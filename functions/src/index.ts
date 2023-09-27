@@ -1,4 +1,4 @@
-import { getTripData } from './data';
+import { getTripData } from './data/data';
 import * as admin from "firebase-admin";
 
 admin.initializeApp();
