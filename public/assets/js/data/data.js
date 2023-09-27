@@ -95,13 +95,3 @@ function _sortFunctionArray(functionArray, orderArray) {
 function _isMoney(excelMoney) {
   return excelMoney.split("$").length > 1
 }
-
-function _fetchData() {
-  const database = firebase.database();
-  const ref = database.ref("/passeios/avUt1xnxXzQCFEM7UZaF");
-
-  ref.on("value", (snapshot) => {
-    const data = snapshot.val();
-    console.log(data);
-  });
-}

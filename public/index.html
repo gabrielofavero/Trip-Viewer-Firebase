@@ -649,9 +649,7 @@
         <!-- Licensing information: [license-url] -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/ -->
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a><br>
-        <a
-          href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph">Logo
-          from studiogstock</a> on Freepik
+        <a href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph">Logo from studiogstock</a> on Freepik
       </div>
     </div>
   </footer>
@@ -660,26 +658,6 @@
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Firebase -->
-  <!-- update the version number as needed -->
-  <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
-  <!-- include only the Firebase features as you need -->
-  <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-database-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-functions-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-messaging-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-storage-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-analytics-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-remote-config-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-performance-compat.js"></script>
-
-  <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
@@ -705,6 +683,8 @@
   <script src="assets/js/modules/places/places.js"></script>
   <script src="assets/js/data/sheetData.js"></script>
   <script src="assets/js/support/countdown.js"></script>
+  <script src="assets/js/modules/schedule/sum-up.js"></script>
+  <script src="assets/js/modules/schedule/schedule-list.js"></script>
   <script src="assets/js/modules/schedule/schedule-calendar.js"></script>
   <script src="assets/js/modules/information/costs.js"></script>
   <script src="assets/js/modules/information/flights.js"></script>
@@ -713,43 +693,6 @@
   <script src="assets/js/modules/media/gallery.js"></script>
   <script src="assets/js/modules/modules.js"></script>
   <script src="assets/js/main/main.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-      // // The Firebase SDK is initialized and available here!
-      //
-      // firebase.auth().onAuthStateChanged(user => { });
-      // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-      // firebase.firestore().doc('/foo/bar').get().then(() => { });
-      // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-      // firebase.messaging().requestPermission().then(() => { });
-      // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-      // firebase.analytics(); // call to activate
-      // firebase.analytics().logEvent('tutorial_completed');
-      // firebase.performance(); // call to activate
-      //
-      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-      try {
-        let app = firebase.app();
-        let features = [
-          'auth',
-          'database',
-          'firestore',
-          'functions',
-          'messaging',
-          'storage',
-          'analytics',
-          'remoteConfig',
-          'performance',
-        ].filter(feature => typeof app[feature] === 'function');
-       console.log(`Firebase SDK loaded with ${features.join(', ')}`);
-      } catch (e) {
-        console.error(e);
-      }
-    });
-  </script>
 </body>
 
 </html>

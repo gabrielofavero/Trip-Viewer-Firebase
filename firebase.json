@@ -12,17 +12,7 @@
         "destination": "/index.html"
       }
     ],
-    "headers": [
-      {
-        "source": "/getUsuario",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          }
-        ]
-      }
-    ]
+    "headers": []
   },
   "functions": [
     {
