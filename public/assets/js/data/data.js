@@ -2,6 +2,7 @@
 
 const CONFIG = _getJSON("assets/json/main/config.json");
 var CALL_SYNC = [];
+var FIRESTONE_DATA;
 
 var SHEET_DATA;
 var P_DATA;
@@ -17,6 +18,29 @@ function _getJSON(path) {
     return JSON.parse(xhr.responseText);
   } else {
     _logger(ERROR, "Failed to load JSON file in path: '" + path, "'")
+  }
+}
+
+async function _getFirestoreData(url="http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648") {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Request failed with status: " + response.status);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Example usage with async/await:
+async function fetchData() {
+  try {
+    FIRESTONE_DATA = await _getFirestoreData()[0];
+    console.log(FIRESTONE_DATA);
+  } catch (error) {
+    console.error("Error: " + error);
   }
 }
 
@@ -65,17 +89,17 @@ function _mergeArrays(arrayOfArrays) {
 
 function _moneyToFloat(excelMoney) {
   try {
-      let adaptedMoney = excelMoney.trim().replace(" ", "").replace(" ", "");
-      if (adaptedMoney == `${CURRENCY}-`) return 0;
-      moneyArray = adaptedMoney.split(CURRENCY);
-      if (moneyArray[0].trim() == "-") {
-          return -parseFloat(moneyArray[1].trim().replace(".", "").replace(",", "."));
-      } else {
-          return parseFloat(moneyArray[1].trim().replace(".", "").replace(",", "."));
-      }
+    let adaptedMoney = excelMoney.trim().replace(" ", "").replace(" ", "");
+    if (adaptedMoney == `${CURRENCY}-`) return 0;
+    moneyArray = adaptedMoney.split(CURRENCY);
+    if (moneyArray[0].trim() == "-") {
+      return -parseFloat(moneyArray[1].trim().replace(".", "").replace(",", "."));
+    } else {
+      return parseFloat(moneyArray[1].trim().replace(".", "").replace(",", "."));
+    }
   } catch (e) {
-      _logger(WARN, "Valor inválido encontrado: '" + excelMoney + "'. Retornando 0");
-      return 0;
+    _logger(WARN, "Valor inválido encontrado: '" + excelMoney + "'. Retornando 0");
+    return 0;
   }
 }
 
