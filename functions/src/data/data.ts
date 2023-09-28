@@ -6,38 +6,40 @@ import * as interfaces from "./interfaces";
 async function _getData(path: string, response: functions.Response) {
     if (!path) {
         response.status(400).send("O parâmetro 'path' é obrigatório.");
-        return;
+        return null;
     }
 
     try {
         const snapshot = await admin.firestore().doc(path).get();
         const data = snapshot.data();
         if (data) {
-            response.send(data);
+            return data;
         } else {
             response.status(404).send("Documento não encontrado");
+            return null;
         }
     } catch (error) {
         response.status(500).send(error);
+        return null;
     }
 }
 
-// async function _getRefData(refObject: interfaces.Referencia, response: functions.Response) {
+async function _getRefData(refObject: interfaces.Referencia, response: functions.Response) {
 
-//     if (
-//         !refObject ||
-//         !refObject._firestore ||
-//         !refObject._path ||
-//         refObject._path.segments.length !== 2
-//     ) {
-//         response.status(400).send("O objeto referenciado não possui a estrutura esperada.");
-//         return;
-//     }
+    if (
+        !refObject ||
+        !refObject._firestore ||
+        !refObject._path ||
+        refObject._path.segments.length !== 2
+    ) {
+        response.status(400).send("O objeto referenciado não possui a estrutura esperada.");
+        return;
+    }
 
-//     const path = `${refObject._path.segments[0]}/${refObject._path.segments[1]}`;
+    const path = `${refObject._path.segments[0]}/${refObject._path.segments[1]}`;
 
-//     await _getData(path, response);
-// }
+    return await _getData(path, response);
+}
 
 
 // Coleta de Dados de módulos específicos
@@ -51,14 +53,6 @@ async function _getUsuario(request: functions.Request, response: functions.Respo
    return await _getData(path, response) as unknown as interfaces.Usuario;
 }
 
-// async function _getViagem(viagemID: any, response: functions.Response) {
-//     _checkParam(viagemID, 'viagemID', response);
-
-//     const path = `viagens/${viagemID}`;
-
-//     await _getData(path, response);
-// }
-
 function _checkParam(param: any, name: string, response: functions.Response) {
     if (!param) {
         response.status(400).send(`O parâmetro '${name}' é obrigatório.`);
@@ -69,5 +63,14 @@ function _checkParam(param: any, name: string, response: functions.Response) {
 
 // Função exportada para o Firebase
 export const getTripData = functions.https.onRequest(async (request, response) => {
-    await _getUsuario(request, response);
+    const user = await _getUsuario(request, response);
+
+    var viagens = [];
+
+    for (const viagemRef of user.viagens) {
+        const viagem = await _getRefData(viagemRef, response);
+        viagens.push(viagem);
+    }
+
+    response.send(viagens)
 });
