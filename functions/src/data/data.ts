@@ -64,6 +64,7 @@ function _checkParam(param: any, name: string, response: functions.Response) {
 
 // Função exportada para o Firebase
 export const getTripData = functions.https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
     const user = await _getUsuario(request, response);
 
     var viagens = [];

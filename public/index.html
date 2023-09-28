@@ -720,7 +720,22 @@
       // // The Firebase SDK is initialized and available here!
       //
       // firebase.auth().onAuthStateChanged(user => { });
-      // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+      // firebase.database().ref('usuarios/yMgghUAV8TapvOAXh648').on('value', snapshot => { });
+      // Get a reference to the Cloud Function
+      // const getTripDataFunction = firebase.functions().httpsCallable('getTripData');
+
+      // const params = {
+      //   userID: 'yMgghUAV8TapvOAXh648',
+      // };
+
+      // getTripDataFunction(params)
+      //   .then((result) => {
+      //     console.log(result.data);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
+
       // firebase.firestore().doc('/foo/bar').get().then(() => { });
       // firebase.functions().httpsCallable('yourFunction')().then(() => { });
       // firebase.messaging().requestPermission().then(() => { });
@@ -744,7 +759,7 @@
           'remoteConfig',
           'performance',
         ].filter(feature => typeof app[feature] === 'function');
-       console.log(`Firebase SDK loaded with ${features.join(', ')}`);
+        console.log(`Firebase SDK loaded with ${features.join(', ')}`);
       } catch (e) {
         console.error(e);
       }
