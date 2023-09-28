@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as interfaces from "./interfaces";
+//import * as passeios from "./passeios";
 
 // Principais Métodos de Coleta de dados
 async function _getData(path: string, response: functions.Response) {
@@ -68,8 +69,31 @@ export const getTripData = functions.https.onRequest(async (request, response) =
     var viagens = [];
 
     for (const viagemRef of user.viagens) {
-        const viagem = await _getRefData(viagemRef, response);
-        viagens.push(viagem);
+        const viagem = await _getRefData(viagemRef, response) as unknown as interfaces.Viagem;
+        const voos = await _getRefData(viagem.voos, response);
+        const programacoes = await _getRefData(viagem.programacoes, response);
+        const hospedagens = await _getRefData(viagem.hospedagens, response);
+
+        var passeios = [];
+
+        for (const cidade of viagem.cidades) {
+            const passeiosCidade = await _getRefData(cidade.passeios, response);
+            const passeioObj = {
+                nome: cidade.nome,
+                passeios: passeiosCidade
+            }
+            passeios.push(passeioObj);
+        }
+
+        const result = {
+            viagem: viagem,
+            voos: voos,
+            programacoes: programacoes,
+            hospedagens: hospedagens,
+            passeios: passeios
+        }
+
+        viagens.push(result);
     }
 
     response.send(viagens)
