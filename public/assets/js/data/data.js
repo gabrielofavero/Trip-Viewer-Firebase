@@ -21,8 +21,12 @@ function _getJSON(path) {
   }
 }
 
-async function _getFirestoreData(url="http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648") {
+async function _getFirestoreData() {
   try {
+    const host = window.location.hostname;
+
+    var url = host == "localhost" ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648" : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=yMgghUAV8TapvOAXh648";
+
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Request failed with status: " + response.status);
