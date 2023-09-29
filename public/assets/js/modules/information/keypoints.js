@@ -66,32 +66,32 @@ function _getKeypoint(dado) {
           if (ADJUSTMENTS["Total"] || ADJUSTMENTS["Ambos"]) {
               valor = ADJUSTED_COST_DURING_TRIP;
           }
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(valor));
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(valor));
           break;
       case "Ida e Volta":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(TRANSPORTATION_COST));
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(TRANSPORTATION_COST));
           break;
       case "Hospedagem":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(STAY_COST));
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(STAY_COST));
           break;
       case "Dia-a-Dia":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(DAY_TO_DAY_COST) * NUMBER_OF_PEOPLE);
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(DAY_TO_DAY_COST) * NUMBER_OF_PEOPLE);
           break;
       case "Dia-a-Dia (Individual)":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(DAY_TO_DAY_COST));
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(DAY_TO_DAY_COST));
           break;
       case "Ingresso":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(TICKET_COST));
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(TICKET_COST));
           break;
       case "Ingressos":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(TICKET_COST) * NUMBER_OF_PEOPLE);
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(TICKET_COST) * NUMBER_OF_PEOPLE);
           break;
       case "Gastos Prévios":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(PREVIOUS_COST));
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(PREVIOUS_COST));
           break;
       case "Gasto Total":
       case "Total":
-          texto = (texto != "-") ? texto : `${CURRENCY} ` + _addDotSeparator(Math.round(TOTAL_COST));
+          texto = (texto != "-") ? texto : `${FIRESTORE_DATA.moeda} ` + _addDotSeparator(Math.round(TOTAL_COST));
           break;
   }
   return `<i class="${icone}"></i>

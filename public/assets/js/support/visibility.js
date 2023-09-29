@@ -11,17 +11,7 @@ const THEME_COLOR_LIGHT = "#AF8F8E";
 
 // ======= LOADERS =======
 function _loadVisibility() {
-     const AUTO_VISIBILITY = CONFIG.visibility.autoVisibility;
-     if (CONFIG.visibility.startOnDarkMode) {
-          if (AUTO_VISIBILITY) {
-               _logger(WARN, "Auto Visibility ignored. System is configured to start on dark mode.");
-          }
-          _loadDarkMode();
-     } else if (AUTO_VISIBILITY) {
-          _autoVisibility();
-     } else {
-          _lightModeLite();
-     }
+     _autoVisibility();
      document.getElementById("night-mode").onclick = function () {
           _switchVisibility();
      };
@@ -123,7 +113,7 @@ function _switchVisibility() {
 
 function _autoVisibility() {
      let now = _getCurrentHour();
-     if (now >= CONFIG.visibility.darkModeStartHour || now < CONFIG.visibility.darkModeEndHour) {
+     if (now >= 18 || now < 6) {
           _loadDarkMode();
      } else {
           _lightModeLite();
@@ -147,7 +137,7 @@ function _changeThemeColor(color) {
 function _changeHeaderImg() {
      try {
           if (HEADER_IMG_ACTIVE) {
-               document.getElementById("header2").src = DARK_MODE ? CONFIG.header.image.dark : CONFIG.header.image.light;
+               document.getElementById("header2").src = DARK_MODE ? FIRESTORE_DATA.imagem.escuro : FIRESTORE_DATA.imagem.claro;
           }
      } catch (e) { }
 }

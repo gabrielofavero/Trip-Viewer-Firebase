@@ -33,7 +33,8 @@ function _getArraybyDate(excelTime) {
 }
 
 function _getNewDay(daysFromInicio) {
-    let newDate = _dateStringToDate(CONFIG.start.split(" ")[0])
+    let newDate = _convertFirestoreDate(FIRESTORE_DATA.inicio)
+    newDate.setHours(0, 0, 0, 0);
     newDate.setDate(newDate.getDate() + daysFromInicio);
     return newDate;
 }

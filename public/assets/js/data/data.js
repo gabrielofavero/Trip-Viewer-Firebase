@@ -99,8 +99,8 @@ function _mergeArrays(arrayOfArrays) {
 function _moneyToFloat(excelMoney) {
   try {
     let adaptedMoney = excelMoney.trim().replace(" ", "").replace(" ", "");
-    if (adaptedMoney == `${CURRENCY}-`) return 0;
-    moneyArray = adaptedMoney.split(CURRENCY);
+    if (adaptedMoney == `${FIRESTORE_DATA.moeda}-`) return 0;
+    moneyArray = adaptedMoney.split(FIRESTORE_DATA.moeda);
     if (moneyArray[0].trim() == "-") {
       return -parseFloat(moneyArray[1].trim().replace(".", "").replace(",", "."));
     } else {
@@ -110,6 +110,10 @@ function _moneyToFloat(excelMoney) {
     _logger(WARN, "Valor inválido encontrado: '" + excelMoney + "'. Retornando 0");
     return 0;
   }
+}
+
+function _convertFirestoreDate(timestamp) {
+  return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
 }
 
 // ======= CHECKERS =======

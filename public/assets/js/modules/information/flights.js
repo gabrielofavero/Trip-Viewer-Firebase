@@ -45,7 +45,6 @@ function _loadFlightsModule() {
     }
   }
   _formatSubtitleAndReservation(reservas, sobres);
-  document.getElementById("sobre").innerHTML = "<p>" + CONFIG.about.introText + "</p>";
   document.getElementById("flight-info1").innerHTML = "<strong>" + sobres[0].title + ":</strong><span>" + sobres[0].text + "</span>";
   document.getElementById("flight-info2").innerHTML = "<strong>" + sobres[1].title + ":</strong><span>" + sobres[1].text + "</span>";
   document.getElementById("flight-info3").innerHTML = "<strong>" + sobres[2].title + ":</strong><span>" + sobres[2].text + "</span>";

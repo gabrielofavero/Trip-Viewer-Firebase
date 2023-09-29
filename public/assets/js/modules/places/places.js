@@ -2,7 +2,6 @@
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
-const CURRENCY = FIRESTORE_DATA.moeda;
 var CURRENT_PLACES_SIZE = 0;
 
 const CITIES_INDEX = _getJSON("assets/json/modules/places/cities.json");
@@ -182,7 +181,7 @@ function _getPlacesHref(code) {
 // ======= SETTERS =======
 function _exportPlacesVariables() {
   window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
-  window.localStorage.setItem('CURRENCY', CURRENCY);
+  window.localStorage.setItem('CURRENCY', FIRESTORE_DATA.moeda);
 }
 
 function _setPlacesURL(city) {

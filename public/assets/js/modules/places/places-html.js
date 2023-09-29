@@ -132,12 +132,11 @@ function _loadP() {
       }
       result.push(innerResult);
     }
+    
+    result.sort(function (a, b) {
+      return b.notaNumerica - a.notaNumerica || a.nome.localeCompare(b.nome); // Ordena por Nota (Desc) e Nome (Asc)
+    });
 
-    if (CONFIG.places.autoSortByScore) { // Ordena por Nota (Desc) e Nome (Asc)
-      result.sort(function (a, b) {
-        return b.notaNumerica - a.notaNumerica || a.nome.localeCompare(b.nome);
-      });
-    };
     _setInnerHTML(result);
   } else {
     _logger(ERROR, "O Código não foi localizado na base de dados");

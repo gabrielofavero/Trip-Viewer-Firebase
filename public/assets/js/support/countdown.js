@@ -6,7 +6,7 @@ var COUNTDOWN;
 COUNTDOWN = setInterval(function () {
   var now = new Date().getTime();
 
-  var distance = _dateStringToDate(CONFIG.start) - now;
+  var distance = _convertFirestoreDate(FIRESTORE_DATA.inicio) - now;
 
   var years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
   distance -= years * (1000 * 60 * 60 * 24 * 365);

@@ -14,7 +14,7 @@ function _loadOfflineMode() {
     const HYPERLINK_BACKUP = _getJSON("assets/json/offline-data/HYPERLINK.json");
     try {
         SHEET_DATA = SHEET_DATA_OFFLINE;
-        if (CONFIG.places.active) {
+        if (FIRESTORE_DATA.modulos.passeios) {
             P_DATA = P_DATA_BACKUP;
             HYPERLINK = HYPERLINK_BACKUP;
             _getPResult();
