@@ -2,7 +2,7 @@
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
-const CURRENCY = FIRESTONE_DATA.moeda;
+const CURRENCY = FIRESTORE_DATA.moeda;
 var CURRENT_PLACES_SIZE = 0;
 
 const CITIES_INDEX = _getJSON("assets/json/modules/places/cities.json");
@@ -48,7 +48,7 @@ function _loadPlaces() {
 function _loadPlacesSelect() {
   let select = document.getElementById("places-select");
   let firstOption = document.createElement("option");
-  const cities = FIRESTONE_DATA.cidades;
+  const cities = FIRESTORE_DATA.cidades;
 
   firstOption.value = cities[0].sigla;
   firstOption.text = cities[0].nome;
@@ -155,7 +155,7 @@ function _getHeaderData(data) {
 
 function getPlacesSelectValue() {
   let select = document.getElementById("places-select");
-  return select.value || FIRESTONE_DATA.cidades[0].sigla;
+  return select.value || FIRESTORE_DATA.cidades[0].sigla;
 }
 
 function _getPlacesBoxesIndex(i) {

@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     _getFirestoreData().then((data) => {
-      FIRESTONE_DATA = data;
+      FIRESTORE_DATA = data;
       console.log('Dados do Firestore Database carregados com sucesso'); 
       _start();
       _mainLoad();

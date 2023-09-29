@@ -2,7 +2,7 @@
 
 const CONFIG = _getJSON("assets/json/main/config.json");
 var CALL_SYNC = [];
-var FIRESTONE_DATA;
+var FIRESTORE_DATA;
 
 var SHEET_DATA;
 var P_DATA;
