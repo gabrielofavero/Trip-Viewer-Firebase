@@ -39,7 +39,7 @@ function _loadP() {
   if (PLACE) {
     let result = [];
 
-    document.title = DISPLAY_TITLE || TYPE_TITLE;
+    document.title = TYPE_TITLE;
     document.getElementById("titleP").innerHTML = "<h2>" + document.title + "</h2>";
     if (TYPE_SUBTITLE) {
       document.getElementById("subTitleP").innerHTML = "<h5>" + TYPE_SUBTITLE + "</h5>";
