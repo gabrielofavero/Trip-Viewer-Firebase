@@ -3,74 +3,20 @@
 var PROG_IS_HIDDEN = true;
 var PROG_CURRENT_DAY = 0;
 var PROG_CURRENT_MONTH = 0;
-var SHEET_PLACES_BY_DATE;
+var PROG_CURRENT_YEAR = 0;
+var SCHEDULE_CALENDAR;
 var SHEET_SCHEDULE = [];
 
 // ======= LOADERS =======
 function _loadScheduleCalendar() {
-    let result = [];
-    let currentResult = "";
-    let currentTime = "";
+    let result = FIRESTORE_DATA.programacoes.programacao;
 
-    for (let i = 0; i < SHEET_SCHEDULE.length; i++) {
-        if (_isScheduleCalendarHeader(SHEET_SCHEDULE[i])) {
-
-            if (currentResult != "") {
-                result.push(currentResult);
-            }
-
-            currentResult = {
-                "Title": SHEET_SCHEDULE[i][0],
-                "Manhã": {
-                    "Programação": [],
-                    "TransportePublico": [],
-                    "TransportePrivado": []
-                },
-                "Tarde": {
-                    "Programação": [],
-                    "TransportePublico": [],
-                    "TransportePrivado": []
-                },
-                "Noite": {
-                    "Programação": [],
-                    "TransportePublico": [],
-                    "TransportePrivado": []
-                },
-                "Total": []
-            }
-
-            currentTime = "";
-        } else {
-            let skip;
-            switch (SHEET_SCHEDULE[i][0]) {
-                case "":
-                    skip = false;
-                    break;
-                case undefined:
-                    skip = false;
-                    break;
-                case "Total":
-                    skip = true;
-                    currentResult["Total"] = [SHEET_SCHEDULE[i][2], SHEET_SCHEDULE[i][3]];
-                    break;
-                case "Horário":
-                    skip = true;
-                    break;
-                default:
-                    skip = false;
-                    currentTime = SHEET_SCHEDULE[i][0];
-            }
-            if (!skip && SHEET_SCHEDULE[i][1] != "") {
-                currentResult[currentTime]["Programação"].push(_returnIfNotUndefined(SHEET_SCHEDULE[i][1]));
-                currentResult[currentTime]["TransportePublico"].push(_returnIfNotUndefined(SHEET_SCHEDULE[i][2]));
-                currentResult[currentTime]["TransportePrivado"].push(_returnIfNotUndefined(SHEET_SCHEDULE[i][3]));
-            }
-        }
+    for (let i = 0; i < result.length; i++) {
+        const date = _convertFirestoreDate(FIRESTORE_DATA.programacoes.programacao[i].data)
+        result[i].titulo = _dateToTitle(date);
     }
-    if (currentResult != "") {
-        result.push(currentResult);
-    }
-    SHEET_PLACES_BY_DATE = result;
+
+    SCHEDULE_CALENDAR = result;
 }
 
 function _loadModalContentCalendar(prog) {
@@ -83,11 +29,11 @@ function _loadModalContentCalendar(prog) {
     tarde.innerHTML = "";
     noite.innerHTML = "";
 
-    title.innerHTML = prog["Title"];
+    title.innerHTML = prog["titulo"];
 
-    _setModalCalendarInnerHTML(manha, prog["Manhã"]);
-    _setModalCalendarInnerHTML(tarde, prog["Tarde"]);
-    _setModalCalendarInnerHTML(noite, prog["Noite"]);
+    _setModalCalendarInnerHTML(manha, prog["manha"]);
+    _setModalCalendarInnerHTML(tarde, prog["tarde"]);
+    _setModalCalendarInnerHTML(noite, prog["noite"]);
 
     _adaptModalCalendarInnerHTML(manha, tarde, noite);
 }
@@ -123,27 +69,32 @@ function _reloadModalCalendar(prog) {
 // ======= GETTERS =======
 function _getScheduleCalendarByDate(stringDayMonth) {
     if (stringDayMonth) {
-        let day = parseInt(stringDayMonth.split("/")[0]);
-        let month = parseInt(stringDayMonth.split("/")[1]);
-    
-        if (day == PROG_CURRENT_DAY && month == PROG_CURRENT_MONTH) {
+        const day = parseInt(stringDayMonth.split("/")[0]);
+        const month = parseInt(stringDayMonth.split("/")[1]);
+        const year = parseInt(stringDayMonth.split("/")[2]);
+
+        const date = new Date(year, month - 1, day);
+
+        if (day == PROG_CURRENT_DAY && month == PROG_CURRENT_MONTH && year == PROG_CURRENT_YEAR) {
             PROG_CURRENT_DAY = 0;
             PROG_CURRENT_MONTH = 0;
+            PROG_CURRENT_YEAR = 0;
             if (day != 0) {
                 _closeModalCalendar();
             }
         } else {
             PROG_CURRENT_DAY = day;
             PROG_CURRENT_MONTH = month;
+            PROG_CURRENT_YEAR = year;
             if (day != 0) {
-                for (let i = 0; i < SHEET_PLACES_BY_DATE.length; i++) {
-                    let date = _titleToDateObject(SHEET_PLACES_BY_DATE[i]["Title"]);
-                    if (date["day"] == day && date["month"] == month) {
+                for (let i = 0; i < SCHEDULE_CALENDAR.length; i++) {
+                    const title = _dateToTitle(date);
+                    if (SCHEDULE_CALENDAR[i]["titulo"] == title) {
                         if (PROG_IS_HIDDEN) {
                             PROG_IS_HIDDEN = false;
-                            _openModalCalendar(SHEET_PLACES_BY_DATE[i]);
+                            _openModalCalendar(SCHEDULE_CALENDAR[i]);
                         } else {
-                            _reloadModalCalendar(SHEET_PLACES_BY_DATE[i]);
+                            _reloadModalCalendar(SCHEDULE_CALENDAR[i]);
                         }
                         break;
                     }
@@ -157,17 +108,9 @@ function _getScheduleCalendarByDate(stringDayMonth) {
 
 // ======= SETTERS =======
 function _setModalCalendarInnerHTML(element, prog) {
-    for (let i = 0; i < prog["Programação"].length; i++) {
-        if (prog["Programação"][i] != "" && prog["Programação"][i] != "-") {
-            let value = "";
-            if ((prog["TransportePublico"][i] != "" && prog["TransportePublico"][i] != 0) && (prog["TransportePrivado"][i] != "" && prog["TransportePrivado"][i] != 0)) {
-                value = ` <b>($${prog["TransportePublico"][i]} 🚌, $${prog["TransportePrivado"][i]} 🚗)</b>`;
-            } else if (prog["TransportePublico"][i] != "" && prog["TransportePublico"][i] != 0) {
-                value = ` <b>($${prog["TransportePublico"][i]} 🚌)</b>`;
-            } else if (prog["TransportePrivado"][i] != "" && prog["TransportePrivado"][i] != 0) {
-                value = ` <b>($${prog["TransportePrivado"][i]} 🚗)</b>`;
-            }
-            element.innerHTML += `<li>${prog["Programação"][i]}${value}</li>`;
+    for (let i = 0; i < prog.length; i++) {
+        if (prog[i] != "" && prog[i] != "-") {
+            element.innerHTML += `<li>${prog[i]}</li>`;
         }
     }
 }
@@ -246,6 +189,45 @@ function _titleToDateObject(title) {
     result["month"] = month;
 
     return result;
+}
+
+function _dateToTitle(date) {
+    const day = date.getDate();
+    const month = numberToMonth(date.getMonth() + 1);
+    const year = date.getFullYear();
+    return `${day} de ${month} de ${year}`;
+}
+
+function numberToMonth(number) {
+    switch (number) {
+        case 1:
+            return "Janeiro";
+        case 2:
+            return "Fevereiro";
+        case 3:
+            return "Março";
+        case 4:
+            return "Abril";
+        case 5:
+            return "Maio";
+        case 6:
+            return "Junho";
+        case 7:
+            return "Julho";
+        case 8:
+            return "Agosto";
+        case 9:
+            return "Setembro";
+        case 10:
+            return "Outubro";
+        case 11:
+            return "Novembro";
+        case 12:
+            return "Dezembro";
+        default:
+            _logger(WARN, "Mês não encontrado: " + number + ".")
+            return "?";
+    }
 }
 
 function _adaptModalCalendarInnerHTML(manha, tarde, noite) {
