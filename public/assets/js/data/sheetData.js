@@ -77,37 +77,6 @@ function _loadMainDataMulti() {
     }
 }
 
-function _loadPlacesData() {
-    for (let i = 0; i < PLACES_RANGES_ARRAY.length; i++) {
-        let key = PLACES_KEYS[i];
-        if (!SHEET_PLACES[key]) {
-            SHEET_PLACES[key] = [];
-        }
-        SHEET_PLACES[key].push(...P_DATA[i].values);
-    }
-}
-
-function _loadHyperlinks() {
-    for (let i = 0; i < HYPERLINK.length; i++) {
-        let innerKey = _findHyperlinkRangeKey(HYPERLINK_RANGES_KEYS[i]);
-        let key = HYPERLINK_RANGES_INNER_KEYS[i];
-
-        if (!P_HYPERLINK[key]) {
-            P_HYPERLINK[key] = {};
-        }
-
-        if (!P_HYPERLINK[key][innerKey]) {
-            P_HYPERLINK[key][innerKey] = [];
-        }
-        let values = [];
-        if (HYPERLINK[i].rowData) {
-            values = _getHyperlinkValues(HYPERLINK[i].rowData);
-        }
-
-        P_HYPERLINK[key][innerKey].push(values);
-    }
-}
-
 function _loadMainRanges() {
     const MAIN_RANGES = CONFIG.data.ranges.main;
     if (typeof MAIN_RANGES === 'object'){
