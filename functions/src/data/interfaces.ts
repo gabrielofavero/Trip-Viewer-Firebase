@@ -45,9 +45,12 @@ export interface Viagem {
         resumo: boolean;
         voos: boolean
     };
-    voos: Referencia;
-    programacoes: Referencia;
-    hospedagens: Referencia;
+    voosRef: Referencia;
+    voos: any;
+    programacoesRef: Referencia;
+    programacoes: any;
+    hospedagensRef: Referencia;
+    hospedagens: any;
     cidades: Cidade[];
 }
 
@@ -58,8 +61,9 @@ interface FirebaseTimestamp {
 
 interface Cidade {
     sigla: string;
-    passeios: Referencia;
+    passeiosRef: Referencia;
     nome: string;
     myMaps: string;
+    passeios: any;
 }
 
