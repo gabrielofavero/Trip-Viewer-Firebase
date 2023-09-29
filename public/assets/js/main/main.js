@@ -221,8 +221,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     _getFirestoreData().then((data) => {
-      const FIRESTONE_DATA = data;
-      console.log(FIRESTONE_DATA);
+      FIRESTONE_DATA = data;
+      console.log('Firesone Data Loaded'); 
       _start();
       _mainLoad();
       $('body').css('overflow', 'auto');
