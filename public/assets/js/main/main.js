@@ -5,13 +5,33 @@
     - License: https://bootstrapmade.com/license/
     - Modified by: Gabriel Fávero
 */
+
 var START_LIST = [];
 const CALL_SYNC_ORDER = _getJSON('assets/json/main/call-sync-order.json');
 
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   try {
     "use strict";
     $('body').css('overflow', 'hidden');
+
+    let app = firebase.app();
+    let features = [
+      'auth',
+      'database',
+      'firestore',
+      'functions',
+      'messaging',
+      'storage',
+      'analytics',
+      'remoteConfig',
+      'performance',
+    ].filter(feature => typeof app[feature] === 'function');
+    console.log(`Firebase SDK loaded with ${features.join(', ')}`);
+
+    _getFirestoreData().then((data) => {
+      const FIRESTONE_DATA = data;
+      console.log(FIRESTONE_DATA);
+    });
 
     _start();
 
@@ -220,7 +240,8 @@ const CALL_SYNC_ORDER = _getJSON('assets/json/main/call-sync-order.json');
     _displayErrorMessage(error);
     throw error;
   }
-})()
+
+});
 
 async function _mainLoad() {
   _loadOfflineMode();
