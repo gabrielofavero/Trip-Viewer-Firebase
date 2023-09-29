@@ -28,13 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
     ].filter(feature => typeof app[feature] === 'function');
     console.log(`Firebase SDK loaded with ${features.join(', ')}`);
 
-    _getFirestoreData().then((data) => {
-      const FIRESTONE_DATA = data;
-      console.log(FIRESTONE_DATA);
-    });
-
-    _start();
-
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
@@ -157,15 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /**
-     * Preloader
-     */
-    let preloader = select('#preloader');
-    if (preloader) {
-      window.addEventListener('load', () => {
-        _mainLoad()
-      });
-    }
-    /**
      * Hero type effect
      */
     const typed = select('.typed')
@@ -235,12 +219,19 @@ document.addEventListener('DOMContentLoaded', function () {
         mirror: false
       })
     });
-    $('body').css('overflow', 'auto');
+
+    _getFirestoreData().then((data) => {
+      const FIRESTONE_DATA = data;
+      console.log(FIRESTONE_DATA);
+      _start();
+      _mainLoad();
+      $('body').css('overflow', 'auto');
+    });
+
   } catch (error) {
     _displayErrorMessage(error);
     throw error;
   }
-
 });
 
 async function _mainLoad() {
