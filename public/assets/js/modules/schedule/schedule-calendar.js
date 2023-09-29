@@ -122,32 +122,36 @@ function _reloadModalCalendar(prog) {
 
 // ======= GETTERS =======
 function _getScheduleCalendarByDate(stringDayMonth) {
-    let day = parseInt(stringDayMonth.split("/")[0]);
-    let month = parseInt(stringDayMonth.split("/")[1]);
-
-    if (day == PROG_CURRENT_DAY && month == PROG_CURRENT_MONTH) {
-        PROG_CURRENT_DAY = 0;
-        PROG_CURRENT_MONTH = 0;
-        if (day != 0) {
-            _closeModalCalendar();
-        }
-    } else {
-        PROG_CURRENT_DAY = day;
-        PROG_CURRENT_MONTH = month;
-        if (day != 0) {
-            for (let i = 0; i < SHEET_PLACES_BY_DATE.length; i++) {
-                let date = _titleToDateObject(SHEET_PLACES_BY_DATE[i]["Title"]);
-                if (date["day"] == day && date["month"] == month) {
-                    if (PROG_IS_HIDDEN) {
-                        PROG_IS_HIDDEN = false;
-                        _openModalCalendar(SHEET_PLACES_BY_DATE[i]);
-                    } else {
-                        _reloadModalCalendar(SHEET_PLACES_BY_DATE[i]);
+    if (stringDayMonth) {
+        let day = parseInt(stringDayMonth.split("/")[0]);
+        let month = parseInt(stringDayMonth.split("/")[1]);
+    
+        if (day == PROG_CURRENT_DAY && month == PROG_CURRENT_MONTH) {
+            PROG_CURRENT_DAY = 0;
+            PROG_CURRENT_MONTH = 0;
+            if (day != 0) {
+                _closeModalCalendar();
+            }
+        } else {
+            PROG_CURRENT_DAY = day;
+            PROG_CURRENT_MONTH = month;
+            if (day != 0) {
+                for (let i = 0; i < SHEET_PLACES_BY_DATE.length; i++) {
+                    let date = _titleToDateObject(SHEET_PLACES_BY_DATE[i]["Title"]);
+                    if (date["day"] == day && date["month"] == month) {
+                        if (PROG_IS_HIDDEN) {
+                            PROG_IS_HIDDEN = false;
+                            _openModalCalendar(SHEET_PLACES_BY_DATE[i]);
+                        } else {
+                            _reloadModalCalendar(SHEET_PLACES_BY_DATE[i]);
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
+    } else {
+        logger(WARN, "Sem dados para a data selecionada.")
     }
 }
 
