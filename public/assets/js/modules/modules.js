@@ -8,8 +8,7 @@ function _start() {
 
   // Header
   _loadHeader();
-  _loadheaderIcons();
-  
+
   // Modules
   _loadModules();
 
@@ -24,29 +23,67 @@ function _start() {
 
 // ======= LOADERS =======
 function _loadHeader() {
-  document.title = CONFIG.title;
-  document.getElementById("header1").innerHTML = "<h1>" + CONFIG.header.title + "</h1>";
+  document.title = FIRESTONE_DATA.titulo;
+  document.getElementById("header1").innerHTML = "<h1>" + FIRESTONE_DATA.titulo + "</h1>";
   document.getElementById("header2").style.display = "none";
-  document.getElementById("sheetLink").href = CONFIG.header.sheetLink;
-  document.getElementById("pptLink").href = CONFIG.header.pptLink;
-  document.getElementById("driveLink").href = CONFIG.header.driveLink;
-  document.getElementById("vaccineLink").href = CONFIG.header.vaccineLink;
-  document.getElementById("mapsLink").href = CONFIG.header.mapsLink;
-  document.getElementById("attachmentsLink").href = CONFIG.header.documentsLink;
-  document.getElementById("comprovantesV").href = CONFIG.header.documentsLink;
-  document.getElementById("comprovantesH").href = CONFIG.header.documentsLink;
-  
 
-  if (CONFIG.header.image.active) {
-    document.getElementById("header2").src = DARK_MODE ? CONFIG.header.image.dark : CONFIG.header.image.light;
+  if (FIRESTONE_DATA.links.attachments) {
+    document.getElementById("attachmentsLink").href = FIRESTONE_DATA.links.attachments;
+  } else {
+    document.getElementById("attachmentsLink").style.display = "none";
+  }
+
+  if (FIRESTONE_DATA.links.sheet) {
+    document.getElementById("sheetLink").href = FIRESTONE_DATA.links.sheet;
+  } else {
+    document.getElementById("sheetLink").style.display = "none";
+  }
+
+  if (FIRESTONE_DATA.links.ppt) {
+    document.getElementById("pptLink").href = FIRESTONE_DATA.links.ppt;
+  } else {
+    document.getElementById("pptLink").style.display = "none";
+  }
+  
+  if (FIRESTONE_DATA.links.drive) {
+    document.getElementById("driveLink").href = FIRESTONE_DATA.links.drive;
+  } else {
+    document.getElementById("driveLink").style.display = "none";
+  }
+  
+  if (FIRESTONE_DATA.links.vacina) {
+    document.getElementById("vaccineLink").href = FIRESTONE_DATA.links.vacina;
+  } else {
+    document.getElementById("vaccineLink").style.display = "none";
+  }
+  
+  if (FIRESTONE_DATA.links.pdf) {
+    document.getElementById("pdfLink").href = FIRESTONE_DATA.links.pdf;
+  } else {
+    document.getElementById("pdfLink").style.display = "none";
+  }
+  
+  if (FIRESTONE_DATA.links.maps) {
+    document.getElementById("mapsLink").href = FIRESTONE_DATA.links.maps;
+  } else {
+    document.getElementById("mapsLink").style.display = "none";
+  }
+
+  if (FIRESTONE_DATA.links.documents) {
+    document.getElementById("comprovantesV").href = FIRESTONE_DATA.links.documents;
+    document.getElementById("comprovantesH").href = FIRESTONE_DATA.links.documents;
+  }
+
+  if (FIRESTONE_DATA.imagem.ativo) {
+    document.getElementById("header2").src = DARK_MODE ? FIRESTONE_DATA.imagem.escuro : FIRESTONE_DATA.imagem.claro;
     document.getElementById("header1").style.display = "none";
     document.getElementById("header2").style.display = "block";
-}
+  }
 }
 
 function _loadModules() {
   // About
-  if (CONFIG.modules.about) {
+  if (FIRESTONE_DATA.modulos.sobre) {
     document.getElementById("keypointsNav").innerHTML = "";
     _loadAboutModule();
     CALL_SYNC.push(_loadAbout);
@@ -59,7 +96,7 @@ function _loadModules() {
   }
 
   // Keypoints
-  if (CONFIG.modules.keypoints) {
+  if (FIRESTONE_DATA.modulos.resumo) {
     CALL_SYNC.push(_loadKeypointsStandAlone);
   } else {
     document.getElementById("keypointsNav").innerHTML = "";
@@ -68,13 +105,13 @@ function _loadModules() {
   }
 
   // Cities
-  if (!CONFIG.modules.keypoints || !CONFIG.modules.cities) {
+  if (FIRESTONE_DATA.cidades.length <= 1) {
     document.getElementById("cities").innerHTML = "";
     document.getElementById("cities").style.display = "none";
   }
 
   // Flights
-  if (CONFIG.modules.flights) {
+  if (FIRESTONE_DATA.modulos.voos) {
     CALL_SYNC.push(_loadFlightsModule);
   } else {
     document.getElementById("flightsNav").innerHTML = "";
@@ -83,14 +120,14 @@ function _loadModules() {
   }
 
   // Stay
-  if (!CONFIG.modules.stay) {
+  if (!FIRESTONE_DATA.modulos.hospedagens) {
     document.getElementById("stayNav").innerHTML = "";
     document.getElementById("stay").innerHTML = "";
     document.getElementById("stay").style.display = "none";
   }
 
   // Costs
-  if (CONFIG.modules.costs) {
+  if (FIRESTONE_DATA.modulos.custos) {
     CALL_SYNC.push(_loadCostModule);
   } else {
     document.getElementById("costsNav").innerHTML = "";
@@ -98,26 +135,8 @@ function _loadModules() {
     document.getElementById("costs").style.display = "none";
   }
 
-  // Sum-Up
-  if (CONFIG.modules.sumUp) {
-    CALL_SYNC.push();
-  } else {
-    document.getElementById("sumUpNav").innerHTML = "";
-    document.getElementById("sumUp").innerHTML = "";
-    document.getElementById("sumUp").style.display = "none";
-  }
-
-  // Schedule: List
-  if (CONFIG.modules.scheduleList) {
-    CALL_SYNC.push();
-  } else {
-    document.getElementById("scheduleListNav").innerHTML = "";
-    document.getElementById("scheduleList").innerHTML = "";
-    document.getElementById("scheduleList").style.display = "none";
-  }
-
   // Schedule: Calendar
-  if (CONFIG.modules.scheduleCalendar) {
+  if (FIRESTONE_DATA.modulos.programacao) {
     CALL_SYNC.push(_loadScheduleCalendar);
   } else {
     document.getElementById("scheduleCalendarNav").innerHTML = "";
@@ -126,46 +145,16 @@ function _loadModules() {
   }
 
   // Places
-  if (CONFIG.modules.places) {
-    document.getElementById("pDescription").innerHTML = "<p>" + CONFIG.places.description + "</p>";
-    _loadPlacesHTML(CONFIG.places.cities[0]);
-    _loadPlacesSelect();
-    CALL_SYNC.push(_loadPlaces);
-    CALL_SYNC.push(_loadPlacesData);
-    CALL_SYNC.push(_loadHyperlinks);
-  } else {
-    document.getElementById("placesNav").innerHTML = "";
-    document.getElementById("places").innerHTML = "";
-  }
+  _loadPlacesHTML(FIRESTONE_DATA.cidades[0]);
+  _loadPlacesSelect();
+  CALL_SYNC.push(_loadPlaces);
+  CALL_SYNC.push(_loadPlacesData);
+  CALL_SYNC.push(_loadHyperlinks);
 
   // Gallery
-  if (!CONFIG.modules.gallery) {
+  if (!FIRESTONE_DATA.modulos.galeria) {
     document.getElementById("galleryNav").innerHTML = "";
     document.getElementById("gallery").innerHTML = "";
     document.getElementById("gallery").style.display = "none";
-  }
-}
-
-function _loadheaderIcons() {
-  if (CONFIG.header.attachmentsLink == "") {
-    document.getElementById("attachmentsLink").style.display = "none";
-  }
-  if (CONFIG.header.sheetLink == "") {
-    document.getElementById("sheetLink").style.display = "none";
-  }
-  if (CONFIG.header.pptLink == "") {
-    document.getElementById("pptLink").style.display = "none";
-  }
-  if (CONFIG.header.driveLink == "") {
-    document.getElementById("driveLink").style.display = "none";
-  }
-  if (CONFIG.header.vaccineLink == "") {
-    document.getElementById("vaccineLink").style.display = "none";
-  }
-  if (CONFIG.header.pdfLink == "") {
-    document.getElementById("pdfLink").style.display = "none";
-  }
-  if (CONFIG.header.mapsLink == "") {
-    document.getElementById("mapsLink").style.display = "none";
   }
 }
