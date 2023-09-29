@@ -2,7 +2,7 @@
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
-const CURRENCY = CONFIG.currency;
+const CURRENCY = FIRESTONE_DATA.moeda;
 var CURRENT_PLACES_SIZE = 0;
 
 const CITIES_INDEX = _getJSON("assets/json/modules/places/cities.json");
@@ -48,18 +48,18 @@ function _loadPlaces() {
 function _loadPlacesSelect() {
   let select = document.getElementById("places-select");
   let firstOption = document.createElement("option");
-  const cities = CONFIG.places.cities;
+  const cities = FIRESTONE_DATA.cidades;
 
-  firstOption.value = cities[0].code;
-  firstOption.text = cities[0].name;
+  firstOption.value = cities[0].sigla;
+  firstOption.text = cities[0].nome;
   select.add(firstOption);
   firstOption.selected = true;
 
   if (cities.length > 1) {
     for (let i = 1; i < cities.length; i++) {
       let newOption = document.createElement("option");
-      newOption.value = cities[i].code;
-      newOption.text = cities[i].name;
+      newOption.value = cities[i].sigla;
+      newOption.text = cities[i].nome;
       select.add(newOption);
     };
   } else {
@@ -155,7 +155,7 @@ function _getHeaderData(data) {
 
 function getPlacesSelectValue() {
   let select = document.getElementById("places-select");
-  return select.value || CONFIG.places.cities[0].code;
+  return select.value || FIRESTONE_DATA.cidades[0].sigla;
 }
 
 function _getPlacesBoxesIndex(i) {
