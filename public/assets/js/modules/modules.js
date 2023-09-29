@@ -82,19 +82,6 @@ function _loadHeader() {
 }
 
 function _loadModules() {
-  // About
-  if (FIRESTORE_DATA.modulos.sobre) {
-    document.getElementById("keypointsNav").innerHTML = "";
-    _loadAboutModule();
-    CALL_SYNC.push(_loadAbout);
-    CALL_SYNC.push(_loadTransportationModule);
-    CALL_SYNC.push(_loadKeypointsIntegrated);
-  } else {
-    document.getElementById("aboutNav").innerHTML = "";
-    document.getElementById("about").innerHTML = "";
-    document.getElementById("about").style.display = "none";
-  }
-
   // Keypoints
   if (FIRESTORE_DATA.modulos.resumo) {
     CALL_SYNC.push(_loadKeypointsStandAlone);
