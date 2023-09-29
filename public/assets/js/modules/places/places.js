@@ -12,33 +12,15 @@ const PLACES_BOXES_JSON = _getJSON("assets/json/modules/places/boxes.json");
 
 // ======= LOADERS =======
 function _loadPlaces() {
-  let keys = Object.keys(SHEET_PLACES);
+  const cidades = FIRESTORE_DATA.cidades;
 
-  for (let key of keys) {
-    let titleIndex = -1;
-    let spk = SHEET_PLACES[key];
-    for (let i = 0; i < spk.length; i++) {
-      if (spk[i][0] != "" && spk[i][1] != undefined) {
-        titleIndex++;
-
-        if (!P_RESULT[key]) {
-          P_RESULT[key] = [];
-        }
-
-        P_RESULT[key].push({
-          titulo: spk[i][0],
-        });
-      }
-      if (spk[i][1]) {
-        P_RESULT[key][titleIndex][_translateHeader(spk[i][1])] = _getHeaderData(spk[i]);
-      }
-    }
+  for (const cidade of cidades) {
+    P_RESULT[cidade.sigla] = cidade.passeios;
   }
 
-  if (_validatePlaces()) {
-    _adaptPlaces();
-    _getPResult();
-  }
+  window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
+  window.localStorage.setItem('CURRENCY', FIRESTORE_DATA.moeda);
+
   window.addEventListener("resize", function () {
     _adjustPlacesHTML();
   });
@@ -85,9 +67,9 @@ function _loadPlacesHTML(city) {
     const box = PLACES_BOXES_JSON[_getPlacesBoxesIndex(i)];
     const title = PLACES_JSON[headers[i]]["title"];
     const code = headers[i];
-    const href = code === "map" ? city.myMaps : "#";
-    const lt = code === "map" ? linktype : "";
-    const onclick = code === "map" ? "" : `onclick="openLightbox('${_getPlacesHref(code)}')"`;
+    const href = code === "mapa" ? city.myMaps : "#";
+    const lt = code === "mapa" ? linktype : "";
+    const onclick = code === "mapa" ? "" : `onclick="openLightbox('${_getPlacesHref(code, city)}')"`;
     const icon = PLACES_JSON[headers[i]]["icon"];
     const description = PLACES_JSON[headers[i]]["description"];
     text += `
@@ -109,39 +91,6 @@ function _loadPlacesHTML(city) {
 
   div.innerHTML = text;
   _adjustPlacesHTML();
-}
-
-// ======= GETTERS =======
-function _getPResult() {
-  let keys = Object.keys(P_RESULT);
-  for (let key of keys) {
-    if (P_RESULT[key] && P_HYPERLINK[key]) {
-      let p_lenght = P_RESULT[key].length;
-      let n_lenght = P_HYPERLINK[key]["name"].length;
-      let i_lenght = P_HYPERLINK[key]["insta"].length;
-      let v_lenght = P_HYPERLINK[key]["video"].length;
-      if (p_lenght == n_lenght && p_lenght == i_lenght && p_lenght == v_lenght) {
-        for (let i = 0; i < P_RESULT[key].length; i++) {
-          P_RESULT[key][i].hyperlink = {};
-          P_RESULT[key][i].hyperlink.name = P_HYPERLINK[key]["name"][i];
-          P_RESULT[key][i].hyperlink.insta = P_HYPERLINK[key]["insta"][i];
-          P_RESULT[key][i].hyperlink.video = P_HYPERLINK[key]["video"][i];
-        }
-      } else {
-        let lenghtObj = {
-          "P_RESULT": p_lenght,
-          "P_HYPERLINK": {
-            "name": n_lenght,
-            "insta": i_lenght,
-            "video": v_lenght
-          }
-        }
-        _logger(ERROR, "It is not possible to save the hyperlinks for '" + key + "'. The number of parameters of P_RESULT and P_HYPERLINK are not equal: ")
-        console.log(lenghtObj);
-      }
-    }
-  }
-  _exportPlacesVariables();
 }
 
 function _getHeaderData(data) {
@@ -171,18 +120,14 @@ function _getLinkType() {
   }
 }
 
-function _getPlacesHref(code) {
-  if (code == "map") {
-    return MY_MAPS;
+function _getPlacesHref(code, city) {
+  if (code == "mapa") {
+    return FIREBASE_DATA.cidades[city].myMaps;
   } else return `places.html?city=${getPlacesSelectValue()}&type=${code}`;
 }
 
 
 // ======= SETTERS =======
-function _exportPlacesVariables() {
-  window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
-  window.localStorage.setItem('CURRENCY', FIRESTORE_DATA.moeda);
-}
 
 function _setPlacesURL(city) {
   let passeiosBox = document.getElementById("passeiosBox");

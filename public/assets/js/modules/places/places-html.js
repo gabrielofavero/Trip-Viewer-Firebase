@@ -32,9 +32,8 @@ function _loadP() {
   var CITY = HTML_PARAMS["city"];
   var TYPE = HTML_PARAMS["type"];
   var TYPE_TITLE = PLACES_JSON[TYPE].title;
-  var DISPLAY_TITLE = PLACES_JSON[TYPE].displayTitle;
   var TYPE_SUBTITLE = PLACES_JSON[TYPE].subtitle;
-  var PLACE = _getPlace(CITY, TYPE_TITLE, P_RESULT);
+  var PLACE = P_RESULT[CITY][TYPE];
   var CURRENCY = window.localStorage.getItem('CURRENCY');
 
   if (PLACE) {
@@ -317,20 +316,6 @@ function _getParamsHTML() {
     let key = param.split('=')[0];
     let value = param.split('=')[1];
     result[key] = value;
-  }
-  return result;
-}
-
-function _getPlace(CITY, TYPE_TITLE, P_RESULT) {
-  let result;
-  let cities = P_RESULT[CITY];
-  if (cities) {
-    for (let i = 0; i < cities.length; i++) {
-      if (cities[i]["titulo"] == TYPE_TITLE) {
-        result = cities[i];
-        break;
-      }
-    }
   }
   return result;
 }

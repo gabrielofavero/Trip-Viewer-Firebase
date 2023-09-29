@@ -1,29 +1,29 @@
 {
-    "restaurants": {
+    "restaurantes": {
         "title": "Restaurantes",
         "subtitle": "",
         "icon": "bx bx-dish",
         "description": "Lugares com refeições completas, para almoçar e jantar. Alguns são apenas noturnos. Locais Físicos."
     },
-    "snacks": {
+    "lanches": {
         "title": "Lanches",
         "subtitle": "",
         "icon": "bx bx-cookie",
         "description": "Lugares com refeições leves para café da manhã, brunch e mini refeições. Locais Físicos e Delivery."
     },
-    "nightlife": {
+    "saidas": {
         "title": "Saídas",
         "subtitle": "",
         "icon": "bx bxs-drink",
         "description": "Bares, Pubs, Baladas ou qualquer outra programação noturna com foco em bebidas ou entretenimento."
     },
-    "tourism": {
+    "turismo": {
         "title": "Turismo",
         "subtitle": "",
         "icon": "bx bx-globe",
         "description": "Pontos Turísticos diversos: Museus, Praças, Exposições, Parques, Mirantes, Peças de Teatro, entre outros."
     },
-    "shopping": {
+    "lojas": {
         "title": "Lojas",
         "subtitle": "",
         "icon": "bx bx-shopping-bag",
@@ -35,13 +35,13 @@
         "icon": "bx bx-music",
         "description": "Lineup do festival. Inclui horários, palcos e artistas, notas e um link para o Spotify do artista."
     },
-    "map": {
+    "mapa": {
         "title": "Mapa",
         "subtitle": "",
         "icon": "bx bx-map-alt",
         "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas e Turismo."
     },
-    "food": {
+    "comida": {
         "title": "Alimentação",
         "subtitle": "",
         "icon": "bx bx-dish",

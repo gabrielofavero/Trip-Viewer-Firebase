@@ -135,8 +135,6 @@ function _loadModules() {
   _loadPlacesHTML(FIRESTORE_DATA.cidades[0]);
   _loadPlacesSelect();
   CALL_SYNC.push(_loadPlaces);
-  CALL_SYNC.push(_loadPlacesData);
-  CALL_SYNC.push(_loadHyperlinks);
 
   // Gallery
   if (!FIRESTORE_DATA.modulos.galeria) {

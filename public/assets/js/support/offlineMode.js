@@ -9,16 +9,8 @@ function _generateOfflineData() {
 }
 
 function _loadOfflineMode() {
-    const SHEET_DATA_OFFLINE = _getJSON("assets/json/offline-data/SHEET_DATA.json");
-    const P_DATA_BACKUP = _getJSON("assets/json/offline-data/P_DATA.json");
-    const HYPERLINK_BACKUP = _getJSON("assets/json/offline-data/HYPERLINK.json");
     try {
-        SHEET_DATA = SHEET_DATA_OFFLINE;
-        if (FIRESTORE_DATA.modulos.passeios) {
-            P_DATA = P_DATA_BACKUP;
-            HYPERLINK = HYPERLINK_BACKUP;
-            _getPResult();
-        }
+        SHEET_DATA = _getJSON("assets/json/offline-data/SHEET_DATA.json");
     } catch (error) {
         _displayErrorMessage(error);
         throw error;

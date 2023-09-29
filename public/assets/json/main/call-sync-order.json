@@ -1,7 +1,5 @@
 [
     "_loadMainDataMulti",
-    "_loadPlacesData",
-    "_loadHyperlinks",
     "_loadMainDataSingle",
     "_loadTransportationModule",
     "_loadKeypointsIntegrated",
