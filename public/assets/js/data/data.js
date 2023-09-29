@@ -25,26 +25,19 @@ async function _getFirestoreData() {
   try {
     const host = window.location.hostname;
 
-    var url = host == "localhost" ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648" : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=yMgghUAV8TapvOAXh648";
+    var url =
+      host == "localhost"
+        ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648"
+        : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=yMgghUAV8TapvOAXh648";
 
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Request failed with status: " + response.status);
     }
     const data = await response.json();
-    return data;
+    return data[0];
   } catch (error) {
     throw error;
-  }
-}
-
-// Example usage with async/await:
-async function fetchData() {
-  try {
-    FIRESTONE_DATA = await _getFirestoreData()[0];
-    console.log(FIRESTONE_DATA);
-  } catch (error) {
-    console.error("Error: " + error);
   }
 }
 
