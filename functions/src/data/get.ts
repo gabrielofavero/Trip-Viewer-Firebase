@@ -1,7 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as interfaces from "./interfaces";
-//import * as passeios from "./passeios";
 
 // Principais Métodos de Coleta de dados
 async function _getData(path: string, response: functions.Response) {
