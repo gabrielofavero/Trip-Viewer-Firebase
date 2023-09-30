@@ -4,6 +4,7 @@
 - Migrar 'Transporte' ao Firestore;
 - Migrar Jsons de configuração ao Firestore;
 - Remover métodos descontinuados;
+- Criar tratamento para falha de conexão com o banco de dados;
 
 ## TO-DO
 - Migrar 'Hospedagem' ao Firestore;
