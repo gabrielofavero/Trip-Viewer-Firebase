@@ -7,7 +7,7 @@
                     "_loadMainDataMulti",
                     "_loadMainDataSingle",
                     "_loadTransportationModule",
-                    "\"_loadKeypointsIntegrated\"",
+                    "_loadKeypointsIntegrated",
                     "_loadScheduleCalendar",
                     "_loadKeypointsStandAlone",
                     "_loadCostModule",
