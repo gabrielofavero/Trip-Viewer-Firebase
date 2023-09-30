@@ -45,8 +45,8 @@ export interface Viagem {
         resumo: boolean;
         voos: boolean
     };
-    voosRef: Referencia;
-    voos: any;
+    transportesRef: Referencia;
+    transportes: any;
     programacoesRef: Referencia;
     programacoes: any;
     hospedagensRef: Referencia;

@@ -71,8 +71,8 @@ export const getTripData = functions.https.onRequest(async (request, response) =
     for (const viagemRef of user.viagens) {
         var viagem = await _getRefData(viagemRef, response) as unknown as interfaces.Viagem;
         
-        const voos = await _getRefData(viagem.voosRef, response);
-        viagem.voos = voos;
+        const transportes = await _getRefData(viagem.transportesRef, response);
+        viagem.transportes = transportes;
         
         const programacoes = await _getRefData(viagem.programacoesRef, response);
         viagem.programacoes = programacoes;
