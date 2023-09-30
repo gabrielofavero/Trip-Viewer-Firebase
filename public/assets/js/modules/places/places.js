@@ -4,7 +4,6 @@ var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var CURRENT_PLACES_SIZE = 0;
 
-const CITIES_INDEX = _getJSON("assets/json/modules/places/cities.json");
 const CURRENCY_JSON = _getJSON("assets/json/modules/places/currency.json");
 const PLACES_JSON = _getJSON("assets/json/modules/places/places.json");
 const PLACES_SETTINGS_JSON = _getJSON("assets/json/modules/places/settings.json");

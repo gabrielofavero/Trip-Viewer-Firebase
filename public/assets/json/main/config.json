@@ -87,7 +87,7 @@
         "introText": "",
         "googleMaps": "https://www.google.com/maps/d/u/0/embed?mid=1M8ctdqWGonk_aWpcZ3coZgKuJoMJrGM&ehbc=2E312F",
         "about6": "",
-        "flights": {
+        "transportation": {
             "toDestination": [],
             "fromDestination": []
         }
@@ -117,7 +117,7 @@
         "about": false,
         "keypoints": true,
         "cities": false,
-        "flights": true,
+        "transportation": true,
         "stay": true,
         "costs": false,
         "sumUp": false,

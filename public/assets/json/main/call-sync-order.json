@@ -6,6 +6,6 @@
     "_loadScheduleCalendar",
     "_loadKeypointsStandAlone",
     "_loadCostModule",
-    "_loadFlightsModule",
+    "_loadTransportationModule",
     "_loadPlaces"
 ]
