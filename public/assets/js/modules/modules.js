@@ -12,11 +12,6 @@ function _start() {
   // Modules
   _loadModules();
 
-  // Ranges
-  _loadMainRanges();
-  _loadPlacesRanges();
-  _loadHyperlinkRanges();
-
   // Visibility - After Load
   _adjustButtonsPosition();
 }
@@ -97,13 +92,13 @@ function _loadModules() {
     document.getElementById("cities").style.display = "none";
   }
 
-  // Flights
-  if (FIRESTORE_DATA.modulos.voos) {
-    CALL_SYNC.push(_loadFlightsModule);
+  // Transportation
+  if (FIRESTORE_DATA.modulos.transportes) {
+    CALL_SYNC.push(_loadTransportationModule);
   } else {
-    document.getElementById("flightsNav").innerHTML = "";
-    document.getElementById("flights").innerHTML = "";
-    document.getElementById("flights").style.display = "none";
+    document.getElementById("transportationNav").innerHTML = "";
+    document.getElementById("transportation").innerHTML = "";
+    document.getElementById("transportation").style.display = "none";
   }
 
   // Stay
