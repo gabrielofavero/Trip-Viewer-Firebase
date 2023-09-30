@@ -116,11 +116,6 @@ function _convertFirestoreDate(timestamp) {
   return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
 }
 
-// ======= CHECKERS =======
-function _hasValue(val) {
-  return (val != undefined && val != null && val != "");
-}
-
 function _sortFunctionArray(functionArray, orderArray) {
   functionArray.sort((a, b) => {
     const indexA = orderArray.indexOf(a.name);
@@ -129,6 +124,7 @@ function _sortFunctionArray(functionArray, orderArray) {
   });
 }
 
+// ======= CHECKERS =======
 function _isMoney(excelMoney) {
   return excelMoney.split("$").length > 1
 }

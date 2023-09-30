@@ -43,14 +43,9 @@ function _loadKeypointsIntegrated() {
       document.getElementById(`dado${i+1}`).innerHTML = _getKeypoint(KEYPOINTS_JSON[i]);
   }
 
-  // Auto Generated
-  _loadTransportationFromData();
-
   // Data Update
   KEYPOINTS_JSON[1].titulo = TRANSPORTATION_JSON["defaultTransportation"]["default"]["text"];
   KEYPOINTS_JSON[1].icone = TRANSPORTATION_JSON["defaultTransportation"]["default"]["icon"];
-  document.getElementById("sobre2").innerHTML = "<strong>" + TRANSPORTATION_JSON["defaultTransportation"]["ida"]["text"] + " Ida:</strong><span></span>";
-  document.getElementById("sobre4").innerHTML = "<strong>" + TRANSPORTATION_JSON["defaultTransportation"]["volta"]["text"] + " Volta:</strong><span></span>";
 }
 
 function _getKeypoint(dado) {
