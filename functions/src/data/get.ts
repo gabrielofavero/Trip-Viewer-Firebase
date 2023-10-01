@@ -61,7 +61,7 @@ function _checkParam(param: any, name: string, response: functions.Response) {
 }
 
 
-// Função exportada para o Firebase
+// Exporta dados da viagem para o app
 export const getTripData = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
     const user = await _getUsuario(request, response);
@@ -95,6 +95,18 @@ export const getTripData = functions.https.onRequest(async (request, response) =
 
     response.send(viagens)
 });
+
+// Exporta dados gerais para o app
+export const getConfig = functions.https.onRequest(async (request, response) => { 
+    response.set("Access-Control-Allow-Origin", "*");
+
+    const collection = admin.firestore().collection('config');
+    const snapshot = await collection.get();
+    const config = snapshot.docs.map(doc => doc.data());
+
+    response.send(config);
+});
+
 
 // Backup de todo o Firestore
 export const getBackup = functions.https.onRequest(async (request, response) => {
