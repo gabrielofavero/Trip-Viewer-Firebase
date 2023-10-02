@@ -1,9 +1,8 @@
 // ======= Costs JS =======
 
-const COSTS = _getJSON("assets/json/modules/information/costs.json");
-
 // ======= LOADERS =======
 function _loadCostModule() {
+    const COSTS = CONFIG.information.costs;
     let dado1 = _removeComma(SHEET_TOTAL);
     let dado2 = _removeComma(_getFromArray("valor", "passagem", SHEET_COSTS));
     let dado3 = _removeComma(_getFromArray("valor", "hospedagem", SHEET_COSTS));

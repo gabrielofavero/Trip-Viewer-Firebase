@@ -7,7 +7,6 @@
 */
 
 var START_LIST = [];
-const CALL_SYNC_ORDER = _getJSON('assets/json/main/call-sync-order.json');
 
 document.addEventListener('DOMContentLoaded', function () {
   try {
@@ -220,13 +219,15 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     });
 
-    _getFirestoreData().then((data) => {
-      FIRESTORE_DATA = data;
-      console.log('Dados do Firestore Database carregados com sucesso'); 
+    Promise.all([_getConfig(), _getFirestoreData()])
+    .then(([configData, firestoreData]) => {
+      CONFIG = configData;
+      FIRESTORE_DATA = firestoreData;
+      console.log('Dados do Firestore Database carregados com sucesso');
       _start();
       _mainLoad();
       $('body').css('overflow', 'auto');
-    });
+    })
 
   } catch (error) {
     _displayErrorMessage(error);
@@ -235,11 +236,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 async function _mainLoad() {
-  _loadOfflineMode();
-
   try {
     if (CALL_SYNC.length > 0) {
-      _sortFunctionArray(CALL_SYNC, CALL_SYNC_ORDER);
+      _sortFunctionArray(CALL_SYNC, CONFIG.callSyncOrder.data);
       for (let _function of CALL_SYNC) {
         _function();
       }

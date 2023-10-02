@@ -1,5 +1,5 @@
-[
-    {
+{
+    "callSyncOrder": {
         "data": [
             "_loadMainDataMulti",
             "_loadMainDataSingle",
@@ -12,7 +12,7 @@
             "_loadPlaces"
         ]
     },
-    {
+    "information": {
         "costs": [
             {
                 "texto": "",
@@ -58,7 +58,7 @@
             }
         ]
     },
-    {
+    "places": {
         "boxes": [
             {
                 "color": "blue",
@@ -199,7 +199,7 @@
             }
         }
     },
-    {
+    "transportes": {
         "carro": {
             "99": {
                 "displayText": "99",
@@ -259,4 +259,4 @@
             }
         }
     }
-]
+}

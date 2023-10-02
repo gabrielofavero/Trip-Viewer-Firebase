@@ -1,45 +1,38 @@
 // ======= Data JS =======
 
-const CONFIG = _getJSON("assets/json/main/config.json");
 var CALL_SYNC = [];
 var FIRESTORE_DATA;
+var CONFIG;
 
 var SHEET_DATA;
 var P_DATA;
 var HYPERLINK;
 
 // ======= GETTERS =======
-function _getJSON(path) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', path, false);
-  xhr.send();
-
-  if (xhr.status === 200) {
-    return JSON.parse(xhr.responseText);
-  } else {
-    _logger(ERROR, "Failed to load JSON file in path: '" + path, "'")
-  }
-}
-
 async function _getFirestoreData() {
-  try {
-    const host = window.location.hostname;
+  const host = window.location.hostname;
+  var url =
+    host == "localhost"
+      ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648"
+      : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=yMgghUAV8TapvOAXh648";
 
-    var url =
-      host == "localhost"
-        ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648"
-        : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=yMgghUAV8TapvOAXh648";
-
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error("Request failed with status: " + response.status);
-    }
-    const data = await response.json();
-    return data[0];
-  } catch (error) {
-    throw error;
-  }
+  const response = await fetch(url);
+  const data = await response.json();
+  return data[0]; // Zero pois é a primeira viagem para esse teste. Adaptar posteriormente por ID
 }
+
+async function _getConfig() {
+  const host = window.location.hostname;
+  var url =
+    host == "localhost"
+      ? "http://localhost:5001/trip-viewer-tcc/us-central1/getConfig"
+      : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getConfig";
+
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
 
 function _getFromArray(what, of, array) {
   let result = "";

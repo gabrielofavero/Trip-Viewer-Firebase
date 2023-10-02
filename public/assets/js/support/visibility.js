@@ -4,8 +4,6 @@ const INDEX = "index";
 const PASSEIO = "places";
 var DARK_MODE;
 
-const COLORS = _getJSON("assets/json/support/colors.json");
-
 const THEME_COLOR_DARK = "#8a7171";
 const THEME_COLOR_LIGHT = "#AF8F8E";
 

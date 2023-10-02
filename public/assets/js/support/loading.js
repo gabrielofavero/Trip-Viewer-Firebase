@@ -1,6 +1,4 @@
 // ======= Loading JS =======
-
-const ERROR_JSON = _getJSON("assets/json/support/error.json");
 var ERROR_MODE = false;
 
 // ======= LOADING SCREEN =======
@@ -36,10 +34,10 @@ function _displayErrorMessage(errorMessage = "") {
     const errorText = document.createElement('div');
     errorText.className = 'error-text';
     const errorTitle = document.createElement('h2');
-    errorTitle.innerText = ERROR_JSON.title;
+    errorTitle.innerText = "Erro ao carregar a página 🙁";
     errorText.appendChild(errorTitle);
     const errorDescription = document.createElement('p');
-    errorDescription.innerHTML = ERROR_JSON.description;
+    errorDescription.innerHTML = "Não foi possível carregar a página. <a href=\"mailto:example@example.com\">Contate o administrador</a> para solucionar o problema.";
     errorText.appendChild(errorDescription);
 
     const stackTrace = (new Error()).stack;

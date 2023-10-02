@@ -25,7 +25,6 @@ async function _getData(path: string, response: functions.Response) {
 }
 
 async function _getRefData(refObject: interfaces.Referencia, response: functions.Response) {
-
     if (
         !refObject ||
         !refObject._firestore ||
@@ -100,9 +99,17 @@ export const getTripData = functions.https.onRequest(async (request, response) =
 export const getConfig = functions.https.onRequest(async (request, response) => { 
     response.set("Access-Control-Allow-Origin", "*");
 
-    const collection = admin.firestore().collection('config');
-    const snapshot = await collection.get();
-    const config = snapshot.docs.map(doc => doc.data());
+    const callSyncOrder = await _getData('config/call-sync-order', response);
+    const information = await _getData('config/information', response);
+    const places = await _getData('config/places', response);
+    const transportes = await _getData('config/transportes', response);
+
+    const config = {
+        callSyncOrder: callSyncOrder,
+        information: information,
+        places: places,
+        transportes: transportes
+    };
 
     response.send(config);
 });

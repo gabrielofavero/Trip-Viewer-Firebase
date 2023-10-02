@@ -25,9 +25,9 @@ function _loadP() {
   const VIDEO = "video";
 
   var P_RESULT = JSON.parse(window.localStorage.getItem('P_RESULT'));
-  const CURRENCY_JSON = _getJSON("assets/json/modules/places/currency.json");
-  const PLACES_JSON = _getJSON("assets/json/modules/places/places.json");
-  const PLACES_SETTINGS_JSON = _getJSON("assets/json/modules/places/settings.json");
+  const CURRENCY_JSON = JSON.parse(window.localStorage.getItem('CURRENCY_JSON'));
+  const PLACES_JSON = JSON.parse(window.localStorage.getItem('PLACES_JSON'));
+  const PLACES_SETTINGS_JSON = JSON.parse(window.localStorage.getItem('PLACES_SETTINGS_JSON'));
   var HTML_PARAMS = _getParamsHTML();
   var CITY = HTML_PARAMS["city"];
   var TYPE = HTML_PARAMS["type"];

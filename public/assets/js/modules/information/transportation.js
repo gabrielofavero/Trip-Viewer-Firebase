@@ -3,10 +3,11 @@
 // ======= LOADERS =======
 function _loadTransportationModule() {
   let transportation = {
-    title: _getTransportationTitle(FIRESTORE_DATA.transportes.tipos.transporte),
+    title: _getTransportationTitle(FIRESTORE_DATA.transportes.transportes),
     data: [],
   };
 
+  _loadTransportationLogoBoxes();
   for (let i = 1; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
     const title = FIRESTORE_DATA.transportes.trajetos[i];
     const periodo = _getPeriodo(FIRESTORE_DATA.transportes.datas[i]);
@@ -19,8 +20,45 @@ function _loadTransportationModule() {
     }
     transportation.data.push(info)
   }
-
   _loadTransportationHTML(transportation);
+}
+
+function _loadTransportationLogoBoxes() {
+  const logoBoxes = document.getElementById('logoBoxes');
+  let innerHTML = "";
+  let group = [];
+
+
+  const empresas = FIRESTORE_DATA.transportes.empresas;
+  const transportes = FIRESTORE_DATA.transportes.transportes;
+
+  for (let i = 0; i < empresas.length; i++) {
+    let empresa = empresas[i];
+    let link;
+    let img;
+    let generic = "";
+
+    if (CONFIG.transportes[transportes[i]] && CONFIG.transportes[transportes[i]][empresas[i]]) {
+      link = CONFIG.transportes[transportes[i]][empresa].link;
+      img = `assets/img/transportation/${transportes[i]}/${empresas[i]}.png`
+    } else {
+      link = `https://www.google.com/search?q=${empresa.toLowerCase().replace(" ", "+")}`;
+      img = `assets/img/transportation/generico/${transportes[i]}.png`
+      generic = "generic";
+    }
+
+    const text = `<a src="${img}" href="${link}" target="_blank"><img class="transportationBox ${generic}"></a>`
+
+    group.push(text);
+
+    if (group.length == 2 || i == empresas.length - 1) {
+      innerHTML += `<div class="logoBox">${group.join("")}</div>`;
+      group = [];
+    }
+  }
+
+  logoBoxes.innerHTML = innerHTML;
+
 }
 
 function _loadTransportationHTML(transportation) {
@@ -52,12 +90,14 @@ function _loadTransportationHTML(transportation) {
 
 // ======= GETTERS =======
 function _getTransportationTitle(transportes) {
+  const categorias = CONFIG.transportes.categorias;
   let result = "";
   for (const transporte of transportes) {
+    const text = categorias[transporte];
     if (!result) {
-      result = transporte;
+      result = text;
     } else {
-      if (result != transporte) {
+      if (result != text) {
         result = "Transporte";
         break;
       }
