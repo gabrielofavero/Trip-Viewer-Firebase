@@ -4,6 +4,7 @@
 function _loadTransportationModule() {
   let transportation = {
     title: _getTransportationTitle(FIRESTORE_DATA.transportes.transportes),
+    subtitle: _getTransportationSubtitle(FIRESTORE_DATA.transportes.reservas),
     data: [],
   };
 
@@ -74,9 +75,11 @@ function _loadTransportationLogoBoxes() {
 
 function _loadTransportationHTML(transportation) {
   const title = transportation.title;
+  const subtitle = transportation.subtitle;
   const data = transportation.data;
 
   const tt = document.getElementById("transportationTitle");
+  const ts = document.getElementById("transportationSubtitle");
   const ti1 = document.getElementById("transportationItems1");
   const ti2 = document.getElementById("transportationItems2");
 
@@ -95,6 +98,7 @@ function _loadTransportationHTML(transportation) {
   }
 
   tt.innerHTML = title;
+  ts.innerHTML = subtitle;
   ti1.innerHTML = innerHTML1;
   ti2.innerHTML = innerHTML2;
 
@@ -177,5 +181,18 @@ function _getTitleIcon(title) {
       return "bx-car";
     case "Voo":
       return "bxs-plane-alt";
+  }
+}
+
+function _getTransportationSubtitle(reservas){
+  const unique = [...new Set(reservas)];
+
+  switch (unique.length) {
+    case 0:
+      return "";
+    case 1:
+      return "Reserva " + unique[0];
+    default:
+      return "Reservas " + unique.join(", ");
   }
 }
