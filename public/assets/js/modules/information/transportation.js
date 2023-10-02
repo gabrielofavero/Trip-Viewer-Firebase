@@ -7,6 +7,8 @@ function _loadTransportationModule() {
     data: [],
   };
 
+
+
   _loadTransportationLogoBoxes();
   for (let i = 1; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
     const title = FIRESTORE_DATA.transportes.trajetos[i];
@@ -26,6 +28,7 @@ function _loadTransportationModule() {
 function _loadTransportationLogoBoxes() {
   const logoBoxes = document.getElementById('logoBoxes');
   let innerHTML = "";
+  let added = [];
   let group = [];
 
 
@@ -34,6 +37,11 @@ function _loadTransportationLogoBoxes() {
 
   for (let i = 0; i < empresas.length; i++) {
     let empresa = empresas[i];
+
+    if (added.includes(empresa)) continue;
+
+    added.push(empresa);
+
     let link;
     let img;
     let generic = "";
@@ -47,9 +55,12 @@ function _loadTransportationLogoBoxes() {
       generic = "generic";
     }
 
-    const text = `<a src="${img}" href="${link}" target="_blank"><img class="transportationBox ${generic}"></a>`
+    const text = `<a href="${link}" target="_blank"><img class="transportationBox" src="${img}"></a>`
 
-    group.push(text);
+    // checks if element already exists in group array
+    if (!group.includes(text)) {
+      group.push(text);
+    }
 
     if (group.length == 2 || i == empresas.length - 1) {
       innerHTML += `<div class="logoBox">${group.join("")}</div>`;
@@ -76,16 +87,21 @@ function _loadTransportationHTML(transportation) {
   let innerHTML2 = "";
 
   for (let i = 0; i < size1; i++) {
-    innerHTML1 += `<li><i class="bi bi-chevron-right"></i><strong>${data[i].title}:</strong><span>${data[i].text}</span></li>`;
+    innerHTML1 += `<li><i class="bi bi-chevron-right"></i><div><strong>${data[i].title}:</strong><span>${data[i].text}</span></div></li>`;
   }
 
   for (let i = 0; i < size2; i++) {
-    innerHTML2 += `<li><i class="bi bi-chevron-right"></i><strong>${data[i + size1].title}:</strong><span>${data[i + size1].text}</span></li>`;
+    innerHTML2 += `<li><i class="bi bi-chevron-right"></i><div><strong>${data[i + size1].title}:</strong><span>${data[i + size1].text}</span></div></li>`;
   }
 
   tt.innerHTML = title;
   ti1.innerHTML = innerHTML1;
   ti2.innerHTML = innerHTML2;
+
+  if (title != "Transporte") {
+    const nav = document.getElementById("transportationNav");
+    nav.innerHTML = nav.innerHTML.replace("Transporte", title).replace("bx-rocket", _getTitleIcon(title));
+  }
 }
 
 // ======= GETTERS =======
@@ -145,5 +161,21 @@ function _getPontos(pontos) {
 
   if (partida && chegada) {
     return `Partida em ${partida} e chegada em ${chegada}.`;
+  }
+}
+
+function _getTitleIcon(title) {
+  if (!title) {
+    title = document.getElementById('transportationNav').innerText;
+  }
+  switch (title) {
+    case "Transporte":
+      return "bx-rocket";
+    case "Ônibus":
+      return "bx-bus";
+    case "Carro":
+      return "bx-car";
+    case "Voo":
+      return "bxs-plane-alt";
   }
 }
