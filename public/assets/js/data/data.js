@@ -33,39 +33,6 @@ async function _getConfig() {
   return data;
 }
 
-
-function _getFromArray(what, of, array) {
-  let result = "";
-  let findIndex;
-  for (let i = 0; i < array[0].length; i++) {
-    if (_formatTxt(array[0][i]).includes(_formatTxt(what))) {
-      findIndex = i;
-      break;
-    }
-  }
-  if (findIndex) {
-    for (let i = 1; i < array.length; i++) {
-      if (_formatTxt(array[i][0]) == _formatTxt(of)) {
-        result = array[i][findIndex];
-        break;
-      }
-    }
-  }
-  return result;
-}
-
-function _getCountForArrayValue(array, value) {
-  let count = 0;
-
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === value) {
-      count++;
-    }
-  }
-
-  return count;
-}
-
 // ======= CONVERTERS =======
 function _formatTxt(text) {
   // áBç -> abc
@@ -81,30 +48,6 @@ function _removeComma(val) {
   return val.split(",")[0];
 }
 
-function _mergeArrays(arrayOfArrays) {
-  let result = arrayOfArrays[0];
-  for (let i = 1; i < arrayOfArrays.length; i++) {
-    result = result.concat(arrayOfArrays[i]);
-  }
-  return result;
-}
-
-function _moneyToFloat(excelMoney) {
-  try {
-    let adaptedMoney = excelMoney.trim().replace(" ", "").replace(" ", "");
-    if (adaptedMoney == `${FIRESTORE_DATA.moeda}-`) return 0;
-    moneyArray = adaptedMoney.split(FIRESTORE_DATA.moeda);
-    if (moneyArray[0].trim() == "-") {
-      return -parseFloat(moneyArray[1].trim().replace(".", "").replace(",", "."));
-    } else {
-      return parseFloat(moneyArray[1].trim().replace(".", "").replace(",", "."));
-    }
-  } catch (e) {
-    _logger(WARN, "Valor inválido encontrado: '" + excelMoney + "'. Retornando 0");
-    return 0;
-  }
-}
-
 function _convertFirestoreDate(timestamp) {
   return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
 }
@@ -115,9 +58,4 @@ function _sortFunctionArray(functionArray, orderArray) {
     const indexB = orderArray.indexOf(b.name);
     return indexA - indexB;
   });
-}
-
-// ======= CHECKERS =======
-function _isMoney(excelMoney) {
-  return excelMoney.split("$").length > 1
 }

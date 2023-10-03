@@ -36,7 +36,3 @@ function _isOnMobileMode() {
 function _isIndexHTML() {
     return _getHTMLpage() === "index";
 }
-
-function _isPasseioHTML() {
-    return _getHTMLpage() === "places";
-}

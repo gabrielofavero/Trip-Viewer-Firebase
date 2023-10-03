@@ -65,7 +65,6 @@ function _reloadModalCalendar(prog) {
     }, 300);
 }
 
-
 // ======= GETTERS =======
 function _getScheduleCalendarByDate(stringDayMonth) {
     if (stringDayMonth) {
@@ -115,121 +114,7 @@ function _setModalCalendarInnerHTML(element, prog) {
     }
 }
 
-// ======= CHECKERS =======
-function _isScheduleCalendarHeader(array) {
-    let result = false;
-    if (array.length == 1) {
-        let value = array[0];
-        let div1 = value.split(":");
-        let div2 = [];
-        try {
-            div2 = div1[1].split(",");
-        } catch (error) { }
-        if (div1.length == 2 && div2.length == 2) {
-            result = true;
-        }
-    }
-    return result;
-}
-
 // ======= CONVERTERS =======
-function _returnIfNotUndefined(value) {
-    if (value != undefined) {
-        return value;
-    } else return "";
-}
-
-function _titleToDateObject(title) {
-    let month;
-    let result = {
-        "day": 0,
-        "month": 0
-    };
-    let div1 = title.split(", ")[1].split(" de ");
-
-    switch (div1[1]) {
-        case "Janeiro":
-            month = 1;
-            break;
-        case "Fevereiro":
-            month = 2;
-            break;
-        case "Março":
-            month = 3;
-            break;
-        case "Abril":
-            month = 4;
-            break;
-        case "Maio":
-            month = 5;
-            break;
-        case "Junho":
-            month = 6;
-            break;
-        case "Julho":
-            month = 7;
-            break;
-        case "Agosto":
-            month = 8;
-            break;
-        case "Setembro":
-            month = 9;
-            break;
-        case "Outubro":
-            month = 10;
-            break;
-        case "Novembro":
-            month = 11;
-            break;
-        case "Dezembro":
-            month = 12;
-    }
-
-    result["day"] = div1[0];
-    result["month"] = month;
-
-    return result;
-}
-
-function _dateToTitle(date) {
-    const day = date.getDate();
-    const month = numberToMonth(date.getMonth() + 1);
-    const year = date.getFullYear();
-    return `${day} de ${month} de ${year}`;
-}
-
-function numberToMonth(number) {
-    switch (number) {
-        case 1:
-            return "Janeiro";
-        case 2:
-            return "Fevereiro";
-        case 3:
-            return "Março";
-        case 4:
-            return "Abril";
-        case 5:
-            return "Maio";
-        case 6:
-            return "Junho";
-        case 7:
-            return "Julho";
-        case 8:
-            return "Agosto";
-        case 9:
-            return "Setembro";
-        case 10:
-            return "Outubro";
-        case 11:
-            return "Novembro";
-        case 12:
-            return "Dezembro";
-        default:
-            _logger(WARN, "Mês não encontrado: " + number + ".")
-            return "?";
-    }
-}
-
 function _adaptModalCalendarInnerHTML(manha, tarde, noite) {
     let innerM = manha.innerHTML;
     let innerT = tarde.innerHTML;

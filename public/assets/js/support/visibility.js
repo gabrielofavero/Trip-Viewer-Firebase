@@ -168,10 +168,10 @@ function _adjustButtonsPosition() {
      }
 }
 
-function disableScroll() {
+function _disableScroll() {
      document.body.style.overflow = "hidden";
 }
 
-function enableScroll() {
+function _enableScroll() {
      document.body.style.overflow = "auto";
 }

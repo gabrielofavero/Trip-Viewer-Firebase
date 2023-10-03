@@ -2,7 +2,7 @@
 
 var savedScrollPosition = 0;
 
-function openLightbox(link) {
+function _openLightbox(link) {
   _startLoadingScreen();
   savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
   var lightboxIframe = document.getElementById('lightbox-iframe');
@@ -15,19 +15,19 @@ function openLightbox(link) {
     document.getElementById('menu').style.display = 'none';
     document.getElementById('navbar').style.display = 'none';
     _stopLoadingScreen();
-    disableScroll();
+    _disableScroll();
   };
   lightboxIframe.src = link;
 }
 
-function closeLightbox() {
+function _closeLightbox() {
   document.getElementById('lightbox').style.display = 'none';
   document.getElementById('night-mode').style.display = 'block';
   document.getElementById('menu').style.display = 'block';
   document.getElementById('navbar').style.display = 'block';
   document.getElementById('share').style.display = 'block';
   document.getElementById('config').style.display = 'block';
-  enableScroll();
+  _enableScroll();
   window.scrollTo({
     top: savedScrollPosition,
     behavior: 'instant'

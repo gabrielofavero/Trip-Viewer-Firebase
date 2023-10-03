@@ -29,29 +29,9 @@ function _logger(type = "", message = "Hello World!") {
     }
 }
 
-function _logSheetsApiError(err, file) {
-    let errorMsg = "";
-    let enableLogObject = false;
-    try {
-        errorMsg = ": " + err.result.error.message;
-    } catch (e) {
-        try {
-            errorMsg = ": " + err.status;
-            enableLogObject = true;
-        } catch (e2) {
-            enableLogObject = true;
-        }
-    }
-    _logger(ERROR, "Error trying to collect '" + file + "' From Google Sheets API: " + errorMsg);
-    if (enableLogObject) {
-        console.log(err)
-    }
-}
-
 // ======= GETTERS =======
 function _getCallerFile() {
     var originalFunc = Error.prepareStackTrace;
-
     var callerfile;
     try {
         var err = new Error();

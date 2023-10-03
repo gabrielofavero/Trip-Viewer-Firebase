@@ -66,7 +66,7 @@ function _loadPlacesHTML(city) {
     const code = headers[i];
     const href = code === "mapa" ? city.myMaps : "#";
     const lt = code === "mapa" ? linktype : "";
-    const onclick = code === "mapa" ? "" : `onclick="openLightbox('${_getPlacesHref(code, city)}')"`;
+    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getPlacesHref(code, city)}')"`;
     const icon = CONFIG.places.places[headers[i]]["icon"];
     const description = CONFIG.places.places[headers[i]]["description"];
     text += `
@@ -88,14 +88,6 @@ function _loadPlacesHTML(city) {
 
   div.innerHTML = text;
   _adjustPlacesHTML();
-}
-
-function _getHeaderData(data) {
-  let result = [];
-  for (let i = 2; i < data.length; i++) {
-    result.push(data[i]);
-  }
-  return result;
 }
 
 function getPlacesSelectValue() {
@@ -125,25 +117,6 @@ function _getPlacesHref(code, city) {
 
 
 // ======= SETTERS =======
-
-function _setPlacesURL(city) {
-  let passeiosBox = document.getElementById("passeiosBox");
-  for (let i = 0; i < passeiosBox.children.length; i++) {
-    let linkDiv = document.getElementById(`ba${i + 1}`);
-    let link = linkDiv.href;
-    let linkSplit = link.split("?");
-    let url = linkSplit[0];
-    let params = linkSplit[1];
-    let otherParams = params.split("&");
-    let newParams = `city=${city}`;
-    for (let j = 1; j < otherParams.length; j++) {
-      newParams += `&${otherParams[j]}`;
-    }
-    link = url + "?" + newParams;
-    linkDiv.href = link;
-  }
-}
-
 function _adjustPlacesHTML() {
   let heights = [];
   let maxHeight = 0;
@@ -159,62 +132,4 @@ function _adjustPlacesHTML() {
   for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
     document.getElementById(`b${i}d`).style.height = `${maxHeight}px`;
   }
-}
-
-// ======= CONVERTERS =======
-function _adaptPlaces() {
-  for (let i = 0; i < P_RESULT.length; i++) {
-    for (let j = 0; j < P_RESULT[i].nome.length; j++) {
-      if (P_RESULT[i].nota[j] == "-100%") {
-        P_RESULT[i].nota[j] = "";
-      }
-      if (P_RESULT[i].visitado && P_RESULT[i].visitado[j] == undefined) {
-        P_RESULT[i].visitado[j] = "";
-      }
-    }
-    if (P_RESULT[i].nota.length > P_RESULT[i].nome.length) {
-      P_RESULT[i].nota.splice(P_RESULT[i].nome.length, P_RESULT[i].nota.length - P_RESULT[i].nome.length);
-    }
-  }
-}
-
-function _translateHeader(header) {
-  // $ -> Value  
-  let result = _formatTxt(header);
-
-  for (let key in CONFIG.places.settings["translations"]) {
-    if (header == CONFIG.places.settings["translations"][key]) {
-      result = key;
-      break;
-    }
-  }
-
-  return result;
-}
-
-// ======= CHECKERS =======
-function _validatePlaces() {
-  let required = CONFIG.places.settings["required"];
-  for (let i = 0; i < P_RESULT.length; i++) {
-    let titulo = P_RESULT[i].titulo;
-    let keys = Object.keys(P_RESULT[i]);
-    let exists = false;
-    for (let j = 0; j < required.length; j++) {
-      if (keys.includes(_formatTxt(required[j]))) {
-        exists = true;
-        break;
-      }
-    }
-    if (!exists) {
-      _logger(ERROR, `${titulo} does not contain the required parameters`);
-      return false;
-    }
-  }
-  return true;
-
-}
-
-function _areRequiredParamsPresent(text) {
-  let required = CONFIG.places.settings["required"];
-  return required.indexOf(text) > -1;
 }

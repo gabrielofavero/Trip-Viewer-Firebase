@@ -6,7 +6,7 @@ function _startLoadingScreen() {
   const preloader = document.getElementById('preloader');
   if (preloader) {
     preloader.style.display = 'block';
-    disableScroll();
+    _disableScroll();
   }
 }
 
@@ -15,7 +15,7 @@ function _stopLoadingScreen() {
     const preloader = document.getElementById('preloader');
     if (preloader) {
       preloader.style.display = 'none';
-      enableScroll();
+      _enableScroll();
     }
   } else {
     _logger(WARN, 'Cannot stop loading in error mode');
@@ -28,7 +28,7 @@ function _displayErrorMessage(errorMessage = "") {
 
   if (preloader) {
     ERROR_MODE = true;
-    disableScroll();
+    _disableScroll();
     const errorContainer = document.createElement('div');
     errorContainer.className = 'error-container';
     const errorText = document.createElement('div');
@@ -62,7 +62,6 @@ function _displayErrorMessage(errorMessage = "") {
     _logger(WARN, 'No preloader element found');
   }
 }
-
 
 function _overrideError() {
   if (ERROR_MODE) {

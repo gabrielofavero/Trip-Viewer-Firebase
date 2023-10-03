@@ -146,43 +146,11 @@ function _loadExitButton() {
   let close = document.getElementById("closeButtonIOS");
   close.style.display = "block";
   close.onclick = function () {
-    window.parent.closeLightbox();
+    window.parent._closeLightbox();
   };
 }
 
 // ======= GETTERS =======
-function _getUrlParameter(item) {
-  let parameters = window.location.href.split("?")[1].split("&");
-  for (let i = 0; i < parameters.length; i++) {
-    if (parameters[i].split("=")[0] == item) {
-      return parameters[i].split("=")[1];
-    }
-  }
-}
-
-function _getCityData(P_RESULTS, PARAM_CITY, PARAM_TYPE) {
-  let result = {
-    "city": "",
-    "type": "",
-    "data": {},
-  };
-  let keys = Object.keys(P_RESULTS);
-
-  for (let i = 0; i < keys.length; i++) {
-    if (P_RESULTS[keys[i]]["Código"] == PARAM_CITY) {
-      result.city = keys[i];
-      let cityKeys = Object.keys(P_RESULTS[keys[i]]);
-      for (let j = 0; j < cityKeys.length; j++) {
-        if (_codifyTitle(cityKeys[j]) == PARAM_TYPE) {
-          result.type = cityKeys[j];
-          result.data = P_RESULTS[keys[i]][cityKeys[j]];
-        }
-      }
-    }
-  }
-  return result;
-}
-
 function _getCost(valor, MOEDA_OBJ) {
   let result;
   let defaultResult;
@@ -438,10 +406,6 @@ function _setInnerHTML(result) {
 }
 
 // ======= FORMATTERS =======
-function _codifyTitle(title) {
-  return title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s/g, "-").replace(/\//g, "-").toLowerCase();
-}
-
 function _AdaptNulls(text) {
   if (!text) {
     return "";
@@ -468,16 +432,6 @@ function _replace(text, index, what) {
 }
 
 // ======= CHECKER =======
-function _isScore(allValues) {
-  let scoreValues = ["!", "1", "2", "3", "4"];
-  for (let i = 0; i < allValues.length; i++) {
-    if (!scoreValues.includes(allValues[i])) {
-      return false;
-    }
-  }
-  return true;
-}
-
 function _newExists(P_NOVO) {
   let result = false;
   if (P_NOVO && P_NOVO.length > 0) {
