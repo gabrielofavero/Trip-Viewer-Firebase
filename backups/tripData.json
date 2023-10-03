@@ -1304,6 +1304,7 @@
             },
             "_converter": {}
         },
+        "quantidadePessoas": 7,
         "transportes": {
             "trajetos": [
                 "BH → SP",
