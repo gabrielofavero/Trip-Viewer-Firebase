@@ -4,14 +4,12 @@
         "docs": [
             {
                 "data": [
-                    "_loadMainDataMulti",
-                    "_loadMainDataSingle",
                     "_loadTransportationModule",
+                    "_loadStayModule",
                     "_loadKeypointsIntegrated",
                     "_loadScheduleCalendar",
                     "_loadKeypointsStandAlone",
                     "_loadCostModule",
-                    "_loadTransportationModule",
                     "_loadPlaces"
                 ]
             },
@@ -260,6 +258,11 @@
                         "displayText": "Cometa",
                         "link": "https://www.viacaocometa.com.br/"
                     }
+                },
+                "categorias": {
+                    "carro": "Carro",
+                    "voo": "Voo",
+                    "onibus": "Ônibus"
                 }
             }
         ]
@@ -297,7 +300,15 @@
                         ]
                     },
                     "_converter": {}
-                }
+                },
+                "links": [
+                    "https://www.tripadvisor.com.br/Hotel_Review-g45963-d91904-Reviews-New_York_New_York_Hotel_Casino-Las_Vegas_Nevada.html",
+                    "https://www.tripadvisor.com.br/Hotel_Review-g45963-d217598-Reviews-Desert_Rose_Resort-Las_Vegas_Nevada.html"
+                ],
+                "codigos": [
+                    "nyny",
+                    "desertroseresort"
+                ]
             }
         ]
     },
@@ -1832,14 +1843,6 @@
                         }
                     }
                 ],
-                "reservas": [
-                    "XPSQSE",
-                    "XPSQSE",
-                    "XPSQSE",
-                    "XPSQSE",
-                    "XPSQSE",
-                    "XPSQSE"
-                ],
                 "pontos": [
                     {
                         "chegada": "Congonhas",
@@ -1867,31 +1870,37 @@
                     }
                 ],
                 "empresas": [
-                    "LATAM",
-                    "LATAM",
-                    "Delta",
-                    "Delta",
-                    "Delta",
-                    "LATAM"
+                    "latam",
+                    "latam",
+                    "delta",
+                    "delta",
+                    "delta",
+                    "latam"
                 ],
-                "tipos": {
-                    "transporte": [
-                        "Voo",
-                        "Voo",
-                        "Voo",
-                        "Voo",
-                        "Voo",
-                        "Voo"
-                    ],
-                    "idaVolta": [
-                        "ida",
-                        "ida",
-                        "ida",
-                        "volta",
-                        "volta",
-                        "volta"
-                    ]
-                }
+                "idaVolta": [
+                    "ida",
+                    "ida",
+                    "ida",
+                    "volta",
+                    "volta",
+                    "volta"
+                ],
+                "transportes": [
+                    "voo",
+                    "voo",
+                    "voo",
+                    "voo",
+                    "voo",
+                    "voo"
+                ],
+                "reservas": [
+                    "XXXXXX",
+                    "XXXXXX",
+                    "XXXXXX",
+                    "XXXXXX",
+                    "XXXXXX",
+                    "XXXXXX"
+                ]
             }
         ]
     },

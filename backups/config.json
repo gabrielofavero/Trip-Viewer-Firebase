@@ -1,14 +1,12 @@
 {
     "callSyncOrder": {
         "data": [
-            "_loadMainDataMulti",
-            "_loadMainDataSingle",
             "_loadTransportationModule",
+            "_loadStayModule",
             "_loadKeypointsIntegrated",
             "_loadScheduleCalendar",
             "_loadKeypointsStandAlone",
             "_loadCostModule",
-            "_loadTransportationModule",
             "_loadPlaces"
         ]
     },
@@ -257,6 +255,11 @@
                 "displayText": "Cometa",
                 "link": "https://www.viacaocometa.com.br/"
             }
+        },
+        "categorias": {
+            "carro": "Carro",
+            "voo": "Voo",
+            "onibus": "Ônibus"
         }
     }
 }
