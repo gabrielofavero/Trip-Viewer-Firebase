@@ -7,9 +7,6 @@ function _loadTransportationModule() {
     subtitle: _getTransportationSubtitle(FIRESTORE_DATA.transportes.reservas),
     data: [],
   };
-
-
-
   _loadTransportationLogoBoxes();
   for (let i = 1; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
     const title = FIRESTORE_DATA.transportes.trajetos[i];
@@ -56,7 +53,7 @@ function _loadTransportationLogoBoxes() {
       generic = "generic";
     }
 
-    const text = `<a href="${link}" target="_blank"><img class="transportationBox" src="${img}"></a>`
+    const text = `<a href="${link}" target="_blank"><img class="transpStayBox" src="${img}"></a>`
 
     // checks if element already exists in group array
     if (!group.includes(text)) {

@@ -102,7 +102,9 @@ function _loadModules() {
   }
 
   // Stay
-  if (!FIRESTORE_DATA.modulos.hospedagens) {
+  if (FIRESTORE_DATA.modulos.hospedagens) {
+    CALL_SYNC.push(_loadStayModule);
+  } else {
     document.getElementById("stayNav").innerHTML = "";
     document.getElementById("stay").innerHTML = "";
     document.getElementById("stay").style.display = "none";
