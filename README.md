@@ -4,7 +4,6 @@
 - Migrar 'Resumo'(Keypoints) ao Firestore;
 
 ## TO-DO
-- Remover métodos descontinuados;
 - Criar tratamento para falha de conexão com o banco de dados;
 - Inserir calendário dinâmico (swiper);
 - Inserir autenticação no back-end e front-end;
@@ -17,6 +16,7 @@
 
 ## 03/10/2023
 - Migrar 'Hospedagem' ao Firestore;
+- Remover métodos descontinuados;
 
 ## 02/10/2023
 - Migrar 'Transporte' ao Firestore;
