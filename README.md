@@ -8,7 +8,12 @@
 - Inserir calendário dinâmico (swiper);
 - Inserir autenticação no back-end e front-end;
 - Inserir funções de escrita principais no back-end (get.ts);
-- Inserir telas de interação no front-end
+- FRONT-END: Criar página de login;
+- FRONT-END: Criar página principal (seleção e de viagens);
+- FRONT-END: Criar página de configurações;
+- FRONT-END: Criar página de edição/criação de viagens;
+- FRONT-END: Criar página de edição/criação de passeios;
+- Criar sistema de compartilhamento de viagens via link;
 - Inserir API Google Maps para busca de passeios
 - Automatizar cores tema definidas pelo usuário
 
