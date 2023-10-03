@@ -1,14 +1,11 @@
 # Trip-Viewer-Firebase
 
 ## Doing
-- Migrar 'Transporte' ao Firestore;
-- Migrar Jsons de configuração ao Firestore;
-- Remover métodos descontinuados;
-- Criar tratamento para falha de conexão com o banco de dados;
+- Migrar 'Resumo'(Keypoints) ao Firestore;
 
 ## TO-DO
-- Migrar 'Hospedagem' ao Firestore;
-- Migrar 'Resumo' ao Firestore;
+- Remover métodos descontinuados;
+- Criar tratamento para falha de conexão com o banco de dados;
 - Inserir calendário dinâmico (swiper);
 - Inserir autenticação no back-end e front-end;
 - Inserir funções de escrita principais no back-end (get.ts);
@@ -17,6 +14,14 @@
 - Automatizar cores tema definidas pelo usuário
 
 ## Done
+
+## 03/10/2023
+- Migrar 'Hospedagem' ao Firestore;
+
+## 02/10/2023
+- Migrar 'Transporte' ao Firestore;
+- Migrar Jsons de configuração ao Firestore;
+
 ### 29/09/2023
 - Migrar 'Passeios' ao Firestore;
 - Migrar 'Programação' ao Firestore;
