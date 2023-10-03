@@ -1,10 +1,9 @@
 # Trip-Viewer-Firebase
 
 ## Doing
-- Migrar 'Resumo'(Keypoints) ao Firestore;
+- Criar tratamento para falha de conexão com o banco de dados;
 
 ## TO-DO
-- Criar tratamento para falha de conexão com o banco de dados;
 - Inserir calendário dinâmico (swiper);
 - Inserir autenticação no back-end e front-end;
 - Inserir funções de escrita principais no back-end (get.ts);
@@ -14,14 +13,16 @@
 - FRONT-END: Criar página de edição/criação de viagens;
 - FRONT-END: Criar página de edição/criação de passeios;
 - Criar sistema de compartilhamento de viagens via link;
-- Inserir API Google Maps para busca de passeios
-- Automatizar cores tema definidas pelo usuário
+- Inserir API Google Maps para busca de passeios;
+- Automatizar cores tema definidas pelo usuário;
+- Criar Keypoints personalizáveis.
 
 ## Done
 
 ## 03/10/2023
 - Migrar 'Hospedagem' ao Firestore;
 - Remover métodos descontinuados;
+- Migrar 'Resumo'(Keypoints) ao Firestore;
 
 ## 02/10/2023
 - Migrar 'Transporte' ao Firestore;
