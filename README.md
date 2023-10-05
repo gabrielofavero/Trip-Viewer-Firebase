@@ -28,6 +28,7 @@
 
 ## 02/10/2023
 - Migrar 'Transporte' ao Firestore;
+- Criar artes de transporte / hospedagem;
 - Migrar Jsons de configuração ao Firestore;
 
 ### 29/09/2023
