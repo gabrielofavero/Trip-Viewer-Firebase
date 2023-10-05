@@ -72,7 +72,9 @@ function _showCalendar(month, year) {
                 if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
                     cell.classList.add("calendarTrip");
                     cell.setAttribute("onclick", "_getScheduleCalendarByDate('" + day + "/" + (month + 1) + "/" + year + "')");
-                };
+                } else {
+                    cell.classList.add("calendarDisabled");
+                }
                 cell.appendChild(cellText);
                 row.appendChild(cell);
                 day++;
@@ -80,6 +82,24 @@ function _showCalendar(month, year) {
         }
 
         tbl.appendChild(row);
+
+        if (_isTripMultiMonth()){
+            _showMonthSelector();
+        } else {
+            _hideMonthSelector();
+        }
     }
 
+}
+
+function _showMonthSelector(){
+    document.getElementById('calendarMonthSelector').style.display = 'block'
+}
+
+function _hideMonthSelector(){
+    document.getElementById('calendarMonthSelector').style.display = 'none'
+}
+
+function _isTripMultiMonth(){
+    return startMonth != endMonth || startYear != endYear;
 }

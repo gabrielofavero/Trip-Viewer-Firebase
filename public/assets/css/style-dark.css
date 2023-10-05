@@ -1946,3 +1946,7 @@ iframe {
   color: white;
   cursor: pointer;
 }
+
+.calendarDisabled {
+  color: #595959;
+}
