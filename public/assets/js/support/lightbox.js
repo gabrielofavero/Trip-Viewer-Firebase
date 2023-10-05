@@ -11,7 +11,7 @@ function _openLightbox(link) {
     document.getElementById('lightbox').style.display = 'block';
     document.getElementById('night-mode').style.display = 'none';
     document.getElementById('share').style.display = 'none';
-    document.getElementById('config').style.display = 'none';
+    document.getElementById('account').style.display = 'none';
     document.getElementById('menu').style.display = 'none';
     document.getElementById('navbar').style.display = 'none';
     _stopLoadingScreen();
@@ -26,7 +26,7 @@ function _closeLightbox() {
   document.getElementById('menu').style.display = 'block';
   document.getElementById('navbar').style.display = 'block';
   document.getElementById('share').style.display = 'block';
-  document.getElementById('config').style.display = 'block';
+  document.getElementById('account').style.display = 'block';
   _enableScroll();
   window.scrollTo({
     top: savedScrollPosition,

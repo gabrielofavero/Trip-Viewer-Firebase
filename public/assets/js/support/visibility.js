@@ -45,6 +45,7 @@ function _loadDarkMode() {
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
      localStorage.setItem("darkModePasseio", true);
+     document.getElementById("logo").src = "assets/img/logo-full-dark.png";
      _loadNightModeToggleHTML();
      _changeThemeColor("#303030");
      if (_isIndexHTML()) {
@@ -61,6 +62,7 @@ function _loadLightMode() {
      document.getElementsByTagName("head")[0].appendChild(link);
      DARK_MODE = false;
      localStorage.setItem("darkModePasseio", false);
+     document.getElementById("logo").src = "assets/img/logo-full.png";
      _loadNightModeToggleHTML();
      _changeThemeColor("#fff");
      if (_isIndexHTML()) {
@@ -151,14 +153,14 @@ function _adjustButtonsPosition() {
 
      switch (_getHTMLpage()) {
           case INDEX:
-               const config = document.getElementById("config");
+               const account = document.getElementById("account");
                const share = document.getElementById("share");
                if (_isOnMobileMode()) {
-                    config.style.right = second;
+                    account.style.right = second;
                     share.style.right = third;
                     nightMode.style.right = fourth;
                } else {
-                    config.style.right = first;
+                    account.style.right = first;
                     share.style.right = second;
                     nightMode.style.right = third;
                }

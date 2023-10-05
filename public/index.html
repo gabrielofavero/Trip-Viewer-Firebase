@@ -48,13 +48,10 @@
 
 <body>
   <div class="top-bar">
-    <div id="trip-viewer-box">
-      <img id="logo" src="assets/img/TripViewer.png" alt="">
-      <div id="trip-viewer-text">TripViewer</div>
-    </div>
+    <img id="logo" src="assets/img/logo-full.png" alt="">
     <i id="night-mode" class="bx bx-moon custom-nav-toggle"></i>
     <i id="share" class="bx bx-share-alt custom-nav-toggle" style="right: 50px;"></i>
-    <i id="config" class="bx bx-user custom-nav-toggle" data-target="modal-login" style="right: 90px;"></i>
+    <i id="account" class="bx bx-user custom-nav-toggle modal-trigger" data-target="modal-login" style="right: 90px;"></i>
     <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>
   </div>
 
@@ -80,10 +77,6 @@
           </li>
         </div>
 
-        <div id="costsNav">
-          <li><a href="#costs" class="nav-link scrollto"><i class="bx bx-money"></i> <span>Gastos</span></a></li>
-        </div>
-
         <div id="scheduleCalendarNav">
           <li><a href="#scheduleCalendar" class="nav-link scrollto"><i class="bx bx-calendar"></i>
               <span>Programação</span></a></li>
@@ -91,11 +84,6 @@
 
         <div id="placesNav">
           <li><a href="#places" class="nav-link scrollto"><i class="bx bx-map"></i> <span>Passeios</span></a></li>
-        </div>
-
-        <div id="galleryNav">
-          <li><a href="#gallery" class="nav-link scrollto"><i class="bx bx-photo-album"></i> <span>Galeria</span></a>
-          </li>
         </div>
 
       </ul>
@@ -259,96 +247,6 @@
       </div>
     </section>
 
-    <!-- ======= Costs ======= -->
-    <section id="costs" class="about">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Gastos</h2>
-          <div id="sobre"></div>
-        </div>
-
-        <div class="row" id="gDados">
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box" id="gDado1">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-            <div class="count-box" id="gDado2">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box" id="gDado3">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box" id="gDado4">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row skills-content" id="gastosPB">
-          <h3>Dia-A-Dia: $300</h3>
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill">Saídas <i class="val">$150</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Alimentação <i class="val">$70</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill">Supermercado <i class="val">$50</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Turismo <i class="val">$30</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-    </section>
-
     <!-- ======= Schedule: Calendar ======= -->
     <section id="scheduleCalendar" class="resume">
       <div class="container" data-aos="fade-up">
@@ -430,28 +328,6 @@
 
       </div>
     </section>
-
-    <!-- ======= Gallery ======= -->
-    <section id="gallery" class="portfolio section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Galeria</h2>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">Todos</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row portfolio-container" id="portfolio-container" data-aos="fade-up" data-aos-delay="200"></div>
-
-      </div>
-    </section>
-
 
     <!-- ======= Support: LightBox ======= -->
     <div id="lightbox" class="lightbox">
@@ -537,7 +413,6 @@
   <script src="assets/js/support/countdown.js"></script>
   <script src="assets/js/modules/schedule/calendar.js"></script>
   <script src="assets/js/modules/schedule/schedule-calendar.js"></script>
-  <script src="assets/js/modules/information/costs.js"></script>
   <script src="assets/js/modules/information/transportation.js"></script>
   <script src="assets/js/modules/information/stay.js"></script>
   <script src="assets/js/modules/information/keypoints.js"></script>

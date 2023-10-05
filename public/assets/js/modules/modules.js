@@ -110,15 +110,6 @@ function _loadModules() {
     document.getElementById("stay").style.display = "none";
   }
 
-  // Costs
-  if (FIRESTORE_DATA.modulos.custos) {
-    CALL_SYNC.push(_loadCostModule);
-  } else {
-    document.getElementById("costsNav").innerHTML = "";
-    document.getElementById("costs").innerHTML = "";
-    document.getElementById("costs").style.display = "none";
-  }
-
   // Schedule: Calendar
   if (FIRESTORE_DATA.modulos.programacao) {
     CALL_SYNC.push(_loadCalendar);
@@ -133,11 +124,4 @@ function _loadModules() {
   _loadPlacesHTML(FIRESTORE_DATA.cidades[0]);
   _loadPlacesSelect();
   CALL_SYNC.push(_loadPlaces);
-
-  // Gallery
-  if (!FIRESTORE_DATA.modulos.galeria) {
-    document.getElementById("galleryNav").innerHTML = "";
-    document.getElementById("gallery").innerHTML = "";
-    document.getElementById("gallery").style.display = "none";
-  }
 }
