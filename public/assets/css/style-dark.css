@@ -324,7 +324,7 @@ h6 {
   margin-top: -33px;
   margin-left: 60px;
   font-family: Chelos;
-  color: #D9D9D9;
+  color: #F2F2F2;
 }
 
 .mobile-nav-toggle i,
@@ -762,6 +762,7 @@ section {
   opacity: 0;
   transition: opacity 0.2s linear;
   width: 100%;
+  margin-top: 20px;
   margin-bottom: 0px;
   margin-left: auto;
   margin-right: auto;
