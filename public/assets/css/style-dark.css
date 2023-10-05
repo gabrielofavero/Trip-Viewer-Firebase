@@ -1,6 +1,12 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+@font-face {
+  font-family: 'Chelos';
+  src: url('../fonts/Chelos\ Free.ttf') format('truetype');
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #E2E2E2;
@@ -310,6 +316,15 @@ h6 {
   height: 30px;
   margin-top: 15px;
   margin-left: 20px;
+}
+
+#trip-viewer-text {
+  height: 30px;
+  font-size: 30px;
+  margin-top: -33px;
+  margin-left: 60px;
+  font-family: Chelos;
+  color: #D9D9D9;
 }
 
 .mobile-nav-toggle i,
