@@ -121,6 +121,7 @@ function _loadModules() {
 
   // Schedule: Calendar
   if (FIRESTORE_DATA.modulos.programacao) {
+    CALL_SYNC.push(_loadCalendar);
     CALL_SYNC.push(_loadScheduleCalendar);
   } else {
     document.getElementById("scheduleCalendarNav").innerHTML = "";

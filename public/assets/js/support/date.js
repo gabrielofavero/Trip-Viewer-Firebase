@@ -45,3 +45,7 @@ function _numberToMonth(number) {
             return "?";
     }
 }
+
+function _getDateNoTime(date){
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}

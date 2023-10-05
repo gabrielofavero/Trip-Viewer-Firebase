@@ -1,11 +1,9 @@
 # Trip-Viewer-Firebase
 
 ## Doing
-- Criar tratamento para falha de conexão com o banco de dados;
+- Inserir autenticação no back-end e front-end;
 
 ## TO-DO
-- Inserir calendário dinâmico (swiper);
-- Inserir autenticação no back-end e front-end;
 - Inserir funções de escrita principais no back-end (get.ts);
 - FRONT-END: Criar página de login;
 - FRONT-END: Criar página principal (seleção e de viagens);
@@ -19,10 +17,14 @@
 
 ## Done
 
+### 04/10/2023
+- Inserir calendário dinâmico (swiper);
+
 ## 03/10/2023
 - Migrar 'Hospedagem' ao Firestore;
 - Remover métodos descontinuados;
 - Migrar 'Resumo'(Keypoints) ao Firestore;
+- Criar tratamento para falha de conexão com o banco de dados;
 
 ## 02/10/2023
 - Migrar 'Transporte' ao Firestore;

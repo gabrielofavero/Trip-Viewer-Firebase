@@ -13,7 +13,7 @@ function _loadScheduleCalendar() {
 
     for (let i = 0; i < result.length; i++) {
         const date = _convertFirestoreDate(FIRESTORE_DATA.programacoes.programacao[i].data)
-        result[i].titulo = _dateToTitle(date);
+        result[i].titulo = _getCalendarTitle(date) + _dateToTitle(date);
     }
 
     SCHEDULE_CALENDAR = result;
@@ -87,7 +87,7 @@ function _getScheduleCalendarByDate(stringDayMonth) {
             PROG_CURRENT_YEAR = year;
             if (day != 0) {
                 for (let i = 0; i < SCHEDULE_CALENDAR.length; i++) {
-                    const title = _dateToTitle(date);
+                    var title = _getCalendarTitle(date);
                     if (SCHEDULE_CALENDAR[i]["titulo"] == title) {
                         if (PROG_IS_HIDDEN) {
                             PROG_IS_HIDDEN = false;
@@ -148,4 +148,18 @@ function _adaptModalCalendarInnerHTML(manha, tarde, noite) {
             document.getElementById("progNoData").style.display = "block";
         }
     }
+}
+
+function _getCalendarTitle(date) {
+    const programacao = FIRESTORE_DATA.programacoes.programacao;
+    for (let i = 0; i < programacao.length; i++) {
+        const currentDate = _convertFirestoreDate(programacao[i].data);
+        if (currentDate.getDate() == date.getDate() && currentDate.getMonth() == date.getMonth() && currentDate.getFullYear() == date.getFullYear()) {
+            const titulo = programacao[i].titulo;
+            if (titulo.includes(":")) {
+                return titulo;
+            } else return `${programacao[i].titulo}: `;
+        }
+    }
+    return "";
 }
