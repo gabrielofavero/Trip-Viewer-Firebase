@@ -6,6 +6,7 @@
                 "data": [
                     "_loadTransportationModule",
                     "_loadStayModule",
+                    "_loadCalendar",
                     "_loadScheduleCalendar",
                     "_loadKeypointsStandAlone",
                     "_loadCostModule",
@@ -1513,6 +1514,7 @@
                             "15:40 - 16:40: Confins - Congonhas ✈️",
                             "Translado para Guarulhos🚘"
                         ],
+                        "titulo": "Viagem",
                         "noite": [
                             "Aguardar embarque Internacional⏱️",
                             "22:50 - 07:40: Guarulhos - Atlanta✈️"
@@ -1529,6 +1531,7 @@
                             "Target 🛒 e Marshalls 👜",
                             "The Big Apple Coaster 🎢"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "Katy Perry 🎤"
                         ],
@@ -1548,6 +1551,7 @@
                             "Coke Store, Haus of Gaga",
                             "Andar pela Strip (Lojas e Turismo) 👜"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "Best Friend 🥢",
                             "👩🏻: Buscar no Aeroporto 👩🏻‍🦰👱🏻‍♂️"
@@ -1566,6 +1570,7 @@
                             "Freemont / Gold & Silver Pawn Shop 🏪",
                             "Haus of Gaga 🎨 e Coke Store 🥤"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "High Roller 🎡",
                             "Bellagio ⛲ e The Volcano 🌋",
@@ -1586,6 +1591,7 @@
                             "Grand Canyon ⛰️",
                             "Devolver Carro 🚗"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "BrewDog 🍺"
                         ],
@@ -1603,6 +1609,7 @@
                             "Chipotle 🌮 / Hattie B’s 🍗 / Lobster ME 🦞",
                             "Bellagio Conservatory & Botanical Gardens 🌳"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "Fremont Street 🍺"
                         ],
@@ -1621,6 +1628,7 @@
                             "Las Vegas Premium Outlets South🛍️",
                             "👱🏻‍♂️: Fashion Show Mall / I Love Sugar Martini Bar 🍸"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "👱🏻‍♂️: Show dos Robôs (18:00) 🤖",
                             "Fremont Street 🍺"
@@ -1639,6 +1647,7 @@
                             "Sickies Garage Burgers & Brews 🍔",
                             "👩🏻‍🦰👱🏻‍♂️:  Area 15 / Omega Mart  🎨 (14:00)"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "🧑🏻‍🦱👱🏻‍♀️: Adele 🎤",
                             "👩🏻‍🦰👱🏻‍♂️👩🏻:  Midnight Dreams (Fantasy Lab) 🎨"
@@ -1656,6 +1665,7 @@
                             "👩🏻‍🦰👱🏻‍♂️: When We Were Young 🎤",
                             "🧑🏻‍🦱👱🏻‍♀️👩🏻: Livre"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "👩🏻‍🦰👱🏻‍♂️: When We Were Young 🎤",
                             "🧑🏻‍🦱👱🏻‍♀️👩🏻: Livre"
@@ -1673,6 +1683,7 @@
                             "👩🏻‍🦰👱🏻‍♂️👩🏻: When We Were Young 🎤",
                             "🧑🏻‍🦱👱🏻‍♀️: Miracle Mile Shops 👜"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "👩🏻‍🦰👱🏻‍♂️👩🏻: When We Were Young 🎤",
                             "🧑🏻‍🦱👱🏻‍♀️: Livre"
@@ -1690,6 +1701,7 @@
                             "👩🏻‍🦰👱🏻‍♂️👩🏻: Punk Rock Museum 🎨",
                             "🧑🏻‍🦱👱🏻‍♀️: Livre"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "Strip 🎰"
                         ],
@@ -1705,6 +1717,7 @@
                         "tarde": [
                             "🛬 16:30 - Pouso em Atlanta"
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             "🛫 19:00 - Decolagem em Atlanta"
                         ],
@@ -1721,6 +1734,7 @@
                         "tarde": [
                             ""
                         ],
+                        "titulo": "Las Vegas",
                         "noite": [
                             ""
                         ],

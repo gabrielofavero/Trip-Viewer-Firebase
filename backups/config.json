@@ -3,6 +3,7 @@
         "data": [
             "_loadTransportationModule",
             "_loadStayModule",
+            "_loadCalendar",
             "_loadScheduleCalendar",
             "_loadKeypointsStandAlone",
             "_loadCostModule",
