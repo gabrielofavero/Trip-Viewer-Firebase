@@ -145,9 +145,9 @@ function _changeHeaderImg() {
 function _adjustButtonsPosition() {
      const nightMode = document.getElementById("night-mode");
      const first = "10px";
-     const second = "50px";
-     const third = "90px";
-     const fourth = "130px";
+     const second = "60px";
+     const third = "100px";
+     const fourth = "140px";
 
      // Padrão: Desktop
 
