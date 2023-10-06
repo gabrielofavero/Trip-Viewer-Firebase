@@ -13,8 +13,8 @@ async function _getFirestoreData() {
   const host = window.location.hostname;
   var url =
     host == "localhost"
-      ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=yMgghUAV8TapvOAXh648"
-      : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=yMgghUAV8TapvOAXh648";
+      ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=R0yDPACnVVPjx2S6oqP6zqVI20t1"
+      : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=R0yDPACnVVPjx2S6oqP6zqVI20t1";
 
   const response = await fetch(url);
   const data = await response.json();
