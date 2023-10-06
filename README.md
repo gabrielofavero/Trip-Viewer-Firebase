@@ -4,12 +4,12 @@
 - Inserir autenticação no back-end e front-end;
 
 ## TO-DO
-- Inserir funções de escrita principais no back-end (get.ts);
 - FRONT-END: Criar página de login;
 - FRONT-END: Criar página principal (seleção e de viagens);
 - FRONT-END: Criar página de configurações;
 - FRONT-END: Criar página de edição/criação de viagens;
 - FRONT-END: Criar página de edição/criação de passeios;
+- Inserir funções de escrita principais no back-end (get.ts);
 - Criar sistema de compartilhamento de viagens via link;
 - Inserir API Google Maps para busca de passeios;
 - Automatizar cores tema definidas pelo usuário;
