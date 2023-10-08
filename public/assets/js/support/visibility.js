@@ -45,7 +45,6 @@ function _loadDarkMode() {
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
      localStorage.setItem("darkModePasseio", true);
-     document.getElementById("logo").src = "assets/img/logo-full-dark.png";
      _loadNightModeToggleHTML();
      _changeThemeColor("#303030");
      if (_isIndexHTML()) {
@@ -62,7 +61,6 @@ function _loadLightMode() {
      document.getElementsByTagName("head")[0].appendChild(link);
      DARK_MODE = false;
      localStorage.setItem("darkModePasseio", false);
-     document.getElementById("logo").src = "assets/img/logo-full.png";
      _loadNightModeToggleHTML();
      _changeThemeColor("#fff");
      if (_isIndexHTML()) {
@@ -136,6 +134,7 @@ function _changeThemeColor(color) {
 
 function _changeHeaderImg() {
      try {
+          document.getElementById("logo").src = DARK_MODE ? "assets/img/logo-full-dark.png" : "assets/img/logo-full.png";
           if (HEADER_IMG_ACTIVE) {
                document.getElementById("header2").src = DARK_MODE ? FIRESTORE_DATA.imagem.escuro : FIRESTORE_DATA.imagem.claro;
           }
