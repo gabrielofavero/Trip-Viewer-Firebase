@@ -1,4 +1,4 @@
-# Trip-Viewer-Firebase
+![alt text]([http://url/to/img.png](https://raw.githubusercontent.com/gabrielofavero/Trip-Viewer-Firebase/master/public/assets/img/logo-full.png?token=GHSAT0AAAAAACG2EJDTFFVWX2FKGW6LHZSQZJCE5DQ))
 
 ## Doing
 - Inserir autenticação no back-end e front-end;
