@@ -13,6 +13,7 @@ body {
   background: #303030;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  padding-top: env(safe-area-inset-top);
 }
 
 strong {
