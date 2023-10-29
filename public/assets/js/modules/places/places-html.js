@@ -361,7 +361,7 @@ function _getGenericLink(videoText, videoLink) {
 
 function _getNameHyperlinkHTML(name, hyperlink) {
   if (hyperlink) {
-    return `<a id="title" href="${name}" target="_blank">${name}</a>`
+    return `<a id="title" href="${hyperlink}" target="_blank">${name}</a>`
   } else return `<div id="title-no-link">${name}</div>`
 }
 

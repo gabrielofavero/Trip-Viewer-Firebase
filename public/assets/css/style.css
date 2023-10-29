@@ -8,9 +8,11 @@
 }
 
 body {
+  background: url(/public/assets/img/background.png);
+  background-size: cover;
   font-family: "Open Sans", sans-serif;
   color: #272829;
-  background: #fff;
+  background-color: #fff;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   padding-top: env(safe-area-inset-top);
@@ -91,7 +93,7 @@ h6 {
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
-  border: 6px solid #AF8F8E;
+  border: 6px solid #5B509E;
   border-top-color: #fff;
   border-bottom-color: #fff;
   border-radius: 50%;
@@ -313,7 +315,7 @@ h6 {
   z-index: 999;
 }
 
-#logo {
+#logo-light, #logo-dark {
   height: 25px;
   margin-top: 18px;
   margin-left: 20px;
@@ -322,10 +324,14 @@ h6 {
 #trip-viewer-text {
   height: 30px;
   font-size: 30px;
-  margin-top: -33px;
-  margin-left: 60px;
+  margin-top: -30px;
+  margin-left: 55px;
   font-family: Chelos;
-  color: #4F5051;
+  color: #595959;
+}
+
+.cls-4 {
+  fill: #AF8F8E !important;
 }
 
 .mobile-nav-toggle i,

@@ -3,9 +3,7 @@
 const INDEX = "index";
 const PASSEIO = "places";
 var DARK_MODE;
-
-const THEME_COLOR_DARK = "#8a7171";
-const THEME_COLOR_LIGHT = "#AF8F8E";
+var THEME_COLOR;
 
 // ======= LOADERS =======
 function _loadVisibility() {
@@ -16,6 +14,28 @@ function _loadVisibility() {
      window.addEventListener("resize", function () {
           _adjustButtonsPosition();
      });
+     _loadThemeColor();
+     _loadLogoColors();
+     //document.getElementById("trip-viewer-text").style.color = THEME_COLOR;
+}
+function _loadThemeColor(){
+     if (_isOnDarkMode()){
+          THEME_COLOR = FIRESTORE_DATA.cores.escuro;
+     } else {
+          THEME_COLOR = FIRESTORE_DATA.cores.claro;
+     }
+}
+
+function _loadLogoColors(){
+     const lightColor1 = document.getElementById("light-color-1");
+     const lightColor2 = document.getElementById("light-color-2");
+     const darkColor1 = document.getElementById("dark-color-1");
+     const darkColor2 = document.getElementById("dark-color-2");
+
+     lightColor1.style.fill = FIRESTORE_DATA.cores.claro;
+     lightColor2.style.fill = FIRESTORE_DATA.cores.claro;
+     darkColor1.style.fill = FIRESTORE_DATA.cores.escuro;
+     darkColor2.style.fill = FIRESTORE_DATA.cores.escuro;
 }
 
 function _loadVisibilityPasseio() {
@@ -49,7 +69,7 @@ function _loadDarkMode() {
      _changeThemeColor("#303030");
      if (_isIndexHTML()) {
           DARK_MODE = true;
-          _changeHeaderImg();
+          _loadTripViewerLogo();
      }
 }
 
@@ -65,12 +85,12 @@ function _loadLightMode() {
      _changeThemeColor("#fff");
      if (_isIndexHTML()) {
           DARK_MODE = false;
-          _changeHeaderImg();
+          _loadTripViewerLogo();
      }
 }
 
 // ======= GETTERS =======
-function _getDarkModeInfo() {
+function _isOnDarkMode() {
      switch (_getHTMLpage()) {
           case INDEX:
                return DARK_MODE;
@@ -101,12 +121,13 @@ function _getNightModeIcon() {
 
 // ======= SETTERS =======
 function _switchVisibility() {
-     if (_getDarkModeInfo()) {
+     if (_isOnDarkMode()) {
           _loadLightMode();
      } else {
           _loadDarkMode();
      }
      _adjustButtonsPosition();
+     _loadThemeColor();
 }
 
 function _autoVisibility() {
@@ -132,12 +153,26 @@ function _changeThemeColor(color) {
      metaThemeColor.setAttribute("content", color);
 }
 
-function _changeHeaderImg() {
+function _loadTripViewerLogo() {
      try {
-          document.getElementById("logo").src = DARK_MODE ? "assets/img/logo-full-dark.png" : "assets/img/logo-full.png";
-          if (HEADER_IMG_ACTIVE) {
-               document.getElementById("header2").src = DARK_MODE ? FIRESTORE_DATA.imagem.escuro : FIRESTORE_DATA.imagem.claro;
+          const header2 = document.getElementById("header2");
+          const logoLight = document.getElementById("logo-light");
+          const logoDark = document.getElementById("logo-dark");
+          //const text = document.getElementById("trip-viewer-text");
+          if (_isOnDarkMode()) {
+               logoLight.style.display = "none";
+               logoDark.style.display = "block";
+               if (HEADER_IMG_ACTIVE) {
+                    header2.src = FIRESTORE_DATA.imagem.escuro;
+               }
+          } else {
+               logoLight.style.display = "block";
+               logoDark.style.display = "none";
+               if (HEADER_IMG_ACTIVE) {
+                    header2.src = FIRESTORE_DATA.imagem.claro;
+               }
           }
+          //text.style.color = THEME_COLOR;
      } catch (e) { }
 }
 

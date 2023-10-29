@@ -9,8 +9,10 @@
 
 body {
   font-family: "Open Sans", sans-serif;
+  background: url(/public/assets/img/background-dark.png);
+  background-size: cover;
   color: #E2E2E2;
-  background: #303030;
+  background-color: #303030;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   padding-top: env(safe-area-inset-top);
@@ -91,7 +93,7 @@ h6 {
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
-  border: 6px solid #8a7171;
+  border: 6px solid #7F75B9;
   border-top-color: #303030;
   border-bottom-color: #303030;
   border-radius: 50%;
@@ -313,7 +315,7 @@ h6 {
   z-index: 999;
 }
 
-#logo {
+#logo-light, #logo-dark {
   height: 25px;
   margin-top: 18px;
   margin-left: 20px;
@@ -322,10 +324,10 @@ h6 {
 #trip-viewer-text {
   height: 30px;
   font-size: 30px;
-  margin-top: -33px;
-  margin-left: 60px;
+  margin-top: -30px;
+  margin-left: 55px;
   font-family: Chelos;
-  color: #F2F2F2;
+  color: #BFBFBF;
 }
 
 .mobile-nav-toggle i,
