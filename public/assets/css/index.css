@@ -1,0 +1,382 @@
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+
+@font-face {
+  font-family: 'Chelos';
+  src: url('../fonts/Chelos\ Free.ttf') format('truetype');
+}
+
+body, html {
+  overflow: hidden;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #272829;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+strong {
+  color: #3A3838;
+}
+
+a {
+  color: #3d85c6;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #6fa8dc;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", sans-serif;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #fff;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #5B509E;
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: animate-preloader 1s linear infinite;
+  animation: animate-preloader 1s linear infinite;
+}
+
+@-webkit-keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Disable aos animation delay on mobile devices
+--------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+
+@media (min-width: 992px) {
+  #main {
+    margin-left: 100px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+
+/**
+* Mobile Navigation 
+*/
+.mobile-nav-toggle,
+.custom-nav-toggle {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 9998;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  outline: none !important;
+  line-height: 0;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 5px;
+}
+
+.custom-nav-toggle {
+  right: 50px;
+  top: 25px;
+}
+
+.top-bar{
+  position: fixed;
+  background-color: #fff;
+  width: 100%;
+  height: 60px;
+  border-bottom: 0.5px solid #D9D9D9;
+  z-index: 999;
+}
+
+#logo-light, #logo-dark {
+  height: 25px;
+  margin-top: 18px;
+  margin-left: 20px;
+}
+
+#trip-viewer-text {
+  height: 30px;
+  font-size: 30px;
+  margin-top: -30px;
+  margin-left: 55px;
+  font-family: Chelos;
+  color: #5859a7;
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+#hero {
+  width: 100%;
+  height: 100vh;
+  background: url("../img/home.jpg") top center no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 992px) {
+  #hero {
+    padding-left: 160px;
+  }
+}
+
+#hero:before {
+  content: "";
+  background: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#hero h1 {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #4F5051;
+}
+
+#hero p {
+  color: #4F5051;
+  margin: 15px 0 0 0;
+  font-size: 26px;
+  font-family: "Poppins", sans-serif;
+}
+
+#hero p span {
+  color: #5859a7;
+  letter-spacing: 1px;
+}
+
+#hero {
+  margin-top: 30px;
+}
+
+#hero .social-links a {
+  font-size: 24px;
+  display: inline-block;
+  color: #4F5051;
+  line-height: 1;
+  margin-right: 20px;
+  transition: 0.3s;
+}
+
+#hero .social-links a:hover {
+  color: #5859a7;
+}
+
+@media (max-width: 992px) {
+  #hero {
+    text-align: center;
+  }
+
+  #hero h1 {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  #hero p {
+    margin-top: 10px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Sections General
+--------------------------------------------------------------*/
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #4F5051;
+}
+
+.section-title h2::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #5859a7;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+.section-title p {
+  margin-bottom: 0;
+}
+
+@-webkit-keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  position: fixed;
+  bottom: 0;
+  background: #f7f8f9;
+  color: #4F5051;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+}
+
+#footer h3 {
+  font-size: 36px;
+  font-weight: 700;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+#footer p {
+  font-size: 15;
+  font-style: italic;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+#footer .social-links {
+  margin-bottom: 20px;
+  margin-top: -20px;
+}
+
+#footer .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #5859a7;
+  color: #fff;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+
+#footer .social-links a:hover {
+  background: #5859a7;
+  color: #fff;
+  text-decoration: none;
+}
+
+#footer .copyright {
+  margin: 0 0 5px 0;
+}
+
+#footer .credits {
+  font-size: 13px;
+}
+
+.pessoa-img {
+  width: 36px;
+  height: 36px;
+}

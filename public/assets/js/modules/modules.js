@@ -70,7 +70,7 @@ function _loadHeader() {
   }
 
   if (FIRESTORE_DATA.imagem.ativo) {
-    document.getElementById("header2").src = DARK_MODE ? FIRESTORE_DATA.imagem.escuro : FIRESTORE_DATA.imagem.claro;
+    document.getElementById("header2").src = _isOnDarkMode() ? FIRESTORE_DATA.imagem.escuro : FIRESTORE_DATA.imagem.claro;
     document.getElementById("header1").style.display = "none";
     document.getElementById("header2").style.display = "block";
   }

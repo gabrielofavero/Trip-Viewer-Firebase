@@ -17,6 +17,14 @@
 
 ## Done
 
+### 31/10/2023
+- Criado esqueleto para a Home Page (Login);
+- Corrigido bugs do modo escuro;
+
+### 29/10/2023
+- Bug Fixes;
+- Logo Interativo de acordo com a cor definida pelo usuário;
+
 ### 04/10/2023
 - Inserir calendário dinâmico (swiper);
 

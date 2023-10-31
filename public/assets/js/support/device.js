@@ -33,6 +33,6 @@ function _isOnMobileMode() {
     return window.innerWidth < 1200;
 }
 
-function _isIndexHTML() {
-    return _getHTMLpage() === "index";
+function _isViagemHTML() {
+    return _getHTMLpage() === "viagem";
 }

@@ -1,9 +1,11 @@
 // ======= Visibility JS =======
 
 const INDEX = "index";
+const VIAGEM = "viagem"
 const PASSEIO = "places";
-var DARK_MODE;
 var THEME_COLOR;
+var CLARO = "#5859a7";
+var ESCURO = "#7f75b6";
 
 // ======= LOADERS =======
 function _loadVisibility() {
@@ -15,14 +17,24 @@ function _loadVisibility() {
           _adjustButtonsPosition();
      });
      _loadThemeColor();
-     _loadLogoColors();
-     //document.getElementById("trip-viewer-text").style.color = THEME_COLOR;
+     if (_isViagemHTML()) {
+          _loadLogoColors();
+     }
+     document.getElementById("trip-viewer-text").style.color = THEME_COLOR;
 }
+
 function _loadThemeColor(){
+     try {
+          if (FIRESTORE_DATA && FIRESTORE_DATA.cores){
+               CLARO = FIRESTORE_DATA.cores.claro;
+               ESCURO = FIRESTORE_DATA.cores.escuro;
+          }
+     } catch (e) { }
+
      if (_isOnDarkMode()){
-          THEME_COLOR = FIRESTORE_DATA.cores.escuro;
+          THEME_COLOR = CLARO;
      } else {
-          THEME_COLOR = FIRESTORE_DATA.cores.claro;
+          THEME_COLOR = ESCURO;
      }
 }
 
@@ -32,14 +44,14 @@ function _loadLogoColors(){
      const darkColor1 = document.getElementById("dark-color-1");
      const darkColor2 = document.getElementById("dark-color-2");
 
-     lightColor1.style.fill = FIRESTORE_DATA.cores.claro;
-     lightColor2.style.fill = FIRESTORE_DATA.cores.claro;
-     darkColor1.style.fill = FIRESTORE_DATA.cores.escuro;
-     darkColor2.style.fill = FIRESTORE_DATA.cores.escuro;
+     lightColor1.style.fill = CLARO;
+     lightColor2.style.fill = CLARO;
+     darkColor1.style.fill = ESCURO;
+     darkColor2.style.fill = ESCURO;
 }
 
 function _loadVisibilityPasseio() {
-     if (localStorage.getItem("darkModePasseio") === "true") {
+     if (localStorage.getItem("darkMode") === "true") {
           _loadDarkMode();
      } else {
           _loadLightMode();
@@ -52,11 +64,17 @@ function _loadVisibilityPasseio() {
 }
 
 function _loadNightModeToggleHTML() {
-     let icon = _getNightModeIcon();
-     var iClass = icon + " custom-nav-toggle";
-     let id = document.getElementById("night-mode");
-     id.innerHTML = `<i id="night-mode" class="${iClass}></i>`;
-}
+     var element = document.getElementById("night-mode");
+     var darkMode = _isOnDarkMode();
+     if (darkMode && element.classList.contains("bx-moon")) {
+         element.classList.remove("bx-moon");
+         element.classList.add("bx-sun");
+     } else if (!darkMode && element.classList.contains("bx-sun")) {
+         element.classList.remove("bx-sun");
+         element.classList.add("bx-moon");
+     }
+ }
+ 
 
 function _loadDarkMode() {
      var link = document.createElement("link");
@@ -64,11 +82,11 @@ function _loadDarkMode() {
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
-     localStorage.setItem("darkModePasseio", true);
+     _setDarkModeVariable();
      _loadNightModeToggleHTML();
      _changeThemeColor("#303030");
-     if (_isIndexHTML()) {
-          DARK_MODE = true;
+     localStorage.setItem("darkMode", true);
+     if (_isViagemHTML()) {
           _loadTripViewerLogo();
      }
 }
@@ -79,47 +97,41 @@ function _loadLightMode() {
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
-     DARK_MODE = false;
-     localStorage.setItem("darkModePasseio", false);
+     _setLightModeVariable();
      _loadNightModeToggleHTML();
      _changeThemeColor("#fff");
-     if (_isIndexHTML()) {
-          DARK_MODE = false;
+     localStorage.setItem("darkMode", false);
+     if (_isViagemHTML()) {
           _loadTripViewerLogo();
      }
 }
 
 // ======= GETTERS =======
 function _isOnDarkMode() {
-     switch (_getHTMLpage()) {
-          case INDEX:
-               return DARK_MODE;
-          case PASSEIO:
-               return localStorage.getItem("darkModePasseio") === "true";
-     }
+     return localStorage.getItem("darkMode") === "true";
 }
 
 function _getCSSname() {
      switch (_getHTMLpage()) {
           case INDEX:
-               return "style";
+               return "index";
           case PASSEIO:
                return "places";
+          case VIAGEM:
+               return "viagem";
      }
-}
-
-function _getNightModeIcon() {
-     let checker;
-     switch (_getHTMLpage()) {
-          case INDEX:
-               checker = DARK_MODE;
-          case PASSEIO:
-               checker = localStorage.getItem("darkModePasseio") === "true";
-     }
-     return checker ? "bx bx-sun" : "bx bx-moon";
 }
 
 // ======= SETTERS =======
+
+function _setDarkModeVariable(){
+     localStorage.setItem("darkMode", true);
+}
+
+function _setLightModeVariable(){
+     localStorage.setItem("darkMode", false);
+}
+
 function _switchVisibility() {
      if (_isOnDarkMode()) {
           _loadLightMode();
@@ -140,11 +152,8 @@ function _autoVisibility() {
 }
 
 function _lightModeLite() {
-     if (_isIndexHTML()) {
-          DARK_MODE = false;
-     };
+     _setLightModeVariable();
      _loadNightModeToggleHTML();
-     localStorage.setItem("darkModePasseio", false);
 }
 
 function _changeThemeColor(color) {
@@ -158,7 +167,7 @@ function _loadTripViewerLogo() {
           const header2 = document.getElementById("header2");
           const logoLight = document.getElementById("logo-light");
           const logoDark = document.getElementById("logo-dark");
-          //const text = document.getElementById("trip-viewer-text");
+          const text = document.getElementById("trip-viewer-text");
           if (_isOnDarkMode()) {
                logoLight.style.display = "none";
                logoDark.style.display = "block";
@@ -172,7 +181,7 @@ function _loadTripViewerLogo() {
                     header2.src = FIRESTORE_DATA.imagem.claro;
                }
           }
-          //text.style.color = THEME_COLOR;
+          text.style.color = THEME_COLOR;
      } catch (e) { }
 }
 
@@ -186,7 +195,7 @@ function _adjustButtonsPosition() {
      // Padrão: Desktop
 
      switch (_getHTMLpage()) {
-          case INDEX:
+          case VIAGEM:
                const account = document.getElementById("account");
                const share = document.getElementById("share");
                if (_isOnMobileMode()) {
@@ -201,6 +210,9 @@ function _adjustButtonsPosition() {
                break;
           case PASSEIO:
                nightMode.style.right = second;
+               break;
+          case INDEX:
+               nightMode.style.right = first;
      }
 }
 
