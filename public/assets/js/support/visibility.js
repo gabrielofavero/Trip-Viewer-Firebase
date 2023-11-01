@@ -75,10 +75,10 @@ function _loadNightModeToggleHTML() {
      }
  }
  
-
 function _loadDarkMode() {
+     const name = _getCSSname();
      var link = document.createElement("link");
-     link.href = `assets/css/${_getCSSname()}-dark.css`;
+     link.href = `assets/css/${name}/${name}-dark.css`;
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
@@ -92,8 +92,9 @@ function _loadDarkMode() {
 }
 
 function _loadLightMode() {
+     const name = _getCSSname();
      var link = document.createElement("link");
-     link.href = `assets/css/${_getCSSname()}.css`;
+     link.href = `assets/css/${name}/${name}.css`;
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
@@ -154,6 +155,26 @@ function _autoVisibility() {
 function _lightModeLite() {
      _setLightModeVariable();
      _loadNightModeToggleHTML();
+}
+
+function _changeStyle(elementCode, property, value) {
+     var element = document.querySelectorAll(elementCode)
+     for (let i = 0; i < element.length; i++) {
+          element[i].style[property] = value;
+     }
+}
+
+function _getEquivalentColorAndPosition(claro) {
+     const claroObj = CONFIG.cores.claro;
+     const escuroObj = CONFIG.cores.escuro;
+
+     for (let i = 0; i < claroObj.length; i++) {
+          if (claroObj[i] === claro) {
+               return { position: i, equivalent: escuroObj[i] };
+          }
+     }
+
+     return {};
 }
 
 function _changeThemeColor(color) {

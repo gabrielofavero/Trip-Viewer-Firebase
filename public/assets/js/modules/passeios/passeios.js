@@ -112,7 +112,7 @@ function _getLinkType() {
 function _getPlacesHref(code, city) {
   if (code == "mapa") {
     return FIREBASE_DATA.cidades[city].myMaps;
-  } else return `places.html?city=${getPlacesSelectValue()}&type=${code}`;
+  } else return `passeios.html?city=${getPlacesSelectValue()}&type=${code}`;
 }
 
 

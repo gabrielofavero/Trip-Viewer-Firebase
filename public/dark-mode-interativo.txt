@@ -1,0 +1,27 @@
+Ainda não Implementado
+
+_changeStyle('body', 'background', CONFIG.cores[modo][0]);
+_changeStyle('body', 'color', CONFIG.cores[modo][1]);
+_changeStyle('body', 'background-color', CONFIG.cores[modo][2]);
+_changeStyle('strong', 'color', CONFIG.cores[modo][3]);
+_changeStyle('#preloader', 'background', CONFIG.cores[modo][2]);
+_changeStyle('#preloader:before', 'border-top-color', CONFIG.cores[modo][2]);
+_changeStyle('#preloader:before', 'border-bottom-color', CONFIG.cores[modo][2]);
+_changeStyle('#header', 'background', CONFIG.cores[modo][2]);
+_changeStyle('#header', 'border-right', `1px solid ${CONFIG.cores[modo][5]}`);
+_changeStyle('.nav-menu a', 'color', CONFIG.cores[modo][6]);
+_changeStyle('.nav-menu a', 'background', CONFIG.cores[modo][7]);
+_changeStyle('.nav-menu a:focus', 'color', CONFIG.cores[modo][6]);
+_changeStyle('.nav-menu a:focus', 'background', CONFIG.cores[modo][7]);
+_changeStyle('.nav-menu a span', 'color', CONFIG.cores[modo][6]);
+_changeStyle('.nav-menu a:focus span', 'color', CONFIG.cores[modo][6]);
+_changeStyle('.top-bar', 'background-color', CONFIG.cores[modo][6]);
+_changeStyle('.top-bar', 'color', CONFIG.cores[modo][6]);
+
+_changeStyle('.back-to-top', 'background', tipo);
+_changeStyle('.back-to-top:hover', 'background', tipo);
+_changeStyle('#preloader:before', 'border', `6px solid ${tipo}`);
+_changeStyle('.nav-menu a:hover', 'background', tipo);
+_changeStyle('.nav-menu .active', 'background', tipo);
+_changeStyle('.nav-menu a:hover', 'background', tipo);
+_changeStyle('.nav-menu .active', 'background', tipo);

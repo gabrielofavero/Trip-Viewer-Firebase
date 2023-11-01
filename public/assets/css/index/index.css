@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'Chelos';
-  src: url('../fonts/Chelos\ Free.ttf') format('truetype');
+  src: url('../../fonts/Chelos\ Free.ttf') format('truetype');
 }
 
 body, html {

@@ -103,12 +103,14 @@ export const getConfig = functions.https.onRequest(async (request, response) => 
     const information = await _getData('config/information', response);
     const places = await _getData('config/places', response);
     const transportes = await _getData('config/transportes', response);
+    const cores = await _getData('config/cores', response);
 
     const config = {
         callSyncOrder: callSyncOrder,
         information: information,
         places: places,
-        transportes: transportes
+        transportes: transportes,
+        cores: cores
     };
 
     response.send(config);
