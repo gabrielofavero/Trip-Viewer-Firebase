@@ -2,8 +2,11 @@
 
 // ======= LOADERS =======
 function _loadP() {
-  _loadExitButton();
   _loadVisibilityPasseio();
+
+  document.getElementById("closeButton").onclick = function () {
+    window.parent._closeLightbox();
+  };
 
   _logger(INFO, "Passeio HTML Page Loaded");
   const NOME = "nome";
@@ -140,14 +143,6 @@ function _loadP() {
   } else {
     _logger(ERROR, "O Código não foi localizado na base de dados");
   }
-}
-
-function _loadExitButton() {
-  let close = document.getElementById("closeButtonIOS");
-  close.style.display = "block";
-  close.onclick = function () {
-    window.parent._closeLightbox();
-  };
 }
 
 // ======= GETTERS =======

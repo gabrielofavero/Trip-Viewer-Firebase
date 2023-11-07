@@ -1,44 +1,34 @@
 // ======= Visibility JS =======
-
 const INDEX = "index";
 const VIAGEM = "viagem"
-const PASSEIO = "places";
+const PASSEIOS = "passeios";
 var THEME_COLOR;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
+var CUSTOM_COLORS = false;
 
 // ======= LOADERS =======
 function _loadVisibility() {
+     try {
+          if (FIRESTORE_DATA && FIRESTORE_DATA.cores) {
+               CUSTOM_COLORS = true;
+               CLARO = FIRESTORE_DATA.cores.claro;
+               ESCURO = FIRESTORE_DATA.cores.escuro;
+          }
+     } catch (e) { }
+
+     _saveLocalColors();
      _autoVisibility();
+
      document.getElementById("night-mode").onclick = function () {
           _switchVisibility();
      };
      window.addEventListener("resize", function () {
           _adjustButtonsPosition();
      });
-     _loadThemeColor();
-     if (_isViagemHTML()) {
-          _loadLogoColors();
-     }
-     document.getElementById("trip-viewer-text").style.color = THEME_COLOR;
 }
 
-function _loadThemeColor(){
-     try {
-          if (FIRESTORE_DATA && FIRESTORE_DATA.cores){
-               CLARO = FIRESTORE_DATA.cores.claro;
-               ESCURO = FIRESTORE_DATA.cores.escuro;
-          }
-     } catch (e) { }
-
-     if (_isOnDarkMode()){
-          THEME_COLOR = CLARO;
-     } else {
-          THEME_COLOR = ESCURO;
-     }
-}
-
-function _loadLogoColors(){
+function _loadLogoColors() {
      const lightColor1 = document.getElementById("light-color-1");
      const lightColor2 = document.getElementById("light-color-2");
      const darkColor1 = document.getElementById("dark-color-1");
@@ -51,11 +41,12 @@ function _loadLogoColors(){
 }
 
 function _loadVisibilityPasseio() {
-     if (localStorage.getItem("darkMode") === "true") {
+     if (_isOnDarkMode()) {
           _loadDarkMode();
      } else {
           _loadLightMode();
      }
+     
      _adjustButtonsPosition();
      document.getElementById("night-mode").style.display = "block";
      document.getElementById("night-mode").onclick = function () {
@@ -63,73 +54,91 @@ function _loadVisibilityPasseio() {
      };
 }
 
-function _loadNightModeToggleHTML() {
+function _loadToggle() {
      var element = document.getElementById("night-mode");
      var darkMode = _isOnDarkMode();
      if (darkMode && element.classList.contains("bx-moon")) {
-         element.classList.remove("bx-moon");
-         element.classList.add("bx-sun");
+          element.classList.remove("bx-moon");
+          element.classList.add("bx-sun");
      } else if (!darkMode && element.classList.contains("bx-sun")) {
-         element.classList.remove("bx-sun");
-         element.classList.add("bx-moon");
+          element.classList.remove("bx-sun");
+          element.classList.add("bx-moon");
      }
- }
- 
+}
+
 function _loadDarkMode() {
-     const name = _getCSSname();
+     localStorage.setItem("darkMode", true);
+     THEME_COLOR = ESCURO;
+     
+     const name = _getHTMLpage();
      var link = document.createElement("link");
      link.href = `assets/css/${name}/${name}-dark.css`;
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
-     _setDarkModeVariable();
-     _loadNightModeToggleHTML();
-     _changeThemeColor("#303030");
-     localStorage.setItem("darkMode", true);
-     if (_isViagemHTML()) {
+     
+     _loadToggle();
+     _ChangeBarColorIOS("#303030");
+
+     const html = _getHTMLpage();
+     if (html == VIAGEM || html == PASSEIOS) {
           _loadTripViewerLogo();
+     }
+
+     if (CUSTOM_COLORS) {
+          _applyCustomColors();
      }
 }
 
 function _loadLightMode() {
-     const name = _getCSSname();
+     localStorage.setItem("darkMode", false);
+     THEME_COLOR = CLARO;
+     
+     const name = _getHTMLpage();
      var link = document.createElement("link");
      link.href = `assets/css/${name}/${name}.css`;
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
-     _setLightModeVariable();
-     _loadNightModeToggleHTML();
-     _changeThemeColor("#fff");
-     localStorage.setItem("darkMode", false);
-     if (_isViagemHTML()) {
+     
+     _loadToggle();
+     _ChangeBarColorIOS("#fff");
+
+     const html = _getHTMLpage();
+     if (html == VIAGEM || html == PASSEIOS) {
           _loadTripViewerLogo();
+     }
+
+     if (CUSTOM_COLORS) {
+          _applyCustomColors();
+     }
+}
+
+function _loadLightModeLite() {
+     localStorage.setItem("darkMode", false);
+     THEME_COLOR = CLARO;
+
+     _loadToggle();
+
+     const html = _getHTMLpage();
+     if (html == VIAGEM || html == PASSEIOS) {
+          _loadTripViewerLogo();
+     }
+
+     if (CUSTOM_COLORS) {
+          _applyCustomColors();
      }
 }
 
 // ======= GETTERS =======
-function _isOnDarkMode() {
-     return localStorage.getItem("darkMode") === "true";
-}
 
-function _getCSSname() {
-     switch (_getHTMLpage()) {
-          case INDEX:
-               return "index";
-          case PASSEIO:
-               return "places";
-          case VIAGEM:
-               return "viagem";
-     }
+function _getLocalColors(){
+     return JSON.parse(localStorage.getItem("localColors"));
 }
 
 // ======= SETTERS =======
 
-function _setDarkModeVariable(){
-     localStorage.setItem("darkMode", true);
-}
-
-function _setLightModeVariable(){
+function _setLightModeVariable() {
      localStorage.setItem("darkMode", false);
 }
 
@@ -140,7 +149,6 @@ function _switchVisibility() {
           _loadDarkMode();
      }
      _adjustButtonsPosition();
-     _loadThemeColor();
 }
 
 function _autoVisibility() {
@@ -148,19 +156,89 @@ function _autoVisibility() {
      if (now >= 18 || now < 6) {
           _loadDarkMode();
      } else {
-          _lightModeLite();
+          _loadLightModeLite();
      }
 }
 
-function _lightModeLite() {
-     _setLightModeVariable();
-     _loadNightModeToggleHTML();
+function _applyCustomColors() {
+     const html = _getHTMLpage()
+     if (html == VIAGEM || html == PASSEIOS) {
+          _loadLogoColors();
+     }
+
+     const text = document.getElementById("trip-viewer-text");
+     text.style.color = THEME_COLOR;
+
+     _clearCustomColors();
+     _addCSSRule('.back-to-top', 'background', THEME_COLOR);
+     _addCSSRule('.back-to-top:hover', 'background', THEME_COLOR);
+     _addCSSRule('.nav-menu a:hover', 'background', THEME_COLOR);
+     _addCSSRule('.nav-menu .active', 'background', THEME_COLOR);
+     _addCSSRule('.nav-menu .active:focus', 'background', THEME_COLOR);
+     _addCSSRule('.nav-menu li:hover>a', 'background', THEME_COLOR);
+     _addCSSRule('.mobile-nav-active .mobile-nav-toggle', 'background-color', THEME_COLOR);
+     _addCSSRule('#hero p span', 'color', THEME_COLOR);
+     _addCSSRule('#hero .social-links a:hover', 'color', THEME_COLOR);
+     _addCSSRule('.section-title h2::after', 'background', THEME_COLOR);
+     _addCSSRule('.about .content ul i', 'color', THEME_COLOR);
+     _addCSSRule('.facts .count-box i', 'background', THEME_COLOR);
+     _addCSSRule('.about .count-box i', 'background', THEME_COLOR);
+     _addCSSRule('.skills .progress-bar', 'background-color', THEME_COLOR);
+     _addCSSRule('.about .progress-bar', 'background-color', THEME_COLOR);
+     _addCSSRule('#calendarTitle', 'background', THEME_COLOR);
+     _addCSSRule('.resume .resume-item', 'border-left', `2px solid ${THEME_COLOR}`);
+     _addCSSRule('.portfolio #portfolio-flters li:hover', 'color', THEME_COLOR);
+     _addCSSRule('.portfolio #portfolio-flters li.filter-active', 'color', THEME_COLOR);
+     _addCSSRule('.portfolio .portfolio-wrap .portfolio-links a:hover', 'color', THEME_COLOR);
+     _addCSSRule('.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet', 'border', `1px solid ${THEME_COLOR}`);
+     _addCSSRule('.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active', 'background-color', THEME_COLOR);
+     _addCSSRule('.testimonials .swiper-pagination .swiper-pagination-bullet', 'border', `1px solid ${THEME_COLOR}`);
+     _addCSSRule('.testimonials .swiper-pagination .swiper-pagination-bullet-active', 'background-color', THEME_COLOR);
+     _addCSSRule('.contact .info i', 'color', THEME_COLOR);
+     _addCSSRule('.contact .info .email:hover i', 'background', THEME_COLOR);
+     _addCSSRule('.contact .info .address:hover i', 'background', THEME_COLOR);
+     _addCSSRule('.contact .info .phone:hover i', 'background', THEME_COLOR);
+     _addCSSRule('#botao', 'background', THEME_COLOR);
+     _addCSSRule('#botao-right', 'background', THEME_COLOR);
+     _addCSSRule('#botao-salvar', 'background', THEME_COLOR);
+     _addCSSRule('#botao:hover', 'background', THEME_COLOR);
+     _addCSSRule('#botao-right:hover', 'background', THEME_COLOR);
+     _addCSSRule('#botao-salvar:hover', 'background', THEME_COLOR);
+     _addCSSRule('#circulo', 'color', THEME_COLOR);
+     _addCSSRule('#circulo-mini', 'color', THEME_COLOR);
+     _addCSSRule('#circulo:hover', 'background', THEME_COLOR);
+     _addCSSRule('#circulo-mini:hover', 'background', THEME_COLOR);
+     _addCSSRule('#footer .social-links a', 'background', THEME_COLOR);
+     _addCSSRule('#footer .social-links a:hover', 'background', THEME_COLOR);
+     _addCSSRule('#previous', 'background-color', THEME_COLOR);
+     _addCSSRule('#next', 'background-color', THEME_COLOR);
+     _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
+     _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
 }
 
-function _changeStyle(elementCode, property, value) {
-     var element = document.querySelectorAll(elementCode)
-     for (let i = 0; i < element.length; i++) {
-          element[i].style[property] = value;
+function _addCSSRule(selector, property, value) {
+     const rule = `${property}: ${value};`;
+     var styleElement = document.getElementById('custom-styles');
+
+     if (!styleElement) {
+          styleElement = document.createElement('style');
+          styleElement.id = 'custom-styles';
+          document.head.appendChild(styleElement);
+     }
+
+     var styleSheet = styleElement.sheet;
+
+     if (styleSheet.insertRule) {
+          styleSheet.insertRule(selector + '{ ' + rule + ' }', 0);
+     } else if (styleSheet.addRule) {
+          styleSheet.addRule(selector, rule, 0);
+     }
+}
+
+function _clearCustomColors() {
+     var styleElement = document.getElementById('custom-styles');
+     if (styleElement) {
+          styleElement.parentNode.removeChild(styleElement);
      }
 }
 
@@ -177,7 +255,7 @@ function _getEquivalentColorAndPosition(claro) {
      return {};
 }
 
-function _changeThemeColor(color) {
+function _ChangeBarColorIOS(color) {
      // Useful for iOS devices     
      let metaThemeColor = document.querySelector("meta[name=theme-color]");
      metaThemeColor.setAttribute("content", color);
@@ -188,7 +266,6 @@ function _loadTripViewerLogo() {
           const header2 = document.getElementById("header2");
           const logoLight = document.getElementById("logo-light");
           const logoDark = document.getElementById("logo-dark");
-          const text = document.getElementById("trip-viewer-text");
           if (_isOnDarkMode()) {
                logoLight.style.display = "none";
                logoDark.style.display = "block";
@@ -202,18 +279,15 @@ function _loadTripViewerLogo() {
                     header2.src = FIRESTORE_DATA.imagem.claro;
                }
           }
-          text.style.color = THEME_COLOR;
      } catch (e) { }
 }
 
 function _adjustButtonsPosition() {
      const nightMode = document.getElementById("night-mode");
      const first = "10px";
-     const second = "60px";
-     const third = "100px";
-     const fourth = "140px";
-
-     // Padrão: Desktop
+     const second = "50px";
+     const third = "90px";
+     const fourth = "130px";
 
      switch (_getHTMLpage()) {
           case VIAGEM:
@@ -229,7 +303,9 @@ function _adjustButtonsPosition() {
                     nightMode.style.right = third;
                }
                break;
-          case PASSEIO:
+          case PASSEIOS:
+               const closeButton = document.getElementById("closeButton");
+               closeButton.style.right = first;
                nightMode.style.right = second;
                break;
           case INDEX:
@@ -244,3 +320,34 @@ function _disableScroll() {
 function _enableScroll() {
      document.body.style.overflow = "auto";
 }
+
+function _saveLocalColors() {
+     var localColors = {
+          claro: CLARO,
+          escuro: ESCURO
+     };
+     localStorage.setItem("localColors", JSON.stringify(localColors));
+}
+
+// ======= CHECKERS =======
+function _isOnDarkMode() {
+     return localStorage.getItem("darkMode") === "true";
+}
+
+// _addCSSRule('body', 'background', CONFIG.cores[modo][0]);
+// _addCSSRule('body', 'color', CONFIG.cores[modo][1]);
+// _addCSSRule('body', 'background-color', CONFIG.cores[modo][2]);
+// _addCSSRule('strong', 'color', CONFIG.cores[modo][3]);
+// _addCSSRule('#preloader', 'background', CONFIG.cores[modo][2]);
+// _addCSSRule('#preloader:before', 'border-top-color', CONFIG.cores[modo][2]);
+// _addCSSRule('#preloader:before', 'border-bottom-color', CONFIG.cores[modo][2]);
+// _addCSSRule('#header', 'background', CONFIG.cores[modo][2]);
+// _addCSSRule('#header', 'border-right', `1px solid ${CONFIG.cores[modo][5]}`);
+// _addCSSRule('.nav-menu a', 'color', CONFIG.cores[modo][6]);
+// _addCSSRule('.nav-menu a', 'background', CONFIG.cores[modo][7]);
+// _addCSSRule('.nav-menu a:focus', 'color', CONFIG.cores[modo][6]);
+// _addCSSRule('.nav-menu a:focus', 'background', CONFIG.cores[modo][7]);
+// _addCSSRule('.nav-menu a span', 'color', CONFIG.cores[modo][6]);
+// _addCSSRule('.nav-menu a:focus span', 'color', CONFIG.cores[modo][6]);
+// _addCSSRule('.top-bar', 'background-color', CONFIG.cores[modo][6]);
+// _addCSSRule('.top-bar', 'color', CONFIG.cores[modo][6]);

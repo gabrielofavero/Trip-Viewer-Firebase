@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Chelos';
+  src: url('../../fonts/Chelos\ Free.ttf') format('truetype');
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #E2E2E2;
@@ -74,10 +79,6 @@ section {
 
 .section-title p {
   margin-bottom: 0;
-}
-
-#main-2 {
-  margin: 20px;
 }
 
 #accordion {
@@ -175,7 +176,6 @@ section {
   border-top: 1px solid #DADADA;
 }
 
-.close-button,
 .custom-nav-toggle {
   position: absolute;
   right: 10px;
@@ -196,21 +196,11 @@ section {
   right: 50px;
 }
 
-.close-button i,
 .custom-nav-toggle i {
   color: #45505B;
 }
 
-#closeButtonIOS,
-#night-mode {
-  display: none;
-}
-
 @media screen and (max-width: 600px) {
-  #main-1 {
-    margin-top: 50px;
-  }
-
   #accordion {
     width: 400px;
   }
@@ -247,4 +237,226 @@ section {
     padding-left: none;
     margin-left: -16px;
   }
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/**
+* Desktop Navigation 
+*/
+.nav-menu {
+  padding: 0;
+  display: block;
+}
+
+.nav-menu * {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-menu>ul>li {
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav-menu a,
+.nav-menu a:focus {
+  display: flex;
+  align-items: center;
+  color: #F2F2F2;
+  padding: 10px 18px;
+  margin-bottom: 8px;
+  transition: 0.3s;
+  font-size: 15px;
+  border-radius: 50px;
+  background: #303030;
+  height: 56px;
+  width: 100%;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.nav-menu a i,
+.nav-menu a:focus i {
+  font-size: 20px;
+}
+
+.nav-menu a span,
+.nav-menu a:focus span {
+  padding: 0 5px 0 7px;
+  color: #F2F2F2;
+}
+
+@media (min-width: 992px) {
+
+  .nav-menu a,
+  .nav-menu a:focus {
+    width: 56px;
+  }
+
+  .nav-menu a span,
+  .nav-menu a:focus span {
+    display: none;
+    color: #fff;
+  }
+}
+
+.nav-menu a:hover,
+.nav-menu .active,
+.nav-menu .active:focus,
+.nav-menu li:hover>a {
+  color: #303030;
+  background: #7f75b6;
+}
+
+.nav-menu a:hover span,
+.nav-menu .active span,
+.nav-menu .active:focus span,
+.nav-menu li:hover>a span {
+  color: #303030;
+}
+
+.nav-menu a:hover,
+.nav-menu li:hover>a {
+  width: 100%;
+  color: #303030;
+}
+
+.nav-menu a:hover span,
+.nav-menu li:hover>a span {
+  display: block;
+}
+
+/**
+* Mobile Navigation 
+*/
+.mobile-nav-toggle,
+.custom-nav-toggle {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 9998;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  outline: none !important;
+  line-height: 0;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 5px;
+}
+
+.custom-nav-toggle {
+  right: 50px;
+  top: 25px;
+}
+
+.top-bar {
+  position: fixed;
+  background-color: #303030;
+  width: 100%;
+  height: 60px;
+  border-bottom: 0.5px solid #414040;
+  z-index: 9999;
+}
+
+#logo-light, #logo-dark {
+  height: 25px;
+  margin-top: 18px;
+  margin-left: 20px;
+}
+
+#trip-viewer-text {
+  height: 30px;
+  font-size: 30px;
+  margin-top: -30px;
+  margin-left: 55px;
+  font-family: Chelos;
+  color: #7f75b6;
+}
+
+.mobile-nav-toggle i,
+.custom-nav-toggle i {
+  color: #F2F2F2;
+}
+
+.mobile-nav-active {
+  overflow: hidden;
+}
+
+.mobile-nav-active #header {
+  left: 0;
+}
+
+.mobile-nav-active .mobile-nav-toggle {
+  color: #fff;
+  background-color: #7f75b6;
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  background: #404040;
+  color: #F2F2F2;
+  font-size: 14px;
+  text-align: center;
+  padding: 30px 0;
+}
+
+#footer h3 {
+  font-size: 36px;
+  font-weight: 700;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+#footer p {
+  font-size: 15;
+  font-style: italic;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+#footer .social-links {
+  margin-bottom: 20px;
+  margin-top: -20px;
+}
+
+#footer .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #7f75b6;
+  color: #303030;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+
+#footer .social-links a:hover {
+  background: #7f75b6;
+  color: #fff;
+  text-decoration: none;
+}
+
+#footer .copyright {
+  margin: 0 0 5px 0;
+}
+
+#footer .credits {
+  font-size: 13px;
+}
+
+.pessoa-img {
+  width: 36px;
+  height: 36px;
 }

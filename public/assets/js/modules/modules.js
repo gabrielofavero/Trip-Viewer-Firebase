@@ -4,7 +4,7 @@
 function _start() {
   // Visibility
   _loadVisibility();
-  _loadNightModeToggleHTML();
+  _loadToggle();
 
   // Header
   _loadHeader();
