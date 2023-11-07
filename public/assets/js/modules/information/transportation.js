@@ -147,12 +147,15 @@ function _getPeriodo(datas) {
 }
 
 function _getReservaEmpresa(reserva, empresa) {
+
+  const empresaCaps = empresa ? empresa.charAt(0).toUpperCase() + empresa.slice(1) : "";
+
   if (reserva && empresa) {
-    return `Reserva ${reserva} na empresa ${empresa}. `;
+    return `Reserva ${reserva} na empresa ${empresaCaps}. `;
   } else if (reserva) {
     return `Reserva ${reserva}. `;
   } else if (empresa) {
-    return `Empresa ${empresa}. `;
+    return `Empresa ${empresaCaps}. `;
   } else return "";
 }
 
