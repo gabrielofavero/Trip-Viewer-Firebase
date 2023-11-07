@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
         mirror: false
       })
     });
-    _loadVisibility();
+    _loadVisibilityIndex();
     _adjustButtonsPosition();
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
