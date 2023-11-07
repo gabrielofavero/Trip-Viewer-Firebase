@@ -12,10 +12,17 @@ function _loadVisibility() {
      try {
           if (FIRESTORE_DATA && FIRESTORE_DATA.cores) {
                CUSTOM_COLORS = true;
+               localStorage.setItem("customColors", true);
                CLARO = FIRESTORE_DATA.cores.claro;
                ESCURO = FIRESTORE_DATA.cores.escuro;
+          } else {
+               CUSTOM_COLORS = false;
+               localStorage.setItem("customColors", false);
           }
-     } catch (e) { }
+     } catch (e) {
+          CUSTOM_COLORS = false;
+          localStorage.setItem("customColors", false); 
+     }
 
      _saveLocalColors();
      _autoVisibility();
@@ -41,13 +48,19 @@ function _loadLogoColors() {
 }
 
 function _loadVisibilityPasseio() {
+     const localColors = _getLocalColors();
+     if (localColors) {
+          CLARO = localColors.claro;
+          ESCURO = localColors.escuro;
+     }
+
      if (_isOnDarkMode()) {
           _loadDarkMode();
      } else {
           _loadLightMode();
      }
-     
      _adjustButtonsPosition();
+
      document.getElementById("night-mode").style.display = "block";
      document.getElementById("night-mode").onclick = function () {
           _switchVisibility();
@@ -85,7 +98,7 @@ function _loadDarkMode() {
           _loadTripViewerLogo();
      }
 
-     if (CUSTOM_COLORS) {
+     if (_isCustomColorsActive()) {
           _applyCustomColors();
      }
 }
@@ -109,7 +122,7 @@ function _loadLightMode() {
           _loadTripViewerLogo();
      }
 
-     if (CUSTOM_COLORS) {
+     if (_isCustomColorsActive()) {
           _applyCustomColors();
      }
 }
@@ -125,7 +138,7 @@ function _loadLightModeLite() {
           _loadTripViewerLogo();
      }
 
-     if (CUSTOM_COLORS) {
+     if (_isCustomColorsActive()) {
           _applyCustomColors();
      }
 }
@@ -133,7 +146,11 @@ function _loadLightModeLite() {
 // ======= GETTERS =======
 
 function _getLocalColors(){
-     return JSON.parse(localStorage.getItem("localColors"));
+     try {
+          return JSON.parse(localStorage.getItem("localColors"));
+     } catch (e) {
+          return null;
+     }
 }
 
 // ======= SETTERS =======
@@ -162,14 +179,25 @@ function _autoVisibility() {
 
 function _applyCustomColors() {
      const html = _getHTMLpage()
-     if (html == VIAGEM || html == PASSEIOS) {
-          _loadLogoColors();
+     _clearCustomColors();
+     switch (html) {
+          case VIAGEM:
+               _loadLogoColors();
+               _applyCustomColorsViagem();
+               break;
+          case PASSEIOS:
+               _loadLogoColors();
+               _applyCustomColorsPasseios();
+               break;
+          default:
+               break;
      }
+}
 
+function _applyCustomColorsViagem() {
      const text = document.getElementById("trip-viewer-text");
      text.style.color = THEME_COLOR;
 
-     _clearCustomColors();
      _addCSSRule('.back-to-top', 'background', THEME_COLOR);
      _addCSSRule('.back-to-top:hover', 'background', THEME_COLOR);
      _addCSSRule('.nav-menu a:hover', 'background', THEME_COLOR);
@@ -214,6 +242,12 @@ function _applyCustomColors() {
      _addCSSRule('#next', 'background-color', THEME_COLOR);
      _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
      _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
+}
+
+function _applyCustomColorsPasseios() {
+     const text = document.getElementById("trip-viewer-text");
+     text.style.color = THEME_COLOR;
+     _addCSSRule('.section-title h2::after', 'background', THEME_COLOR);
 }
 
 function _addCSSRule(selector, property, value) {
@@ -334,20 +368,11 @@ function _isOnDarkMode() {
      return localStorage.getItem("darkMode") === "true";
 }
 
-// _addCSSRule('body', 'background', CONFIG.cores[modo][0]);
-// _addCSSRule('body', 'color', CONFIG.cores[modo][1]);
-// _addCSSRule('body', 'background-color', CONFIG.cores[modo][2]);
-// _addCSSRule('strong', 'color', CONFIG.cores[modo][3]);
-// _addCSSRule('#preloader', 'background', CONFIG.cores[modo][2]);
-// _addCSSRule('#preloader:before', 'border-top-color', CONFIG.cores[modo][2]);
-// _addCSSRule('#preloader:before', 'border-bottom-color', CONFIG.cores[modo][2]);
-// _addCSSRule('#header', 'background', CONFIG.cores[modo][2]);
-// _addCSSRule('#header', 'border-right', `1px solid ${CONFIG.cores[modo][5]}`);
-// _addCSSRule('.nav-menu a', 'color', CONFIG.cores[modo][6]);
-// _addCSSRule('.nav-menu a', 'background', CONFIG.cores[modo][7]);
-// _addCSSRule('.nav-menu a:focus', 'color', CONFIG.cores[modo][6]);
-// _addCSSRule('.nav-menu a:focus', 'background', CONFIG.cores[modo][7]);
-// _addCSSRule('.nav-menu a span', 'color', CONFIG.cores[modo][6]);
-// _addCSSRule('.nav-menu a:focus span', 'color', CONFIG.cores[modo][6]);
-// _addCSSRule('.top-bar', 'background-color', CONFIG.cores[modo][6]);
-// _addCSSRule('.top-bar', 'color', CONFIG.cores[modo][6]);
+function _isCustomColorsActive() {
+     const html = _getHTMLpage();
+     if (html === PASSEIOS) {
+          return localStorage.getItem("customColors") === "true";
+     } else {
+          return CUSTOM_COLORS
+     }
+}
