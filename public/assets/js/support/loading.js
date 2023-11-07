@@ -37,7 +37,7 @@ function _displayErrorMessage(errorMessage = "") {
     errorTitle.innerText = "Erro ao carregar a página 🙁";
     errorText.appendChild(errorTitle);
     const errorDescription = document.createElement('p');
-    errorDescription.innerHTML = "Não foi possível carregar a página. <a href=\"mailto:example@example.com\">Contate o administrador</a> para solucionar o problema.";
+    errorDescription.innerHTML = "Não foi possível carregar a página. <a href=\"mailto:gabriel.o.favero@live.com\">Contate o administrador</a> para solucionar o problema.";
     errorText.appendChild(errorDescription);
 
     const stackTrace = (new Error()).stack;
