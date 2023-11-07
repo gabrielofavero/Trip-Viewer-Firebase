@@ -1,25 +1,28 @@
 ![alt text](https://github.com/gabrielofavero/Trip-Viewer-Firebase/blob/master/public/assets/img/logo-full.png?raw=true)
 
 ## Doing
-- Inserir autenticação no back-end e front-end;
+- FRONT-END: Criar página de login;
+- Criar sistema de compartilhamento de viagens via link;
 
 ## TO-DO
-- FRONT-END: Criar página de login;
 - FRONT-END: Criar página principal (seleção e de viagens);
 - FRONT-END: Criar página de configurações;
 - FRONT-END: Criar página de edição/criação de viagens;
 - FRONT-END: Criar página de edição/criação de passeios;
 - Inserir funções de escrita principais no back-end (get.ts);
-- Criar sistema de compartilhamento de viagens via link;
 - Inserir API Google Maps para busca de passeios;
-- Automatizar cores tema definidas pelo usuário;
 - Criar Keypoints personalizáveis.
 
 ## Done
 
+### 07/11/2023
+- Automatizadas cores tema definidas pelo usuário;
+- Corrigido bugs do modo escuro;
+
 ### 31/10/2023
 - Criado esqueleto para a Home Page (Login);
 - Corrigido bugs do modo escuro;
+- Inserir autenticação no back-end e front-end;
 
 ### 29/10/2023
 - Bug Fixes;
