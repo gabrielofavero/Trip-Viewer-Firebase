@@ -1,11 +1,14 @@
 ![alt text](https://github.com/gabrielofavero/Trip-Viewer-Firebase/blob/master/public/assets/img/logo-full.png?raw=true)
 
+# Tarefas
+
 ## Doing
-- FRONT-END: Criar página de login;
+- Criar Página de Login;
 - Criar sistema de compartilhamento de viagens via link;
 
 ## TO-DO
-- FRONT-END: Criar página principal (seleção e de viagens);
+### Prioridade Alta
+- Criar Página de usuário logado (Minhas Viagens e Configurações)
 - FRONT-END: Criar página de configurações;
 - FRONT-END: Criar página de edição/criação de viagens;
 - FRONT-END: Criar página de edição/criação de passeios;
@@ -53,3 +56,7 @@
 - Importar HTML, CSS e JS do projeto estático;
 - Desenvolver estrutura básica do back-end via Cloud Functions (NodeJS com TypeScript);
 - Criar funções de leitura principais no back-end (get.ts);
+
+# Bugs Conhecidos
+1. Em index.html, o logo não muda de cor no modo escuro (apenas a fonte);
+2. Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
