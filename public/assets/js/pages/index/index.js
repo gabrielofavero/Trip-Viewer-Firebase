@@ -220,6 +220,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     _loadVisibilityIndex();
     _adjustButtonsPosition();
+
+    document.getElementById('google-login-button').addEventListener('click', function () {
+      _signInGoogle();
+    });
+
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
 

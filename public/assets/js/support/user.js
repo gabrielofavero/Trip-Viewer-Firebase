@@ -1,7 +1,6 @@
-
 var USER;
 
-function _signIn() {
+function _signInGoogle() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function (result) {
         USER = result.user;
