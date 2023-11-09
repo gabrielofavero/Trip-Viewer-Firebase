@@ -225,6 +225,15 @@ document.addEventListener('DOMContentLoaded', function () {
       _signInGoogle();
     });
 
+    document.getElementById('viagem-continue').addEventListener('click', function () {
+      let viagem = document.getElementById('viagem-input').value;
+      if (viagem) {
+        window.location.href = `viagem?v=${viagem.trim()}`;
+      } else {
+        document.getElementById('viagem-reminder').style.display = 'block';
+      }
+    });
+
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
 

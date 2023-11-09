@@ -52,6 +52,38 @@ async function _getUsuario(request: functions.Request, response: functions.Respo
    return await _getData(path, response) as unknown as interfaces.Usuario;
 }
 
+// Retorna a viagem a partir da referência
+async function _getViagem(viagemRef: interfaces.Referencia | string, response: functions.Response) {
+    var viagem;
+    
+    if (typeof viagemRef === 'string') {
+        viagem = await _getData(viagemRef, response) as unknown as interfaces.Viagem;
+    } else {
+        viagem = await _getRefData(viagemRef, response) as unknown as interfaces.Viagem;
+    }4
+        
+    const transportes = await _getRefData(viagem.transportesRef, response);
+    viagem.transportes = transportes;
+    
+    const programacoes = await _getRefData(viagem.programacoesRef, response);
+    viagem.programacoes = programacoes;
+    
+    const hospedagens = await _getRefData(viagem.hospedagensRef, response);
+    viagem.hospedagens = hospedagens;
+
+    for (let i = 0; i < viagem.cidades.length; i++) {
+        const passeiosCidade = await _getRefData(viagem.cidades[i].passeiosRef, response);
+        viagem.cidades[i].passeios = passeiosCidade;
+    }
+
+    for (let i = 0; i < viagem.cidades.length; i++) {
+        const passeiosCidade = await _getRefData(viagem.cidades[i].passeiosRef, response);
+        viagem.cidades[i].passeios = passeiosCidade;
+    }
+
+    return viagem;
+}
+
 function _checkParam(param: any, name: string, response: functions.Response) {
     if (!param) {
         response.status(400).send(`O parâmetro '${name}' é obrigatório.`);
@@ -68,27 +100,7 @@ export const getTripData = functions.https.onRequest(async (request, response) =
     var viagens = [];
 
     for (const viagemRef of user.viagens) {
-        var viagem = await _getRefData(viagemRef, response) as unknown as interfaces.Viagem;
-        
-        const transportes = await _getRefData(viagem.transportesRef, response);
-        viagem.transportes = transportes;
-        
-        const programacoes = await _getRefData(viagem.programacoesRef, response);
-        viagem.programacoes = programacoes;
-        
-        const hospedagens = await _getRefData(viagem.hospedagensRef, response);
-        viagem.hospedagens = hospedagens;
-
-        for (let i = 0; i < viagem.cidades.length; i++) {
-            const passeiosCidade = await _getRefData(viagem.cidades[i].passeiosRef, response);
-            viagem.cidades[i].passeios = passeiosCidade;
-        }
-
-        for (let i = 0; i < viagem.cidades.length; i++) {
-            const passeiosCidade = await _getRefData(viagem.cidades[i].passeiosRef, response);
-            viagem.cidades[i].passeios = passeiosCidade;
-        }
-
+        const viagem = await _getViagem(viagemRef, response);
         viagens.push(viagem);
     }
 
@@ -135,4 +147,12 @@ export const getBackup = functions.https.onRequest(async (request, response) => 
         console.error('Erro ao fazer backup:', error);
         response.status(500).send('Erro ao fazer backup dos dados.');
     }
+});
+
+// Exporta dados de uma viagem específica
+export const getSingleTrip = functions.https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    const viagemRef = request.query.viagemRef as string;
+    var viagem = _getViagem(viagemRef, response);
+    response.send(viagem);
 });

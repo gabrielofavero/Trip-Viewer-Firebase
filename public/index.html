@@ -85,15 +85,18 @@
   <!-- ======= Hero ======= -->
   <section id="hero">
     <div class="content-box">
-      <p>Isso é <span class="typed chelos" data-typed-items="Las Vegas, New York, São Paulo, TripViewer"></span></p>
+      <div id="index-title"><p>Isso é <span class="typed" data-typed-items="Las Vegas, New York, São Paulo, TripViewer"></span></p></div>
     
       <div class="login-box">
-        Entrar
-        <button id="google-login-button">Login com o Google</button>
+        <button class="login-item" id="google-login-button"><i class="iconify" data-icon="devicon:google"></i> Login com o Google</button>
       </div>
     
       <div class="viagem-box">
-        Visualizar Viagem
+        <h4 id="viagem-title">Visualizar Viagem</h4>
+        <input id="viagem-input" type="text" placeholder="Código da Viagem">
+        <br>
+        <div id="viagem-reminder"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo: g4nx5cyNKW2geSnQVXX8)</div>
+        <button id="viagem-continue" type="button">Prosseguir</button>
       </div>
     </div>
   </section>
