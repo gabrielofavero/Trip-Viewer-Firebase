@@ -93,10 +93,7 @@ function _loadDarkMode() {
      _loadToggle();
      _ChangeBarColorIOS("#303030");
 
-     const html = _getHTMLpage();
-     if (html == VIAGEM || html == PASSEIOS) {
-          _loadTripViewerLogo();
-     }
+     _loadTripViewerLogo();
 
      if (_isCustomColorsActive()) {
           _applyCustomColors();
@@ -117,10 +114,7 @@ function _loadLightMode() {
      _loadToggle();
      _ChangeBarColorIOS("#fff");
 
-     const html = _getHTMLpage();
-     if (html == VIAGEM || html == PASSEIOS) {
-          _loadTripViewerLogo();
-     }
+     _loadTripViewerLogo();
 
      if (_isCustomColorsActive()) {
           _applyCustomColors();
@@ -133,10 +127,7 @@ function _loadLightModeLite() {
 
      _loadToggle();
 
-     const html = _getHTMLpage();
-     if (html == VIAGEM || html == PASSEIOS) {
-          _loadTripViewerLogo();
-     }
+     _loadTripViewerLogo();
 
      if (_isCustomColorsActive()) {
           _applyCustomColors();

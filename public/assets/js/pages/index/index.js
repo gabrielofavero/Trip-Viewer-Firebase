@@ -248,6 +248,15 @@ document.addEventListener('DOMContentLoaded', function () {
 function _loadUserIndex() {
   document.getElementById('index-unlogged-title').style.display = 'none';
   document.getElementById('index-logged-title').style.display = 'block';
+  document.getElementById('login-box').style.display = 'none';
+  //document.getElementById('index-my-trips').style.display = 'block';
 
   document.getElementById('title-name').innerHTML = USER.displayName.split(' ')[0];
+}
+
+function _unloadUserIndex() {
+  document.getElementById('index-unlogged-title').style.display = 'block';
+  document.getElementById('index-logged-title').style.display = 'none';
+  document.getElementById('login-box').style.display = 'block';
+  //document.getElementById('index-my-trips').style.display = 'none';
 }

@@ -15,6 +15,13 @@ function _loadPageUserFunctions() {
     };
 }
 
+function _unloadPageUserFunctions() {
+    const html = _getHTMLpage();
+    if (html == 'index') {
+        _unloadUserIndex();
+    };
+}
+
 function _signInGoogle() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function (result) {
@@ -31,4 +38,5 @@ function _signOut() {
     firebase.auth().signOut()
     USER = undefined;
     localStorage.removeItem('user');
+    _unloadPageUserFunctions();
 }
