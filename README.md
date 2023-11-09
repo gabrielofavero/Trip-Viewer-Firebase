@@ -1,4 +1,4 @@
-![alt text](https://github.com/gabrielofavero/Trip-Viewer-Firebase/blob/master/public/assets/img/logo-full.png?raw=true)
+![alt text](https://i.imgur.com/jm7wA0u.png)
 
 # Tarefas
 
@@ -34,13 +34,13 @@
 ### 04/10/2023
 - Inserir calendário dinâmico (swiper);
 
-## 03/10/2023
+### 03/10/2023
 - Migrar 'Hospedagem' ao Firestore;
 - Remover métodos descontinuados;
 - Migrar 'Resumo'(Keypoints) ao Firestore;
 - Criar tratamento para falha de conexão com o banco de dados;
 
-## 02/10/2023
+### 02/10/2023
 - Migrar 'Transporte' ao Firestore;
 - Criar artes de transporte / hospedagem;
 - Migrar Jsons de configuração ao Firestore;
