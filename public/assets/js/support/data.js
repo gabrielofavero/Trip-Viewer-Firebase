@@ -8,31 +8,6 @@ var SHEET_DATA;
 var P_DATA;
 var HYPERLINK;
 
-// ======= GETTERS =======
-async function _getFirestoreData() {
-  const host = window.location.hostname;
-  var url =
-    host == "localhost"
-      ? "http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=R0yDPACnVVPjx2S6oqP6zqVI20t1"
-      : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=R0yDPACnVVPjx2S6oqP6zqVI20t1";
-
-  const response = await fetch(url);
-  const data = await response.json();
-  return data[0]; // Zero pois é a primeira viagem para esse teste. Adaptar posteriormente por ID
-}
-
-async function _getConfig() {
-  const host = window.location.hostname;
-  var url =
-    host == "localhost"
-      ? "http://localhost:5001/trip-viewer-tcc/us-central1/getConfig"
-      : "https://us-central1-trip-viewer-tcc.cloudfunctions.net/getConfig";
-
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-}
-
 // ======= CONVERTERS =======
 function _formatTxt(text) {
   // áBç -> abc

@@ -13,7 +13,7 @@ function _logger(type = "", message = "Hello World!") {
             e.pop();
             let line = ":" + e.pop();
             let caller;
-            if (message.includes("@at:")) {
+            if (message && message.includes("@at:")) {
                 caller = message.split("@at:")[1];
                 message = message.split("@at:")[0];
             } else {

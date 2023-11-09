@@ -93,7 +93,7 @@ function _checkParam(param: any, name: string, response: functions.Response) {
 
 
 // Exporta dados da viagem para o app
-export const getTripData = functions.https.onRequest(async (request, response) => {
+export const getAllTripsFromUser = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
     const user = await _getUsuario(request, response);
 
@@ -152,7 +152,31 @@ export const getBackup = functions.https.onRequest(async (request, response) => 
 // Exporta dados de uma viagem específica
 export const getSingleTrip = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
+    
+    _checkParam(request.query.viagemRef, 'viagemRef', response);
     const viagemRef = request.query.viagemRef as string;
-    var viagem = _getViagem(viagemRef, response);
+    
+    var viagem = await _getViagem('/viagens/' + viagemRef, response);
+    
     response.send(viagem);
+});
+
+// Exporta todas as viagens do usuário
+export const getTripList = functions.https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    const user = await _getUsuario(request, response);
+    var viagens = [];
+
+    for (const viagemRef of user.viagens) {
+        const viagemCode = viagemRef._path.segments[1];
+        const viagem = await _getViagem(viagemRef, response);
+        viagens.push({
+            code: viagemCode,
+            titulo: viagem.titulo,
+            inicio: viagem.inicio,
+            fim: viagem.fim
+        });
+    }
+
+    response.send(viagens);
 });

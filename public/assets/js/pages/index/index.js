@@ -228,11 +228,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('viagem-continue').addEventListener('click', function () {
       let viagem = document.getElementById('viagem-input').value;
       if (viagem) {
-        window.location.href = `viagem?v=${viagem.trim()}`;
+        window.location.href = `viagem.html?v=${viagem.trim()}`;
       } else {
         document.getElementById('viagem-reminder').style.display = 'block';
       }
     });
+
+    _loadUser();
 
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
@@ -242,3 +244,10 @@ document.addEventListener('DOMContentLoaded', function () {
     throw error;
   }
 });
+
+function _loadUserIndex() {
+  document.getElementById('index-unlogged-title').style.display = 'none';
+  document.getElementById('index-logged-title').style.display = 'block';
+
+  document.getElementById('title-name').innerHTML = USER.displayName.split(' ')[0];
+}
