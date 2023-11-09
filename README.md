@@ -62,6 +62,7 @@
 - O loading em viagens não está pegando a cor customizada;
 - Ao editar a cor no passeio, ela não é salva globalmente;
 - Botão de "transportation" em viagem.html não está deselecionando corretamente;
+- Botão 'x' em viagem.html (sair do menu em modo mobile) deveria ter color preto quando selecionado;
 
 # Possíveis Melhorias Futuras
 - Criar Keypoints personalizáveis.
