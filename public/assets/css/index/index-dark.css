@@ -478,6 +478,32 @@ section {
   color: red;
 }
 
+.myTrips-box{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#myTrips-list {
+  height: 100px;
+  width: 300px;
+  background: #404040;
+}
+
+.icons-box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.index-buttons {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 30px;
+  width: 30px;
+  color: #F2F2F2;
+  cursor: pointer;
+}
+
 @media (max-height: 896px) {
   .content-box {
     top: 44%;
