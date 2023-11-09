@@ -225,6 +225,10 @@ document.addEventListener('DOMContentLoaded', function () {
       _signInGoogle();
     });
 
+    document.getElementById('sign-out').addEventListener('click', function () {
+      _signOut();
+    });
+
     document.getElementById('viagem-continue').addEventListener('click', function () {
       let viagem = document.getElementById('viagem-input').value;
       if (viagem) {

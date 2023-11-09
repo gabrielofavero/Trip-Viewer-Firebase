@@ -421,7 +421,6 @@ section {
 @media (max-width: 520px) {
   .content-box {
     width: 90%;
-    height: calc(500px + (520px - 100vw) * 0.5);
   }
 }
 
@@ -493,21 +492,31 @@ section {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
+}
+
+.index-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .index-buttons {
-  margin-left: 5px;
   margin-right: 5px;
+  margin-left: 5px;
   height: 30px;
   width: 30px;
   color: #F2F2F2;
   cursor: pointer;
 }
 
+#index-logged-title {
+  margin-top: -15px;
+}
+
 @media (max-height: 896px) {
   .content-box {
     top: 44%;
-    height: 450px;
   }
   .login-box{
     margin-top: 45px;
@@ -515,13 +524,8 @@ section {
   }
 }
 
-@media (max-height: 715px) {
+@media (max-height: 745px) {
   .content-box {
-    top: 42%;
-    height: 400px;
-  }
-  .login-box{
-    margin-top: 30px;
-    margin-bottom: 30px;
+    top: 45%;
   }
 }
