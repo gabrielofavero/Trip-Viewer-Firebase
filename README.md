@@ -3,20 +3,20 @@
 # Tarefas
 
 ## Doing
-- Criar Página de Login;
-- Criar sistema de compartilhamento de viagens via link;
+- Criar funcionalidade "Minhas Viagens";
+- Criar página de configurações;
+- Implementar compartilhamento de viagens via botão no viagem.html.
 
-## TO-DO
-### Prioridade Alta
-- Criar Página de usuário logado (Minhas Viagens e Configurações)
-- FRONT-END: Criar página de configurações;
-- FRONT-END: Criar página de edição/criação de viagens;
-- FRONT-END: Criar página de edição/criação de passeios;
-- Inserir funções de escrita principais no back-end (get.ts);
+## To-Do
+- Criar página de edição/criação de viagens;
+- Criar página de edição/criação de passeios;
 - Inserir API Google Maps para busca de passeios;
-- Criar Keypoints personalizáveis.
 
 ## Done
+### 09/11/2023
+- Criada Página de Login;
+- Criada Página de Usuário logado;
+- Criado sistema de compartilhamento de viagens via link (URL do viagem.html e botão no index.html);
 
 ### 07/11/2023
 - Automatizadas cores tema definidas pelo usuário;
@@ -57,6 +57,11 @@
 - Desenvolver estrutura básica do back-end via Cloud Functions (NodeJS com TypeScript);
 - Criar funções de leitura principais no back-end (get.ts);
 
-# Bugs Conhecidos
-1. Em index.html, o logo não muda de cor no modo escuro (apenas a fonte);
-2. Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
+# Bugs Não Críticos Conhecidos
+- Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
+- O loading em viagens não está pegando a cor customizada;
+- Ao editar a cor no passeio, ela não é salva globalmente;
+- Botão de "transportation" em viagem.html não está deselecionando corretamente;
+
+# Possíveis Melhorias Futuras
+- Criar Keypoints personalizáveis.
