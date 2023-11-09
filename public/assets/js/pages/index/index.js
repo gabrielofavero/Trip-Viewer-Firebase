@@ -249,7 +249,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-function _loadUserIndex() {
+async function _loadUserIndex() {
+  _startLoadingScreen();
   document.getElementById('index-unlogged-title').style.display = 'none';
   document.getElementById('index-logged-title').style.display = 'block';
   document.getElementById('login-box').style.display = 'none';
@@ -257,6 +258,10 @@ function _loadUserIndex() {
   document.getElementById('icons-box').style.display = 'block';
 
   document.getElementById('title-name').innerHTML = USER.displayName.split(' ')[0];
+
+  var TRIP_LIST = await _getTripList();
+  console.log(TRIP_LIST);
+  _stopLoadingScreen();
 }
 
 function _unloadUserIndex() {
