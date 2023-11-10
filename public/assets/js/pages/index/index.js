@@ -260,6 +260,10 @@ async function _loadUserIndex() {
   document.getElementById('title-name').innerHTML = USER.displayName.split(' ')[0];
 
   var TRIP_LIST = await _getTripList();
+  if (TRIP_LIST.length > 0) {
+    document.getElementById('no-trips').style.display = 'none';
+    _loadTripListHTML(TRIP_LIST);
+  }
   console.log(TRIP_LIST);
   _stopLoadingScreen();
 }

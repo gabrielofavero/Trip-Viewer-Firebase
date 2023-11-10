@@ -466,6 +466,10 @@ section {
   width: 120px;
 }
 
+#viagem-continue:hover {
+  color: rgb(243, 242, 242);
+}
+
 #viagem-reminder {
   font-size: 12px;
   margin-bottom: 20px;
@@ -493,23 +497,49 @@ section {
   overscroll-behavior-y: contain;
 }
 
-#add-trip {
-  width: 100%;
-  height: 50px;
+.myTrips-list-item-clickable {
   background: #ECEEF0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   cursor: pointer;
 }
 
-#add-trip:hover {
+.add-trip:hover {
   background: #E5E8EB;
 }
 
+#no-trips {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin-top: 15px;
+}
+
+#add-trip-mini {
+  display: flex;
+  cursor: pointer;
+  width: 100%;
+  height: 30px;
+  align-items: flex-end;
+  justify-content: flex-end;
+  text-align: right;
+  color: #4F5051;
+  margin-bottom: 10px;
+}
+
+#add-trip-mini:hover {
+  color: #545555;
+}
+
 #add {
+  height: 20px;
+  width: 20px;
   margin-left: 5px;
+  margin-right: 10px;
+  top: 10px;
+  margin-bottom: 2px;
 }
 
 .icons-box {
