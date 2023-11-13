@@ -567,7 +567,7 @@ section {
   margin-bottom: 10px;
 }
 
-#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover {
+#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover {
   color: #7a7a7a;
 }
 

@@ -23,10 +23,6 @@ function _removeComma(val) {
   return val.split(",")[0];
 }
 
-function _convertFirestoreDate(timestamp) {
-  return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
-}
-
 function _sortFunctionArray(functionArray, orderArray) {
   functionArray.sort((a, b) => {
     const indexA = orderArray.indexOf(a.name);

@@ -46,6 +46,21 @@ function _numberToMonth(number) {
     }
 }
 
-function _getDateNoTime(date){
+function _getDateNoTime(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function _convertFirestoreDate(timestamp) {
+    return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
+}
+
+function _jsDateToDate(date) {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const dayString = day < 10 ? `0${day}` : `${day}`;
+    const monthString = month < 10 ? `0${month}` : `${month}`;
+
+    return `${dayString}/${monthString}/${year}`;
 }

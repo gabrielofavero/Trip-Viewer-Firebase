@@ -261,12 +261,11 @@ async function _loadUserIndex() {
 
   document.getElementById('title-name').innerHTML = USER.displayName.split(' ')[0];
 
-  var TRIP_LIST = await _getTripList();
-  if (TRIP_LIST.length > 0) {
+  let tripList = await _getTripList();
+  if (tripList && tripList.length > 0) {
     document.getElementById('no-trips').style.display = 'none';
-    //_loadTripListHTML(TRIP_LIST);
+    _loadTripListHTML(tripList);
   }
-  console.log(TRIP_LIST);
   _stopLoadingScreen();
 }
 
@@ -276,4 +275,48 @@ function _unloadUserIndex() {
   document.getElementById('login-box').style.display = 'block';
   document.getElementById('myTrips-box').style.display = 'none';
   document.getElementById('icons-box').style.display = 'none';
+}
+
+function _loadTripListHTML(tripList) {
+  const div = document.getElementById('trip-data');
+
+  let text = '';
+  for (let i = 0; i < tripList.length; i++) {
+    const index = i + 1;
+
+    const inicioDate = _convertFirestoreDate(tripList[i].inicio);
+    const fimDate = _convertFirestoreDate(tripList[i].fim);
+
+    const inicio = _jsDateToDate(inicioDate);
+    const fim = _jsDateToDate(fimDate);
+
+    const titulo = tripList[i].titulo;
+    const code = tripList[i].code;
+
+    text += `
+    <div class="trip-data-item" id="trip-data-item-${index}">
+      <div class="trip-data-item-text" id="trip-data-item-text-${index}">
+        <div class="trip-data-item-title" id="trip-data-item-title-${index}">${titulo}</div>
+        <div class="trip-data-item-date" id="trip-data-item-date-${index}">${inicio} - ${fim}</div>
+      </div>
+      <div class="trip-data-icons" id="trip-data-icons-${index}">
+        <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="trip-data-icon-edit-${index}" data-icon="tabler:edit"></i>
+        <i class="iconify trip-data-icon" onclick="_viewTrip('${code}')" id="iconify trip-data-icon-view-${index}" data-icon="fluent:eye-16-regular"></i>
+      </div>
+    </div>`
+  }
+
+  div.innerHTML = text;
+}
+
+function _editTrip(code){
+  window.location.href = `editar-viagem.html?v=${code}`;
+}
+
+function _viewTrip(code){
+  window.location.href = `viagem.html?v=${code}`;
+}
+
+function _goToSettings(){
+  window.location.href = `conta.html`;
 }
