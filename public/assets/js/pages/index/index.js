@@ -231,6 +231,14 @@ document.addEventListener('DOMContentLoaded', function () {
       _signOut();
     });
 
+    document.getElementById('settings').addEventListener('click', function () {
+      _goToSettings();
+    });
+
+    document.getElementById('add-trip').addEventListener('click', function () {
+      _newTrip();
+    });
+
     document.getElementById('trip-view-continue').addEventListener('click', function () {
       let viagem = document.getElementById('trip-view-input').value;
       if (viagem) {
@@ -319,4 +327,8 @@ function _viewTrip(code){
 
 function _goToSettings(){
   window.location.href = `conta.html`;
+}
+
+function _newTrip() {
+  window.location.href = `nova-viagem.html`;
 }
