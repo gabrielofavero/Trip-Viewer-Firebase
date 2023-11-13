@@ -460,3 +460,7 @@ section {
   width: 36px;
   height: 36px;
 }
+
+.mobile-nav-toggle:hover, .custom-nav-toggle:hover {
+  color: #7a7a7a;
+}

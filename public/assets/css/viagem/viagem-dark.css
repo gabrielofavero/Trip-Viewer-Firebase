@@ -1986,3 +1986,7 @@ iframe {
 .calendarDisabled {
   color: #595959;
 }
+
+.mobile-nav-toggle:hover, .custom-nav-toggle:hover {
+  color: #aaaaaa;
+}
