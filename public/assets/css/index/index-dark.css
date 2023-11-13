@@ -142,7 +142,7 @@ h6 {
   background-color: #303030;
   width: 100%;
   height: 60px;
-  border-bottom: 0.5px solid #292929;
+  border-bottom: 0.5px solid #383838;
   z-index: 999;
 }
 
@@ -431,6 +431,7 @@ section {
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  margin-bottom: -10px;
 }
 
 .index-buttons-container {
@@ -440,7 +441,7 @@ section {
   margin-bottom: 10px
 }
 
-.index-buttons {
+.index-buttons, .trip-data-icon{
   margin-right: 5px;
   margin-left: 5px;
   height: 30px;
@@ -472,7 +473,6 @@ section {
   height: 40px;
   width: 200px;
   color: #F2F2F2;
-  border: 0.5px solid #292929;
   border-radius: 2px;
   background: #404040;
   border-radius: 5px;
@@ -494,6 +494,9 @@ section {
   background: #404040;
   overflow-y: auto;
   overscroll-behavior-y: contain;
+  border: 0.5px solid #383838;
+  border-radius: 5px;
+  overflow-x: hidden;
 }
 
 .myTrips-list-item-clickable {
@@ -510,7 +513,7 @@ section {
 #trip-view-input {
   margin-bottom: 20px;
   background: #404040;
-  border: 0.5px solid #292929;
+  border: 0.5px solid #383838;
   padding: 3px;
   width: 300px;
   text-align: center;
@@ -542,10 +545,6 @@ section {
   color: red;
 }
 
-.add-trip:hover {
-  background: #5A5A5A;
-}
-
 #no-trips {
   display: flex;
   width: 100%;
@@ -568,8 +567,8 @@ section {
   margin-bottom: 10px;
 }
 
-#add-trip:hover {
-  color: #E2E2E2;
+#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover {
+  color: #aaaaaa;
 }
 
 #add {
@@ -602,7 +601,9 @@ section {
 }
 
 .trip-data-item {
-  border-bottom: 0.5px solid #292929;
+  border-bottom: 0.5px solid #383838;
+  border-top: 0.5px solid #383838;
+  padding: 7px;
 }
 
 .trip-data-item {
@@ -619,4 +620,24 @@ section {
 
 .trip-data-item{
   text-align: left;
+}
+
+.trip-data-item-title {
+  font-weight: bold;
+}
+
+.trip-data-item-date{
+  font-size: 13px;
+  color: #767676;
+}
+
+.trip-data-icon{
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.trip-data-icons{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }

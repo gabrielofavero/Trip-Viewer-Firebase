@@ -431,6 +431,7 @@ section {
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  margin-bottom: -10px;
 }
 
 .index-buttons-container {
@@ -440,7 +441,7 @@ section {
   margin-bottom: 10px
 }
 
-.index-buttons {
+.index-buttons, .trip-data-icon{
   margin-right: 5px;
   margin-left: 5px;
   height: 30px;
@@ -472,7 +473,6 @@ section {
   height: 40px;
   width: 200px;
   color: #4F5051;
-  border: 0.5px solid #D9D9D9;
   border-radius: 2px;
   background: #f7f8f9;
   border-radius: 5px;
@@ -494,6 +494,9 @@ section {
   background: #f7f8f9;
   overflow-y: auto;
   overscroll-behavior-y: contain;
+  border: 0.5px solid #D9D9D9;
+  border-radius: 5px;
+  overflow-x: hidden;
 }
 
 .myTrips-list-item-clickable {
@@ -542,10 +545,6 @@ section {
   color: red;
 }
 
-.add-trip:hover {
-  background: #E5E8EB;
-}
-
 #no-trips {
   display: flex;
   width: 100%;
@@ -568,8 +567,8 @@ section {
   margin-bottom: 10px;
 }
 
-#add-trip:hover {
-  color: #545555;
+#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover {
+  color: #7a7a7a;
 }
 
 #add {
@@ -603,6 +602,8 @@ section {
 
 .trip-data-item {
   border-bottom: 0.5px solid #D9D9D9;
+  border-top: 0.5px solid #D9D9D9;
+  padding: 7px;
 }
 
 .trip-data-item {
@@ -619,4 +620,24 @@ section {
 
 .trip-data-item{
   text-align: left;
+}
+
+.trip-data-item-title {
+  font-weight: bold;
+}
+
+.trip-data-item-date{
+  font-size: 13px;
+  color: #737473;
+}
+
+.trip-data-icon{
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.trip-data-icons{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
