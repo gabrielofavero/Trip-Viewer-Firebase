@@ -8,6 +8,8 @@
 
 var START_LIST = [];
 
+_startLoadingScreen();
+
 document.addEventListener('DOMContentLoaded', function () {
   try {
     "use strict";
@@ -229,18 +231,18 @@ document.addEventListener('DOMContentLoaded', function () {
       _signOut();
     });
 
-    document.getElementById('viagem-continue').addEventListener('click', function () {
-      let viagem = document.getElementById('viagem-input').value;
+    document.getElementById('trip-view-continue').addEventListener('click', function () {
+      let viagem = document.getElementById('trip-view-input').value;
       if (viagem) {
         window.location.href = `viagem.html?v=${viagem.trim()}`;
       } else {
-        document.getElementById('viagem-reminder').style.display = 'block';
+        document.getElementById('trip-view-reminder').style.display = 'block';
       }
     });
 
-    _loadUser();
-
     _stopLoadingScreen();
+
+    _loadUser();
     $('body').css('overflow', 'auto');
 
   } catch (error) {
@@ -262,7 +264,7 @@ async function _loadUserIndex() {
   var TRIP_LIST = await _getTripList();
   if (TRIP_LIST.length > 0) {
     document.getElementById('no-trips').style.display = 'none';
-    _loadTripListHTML(TRIP_LIST);
+    //_loadTripListHTML(TRIP_LIST);
   }
   console.log(TRIP_LIST);
   _stopLoadingScreen();

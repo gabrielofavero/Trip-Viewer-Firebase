@@ -128,23 +128,31 @@
         <h4 id="myTrips-title">Minhas Viagens</h4>
         <div id="myTrips-list">
           <div id="no-trips">Sem Viagens Cadastradas😔</div>
-          <div id="trip-data"></div>
-          <div id="add-trip-mini">Nova viagem <i id="add" class="iconify" data-icon="gridicons:add-outline"></i></div>
+          <div id="trip-data">
+            <div class="trip-data-item" id="trip-data-item-1">
+              <div class="trip-data-item-text" id="trip-data-item-text-1">
+                <div class="trip-data-item-title" id="trip-data-item-title-1">Las Vegas</div>
+                <div class="trip-data-item-date" id="trip-data-item-date-1">01/01/2023 - 02/02/2023</div>
+              </div>
+              <i class="iconify" data-icon="tabler:edit"></i>
+              <i class="iconify" data-icon="fluent:eye-16-regular"></i>
+            </div>
+            <div id="add-trip">Nova viagem <i id="add" class="iconify" data-icon="gridicons:add-outline"></i></div>
+          </div>
         </div>
-      </div>
 
-      <div class="viagem-box">
-        <h4 id="viagem-title">Visualizar Viagem</h4>
-        <input id="viagem-input" type="text" placeholder="Código da Viagem">
-        <br>
-        <div id="viagem-reminder"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo:
-          g4nx5cyNKW2geSnQVXX8)</div>
-        <button id="viagem-continue" type="button">Prosseguir</button>
-      </div>
+        <div class="trip-view-box">
+          <h4 id="trip-view-title">Visualizar Viagem</h4>
+          <input id="trip-view-input" type="text" placeholder="Código da Viagem">
+          <br>
+          <div id="trip-view-reminder"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo:
+            g4nx5cyNKW2geSnQVXX8)</div>
+          <button id="trip-view-continue" type="button">Prosseguir</button>
+        </div>
 
-      <!-- ======= Support: Preloader ======= -->
-      <div id="preloader"></div>
-    </div>
+        <!-- ======= Support: Preloader ======= -->
+        <div id="preloader"></div>
+      </div>
   </section>
 
   <!-- ======= Footer ======= -->

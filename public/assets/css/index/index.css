@@ -398,6 +398,7 @@ section {
   }
 }
 
+/* ---------- Box Principal ---------- */
 .content-box {
   position: absolute;
   top: 44%;
@@ -424,15 +425,46 @@ section {
   }
 }
 
-.login-box{
-  margin-top: 45px;
-  margin-bottom: 45px;
+/* ---------- Ícones Laterais ---------- */
+.icons-box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
 }
+
+.index-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-bottom: 10px
+}
+
+.index-buttons {
+  margin-right: 5px;
+  margin-left: 5px;
+  height: 30px;
+  width: 30px;
+  color: #4F5051;
+  cursor: pointer;
+}
+
+/* ---------- Título ---------- */
 
 .index-title {
   font-size: 35px;
   color: #4F5051;
   border-bottom: 15px;
+}
+
+#index-logged-title {
+  margin-top: -15px;
+}
+
+/* ---------- Login ---------- */
+.login-box{
+  margin-top: 45px;
+  margin-bottom: 45px;
 }
 
 .login-item {
@@ -446,40 +478,7 @@ section {
   background: #f7f8f9;
 }
 
-#viagem-input {
-  margin-bottom: 20px;
-  background: #f7f8f9;
-  border: 1px solid #D9D9D9;
-  padding: 3px;
-  width: 300px;
-  text-align: center;
-  border-radius: 5px;
-  color: #4F5051;
-}
-
-#viagem-continue {
-  color: #fff;
-  background: #5859a7;
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  width: 120px;
-}
-
-#viagem-continue:hover {
-  color: rgb(243, 242, 242);
-}
-
-#viagem-reminder {
-  font-size: 12px;
-  margin-bottom: 20px;
-  display: none;
-}
-
-.red {
-  color: red;
-}
-
+/* ---------- Minhas Viagens ---------- */
 .myTrips-box{
   margin-top: 20px;
   margin-bottom: 20px;
@@ -490,7 +489,7 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: 150px;
   width: 300px;
   background: #f7f8f9;
   overflow-y: auto;
@@ -501,6 +500,50 @@ section {
   background: #ECEEF0;
   display: flex;
   cursor: pointer;
+}
+
+
+
+
+/* ---------- Visualizar Viagem ---------- */
+.trip-view-box {
+  width: 300px;
+  margin-top: 30px;
+}
+
+#trip-view-input {
+  margin-bottom: 20px;
+  background: #f7f8f9;
+  border: 1px solid #D9D9D9;
+  padding: 3px;
+  width: 300px;
+  text-align: center;
+  border-radius: 5px;
+  color: #4F5051;
+}
+
+#trip-view-continue {
+  color: #fff;
+  background: #5859a7;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  width: 120px;
+}
+
+#trip-view-continue:hover {
+  color: rgb(243, 242, 242);
+}
+
+#trip-view-reminder {
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.red {
+  color: red;
 }
 
 .add-trip:hover {
@@ -517,7 +560,7 @@ section {
   margin-top: 15px;
 }
 
-#add-trip-mini {
+#add-trip {
   display: flex;
   cursor: pointer;
   width: 100%;
@@ -529,7 +572,7 @@ section {
   margin-bottom: 10px;
 }
 
-#add-trip-mini:hover {
+#add-trip:hover {
   color: #545555;
 }
 
@@ -540,32 +583,6 @@ section {
   margin-right: 10px;
   top: 10px;
   margin-bottom: 2px;
-}
-
-.icons-box {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-}
-
-.index-buttons-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.index-buttons {
-  margin-right: 5px;
-  margin-left: 5px;
-  height: 30px;
-  width: 30px;
-  color: #4F5051;
-  cursor: pointer;
-}
-
-#index-logged-title {
-  margin-top: -15px;
 }
 
 @media (max-height: 896px) {
@@ -583,3 +600,9 @@ section {
     top: 45%;
   }
 }
+
+.trip-data-item {
+  width: 300px;
+}
+
+
