@@ -3,16 +3,19 @@
 # Tarefas
 
 ## Doing
-- Criar funcionalidade "Minhas Viagens";
-- Criar página de configurações;
-- Implementar compartilhamento de viagens via botão no viagem.html.
+
 
 ## To-Do
 - Criar página de edição/criação de viagens;
 - Criar página de edição/criação de passeios;
 - Inserir API Google Maps para busca de passeios;
+- Criar página de configurações;
+- Implementar compartilhamento de viagens via botão no viagem.html.
 
 ## Done
+### 13/11/2023
+- Criada funcionalidade "Minhas Viagens";
+
 ### 09/11/2023
 - Criada Página de Login;
 - Criada Página de Usuário logado;
