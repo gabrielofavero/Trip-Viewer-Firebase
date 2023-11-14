@@ -125,19 +125,24 @@ export const getSingleTrip = functions.https.onRequest(async (request, response)
 // Exporta todas as viagens do usuário
 export const getTripList = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
-    const user = await _getUser(request, response);
-    var viagens = [];
+    
+    try {
+        const user = await _getUser(request, response);
+        var viagens = [];
 
-    for (const viagemRef of user.viagens) {
-        const viagemCode = viagemRef._path.segments[1];
-        const viagem = await _getViagem(viagemRef, response);
-        viagens.push({
-            code: viagemCode,
-            titulo: viagem.titulo,
-            inicio: viagem.inicio,
-            fim: viagem.fim
-        });
+        for (const viagemRef of user.viagens) {
+            const viagemCode = viagemRef._path.segments[1];
+            const viagem = await _getViagem(viagemRef, response);
+            viagens.push({
+                code: viagemCode,
+                titulo: viagem.titulo,
+                inicio: viagem.inicio,
+                fim: viagem.fim
+            });
+        }
+
+        response.json(viagens);
+    } catch (error) {
+        response.status(500).send(error);
     }
-
-    response.send(viagens);
 });

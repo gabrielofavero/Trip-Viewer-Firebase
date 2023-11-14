@@ -29,7 +29,7 @@ export async function _registerUser (request: functions.Request, response: funct
 };
 
 export async function _getAuthUserUID (request: functions.Request, response: functions.Response) {
-    const { authToken } = request.headers;
+    const authToken = request.query.token;
 
     if (!authToken) {
         response.status(401).json({ error: 'Authentication token is missing' });

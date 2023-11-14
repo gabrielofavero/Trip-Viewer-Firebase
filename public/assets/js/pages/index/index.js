@@ -249,9 +249,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     _stopLoadingScreen();
-
-    _loadUser();
     $('body').css('overflow', 'auto');
+
+    _loadUserIndex();
 
   } catch (error) {
     _displayErrorMessage(error);
@@ -260,22 +260,34 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 async function _loadUserIndex() {
-  _startLoadingScreen();
-  document.getElementById('index-unlogged-title').style.display = 'none';
-  document.getElementById('index-logged-title').style.display = 'block';
-  document.getElementById('login-box').style.display = 'none';
-  document.getElementById('myTrips-box').style.display = 'block';
-  document.getElementById('icons-box').style.display = 'block';
+  try {
+    // Add an event listener to get user information when it's available.
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        _startLoadingScreen();
+        document.getElementById('index-unlogged-title').style.display = 'none';
+        document.getElementById('index-logged-title').style.display = 'block';
+        document.getElementById('login-box').style.display = 'none';
+        document.getElementById('myTrips-box').style.display = 'block';
+        document.getElementById('icons-box').style.display = 'block';
+        
+        const displayName = user.displayName;
+        document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
 
-  document.getElementById('title-name').innerHTML = USER.displayName.split(' ')[0];
-
-  let tripList = await _getTripList();
-  if (tripList && tripList.length > 0) {
-    document.getElementById('no-trips').style.display = 'none';
-    _loadTripListHTML(tripList);
+        let tripList = await _getTripList();
+        if (tripList && tripList.length > 0) {
+          document.getElementById('no-trips').style.display = 'none';
+          _loadTripListHTML(tripList);
+        }
+        _stopLoadingScreen();
+      }
+    });
+  } catch (error) {
+    _displayErrorMessage(error);
+    throw error;
   }
-  _stopLoadingScreen();
 }
+
 
 function _unloadUserIndex() {
   document.getElementById('index-unlogged-title').style.display = 'block';
