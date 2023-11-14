@@ -480,7 +480,7 @@ section {
 
 /* ---------- Minhas Viagens ---------- */
 .myTrips-box{
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 
@@ -507,6 +507,7 @@ section {
 
 /* ---------- Visualizar Viagem ---------- */
 .trip-view-box {
+  margin-top: 10px;
   width: 300px;
 }
 
