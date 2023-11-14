@@ -26,7 +26,7 @@ export async function _getData(path: string, response: functions.Response) {
     }
 }
 
-async function _getRefData(refObject: interfaces.Referencia, response: functions.Response) {
+export function _getRefDataPath(refObject: interfaces.Referencia, response: functions.Response) {
     if (
         !refObject ||
         !refObject._firestore ||
@@ -37,9 +37,12 @@ async function _getRefData(refObject: interfaces.Referencia, response: functions
         return;
     }
 
-    const path = `${refObject._path.segments[0]}/${refObject._path.segments[1]}`;
+    return `${refObject._path.segments[0]}/${refObject._path.segments[1]}`;
+}
 
-    return await _getData(path, response);
+export async function _getRefData(refObject: interfaces.Referencia, response: functions.Response) {
+    const path = _getRefDataPath(refObject, response);
+    return await _getData(path as string, response);
 }
 
 // Retorna a viagem a partir da referência
