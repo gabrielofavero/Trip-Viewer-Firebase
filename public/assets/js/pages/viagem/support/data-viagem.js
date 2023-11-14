@@ -23,22 +23,6 @@ async function _getSingleTrip() {
     }
 }
 
-async function _getAllTripsFromUser() {
-    if (USER) {
-        const host = window.location.hostname;
-        var url =
-            host == "localhost"
-                ? `http://localhost:5001/trip-viewer-tcc/us-central1/getTripData?userID=${USER.uid}`
-                : `https://us-central1-trip-viewer-tcc.cloudfunctions.net/getTripData?userID=${USER.uid}`;
-
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
-    } else {
-        _logger(ERROR, "Usuário não logado");
-    }
-}
-
 async function _getConfig() {
     const host = window.location.hostname;
     var url =
