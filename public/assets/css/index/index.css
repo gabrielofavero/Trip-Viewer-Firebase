@@ -564,12 +564,13 @@ section {
   justify-content: flex-end;
   text-align: right;
   color: #4F5051;
-  margin-bottom: 10px;
+  margin-top: 3px;
+  margin-bottom: 7px;
 }
 
-/* #add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover {
+#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover {
   color: #7a7a7a;
-} */
+}
 
 #add {
   height: 20px;
@@ -602,7 +603,6 @@ section {
 
 .trip-data-item {
   border-bottom: 0.5px solid #D9D9D9;
-  border-top: 0.5px solid #D9D9D9;
   padding: 7px;
 }
 
