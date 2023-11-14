@@ -1,11 +1,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import { _getAuthUserUID } from "./get";
 
 export async function _registerUser (request: functions.Request, response: functions.Response) {
     response.set("Access-Control-Allow-Origin", "*");
-    const uid = request.query.uid;
 
-    if (!uid) console.log("Usuário não informado");
+    const uid = await _getAuthUserUID(request, response);
 
     try {
         const doc = await admin.firestore().doc(`usuarios/${uid}`).get();
@@ -19,5 +19,4 @@ export async function _registerUser (request: functions.Request, response: funct
     } catch (e) {
         console.error(e);
     } 
-    
 };

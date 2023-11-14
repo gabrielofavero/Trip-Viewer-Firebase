@@ -1,6 +1,18 @@
-import { getAllTripsFromUser, getConfig, getBackup, getSingleTrip, getTripList } from './data/get';
+import { getBackup } from './data/backup';
+import { getConfig, getSingleTrip, getTripList } from './data/viagem/get';
+import { updateViagem, newViagem } from './data/viagem/set';
 import * as admin from "firebase-admin";
+import credentials from "./data/credentials";
 
-admin.initializeApp();
+admin.initializeApp({
+    credential: admin.credential.cert(credentials as admin.ServiceAccount),
+});
 
-export { getAllTripsFromUser, getBackup, getConfig, getSingleTrip, getTripList };
+export {
+    getBackup,
+    getConfig,
+    getSingleTrip,
+    getTripList,
+    updateViagem,
+    newViagem
+};

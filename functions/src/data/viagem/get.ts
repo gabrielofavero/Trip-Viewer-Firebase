@@ -1,9 +1,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import * as interfaces from "./interfaces";
+import * as interfaces from "../interfaces";
+import { _getAuthUserUID, _getUser } from "../user/get";
+import { _checkParam } from "./check";
 
 // Principais Métodos de Coleta de dados
-async function _getData(path: string, response: functions.Response) {
+export async function _getData(path: string, response: functions.Response) {
     if (!path) {
         response.status(400).send("O parâmetro 'path' é obrigatório.");
         return null;
@@ -40,18 +42,6 @@ async function _getRefData(refObject: interfaces.Referencia, response: functions
     return await _getData(path, response);
 }
 
-
-// Coleta de Dados de módulos específicos
-async function _getUsuario(request: functions.Request, response: functions.Response) {
-    const userID = request.query.userID;
-
-    _checkParam(userID, 'userID', response);
-
-    const path = `usuarios/${userID}`;
-
-   return await _getData(path, response) as unknown as interfaces.Usuario;
-}
-
 // Retorna a viagem a partir da referência
 async function _getViagem(viagemRef: interfaces.Referencia | string, response: functions.Response) {
     var viagem;
@@ -84,18 +74,10 @@ async function _getViagem(viagemRef: interfaces.Referencia | string, response: f
     return viagem;
 }
 
-function _checkParam(param: any, name: string, response: functions.Response) {
-    if (!param) {
-        response.status(400).send(`O parâmetro '${name}' é obrigatório.`);
-        throw new Error(`O parâmetro '${name}' é obrigatório.`);
-    }
-}
-
-
 // Exporta dados da viagem para o app
 export const getAllTripsFromUser = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
-    const user = await _getUsuario(request, response);
+    const user = await _getUser(request, response);
 
     var viagens = [];
 
@@ -128,27 +110,6 @@ export const getConfig = functions.https.onRequest(async (request, response) => 
     response.send(config);
 });
 
-
-// Backup de todo o Firestore
-export const getBackup = functions.https.onRequest(async (request, response) => {
-    const collections = ['config', 'hospedagens', 'passeios', 'programacoes', 'transportes', 'usuarios', 'viagens'];
-
-    const promises = collections.map(async collectionName => {
-        const collectionRef = admin.firestore().collection(collectionName);
-        const snapshot = await collectionRef.get();
-        const docs = snapshot.docs.map(doc => doc.data());
-        return { collection: collectionName, docs };
-    });
-
-    try {
-        const results = await Promise.all(promises);
-        response.json(results);
-    } catch (error) {
-        console.error('Erro ao fazer backup:', error);
-        response.status(500).send('Erro ao fazer backup dos dados.');
-    }
-});
-
 // Exporta dados de uma viagem específica
 export const getSingleTrip = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
@@ -164,7 +125,7 @@ export const getSingleTrip = functions.https.onRequest(async (request, response)
 // Exporta todas as viagens do usuário
 export const getTripList = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
-    const user = await _getUsuario(request, response);
+    const user = await _getUser(request, response);
     var viagens = [];
 
     for (const viagemRef of user.viagens) {
