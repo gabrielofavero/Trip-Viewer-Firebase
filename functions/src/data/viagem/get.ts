@@ -1,52 +1,12 @@
 import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-import * as interfaces from "../interfaces";
+import * as interfaces from "../main/interfaces";
 import { _getAuthUserUID, _getUser } from "../user/get";
 import { _checkParam } from "./check";
+import {_getData, _getRefData, _getRefDataPath} from "../main/get";
 
-// Principais Métodos de Coleta de dados
-export async function _getData(path: string, response: functions.Response) {
-    if (!path) {
-        response.status(400).send("O parâmetro 'path' é obrigatório.");
-        return null;
-    }
-
-    try {
-        const snapshot = await admin.firestore().doc(path).get();
-        const data = snapshot.data();
-        if (data) {
-            return data;
-        } else {
-            response.status(404).send("Documento não encontrado");
-            return null;
-        }
-    } catch (error) {
-        response.status(500).send(error);
-        return null;
-    }
-}
-
-export function _getRefDataPath(refObject: interfaces.Referencia, response: functions.Response) {
-    if (
-        !refObject ||
-        !refObject._firestore ||
-        !refObject._path ||
-        refObject._path.segments.length !== 2
-    ) {
-        response.status(400).send("O objeto referenciado não possui a estrutura esperada.");
-        return;
-    }
-
-    return `${refObject._path.segments[0]}/${refObject._path.segments[1]}`;
-}
-
-export async function _getRefData(refObject: interfaces.Referencia, response: functions.Response) {
-    const path = _getRefDataPath(refObject, response);
-    return await _getData(path as string, response);
-}
 
 // Retorna a viagem a partir da referência
-async function _getViagem(viagemRef: interfaces.Referencia | string, response: functions.Response) {
+export async function _getViagem(viagemRef: interfaces.Referencia | string, response: functions.Response) {
     var viagem;
     
     if (typeof viagemRef === 'string') {

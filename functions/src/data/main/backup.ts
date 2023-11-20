@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import {_getAuthUserUID, _getUser} from "./user/get";
+import {_getAuthUserUID, _getUser} from "../user/get";
 
 // Backup de todo o Firestore
 export const getBackup = functions.https.onRequest(async (request, response) => {

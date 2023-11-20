@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { _getAuthUserUID, _getUser } from "../user/get";
-import { _getRefData, _getRefDataPath } from "../viagem/get";
+import { _getRefData, _getRefDataPath } from "../main/get";
 
 export async function _deleteUser(request: functions.Request, response: functions.Response) {
     const user = await _getUser(request, response);

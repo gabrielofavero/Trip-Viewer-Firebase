@@ -1,5 +1,5 @@
-import * as interfaces from "../interfaces";
-import { _getData } from "../viagem/get";
+import * as interfaces from "../main/interfaces";
+import { _getData } from "../main/get";
 
 export function _isUserOwner (viagemID: string, usuario: interfaces.Usuario) {
     const viagens = usuario.viagens;

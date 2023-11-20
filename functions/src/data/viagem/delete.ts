@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { _getAuthUserUID, _getUser } from "../user/get";
-import { _getRefDataPath } from "../viagem/get";
+import { _getRefDataPath } from "../main/get";
 
 export async function _deleteTrip (request: functions.Request, response: functions.Response) {
     const tripID = request.params.tripID;

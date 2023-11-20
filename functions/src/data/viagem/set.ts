@@ -1,10 +1,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import * as interfaces from "../interfaces";
-import { _getUser, _getAuthUserUID, _isUserOwner, _isUserEditor } from "../user/get";
+import * as interfaces from "../main/interfaces";
+import { _getUser, _getAuthUserUID} from "../user/get";
+import {_isUserOwner, _isUserEditor } from "../user/check";
 
 // Atualiza uma viagem já existente
-export const updateViagem = functions.https.onRequest(async (request, response) => {
+export const updateTrip = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
 
     const viagemID = request.body.viagem.id as string;
@@ -71,7 +72,7 @@ export const updateViagem = functions.https.onRequest(async (request, response) 
 
 });
 
-export const newViagem = functions.https.onRequest(async (request, response) => {
+export const newTrip = functions.https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
 
     let viagem
