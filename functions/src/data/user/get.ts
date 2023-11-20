@@ -1,12 +1,12 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as interfaces from "../main/interfaces";
-import { _getData } from "../main/get";
+import { _getDataFromPath } from "../main/get";
 
 export async function _getUser (request: functions.Request, response: functions.Response) {
     const uid = await _getAuthUserUID(request, response);
     const path = `usuarios/${uid}`;
-    return await _getData(path, response) as unknown as interfaces.Usuario;
+    return await _getDataFromPath(path, response) as unknown as interfaces.Usuario;
 }
 
 export async function _registerUser (request: functions.Request, response: functions.Response) {

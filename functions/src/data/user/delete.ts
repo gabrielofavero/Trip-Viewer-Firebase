@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { _getAuthUserUID, _getUser } from "../user/get";
-import { _getRefData, _getRefDataPath } from "../main/get";
+import { _getDataFromReference, _getRefDataPath } from "../main/get";
 
 export async function _deleteUser(request: functions.Request, response: functions.Response) {
     const user = await _getUser(request, response);
@@ -21,7 +21,7 @@ export async function _deleteUser(request: functions.Request, response: function
         const viagensRefs = user.viagens;
 
         for (let i = 0; i < viagensRefs.length; i++) {
-            const viagem = await _getRefData(viagensRefs[i], response);
+            const viagem = await _getDataFromReference(viagensRefs[i], response);
             const viagemPath = _getRefDataPath(viagensRefs[i], response);
 
             if (!viagem || !viagem.hospedagensRef || !viagem.programacoesRef || !viagem.transportesRef) {

@@ -2,15 +2,12 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { _getAuthUserUID, _getUser } from "../user/get";
 import { _getRefDataPath } from "../main/get";
+import { _checkParam } from "./check";
 
 export async function _deleteTrip (request: functions.Request, response: functions.Response) {
     const tripID = request.params.tripID;
-    const deletePasseio = request.query.deletePasseio === 'true';
 
-    if (!tripID) {
-        response.status(400).send("O parâmetro 'tripID' é obrigatório.");
-        return;
-    }
+    _checkParam(tripID, 'tripID', response)
 
     const user = await _getUser(request, response);
     const uid = await _getAuthUserUID(request, response);
@@ -29,13 +26,8 @@ export async function _deleteTrip (request: functions.Request, response: functio
                 await admin.firestore().doc(programacoesPath as string).delete();
                 await admin.firestore().doc(transportesPath as string).delete();
 
-                if (deletePasseio) {
-                    const passeiosPath = _getRefDataPath(viagens[i].passeiosRef, response);
-                    await admin.firestore().doc(passeiosPath as string).delete();
-                }
-
                 viagens.splice(i, 1);
-                await admin.firestore().doc(`usuarios/${uid}`).update({ viagens });
+                await admin.firestore().doc(`usuarios/${uid}`).update({ viagens: viagens });
 
                 const viagensPath = `viagens/${tripID}`;
                 await admin.firestore().doc(viagensPath).delete();
@@ -44,7 +36,6 @@ export async function _deleteTrip (request: functions.Request, response: functio
                     hospedagem: hospedagemPath,
                     programacoes: programacoesPath,
                     transportes: transportesPath,
-                    passeios: deletePasseio ? _getRefDataPath(viagens[i].passeiosRef, response) : null,
                     viagem: viagensPath
                 };
                 response.status(200).send(`Viagem deletada com sucesso: ${JSON.stringify(deletedContent)}`);

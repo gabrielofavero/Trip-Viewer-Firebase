@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as interfaces from "../main/interfaces";
 import { _getUser, _getAuthUserUID} from "../user/get";
-import {_isUserOwner, _isUserEditor } from "../user/check";
+import {_isUserTripOwner, _isUserTripEditor } from "../user/check";
 
 // Atualiza uma viagem já existente
 export const updateTrip = functions.https.onRequest(async (request, response) => {
@@ -53,8 +53,8 @@ export const updateTrip = functions.https.onRequest(async (request, response) =>
     const user = await _getUser(request, response);
     const uid = await _getAuthUserUID(request, response) as string;
 
-    const isUserOwner = _isUserOwner(viagemID, user);
-    const isUserEditor = _isUserEditor(viagem, uid);
+    const isUserOwner = _isUserTripOwner(viagemID, user);
+    const isUserEditor = _isUserTripEditor(viagem, uid);
 
     if (!isUserOwner && !isUserEditor) {
         response.status(401).send("Usuário não tem permissão para editar esta viagem");

@@ -2,13 +2,11 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as interfaces from "../main/interfaces";
 import { _getAuthUserUID, _getUser } from "../user/get";
+import { _checkParam } from "../viagem/check";
 
-// Principais Métodos de Coleta de dados
-export async function _getData(path: string, response: functions.Response) {
-    if (!path) {
-        response.status(400).send("O parâmetro 'path' é obrigatório.");
-        return null;
-    }
+// Principal Método de Coleta de dados
+export async function _getDataFromPath(path: string, response: functions.Response) {
+    _checkParam(path, 'path', response);
 
     try {
         const snapshot = await admin.firestore().doc(path).get();
@@ -39,7 +37,7 @@ export function _getRefDataPath(refObject: interfaces.Referencia, response: func
     return `${refObject._path.segments[0]}/${refObject._path.segments[1]}`;
 }
 
-export async function _getRefData(refObject: interfaces.Referencia, response: functions.Response) {
+export async function _getDataFromReference(refObject: interfaces.Referencia, response: functions.Response) {
     const path = _getRefDataPath(refObject, response);
-    return await _getData(path as string, response);
+    return await _getDataFromPath(path as string, response);
 }

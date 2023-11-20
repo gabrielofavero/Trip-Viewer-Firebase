@@ -2,35 +2,30 @@ import * as functions from "firebase-functions";
 import * as interfaces from "../main/interfaces";
 import { _getAuthUserUID, _getUser } from "../user/get";
 import { _checkParam } from "./check";
-import {_getData, _getRefData, _getRefDataPath} from "../main/get";
+import {_getDataFromPath, _getDataFromReference, _getRefDataPath} from "../main/get";
 
 
 // Retorna a viagem a partir da referência
-export async function _getViagem(viagemRef: interfaces.Referencia | string, response: functions.Response) {
+export async function _getTrip(viagemRef: interfaces.Referencia | string, response: functions.Response) {
     var viagem;
     
     if (typeof viagemRef === 'string') {
-        viagem = await _getData(viagemRef, response) as unknown as interfaces.Viagem;
+        viagem = await _getDataFromPath(viagemRef, response) as unknown as interfaces.Viagem;
     } else {
-        viagem = await _getRefData(viagemRef, response) as unknown as interfaces.Viagem;
-    }4
+        viagem = await _getDataFromReference(viagemRef, response) as unknown as interfaces.Viagem;
+    }
         
-    const transportes = await _getRefData(viagem.transportesRef, response);
+    const transportes = await _getDataFromReference(viagem.transportesRef, response);
     viagem.transportes = transportes;
     
-    const programacoes = await _getRefData(viagem.programacoesRef, response);
+    const programacoes = await _getDataFromReference(viagem.programacoesRef, response);
     viagem.programacoes = programacoes;
     
-    const hospedagens = await _getRefData(viagem.hospedagensRef, response);
+    const hospedagens = await _getDataFromReference(viagem.hospedagensRef, response);
     viagem.hospedagens = hospedagens;
 
     for (let i = 0; i < viagem.cidades.length; i++) {
-        const passeiosCidade = await _getRefData(viagem.cidades[i].passeiosRef, response);
-        viagem.cidades[i].passeios = passeiosCidade;
-    }
-
-    for (let i = 0; i < viagem.cidades.length; i++) {
-        const passeiosCidade = await _getRefData(viagem.cidades[i].passeiosRef, response);
+        const passeiosCidade = await _getDataFromReference(viagem.cidades[i].passeiosRef, response);
         viagem.cidades[i].passeios = passeiosCidade;
     }
 
@@ -45,7 +40,7 @@ export const getAllTripsFromUser = functions.https.onRequest(async (request, res
     var viagens = [];
 
     for (const viagemRef of user.viagens) {
-        const viagem = await _getViagem(viagemRef, response);
+        const viagem = await _getTrip(viagemRef, response);
         viagens.push(viagem);
     }
 
@@ -56,11 +51,11 @@ export const getAllTripsFromUser = functions.https.onRequest(async (request, res
 export const getConfig = functions.https.onRequest(async (request, response) => { 
     response.set("Access-Control-Allow-Origin", "*");
 
-    const callSyncOrder = await _getData('config/call-sync-order', response);
-    const information = await _getData('config/information', response);
-    const places = await _getData('config/places', response);
-    const transportes = await _getData('config/transportes', response);
-    const cores = await _getData('config/cores', response);
+    const callSyncOrder = await _getDataFromPath('config/call-sync-order', response);
+    const information = await _getDataFromPath('config/information', response);
+    const places = await _getDataFromPath('config/places', response);
+    const transportes = await _getDataFromPath('config/transportes', response);
+    const cores = await _getDataFromPath('config/cores', response);
 
     const config = {
         callSyncOrder: callSyncOrder,
@@ -78,12 +73,24 @@ export const getSingleTrip = functions.https.onRequest(async (request, response)
     response.set("Access-Control-Allow-Origin", "*");
     
     _checkParam(request.query.viagemRef, 'viagemRef', response);
+
     const viagemRef = request.query.viagemRef as string;
-    
-    var viagem = await _getViagem('/viagens/' + viagemRef, response);
+    var viagem = await _getTrip('/viagens/' + viagemRef, response);
     
     response.send(viagem);
 });
+
+export const getSingleTripStripped = functions.https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    
+    _checkParam(request.query.viagemRef, 'viagemRef', response);
+
+    const viagemRef = request.query.viagemRef as string;
+    var viagem = await _getDataFromPath('/viagens/' + viagemRef, response);
+    
+    response.send(viagem);
+});
+
 
 // Exporta todas as viagens do usuário
 export const getTripList = functions.https.onRequest(async (request, response) => {
@@ -95,7 +102,7 @@ export const getTripList = functions.https.onRequest(async (request, response) =
 
         for (const viagemRef of user.viagens) {
             const viagemCode = viagemRef._path.segments[1];
-            const viagem = await _getViagem(viagemRef, response);
+            const viagem = await _getTrip(viagemRef, response);
             viagens.push({
                 code: viagemCode,
                 titulo: viagem.titulo,

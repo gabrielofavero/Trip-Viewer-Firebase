@@ -11,6 +11,7 @@ export interface Referencia {
 export interface Usuario {
     Nome: string;
     viagens: any;
+    passeios: any;
   }
 
 export interface Viagem {
@@ -91,6 +92,7 @@ export interface Passeios {
     restaurantes: Passeio[];
     saidas: Passeio[];
     turismo: Passeio[];
+    titulo: string;
 }
 
 interface Passeio {
