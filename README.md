@@ -11,6 +11,7 @@
 - Inserir API Google Maps para busca de passeios;
 - Criar página de configurações;
 - Implementar compartilhamento de viagens via botão no viagem.html.
+- Otimizar BD (simplificar estrutura);
 
 ## Done
 ### 13/11/2023
