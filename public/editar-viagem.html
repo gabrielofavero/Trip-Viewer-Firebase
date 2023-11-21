@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>TripViewer</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Apple Data -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Viagem" />
+  <meta name="theme-color" content="#fff">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="msapplication-TileColor" content="#e4ebdb">
+  <meta name="msapplication-config" content="browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/editar-viagem/editar-viagem.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="top-bar" id="top-bar">
+    <div class="logo-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
+        <g style="isolation: isolate;">
+          <g id="Capa_1" data-name="Capa 1">
+            <g>
+              <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
+              <path id="light-color-1"
+                d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                style="fill: #5859a7; stroke-width: 0px;" />
+              <path
+                d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <path id="light-color-2"
+                d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                style="fill: #5859a7; stroke-width: 0px;" />
+              <path
+                d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
+            </g>
+          </g>
+        </g>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
+        <g style="isolation: isolate;">
+          <g id="Capa_1" data-name="Capa 1">
+            <g>
+              <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
+              <path id="dark-color-1"
+                d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                style="fill: #7f75b6; stroke-width: 0px;" />
+              <path
+                d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <path id="dark-color-2"
+                d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                style="fill: #7f75b6; stroke-width: 0px;" />
+              <path
+                d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
+            </g>
+          </g>
+        </g>
+      </svg>
+      <div id="trip-viewer-text">TripViewer</div>
+    </div>
+    <i id="night-mode" class="bx bx-moon custom-nav-toggle"></i>
+  </div>
+
+  <!-- ======= Hero ======= -->
+  <section id="hero">
+
+
+    <div class="demo-page">
+      <div class="demo-page-navigation">
+        <nav>
+          <ul>
+            <li>
+              <a href="#installation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-tool">
+                  <path
+                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                </svg>
+                Installation</a>
+            </li>
+            <li>
+              <a href="#structure">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-layers">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
+                </svg>
+                Structure</a>
+            </li>
+            <li>
+              <a href="#input-types">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-align-justify">
+                  <line x1="21" y1="10" x2="3" y2="10" />
+                  <line x1="21" y1="6" x2="3" y2="6" />
+                  <line x1="21" y1="14" x2="3" y2="14" />
+                  <line x1="21" y1="18" x2="3" y2="18" />
+                </svg>
+                Input types</a>
+            </li>
+            <li>
+              <a href="#checkbox-and-radio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-check-square">
+                  <polyline points="9 11 12 14 22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+                Checkbox and Radio</a>
+            </li>
+            <li>
+              <a href="#fieldset">
+                <svg xmlns="http://www.w3.org/2000/svg" style="transform: rotate(90deg)" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="feather feather-columns">
+                  <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18" />
+                </svg>
+                Fieldset</a>
+            </li>
+
+            <li>
+              <a href="#icons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-feather">
+                  <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
+                  <line x1="16" y1="8" x2="2" y2="22" />
+                  <line x1="17.5" y1="15" x2="9" y2="15" />
+                </svg>
+                Icons</a>
+            </li>
+            <li>
+              <a href="#validation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-alert-triangle">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                Validation</a>
+            </li>
+            <li>
+              <a href="#date">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-calendar">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Date input</a>
+            </li>
+            <li>
+              <a href="#other">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-server">
+                  <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                  <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                  <line x1="6" y1="6" x2="6.01" y2="6" />
+                  <line x1="6" y1="18" x2="6.01" y2="18" />
+                </svg>
+                Other input types</a>
+            </li>
+            <li>
+              <a href="#reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-power">
+                  <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                  <line x1="12" y1="2" x2="12" y2="12" />
+                </svg>
+                Reset only</a>
+            </li>
+            <li>
+              <a href="#customization">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-sliders">
+                  <line x1="4" y1="21" x2="4" y2="14" />
+                  <line x1="4" y1="10" x2="4" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12" y2="3" />
+                  <line x1="20" y1="21" x2="20" y2="16" />
+                  <line x1="20" y1="12" x2="20" y2="3" />
+                  <line x1="1" y1="14" x2="7" y2="14" />
+                  <line x1="9" y1="8" x2="15" y2="8" />
+                  <line x1="17" y1="16" x2="23" y2="16" />
+                </svg>
+                Customization</a>
+            </li>
+            <li>
+              <a href="#contribute">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-github">
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                </svg>
+                Contribute</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <main class="demo-page-content">
+        <section>
+          <div class="href-target" id="intro"></div>
+          <h1 class="package-name">nice-forms.css</h1>
+          <p>
+            I like pretty forms and clean HTML 😄 That's why I created
+            <strong>nice-forms.css</strong> to help devs who want to hit the
+            ground running, but don't want to stare at default input fields when
+            doing so 💩
+          </p>
+          <strong>In a nutshell:</strong>
+          <ul>
+            <li>It provides a sensible input styling 'reset'</li>
+            <li>Get nice looking forms with zero effort</li>
+            <li>Easily customizable with css-variables</li>
+            <li>
+              Perfect for rapid prototyping or tweak it and make it your own.
+            </li>
+            <li>No hacks or unnecessary elements, pure semantics</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="href-target" id="installation"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-tool">
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+            Installation
+          </h1>
+          <p>
+            Import nice-forms.css from <strong>unpkg</strong>
+            <br />
+            <code>https://unpkg.com/nice-forms.css/nice-forms.css</code>
+          </p>
+          <p>
+            Install via <strong>NPM</strong>
+            <br />
+            <code> npm install nice-forms.css </code>
+          </p>
+        </section>
+
+        <section>
+          <div class="href-target" id="structure"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-layers">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            Structure
+          </h1>
+          <p>
+            All you need to do is add the class <code>.nice-form-group</code> to
+            get a nice base style for all your input fields. Add a
+            <code>small</code> element for additional information, this can be
+            below the label or below the field.
+          </p>
+
+          <div class="nice-form-group">
+            <label>Basic form group</label>
+            <input type="text" placeholder="Your name" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Basic form group</label>
+            <small>With additional information below the label</small>
+            <input type="text" placeholder="Your name" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>My form group label</label>
+            <input type="text" placeholder="Your name" />
+            <small>Or additional text below</small>
+          </div>
+
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/a00c2c8b6b7acfacce6d50926379e722.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="input-types"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-align-justify">
+              <line x1="21" y1="10" x2="3" y2="10" />
+              <line x1="21" y1="6" x2="3" y2="6" />
+              <line x1="21" y1="14" x2="3" y2="14" />
+              <line x1="21" y1="18" x2="3" y2="18" />
+            </svg>
+            Input types
+          </h1>
+          <p>All available input types are included</p>
+
+          <div class="nice-form-group">
+            <label>Text</label>
+            <input type="text" placeholder="Your name" value="" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Your email" value="" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Phonenumber</label>
+            <input type="tel" placeholder="Your phonenumber" value="" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Url</label>
+            <input type="url" placeholder="www.google.com" value="" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Your password" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Search</label>
+            <input type="search" placeholder="Search all the things" value="" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Disabled field</label>
+            <input type="text" disabled placeholder="Your name" value="" />
+          </div>
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/e25c9c8f2b8456bbd1239b775d21333f.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="checkbox-and-radio"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-check-square">
+              <polyline points="9 11 12 14 22 4" />
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+            </svg>
+            Checkbox and Radio
+          </h1>
+          <p>
+            These are your basic <code>input[type="radio"]</code> and
+            <code>input[type="checkbox"]</code> elements. They have a label and
+            can contain secondary information by adding a
+            <code>small</code> element inside the <code>label</code>.
+          </p>
+
+          <fieldset class="nice-form-group">
+            <div class="nice-form-group">
+              <input type="radio" name="radio" id="r-1" />
+              <label for="r-1">Radio button with label</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="radio" name="radio" id="r-2" />
+              <label for="r-2">
+                Radio button with label
+                <small>Radio can have additional information</small>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="nice-form-group">
+            <div class="nice-form-group">
+              <input type="checkbox" id="check-1" />
+              <label for="check-1">Checkbox with label</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="checkbox" id="check-2" />
+              <label for="check-2">
+                Checkbox with label
+                <small>I am additional information regarding this field</small>
+              </label>
+            </div>
+          </fieldset>
+          <br />
+          <p>
+            <strong style="display: block">Switch</strong>
+            If you want a checkbox to look like a switch, just add a
+            <code>.switch</code> class to the checkbox input element
+          </p>
+
+          <fieldset class="nice-form-group">
+            <div class="nice-form-group">
+              <input type="checkbox" id="check-3" class="switch" />
+              <label for="check-3">Switch with label</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="checkbox" id="check-4" class="switch" />
+              <label for="check-4">
+                Switch with label
+                <small>I am additional information regarding this field</small>
+              </label>
+            </div>
+          </fieldset>
+
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/5c490e16bc1b63bba29d4ee76477f94d.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="fieldset"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" style="transform: rotate(90deg)" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" class="feather feather-columns">
+              <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18" />
+            </svg>
+            Fieldset
+          </h1>
+          <p>
+            The <code>fieldset</code> is used to group multiple related input
+            fields. All nested <code>.nice-form-group</code> elements within
+            will automaticly have a smaller margin.
+          </p>
+
+          <fieldset class="nice-form-group">
+            <legend>Select your favorite framework</legend>
+            <div class="nice-form-group">
+              <input type="radio" name="radio" id="react" />
+              <label for="react">React</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="radio" name="radio" id="vue" />
+              <label for="vue">Vue</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="radio" name="radio" id="angular" />
+              <label for="angular">Angular</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="nice-form-group">
+            <legend>Select your favorite languages</legend>
+            <div class="nice-form-group">
+              <input type="checkbox" id="css" />
+              <label for="css">CSS</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="checkbox" id="html" />
+              <label for="html">HTML</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="checkbox" id="js" />
+              <label for="js">Javascript</label>
+            </div>
+          </fieldset>
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/e513d0df728dfc3fb1f5f9ecae042bf8.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="icons"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-feather">
+              <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
+              <line x1="16" y1="8" x2="2" y2="22" />
+              <line x1="17.5" y1="15" x2="9" y2="15" />
+            </svg>
+            Icons
+          </h1>
+          <p>
+            For some input types it could make sense to show a icon. These icons
+            are hidden by default but can be added by adding either
+            <code>.icon-left</code> or <code>.icon-right</code> to the input
+            element. The icons used are from
+            <a href="https://feathericons.com/" target="_blank">feathericons</a>.
+          </p>
+
+          <div class="nice-form-group">
+            <label>Phonenumber</label>
+            <input type="tel" placeholder="Your phonenumber" value="" class="icon-left" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Url</label>
+            <input type="url" placeholder="www.google.com" value="" class="icon-left" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Your email" value="" class="icon-left" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Your password" class="icon-left" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Phonenumber</label>
+            <input type="tel" placeholder="Your phonenumber" value="" class="icon-right" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Url</label>
+            <input type="url" placeholder="www.google.com" value="" class="icon-right" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Your email" value="" class="icon-right" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Your password" class="icon-right" />
+          </div>
+
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/8cc4cd8ebc6e81c3f889f1b40037b0cc.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="validation"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-alert-triangle">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Field Validation
+          </h1>
+          <p>
+            Fields that have a <code>required</code> attribute can be valid or
+            invalid based on their value. When a user focuses on a invalid field
+            the styling is set back to default.
+          </p>
+
+          <div class="nice-form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Your email" value="this is not a email adress" required />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Your email" value="nice@forms.com" required />
+          </div>
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/75ebf8c12ca420eb2089312a931ab4cf.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="date"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-calendar">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            Date input
+          </h1>
+          <p>
+            Date fields show icons by default. The <code>month</code>,
+            <code>week</code> and <code>date</code> fields have a fixed min
+            width set at 14em. <code>time</code> is set at 7em.
+          </p>
+
+          <div class="nice-form-group">
+            <label>Month</label>
+            <input type="month" value="2018-05" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Week</label>
+            <input type="week" value="2017-W01" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Date</label>
+            <input type="date" value="2018-07-22" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Time</label>
+            <input type="time" value="13:30" />
+          </div>
+
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/2ae279af287e520f545285b0d7c45828.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="other"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-server">
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+              <line x1="6" y1="6" x2="6.01" y2="6" />
+              <line x1="6" y1="18" x2="6.01" y2="18" />
+            </svg>
+            Other input types
+          </h1>
+
+          <div class="nice-form-group">
+            <label>Textarea</label>
+            <textarea rows="5" placeholder="Your message"></textarea>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Select</label>
+            <select>
+              <option>Please select a value</option>
+              <option>Option 1</option>
+              <option>Option 2</option>
+            </select>
+          </div>
+
+          <div class="nice-form-group">
+            <label>File upload</label>
+            <input type="file" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Range slider</label>
+            <input type="range" min="0" max="15" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Number</label>
+            <input type="number" placeholder="1234" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Color</label>
+            <input type="color" />
+          </div>
+
+          <details>
+            <summary>
+              <div class="toggle-code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-code">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                Toggle code
+              </div>
+            </summary>
+            <script src="https://gist.github.com/nielsVoogt/f0480b1a2d0deda02138d61ec5c9f4d0.js"></script>
+          </details>
+        </section>
+
+        <section>
+          <div class="href-target" id="reset"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-power">
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+              <line x1="12" y1="2" x2="12" y2="12" />
+            </svg>
+            Reset only
+          </h1>
+          <p>There is also a reset only version available, this version provides styled form fields out of the box
+            without any wrapping class. This does however mean that <code>.icon-left</code>, <code>.icon-right</code> or
+            <code>.switch</code> are not included.</p>
+          <p>
+            Grab the raw CSS <a
+              href="https://raw.githubusercontent.com/nielsVoogt/nice-forms.css/main/dist/nice-forms-reset.css">here</a>,
+            or import the reset from <strong>unpkg</strong> via
+            <code>https://unpkg.com/nice-forms.css@0.1.7/dist/nice-forms-reset.css</code>
+          </p>
+
+          <a href="https://nielsvoogt.github.io/nice-forms.css/reset.html" class="to-reset" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-external-link">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            Check out the example page
+          </a>
+        </section>
+
+        <section>
+          <div class="href-target" id="customization"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-sliders">
+              <line x1="4" y1="21" x2="4" y2="14" />
+              <line x1="4" y1="10" x2="4" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="3" />
+              <line x1="20" y1="21" x2="20" y2="16" />
+              <line x1="20" y1="12" x2="20" y2="3" />
+              <line x1="1" y1="14" x2="7" y2="14" />
+              <line x1="9" y1="8" x2="15" y2="8" />
+              <line x1="17" y1="16" x2="23" y2="16" />
+            </svg>
+            Customization
+          </h1>
+          <p>The styling is highly customizable using css variables.</p>
+          <script src="https://gist.github.com/nielsVoogt/63daf967a17776d00f5923048cf28daf.js"></script>
+        </section>
+
+        <section>
+          <div class="href-target" id="contribute"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-github">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg>
+            Contribute
+          </h1>
+          <p>
+            If you encounter a bug on any device or have suggestions for
+            improvement, don't hesitate to open a bug report or pull request.
+          </p>
+
+          <a href="https://github.com/nielsVoogt/nice-forms.css" class="to-repo" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-external-link">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            Check out the repo
+          </a>
+        </section>
+
+        <footer>Made with ♥ for CSS</footer>
+      </main>
+    </div>
+
+  </section>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="credits">
+        Site Feito por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. Logo adaptado de <a
+          href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph">studiogstock</a>
+        e fundo de <a
+          href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph">jcomp</a>
+        no Freepik. Sistema de cadastro adaptado de <a href="https://github.com/nielsVoogt/nice-forms.css">Niels Voogt
+          (2021)</a>.
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <!-- ======= Support: Preloader ======= -->
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Firebase -->
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-database-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-functions-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-messaging-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-storage-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-analytics-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-remote-config-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-performance-compat.js"></script>
+
+  <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+
+  <script src="assets/js/support/logger.js"></script>
+  <script src="assets/js/support/date.js"></script>
+  <script src="assets/js/support/user.js"></script>
+  <script src="assets/js/support/visibility.js"></script>
+  <script src="assets/js/support/device.js"></script>
+  <script src="assets/js/support/loading.js"></script>
+  <script src="assets/js/pages/editar-viagem/editar-viagem.js"></script>
+
+</body>
+
+</html>
