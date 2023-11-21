@@ -1,6 +1,7 @@
 import { getBackup } from "./data/main/backup";
 import { getConfig, getSingleTrip, getTripList } from "./data/viagem/get";
 import { updateTrip, newTrip } from "./data/viagem/set";
+import { getPlacesList } from "./data/passeios/get";
 import * as admin from "firebase-admin";
 import credentials from "./data/main/credentials";
 
@@ -13,6 +14,7 @@ export {
   getConfig,
   getSingleTrip,
   getTripList,
+  getPlacesList,
   updateTrip,
   newTrip,
 };
