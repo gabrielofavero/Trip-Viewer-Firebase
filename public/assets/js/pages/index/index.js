@@ -274,11 +274,11 @@ async function _loadUserIndex() {
         const displayName = user.displayName;
         document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
 
-        let tripList = await _getTripList();
-        if (tripList && tripList.length > 0) {
-          document.getElementById('no-trips').style.display = 'none';
-          _loadTripListHTML(tripList);
-        }
+        // let tripList = await _getTripList();
+        // if (tripList && tripList.length > 0) {
+        //   document.getElementById('no-trips').style.display = 'none';
+        //   _loadTripListHTML(tripList);
+        // }
         _stopLoadingScreen();
       }
     });
