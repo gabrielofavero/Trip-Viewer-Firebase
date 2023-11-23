@@ -12,6 +12,7 @@
 - Criar página de configurações;
 - Implementar compartilhamento de viagens via botão no viagem.html.
 - Otimizar BD (simplificar estrutura);
+- Substituir títulos de accordeons no editar-viagens
 
 ## Done
 ### 13/11/2023
