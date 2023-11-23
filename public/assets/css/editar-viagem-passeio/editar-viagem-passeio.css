@@ -1450,3 +1450,29 @@ details summary::-webkit-details-marker {
 .opcional {
   color: #A6A6A6;
 }
+
+.button-box {
+  text-align: right;
+  background: #f1f1f1;
+}
+
+.button-box-formatted {
+  text-align: right;
+  background: #f1f1f1;
+  margin: 2em -2em -2em;
+  padding: 1.5em 2em
+}
+
+#salvar-cancelar-section{
+  background: #f1f1f1;
+}
+
+#cancelar, #salvar {
+  margin-left: 20px;
+}
+
+.btn-purple {
+  background: #5859a7;
+  color: #fff;
+}
+

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>TripViewer</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Apple Data -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Viagem" />
+  <meta name="theme-color" content="#fff">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="msapplication-TileColor" content="#e4ebdb">
+  <meta name="msapplication-config" content="browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/editar-viagem-passeio/editar-viagem-passeio.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="top-bar" id="top-bar">
+    <div class="logo-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
+        <g style="isolation: isolate;">
+          <g id="Capa_1" data-name="Capa 1">
+            <g>
+              <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
+              <path id="light-color-1"
+                d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                style="fill: #5859a7; stroke-width: 0px;" />
+              <path
+                d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <path id="light-color-2"
+                d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                style="fill: #5859a7; stroke-width: 0px;" />
+              <path
+                d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
+            </g>
+          </g>
+        </g>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
+        <g style="isolation: isolate;">
+          <g id="Capa_1" data-name="Capa 1">
+            <g>
+              <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                style="fill: none; stroke: #00b6ea; stroke-miterlimit: 10; stroke-width: 8px;" />
+              <path id="dark-color-1"
+                d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                style="fill: #7f75b6; stroke-width: 0px;" />
+              <path
+                d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <path id="dark-color-2"
+                d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                style="fill: #7f75b6; stroke-width: 0px;" />
+              <path
+                d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+              <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #00b6ea; stroke-width: 0px;" />
+            </g>
+          </g>
+        </g>
+      </svg>
+      <div id="trip-viewer-text">TripViewer</div>
+    </div>
+    <i id="night-mode" class="bx bx-moon custom-nav-toggle"></i>
+  </div>
+
+  <!-- ======= Hero ======= -->
+  <section id="hero">
+    <div class="demo-page">
+      <div class="demo-page-navigation">
+        <nav>
+          <ul>
+            <li>
+              <a href="#dados-basicos">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-tool">
+                  <path
+                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                </svg>
+                Dados Básicos</a>
+            </li>
+            <li>
+              <a href="#restaurantes">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2h18v-2zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zm-3 3h20v2H2z">
+                  </path>
+                </svg>
+                Restaurantes</a>
+            </li>
+            <li>
+              <a href="#lanches">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M21.598 11.064a1.006 1.006 0 0 0-.854-.172A2.938 2.938 0 0 1 20 11c-1.654 0-3-1.346-3.003-2.937c.005-.034.016-.136.017-.17a.998.998 0 0 0-1.254-1.006A2.963 2.963 0 0 1 15 7c-1.654 0-3-1.346-3-3c0-.217.031-.444.099-.716a1 1 0 0 0-1.067-1.236A9.956 9.956 0 0 0 2 12c0 5.514 4.486 10 10 10s10-4.486 10-10c0-.049-.003-.097-.007-.16a1.004 1.004 0 0 0-.395-.776zM12 20c-4.411 0-8-3.589-8-8a7.962 7.962 0 0 1 6.006-7.75A5.006 5.006 0 0 0 15 9l.101-.001a5.007 5.007 0 0 0 4.837 4C19.444 16.941 16.073 20 12 20z">
+                  </path>
+                  <circle cx="12.5" cy="11.5" r="1.5" fill="currentColor"></circle>
+                  <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"></circle>
+                  <circle cx="7.5" cy="12.5" r="1.5" fill="currentColor"></circle>
+                  <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+                  <circle cx="10.5" cy="16.5" r="1.5" fill="currentColor"></circle>
+                </svg>
+                Lanches</a>
+            </li>
+            <li>
+              <a href="#saidas">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M20.832 4.555A1 1 0 0 0 20 3H4a1 1 0 0 0-.832 1.554L11 16.303V20H8v2h8v-2h-3v-3.697l7.832-11.748zm-2.7.445l-2 3H7.868l-2-3h12.264z">
+                  </path>
+                </svg>
+                Saídas</a>
+            </li>
+            <li>
+              <a href="#turismo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a14.67 14.67 0 0 0-1.792-6.243A8.013 8.013 0 0 1 19.931 11zM12.53 4.027c1.035 1.364 2.427 3.78 2.627 6.973H9.03c.139-2.596.994-5.028 2.451-6.974c.172-.01.344-.026.519-.026c.179 0 .354.016.53.027zm-3.842.7C7.704 6.618 7.136 8.762 7.03 11H4.069a8.013 8.013 0 0 1 4.619-6.273zM4.069 13h2.974c.136 2.379.665 4.478 1.556 6.23A8.01 8.01 0 0 1 4.069 13zm7.381 6.973C10.049 18.275 9.222 15.896 9.041 13h6.113c-.208 2.773-1.117 5.196-2.603 6.972c-.182.012-.364.028-.551.028c-.186 0-.367-.016-.55-.027zm4.011-.772c.955-1.794 1.538-3.901 1.691-6.201h2.778a8.005 8.005 0 0 1-4.469 6.201z">
+                  </path>
+                </svg>
+                Turismo</a>
+            </li>
+
+            <li>
+              <a href="#lojas">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M5 22h14c1.103 0 2-.897 2-2V9a1 1 0 0 0-1-1h-3V7c0-2.757-2.243-5-5-5S7 4.243 7 7v1H4a1 1 0 0 0-1 1v11c0 1.103.897 2 2 2zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v1H9V7zm-4 3h2v2h2v-2h6v2h2v-2h2l.002 10H5V10z">
+                  </path>
+                </svg>
+                Lojas</a>
+            </li>
+
+            <li>
+              <a href="#mapa">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="m21.447 6.105l-6-3a1 1 0 0 0-.895 0L9 5.882L3.447 3.105A1 1 0 0 0 2 4v13c0 .379.214.725.553.895l6 3a1 1 0 0 0 .895 0L15 18.118l5.553 2.776a.992.992 0 0 0 .972-.043c.295-.183.475-.504.475-.851V7c0-.379-.214-.725-.553-.895zM10 7.618l4-2v10.764l-4 2V7.618zm-6-2l4 2v10.764l-4-2V5.618zm16 12.764l-4-2V5.618l4 2v10.764z">
+                  </path>
+                </svg>
+                Mapa</a>
+            </li>
+
+            <li>
+              <a href="#lineup">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="m19.684 5.821l-9-3.272A1.998 1.998 0 0 0 8 4.428v6.129A3.953 3.953 0 0 0 6 10c-2.206 0-4 1.794-4 4s1.794 4 4 4s4-1.794 4-4V4.428L19 7.7v6.856A3.962 3.962 0 0 0 17 14c-2.206 0-4 1.794-4 4s1.794 4 4 4s4-1.794 4-4V7.7c0-.838-.529-1.594-1.316-1.879zM6 16c-1.103 0-2-.897-2-2s.897-2 2-2s2 .897 2 2s-.897 2-2 2zm11 4c-1.103 0-2-.897-2-2s.897-2 2-2s2 .897 2 2s-.897 2-2 2z">
+                  </path>
+                </svg>
+                Lineup</a>
+            </li>
+
+            <li>
+              <a href="#salvar-cancelar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
+                  </path>
+                </svg>
+                Salvar ou Cancelar</a>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+
+      <main class="demo-page-content">
+        <section>
+          <div class="href-target" id="dados-basicos"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-tool">
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+            Dados Básicos
+          </h1>
+
+          <p>
+            Adicione aqui as principais informações da sua viagem.
+          </p>
+
+          <div class="nice-form-group">
+            <label>Nome da Cidade / Região</label>
+            <input required id="titulo" type="text" placeholder="São Paulo" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Moeda</label>
+            <input required id="moeda" type="text" placeholder="R$" />
+          </div>
+
+        </section>
+
+        <section>
+          <div class="href-target" id="restaurantes"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2h18v-2zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zm-3 3h20v2H2z">
+              </path>
+            </svg>
+            Restaurantes
+          </h1>
+          <p>
+            Lugares com refeições completas, para almoçar e jantar. Alguns são apenas noturnos. Locais Físicos.
+          </p>
+
+          <div class="nice-form-group">
+            <input id="habilitado-restaurantes" type="checkbox" class="switch" />
+            <label for="habilitado-restaurantes">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-restaurantes-content">
+            <div class="item-box accordion restaurantes-box" id="restaurantes-box">
+              <div id="restaurantes-1" class="accordion-item">
+                <h2 class="accordion-header" id="heading-restaurantes-1">
+                  <button id="restaurantes-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-restaurantes-1" aria-expanded="true"
+                    aria-controls="collapse-restaurantes-1">
+                    Restaurante 1
+                  </button>
+                </h2>
+                <div id="collapse-restaurantes-1" class="accordion-collapse collapse"
+                  aria-labelledby="heading-restaurantes-1" data-bs-parent="#restaurantes-box">
+                  <div class="accordion-body">
+                    <div class="nice-form-group">
+                      <label>Nome</label>
+                      <input required id="restaurantes-nome-1" type="text" placeholder="Salumeria Central" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Descrição</label>
+                      <textarea id="restaurantes-descricao-1" rows="3"
+                        placeholder="Restaurante famoso por seus embutidos. Oferece feijoada à vontade nos domingos."></textarea>
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Link <span class="opcional"> (Opcional)</span></label>
+                      <input id="restaurantes-link-1" type="url"
+                        placeholder="https://www.instagram.com/salumeria.central/" value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Região <span class="opcional"> (Opcional)</span></label>
+                      <input id="restaurantes-regiao-1" type="text" placeholder="Sapucaí" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
+                      <input id="restaurantes-valor-1" type="text" placeholder="R$50 - R$100" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+                      <input id="restaurantes-midia-1" type="url"
+                        placeholder="https://www.youtube.com/watch?v=GAirUeYBvQI" value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
+                      <input required id="restaurantes-nota-1" type="number" placeholder="90" min="0" max="100" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-box-formatted">
+                <button id="restaurantes-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Restaurante
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <section>
+          <div class="href-target" id="lanches"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M21.598 11.064a1.006 1.006 0 0 0-.854-.172A2.938 2.938 0 0 1 20 11c-1.654 0-3-1.346-3.003-2.937c.005-.034.016-.136.017-.17a.998.998 0 0 0-1.254-1.006A2.963 2.963 0 0 1 15 7c-1.654 0-3-1.346-3-3c0-.217.031-.444.099-.716a1 1 0 0 0-1.067-1.236A9.956 9.956 0 0 0 2 12c0 5.514 4.486 10 10 10s10-4.486 10-10c0-.049-.003-.097-.007-.16a1.004 1.004 0 0 0-.395-.776zM12 20c-4.411 0-8-3.589-8-8a7.962 7.962 0 0 1 6.006-7.75A5.006 5.006 0 0 0 15 9l.101-.001a5.007 5.007 0 0 0 4.837 4C19.444 16.941 16.073 20 12 20z">
+              </path>
+              <circle cx="12.5" cy="11.5" r="1.5" fill="currentColor"></circle>
+              <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"></circle>
+              <circle cx="7.5" cy="12.5" r="1.5" fill="currentColor"></circle>
+              <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+              <circle cx="10.5" cy="16.5" r="1.5" fill="currentColor"></circle>
+            </svg>
+            Lanches
+          </h1>
+          <p>Dê uma cara única para a sua viagem.</p>
+
+          <div class="nice-form-group">
+            <input id="habilitado-lanches" type="checkbox" class="switch" />
+            <label for="habilitado-lanches">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-lanches-content">
+            <div class="item-box accordion lanches-box" id="lanches-box">
+              <div id="lanches-1" class="accordion-item">
+                <h2 class="accordion-header" id="heading-lanches-1">
+                  <button id="lanches-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-lanches-1" aria-expanded="true" aria-controls="collapse-lanches-1">
+                    Lanche 1
+                  </button>
+                </h2>
+                <div id="collapse-lanches-1" class="accordion-collapse collapse" aria-labelledby="heading-lanches-1"
+                  data-bs-parent="#lanches-box">
+                  <div class="accordion-body">
+                    <div class="nice-form-group">
+                      <label>Nome</label>
+                      <input required id="lanches-nome-1" type="text" placeholder="BotaniKafé" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Descrição</label>
+                      <textarea id="lanches-descricao-1" rows="3"
+                        placeholder="Bastante conhecido pelo ovo porchê, bowls e smoothies, é um excelente lugar para brunchs."></textarea>
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Link <span class="opcional"> (Opcional)</span></label>
+                      <input id="lanches-link-1" type="url" placeholder="https://www.instagram.com/botanikafe/" value=""
+                        class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Região <span class="opcional"> (Opcional)</span></label>
+                      <input id="lanches-regiao-1" type="text" placeholder="Jardim Paulista" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
+                      <input id="lanches-valor-1" type="text" placeholder="R$50 - R$100" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+                      <input id="lanches-midia-1" type="url"
+                        placeholder="https://www.tiktok.com/@viajeparacomer/video/7172239210282274053?q=bottanikafe&t=1700768671502"
+                        value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
+                      <input required id="lanches-nota-1" type="number" placeholder="80" min="0" max="100" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-box-formatted">
+                <button id="lanches-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Lanche
+                </button>
+              </div>
+            </div>
+
+        </section>
+
+        <section>
+          <div class="href-target" id="saidas"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M20.832 4.555A1 1 0 0 0 20 3H4a1 1 0 0 0-.832 1.554L11 16.303V20H8v2h8v-2h-3v-3.697l7.832-11.748zm-2.7.445l-2 3H7.868l-2-3h12.264z">
+              </path>
+            </svg>
+            Saídas
+          </h1>
+          <p>
+            Cadastre os principais deslocamentos de ida e volta.
+          </p>
+
+          <div class="nice-form-group">
+            <input id="habilitado-saidas" type="checkbox" class="switch" />
+            <label for="habilitado-saidas">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-saidas-content">
+            <div class="item-box accordion saidas-box" id="saidas-box">
+              <div id="saidas-1" class="accordion-item">
+                <h2 class="accordion-header" id="heading-saidas-1">
+                  <button id="saidas-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-saidas-1" aria-expanded="true" aria-controls="collapse-saidas-1">
+                    Saída 1
+                  </button>
+                </h2>
+                <div id="collapse-saidas-1" class="accordion-collapse collapse" aria-labelledby="heading-saidas-1"
+                  data-bs-parent="#saidas-box">
+                  <div class="accordion-body">
+                    <div class="nice-form-group">
+                      <label>Nome</label>
+                      <input required id="saidas-nome-1" type="text" placeholder="Omalleys" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Descrição</label>
+                      <textarea id="saidas-descricao-1" rows="3"
+                        placeholder="Pub irlandês autêntico e próximo da paulista. Cervejas diferentes, drinks e comida irlandesa. English Karaoke nas segundas."></textarea>
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Link <span class="opcional"> (Opcional)</span></label>
+                      <input id="saidas-link-1" type="url" placeholder="https://www.instagram.com/omalleysbar/" value=""
+                        class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Região <span class="opcional"> (Opcional)</span></label>
+                      <input id="saidas-regiao-1" type="text" placeholder="Jardim Paulista" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
+                      <input id="saidas-valor-1" type="text" placeholder="R$50 - R$100" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+                      <input id="saidas-midia-1" type="url" placeholder="https://www.youtube.com/watch?v=M1qd2Y2T4ZA"
+                        value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
+                      <input required id="saidas-nota-1" type="number" placeholder="80" min="0" max="100" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-box-formatted">
+                <button id="saidas-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Saídas
+                </button>
+
+              </div>
+            </div>
+
+        </section>
+
+        <section>
+          <div class="href-target" id="turismo"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a14.67 14.67 0 0 0-1.792-6.243A8.013 8.013 0 0 1 19.931 11zM12.53 4.027c1.035 1.364 2.427 3.78 2.627 6.973H9.03c.139-2.596.994-5.028 2.451-6.974c.172-.01.344-.026.519-.026c.179 0 .354.016.53.027zm-3.842.7C7.704 6.618 7.136 8.762 7.03 11H4.069a8.013 8.013 0 0 1 4.619-6.273zM4.069 13h2.974c.136 2.379.665 4.478 1.556 6.23A8.01 8.01 0 0 1 4.069 13zm7.381 6.973C10.049 18.275 9.222 15.896 9.041 13h6.113c-.208 2.773-1.117 5.196-2.603 6.972c-.182.012-.364.028-.551.028c-.186 0-.367-.016-.55-.027zm4.011-.772c.955-1.794 1.538-3.901 1.691-6.201h2.778a8.005 8.005 0 0 1-4.469 6.201z">
+              </path>
+            </svg>
+            Turismo
+          </h1>
+          <p>
+            Cadastre onde você ficará hospedado durante a viagem.
+          </p>
+
+          <div class="nice-form-group">
+            <input type="checkbox" id="habilitado-turismo" class="switch" />
+            <label for="habilitado-turismo">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-turismo-content">
+            <div class="item-box accordion turismo-box" id="turismo-box">
+              <div id="turismo-1" class="accordion-item">
+                <h2 class="accordion-header" id="heading-turismo-1">
+                  <button id="turismo-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-turismo-1" aria-expanded="true" aria-controls="collapse-turismo-1">
+                    Turismo 1
+                  </button>
+                </h2>
+                <div id="collapse-turismo-1" class="accordion-collapse collapse" aria-labelledby="heading-turismo-1"
+                  data-bs-parent="#turismo-box">
+                  <div class="accordion-body">
+                    <div class="nice-form-group">
+                      <label>Nome</label>
+                      <input required id="turismo-nome-1" type="text" placeholder="Las Vegas Sign" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Descrição</label>
+                      <textarea id="turismo-descricao-1" rows="3"
+                        placeholder="Famosa placa de Las Vegas. Costuma ter fila, então importante chegar cedo."></textarea>
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Link <span class="opcional"> (Opcional)</span></label>
+                      <input id="turismo-link-1" type="url" placeholder="https://maps.app.goo.gl/on4sJh1d2RNhvPXf6"
+                        value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Região <span class="opcional"> (Opcional)</span></label>
+                      <input id="turismo-regiao-1" type="text" placeholder="Centro da Cidade" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Valor <span class="opcional"> (Opcional)</span></label>
+                      <input id="turismo-valor-1" type="text" placeholder="Gratuito" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+                      <input id="turismo-midia-1" type="url"
+                        placeholder="https://www.tiktok.com/@pompsie/video/7214164412616166699?q=las%20vegas%20sign&t=1700778158244"
+                        value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
+                      <input required id="turismo-nota-1" type="number" placeholder="65" min="0" max="100" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-box-formatted">
+                <button id="turismo-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Ponto Turístico
+                </button>
+              </div>
+            </div>
+
+        </section>
+
+        <section>
+          <div class="href-target" id="lojas"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M5 22h14c1.103 0 2-.897 2-2V9a1 1 0 0 0-1-1h-3V7c0-2.757-2.243-5-5-5S7 4.243 7 7v1H4a1 1 0 0 0-1 1v11c0 1.103.897 2 2 2zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v1H9V7zm-4 3h2v2h2v-2h6v2h2v-2h2l.002 10H5V10z">
+              </path>
+            </svg>
+            Lojas
+          </h1>
+          <p>
+            Inclua aqui a sua programação diária.
+          </p>
+
+          <div class="nice-form-group">
+            <input type="checkbox" id="habilitado-lojas" class="switch" />
+            <label for="habilitado-lojas">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-lojas-content">
+            <div class="item-box accordion lojas-box" id="lojas-box">
+              <div id="lojas-1" class="accordion-item">
+                <h2 class="accordion-header" id="heading-lojas-1">
+                  <button id="lojas-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-lojas-1" aria-expanded="true" aria-controls="collapse-lojas-1">
+                    Loja 1
+                  </button>
+                </h2>
+                <div id="collapse-lojas-1" class="accordion-collapse collapse" aria-labelledby="heading-lojas-1"
+                  data-bs-parent="#lojas-box">
+                  <div class="accordion-body">
+                    <div class="nice-form-group">
+                      <label>Nome</label>
+                      <input required id="lojas-nome-1" type="text" placeholder="Las Vegas North Premium Outlets" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Descrição</label>
+                      <textarea id="lojas-descricao-1" rows="3"
+                        placeholder="Centro de compras. Possui loja da Forever 21, Calvin Klein, Lacoste, entre outros."></textarea>
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Link <span class="opcional"> (Opcional)</span></label>
+                      <input id="lojas-link-1" type="url"
+                        placeholder="https://www.premiumoutlets.com/outlet/las-vegas-north" value=""
+                        class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Região <span class="opcional"> (Opcional)</span></label>
+                      <input id="lojas-regiao-1" type="text" placeholder="Las Vegas Strip (Norte)" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
+                      <input id="lojas-valor-1" type="text" placeholder="O valor varia conforme a loja" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+                      <input id="lojas-midia-1" type="url" placeholder="https://www.youtube.com/watch?v=2LVCuEXZ3bk"
+                        value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
+                      <input required id="lojas-nota-1" type="number" placeholder="65" min="0" max="100" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-box-formatted">
+                <button id="lojas-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Loja
+                </button>
+              </div>
+            </div>
+
+        </section>
+
+        <section>
+          <div class="href-target" id="mapa"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="m21.447 6.105l-6-3a1 1 0 0 0-.895 0L9 5.882L3.447 3.105A1 1 0 0 0 2 4v13c0 .379.214.725.553.895l6 3a1 1 0 0 0 .895 0L15 18.118l5.553 2.776a.992.992 0 0 0 .972-.043c.295-.183.475-.504.475-.851V7c0-.379-.214-.725-.553-.895zM10 7.618l4-2v10.764l-4 2V7.618zm-6-2l4 2v10.764l-4-2V5.618zm16 12.764l-4-2V5.618l4 2v10.764z">
+              </path>
+            </svg>
+            Mapa
+          </h1>
+          <p>
+            Adicione aqui um mapa personalizado para a viagem. Cadastre um mapa gratuitamente no <a
+              href="https://www.google.com/maps/d/u/0/?hl=pt-BR" target="_blank">My Maps</a>
+          </p>
+
+          <div class="nice-form-group">
+            <input type="checkbox" id="habilitado-mapa" class="switch" />
+            <label for="habilitado-mapa">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-mapa-content">
+            <div class="nice-form-group">
+              <label>My Maps Link</label>
+              <input required id="mapa-link" type="url"
+                placeholder="https://www.google.com/maps/d/viewer?mid=1tgHq3Dg7zI1yMKTDlObLRryNPi_sy79t&usp=sharing "
+                value="" class="icon-right" />
+            </div>
+          </div>
+
+        </section>
+
+        <section>
+          <div class="href-target" id="lineup"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="m19.684 5.821l-9-3.272A1.998 1.998 0 0 0 8 4.428v6.129A3.953 3.953 0 0 0 6 10c-2.206 0-4 1.794-4 4s1.794 4 4 4s4-1.794 4-4V4.428L19 7.7v6.856A3.962 3.962 0 0 0 17 14c-2.206 0-4 1.794-4 4s1.794 4 4 4s4-1.794 4-4V7.7c0-.838-.529-1.594-1.316-1.879zM6 16c-1.103 0-2-.897-2-2s.897-2 2-2s2 .897 2 2s-.897 2-2 2zm11 4c-1.103 0-2-.897-2-2s.897-2 2-2s2 .897 2 2s-.897 2-2 2z">
+              </path>
+            </svg>
+            Lineup
+          </h1>
+          <p>
+            Vai viajar para um festival? Inclua aqui horários, palcos, artistas e um link Spotify
+          </p>
+
+          <div class="nice-form-group">
+            <input type="checkbox" id="habilitado-lineup" class="switch" />
+            <label for="habilitado-lineup">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-lineup-content">
+            <div class="item-box accordion lineup-box" id="lineup-box">
+              <div id="lineup-1" class="accordion-item">
+                <h2 class="accordion-header" id="heading-lineup-1">
+                  <button id="lineup-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-lineup-1" aria-expanded="true" aria-controls="collapse-lineup-1">
+                    Banda / Artista 1
+                  </button>
+                </h2>
+                <div id="collapse-lineup-1" class="accordion-collapse collapse" aria-labelledby="heading-lineup-1"
+                  data-bs-parent="#lineup-box">
+                  <div class="accordion-body">
+                    <div class="nice-form-group">
+                      <div class="nice-form-group">
+                        <input type="checkbox" id="lineup-headliner-1" class="switch" />
+                        <label for="lineup-headliner-1">
+                          Headliner
+                        </label>
+                      </div>
+
+                      <label>Nome</label>
+                      <input required id="lineup-nome-1" type="text" placeholder="Omalleys" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Gênero <span class="opcional"> (Opcional)</span></label>
+                      <input id="lineup-descricao-1" type="text" placeholder="Pop Punk Gen-Z" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Palco <span class="opcional"> (Opcional)</span></label>
+                      <input id="lineup-palco-1" type="text" placeholder="Stripe Stage" />
+                    </div>
+
+                    <div class="side-by-side-box">
+                      <div class="nice-form-group side-by-side">
+                        <label>Início <span class="opcional"> (Opcional)</span></label>
+                        <input id="lineup-inicio-1" type="time" value="11:15" />
+                      </div>
+
+                      <div class="nice-form-group side-by-side">
+                        <label>Fim <span class="opcional"> (Opcional)</span></label>
+                        <input id="lineup-fim-1" type="time" value="11:45" />
+                      </div>
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Link Spotify <span class="opcional"> (Playlist ou página do artista)</span></label>
+                      <input id="lineup-midia-1" type="url"
+                        placeholder="https://open.spotify.com/playlist/16mG20ZrC9QttUB6Sozqep?si=da0794cde4914a17"
+                        value="" class="icon-right" />
+                    </div>
+
+                    <div class="nice-form-group">
+                      <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
+                      <input required id="lineup-nota-1" type="number" placeholder="95" min="0" max="100" />
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-box-formatted">
+                <button id="lineup-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Banda / Artista
+                </button>
+              </div>
+            </div>
+        </section>
+
+        <section id="salvar-cancelar-section">
+          <div class="href-target" id="salvar-cancelar"></div>
+          <div class="button-box">
+            <button id="cancelar" class="btn btn-secondary" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
+                </path>
+              </svg>
+              Cancelar
+              <button id="salvar" class="btn btn-purple" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
+                  </path>
+                </svg>
+                Salvar
+              </button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="credits">
+        Site Feito por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. Logo adaptado de <a
+          href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph">studiogstock</a>
+        e fundo de <a
+          href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph">jcomp</a>
+        no Freepik. Sistema de cadastro adaptado de <a href="https://github.com/nielsVoogt/nice-forms.css">Niels Voogt
+          (2021)</a>.
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <!-- ======= Support: Preloader ======= -->
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Firebase -->
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-database-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-functions-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-messaging-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-storage-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-analytics-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-remote-config-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-performance-compat.js"></script>
+
+  <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+
+  <script src="assets/js/support/logger.js"></script>
+  <script src="assets/js/support/date.js"></script>
+  <script src="assets/js/support/user.js"></script>
+  <script src="assets/js/support/visibility.js"></script>
+  <script src="assets/js/support/device.js"></script>
+  <script src="assets/js/support/loading.js"></script>
+  <script src="assets/js/pages/editar-passeio/editar-passeio.js"></script>
+
+</body>
+
+</html>

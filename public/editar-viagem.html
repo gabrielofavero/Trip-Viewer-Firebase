@@ -42,7 +42,7 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/editar-viagem/editar-viagem.css" rel="stylesheet">
+  <link href="assets/css/editar-viagem-passeio/editar-viagem-passeio.css" rel="stylesheet">
 
 </head>
 
@@ -183,6 +183,15 @@
                   </path>
                 </svg>
                 Passeios</a>
+            </li>
+            <li>
+              <a href="#salvar-cancelar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
+                  </path>
+                </svg>
+                Salvar ou Cancelar</a>
             </li>
           </ul>
         </nav>
@@ -505,27 +514,20 @@
                 </div>
               </div>
 
-              <details>
-                <summary>
-                  <div class="toggle-code">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                      <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                        <path
-                          d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                        </path>
-                        <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                        </path>
-                      </g>
-                    </svg>
-                    Adicionar Trajeto
-                  </div>
-                </summary>
-              </details>
+              <div class="button-box-formatted">
+                <button id="transportes-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Trajeto
+                </button>
             </div>
-
-
-
-
           </div>
 
         </section>
@@ -587,22 +589,19 @@
                 </div>
               </div>
 
-              <details>
-                <summary>
-                  <div class="toggle-code">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                      <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                        <path
-                          d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                        </path>
-                        <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                        </path>
-                      </g>
-                    </svg>
-                    Adicionar Hospedagem
-                  </div>
-                </summary>
-              </details>
+              <div class="button-box-formatted">
+                <button id="hospedagem-adicionar" class="btn btn-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                      <path
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                      </path>
+                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                      </path>
+                    </g>
+                  </svg>
+                  Adicionar Hospedagem
+                </button>
             </div>
           </div>
 
@@ -706,22 +705,26 @@
               <label>Meus Passeios</label>
               <input type="text" readonly placeholder='Cadastre um passeio em "Meus Passeios"' />
             </div>
-            <details>
-              <summary>
-                <div class="toggle-code">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                      <path
-                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                      </path>
-                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                      </path>
-                    </g>
-                  </svg>
-                  Adicionar Passeio
-                </div>
-              </summary>
-            </details>
+          </div>
+        </section>
+        <section id="salvar-cancelar-section">
+          <div class="href-target" id="salvar-cancelar"></div>
+          <div class="button-box">
+            <button id="cancelar" class="btn btn-secondary" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
+                </path>
+              </svg>
+              Cancelar
+              <button id="salvar" class="btn btn-purple" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
+                  </path>
+                </svg>
+                Salvar
+              </button>
           </div>
         </section>
       </main>
