@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     tripID = urlParams.get('v');
 
-    //_loadVisibilityEditarViagem();
+    _loadVisibilityIndex();
 
     
     _adjustButtonsPosition();
