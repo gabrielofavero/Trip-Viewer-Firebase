@@ -54,13 +54,42 @@ function _convertFirestoreDate(timestamp) {
     return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
 }
 
-function _jsDateToDate(date) {
+function _jsDateToDate(date, format = "dd/mm/yyyy") {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    const dayString = day < 10 ? `0${day}` : `${day}`;
-    const monthString = month < 10 ? `0${month}` : `${month}`;
+    const separator = format.includes("-") ? "-" : "/";
 
-    return `${dayString}/${monthString}/${year}`;
+    let result = '';
+    const formatParts = format.split(separator);
+    for (let i = 0; i < formatParts.length; i++) {
+        switch (formatParts[i]) {
+            case "dd":
+                result += day < 10 ? `0${day}` : day;
+                break;
+            case "d":
+                result += day;
+                break;
+            case "mm":
+                result += month < 10 ? `0${month}` : month;
+                break;
+            case "m":
+                result += month;
+                break;
+            case "yyyy":
+                result += year;
+                break;
+            case "yy":
+                result += year.toString().substr(-2);
+                break;
+            default:
+                _logger(WARN, "Formato de data não encontrado: " + formatParts[i] + ".");
+        }
+        if (i < formatParts.length - 1) {
+            result += separator;
+        }
+    }
+
+    return result;
 }
