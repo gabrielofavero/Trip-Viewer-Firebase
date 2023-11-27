@@ -6,7 +6,6 @@
     - Modified by: Gabriel Fávero
 */
 
-var START_LIST = [];
 var tripID;
 
 _startLoadingScreen();

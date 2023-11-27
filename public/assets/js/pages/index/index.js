@@ -6,7 +6,8 @@
     - Modified by: Gabriel Fávero
 */
 
-var START_LIST = [];
+var TRIP_LIST = [];
+var PLACES_LIST = [];
 
 _startLoadingScreen();
 
@@ -223,30 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     _loadVisibilityIndex();
     _adjustButtonsPosition();
 
-    document.getElementById('google-login-button').addEventListener('click', function () {
-      _signInGoogle();
-    });
-
-    document.getElementById('sign-out').addEventListener('click', function () {
-      _signOut();
-    });
-
-    document.getElementById('settings').addEventListener('click', function () {
-      _goToSettings();
-    });
-
-    document.getElementById('add-trip').addEventListener('click', function () {
-      _newTrip();
-    });
-
-    document.getElementById('trip-view-continue').addEventListener('click', function () {
-      let viagem = document.getElementById('trip-view-input').value;
-      if (viagem) {
-        window.location.href = `viagem.html?v=${viagem.trim()}`;
-      } else {
-        document.getElementById('trip-view-reminder').style.display = 'block';
-      }
-    });
+    _loadListenersIndex();
 
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
@@ -259,26 +237,66 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+function _loadListenersIndex() {
+  document.getElementById('google-login-button').addEventListener('click', function () {
+    _signInGoogle();
+  });
+
+  document.getElementById('sign-out').addEventListener('click', function () {
+    _signOut();
+  });
+
+  document.getElementById('myTrips').addEventListener('click', function () {
+    _loadMyTripsVisibility();
+  });
+
+  document.getElementById('myPlaces').addEventListener('click', function () {
+    _loadMyPlacesVisibility();
+  });
+
+  document.getElementById('settings').addEventListener('click', function () {
+    _loadSettingsVisibility();
+  });
+
+  document.getElementById('add-trip').addEventListener('click', function () {
+    _newTrip();
+  });
+
+  document.getElementById('myTrips-back').addEventListener('click', function () {
+    _loadUserIndexVisibility();
+  });
+
+  document.getElementById('myPlaces-back').addEventListener('click', function () {
+    _loadUserIndexVisibility();
+  });
+
+  document.getElementById('settings-back').addEventListener('click', function () {
+    _loadUserIndexVisibility();
+  });
+
+  document.getElementById('trip-view-continue').addEventListener('click', function () {
+    let viagem = document.getElementById('trip-view-input').value;
+    if (viagem) {
+      window.location.href = `viagem.html?v=${viagem.trim()}`;
+    } else {
+      document.getElementById('trip-view-reminder').style.display = 'block';
+    }
+  });
+}
+
 async function _loadUserIndex() {
   try {
-    // Add an event listener to get user information when it's available.
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         _startLoadingScreen();
-        document.getElementById('index-unlogged-title').style.display = 'none';
-        document.getElementById('index-logged-title').style.display = 'block';
-        document.getElementById('login-box').style.display = 'none';
-        document.getElementById('icons-box').style.display = 'block';
-        document.getElementById('logged-menu').style.display = 'block';
-        
+        _loadUserIndexVisibility();
+
         const displayName = user.displayName;
         document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
 
-        // let tripList = await _getTripList();
-        // if (tripList && tripList.length > 0) {
-        //   document.getElementById('no-trips').style.display = 'none';
-        //   _loadTripListHTML(tripList);
-        // }
+        TRIP_LIST = await _getTripList();
+        PLACES_LIST = await _getPlacesList();
+
         _stopLoadingScreen();
       }
     });
@@ -286,17 +304,6 @@ async function _loadUserIndex() {
     _displayErrorMessage(error);
     throw error;
   }
-}
-
-
-function _unloadUserIndex() {
-  document.getElementById('index-unlogged-title').style.display = 'block';
-  document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('login-box').style.display = 'block';
-  document.getElementById('logged-menu').style.display = 'none';
-  document.getElementById('myTrips-box').style.display = 'none';
-  document.getElementById('myPlaces-box').style.display = 'none';
-  document.getElementById('icons-box').style.display = 'none';
 }
 
 function _loadTripListHTML(tripList) {
@@ -339,10 +346,6 @@ function _viewTrip(code){
   window.location.href = `viagem.html?v=${code}`;
 }
 
-function _goToSettings(){
-  window.location.href = `conta.html`;
-}
-
 function _newTrip() {
-  window.location.href = `nova-viagem.html`;
+  window.location.href = `editar-viagem.html`;
 }

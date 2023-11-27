@@ -1,7 +1,7 @@
 function _unloadPageUserFunctions() {
     const html = _getHTMLpage();
     if (html == 'index') {
-        _unloadUserIndex();
+        _unloadUserIndexVisibility();
     };
 }
 

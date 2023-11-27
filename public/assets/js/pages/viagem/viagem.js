@@ -6,8 +6,6 @@
     - Modified by: Gabriel Fávero
 */
 
-var START_LIST = [];
-
 document.addEventListener('DOMContentLoaded', function () {
   try {
     "use strict";
