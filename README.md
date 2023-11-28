@@ -6,18 +6,9 @@
 - Criar página de edição/criação de viagens;
 - Criar página de edição/criação de passeios;
 
-## To-Do - Prioridade Alta
+## To-Do
 - Criar página de configurações;
 - Implementar compartilhamento de viagens via botão no viagem.html.
-
-
-## To-Do - Prioridade Baixa
-- Otimizar BD (simplificar estrutura);
-- Substituir títulos de accordeons no editar-viagens;
-- Validar inputs de links;
-- Adicionar opção de excluir accordion;
-- Melhorar fundo cinza do "Adicionar ---" em editar-viagens / editar-passeios;
-- Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
 
 
 ## Done
@@ -77,3 +68,11 @@
 
 # Possíveis Melhorias Futuras
 - Criar Keypoints personalizáveis.
+- Otimizar BD (simplificar estrutura);
+- Substituir títulos de accordeons no editar-viagens;
+- Validar inputs de links;
+- Adicionar opção de excluir accordion;
+- Melhorar fundo cinza do "Adicionar ---" em editar-viagens / editar-passeios;
+- Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
+- Editar caixa de perfil no index para tratar strings muito longas;
+- Adicionar animações no index.html;
