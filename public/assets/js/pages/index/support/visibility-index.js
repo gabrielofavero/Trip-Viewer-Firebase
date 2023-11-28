@@ -74,3 +74,19 @@ function _loadMyPlacesVisibility() {
   document.getElementById('myPlaces-box').style.display = 'block';
   document.getElementById('settings-box').style.display = 'none';
 }
+
+function _confirmDelete() {
+  var modal = document.getElementById('deleteAccountModal');
+  modal.style.display = 'block';
+}
+
+function _indexCloseModal() {
+  var modal = document.getElementById('deleteAccountModal');
+  modal.style.display = 'none';
+}
+
+function _deleteAccount() {
+  alert('Função desabilitada por hora!');
+  // _deleteAccount();
+  _indexCloseModal;
+}

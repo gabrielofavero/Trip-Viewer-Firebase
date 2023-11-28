@@ -499,6 +499,45 @@ section {
   overflow-x: hidden;
 }
 
+#settings-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 300px;
+  background: #f7f8f9;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  border: 0.5px solid #D9D9D9;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#settings-account-picture {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 1px solid #D9D9D9;
+  background: #f7f8f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#settings-account-text  {
+  margin-left: 10px
+}
+
+#settings-account-name {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#settings-account-name, #settings-account-email {
+  text-align: left;
+}
+
 #logged-menu {
   display: flex;
   flex-direction: column;
@@ -595,10 +634,6 @@ section {
   color: #7a7a7a;
 }
 
-#abc {
-  text-align: center;
-}
-
 .add {
   height: 20px;
   width: 20px;
@@ -683,4 +718,36 @@ section {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  text-decoration: none;
+  cursor: pointer;
 }

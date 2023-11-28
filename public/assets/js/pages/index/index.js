@@ -6,9 +6,6 @@
     - Modified by: Gabriel Fávero
 */
 
-var TRIP_LIST = [];
-var PLACES_LIST = [];
-
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -226,10 +223,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     _loadListenersIndex();
 
+    _loadUserIndex();
+
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
-
-    _loadUserIndex();
 
   } catch (error) {
     _displayErrorMessage(error);
@@ -274,6 +271,10 @@ function _loadListenersIndex() {
     _loadUserIndexVisibility();
   });
 
+  document.getElementById('settings-delete-account').addEventListener('click', function () {
+    _confirmDelete();
+  });
+
   document.getElementById('trip-view-continue').addEventListener('click', function () {
     let viagem = document.getElementById('trip-view-input').value;
     if (viagem) {
@@ -288,16 +289,33 @@ async function _loadUserIndex() {
   try {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        _startLoadingScreen();
         _loadUserIndexVisibility();
 
         const displayName = user.displayName;
+        const email = user.email;
+        const photoURL = user.photoURL;
         document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
 
-        TRIP_LIST = await _getTripList();
-        PLACES_LIST = await _getPlacesList();
+        document.getElementById('settings-account-name').innerHTML = displayName;
+        document.getElementById('settings-account-email').innerHTML = email;
+        document.getElementById('settings-account-picture').style.backgroundImage = 'url(' + photoURL + ')';;
+        document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
 
-        _stopLoadingScreen();
+        tripList = await _getTripList();
+
+        if (tripList && tripList.length > 0) {
+          document.getElementById('no-trips').style.display = 'none';
+          _loadTripListHTML(tripList);
+        }
+
+        placesList = await _getPlacesList();
+
+        if (placesList && placesList.length > 0) {
+          document.getElementById('no-places').style.display = 'none';
+          _loadPlacesListHTML(placesList);
+        }
+      } else {
+        _unloadUserIndexVisibility();
       }
     });
   } catch (error) {
@@ -331,6 +349,30 @@ function _loadTripListHTML(tripList) {
       <div class="trip-data-icons" id="trip-data-icons-${index}">
         <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="trip-data-icon-edit-${index}" data-icon="tabler:edit"></i>
         <i class="iconify trip-data-icon" onclick="_viewTrip('${code}')" id="iconify trip-data-icon-view-${index}" data-icon="fluent:eye-16-regular"></i>
+      </div>
+    </div>`
+  }
+
+  div.innerHTML = text;
+}
+
+function _loadPlacesListHTML(placesList) {
+  const div = document.getElementById('places-data');
+
+  let text = '';
+  for (let i = 0; i < placesList.length; i++) {
+    const index = i + 1;
+
+    const titulo = placesList[i].titulo;
+    const code = placesList[i].code;
+
+    text += `
+    <div class="trip-data-item" id="places-data-item-${index}">
+      <div class="trip-data-item-text" id="places-data-item-text-${index}">
+        <div class="trip-data-item-title" id="places-data-item-title-${index}">${titulo}</div>
+      </div>
+      <div class="trip-data-icons" id="places-data-icons-${index}">
+        <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="places-data-icon-edit-${index}" data-icon="tabler:edit"></i>
       </div>
     </div>`
   }

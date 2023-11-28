@@ -499,15 +499,57 @@ section {
   overflow-x: hidden;
 }
 
+#settings-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 300px;
+  background: #404040;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  border: 0.5px solid #383838;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#settings-account-picture {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 1px solid #383838;
+  background: #404040;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#settings-account-text  {
+  margin-left: 10px
+}
+
+#settings-account-name {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#settings-account-name, #settings-account-email {
+  text-align: left;
+}
+
 #logged-menu {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 300px;
   background: #404040;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
   border: 0.5px solid #383838;
   border-radius: 5px;
+  overflow-x: hidden;
 }
 
 .logged-menu-item {
@@ -588,7 +630,7 @@ section {
   margin-bottom: 15px;
 }
 
-#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover, .logged-menu-item:hover .back:hover {
+#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover, .logged-menu-item:hover, .back:hover {
   color: #aaaaaa;
 }
 
@@ -611,6 +653,10 @@ section {
   margin: 20px;
   z-index: 1000;
   cursor: pointer;
+}
+
+.new {
+  text-align: left
 }
 
 @media (max-height: 896px) {
@@ -672,4 +718,36 @@ section {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(48, 48, 48, 0.8);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #303030;
+  padding: 20px;
+  text-align: center;
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  text-decoration: none;
+  cursor: pointer;
 }
