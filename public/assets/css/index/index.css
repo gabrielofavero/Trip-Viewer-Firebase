@@ -631,7 +631,7 @@ section {
 }
 
 #add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover, .logged-menu-item:hover, .back:hover {
-  color: #7a7a7a;
+  color: #575757;
 }
 
 .add {

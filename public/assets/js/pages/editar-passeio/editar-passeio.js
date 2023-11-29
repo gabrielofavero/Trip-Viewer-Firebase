@@ -230,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
     _adjustButtonsPosition();
 
     _loadHabilitados();
+    _loadElementsHTML();
 
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
@@ -243,109 +244,17 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function _loadHabilitados() {
-  const restaurantesH = document.getElementById('habilitado-restaurantes');
-  const lanchesH = document.getElementById('habilitado-lanches');
-  const saidasH = document.getElementById('habilitado-saidas');
-  const turismoH = document.getElementById('habilitado-turismo');
-  const lojasH = document.getElementById('habilitado-lojas');
-  const mapaH = document.getElementById('habilitado-mapa');
-  const lineupH = document.getElementById('habilitado-lineup');
+  _loadEditModule('restaurantes');
+  _loadEditModule('lanches');
+  _loadEditModule('saidas');
+  _loadEditModule('turismo');
+  _loadEditModule('lojas');
+  _loadEditModule('mapa');
+  _loadEditModule('lineup');
+}
 
-  if (restaurantesH.checked) {
-    document.getElementById('habilitado-restaurantes-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-restaurantes-content').style.display = 'none';
+function _loadElementsHTML() {
+  if (!tripID) {
+    // To-DO
   }
-
-  if (lanchesH.checked) {
-    document.getElementById('habilitado-lanches-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-lanches-content').style.display = 'none';
-  }
-
-  if (saidasH.checked) {
-    document.getElementById('habilitado-saidas-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-saidas-content').style.display = 'none';
-  }
-
-  if (turismoH.checked) {
-    document.getElementById('habilitado-turismo-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-turismo-content').style.display = 'none';
-  }
-
-  if (lojasH.checked) {
-    document.getElementById('habilitado-lojas-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-lojas-content').style.display = 'none';
-  }
-
-  if (mapaH.checked) {
-    document.getElementById('habilitado-mapa-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-mapa-content').style.display = 'none';
-  }
-
-  if (lineupH.checked) {
-    document.getElementById('habilitado-lineup-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-lineup-content').style.display = 'none';
-  }
-
-  restaurantesH.addEventListener('change', function () {
-    if (restaurantesH.checked) {
-      document.getElementById('habilitado-restaurantes-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-restaurantes-content').style.display = 'none';
-    }
-  });
-
-  lanchesH.addEventListener('change', function () {
-    if (lanchesH.checked) {
-      document.getElementById('habilitado-lanches-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-lanches-content').style.display = 'none';
-    }
-  });
-
-  saidasH.addEventListener('change', function () {
-    if (saidasH.checked) {
-      document.getElementById('habilitado-saidas-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-saidas-content').style.display = 'none';
-    }
-  });
-
-  turismoH.addEventListener('change', function () {
-    if (turismoH.checked) {
-      document.getElementById('habilitado-turismo-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-turismo-content').style.display = 'none';
-    }
-  });
-
-  lojasH.addEventListener('change', function () {
-    if (lojasH.checked) {
-      document.getElementById('habilitado-lojas-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-lojas-content').style.display = 'none';
-    }
-  });
-
-  mapaH.addEventListener('change', function () {
-    if (mapaH.checked) {
-      document.getElementById('habilitado-mapa-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-mapa-content').style.display = 'none';
-    }
-  });
-
-  lineupH.addEventListener('change', function () {
-    if (lineupH.checked) {
-      document.getElementById('habilitado-lineup-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-lineup-content').style.display = 'none';
-    }
-  });
 }

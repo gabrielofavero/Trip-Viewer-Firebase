@@ -188,8 +188,23 @@
       <div class="modal-content">
         <span class="close" onclick="_indexCloseModal()">&times;</span>
         <p>Tem certeza que deseja apagar sua conta? Todos os dados de viagens e passeios também serão excluídos.</p>
-        <buttom id="cancelDeleteButton" class="purple" type="button" onclick="_indexCloseModal()">Cancelar</buttom>
-        <button id="confirmDeleteButton" class="purple" type="button" onclick="_deleteAccount()">Confirmar</button>
+        <div class="button-box">
+          <button id="cancelar" class="btn btn-secondary" type="button" onclick="_indexCloseModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
+              </path>
+            </svg>
+            Cancelar
+            <button id="apagar" class="btn btn-purple" type="submit" onclick="_deleteAccount()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
+                </path>
+              </svg>
+              Salvar
+            </button>
+        </div>
       </div>
     </div>
   </section>

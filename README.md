@@ -76,3 +76,4 @@
 - Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
 - Editar caixa de perfil no index para tratar strings muito longas;
 - Adicionar animações no index.html;
+- Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;

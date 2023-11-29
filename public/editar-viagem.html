@@ -185,7 +185,7 @@
                 Passeios</a>
             </li>
             <li>
-              <a href="#salvar-cancelar">
+              <a href="#double-buttons">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                   <path fill="currentColor"
                     d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
@@ -227,18 +227,18 @@
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Início</label>
-              <input id="inicio" type="date" value="2023-01-22" />
+              <input class="flex-input" id="inicio" type="date" value="2023-01-22" />
             </div>
 
             <div class="nice-form-group side-by-side">
               <label>Fim</label>
-              <input id="fim" type="date" value="2023-01-22" />
+              <input class="flex-input" id="fim" type="date" value="2023-01-22" />
             </div>
           </div>
 
           <div class="nice-form-group">
             <label>Quantidade de Pessoas</label>
-            <input required id="pessoas" type="number" placeholder="0" />
+            <input required class="flex-input" id="pessoas" type="number" placeholder="0" />
           </div>
 
         </section>
@@ -294,21 +294,17 @@
           </h1>
           <p>Dê uma cara única para a sua viagem.</p>
 
-          <div class="nice-form-group">
-            <label>Papel de Parede</label>
+          <div class="nice-form-group customization-box">
+            <label>Papel de Parede <span class="opcional"> (Imagem de fundo para sua viagem)</span></label>
             <input id="wallpaper" type="file" accept=".png, .jpg, .jpeg" />
-            <br>
-            <small>Imagem de fundo para sua viagem. Priorize imagens grandes.</small>
           </div>
 
-          <div class="nice-form-group">
-            <label>Título</label>
+          <div class="nice-form-group customization-box">
+            <label>Título <span class="opcional"> (Logotipo para o título de sua viagem)</span></label>
             <input id="logo" type="file" accept=".png" />
-            <br>
-            <small>Um logotipo personalizado para o título de sua viagem.</small>
           </div>
 
-          <div class="side-by-side-box-fixed">
+          <div class="side-by-side-box-fixed" id="cores">
             <div class="nice-form-group side-by-side-fixed">
               <label>Tema: Claro</label>
               <input id="claro" type="color" value="#5859a7" />
@@ -346,37 +342,36 @@
           </div>
 
           <div id="habilitado-transporte-content">
-            <div class="item-box accordion transportes-box" id="transportes-box">
-              <div id="transportes-1" class="accordion-item">
-                <h2 class="accordion-header" id="heading-transportes-1">
-                  <button id="transportes-title" class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse-transportes-1" aria-expanded="true"
-                    aria-controls="collapse-transportes-1">
+            <div class="item-box accordion transporte-box" id="transporte-box">
+              <div id="transporte-1" class="accordion-item">
+                <h2 class="accordion-header" id="heading-transporte-1">
+                  <button id="transporte-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-transporte-1" aria-expanded="false" aria-controls="collapse-transporte-1">
                     Transporte 1
                   </button>
                 </h2>
-                <div id="collapse-transportes-1" class="accordion-collapse collapse"
-                  aria-labelledby="heading-transportes-1" data-bs-parent="#transportes-box">
+                <div id="collapse-transporte-1" class="accordion-collapse collapse"
+                  aria-labelledby="heading-transporte-1" data-bs-parent="#transporte-box">
                   <div class="accordion-body">
                     <div class="side-by-side-box">
                       <div class="nice-form-group side-by-side">
                         <label>Partida</label>
-                        <input id="partida-1" type="date" value="2023-01-22" />
+                        <input class="flex-input" id="partida-1" type="date" value="2023-01-22" />
                       </div>
                       <div class="nice-form-group side-by-side">
                         <label>⠀</label>
-                        <input id="partida-horario-1" type="time" value="13:30" />
+                        <input class="flex-input time" id="partida-horario-1" type="time" value="13:30" />
                       </div>
                     </div>
 
                     <div class="side-by-side-box">
                       <div class="nice-form-group side-by-side">
                         <label>Chegada</label>
-                        <input id="chegada-1" type="date" value="2023-01-22" />
+                        <input class="flex-input" id="chegada-1" type="date" value="2023-01-22" />
                       </div>
                       <div class="nice-form-group side-by-side">
                         <label>⠀</label>
-                        <input id="chegada-horario-1" type="time" value="13:30" />
+                        <input class="flex-input time" id="chegada-horario-1" type="time" value="13:30" />
                       </div>
                     </div>
 
@@ -430,104 +425,22 @@
                   </div>
                 </div>
               </div>
-              <div id="transportes-2" class="accordion-item">
-                <h2 class="accordion-header" id="heading-transportes-2">
-                  <button id="transportes-title" class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse-transportes-2" aria-expanded="true"
-                    aria-controls="collapse-transportes-2">
-                    Transporte 2
-                  </button>
-                </h2>
-                <div id="collapse-transportes-2" class="accordion-collapse collapse"
-                  aria-labelledby="heading-transportes-2" data-bs-parent="#transportes-box">
-                  <div class="accordion-body">
-                    <div class="side-by-side-box">
-                      <div class="nice-form-group side-by-side">
-                        <label>Partida</label>
-                        <input id="partida-2" type="date" value="2023-01-22" />
-                      </div>
-                      <div class="nice-form-group side-by-side">
-                        <label>⠀</label>
-                        <input id="partida-horario-2" type="time" value="13:30" />
-                      </div>
-                    </div>
-
-                    <div class="side-by-side-box">
-                      <div class="nice-form-group side-by-side">
-                        <label>Chegada</label>
-                        <input id="chegada-2" type="date" value="2023-01-22" />
-                      </div>
-                      <div class="nice-form-group side-by-side">
-                        <label>⠀</label>
-                        <input id="chegada-horario-2" type="time" value="13:30" />
-                      </div>
-                    </div>
-
-                    <fieldset class="nice-form-group">
-                      <legend>Meio de Transporte</legend>
-                      <div class="nice-form-group">
-                        <input type="radio" name="radio" id="voo-1" />
-                        <label for="voo-2">Voo</label>
-                      </div>
-
-                      <div class="nice-form-group">
-                        <input type="radio" name="radio" id="carro-1" />
-                        <label for="carro-2">Carro</label>
-                      </div>
-
-                      <div class="nice-form-group">
-                        <input type="radio" name="radio" id="onibus-1" />
-                        <label for="onibus-2">Ônibus</label>
-                      </div>
-                    </fieldset>
-
-                    <div class="nice-form-group">
-                      <label>Nome da Empresa <span class="opcional"> (Opcional)</span></label>
-                      <input id="empresa-2" type="text" placeholder="Empresa de Transporte" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-                      <input id="reserva-transp-2" type="text" placeholder="#ABC123" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Cidade de Partida <span class="opcional"> (Opcional)</span></label>
-                      <input id="cidade-partida-2" type="text" placeholder="Belo Horizonte" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Cidade de Chegada <span class="opcional"> (Opcional)</span></label>
-                      <input id="cidade-chegada-2" type="text" placeholder="Las Vegas" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Ponto de Partida <span class="opcional"> (Opcional)</span></label>
-                      <input id="ponto-partida-2" type="text" placeholder="Aeroporto de Confins" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Ponto de Chegada <span class="opcional"> (Opcional)</span></label>
-                      <input id="ponto-chegada-2" type="text" placeholder="Aeroporto Henry Field" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="button-box-formatted">
-                <button id="transportes-adicionar" class="btn btn-purple">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                      <path
-                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                      </path>
-                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                      </path>
-                    </g>
-                  </svg>
-                  Adicionar Trajeto
-                </button>
             </div>
+          </div>
+
+          <div class="button-box-formatted" id="transporte-adicionar-box">
+            <button id="transporte-adicionar" class="btn btn-purple">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Trajeto
+            </button>
           </div>
 
         </section>
@@ -558,7 +471,7 @@
               <div id="hospedagem-1" class="accordion-item">
                 <h2 class="accordion-header" id="heading-hospedagem-1">
                   <button id="hospedagem-title" class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse-hospedagem-1" aria-expanded="true" aria-controls="collapse-hospedagem-1">
+                    data-bs-target="#collapse-hospedagem-1" aria-expanded="false" aria-controls="collapse-hospedagem-1">
                     Hospedagem 1
                   </button>
                 </h2>
@@ -588,23 +501,22 @@
                   </div>
                 </div>
               </div>
-
-              <div class="button-box-formatted">
-                <button id="hospedagem-adicionar" class="btn btn-purple">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                    <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                      <path
-                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                      </path>
-                      <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                      </path>
-                    </g>
-                  </svg>
-                  Adicionar Hospedagem
-                </button>
             </div>
           </div>
-
+          <div class="button-box-formatted" id="hospedagem-adicionar-box">
+            <button id="hospedagem-adicionar" class="btn btn-purple">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Hospedagem
+            </button>
+          </div>
         </section>
 
         <section>
@@ -636,7 +548,7 @@
               <div id="programacao-1" class="accordion-item">
                 <h2 class="accordion-header" id="heading-programacao-1">
                   <button id="programacao-title" class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse-programacao-1" aria-expanded="true"
+                    data-bs-target="#collapse-programacao-1" aria-expanded="false"
                     aria-controls="collapse-programacao-1">
                     01/01/01
                   </button>
@@ -703,12 +615,27 @@
           <div id="habilitado-passeios-content">
             <div class="nice-form-group" id="sem-passeios">
               <label>Meus Passeios</label>
-              <input type="text" readonly placeholder='Cadastre um passeio em "Meus Passeios"' />
+              <input type="text" readonly placeholder='Sem passeios cadastrados"' />
             </div>
           </div>
+
+          <div class="button-box-formatted" id="passeios-adicionar-box">
+            <button id="passeios-adicionar" class="btn btn-purple">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Passeio
+            </button>
+          </div>
         </section>
-        <section id="salvar-cancelar-section">
-          <div class="href-target" id="salvar-cancelar"></div>
+        <section id="double-button-section">
+          <div class="href-target" id="double-buttons"></div>
           <div class="button-box">
             <button id="cancelar" class="btn btn-secondary" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
@@ -735,12 +662,11 @@
   <footer id="footer">
     <div class="container">
       <div class="credits">
-        Site Feito por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. Logo adaptado de <a
+        Site Feito por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a> - Logo: <a
           href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph">studiogstock</a>
-        e fundo de <a
+        - Fundo: <a
           href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph">jcomp</a>
-        no Freepik. Sistema de cadastro adaptado de <a href="https://github.com/nielsVoogt/nice-forms.css">Niels Voogt
-          (2021)</a>.
+        (Freepik). Formulários: <a href="https://github.com/nielsVoogt/nice-forms.css">Niels Voogt</a>.
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -786,6 +712,7 @@
   <script src="assets/js/support/logger.js"></script>
   <script src="assets/js/support/date.js"></script>
   <script src="assets/js/support/user.js"></script>
+  <script src="assets/js/pages/editar-viagem/support/visibility-editar-viagem.js"></script>
   <script src="assets/js/support/visibility.js"></script>
   <script src="assets/js/pages/index/support/visibility-index.js"></script>
   <script src="assets/js/support/device.js"></script>

@@ -191,6 +191,10 @@ h6 {
   right: 0;
 }
 
+#hero h1 {
+  color: #3A3838;
+}
+
 #hero p {
   color: #4F5051;
   margin: 15px 0 0 0;
@@ -1065,7 +1069,6 @@ html {
 body {
   background: #f3f0e7;
   font-family: "Open Sans", sans-serif;
-  color: #4b5563;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
@@ -1092,6 +1095,11 @@ body {
 @media only screen and (max-width:750px) {
   .demo-page .demo-page-navigation {
     display: none
+  }
+  
+  .demo-page {
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -1414,17 +1422,6 @@ details summary::-webkit-details-marker {
   margin-right: 10px; 
 }
 
-@media (max-width: 558px) {
-  .side-by-side-box {
-    flex-direction: column;
-  }
-
-  .side-by-side {
-    flex: auto;
-    margin-right: 0;
-  }
-}
-
 .side-by-side-box-fixed {
   display: flex;
   justify-content: space-between;
@@ -1456,18 +1453,30 @@ details summary::-webkit-details-marker {
   background: #f1f1f1;
 }
 
+@media (max-width: 480px) {
+  .button-box {
+    text-align: center;
+  }
+}
+
 .button-box-formatted {
   text-align: right;
   background: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: initial;
   margin: 2em -2em -2em;
   padding: 1.5em 2em
 }
 
-#salvar-cancelar-section{
+#double-button-section{
   background: #f1f1f1;
 }
 
-#cancelar, #salvar {
+#salvar {
   margin-left: 20px;
 }
 
@@ -1476,3 +1485,67 @@ details summary::-webkit-details-marker {
   color: #fff;
 }
 
+.btn-purple:hover {
+  background: #505197;
+  color: #fff;
+}
+
+.demo-page, .demo-page-navigation, #dark-mode {
+  color: #1f2937;
+}
+
+.accordion-item {
+  background-color: #fff;
+}
+
+.accordion-header {
+  background-color: #f1f1f1;
+  color: #1f2937;
+  border-radius: .75rem;
+}
+
+.accordion-body {
+  background-color: #fff;
+  color: #1f2937;
+}
+
+.accordion-button[aria-expanded="false"] {
+  background-color: #f1f1f1;
+  color: #1f2937;
+}
+
+.accordion-button[aria-expanded="true"] {
+  background-color: #f1f1f1;
+  color: #1f2937;
+}
+
+.accordion-button:focus, .purple:focus {
+  box-shadow: 0 0 0 0.3rem rgba(88, 89, 167, 0.25);
+}
+
+.customization-box {
+  margin-top: 30px;
+}
+
+#cores {
+  margin-top: 10px;
+}
+
+@media (max-width: 790px) {
+  .side-by-side-box {
+    flex-direction: column;
+  }
+
+  .side-by-side {
+    flex: auto;
+    margin-right: 0;
+  }
+
+  .flex-input {
+    width: 100% !important;
+  }
+
+  .time {
+    margin-top: -10px;
+  }
+}

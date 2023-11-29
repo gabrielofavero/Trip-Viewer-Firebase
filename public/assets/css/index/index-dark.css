@@ -631,7 +631,7 @@ section {
 }
 
 #add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover, .logged-menu-item:hover, .back:hover {
-  color: #aaaaaa;
+  color: #c7c6c6;
 }
 
 .add {
@@ -750,4 +750,34 @@ section {
 .close:focus {
   text-decoration: none;
   cursor: pointer;
+}
+
+.button-box {
+  text-align: right;
+  background: #f1f1f1;
+}
+
+.button-box-formatted {
+  text-align: right;
+  background: #f1f1f1;
+  margin: 2em -2em -2em;
+  padding: 1.5em 2em
+}
+
+#double-button-section{
+  background: #f1f1f1;
+}
+
+#cancelar, #apagar {
+  margin-left: 20px;
+}
+
+.btn-purple {
+  background: #5859a7;
+  color: #fff;
+}
+
+.btn-purple:hover {
+  background: rgb(76, 77, 139);
+  color: #fff;
 }

@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     _loadVisibilityIndex();
 
-    
+
     _adjustButtonsPosition();
 
     _loadHabilitados();
@@ -244,66 +244,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function _loadHabilitados() {
-  const transporteH = document.getElementById('habilitado-transporte');
-  const hospedagemH = document.getElementById('habilitado-hospedagem');
-  const programacaoH = document.getElementById('habilitado-programacao');
-  const passeiosH = document.getElementById('habilitado-passeios');
-
-  if (transporteH.checked) {
-    document.getElementById('habilitado-transporte-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-transporte-content').style.display = 'none';
-  }
-
-  if (hospedagemH.checked) {
-    document.getElementById('habilitado-hospedagem-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-hospedagem-content').style.display = 'none';
-  }
-
-  if (programacaoH.checked) {
-    document.getElementById('habilitado-programacao-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-programacao-content').style.display = 'none';
-  }
-
-  if (passeiosH.checked) {
-    document.getElementById('habilitado-passeios-content').style.display = 'block';
-  } else {
-    document.getElementById('habilitado-passeios-content').style.display = 'none';
-  }
-
-  transporteH.addEventListener('change', function () {
-    if (transporteH.checked) {
-      document.getElementById('habilitado-transporte-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-transporte-content').style.display = 'none';
-    }
-  });
-
-  hospedagemH.addEventListener('change', function () {
-    if (hospedagemH.checked) {
-      document.getElementById('habilitado-hospedagem-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-hospedagem-content').style.display = 'none';
-    }
-  });
-
-  programacaoH.addEventListener('change', function () {
-    if (programacaoH.checked) {
-      document.getElementById('habilitado-programacao-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-programacao-content').style.display = 'none';
-    }
-  });
-
-  passeiosH.addEventListener('change', function () {
-    if (passeiosH.checked) {
-      document.getElementById('habilitado-passeios-content').style.display = 'block';
-    } else {
-      document.getElementById('habilitado-passeios-content').style.display = 'none';
-    }
-  });
+  _loadEditModule('transporte');
+  _loadEditModule('hospedagem');
+  _loadEditModule('programacao');
+  _loadEditModule('passeios');
 }
 
 function _loadElementsHTML() {
@@ -312,10 +256,8 @@ function _loadElementsHTML() {
 
     const inicio = document.getElementById('inicio');
     const fim = document.getElementById('fim');
-  
+
     inicio.value = date;
     fim.value = date;
   }
-
-
 }
