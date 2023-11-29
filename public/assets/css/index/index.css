@@ -583,19 +583,6 @@ section {
   color: #4F5051;
 }
 
-.purple {
-  color: #fff;
-  background: #5859a7;
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  width: 120px;
-}
-
-.purple:hover {
-  color: rgb(243, 242, 242);
-}
-
 #trip-view-reminder {
   font-size: 12px;
   margin-top: -10px;
@@ -732,12 +719,27 @@ section {
 
 .modal-content {
   position: absolute;
+  width: 500px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   padding: 20px;
   text-align: center;
+}
+
+.modal-text {
+  height: 100px;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+  }
+  .modal-text{
+    height: auto;
+    margin-bottom: 20px;
+  }
 }
 
 .close {
@@ -750,4 +752,40 @@ section {
 .close:focus {
   text-decoration: none;
   cursor: pointer;
+}
+
+.button-box {
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .button-box {
+    text-align: center;
+  }
+}
+
+.button-box-formatted {
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: initial;
+  margin: 2em -2em -2em;
+  padding: 1.5em 2em
+}
+
+#cancelar, #apagar {
+  margin-left: 20px;
+}
+
+.btn-purple {
+  background: #5859a7;
+  color: #fff;
+}
+
+.btn-purple:hover {
+  background: #505197;
+  color: #fff;
 }

@@ -583,19 +583,6 @@ section {
   color: #F2F2F2;
 }
 
-.purple {
-  color: #F2F2F2;
-  background: #7f75b6;
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  width: 120px;
-}
-
-.purple:hover {
-  color: #dfdfdf;
-}
-
 #trip-view-reminder {
   font-size: 12px;
   margin-top: -10px;
@@ -732,12 +719,27 @@ section {
 
 .modal-content {
   position: absolute;
+  width: 500px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #303030;
   padding: 20px;
   text-align: center;
+}
+
+.modal-text {
+  height: 100px;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+  }
+  .modal-text{
+    height: auto;
+    margin-bottom: 20px;
+  }
 }
 
 .close {
@@ -754,18 +756,24 @@ section {
 
 .button-box {
   text-align: right;
-  background: #f1f1f1;
+}
+
+@media (max-width: 480px) {
+  .button-box {
+    text-align: center;
+  }
 }
 
 .button-box-formatted {
   text-align: right;
-  background: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: initial;
   margin: 2em -2em -2em;
   padding: 1.5em 2em
-}
-
-#double-button-section{
-  background: #f1f1f1;
 }
 
 #cancelar, #apagar {
