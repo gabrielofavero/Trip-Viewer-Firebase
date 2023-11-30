@@ -3,15 +3,23 @@
 # Tarefas
 
 ## Doing
-- Criar página de edição/criação de viagens;
-- Criar página de edição/criação de passeios;
+- Criar funções de front-end para edição de viagens e passeios;
+
 
 ## To-Do
-- Criar página de configurações;
+- Linkar e validar funções de back-end para edição de viagens e passeios;
+- Criar Sistema de imagens;
 - Implementar compartilhamento de viagens via botão no viagem.html.
 
 
 ## Done
+
+### Semana 19/11/2023 - 25/11/2023
+- Criada página de edição/criação de viagens;
+- Criada página de edição/criação de passeios;
+- Criada página de configurações;
+- Criadas funções de front-end para o index.html;
+
 ### 13/11/2023
 - Criada funcionalidade "Minhas Viagens";
 
