@@ -225,17 +225,14 @@ document.addEventListener('DOMContentLoaded', function () {
     tripID = urlParams.get('v');
 
     _loadVisibilityIndex();
-
-
     _adjustButtonsPosition();
 
     _loadHabilitados();
     _loadElementsHTML();
+    _loadEventListeners();
 
     _stopLoadingScreen();
     $('body').css('overflow', 'auto');
-
-    // _loadUserIndex();
 
   } catch (error) {
     _displayErrorMessage(error);
@@ -252,12 +249,21 @@ function _loadHabilitados() {
 
 function _loadElementsHTML() {
   if (!tripID) {
-    const date = _jsDateToDate(new Date(), 'yyyy-mm-dd');
-
-    const inicio = document.getElementById('inicio');
-    const fim = document.getElementById('fim');
-
-    inicio.value = date;
-    fim.value = date;
+    _loadNewTrip();
   }
+}
+
+function _loadEventListeners() {
+  document.getElementById('transporte-adicionar').addEventListener('click', () => {
+    _addTransporte();
+  });
+  document.getElementById('hospedagem-adicionar').addEventListener('click', () => {
+    _addHospedagem();
+  });
+}
+
+function _loadNewTrip() {
+  _loadDadosBasicosNewTrip();
+  _addTransporte();
+  _addHospedagem();
 }

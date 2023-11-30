@@ -343,93 +343,11 @@
 
           <div id="habilitado-transporte-content">
             <div class="item-box accordion transporte-box" id="transporte-box">
-              <div id="transporte-1" class="accordion-item">
-                <h2 class="accordion-header" id="heading-transporte-1">
-                  <button id="transporte-title" class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse-transporte-1" aria-expanded="false" aria-controls="collapse-transporte-1">
-                    Transporte 1
-                  </button>
-                </h2>
-                <div id="collapse-transporte-1" class="accordion-collapse collapse"
-                  aria-labelledby="heading-transporte-1" data-bs-parent="#transporte-box">
-                  <div class="accordion-body">
-                    <div class="side-by-side-box">
-                      <div class="nice-form-group side-by-side">
-                        <label>Partida</label>
-                        <input class="flex-input" id="partida-1" type="date" value="2023-01-22" />
-                      </div>
-                      <div class="nice-form-group side-by-side">
-                        <label>⠀</label>
-                        <input class="flex-input time" id="partida-horario-1" type="time" value="13:30" />
-                      </div>
-                    </div>
-
-                    <div class="side-by-side-box">
-                      <div class="nice-form-group side-by-side">
-                        <label>Chegada</label>
-                        <input class="flex-input" id="chegada-1" type="date" value="2023-01-22" />
-                      </div>
-                      <div class="nice-form-group side-by-side">
-                        <label>⠀</label>
-                        <input class="flex-input time" id="chegada-horario-1" type="time" value="13:30" />
-                      </div>
-                    </div>
-
-                    <fieldset class="nice-form-group">
-                      <legend>Meio de Transporte</legend>
-                      <div class="nice-form-group">
-                        <input type="radio" name="radio" id="voo-1" />
-                        <label for="voo-1">Voo</label>
-                      </div>
-
-                      <div class="nice-form-group">
-                        <input type="radio" name="radio" id="carro-1" />
-                        <label for="carro-1">Carro</label>
-                      </div>
-
-                      <div class="nice-form-group">
-                        <input type="radio" name="radio" id="onibus-1" />
-                        <label for="onibus-1">Ônibus</label>
-                      </div>
-                    </fieldset>
-
-                    <div class="nice-form-group">
-                      <label>Nome da Empresa <span class="opcional"> (Opcional)</span></label>
-                      <input id="empresa-1" type="text" placeholder="Empresa de Transporte" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-                      <input id="reserva-transp-1" type="text" placeholder="#ABC123" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Cidade de Partida <span class="opcional"> (Opcional)</span></label>
-                      <input id="cidade-partida-1" type="text" placeholder="Belo Horizonte" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Cidade de Chegada <span class="opcional"> (Opcional)</span></label>
-                      <input id="cidade-chegada-1" type="text" placeholder="Las Vegas" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Ponto de Partida <span class="opcional"> (Opcional)</span></label>
-                      <input id="ponto-partida-1" type="text" placeholder="Aeroporto de Confins" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Ponto de Chegada <span class="opcional"> (Opcional)</span></label>
-                      <input id="ponto-chegada-1" type="text" placeholder="Aeroporto Henry Field" />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           <div class="button-box-formatted" id="transporte-adicionar-box">
-            <button id="transporte-adicionar" class="btn btn-purple">
+            <button id="transporte-adicionar" class="btn btn-purple" onclick="">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -468,39 +386,6 @@
 
           <div id="habilitado-hospedagem-content">
             <div class="item-box accordion hospedagem-box" id="hospedagem-box">
-              <div id="hospedagem-1" class="accordion-item">
-                <h2 class="accordion-header" id="heading-hospedagem-1">
-                  <button id="hospedagem-title" class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse-hospedagem-1" aria-expanded="false" aria-controls="collapse-hospedagem-1">
-                    Hospedagem 1
-                  </button>
-                </h2>
-                <div id="collapse-hospedagem-1" class="accordion-collapse collapse"
-                  aria-labelledby="heading-hospedagem-1" data-bs-parent="#hospedagem-box">
-                  <div class="accordion-body">
-                    <div class="nice-form-group">
-                      <label>Nome da Hospedagem</label>
-                      <input required id="hospedagem-1" type="text" placeholder="Casa da Fernanda" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Endereço</label>
-                      <input required id="cidade-partida-1" type="text" placeholder="Rua ABC, número 0" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-                      <input id="reserva-hosp-1" type="text" placeholder="#ABC123" />
-                    </div>
-
-                    <div class="nice-form-group">
-                      <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-                      <input required id="link-hosp-1" type="url" placeholder="www.google.com" value=""
-                        class="icon-right" />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div class="button-box-formatted" id="hospedagem-adicionar-box">
@@ -717,6 +602,7 @@
   <script src="assets/js/pages/index/support/visibility-index.js"></script>
   <script src="assets/js/support/device.js"></script>
   <script src="assets/js/support/loading.js"></script>
+  <script src="assets/js/pages/editar-viagem/modules/modules.js"></script>
   <script src="assets/js/pages/editar-viagem/editar-viagem.js"></script>
 
 </body>

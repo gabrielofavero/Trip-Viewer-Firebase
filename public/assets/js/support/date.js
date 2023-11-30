@@ -93,3 +93,11 @@ function _jsDateToDate(date, format = "dd/mm/yyyy") {
 
     return result;
 }
+
+function _getTodayFormatted (format='yyyy-mm-dd') {
+    return _jsDateToDate(new Date(), format);
+}
+
+function _getTomorrowFormatted (format='yyyy-mm-dd') {
+    return _jsDateToDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), format);
+}

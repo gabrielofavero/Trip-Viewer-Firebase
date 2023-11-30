@@ -46,5 +46,4 @@ function _hideContent(type) {
     if (adicionarBox) {
         adicionarBox.style.display = 'none';
     }
-    
 }
