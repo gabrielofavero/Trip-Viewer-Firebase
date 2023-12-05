@@ -260,10 +260,29 @@ function _loadEventListeners() {
   document.getElementById('hospedagem-adicionar').addEventListener('click', () => {
     _addHospedagem();
   });
+  document.getElementById('passeios-adicionar').addEventListener('click', () => {
+    _addPasseios();
+  });
+  document.getElementById('salvar').addEventListener('click', () => {
+    alert('teste');
+  });
+  document.getElementById('cancelar').addEventListener('click', () => {
+    window.location.href = `index.html`;
+  });
+  document.getElementById('inicio').addEventListener('change', () => {
+    _loadProgramacao();
+  });
+  document.getElementById('fim').addEventListener('change', () => {
+    _loadProgramacao();
+  });
+
+
 }
 
 function _loadNewTrip() {
   _loadDadosBasicosNewTrip();
   _addTransporte();
   _addHospedagem();
+  _loadProgramacao();
+  _loadPasseios();
 }

@@ -94,10 +94,32 @@ function _jsDateToDate(date, format = "dd/mm/yyyy") {
     return result;
 }
 
+function _changeFormat(formattedDate, newFormat) {
+    return _jsDateToDate(_formattedDateToDate(formattedDate), newFormat);
+}
+
 function _getTodayFormatted (format='yyyy-mm-dd') {
     return _jsDateToDate(new Date(), format);
 }
 
 function _getTomorrowFormatted (format='yyyy-mm-dd') {
     return _jsDateToDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), format);
+}
+
+function _getArrayOfFormattedDates(formattedStart, formattedEnd, format='yyyy-mm-dd') {
+    const start = _formattedDateToDate(formattedStart);
+    const end = _formattedDateToDate(formattedEnd);
+    
+    const dates = [];
+    let currentDate = start;
+    while (currentDate <= end) {
+        dates.push(_jsDateToDate(currentDate, format));
+        currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    }
+    return dates;
+}
+
+function _formattedDateToDate (formattedDate) {
+    const parts = formattedDate.split("-");
+    return new Date(parts[0], parts[1] - 1, parts[2]);
 }

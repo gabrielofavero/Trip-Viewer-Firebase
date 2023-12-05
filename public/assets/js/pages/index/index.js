@@ -6,6 +6,9 @@
     - Modified by: Gabriel Fávero
 */
 
+var tripList;
+var placesList;
+
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -259,6 +262,10 @@ function _loadListenersIndex() {
     _newTrip();
   });
 
+  document.getElementById('add-places').addEventListener('click', function () {
+    _newPlace();
+  });
+
   document.getElementById('myTrips-back').addEventListener('click', function () {
     _loadUserIndexVisibility();
   });
@@ -302,6 +309,7 @@ async function _loadUserIndex() {
         document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
 
         tripList = await _getTripList();
+        localStorage.setItem('tripList', JSON.stringify(tripList));
 
         if (tripList && tripList.length > 0) {
           document.getElementById('no-trips').style.display = 'none';
@@ -309,6 +317,7 @@ async function _loadUserIndex() {
         }
 
         placesList = await _getPlacesList();
+        localStorage.setItem('placesList', JSON.stringify(placesList));
 
         if (placesList && placesList.length > 0) {
           document.getElementById('no-places').style.display = 'none';
@@ -389,5 +398,11 @@ function _viewTrip(code){
 }
 
 function _newTrip() {
+  localStorage.setItem('tripList', JSON.stringify(tripList));
   window.location.href = `editar-viagem.html`;
+}
+
+function _newPlace() {
+  localStorage.setItem('placesList', JSON.stringify(placesList));
+  window.location.href = `editar-passeio.html`;
 }

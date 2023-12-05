@@ -1,6 +1,9 @@
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
+var NEW_SELECT;
+
+// Carregar
 function _loadDadosBasicosNewTrip() {
     const inicio = document.getElementById('inicio');
     const fim = document.getElementById('fim');
@@ -9,6 +12,92 @@ function _loadDadosBasicosNewTrip() {
     fim.value = TOMORROW;
 }
 
+function _loadProgramacao(){
+  const inicio = document.getElementById('inicio').value;
+  const fim = document.getElementById('fim').value;
+
+  const dates = _getArrayOfFormattedDates(inicio, fim);
+
+  const box = document.getElementById('programacao-box');
+  box.innerHTML = '';
+
+  for (let i = 1; i <= dates.length; i++) {
+    const date = _changeFormat(dates[i-1], 'dd/mm/yyyy');
+    box.innerHTML += `
+    <div id="programacao-${i}" class="accordion-item">
+    <h2 class="accordion-header" id="heading-programacao-${i}">
+      <button id="programacao-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapse-programacao-${i}" aria-expanded="false"
+        aria-controls="collapse-programacao-${i}">
+        ${date}
+      </button>
+    </h2>
+    <div id="collapse-programacao-${i}" class="accordion-collapse collapse"
+      aria-labelledby="heading-programacao-${i}" data-bs-parent="#programacao-box">
+      <div class="accordion-body">
+        <h1 class="item-title"></h1>
+
+        <div class="nice-form-group">
+          <label>Título <span class="opcional"> (Opcional)</span></label>
+          <input id="programacao-title-${i}" type="text" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Manhã</label>
+          <input required id="manha-${i}-1" type="text" placeholder="Fazer isso" /><br><br>
+          <input required id="manha-${i}-2" type="text" placeholder="Depois aquilo" /><br><br>
+          <input required id="manha-${i}-3" type="text" placeholder="Por fim, isso" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Tarde</label>
+          <input required id="tarde-${i}-1" type="text" placeholder="Fazer isso" /><br><br>
+          <input required id="tarde-${i}-2" type="text" placeholder="Depois aquilo" /><br><br>
+          <input required id="tarde-${i}-3" type="text" placeholder="Por fim, isso" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Noite</label>
+          <input required id="noite-${i}-1" type="text" placeholder="Fazer isso" /><br><br>
+          <input required id="noite-${i}-2" type="text" placeholder="Depois aquilo" /><br><br>
+          <input required id="noite-${i}-3" type="text" placeholder="Por fim, isso" />
+        </div>
+      </div>
+    </div>
+  </div>
+    `
+  }
+}
+
+function _loadPasseios(){
+  const placesList = localStorage.getItem('placesList');
+  const myPlaces = placesList ? JSON.parse(placesList) : [];
+
+  if (myPlaces && myPlaces.length > 0) {
+    document.getElementById('sem-passeios').style.display = 'none';
+
+    const comPasseios = document.getElementById('com-passeios');
+    comPasseios.style.display = 'block';
+
+    NEW_SELECT = '<option value="0">Selecione um Passeio</option>';
+
+    for (const place of myPlaces) {
+      NEW_SELECT += `<option value="${place.id}">${place.titulo}</option>`
+    }
+    
+    let i = 1;
+    while (document.getElementById(`select-passeios-${i}`)) {
+      document.getElementById(`select-passeios-${i}`).innerHTML = NEW_SELECT;
+      i++;
+    }
+
+  } else {
+    document.getElementById('sem-passeios').style.display = 'block';
+    document.getElementById('com-passeios').style.display = 'none';
+    document.getElementById('passeios-adicionar-box').style.display = 'none';
+  }
+
+}
 
 // Adicionar
 function _addTransporte(){
@@ -189,6 +278,20 @@ function _addHospedagem(){
     </div>
   </div>
     `  
+}
+
+function _addPasseios(){
+  let i = 1;
+  while (document.getElementById(`select-passeios-${i}`)) {
+    i++;
+  };
+
+  document.getElementById('com-passeios').innerHTML += `
+  <select id="select-passeios-${i}">
+    <option value="0">Selecione um Passeio</option>
+    ${NEW_SELECT}
+  </select>
+  `
 }
 
 
