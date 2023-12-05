@@ -123,3 +123,23 @@ function _formattedDateToDate (formattedDate) {
     const parts = formattedDate.split("-");
     return new Date(parts[0], parts[1] - 1, parts[2]);
 }
+
+function _formatFirestoreDate (date, format) {
+    const jsDate = _convertFirestoreDate(date);
+    return _jsDateToDate(jsDate, format);
+}
+
+function _jsDateToTime(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+
+    if (hours < 10) {
+        hours = `0${hours}`;
+    }
+
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+
+    return `${hours}:${minutes}`;
+}

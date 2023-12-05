@@ -302,3 +302,11 @@ async function _loadTrip() {
   _loadTripData(FIRESTORE_DATA);
   _stopLoadingScreen();
 }
+
+async function _uploadWallpaper(){
+  await _uploadImage(tripID + '/hero-bg.jpg', 'wallpaper');
+}
+
+async function _uploadTitle(){
+  await _uploadImage(tripID + '/logo.png', 'logo');
+}

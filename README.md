@@ -86,3 +86,5 @@
 - Adicionar animações no index.html;
 - Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
 - Fazer ícone Trip Viewer + texto redirecionar para index.html;
+- Limitar tamanho de upload + forma no backend para deixar mais seguro;
+- Criar forma de restaurar imagem previamente carregada na edição

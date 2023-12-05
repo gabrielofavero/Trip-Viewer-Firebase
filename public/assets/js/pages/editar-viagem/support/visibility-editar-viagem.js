@@ -1,11 +1,13 @@
-function _loadEditModule(type) {
+function _loadEditModule(type, loadListener=true) {
     const habilitado = document.getElementById(`habilitado-${type}`);
     if (habilitado.checked) {
         _showContent(type);
     } else {
         _hideContent(type);
     }
-    _loadListener(type);
+    if (loadListener) {
+        _loadListener(type);
+    }
 }
 
 function _loadListener(type) {

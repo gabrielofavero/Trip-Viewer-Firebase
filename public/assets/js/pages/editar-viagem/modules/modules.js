@@ -3,16 +3,35 @@ const TOMORROW = _getTomorrowFormatted();
 
 var NEW_SELECT;
 
-// Carregar
-function _loadDadosBasicosNewTrip() {
-    const inicio = document.getElementById('inicio');
-    const fim = document.getElementById('fim');
+// Viagem Existente
+function _loadTripData(FIRESTORE_DATA) {
+  try {
+    _loadDadosBasicosData(FIRESTORE_DATA);
+    _loadCompartilhamentoData(FIRESTORE_DATA);
+    _loadCustomizacaoData(FIRESTORE_DATA);
+    _loadMeiosDeTransporteData(FIRESTORE_DATA);
+    _loadHospedagemData(FIRESTORE_DATA);
 
-    inicio.value = TODAY;
-    fim.value = TOMORROW;
+  } catch (e) {
+    _displayErrorMessage(e);
+    throw e;
+  }
+
+
 }
 
-function _loadProgramacao(){
+// Nova Viagem
+function _loadDadosBasicosNewTrip() {
+  const inicio = document.getElementById('inicio');
+  const fim = document.getElementById('fim');
+
+  inicio.value = TODAY;
+  fim.value = TOMORROW;
+}
+
+
+// Métodos Gerais
+function _loadProgramacao() {
   const inicio = document.getElementById('inicio').value;
   const fim = document.getElementById('fim').value;
 
@@ -22,7 +41,7 @@ function _loadProgramacao(){
   box.innerHTML = '';
 
   for (let i = 1; i <= dates.length; i++) {
-    const date = _changeFormat(dates[i-1], 'dd/mm/yyyy');
+    const date = _changeFormat(dates[i - 1], 'dd/mm/yyyy');
     box.innerHTML += `
     <div id="programacao-${i}" class="accordion-item">
     <h2 class="accordion-header" id="heading-programacao-${i}">
@@ -69,7 +88,7 @@ function _loadProgramacao(){
   }
 }
 
-function _loadPasseios(){
+function _loadPasseios() {
   const placesList = localStorage.getItem('placesList');
   const myPlaces = placesList ? JSON.parse(placesList) : [];
 
@@ -84,7 +103,7 @@ function _loadPasseios(){
     for (const place of myPlaces) {
       NEW_SELECT += `<option value="${place.id}">${place.titulo}</option>`
     }
-    
+
     let i = 1;
     while (document.getElementById(`select-passeios-${i}`)) {
       document.getElementById(`select-passeios-${i}`).innerHTML = NEW_SELECT;
@@ -99,31 +118,17 @@ function _loadPasseios(){
 
 }
 
-function _loadTripData(FIRESTORE_DATA) {
-  document.getElementById('titulo').value = FIRESTORE_DATA.titulo;
-  document.getElementById('moeda').value = FIRESTORE_DATA.moeda;
-
-  const inicio = _convertFirestoreDate(FIRESTORE_DATA.inicio);
-  const fim = _convertFirestoreDate(FIRESTORE_DATA.fim);
-
-  document.getElementById('inicio').value = _jsDateToDate(inicio, 'yyyy-mm-dd')
-  document.getElementById('fim').value = _jsDateToDate(fim, 'yyyy-mm-dd')
-
-  document.getElementById('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
-
-}
-
 // Adicionar
-function _addTransporte(){
-    var i = 1;
-    while (document.getElementById('transporte-'+i)) {
-        i++;
-    }
+function _addTransporte() {
+  var i = 1;
+  while (document.getElementById('transporte-' + i)) {
+    i++;
+  }
 
-    document.getElementById('transporte-box').innerHTML += `
+  $('#transporte-box').append(`
     <div id="transporte-${i}" class="accordion-item">
     <h2 class="accordion-header" id="heading-transporte-${i}">
-      <button id="transporte-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+      <button id="transporte-title-${i}" class="accordion-button" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-transporte-${i}" aria-expanded="false" aria-controls="collapse-transporte-${i}">
         Trajeto ${i}
       </button>
@@ -131,6 +136,19 @@ function _addTransporte(){
     <div id="collapse-transporte-${i}" class="accordion-collapse collapse"
       aria-labelledby="heading-transporte-${i}" data-bs-parent="#transporte-box">
       <div class="accordion-body">
+        <fieldset class="nice-form-group">
+          <legend>Ida ou Volta</legend>
+          <div class="nice-form-group">
+            <input type="radio" name="idaVolta-${i}" id="ida-${i}" />
+            <label for="ida-${i}">Ida</label>
+          </div>
+
+          <div class="nice-form-group">
+            <input type="radio" name="idaVolta-${i}" id="volta-${i}" />
+            <label for="volta-${i}">Volta</label>
+          </div>
+        </fieldset>
+
         <div class="side-by-side-box">
           <div class="nice-form-group side-by-side">
             <label>Partida</label>
@@ -156,18 +174,23 @@ function _addTransporte(){
         <fieldset class="nice-form-group">
           <legend>Meio de Transporte</legend>
           <div class="nice-form-group">
-            <input type="radio" name="radio" id="voo-${i}" />
+            <input type="radio" name="meio-${i}" id="voo-${i}" />
             <label for="voo-${i}">Voo</label>
           </div>
 
           <div class="nice-form-group">
-            <input type="radio" name="radio" id="carro-${i}" />
+            <input type="radio" name="meio-${i}" id="carro-${i}" />
             <label for="carro-${i}">Carro</label>
           </div>
 
           <div class="nice-form-group">
-            <input type="radio" name="radio" id="onibus-${i}" />
+            <input type="radio" name="meio-${i}" id="onibus-${i}" />
             <label for="onibus-${i}">Ônibus</label>
+          </div>
+
+          <div class="nice-form-group">
+            <input type="radio" name="meio-${i}" id="outro-${i}" />
+            <label for="onibus-${i}">Outro</label>
           </div>
         </fieldset>
 
@@ -200,6 +223,7 @@ function _addTransporte(){
           <label>Ponto de Chegada <span class="opcional"> (Opcional)</span></label>
           <input id="ponto-chegada-${i}" type="text" placeholder="Aeroporto Henry Field" />
         </div>
+
       </div>
 
       <div class="deletar-box">
@@ -214,20 +238,20 @@ function _addTransporte(){
 
     </div>
   </div>
-    `;
+    `);
 
 }
 
-function _addHospedagem(){
-    var i = 1;
-    while (document.getElementById('hospedagem-'+i)) {
-        i++;
-    }
+function _addHospedagem() {
+  var i = 1;
+  while (document.getElementById('hospedagem-' + i)) {
+    i++;
+  }
 
-    document.getElementById('hospedagem-box').innerHTML += `
+  $('#hospedagem-box').append(`
     <div id="hospedagem-${i}" class="accordion-item">
     <h2 class="accordion-header" id="heading-hospedagem-${i}">
-      <button id="hospedagem-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+      <button id="hospedagem-title-${i}" class="accordion-button" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-hospedagem-${i}" aria-expanded="false" aria-controls="collapse-hospedagem-${i}">
         Hospedagem ${i}
       </button>
@@ -237,12 +261,12 @@ function _addHospedagem(){
       <div class="accordion-body">
         <div class="nice-form-group">
           <label>Nome da Hospedagem</label>
-          <input required id="hospedagem-${i}" type="text" placeholder="Casa da Fernanda" />
+          <input required id="hospedagem-nome-${i}" type="text" placeholder="Casa da Fernanda" />
         </div>
 
         <div class="nice-form-group">
           <label>Endereço</label>
-          <input required id="cidade-partida-${i}" type="text" placeholder="Rua ABC, número 0" />
+          <input required id="hospedagem-endereco-${i}" type="text" placeholder="Rua ABC, número 0" />
         </div>
 
         <div class="side-by-side-box">
@@ -268,9 +292,35 @@ function _addHospedagem(){
         </div>
 
         <div class="nice-form-group">
-          <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-          <input id="reserva-hospedagem-${i}" type="text" placeholder="#ABC123" />
-        </div>
+        <label>Imagem</label>
+        <select id="hospedagem-codigo-${i}">
+          <option value="generico">Imagem Padrão</option>
+          <option value="airbnb">Airbnb</option>
+          <option value="booking">Booking</option>
+          <option value="decolar">Decolar.com</option>
+          <option value="desertroseresort">Desert Rose Resort</option>
+          <option value="even">Even</option>
+          <option value="expedia">Expedia</option>
+          <option value="hilton">Hilton</option>
+          <option value="host">Host</option>
+          <option value="hotelsCom">Hotels.com</option>
+          <option value="hyatt">Hyatt</option>
+          <option value="ibis">Ibis</option>
+          <option value="ibisStyles">Ibis Styles</option>
+          <option value="ibistBudget">Ibis Budget</option>
+          <option value="intercontinental">Ibis Continental</option>
+          <option value="mariott">Mariott</option>
+          <option value="mercure">Mercure</option>
+          <option value="nyny">New York New York</option>
+          <option value="sheraton">Sheraton</option>
+          <option value="tripadvisor">Trip Advisor</option>
+        </select>
+      </div>
+
+      <div class="nice-form-group">
+        <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
+        <input id="reserva-hospedagem-${i}" type="text" placeholder="#ABC123" />
+      </div>
 
         <div class="nice-form-group">
           <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
@@ -291,30 +341,30 @@ function _addHospedagem(){
       
     </div>
   </div>
-    `  
+    `);
 }
 
-function _addPasseios(){
+function _addPasseios() {
   let i = 1;
   while (document.getElementById(`select-passeios-${i}`)) {
     i++;
   };
 
-  document.getElementById('com-passeios').innerHTML += `
+  $('#com-passeios').append(`
   <select id="select-passeios-${i}">
     <option value="0">Selecione um Passeio</option>
     ${NEW_SELECT}
   </select>
-  `
+  `);
 }
 
 function _addEditores() {
   let i = 1;
-  while (document.getElementById(`editores-${i}`)) {
+  while (document.getElementById(`editores-email-${i}`)) {
     i++;
   };
 
-  document.getElementById('habilitado-editores-content').innerHTML += `
+  $('#habilitado-editores-content').append(`
   <div class="nice-form-group" id="editores-${i}">
     <label>Editor ${i}</label>
     <input
@@ -325,12 +375,199 @@ function _addEditores() {
       class="icon-left"
     />
   </div>
-  `
+  `);
 
 }
 
 // Deletar
 function _deleteType(tipo) {
-    const div = document.getElementById(tipo);
-    div.parentNode.removeChild(div);
+  const div = document.getElementById(tipo);
+  div.parentNode.removeChild(div);
+}
+
+// Módulos: Viagem Existente
+function _loadDadosBasicosData(FIRESTORE_DATA) {
+  document.getElementById('titulo').value = FIRESTORE_DATA.titulo;
+  document.getElementById('moeda').value = FIRESTORE_DATA.moeda;
+
+  document.getElementById('inicio').value = _formatFirestoreDate(FIRESTORE_DATA.inicio, 'yyyy-mm-dd');
+  document.getElementById('fim').value = _formatFirestoreDate(FIRESTORE_DATA.fim, 'yyyy-mm-dd');
+
+  document.getElementById('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
+}
+
+function _loadCompartilhamentoData(FIRESTORE_DATA) {
+  document.getElementById('habilitado-publico').checked = FIRESTORE_DATA.compartilhamento.ativo;
+  const editores = FIRESTORE_DATA.compartilhamento.editores;
+
+  if (editores && editores.length > 0) {
+    document.getElementById('habilitado-editores').checked = true;
+    for (let i = 1; i <= editores.length; i++) {
+      _addEditores();
+      document.getElementById(`editores-email-${i}`).value = editores[i - 1];
+    }
+  }
+}
+
+function _loadCustomizacaoData(FIRESTORE_DATA) {
+  document.getElementById('claro').value = FIRESTORE_DATA.cores.claro;
+  document.getElementById('escuro').value = FIRESTORE_DATA.cores.escuro;
+}
+
+function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
+  if (FIRESTORE_DATA.modulos.transportes === true) {
+    document.getElementById('habilitado-transporte').checked = true;
+    document.getElementById('habilitado-transporte-content').style.display = 'block';
+    document.getElementById('transporte-adicionar-box').style.display = 'block';
+
+    const transporteSize = FIRESTORE_DATA.transportes.datas.length;
+    if (transporteSize > 0) {
+      for (let i = 1; i <= transporteSize; i++) {
+        const j = i - 1;
+        _addTransporte();
+
+        switch (FIRESTORE_DATA.transportes.idaVolta[j]) {
+          case 'ida':
+            document.getElementById(`ida-${i}`).checked = true;
+            break;
+          case 'volta':
+            document.getElementById(`volta-${i}`).checked = true;
+        }
+
+        const partida = _convertFirestoreDate(FIRESTORE_DATA.transportes.datas[j].partida);
+        const chegada = _convertFirestoreDate(FIRESTORE_DATA.transportes.datas[j].chegada);
+
+        if (partida) {
+          document.getElementById(`partida-${i}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
+          document.getElementById(`partida-horario-${i}`).value = _jsDateToTime(partida);
+        }
+
+        if (chegada) {
+          document.getElementById(`chegada-${i}`).value = _jsDateToDate(chegada, 'yyyy-mm-dd');
+          document.getElementById(`chegada-horario-${i}`).value = _jsDateToTime(chegada);
+        }
+
+        switch (FIRESTORE_DATA.transportes.transportes[j]) {
+          case 'carro':
+            document.getElementById(`carro-${i}`).checked = true;
+            break;
+          case 'onibus':
+            document.getElementById(`onibus-${i}`).checked = true;
+            break;
+          case 'voo':
+            document.getElementById(`voo-${i}`).checked = true;
+            break;
+          default:
+            document.getElementById(`outro-${i}`).checked = true;
+        }
+
+        const empresa = FIRESTORE_DATA.transportes.empresas[j];
+        if (empresa) {
+          document.getElementById(`empresa-${i}`).value = _firstCharToUpperCase(empresa);
+        }
+
+        const reserva = FIRESTORE_DATA.transportes.reservas[j];
+        if (reserva) {
+          document.getElementById(`reserva-transp-${i}`).value = reserva;
+        }
+
+        const trajeto = FIRESTORE_DATA.transportes.trajetos[j];
+        if (trajeto && trajeto.includes(' → ')) {
+          document.getElementById(`transporte-title-${i}`).innerText = trajeto;
+          document.getElementById(`cidade-partida-${i}`).value = trajeto.split(' → ')[0];
+          document.getElementById(`cidade-chegada-${i}`).value = trajeto.split(' → ')[1];
+        }
+
+        const pontoPartida = FIRESTORE_DATA.transportes.pontos[j].partida;
+        const pontoChegada = FIRESTORE_DATA.transportes.pontos[j].chegada;
+
+        if (pontoPartida) {
+          document.getElementById(`ponto-partida-${i}`).value = pontoPartida;
+        }
+
+        if (pontoChegada) {
+          document.getElementById(`ponto-chegada-${i}`).value = pontoChegada;
+        }
+
+        document.getElementById(`cidade-partida-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+        document.getElementById(`cidade-chegada-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+      }
+    }
+  }
+}
+
+function _loadHospedagemData(FIRESTORE_DATA) {
+  if (FIRESTORE_DATA.modulos.hospedagens === true) {
+    document.getElementById('habilitado-hospedagem').checked = true;
+    document.getElementById('habilitado-hospedagem-content').style.display = 'block';
+    document.getElementById('hospedagem-adicionar-box').style.display = 'block';
+
+    const hospedagemSize = FIRESTORE_DATA.hospedagens.hospedagem.length;
+    if (hospedagemSize > 0) {
+      for (let i = 1; i <= hospedagemSize; i++) {
+        const j = i - 1;
+        _addHospedagem();
+
+        const hospedagemTitle = document.getElementById(`hospedagem-title-${i}`);
+        const hospedagemNome = document.getElementById(`hospedagem-nome-${i}`);
+
+        const hospedagem = FIRESTORE_DATA.hospedagens.hospedagem[j];
+        if (hospedagem) {
+          hospedagemNome.value = hospedagem;
+          hospedagemTitle.innerText = hospedagem;
+        }
+
+        const endereco = FIRESTORE_DATA.hospedagens.endereco[j];
+        if (endereco) {
+          document.getElementById(`hospedagem-endereco-${i}`).value = endereco;
+        }
+
+        const dataCheckIn = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkin);
+        const dataCheckOut = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkout)
+
+        if (dataCheckIn) {
+          const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, 'yyyy-mm-dd');
+          const horarioCheckIn = _jsDateToTime(dataCheckIn);
+          document.getElementById(`check-in-${i}`).value = dataFormattedCheckIn;
+          document.getElementById(`check-in-horario-${i}`).value = horarioCheckIn;
+        }
+
+        if (dataCheckOut) {
+          const dataFormattedCheckOut = _jsDateToDate(dataCheckOut, "yyyy-mm-dd");
+          const horarioCheckOut = _jsDateToTime(dataCheckOut);
+
+          document.getElementById(`check-out-${i}`).value = dataFormattedCheckOut;
+          document.getElementById(`check-out-horario-${i}`).value = horarioCheckOut;
+        }
+
+        const codigo = FIRESTORE_DATA.hospedagens.codigos[j];
+        if (codigo) {
+          document.getElementById(`hospedagem-codigo-${i}`).value = codigo;
+        }
+
+        const reserva = FIRESTORE_DATA.hospedagens.reservas[j];
+        if (reserva) {
+          document.getElementById(`reserva-hospedagem-${i}`).value = reserva;
+        }
+
+        const link = FIRESTORE_DATA.hospedagens.links[j];
+        if (link) {
+          document.getElementById(`link-hospedagem-${i}`).value = link;
+        }
+
+        hospedagemNome.addEventListener('change', function () {
+          hospedagemTitle.innerText = hospedagemNome.value;
+        });
+
+      }
+    }
+  }
+}
+
+function _updateTransporteTitle(i) {
+  const cidadePartida = document.getElementById(`cidade-partida-${i}`).value;
+  const cidadeChegada = document.getElementById(`cidade-chegada-${i}`).value;
+
+  if (!cidadePartida || !cidadeChegada) return;
+  document.getElementById(`transporte-title-${i}`).innerText = `${cidadePartida} → ${cidadeChegada}`;
 }

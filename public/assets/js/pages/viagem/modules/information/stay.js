@@ -8,7 +8,18 @@ function _loadStayModule() {
     for (let i = 0; i < FIRESTORE_DATA.hospedagens.hospedagem.length; i++) {
       const title = FIRESTORE_DATA.hospedagens.hospedagem[i];
       const endereco = FIRESTORE_DATA.hospedagens.endereco[i];
-      const checkInOut = `Check-in às ${FIRESTORE_DATA.hospedagens.horarios[i].checkin} e check-out às ${FIRESTORE_DATA.hospedagens.horarios[i].checkout}`;
+
+      const dataCheckIn = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkin);
+      const dataCheckOut = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkout)
+
+      const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, "dd/mm/yyyy");
+      const dataFormattedCheckOut = _jsDateToDate(dataCheckOut, "dd/mm/yyyy");
+
+      const horarioCheckIn = _jsDateToTime(dataCheckIn);
+      const horarioCheckOut = _jsDateToTime(dataCheckOut);
+
+
+      const checkInOut = `Check-in ${dataFormattedCheckIn} às ${horarioCheckIn} e check-out ${dataFormattedCheckOut} às ${horarioCheckOut}`;
   
       const info = {
         title: title,
