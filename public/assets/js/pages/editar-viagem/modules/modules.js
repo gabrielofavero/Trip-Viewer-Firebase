@@ -99,6 +99,20 @@ function _loadPasseios(){
 
 }
 
+function _loadTripData(FIRESTORE_DATA) {
+  document.getElementById('titulo').value = FIRESTORE_DATA.titulo;
+  document.getElementById('moeda').value = FIRESTORE_DATA.moeda;
+
+  const inicio = _convertFirestoreDate(FIRESTORE_DATA.inicio);
+  const fim = _convertFirestoreDate(FIRESTORE_DATA.fim);
+
+  document.getElementById('inicio').value = _jsDateToDate(inicio, 'yyyy-mm-dd')
+  document.getElementById('fim').value = _jsDateToDate(fim, 'yyyy-mm-dd')
+
+  document.getElementById('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
+
+}
+
 // Adicionar
 function _addTransporte(){
     var i = 1;
@@ -294,6 +308,26 @@ function _addPasseios(){
   `
 }
 
+function _addEditores() {
+  let i = 1;
+  while (document.getElementById(`editores-${i}`)) {
+    i++;
+  };
+
+  document.getElementById('habilitado-editores-content').innerHTML += `
+  <div class="nice-form-group" id="editores-${i}">
+    <label>Editor ${i}</label>
+    <input
+      id="editores-email-${i}"
+      type="email"
+      placeholder="Email cadastrado no TripViewer"
+      value=""
+      class="icon-left"
+    />
+  </div>
+  `
+
+}
 
 // Deletar
 function _deleteType(tipo) {

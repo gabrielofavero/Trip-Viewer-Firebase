@@ -6,6 +6,8 @@
     - Modified by: Gabriel Fávero
 */
 
+var blockLoadingEnd = false;
+
 var tripID;
 
 _startLoadingScreen();
@@ -228,10 +230,18 @@ document.addEventListener('DOMContentLoaded', function () {
     _adjustButtonsPosition();
 
     _loadHabilitados();
-    _loadElementsHTML();
+
+    if (tripID) {
+      _loadTrip()
+    } else {
+      _loadNewTrip();
+    }
+
     _loadEventListeners();
 
-    _stopLoadingScreen();
+    if (!blockLoadingEnd) {
+      _stopLoadingScreen();
+    }
     $('body').css('overflow', 'auto');
 
   } catch (error) {
@@ -241,16 +251,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function _loadHabilitados() {
+  _loadEditModule('editores');
   _loadEditModule('transporte');
   _loadEditModule('hospedagem');
   _loadEditModule('programacao');
   _loadEditModule('passeios');
-}
-
-function _loadElementsHTML() {
-  if (!tripID) {
-    _loadNewTrip();
-  }
 }
 
 function _loadEventListeners() {
@@ -275,14 +280,25 @@ function _loadEventListeners() {
   document.getElementById('fim').addEventListener('change', () => {
     _loadProgramacao();
   });
-
-
+  document.getElementById('editores-adicionar').addEventListener('click', () => {
+    _addEditores();
+  });
 }
 
 function _loadNewTrip() {
   _loadDadosBasicosNewTrip();
+  _addEditores();
   _addTransporte();
   _addHospedagem();
   _loadProgramacao();
   _loadPasseios();
+}
+
+async function _loadTrip() {
+  blockLoadingEnd = true;
+  _startLoadingScreen();
+  const FIRESTORE_DATA = await _getSingleTrip();
+  console.log(FIRESTORE_DATA);
+  _loadTripData(FIRESTORE_DATA);
+  _stopLoadingScreen();
 }

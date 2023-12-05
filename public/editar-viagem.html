@@ -258,7 +258,7 @@
           </p>
 
           <div class="nice-form-group">
-            <input id="publico" type="checkbox" id="check-4" class="switch" checked />
+            <input id="habilitado-publico" type="checkbox" id="check-4" class="switch" checked />
             <label for="check-4">
               Viagem pública
               <small>Todos com o link de acesso podem visualizar sua viagem</small>
@@ -266,11 +266,29 @@
           </div>
 
           <div class="nice-form-group">
-            <input id="editores" type="checkbox" id="check-4" class="switch" />
+            <input id="habilitado-editores" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               Permitir Editores
               <small>Outros usuários podem solicitar permissão de edição</small>
             </label>
+          </div>
+
+          <div id="habilitado-editores-content">
+          </div>
+
+          <div class="button-box-formatted" id="editores-adicionar-box">
+            <button id="editores-adicionar" class="btn btn-purple">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Editor
+            </button>
           </div>
         </section>
 
@@ -486,6 +504,7 @@
             </button>
           </div>
         </section>
+
         <section id="double-button-section">
           <div class="href-target" id="double-buttons"></div>
           <div class="button-box">
@@ -562,6 +581,7 @@
   <script src="https://apis.google.com/js/api.js"></script>
 
   <script src="assets/js/support/logger.js"></script>
+  <script src="assets/js/support/data.js"></script>
   <script src="assets/js/support/date.js"></script>
   <script src="assets/js/support/user.js"></script>
   <script src="assets/js/pages/editar-viagem/support/visibility-editar-viagem.js"></script>
