@@ -2,6 +2,7 @@ const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
 var NEW_SELECT;
+var PROGRAMACAO = {};
 
 // Viagem Existente
 function _loadTripData(FIRESTORE_DATA) {
@@ -11,6 +12,7 @@ function _loadTripData(FIRESTORE_DATA) {
     _loadCustomizacaoData(FIRESTORE_DATA);
     _loadMeiosDeTransporteData(FIRESTORE_DATA);
     _loadHospedagemData(FIRESTORE_DATA);
+    _loadProgramacaoData(FIRESTORE_DATA);
 
   } catch (e) {
     _displayErrorMessage(e);
@@ -40,12 +42,14 @@ function _loadProgramacao() {
   const box = document.getElementById('programacao-box');
   box.innerHTML = '';
 
+  var newDates = [];
+
   for (let i = 1; i <= dates.length; i++) {
     const date = _changeFormat(dates[i - 1], 'dd/mm/yyyy');
     box.innerHTML += `
     <div id="programacao-${i}" class="accordion-item">
     <h2 class="accordion-header" id="heading-programacao-${i}">
-      <button id="programacao-title" class="accordion-button" type="button" data-bs-toggle="collapse"
+      <button id="programacao-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-programacao-${i}" aria-expanded="false"
         aria-controls="collapse-programacao-${i}">
         ${date}
@@ -58,33 +62,50 @@ function _loadProgramacao() {
 
         <div class="nice-form-group">
           <label>Título <span class="opcional"> (Opcional)</span></label>
-          <input id="programacao-title-${i}" type="text" />
+          <input id="programacao-inner-title-${i}" type="text" />
         </div>
 
         <div class="nice-form-group">
           <label>Manhã</label>
-          <input required id="manha-${i}-1" type="text" placeholder="Fazer isso" /><br><br>
-          <input required id="manha-${i}-2" type="text" placeholder="Depois aquilo" /><br><br>
-          <input required id="manha-${i}-3" type="text" placeholder="Por fim, isso" />
+          <input id="manha-1-${i}" type="text" placeholder="Fazer isso" /><br><br>
+          <input id="manha-2-${i}" type="text" placeholder="Depois aquilo" /><br><br>
+          <input id="manha-3-${i}" type="text" placeholder="Por fim, isso" />
         </div>
 
         <div class="nice-form-group">
           <label>Tarde</label>
-          <input required id="tarde-${i}-1" type="text" placeholder="Fazer isso" /><br><br>
-          <input required id="tarde-${i}-2" type="text" placeholder="Depois aquilo" /><br><br>
-          <input required id="tarde-${i}-3" type="text" placeholder="Por fim, isso" />
+          <input id="tarde-1-${i}" type="text" placeholder="Fazer isso" /><br><br>
+          <input id="tarde-2-${i}" type="text" placeholder="Depois aquilo" /><br><br>
+          <input id="tarde-3-${i}" type="text" placeholder="Por fim, isso" />
         </div>
 
         <div class="nice-form-group">
           <label>Noite</label>
-          <input required id="noite-${i}-1" type="text" placeholder="Fazer isso" /><br><br>
-          <input required id="noite-${i}-2" type="text" placeholder="Depois aquilo" /><br><br>
-          <input required id="noite-${i}-3" type="text" placeholder="Por fim, isso" />
+          <input id="noite-1-${i}" type="text" placeholder="Fazer isso" /><br><br>
+          <input id="noite-2-${i}" type="text" placeholder="Depois aquilo" /><br><br>
+          <input id="noite-3-${i}" type="text" placeholder="Por fim, isso" />
         </div>
       </div>
     </div>
   </div>
     `
+    newDates.push(_removeSlashesFromDate(date));
+  }
+
+  for (let i = 1; i <= newDates.length; i++) {
+    const formatted = newDates[i - 1];
+    if (PROGRAMACAO && PROGRAMACAO[formatted]) {
+      document.getElementById(`programacao-inner-title-${i}`).value = PROGRAMACAO[formatted].titulo || ''; 
+      document.getElementById(`manha-1-${i}`).value = PROGRAMACAO[formatted][`manha-1`] || '';
+      document.getElementById(`manha-2-${i}`).value = PROGRAMACAO[formatted][`manha-2`] || '';
+      document.getElementById(`manha-3-${i}`).value = PROGRAMACAO[formatted][`manha-3`] || '';
+      document.getElementById(`tarde-1-${i}`).value = PROGRAMACAO[formatted][`tarde-1`] || '';
+      document.getElementById(`tarde-2-${i}`).value = PROGRAMACAO[formatted][`tarde-2`] || '';
+      document.getElementById(`tarde-3-${i}`).value = PROGRAMACAO[formatted][`tarde-3`] || '';
+      document.getElementById(`noite-1-${i}`).value = PROGRAMACAO[formatted][`noite-1`] || '';
+      document.getElementById(`noite-2-${i}`).value = PROGRAMACAO[formatted][`noite-2`] || '';
+      document.getElementById(`noite-3-${i}`).value = PROGRAMACAO[formatted][`noite-3`] || '';
+    }
   }
 }
 
@@ -128,7 +149,7 @@ function _addTransporte() {
   $('#transporte-box').append(`
     <div id="transporte-${i}" class="accordion-item">
     <h2 class="accordion-header" id="heading-transporte-${i}">
-      <button id="transporte-title-${i}" class="accordion-button" type="button" data-bs-toggle="collapse"
+      <button id="transporte-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-transporte-${i}" aria-expanded="false" aria-controls="collapse-transporte-${i}">
         Trajeto ${i}
       </button>
@@ -251,7 +272,7 @@ function _addHospedagem() {
   $('#hospedagem-box').append(`
     <div id="hospedagem-${i}" class="accordion-item">
     <h2 class="accordion-header" id="heading-hospedagem-${i}">
-      <button id="hospedagem-title-${i}" class="accordion-button" type="button" data-bs-toggle="collapse"
+      <button id="hospedagem-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-hospedagem-${i}" aria-expanded="false" aria-controls="collapse-hospedagem-${i}">
         Hospedagem ${i}
       </button>
@@ -563,6 +584,74 @@ function _loadHospedagemData(FIRESTORE_DATA) {
     }
   }
 }
+
+function _loadProgramacaoData(FIRESTORE_DATA) {
+  if (FIRESTORE_DATA.modulos.programacao === true) {
+    document.getElementById('habilitado-programacao').checked = true;
+    document.getElementById('habilitado-programacao-content').style.display = 'block';
+    _loadProgramacao();
+
+    let i = 1;
+
+    while (document.getElementById(`programacao-title-${i}`)) {
+      let prog = {};
+      const j = i - 1;
+      let progTitle = j;
+
+      const data = FIRESTORE_DATA.programacoes.programacao[j].data;
+      if (data) {
+        const formatted = _formatFirestoreDate(data, 'dd/mm/yyyy');
+        prog.data = formatted;
+        progTitle = _removeSlashesFromDate(formatted);
+      }
+
+      const titulo = FIRESTORE_DATA.programacoes.programacao[j].titulo;
+      if (titulo) {
+        document.getElementById(`programacao-inner-title-${i}`).value = titulo;
+        prog.titulo = titulo;
+      }
+
+      const manha = FIRESTORE_DATA.programacoes.programacao[j].manha;
+      if (manha && manha.length > 0) {
+        for (let k = 1; k <= manha.length; k++) {
+          document.getElementById(`manha-${k}-${i}`).value = manha[k - 1];
+          prog[`manha-${k}`] = manha[k - 1];
+        }
+      }
+
+      const tarde = FIRESTORE_DATA.programacoes.programacao[j].tarde;
+      if (tarde && tarde.length > 0) {
+        for (let k = 1; k <= tarde.length; k++) {
+          document.getElementById(`tarde-${k}-${i}`).value = tarde[k - 1];
+          prog[`tarde-${k}`] = tarde[k - 1];
+        }
+      }
+
+      const noite = FIRESTORE_DATA.programacoes.programacao[j].noite;
+      if (noite && noite.length > 0) {
+        for (let k = 1; k <= noite.length; k++) {
+          document.getElementById(`noite-${k}-${i}`).value = noite[k - 1];
+          prog[`noite-${k}`] = noite[k - 1];
+        }
+      }
+
+      PROGRAMACAO[progTitle] = prog;
+      i++;
+    }
+
+
+
+
+  }
+}
+
+
+
+
+
+
+
+
 
 function _updateTransporteTitle(i) {
   const cidadePartida = document.getElementById(`cidade-partida-${i}`).value;

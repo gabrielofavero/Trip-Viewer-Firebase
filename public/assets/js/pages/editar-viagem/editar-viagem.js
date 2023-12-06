@@ -7,9 +7,7 @@
 */
 
 var blockLoadingEnd = false;
-
 var tripID;
-
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {

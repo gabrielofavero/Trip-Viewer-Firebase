@@ -143,3 +143,7 @@ function _jsDateToTime(date) {
 
     return `${hours}:${minutes}`;
 }
+
+function _removeSlashesFromDate(date) {
+    return date.replace(/\//g, "");
+}
