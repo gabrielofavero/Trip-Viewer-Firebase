@@ -659,7 +659,11 @@ function _loadPasseiosData(FIRESTORE_DATA){
     document.getElementById('com-passeios').style.display = 'block';
     document.getElementById('passeios-adicionar-box').style.display = 'block';
     
-    const passeiosRefs = FIRESTORE_DATA.passeiosRefs;
+    var passeiosRefs = [];
+
+    for (const cidade of FIRESTORE_DATA.cidades) {
+      passeiosRefs.push(cidade.passeiosRefs);
+    }
 
     if (passeiosRefs && passeiosRefs.length > 0) {
       for (const passeio of passeiosRefs) {

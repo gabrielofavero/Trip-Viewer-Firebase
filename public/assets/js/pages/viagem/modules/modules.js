@@ -121,7 +121,7 @@ function _loadModules() {
   }
 
   // Places
-  _loadPlacesHTML(FIRESTORE_DATA.cidades[0]);
   _loadPlacesSelect();
+  _loadPlacesHTML(CIDADES[0].passeios);
   CALL_SYNC.push(_loadPlaces);
 }

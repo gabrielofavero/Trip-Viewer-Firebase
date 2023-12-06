@@ -32,7 +32,7 @@ function _loadP() {
   const PLACES_JSON = JSON.parse(window.localStorage.getItem('PLACES_JSON'));
   const PLACES_SETTINGS_JSON = JSON.parse(window.localStorage.getItem('PLACES_SETTINGS_JSON'));
   var HTML_PARAMS = _getParamsHTML();
-  var CITY = HTML_PARAMS["city"];
+  var CITY = HTML_PARAMS["passeio"];
   var TYPE = HTML_PARAMS["type"];
   var TYPE_TITLE = PLACES_JSON[TYPE].title;
   var TYPE_SUBTITLE = PLACES_JSON[TYPE].subtitle;

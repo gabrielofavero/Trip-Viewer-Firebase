@@ -3,13 +3,12 @@
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var CURRENT_PLACES_SIZE = 0;
+var CIDADES = [];
 
 // ======= LOADERS =======
 function _loadPlaces() {
-  const cidades = FIRESTORE_DATA.cidades;
-
-  for (const cidade of cidades) {
-    P_RESULT[cidade.sigla] = cidade.passeios;
+  for (let i = 0; i < CIDADES.length; i++) {
+    P_RESULT[CIDADES[i].passeios.sigla] = CIDADES[i].passeios;
   }
 
   window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
@@ -26,18 +25,24 @@ function _loadPlaces() {
 function _loadPlacesSelect() {
   let select = document.getElementById("places-select");
   let firstOption = document.createElement("option");
-  const cities = FIRESTORE_DATA.cidades;
+  CIDADES = FIRESTORE_DATA.cidades;
 
-  firstOption.value = cities[0].sigla;
-  firstOption.text = cities[0].nome;
+  const firstSigla = _getNewPlacesSigla(CIDADES[0].passeios.titulo);
+  CIDADES[0].passeios.sigla = firstSigla;
+
+  firstOption.value = firstSigla;
+  firstOption.text = CIDADES[0].titulo;
   select.add(firstOption);
   firstOption.selected = true;
 
-  if (cities.length > 1) {
-    for (let i = 1; i < cities.length; i++) {
+  if (CIDADES.length > 1) {
+    for (let i = 1; i < CIDADES.length; i++) {
       let newOption = document.createElement("option");
-      newOption.value = cities[i].sigla;
-      newOption.text = cities[i].nome;
+      let sigla = _getNewPlacesSigla(CIDADES[i].passeios.titulo);
+      CIDADES[i].passeios.sigla = sigla;
+
+      newOption.value = sigla;
+      newOption.text = CIDADES[i].titulo;
       select.add(newOption);
     };
   } else {
@@ -45,16 +50,22 @@ function _loadPlacesSelect() {
   };
 
   select.addEventListener("change", function () {
-    _loadPlacesHTML(select.value);
-    _adjustPlacesHTML();
+    for (let i = 0; i < CIDADES.length; i++) {
+      const sigla = CIDADES[i].passeios.sigla;
+      if (sigla === select.value) {
+        _loadPlacesHTML(FIRESTORE_DATA.cidades[i].passeios);
+        _adjustPlacesHTML();
+        break;
+      }
+    }
   });
 }
 
-function _loadPlacesHTML(city) {
+function _loadPlacesHTML(passeio) {
   let div = document.getElementById("passeiosBox");
   let text = "";
 
-  const headers = city.headers;
+  const headers = _getPlacesHeaders(passeio.modulos);
   CURRENT_PLACES_SIZE = headers.length;
 
   let linktype = _getLinkType();
@@ -64,9 +75,9 @@ function _loadPlacesHTML(city) {
     const box = CONFIG.places.boxes[_getPlacesBoxesIndex(i)];
     const title = CONFIG.places.places[headers[i]]["title"];
     const code = headers[i];
-    const href = code === "mapa" ? city.myMaps : "#";
+    const href = code === "mapa" ? passeio.myMaps : "#";
     const lt = code === "mapa" ? linktype : "";
-    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getPlacesHref(code, city)}')"`;
+    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getPlacesHref(code, passeio)}')"`;
     const icon = CONFIG.places.places[headers[i]]["icon"];
     const description = CONFIG.places.places[headers[i]]["description"];
     text += `
@@ -90,9 +101,25 @@ function _loadPlacesHTML(city) {
   _adjustPlacesHTML();
 }
 
+function _getPlacesHeaders(module) {
+  const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', 'mapa', 'lineup']
+  const headerMap = new Map(headerBase.map((element, index) => [element, index]));
+  
+  let result = [];
+  const keys = Object.keys(module);
+
+  for (const key of keys) {
+    if (module[key] === true) {
+      result.push(key)
+    }
+  }
+
+  return result.sort((a, b) => headerMap.get(a) - headerMap.get(b));
+}
+
 function getPlacesSelectValue() {
   let select = document.getElementById("places-select");
-  return select.value || FIRESTORE_DATA.cidades[0].sigla;
+  return select.value || CIDADES[0].passeios.sigla;
 }
 
 function _getPlacesBoxesIndex(i) {
@@ -109,10 +136,24 @@ function _getLinkType() {
   }
 }
 
-function _getPlacesHref(code, city) {
+function _getPlacesHref(code, passeio) {
   if (code == "mapa") {
-    return FIREBASE_DATA.cidades[city].myMaps;
-  } else return `passeios.html?city=${getPlacesSelectValue()}&type=${code}`;
+    return passeio.myMaps;
+  } else return `passeios.html?passeio=${passeio.sigla}&type=${code}`;
+}
+
+function _getNewPlacesSigla(name) {
+  var original = _codifyText(name);
+  var result = original;
+  let j = 0;
+  for (let i = 0; i < CIDADES.length; i++) {
+    const sigla = CIDADES[i].passeios.sigla;
+    if (result == sigla) {
+      result += original + j;
+      j++;
+    }
+  }
+  return result;
 }
 
 
