@@ -6,8 +6,8 @@
     - Modified by: Gabriel Fávero
 */
 
-var tripID;
-
+var blockLoadingEnd = false;
+var placesID;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -222,20 +222,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-    tripID = urlParams.get('v');
+    placesID = urlParams.get('p');
 
-    _loadVisibilityIndex();
-
-    
+    _loadVisibilityIndex();    
     _adjustButtonsPosition();
 
     _loadHabilitados();
-    _loadElementsHTML();
 
-    _stopLoadingScreen();
+    if (placesID) {
+      _loadPlaces()
+    } else {
+      _loadNewPlaces();
+    }
+
+    _loadEventListeners();
+
+    if (!blockLoadingEnd) {
+      _stopLoadingScreen();
+    }
     $('body').css('overflow', 'auto');
-
-    // _loadUserIndex();
 
   } catch (error) {
     _displayErrorMessage(error);
@@ -253,8 +258,39 @@ function _loadHabilitados() {
   _loadEditModule('lineup');
 }
 
-function _loadElementsHTML() {
-  if (!tripID) {
-    // To-DO
-  }
+function _loadEventListeners() {
+  document.getElementById('restaurantes-adicionar').addEventListener('click', () => {
+    _addRestaurante();
+  });
+  document.getElementById('lanches-adicionar').addEventListener('click', () => {
+    _addLanche();
+  });
+  document.getElementById('saidas-adicionar').addEventListener('click', () => {
+    _addSaida();
+  });
+  document.getElementById('turismo-adicionar').addEventListener('click', () => {
+    _addTurismo();
+  });
+  document.getElementById('lojas-adicionar').addEventListener('click', () => {
+    _addLoja();
+  });
+  document.getElementById('lineup-adicionar').addEventListener('click', () => {
+    _addLineup();
+  });
+
 }
+
+function _loadNewPlaces() {
+  _addRestaurante();
+  _addLanche();
+  _addSaida();
+  _addTurismo();
+  _addLoja();
+  _addLineup();
+}
+
+async function _loadPlaces() {
+  blockLoadingEnd = true;
+  _stopLoadingScreen();
+}
+
