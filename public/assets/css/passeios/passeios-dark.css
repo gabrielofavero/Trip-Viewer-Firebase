@@ -358,23 +358,37 @@ section {
   background-color: #303030;
   width: 100%;
   height: 60px;
-  border-bottom: 0.5px solid #414040;
-  z-index: 9999;
+  border-bottom: 0.5px solid #383838;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#logo-light, #logo-dark {
+.logo-box {
+  display: flex;
+  align-items: center;
+}
+
+#logo-light,
+#logo-dark {
   height: 25px;
-  margin-top: 18px;
   margin-left: 20px;
 }
 
 #trip-viewer-text {
-  height: 30px;
   font-size: 30px;
-  margin-top: -30px;
-  margin-left: 55px;
+  margin-top: 10px;
+  margin-left: 7px;
   font-family: Chelos;
   color: #7f75b6;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .mobile-nav-toggle i,
