@@ -662,12 +662,12 @@ function _loadPasseiosData(FIRESTORE_DATA){
     var passeiosRefs = [];
 
     for (const cidade of FIRESTORE_DATA.cidades) {
-      passeiosRefs.push(cidade.passeiosRefs);
+      passeiosRefs.push(cidade.passeiosRef);
     }
 
     if (passeiosRefs && passeiosRefs.length > 0) {
       for (const passeio of passeiosRefs) {
-        const id = passeio.ref._path.segments[1];
+        const id = passeio._path.segments[1];
         PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${passeio.titulo}</option>`;
       }
     }
