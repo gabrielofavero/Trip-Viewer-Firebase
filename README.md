@@ -90,3 +90,4 @@
 - Criar forma de restaurar imagem previamente carregada na edição
 - Excluir passeio do select caso ele já tenha sido selecionado anteriormente
 - Adicionar forma de deletar passeio em editar-viagens
+- Mudar on change do module de editar viagens para adição no lugar de load
