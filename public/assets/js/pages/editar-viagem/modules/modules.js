@@ -1,7 +1,7 @@
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
-var NEW_SELECT;
+var PASSEIOS_SELECT_OPTIONS = "";
 var PROGRAMACAO = {};
 
 // Viagem Existente
@@ -13,6 +13,7 @@ function _loadTripData(FIRESTORE_DATA) {
     _loadMeiosDeTransporteData(FIRESTORE_DATA);
     _loadHospedagemData(FIRESTORE_DATA);
     _loadProgramacaoData(FIRESTORE_DATA);
+    _loadPasseiosData(FIRESTORE_DATA);
 
   } catch (e) {
     _displayErrorMessage(e);
@@ -109,7 +110,7 @@ function _loadProgramacao() {
   }
 }
 
-function _loadPasseios() {
+function _loadPasseios(newTrip=true) {
   const placesList = localStorage.getItem('placesList');
   const myPlaces = placesList ? JSON.parse(placesList) : [];
 
@@ -119,19 +120,20 @@ function _loadPasseios() {
     const comPasseios = document.getElementById('com-passeios');
     comPasseios.style.display = 'block';
 
-    NEW_SELECT = '<option value="0">Selecione um Passeio</option>';
-
     for (const place of myPlaces) {
-      NEW_SELECT += `<option value="${place.id}">${place.titulo}</option>`
+      if (!PASSEIOS_SELECT_OPTIONS.includes(place.code)) {
+        PASSEIOS_SELECT_OPTIONS += `<option value="${place.code}">${place.titulo}</option>`
+      }
     }
 
     let i = 1;
+    const options = '<option value="0"></option>' + PASSEIOS_SELECT_OPTIONS;
     while (document.getElementById(`select-passeios-${i}`)) {
-      document.getElementById(`select-passeios-${i}`).innerHTML = NEW_SELECT;
+      document.getElementById(`select-passeios-${i}`).innerHTML = options;
       i++;
     }
 
-  } else {
+  } else if (newTrip) {
     document.getElementById('sem-passeios').style.display = 'block';
     document.getElementById('com-passeios').style.display = 'none';
     document.getElementById('passeios-adicionar-box').style.display = 'none';
@@ -365,18 +367,22 @@ function _addHospedagem() {
     `);
 }
 
-function _addPasseios() {
+function _addPasseios(id) {
   let i = 1;
   while (document.getElementById(`select-passeios-${i}`)) {
     i++;
   };
 
   $('#com-passeios').append(`
-  <select id="select-passeios-${i}">
-    <option value="0">Selecione um Passeio</option>
-    ${NEW_SELECT}
+  <br><br><select class="mini-select" id="select-passeios-${i}">
+  '<option value="0"></option>'
+    ${PASSEIOS_SELECT_OPTIONS}
   </select>
   `);
+
+  if (id) {
+    _setSelectedPasseios(id, i);
+  }
 }
 
 function _addEditores() {
@@ -645,13 +651,53 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
   }
 }
 
+function _loadPasseiosData(FIRESTORE_DATA){
+  if (FIRESTORE_DATA.modulos.passeios === true) {
+    document.getElementById('habilitado-passeios').checked = true;
+    document.getElementById('habilitado-passeios-content').style.display = 'block';
+    document.getElementById('sem-passeios').style.display = 'none';
+    document.getElementById('com-passeios').style.display = 'block';
+    document.getElementById('passeios-adicionar-box').style.display = 'block';
+    
+    const passeiosRefs = FIRESTORE_DATA.passeiosRefs;
 
+    if (passeiosRefs && passeiosRefs.length > 0) {
+      for (const passeio of passeiosRefs) {
+        const id = passeio.ref._path.segments[1];
+        PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${passeio.titulo}</option>`;
+      }
+    }
 
+    _loadPasseios(true);
 
+    if (passeiosRefs && passeiosRefs.length > 0) {
+      for (let i = 1; i <= passeiosRefs.length; i++) {
+        const j = i - 1;
+        const passeio = passeiosRefs[j];
+        const id = passeio.ref._path.segments[1];
 
+        if (i === 1) {
+          _setSelectedPasseios(id, i);
+        } else {
+          _addPasseios(id);
+        }
+      }
+    }
+  } else {
+    _loadPasseios();
+  }
 
+}
 
-
+function _setSelectedPasseios(optionValue, index) {
+  var selectElement = document.getElementById(`select-passeios-${index}`);
+  for (var i = 0; i < selectElement.options.length; i++) {
+    if (selectElement.options[i].value === optionValue) {
+      selectElement.options[i].selected = true;
+      break;
+    }
+  }
+}
 
 function _updateTransporteTitle(i) {
   const cidadePartida = document.getElementById(`cidade-partida-${i}`).value;

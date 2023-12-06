@@ -88,3 +88,5 @@
 - Fazer ícone Trip Viewer + texto redirecionar para index.html;
 - Limitar tamanho de upload + forma no backend para deixar mais seguro;
 - Criar forma de restaurar imagem previamente carregada na edição
+- Excluir passeio do select caso ele já tenha sido selecionado anteriormente
+- Adicionar forma de deletar passeio em editar-viagens

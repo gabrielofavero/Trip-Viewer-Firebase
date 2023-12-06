@@ -399,6 +399,7 @@ function _viewTrip(code){
 
 function _newTrip() {
   localStorage.setItem('tripList', JSON.stringify(tripList));
+  localStorage.setItem('placesList', JSON.stringify(placesList));
   window.location.href = `editar-viagem.html`;
 }
 
