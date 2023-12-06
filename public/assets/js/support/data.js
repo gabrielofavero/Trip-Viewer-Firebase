@@ -73,7 +73,7 @@ function _firstCharToUpperCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function _convertToValidFolderName(inputString) {
+function _codifyText(inputString) {
   let lowercaseString = inputString.toLowerCase();
   let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, '');
   return validFolderName;

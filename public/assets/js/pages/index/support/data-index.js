@@ -1,5 +1,5 @@
 async function _getTripList() {
-    const user = await firebase.auth().currentUser;
+    const user = await _getUser();
     if (user) {
         const host = window.location.hostname;
         try {
@@ -25,7 +25,7 @@ async function _getTripList() {
 }
 
 async function _getPlacesList() {
-    const user = await firebase.auth().currentUser;
+    const user = await _getUser();
     if (user) {
         const host = window.location.hostname;
         try {
