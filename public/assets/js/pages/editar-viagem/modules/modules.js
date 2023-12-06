@@ -659,26 +659,21 @@ function _loadPasseiosData(FIRESTORE_DATA){
     document.getElementById('com-passeios').style.display = 'block';
     document.getElementById('passeios-adicionar-box').style.display = 'block';
     
-    var passeiosRefs = [];
+    const cidades = FIRESTORE_DATA.cidades;
 
-    for (const cidade of FIRESTORE_DATA.cidades) {
-      passeiosRefs.push(cidade.passeiosRef);
-    }
-
-    if (passeiosRefs && passeiosRefs.length > 0) {
-      for (const passeio of passeiosRefs) {
-        const id = passeio._path.segments[1];
-        PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${passeio.titulo}</option>`;
+    if (cidades && cidades > 0) {
+      for (const cidade of cidades) {
+        const id = cidade.passeiosRef._path.segments[1];
+        PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${cidade.passeios.titulo}</option>`;
       }
     }
 
     _loadPasseios(true);
 
-    if (passeiosRefs && passeiosRefs.length > 0) {
-      for (let i = 1; i <= passeiosRefs.length; i++) {
+    if (cidades && cidades.length > 0) {
+      for (let i = 1; i <= cidades.length; i++) {
         const j = i - 1;
-        const passeio = passeiosRefs[j];
-        const id = passeio.ref._path.segments[1];
+        const id = cidades[j].passeiosRef._path.segments[1];
 
         if (i === 1) {
           _setSelectedPasseios(id, i);
