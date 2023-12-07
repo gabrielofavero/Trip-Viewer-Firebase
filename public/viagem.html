@@ -55,7 +55,7 @@
             <g id="Capa_1" data-name="Capa 1">
               <g>
                 <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                style="fill: none; stroke: #595a5a; stroke-miterlimit: 10; stroke-width: 8px;" />
+                  style="fill: none; stroke: #595a5a; stroke-miterlimit: 10; stroke-width: 8px;" />
                 <path id="light-color-1"
                   d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
                   style="fill: #5859a7; stroke-width: 0px;" />
@@ -68,7 +68,7 @@
                 <path
                   d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
                   style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #595a5a; stroke-width: 0px;" />
+                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #595a5a; stroke-width: 0px;" />
               </g>
             </g>
           </g>
@@ -78,7 +78,7 @@
             <g id="Capa_1" data-name="Capa 1">
               <g>
                 <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                style="fill: none; stroke: #bfbfbf; stroke-miterlimit: 10; stroke-width: 8px;" />
+                  style="fill: none; stroke: #bfbfbf; stroke-miterlimit: 10; stroke-width: 8px;" />
                 <path id="dark-color-1"
                   d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
                   style="fill: #7f75b6; stroke-width: 0px;" />
@@ -91,7 +91,7 @@
                 <path
                   d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
                   style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #bfbfbf; stroke-width: 0px;" />
+                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #bfbfbf; stroke-width: 0px;" />
               </g>
             </g>
           </g>
@@ -101,8 +101,6 @@
     </a>
     <i id="night-mode" class="bx bx-moon custom-nav-toggle"></i>
     <i id="share" class="bx bx-share-alt custom-nav-toggle" style="right: 50px;"></i>
-    <i id="account" class="bx bx-user custom-nav-toggle modal-trigger" data-target="modal-login"
-      style="right: 90px;"></i>
     <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>
   </div>
 
@@ -401,6 +399,35 @@
     </div>
   </footer>
 
+  <!-- ======= Support: Share Modal ======= -->
+  <div id="shareModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-text">
+        <div id="share-box">
+          <a id="share-link"></a>
+        </div>
+      </div>
+      <div class="button-box">
+        <button id="fechar" class="btn btn-secondary" type="button" onclick="_closeShare()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
+            </path>
+          </svg>
+          Fechar
+        </button><button id="copiar" class="btn btn-purple" type="submit" onclick="_copyInput()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M20 2H10c-1.103 0-2 .897-2 2v4H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2v-4h4c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zM4 20V10h10l.002 10H4zm16-6h-4v-4c0-1.103-.897-2-2-2h-4V4h10v10z">
+            </path>
+            <path fill="currentColor" d="M6 12h6v2H6zm0 4h6v2H6z"></path>
+          </svg>
+          Copiar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -440,7 +467,7 @@
   <script src="https://apis.google.com/js/api.js"></script>
 
   <script src="assets/js/support/logger.js"></script>
-  <script src="assets/js/pages/viagem/support/loading-viagem.js"></script>
+  <script src="assets/js/support/loading.js"></script>
   <script src="assets/js/support/user.js"></script>
   <script src="assets/js/support/data.js"></script>
   <script src="assets/js/support/date.js"></script>

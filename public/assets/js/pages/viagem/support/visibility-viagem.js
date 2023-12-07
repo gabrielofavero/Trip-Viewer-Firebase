@@ -5,17 +5,25 @@ function _adjustButtonsPositionViagem() {
     const fourth = "130px";
 
     const nightMode = document.getElementById("night-mode");
-    const account = document.getElementById("account");
     const share = document.getElementById("share");
 
-    if (_isOnMobileMode()) {
-         account.style.right = second;
-         share.style.right = third;
-         nightMode.style.right = fourth;
+    const nightModeVisible = nightMode.style.display != "none";
+    const shareVisible = share.style.display != "none";
+
+    if (nightModeVisible && shareVisible) {
+        if (_isOnMobileMode()) {
+            share.style.right = second;
+            nightMode.style.right = third;
+        } else {
+            share.style.right = first;
+            nightMode.style.right = second;
+        }
     } else {
-         account.style.right = first;
-         share.style.right = second;
-         nightMode.style.right = third;
+        if (_isOnMobileMode()) {
+            nightMode.style.right = second;
+        } else {
+            nightMode.style.right = first;
+        }
     }
 }
 
@@ -67,4 +75,47 @@ function _applyCustomColorsViagem() {
     _addCSSRule('#next', 'background-color', THEME_COLOR);
     _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
+}
+
+function _loadShare() {
+    const share = document.getElementById("share");
+    if (FIRESTORE_DATA.compartilhamento.ativo === true) {
+        share.style.display = "block";
+
+        const link = window.location.href.split("#")[0];
+        const shareLink = document.getElementById("share-link");
+        shareLink.innerText = link;
+        shareLink.href = link;
+
+        share.addEventListener("click", function () {
+            _openShare();
+        });
+
+        document.getElementById('copiar').addEventListener("click", function () {
+            _copyShareLink();
+        });
+    }
+
+}
+
+function _openShare() {
+    var modal = document.getElementById('shareModal');
+    modal.style.display = 'block';
+}
+
+function _closeShare() {
+    var modal = document.getElementById('shareModal');
+    modal.style.display = 'none';
+}
+
+function _copyShareLink() {
+    var divElement = document.getElementById('share-link');
+    var textarea = document.createElement('textarea');
+
+    textarea.value = divElement.innerText;
+
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
 }

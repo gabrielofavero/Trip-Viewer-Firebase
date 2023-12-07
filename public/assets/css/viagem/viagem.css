@@ -1997,3 +1997,58 @@ iframe {
 .mobile-nav-toggle:hover, .custom-nav-toggle:hover {
   color: #7a7a7a;
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.modal-content {
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-text {
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.button-box {
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+  }
+}
+
+#fechar, #copiar {
+  margin-left: 20px;
+}
+
+.btn-purple {
+  background: #5859a7;
+  color: #fff;
+}
+
+.btn-purple:hover {
+  background: #505197;
+  color: #fff;
+}
+
+.btn-purple:active {
+  background: #3d85c6;
+  color: #fff;
+}

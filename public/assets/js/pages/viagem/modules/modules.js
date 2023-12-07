@@ -13,6 +13,7 @@ function _start() {
   _loadModules();
 
   // Visibility - After Load
+  _loadShare();
   _adjustButtonsPosition();
 }
 
