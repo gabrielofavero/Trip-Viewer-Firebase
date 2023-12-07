@@ -834,13 +834,17 @@ function _loadLineupData(FIRESTORE_PLACES_DATA) {
   if (FIRESTORE_PLACES_DATA.modulos.lineup === true) {
     document.getElementById('habilitado-lineup').checked = true;
     document.getElementById('habilitado-lineup-content').style.display = 'block';
-    document.getElementById('lineup-adicionar-box').style.display = 'block';
 
-    const lineupSize = FIRESTORE_PLACES_DATA.lineup.nome.length;
-    if (lineupSize > 0) {
-      for (let i = 1; i <= lineupSize; i++) {
+    const size = FIRESTORE_PLACES_DATA.lineup.nome.length;
+    if (size > 0) {
+      for (let i = 1; i <= size; i++) {
         const j = i - 1;
-        _addLoja();
+        _addLineup();
+
+        const headliner = FIRESTORE_PLACES_DATA.lineup.headliner;
+        if (headliner && headliner[j]){
+          document.getElementById(`lineup-headliner-${i}`).checked = headliner[j];
+        }
 
         const nome = FIRESTORE_PLACES_DATA.lineup.nome;
         if (nome && nome[j]){
@@ -848,24 +852,24 @@ function _loadLineupData(FIRESTORE_PLACES_DATA) {
           document.getElementById(`lineup-title-${i}`).innerText = nome[j];
         }
 
-        const descricao = FIRESTORE_PLACES_DATA.lineup.descricao;
-        if (descricao && descricao[j]){
-          document.getElementById(`lineup-descricao-${i}`).value = descricao[j];
+        const genero = FIRESTORE_PLACES_DATA.lineup.descricao;
+        if (genero && genero[j]){
+          document.getElementById(`lineup-descricao-${i}`).value = genero[j];
         }
 
-        const link = FIRESTORE_PLACES_DATA.lineup.hyperlink.name;
-        if (link && link[j]){
-          document.getElementById(`lineup-link-${i}`).value = link[j];
+        const palco = FIRESTORE_PLACES_DATA.lineup.palco;
+        if (palco && palco[j]){
+          document.getElementById(`lineup-palco-${i}`).value = palco[j];
         }
 
-        const regiao = FIRESTORE_PLACES_DATA.lineup.regiao;
-        if (regiao && regiao[j]){
-          document.getElementById(`lineup-regiao-${i}`).value = regiao[j];
+        const inicio = FIRESTORE_PLACES_DATA.lineup.inicio;
+        if (inicio && inicio[j]){
+          document.getElementById(`lineup-inicio-${i}`).value = inicio[j];
         }
 
-        const valor = FIRESTORE_PLACES_DATA.lineup.valor;
-        if (valor && valor[j]) {
-          document.getElementById(`lineup-valor-${i}`).value = valor[j];
+        const fim = FIRESTORE_PLACES_DATA.lineup.fim;
+        if (fim && fim[j]) {
+          document.getElementById(`lineup-fim-${i}`).value = fim[j];
         }         
 
         const midia = FIRESTORE_PLACES_DATA.lineup.hyperlink.video;
