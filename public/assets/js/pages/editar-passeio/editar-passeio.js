@@ -291,6 +291,10 @@ function _loadNewPlaces() {
 
 async function _loadPlaces() {
   blockLoadingEnd = true;
+  _startLoadingScreen();
+  const FIRESTORE_PLACES_DATA = await _getSinglePlaces();
+  console.log(FIRESTORE_PLACES_DATA);
+  _loadPlacesData(FIRESTORE_PLACES_DATA);
   _stopLoadingScreen();
 }
 

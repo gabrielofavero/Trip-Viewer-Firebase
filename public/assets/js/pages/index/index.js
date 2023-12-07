@@ -381,7 +381,7 @@ function _loadPlacesListHTML(placesList) {
         <div class="trip-data-item-title" id="places-data-item-title-${index}">${titulo}</div>
       </div>
       <div class="trip-data-icons" id="places-data-icons-${index}">
-        <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="places-data-icon-edit-${index}" data-icon="tabler:edit"></i>
+        <i class="iconify trip-data-icon" onclick="_editPlace('${code}')" id="places-data-icon-edit-${index}" data-icon="tabler:edit"></i>
       </div>
     </div>`
   }
@@ -406,4 +406,9 @@ function _newTrip() {
 function _newPlace() {
   localStorage.setItem('placesList', JSON.stringify(placesList));
   window.location.href = `editar-passeio.html`;
+}
+
+function _editPlace(code) {
+  localStorage.setItem('placesList', JSON.stringify(placesList));
+  window.location.href = `editar-passeio.html?p=${code}`;
 }

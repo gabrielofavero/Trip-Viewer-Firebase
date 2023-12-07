@@ -7,13 +7,13 @@ var PROGRAMACAO = {};
 // Passeio Existente
 function _loadPlacesData(FIRESTORE_PLACES_DATA) {
   try {
-    // _loadDadosBasicosData(FIRESTORE_PLACES_DATA);
-    // _loadCompartilhamentoData(FIRESTORE_PLACES_DATA);
-    // _loadCustomizacaoData(FIRESTORE_PLACES_DATA);
-    // _loadMeiosDeTransporteData(FIRESTORE_PLACES_DATA);
-    // _loadHospedagemData(FIRESTORE_PLACES_DATA);
-    // _loadProgramacaoData(FIRESTORE_PLACES_DATA);
-    // _loadPasseiosData(FIRESTORE_PLACES_DATA);
+    _loadRestaurantesData(FIRESTORE_PLACES_DATA);
+    _loadLanchesData(FIRESTORE_PLACES_DATA);
+    _loadSaidasData(FIRESTORE_PLACES_DATA);
+    _loadTurismoData(FIRESTORE_PLACES_DATA);
+    _loadLojasData(FIRESTORE_PLACES_DATA);
+    _loadMapaData(FIRESTORE_PLACES_DATA);
+    _loadLineupData(FIRESTORE_PLACES_DATA);
 
   } catch (e) {
     _displayErrorMessage(e);
@@ -86,9 +86,17 @@ function _addRestaurante() {
         </div>
 
         <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
-          <input required id="restaurantes-nota-${i}" type="number" placeholder="90" min="0" max="100" />
+        <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <select id="restaurantes-nota-${i}">
+            <option value="?">Desconhecido</option>
+            <option value="!">100%</option>
+            <option value="1">75%</option>
+            <option value="2">50%</option>
+            <option value="3">25%</option>
+            <option value="4">0%</option>
+          </select>
         </div>
+
       </div>
 
       <div class="deletar-box">
@@ -163,9 +171,17 @@ function _addLanche() {
         </div>
 
         <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
-          <input required id="lanches-nota-${i}" type="number" placeholder="80" min="0" max="100" />
+        <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <select id="lanches-nota-${i}">
+            <option value="?">Desconhecido</option>
+            <option value="!">100%</option>
+            <option value="1">75%</option>
+            <option value="2">50%</option>
+            <option value="3">25%</option>
+            <option value="4">0%</option>
+          </select>
         </div>
+
       </div>
 
       <div class="deletar-box">
@@ -239,8 +255,15 @@ function _addSaida() {
         </div>
 
         <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
-          <input required id="saidas-nota-${i}" type="number" placeholder="80" min="0" max="100" />
+        <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <select id="saidas-nota-${i}">
+            <option value="?">Desconhecido</option>
+            <option value="!">100%</option>
+            <option value="1">75%</option>
+            <option value="2">50%</option>
+            <option value="3">25%</option>
+            <option value="4">0%</option>
+          </select>
         </div>
 
       </div>
@@ -317,9 +340,17 @@ function _addTurismo() {
         </div>
 
         <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
-          <input required id="turismo-nota-${i}" type="number" placeholder="65" min="0" max="100" />
+        <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <select id="turismo-nota-${i}">
+            <option value="?">Desconhecido</option>
+            <option value="!">100%</option>
+            <option value="1">75%</option>
+            <option value="2">50%</option>
+            <option value="3">25%</option>
+            <option value="4">0%</option>
+          </select>
         </div>
+
       </div>
 
       <div class="deletar-box">
@@ -394,9 +425,17 @@ function _addLoja() {
         </div>
 
         <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
-          <input required id="lojas-nota-${i}" type="number" placeholder="65" min="0" max="100" />
+        <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <select id="lojas-nota-${i}">
+            <option value="?">Desconhecido</option>
+            <option value="!">100%</option>
+            <option value="1">75%</option>
+            <option value="2">50%</option>
+            <option value="3">25%</option>
+            <option value="4">0%</option>
+          </select>
         </div>
+
       </div>
 
       <div class="deletar-box">
@@ -479,9 +518,17 @@ function _addLineup() {
         </div>
 
         <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0 a 100)</span></label>
-          <input required id="lineup-nota-1" type="number" placeholder="95" min="0" max="100" />
+        <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <select id="lineup-nota-${i}">
+            <option value="?">Desconhecido</option>
+            <option value="!">100%</option>
+            <option value="1">75%</option>
+            <option value="2">50%</option>
+            <option value="3">25%</option>
+            <option value="4">0%</option>
+          </select>
         </div>
+
       </div>
 
       <div class="deletar-box">
@@ -508,4 +555,329 @@ function _addLineup() {
 function _deleteType(tipo) {
   const div = document.getElementById(tipo);
   div.parentNode.removeChild(div);
+}
+
+// Módulos: Passeio Existente
+function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
+  if (FIRESTORE_PLACES_DATA.modulos.restaurantes === true) {
+    document.getElementById('habilitado-restaurantes').checked = true;
+    document.getElementById('habilitado-restaurantes-content').style.display = 'block';
+    document.getElementById('restaurantes-adicionar-box').style.display = 'block';
+
+    const restaurantesSize = FIRESTORE_PLACES_DATA.restaurantes.nome.length;
+    if (restaurantesSize > 0) {
+      for (let i = 1; i <= restaurantesSize; i++) {
+        const j = i - 1;
+        _addRestaurante();
+
+        const nome = FIRESTORE_PLACES_DATA.restaurantes.nome;
+        if (nome && nome[j]){
+          document.getElementById(`restaurantes-nome-${i}`).value = nome[j];
+          document.getElementById(`restaurantes-title-${i}`).innerText = nome[j];
+        }
+
+        const descricao = FIRESTORE_PLACES_DATA.restaurantes.descricao;
+        if (descricao && descricao[j]){
+          document.getElementById(`restaurantes-descricao-${i}`).value = descricao[j];
+        }
+
+        const link = FIRESTORE_PLACES_DATA.restaurantes.hyperlink.name;
+        if (link && link[j]){
+          document.getElementById(`restaurantes-link-${i}`).value = link[j];
+        }
+
+        const regiao = FIRESTORE_PLACES_DATA.restaurantes.regiao;
+        if (regiao && regiao[j]){
+          document.getElementById(`restaurantes-regiao-${i}`).value = regiao[j];
+        }
+
+        const valor = FIRESTORE_PLACES_DATA.restaurantes.valor;
+        if (valor && valor[j]) {
+          document.getElementById(`restaurantes-valor-${i}`).value = valor[j];
+        }         
+
+        const midia = FIRESTORE_PLACES_DATA.restaurantes.hyperlink.video;
+        if (midia && midia[j]){
+          document.getElementById(`restaurantes-midia-${i}`).value = midia[j];
+        }
+
+        const nota = FIRESTORE_PLACES_DATA.restaurantes.nota;
+        if (nota && nota[j]){
+          document.getElementById(`restaurantes-nota-${i}`).value = nota[j];
+        }
+      }
+    }
+  }
+}
+
+function _loadLanchesData(FIRESTORE_PLACES_DATA) {
+  if (FIRESTORE_PLACES_DATA.modulos.lanches === true) {
+    document.getElementById('habilitado-lanches').checked = true;
+    document.getElementById('habilitado-lanches-content').style.display = 'block';
+    document.getElementById('lanches-adicionar-box').style.display = 'block';
+
+    const lanchesSize = FIRESTORE_PLACES_DATA.lanches.nome.length;
+    if (lanchesSize > 0) {
+      for (let i = 1; i <= lanchesSize; i++) {
+        const j = i - 1;
+        _addLanche();
+
+        const nome = FIRESTORE_PLACES_DATA.lanches.nome;
+        if (nome && nome[j]){
+          document.getElementById(`lanches-nome-${i}`).value = nome[j];
+          document.getElementById(`lanches-title-${i}`).innerText = nome[j];
+        }
+
+        const descricao = FIRESTORE_PLACES_DATA.lanches.descricao;
+        if (descricao && descricao[j]){
+          document.getElementById(`lanches-descricao-${i}`).value = descricao[j];
+        }
+
+        const link = FIRESTORE_PLACES_DATA.lanches.hyperlink.name;
+        if (link && link[j]){
+          document.getElementById(`lanches-link-${i}`).value = link[j];
+        }
+
+        const regiao = FIRESTORE_PLACES_DATA.lanches.regiao;
+        if (regiao && regiao[j]){
+          document.getElementById(`lanches-regiao-${i}`).value = regiao[j];
+        }
+
+        const valor = FIRESTORE_PLACES_DATA.lanches.valor;
+        if (valor && valor[j]) {
+          document.getElementById(`lanches-valor-${i}`).value = valor[j];
+        }         
+
+        const midia = FIRESTORE_PLACES_DATA.lanches.hyperlink.video;
+        if (midia && midia[j]){
+          document.getElementById(`lanches-midia-${i}`).value = midia[j];
+        }
+
+        const nota = FIRESTORE_PLACES_DATA.lanches.nota;
+        if (nota && nota[j]){
+          document.getElementById(`lanches-nota-${i}`).value = nota[j];
+        }
+      }
+    }
+  }
+}
+
+function _loadSaidasData(FIRESTORE_PLACES_DATA) {
+  if (FIRESTORE_PLACES_DATA.modulos.saidas === true) {
+    document.getElementById('habilitado-saidas').checked = true;
+    document.getElementById('habilitado-saidas-content').style.display = 'block';
+    document.getElementById('saidas-adicionar-box').style.display = 'block';
+
+    const saidasSize = FIRESTORE_PLACES_DATA.saidas.nome.length;
+    if (saidasSize > 0) {
+      for (let i = 1; i <= saidasSize; i++) {
+        const j = i - 1;
+        _addSaida();
+
+        const nome = FIRESTORE_PLACES_DATA.saidas.nome;
+        if (nome && nome[j]){
+          document.getElementById(`saidas-nome-${i}`).value = nome[j];
+          document.getElementById(`saidas-title-${i}`).innerText = nome[j];
+        }
+
+        const descricao = FIRESTORE_PLACES_DATA.saidas.descricao;
+        if (descricao && descricao[j]){
+          document.getElementById(`saidas-descricao-${i}`).value = descricao[j];
+        }
+
+        const link = FIRESTORE_PLACES_DATA.saidas.hyperlink.name;
+        if (link && link[j]){
+          document.getElementById(`saidas-link-${i}`).value = link[j];
+        }
+
+        const regiao = FIRESTORE_PLACES_DATA.saidas.regiao;
+        if (regiao && regiao[j]){
+          document.getElementById(`saidas-regiao-${i}`).value = regiao[j];
+        }
+
+        const valor = FIRESTORE_PLACES_DATA.saidas.valor;
+        if (valor && valor[j]) {
+          document.getElementById(`saidas-valor-${i}`).value = valor[j];
+        }         
+
+        const midia = FIRESTORE_PLACES_DATA.saidas.hyperlink.video;
+        if (midia && midia[j]){
+          document.getElementById(`saidas-midia-${i}`).value = midia[j];
+        }
+
+        const nota = FIRESTORE_PLACES_DATA.saidas.nota;
+        if (nota && nota[j]){
+          document.getElementById(`saidas-nota-${i}`).value = nota[j];
+        }
+      }
+    }
+  }
+}
+
+function _loadTurismoData(FIRESTORE_PLACES_DATA) {
+  if (FIRESTORE_PLACES_DATA.modulos.turismo === true) {
+    document.getElementById('habilitado-turismo').checked = true;
+    document.getElementById('habilitado-turismo-content').style.display = 'block';
+    document.getElementById('turismo-adicionar-box').style.display = 'block';
+
+    const turismoSize = FIRESTORE_PLACES_DATA.turismo.nome.length;
+    if (turismoSize > 0) {
+      for (let i = 1; i <= turismoSize; i++) {
+        const j = i - 1;
+        _addTurismo();
+
+        const nome = FIRESTORE_PLACES_DATA.turismo.nome;
+        if (nome && nome[j]){
+          document.getElementById(`turismo-nome-${i}`).value = nome[j];
+          document.getElementById(`turismo-title-${i}`).innerText = nome[j];
+        }
+
+        const descricao = FIRESTORE_PLACES_DATA.turismo.descricao;
+        if (descricao && descricao[j]){
+          document.getElementById(`turismo-descricao-${i}`).value = descricao[j];
+        }
+
+        const link = FIRESTORE_PLACES_DATA.turismo.hyperlink.name;
+        if (link && link[j]){
+          document.getElementById(`turismo-link-${i}`).value = link[j];
+        }
+
+        const regiao = FIRESTORE_PLACES_DATA.turismo.regiao;
+        if (regiao && regiao[j]){
+          document.getElementById(`turismo-regiao-${i}`).value = regiao[j];
+        }
+
+        const valor = FIRESTORE_PLACES_DATA.turismo.valor;
+        if (valor && valor[j]) {
+          document.getElementById(`turismo-valor-${i}`).value = valor[j];
+        }         
+
+        const midia = FIRESTORE_PLACES_DATA.turismo.hyperlink.video;
+        if (midia && midia[j]){
+          document.getElementById(`turismo-midia-${i}`).value = midia[j];
+        }
+
+        const nota = FIRESTORE_PLACES_DATA.turismo.nota;
+        if (nota && nota[j]){
+          document.getElementById(`turismo-nota-${i}`).value = nota[j];
+        }
+      }
+    }
+  }
+}
+
+function _loadLojasData(FIRESTORE_PLACES_DATA) {
+  if (FIRESTORE_PLACES_DATA.modulos.lojas === true) {
+    document.getElementById('habilitado-lojas').checked = true;
+    document.getElementById('habilitado-lojas-content').style.display = 'block';
+    document.getElementById('lojas-adicionar-box').style.display = 'block';
+
+    const lojasSize = FIRESTORE_PLACES_DATA.lojas.nome.length;
+    if (lojasSize > 0) {
+      for (let i = 1; i <= lojasSize; i++) {
+        const j = i - 1;
+        _addLoja();
+
+        const nome = FIRESTORE_PLACES_DATA.lojas.nome;
+        if (nome && nome[j]){
+          document.getElementById(`lojas-nome-${i}`).value = nome[j];
+          document.getElementById(`lojas-title-${i}`).innerText = nome[j];
+        }
+
+        const descricao = FIRESTORE_PLACES_DATA.lojas.descricao;
+        if (descricao && descricao[j]){
+          document.getElementById(`lojas-descricao-${i}`).value = descricao[j];
+        }
+
+        const link = FIRESTORE_PLACES_DATA.lojas.hyperlink.name;
+        if (link && link[j]){
+          document.getElementById(`lojas-link-${i}`).value = link[j];
+        }
+
+        const regiao = FIRESTORE_PLACES_DATA.lojas.regiao;
+        if (regiao && regiao[j]){
+          document.getElementById(`lojas-regiao-${i}`).value = regiao[j];
+        }
+
+        const valor = FIRESTORE_PLACES_DATA.lojas.valor;
+        if (valor && valor[j]) {
+          document.getElementById(`lojas-valor-${i}`).value = valor[j];
+        }         
+
+        const midia = FIRESTORE_PLACES_DATA.lojas.hyperlink.video;
+        if (midia && midia[j]){
+          document.getElementById(`lojas-midia-${i}`).value = midia[j];
+        }
+
+        const nota = FIRESTORE_PLACES_DATA.lojas.nota;
+        if (nota && nota[j]){
+          document.getElementById(`lojas-nota-${i}`).value = nota[j];
+        }
+      }
+    }
+  }
+}
+
+function _loadMapaData(FIRESTORE_PLACES_DATA) {
+  if (FIRESTORE_PLACES_DATA.modulos.mapa === true) {
+    document.getElementById('habilitado-mapa').checked = true;
+    document.getElementById('habilitado-mapa-content').style.display = 'block';
+
+    const mapa = FIRESTORE_PLACES_DATA.myMaps;
+    if (mapa) {
+      document.getElementById('mapa-link').value = mapa;
+    }
+  }
+}
+
+function _loadLineupData(FIRESTORE_PLACES_DATA) {
+  if (FIRESTORE_PLACES_DATA.modulos.lineup === true) {
+    document.getElementById('habilitado-lineup').checked = true;
+    document.getElementById('habilitado-lineup-content').style.display = 'block';
+    document.getElementById('lineup-adicionar-box').style.display = 'block';
+
+    const lineupSize = FIRESTORE_PLACES_DATA.lineup.nome.length;
+    if (lineupSize > 0) {
+      for (let i = 1; i <= lineupSize; i++) {
+        const j = i - 1;
+        _addLoja();
+
+        const nome = FIRESTORE_PLACES_DATA.lineup.nome;
+        if (nome && nome[j]){
+          document.getElementById(`lineup-nome-${i}`).value = nome[j];
+          document.getElementById(`lineup-title-${i}`).innerText = nome[j];
+        }
+
+        const descricao = FIRESTORE_PLACES_DATA.lineup.descricao;
+        if (descricao && descricao[j]){
+          document.getElementById(`lineup-descricao-${i}`).value = descricao[j];
+        }
+
+        const link = FIRESTORE_PLACES_DATA.lineup.hyperlink.name;
+        if (link && link[j]){
+          document.getElementById(`lineup-link-${i}`).value = link[j];
+        }
+
+        const regiao = FIRESTORE_PLACES_DATA.lineup.regiao;
+        if (regiao && regiao[j]){
+          document.getElementById(`lineup-regiao-${i}`).value = regiao[j];
+        }
+
+        const valor = FIRESTORE_PLACES_DATA.lineup.valor;
+        if (valor && valor[j]) {
+          document.getElementById(`lineup-valor-${i}`).value = valor[j];
+        }         
+
+        const midia = FIRESTORE_PLACES_DATA.lineup.hyperlink.video;
+        if (midia && midia[j]){
+          document.getElementById(`lineup-midia-${i}`).value = midia[j];
+        }
+
+        const nota = FIRESTORE_PLACES_DATA.lineup.nota;
+        if (nota && nota[j]){
+          document.getElementById(`lineup-nota-${i}`).value = nota[j];
+        }
+      }
+    }
+  }
 }
