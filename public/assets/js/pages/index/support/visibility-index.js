@@ -1,5 +1,10 @@
 function _loadVisibilityIndex() {
-  _loadUserVisibility();
+  const html = _getHTMLpage();
+
+  if (html == 'index') {
+    _loadUserVisibility();
+  }
+
   _applyUserVisibility();
   _loadLogoColors();
 
@@ -11,29 +16,31 @@ function _loadVisibilityIndex() {
     _adjustButtonsPosition();
   });
 
-  document.getElementById("visibilidade-dinamico").addEventListener("click", function () {
-    if (document.getElementById("visibilidade-dinamico").checked) {
-      _autoVisibility();
-      localStorage.setItem("visibilidade", "dinamico");
-      _updateVisibility("dinamico");
-    };
-  });
-
-  document.getElementById("visibilidade-claro").addEventListener("click", function () {
-    if (document.getElementById("visibilidade-claro").checked) {
-      _loadLightMode();
-      localStorage.setItem("visibilidade", "claro");
-      _updateVisibility("claro");
-    }
-  });
-
-  document.getElementById("visibilidade-escuro").addEventListener("click", function () {
-    if (document.getElementById("visibilidade-escuro").checked) {
-      _loadDarkMode();
-      localStorage.setItem("visibilidade", "escuro");
-      _updateVisibility("escuro");
-    }
-  });
+  if (html == 'index') {
+    document.getElementById("visibilidade-dinamico").addEventListener("click", function () {
+      if (document.getElementById("visibilidade-dinamico").checked) {
+        _autoVisibility();
+        localStorage.setItem("visibilidade", "dinamico");
+        _updateVisibility("dinamico");
+      };
+    });
+  
+    document.getElementById("visibilidade-claro").addEventListener("click", function () {
+      if (document.getElementById("visibilidade-claro").checked) {
+        _loadLightMode();
+        localStorage.setItem("visibilidade", "claro");
+        _updateVisibility("claro");
+      }
+    });
+  
+    document.getElementById("visibilidade-escuro").addEventListener("click", function () {
+      if (document.getElementById("visibilidade-escuro").checked) {
+        _loadDarkMode();
+        localStorage.setItem("visibilidade", "escuro");
+        _updateVisibility("escuro");
+      }
+    });
+  }
 }
 
 async function _loadUserVisibility() {

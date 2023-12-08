@@ -82,10 +82,9 @@ function _loadShare() {
     if (FIRESTORE_DATA.compartilhamento.ativo === true) {
         share.style.display = "block";
 
-        const link = window.location.href.split("#")[0];
-        const shareLink = document.getElementById("share-link");
-        shareLink.innerText = link;
-        shareLink.href = link;
+        const urlParams = new URLSearchParams(window.location.search);
+
+        document.getElementById("share-link").innerText = urlParams.get('v');
 
         share.addEventListener("click", function () {
             _openShare();
