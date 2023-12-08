@@ -25,7 +25,7 @@ function _loadVisibility() {
      }
 
      _saveLocalColors();
-     _autoVisibility();
+     _applyUserVisibility();
 
      document.getElementById("night-mode").onclick = function () {
           _switchVisibility();
@@ -145,6 +145,19 @@ function _getLocalColors(){
 }
 
 // ======= SETTERS =======
+
+function _applyUserVisibility(){
+     switch (localStorage.getItem("visibilidade")) {
+          case "escuro":
+               _loadDarkMode();
+               break;
+          case "claro":
+               _loadLightMode();
+               break;
+          default:
+               _autoVisibility();
+     }
+}
 
 function _setLightModeVariable() {
      localStorage.setItem("darkMode", false);

@@ -9,9 +9,9 @@ export interface Referencia {
 }
 
 export interface Usuario {
-  Nome: string;
   viagens: any;
   passeios: any;
+  visibilidade: string;
 }
 
 export interface Viagem {
@@ -65,11 +65,8 @@ interface FirebaseTimestamp {
 }
 
 interface Cidade {
-  sigla: string;
   passeiosRef: Referencia;
-  nome: string;
-  myMaps: string;
-  passeios: any;
+  passeios?: any;
 }
 
 export interface Hospedagem {
@@ -93,6 +90,16 @@ export interface Passeios {
   saidas: Passeio[];
   turismo: Passeio[];
   titulo: string;
+  myMaps: string;
+  modulos: {
+    lanches: boolean;
+    lineup: boolean;
+    lojas: boolean;
+    mapa: boolean;
+    restaurantes: boolean;
+    saidas: boolean;
+    turismo: boolean;
+  };
 }
 
 interface Passeio {

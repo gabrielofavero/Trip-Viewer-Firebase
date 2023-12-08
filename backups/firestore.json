@@ -14,6 +14,56 @@
                 ]
             },
             {
+                "claro": [
+                    "url(/public/assets/img/background.png)",
+                    "#272829",
+                    "#fff",
+                    "#3A3838",
+                    "#5B509E",
+                    "#e6e9ec",
+                    "#4F5051",
+                    "#f2f3f5",
+                    "#D9D9D9",
+                    "#595959",
+                    "rgba(255, 255, 255, 0.8)",
+                    "#ddd",
+                    "#011426",
+                    "#F2F2F2",
+                    "#F6F6F6",
+                    "#6f757a",
+                    "#f7f8f9",
+                    "rgba(255, 255, 255, 0.7)",
+                    "#111",
+                    "#999",
+                    "#eef7ff",
+                    "#5859a7"
+                ],
+                "escuro": [
+                    "url(/public/assets/img/background-dark.png)",
+                    "#E2E2E2",
+                    "#303030",
+                    "#F2F2F2",
+                    "#7F75B9",
+                    "#404040",
+                    "#F2F2F2",
+                    "#303030",
+                    "#414040",
+                    "#BFBFBF",
+                    "rgba(48, 48, 48, 0.8)",
+                    "#A6A6A6",
+                    "#011426",
+                    "#a5a5a5",
+                    "#3b3b3b",
+                    "#E2E2E2",
+                    "#404040",
+                    "rgba(48, 48, 48, 0.7)",
+                    "#E2E2E2",
+                    "#A6A6A6",
+                    "#303030",
+                    "#7f75b6"
+                ]
+            },
+            {
                 "costs": [
                     {
                         "texto": "",
@@ -104,13 +154,24 @@
                         "Nota"
                     ]
                 },
-                "places": {
-                    "tourismAndShopping": {
-                        "subtitle": "",
-                        "icon": "bx bx-dish",
-                        "description": "Pontos Turísticos e locais para fazer compras. Regiões, Museus, Shoppings, Supermercados, entre outros.",
-                        "title": "Turismo e Lojas"
+                "currency": {
+                    "R$": {
+                        "$$": "R$50 - R$100",
+                        "default": "Valor Desconhecido",
+                        "$": "R$1 - R$50",
+                        "$$$": "Mais de R$100!",
+                        "-": "Gratuito"
                     },
+                    "$": {
+                        "$$": "$26 - $50",
+                        "$$$$": "Mais de $100!",
+                        "default": "Valor Desconhecido",
+                        "$": "$1 - $25",
+                        "$$$": "$51 - $99",
+                        "-": "Gratuito"
+                    }
+                },
+                "places": {
                     "mapa": {
                         "subtitle": "",
                         "icon": "bx bx-map-alt",
@@ -128,12 +189,6 @@
                         "icon": "bx bx-dish",
                         "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros.",
                         "title": "Alimentação"
-                    },
-                    "turismo": {
-                        "subtitle": "",
-                        "icon": "bx bx-globe",
-                        "description": "Pontos Turísticos diversos: Museus, Praças, Exposições, Parques, Mirantes, Peças de Teatro, entre outros.",
-                        "title": "Turismo"
                     },
                     "lojas": {
                         "subtitle": "",
@@ -158,23 +213,18 @@
                         "icon": "bx bx-cookie",
                         "description": "Lugares com refeições leves para café da manhã, brunch e mini refeições. Locais Físicos e Delivery.",
                         "title": "Lanches"
-                    }
-                },
-                "currency": {
-                    "R$": {
-                        "$$": "R$50 - R$100",
-                        "default": "Valor Desconhecido",
-                        "$": "R$1 - R$50",
-                        "$$$": "Mais de R$100!",
-                        "-": "Gratuito"
                     },
-                    "$": {
-                        "$$": "$26 - $50",
-                        "$$$$": "Mais de $100!",
-                        "default": "Valor Desconhecido",
-                        "$": "$1 - $25",
-                        "$$$": "$51 - $99",
-                        "-": "Gratuito"
+                    "turismo": {
+                        "subtitle": "",
+                        "icon": "bx bx-globe",
+                        "title": "Turismo",
+                        "description": "Pontos Turísticos diversos. Bairros, monumentos, museus, praças, mriantes, exposições, entre outros."
+                    },
+                    "tourismAndShopping": {
+                        "subtitle": "",
+                        "icon": "bx bx-dish",
+                        "title": "Turismo e Lojas",
+                        "description": "Pontos Turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros."
                     }
                 }
             },
@@ -249,16 +299,6 @@
         "collection": "hospedagens",
         "docs": [
             {
-                "horarios": [
-                    {
-                        "checkin": "15:00",
-                        "checkout": "11:00"
-                    },
-                    {
-                        "checkin": "16:00",
-                        "checkout": "10:00"
-                    }
-                ],
                 "endereco": [
                     "3790 Las Vegas Boulevard South",
                     "5051 Duke Ellington Way"
@@ -286,7 +326,30 @@
                 "codigos": [
                     "nyny",
                     "desertroseresort"
-                ]
+                ],
+                "datas": [
+                    {
+                        "checkin": {
+                            "_seconds": 1697306400,
+                            "_nanoseconds": 325000000
+                        },
+                        "checkout": {
+                            "_seconds": 1698156000,
+                            "_nanoseconds": 63000000
+                        }
+                    },
+                    {
+                        "checkin": {
+                            "_seconds": 1697310000,
+                            "_nanoseconds": 136000000
+                        },
+                        "checkout": {
+                            "_seconds": 1698152400,
+                            "_nanoseconds": 876000000
+                        }
+                    }
+                ],
+                "reservas": []
             }
         ]
     },
@@ -559,186 +622,6 @@
                         "Torre Gigante. Longe",
                         "Instalação de arte no deserto",
                         "Batalha de Robôs. Confirmar se terá na data"
-                    ]
-                },
-                "lojas": {
-                    "hyperlink": {
-                        "insta": [],
-                        "name": [],
-                        "video": [
-                            "https://www.tiktok.com/@skylarravert123/video/7196456097887046955?_r=1&_t=8bzJjZW9qfl&social_sharing=v3",
-                            "https://www.tiktok.com/@letslasvegas/video/7185329493878361387?q=Coca%20Cola%20Store%20vegas&t=1683676253624",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "https://youtu.be/47GrJJUdHIY",
-                            "",
-                            "https://youtu.be/rtLG1BBulrI",
-                            "https://youtu.be/jMOCHlIuc5o"
-                        ]
-                    },
-                    "site": [],
-                    "emoji": [
-                        "🛍️",
-                        "🥤",
-                        "🛍️",
-                        "🛍️",
-                        "🛍️",
-                        "🛍️",
-                        "💿",
-                        "🛍️",
-                        "🛍️",
-                        "🍬",
-                        "🛍️",
-                        "🛍️",
-                        "💿",
-                        "🏠",
-                        "🛍️",
-                        "🎮",
-                        "🥁"
-                    ],
-                    "valor": [
-                        "-",
-                        "$",
-                        "$",
-                        "$",
-                        "$",
-                        "$",
-                        "$$",
-                        "$",
-                        "$$$$",
-                        "$",
-                        "$$",
-                        "$$$",
-                        "$$",
-                        "$$",
-                        "$$",
-                        "$$",
-                        "$$"
-                    ],
-                    "titulo": "Lojas",
-                    "novo": [
-                        "✔",
-                        "✔",
-                        "",
-                        "",
-                        "✔",
-                        "✔",
-                        "",
-                        "",
-                        "",
-                        "✔",
-                        "",
-                        "✔"
-                    ],
-                    "nome": [
-                        "Fergusons Downtown",
-                        "Coca Cola Store",
-                        "Las Vegas Premium Outlets N",
-                        "Las Vegas Premium Outlets S",
-                        "Marshalls",
-                        "Target",
-                        "Urban Outfitters",
-                        "Wallmart",
-                        "Forum Shops at Caesars Palace",
-                        "IT'SUGAR",
-                        "Miracle Mile Shops",
-                        "Fashion Show Mall",
-                        "11th Street Records",
-                        "Home Depot",
-                        "Town Square Park",
-                        "Retro City Games",
-                        "Guitar Center"
-                    ],
-                    "regiao": [
-                        "Centro da Cidade",
-                        "Strip (Centro)",
-                        "Strip (Norte)",
-                        "Strip (Sul)",
-                        "Strip (Centro)",
-                        "Strip (Centro)",
-                        "Strip (Centro)",
-                        "Paradise",
-                        "Strip (Centro)",
-                        "Strip (Centro)",
-                        "Strip (Centro)",
-                        "Strip (Centro)",
-                        "Centro da Cidade",
-                        "Paradise",
-                        "Strip (Sul)",
-                        "Strip (Sul)",
-                        "Strip (Sul)"
-                    ],
-                    "video": [
-                        "Tiktok",
-                        "TikTok",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "Youtube",
-                        "",
-                        "Youtube",
-                        "Youtube"
-                    ],
-                    "plan": [
-                        "✔",
-                        "✔",
-                        "",
-                        "✔",
-                        "✔",
-                        "✔",
-                        "✔",
-                        "✔",
-                        "✔",
-                        "✔",
-                        "",
-                        "✔",
-                        "",
-                        "✔"
-                    ],
-                    "nota": [
-                        "!",
-                        "1",
-                        "1",
-                        "1",
-                        "1",
-                        "1",
-                        "1",
-                        "1",
-                        "1",
-                        "1",
-                        "1",
-                        "2",
-                        "2",
-                        "2",
-                        "!",
-                        "1",
-                        "1"
-                    ],
-                    "descricao": [
-                        "Shopping descolado",
-                        "Loja com refrigerantes do mundo inteiro",
-                        "Outlet. Mais longe, mais lojas",
-                        "Outlet. Mais perto, menos lojas. 5 Guys",
-                        "Vestuário",
-                        "Loja de Departamento",
-                        "Vestuário e Vinis",
-                        "Loja de Departamento",
-                        "Shopping estilo romano",
-                        "Loja de doces",
-                        "Shopping no centro da Strip. Boa praça ",
-                        "Várias lojas e restaurantes",
-                        "Loja de Vinis",
-                        "Loja de objetos de casa",
-                        "Centro de lojas e restaurantes",
-                        "Jogos vintage",
-                        "Loja de instrumentos musicais"
                     ]
                 },
                 "saidas": {
@@ -1483,6 +1366,196 @@
                         "Dentro do Cassino Royale",
                         "Franquia de frango frito texano"
                     ]
+                },
+                "lojas": {
+                    "hyperlink": {
+                        "insta": [],
+                        "name": [],
+                        "video": [
+                            "https://www.tiktok.com/@skylarravert123/video/7196456097887046955?_r=1&_t=8bzJjZW9qfl&social_sharing=v3",
+                            "https://www.tiktok.com/@letslasvegas/video/7185329493878361387?q=Coca%20Cola%20Store%20vegas&t=1683676253624",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "https://youtu.be/47GrJJUdHIY",
+                            "",
+                            "https://youtu.be/rtLG1BBulrI",
+                            "https://youtu.be/jMOCHlIuc5o"
+                        ]
+                    },
+                    "site": [],
+                    "emoji": [
+                        "🛍️",
+                        "🥤",
+                        "🛍️",
+                        "🛍️",
+                        "🛍️",
+                        "🛍️",
+                        "💿",
+                        "🛍️",
+                        "🛍️",
+                        "🍬",
+                        "🛍️",
+                        "🛍️",
+                        "💿",
+                        "🏠",
+                        "🛍️",
+                        "🎮",
+                        "🥁"
+                    ],
+                    "valor": [
+                        "-",
+                        "$",
+                        "$",
+                        "$",
+                        "$",
+                        "$",
+                        "$$",
+                        "$",
+                        "$$$$",
+                        "$",
+                        "$$",
+                        "$$$",
+                        "$$",
+                        "$$",
+                        "$$",
+                        "$$",
+                        "$$"
+                    ],
+                    "novo": [
+                        "✔",
+                        "✔",
+                        "",
+                        "",
+                        "✔",
+                        "✔",
+                        "",
+                        "",
+                        "",
+                        "✔",
+                        "",
+                        "✔"
+                    ],
+                    "nome": [
+                        "Fergusons Downtown",
+                        "Coca Cola Store",
+                        "Las Vegas Premium Outlets N",
+                        "Las Vegas Premium Outlets S",
+                        "Marshalls",
+                        "Target",
+                        "Urban Outfitters",
+                        "Wallmart",
+                        "Forum Shops at Caesars Palace",
+                        "IT'SUGAR",
+                        "Miracle Mile Shops",
+                        "Fashion Show Mall",
+                        "11th Street Records",
+                        "Home Depot",
+                        "Town Square Park",
+                        "Retro City Games",
+                        "Guitar Center"
+                    ],
+                    "regiao": [
+                        "Centro da Cidade",
+                        "Strip (Centro)",
+                        "Strip (Norte)",
+                        "Strip (Sul)",
+                        "Strip (Centro)",
+                        "Strip (Centro)",
+                        "Strip (Centro)",
+                        "Paradise",
+                        "Strip (Centro)",
+                        "Strip (Centro)",
+                        "Strip (Centro)",
+                        "Strip (Centro)",
+                        "Centro da Cidade",
+                        "Paradise",
+                        "Strip (Sul)",
+                        "Strip (Sul)",
+                        "Strip (Sul)"
+                    ],
+                    "video": [
+                        "Tiktok",
+                        "TikTok",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "Youtube",
+                        "",
+                        "Youtube",
+                        "Youtube"
+                    ],
+                    "plan": [
+                        "✔",
+                        "✔",
+                        "",
+                        "✔",
+                        "✔",
+                        "✔",
+                        "✔",
+                        "✔",
+                        "✔",
+                        "✔",
+                        "",
+                        "✔",
+                        "",
+                        "✔"
+                    ],
+                    "nota": [
+                        "!",
+                        "1",
+                        "1",
+                        "1",
+                        "1",
+                        "1",
+                        "1",
+                        "1",
+                        "1",
+                        "1",
+                        "1",
+                        "2",
+                        "2",
+                        "2",
+                        "!",
+                        "1",
+                        "1"
+                    ],
+                    "descricao": [
+                        "Shopping descolado",
+                        "Loja com refrigerantes do mundo inteiro",
+                        "Outlet. Mais longe, mais lojas",
+                        "Outlet. Mais perto, menos lojas. 5 Guys",
+                        "Vestuário",
+                        "Loja de Departamento",
+                        "Vestuário e Vinis",
+                        "Loja de Departamento",
+                        "Shopping estilo romano",
+                        "Loja de doces",
+                        "Shopping no centro da Strip. Boa praça ",
+                        "Várias lojas e restaurantes",
+                        "Loja de Vinis",
+                        "Loja de objetos de casa",
+                        "Centro de lojas e restaurantes",
+                        "Jogos vintage",
+                        "Loja de instrumentos musicais"
+                    ]
+                },
+                "titulo": "Las Vegas",
+                "myMaps": "https://www.google.com/maps/d/u/0/edit?mid=1M8ctdqWGonk_aWpcZ3coZgKuJoMJrGM&usp=sharing",
+                "modulos": {
+                    "lineup": false,
+                    "turismo": true,
+                    "lojas": true,
+                    "saidas": true,
+                    "restaurantes": true,
+                    "lanches": true,
+                    "mapa": true
                 }
             }
         ]
@@ -1543,8 +1616,8 @@
                     },
                     {
                         "data": {
-                            "_nanoseconds": 54000000,
-                            "_seconds": 1694746800
+                            "_seconds": 1697338800,
+                            "_nanoseconds": 662000000
                         },
                         "tarde": [
                             "Shake Shack 🍔 / The Crack Shack 🍗 / Eataly 🍝",
@@ -1572,8 +1645,8 @@
                         ],
                         "titulo": "Las Vegas",
                         "noite": [
-                            "High Roller 🎡",
-                            "Bellagio ⛲ e The Volcano 🌋",
+                            "High Roller 🎡 e Bellagio ⛲",
+                            "Strip (Livre)",
                             "👩🏻‍🦰👱🏻‍♂️👩🏻: Drag Race Live (21:30)"
                         ],
                         "manha": [
@@ -1593,7 +1666,7 @@
                         ],
                         "titulo": "Las Vegas",
                         "noite": [
-                            "BrewDog 🍺"
+                            "BrewDog 🍺 / Hooters🍺🍗 / Nine Fine Irishmen🍺🍀"
                         ],
                         "manha": [
                             "Alugar Carro 🚗",
@@ -1606,16 +1679,16 @@
                             "_seconds": 1697598000
                         },
                         "tarde": [
-                            "Chipotle 🌮 / Hattie B’s 🍗 / Lobster ME 🦞",
-                            "Bellagio Conservatory & Botanical Gardens 🌳"
+                            "Five Guys 🍔 / Panda Express 🥡 / Buffalo Wild Wings 🍗",
+                            "Las Vegas Premium Outlets South🛍️"
                         ],
                         "titulo": "Las Vegas",
                         "noite": [
-                            "Fremont Street 🍺"
+                            "Señor Frog's 🐸/ Fremont Street 🍺"
                         ],
                         "manha": [
                             "👱🏻‍♂️: Los Angeles (O dia todo)",
-                            "🧑🏻‍🦱👱🏻‍♀️👩🏻‍🦰👩🏻: Bass Pro Shops"
+                            "Las Vegas Premium Outlets South🛍️"
                         ]
                     },
                     {
@@ -1624,9 +1697,9 @@
                             "_seconds": 1697684400
                         },
                         "tarde": [
-                            "Five Guys 🍔 / Panda Express 🥡 / Buffalo Wild Wings 🍗",
-                            "Las Vegas Premium Outlets South🛍️",
-                            "👱🏻‍♂️: Fashion Show Mall / I Love Sugar Martini Bar 🍸"
+                            "Chipotle 🌮 / Hattie B’s 🍗 / Lobster ME 🦞",
+                            "Fashion Show Mall 🛍️",
+                            "I Love Sugar Martini Bar 🍸"
                         ],
                         "titulo": "Las Vegas",
                         "noite": [
@@ -1635,7 +1708,7 @@
                         ],
                         "manha": [
                             "👱🏻‍♂️: Los Angeles (Chegada de tarde)",
-                            "Las Vegas Premium Outlets South🛍️"
+                            "🧑🏻‍🦱👱🏻‍♀️👩🏻‍🦰👩🏻: Bass Pro Shops 🎣"
                         ]
                     },
                     {
@@ -1649,7 +1722,7 @@
                         ],
                         "titulo": "Las Vegas",
                         "noite": [
-                            "🧑🏻‍🦱👱🏻‍♀️: Adele 🎤",
+                            "🧑🏻‍🦱👱🏻‍♀️👱🏻‍♂️: U2🎤",
                             "👩🏻‍🦰👱🏻‍♂️👩🏻:  Midnight Dreams (Fantasy Lab) 🎨"
                         ],
                         "manha": [
@@ -1885,12 +1958,12 @@
                     "voo"
                 ],
                 "reservas": [
-                    "XXXXXX",
-                    "XXXXXX",
-                    "XXXXXX",
-                    "XXXXXX",
-                    "XXXXXX",
-                    "XXXXXX"
+                    "XPSQSE",
+                    "XPSQSE",
+                    "XPSQSE",
+                    "XPSQSE",
+                    "XPSQSE",
+                    "XPSQSE"
                 ]
             }
         ]
@@ -1899,7 +1972,6 @@
         "collection": "usuarios",
         "docs": [
             {
-                "Nome": "Gabriel Fávero",
                 "viagens": [
                     {
                         "_firestore": {
@@ -1913,7 +1985,22 @@
                         },
                         "_converter": {}
                     }
-                ]
+                ],
+                "passeios": [
+                    {
+                        "_firestore": {
+                            "projectId": "trip-viewer-tcc"
+                        },
+                        "_path": {
+                            "segments": [
+                                "passeios",
+                                "eWj79W36wxxyhuvccevW"
+                            ]
+                        },
+                        "_converter": {}
+                    }
+                ],
+                "visibilidade": "dinamico"
             }
         ]
     },
@@ -1921,27 +2008,7 @@
         "collection": "viagens",
         "docs": [
             {
-                "usuario": {
-                    "_firestore": {
-                        "projectId": "trip-viewer-tcc"
-                    },
-                    "_path": {
-                        "segments": [
-                            "usuarios",
-                            "yMgghUAV8TapvOAXh648"
-                        ]
-                    },
-                    "_converter": {}
-                },
                 "titulo": "Las Vegas",
-                "fim": {
-                    "_seconds": 1698235200,
-                    "_nanoseconds": 58000000
-                },
-                "cores": {
-                    "claro": "#AF8F8E",
-                    "escuro": "#8a7171"
-                },
                 "links": {
                     "attachments": "",
                     "pdf": "",
@@ -1951,12 +2018,6 @@
                     "vacina": "",
                     "sheet": "",
                     "drive": ""
-                },
-                "imagem": {
-                    "claro": "assets/img/logo.png",
-                    "escuro": "assets/img/logo.png",
-                    "ativo": true,
-                    "altura": "250px"
                 },
                 "hospedagensRef": {
                     "_firestore": {
@@ -1971,37 +2032,6 @@
                     "_converter": {}
                 },
                 "moeda": "$",
-                "inicio": {
-                    "_seconds": 1697221200,
-                    "_nanoseconds": 644000000
-                },
-                "cidades": [
-                    {
-                        "headers": [
-                            "restaurantes",
-                            "lanches",
-                            "saidas",
-                            "turismo",
-                            "lojas",
-                            "mapa"
-                        ],
-                        "passeiosRef": {
-                            "_firestore": {
-                                "projectId": "trip-viewer-tcc"
-                            },
-                            "_path": {
-                                "segments": [
-                                    "passeios",
-                                    "eWj79W36wxxyhuvccevW"
-                                ]
-                            },
-                            "_converter": {}
-                        },
-                        "sigla": "LV",
-                        "nome": "Las Vegas",
-                        "myMaps": "https://www.google.com/maps/d/u/0/edit?mid=1M8ctdqWGonk_aWpcZ3coZgKuJoMJrGM&usp=sharing"
-                    }
-                ],
                 "programacoesRef": {
                     "_firestore": {
                         "projectId": "trip-viewer-tcc"
@@ -2033,7 +2063,75 @@
                     },
                     "_converter": {}
                 },
-                "quantidadePessoas": 7
+                "quantidadePessoas": 7,
+                "cores": {
+                    "claro": "#AF8F8E",
+                    "escuro": "#825D5C"
+                },
+                "fim": {
+                    "_seconds": 1698235200,
+                    "_nanoseconds": 920000000
+                },
+                "inicio": {
+                    "_seconds": 1697221200,
+                    "_nanoseconds": 856000000
+                },
+                "imagem": {
+                    "claro": "assets/img/logo.png",
+                    "escuro": "assets/img/logo.png",
+                    "ativo": true,
+                    "altura": "250px",
+                    "background": "assets/img/hero-bg.jpg"
+                },
+                "compartilhamento": {
+                    "ativo": true,
+                    "dono": {
+                        "_firestore": {
+                            "projectId": "trip-viewer-tcc"
+                        },
+                        "_path": {
+                            "segments": [
+                                "usuarios",
+                                "R0yDPACnVVPjx2S6oqP6zqVI20t1"
+                            ]
+                        },
+                        "_converter": {}
+                    },
+                    "editores": []
+                },
+                "passeiosRefs": [
+                    {
+                        "ref": {
+                            "_firestore": {
+                                "projectId": "trip-viewer-tcc"
+                            },
+                            "_path": {
+                                "segments": [
+                                    "passeios",
+                                    "eWj79W36wxxyhuvccevW"
+                                ]
+                            },
+                            "_converter": {}
+                        },
+                        "titulo": "Las Vegas"
+                    }
+                ],
+                "cidades": [
+                    {
+                        "passeiosRef": {
+                            "_firestore": {
+                                "projectId": "trip-viewer-tcc"
+                            },
+                            "_path": {
+                                "segments": [
+                                    "passeios",
+                                    "eWj79W36wxxyhuvccevW"
+                                ]
+                            },
+                            "_converter": {}
+                        }
+                    }
+                ]
             }
         ]
     }

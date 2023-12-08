@@ -10,13 +10,19 @@ export async function _registerUser(
 
   const uid = await _getAuthUserUID(request, response);
 
+  const userData = {
+    viagens: [],
+    passeios: [],
+    visibilidade: "dinamico"
+  }
+
   try {
     const doc = await admin.firestore().doc(`usuarios/${uid}`).get();
     if (doc.exists) {
       console.log("Usuário já cadastrado no Firestore");
       return;
     } else {
-      await admin.firestore().doc(`usuarios/${uid}`).set({});
+      await admin.firestore().doc(`usuarios/${uid}`).set(userData);
       console.log("Usuário cadastrado no Firestore");
     }
   } catch (e) {

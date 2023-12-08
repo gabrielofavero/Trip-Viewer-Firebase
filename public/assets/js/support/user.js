@@ -6,29 +6,14 @@ function _unloadPageUserFunctions() {
 }
 
 async function _signInGoogle() {
-    try {
-      const auth = firebase.auth();
-  
-      // Set the authentication state persistence to 'local'
-      await setPersistence(auth, browserLocalPersistence);
-  
-      // Create a GoogleAuthProvider instance
-      const provider = new firebase.auth.GoogleAuthProvider();
-  
-      // Sign in with Google Popup
-      const result = await auth.signInWithPopup(provider);
-  
-      // Access user information if needed
-      const user = result.user;
-      console.log('User is signed in:', user);
-      console.log('User UID:', user.uid);
-      console.log('User Email:', user.email);
-      // You can access other user properties as needed
-    } catch (error) {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function (result) {
+  }).catch(function (error) {
       _logger(ERROR, error);
       throw error;
-    }
-  }
+  });
+
+}
   
 
 function _signOut() {

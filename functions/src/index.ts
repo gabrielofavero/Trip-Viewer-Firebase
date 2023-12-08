@@ -1,8 +1,8 @@
 import * as admin from "firebase-admin";
 import credentials from "./data/main/credentials";
 
-import { getBackup } from "./data/main/backup";
 import { getConfig } from "./data/main/config";
+import { updateVisibility, getVisibility } from "./data/main/visibility";
 
 import { getSingleTrip, getTripList } from "./data/viagem/get";
 import { updateTrip, newTrip } from "./data/viagem/set";
@@ -19,8 +19,9 @@ admin.initializeApp({
 });
 
 export {
-  getBackup,
   getConfig,
+  updateVisibility,
+  getVisibility,
   getSingleTrip,
   getTripList,
   updateTrip,
@@ -32,4 +33,5 @@ export {
   newPlaces,
   deletePlaces,
   deleteUser,
+
 };

@@ -23,7 +23,7 @@ export const updatePlaces = functions.https.onRequest(
 
     try {
       await admin.firestore().doc(`viagens/${passeiosID}`).set(passeios);
-      response.send("ok");
+      response.send("Passeio Atualizado com Sucesso");
     } catch (e) {
       response.send(e);
     }

@@ -505,6 +505,15 @@ section {
   overflow-x: hidden;
 }
 
+#settings-account-container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.settings-account-item {
+  margin-bottom: 20px;
+}
+
 #settings-account {
   display: flex;
   align-items: center;
@@ -516,8 +525,6 @@ section {
   overscroll-behavior-y: contain;
   border: 0.5px solid #D9D9D9;
   border-radius: 5px;
-  margin-top: 50px;
-  margin-bottom: 50px;
 }
 
 #settings-account-picture {

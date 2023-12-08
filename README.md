@@ -9,6 +9,8 @@
 ## To-Do
 - Implementar get de imagens em viagem.html;
 - Implementar bloqueios de edição de viagens e passeios;
+- Night Mode interativo do user
+- Erros de user retornando
 
 
 ## Done

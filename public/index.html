@@ -172,13 +172,37 @@
       <div class="settings-box" id="settings-box" style="display: none">
         <i id="settings-back" class="iconify back" data-icon="ion:arrow-back"></i>
         <h4 id="settings-title">Ajustes</h4>
-        <div id="settings-account">
-          <div id="settings-account-picture"></div>
-          <div id="settings-account-text">
-            <div id="settings-account-name"></div>
-            <div id="settings-account-email"></div>
+        <div id="#settings-account-container">
+          <div id="settings-account" class="settings-account-item">
+            <div id="settings-account-picture"></div>
+            <div id="settings-account-text">
+              <div id="settings-account-name"></div>
+              <div id="settings-account-email"></div>
+            </div>
+          </div>
+  
+          <div class="settings-account-item">
+            <fieldset class="nice-form-group">
+              <legend>Visualização</legend>
+    
+              <div class="nice-form-group">
+                <input type="radio" name="visibilidade" id="visibilidade-dinamico">
+                <label for="visibilidade-dinamico">Dinâmico</label>
+              </div>
+    
+              <div class="nice-form-group">
+                <input type="radio" name="visibilidade" id="visibilidade-claro">
+                <label for="visibilidade-claro">Modo Claro</label>
+              </div>
+    
+              <div class="nice-form-group">
+                <input type="radio" name="visibilidade" id="visibilidade-escuro">
+                <label for="visibilidade-escuro">Modo Escuro</label>
+              </div>
+            </fieldset>
           </div>
         </div>
+
         <button id="settings-delete-account" class="btn btn-purple" type="button">Apagar Conta</button>
 
       </div>
