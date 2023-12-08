@@ -78,3 +78,42 @@ function _codifyText(inputString) {
   let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, '');
   return validFolderName;
 }
+
+function _getChildIDs(parentId) {
+  var parentElement = document.getElementById(parentId);
+
+  if (parentElement) {
+    var childElements = parentElement.children;
+    var idsArray = [];
+
+    for (var i = 0; i < childElements.length; i++) {
+      var elementId = childElements[i].id;
+      if (elementId) {
+        idsArray.push(elementId);
+      }
+    }
+    return idsArray;
+  } else {
+    console.error("Element with id '" + parentId + "' not found");
+    return null;
+  }
+}
+
+function _removeEmptyValuesFromEndArray(arr) {
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] === "") {
+      arr.pop();
+    } else {
+      break;
+    }
+  }
+  return arr;
+}
+
+function _returnEmptyIfNoValue(value) {
+  if (value) {
+    return value;
+  } else {
+    return "";
+  }
+}

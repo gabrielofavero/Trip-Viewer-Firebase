@@ -7,6 +7,7 @@ var PROGRAMACAO = {};
 // Passeio Existente
 function _loadPlacesData(FIRESTORE_PLACES_DATA) {
   try {
+    _loadDadosBasicosData(FIRESTORE_PLACES_DATA);
     _loadRestaurantesData(FIRESTORE_PLACES_DATA);
     _loadLanchesData(FIRESTORE_PLACES_DATA);
     _loadSaidasData(FIRESTORE_PLACES_DATA);
@@ -22,16 +23,6 @@ function _loadPlacesData(FIRESTORE_PLACES_DATA) {
 
 
 }
-
-// Novo Passeio
-function _loadDadosBasicosNewPlaces() {
-  const inicio = document.getElementById('inicio');
-  const fim = document.getElementById('fim');
-
-  inicio.value = TODAY;
-  fim.value = TOMORROW;
-}
-
 
 // Adicionar
 function _addRestaurante() {
@@ -52,9 +43,22 @@ function _addRestaurante() {
     <div id="collapse-restaurantes-${i}" class="accordion-collapse collapse"
       aria-labelledby="heading-restaurantes-${i}" data-bs-parent="#restaurantes-box">
       <div class="accordion-body">
+
+        <div class="nice-form-group">
+          <input type="checkbox" id="restaurantes-novo-${i}" class="switch" />
+          <label for="restaurantes-novo-${i}">
+            Novo
+          </label>
+        </div>
+
         <div class="nice-form-group">
           <label>Nome</label>
           <input required id="restaurantes-nome-${i}" type="text" placeholder="Salumeria Central" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <input required id="restaurantes-emoji-${i}" type="text" placeholder="🥩" />
         </div>
 
         <div class="nice-form-group">
@@ -136,9 +140,22 @@ function _addLanche() {
     <div id="collapse-lanches-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lanches-${i}"
       data-bs-parent="#lanches-box">
       <div class="accordion-body">
+
+      <div class="nice-form-group">
+        <input type="checkbox" id="lanches-novo-${i}" class="switch" />
+        <label for="lanches-novo-${i}">
+          Novo
+        </label>
+      </div>
+
         <div class="nice-form-group">
           <label>Nome</label>
           <input required id="lanches-nome-${i}" type="text" placeholder="BotaniKafé" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <input required id="lanches-emoji-${i}" type="text" placeholder="🥢" />
         </div>
 
         <div class="nice-form-group">
@@ -221,9 +238,22 @@ function _addSaida() {
     <div id="collapse-saidas-${i}" class="accordion-collapse collapse" aria-labelledby="heading-saidas-${i}"
       data-bs-parent="#saidas-box">
       <div class="accordion-body">
+
+      <div class="nice-form-group">
+        <input type="checkbox" id="saidas-novo-${i}" class="switch" />
+        <label for="saidas-novo-${i}">
+          Novo
+        </label>
+      </div>
+
         <div class="nice-form-group">
           <label>Nome</label>
           <input required id="saidas-nome-${i}" type="text" placeholder="Omalleys" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <input required id="saidas-emoji-${i}" type="text" placeholder="🍺" />
         </div>
 
         <div class="nice-form-group">
@@ -305,9 +335,22 @@ function _addTurismo() {
     <div id="collapse-turismo-${i}" class="accordion-collapse collapse" aria-labelledby="heading-turismo-${i}"
       data-bs-parent="#turismo-box">
       <div class="accordion-body">
+
+      <div class="nice-form-group">
+        <input type="checkbox" id="turismo-novo-${i}" class="switch" />
+        <label for="turismo-novo-${i}">
+          Novo
+        </label>
+      </div>
+
         <div class="nice-form-group">
           <label>Nome</label>
           <input required id="turismo-nome-${i}" type="text" placeholder="Las Vegas Sign" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <input required id="turismo-emoji-${i}" type="text" placeholder="🎰" />
         </div>
 
         <div class="nice-form-group">
@@ -390,9 +433,22 @@ function _addLoja() {
     <div id="collapse-lojas-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lojas-${i}"
       data-bs-parent="#lojas-box">
       <div class="accordion-body">
+
+      <div class="nice-form-group">
+        <input type="checkbox" id="lojas-novo-${i}" class="switch" />
+        <label for="lojas-novo-${i}">
+          Novo
+        </label>
+      </div>
+
         <div class="nice-form-group">
           <label>Nome</label>
           <input required id="lojas-nome-${i}" type="text" placeholder="Las Vegas North Premium Outlets" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <input required id="lojas-emoji-${i}" type="text" placeholder="🛍️" />
         </div>
 
         <div class="nice-form-group">
@@ -518,15 +574,8 @@ function _addLineup() {
         </div>
 
         <div class="nice-form-group">
-        <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
-          <select id="lineup-nota-${i}">
-            <option value="?">Desconhecido</option>
-            <option value="!">100%</option>
-            <option value="1">75%</option>
-            <option value="2">50%</option>
-            <option value="3">25%</option>
-            <option value="4">0%</option>
-          </select>
+          <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <input required id="lineup-nota-${i}" type="text" placeholder="100%" />
         </div>
 
       </div>
@@ -558,6 +607,11 @@ function _deleteType(tipo) {
 }
 
 // Módulos: Passeio Existente
+function _loadDadosBasicosData(FIRESTORE_PLACES_DATA) {
+  document.getElementById('titulo').value = FIRESTORE_PLACES_DATA.titulo;
+  document.getElementById('moeda').value = FIRESTORE_PLACES_DATA.moeda;
+}
+
 function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
   if (FIRESTORE_PLACES_DATA.modulos.restaurantes === true) {
     document.getElementById('habilitado-restaurantes').checked = true;
@@ -570,10 +624,20 @@ function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
         const j = i - 1;
         _addRestaurante();
 
+        const novo = FIRESTORE_PLACES_DATA.restaurantes.novo;
+        if (novo && novo[j] && novo[j] === '✔'){
+          document.getElementById(`restaurantes-novo-${i}`).checked = true;
+        }
+
         const nome = FIRESTORE_PLACES_DATA.restaurantes.nome;
         if (nome && nome[j]){
           document.getElementById(`restaurantes-nome-${i}`).value = nome[j];
           document.getElementById(`restaurantes-title-${i}`).innerText = nome[j];
+        }
+
+        const emoji = FIRESTORE_PLACES_DATA.restaurantes.emoji;
+        if (emoji && emoji[j]){
+          document.getElementById(`restaurantes-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.restaurantes.descricao;
@@ -622,10 +686,20 @@ function _loadLanchesData(FIRESTORE_PLACES_DATA) {
         const j = i - 1;
         _addLanche();
 
+        const novo = FIRESTORE_PLACES_DATA.lanches.novo;
+        if (novo && novo[j] && novo[j] === '✔'){
+          document.getElementById(`lanches-novo-${i}`).checked = true;
+        }
+
         const nome = FIRESTORE_PLACES_DATA.lanches.nome;
         if (nome && nome[j]){
           document.getElementById(`lanches-nome-${i}`).value = nome[j];
           document.getElementById(`lanches-title-${i}`).innerText = nome[j];
+        }
+
+        const emoji = FIRESTORE_PLACES_DATA.lanches.emoji;
+        if (emoji && emoji[j]){
+          document.getElementById(`lanches-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lanches.descricao;
@@ -674,10 +748,20 @@ function _loadSaidasData(FIRESTORE_PLACES_DATA) {
         const j = i - 1;
         _addSaida();
 
+        const novo = FIRESTORE_PLACES_DATA.saidas.novo;
+        if (novo && novo[j] && novo[j] === '✔'){
+          document.getElementById(`saidas-novo-${i}`).checked = true;
+        }
+
         const nome = FIRESTORE_PLACES_DATA.saidas.nome;
         if (nome && nome[j]){
           document.getElementById(`saidas-nome-${i}`).value = nome[j];
           document.getElementById(`saidas-title-${i}`).innerText = nome[j];
+        }
+
+        const emoji = FIRESTORE_PLACES_DATA.saidas.emoji;
+        if (emoji && emoji[j]){
+          document.getElementById(`saidas-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.saidas.descricao;
@@ -726,10 +810,20 @@ function _loadTurismoData(FIRESTORE_PLACES_DATA) {
         const j = i - 1;
         _addTurismo();
 
+        const novo = FIRESTORE_PLACES_DATA.turismo.novo;
+        if (novo && novo[j] && novo[j] === '✔'){
+          document.getElementById(`turismo-novo-${i}`).checked = true;
+        }
+
         const nome = FIRESTORE_PLACES_DATA.turismo.nome;
         if (nome && nome[j]){
           document.getElementById(`turismo-nome-${i}`).value = nome[j];
           document.getElementById(`turismo-title-${i}`).innerText = nome[j];
+        }
+
+        const emoji = FIRESTORE_PLACES_DATA.turismo.emoji;
+        if (emoji && emoji[j]){
+          document.getElementById(`turismo-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.turismo.descricao;
@@ -778,10 +872,20 @@ function _loadLojasData(FIRESTORE_PLACES_DATA) {
         const j = i - 1;
         _addLoja();
 
+        const novo = FIRESTORE_PLACES_DATA.lojas.novo;
+        if (novo && novo[j] && novo[j] === '✔'){
+          document.getElementById(`lojas-novo-${i}`).checked = true;
+        }
+
         const nome = FIRESTORE_PLACES_DATA.lojas.nome;
         if (nome && nome[j]){
           document.getElementById(`lojas-nome-${i}`).value = nome[j];
           document.getElementById(`lojas-title-${i}`).innerText = nome[j];
+        }
+
+        const emoji = FIRESTORE_PLACES_DATA.lojas.emoji;
+        if (emoji && emoji[j]){
+          document.getElementById(`lojas-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lojas.descricao;

@@ -84,12 +84,13 @@ interface Horario {
 }
 
 export interface Passeios {
-  lanches: Passeio[];
-  lojas: Passeio[];
-  restaurantes: Passeio[];
-  saidas: Passeio[];
-  turismo: Passeio[];
+  lanches: Passeio;
+  lojas: Passeio;
+  restaurantes: Passeio;
+  saidas: Passeio;
+  turismo: Passeio;
   titulo: string;
+  moeda: string;
   myMaps: string;
   modulos: {
     lanches: boolean;
@@ -109,15 +110,11 @@ interface Passeio {
   nome: string[];
   nota: string[];
   novo: string[];
-  plan: string[];
   regiao: string[];
-  site: string[];
   valor: string[];
-  video: string[];
 }
 
 interface Hyperlink {
-  insta: string[];
   name: string[];
   video: string[];
 }

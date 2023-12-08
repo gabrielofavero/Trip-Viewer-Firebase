@@ -23,7 +23,6 @@ function _loadP() {
   const PALCO = "palco";
   const WEED = "weed";
   const EMOJI = "emoji";
-  const PLAN = "plan.";
   const NOVO = "novo";
   const VIDEO = "video";
 
@@ -66,9 +65,7 @@ function _loadP() {
     let P_PALCO = PLACE[PALCO];
     let P_WEED = PLACE[WEED];
     let P_EMOJI = PLACE[EMOJI];
-    let P_PLAN = PLACE[PLAN];
     let P_NOVO = PLACE[NOVO];
-    let P_VIDEO = PLACE[VIDEO];
 
     let novoExists = _newExists(P_NOVO);
 
@@ -84,7 +81,6 @@ function _loadP() {
       let valor = P_VALOR ? _getCost(P_VALOR[i], MOEDA_OBJ) : "";
       let nameHyperlink = _getHyperlinkItem(P_HYPERLINK, i, "name");
       let mediaHyperlink = _getHyperlinkItem(P_HYPERLINK, i, "video");
-      let videoText = P_VIDEO ? _AdaptNulls(P_VIDEO[i]) : "";
       let descricao = P_DESCRICAO ? _AdaptNulls(P_DESCRICAO[i]) : "";
       let visitado = _replace(P_VISITADO, i, "✓");
       let duo = _replace(P_DUO, i, "Aceita Duo Gourmet");
@@ -95,18 +91,17 @@ function _loadP() {
       let head = _replace(P_HEAD, i, "⭐");
       let weed = _replace(P_WEED, i, "🌿");
       let emoji = P_EMOJI ? _AdaptNulls(P_EMOJI[i]) : "";
-      let plan = _replace(P_PLAN, i, "Planejado");
 
       let nameEmojis = emoji + visitado + veg + weed + head;
-      let detalhes = _getDetails([regiao, horario, palco, duo, plan]);
+      let detalhes = _getDetails([regiao, horario, palco, duo]);
 
       if (novoExists) {
         let novo = _replace(P_NOVO, i, "Novo!");
         nota = novo ? novo : "";
       }
 
-      if (videoText) {
-        mediaHyperlink = _getVideoEmbed(videoText, mediaHyperlink, name);
+      if (mediaHyperlink) {
+        mediaHyperlink = _getVideoEmbed(mediaHyperlink, name);
       }
 
       if (nameHyperlink) {
@@ -294,16 +289,14 @@ function _getHyperlinkItem(hyperlinkArray, index, item) {
   return result;
 }
 
-function _getVideoEmbed(videoText, videoLink, name) {
+function _getVideoEmbed(videoLink, name) {
   let result = "";
-  if (videoText) {
-    if (videoText.toLowerCase() == "youtube" || videoLink.includes("youtu.be/") || videoLink.includes("youtube.com")) {
-      result = _getVideoEmbedYoutube(videoLink);
-    } else if (videoText.toLowerCase() == "tiktok" || videoLink.includes("tiktok")) {
-      result = _getVideoEmbedTikTok(videoLink, name);
-    } else if (videoLink) {
-      result = _getGenericLink(videoText, videoLink);
-    }
+  if (videoLink.includes("youtu.be/") || videoLink.includes("youtube.com")) {
+    result = _getVideoEmbedYoutube(videoLink);
+  } else if (videoLink.includes("tiktok")) {
+    result = _getVideoEmbedTikTok(videoLink, name);
+  } else if (videoLink) {
+    result = _getGenericLink(videoLink);
   }
   return result;
 }
@@ -350,8 +343,23 @@ function _getIframe(url, iframeClass = "") {
   } else return "";
 }
 
-function _getGenericLink(videoText, videoLink) {
-  return `<a href="${videoLink}">${videoText}</a>`;
+function _getGenericLink(videoLink) {
+  return `<a href="${videoLink}">${_extractDomain(videoLink)}</a>`;
+}
+
+function _extractDomain(url) {
+  var domain;
+  if (url.indexOf("://") > -1) {
+    domain = url.split('/')[2];
+  } else {
+    domain = url.split('/')[0];
+  }
+
+  domain = domain.split(':')[0];
+  domain = domain.replace("www.", "");
+  domain = domain.split('.')[0];
+
+  return _firstCharToUpperCase(domain);
 }
 
 function _getNameHyperlinkHTML(name, hyperlink) {

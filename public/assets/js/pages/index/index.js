@@ -228,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     _loadUserIndex();
 
-    _stopLoadingScreen();
     $('body').css('overflow', 'auto');
 
   } catch (error) {
@@ -328,9 +327,11 @@ async function _loadUserIndex() {
       }
     });
   } catch (error) {
+    _stopLoadingScreen();
     _displayErrorMessage(error);
     throw error;
   }
+  _stopLoadingScreen();
 }
 
 function _loadTripListHTML(tripList) {
