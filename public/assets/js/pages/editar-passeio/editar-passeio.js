@@ -285,9 +285,15 @@ function _loadEventListeners() {
     _addLineup();
   });
   document.getElementById('salvar').addEventListener('click', () => {
-    alert('teste');
+    _setPasseio();
+  });
+  document.getElementById('voltar').addEventListener('click', () => {
+    _closeModal();
   });
   document.getElementById('cancelar').addEventListener('click', () => {
+    _closeModal();
+  });
+  document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
 }
@@ -300,4 +306,3 @@ async function _loadPlaces() {
   _loadPlacesData(FIRESTORE_PLACES_DATA);
   _stopLoadingScreen();
 }
-

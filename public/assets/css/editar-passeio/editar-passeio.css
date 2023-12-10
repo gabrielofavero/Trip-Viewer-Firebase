@@ -1457,8 +1457,14 @@ details summary::-webkit-details-marker {
   color: #A6A6A6;
 }
 
-.button-box {
+.button-box, .button-box-right {
   text-align: right;
+}
+
+@media (max-width: 480px) {
+  .button-box {
+    text-align: center;
+  }
 }
 
 .button-box-formatted {
@@ -1586,6 +1592,7 @@ details summary::-webkit-details-marker {
 }
 
 .modal-text {
+  margin-bottom: 20px;
   padding: 5px;
   height: auto;
   overflow: auto;
@@ -1594,9 +1601,5 @@ details summary::-webkit-details-marker {
 @media (max-width: 600px) {
   .modal-content {
     width: 90%;
-  }
-
-  .modal-text {
-    margin-bottom: 20px;
   }
 }

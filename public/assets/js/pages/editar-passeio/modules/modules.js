@@ -58,7 +58,7 @@ function _addRestaurante() {
 
         <div class="nice-form-group">
           <label>Emoji <span class="opcional"> (Opcional)</span></label>
-          <input required id="restaurantes-emoji-${i}" type="text" placeholder="🥩" />
+          <input id="restaurantes-emoji-${i}" type="text" placeholder="🥩" />
         </div>
 
         <div class="nice-form-group">
@@ -155,7 +155,7 @@ function _addLanche() {
 
         <div class="nice-form-group">
           <label>Emoji <span class="opcional"> (Opcional)</span></label>
-          <input required id="lanches-emoji-${i}" type="text" placeholder="🥢" />
+          <input id="lanches-emoji-${i}" type="text" placeholder="🥢" />
         </div>
 
         <div class="nice-form-group">
@@ -253,7 +253,7 @@ function _addSaida() {
 
         <div class="nice-form-group">
           <label>Emoji <span class="opcional"> (Opcional)</span></label>
-          <input required id="saidas-emoji-${i}" type="text" placeholder="🍺" />
+          <input id="saidas-emoji-${i}" type="text" placeholder="🍺" />
         </div>
 
         <div class="nice-form-group">
@@ -350,7 +350,7 @@ function _addTurismo() {
 
         <div class="nice-form-group">
           <label>Emoji <span class="opcional"> (Opcional)</span></label>
-          <input required id="turismo-emoji-${i}" type="text" placeholder="🎰" />
+          <input id="turismo-emoji-${i}" type="text" placeholder="🎰" />
         </div>
 
         <div class="nice-form-group">
@@ -448,7 +448,7 @@ function _addLoja() {
 
         <div class="nice-form-group">
           <label>Emoji <span class="opcional"> (Opcional)</span></label>
-          <input required id="lojas-emoji-${i}" type="text" placeholder="🛍️" />
+          <input id="lojas-emoji-${i}" type="text" placeholder="🛍️" />
         </div>
 
         <div class="nice-form-group">

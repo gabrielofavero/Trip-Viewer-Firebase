@@ -266,9 +266,6 @@ function _loadEventListeners() {
   document.getElementById('passeios-adicionar').addEventListener('click', () => {
     _addPasseios();
   });
-  document.getElementById('salvar').addEventListener('click', () => {
-    alert('teste');
-  });
   document.getElementById('cancelar').addEventListener('click', () => {
     window.location.href = `index.html`;
   });

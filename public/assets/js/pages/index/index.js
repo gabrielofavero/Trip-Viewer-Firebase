@@ -278,7 +278,7 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('settings-delete-account').addEventListener('click', function () {
-    _openModal('deleteAccountModal');
+    _openDeleteModal('conta')
   });
 
   document.getElementById('trip-view-continue').addEventListener('click', function () {
@@ -307,21 +307,9 @@ async function _loadUserIndex() {
         document.getElementById('settings-account-picture').style.backgroundImage = 'url(' + photoURL + ')';;
         document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
 
-        tripList = await _getTripList();
-        localStorage.setItem('tripList', JSON.stringify(tripList));
+        _loadUserTripList();
+        _loadUserPlacesList();
 
-        if (tripList && tripList.length > 0) {
-          document.getElementById('no-trips').style.display = 'none';
-          _loadTripListHTML(tripList);
-        }
-
-        placesList = await _getPlacesList();
-        localStorage.setItem('placesList', JSON.stringify(placesList));
-
-        if (placesList && placesList.length > 0) {
-          document.getElementById('no-places').style.display = 'none';
-          _loadPlacesListHTML(placesList);
-        }
       } else {
         _unloadUserIndexVisibility();
       }
@@ -332,6 +320,26 @@ async function _loadUserIndex() {
     throw error;
   }
   _stopLoadingScreen();
+}
+
+async function _loadUserTripList() {
+  tripList = await _getTripList();
+  localStorage.setItem('tripList', JSON.stringify(tripList));
+
+  if (tripList && tripList.length > 0) {
+    document.getElementById('no-trips').style.display = 'none';
+    _loadTripListHTML(tripList);
+  }
+}
+
+async function _loadUserPlacesList() {
+  placesList = await _getPlacesList();
+  localStorage.setItem('placesList', JSON.stringify(placesList));
+
+  if (placesList && placesList.length > 0) {
+    document.getElementById('no-places').style.display = 'none';
+    _loadPlacesListHTML(placesList);
+  }
 }
 
 function _loadTripListHTML(tripList) {
@@ -357,10 +365,11 @@ function _loadTripListHTML(tripList) {
         <div class="trip-data-item-date" id="trip-data-item-date-${index}">${inicio} - ${fim}</div>
       </div>
       <div class="trip-data-icons" id="trip-data-icons-${index}">
-        <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="trip-data-icon-edit-${index}" data-icon="tabler:edit"></i>
         <i class="iconify trip-data-icon" onclick="_viewTrip('${code}')" id="iconify trip-data-icon-view-${index}" data-icon="fluent:eye-16-regular"></i>
       </div>
-    </div>`
+    </div>`;
+
+    //         <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="trip-data-icon-edit-${index}" data-icon="tabler:edit"></i>
   }
 
   div.innerHTML = text;
@@ -382,6 +391,7 @@ function _loadPlacesListHTML(placesList) {
         <div class="trip-data-item-title" id="places-data-item-title-${index}">${titulo}</div>
       </div>
       <div class="trip-data-icons" id="places-data-icons-${index}">
+        <i class="iconify trip-data-icon" onclick="_openDeleteModal('passeio', '${code}')" id="places-data-icon-delete-${index}" data-icon="material-symbols:delete-outline"></i>
         <i class="iconify trip-data-icon" onclick="_editPlace('${code}')" id="places-data-icon-edit-${index}" data-icon="tabler:edit"></i>
       </div>
     </div>`

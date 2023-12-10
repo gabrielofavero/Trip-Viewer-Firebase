@@ -14,33 +14,27 @@ export const deletePlaces = functions.https.onRequest(
     const uid = await _getAuthUserUID(request, response);
 
     try {
-      const passeios = user.passeios;
+      let passeios = user.passeios;
+      let passeioDeleted = false;
 
       for (let i = 0; i < passeios.length; i++) {
         if (passeios[i].id === placesID) {
           const path = "passeios/" + placesID;
-
           await admin.firestore().doc(path).delete();
-
+          
           passeios.splice(i, 1);
-          await admin
-            .firestore()
-            .doc(`usuarios/${uid}`)
-            .update({ passeios: passeios });
 
-          const deletedContent = {
-            passeios: path,
-          };
-          response
-            .status(200)
-            .send(
-              `Passeio deletado com sucesso: ${JSON.stringify(deletedContent)}`
-            );
-          return;
+          await admin.firestore().doc(`usuarios/${uid}`).update({ passeios: passeios });
+          passeioDeleted = true;
+          break;
         }
       }
 
-      response.status(404).send(`Passeio ${placesID} não encontrado`);
+      if (passeioDeleted) {
+        response.status(200).send(`Passeio deletado com sucesso`);
+      } else {
+        response.status(404).send(`Passeio ${placesID} não encontrado`);
+      }
     } catch (e) {
       response.status(500).send(`Erro ao deletar passeio ${placesID}: ${e}`);
     }

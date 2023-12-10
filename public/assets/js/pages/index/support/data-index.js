@@ -99,3 +99,93 @@ async function _getVisibility() {
     }
 }
 
+async function _deleteTrip(id) {
+    _startLoadinScreen();
+    alert('Função desabilitada temporariamente para evitar risco de perda de dados de teste')
+    // const user = await _getUser();
+    // if (user) {
+    //     const host = window.location.hostname;
+    //     try {
+    //         const token = await _getFirebaseIdToken();
+    //         const url = host === "localhost"
+    //             ? `http://localhost:5001/trip-viewer-tcc/us-central1/deleteTrip?token=${token}&tripID=${id}`
+    //             : `https://us-central1-trip-viewer-tcc.cloudfunctions.net/deleteTrip?token=${token}&tripID=${id}`;
+
+    //         const response = await fetch(url);
+
+    //         if (!response.ok) {
+    //             throw new Error(`Fetch request failed with status: ${response.status}`);
+    //         }
+    //         const data = await response.text();
+    //         console.log(data);
+    //         window.location.href = `index.html`;
+    //     } catch (error) {
+    //         _logger(ERROR, error);
+    //     }
+    // } else {
+    //     _logger(ERROR, "Usuário não logado");
+    // }
+    _stopLoadingScreen();
+}
+
+async function _deletePlace(id) {
+    _startLoadinScreen();
+    alert('Função desabilitada temporariamente para evitar risco de perda de dados de teste')
+    // const user = await _getUser();
+    // if (user) {
+    //     const host = window.location.hostname;
+    //     try {
+    //         const token = await _getFirebaseIdToken();
+    //         const url = host === "localhost"
+    //             ? `http://localhost:5001/trip-viewer-tcc/us-central1/deletePlaces?token=${token}&placesID=${id}`
+    //             : `https://us-central1-trip-viewer-tcc.cloudfunctions.net/deletePlaces?token=${token}&placesID=${id}`;
+
+    //         const response = await fetch(url);
+
+    //         if (!response.ok) {
+    //             throw new Error(`Fetch request failed with status: ${response.status}`);
+    //         }
+    //         const data = await response.text();
+    //         console.log(data);
+    //         window.location.href = `index.html`;
+    //     } catch (error) {
+    //         _logger(ERROR, error);
+    //     }
+    // } else {
+    //     _logger(ERROR, "Usuário não logado");
+    // }
+    _stopLoadingScreen();
+}
+
+async function _deleteAccount() {
+    _startLoadinScreen();
+    alert('Função desabilitada temporariamente para evitar risco de perda de dados de teste')
+
+    // const user = await _getUser();
+    // if (user) {
+    //     const host = window.location.hostname;
+    //     try {
+    //         const token = await _getFirebaseIdToken();
+    //         const url = host === "localhost"
+    //             ? `http://localhost:5001/trip-viewer-tcc/us-central1/deleteUser?token=${token}`
+    //             : `https://us-central1-trip-viewer-tcc.cloudfunctions.net/deleteUser?token=${token}`;
+
+    //         const response = await fetch(url);
+
+    //         if (!response.ok) {
+    //             throw new Error(`Fetch request failed with status: ${response.status}`);
+    //         }
+    //         const data = await response.text();
+    //         console.log(data);
+    //         _signOut();
+    //         window.location.href = `index.html`;
+    //     } catch (error) {
+    //         _logger(ERROR, error);
+    //     }
+    // } else {
+    //     _logger(ERROR, "Usuário não logado");
+    // }
+
+    _closeModal();
+    _stopLoadingScreen();
+  }

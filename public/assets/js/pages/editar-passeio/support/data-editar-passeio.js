@@ -22,8 +22,14 @@ async function _getSinglePlaces() {
     }
 }
 
-async function _updatePlaces(places) {
+async function _updatePlaces(places, placesID) {
     const user = await _getUser();
+    const body = {
+        passeios: {
+            id: placesID,
+            data: places
+        }
+    }
 
     if (user) {
         try {
@@ -39,10 +45,10 @@ async function _updatePlaces(places) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(places),
+                body: JSON.stringify(body),
             });
 
-            if (response.ok) {
+            if (response) {
                 return response.text();
             }
         } catch (error) {
@@ -54,6 +60,11 @@ async function _updatePlaces(places) {
 
 async function _newPlaces(places) {
     const user = await _getUser();
+    const body = {
+        passeios: {
+            data: places
+        }
+    }
 
     if (user) {
         try {
@@ -69,10 +80,10 @@ async function _newPlaces(places) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(places),
+                body: JSON.stringify(body),
             });
 
-            if (response.ok) {
+            if (response) {
                 return response.text();
             }
         } catch (error) {

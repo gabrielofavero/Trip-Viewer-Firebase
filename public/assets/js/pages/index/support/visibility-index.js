@@ -134,8 +134,26 @@ function _loadMyPlacesVisibility() {
   document.getElementById('settings-box').style.display = 'none';
 }
 
-function _deleteAccount() {
-  alert('Função desabilitada temporáriamente para evitar o risco de perder os dados de teste');
-  // _deleteAccount();
-  _closeModal('deleteAccountModal');
+function _openDeleteModal(type, param){
+  switch (type) {
+    case 'conta':
+      document.getElementById('modal-text-title').innerText = "Apagar Conta";
+      document.getElementById('apagar').onclick = function() {
+        _deleteAccount();
+      };
+      break;
+    case 'viagem':
+      document.getElementById('modal-text-title').innerText = "Apagar Viagem";
+      document.getElementById('apagar').onclick = function() {
+        _deleteTrip(param);
+      };
+      break;
+    case 'passeio':
+        document.getElementById('modal-text-title').innerText = "Apagar Passeio";
+        document.getElementById('apagar').onclick = function() {
+          _deletePlace(param);
+        };
+        break; 
+  }
+  _openModal();
 }
