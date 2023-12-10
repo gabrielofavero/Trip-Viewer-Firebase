@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     placesID = urlParams.get('p');
 
-    _loadVisibilityIndex();    
+    _loadVisibilityIndex();
     _adjustButtonsPosition();
 
     _loadHabilitados();
@@ -254,6 +254,15 @@ function _loadHabilitados() {
   _loadEditModule('lojas');
   _loadEditModule('mapa');
   _loadEditModule('lineup');
+
+  const mapa = document.getElementById('habilitado-mapa');
+  mapa.addEventListener('change', function () {
+    if (mapa.checked) {
+      mapa.setAttribute('required', "");
+    } else {
+      mapa.removeAttribute('required');
+    }
+  });
 }
 
 function _loadEventListeners() {
@@ -275,7 +284,12 @@ function _loadEventListeners() {
   document.getElementById('lineup-adicionar').addEventListener('click', () => {
     _addLineup();
   });
-
+  document.getElementById('salvar').addEventListener('click', () => {
+    alert('teste');
+  });
+  document.getElementById('cancelar').addEventListener('click', () => {
+    window.location.href = `index.html`;
+  });
 }
 
 async function _loadPlaces() {
