@@ -20,6 +20,7 @@ body {
 }
 
 strong {
+  font-weight: bold;
   color: #3A3838;
 }
 
@@ -305,7 +306,6 @@ section,
 small,
 span,
 strike,
-strong,
 sub,
 summary,
 sup,
@@ -1110,7 +1110,7 @@ body {
   .demo-page .demo-page-navigation {
     display: none
   }
-    
+
   .demo-page {
     justify-content: center;
     align-items: center;
@@ -1229,11 +1229,6 @@ section h1.package-name {
   font-size: 2rem;
   margin-bottom: .75rem;
   margin-top: -.5rem
-}
-
-section strong {
-  font-weight: 500;
-  color: #000
 }
 
 section p {
@@ -1433,7 +1428,7 @@ details summary::-webkit-details-marker {
 
 .side-by-side {
   flex: 1;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .side-by-side-box-fixed {
@@ -1443,7 +1438,7 @@ details summary::-webkit-details-marker {
 
 .side-by-side-fixed {
   flex: 1;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .item-title {
@@ -1464,13 +1459,6 @@ details summary::-webkit-details-marker {
 
 .button-box {
   text-align: right;
-  background: #f1f1f1;
-}
-
-@media (max-width: 480px) {
-  .button-box {
-    text-align: center;
-  }
 }
 
 .button-box-formatted {
@@ -1486,7 +1474,7 @@ details summary::-webkit-details-marker {
   padding: 1.5em 2em
 }
 
-#double-button-section{
+#double-button-section {
   background: #f1f1f1;
 }
 
@@ -1504,7 +1492,9 @@ details summary::-webkit-details-marker {
   color: #fff;
 }
 
-.demo-page, .demo-page-navigation, #dark-mode {
+.demo-page,
+.demo-page-navigation,
+#dark-mode {
   color: #1f2937;
 }
 
@@ -1533,7 +1523,8 @@ details summary::-webkit-details-marker {
   color: #1f2937;
 }
 
-.accordion-button:focus, .purple:focus {
+.accordion-button:focus,
+.purple:focus {
   box-shadow: 0 0 0 0.3rem rgba(88, 89, 167, 0.25);
 }
 
@@ -1568,7 +1559,44 @@ details summary::-webkit-details-marker {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
-.deletar-box{
+.deletar-box {
   margin: 10px;
   text-align: right;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.modal-content {
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-text {
+  padding: 5px;
+  height: auto;
+  overflow: auto;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+  }
+
+  .modal-text {
+    margin-bottom: 20px;
+  }
 }

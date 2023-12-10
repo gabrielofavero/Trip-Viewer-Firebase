@@ -923,14 +923,19 @@ function _loadLojasData(FIRESTORE_PLACES_DATA) {
 }
 
 function _loadMapaData(FIRESTORE_PLACES_DATA) {
+  const mapaLink = document.getElementById('mapa-link');
+
   if (FIRESTORE_PLACES_DATA.modulos.mapa === true) {
     document.getElementById('habilitado-mapa').checked = true;
     document.getElementById('habilitado-mapa-content').style.display = 'block';
+    mapaLink.setAttribute('required', "");
 
     const mapa = FIRESTORE_PLACES_DATA.myMaps;
     if (mapa) {
-      document.getElementById('mapa-link').value = mapa;
+      mapaLink.value = mapa;
     }
+  } else {
+    mapaLink.removeAttribute('required');
   }
 }
 

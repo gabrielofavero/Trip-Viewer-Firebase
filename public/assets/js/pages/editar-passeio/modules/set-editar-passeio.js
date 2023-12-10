@@ -212,3 +212,17 @@ function _buildPasseioLineupObject() {
 
     return result;
 }
+
+async function _setPasseio() {
+    let message;
+    
+    const passeio = _buildPasseiosObject();
+
+    if (placesID && passeio) {
+        message = await _updatePlaces(passeio);
+    } else if (passeio) {
+        message = await _newPlaces(passeio)
+    }
+    document.getElementById('modal-inner-text').innerText = message;
+    _openModal('modal');
+}

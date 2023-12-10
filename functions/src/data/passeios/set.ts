@@ -4,7 +4,6 @@ import * as interfaces from "../main/interfaces";
 import { _getUser, _getAuthUserUID } from "../user/get";
 import { _isUserPlacesOwner } from "../user/check";
 
-// Atualiza uma viagem já existente
 export const updatePlaces = functions.https.onRequest(
   async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");

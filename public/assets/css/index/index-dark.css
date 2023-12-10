@@ -7,7 +7,8 @@
   src: url('../../fonts/Chelos\ Free.ttf') format('truetype');
 }
 
-body, html {
+body,
+html {
   overflow: hidden;
 }
 
@@ -44,7 +45,7 @@ h6 {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-#preloader{
+#preloader {
   position: fixed;
   top: 0;
   left: 0;
@@ -455,7 +456,8 @@ section {
   margin-right: 45px;
 }
 
-.index-buttons, .trip-data-icon{
+.index-buttons,
+.trip-data-icon {
   margin-right: 5px;
   margin-left: 5px;
   height: 30px;
@@ -476,7 +478,7 @@ section {
 }
 
 /* ---------- Login ---------- */
-.login-box{
+.login-box {
   margin-top: 45px;
   margin-bottom: 45px;
 }
@@ -493,12 +495,15 @@ section {
 }
 
 /* ---------- Minhas Viagens ---------- */
-.myTrips-box, .myPlaces-box, .logged-menu{
+.myTrips-box,
+.myPlaces-box,
+.logged-menu {
   margin-top: 30px;
   margin-bottom: 20px;
 }
 
-#myTrips-list, #myPlaces-list {
+#myTrips-list,
+#myPlaces-list {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -546,7 +551,7 @@ section {
   align-items: center;
 }
 
-#settings-account-text  {
+#settings-account-text {
   margin-left: 10px
 }
 
@@ -555,7 +560,8 @@ section {
   font-size: 18px;
 }
 
-#settings-account-name, #settings-account-email {
+#settings-account-name,
+#settings-account-email {
   text-align: left;
 }
 
@@ -576,12 +582,12 @@ section {
 .logged-menu-item {
   margin: 15px;
   cursor: pointer;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.myTrips-list-item-clickable{
+.myTrips-list-item-clickable {
   background: #515151;
   display: flex;
   cursor: pointer;
@@ -615,7 +621,8 @@ section {
   color: red;
 }
 
-#no-trips, #no-places {
+#no-trips,
+#no-places {
   display: flex;
   width: 100%;
   height: 60px;
@@ -625,7 +632,7 @@ section {
   margin-top: 15px;
 }
 
-.new { 
+.new {
   display: flex;
   cursor: pointer;
   width: 100%;
@@ -638,7 +645,12 @@ section {
   margin-bottom: 15px;
 }
 
-#add-trip:hover, .trip-data-icon:hover, .index-buttons:hover, .custom-nav-toggle:hover, .logged-menu-item:hover, .back:hover {
+#add-trip:hover,
+.trip-data-icon:hover,
+.index-buttons:hover,
+.custom-nav-toggle:hover,
+.logged-menu-item:hover,
+.back:hover {
   color: #c7c6c6;
 }
 
@@ -671,7 +683,8 @@ section {
   .content-box {
     top: 46%;
   }
-  .login-box{
+
+  .login-box {
     margin-top: 30px;
     margin-bottom: 30px;
   }
@@ -704,7 +717,7 @@ section {
   flex: 1 1 30%;
 }
 
-.trip-data-item{
+.trip-data-item {
   text-align: left;
 }
 
@@ -712,17 +725,17 @@ section {
   font-weight: bold;
 }
 
-.trip-data-item-date{
+.trip-data-item-date {
   font-size: 13px;
   color: #767676;
 }
 
-.trip-data-icon{
+.trip-data-icon {
   margin-right: 4px;
   margin-left: 4px;
 }
 
-.trip-data-icons{
+.trip-data-icons {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -757,7 +770,8 @@ section {
   .modal-content {
     width: 90%;
   }
-  .modal-text{
+
+  .modal-text {
     height: auto;
     margin-bottom: 20px;
   }
@@ -797,7 +811,8 @@ section {
   padding: 1.5em 2em
 }
 
-#cancelar, #apagar {
+#cancelar,
+#apagar {
   margin-left: 20px;
 }
 

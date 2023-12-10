@@ -278,7 +278,7 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('settings-delete-account').addEventListener('click', function () {
-    _confirmDelete();
+    _openModal('deleteAccountModal');
   });
 
   document.getElementById('trip-view-continue').addEventListener('click', function () {

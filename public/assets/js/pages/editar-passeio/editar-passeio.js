@@ -231,8 +231,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (placesID) {
       _loadPlaces()
-    } else {
-      _loadNewPlaces();
     }
 
     _loadEventListeners();
@@ -278,15 +276,6 @@ function _loadEventListeners() {
     _addLineup();
   });
 
-}
-
-function _loadNewPlaces() {
-  _addRestaurante();
-  _addLanche();
-  _addSaida();
-  _addTurismo();
-  _addLoja();
-  _addLineup();
 }
 
 async function _loadPlaces() {

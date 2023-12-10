@@ -134,18 +134,8 @@ function _loadMyPlacesVisibility() {
   document.getElementById('settings-box').style.display = 'none';
 }
 
-function _confirmDelete() {
-  var modal = document.getElementById('deleteAccountModal');
-  modal.style.display = 'block';
-}
-
-function _indexCloseModal() {
-  var modal = document.getElementById('deleteAccountModal');
-  modal.style.display = 'none';
-}
-
 function _deleteAccount() {
-  alert('Função desabilitada por hora!');
+  alert('Função desabilitada temporáriamente para evitar o risco de perder os dados de teste');
   // _deleteAccount();
-  _indexCloseModal;
+  _closeModal('deleteAccountModal');
 }

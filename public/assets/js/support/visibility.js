@@ -21,7 +21,7 @@ function _loadVisibility() {
           }
      } catch (e) {
           CUSTOM_COLORS = false;
-          localStorage.setItem("customColors", false); 
+          localStorage.setItem("customColors", false);
      }
 
      _saveLocalColors();
@@ -82,14 +82,14 @@ function _loadToggle() {
 function _loadDarkMode() {
      localStorage.setItem("darkMode", true);
      THEME_COLOR = ESCURO;
-     
+
      const name = _getHTMLpage();
      var link = document.createElement("link");
      link.href = `assets/css/${name}/${name}-dark.css`;
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
-     
+
      _loadToggle();
      _ChangeBarColorIOS("#303030");
 
@@ -103,14 +103,14 @@ function _loadDarkMode() {
 function _loadLightMode() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
-     
+
      const name = _getHTMLpage();
      var link = document.createElement("link");
      link.href = `assets/css/${name}/${name}.css`;
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
-     
+
      _loadToggle();
      _ChangeBarColorIOS("#fff");
 
@@ -134,9 +134,29 @@ function _loadLightModeLite() {
      }
 }
 
-// ======= GETTERS =======
+function _loadTripViewerLogo() {
+     try {
+          const header2 = document.getElementById("header2");
+          const logoLight = document.getElementById("logo-light");
+          const logoDark = document.getElementById("logo-dark");
+          if (_isOnDarkMode()) {
+               logoLight.style.display = "none";
+               logoDark.style.display = "block";
+               if (HEADER_IMG_ACTIVE) {
+                    header2.src = FIRESTORE_DATA.imagem.escuro;
+               }
+          } else {
+               logoLight.style.display = "block";
+               logoDark.style.display = "none";
+               if (HEADER_IMG_ACTIVE) {
+                    header2.src = FIRESTORE_DATA.imagem.claro;
+               }
+          }
+     } catch (e) { }
+}
 
-function _getLocalColors(){
+// ======= GETTERS =======
+function _getLocalColors() {
      try {
           return JSON.parse(localStorage.getItem("localColors"));
      } catch (e) {
@@ -144,9 +164,21 @@ function _getLocalColors(){
      }
 }
 
-// ======= SETTERS =======
+function _getEquivalentColorAndPosition(claro) {
+     const claroObj = CONFIG.cores.claro;
+     const escuroObj = CONFIG.cores.escuro;
 
-function _applyUserVisibility(){
+     for (let i = 0; i < claroObj.length; i++) {
+          if (claroObj[i] === claro) {
+               return { position: i, equivalent: escuroObj[i] };
+          }
+     }
+
+     return {};
+}
+
+// ======= SETTERS =======
+function _applyUserVisibility() {
      switch (localStorage.getItem("visibilidade")) {
           case "escuro":
                _loadDarkMode();
@@ -224,44 +256,10 @@ function _clearCustomColors() {
      }
 }
 
-function _getEquivalentColorAndPosition(claro) {
-     const claroObj = CONFIG.cores.claro;
-     const escuroObj = CONFIG.cores.escuro;
-
-     for (let i = 0; i < claroObj.length; i++) {
-          if (claroObj[i] === claro) {
-               return { position: i, equivalent: escuroObj[i] };
-          }
-     }
-
-     return {};
-}
-
 function _ChangeBarColorIOS(color) {
      // Useful for iOS devices     
      let metaThemeColor = document.querySelector("meta[name=theme-color]");
      metaThemeColor.setAttribute("content", color);
-}
-
-function _loadTripViewerLogo() {
-     try {
-          const header2 = document.getElementById("header2");
-          const logoLight = document.getElementById("logo-light");
-          const logoDark = document.getElementById("logo-dark");
-          if (_isOnDarkMode()) {
-               logoLight.style.display = "none";
-               logoDark.style.display = "block";
-               if (HEADER_IMG_ACTIVE) {
-                    header2.src = FIRESTORE_DATA.imagem.escuro;
-               }
-          } else {
-               logoLight.style.display = "block";
-               logoDark.style.display = "none";
-               if (HEADER_IMG_ACTIVE) {
-                    header2.src = FIRESTORE_DATA.imagem.claro;
-               }
-          }
-     } catch (e) { }
 }
 
 function _adjustButtonsPosition() {
@@ -306,4 +304,17 @@ function _isCustomColorsActive() {
      } else {
           return CUSTOM_COLORS
      }
+}
+
+// ======= Modal Functions =======
+function _openModal(modalID = 'modal') {
+     document.getElementById(modalID).style.display = 'block';
+}
+
+function _closeModal(modalID = 'modal') {
+     document.getElementById(modalID).style.display = 'none';
+}
+
+function _isModalOpen(modalID = 'modal') {
+     return document.getElementById(modalID).style.display === 'block';
 }
