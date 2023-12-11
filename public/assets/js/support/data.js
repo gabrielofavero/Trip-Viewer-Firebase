@@ -125,3 +125,11 @@ function _firestoreReferencetoPath(ref) {
     return "";
   }
 }
+
+function _firestoreReferencetoID(ref) {
+  if (ref && ref._path && ref._path.segments) {
+    return ref._path.segments[1];
+  } else {
+    return "";
+  }
+}

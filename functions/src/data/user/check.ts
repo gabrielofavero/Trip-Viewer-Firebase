@@ -6,9 +6,14 @@ export function _isUserTripOwner(
 ) {
   const viagens = usuario.viagens;
 
+  console.log('viagens: ' + viagens)
+  console.log('viagemID: ' + viagemID)
+
   for (let i = 0; i < viagens.length; i++) {
     const viagem = viagens[i];
-    if (viagem._path.segments[1] === viagemID) {
+    console.log('viagem: ' + viagens)
+    console.log('viagem._path.segments[1]: ' + viagem._path.segments[1])
+    if (viagem._path.segments[1] == viagemID) {
       return true;
     }
   }

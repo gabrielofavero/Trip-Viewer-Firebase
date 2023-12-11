@@ -70,6 +70,12 @@ function _loadHeader() {
     document.getElementById("comprovantesH").href = FIRESTORE_DATA.links.documents;
   }
 
+  if (FIRESTORE_DATA.imagem.background) {
+    var hero = document.getElementById('hero');
+    hero.style.background = 'url("' + FIRESTORE_DATA.imagem.background + '") top center no-repeat';
+    hero.style.backgroundSize = 'cover';
+  }
+
   if (FIRESTORE_DATA.imagem.ativo) {
     document.getElementById("header2").src = _isOnDarkMode() ? FIRESTORE_DATA.imagem.escuro : FIRESTORE_DATA.imagem.claro;
     document.getElementById("header1").style.display = "none";

@@ -1,6 +1,5 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import * as interfaces from "../main/interfaces";
 import { _getUser, _getAuthUserUID } from "../user/get";
 import { _isUserTripOwner, _isUserTripEditor } from "../user/check";
 
@@ -8,24 +7,32 @@ import { _isUserTripOwner, _isUserTripEditor } from "../user/check";
 export const updateTrip = functions.https.onRequest(
   async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
+    if (request.method === "OPTIONS") {
+      response.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      response.set("Access-Control-Allow-Headers", "Content-Type");
+      response.status(200).send();
+      return;
+    }
 
-    const viagemID = request.body.viagem.id as string;
-    const hospedagemID = request.body.hospedagem.id as string;
-    const programacoesIDs = request.body.programacao.id as string;
-    const transporteID = request.body.transporte.id as string;
+    const viagemPath = request.body.viagem.id as string;
+    const hospedagemPath = request.body.hospedagem.id as string;
+    const programacoesPath = request.body.programacao.id as string;
+    const transportePath = request.body.transporte.id as string;
 
-    if (!viagemID || !hospedagemID || !programacoesIDs || !transporteID) {
+    if (!viagemPath || !hospedagemPath || !programacoesPath || !transportePath) {
       response
         .status(400)
         .send(
-          "Não foram fornecidos todos os IDs necessários para atualizar a viagem"
+          "Não foram fornecidas todos as referências necessárias para atualizar a viagem"
         );
       return;
     }
 
+    const viagemID = viagemPath.split("/")[1];
+
     let viagem;
     try {
-      viagem = request.body.viagem.data as interfaces.Viagem;
+      viagem = request.body.viagem.data;
     } catch (e) {
       response.status(400).send("Não foi fornecido um objeto 'Viagem' válido");
       return;
@@ -33,7 +40,7 @@ export const updateTrip = functions.https.onRequest(
 
     let hospedagem;
     try {
-      hospedagem = request.body.hospedagem.data as interfaces.Hospedagem;
+      hospedagem = request.body.hospedagem.data;
     } catch (e) {
       response
         .status(400)
@@ -43,7 +50,7 @@ export const updateTrip = functions.https.onRequest(
 
     let programacao;
     try {
-      programacao = request.body.programacao.data as interfaces.Programacao;
+      programacao = request.body.programacao.data;
     } catch (e) {
       response
         .status(400)
@@ -53,7 +60,7 @@ export const updateTrip = functions.https.onRequest(
 
     let transporte;
     try {
-      transporte = request.body.transporte.data as interfaces.Transporte;
+      transporte = request.body.transporte.data;
     } catch (e) {
       response
         .status(400)
@@ -71,25 +78,34 @@ export const updateTrip = functions.https.onRequest(
       response
         .status(401)
         .send("Usuário não tem permissão para editar esta viagem");
+      return;
     }
 
     try {
-      await admin.firestore().doc(`viagens/${viagemID}`).set(viagem);
-      await admin
-        .firestore()
-        .doc(`hospedagens/${hospedagemID}`)
-        .set(hospedagem);
-      await admin
-        .firestore()
-        .doc(`programacoes/${programacoesIDs}`)
-        .set(programacao);
-      await admin
-        .firestore()
-        .doc(`transportes/${transporteID}`)
-        .set(transporte);
-      response.send("ok");
+      const viagemDoc = admin.firestore().doc(`viagens/${viagemID}`);
+      await viagemDoc.set(viagem);
+
+      const hospedagemDoc = admin.firestore().doc(hospedagemPath);
+      await hospedagemDoc.set(hospedagem);
+
+      const programacoesDoc = admin.firestore().doc(programacoesPath);
+      await programacoesDoc.set(programacao);
+
+      const transporteDoc = admin.firestore().doc(transportePath);
+      await transporteDoc.set(transporte);
+
+      const userDoc = admin.firestore().doc(`usuarios/${uid}`);
+
+      await viagemDoc.update({
+        hospedagensRef: hospedagemDoc,
+        programacoesRef: programacoesDoc,
+        transportesRef: transporteDoc,
+        'compartilhamento.dono': userDoc,
+      });
+
+      response.send("Viagem atualizada com sucesso");
     } catch (e) {
-      response.send(e);
+      response.status(500).send(e);
     }
   }
 );
