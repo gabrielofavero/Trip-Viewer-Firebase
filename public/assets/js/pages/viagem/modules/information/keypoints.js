@@ -1,8 +1,8 @@
 // ======= Keypoints JS =======
 
 function _loadKeypointsStandAlone() {
-    const inicioDate = _convertFirestoreDate(FIRESTORE_DATA.inicio);
-    const fimDate = _convertFirestoreDate(FIRESTORE_DATA.fim);
+    const inicioDate = _convertFromFirestoreDate(FIRESTORE_DATA.inicio);
+    const fimDate = _convertFromFirestoreDate(FIRESTORE_DATA.fim);
     const dias = Math.ceil((fimDate - inicioDate) / (1000 * 60 * 60 * 24));
 
     const inicio = `${inicioDate.getDate()}/${inicioDate.getMonth() + 1}`;

@@ -96,10 +96,16 @@ export const updateTrip = functions.https.onRequest(
 
 export const newTrip = functions.https.onRequest(async (request, response) => {
   response.set("Access-Control-Allow-Origin", "*");
+  if (request.method === "OPTIONS") {
+    response.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    response.set("Access-Control-Allow-Headers", "Content-Type");
+    response.status(200).send();
+    return;
+  }
 
   let viagem;
   try {
-    viagem = request.body.viagem.data as interfaces.Viagem;
+    viagem = request.body.viagem.data;
   } catch (e) {
     response.status(400).send("Não foi fornecido um objeto 'Viagem' válido");
     return;
@@ -107,7 +113,7 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
 
   let hospedagem;
   try {
-    hospedagem = request.body.hospedagem.data as interfaces.Hospedagem;
+    hospedagem = request.body.hospedagem.data;
   } catch (e) {
     response
       .status(400)
@@ -117,7 +123,7 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
 
   let programacao;
   try {
-    programacao = request.body.programacao.data as interfaces.Programacao;
+    programacao = request.body.programacao.data;
   } catch (e) {
     response
       .status(400)
@@ -127,7 +133,7 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
 
   let transporte;
   try {
-    transporte = request.body.transporte.data as interfaces.Transporte;
+    transporte = request.body.transporte.data;
   } catch (e) {
     response
       .status(400)
@@ -142,7 +148,7 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
   try {
     const viagemRef = await admin.firestore().collection("viagens").add(viagem);
     const viagemID = viagemRef.id;
-    const viagemPath = "viagens/" + viagemID;
+    const viagemPath = admin.firestore().doc("viagens/" + viagemID);
 
     hospedagem.viagem = viagemPath;
     const hospedagemRef = await admin
@@ -150,6 +156,7 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
       .collection("hospedagens")
       .add(hospedagem);
     const hospedagemID = hospedagemRef.id;
+    const hospedagemPath = admin.firestore().doc("hospedagens/" + hospedagemID);
 
     programacao.viagem = viagemPath;
     const programacaoRef = await admin
@@ -157,6 +164,7 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
       .collection("programacoes")
       .add(programacao);
     const programacaoID = programacaoRef.id;
+    const programacaoPath = admin.firestore().doc("programacoes/" + programacaoID);
 
     transporte.viagem = viagemPath;
     const transporteRef = await admin
@@ -164,20 +172,24 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
       .collection("transportes")
       .add(transporte);
     const transporteID = transporteRef.id;
+    const transportePath = admin.firestore().doc("transportes/" + transporteID);
 
-    await admin.firestore().doc(viagemPath).update({
-      hospedagensRef: hospedagemID,
-      programacoesRef: programacaoID,
-      transportesRef: transporteID,
+    const userPath = admin.firestore().doc(`usuarios/${uid}`);
+
+    await admin.firestore().doc('viagens/' + viagemID).update({
+      hospedagensRef: hospedagemPath,
+      programacoesRef: programacaoPath,
+      transportesRef: transportePath,
+      'compartilhamento.dono': userPath,
     });
 
     viagens.push(viagemPath);
 
-    await admin.firestore().doc(`users/${uid}`).update({
+    await admin.firestore().doc(`usuarios/${uid}`).update({
       viagens: viagens,
     });
 
-    response.send("ok");
+    response.send("Viagem criada com sucesso");
   } catch (e) {
     response.status(500).send(e);
   }

@@ -349,8 +349,8 @@ function _loadTripListHTML(tripList) {
   for (let i = 0; i < tripList.length; i++) {
     const index = i + 1;
 
-    const inicioDate = _convertFirestoreDate(tripList[i].inicio);
-    const fimDate = _convertFirestoreDate(tripList[i].fim);
+    const inicioDate = _convertFromFirestoreDate(tripList[i].inicio);
+    const fimDate = _convertFromFirestoreDate(tripList[i].fim);
 
     const inicio = _jsDateToDate(inicioDate);
     const fim = _jsDateToDate(fimDate);
@@ -365,11 +365,10 @@ function _loadTripListHTML(tripList) {
         <div class="trip-data-item-date" id="trip-data-item-date-${index}">${inicio} - ${fim}</div>
       </div>
       <div class="trip-data-icons" id="trip-data-icons-${index}">
+        <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="trip-data-icon-edit-${index}" data-icon="tabler:edit"></i>
         <i class="iconify trip-data-icon" onclick="_viewTrip('${code}')" id="iconify trip-data-icon-view-${index}" data-icon="fluent:eye-16-regular"></i>
       </div>
-    </div>`;
-
-    //         <i class="iconify trip-data-icon" onclick="_editTrip('${code}')" id="trip-data-icon-edit-${index}" data-icon="tabler:edit"></i>
+    </div>`
   }
 
   div.innerHTML = text;
@@ -391,10 +390,10 @@ function _loadPlacesListHTML(placesList) {
         <div class="trip-data-item-title" id="places-data-item-title-${index}">${titulo}</div>
       </div>
       <div class="trip-data-icons" id="places-data-icons-${index}">
-        <i class="iconify trip-data-icon" onclick="_openDeleteModal('passeio', '${code}')" id="places-data-icon-delete-${index}" data-icon="material-symbols:delete-outline"></i>
         <i class="iconify trip-data-icon" onclick="_editPlace('${code}')" id="places-data-icon-edit-${index}" data-icon="tabler:edit"></i>
       </div>
     </div>`
+    //         <i class="iconify trip-data-icon" onclick="_openDeleteModal('passeio', '${code}')" id="places-data-icon-delete-${index}" data-icon="material-symbols:delete-outline"></i>
   }
 
   div.innerHTML = text;

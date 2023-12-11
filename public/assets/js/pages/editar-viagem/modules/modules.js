@@ -461,8 +461,8 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
             document.getElementById(`volta-${i}`).checked = true;
         }
 
-        const partida = _convertFirestoreDate(FIRESTORE_DATA.transportes.datas[j].partida);
-        const chegada = _convertFirestoreDate(FIRESTORE_DATA.transportes.datas[j].chegada);
+        const partida = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].partida);
+        const chegada = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].chegada);
 
         if (partida) {
           document.getElementById(`partida-${i}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
@@ -549,8 +549,8 @@ function _loadHospedagemData(FIRESTORE_DATA) {
           document.getElementById(`hospedagem-endereco-${i}`).value = endereco;
         }
 
-        const dataCheckIn = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkin);
-        const dataCheckOut = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkout)
+        const dataCheckIn = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkin);
+        const dataCheckOut = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkout)
 
         if (dataCheckIn) {
           const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, 'yyyy-mm-dd');

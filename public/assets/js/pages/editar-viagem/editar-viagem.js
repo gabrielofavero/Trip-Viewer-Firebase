@@ -8,6 +8,7 @@
 
 var blockLoadingEnd = false;
 var tripID;
+var FIRESTORE_DATA;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -278,13 +279,22 @@ function _loadEventListeners() {
   document.getElementById('editores-adicionar').addEventListener('click', () => {
     _addEditores();
   });
+  document.getElementById('salvar').addEventListener('click', () => {
+    _setViagem();
+  });
+  document.getElementById('voltar').addEventListener('click', () => {
+    _closeModal();
+  });
+  document.getElementById('cancelar').addEventListener('click', () => {
+    _closeModal();
+  });
+  document.getElementById('home').addEventListener('click', () => {
+    window.location.href = `index.html`;
+  });
 }
 
 function _loadNewTrip() {
   _loadDadosBasicosNewTrip();
-  _addEditores();
-  _addTransporte();
-  _addHospedagem();
   _loadProgramacao();
   _loadPasseios();
 }
@@ -292,7 +302,7 @@ function _loadNewTrip() {
 async function _loadTrip() {
   blockLoadingEnd = true;
   _startLoadingScreen();
-  const FIRESTORE_DATA = await _getSingleTrip();
+  FIRESTORE_DATA = await _getSingleTrip();
   console.log(FIRESTORE_DATA);
   _loadTripData(FIRESTORE_DATA);
   _stopLoadingScreen();

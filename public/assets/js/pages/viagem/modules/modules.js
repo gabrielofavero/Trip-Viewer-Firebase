@@ -122,7 +122,11 @@ function _loadModules() {
   }
 
   // Places
-  _loadPlacesSelect();
-  _loadPlacesHTML(CIDADES[0].passeios);
-  CALL_SYNC.push(_loadPlaces);
+  if (FIRESTORE_DATA.modulos.passeios) {
+    _loadPlacesSelect();
+    _loadPlacesHTML(CIDADES[0].passeios);
+    CALL_SYNC.push(_loadPlaces);
+  } else {
+    document.getElementById('places').style.display = "none";
+  }
 }

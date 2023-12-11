@@ -12,7 +12,7 @@ function _loadScheduleCalendar() {
     let result = FIRESTORE_DATA.programacoes.programacao;
 
     for (let i = 0; i < result.length; i++) {
-        const date = _convertFirestoreDate(FIRESTORE_DATA.programacoes.programacao[i].data)
+        const date = _convertFromFirestoreDate(FIRESTORE_DATA.programacoes.programacao[i].data)
         result[i].titulo = _getCalendarTitle(date) + _dateToTitle(date);
     }
 
@@ -153,7 +153,7 @@ function _adaptModalCalendarInnerHTML(manha, tarde, noite) {
 function _getCalendarTitle(date) {
     const programacao = FIRESTORE_DATA.programacoes.programacao;
     for (let i = 0; i < programacao.length; i++) {
-        const currentDate = _convertFirestoreDate(programacao[i].data);
+        const currentDate = _convertFromFirestoreDate(programacao[i].data);
         if (currentDate.getDate() == date.getDate() && currentDate.getMonth() == date.getMonth() && currentDate.getFullYear() == date.getFullYear()) {
             const titulo = programacao[i].titulo;
             if (titulo.includes(":")) {

@@ -117,3 +117,11 @@ function _returnEmptyIfNoValue(value) {
     return "";
   }
 }
+
+function _firestoreReferencetoPath(ref) {
+  if (ref && ref._path && ref._path.segments) {
+    return ref._path.segments.join("/");
+  } else {
+    return "";
+  }
+}

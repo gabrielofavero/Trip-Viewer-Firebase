@@ -9,8 +9,8 @@ function _loadStayModule() {
       const title = FIRESTORE_DATA.hospedagens.hospedagem[i];
       const endereco = FIRESTORE_DATA.hospedagens.endereco[i];
 
-      const dataCheckIn = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkin);
-      const dataCheckOut = _convertFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkout)
+      const dataCheckIn = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkin);
+      const dataCheckOut = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkout)
 
       const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, "dd/mm/yyyy");
       const dataFormattedCheckOut = _jsDateToDate(dataCheckOut, "dd/mm/yyyy");

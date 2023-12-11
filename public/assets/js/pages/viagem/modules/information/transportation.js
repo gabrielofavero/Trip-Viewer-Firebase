@@ -127,8 +127,8 @@ function _getPeriodo(datas) {
   const inicio = datas.inicio;
   const fim = datas.fim;
   if (inicio && fim) {
-    let inicioDate = _convertFirestoreDate(inicio);
-    let fimDate = _convertFirestoreDate(fim);
+    let inicioDate = _convertFromFirestoreDate(inicio);
+    let fimDate = _convertFromFirestoreDate(fim);
 
     let inicioDia = inicioDate.getDate();
     let inicioMes = inicioDate.getMonth() + 1;

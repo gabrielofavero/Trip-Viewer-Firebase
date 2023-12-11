@@ -50,8 +50,17 @@ function _getDateNoTime(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
-function _convertFirestoreDate(timestamp) {
+function _convertFromFirestoreDate(timestamp) {
     return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
+}
+
+function _convertToFirestoreDate(date) {
+    const seconds = Math.floor(date.getTime() / 1000);
+    const nanoseconds = (date.getTime() % 1000) * 1000000;
+    return {
+        _seconds: seconds,
+        _nanoseconds: nanoseconds,
+    };
 }
 
 function _jsDateToDate(date, format = "dd/mm/yyyy") {
@@ -119,13 +128,23 @@ function _getArrayOfFormattedDates(formattedStart, formattedEnd, format='yyyy-mm
     return dates;
 }
 
-function _formattedDateToDate (formattedDate) {
+function _formattedDateToDate (formattedDate, time) {
     const parts = formattedDate.split("-");
-    return new Date(parts[0], parts[1] - 1, parts[2]);
+    if (!time) {
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+    } else {
+        const timeParts = time.split(":");
+        return new Date(parts[0], parts[1] - 1, parts[2], timeParts[0], timeParts[1]);
+    }
+}
+
+function _formattedDateToFirestoreDate (formattedDate, time) {
+    const date = _formattedDateToDate(formattedDate, time);
+    return _convertToFirestoreDate(date);
 }
 
 function _formatFirestoreDate (date, format) {
-    const jsDate = _convertFirestoreDate(date);
+    const jsDate = _convertFromFirestoreDate(date);
     return _jsDateToDate(jsDate, format);
 }
 

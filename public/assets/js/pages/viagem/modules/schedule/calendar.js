@@ -12,8 +12,8 @@ var endYear;
 var calendarTitle;
 
 function _loadCalendar() {
-    start = _convertFirestoreDate(FIRESTORE_DATA.inicio);
-    end = _convertFirestoreDate(FIRESTORE_DATA.fim);
+    start = _convertFromFirestoreDate(FIRESTORE_DATA.inicio);
+    end = _convertFromFirestoreDate(FIRESTORE_DATA.fim);
     
     startMonth = start.getMonth();
     startYear = start.getFullYear();
