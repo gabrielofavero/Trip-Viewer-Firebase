@@ -1,4 +1,4 @@
-var uploadWallpapaer = false;
+var uploadBackground = false;
 var uploadLogo = false;
 
 function _buildTripObject() {
@@ -86,7 +86,7 @@ function _buildTripObject() {
 
     result.viagem.data.compartilhamento = _buildCompartilhamentoObject();
     result.viagem.data.imagem = _buildImagemObject();
-    
+
     result.viagem.data.cores = {
         claro: _returnEmptyIfNoValue(document.getElementById('claro').value),
         escuro: _returnEmptyIfNoValue(document.getElementById('escuro').value)
@@ -108,11 +108,11 @@ function _buildTripObject() {
             const hospedagensRef = _firestoreReferencetoPath(FIRESTORE_DATA.hospedagensRef);
             const programacoesRef = _firestoreReferencetoPath(FIRESTORE_DATA.programacoesRef);
             const transportesRef = _firestoreReferencetoPath(FIRESTORE_DATA.transportesRef);
-    
+
             result.viagem.data.hospedagensRef = hospedagensRef;
             result.viagem.data.programacoesRef = programacoesRef;
             result.viagem.data.transportesRef = transportesRef;
-    
+
             result.hospedagem.id = hospedagensRef;
             result.programacao.id = programacoesRef;
             result.transporte.id = transportesRef;
@@ -161,13 +161,12 @@ function _buildImagemObject() {
         result.escuro = FIRESTORE_DATA.imagem.escuro;
     }
 
-    if (document.getElementById('wallpaper').value) {
-        uploadWallpapaer = true;
+    if (document.getElementById('background').value) {
+        uploadBackground = true;
     }
 
     if (document.getElementById('logo').value) {
         uploadLogo = true;
-        result.ativo = true;
     }
 
     return result;
@@ -232,7 +231,7 @@ function _buildTransporteObject() {
         result.reservas.push(valueReserva);
 
         const divCidadePartida = document.getElementById(`cidade-partida-${j}`);
-        const valueCidadePartida = divCidadePartida ? _returnEmptyIfNoValue(divCidadePartida.value) : "";        
+        const valueCidadePartida = divCidadePartida ? _returnEmptyIfNoValue(divCidadePartida.value) : "";
 
         const divCidadeChegada = document.getElementById(`cidade-chegada-${j}`);
         const valueCidadeChegada = divCidadeChegada ? _returnEmptyIfNoValue(divCidadeChegada.value) : "";
@@ -245,7 +244,7 @@ function _buildTransporteObject() {
             partida: "",
             chegada: ""
         }
-        
+
         const divPontoPartida = document.getElementById(`ponto-partida-${j}`);
         const valuePontoPartida = divPontoPartida ? _returnEmptyIfNoValue(divPontoPartida.value) : "";
         pontos.partida = valuePontoPartida;
@@ -381,7 +380,7 @@ function _buildCidadesArray() {
             result.push(innerResult);
         }
     }
-    
+
     return result;
 }
 
@@ -398,6 +397,37 @@ async function _setViagem() {
         } else if (viagem) {
             message = await _newTrip(viagem)
         }
+
+        if (message.includes('sucesso') && (uploadLogo || uploadBackground)) {
+            let newMessage = '';
+            const id = message.split("'")[1];
+            let logo = '';
+            let background = '';
+
+            if (uploadLogo) {
+                logo = await _uploadLogo(id);
+            }
+
+            if (uploadBackground) {
+                background = await _uploadBackground(id);
+            }
+
+            body = {
+                viagemID: id,
+                uploadBackground: uploadBackground,
+                background: background,
+                uploadLogo: uploadLogo,
+                logo: logo
+            }
+
+            newMessage = await _updateTripImage(body)
+
+            if (!newMessage.includes('sucesso')) {
+                message += '. Falha no upload de imagem(s): ' + newMessage;
+            }
+
+        }
+
         document.getElementById('modal-inner-text').innerText = message;
         document.getElementById('set-complete').style.display = 'block';
         document.getElementById('voltar-box').style.display = 'none';

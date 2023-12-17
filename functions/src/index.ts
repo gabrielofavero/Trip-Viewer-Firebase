@@ -5,7 +5,7 @@ import { getConfig } from "./data/main/config";
 import { updateVisibility, getVisibility } from "./data/main/visibility";
 
 import { getSingleTrip, getTripList } from "./data/viagem/get";
-import { updateTrip, newTrip } from "./data/viagem/set";
+import { updateTrip, newTrip, updateTripImage } from "./data/viagem/set";
 import { deleteTrip } from "./data/viagem/delete";
 
 import { getSinglePlaces, getPlacesList } from "./data/passeios/get";
@@ -28,6 +28,7 @@ export {
   getTripList,
   updateTrip,
   newTrip,
+  updateTripImage,
   deleteTrip,
   getSinglePlaces,
   getPlacesList,

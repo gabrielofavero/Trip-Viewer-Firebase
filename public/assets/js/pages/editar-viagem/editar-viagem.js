@@ -308,10 +308,10 @@ async function _loadTrip() {
   _stopLoadingScreen();
 }
 
-async function _uploadWallpaper(){
-  await _uploadImage(tripID + '/hero-bg.jpg', 'wallpaper');
+async function _uploadBackground(id = tripID) {
+  return await _uploadImage('trips/' + id + '/hero-bg.jpg', 'background');
 }
 
-async function _uploadTitle(){
-  await _uploadImage(tripID + '/logo.png', 'logo');
+async function _uploadLogo(id=tripID){
+  return await _uploadImage('trips/' + id + '/logo.png', 'logo');
 }

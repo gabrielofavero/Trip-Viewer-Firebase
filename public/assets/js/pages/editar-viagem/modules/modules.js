@@ -96,7 +96,7 @@ function _loadProgramacao() {
   for (let i = 1; i <= newDates.length; i++) {
     const formatted = newDates[i - 1];
     if (PROGRAMACAO && PROGRAMACAO[formatted]) {
-      document.getElementById(`programacao-inner-title-${i}`).value = PROGRAMACAO[formatted].titulo || ''; 
+      document.getElementById(`programacao-inner-title-${i}`).value = PROGRAMACAO[formatted].titulo || '';
       document.getElementById(`manha-1-${i}`).value = PROGRAMACAO[formatted][`manha-1`] || '';
       document.getElementById(`manha-2-${i}`).value = PROGRAMACAO[formatted][`manha-2`] || '';
       document.getElementById(`manha-3-${i}`).value = PROGRAMACAO[formatted][`manha-3`] || '';
@@ -110,7 +110,7 @@ function _loadProgramacao() {
   }
 }
 
-function _loadPasseios(newTrip=true) {
+function _loadPasseios(newTrip = true) {
   const placesList = localStorage.getItem('placesList');
   const myPlaces = placesList ? JSON.parse(placesList) : [];
 
@@ -196,25 +196,18 @@ function _addTransporte() {
 
         <fieldset class="nice-form-group">
           <legend>Meio de Transporte</legend>
-          <div class="nice-form-group">
-            <input type="radio" name="meio-${i}" id="voo-${i}" />
-            <label for="voo-${i}">Voo</label>
-          </div>
-
-          <div class="nice-form-group">
-            <input type="radio" name="meio-${i}" id="carro-${i}" />
-            <label for="carro-${i}">Carro</label>
-          </div>
-
-          <div class="nice-form-group">
-            <input type="radio" name="meio-${i}" id="onibus-${i}" />
-            <label for="onibus-${i}">Ônibus</label>
-          </div>
-
-          <div class="nice-form-group">
-            <input type="radio" name="meio-${i}" id="outro-${i}" />
-            <label for="onibus-${i}">Outro</label>
-          </div>
+          <select id="transporte-codigo-${i}">
+          <option selected value="voo">Voo</option>
+          <option value="carro">Carro</option>
+          <option value="onibus">Ônibus</option>
+          <option value="bondinho">Bondinho</option>
+          <option value="helicoptero">Helicoptero</option>
+          <option value="locomotiva">Locomotiva</option>
+          <option value="metro">Metrô</option>
+          <option value="moto">Moto</option>
+          <option value="navio">Navio</option>
+          <option value="trem-bala">Trem Bala</option>
+        </select>
         </fieldset>
 
         <div class="nice-form-group">
@@ -474,18 +467,8 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
           document.getElementById(`chegada-horario-${i}`).value = _jsDateToTime(chegada);
         }
 
-        switch (FIRESTORE_DATA.transportes.transportes[j]) {
-          case 'carro':
-            document.getElementById(`carro-${i}`).checked = true;
-            break;
-          case 'onibus':
-            document.getElementById(`onibus-${i}`).checked = true;
-            break;
-          case 'voo':
-            document.getElementById(`voo-${i}`).checked = true;
-            break;
-          default:
-            document.getElementById(`outro-${i}`).checked = true;
+        if (FIRESTORE_DATA.transportes.transportes[j]) {
+          document.getElementById(`transporte-codigo-${i}`).value = FIRESTORE_DATA.transportes.transportes[j];
         }
 
         const empresa = FIRESTORE_DATA.transportes.empresas[j];
@@ -651,14 +634,14 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
   }
 }
 
-function _loadPasseiosData(FIRESTORE_DATA){
+function _loadPasseiosData(FIRESTORE_DATA) {
   if (FIRESTORE_DATA.modulos.passeios === true) {
     document.getElementById('habilitado-passeios').checked = true;
     document.getElementById('habilitado-passeios-content').style.display = 'block';
     document.getElementById('sem-passeios').style.display = 'none';
     document.getElementById('com-passeios').style.display = 'block';
     document.getElementById('passeios-adicionar-box').style.display = 'block';
-    
+
     const cidades = FIRESTORE_DATA.cidades;
 
     if (cidades && cidades > 0) {

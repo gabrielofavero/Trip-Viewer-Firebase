@@ -37,7 +37,7 @@ export const updatePlaces = functions.https.onRequest(
 
     try {
       await admin.firestore().doc(`passeios/${passeiosID}`).set(passeios);
-      response.status(200).send("Passeio Atualizado com Sucesso");
+      response.status(200).send(`Passeio '${passeiosID}' com Sucesso`);
     } catch (e) {
       response.status(500).send(e);
     }
@@ -84,7 +84,7 @@ export const newPlaces = functions.https.onRequest(
         passeios: passeios,
       });
 
-      response.send("Novo Passeio criado com sucesso");
+      response.send(`Passeio '${passeiosID}' criado com sucesso`);
     } catch (e) {
       response.status(500).send(e);
     }

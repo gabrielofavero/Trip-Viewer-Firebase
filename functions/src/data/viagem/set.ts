@@ -103,7 +103,53 @@ export const updateTrip = functions.https.onRequest(
         'compartilhamento.dono': userDoc,
       });
 
-      response.send("Viagem atualizada com sucesso");
+      response.send(`Viagem '${viagemID}' atualizada com sucesso`);
+    } catch (e) {
+      response.status(500).send(e);
+    }
+  }
+);
+
+export const updateTripImage = functions.https.onRequest(
+  async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    if (request.method === "OPTIONS") {
+      response.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      response.set("Access-Control-Allow-Headers", "Content-Type");
+      response.status(200).send();
+      return;
+    }
+
+    const viagemID = request.body.viagemID as string;
+    const background = request.body.background as string;
+    const logo = request.body.logo as string;
+    const logoAtivo = logo ? true : false;
+    const uploadBackground = request.body.uploadBackground as boolean;
+    const uploadLogo = request.body.uploadLogo as boolean;
+
+    const viagemDoc = admin.firestore().doc(`viagens/${viagemID}`);
+
+    try {
+      if (uploadBackground && uploadLogo) {
+        await viagemDoc.update({
+          'imagem.background': background,
+          'imagem.ativo': logoAtivo,
+          'imagem.claro': logo,
+          'imagem.escuro': logo,
+        });
+      } else if (uploadBackground) {
+        await viagemDoc.update({
+          'imagem.background': background,
+        });
+       } else if (uploadLogo) {
+          await viagemDoc.update({
+            'imagem.ativo': logoAtivo,
+            'imagem.claro': logo,
+            'imagem.escuro': logo,
+          });
+      }
+
+      response.send(`Viagem '${viagemID}' atualizada com sucesso`);
     } catch (e) {
       response.status(500).send(e);
     }
@@ -205,7 +251,7 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
       viagens: viagens,
     });
 
-    response.send("Viagem criada com sucesso");
+    response.send(`Viagem '${viagemID}' criada com sucesso`);
   } catch (e) {
     response.status(500).send(e);
   }
