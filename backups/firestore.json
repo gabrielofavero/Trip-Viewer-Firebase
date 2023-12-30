@@ -350,66 +350,6 @@
                     }
                 ],
                 "reservas": []
-            },
-            {
-                "viagem": {
-                    "_firestore": {
-                        "projectId": "trip-viewer-tcc"
-                    },
-                    "_path": {
-                        "segments": [
-                            "viagens",
-                            "puhUQgIhjrFQaKN1OCsG"
-                        ]
-                    },
-                    "_converter": {}
-                },
-                "endereco": [],
-                "datas": [],
-                "reservas": [],
-                "hospedagem": [],
-                "links": [],
-                "codigos": []
-            },
-            {
-                "viagem": {
-                    "_firestore": {
-                        "projectId": "trip-viewer-tcc"
-                    },
-                    "_path": {
-                        "segments": [
-                            "viagens",
-                            "BK4xK9aam7jUrroAsqB3"
-                        ]
-                    },
-                    "_converter": {}
-                },
-                "endereco": [],
-                "datas": [],
-                "reservas": [],
-                "hospedagem": [],
-                "links": [],
-                "codigos": []
-            },
-            {
-                "viagem": {
-                    "_firestore": {
-                        "projectId": "trip-viewer-tcc"
-                    },
-                    "_path": {
-                        "segments": [
-                            "viagens",
-                            "GMr7dRL08UID1NzZvAh1"
-                        ]
-                    },
-                    "_converter": {}
-                },
-                "endereco": [],
-                "datas": [],
-                "reservas": [],
-                "hospedagem": [],
-                "links": [],
-                "codigos": []
             }
         ]
     },
@@ -1366,6 +1306,22 @@
                             "https://www.tiktok.com/@gwilli25/video/7200560403452251435?q=7%20mountains%20vegas&t=1686099379988"
                         ]
                     }
+                },
+                "compartilhamento": {
+                    "editores": [],
+                    "ativo": true,
+                    "dono": {
+                        "_firestore": {
+                            "projectId": "trip-viewer-tcc"
+                        },
+                        "_path": {
+                            "segments": [
+                                "usuarios",
+                                "R0yDPACnVVPjx2S6oqP6zqVI20t1"
+                            ]
+                        },
+                        "_converter": {}
+                    }
                 }
             }
         ]
@@ -1782,21 +1738,6 @@
         "collection": "usuarios",
         "docs": [
             {
-                "viagens": [
-                    {
-                        "_firestore": {
-                            "projectId": "trip-viewer-tcc"
-                        },
-                        "_path": {
-                            "segments": [
-                                "viagens",
-                                "g4nx5cyNKW2geSnQVXX8"
-                            ]
-                        },
-                        "_converter": {}
-                    }
-                ],
-                "visibilidade": "claro",
                 "passeios": [
                     {
                         "_firestore": {
@@ -1810,6 +1751,33 @@
                         },
                         "_converter": {}
                     }
+                ],
+                "visibilidade": "claro",
+                "viagens": [
+                    {
+                        "_firestore": {
+                            "projectId": "trip-viewer-tcc"
+                        },
+                        "_path": {
+                            "segments": [
+                                "viagens",
+                                "g4nx5cyNKW2geSnQVXX8"
+                            ]
+                        },
+                        "_converter": {}
+                    },
+                    {
+                        "_firestore": {
+                            "projectId": "trip-viewer-tcc"
+                        },
+                        "_path": {
+                            "segments": [
+                                "viagens",
+                                "USWBAZNxZjEh3sJdQaWv"
+                            ]
+                        },
+                        "_converter": {}
+                    }
                 ]
             }
         ]
@@ -1817,6 +1785,100 @@
     {
         "collection": "viagens",
         "docs": [
+            {
+                "inicio": {
+                    "_nanoseconds": 0,
+                    "_seconds": 1702782000
+                },
+                "titulo": "Teste",
+                "cidades": [],
+                "fim": {
+                    "_nanoseconds": 0,
+                    "_seconds": 1702868400
+                },
+                "quantidadePessoas": 1,
+                "cores": {
+                    "claro": "#5859a7",
+                    "escuro": "#7f75b6"
+                },
+                "moeda": "R$",
+                "modulos": {
+                    "hospedagens": false,
+                    "programacao": false,
+                    "transportes": false,
+                    "passeios": false,
+                    "resumo": true
+                },
+                "links": {
+                    "attachments": "",
+                    "pdf": "",
+                    "maps": "",
+                    "documents": "",
+                    "ppt": "",
+                    "vacina": "",
+                    "sheet": "",
+                    "drive": ""
+                },
+                "transportesRef": {
+                    "_firestore": {
+                        "projectId": "trip-viewer-tcc"
+                    },
+                    "_path": {
+                        "segments": [
+                            "transportes",
+                            "w0P6kz7UgKY2J3OLGP3W"
+                        ]
+                    },
+                    "_converter": {}
+                },
+                "hospedagensRef": {
+                    "_firestore": {
+                        "projectId": "trip-viewer-tcc"
+                    },
+                    "_path": {
+                        "segments": [
+                            "hospedagens",
+                            "BCGkwdHJ4xHI46dhXFhu"
+                        ]
+                    },
+                    "_converter": {}
+                },
+                "compartilhamento": {
+                    "editores": [],
+                    "ativo": true,
+                    "dono": {
+                        "_firestore": {
+                            "projectId": "trip-viewer-tcc"
+                        },
+                        "_path": {
+                            "segments": [
+                                "usuarios",
+                                "R0yDPACnVVPjx2S6oqP6zqVI20t1"
+                            ]
+                        },
+                        "_converter": {}
+                    }
+                },
+                "programacoesRef": {
+                    "_firestore": {
+                        "projectId": "trip-viewer-tcc"
+                    },
+                    "_path": {
+                        "segments": [
+                            "programacoes",
+                            "09QJUWrceLK6Tcr005VH"
+                        ]
+                    },
+                    "_converter": {}
+                },
+                "imagem": {
+                    "claro": "",
+                    "escuro": "",
+                    "ativo": false,
+                    "altura": "250px",
+                    "background": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/trips%2FUSWBAZNxZjEh3sJdQaWv%2Fhero-bg.jpg?alt=media&token=5efe9ad5-9fc4-4be2-a139-d097b85a8b04"
+                }
+            },
             {
                 "titulo": "Las Vegas",
                 "links": {
@@ -1886,13 +1948,6 @@
                     "_seconds": 1697221200,
                     "_nanoseconds": 856000000
                 },
-                "imagem": {
-                    "claro": "assets/img/logo.png",
-                    "escuro": "assets/img/logo.png",
-                    "ativo": true,
-                    "altura": "250px",
-                    "background": "assets/img/hero-bg.jpg"
-                },
                 "compartilhamento": {
                     "ativo": true,
                     "dono": {
@@ -1941,7 +1996,14 @@
                             "_converter": {}
                         }
                     }
-                ]
+                ],
+                "imagem": {
+                    "ativo": true,
+                    "altura": "250px",
+                    "background": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/trips%2Fg4nx5cyNKW2geSnQVXX8%2Fhero-bg.jpg?alt=media&token=cf0ca102-0d72-4f08-be5c-6fde835d4a95",
+                    "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/trips%2Fg4nx5cyNKW2geSnQVXX8%2Flogo.png?alt=media&token=961d8285-18cf-4614-a212-fe3ae300ffef",
+                    "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/trips%2Fg4nx5cyNKW2geSnQVXX8%2Flogo.png?alt=media&token=961d8285-18cf-4614-a212-fe3ae300ffef"
+                }
             }
         ]
     }
