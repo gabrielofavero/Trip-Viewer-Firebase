@@ -7,7 +7,6 @@
 - ⚔️: Epic
 
 ## Doing
-- ⚔️ Otimizar BD (simplificar estrutura);
 - ⚔️ Security Overhaul
 
 ## To-Do
@@ -42,7 +41,6 @@
 ## Done
 
 ### Dezembro 2023
-- 
 - 🐞 Consertada posição do select de transporte de editar-viagem;
 - 🏆 Criadas funções de front-end para edição de viagens e passeios;
 - 🏆 Criado sistema de imagens;
@@ -51,6 +49,7 @@
 - 🏆 Implementados bloqueios de edição de viagens e passeios;
 - 🏆 Night Mode interativo do user
 - 📈 Linkado e validado funções de back-end para edição de viagens e passeios;
+- ⚔️ Otimizar BD (simplificar estrutura);
 
 ### Semana 19/11/2023 - 25/11/2023
 - 🏆 Criada página de edição/criação de viagens;
