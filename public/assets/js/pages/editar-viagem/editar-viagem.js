@@ -270,8 +270,9 @@ function _loadEventListeners() {
   document.getElementById('cancelar').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
-  document.getElementById('inicio').addEventListener('change', () => {
+  document.getElementById('inicio').addEventListener('input', () => {
     _loadProgramacao();
+    document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
   });
   document.getElementById('fim').addEventListener('change', () => {
     _loadProgramacao();

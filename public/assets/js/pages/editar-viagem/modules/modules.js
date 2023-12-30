@@ -20,7 +20,6 @@ function _loadTripData(FIRESTORE_DATA) {
     throw e;
   }
 
-
 }
 
 // Nova Viagem
@@ -34,6 +33,16 @@ function _loadDadosBasicosNewTrip() {
 
 
 // Métodos Gerais
+function _add(type) {
+  const dynamicFunctionName = `_add${type}`;
+  if (typeof window[dynamicFunctionName] === 'function') {
+    window[dynamicFunctionName]();
+  } else {
+    _logger(ERROR, `${dynamicFunctionName} is not defined.`);
+  }
+}
+
+
 function _loadProgramacao() {
   const inicio = document.getElementById('inicio').value;
   const fim = document.getElementById('fim').value;
@@ -141,11 +150,22 @@ function _loadPasseios(newTrip = true) {
 
 }
 
-// Adicionar
 function _addTransporte() {
   var i = 1;
   while (document.getElementById('transporte-' + i)) {
     i++;
+  }
+
+  var checkedIda = '';
+  var checkedVolta = '';
+  var day = '';
+
+  if (i === 1) {
+    checkedIda = 'checked';
+    day = document.getElementById('inicio').value;
+  } else {
+    checkedVolta = 'checked';
+    day = document.getElementById('fim').value;
   }
 
   $('#transporte-box').append(`
@@ -162,12 +182,12 @@ function _addTransporte() {
         <fieldset class="nice-form-group">
           <legend>Ida ou Volta</legend>
           <div class="nice-form-group">
-            <input type="radio" name="idaVolta-${i}" id="ida-${i}" />
+            <input type="radio" name="idaVolta-${i}" id="ida-${i}" ${checkedIda} />
             <label for="ida-${i}">Ida</label>
           </div>
 
           <div class="nice-form-group">
-            <input type="radio" name="idaVolta-${i}" id="volta-${i}" />
+            <input type="radio" name="idaVolta-${i}" id="volta-${i}" ${checkedVolta} />
             <label for="volta-${i}">Volta</label>
           </div>
         </fieldset>
@@ -175,7 +195,7 @@ function _addTransporte() {
         <div class="side-by-side-box">
           <div class="nice-form-group side-by-side">
             <label>Partida</label>
-            <input class="flex-input" id="partida-${i}" type="date" value="${TODAY}" />
+            <input class="flex-input" id="partida-${i}" type="date" value="${day}" />
           </div>
           <div class="nice-form-group side-by-side">
             <label>⠀</label>
@@ -186,7 +206,7 @@ function _addTransporte() {
         <div class="side-by-side-box">
           <div class="nice-form-group side-by-side">
             <label>Chegada</label>
-            <input class="flex-input" id="chegada-${i}" type="date" value="${TODAY}" />
+            <input class="flex-input" id="chegada-${i}" type="date" value="${day}" />
           </div>
           <div class="nice-form-group side-by-side">
             <label>⠀</label>
@@ -194,21 +214,20 @@ function _addTransporte() {
           </div>
         </div>
 
-        <fieldset class="nice-form-group">
-          <legend>Meio de Transporte</legend>
+        <div class="nice-form-group">
+          <label>Meio de Transporte</label>
           <select id="transporte-codigo-${i}">
-          <option selected value="voo">Voo</option>
-          <option value="carro">Carro</option>
-          <option value="onibus">Ônibus</option>
-          <option value="bondinho">Bondinho</option>
-          <option value="helicoptero">Helicoptero</option>
-          <option value="locomotiva">Locomotiva</option>
-          <option value="metro">Metrô</option>
-          <option value="moto">Moto</option>
-          <option value="navio">Navio</option>
-          <option value="trem-bala">Trem Bala</option>
-        </select>
-        </fieldset>
+            <option value="carro">Carro</option>
+            <option value="onibus">Ônibus</option>
+            <option value="bondinho">Bondinho</option>
+            <option value="helicoptero">Helicóptero</option>
+            <option value="locomotiva">Locomotiva</option>
+            <option value="metro">Metrô</option>
+            <option value="moto">Moto</option>
+            <option value="navio">Navio</option>
+            <option value="trem-bala">Trem Bala</option>
+          </select>
+        </div>
 
         <div class="nice-form-group">
           <label>Nome da Empresa <span class="opcional"> (Opcional)</span></label>

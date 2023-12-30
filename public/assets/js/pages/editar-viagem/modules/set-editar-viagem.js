@@ -10,7 +10,15 @@ function _buildTripObject() {
                 compartilhamento: {},
                 cores: {},
                 fim: {},
-                hospedagensRef: "",
+                hospedagens:{
+                    codigos: [],
+                    datas: [],
+                    endereco: [],
+                    hospedagem: [],
+                    links: [],
+                    reservas: [],
+                    viagem: ""
+                },
                 imagem: {},
                 inicio: {},
                 links: {
@@ -25,35 +33,15 @@ function _buildTripObject() {
                 },
                 modulos: {},
                 moeda: "",
-                programacoesRef: "",
+                programacoes: {
+                    programacao: [],
+                    viagem: ""
+                },
                 quantidadePessoas: 1,
                 titulo: "",
-                transportesRef: ""
+                transportes: {}
             }
         },
-        transporte: {
-            id: "",
-            data: {}
-        },
-        hospedagem: {
-            id: "",
-            data: {
-                codigos: [],
-                datas: [],
-                endereco: [],
-                hospedagem: [],
-                links: [],
-                reservas: [],
-                viagem: ""
-            }
-        },
-        programacao: {
-            id: "",
-            data: {
-                programacao: [],
-                viagem: ""
-            }
-        }
     }
 
     result.viagem.data.modulos = {
@@ -92,31 +80,14 @@ function _buildTripObject() {
         escuro: _returnEmptyIfNoValue(document.getElementById('escuro').value)
     }
 
-    result.transporte.data = _buildTransporteObject();
-    result.hospedagem.data = _buildHospedagemObject();
-    result.programacao.data = _buildProgramacaoObject();
+    result.transportes = _buildTransporteObject();
+    result.hospedagens = _buildHospedagemObject();
+    result.programacoes = _buildProgramacaoObject();
     result.viagem.data.cidades = _buildCidadesArray();
 
     if (tripID) {
         const path = `viagens/${tripID}`;
         result.viagem.id = path;
-        result.transporte.data.viagem = path;
-        result.hospedagem.data.viagem = path;
-        result.programacao.data.viagem = path;
-
-        if (FIRESTORE_DATA) {
-            const hospedagensRef = _firestoreReferencetoPath(FIRESTORE_DATA.hospedagensRef);
-            const programacoesRef = _firestoreReferencetoPath(FIRESTORE_DATA.programacoesRef);
-            const transportesRef = _firestoreReferencetoPath(FIRESTORE_DATA.transportesRef);
-
-            result.viagem.data.hospedagensRef = hospedagensRef;
-            result.viagem.data.programacoesRef = programacoesRef;
-            result.viagem.data.transportesRef = transportesRef;
-
-            result.hospedagem.id = hospedagensRef;
-            result.programacao.id = programacoesRef;
-            result.transporte.id = transportesRef;
-        }
     }
 
     return result;

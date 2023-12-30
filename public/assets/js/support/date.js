@@ -107,18 +107,25 @@ function _changeFormat(formattedDate, newFormat) {
     return _jsDateToDate(_formattedDateToDate(formattedDate), newFormat);
 }
 
-function _getTodayFormatted (format='yyyy-mm-dd') {
+function _getTodayFormatted(format = 'yyyy-mm-dd') {
     return _jsDateToDate(new Date(), format);
 }
 
-function _getTomorrowFormatted (format='yyyy-mm-dd') {
+function _getTomorrowFormatted(format = 'yyyy-mm-dd') {
     return _jsDateToDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), format);
 }
 
-function _getArrayOfFormattedDates(formattedStart, formattedEnd, format='yyyy-mm-dd') {
+function _getNextDay(inputDate) {
+    const currentDate = new Date(inputDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+    const nextDay = currentDate.toISOString().split('T')[0];
+    return nextDay;
+}
+
+function _getArrayOfFormattedDates(formattedStart, formattedEnd, format = 'yyyy-mm-dd') {
     const start = _formattedDateToDate(formattedStart);
     const end = _formattedDateToDate(formattedEnd);
-    
+
     const dates = [];
     let currentDate = start;
     while (currentDate <= end) {
@@ -128,7 +135,7 @@ function _getArrayOfFormattedDates(formattedStart, formattedEnd, format='yyyy-mm
     return dates;
 }
 
-function _formattedDateToDate (formattedDate, time) {
+function _formattedDateToDate(formattedDate, time) {
     const parts = formattedDate.split("-");
     if (!time) {
         return new Date(parts[0], parts[1] - 1, parts[2]);
@@ -138,12 +145,12 @@ function _formattedDateToDate (formattedDate, time) {
     }
 }
 
-function _formattedDateToFirestoreDate (formattedDate, time) {
+function _formattedDateToFirestoreDate(formattedDate, time) {
     const date = _formattedDateToDate(formattedDate, time);
     return _convertToFirestoreDate(date);
 }
 
-function _formatFirestoreDate (date, format) {
+function _formatFirestoreDate(date, format) {
     const jsDate = _convertFromFirestoreDate(date);
     return _jsDateToDate(jsDate, format);
 }

@@ -23,24 +23,6 @@ export async function _getTrip(
     )) as unknown as interfaces.Viagem;
   }
 
-  const transportes = await _getDataFromReference(
-    viagem.transportesRef,
-    response
-  );
-  viagem.transportes = transportes;
-
-  const programacoes = await _getDataFromReference(
-    viagem.programacoesRef,
-    response
-  );
-  viagem.programacoes = programacoes;
-
-  const hospedagens = await _getDataFromReference(
-    viagem.hospedagensRef,
-    response
-  );
-  viagem.hospedagens = hospedagens;
-
   for (let i = 0; i < viagem.cidades.length; i++) {
     const passeiosCidade = await _getDataFromReference(
       viagem.cidades[i].passeiosRef,

@@ -2,6 +2,9 @@ function _loadEditModule(type, loadListener=true) {
     const habilitado = document.getElementById(`habilitado-${type}`);
     if (habilitado.checked) {
         _showContent(type);
+        if (!document.getElementById(`habilitado-${type}-content`).innerText) {
+            _add(_firstCharToUpperCase(type))
+        }
     } else {
         _hideContent(type);
     }
@@ -15,6 +18,9 @@ function _loadListener(type) {
     habilitado.addEventListener('change', function () {
         if (habilitado.checked) {
             _showContent(type);
+            if (!document.getElementById(`habilitado-${type}-content`).innerText) {
+                _add(_firstCharToUpperCase(type))
+            }
         } else {
             _hideContent(type);
         }

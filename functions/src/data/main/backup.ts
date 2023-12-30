@@ -5,6 +5,7 @@ import * as admin from "firebase-admin";
 export const getBackup = functions.https.onRequest(
   async (request, response) => {
     const collections = [
+      "admin",
       "config",
       "hospedagens",
       "passeios",

@@ -15,15 +15,12 @@ export const updateTrip = functions.https.onRequest(
     }
 
     const viagemPath = request.body.viagem.id as string;
-    const hospedagemPath = request.body.hospedagem.id as string;
-    const programacoesPath = request.body.programacao.id as string;
-    const transportePath = request.body.transporte.id as string;
 
-    if (!viagemPath || !hospedagemPath || !programacoesPath || !transportePath) {
+    if (!viagemPath) {
       response
         .status(400)
         .send(
-          "Não foram fornecidas todos as referências necessárias para atualizar a viagem"
+          "Não foi fornecida a referência da viagem"
         );
       return;
     }
@@ -35,36 +32,6 @@ export const updateTrip = functions.https.onRequest(
       viagem = request.body.viagem.data;
     } catch (e) {
       response.status(400).send("Não foi fornecido um objeto 'Viagem' válido");
-      return;
-    }
-
-    let hospedagem;
-    try {
-      hospedagem = request.body.hospedagem.data;
-    } catch (e) {
-      response
-        .status(400)
-        .send("Não foi fornecido um objeto 'Hospedagem' válido");
-      return;
-    }
-
-    let programacao;
-    try {
-      programacao = request.body.programacao.data;
-    } catch (e) {
-      response
-        .status(400)
-        .send("Não foi fornecido um objeto 'Programação' válido");
-      return;
-    }
-
-    let transporte;
-    try {
-      transporte = request.body.transporte.data;
-    } catch (e) {
-      response
-        .status(400)
-        .send("Não foi fornecido um objeto 'Transporte' válido");
       return;
     }
 
@@ -85,21 +52,9 @@ export const updateTrip = functions.https.onRequest(
       const viagemDoc = admin.firestore().doc(`viagens/${viagemID}`);
       await viagemDoc.set(viagem);
 
-      const hospedagemDoc = admin.firestore().doc(hospedagemPath);
-      await hospedagemDoc.set(hospedagem);
-
-      const programacoesDoc = admin.firestore().doc(programacoesPath);
-      await programacoesDoc.set(programacao);
-
-      const transporteDoc = admin.firestore().doc(transportePath);
-      await transporteDoc.set(transporte);
-
       const userDoc = admin.firestore().doc(`usuarios/${uid}`);
 
       await viagemDoc.update({
-        hospedagensRef: hospedagemDoc,
-        programacoesRef: programacoesDoc,
-        transportesRef: transporteDoc,
         'compartilhamento.dono': userDoc,
       });
 
@@ -173,36 +128,6 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
     return;
   }
 
-  let hospedagem;
-  try {
-    hospedagem = request.body.hospedagem.data;
-  } catch (e) {
-    response
-      .status(400)
-      .send("Não foi fornecido um objeto 'Hospedagem' válido");
-    return;
-  }
-
-  let programacao;
-  try {
-    programacao = request.body.programacao.data;
-  } catch (e) {
-    response
-      .status(400)
-      .send("Não foi fornecido um objeto 'Programação' válido");
-    return;
-  }
-
-  let transporte;
-  try {
-    transporte = request.body.transporte.data;
-  } catch (e) {
-    response
-      .status(400)
-      .send("Não foi fornecido um objeto 'Transporte' válido");
-    return;
-  }
-
   const user = await _getUser(request, response);
   const uid = (await _getAuthUserUID(request, response)) as string;
   const viagens = user.viagens;
@@ -212,36 +137,9 @@ export const newTrip = functions.https.onRequest(async (request, response) => {
     const viagemID = viagemRef.id;
     const viagemPath = admin.firestore().doc("viagens/" + viagemID);
 
-    hospedagem.viagem = viagemPath;
-    const hospedagemRef = await admin
-      .firestore()
-      .collection("hospedagens")
-      .add(hospedagem);
-    const hospedagemID = hospedagemRef.id;
-    const hospedagemPath = admin.firestore().doc("hospedagens/" + hospedagemID);
-
-    programacao.viagem = viagemPath;
-    const programacaoRef = await admin
-      .firestore()
-      .collection("programacoes")
-      .add(programacao);
-    const programacaoID = programacaoRef.id;
-    const programacaoPath = admin.firestore().doc("programacoes/" + programacaoID);
-
-    transporte.viagem = viagemPath;
-    const transporteRef = await admin
-      .firestore()
-      .collection("transportes")
-      .add(transporte);
-    const transporteID = transporteRef.id;
-    const transportePath = admin.firestore().doc("transportes/" + transporteID);
-
     const userPath = admin.firestore().doc(`usuarios/${uid}`);
 
     await admin.firestore().doc('viagens/' + viagemID).update({
-      hospedagensRef: hospedagemPath,
-      programacoesRef: programacaoPath,
-      transportesRef: transportePath,
       'compartilhamento.dono': userPath,
     });
 
