@@ -12,7 +12,6 @@ async function _signInGoogle() {
       _logger(ERROR, error);
       throw error;
   });
-
 }
   
 

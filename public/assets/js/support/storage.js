@@ -25,20 +25,6 @@ async function _uploadImage(path, id) {
   }
 }
 
-
-async function _retrieveImage(path) {
-  const storageRef = firebase.storage().ref();
-  const imageRef = storageRef.child(path);
-
-  try {
-    const url = await imageRef.getDownloadURL();
-    return url;
-  } catch (error) {
-    console.error('Error getting download URL:', error);
-    _displayErrorMessage(error);
-  }
-}
-
 function _getFileExtension(fileName) {
   const dotIndex = fileName.lastIndexOf('.');
   if (dotIndex !== -1) {

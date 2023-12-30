@@ -13,7 +13,6 @@ import { updatePlaces, newPlaces } from "./data/passeios/set";
 import { deletePlaces } from "./data/passeios/delete";
 
 import { deleteUser } from "./data/user/delete";
-import { getBackup } from "./data/main/backup";
 
 admin.initializeApp({
   credential: admin.credential.cert(credentials as admin.ServiceAccount),
@@ -21,7 +20,6 @@ admin.initializeApp({
 
 export {
   getConfig,
-  getBackup,
   updateVisibility,
   getVisibility,
   getSingleTrip,
@@ -36,5 +34,4 @@ export {
   newPlaces,
   deletePlaces,
   deleteUser,
-
 };
