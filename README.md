@@ -7,15 +7,14 @@
 - ⚔️: Epic
 
 ## Doing
-- ⚔️ Security Overhaul
+- 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
 
 ## To-Do
 
 # Prioridade Alta
-- ⚔️ Implementar Beta Fechado
-- 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
 - 🐞 Loading no index finalizando antes de carregar a lista de viagens/passeios 
 - 🏆 Criar Função de Visualizador de Passeios
+- 🏆 Criar Módulo de Galeria
 - 🏆 Limitar tamanho de upload + forma no backend para deixar mais seguro;
 
 # Prioridade Média
@@ -40,6 +39,9 @@
 
 ## Done
 
+### Janeiro 2023
+- ⚔️ Migrar Projeto para Plano Spark
+
 ### Dezembro 2023
 - 🐞 Consertada posição do select de transporte de editar-viagem;
 - 🏆 Criadas funções de front-end para edição de viagens e passeios;
@@ -49,7 +51,8 @@
 - 🏆 Implementados bloqueios de edição de viagens e passeios;
 - 🏆 Night Mode interativo do user
 - 📈 Linkado e validado funções de back-end para edição de viagens e passeios;
-- ⚔️ Otimizar BD (simplificar estrutura);
+- ⚔️ Otimizado BD (simplificar estrutura);
+- ⚔️ Security Overhaul
 
 ### Semana 19/11/2023 - 25/11/2023
 - 🏆 Criada página de edição/criação de viagens;

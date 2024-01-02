@@ -665,7 +665,7 @@ function _loadPasseiosData(FIRESTORE_DATA) {
 
     if (cidades && cidades > 0) {
       for (const cidade of cidades) {
-        const id = cidade.passeiosRef._path.segments[1];
+        const id = cidade.passeiosID;
         PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${cidade.passeios.titulo}</option>`;
       }
     }
@@ -675,7 +675,7 @@ function _loadPasseiosData(FIRESTORE_DATA) {
     if (cidades && cidades.length > 0) {
       for (let i = 1; i <= cidades.length; i++) {
         const j = i - 1;
-        const id = cidades[j].passeiosRef._path.segments[1];
+        const id = cidades[j].passeiosID;
 
         if (i === 1) {
           _setSelectedPasseios(id, i);

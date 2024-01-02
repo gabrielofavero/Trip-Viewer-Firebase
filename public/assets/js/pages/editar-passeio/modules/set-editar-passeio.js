@@ -215,18 +215,25 @@ function _buildPasseioLineupObject() {
 
 async function _setPasseio() {
     _startLoadingScreen();
-    let message;
     _validateRequiredInputs();
 
     if (!_isModalOpen()) {
         const passeio = _buildPasseiosObject();
+        let result;
 
         if (placesID && passeio) {
-            message = await _updatePlaces(passeio, placesID);
+            result = await _updatePlaces(passeio, placesID);
         } else if (passeio) {
-            message = await _newPlaces(passeio)
+            result = await _newPlaces(passeio)
+            if (result.data) {
+                const id = _getIdFromDbOjbect(result);
+                await _addPlaceToUser(id);
+            }
         }
-        document.getElementById('modal-inner-text').innerText = message;
+
+        console.log(result);
+
+        document.getElementById('modal-inner-text').innerText = result.message;
         document.getElementById('set-complete').style.display = 'block';
         document.getElementById('voltar-box').style.display = 'none';
 

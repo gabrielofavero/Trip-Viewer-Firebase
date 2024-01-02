@@ -1,50 +1,48 @@
 var uploadBackground = false;
 var uploadLogo = false;
 
-function _buildTripObject() {
+async function _buildTripObject() {
     let result = {
-        viagem: {
-            id: "",
-            data: {
-                cidades: [],
-                compartilhamento: {},
-                cores: {},
-                fim: {},
-                hospedagens:{
-                    codigos: [],
-                    datas: [],
-                    endereco: [],
-                    hospedagem: [],
-                    links: [],
-                    reservas: [],
-                    viagem: ""
-                },
-                imagem: {},
-                inicio: {},
-                links: {
-                    attachments: "",
-                    documents: "",
-                    drive: "",
-                    maps: "",
-                    pdf: "",
-                    ppt: "",
-                    sheet: "",
-                    vacina: ""
-                },
-                modulos: {},
-                moeda: "",
-                programacoes: {
-                    programacao: [],
-                    viagem: ""
-                },
-                quantidadePessoas: 1,
-                titulo: "",
-                transportes: {}
-            }
-        },
+        id: "",
+        data: {
+            cidades: [],
+            compartilhamento: {},
+            cores: {},
+            fim: {},
+            hospedagens:{
+                codigos: [],
+                datas: [],
+                endereco: [],
+                hospedagem: [],
+                links: [],
+                reservas: [],
+                viagem: ""
+            },
+            imagem: {},
+            inicio: {},
+            links: {
+                attachments: "",
+                documents: "",
+                drive: "",
+                maps: "",
+                pdf: "",
+                ppt: "",
+                sheet: "",
+                vacina: ""
+            },
+            modulos: {},
+            moeda: "",
+            programacoes: {
+                programacao: [],
+                viagem: ""
+            },
+            quantidadePessoas: 1,
+            titulo: "",
+            transportes: {}
+        }
     }
 
-    result.viagem.data.modulos = {
+    result.data.modulos = {
         hospedagens: document.getElementById('habilitado-hospedagem').checked,
         passeios: document.getElementById('habilitado-passeios').checked,
         programacao: document.getElementById('habilitado-programacao').checked,
@@ -54,49 +52,55 @@ function _buildTripObject() {
 
     const divTitulo = document.getElementById(`titulo`);
     const valueTitulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
-    result.viagem.data.titulo = valueTitulo;
+    result.data.titulo = valueTitulo;
 
     const divMoeda = document.getElementById(`moeda`);
     const valueMoeda = divMoeda ? _returnEmptyIfNoValue(divMoeda.value) : "";
-    result.viagem.data.moeda = valueMoeda;
+    result.data.moeda = valueMoeda;
 
     const divInicio = document.getElementById(`inicio`);
     const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
-    result.viagem.data.inicio = _formattedDateToFirestoreDate(valueInicio);
+    result.data.inicio = _formattedDateToFirestoreDate(valueInicio);
 
     const divFim = document.getElementById(`fim`);
     const valueFim = divFim ? _returnEmptyIfNoValue(divFim.value) : "";
-    result.viagem.data.fim = _formattedDateToFirestoreDate(valueFim);
+    result.data.fim = _formattedDateToFirestoreDate(valueFim);
 
     const divQuantidadePessoas = document.getElementById(`quantidadePessoas`);
     const valueQuantidadePessoas = divQuantidadePessoas ? _returnEmptyIfNoValue(divQuantidadePessoas.value) : "";
-    result.viagem.data.quantidadePessoas = !isNaN(valueQuantidadePessoas) ? parseInt(valueQuantidadePessoas) : 0;
+    result.data.quantidadePessoas = !isNaN(valueQuantidadePessoas) ? parseInt(valueQuantidadePessoas) : 0;
 
-    result.viagem.data.compartilhamento = _buildCompartilhamentoObject();
-    result.viagem.data.imagem = _buildImagemObject();
+    result.data.compartilhamento = await _buildCompartilhamentoObject();
+    result.data.imagem = _buildImagemObject();
 
-    result.viagem.data.cores = {
+    result.data.cores = {
         claro: _returnEmptyIfNoValue(document.getElementById('claro').value),
         escuro: _returnEmptyIfNoValue(document.getElementById('escuro').value)
     }
 
-    result.transportes = _buildTransporteObject();
-    result.hospedagens = _buildHospedagemObject();
-    result.programacoes = _buildProgramacaoObject();
-    result.viagem.data.cidades = _buildCidadesArray();
+    result.data.transportes = _buildTransporteObject();
+    result.data.hospedagens = _buildHospedagemObject();
+    result.data.programacoes = _buildProgramacaoObject();
+    result.data.cidades = _buildCidadesArray();
 
     if (tripID) {
-        const path = `viagens/${tripID}`;
-        result.viagem.id = path;
+        result.id = tripID;
     }
 
     return result;
 }
 
-function _buildCompartilhamentoObject() {
+async function _buildCompartilhamentoObject() {
     const publica = document.getElementById('habilitado-publico').checked;
     const editores = document.getElementById('habilitado-editores').checked;
     var editoresArray = [];
+    var dono;
+
+    if (FIRESTORE_DATA) {
+        dono = FIRESTORE_DATA.compartilhamento.dono;
+    } else {
+        dono = await _getUID();
+    }
 
     if (editores) {
         const childIds = _getChildIDs('habilitado-editores-content');
@@ -110,7 +114,7 @@ function _buildCompartilhamentoObject() {
 
     return {
         ativo: publica,
-        dono: '',
+        dono: dono,
         editores: editoresArray
     }
 }
@@ -340,14 +344,14 @@ function _buildCidadesArray() {
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[2]);
         var innerResult = {
-            passeiosRef: ""
+            passeiosID: ""
         }
 
         divSelectPasseios = document.getElementById(`select-passeios-${j}`);
         valueSelectPasseios = divSelectPasseios ? _returnEmptyIfNoValue(divSelectPasseios.value) : "";
 
         if (valueSelectPasseios && valueSelectPasseios != '0') {
-            innerResult.passeiosRef = 'passeios/' + valueSelectPasseios;
+            innerResult.passeiosID = valueSelectPasseios;
             result.push(innerResult);
         }
     }
@@ -361,15 +365,23 @@ async function _setViagem() {
     _validateRequiredInputs();
 
     if (!_isModalOpen()) {
-        const viagem = _buildTripObject();
+        const viagem = await _buildTripObject();
+        let result;
 
         if (tripID && viagem) {
-            message = await _updateTrip(viagem);
+            result = await _update(`viagens/${viagem.id}`, viagem.data)
         } else if (viagem) {
-            message = await _newTrip(viagem)
+            result = await _create('viagens', viagem.data);
+            if (result.data) {
+                const id = _getIdFromDbOjbect(result);
+                await _addTripToUser(id);
+            }
         }
 
-        if (message.includes('sucesso') && (uploadLogo || uploadBackground)) {
+        console.log(result);
+        message = result.message;
+
+        if (result.success == true && (uploadLogo || uploadBackground)) {
             let newMessage = '';
             const id = message.split("'")[1];
             let logo = '';

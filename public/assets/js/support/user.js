@@ -6,23 +6,54 @@ function _unloadPageUserFunctions() {
 }
 
 async function _signInGoogle() {
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function (result) {
-  }).catch(function (error) {
-      _logger(ERROR, error);
-      throw error;
-  });
+    try {
+        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        var provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+        await _registerIfUserNotPresent();
+    } catch (error) {
+        _logger(ERROR, error.message);
+        throw error;
+    }
 }
-  
 
 function _signOut() {
     firebase.auth().signOut()
     _unloadPageUserFunctions();
 }
 
+async function _registerIfUserNotPresent() {
+    const user = firebase.auth().currentUser;
+
+    if (user) {
+        const userDoc = await _get(`usuarios/${user.uid}`);
+        if (!userDoc) {
+            await _create(`usuarios`, {
+                viagens: [],
+                passeios: [],
+                visibilidade: 'dinamico'
+            }, user.uid)
+        }
+    }
+}
+
+async function _getUID() {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        unsubscribe(); // Unsubscribe to avoid memory leaks
+  
+        if (user) {
+          resolve(user.uid);
+        } else {
+          resolve(null)
+        }
+      });
+    });
+  }
+
 async function _getFirebaseIdToken(user) {
     if (!user) {
-        user = await _getUser();
+        user = firebase.auth().currentUser;
     }
     if (user) {
         return await user.getIdToken();
@@ -32,26 +63,28 @@ async function _getFirebaseIdToken(user) {
 }
 
 async function _deleteAccount() {
-    const user = await _getUser();
-    if (user) {
-        const host = window.location.hostname;
-        try {
-            const token = await _getFirebaseIdToken(user);
-            const url = host === "localhost"
-                ? `http://localhost:5001/trip-viewer-tcc/us-central1/deleteUser?token=${token}`
-                : `https://us-central1-trip-viewer-tcc.cloudfunctions.net/deleteUser?token=${token}`;
+    const uid = await _getUID();
+    if (uid) {
+        const userDoc = await _get(`usuarios/${uid}`);
 
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`Fetch request failed with status: ${response.status}`);
+        if (userDoc) {
+            for (const viagemID of userDoc.viagens) {
+                const viagemDoc = await _get(`viagens/${viagemID}`);
+                if (uid == viagemDoc.compartilhamento.dono) {
+                    _delete(`viagens/${viagemID}`);
+                }
             }
 
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            _logger(ERROR, error);
+            for (const passeioID of userDoc.passeios) {
+                const passeioDoc = await _get(`passeios/${passeioID}`);
+                if (uid == passeioDoc.compartilhamento.dono) {
+                    _delete(`passeios/${passeioID}`);
+                }
+            }
+
+            await _delete(`usuarios/${uid}`)
         }
+
     } else {
         _logger(ERROR, "Usuário não logado");
     }
@@ -59,17 +92,17 @@ async function _deleteAccount() {
 
 async function _getUser() {
     return new Promise((resolve, reject) => {
-      const auth = firebase.auth();
-      const unsubscribe = auth.onAuthStateChanged(async (user) => {
-        unsubscribe();
-  
-        if (user) {
-          resolve(user);
-        } else {
-          resolve(undefined);
-        }
-      }, (error) => {
-        reject(error);
-      });
+        const auth = firebase.auth();
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            unsubscribe();
+
+            if (user) {
+                resolve(user);
+            } else {
+                resolve(undefined);
+            }
+        }, (error) => {
+            reject(error);
+        });
     });
-  }
+}

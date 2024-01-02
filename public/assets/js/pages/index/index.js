@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
       'performance',
     ].filter(feature => typeof app[feature] === 'function');
     console.log(`Firebase SDK loaded with ${features.join(', ')}`);
-
+    firebase.auth().currentUser;
+    
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
@@ -258,7 +259,7 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('add-trip').addEventListener('click', function () {
-    _newTrip();
+    _newTripIndex();
   });
 
   document.getElementById('add-places').addEventListener('click', function () {
@@ -295,6 +296,7 @@ async function _loadUserIndex() {
   try {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
+        _registerIfUserNotPresent();
         _loadUserIndexVisibility();
 
         const displayName = user.displayName;
@@ -407,7 +409,7 @@ function _viewTrip(code){
   window.location.href = `viagem.html?v=${code}`;
 }
 
-function _newTrip() {
+function _newTripIndex() {
   localStorage.setItem('tripList', JSON.stringify(tripList));
   localStorage.setItem('placesList', JSON.stringify(placesList));
   window.location.href = `editar-viagem.html`;

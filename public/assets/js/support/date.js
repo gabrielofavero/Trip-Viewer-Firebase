@@ -51,7 +51,11 @@ function _getDateNoTime(date) {
 }
 
 function _convertFromFirestoreDate(timestamp) {
-    return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
+    if (timestamp.seconds) {
+        return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+    } else {
+        return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
+    }
 }
 
 function _convertToFirestoreDate(date) {

@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
       'performance',
     ].filter(feature => typeof app[feature] === 'function');
     console.log(`Firebase SDK loaded with ${features.join(', ')}`);
-
+    firebase.auth().currentUser;
+    
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
