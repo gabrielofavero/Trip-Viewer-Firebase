@@ -7,15 +7,18 @@
 - ⚔️: Epic
 
 ## Doing
-- 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
+- 🏆 Criar opção de fornecer link de imagem ao invés de upload;
+- 🏆 Adicionar suporte a links personalizáveis;
+- 🏆 Criar opção de apagar viagem dentro da tela de edição;
+- 🏆 Criar Módulo de Galeria
 
 ## To-Do
 
 # Prioridade Alta
-- 🐞 Loading no index finalizando antes de carregar a lista de viagens/passeios 
+- 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
 - 🏆 Criar Função de Visualizador de Passeios
-- 🏆 Criar Módulo de Galeria
-- 🏆 Limitar tamanho de upload + forma no backend para deixar mais seguro;
+
+
 
 # Prioridade Média
 - ⚔️ Migrar Projeto para outro domínio
@@ -40,7 +43,9 @@
 ## Done
 
 ### Janeiro 2023
-- ⚔️ Migrar Projeto para Plano Spark
+- ⚔️ Migração do Projeto para Plano Spark
+- 🏆 Limitação do tamanho de upload + forma no backend para deixar mais seguro;
+- 🐞 Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios 
 
 ### Dezembro 2023
 - 🐞 Consertada posição do select de transporte de editar-viagem;
