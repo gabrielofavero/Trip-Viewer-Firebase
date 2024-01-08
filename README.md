@@ -39,7 +39,7 @@
 
 ## Done
 
-### Janeiro 2023
+### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;
 - 🏆 Limitação do tamanho de upload + forma no backend para deixar mais seguro;
 - 🐞 Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios;
@@ -58,48 +58,34 @@
 - ⚔️ Otimizado BD (simplificar estrutura);
 - ⚔️ Security Overhaul.
 
-### Semana 19/11/2023 - 25/11/2023
+### Novembro 2023
+- 📈 Automatizadas cores tema definidas pelo usuário;
+- 🐞 Corrigido bugs do modo escuro;
+- 🏆 Criada Página de Login;
+- 🏆 Criada Página de Usuário logado;
+- 🏆 Criado sistema de compartilhamento de viagens via link (URL do viagem.html e botão no index.html);
+- 🏆 Criada funcionalidade "Minhas Viagens";
 - 🏆 Criada página de edição/criação de viagens;
 - 🏆 Criada página de edição/criação de passeios;
 - 🏆 Criada página de configurações;
 - 🏆 Criadas funções de front-end para o index.html;
 
-### 13/11/2023
-- 🏆 Criada funcionalidade "Minhas Viagens";
-
-### 09/11/2023
-- 🏆 Criada Página de Login;
-- 🏆 Criada Página de Usuário logado;
-- 🏆 Criado sistema de compartilhamento de viagens via link (URL do viagem.html e botão no index.html);
-
-### 07/11/2023
-- 📈 Automatizadas cores tema definidas pelo usuário;
-- 🐞 Corrigido bugs do modo escuro;
-
-### 31/10/2023
-- 🏆 Criado esqueleto para a Home Page (Login);
-- 🐞 Corrigido bugs do modo escuro;
-- 🏆 Inserção de autenticação no back-end e front-end;
-
-### 29/10/2023
-- 🐞 Bug Fixes;
-- 🏆 Logo Interativo de acordo com a cor definida pelo usuário;
-
-### 04/10/2023
-- 🏆 Inserção de calendário dinâmico (swiper);
-
-### 03/10/2023
+### Outubro 2023
+- 🏆 Migração de 'Transporte' ao Firestore;
+- 🏆 Criação de artes de transporte / hospedagem;
+- 🏆 Migração de Jsons de configuração ao Firestore;
 - 🏆 Migração de 'Hospedagem' ao Firestore;
 - 📈 Remoção de métodos descontinuados;
 - 🏆 Migração de  'Resumo'(Keypoints) ao Firestore;
 - 🏆 Criação de tratamento para falha de conexão com o banco de dados;
+- 🏆 Inserção de calendário dinâmico (swiper);
+- 🐞 Bug Fixes diversos;
+- 🏆 Logo Interativo de acordo com a cor definida pelo usuário;
+- 🏆 Criado esqueleto para a Home Page (Login);
+- 🐞 Corrigido bugs do modo escuro;
+- 🏆 Inserção de autenticação no back-end e front-end;
 
-### 02/10/2023
-- 🏆 Migração de 'Transporte' ao Firestore;
-- 🏆 Criação de artes de transporte / hospedagem;
-- 🏆 Migração de Jsons de configuração ao Firestore;
-
-### 29/09/2023
+### Setembro 2023
 - 🏆 Migração de 'Passeios' ao Firestore;
 - 🏆 Migração de 'Programação' ao Firestore;
 
