@@ -1017,7 +1017,7 @@ table {
   background: #fff
 }
 
-.nice-form-group>input[type=file] {
+.nice-form-group>input[type=file], .upload-box {
   background: rgba(0, 0, 0, .025);
   padding: var(--nf-input-size);
   display: block;
@@ -1029,7 +1029,9 @@ table {
 }
 
 .nice-form-group>input[type=file]:focus,
-.nice-form-group>input[type=file]:hover {
+.nice-form-group>input[type=file]:hover,
+.upload-box:focus,
+.upload-box:focus  {
   border-color: var(--nf-input-focus-border-color)
 }
 
@@ -1605,4 +1607,24 @@ details summary::-webkit-details-marker {
   .modal-content {
     width: 90%;
   }
+}
+
+.transparent-background{
+  background: rgba(0, 0, 0, .005);
+  margin-top: 10px;
+  padding-top: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  width: 100%;
+  border-radius: var(--nf-input-border-radius);
+}
+
+.transparent-background-color{
+  background: rgba(0, 0, 0, .005);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  width: 100%;
+  border-radius: var(--nf-input-border-radius);
 }

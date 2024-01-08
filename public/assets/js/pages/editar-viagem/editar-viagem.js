@@ -237,6 +237,9 @@ document.addEventListener('DOMContentLoaded', function () {
       _loadNewTrip();
     }
 
+    _loadBackgroundSelector();
+    _loadLogoSelector();
+
     _loadEventListeners();
 
     if (!blockLoadingEnd) {
@@ -246,16 +249,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
   } catch (error) {
     _displayErrorMessage(error);
+    if (window.location.href.includes('editar-template.html')) {
+      _overrideError();
+    }
     throw error;
   }
 });
 
 function _loadHabilitados() {
+  _loadEditModule('imagens');
+  _loadEditModule('cores');
+  _loadEditModule('links');
   _loadEditModule('editores');
   _loadEditModule('transporte');
   _loadEditModule('hospedagem');
   _loadEditModule('programacao');
   _loadEditModule('passeios');
+}
+
+function _loadUploadSelectors() {
+  _loadUploadSelector('background');
+  _loadUploadSelector('logo');
 }
 
 function _loadEventListeners() {
@@ -305,7 +319,6 @@ async function _loadTrip() {
   blockLoadingEnd = true;
   _startLoadingScreen();
   FIRESTORE_DATA = await _getSingleTrip();
-  console.log(FIRESTORE_DATA);
   _loadTripData(FIRESTORE_DATA);
   _stopLoadingScreen();
 }
@@ -314,6 +327,10 @@ async function _uploadBackground(id = tripID) {
   return await _uploadImage('trips/' + id + '/hero-bg.jpg', 'background');
 }
 
-async function _uploadLogo(id=tripID){
+async function _uploadLogoLight(id=tripID){
   return await _uploadImage('trips/' + id + '/logo.png', 'logo');
+}
+
+async function _uploadLogoDark(id=tripID){
+  return await _uploadImage('trips/' + id + '/logo-dark.png', 'logo');
 }

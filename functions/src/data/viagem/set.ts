@@ -88,7 +88,6 @@ export const updateTripImage = functions.https.onRequest(
       if (uploadBackground && uploadLogo) {
         await viagemDoc.update({
           'imagem.background': background,
-          'imagem.ativo': logoAtivo,
           'imagem.claro': logo,
           'imagem.escuro': logo,
         });
@@ -98,7 +97,6 @@ export const updateTripImage = functions.https.onRequest(
         });
        } else if (uploadLogo) {
           await viagemDoc.update({
-            'imagem.ativo': logoAtivo,
             'imagem.claro': logo,
             'imagem.escuro': logo,
           });

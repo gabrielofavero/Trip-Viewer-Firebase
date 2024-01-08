@@ -1,4 +1,4 @@
-function _getDatabaseObject(success, data, message="") {
+function _getDatabaseObject(success, data, message = "") {
   return ({
     success: success,
     data: data,
@@ -27,7 +27,7 @@ async function _get(path) {
 
 }
 
-async function _create(collection, data, docName="") {
+async function _create(collection, data, docName = "") {
   try {
     let docRef = '';
     if (!docName) {
@@ -146,102 +146,102 @@ async function _getConfig() {
 async function _getTripList() {
   const uid = await _getUID();
   if (uid) {
-      const userData = await _get(`usuarios/${uid}`);
-      var viagens = [];
+    const userData = await _get(`usuarios/${uid}`);
+    var viagens = [];
 
-      if (userData) {
-          for (const viagemID of userData.viagens) {
-              const viagem = await _get(`viagens/${viagemID}`);
-              viagens.push({
-                  code: viagemID,
-                  titulo: viagem.titulo,
-                  inicio: viagem.inicio,
-                  fim: viagem.fim,
-              });
-          }
+    if (userData) {
+      for (const viagemID of userData.viagens) {
+        const viagem = await _get(`viagens/${viagemID}`);
+        viagens.push({
+          code: viagemID,
+          titulo: viagem.titulo,
+          inicio: viagem.inicio,
+          fim: viagem.fim,
+        });
       }
+    }
 
-      return viagens;
+    return viagens;
 
   } else {
-      _logger(ERROR, "Usuário não logado");
+    _logger(ERROR, "Usuário não logado");
   }
 }
 
 async function _getPlacesList() {
   const uid = await _getUID();
   if (uid) {
-      const userData = await _get(`usuarios/${uid}`);
-      var passeios = [];
+    const userData = await _get(`usuarios/${uid}`);
+    var passeios = [];
 
-      if (userData) {
-          for (const passeioID of userData.passeios) {
-              const passeio = await _get(`passeios/${passeioID}`);
-              passeios.push({
-                  code: passeioID,
-                  titulo: passeio.titulo
-              })
-          }
+    if (userData) {
+      for (const passeioID of userData.passeios) {
+        const passeio = await _get(`passeios/${passeioID}`);
+        passeios.push({
+          code: passeioID,
+          titulo: passeio.titulo
+        })
       }
+    }
 
-      return passeios
+    return passeios
 
   } else {
-      _logger(ERROR, "Usuário não logado");
+    _logger(ERROR, "Usuário não logado");
   }
 }
 
 async function _updateVisibility(visibility) {
   const uid = await _getUID();
   if (uid) {
-      if (!visibility || !["dinamico", "claro", "escuro"].includes(visibility)) {
-          _logger(ERROR, "Visibilidade inválida");
-      } else {
-          const result = await _update(`usuarios/${uid}`, { visibilidade: visibility })
-          console.log(result);
-      }
+    if (!visibility || !["dinamico", "claro", "escuro"].includes(visibility)) {
+      _logger(ERROR, "Visibilidade inválida");
+    } else {
+      const result = await _update(`usuarios/${uid}`, { visibilidade: visibility })
+      console.log(result);
+    }
   } else {
-      _logger(ERROR, "Usuário não logado");
+    _logger(ERROR, "Usuário não logado");
   }
 }
 
 async function _getVisibility() {
   const uid = await _getUID();
   if (uid) {
-      const userData = await _get(`usuarios/${uid}`);
-      return userData.visibilidade;
+    const userData = await _get(`usuarios/${uid}`);
+    return userData.visibilidade;
   }
 }
 
 async function _deleteTrip(id) {
   const uid = await _getUID();
   if (uid) {
-      const userData = await _get(`usuarios/${uid}`);
-      var viagens = userData.viagens;
+    const userData = await _get(`usuarios/${uid}`);
+    var viagens = userData.viagens;
 
-      const index = viagens.indexOf(id);
-      if (index !== -1) {
-          viagens.splice(index, 1);
-          _update(`viagens/${id}`, { viagens: viagens })
-      }
+    const index = viagens.indexOf(id);
+    if (index !== -1) {
+      viagens.splice(index, 1);
+      _update(`viagens/${id}`, { viagens: viagens })
+    }
 
-      return await _delete(`viagens/${id}`);
+    return await _delete(`viagens/${id}`);
   }
 }
 
 async function _deletePlace(id) {
   const uid = await _getUID();
   if (uid) {
-      const userData = await _get(`usuarios/${uid}`);
-      var passeios = userData.passeios;
+    const userData = await _get(`usuarios/${uid}`);
+    var passeios = userData.passeios;
 
-      const index = passeios.indexOf(id);
-      if (index !== -1) {
-          passeios.splice(index, 1);
-          _update(`passeios/${id}`, { passeios: passeios })
-      }
+    const index = passeios.indexOf(id);
+    if (index !== -1) {
+      passeios.splice(index, 1);
+      _update(`passeios/${id}`, { passeios: passeios })
+    }
 
-      return await _delete(`passeios/${id}`);
+    return await _delete(`passeios/${id}`);
   }
 }
 
@@ -268,90 +268,91 @@ async function _addPlaceToUser(id) {
 async function _deleteAccount() {
   const uid = await _getUID();
   if (uid) {
-      const userData = await _get(`usuarios/${uid}`);
+    const userData = await _get(`usuarios/${uid}`);
 
-      for (const viagemID of userData.viagens) {
-          const viagem = await _get(`viagens/${viagemID}`);
-          const dono = viagem.compartilhamento.dono;
-          if (viagemID == dono) {
-              _deleteTrip(viagemID)
-          }
+    for (const viagemID of userData.viagens) {
+      const viagem = await _get(`viagens/${viagemID}`);
+      const dono = viagem.compartilhamento.dono;
+      if (viagemID == dono) {
+        _deleteTrip(viagemID)
       }
+    }
 
-      for (const passeioID of userData.passeios) {
-          const passeio = await _get(`passeios/${passeioID}`);
-          const dono = passeio.compartilhamento.dono;
-          if (passeioID == dono) {
-              _deletePlace(passeioID)
-          }
+    for (const passeioID of userData.passeios) {
+      const passeio = await _get(`passeios/${passeioID}`);
+      const dono = passeio.compartilhamento.dono;
+      if (passeioID == dono) {
+        _deletePlace(passeioID)
       }
-
+    }
   }
 }
 
 async function _getSinglePlaces() {
   try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const placesID = urlParams.get('p');
-  
-      let place = await _get(`passeios/${placesID}`);
+    const urlParams = new URLSearchParams(window.location.search);
+    const placesID = urlParams.get('p');
 
-      if (place == null) {
-          _displayNoPlaceError();
-      }
-  
-      return place;
-  
-    } catch (error) {
-      _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+    let place = await _get(`passeios/${placesID}`);
+
+    if (place == null) {
       _displayNoPlaceError();
-      return null;
     }
+
+    return place;
+
+  } catch (error) {
+    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+    _displayNoPlaceError();
+    return null;
+  }
 }
 
 async function _updatePlaces(places, placesID) {
   if (await _getUID()) {
-      try {
-          return await _update(`passeios/${placesID}`, places)
-      } catch (error) {
-          console.error('Error fetching data:', error);
-          return error.message;
-      }
+    try {
+      return await _update(`passeios/${placesID}`, places)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return error.message;
+    }
   } else return "Usuário não logado"
 }
 
 async function _newPlaces(places) {
   if (await _getUID()) {
-      return await _create('passeios', places)
+    return await _create('passeios', places)
   } else return "Usuário não logado"
 }
 
 async function _updateTripImage(body) {
   if (await _getUID()) {
-      const viagemDoc = admin.firestore().doc(`viagens/${body.viagemID}`);
-      try {
-          if (body.uploadBackground && body.uploadLogo) {
-              await viagemDoc.update({
-                  'imagem.background': body.background,
-                  'imagem.ativo': body.logoAtivo,
-                  'imagem.claro': body.logo,
-                  'imagem.escuro': body.logo,
-              });
-          } else if (body.uploadBackground) {
-              await viagemDoc.update({
-                  'imagem.background': body.background,
-              });
-          } else if (body.uploadLogo) {
-              await viagemDoc.update({
-                  'imagem.ativo': body.logoAtivo,
-                  'imagem.claro': body.logo,
-                  'imagem.escuro': body.logo,
-              });
-          }
-          return `Viagem '${body.viagemID}' atualizada com sucesso`;
-      } catch (e) {
-          return `Erro ao atualizar viagem: ${e.message}`;
+    const viagemDoc = admin.firestore().doc(`viagens/${body.viagemID}`);
+
+    try {
+      if (body.background || body.logoLight || body.logoDark) {
+        let uploadObject = {};
+
+        if (body.background) {
+          uploadObject['imagem.background'] = body.background;
+        }
+
+        if (body.logoLight) {
+          uploadObject['imagem.claro'] = body.logoLight;
+        }
+
+        if (body.logoDark) {
+          uploadObject['imagem.escuro'] = body.logoDark;
+        }
+
+        await viagemDoc.update(uploadObject);
       }
+
+      return `Viagem '${body.viagemID}' atualizada com sucesso`;
+
+    } catch (e) {
+      return `Erro ao atualizar viagem: ${e.message}`;
+    }
 
 
   } else return "Usuário não logado"

@@ -1,8 +1,16 @@
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
+const FIREBASE_IMAGE_ORIGIN = 'https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/';
+
 var PASSEIOS_SELECT_OPTIONS = "";
 var PROGRAMACAO = {};
+
+var FIREBASE_IMAGES = {
+  background: false,
+  claro: false,
+  escuro: false
+}
 
 // Viagem Existente
 function _loadTripData(FIRESTORE_DATA) {
@@ -19,16 +27,15 @@ function _loadTripData(FIRESTORE_DATA) {
     _displayErrorMessage(e);
     throw e;
   }
-
 }
 
 // Nova Viagem
 function _loadDadosBasicosNewTrip() {
-  const inicio = document.getElementById('inicio');
-  const fim = document.getElementById('fim');
+  document.getElementById('inicio').value = TODAY;
+  document.getElementById('fim').value = TOMORROW;
 
-  inicio.value = TODAY;
-  fim.value = TOMORROW;
+  document.getElementById('moeda').value = 'R$';
+  document.getElementById('quantidadePessoas').value = 1;
 }
 
 
@@ -449,8 +456,102 @@ function _loadCompartilhamentoData(FIRESTORE_DATA) {
 }
 
 function _loadCustomizacaoData(FIRESTORE_DATA) {
-  document.getElementById('claro').value = FIRESTORE_DATA.cores.claro;
-  document.getElementById('escuro').value = FIRESTORE_DATA.cores.escuro;
+  // Imagens
+  const background = FIRESTORE_DATA.imagem.background;
+  const logoClaro = FIRESTORE_DATA.imagem.claro;
+  const logoEscuro = FIRESTORE_DATA.imagem.escuro;
+  const altura = FIRESTORE_DATA.imagem.altura;
+  
+  const logoTamanho = document.getElementById('logo-tamanho');
+  const alturaArray = Array.from(logoTamanho.options).map(option => option.value);
+
+  if (background || logoClaro || logoEscuro) {
+    document.getElementById('habilitado-imagens').checked = true;
+  }
+
+  if (background) {
+    document.getElementById('link-background').value = background;
+  }
+
+  if (logoClaro) {
+    document.getElementById('link-logo-light').value = logoClaro;
+  }
+
+  if (logoEscuro) {
+    document.getElementById('link-logo-dark').value = logoEscuro;
+  }
+
+  if (altura && alturaArray.includes(altura)) {
+    logoTamanho.value = altura;
+  }
+
+  if (background.includes(FIREBASE_IMAGE_ORIGIN)) {
+    FIREBASE_IMAGES.background = true;
+  }
+
+  if (logoClaro.includes(FIREBASE_IMAGE_ORIGIN)) {
+    FIREBASE_IMAGES.claro = true;
+  }
+
+  if (logoEscuro.includes(FIREBASE_IMAGE_ORIGIN)) {
+    FIREBASE_IMAGES.escuro = true;
+  }
+
+
+  // Cores
+  const claro = document.getElementById('claro');
+  const escuro = document.getElementById('escuro');
+
+  const claroFB = FIRESTORE_DATA.cores.claro;
+  const escuroFB = FIRESTORE_DATA.cores.escuro
+
+  if (claro.value != claroFB || escuro.value != escuroFB ) {
+    document.getElementById('habilitado-cores').checked = true;
+    claro.value = claroFB;
+    escuro.value = escuroFB;
+    document.getElementById('habilitado-cores-content').style.display = 'block';
+  }
+
+  // Links Personalizados
+  const attachments = FIRESTORE_DATA.links.attachments;
+  const drive = FIRESTORE_DATA.links.drive;
+  const maps = FIRESTORE_DATA.links.maps;
+  const pdf = FIRESTORE_DATA.links.pdf;
+  const ppt = FIRESTORE_DATA.links.ppt;
+  const sheet = FIRESTORE_DATA.links.sheet;
+  const vacina = FIRESTORE_DATA.links.vacina;
+
+  if (attachments || drive || maps || pdf || ppt || sheet || vacina) {
+    document.getElementById('habilitado-imagens').checked = true;
+  }
+
+  if (attachments) {
+    document.getElementById('link-attachments').value = attachments;
+  }
+
+  if (drive) {
+    document.getElementById('link-drive').value = drive;
+  }
+
+  if (maps) {
+    document.getElementById('link-maps').value = maps;
+  }
+
+  if (pdf) {
+    document.getElementById('link-pdf').value = pdf;
+  }
+
+  if (ppt) {
+    document.getElementById('link-ppt').value = ppt;
+  }
+
+  if (sheet) {
+    document.getElementById('link-sheet').value = sheet;
+  }
+
+  if (vacina) {
+    document.getElementById('link-vacina').value = vacina;
+  }
 }
 
 function _loadMeiosDeTransporteData(FIRESTORE_DATA) {

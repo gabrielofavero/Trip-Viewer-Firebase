@@ -7,23 +7,20 @@
 - ⚔️: Epic
 
 ## Doing
-- 🏆 Criar opção de fornecer link de imagem ao invés de upload;
-- 🏆 Adicionar suporte a links personalizáveis;
-- 🏆 Criar opção de apagar viagem dentro da tela de edição;
-- 🏆 Criar Módulo de Galeria
+- 🏆 Implementar Set para links personalizáveis;
 
 ## To-Do
 
 # Prioridade Alta
+- 🏆 Adicionar forma de deletar passeios / viagens
+- 🏆 Adicionar forma de deletar passeio em editar-viagens
+- 🏆 Criar Módulo de Galeria
 - 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
 - 🏆 Criar Função de Visualizador de Passeios
 
-
-
 # Prioridade Média
 - ⚔️ Migrar Projeto para outro domínio
-- 🏆 Adicionar forma de deletar passeios / viagens
-- 🏆 Adicionar forma de deletar passeio em editar-viagens
+- 🏆 Adicionar mensagem customizada para erro no upload de imagens;
 
 # Prioridade Baixa
 - 🐞 O loading em viagens não está pegando a cor customizada;
@@ -43,9 +40,11 @@
 ## Done
 
 ### Janeiro 2023
-- ⚔️ Migração do Projeto para Plano Spark
+- ⚔️ Migração do Projeto para Plano Spark;
 - 🏆 Limitação do tamanho de upload + forma no backend para deixar mais seguro;
-- 🐞 Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios 
+- 🐞 Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios;
+- 🏆 Criar opção de fornecer link de imagem ao invés de upload;
+- 🏆 Adicionar suporte a links personalizáveis;
 
 ### Dezembro 2023
 - 🐞 Consertada posição do select de transporte de editar-viagem;
@@ -54,10 +53,10 @@
 - 🏆 Implementado compartilhamento de viagens via botão no viagem.html.
 - 🏆 Implementado get de imagens em viagem.html;
 - 🏆 Implementados bloqueios de edição de viagens e passeios;
-- 🏆 Night Mode interativo do user
+- 🏆 Night Mode interativo do user;
 - 📈 Linkado e validado funções de back-end para edição de viagens e passeios;
 - ⚔️ Otimizado BD (simplificar estrutura);
-- ⚔️ Security Overhaul
+- ⚔️ Security Overhaul.
 
 ### Semana 19/11/2023 - 25/11/2023
 - 🏆 Criada página de edição/criação de viagens;

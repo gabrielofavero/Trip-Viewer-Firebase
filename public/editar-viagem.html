@@ -262,12 +262,12 @@
           <div class="nice-form-group">
             <input id="habilitado-publico" type="checkbox" id="check-4" class="switch" checked />
             <label for="check-4">
-              Viagem pública
+              Viagem Pública
               <small>Todos com o link de acesso podem visualizar sua viagem</small>
             </label>
           </div>
 
-          <div class="nice-form-group">
+          <div class="nice-form-group" id="editoresCheck" style="display:none">
             <input id="habilitado-editores" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               Permitir Editores
@@ -314,27 +314,146 @@
           </h1>
           <p>Dê uma cara única para a sua viagem.</p>
 
-          <div class="nice-form-group customization-box">
-            <label>Papel de Parede <span class="opcional"> (Imagem de fundo para sua viagem)</span></label>
-            <input id="background" type="file" accept=".jpg" />
+
+          <div class="nice-form-group">
+            <input id="habilitado-imagens" type="checkbox" id="check-4" class="switch" />
+            <label for="check-4">
+              Imagens Personalizadas
+              <small>Adicione um papel de parede e um logotipo</small>
+            </label>
           </div>
 
-          <div class="nice-form-group customization-box">
-            <label>Título <span class="opcional"> (Logotipo para o título de sua viagem)</span></label>
-            <input id="logo" type="file" accept=".png" />
-          </div>
+          <div class="transparent-background" id="habilitado-imagens-content">
 
-          <div class="side-by-side-box-fixed" id="cores">
-            <div class="nice-form-group side-by-side-fixed">
-              <label>Tema: Claro</label>
-              <input id="claro" type="color" value="#5859a7" />
+            <div class="nice-form-group customization-box" id="background-box">
+              <label>Papel de Parede <span class="opcional"> (Opcional)</span></label>
+              <input id="upload-background" type="file" accept=".jpg" />
             </div>
 
-            <div class="nice-form-group side-by-side-fixed">
-              <label>Tema: Escuro</label>
-              <input id="escuro" type="color" value="#7f75b6" />
+            <div class="nice-form-group">
+              <input required="" id="link-background" type="url" placeholder="https://link.com/imagem.jpg" value="" class="icon-right">
+            </div>
+
+            <fieldset class="nice-form-group">
+              <div class="nice-form-group">
+                <input type="radio" name="type-background" id="enable-link-background" checked>
+              </div>
+  
+              <div class="nice-form-group">
+                <input type="radio" name="type-background" id="enable-upload-background">
+                <label for="enable-upload-background">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+              </div>
+            </fieldset>
+  
+            <div class="nice-form-group customization-box">
+              <label>Título: Modo Claro <span class="opcional"> (Opcional)</span></label>
+              <input id="upload-logo-light" type="file" accept=".png" />
+            </div>
+
+            <div class="nice-form-group">
+              <input required="" id="link-logo-light" type="url" placeholder="https://link.com/imagem.png" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group customization-box">
+              <label>Título: Modo Escuro <span class="opcional"> (Opcional)</span></label>
+              <input id="upload-logo-dark" type="file" accept=".png" />
+            </div>
+
+            <div class="nice-form-group">
+              <input required="" id="link-logo-dark" type="url" placeholder="https://link.com/imagem.png" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group">
+              <label>Altura do Título</label>
+              <select id="logo-tamanho">
+                <option value="250px">Padrão</option>
+                <option value="150px">Pequena</option>
+                <option value="350px">Grande</option>
+              </select>
+            </div>
+
+            <fieldset class="nice-form-group">
+              <div class="nice-form-group">
+                <input type="radio" name="type-logo" id="enable-link-logo" checked>
+                <label for="enable-link-logo">Fornecer link</label>
+              </div>
+  
+              <div class="nice-form-group">
+                <input type="radio" name="type-logo" id="enable-upload-logo">
+                <label for="enable-upload-logo">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="nice-form-group">
+            <input id="habilitado-cores" type="checkbox" id="check-4" class="switch" />
+            <label for="check-4">
+              Cores Personalizadas
+              <small>Escolha as cores para o seu planejamento</small>
+            </label>
+          </div>
+
+          <div class="transparent-background-color" id="habilitado-cores-content">
+            <div class="side-by-side-box-fixed" id="cores">
+              <div class="nice-form-group side-by-side-fixed">
+                <label>Tema: Claro</label>
+                <input id="claro" type="color" value="#5859a7" />
+              </div>
+  
+              <div class="nice-form-group side-by-side-fixed">
+                <label>Tema: Escuro</label>
+                <input id="escuro" type="color" value="#7f75b6" />
+              </div>
             </div>
           </div>
+
+          <div class="nice-form-group">
+            <input id="habilitado-links" type="checkbox" id="check-4" class="switch" />
+            <label for="check-4">
+              Links Personalizados
+              <small>Adicione links de comprovantes, planilhas, entre outros</small>
+            </label>
+          </div>
+
+          <div class="transparent-background" id="habilitado-links-content">
+            <div class="nice-form-group">
+              <label>Anexo <span class="opcional"> (Opcional)</span></label>
+              <input required="" id="link-attachments" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group">
+              <label>Google Drive <span class="opcional"> (Opcional)</span></label>
+              <input required="" id="link-drive" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group">
+              <label>Mapa <span class="opcional"> (Opcional)</span></label>
+              <input required="" id="link-maps" type="url" placeholder="https://www.google.com/maps/" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group">
+              <label>PDF <span class="opcional"> (Opcional)</span></label>
+              <input required="" id="link-pdf" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group">
+              <label>Apresentação (PowerPoint) <span class="opcional"> (Opcional)</span></label>
+              <input required="" id="link-maps" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group">
+              <label>Planilha (Excel / Sheets) <span class="opcional"> (Opcional)</span></label>
+              <input required="" id="link-maps" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+            </div>
+
+            <div class="nice-form-group">
+              <label>Comprovante de Vacinação <span class="opcional"> (Opcional)</span></label>
+              <input required="" id="link-maps" type="url" placeholder="https://drive.google.com/drive" value="" class="icon-right">
+            </div>
+
+          </div>
+
+
 
         </section>
 

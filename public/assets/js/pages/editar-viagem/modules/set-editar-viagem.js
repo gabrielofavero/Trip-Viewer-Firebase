@@ -1,5 +1,12 @@
 var uploadBackground = false;
-var uploadLogo = false;
+var uploadLogoLight = false;
+var uploadLogoDark = false;
+
+var CLEAR_IMAGES = {
+    background: false,
+    claro: false,
+    escuro: false
+}
 
 async function _buildTripObject() {
     let result = {
@@ -9,7 +16,7 @@ async function _buildTripObject() {
             compartilhamento: {},
             cores: {},
             fim: {},
-            hospedagens:{
+            hospedagens: {
                 codigos: [],
                 datas: [],
                 endereco: [],
@@ -22,7 +29,6 @@ async function _buildTripObject() {
             inicio: {},
             links: {
                 attachments: "",
-                documents: "",
                 drive: "",
                 maps: "",
                 pdf: "",
@@ -121,27 +127,28 @@ async function _buildCompartilhamentoObject() {
 
 function _buildImagemObject() {
     let result = {
-        altura: '250px',
-        ativo: false,
-        background: '',
-        claro: '',
-        escuro: '',
+        altura: document.getElementById('logo-tamanho').value,
+        background: document.getElementById('link-background').value || "",
+        claro: document.getElementById('link-logo-light').value || "",
+        escuro: document.getElementById('link-logo-dark').value || "",
     }
 
-    if (FIRESTORE_DATA) {
-        result.ativo = FIRESTORE_DATA.imagem.ativo;
-        result.background = FIRESTORE_DATA.imagem.background;
-        result.altura = FIRESTORE_DATA.imagem.altura;
-        result.claro = FIRESTORE_DATA.imagem.claro;
-        result.escuro = FIRESTORE_DATA.imagem.escuro;
-    }
-
-    if (document.getElementById('background').value) {
+    if (document.getElementById('upload-background').value) {
         uploadBackground = true;
+    } else if (result.background && FIREBASE_IMAGES.background && !result.background.includes(FIREBASE_IMAGE_ORIGIN)) {
+        CLEAR_IMAGES.background = true;
     }
 
-    if (document.getElementById('logo').value) {
-        uploadLogo = true;
+    if (document.getElementById('upload-logo-light').value) {
+        uploadLogoLight = true;
+    } else if (result.claro && FIREBASE_IMAGES.claro && !result.claro.includes(FIREBASE_IMAGE_ORIGIN)) {
+        CLEAR_IMAGES.claro = true;
+    }
+
+    if (document.getElementById('upload-logo-dark').value) {
+        uploadLogoDark = true;
+    } else if (result.escuro && FIREBASE_IMAGES.escuro && !result.escuro.includes(FIREBASE_IMAGE_ORIGIN)) {
+        CLEAR_IMAGES.escuro = true;
     }
 
     return result;
@@ -381,34 +388,39 @@ async function _setViagem() {
         console.log(result);
         message = result.message;
 
-        if (result.success == true && (uploadLogo || uploadBackground)) {
+        if (result.success == true && (uploadLogoLight || uploadLogoDark || uploadBackground)) {
             let newMessage = '';
             const id = message.split("'")[1];
-            let logo = '';
+            let logoLight = '';
+            let logoDark = ''
             let background = '';
 
-            if (uploadLogo) {
-                logo = await _uploadLogo(id);
+            if (uploadLogoLight) {
+                logoLight = await _uploadLogoLight(id);
+            }
+
+            if (uploadLogoDark) {
+                logoDark = await _uploadLogo(id);
             }
 
             if (uploadBackground) {
-                background = await _uploadBackground(id);
+                background = await _uploadLogoDark(id);
             }
 
             body = {
                 viagemID: id,
-                uploadBackground: uploadBackground,
                 background: background,
-                uploadLogo: uploadLogo,
-                logo: logo
+                logoLight: logoLight,
+                logoDark: logoDark
             }
 
             newMessage = await _updateTripImage(body)
 
             if (!newMessage.includes('sucesso')) {
                 message += '. Falha no upload de imagem(s): ' + newMessage;
+            } else {
+                await _checkAndClearFirebaseImages(id);
             }
-
         }
 
         document.getElementById('modal-inner-text').innerText = message;
