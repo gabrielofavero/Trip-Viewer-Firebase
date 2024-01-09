@@ -36,6 +36,7 @@
 - 📈 Editar caixa de perfil no index para tratar strings muito longas;
 - 🏆 Adicionar animações no index.html;
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
+- Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
 
 ## Done
 
