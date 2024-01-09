@@ -7,7 +7,6 @@
 - ⚔️: Epic
 
 ## Doing
-- 📈 Redução do CSS em modo escuro
 
 ## To-Do
 
@@ -48,6 +47,7 @@
 - 🏆 Adicionar suporte a links personalizáveis;
 - 🏆 Implementar Set para links personalizáveis;
 - 🏆 Implementar modo ativo/inativo em links, imagens e cores para não perder os dados do user caso ele só queira mudar a exibição.
+- 📈 Redução do CSS em modo escuro
 
 ### Dezembro 2023
 - 🐞 Consertada posição do select de transporte de editar-viagem;

@@ -467,6 +467,7 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
 
   if (FIRESTORE_DATA.imagem.ativo === true) {
     document.getElementById('habilitado-imagens').checked = true;
+    document.getElementById('habilitado-imagens-content').style.display = 'block';
   }
 
   if (background) {
