@@ -23,59 +23,65 @@ function _loadHeader() {
   document.getElementById("header1").innerHTML = "<h1>" + FIRESTORE_DATA.titulo + "</h1>";
   document.getElementById("header2").style.display = "none";
 
-  if (FIRESTORE_DATA.links.attachments) {
-    document.getElementById("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
-  } else {
-    document.getElementById("attachmentsLink").style.display = "none";
+  if (FIRESTORE_DATA.links.ativo) {
+    
+    if (FIRESTORE_DATA.links.attachments) {
+      document.getElementById("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
+    } else {
+      document.getElementById("attachmentsLink").style.display = "none";
+    }
+  
+    if (FIRESTORE_DATA.links.sheet) {
+      document.getElementById("sheetLink").href = FIRESTORE_DATA.links.sheet;
+    } else {
+      document.getElementById("sheetLink").style.display = "none";
+    }
+  
+    if (FIRESTORE_DATA.links.ppt) {
+      document.getElementById("pptLink").href = FIRESTORE_DATA.links.ppt;
+    } else {
+      document.getElementById("pptLink").style.display = "none";
+    }
+    
+    if (FIRESTORE_DATA.links.drive) {
+      document.getElementById("driveLink").href = FIRESTORE_DATA.links.drive;
+    } else {
+      document.getElementById("driveLink").style.display = "none";
+    }
+    
+    if (FIRESTORE_DATA.links.vacina) {
+      document.getElementById("vaccineLink").href = FIRESTORE_DATA.links.vacina;
+    } else {
+      document.getElementById("vaccineLink").style.display = "none";
+    }
+    
+    if (FIRESTORE_DATA.links.pdf) {
+      document.getElementById("pdfLink").href = FIRESTORE_DATA.links.pdf;
+    } else {
+      document.getElementById("pdfLink").style.display = "none";
+    }
+    
+    if (FIRESTORE_DATA.links.maps) {
+      document.getElementById("mapsLink").href = FIRESTORE_DATA.links.maps;
+    } else {
+      document.getElementById("mapsLink").style.display = "none";
+    }
   }
 
-  if (FIRESTORE_DATA.links.sheet) {
-    document.getElementById("sheetLink").href = FIRESTORE_DATA.links.sheet;
-  } else {
-    document.getElementById("sheetLink").style.display = "none";
-  }
+  if (FIRESTORE_DATA.imagem.ativo) {
+    
+    if (FIRESTORE_DATA.imagem.background) {
+      var hero = document.getElementById('hero');
+      hero.style.background = 'url("' + FIRESTORE_DATA.imagem.background + '") top center no-repeat';
+      hero.style.backgroundSize = 'cover';
+    }
 
-  if (FIRESTORE_DATA.links.ppt) {
-    document.getElementById("pptLink").href = FIRESTORE_DATA.links.ppt;
-  } else {
-    document.getElementById("pptLink").style.display = "none";
-  }
-  
-  if (FIRESTORE_DATA.links.drive) {
-    document.getElementById("driveLink").href = FIRESTORE_DATA.links.drive;
-  } else {
-    document.getElementById("driveLink").style.display = "none";
-  }
-  
-  if (FIRESTORE_DATA.links.vacina) {
-    document.getElementById("vaccineLink").href = FIRESTORE_DATA.links.vacina;
-  } else {
-    document.getElementById("vaccineLink").style.display = "none";
-  }
-  
-  if (FIRESTORE_DATA.links.pdf) {
-    document.getElementById("pdfLink").href = FIRESTORE_DATA.links.pdf;
-  } else {
-    document.getElementById("pdfLink").style.display = "none";
-  }
-  
-  if (FIRESTORE_DATA.links.maps) {
-    document.getElementById("mapsLink").href = FIRESTORE_DATA.links.maps;
-  } else {
-    document.getElementById("mapsLink").style.display = "none";
-  }
-
-  if (FIRESTORE_DATA.imagem.background) {
-    var hero = document.getElementById('hero');
-    hero.style.background = 'url("' + FIRESTORE_DATA.imagem.background + '") top center no-repeat';
-    hero.style.backgroundSize = 'cover';
-  }
-
-  if (FIRESTORE_DATA.imagem.claro) {
-    const escuro = FIRESTORE_DATA.imagem.escuro || FIRESTORE_DATA.imagem.claro;
-    document.getElementById("header2").src = _isOnDarkMode() ? escuro : FIRESTORE_DATA.imagem.claro;
-    document.getElementById("header1").style.display = "none";
-    document.getElementById("header2").style.display = "block";
+    if (FIRESTORE_DATA.imagem.claro) {
+      const escuro = FIRESTORE_DATA.imagem.escuro || FIRESTORE_DATA.imagem.claro;
+      document.getElementById("header2").src = _isOnDarkMode() ? escuro : FIRESTORE_DATA.imagem.claro;
+      document.getElementById("header1").style.display = "none";
+      document.getElementById("header2").style.display = "block";
+    }
   }
 }
 

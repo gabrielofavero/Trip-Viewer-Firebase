@@ -10,7 +10,7 @@ var CUSTOM_COLORS = false;
 // ======= LOADERS =======
 function _loadVisibility() {
      try {
-          if (FIRESTORE_DATA && FIRESTORE_DATA.cores) {
+          if (FIRESTORE_DATA && FIRESTORE_DATA.cores && FIRESTORE_DATA.cores.ativo) {
                CUSTOM_COLORS = true;
                localStorage.setItem("customColors", true);
                CLARO = FIRESTORE_DATA.cores.claro;

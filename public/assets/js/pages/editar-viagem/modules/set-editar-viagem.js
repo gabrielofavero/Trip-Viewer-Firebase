@@ -27,15 +27,7 @@ async function _buildTripObject() {
             },
             imagem: {},
             inicio: {},
-            links: {
-                attachments: "",
-                drive: "",
-                maps: "",
-                pdf: "",
-                ppt: "",
-                sheet: "",
-                vacina: ""
-            },
+            links: {},
             modulos: {},
             moeda: "",
             programacoes: {
@@ -78,8 +70,10 @@ async function _buildTripObject() {
 
     result.data.compartilhamento = await _buildCompartilhamentoObject();
     result.data.imagem = _buildImagemObject();
+    result.data.links = _buildLinksObject();
 
     result.data.cores = {
+        ativo: document.getElementById('habilitado-cores').checked,
         claro: _returnEmptyIfNoValue(document.getElementById('claro').value),
         escuro: _returnEmptyIfNoValue(document.getElementById('escuro').value)
     }
@@ -127,6 +121,7 @@ async function _buildCompartilhamentoObject() {
 
 function _buildImagemObject() {
     let result = {
+        ativo: document.getElementById('habilitado-imagens').checked,
         altura: document.getElementById('logo-tamanho').value,
         background: document.getElementById('link-background').value || "",
         claro: document.getElementById('link-logo-light').value || "",
@@ -152,6 +147,19 @@ function _buildImagemObject() {
     }
 
     return result;
+}
+
+function _buildLinksObject() {
+    return {
+        ativo: document.getElementById('habilitado-links').checked,
+        attachments: document.getElementById('link-attachments').value || "",
+        drive: document.getElementById('link-drive').value || "",
+        maps: document.getElementById('link-maps').value || "",
+        pdf: document.getElementById('link-pdf').value || "",
+        ppt: document.getElementById('link-ppt').value || "",
+        sheet: document.getElementById('link-sheet').value || "",
+        vacina: document.getElementById('link-vacina').value || "",
+    }
 }
 
 function _buildTransporteObject() {

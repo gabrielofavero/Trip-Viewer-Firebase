@@ -7,22 +7,22 @@
 - ⚔️: Epic
 
 ## Doing
-- 🏆 Implementar Set para links personalizáveis;
+- 📈 Redução do CSS em modo escuro
 
 ## To-Do
 
-# Prioridade Alta
+### Prioridade Alta
 - 🏆 Adicionar forma de deletar passeios / viagens
 - 🏆 Adicionar forma de deletar passeio em editar-viagens
 - 🏆 Criar Módulo de Galeria
 - 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
 - 🏆 Criar Função de Visualizador de Passeios
 
-# Prioridade Média
+### Prioridade Média
 - ⚔️ Migrar Projeto para outro domínio
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
 
-# Prioridade Baixa
+### Prioridade Baixa
 - 🐞 O loading em viagens não está pegando a cor customizada;
 - 🐞 Ao editar a cor no passeio, ela não é salva globalmente;
 - 🐞 Botão de "transportation" em viagem.html não está deselecionando corretamente;
@@ -30,7 +30,7 @@
 - 🏆 Criar Keypoints personalizáveis.
 - 📈 Substituir títulos de accordeons no editar-viagens;
 - 📈 Validar inputs de links;
-- 🏆 Adicionar opção de excluir accordion;
+- 🏆 Adicionar opção de excluir accordeon;
 - 📈 Melhorar fundo cinza do "Adicionar ---" em editar-viagens / editar-passeios;
 - 🏆 Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
 - 📈 Editar caixa de perfil no index para tratar strings muito longas;
@@ -45,6 +45,8 @@
 - 🐞 Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios;
 - 🏆 Criar opção de fornecer link de imagem ao invés de upload;
 - 🏆 Adicionar suporte a links personalizáveis;
+- 🏆 Implementar Set para links personalizáveis;
+- 🏆 Implementar modo ativo/inativo em links, imagens e cores para não perder os dados do user caso ele só queira mudar a exibição.
 
 ### Dezembro 2023
 - 🐞 Consertada posição do select de transporte de editar-viagem;

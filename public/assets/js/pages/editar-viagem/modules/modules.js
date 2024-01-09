@@ -461,11 +461,11 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
   const logoClaro = FIRESTORE_DATA.imagem.claro;
   const logoEscuro = FIRESTORE_DATA.imagem.escuro;
   const altura = FIRESTORE_DATA.imagem.altura;
-  
+
   const logoTamanho = document.getElementById('logo-tamanho');
   const alturaArray = Array.from(logoTamanho.options).map(option => option.value);
 
-  if (background || logoClaro || logoEscuro) {
+  if (FIRESTORE_DATA.imagem.ativo === true) {
     document.getElementById('habilitado-imagens').checked = true;
   }
 
@@ -505,7 +505,7 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
   const claroFB = FIRESTORE_DATA.cores.claro;
   const escuroFB = FIRESTORE_DATA.cores.escuro
 
-  if (claro.value != claroFB || escuro.value != escuroFB ) {
+  if (FIRESTORE_DATA.cores.ativo === true) {
     document.getElementById('habilitado-cores').checked = true;
     claro.value = claroFB;
     escuro.value = escuroFB;
@@ -521,7 +521,7 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
   const sheet = FIRESTORE_DATA.links.sheet;
   const vacina = FIRESTORE_DATA.links.vacina;
 
-  if (attachments || drive || maps || pdf || ppt || sheet || vacina) {
+  if (FIRESTORE_DATA.links.ativo === true) {
     document.getElementById('habilitado-imagens').checked = true;
   }
 
