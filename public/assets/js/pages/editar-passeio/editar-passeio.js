@@ -226,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function () {
     placesID = urlParams.get('p');
 
     _loadVisibilityIndex();
-    _adjustButtonsPosition();
 
     _loadHabilitados();
 

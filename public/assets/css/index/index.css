@@ -7,7 +7,8 @@
   src: url('../../fonts/Chelos\ Free.ttf') format('truetype');
 }
 
-body, html {
+body,
+html {
   overflow: hidden;
 }
 
@@ -44,7 +45,7 @@ h6 {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-#preloader{
+#preloader {
   position: fixed;
   top: 0;
   left: 0;
@@ -116,26 +117,6 @@ h6 {
 /**
 * Mobile Navigation 
 */
-.mobile-nav-toggle,
-.custom-nav-toggle {
-  position: fixed;
-  right: 10px;
-  top: 10px;
-  z-index: 9998;
-  border: 0;
-  background: none;
-  font-size: 28px;
-  outline: none !important;
-  line-height: 0;
-  cursor: pointer;
-  border-radius: 50px;
-  padding: 5px;
-}
-
-.custom-nav-toggle {
-  right: 50px;
-  top: 25px;
-}
 
 .top-bar {
   position: fixed;
@@ -166,6 +147,25 @@ h6 {
   margin-left: 7px;
   font-family: Chelos;
   color: #5859a7;
+}
+
+.icons-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-buttons {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  margin: 0 7px 0 7px;
+}
+
+#profile-icon {
+  display: flex;
+  border-radius: 100%;
 }
 
 /*--------------------------------------------------------------
@@ -413,7 +413,7 @@ section {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 450px;
-  height: 500px;
+  height: 550px;
   background: #fff;
   border-radius: 10px;
   text-align: center;
@@ -425,43 +425,48 @@ section {
   padding: 10px;
   overflow-wrap: break-word;
   color: #272829;
+  overflow-y: auto;
 }
 
-@media (max-width: 520px) {
+#footer-mobile {
+  display: none;
+  margin-top: 20px;
+  color: #4F5051;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
   .content-box {
-    top: 46.5%;
-    width: 90%;
-    height: 60%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    transform: translate(-50%, -43%);
+    border-radius: 0px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    padding: 20px;
+  }
+
+  #footer-mobile {
+    display: block;
+  }
+
+  #footer {
+    display: none;
+  }
+
+  #index-logged-title {
+    margin-top: 0px;
   }
 }
 
-/* ---------- Ícones Laterais ---------- */
-.icons-box {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-}
-
-.index-buttons-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 45px;
-}
-
-.index-buttons, .trip-data-icon{
-  margin-right: 5px;
-  margin-left: 5px;
-  height: 30px;
-  width: 30px;
-  cursor: pointer;
-}
+/* ---------- Ícones Nav Bar ---------- */
 
 /* ---------- Título ---------- */
 
 .index-title {
-  font-size: 35px;
+  font-size: 25px;
   color: #4F5051;
   border-bottom: 15px;
 }
@@ -471,7 +476,7 @@ section {
 }
 
 /* ---------- Login ---------- */
-.login-box{
+.login-box {
   margin-top: 45px;
   margin-bottom: 45px;
 }
@@ -488,7 +493,9 @@ section {
 }
 
 /* ---------- Minhas Viagens ---------- */
-.myTrips-box, .myPlaces-box, .logged-menu{
+.myTrips-box,
+.myPlaces-box,
+.logged-menu {
   margin-top: 30px;
   margin-bottom: 20px;
 }
@@ -535,7 +542,8 @@ section {
 #settings-account {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* changed from center to start */
+  justify-content: flex-start;
+  /* changed from center to start */
   min-height: 100px;
   width: 300px;
   background: #f7f8f9;
@@ -546,14 +554,18 @@ section {
 
 #settings-account-text {
   margin-left: 10px;
-  flex-grow: 1; /* allow text container to grow */
+  flex-grow: 1;
+  /* allow text container to grow */
   overflow-wrap: break-word;
-  word-break: break-word; /* add word-break for better control */
+  word-break: break-word;
+  /* add word-break for better control */
 }
 
-#settings-account-name, #settings-account-email {
+#settings-account-name,
+#settings-account-email {
   text-align: left;
-  word-wrap: break-word; /* ensure word-wrap is applied */
+  word-wrap: break-word;
+  /* ensure word-wrap is applied */
 }
 
 #settings-account-name {
@@ -578,7 +590,7 @@ section {
 .logged-menu-item {
   margin: 15px;
   cursor: pointer;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -617,7 +629,8 @@ section {
   color: red;
 }
 
-#no-trips, #no-places {
+#no-trips,
+#no-places {
   display: flex;
   width: 100%;
   height: 60px;
@@ -725,12 +738,12 @@ section {
   color: #737473;
 }
 
-.trip-data-icon{
+.trip-data-icon {
   margin-right: 4px;
   margin-left: 4px;
 }
 
-.trip-data-icons{
+.trip-data-icons {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -814,7 +827,16 @@ section {
   color: #fff;
 }
 
+.btn-purple-mobile {
+  background: #5859a7;
+  color: #fff;
+}
+
 .btn-purple:hover {
   background: #505197;
   color: #fff;
+}
+
+#settings-sign-out{
+  margin-bottom: 20px;
 }

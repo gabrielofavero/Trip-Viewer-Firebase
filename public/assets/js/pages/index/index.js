@@ -223,7 +223,6 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     });
     _loadVisibilityIndex();
-    _adjustButtonsPosition();
 
     _loadListenersIndex();
 
@@ -242,10 +241,6 @@ function _loadListenersIndex() {
     _signInGoogle();
   });
 
-  document.getElementById('sign-out').addEventListener('click', function () {
-    _signOut();
-  });
-
   document.getElementById('myTrips').addEventListener('click', function () {
     _loadMyTripsVisibility();
   });
@@ -254,7 +249,7 @@ function _loadListenersIndex() {
     _loadMyPlacesVisibility();
   });
 
-  document.getElementById('settings').addEventListener('click', function () {
+  document.getElementById('profile-icon').addEventListener('click', function () {
     _loadSettingsVisibility();
   });
 
@@ -300,14 +295,15 @@ async function _loadUserIndex() {
         _loadUserIndexVisibility();
 
         const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
+        const photoURL = 'url(' + user.photoURL + ')';
+
         document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
 
         document.getElementById('settings-account-name').innerHTML = displayName;
-        document.getElementById('settings-account-email').innerHTML = email;
-        document.getElementById('settings-account-picture').style.backgroundImage = 'url(' + photoURL + ')';;
+        document.getElementById('settings-account-picture').style.backgroundImage = photoURL;
         document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
+        document.getElementById('profile-icon').style.backgroundImage = photoURL;
+        document.getElementById('profile-icon').style.backgroundSize = 'cover';
 
         _loadUserTripList();
         _loadUserPlacesList();

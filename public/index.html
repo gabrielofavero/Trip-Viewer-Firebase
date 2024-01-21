@@ -99,19 +99,16 @@
         <div id="trip-viewer-text">TripViewer</div>
       </div>
     </a>
-    <div class="icons-box" id="icons-box" style="display: none;">
-      <div class="index-buttons-container">
-        <i id="sign-out" class="iconify index-buttons" data-icon="ph:sign-out-bold"></i>
-      </div>
+    <div class="icons-box" id="icons-box">
+      <i id="night-mode" class="bx bx-moon icon-buttons"></i>
+      <i id="profile-icon" class="icon-buttons"></i>  
     </div>
-    <i id="night-mode" class="bx bx-moon custom-nav-toggle"></i>
   </div>
 
   <!-- ======= Hero ======= -->
   <section id="hero">
 
     <div class="content-box">
-      <i id="settings" class="iconify back" data-icon="clarity:settings-solid" style="display: none"></i>
       <div id="index-unlogged-title" class="index-title" style="display: none">
         <p>Isso é <span class="typed" data-typed-items="Las Vegas, New York, São Paulo, TripViewer"></span></p>
       </div>
@@ -134,8 +131,8 @@
           <div class="logged-menu-text"> Meus Passeios</div>
         </div>
         <div class="logged-menu-item" id="myPlacesLists"><i class="iconify index-buttons logged-menu-buttons"
-          data-icon="fluent:list-28-filled"></i>
-        <div class="logged-menu-text"> Minhas Listas</div>
+            data-icon="fluent:list-28-filled"></i>
+          <div class="logged-menu-text"> Minhas Listas</div>
         </div>
       </div>
 
@@ -182,19 +179,19 @@
 
       <div class="settings-box" id="settings-box" style="display: none">
         <i id="settings-back" class="iconify back" data-icon="ion:arrow-back"></i>
-        <h4 id="settings-title">Minha Conta</h4>
         <div id="#settings-account-container">
           <div id="settings-account" class="settings-account-item">
             <div id="settings-account-picture"></div>
             <div id="settings-account-text">
               <div id="settings-account-name"></div>
-              <div id="settings-account-email"></div>
             </div>
           </div>
 
+          <button id="settings-sign-out" class="btn btn-purple" onclick="_signOut()" type="button">Sair da Conta</button>
+
           <div class="settings-account-item">
             <fieldset class="nice-form-group">
-              <legend>Visualização</legend>
+              <div class="index-title">Tema</div>
 
               <div class="nice-form-group">
                 <input type="radio" name="visibilidade" id="visibilidade-dinamico">
@@ -214,13 +211,23 @@
           </div>
         </div>
 
-        <button id="settings-delete-account" class="btn btn-purple" type="button">Apagar Conta</button>
-
+        <button id="settings-delete-account" class="btn btn-secondary" type="button">Apagar Conta</button>
       </div>
 
+      <div id="footer-mobile" class="container">
+        <div class="credits">
+          Site Feito por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. Logo adaptado de
+          <a
+            href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph">studiogstock</a>
+          e fundo de <a
+            href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph">jcomp</a>
+          no Freepik
+        </div>
+      </div>
+
+    </div>
       <!-- ======= Support: Preloader ======= -->
       <div id="preloader"></div>
-    </div>
 
     <div id="modal" class="modal">
       <div class="modal-content">
@@ -228,7 +235,9 @@
           <div id="cancel-icon" style="text-align: right;">
             <a onclick="_closeModal()">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z"></path>
+                <path fill="currentColor"
+                  d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
+                </path>
               </svg>
             </a>
           </div>
@@ -255,7 +264,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> 
 
   <!-- ======= Footer ======= -->
   <footer id="footer">

@@ -11,10 +11,6 @@ function _start() {
 
   // Modules
   _loadModules();
-
-  // Visibility - After Load
-  _loadShare();
-  _adjustButtonsPosition();
 }
 
 // ======= LOADERS =======

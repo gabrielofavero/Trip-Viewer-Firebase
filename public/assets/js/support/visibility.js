@@ -30,9 +30,6 @@ function _loadVisibility() {
      document.getElementById("night-mode").onclick = function () {
           _switchVisibility();
      };
-     window.addEventListener("resize", function () {
-          _adjustButtonsPosition();
-     });
 }
 
 function _loadLogoColors() {
@@ -59,7 +56,6 @@ function _loadVisibilityPasseio() {
      } else {
           _loadLightMode();
      }
-     _adjustButtonsPosition();
 
      document.getElementById("night-mode").style.display = "block";
      document.getElementById("night-mode").onclick = function () {
@@ -201,7 +197,6 @@ function _switchVisibility() {
      } else {
           _loadDarkMode();
      }
-     _adjustButtonsPosition();
 }
 
 function _autoVisibility() {
@@ -260,20 +255,6 @@ function _ChangeBarColorIOS(color) {
      // Useful for iOS devices     
      let metaThemeColor = document.querySelector("meta[name=theme-color]");
      metaThemeColor.setAttribute("content", color);
-}
-
-function _adjustButtonsPosition() {
-     switch (_getHTMLpage()) {
-          case VIAGEM:
-               _adjustButtonsPositionViagem();
-               break;
-          case PASSEIOS:
-               _adjustButtonsPositionPasseios();
-               break;
-          default:
-               const nightMode = document.getElementById("night-mode");
-               nightMode.style.right = "10px";
-     }
 }
 
 function _disableScroll() {

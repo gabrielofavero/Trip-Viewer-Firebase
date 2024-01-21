@@ -228,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function () {
     tripID = urlParams.get('v');
 
     _loadVisibilityIndex();
-    _adjustButtonsPosition();
 
     _loadHabilitados();
 

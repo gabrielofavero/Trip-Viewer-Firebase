@@ -1,32 +1,3 @@
-function _adjustButtonsPositionViagem() {
-    const first = "10px";
-    const second = "50px";
-    const third = "90px";
-    const fourth = "130px";
-
-    const nightMode = document.getElementById("night-mode");
-    const share = document.getElementById("share");
-
-    const nightModeVisible = nightMode.style.display != "none";
-    const shareVisible = share.style.display != "none";
-
-    if (nightModeVisible && shareVisible) {
-        if (_isOnMobileMode()) {
-            share.style.right = second;
-            nightMode.style.right = third;
-        } else {
-            share.style.right = first;
-            nightMode.style.right = second;
-        }
-    } else {
-        if (_isOnMobileMode()) {
-            nightMode.style.right = second;
-        } else {
-            nightMode.style.right = first;
-        }
-    }
-}
-
 function _applyCustomColorsViagem() {
     const text = document.getElementById("trip-viewer-text");
     text.style.color = THEME_COLOR;
@@ -75,26 +46,6 @@ function _applyCustomColorsViagem() {
     _addCSSRule('#next', 'background-color', THEME_COLOR);
     _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
-}
-
-function _loadShare() {
-    const share = document.getElementById("share");
-    if (FIRESTORE_DATA.compartilhamento.ativo === true) {
-        share.style.display = "block";
-
-        const urlParams = new URLSearchParams(window.location.search);
-
-        document.getElementById("share-link").innerText = urlParams.get('v');
-
-        share.addEventListener("click", function () {
-            _openShare();
-        });
-
-        document.getElementById('copiar').addEventListener("click", function () {
-            _copyShareLink();
-        });
-    }
-
 }
 
 function _openShare() {
