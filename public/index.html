@@ -111,7 +111,7 @@
   <section id="hero">
 
     <div class="content-box">
-      <i class="iconify index-buttons" id="go-back" data-icon="bx:arrow-back" style="display: none"></i>
+      <i id="settings" class="iconify back" data-icon="clarity:settings-solid" style="display: none"></i>
       <div id="index-unlogged-title" class="index-title" style="display: none">
         <p>Isso é <span class="typed" data-typed-items="Las Vegas, New York, São Paulo, TripViewer"></span></p>
       </div>
@@ -133,9 +133,9 @@
             data-icon="bx:trip"></i>
           <div class="logged-menu-text"> Meus Passeios</div>
         </div>
-        <div class="logged-menu-item" id="settings"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="clarity:settings-solid"></i>
-          <div class="logged-menu-text"> Minha Conta</div>
+        <div class="logged-menu-item" id="myPlacesLists"><i class="iconify index-buttons logged-menu-buttons"
+          data-icon="fluent:list-28-filled"></i>
+        <div class="logged-menu-text"> Minhas Listas</div>
         </div>
       </div>
 
@@ -169,9 +169,20 @@
         </div>
       </div>
 
+      <div class="myPlacesLists-box" id="myPlacesLists-box" style="display: none">
+        <i id="myPlacesLists-back" class="iconify back" data-icon="ion:arrow-back"></i>
+        <h4 id="myPlacesLists-title">Minhas Listas</h4>
+        <div id="myPlacesLists-list">
+          <div id="no-places">Sem Listas Cadastradas 😔</div>
+          <div id="places-data"></div>
+          <div class="new" id="add-places">Nova Lista <i class="iconify add" data-icon="gridicons:add-outline"></i>
+          </div>
+        </div>
+      </div>
+
       <div class="settings-box" id="settings-box" style="display: none">
         <i id="settings-back" class="iconify back" data-icon="ion:arrow-back"></i>
-        <h4 id="settings-title">Ajustes</h4>
+        <h4 id="settings-title">Minha Conta</h4>
         <div id="#settings-account-container">
           <div id="settings-account" class="settings-account-item">
             <div id="settings-account-picture"></div>
@@ -214,6 +225,13 @@
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-text">
+          <div id="cancel-icon" style="text-align: right;">
+            <a onclick="_closeModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z"></path>
+              </svg>
+            </a>
+          </div>
           <h4 id="modal-text-title">Apagar Conta</h4>
           <p>Tem certeza que deseja realizar a exclusão? A ação não poderá ser desfeita e todos os dados associados
             também serão excluídos.</p>

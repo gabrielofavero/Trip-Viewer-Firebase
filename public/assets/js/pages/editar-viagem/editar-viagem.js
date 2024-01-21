@@ -9,6 +9,7 @@
 var blockLoadingEnd = false;
 var tripID;
 var FIRESTORE_DATA;
+var newTrip = false;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -310,12 +311,15 @@ function _loadEventListeners() {
 }
 
 function _loadNewTrip() {
+  newTrip = true;
   _loadDadosBasicosNewTrip();
   _loadProgramacao();
   _loadPasseios();
 }
 
 async function _loadTrip() {
+  newTrip = false;
+  document.getElementById('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
   FIRESTORE_DATA = await _getSingleTrip();

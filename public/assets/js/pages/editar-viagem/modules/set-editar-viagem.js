@@ -1,6 +1,7 @@
 var uploadBackground = false;
 var uploadLogoLight = false;
 var uploadLogoDark = false;
+var SUCCESS = false;
 
 var CLEAR_IMAGES = {
     background: false,
@@ -387,53 +388,57 @@ async function _setViagem() {
             result = await _update(`viagens/${viagem.id}`, viagem.data)
         } else if (viagem) {
             result = await _create('viagens', viagem.data);
-            if (result.data) {
-                const id = _getIdFromDbOjbect(result);
-                await _addTripToUser(id);
-            }
         }
 
         console.log(result);
         message = result.message;
 
-        if (result.success == true && (uploadLogoLight || uploadLogoDark || uploadBackground)) {
-            let newMessage = '';
-            const id = message.split("'")[1];
-            let logoLight = '';
-            let logoDark = ''
-            let background = '';
-
-            if (uploadLogoLight) {
-                logoLight = await _uploadLogoLight(id);
+        if (result.success == true) {
+            SUCCESS = true;
+            
+            if (newTrip) {
+                tripID = result.data.id;
             }
 
-            if (uploadLogoDark) {
-                logoDark = await _uploadLogo(id);
-            }
-
-            if (uploadBackground) {
-                background = await _uploadLogoDark(id);
-            }
-
-            body = {
-                viagemID: id,
-                background: background,
-                logoLight: logoLight,
-                logoDark: logoDark
-            }
-
-            newMessage = await _updateTripImage(body)
-
-            if (!newMessage.includes('sucesso')) {
-                message += '. Falha no upload de imagem(s): ' + newMessage;
-            } else {
-                await _checkAndClearFirebaseImages(id);
+            _addToUser('viagens', tripID);
+            
+            if (uploadLogoLight || uploadLogoDark || uploadBackground) {
+                let newMessage = '';
+                let logoLight = '';
+                let logoDark = ''
+                let background = '';
+    
+                if (uploadLogoLight) {
+                    logoLight = await _uploadLogoLight(tripID);
+                }
+    
+                if (uploadLogoDark) {
+                    logoDark = await _uploadLogo(tripID);
+                }
+    
+                if (uploadBackground) {
+                    background = await _uploadLogoDark(tripID);
+                }
+    
+                body = {
+                    viagemID: tripID,
+                    background: background,
+                    logoLight: logoLight,
+                    logoDark: logoDark
+                }
+    
+                newMessage = await _updateTripImage(body)
+    
+                if (!newMessage.includes('sucesso')) {
+                    message += '. Falha no upload de imagem(s): ' + newMessage;
+                } else {
+                    await _checkAndClearFirebaseImages(tripID);
+                }
             }
         }
 
         document.getElementById('modal-inner-text').innerText = message;
         document.getElementById('set-complete').style.display = 'block';
-        document.getElementById('voltar-box').style.display = 'none';
 
         _stopLoadingScreen();
         _openModal('modal');

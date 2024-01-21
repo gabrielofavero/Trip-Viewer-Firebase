@@ -19,7 +19,7 @@ async function _signInGoogle() {
 
 function _signOut() {
     firebase.auth().signOut()
-    _unloadPageUserFunctions();
+    window.location.href = 'index.html';
 }
 
 async function _registerIfUserNotPresent() {
@@ -29,6 +29,7 @@ async function _registerIfUserNotPresent() {
         const userDoc = await _get(`usuarios/${user.uid}`);
         if (!userDoc) {
             await _create(`usuarios`, {
+                listagens: [],
                 viagens: [],
                 passeios: [],
                 visibilidade: 'dinamico'
@@ -105,4 +106,18 @@ async function _getUser() {
             reject(error);
         });
     });
+}
+
+async function _addToUser(type, id) {
+    const uid = await _getUID();
+    if (uid) {
+        const userDoc = await _get(`usuarios/${uid}`);
+        if (userDoc) {
+            let list = userDoc[type];
+            list.push(id);
+            await _update(`usuarios/${uid}`, {
+                [type]: list
+            });
+        }
+    }
 }

@@ -429,7 +429,9 @@ section {
 
 @media (max-width: 520px) {
   .content-box {
+    top: 46.5%;
     width: 90%;
+    height: 60%;
   }
 }
 
@@ -516,19 +518,6 @@ section {
   margin-bottom: 20px;
 }
 
-#settings-account {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100px;
-  width: 300px;
-  background: #f7f8f9;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
-  border: 0.5px solid #D9D9D9;
-  border-radius: 5px;
-}
-
 #settings-account-picture {
   width: 75px;
   height: 75px;
@@ -538,19 +527,38 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
+  flex-grow: 0;
+
 }
 
-#settings-account-text  {
-  margin-left: 10px
+#settings-account {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* changed from center to start */
+  min-height: 100px;
+  width: 300px;
+  background: #f7f8f9;
+  border: 0.5px solid #D9D9D9;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#settings-account-text {
+  margin-left: 10px;
+  flex-grow: 1; /* allow text container to grow */
+  overflow-wrap: break-word;
+  word-break: break-word; /* add word-break for better control */
+}
+
+#settings-account-name, #settings-account-email {
+  text-align: left;
+  word-wrap: break-word; /* ensure word-wrap is applied */
 }
 
 #settings-account-name {
   font-weight: bold;
   font-size: 18px;
-}
-
-#settings-account-name, #settings-account-email {
-  text-align: left;
 }
 
 #logged-menu {
@@ -747,20 +755,18 @@ section {
   background-color: #fff;
   padding: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-text {
-  height: 100px;
+  flex-grow: 1;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 600px) {
   .modal-content {
     width: 90%;
-  }
-
-  .modal-text {
-    height: auto;
-    margin-bottom: 20px;
   }
 }
 

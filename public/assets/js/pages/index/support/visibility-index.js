@@ -24,7 +24,7 @@ function _loadVisibilityIndex() {
         _updateVisibility("dinamico");
       };
     });
-  
+
     document.getElementById("visibilidade-claro").addEventListener("click", function () {
       if (document.getElementById("visibilidade-claro").checked) {
         _loadLightMode();
@@ -32,7 +32,7 @@ function _loadVisibilityIndex() {
         _updateVisibility("claro");
       }
     });
-  
+
     document.getElementById("visibilidade-escuro").addEventListener("click", function () {
       if (document.getElementById("visibilidade-escuro").checked) {
         _loadDarkMode();
@@ -84,6 +84,7 @@ function _loadUserIndexVisibility() {
   document.getElementById('myTrips-box').style.display = 'none';
   document.getElementById('myPlaces-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
+  document.getElementById('settings').style.display = 'block';
 }
 
 function _unloadUserIndexVisibility() {
@@ -96,6 +97,7 @@ function _unloadUserIndexVisibility() {
   document.getElementById('myTrips-box').style.display = 'none';
   document.getElementById('myPlaces-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
+  document.getElementById('settings').style.display = 'none';
 }
 
 function _loadSettingsVisibility() {
@@ -108,6 +110,7 @@ function _loadSettingsVisibility() {
   document.getElementById('myTrips-box').style.display = 'none';
   document.getElementById('myPlaces-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'block';
+  document.getElementById('settings').style.display = 'none';
 }
 
 function _loadMyTripsVisibility() {
@@ -120,6 +123,7 @@ function _loadMyTripsVisibility() {
   document.getElementById('myTrips-box').style.display = 'block';
   document.getElementById('myPlaces-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
+  document.getElementById('settings').style.display = 'none';
 }
 
 function _loadMyPlacesVisibility() {
@@ -132,28 +136,36 @@ function _loadMyPlacesVisibility() {
   document.getElementById('myTrips-box').style.display = 'none';
   document.getElementById('myPlaces-box').style.display = 'block';
   document.getElementById('settings-box').style.display = 'none';
+  document.getElementById('settings').style.display = 'none';
 }
 
-function _openDeleteModal(type, param){
+function _openDeleteModal(type, param) {
   switch (type) {
     case 'conta':
       document.getElementById('modal-text-title').innerText = "Apagar Conta";
-      document.getElementById('apagar').onclick = function() {
+      document.getElementById('apagar').onclick = function () {
         _deleteAccount();
       };
+      _openModal();
       break;
     case 'viagem':
       document.getElementById('modal-text-title').innerText = "Apagar Viagem";
-      document.getElementById('apagar').onclick = function() {
+      document.getElementById('apagar').onclick = function () {
         _deleteTrip(param);
       };
+      _openModal('delete-modal');
       break;
     case 'passeio':
-        document.getElementById('modal-text-title').innerText = "Apagar Passeio";
-        document.getElementById('apagar').onclick = function() {
-          _deletePlace(param);
-        };
-        break; 
+      document.getElementById('modal-text-title').innerText = "Apagar Passeio";
+      document.getElementById('apagar').onclick = function () {
+        _deletePlace(param);
+      };
+      _openModal('delete-modal');
+      break;
   }
-  _openModal();
+
+}
+
+function _closeDeleteModal() {
+  _closeModal('delete-modal');
 }

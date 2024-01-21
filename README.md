@@ -7,12 +7,12 @@
 - ⚔️: Epic
 
 ## Doing
+- ⚔️ Front-End Ovehaul
 
 ## To-Do
 
 ### Prioridade Alta
 - 🏆 Adicionar forma de deletar passeios / viagens
-- 🏆 Adicionar forma de deletar passeio em editar-viagens
 - 🏆 Criar Módulo de Galeria
 - 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
 - 🏆 Criar Função de Visualizador de Passeios

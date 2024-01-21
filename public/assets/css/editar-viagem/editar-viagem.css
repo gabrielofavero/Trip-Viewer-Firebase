@@ -785,6 +785,7 @@ table {
 
 .nice-form-group>input[type=range] {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   cursor: pointer
 }
@@ -1464,13 +1465,13 @@ details summary::-webkit-details-marker {
   color: #A6A6A6;
 }
 
-.button-box {
+.button-box-gray {
   text-align: right;
   background: #f1f1f1;
 }
 
 @media (max-width: 480px) {
-  .button-box {
+  .button-box-gray {
     text-align: center;
   }
 }
@@ -1627,4 +1628,53 @@ details summary::-webkit-details-marker {
   padding-bottom: 25px;
   width: 100%;
   border-radius: var(--nf-input-border-radius);
+}
+
+#delete-text {
+  text-align: right;
+}
+
+@media (max-width: 790px) {
+  #delete-text {
+    margin-top: 20px;
+  }
+}
+
+.delete-modal-content {
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  display: flex; /* Add flex display */
+  flex-direction: column; /* Stack children vertically */
+}
+
+.delete-modal-text {
+  /* height: 100px; Remove fixed height */
+  flex-grow: 1; /* Allow text area to grow */
+  margin-bottom: 20px; /* Add some space below the text */
+}
+
+@media (max-width: 600px) {
+  .delete-modal-content {
+    width: 90%;
+  }
+}
+
+.button-box {
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .button-box {
+    text-align: center;
+  }
+}
+
+.btn-margin {
+  margin-left: 20px;
 }

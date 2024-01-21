@@ -12,6 +12,7 @@ function _validateRequiredInputs() {
         const text = _getInvalidInputsText(invalidFields);
         document.getElementById('modal-inner-text').innerHTML = text;
         _openModal();
+        _stopLoadingScreen();
     }
 }
 
@@ -71,4 +72,12 @@ function _getInvalidInputsText(invalidFields) {
 
     }
     return text + '</ul>';
+}
+
+function _reEdit(type, id) {
+    if (SUCCESS == true && newTrip == true && id) {
+        window.location.href = `editar-${type}.html?${type[0]}=${id}`;
+    } else {
+        _closeModal();
+    }
 }
