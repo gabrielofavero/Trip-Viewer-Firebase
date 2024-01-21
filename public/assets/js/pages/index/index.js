@@ -241,14 +241,6 @@ function _loadListenersIndex() {
     _signInGoogle();
   });
 
-  document.getElementById('myTrips').addEventListener('click', function () {
-    _loadMyTripsVisibility();
-  });
-
-  document.getElementById('myPlaces').addEventListener('click', function () {
-    _loadMyPlacesVisibility();
-  });
-
   document.getElementById('profile-icon').addEventListener('click', function () {
     _loadSettingsVisibility();
   });
@@ -259,18 +251,6 @@ function _loadListenersIndex() {
 
   document.getElementById('add-places').addEventListener('click', function () {
     _newPlace();
-  });
-
-  document.getElementById('myTrips-back').addEventListener('click', function () {
-    _loadUserIndexVisibility();
-  });
-
-  document.getElementById('myPlaces-back').addEventListener('click', function () {
-    _loadUserIndexVisibility();
-  });
-
-  document.getElementById('settings-back').addEventListener('click', function () {
-    _loadUserIndexVisibility();
   });
 
   document.getElementById('settings-delete-account').addEventListener('click', function () {
