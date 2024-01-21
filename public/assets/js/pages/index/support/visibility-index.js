@@ -74,7 +74,6 @@ function _loadUserIndexVisibility() {
   document.getElementById('index-unlogged-title').style.display = 'none';
   document.getElementById('index-logged-title').style.display = 'block';
   document.getElementById('login-box').style.display = 'none';
-  document.getElementById('icons-box').style.display = 'flex';
   document.getElementById('logged-menu').style.display = 'block';
   document.getElementById('tripViewer').style.display = 'block';
   document.getElementById('myTrips-box').style.display = 'none';
@@ -86,7 +85,6 @@ function _loadUserIndexVisibility() {
 function _unloadUserIndexVisibility() {
   document.getElementById('index-unlogged-title').style.display = 'block';
   document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('icons-box').style.display = 'none';
   document.getElementById('login-box').style.display = 'block';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'block';
@@ -99,40 +97,37 @@ function _unloadUserIndexVisibility() {
 function _loadSettingsVisibility() {
   document.getElementById('index-unlogged-title').style.display = 'none';
   document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('icons-box').style.display = 'flex';
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
   document.getElementById('myTrips-box').style.display = 'none';
   document.getElementById('myPlaces-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'block';
-  document.getElementById('profile-icon').style.display = 'none';
+  document.getElementById('profile-icon').style.display = 'block';
 }
 
 function _loadMyTripsVisibility() {
   document.getElementById('index-unlogged-title').style.display = 'none';
   document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('icons-box').style.display = 'flex';
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
   document.getElementById('myTrips-box').style.display = 'block';
   document.getElementById('myPlaces-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
-  document.getElementById('profile-icon').style.display = 'none';
+  document.getElementById('profile-icon').style.display = 'block';
 }
 
 function _loadMyPlacesVisibility() {
   document.getElementById('index-unlogged-title').style.display = 'none';
   document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('icons-box').style.display = 'flex';
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
   document.getElementById('myTrips-box').style.display = 'none';
   document.getElementById('myPlaces-box').style.display = 'block';
   document.getElementById('settings-box').style.display = 'none';
-  document.getElementById('profile-icon').style.display = 'none';
+  document.getElementById('profile-icon').style.display = 'block';
 }
 
 function _openDeleteModal(type, param) {

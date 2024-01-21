@@ -676,11 +676,9 @@ section {
   height: 40px;
   width: 40px;
   position: fixed;
-  top: 0;
-  left: 0;
-  margin: 20px;
-  z-index: 1000;
   cursor: pointer;
+  left: 0;
+  top: 0;
 }
 
 .new {
@@ -688,6 +686,12 @@ section {
 }
 
 @media (max-height: 896px) {
+
+  .back {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
   .content-box {
     top: 46%;
   }
