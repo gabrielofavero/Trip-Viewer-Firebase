@@ -6,8 +6,9 @@
     - Modified by: Gabriel Fávero
 */
 
-var tripList;
-var placesList;
+var userTrips;
+var userPlaces;
+var userPlacesLists;
 
 _startLoadingScreen();
 
@@ -261,16 +262,12 @@ function _loadListenersIndex() {
     _newPlace();
   });
 
-  document.getElementById('myTrips-back').addEventListener('click', function () {
+  document.getElementById('back').addEventListener('click', function () {
     _loadUserIndexVisibility();
   });
 
-  document.getElementById('myPlaces-back').addEventListener('click', function () {
-    _loadUserIndexVisibility();
-  });
-
-  document.getElementById('settings-back').addEventListener('click', function () {
-    _loadUserIndexVisibility();
+  document.getElementById('myPlacesLists').addEventListener('click', function () {
+    _loadMyPlacesListVisibility();
   });
 
   document.getElementById('settings-delete-account').addEventListener('click', function () {
@@ -305,8 +302,8 @@ async function _loadUserIndex() {
         document.getElementById('profile-icon').style.backgroundImage = photoURL;
         document.getElementById('profile-icon').style.backgroundSize = 'cover';
 
-        _loadUserTripList();
-        _loadUserPlacesList();
+        _loadUserTrips();
+        _loadUserPlaces();
 
       } else {
         _unloadUserIndexVisibility();
@@ -320,41 +317,41 @@ async function _loadUserIndex() {
   _stopLoadingScreen();
 }
 
-async function _loadUserTripList() {
-  tripList = await _getTripList();
-  localStorage.setItem('tripList', JSON.stringify(tripList));
+async function _loadUserTrips() {
+  userTrips = await _getUserTrips();
+  localStorage.setItem('userTrips', JSON.stringify(userTrips));
 
-  if (tripList && tripList.length > 0) {
+  if (userTrips && userTrips.length > 0) {
     document.getElementById('no-trips').style.display = 'none';
-    _loadTripListHTML(tripList);
+    _loadUserTripsHTML(userTrips);
   }
 }
 
-async function _loadUserPlacesList() {
-  placesList = await _getPlacesList();
-  localStorage.setItem('placesList', JSON.stringify(placesList));
+async function _loadUserPlaces() {
+  userPlaces = await _getUserPlaces();
+  localStorage.setItem('userPlaces', JSON.stringify(userPlaces));
 
-  if (placesList && placesList.length > 0) {
+  if (userPlaces && userPlaces.length > 0) {
     document.getElementById('no-places').style.display = 'none';
-    _loadPlacesListHTML(placesList);
+    _loadUserPlacesHTML(userPlaces);
   }
 }
 
-function _loadTripListHTML(tripList) {
+function _loadUserTripsHTML(userTrips) {
   const div = document.getElementById('trip-data');
 
   let text = '';
-  for (let i = 0; i < tripList.length; i++) {
+  for (let i = 0; i < userTrips.length; i++) {
     const index = i + 1;
 
-    const inicioDate = _convertFromFirestoreDate(tripList[i].inicio);
-    const fimDate = _convertFromFirestoreDate(tripList[i].fim);
+    const inicioDate = _convertFromFirestoreDate(userTrips[i].inicio);
+    const fimDate = _convertFromFirestoreDate(userTrips[i].fim);
 
     const inicio = _jsDateToDate(inicioDate);
     const fim = _jsDateToDate(fimDate);
 
-    const titulo = tripList[i].titulo;
-    const code = tripList[i].code;
+    const titulo = userTrips[i].titulo;
+    const code = userTrips[i].code;
 
     text += `
     <div class="trip-data-item" id="trip-data-item-${index}">
@@ -372,15 +369,15 @@ function _loadTripListHTML(tripList) {
   div.innerHTML = text;
 }
 
-function _loadPlacesListHTML(placesList) {
+function _loadUserPlacesHTML(userPlaces) {
   const div = document.getElementById('places-data');
 
   let text = '';
-  for (let i = 0; i < placesList.length; i++) {
+  for (let i = 0; i < userPlaces.length; i++) {
     const index = i + 1;
 
-    const titulo = placesList[i].titulo;
-    const code = placesList[i].code;
+    const titulo = userPlaces[i].titulo;
+    const code = userPlaces[i].code;
 
     text += `
     <div class="trip-data-item" id="places-data-item-${index}">
@@ -406,17 +403,17 @@ function _viewTrip(code){
 }
 
 function _newTripIndex() {
-  localStorage.setItem('tripList', JSON.stringify(tripList));
-  localStorage.setItem('placesList', JSON.stringify(placesList));
+  localStorage.setItem('userTrips', JSON.stringify(userTrips));
+  localStorage.setItem('userPlaces', JSON.stringify(userPlaces));
   window.location.href = `editar-viagem.html`;
 }
 
 function _newPlace() {
-  localStorage.setItem('placesList', JSON.stringify(placesList));
+  localStorage.setItem('userPlaces', JSON.stringify(userPlaces));
   window.location.href = `editar-passeio.html`;
 }
 
 function _editPlace(code) {
-  localStorage.setItem('placesList', JSON.stringify(placesList));
+  localStorage.setItem('userPlaces', JSON.stringify(userPlaces));
   window.location.href = `editar-passeio.html?p=${code}`;
 }

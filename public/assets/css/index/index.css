@@ -457,6 +457,7 @@ section {
   font-size: 25px;
   color: #4F5051;
   border-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 #index-logged-title {
@@ -483,13 +484,13 @@ section {
 /* ---------- Minhas Viagens ---------- */
 .myTrips-box,
 .myPlaces-box,
+.myPlacesLists-box
 .logged-menu {
   margin-top: 30px;
   margin-bottom: 20px;
 }
 
-#myTrips-list,
-#myPlaces-list {
+.content-list {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -591,7 +592,8 @@ section {
 
 /* ---------- Visualizar Viagem ---------- */
 .trip-view-box {
-  margin-top: 10px;
+  margin-top: 30px;
+  margin-bottom: 10px;
   width: 300px;
 }
 
@@ -618,7 +620,8 @@ section {
 }
 
 #no-trips,
-#no-places {
+#no-places,
+#no-places-lists {
   display: flex;
   width: 100%;
   height: 60px;
@@ -733,6 +736,14 @@ section {
 .trip-data-icon {
   margin-right: 4px;
   margin-left: 4px;
+  height: 30px;
+  width: 30px;
+}
+
+.logged-menu-buttons {
+  height: 30px;
+  width: 30px;
+  margin-right: 5px;
 }
 
 .trip-data-icons {
@@ -827,8 +838,4 @@ section {
 .btn-purple:hover {
   background: #505197;
   color: #fff;
-}
-
-#settings-sign-out{
-  margin-bottom: 20px;
 }

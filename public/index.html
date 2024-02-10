@@ -100,6 +100,7 @@
       </div>
     </a>
     <div class="icons-box" id="icons-box">
+      <i id="back" class="bx bx-arrow-back icon-buttons" style="display: none;"></i>
       <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       <i id="profile-icon" class="icon-buttons"></i>  
     </div>
@@ -146,9 +147,8 @@
       </div>
 
       <div class="myTrips-box" id="myTrips-box" style="display: none">
-        <i id="myTrips-back" class="iconify back" data-icon="ion:arrow-back"></i>
         <h4 id="myTrips-title">Minhas Viagens</h4>
-        <div id="myTrips-list">
+        <div id="myTrips-list" class="content-list">
           <div id="no-trips">Sem Viagens Cadastradas 😔</div>
           <div id="trip-data"></div>
           <div class="new" id="add-trip">Nova Viagem <i class="iconify add" data-icon="gridicons:add-outline"></i></div>
@@ -156,29 +156,26 @@
       </div>
 
       <div class="myPlaces-box" id="myPlaces-box" style="display: none">
-        <i id="myPlaces-back" class="iconify back" data-icon="ion:arrow-back"></i>
         <h4 id="myPlaces-title">Meus Pontos Turísticos</h4>
-        <div id="myPlaces-list">
-          <div id="no-places">Sem Passeios Cadastrados 😔</div>
+        <div id="myPlaces-list" class="content-list">
+          <div id="no-places">Sem Pontos Turísticos Cadastrados 😔</div>
           <div id="places-data"></div>
-          <div class="new" id="add-places">Novo Passeio <i class="iconify add" data-icon="gridicons:add-outline"></i>
+          <div class="new" id="add-places">Novo Ponto Turístico <i class="iconify add" data-icon="gridicons:add-outline"></i>
           </div>
         </div>
       </div>
 
       <div class="myPlacesLists-box" id="myPlacesLists-box" style="display: none">
-        <i id="myPlacesLists-back" class="iconify back" data-icon="ion:arrow-back"></i>
         <h4 id="myPlacesLists-title">Minhas Listas de Passeios</h4>
-        <div id="myPlacesLists-list">
-          <div id="no-places">Sem Listas Cadastradas 😔</div>
-          <div id="places-data"></div>
-          <div class="new" id="add-places">Nova Lista <i class="iconify add" data-icon="gridicons:add-outline"></i>
+        <div id="myPlacesLists-list" class="content-list">
+          <div id="no-places-lists">Sem Listas Cadastradas 😔</div>
+          <div id="places-lists-data"></div>
+          <div class="new" id="add-places-list">Nova Lista de Passeios <i class="iconify add" data-icon="gridicons:add-outline"></i>
           </div>
         </div>
       </div>
 
       <div class="settings-box" id="settings-box" style="display: none">
-        <i id="settings-back" class="iconify back" data-icon="ion:arrow-back"></i>
         <div id="#settings-account-container">
           <div id="settings-account" class="settings-account-item">
             <div id="settings-account-picture"></div>
@@ -186,8 +183,6 @@
               <div id="settings-account-name"></div>
             </div>
           </div>
-
-          <button id="settings-sign-out" class="btn btn-purple" onclick="_signOut()" type="button">Sair da Conta</button>
 
           <div class="settings-account-item">
             <fieldset class="nice-form-group">
@@ -210,6 +205,8 @@
             </fieldset>
           </div>
         </div>
+
+        <button id="settings-sign-out" class="btn btn-purple" onclick="_signOut()" type="button">Sair da Conta</button>
 
         <button id="settings-delete-account" class="btn btn-secondary" type="button">Apagar Conta</button>
       </div>

@@ -97,8 +97,7 @@ strong {
   background: #404040;
 }
 
-#myTrips-list,
-#myPlaces-list {
+.content-list {
   background: #404040;
   border: 0.5px solid #383838;
 }

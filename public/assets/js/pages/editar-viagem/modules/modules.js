@@ -127,8 +127,8 @@ function _loadProgramacao() {
 }
 
 function _loadPasseios(newTrip = true) {
-  const placesList = localStorage.getItem('placesList');
-  const myPlaces = placesList ? JSON.parse(placesList) : [];
+  const userPlaces = localStorage.getItem('userPlaces');
+  const myPlaces = userPlaces ? JSON.parse(userPlaces) : [];
 
   if (myPlaces && myPlaces.length > 0) {
     document.getElementById('sem-passeios').style.display = 'none';

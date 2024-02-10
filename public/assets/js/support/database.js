@@ -143,7 +143,7 @@ async function _getConfig() {
   }
 }
 
-async function _getTripList() {
+async function _getUserTrips() {
   const uid = await _getUID();
   if (uid) {
     const userData = await _get(`usuarios/${uid}`);
@@ -168,7 +168,7 @@ async function _getTripList() {
   }
 }
 
-async function _getPlacesList() {
+async function _getUserPlaces() {
   const uid = await _getUID();
   if (uid) {
     const userData = await _get(`usuarios/${uid}`);
