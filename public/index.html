@@ -121,29 +121,61 @@
           o Google</button>
       </div>
 
-        <div class="index-subtitle" id="myTrips-title">Viagens</div>
+      <div class="logged-menu" id="logged-menu" style="display: none" style="display: none">
+        <div class="logged-menu-item" id="myTrips"><i class="iconify index-buttons logged-menu-buttons"
+            data-icon="material-symbols-light:trip"></i>
+          <div class="logged-menu-text"> Minhas Viagens</div>
+        </div>
+        <div class="logged-menu-item" id="myPlaces"><i class="iconify index-buttons logged-menu-buttons"
+            data-icon="bx:trip"></i>
+          <div class="logged-menu-text"> Meus Passeios</div>
+        </div>
+        <div class="logged-menu-item" id="myPlacesLists"><i class="iconify index-buttons logged-menu-buttons"
+            data-icon="fluent:list-28-filled"></i>
+          <div class="logged-menu-text"> Minhas Listas</div>
+        </div>
+      </div>
+
+      <div class="trip-view-box" id="tripViewer" style="display: none">
+        <h4 id="trip-view-title">Visualizar Viagem</h4>
+        <input id="trip-view-input" type="text" placeholder="Código da Viagem">
+        <br>
+        <div id="trip-view-reminder"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo:
+          g4nx5cyNKW2geSnQVXX8)</div>
+        <button id="trip-view-continue" class="btn btn-purple" type="button">Prosseguir</button>
+      </div>
+
+      <div class="myTrips-box" id="myTrips-box" style="display: none">
+        <i id="myTrips-back" class="iconify back" data-icon="ion:arrow-back"></i>
+        <h4 id="myTrips-title">Minhas Viagens</h4>
         <div id="myTrips-list">
           <div id="no-trips">Sem Viagens Cadastradas 😔</div>
           <div id="trip-data"></div>
           <div class="new" id="add-trip">Nova Viagem <i class="iconify add" data-icon="gridicons:add-outline"></i></div>
         </div>
+      </div>
 
-        <div class="index-subtitle">Pontos Turísticos</div>
+      <div class="myPlaces-box" id="myPlaces-box" style="display: none">
+        <i id="myPlaces-back" class="iconify back" data-icon="ion:arrow-back"></i>
+        <h4 id="myPlaces-title">Meus Passeios</h4>
         <div id="myPlaces-list">
-          <div id="no-places">Sem Pontos Turísticos Cadastrados 😔</div>
+          <div id="no-places">Sem Passeios Cadastrados 😔</div>
           <div id="places-data"></div>
           <div class="new" id="add-places">Novo Passeio <i class="iconify add" data-icon="gridicons:add-outline"></i>
           </div>
         </div>
+      </div>
 
-        <div class="trip-view-box" id="tripViewer" style="display: none">
-          <div class="index-subtitle">Visualizar Viagem</div>
-          <input id="trip-view-input" type="text" placeholder="Código da Viagem">
-          <br>
-          <div id="trip-view-reminder"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo:
-            g4nx5cyNKW2geSnQVXX8)</div>
-          <button id="trip-view-continue" class="btn btn-purple" type="button">Prosseguir</button>
+      <div class="myPlacesLists-box" id="myPlacesLists-box" style="display: none">
+        <i id="myPlacesLists-back" class="iconify back" data-icon="ion:arrow-back"></i>
+        <h4 id="myPlacesLists-title">Minhas Listas</h4>
+        <div id="myPlacesLists-list">
+          <div id="no-places">Sem Listas Cadastradas 😔</div>
+          <div id="places-data"></div>
+          <div class="new" id="add-places">Nova Lista <i class="iconify add" data-icon="gridicons:add-outline"></i>
+          </div>
         </div>
+      </div>
 
       <div class="settings-box" id="settings-box" style="display: none">
         <i id="settings-back" class="iconify back" data-icon="ion:arrow-back"></i>
