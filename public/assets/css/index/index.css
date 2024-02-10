@@ -457,7 +457,13 @@ section {
   font-size: 25px;
   color: #4F5051;
   border-bottom: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+#trip-view-title {
+  font-size: 20px;
+  border-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 #index-logged-title {
@@ -608,7 +614,7 @@ section {
   color: #4F5051;
 }
 
-#trip-view-reminder {
+.trip-view-text {
   font-size: 12px;
   margin-top: -10px;
   margin-bottom: 10px;

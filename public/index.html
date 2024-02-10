@@ -102,7 +102,7 @@
     <div class="icons-box" id="icons-box">
       <i id="back" class="bx bx-arrow-back icon-buttons" style="display: none;"></i>
       <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-      <i id="profile-icon" class="icon-buttons"></i>  
+      <i id="profile-icon" class="icon-buttons"></i>
     </div>
   </div>
 
@@ -138,11 +138,14 @@
       </div>
 
       <div class="trip-view-box" id="tripViewer" style="display: none">
-        <h4 id="trip-view-title">Visualizar Viagem</h4>
+        <div id="trip-view-title">Visualizar Viagem</div>
         <input id="trip-view-input" type="text" placeholder="Código da Viagem">
         <br>
-        <div id="trip-view-reminder"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo:
+        <div id="trip-view-reminder" class="trip-view-text"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo:
           g4nx5cyNKW2geSnQVXX8)</div>
+        <div id="trip-view-invalid" class="trip-view-text"> <i class='red'>*</i> Código Inválido. Insira o código da viagem para continuar <br> (Exemplo:
+          g4nx5cyNKW2geSnQVXX8)</div>
+        <div id="trip-view-private" class="trip-view-text"> <i class='red'>*</i> A viagem selecionada está definida como privada</div>
         <button id="trip-view-continue" class="btn btn-purple" type="button">Prosseguir</button>
       </div>
 
@@ -160,7 +163,8 @@
         <div id="myPlaces-list" class="content-list">
           <div id="no-places">Sem Pontos Turísticos Cadastrados 😔</div>
           <div id="places-data"></div>
-          <div class="new" id="add-places">Novo Ponto Turístico <i class="iconify add" data-icon="gridicons:add-outline"></i>
+          <div class="new" id="add-places">Novo Ponto Turístico <i class="iconify add"
+              data-icon="gridicons:add-outline"></i>
           </div>
         </div>
       </div>
@@ -170,7 +174,8 @@
         <div id="myPlacesLists-list" class="content-list">
           <div id="no-places-lists">Sem Listas Cadastradas 😔</div>
           <div id="places-lists-data"></div>
-          <div class="new" id="add-places-list">Nova Lista de Passeios <i class="iconify add" data-icon="gridicons:add-outline"></i>
+          <div class="new" id="add-places-list">Nova Lista de Passeios <i class="iconify add"
+              data-icon="gridicons:add-outline"></i>
           </div>
         </div>
       </div>
@@ -212,8 +217,8 @@
       </div>
 
     </div>
-      <!-- ======= Support: Preloader ======= -->
-      <div id="preloader"></div>
+    <!-- ======= Support: Preloader ======= -->
+    <div id="preloader"></div>
 
     <div id="modal" class="modal">
       <div class="modal-content">
@@ -250,7 +255,7 @@
         </div>
       </div>
     </div>
-  </section> 
+  </section>
 
   <!-- ======= Footer ======= -->
   <footer id="footer">

@@ -27,6 +27,19 @@ async function _get(path) {
 
 }
 
+async function _exists(path) {
+  try {
+    const docRef = firebase.firestore().doc(path);
+    const snapshot = await docRef.get();
+
+    return snapshot.exists;
+  } catch (e) {
+    _logger(ERROR, e.message);
+    return false;
+  }
+}
+
+
 async function _create(collection, data, docName = "") {
   try {
     let docRef = '';
@@ -114,6 +127,16 @@ async function _getSingleTrip() {
 
     return trip;
 
+  } catch (error) {
+    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+    return null;
+  }
+}
+
+async function _isTripPublic(tripID) {
+  try {
+    const trip = await _get(`viagens/${tripID}`);
+    return trip.compartilhamento.ativo;
   } catch (error) {
     _logger(ERROR, 'Error fetching data from Firestore:', error.message);
     return null;

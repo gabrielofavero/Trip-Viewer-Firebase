@@ -274,10 +274,26 @@ function _loadListenersIndex() {
     _openDeleteModal('conta')
   });
 
-  document.getElementById('trip-view-continue').addEventListener('click', function () {
+  document.getElementById('trip-view-continue').addEventListener('click', async function () {
+    document.getElementById('trip-view-invalid').style.display = 'none';
+    document.getElementById('trip-view-private').style.display = 'none';
+    document.getElementById('trip-view-reminder').style.display = 'none';
+    
     let viagem = document.getElementById('trip-view-input').value;
     if (viagem) {
-      window.location.href = `viagem.html?v=${viagem.trim()}`;
+      const viagemValue = viagem.trim();
+      const tripExists = await _exists(`viagens/${viagemValue}`);
+
+      if (tripExists) {
+        const isPublic = await _isTripPublic(viagemValue);
+        if (isPublic) {
+          window.location.href = `viagem.html?v=${viagemValue}`;
+        } else {
+          document.getElementById('trip-view-private').style.display = 'block';
+        }  
+      } else {
+        document.getElementById('trip-view-invalid').style.display = 'block';
+      }
     } else {
       document.getElementById('trip-view-reminder').style.display = 'block';
     }
