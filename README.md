@@ -7,15 +7,15 @@
 - ⚔️: Epic
 
 ## Doing
-- ⚔️ Front-End Ovehaul
+- 🏆 Adicionar forma de deletar passeios / viagens
+- 🏆 Criar Módulo de Galeria
+- 🏆 Criar Função de Visualizador de Passeios
 
 ## To-Do
 
 ### Prioridade Alta
-- 🏆 Adicionar forma de deletar passeios / viagens
-- 🏆 Criar Módulo de Galeria
 - 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
-- 🏆 Criar Função de Visualizador de Passeios
+- ⚔️ Front-End Ovehaul
 
 ### Prioridade Média
 - ⚔️ Migrar Projeto para outro domínio
@@ -38,6 +38,9 @@
 - Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
 
 ## Done
+
+### Fevereiro 2024
+- 🏆 Mini melhoria de front mobile
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

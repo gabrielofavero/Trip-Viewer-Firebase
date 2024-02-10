@@ -428,32 +428,20 @@ section {
   overflow-y: auto;
 }
 
-#footer-mobile {
-  display: none;
-  margin-top: 20px;
-  color: #4F5051;
-  font-size: 14px;
-}
-
 @media (max-width: 600px) {
   .content-box {
     width: 100%;
-    height: 100%;
-    top: 0;
-    transform: translate(-50%, -43%);
-    border-radius: 0px;
-    justify-content: flex-start;
-    align-items: flex-start;
-    text-align: left;
+    height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     padding: 20px;
-  }
-
-  #footer-mobile {
-    display: block;
-  }
-
-  #footer {
-    display: none;
+    box-sizing: border-box;
   }
 
   #index-logged-title {
