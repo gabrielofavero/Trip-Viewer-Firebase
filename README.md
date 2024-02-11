@@ -7,19 +7,21 @@
 - ⚔️: Epic
 
 ## Doing
-- 🏆 Adicionar forma de deletar passeios / viagens
-- 🏆 Criar Módulo de Galeria
 - 🏆 Criar Função de Visualizador de Passeios
+- 🏆 Criar/Organizar Lineup por dia
 
 ## To-Do
 
 ### Prioridade Alta
-- 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
-- ⚔️ Front-End Ovehaul
+- ⚔️ Testagem Geral e bug fixes
+- 🐞 Dados estão se perdendo no load do editar-viagem quando o user não deixa o dado ativo
+- 🐞 Ao reeditar viagem recém criada, o id é re-adicionado.
+- 🐞 Imagem de user não carrega no primeiro login
 
 ### Prioridade Média
-- ⚔️ Migrar Projeto para outro domínio
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
+- 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
+- ⚔️ Front-End Ovehaul
 
 ### Prioridade Baixa
 - 🐞 O loading em viagens não está pegando a cor customizada;
@@ -35,12 +37,15 @@
 - 📈 Editar caixa de perfil no index para tratar strings muito longas;
 - 🏆 Adicionar animações no index.html;
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
-- Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
+- 🐞 Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
+- ⚔️ Migrar Projeto para outro domínio
 
 ## Done
 
 ### Fevereiro 2024
 - 🏆 Mini melhoria de front mobile
+- 🏆 Adicionada forma de deletar passeios / viagens
+- 🏆 Criado Módulo de Galeria
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

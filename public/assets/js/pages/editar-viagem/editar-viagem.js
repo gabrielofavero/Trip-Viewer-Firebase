@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
       _loadNewTrip();
     }
 
-    _loadBackgroundSelector();
+    _loadImageSelector('background');
     _loadLogoSelector();
 
     _loadEventListeners();
@@ -265,6 +265,7 @@ function _loadHabilitados() {
   _loadEditModule('hospedagem');
   _loadEditModule('programacao');
   _loadEditModule('passeios');
+  _loadEditModule('galeria');
 }
 
 function _loadUploadSelectors() {
@@ -281,6 +282,9 @@ function _loadEventListeners() {
   });
   document.getElementById('passeios-adicionar').addEventListener('click', () => {
     _addPasseios();
+  });
+  document.getElementById('galeria-adicionar').addEventListener('click', () => {
+    _addGaleria();
   });
   document.getElementById('cancelar').addEventListener('click', () => {
     window.location.href = `index.html`;
@@ -326,14 +330,23 @@ async function _loadTrip() {
   _stopLoadingScreen();
 }
 
-async function _uploadBackground(id = tripID) {
-  return await _uploadImage('trips/' + id + '/hero-bg.jpg', 'background');
+async function _uploadBackground(id=tripID) {
+  return await _uploadImage(`trips/${id}/hero-bg.jpg`, 'upload-background');
 }
 
 async function _uploadLogoLight(id=tripID){
-  return await _uploadImage('trips/' + id + '/logo.png', 'logo');
+  return await _uploadImage(`trips/${id}/logo.png`, 'upload-logo-light');
 }
 
 async function _uploadLogoDark(id=tripID){
-  return await _uploadImage('trips/' + id + '/logo-dark.png', 'logo');
+  return await _uploadImage(`trips/${id}/logo-dark.png`, 'upload-logo-dark');
+}
+
+async function _uploadGaleria(id=tripID, uploadGaleria=uploadGaleria) {
+  let result = [];
+  for (const i of uploadGaleria) {
+    const url = await _uploadImage(`trips/${id}/galeria/${i}.jpg`, `upload-galeria-${i}`);
+    result.push(url);
+  }
+  return result;
 }

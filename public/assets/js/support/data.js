@@ -35,6 +35,10 @@ function _firstCharToUpperCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function _firstCharToUpperCaseAllWords(str) {
+  return str.replace(/\b\w/g, l => l.toUpperCase());
+}
+
 function _codifyText(inputString) {
   let lowercaseString = inputString.toLowerCase();
   let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, '');

@@ -56,12 +56,12 @@ function _hideContent(type) {
     }
 }
 
-function _loadBackgroundSelector() {
-    const checkboxLink = document.getElementById(`enable-link-background`);
-    const checkboxUpload = document.getElementById(`enable-upload-background`);
+function _loadImageSelector(type) {
+    const checkboxLink = document.getElementById(`enable-link-${type}`);
+    const checkboxUpload = document.getElementById(`enable-upload-${type}`);
 
-    const link = document.getElementById(`link-background`);
-    const upload = document.getElementById(`upload-background`);
+    const link = document.getElementById(`link-${type}`);
+    const upload = document.getElementById(`upload-${type}`);
     
     if (checkboxLink.checked) {
         link.style.display = 'block';
@@ -90,6 +90,32 @@ function _loadBackgroundSelector() {
         }
     });
 }
+
+function _removeImageSelectorListeners(type) {
+    const checkboxLink = document.getElementById(`enable-link-${type}`);
+    const checkboxUpload = document.getElementById(`enable-upload-${type}`);
+
+    checkboxLink.removeEventListener('change', function () {
+        if (checkboxLink.checked) {
+            link.style.display = 'block';
+            upload.style.display = 'none';
+        } else {
+            link.style.display = 'none';
+            upload.style.display = 'block'; 
+        }
+    });
+    checkboxUpload.removeEventListener('change', function () {
+        if (checkboxUpload.checked) {
+            link.style.display = 'none';
+            upload.style.display = 'block';
+        } else {
+            link.style.display = 'block';
+            upload.style.display = 'none'; 
+        }
+    });
+
+}
+
 
 function _loadLogoSelector() {
     const checkboxLink = document.getElementById(`enable-link-logo`);

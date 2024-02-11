@@ -348,7 +348,7 @@ async function _newPlaces(places) {
   } else return "Usuário não logado"
 }
 
-async function _updateTripImage(body) {
+async function _updateTripImages(body) {
   if (await _getUID()) {
     const viagemDoc = admin.firestore().doc(`viagens/${body.viagemID}`);
 
@@ -366,6 +366,19 @@ async function _updateTripImage(body) {
 
         if (body.logoDark) {
           uploadObject['imagem.escuro'] = body.logoDark;
+        }
+
+        if (body.galeria?.length > 0) {
+          var galeria = await _get(`viagens/${body.viagemID}/galeria`);
+          if (galeria) {
+            for (let j = 0; j < body.galeria.length; j++) {
+              const i = body.galeria[j] - 1;
+              if (galeria.imagens[i]) {
+                galeria.imagens[i].link = body.galeria[j].link;
+              }
+            }
+            uploadObject['galeria'] = galeria;
+          }
         }
 
         await viagemDoc.update(uploadObject);

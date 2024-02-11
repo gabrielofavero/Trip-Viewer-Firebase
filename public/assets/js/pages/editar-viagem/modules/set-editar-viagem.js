@@ -1,6 +1,8 @@
 var uploadBackground = false;
 var uploadLogoLight = false;
 var uploadLogoDark = false;
+var uploadGaleria = [];
+
 var SUCCESS = false;
 
 var CLEAR_IMAGES = {
@@ -17,6 +19,7 @@ async function _buildTripObject() {
             compartilhamento: {},
             cores: {},
             fim: {},
+            galeria: {},
             hospedagens: {
                 codigos: [],
                 datas: [],
@@ -46,7 +49,8 @@ async function _buildTripObject() {
         passeios: document.getElementById('habilitado-passeios').checked,
         programacao: document.getElementById('habilitado-programacao').checked,
         resumo: true,
-        transportes: document.getElementById('habilitado-transporte').checked
+        transportes: document.getElementById('habilitado-transporte').checked,
+        galeria: document.getElementById('habilitado-galeria').checked
     }
 
     const divTitulo = document.getElementById(`titulo`);
@@ -83,6 +87,7 @@ async function _buildTripObject() {
     result.data.hospedagens = _buildHospedagemObject();
     result.data.programacoes = _buildProgramacaoObject();
     result.data.cidades = _buildCidadesArray();
+    result.data.galeria = _buildGaleriaObject();
 
     if (tripID) {
         result.id = tripID;
@@ -375,6 +380,42 @@ function _buildCidadesArray() {
     return result;
 }
 
+function _buildGaleriaObject() {
+    let result = {
+        filtros: [],
+        imagens: []
+    }
+
+    const childIds = _getChildIDs('galeria-box');
+    for (var i = 0; i < childIds.length; i++) {
+        const j = parseInt(childIds[i].split("-")[1]);
+        const filter = _firstCharToUpperCaseAllWords(document.getElementById(`galeria-categoria-${j}`).value);
+        const title = document.getElementById(`galeria-titulo-${j}`).value;
+        const descricao = document.getElementById(`galeria-descricao-${j}`).value;
+
+        var link = "";
+
+        if (document.getElementById(`enable-link-galeria-${j}`).checked) {
+            link = document.getElementById(`link-galeria-${j}`).value;
+        } else {
+            uploadGaleria.push(j);
+        }
+
+        if (!result.filtros.includes(filter)){
+            result.filtros.push(filter);
+        }
+
+        result.imagens.push({
+            link: link,
+            titulo: title,
+            descricao: descricao,
+            filtro: filter
+        });
+    }
+
+    return result;
+}
+
 async function _setViagem() {
     _startLoadingScreen();
     let message;
@@ -402,11 +443,12 @@ async function _setViagem() {
 
             _addToUser('viagens', tripID);
             
-            if (uploadLogoLight || uploadLogoDark || uploadBackground) {
+            if (uploadLogoLight || uploadLogoDark || uploadBackground || uploadGaleria.length > 0) {
                 let newMessage = '';
                 let logoLight = '';
                 let logoDark = ''
                 let background = '';
+                let galeria = [];
     
                 if (uploadLogoLight) {
                     logoLight = await _uploadLogoLight(tripID);
@@ -417,17 +459,22 @@ async function _setViagem() {
                 }
     
                 if (uploadBackground) {
-                    background = await _uploadLogoDark(tripID);
+                    background = await _uploadBackground(tripID);
+                }
+
+                if (uploadGaleria.length > 0) {
+                    galeria = await _uploadGaleria(tripID, uploadGaleria);
                 }
     
                 body = {
                     viagemID: tripID,
                     background: background,
                     logoLight: logoLight,
-                    logoDark: logoDark
+                    logoDark: logoDark,
+                    galeria: galeria
                 }
     
-                newMessage = await _updateTripImage(body)
+                newMessage = await _updateTripImages(body)
     
                 if (!newMessage.includes('sucesso')) {
                     message += '. Falha no upload de imagem(s): ' + newMessage;

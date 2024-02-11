@@ -300,6 +300,7 @@ function _loadEventListeners() {
 
 async function _loadPlaces() {
   blockLoadingEnd = true;
+  document.getElementById('delete-text').style.display = 'block';
   _startLoadingScreen();
   const FIRESTORE_PLACES_DATA = await _getSinglePlaces();
   console.log(FIRESTORE_PLACES_DATA);

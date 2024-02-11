@@ -187,6 +187,17 @@
                 Passeios</a>
             </li>
             <li>
+              <a href="#galeria">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"></path>
+                  <circle cx="9.503" cy="7.497" r="1.503" fill="currentColor"></circle>
+                  <path fill="currentColor"
+                    d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2m0 14H5V5c0-.806.55-.988 1-1h13z">
+                  </path>
+                </svg>
+                Galeria</a>
+            </li>
+            <li>
               <a href="#double-buttons">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                   <path fill="currentColor"
@@ -342,6 +353,7 @@
             <fieldset class="nice-form-group">
               <div class="nice-form-group">
                 <input type="radio" name="type-background" id="enable-link-background" checked>
+                <label for="enable-link-background">Fornecer link</label>
               </div>
 
               <div class="nice-form-group">
@@ -370,15 +382,6 @@
                 class="icon-right">
             </div>
 
-            <div class="nice-form-group">
-              <label>Altura do Título</label>
-              <select id="logo-tamanho">
-                <option value="250px">Padrão</option>
-                <option value="150px">Pequena</option>
-                <option value="350px">Grande</option>
-              </select>
-            </div>
-
             <fieldset class="nice-form-group">
               <div class="nice-form-group">
                 <input type="radio" name="type-logo" id="enable-link-logo" checked>
@@ -390,6 +393,15 @@
                 <label for="enable-upload-logo">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
               </div>
             </fieldset>
+
+            <div class="nice-form-group">
+              <label>Altura do Título</label>
+              <select id="logo-tamanho">
+                <option value="250px">Padrão</option>
+                <option value="150px">Pequena</option>
+                <option value="350px">Grande</option>
+              </select>
+            </div>
           </div>
 
           <div class="nice-form-group">
@@ -463,8 +475,6 @@
             </div>
 
           </div>
-
-
 
         </section>
 
@@ -637,6 +647,50 @@
           </div>
         </section>
 
+        <section>
+          <div class="href-target" id="galeria"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"></path>
+              <circle cx="9.503" cy="7.497" r="1.503" fill="currentColor"></circle>
+              <path fill="currentColor"
+                d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2m0 14H5V5c0-.806.55-.988 1-1h13z">
+              </path>
+            </svg>
+            Galeria
+          </h1>
+          <p>
+            Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros.
+          </p>
+
+          <div class="nice-form-group">
+            <input type="checkbox" id="habilitado-galeria" class="switch" />
+            <label for="habilitado-galeria">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-galeria-content">
+            <div class="item-box accordion galeria-box" id="galeria-box">
+            </div>
+          </div>
+
+          <div class="button-box-formatted" id="galeria-adicionar-box">
+            <button id="galeria-adicionar" class="btn btn-purple">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Imagem
+            </button>
+          </div>
+        </section>
+
         <section id="double-button-section">
           <div class="href-target" id="double-buttons"></div>
           <div class="button-box">
@@ -720,7 +774,7 @@
             </svg>
           </a>
         </div>
-        <h4 id="modal-text-title">Apagar Conta</h4>
+        <h4 id="delete-title">Apagar Viagem</h4>
         <p>Tem certeza que deseja realizar a exclusão da viagem? A ação não poderá ser desfeita.</p>
       </div>
       <div class="button-box">

@@ -22,6 +22,7 @@ function _loadTripData(FIRESTORE_DATA) {
     _loadHospedagemData(FIRESTORE_DATA);
     _loadProgramacaoData(FIRESTORE_DATA);
     _loadPasseiosData(FIRESTORE_DATA);
+    _loadGaleriaData(FIRESTORE_DATA);
 
   } catch (e) {
     _displayErrorMessage(e);
@@ -425,10 +426,92 @@ function _addEditores() {
 
 }
 
+function _addGaleria() {
+  var i = 1;
+  while (document.getElementById('galeria-' + i)) {
+    i++;
+  }
+
+  $('#galeria-box').append(`
+    <div id="galeria-${i}" class="accordion-item">
+    <h2 class="accordion-header" id="heading-galeria-${i}">
+      <button id="galeria-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapse-galeria-${i}" aria-expanded="false" aria-controls="collapse-hospedagem-${i}">
+        Imagem ${i}
+      </button>
+    </h2>
+    <div id="collapse-galeria-${i}" class="accordion-collapse collapse"
+      aria-labelledby="heading-galeria-${i}" data-bs-parent="#galeria-box">
+      <div class="accordion-body">
+        <div class="nice-form-group">
+          <label>Título</label>
+          <input required id="galeria-titulo-${i}" type="text" placeholder="Lineup por dia" />
+        </div>
+
+        <div class="nice-form-group">
+          <label>Categoria</label>
+          <input required id="galeria-categoria-${i}" type="text" placeholder="Lineup" />
+        </div>
+
+      <div class="nice-form-group">
+        <label>Descrição <span class="opcional"> (Opcional)</span></label>
+        <input id="galeria-descricao-${i}" type="text" placeholder="Lineup oficial para os três dias de evento" />
+      </div>
+
+      <div class="nice-form-group customization-box" id="galeria-${i}-box">
+        <label>Imagem</label>
+        <input id="upload-galeria-${i}" type="file" accept=".jpg" />
+      </div>
+
+      <div class="nice-form-group">
+        <input id="link-galeria-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
+          class="icon-right">
+      </div>
+
+      <fieldset class="nice-form-group">
+        <div class="nice-form-group enable-link">
+          <input type="radio" name="type-galeria-${i}" id="enable-link-galeria-${i}" checked>
+          <label for="enable-link-galeria-${i}">Fornecer link</label>
+        </div>
+
+        <div class="nice-form-group">
+          <input type="radio" name="type-galeria-${i}" id="enable-upload-galeria-${i}">
+          <label for="enable-upload-galeria-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+        </div>
+      </fieldset>
+
+      </div>
+
+      <div class="deletar-box">
+        <button id="galeria-deletar-${i}" class="btn btn-secondary" onclick="_deleteGaleria(${i})">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="currentColor" fill-rule="evenodd"
+              d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+              clip-rule="evenodd"></path>
+        </svg>
+        </button>
+      </div>
+      
+    </div>
+  </div>
+    `);
+
+    _loadImageSelector(`galeria-${i}`);
+  
+}
+
 // Deletar
 function _deleteType(tipo) {
   const div = document.getElementById(tipo);
   div.parentNode.removeChild(div);
+}
+
+function _deleteGaleria(i) {
+  const id = `galeria-${i}`;
+  _removeImageSelectorListeners(id);
+  const div = document.getElementById(id);
+  div.parentNode.removeChild(div);
+
 }
 
 // Módulos: Viagem Existente
@@ -749,9 +832,6 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
       i++;
     }
 
-
-
-
   }
 }
 
@@ -790,6 +870,43 @@ function _loadPasseiosData(FIRESTORE_DATA) {
     _loadPasseios();
   }
 
+}
+
+function _loadGaleriaData(FIRESTORE_DATA) {
+  if (FIRESTORE_DATA.modulos.galeria === true) {
+    document.getElementById('habilitado-galeria').checked = true;
+    document.getElementById('habilitado-galeria-content').style.display = 'block';
+    document.getElementById('galeria-adicionar-box').style.display = 'block';
+
+    const galeriaSize = FIRESTORE_DATA.galeria.imagens.length;
+    if (galeriaSize > 0) {
+      for (let i = 1; i <= galeriaSize; i++) {
+        const j = i - 1;
+        _addGaleria();
+
+        const titulo = FIRESTORE_DATA.galeria.imagens[j].titulo;
+        if (titulo) {
+          document.getElementById(`galeria-titulo-${i}`).value = titulo;
+        }
+
+        const filtro = FIRESTORE_DATA.galeria.imagens[j].filtro;
+        if (filtro) {
+          document.getElementById(`galeria-categoria-${i}`).value = filtro;
+        }
+
+        const descricao = FIRESTORE_DATA.galeria.imagens[j].descricao;
+        if (descricao) {
+          document.getElementById(`galeria-descricao-${i}`).value = descricao;
+        }
+
+        const link = FIRESTORE_DATA.galeria.imagens[j].link;
+        if (link) {
+          document.getElementById(`link-galeria-${i}`).value = link;
+        }
+
+      }
+    }
+  }
 }
 
 function _setSelectedPasseios(optionValue, index) {

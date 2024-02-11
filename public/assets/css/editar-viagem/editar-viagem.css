@@ -1678,3 +1678,12 @@ details summary::-webkit-details-marker {
 .btn-margin {
   margin-left: 20px;
 }
+
+#delete-title {
+  text-decoration: double;
+  margin-bottom: 20px;
+}
+
+.enable-link {
+  margin-top: 0px;
+}
