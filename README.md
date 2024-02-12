@@ -32,7 +32,6 @@
 - 🏆 Adicionar opção de excluir accordeon;
 - 📈 Melhorar fundo cinza do "Adicionar ---" em editar-viagens / editar-passeios;
 - 🏆 Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
-- 📈 Editar caixa de perfil no index para tratar strings muito longas;
 - 🏆 Adicionar animações no index.html;
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
 - 🐞 Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
@@ -57,6 +56,7 @@
 - 🏆 Implementar Set para links personalizáveis;
 - 🏆 Implementar modo ativo/inativo em links, imagens e cores para não perder os dados do user caso ele só queira mudar a exibição.
 - 📈 Redução do CSS em modo escuro
+- 📈 Editada caixa de perfil no index para tratar strings muito longas;
 
 ### Dezembro 2023
 - 🐞 Consertada posição do select de transporte de editar-viagem;
