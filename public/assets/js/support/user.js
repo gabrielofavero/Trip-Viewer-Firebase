@@ -107,17 +107,3 @@ async function _getUser() {
         });
     });
 }
-
-async function _addToUser(type, id) {
-    const uid = await _getUID();
-    if (uid) {
-        const userDoc = await _get(`usuarios/${uid}`);
-        if (userDoc) {
-            let list = userDoc[type];
-            list.push(id);
-            await _update(`usuarios/${uid}`, {
-                [type]: list
-            });
-        }
-    }
-}

@@ -1,4 +1,5 @@
-function _getDatabaseObject(success, data, message = "") {
+// Constructors
+function _buildDatabaseObject(success, data, message = "") {
   return ({
     success: success,
     data: data,
@@ -7,7 +8,7 @@ function _getDatabaseObject(success, data, message = "") {
 
 }
 
-// Main Methods
+// Generic Methods
 async function _get(path) {
   try {
     const docRef = firebase.firestore().doc(path);
@@ -39,7 +40,6 @@ async function _exists(path) {
   }
 }
 
-
 async function _create(collection, data, docName = "") {
   try {
     let docRef = '';
@@ -48,11 +48,11 @@ async function _create(collection, data, docName = "") {
     } else {
       docRef = await firebase.firestore().collection(collection).doc(docName).set(data)
     }
-    return _getDatabaseObject(true, docRef, `Documento criado com sucesso`)
+    return _buildDatabaseObject(true, docRef, `Documento criado com sucesso`)
 
   } catch (error) {
     _logger(ERROR, error.message);
-    return _getDatabaseObject(false, {}, 'Erro ao criar o documento: ' + error.message)
+    return _buildDatabaseObject(false, {}, 'Erro ao criar o documento: ' + error.message)
   }
 }
 
@@ -60,10 +60,10 @@ async function _update(path, newData) {
   const docRef = firebase.firestore().doc(path);
   try {
     const update = await docRef.update(newData);
-    return _getDatabaseObject(true, update, 'Documento atualizado com sucesso');
+    return _buildDatabaseObject(true, update, 'Documento atualizado com sucesso');
   } catch (error) {
     _logger(ERROR, error.message);
-    return _getDatabaseObject(false, {}, 'Erro ao atualizar o documento: ' + error.message)
+    return _buildDatabaseObject(false, {}, 'Erro ao atualizar o documento: ' + error.message)
   }
 }
 
@@ -71,14 +71,15 @@ async function _delete(path) {
   const docRef = firebase.firestore().doc(path);
   try {
     const deleteObj = await docRef.delete();
-    return _getDatabaseObject(true, deleteObj, 'Documento atualizado com sucesso');
+    return _buildDatabaseObject(true, deleteObj, 'Documento atualizado com sucesso');
   } catch (error) {
     _logger(ERROR, error.message);
-    return _getDatabaseObject(false, {}, 'Erro ao deletar o documento: ' + error.message)
+    return _buildDatabaseObject(false, {}, 'Erro ao deletar o documento: ' + error.message)
   }
 }
 
-// Modules
+
+// Backup & Config
 async function _getBackup() {
   try {
     const uid = await _getUID();
@@ -113,6 +114,53 @@ async function _getBackup() {
   }
 }
 
+async function _getConfig() {
+  try {
+    const callSyncOrder = await _get('config/call-sync-order');
+    const information = await _get('config/information');
+    const places = await _get('config/places');
+    const transportes = await _get('config/transportes');
+    const cores = await _get('config/cores');
+
+    const config = {
+      callSyncOrder: callSyncOrder,
+      information: information,
+      places: places,
+      transportes: transportes,
+      cores: cores,
+    };
+
+    return config;
+
+  } catch (error) {
+    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+  }
+}
+
+// Visibilidade
+async function _updateVisibility(visibility) {
+  const uid = await _getUID();
+  if (uid) {
+    if (!visibility || !["dinamico", "claro", "escuro"].includes(visibility)) {
+      _logger(ERROR, "Visibilidade inválida");
+    } else {
+      const result = await _update(`usuarios/${uid}`, { visibilidade: visibility })
+      console.log(result);
+    }
+  } else {
+    _logger(ERROR, "Usuário não logado");
+  }
+}
+
+async function _getVisibility() {
+  const uid = await _getUID();
+  if (uid) {
+    const userData = await _get(`usuarios/${uid}`);
+    return userData.visibilidade;
+  }
+}
+
+// Viagens
 async function _getSingleTrip() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -143,29 +191,6 @@ async function _isTripPublic(tripID) {
   }
 }
 
-async function _getConfig() {
-  try {
-    const callSyncOrder = await _get('config/call-sync-order');
-    const information = await _get('config/information');
-    const places = await _get('config/places');
-    const transportes = await _get('config/transportes');
-    const cores = await _get('config/cores');
-
-    const config = {
-      callSyncOrder: callSyncOrder,
-      information: information,
-      places: places,
-      transportes: transportes,
-      cores: cores,
-    };
-
-    return config;
-
-  } catch (error) {
-    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
-  }
-}
-
 async function _getUserTrips() {
   const uid = await _getUID();
   if (uid) {
@@ -189,163 +214,6 @@ async function _getUserTrips() {
   } else {
     _logger(ERROR, "Usuário não logado");
   }
-}
-
-async function _getUserPlaces() {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    var passeios = [];
-
-    if (userData) {
-      for (const passeioID of userData.passeios) {
-        const passeio = await _get(`passeios/${passeioID}`);
-        passeios.push({
-          code: passeioID,
-          titulo: passeio.titulo
-        })
-      }
-    }
-
-    return passeios
-
-  } else {
-    _logger(ERROR, "Usuário não logado");
-  }
-}
-
-async function _updateVisibility(visibility) {
-  const uid = await _getUID();
-  if (uid) {
-    if (!visibility || !["dinamico", "claro", "escuro"].includes(visibility)) {
-      _logger(ERROR, "Visibilidade inválida");
-    } else {
-      const result = await _update(`usuarios/${uid}`, { visibilidade: visibility })
-      console.log(result);
-    }
-  } else {
-    _logger(ERROR, "Usuário não logado");
-  }
-}
-
-async function _getVisibility() {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    return userData.visibilidade;
-  }
-}
-
-async function _deleteTrip(id) {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    var viagens = userData.viagens;
-
-    const index = viagens.indexOf(id);
-    if (index !== -1) {
-      viagens.splice(index, 1);
-      _update(`viagens/${id}`, { viagens: viagens })
-    }
-
-    return await _delete(`viagens/${id}`);
-  }
-}
-
-async function _deletePlace(id) {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    var passeios = userData.passeios;
-
-    const index = passeios.indexOf(id);
-    if (index !== -1) {
-      passeios.splice(index, 1);
-      _update(`passeios/${id}`, { passeios: passeios })
-    }
-
-    return await _delete(`passeios/${id}`);
-  }
-}
-
-async function _addTripToUser(id) {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    let viagens = userData.viagens
-    viagens.push(id);
-    return await _update(`usuarios/${uid}`, { viagens: viagens })
-  }
-}
-
-async function _addPlaceToUser(id) {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    let passeios = userData.passeios
-    passeios.push(id);
-    return await _update(`usuarios/${uid}`, { passeios: passeios })
-  }
-}
-
-async function _deleteAccount() {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-
-    for (const viagemID of userData.viagens) {
-      const viagem = await _get(`viagens/${viagemID}`);
-      const dono = viagem.compartilhamento.dono;
-      if (viagemID == dono) {
-        _deleteTrip(viagemID)
-      }
-    }
-
-    for (const passeioID of userData.passeios) {
-      const passeio = await _get(`passeios/${passeioID}`);
-      const dono = passeio.compartilhamento.dono;
-      if (passeioID == dono) {
-        _deletePlace(passeioID)
-      }
-    }
-  }
-}
-
-async function _getSinglePlaces() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const placesID = urlParams.get('p');
-
-    let place = await _get(`passeios/${placesID}`);
-
-    if (place == null) {
-      _displayNoPlaceError();
-    }
-
-    return place;
-
-  } catch (error) {
-    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
-    _displayNoPlaceError();
-    return null;
-  }
-}
-
-async function _updatePlaces(places, placesID) {
-  if (await _getUID()) {
-    try {
-      return await _update(`passeios/${placesID}`, places)
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return error.message;
-    }
-  } else return "Usuário não logado"
-}
-
-async function _newPlaces(places) {
-  if (await _getUID()) {
-    return await _create('passeios', places)
-  } else return "Usuário não logado"
 }
 
 async function _updateTripImages(body) {
@@ -391,5 +259,129 @@ async function _updateTripImages(body) {
     }
 
 
+  } else return "Usuário não logado"
+}
+
+// Passeios
+async function _getUserPlaces() {
+  const uid = await _getUID();
+  if (uid) {
+    const userData = await _get(`usuarios/${uid}`);
+    var passeios = [];
+
+    if (userData) {
+      for (const passeioID of userData.passeios) {
+        const passeio = await _get(`passeios/${passeioID}`);
+        passeios.push({
+          code: passeioID,
+          titulo: passeio.titulo
+        })
+      }
+    }
+
+    return passeios
+
+  } else {
+    _logger(ERROR, "Usuário não logado");
+  }
+}
+
+async function _getSinglePlaces() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const placesID = urlParams.get('p');
+
+    let place = await _get(`passeios/${placesID}`);
+
+    if (place == null) {
+      _displayNoPlaceError();
+    }
+
+    return place;
+
+  } catch (error) {
+    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+    _displayNoPlaceError();
+    return null;
+  }
+}
+
+// Usuário
+async function _deleteUserObjectDB(id, type) {
+  const uid = await _getUID();
+  if (uid) {
+    var dataArray = await _get(`usuarios/${uid}/${type}`);
+    dataArray.filter(item => item !== id);
+
+    _update(`usuarios/${uid}/${type}`, dataArray)
+
+    return await _delete(`${type}/${id}`);
+  }
+
+}
+
+async function _deleteAccount() {
+  const uid = await _getUID();
+  if (uid) {
+    const userData = await _get(`usuarios/${uid}`);
+
+    for (const viagemID of userData.viagens) {
+      const viagem = await _get(`viagens/${viagemID}`);
+      const dono = viagem.compartilhamento.dono;
+      if (viagemID == dono) {
+        _deleteUserObjectDB(viagemID, "viagens")
+      }
+    }
+
+    for (const passeioID of userData.passeios) {
+      const passeio = await _get(`passeios/${passeioID}`);
+      const dono = passeio.compartilhamento.dono;
+      if (passeioID == dono) {
+        _deleteUserObjectDB(passeioID, "passeios")
+      }
+    }
+  }
+}
+
+async function _addToUserArray(type, value) {
+  const uid = await _getUID();
+  if (uid) {
+      const userDoc = await _get(`usuarios/${uid}`);
+      if (userDoc) {
+          let list = userDoc[type];
+          if (!list) {
+              list = [];
+          }
+          if (!list.includes(value)) {
+              list.push(value);
+              await _update(`usuarios/${uid}`, {
+                  [type]: list
+              });
+          }
+          console.log("Dados de usuário atualizados");
+      }
+  }
+}
+
+async function _updateUserObjectDB(object, placesID, ) {
+  if (await _getUID()) {
+    try {
+      return await _update(`${type}/${placesID}`, object)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return error.message;
+    }
+  } else return "Usuário não logado"
+}
+
+async function _newUserObjectDB(object, type) {
+  if (await _getUID()) {
+    const result = await _create(type, object)
+    console.log(`Criação em ${type}:`);
+    console.log(result);
+    if (result.data) {
+      const id = _getIdFromOjbectDB(result);
+      _addToUserArray(type, id);
+  }
   } else return "Usuário não logado"
 }

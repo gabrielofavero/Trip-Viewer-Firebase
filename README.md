@@ -14,9 +14,7 @@
 
 ### Prioridade Alta
 - ⚔️ Testagem Geral e bug fixes
-- 🐞 Dados estão se perdendo no load do editar-viagem quando o user não deixa o dado ativo
-- 🐞 Ao reeditar viagem recém criada, o id é re-adicionado.
-- 🐞 Imagem de user não carrega no primeiro login
+- 🐞 Ícone do user não carrega corretamente no primeiro login
 
 ### Prioridade Média
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
@@ -46,6 +44,9 @@
 - 🏆 Mini melhoria de front mobile
 - 🏆 Adicionada forma de deletar passeios / viagens
 - 🏆 Criado Módulo de Galeria
+- 🐞 Dados estavam se perdendo no load do editar-viagem quando o user não deixava o dado ativo
+- 🐞 Ajustada posição do night mode em editar-viagem e editar-passeio
+- 🏆 Colocada seta de voltar em editar-viagens e editar-passeios
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

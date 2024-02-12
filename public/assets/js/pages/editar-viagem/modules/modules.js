@@ -127,7 +127,7 @@ function _loadProgramacao() {
   }
 }
 
-function _loadPasseios(newTrip = true) {
+function _loadPasseios() {
   const userPlaces = localStorage.getItem('userPlaces');
   const myPlaces = userPlaces ? JSON.parse(userPlaces) : [];
 
@@ -150,12 +150,7 @@ function _loadPasseios(newTrip = true) {
       i++;
     }
 
-  } else if (newTrip) {
-    document.getElementById('sem-passeios').style.display = 'block';
-    document.getElementById('com-passeios').style.display = 'none';
-    document.getElementById('passeios-adicionar-box').style.display = 'none';
   }
-
 }
 
 function _addTransporte() {
@@ -496,8 +491,8 @@ function _addGaleria() {
   </div>
     `);
 
-    _loadImageSelector(`galeria-${i}`);
-  
+  _loadImageSelector(`galeria-${i}`);
+
 }
 
 // Deletar
@@ -643,69 +638,69 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
     document.getElementById('habilitado-transporte').checked = true;
     document.getElementById('habilitado-transporte-content').style.display = 'block';
     document.getElementById('transporte-adicionar-box').style.display = 'block';
+  }
 
-    const transporteSize = FIRESTORE_DATA.transportes.datas.length;
-    if (transporteSize > 0) {
-      for (let i = 1; i <= transporteSize; i++) {
-        const j = i - 1;
-        _addTransporte();
+  const transporteSize = FIRESTORE_DATA?.transportes?.datas.length;
+  if (transporteSize > 0) {
+    for (let i = 1; i <= transporteSize; i++) {
+      const j = i - 1;
+      _addTransporte();
 
-        switch (FIRESTORE_DATA.transportes.idaVolta[j]) {
-          case 'ida':
-            document.getElementById(`ida-${i}`).checked = true;
-            break;
-          case 'volta':
-            document.getElementById(`volta-${i}`).checked = true;
-        }
-
-        const partida = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].partida);
-        const chegada = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].chegada);
-
-        if (partida) {
-          document.getElementById(`partida-${i}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
-          document.getElementById(`partida-horario-${i}`).value = _jsDateToTime(partida);
-        }
-
-        if (chegada) {
-          document.getElementById(`chegada-${i}`).value = _jsDateToDate(chegada, 'yyyy-mm-dd');
-          document.getElementById(`chegada-horario-${i}`).value = _jsDateToTime(chegada);
-        }
-
-        if (FIRESTORE_DATA.transportes.transportes[j]) {
-          document.getElementById(`transporte-codigo-${i}`).value = FIRESTORE_DATA.transportes.transportes[j];
-        }
-
-        const empresa = FIRESTORE_DATA.transportes.empresas[j];
-        if (empresa) {
-          document.getElementById(`empresa-${i}`).value = _firstCharToUpperCase(empresa);
-        }
-
-        const reserva = FIRESTORE_DATA.transportes.reservas[j];
-        if (reserva) {
-          document.getElementById(`reserva-transp-${i}`).value = reserva;
-        }
-
-        const trajeto = FIRESTORE_DATA.transportes.trajetos[j];
-        if (trajeto && trajeto.includes(' → ')) {
-          document.getElementById(`transporte-title-${i}`).innerText = trajeto;
-          document.getElementById(`cidade-partida-${i}`).value = trajeto.split(' → ')[0];
-          document.getElementById(`cidade-chegada-${i}`).value = trajeto.split(' → ')[1];
-        }
-
-        const pontoPartida = FIRESTORE_DATA.transportes.pontos[j].partida;
-        const pontoChegada = FIRESTORE_DATA.transportes.pontos[j].chegada;
-
-        if (pontoPartida) {
-          document.getElementById(`ponto-partida-${i}`).value = pontoPartida;
-        }
-
-        if (pontoChegada) {
-          document.getElementById(`ponto-chegada-${i}`).value = pontoChegada;
-        }
-
-        document.getElementById(`cidade-partida-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
-        document.getElementById(`cidade-chegada-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+      switch (FIRESTORE_DATA.transportes.idaVolta[j]) {
+        case 'ida':
+          document.getElementById(`ida-${i}`).checked = true;
+          break;
+        case 'volta':
+          document.getElementById(`volta-${i}`).checked = true;
       }
+
+      const partida = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].partida);
+      const chegada = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].chegada);
+
+      if (partida) {
+        document.getElementById(`partida-${i}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
+        document.getElementById(`partida-horario-${i}`).value = _jsDateToTime(partida);
+      }
+
+      if (chegada) {
+        document.getElementById(`chegada-${i}`).value = _jsDateToDate(chegada, 'yyyy-mm-dd');
+        document.getElementById(`chegada-horario-${i}`).value = _jsDateToTime(chegada);
+      }
+
+      if (FIRESTORE_DATA.transportes.transportes[j]) {
+        document.getElementById(`transporte-codigo-${i}`).value = FIRESTORE_DATA.transportes.transportes[j];
+      }
+
+      const empresa = FIRESTORE_DATA.transportes.empresas[j];
+      if (empresa) {
+        document.getElementById(`empresa-${i}`).value = _firstCharToUpperCase(empresa);
+      }
+
+      const reserva = FIRESTORE_DATA.transportes.reservas[j];
+      if (reserva) {
+        document.getElementById(`reserva-transp-${i}`).value = reserva;
+      }
+
+      const trajeto = FIRESTORE_DATA.transportes.trajetos[j];
+      if (trajeto && trajeto.includes(' → ')) {
+        document.getElementById(`transporte-title-${i}`).innerText = trajeto;
+        document.getElementById(`cidade-partida-${i}`).value = trajeto.split(' → ')[0];
+        document.getElementById(`cidade-chegada-${i}`).value = trajeto.split(' → ')[1];
+      }
+
+      const pontoPartida = FIRESTORE_DATA.transportes.pontos[j].partida;
+      const pontoChegada = FIRESTORE_DATA.transportes.pontos[j].chegada;
+
+      if (pontoPartida) {
+        document.getElementById(`ponto-partida-${i}`).value = pontoPartida;
+      }
+
+      if (pontoChegada) {
+        document.getElementById(`ponto-chegada-${i}`).value = pontoChegada;
+      }
+
+      document.getElementById(`cidade-partida-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+      document.getElementById(`cidade-chegada-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
     }
   }
 }
@@ -715,65 +710,65 @@ function _loadHospedagemData(FIRESTORE_DATA) {
     document.getElementById('habilitado-hospedagem').checked = true;
     document.getElementById('habilitado-hospedagem-content').style.display = 'block';
     document.getElementById('hospedagem-adicionar-box').style.display = 'block';
+  }
 
-    const hospedagemSize = FIRESTORE_DATA.hospedagens.hospedagem.length;
-    if (hospedagemSize > 0) {
-      for (let i = 1; i <= hospedagemSize; i++) {
-        const j = i - 1;
-        _addHospedagem();
+  const hospedagemSize = FIRESTORE_DATA.hospedagens.hospedagem.length;
+  if (hospedagemSize > 0) {
+    for (let i = 1; i <= hospedagemSize; i++) {
+      const j = i - 1;
+      _addHospedagem();
 
-        const hospedagemTitle = document.getElementById(`hospedagem-title-${i}`);
-        const hospedagemNome = document.getElementById(`hospedagem-nome-${i}`);
+      const hospedagemTitle = document.getElementById(`hospedagem-title-${i}`);
+      const hospedagemNome = document.getElementById(`hospedagem-nome-${i}`);
 
-        const hospedagem = FIRESTORE_DATA.hospedagens.hospedagem[j];
-        if (hospedagem) {
-          hospedagemNome.value = hospedagem;
-          hospedagemTitle.innerText = hospedagem;
-        }
-
-        const endereco = FIRESTORE_DATA.hospedagens.endereco[j];
-        if (endereco) {
-          document.getElementById(`hospedagem-endereco-${i}`).value = endereco;
-        }
-
-        const dataCheckIn = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkin);
-        const dataCheckOut = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkout)
-
-        if (dataCheckIn) {
-          const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, 'yyyy-mm-dd');
-          const horarioCheckIn = _jsDateToTime(dataCheckIn);
-          document.getElementById(`check-in-${i}`).value = dataFormattedCheckIn;
-          document.getElementById(`check-in-horario-${i}`).value = horarioCheckIn;
-        }
-
-        if (dataCheckOut) {
-          const dataFormattedCheckOut = _jsDateToDate(dataCheckOut, "yyyy-mm-dd");
-          const horarioCheckOut = _jsDateToTime(dataCheckOut);
-
-          document.getElementById(`check-out-${i}`).value = dataFormattedCheckOut;
-          document.getElementById(`check-out-horario-${i}`).value = horarioCheckOut;
-        }
-
-        const codigo = FIRESTORE_DATA.hospedagens.codigos[j];
-        if (codigo) {
-          document.getElementById(`hospedagem-codigo-${i}`).value = codigo;
-        }
-
-        const reserva = FIRESTORE_DATA.hospedagens.reservas[j];
-        if (reserva) {
-          document.getElementById(`reserva-hospedagem-${i}`).value = reserva;
-        }
-
-        const link = FIRESTORE_DATA.hospedagens.links[j];
-        if (link) {
-          document.getElementById(`link-hospedagem-${i}`).value = link;
-        }
-
-        hospedagemNome.addEventListener('change', function () {
-          hospedagemTitle.innerText = hospedagemNome.value;
-        });
-
+      const hospedagem = FIRESTORE_DATA.hospedagens.hospedagem[j];
+      if (hospedagem) {
+        hospedagemNome.value = hospedagem;
+        hospedagemTitle.innerText = hospedagem;
       }
+
+      const endereco = FIRESTORE_DATA.hospedagens.endereco[j];
+      if (endereco) {
+        document.getElementById(`hospedagem-endereco-${i}`).value = endereco;
+      }
+
+      const dataCheckIn = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkin);
+      const dataCheckOut = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkout)
+
+      if (dataCheckIn) {
+        const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, 'yyyy-mm-dd');
+        const horarioCheckIn = _jsDateToTime(dataCheckIn);
+        document.getElementById(`check-in-${i}`).value = dataFormattedCheckIn;
+        document.getElementById(`check-in-horario-${i}`).value = horarioCheckIn;
+      }
+
+      if (dataCheckOut) {
+        const dataFormattedCheckOut = _jsDateToDate(dataCheckOut, "yyyy-mm-dd");
+        const horarioCheckOut = _jsDateToTime(dataCheckOut);
+
+        document.getElementById(`check-out-${i}`).value = dataFormattedCheckOut;
+        document.getElementById(`check-out-horario-${i}`).value = horarioCheckOut;
+      }
+
+      const codigo = FIRESTORE_DATA.hospedagens.codigos[j];
+      if (codigo) {
+        document.getElementById(`hospedagem-codigo-${i}`).value = codigo;
+      }
+
+      const reserva = FIRESTORE_DATA.hospedagens.reservas[j];
+      if (reserva) {
+        document.getElementById(`reserva-hospedagem-${i}`).value = reserva;
+      }
+
+      const link = FIRESTORE_DATA.hospedagens.links[j];
+      if (link) {
+        document.getElementById(`link-hospedagem-${i}`).value = link;
+      }
+
+      hospedagemNome.addEventListener('change', function () {
+        hospedagemTitle.innerText = hospedagemNome.value;
+      });
+
     }
   }
 }
@@ -782,56 +777,55 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
   if (FIRESTORE_DATA.modulos.programacao === true) {
     document.getElementById('habilitado-programacao').checked = true;
     document.getElementById('habilitado-programacao-content').style.display = 'block';
-    _loadProgramacao();
+  }
+  _loadProgramacao();
 
-    let i = 1;
+  let i = 1;
 
-    while (document.getElementById(`programacao-title-${i}`)) {
-      let prog = {};
-      const j = i - 1;
-      let progTitle = j;
+  while (document.getElementById(`programacao-title-${i}`)) {
+    let prog = {};
+    const j = i - 1;
+    let progTitle = j;
 
-      const data = FIRESTORE_DATA.programacoes.programacao[j].data;
-      if (data) {
-        const formatted = _formatFirestoreDate(data, 'dd/mm/yyyy');
-        prog.data = formatted;
-        progTitle = _removeSlashesFromDate(formatted);
-      }
-
-      const titulo = FIRESTORE_DATA.programacoes.programacao[j].titulo;
-      if (titulo) {
-        document.getElementById(`programacao-inner-title-${i}`).value = titulo;
-        prog.titulo = titulo;
-      }
-
-      const manha = FIRESTORE_DATA.programacoes.programacao[j].manha;
-      if (manha && manha.length > 0) {
-        for (let k = 1; k <= manha.length; k++) {
-          document.getElementById(`manha-${k}-${i}`).value = manha[k - 1];
-          prog[`manha-${k}`] = manha[k - 1];
-        }
-      }
-
-      const tarde = FIRESTORE_DATA.programacoes.programacao[j].tarde;
-      if (tarde && tarde.length > 0) {
-        for (let k = 1; k <= tarde.length; k++) {
-          document.getElementById(`tarde-${k}-${i}`).value = tarde[k - 1];
-          prog[`tarde-${k}`] = tarde[k - 1];
-        }
-      }
-
-      const noite = FIRESTORE_DATA.programacoes.programacao[j].noite;
-      if (noite && noite.length > 0) {
-        for (let k = 1; k <= noite.length; k++) {
-          document.getElementById(`noite-${k}-${i}`).value = noite[k - 1];
-          prog[`noite-${k}`] = noite[k - 1];
-        }
-      }
-
-      PROGRAMACAO[progTitle] = prog;
-      i++;
+    const data = FIRESTORE_DATA.programacoes.programacao[j]?.data;
+    if (data) {
+      const formatted = _formatFirestoreDate(data, 'dd/mm/yyyy');
+      prog.data = formatted;
+      progTitle = _removeSlashesFromDate(formatted);
     }
 
+    const titulo = FIRESTORE_DATA.programacoes.programacao[j]?.titulo;
+    if (titulo) {
+      document.getElementById(`programacao-inner-title-${i}`).value = titulo;
+      prog.titulo = titulo;
+    }
+
+    const manha = FIRESTORE_DATA.programacoes.programacao[j]?.manha;
+    if (manha && manha.length > 0) {
+      for (let k = 1; k <= manha.length; k++) {
+        document.getElementById(`manha-${k}-${i}`).value = manha[k - 1];
+        prog[`manha-${k}`] = manha[k - 1];
+      }
+    }
+
+    const tarde = FIRESTORE_DATA.programacoes.programacao[j]?.tarde;
+    if (tarde && tarde.length > 0) {
+      for (let k = 1; k <= tarde.length; k++) {
+        document.getElementById(`tarde-${k}-${i}`).value = tarde[k - 1];
+        prog[`tarde-${k}`] = tarde[k - 1];
+      }
+    }
+
+    const noite = FIRESTORE_DATA.programacoes.programacao[j]?.noite;
+    if (noite && noite.length > 0) {
+      for (let k = 1; k <= noite.length; k++) {
+        document.getElementById(`noite-${k}-${i}`).value = noite[k - 1];
+        prog[`noite-${k}`] = noite[k - 1];
+      }
+    }
+
+    PROGRAMACAO[progTitle] = prog;
+    i++;
   }
 }
 
@@ -842,34 +836,35 @@ function _loadPasseiosData(FIRESTORE_DATA) {
     document.getElementById('sem-passeios').style.display = 'none';
     document.getElementById('com-passeios').style.display = 'block';
     document.getElementById('passeios-adicionar-box').style.display = 'block';
-
-    const cidades = FIRESTORE_DATA.cidades;
-
-    if (cidades && cidades > 0) {
-      for (const cidade of cidades) {
-        const id = cidade.passeiosID;
-        PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${cidade.passeios.titulo}</option>`;
-      }
-    }
-
-    _loadPasseios(true);
-
-    if (cidades && cidades.length > 0) {
-      for (let i = 1; i <= cidades.length; i++) {
-        const j = i - 1;
-        const id = cidades[j].passeiosID;
-
-        if (i === 1) {
-          _setSelectedPasseios(id, i);
-        } else {
-          _addPasseios(id);
-        }
-      }
-    }
   } else {
-    _loadPasseios();
+    document.getElementById('sem-passeios').style.display = 'block';
+    document.getElementById('com-passeios').style.display = 'none';
+    document.getElementById('passeios-adicionar-box').style.display = 'none';
   }
 
+  const cidades = FIRESTORE_DATA.cidades;
+
+  if (cidades && cidades > 0) {
+    for (const cidade of cidades) {
+      const id = cidade.passeiosID;
+      PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${cidade.passeios.titulo}</option>`;
+    }
+  }
+
+  _loadPasseios(true);
+
+  if (cidades && cidades.length > 0) {
+    for (let i = 1; i <= cidades.length; i++) {
+      const j = i - 1;
+      const id = cidades[j].passeiosID;
+
+      if (i === 1) {
+        _setSelectedPasseios(id, i);
+      } else {
+        _addPasseios(id);
+      }
+    }
+  }
 }
 
 function _loadGaleriaData(FIRESTORE_DATA) {
@@ -877,34 +872,34 @@ function _loadGaleriaData(FIRESTORE_DATA) {
     document.getElementById('habilitado-galeria').checked = true;
     document.getElementById('habilitado-galeria-content').style.display = 'block';
     document.getElementById('galeria-adicionar-box').style.display = 'block';
+  }
 
-    const galeriaSize = FIRESTORE_DATA.galeria.imagens.length;
-    if (galeriaSize > 0) {
-      for (let i = 1; i <= galeriaSize; i++) {
-        const j = i - 1;
-        _addGaleria();
+  const galeriaSize = FIRESTORE_DATA.galeria?.imagens.length;
+  if (galeriaSize > 0) {
+    for (let i = 1; i <= galeriaSize; i++) {
+      const j = i - 1;
+      _addGaleria();
 
-        const titulo = FIRESTORE_DATA.galeria.imagens[j].titulo;
-        if (titulo) {
-          document.getElementById(`galeria-titulo-${i}`).value = titulo;
-        }
-
-        const filtro = FIRESTORE_DATA.galeria.imagens[j].filtro;
-        if (filtro) {
-          document.getElementById(`galeria-categoria-${i}`).value = filtro;
-        }
-
-        const descricao = FIRESTORE_DATA.galeria.imagens[j].descricao;
-        if (descricao) {
-          document.getElementById(`galeria-descricao-${i}`).value = descricao;
-        }
-
-        const link = FIRESTORE_DATA.galeria.imagens[j].link;
-        if (link) {
-          document.getElementById(`link-galeria-${i}`).value = link;
-        }
-
+      const titulo = FIRESTORE_DATA.galeria.imagens[j].titulo;
+      if (titulo) {
+        document.getElementById(`galeria-titulo-${i}`).value = titulo;
       }
+
+      const filtro = FIRESTORE_DATA.galeria.imagens[j].filtro;
+      if (filtro) {
+        document.getElementById(`galeria-categoria-${i}`).value = filtro;
+      }
+
+      const descricao = FIRESTORE_DATA.galeria.imagens[j].descricao;
+      if (descricao) {
+        document.getElementById(`galeria-descricao-${i}`).value = descricao;
+      }
+
+      const link = FIRESTORE_DATA.galeria.imagens[j].link;
+      if (link) {
+        document.getElementById(`link-galeria-${i}`).value = link;
+      }
+
     }
   }
 }

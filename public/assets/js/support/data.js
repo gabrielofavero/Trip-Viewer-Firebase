@@ -100,7 +100,7 @@ function _firestoreReferencetoID(ref) {
   }
 }
 
-function _getIdFromDbOjbect(dbObject) {
+function _getIdFromOjbectDB(dbObject) {
   try {
     const segments = dbObject.data._delegate._key.path.segments
     return segments[segments.length - 1];

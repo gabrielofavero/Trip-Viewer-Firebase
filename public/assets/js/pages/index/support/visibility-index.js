@@ -166,14 +166,14 @@ function _openDeleteModal(type, param) {
     case 'viagem':
       document.getElementById('modal-text-title').innerText = "Apagar Viagem";
       document.getElementById('apagar').onclick = function () {
-        _deleteTrip(param);
+        _deleteUserObjectDB(param, "viagens");
       };
       _openModal('delete-modal');
       break;
     case 'passeio':
       document.getElementById('modal-text-title').innerText = "Apagar Passeio";
       document.getElementById('apagar').onclick = function () {
-        _deletePlace(param);
+        _deleteUserObjectDB(param, "passeios");
       };
       _openModal('delete-modal');
       break;

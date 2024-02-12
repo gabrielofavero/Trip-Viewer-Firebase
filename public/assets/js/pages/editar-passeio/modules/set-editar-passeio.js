@@ -222,13 +222,9 @@ async function _setPasseio() {
         let result;
 
         if (placesID && passeio) {
-            result = await _updatePlaces(passeio, placesID);
+            result = await _updateObjectDB(passeio, placesID, "passeios");
         } else if (passeio) {
-            result = await _newPlaces(passeio)
-            if (result.data) {
-                const id = _getIdFromDbOjbect(result);
-                await _addPlaceToUser(id);
-            }
+            result = await _newUserObjectDB(passeio, "passeios");
         }
 
         console.log(result);

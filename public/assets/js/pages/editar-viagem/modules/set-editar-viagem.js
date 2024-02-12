@@ -207,16 +207,7 @@ function _buildTransporteObject() {
         data.chegada = chegadaValue;
 
         result.datas.push(data);
-
-        if (document.getElementById(`voo-${j}`).checked) {
-            result.transportes.push('voo');
-        } else if (document.getElementById(`carro-${j}`).checked) {
-            result.transportes.push('carro');
-        } else if (document.getElementById(`onibus-${j}`).checked) {
-            result.transportes.push('onibus');
-        } else {
-            result.transportes.push('outro');
-        }
+        result.transportes.push(document.getElementById(`transporte-codigo-${j}`).value);
 
         const divEmpresa = document.getElementById(`empresa-${j}`);
         const valueEmpresa = divEmpresa ? _returnEmptyIfNoValue(divEmpresa.value) : "";
@@ -418,17 +409,17 @@ function _buildGaleriaObject() {
 
 async function _setViagem() {
     _startLoadingScreen();
-    let message;
     _validateRequiredInputs();
+    let message;
 
     if (!_isModalOpen()) {
         const viagem = await _buildTripObject();
         let result;
 
         if (tripID && viagem) {
-            result = await _update(`viagens/${viagem.id}`, viagem.data)
+            result = await _updateObjectDB(viagem.data, viagem.id, "viagens");
         } else if (viagem) {
-            result = await _create('viagens', viagem.data);
+            result = await _newUserObjectDB(passeio, "viagens");
         }
 
         console.log(result);
@@ -436,12 +427,6 @@ async function _setViagem() {
 
         if (result.success == true) {
             SUCCESS = true;
-            
-            if (newTrip) {
-                tripID = result.data.id;
-            }
-
-            _addToUser('viagens', tripID);
             
             if (uploadLogoLight || uploadLogoDark || uploadBackground || uploadGaleria.length > 0) {
                 let newMessage = '';
