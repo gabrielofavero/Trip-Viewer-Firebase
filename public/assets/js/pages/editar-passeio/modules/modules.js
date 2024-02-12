@@ -25,7 +25,7 @@ function _loadPlacesData(FIRESTORE_PLACES_DATA) {
 }
 
 // Adicionar
-function _addRestaurante() {
+function _addRestaurantes() {
   let i = 1;
   while (document.getElementById(`restaurantes-${i}`)) {
     i++;
@@ -57,7 +57,7 @@ function _addRestaurante() {
         </div>
 
         <div class="nice-form-group">
-          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
           <input id="restaurantes-emoji-${i}" type="text" placeholder="🥩" />
         </div>
 
@@ -117,13 +117,11 @@ function _addRestaurante() {
   </div>
   `);
 
-  const nome = document.getElementById(`restaurantes-nome-${i}`);
-  nome.addEventListener('change', function () {
-    document.getElementById(`restaurantes-title-${i}`).innerText = nome.value;
-  });
+  _applyOnChangeListeners(i, 'restaurantes');
+
 }
 
-function _addLanche() {
+function _addLanches() {
   let i = 1;
   while (document.getElementById(`lanches-${i}`)) {
     i++;
@@ -154,7 +152,7 @@ function _addLanche() {
         </div>
 
         <div class="nice-form-group">
-          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
           <input id="lanches-emoji-${i}" type="text" placeholder="🥢" />
         </div>
 
@@ -221,7 +219,7 @@ function _addLanche() {
   });
 }
 
-function _addSaida() {
+function _addSaidas() {
   let i = 1;
   while (document.getElementById(`saidas-${i}`)) {
     i++;
@@ -252,7 +250,7 @@ function _addSaida() {
         </div>
 
         <div class="nice-form-group">
-          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
           <input id="saidas-emoji-${i}" type="text" placeholder="🍺" />
         </div>
 
@@ -349,7 +347,7 @@ function _addTurismo() {
         </div>
 
         <div class="nice-form-group">
-          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
           <input id="turismo-emoji-${i}" type="text" placeholder="🎰" />
         </div>
 
@@ -416,7 +414,7 @@ function _addTurismo() {
   });
 }
 
-function _addLoja() {
+function _addLojas() {
   let i = 1;
   while (document.getElementById(`lojas-${i}`)) {
     i++;
@@ -447,7 +445,7 @@ function _addLoja() {
         </div>
 
         <div class="nice-form-group">
-          <label>Emoji <span class="opcional"> (Opcional)</span></label>
+          <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
           <input id="lojas-emoji-${i}" type="text" placeholder="🛍️" />
         </div>
 
@@ -622,51 +620,51 @@ function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
     if (restaurantesSize > 0) {
       for (let i = 1; i <= restaurantesSize; i++) {
         const j = i - 1;
-        _addRestaurante();
+        _addRestaurantes();
 
         const novo = FIRESTORE_PLACES_DATA.restaurantes.novo;
-        if (novo && novo[j] && novo[j] === '✔'){
+        if (novo && novo[j] && novo[j] === '✔') {
           document.getElementById(`restaurantes-novo-${i}`).checked = true;
         }
 
         const nome = FIRESTORE_PLACES_DATA.restaurantes.nome;
-        if (nome && nome[j]){
+        if (nome && nome[j]) {
           document.getElementById(`restaurantes-nome-${i}`).value = nome[j];
           document.getElementById(`restaurantes-title-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.restaurantes.emoji;
-        if (emoji && emoji[j]){
+        if (emoji && emoji[j]) {
           document.getElementById(`restaurantes-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.restaurantes.descricao;
-        if (descricao && descricao[j]){
+        if (descricao && descricao[j]) {
           document.getElementById(`restaurantes-descricao-${i}`).value = descricao[j];
         }
 
         const link = FIRESTORE_PLACES_DATA.restaurantes.hyperlink.name;
-        if (link && link[j]){
+        if (link && link[j]) {
           document.getElementById(`restaurantes-link-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_PLACES_DATA.restaurantes.regiao;
-        if (regiao && regiao[j]){
+        if (regiao && regiao[j]) {
           document.getElementById(`restaurantes-regiao-${i}`).value = regiao[j];
         }
 
         const valor = FIRESTORE_PLACES_DATA.restaurantes.valor;
         if (valor && valor[j]) {
           document.getElementById(`restaurantes-valor-${i}`).value = valor[j];
-        }         
+        }
 
         const midia = FIRESTORE_PLACES_DATA.restaurantes.hyperlink.video;
-        if (midia && midia[j]){
+        if (midia && midia[j]) {
           document.getElementById(`restaurantes-midia-${i}`).value = midia[j];
         }
 
         const nota = FIRESTORE_PLACES_DATA.restaurantes.nota;
-        if (nota && nota[j]){
+        if (nota && nota[j]) {
           document.getElementById(`restaurantes-nota-${i}`).value = nota[j];
         }
       }
@@ -684,51 +682,51 @@ function _loadLanchesData(FIRESTORE_PLACES_DATA) {
     if (lanchesSize > 0) {
       for (let i = 1; i <= lanchesSize; i++) {
         const j = i - 1;
-        _addLanche();
+        _addLanches();
 
         const novo = FIRESTORE_PLACES_DATA.lanches.novo;
-        if (novo && novo[j] && novo[j] === '✔'){
+        if (novo && novo[j] && novo[j] === '✔') {
           document.getElementById(`lanches-novo-${i}`).checked = true;
         }
 
         const nome = FIRESTORE_PLACES_DATA.lanches.nome;
-        if (nome && nome[j]){
+        if (nome && nome[j]) {
           document.getElementById(`lanches-nome-${i}`).value = nome[j];
           document.getElementById(`lanches-title-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.lanches.emoji;
-        if (emoji && emoji[j]){
+        if (emoji && emoji[j]) {
           document.getElementById(`lanches-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lanches.descricao;
-        if (descricao && descricao[j]){
+        if (descricao && descricao[j]) {
           document.getElementById(`lanches-descricao-${i}`).value = descricao[j];
         }
 
         const link = FIRESTORE_PLACES_DATA.lanches.hyperlink.name;
-        if (link && link[j]){
+        if (link && link[j]) {
           document.getElementById(`lanches-link-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_PLACES_DATA.lanches.regiao;
-        if (regiao && regiao[j]){
+        if (regiao && regiao[j]) {
           document.getElementById(`lanches-regiao-${i}`).value = regiao[j];
         }
 
         const valor = FIRESTORE_PLACES_DATA.lanches.valor;
         if (valor && valor[j]) {
           document.getElementById(`lanches-valor-${i}`).value = valor[j];
-        }         
+        }
 
         const midia = FIRESTORE_PLACES_DATA.lanches.hyperlink.video;
-        if (midia && midia[j]){
+        if (midia && midia[j]) {
           document.getElementById(`lanches-midia-${i}`).value = midia[j];
         }
 
         const nota = FIRESTORE_PLACES_DATA.lanches.nota;
-        if (nota && nota[j]){
+        if (nota && nota[j]) {
           document.getElementById(`lanches-nota-${i}`).value = nota[j];
         }
       }
@@ -746,51 +744,51 @@ function _loadSaidasData(FIRESTORE_PLACES_DATA) {
     if (saidasSize > 0) {
       for (let i = 1; i <= saidasSize; i++) {
         const j = i - 1;
-        _addSaida();
+        _addSaidas();
 
         const novo = FIRESTORE_PLACES_DATA.saidas.novo;
-        if (novo && novo[j] && novo[j] === '✔'){
+        if (novo && novo[j] && novo[j] === '✔') {
           document.getElementById(`saidas-novo-${i}`).checked = true;
         }
 
         const nome = FIRESTORE_PLACES_DATA.saidas.nome;
-        if (nome && nome[j]){
+        if (nome && nome[j]) {
           document.getElementById(`saidas-nome-${i}`).value = nome[j];
           document.getElementById(`saidas-title-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.saidas.emoji;
-        if (emoji && emoji[j]){
+        if (emoji && emoji[j]) {
           document.getElementById(`saidas-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.saidas.descricao;
-        if (descricao && descricao[j]){
+        if (descricao && descricao[j]) {
           document.getElementById(`saidas-descricao-${i}`).value = descricao[j];
         }
 
         const link = FIRESTORE_PLACES_DATA.saidas.hyperlink.name;
-        if (link && link[j]){
+        if (link && link[j]) {
           document.getElementById(`saidas-link-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_PLACES_DATA.saidas.regiao;
-        if (regiao && regiao[j]){
+        if (regiao && regiao[j]) {
           document.getElementById(`saidas-regiao-${i}`).value = regiao[j];
         }
 
         const valor = FIRESTORE_PLACES_DATA.saidas.valor;
         if (valor && valor[j]) {
           document.getElementById(`saidas-valor-${i}`).value = valor[j];
-        }         
+        }
 
         const midia = FIRESTORE_PLACES_DATA.saidas.hyperlink.video;
-        if (midia && midia[j]){
+        if (midia && midia[j]) {
           document.getElementById(`saidas-midia-${i}`).value = midia[j];
         }
 
         const nota = FIRESTORE_PLACES_DATA.saidas.nota;
-        if (nota && nota[j]){
+        if (nota && nota[j]) {
           document.getElementById(`saidas-nota-${i}`).value = nota[j];
         }
       }
@@ -811,48 +809,48 @@ function _loadTurismoData(FIRESTORE_PLACES_DATA) {
         _addTurismo();
 
         const novo = FIRESTORE_PLACES_DATA.turismo.novo;
-        if (novo && novo[j] && novo[j] === '✔'){
+        if (novo && novo[j] && novo[j] === '✔') {
           document.getElementById(`turismo-novo-${i}`).checked = true;
         }
 
         const nome = FIRESTORE_PLACES_DATA.turismo.nome;
-        if (nome && nome[j]){
+        if (nome && nome[j]) {
           document.getElementById(`turismo-nome-${i}`).value = nome[j];
           document.getElementById(`turismo-title-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.turismo.emoji;
-        if (emoji && emoji[j]){
+        if (emoji && emoji[j]) {
           document.getElementById(`turismo-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.turismo.descricao;
-        if (descricao && descricao[j]){
+        if (descricao && descricao[j]) {
           document.getElementById(`turismo-descricao-${i}`).value = descricao[j];
         }
 
         const link = FIRESTORE_PLACES_DATA.turismo.hyperlink.name;
-        if (link && link[j]){
+        if (link && link[j]) {
           document.getElementById(`turismo-link-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_PLACES_DATA.turismo.regiao;
-        if (regiao && regiao[j]){
+        if (regiao && regiao[j]) {
           document.getElementById(`turismo-regiao-${i}`).value = regiao[j];
         }
 
         const valor = FIRESTORE_PLACES_DATA.turismo.valor;
         if (valor && valor[j]) {
           document.getElementById(`turismo-valor-${i}`).value = valor[j];
-        }         
+        }
 
         const midia = FIRESTORE_PLACES_DATA.turismo.hyperlink.video;
-        if (midia && midia[j]){
+        if (midia && midia[j]) {
           document.getElementById(`turismo-midia-${i}`).value = midia[j];
         }
 
         const nota = FIRESTORE_PLACES_DATA.turismo.nota;
-        if (nota && nota[j]){
+        if (nota && nota[j]) {
           document.getElementById(`turismo-nota-${i}`).value = nota[j];
         }
       }
@@ -870,51 +868,51 @@ function _loadLojasData(FIRESTORE_PLACES_DATA) {
     if (lojasSize > 0) {
       for (let i = 1; i <= lojasSize; i++) {
         const j = i - 1;
-        _addLoja();
+        _addLojas();
 
         const novo = FIRESTORE_PLACES_DATA.lojas.novo;
-        if (novo && novo[j] && novo[j] === '✔'){
+        if (novo && novo[j] && novo[j] === '✔') {
           document.getElementById(`lojas-novo-${i}`).checked = true;
         }
 
         const nome = FIRESTORE_PLACES_DATA.lojas.nome;
-        if (nome && nome[j]){
+        if (nome && nome[j]) {
           document.getElementById(`lojas-nome-${i}`).value = nome[j];
           document.getElementById(`lojas-title-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.lojas.emoji;
-        if (emoji && emoji[j]){
+        if (emoji && emoji[j]) {
           document.getElementById(`lojas-emoji-${i}`).value = emoji[j];
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lojas.descricao;
-        if (descricao && descricao[j]){
+        if (descricao && descricao[j]) {
           document.getElementById(`lojas-descricao-${i}`).value = descricao[j];
         }
 
         const link = FIRESTORE_PLACES_DATA.lojas.hyperlink.name;
-        if (link && link[j]){
+        if (link && link[j]) {
           document.getElementById(`lojas-link-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_PLACES_DATA.lojas.regiao;
-        if (regiao && regiao[j]){
+        if (regiao && regiao[j]) {
           document.getElementById(`lojas-regiao-${i}`).value = regiao[j];
         }
 
         const valor = FIRESTORE_PLACES_DATA.lojas.valor;
         if (valor && valor[j]) {
           document.getElementById(`lojas-valor-${i}`).value = valor[j];
-        }         
+        }
 
         const midia = FIRESTORE_PLACES_DATA.lojas.hyperlink.video;
-        if (midia && midia[j]){
+        if (midia && midia[j]) {
           document.getElementById(`lojas-midia-${i}`).value = midia[j];
         }
 
         const nota = FIRESTORE_PLACES_DATA.lojas.nota;
-        if (nota && nota[j]){
+        if (nota && nota[j]) {
           document.getElementById(`lojas-nota-${i}`).value = nota[j];
         }
       }
@@ -951,46 +949,74 @@ function _loadLineupData(FIRESTORE_PLACES_DATA) {
         _addLineup();
 
         const headliner = FIRESTORE_PLACES_DATA.lineup.headliner;
-        if (headliner && headliner[j]){
+        if (headliner && headliner[j]) {
           document.getElementById(`lineup-headliner-${i}`).checked = headliner[j];
         }
 
         const nome = FIRESTORE_PLACES_DATA.lineup.nome;
-        if (nome && nome[j]){
+        if (nome && nome[j]) {
           document.getElementById(`lineup-nome-${i}`).value = nome[j];
           document.getElementById(`lineup-title-${i}`).innerText = nome[j];
         }
 
         const genero = FIRESTORE_PLACES_DATA.lineup.descricao;
-        if (genero && genero[j]){
+        if (genero && genero[j]) {
           document.getElementById(`lineup-descricao-${i}`).value = genero[j];
         }
 
         const palco = FIRESTORE_PLACES_DATA.lineup.palco;
-        if (palco && palco[j]){
+        if (palco && palco[j]) {
           document.getElementById(`lineup-palco-${i}`).value = palco[j];
         }
 
         const inicio = FIRESTORE_PLACES_DATA.lineup.inicio;
-        if (inicio && inicio[j]){
+        if (inicio && inicio[j]) {
           document.getElementById(`lineup-inicio-${i}`).value = inicio[j];
         }
 
         const fim = FIRESTORE_PLACES_DATA.lineup.fim;
         if (fim && fim[j]) {
           document.getElementById(`lineup-fim-${i}`).value = fim[j];
-        }         
+        }
 
         const midia = FIRESTORE_PLACES_DATA.lineup.hyperlink.video;
-        if (midia && midia[j]){
+        if (midia && midia[j]) {
           document.getElementById(`lineup-midia-${i}`).value = midia[j];
         }
 
         const nota = FIRESTORE_PLACES_DATA.lineup.nota;
-        if (nota && nota[j]){
+        if (nota && nota[j]) {
           document.getElementById(`lineup-nota-${i}`).value = nota[j];
         }
       }
     }
+  }
+}
+
+// Listeners
+function _applyOnChangeListeners(i, type) {
+  document.getElementById(`${type}-nome-${i}`).addEventListener('change', function () {
+    _onChangeName(i, type);
+  });
+  document.getElementById(`${type}-emoji-${i}`).addEventListener('change', function () {
+    _onChangeName(i, type);
+  });
+}
+
+function _onChangeName(i, type) {
+  const titleDiv = document.getElementById(`${type}-title-${i}`);
+  const nomeDiv = document.getElementById(`${type}-nome-${i}`);
+  const emojiDiv = document.getElementById(`${type}-emoji-${i}`);
+
+  const nome = nomeDiv.value;
+  const emoji = emojiDiv.value.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '');
+
+  if (emoji && nome) {
+    titleDiv.innerText = `${nome} ${emoji}`
+  } else if (emoji) {
+    titleDiv.innerText = nome;
+  } else {
+    emojiDiv.value = '';
+    emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
   }
 }

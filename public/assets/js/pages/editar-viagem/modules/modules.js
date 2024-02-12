@@ -39,18 +39,6 @@ function _loadDadosBasicosNewTrip() {
   document.getElementById('quantidadePessoas').value = 1;
 }
 
-
-// Métodos Gerais
-function _add(type) {
-  const dynamicFunctionName = `_add${type}`;
-  if (typeof window[dynamicFunctionName] === 'function') {
-    window[dynamicFunctionName]();
-  } else {
-    _logger(ERROR, `${dynamicFunctionName} is not defined.`);
-  }
-}
-
-
 function _loadProgramacao() {
   const inicio = document.getElementById('inicio').value;
   const fim = document.getElementById('fim').value;

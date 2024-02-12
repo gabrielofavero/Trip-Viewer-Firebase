@@ -258,28 +258,28 @@ function _loadHabilitados() {
   const mapa = document.getElementById('habilitado-mapa');
   mapa.addEventListener('change', function () {
     if (mapa.checked) {
-      mapa.setAttribute('required', "");
+      _setRequired('mapa-link');
     } else {
-      mapa.removeAttribute('required');
+      _removeRequired('mapa-link');
     }
   });
 }
 
 function _loadEventListeners() {
   document.getElementById('restaurantes-adicionar').addEventListener('click', () => {
-    _addRestaurante();
+    _addRestaurantes();
   });
   document.getElementById('lanches-adicionar').addEventListener('click', () => {
-    _addLanche();
+    _addLanches();
   });
   document.getElementById('saidas-adicionar').addEventListener('click', () => {
-    _addSaida();
+    _addSaidas();
   });
   document.getElementById('turismo-adicionar').addEventListener('click', () => {
     _addTurismo();
   });
   document.getElementById('lojas-adicionar').addEventListener('click', () => {
-    _addLoja();
+    _addLojas();
   });
   document.getElementById('lineup-adicionar').addEventListener('click', () => {
     _addLineup();

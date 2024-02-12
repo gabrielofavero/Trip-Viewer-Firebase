@@ -3,7 +3,7 @@ function _loadEditModule(type, loadListener=true) {
     if (habilitado.checked) {
         _showContent(type);
         if (!document.getElementById(`habilitado-${type}-content`).innerText) {
-            _add(_firstCharToUpperCase(type))
+            _add(_firstCharToUpperCase(type).trim())
         }
     } else {
         _hideContent(type);
@@ -19,7 +19,7 @@ function _loadListener(type) {
         if (habilitado.checked) {
             _showContent(type);
             if (!document.getElementById(`habilitado-${type}-content`).innerText) {
-                _add(_firstCharToUpperCase(type))
+                _add(_firstCharToUpperCase(type).trim())
             }
         } else {
             _hideContent(type);

@@ -110,3 +110,26 @@ function _getIdFromOjbectDB(dbObject) {
     return;
   }
 }
+
+function _add(type) {
+  const dynamicFunctionName = `_add${type}`;
+  if (typeof window[dynamicFunctionName] === 'function') {
+    window[dynamicFunctionName]();
+  } else {
+    _logger(ERROR, `${dynamicFunctionName} is not defined.`);
+  }
+}
+
+function _setRequired(id) {
+  const div = document.getElementById(id);
+  if (div) {
+    div.setAttribute('required', "");
+  }
+}
+
+function _removeRequired(id) {
+  const div = document.getElementById(id);
+  if (div) {
+    div.removeAttribute('required');
+  }
+}
