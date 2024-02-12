@@ -308,6 +308,12 @@ function _loadEventListeners() {
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();
   });
+  document.getElementById('apagar').addEventListener('click', async () => {
+    if (tripID) {
+      await _deleteUserObjectDB(tripID, "viagens");
+      window.location.href = `index.html`;
+    }
+  });
   document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });

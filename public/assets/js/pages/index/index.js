@@ -270,8 +270,8 @@ function _loadListenersIndex() {
     _loadMyPlacesListVisibility();
   });
 
-  document.getElementById('settings-delete-account').addEventListener('click', function () {
-    _openDeleteModal('conta')
+  document.getElementById('apagar').addEventListener('click', function () {
+    _deleteAccount();
   });
 
   document.getElementById('trip-view-continue').addEventListener('click', async function () {
@@ -404,7 +404,6 @@ function _loadUserPlacesHTML(userPlaces) {
         <i class="iconify trip-data-icon" onclick="_editPlace('${code}')" id="places-data-icon-edit-${index}" data-icon="tabler:edit"></i>
       </div>
     </div>`
-    //         <i class="iconify trip-data-icon" onclick="_openDeleteModal('passeio', '${code}')" id="places-data-icon-delete-${index}" data-icon="material-symbols:delete-outline"></i>
   }
 
   div.innerHTML = text;

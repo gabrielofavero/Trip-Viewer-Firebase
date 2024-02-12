@@ -310,10 +310,14 @@ async function _getSinglePlaces() {
 async function _deleteUserObjectDB(id, type) {
   const uid = await _getUID();
   if (uid) {
-    var dataArray = await _get(`usuarios/${uid}/${type}`);
-    dataArray.filter(item => item !== id);
+    const userData = await _get(`usuarios/${uid}`);
+    let dataArray = userData[type];
+    dataArray = dataArray.filter(item => item !== id);
 
-    _update(`usuarios/${uid}/${type}`, dataArray)
+    let result = {};
+    result[type] = dataArray;
+
+    _update(`usuarios/${uid}/`, result)
 
     return await _delete(`${type}/${id}`);
   }
