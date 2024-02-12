@@ -1629,14 +1629,13 @@ details summary::-webkit-details-marker {
   background-color: #fff;
   padding: 20px;
   text-align: center;
-  display: flex; /* Add flex display */
-  flex-direction: column; /* Stack children vertically */
+  display: flex;
+  flex-direction: column;
 }
 
 .delete-modal-text {
-  /* height: 100px; Remove fixed height */
-  flex-grow: 1; /* Allow text area to grow */
-  margin-bottom: 20px; /* Add some space below the text */
+  flex-grow: 1;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 600px) {
@@ -1680,4 +1679,8 @@ details summary::-webkit-details-marker {
   height: 30px;
   font-size: 30px;
   margin: 0 7px 0 7px;
+}
+
+#cancel-icon {
+  cursor: pointer;
 }

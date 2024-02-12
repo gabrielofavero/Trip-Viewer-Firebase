@@ -1,4 +1,4 @@
-function _buildPasseiosObject() {
+async function _buildPasseiosObject() {
     let result = {
         lanches: {},
         lojas: {},
@@ -10,6 +10,7 @@ function _buildPasseiosObject() {
         moeda: "",
         myMaps: "",
         modulos: {},
+        compartilhamento: {}
     }
 
     const divTitulo = document.getElementById(`titulo`);
@@ -23,6 +24,8 @@ function _buildPasseiosObject() {
     const divMyMaps = document.getElementById(`mapa-link`);
     const valueMyMaps = divMyMaps ? _returnEmptyIfNoValue(divMyMaps.value) : "";
     result.myMaps = valueMyMaps;
+
+    result.compartilhamento.dono = FIRESTORE_PLACES_DATA ? FIRESTORE_PLACES_DATA.compartilhamento.dono : await _getUID();
 
     result.modulos = _buildPasseioModulos();
     result.restaurantes = _buildPasseioCategoryObject("restaurantes");
@@ -218,7 +221,7 @@ async function _setPasseio() {
     _validateRequiredInputs();
 
     if (!_isModalOpen()) {
-        const passeio = _buildPasseiosObject();
+        const passeio = await _buildPasseiosObject();
         let result;
 
         if (placesID && passeio) {

@@ -1447,6 +1447,10 @@ details summary::-webkit-details-marker {
   }
 }
 
+.btn-margin {
+  margin-left: 20px;
+}
+
 .button-box-formatted {
   text-align: right;
   background: #f1f1f1;
@@ -1584,16 +1588,6 @@ details summary::-webkit-details-marker {
   }
 }
 
-#delete-text {
-  text-align: right;
-}
-
-@media (max-width: 790px) {
-  #delete-text {
-    margin-top: 20px;
-  }
-}
-
 .icons-box {
   display: flex;
   align-items: center;
@@ -1606,4 +1600,47 @@ details summary::-webkit-details-marker {
   height: 30px;
   font-size: 30px;
   margin: 0 7px 0 7px;
+}
+
+#delete-title {
+  text-decoration: double;
+  margin-bottom: 20px;
+}
+
+#delete-text {
+  text-align: right;
+}
+
+@media (max-width: 790px) {
+  #delete-text {
+    margin-top: 20px;
+  }
+}
+
+.delete-modal-content {
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-modal-text {
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .delete-modal-content {
+    width: 90%;
+  }
+}
+
+#cancel-icon {
+  cursor: pointer;
 }
