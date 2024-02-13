@@ -1684,3 +1684,8 @@ details summary::-webkit-details-marker {
 #cancel-icon {
   cursor: pointer;
 }
+
+.modal-title {
+  font-family: "Raleway", sans-serif;
+  font-size: 21.642px;
+}

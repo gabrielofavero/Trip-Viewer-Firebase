@@ -34,15 +34,6 @@ a:hover {
   text-decoration: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Raleway", sans-serif;
-}
-
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
@@ -1643,4 +1634,9 @@ details summary::-webkit-details-marker {
 
 #cancel-icon {
   cursor: pointer;
+}
+
+.modal-title {
+  font-family: "Raleway", sans-serif;
+  font-size: 21.642px;
 }

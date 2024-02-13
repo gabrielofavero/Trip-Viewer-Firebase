@@ -45,6 +45,7 @@
 - 🐞 Dados estavam se perdendo no load do editar-viagem quando o user não deixava o dado ativo
 - 🐞 Ajustada posição do night mode em editar-viagem e editar-passeio
 - 🏆 Colocada seta de voltar em editar-viagens e editar-passeios
+- 🐞 Corrigido Título de modal desformatado
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;
