@@ -414,7 +414,7 @@ section {
   transform: translate(-50%, -50%);
   width: 450px;
   height: 550px;
-  background: #fff;
+  background-color: #fff;
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -431,6 +431,7 @@ section {
 @media (max-width: 600px) {
   .content-box {
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.80);
     height: 100vh;
     position: fixed;
     top: 50%;
@@ -490,8 +491,7 @@ section {
 /* ---------- Minhas Viagens ---------- */
 .myTrips-box,
 .myPlaces-box,
-.myPlacesLists-box
-.logged-menu {
+.myPlacesLists-box .logged-menu {
   margin-top: 30px;
   margin-bottom: 20px;
 }
@@ -509,6 +509,12 @@ section {
   border: 0.5px solid #D9D9D9;
   border-radius: 5px;
   overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+  .content-list {
+    height: 500px;
+  }
 }
 
 #settings-account-container {

@@ -83,15 +83,17 @@ strong {
 }
 
 .content-box {
-  background: #303030;
+  background-color: #303030;
   color: #E2E2E2;
 }
 
-.index-title {
-  color: #F2F2F2;
+@media (max-width: 600px) {
+  .content-box {
+    background-color: rgba(48, 48, 48, 0.90);
+  }
 }
 
-#trip-view-title {
+.index-title {
   color: #F2F2F2;
 }
 
