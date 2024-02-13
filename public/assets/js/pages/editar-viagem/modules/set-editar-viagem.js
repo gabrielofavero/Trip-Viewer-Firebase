@@ -126,7 +126,7 @@ async function _buildCompartilhamentoObject() {
 function _buildImagemObject() {
     let result = {
         ativo: document.getElementById('habilitado-imagens').checked,
-        altura: document.getElementById('logo-tamanho').value,
+        altura: `${document.getElementById('logo-tamanho').value * 25}px`,
         background: document.getElementById('link-background').value || "",
         claro: document.getElementById('link-logo-light').value || "",
         escuro: document.getElementById('link-logo-dark').value || "",

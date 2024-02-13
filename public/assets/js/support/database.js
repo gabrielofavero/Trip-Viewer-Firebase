@@ -218,8 +218,6 @@ async function _getUserTrips() {
 
 async function _updateTripImages(body) {
   if (await _getUID()) {
-    const viagemDoc = admin.firestore().doc(`viagens/${body.viagemID}`);
-
     try {
       if (body.background || body.logoLight || body.logoDark) {
         let uploadObject = {};
@@ -249,7 +247,7 @@ async function _updateTripImages(body) {
           }
         }
 
-        await viagemDoc.update(uploadObject);
+        await _update(`viagens/${body.viagemID}`, uploadObject);
       }
 
       return `Viagem '${body.viagemID}' atualizada com sucesso`;

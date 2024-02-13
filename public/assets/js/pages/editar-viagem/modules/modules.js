@@ -528,9 +528,6 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
   const logoEscuro = FIRESTORE_DATA.imagem.escuro;
   const altura = FIRESTORE_DATA.imagem.altura;
 
-  const logoTamanho = document.getElementById('logo-tamanho');
-  const alturaArray = Array.from(logoTamanho.options).map(option => option.value);
-
   if (FIRESTORE_DATA.imagem.ativo === true) {
     document.getElementById('habilitado-imagens').checked = true;
     document.getElementById('habilitado-imagens-content').style.display = 'block';
@@ -548,8 +545,12 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
     document.getElementById('link-logo-dark').value = logoEscuro;
   }
 
-  if (altura && alturaArray.includes(altura)) {
-    logoTamanho.value = altura;
+  if (altura) {
+    const alturaValue = altura.replace('px', '');
+    if (alturaValue > 25 && alturaValue < 500) {
+      document.getElementById('logo-tamanho').value = alturaValue / 25;
+      document.getElementById('logo-tamanho-tooltip').innerText = `(${altura})`;
+    }
   }
 
   if (background.includes(FIREBASE_IMAGE_ORIGIN)) {
@@ -908,4 +909,12 @@ function _updateTransporteTitle(i) {
 
   if (!cidadePartida || !cidadeChegada) return;
   document.getElementById(`transporte-title-${i}`).innerText = `${cidadePartida} → ${cidadeChegada}`;
+}
+
+function _formatAltura(value) {    
+  if (value == 0) {
+    value = 1;
+    document.getElementById('logo-tamanho').value = value;
+  }
+  document.getElementById('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
 }

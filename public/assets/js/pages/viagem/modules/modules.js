@@ -20,43 +20,43 @@ function _loadHeader() {
   document.getElementById("header2").style.display = "none";
 
   if (FIRESTORE_DATA.links.ativo) {
-    
+
     if (FIRESTORE_DATA.links.attachments) {
       document.getElementById("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
     } else {
       document.getElementById("attachmentsLink").style.display = "none";
     }
-  
+
     if (FIRESTORE_DATA.links.sheet) {
       document.getElementById("sheetLink").href = FIRESTORE_DATA.links.sheet;
     } else {
       document.getElementById("sheetLink").style.display = "none";
     }
-  
+
     if (FIRESTORE_DATA.links.ppt) {
       document.getElementById("pptLink").href = FIRESTORE_DATA.links.ppt;
     } else {
       document.getElementById("pptLink").style.display = "none";
     }
-    
+
     if (FIRESTORE_DATA.links.drive) {
       document.getElementById("driveLink").href = FIRESTORE_DATA.links.drive;
     } else {
       document.getElementById("driveLink").style.display = "none";
     }
-    
+
     if (FIRESTORE_DATA.links.vacina) {
       document.getElementById("vaccineLink").href = FIRESTORE_DATA.links.vacina;
     } else {
       document.getElementById("vaccineLink").style.display = "none";
     }
-    
+
     if (FIRESTORE_DATA.links.pdf) {
       document.getElementById("pdfLink").href = FIRESTORE_DATA.links.pdf;
     } else {
       document.getElementById("pdfLink").style.display = "none";
     }
-    
+
     if (FIRESTORE_DATA.links.maps) {
       document.getElementById("mapsLink").href = FIRESTORE_DATA.links.maps;
     } else {
@@ -65,7 +65,7 @@ function _loadHeader() {
   }
 
   if (FIRESTORE_DATA.imagem.ativo) {
-    
+
     if (FIRESTORE_DATA.imagem.background) {
       var hero = document.getElementById('hero');
       hero.style.background = 'url("' + FIRESTORE_DATA.imagem.background + '") top center no-repeat';
@@ -77,6 +77,10 @@ function _loadHeader() {
       document.getElementById("header2").src = _isOnDarkMode() ? escuro : FIRESTORE_DATA.imagem.claro;
       document.getElementById("header1").style.display = "none";
       document.getElementById("header2").style.display = "block";
+
+      if (FIRESTORE_DATA.imagem.altura) {
+        document.getElementById("header2").style.height = FIRESTORE_DATA.imagem.altura;
+      }
     }
   }
 }
@@ -132,5 +136,14 @@ function _loadModules() {
     CALL_SYNC.push(_loadPlaces);
   } else {
     document.getElementById('places').style.display = "none";
+    document.getElementById("placesNav").innerHTML = "";
+  }
+
+  // Gallery
+  if (FIRESTORE_DATA.modulos.galeria) {
+    CALL_SYNC.push(_loadGallery);
+  } else {
+    document.getElementById("portfolioM").innerHTML = "";
+    document.getElementById("portfolio").style.display = "none";
   }
 }

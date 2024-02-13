@@ -10,7 +10,6 @@ function _openLightbox(link) {
   lightboxIframe.onload = function () {
     document.getElementById('lightbox').style.display = 'block';
     document.getElementById('night-mode').style.display = 'none';
-    document.getElementById('share').style.display = 'none';
     document.getElementById('menu').style.display = 'none';
     document.getElementById('navbar').style.display = 'none';
     _stopLoadingScreen();

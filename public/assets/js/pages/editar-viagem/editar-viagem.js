@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ].filter(feature => typeof app[feature] === 'function');
     console.log(`Firebase SDK loaded with ${features.join(', ')}`);
     firebase.auth().currentUser;
-    
+
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
@@ -278,43 +278,59 @@ function _loadEventListeners() {
   document.getElementById('transporte-adicionar').addEventListener('click', () => {
     _addTransporte();
   });
+
   document.getElementById('hospedagem-adicionar').addEventListener('click', () => {
     _addHospedagem();
   });
+
   document.getElementById('passeios-adicionar').addEventListener('click', () => {
     _addPasseios();
   });
+
   document.getElementById('galeria-adicionar').addEventListener('click', () => {
     _addGaleria();
   });
+
   document.getElementById('cancelar').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
+
   document.getElementById('inicio').addEventListener('input', () => {
     _loadProgramacao();
     document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
   });
+
   document.getElementById('fim').addEventListener('change', () => {
     _loadProgramacao();
   });
+
   document.getElementById('editores-adicionar').addEventListener('click', () => {
     _addEditores();
   });
+
+  document.getElementById('logo-tamanho').addEventListener('input', (event) => {
+    _formatAltura(event.target.value);
+  });
+  
   document.getElementById('salvar').addEventListener('click', () => {
     _setViagem();
   });
+
   document.getElementById('re-editar').addEventListener('click', () => {
     _reEdit(tripID, 'viagens', wasSaved);
   });
+
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();
   });
+
   document.getElementById('apagar').addEventListener('click', async () => {
     if (tripID) {
       await _deleteUserObjectDB(tripID, "viagens");
       window.location.href = `index.html`;
     }
   });
+
   document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
@@ -337,19 +353,19 @@ async function _loadTrip() {
   _stopLoadingScreen();
 }
 
-async function _uploadBackground(id=tripID) {
+async function _uploadBackground(id = tripID) {
   return await _uploadImage(`trips/${id}/hero-bg.jpg`, 'upload-background');
 }
 
-async function _uploadLogoLight(id=tripID){
+async function _uploadLogoLight(id = tripID) {
   return await _uploadImage(`trips/${id}/logo.png`, 'upload-logo-light');
 }
 
-async function _uploadLogoDark(id=tripID){
+async function _uploadLogoDark(id = tripID) {
   return await _uploadImage(`trips/${id}/logo-dark.png`, 'upload-logo-dark');
 }
 
-async function _uploadGaleria(id=tripID, uploadGaleria=uploadGaleria) {
+async function _uploadGaleria(id = tripID, uploadGaleria = uploadGaleria) {
   let result = [];
   for (const i of uploadGaleria) {
     const url = await _uploadImage(`trips/${id}/galeria/${i}.jpg`, `upload-galeria-${i}`);
