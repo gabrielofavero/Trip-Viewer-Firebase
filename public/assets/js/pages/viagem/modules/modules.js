@@ -123,10 +123,12 @@ function _loadModules() {
   if (FIRESTORE_DATA.modulos.programacao) {
     CALL_SYNC.push(_loadCalendar);
     CALL_SYNC.push(_loadScheduleCalendar);
+    document.getElementById("calendario-credit").style.display = "inline";
   } else {
     document.getElementById("scheduleCalendarNav").innerHTML = "";
     document.getElementById("scheduleCalendar").innerHTML = "";
     document.getElementById("scheduleCalendar").style.display = "none";
+    document.getElementById("calendario-credit").style.display = "none";
   }
 
   // Places
