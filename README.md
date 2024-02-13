@@ -13,27 +13,21 @@
 ## To-Do
 
 ### Prioridade Alta
-- ⚔️ Testagem Geral e bug fixes
+- ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
 
 ### Prioridade Média
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
 - 🐞 Ícone do user não carrega corretamente no primeiro login
-- ⚔️ Front-End Ovehaul
 
 ### Prioridade Baixa
 - 🐞 O loading em viagens não está pegando a cor customizada;
 - 🐞 Ao editar a cor no passeio, ela não é salva globalmente;
 - 🐞 Botão de "transportation" em viagem.html não está deselecionando corretamente;
-- 🐞 Botão 'x' em viagem.html (sair do menu em modo mobile) deveria ter color preto quando selecionado;
 - 🏆 Criar Keypoints personalizáveis.
-- 📈 Substituir títulos de accordeons no editar-viagens;
 - 📈 Validar inputs de links;
-- 🏆 Adicionar opção de excluir accordeon;
-- 📈 Melhorar fundo cinza do "Adicionar ---" em editar-viagens / editar-passeios;
 - 🏆 Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
 - 🏆 Adicionar animações no index.html;
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
-- 🐞 Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
 - ⚔️ Migrar Projeto para outro domínio
 
 ## Done
@@ -48,6 +42,7 @@
 - 🐞 Corrigido Título de modal desformatado
 - 🏆 Adicionada Transparência em background mobile
 - 🏆 Reeditar agora não retoma a home caso tenha dado erro no salvamento
+- ⚔️ Testagem Geral e bug fixes
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;
@@ -59,6 +54,7 @@
 - 🏆 Implementar modo ativo/inativo em links, imagens e cores para não perder os dados do user caso ele só queira mudar a exibição.
 - 📈 Redução do CSS em modo escuro
 - 📈 Editada caixa de perfil no index para tratar strings muito longas;
+- 🐞 Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
 
 ### Dezembro 2023
 - 🐞 Consertada posição do select de transporte de editar-viagem;
