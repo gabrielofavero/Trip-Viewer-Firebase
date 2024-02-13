@@ -47,6 +47,7 @@
 - 🏆 Colocada seta de voltar em editar-viagens e editar-passeios
 - 🐞 Corrigido Título de modal desformatado
 - 🏆 Adicionada Transparência em background mobile
+- 🏆 Reeditar agora não retoma a home caso tenha dado erro no salvamento
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

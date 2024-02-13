@@ -423,6 +423,7 @@ async function _setViagem() {
         let message = result.message;
 
         if (result.success == true) {
+            wasSaved = true;
             
             if (uploadLogoLight || uploadLogoDark || uploadBackground || uploadGaleria.length > 0) {
                 let newMessage = '';

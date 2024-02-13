@@ -9,6 +9,7 @@
 var blockLoadingEnd = false;
 var placesID;
 var FIRESTORE_PLACES_DATA;
+wasSaved = false;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -289,7 +290,7 @@ function _loadEventListeners() {
     _setPasseio();
   });
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(placesID, 'passeios');
+    _reEdit(placesID, 'passeios', wasSaved);
   });
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();

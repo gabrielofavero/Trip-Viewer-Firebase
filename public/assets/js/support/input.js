@@ -9,6 +9,7 @@ function _validateRequiredInputs() {
     });
 
     if (invalidFields.length > 0) {
+        wasSaved = false;
         const text = _getInvalidInputsText(invalidFields);
         document.getElementById('modal-inner-text').innerHTML = text;
         _openModal();
@@ -74,7 +75,7 @@ function _getInvalidInputsText(invalidFields) {
     return text + '</ul>';
 }
 
-function _reEdit(id, type) {
+function _reEdit(id, type, wasSaved=true) {
     let param;
     let url;
 
@@ -87,8 +88,10 @@ function _reEdit(id, type) {
     }
 
 
-    if (param && id) {
+    if (param && id && wasSaved) {
         window.location.href = `${url}?${param}=${id}`;
+    } else if (!wasSaved) {
+        _closeModal();
     } else {
         window.location.href = 'index.html';
     }

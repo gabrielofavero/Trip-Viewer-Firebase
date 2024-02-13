@@ -10,6 +10,7 @@ var blockLoadingEnd = false;
 var tripID;
 var FIRESTORE_DATA;
 var newTrip = false;
+var wasSaved = false;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -303,7 +304,7 @@ function _loadEventListeners() {
     _setViagem();
   });
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(tripID, 'viagens');
+    _reEdit(tripID, 'viagens', wasSaved);
   });
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();

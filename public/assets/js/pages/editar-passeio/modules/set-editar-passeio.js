@@ -234,6 +234,8 @@ async function _setPasseio() {
 
         document.getElementById('modal-inner-text').innerText = result.message;
 
+        wasSaved = result.success;
+
         _stopLoadingScreen();
         _openModal('modal');
     }

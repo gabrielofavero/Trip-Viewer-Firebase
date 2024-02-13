@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ].filter(feature => typeof app[feature] === 'function');
     console.log(`Firebase SDK loaded with ${features.join(', ')}`);
     firebase.auth().currentUser;
-    
+
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
@@ -271,15 +271,18 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('apagar').addEventListener('click', async function () {
+    _startLoadingScreen();
     await _deleteAccount();
+    _closeModal();
     _signOut();
+    _stopLoadingScreen();
   });
 
   document.getElementById('trip-view-continue').addEventListener('click', async function () {
     document.getElementById('trip-view-invalid').style.display = 'none';
     document.getElementById('trip-view-private').style.display = 'none';
     document.getElementById('trip-view-reminder').style.display = 'none';
-    
+
     let viagem = document.getElementById('trip-view-input').value;
     if (viagem) {
       const viagemValue = viagem.trim();
@@ -291,7 +294,7 @@ function _loadListenersIndex() {
           window.location.href = `viagem.html?v=${viagemValue}`;
         } else {
           document.getElementById('trip-view-private').style.display = 'block';
-        }  
+        }
       } else {
         document.getElementById('trip-view-invalid').style.display = 'block';
       }
@@ -303,28 +306,29 @@ function _loadListenersIndex() {
 
 async function _loadUserIndex() {
   try {
-    const user = await _getUser();
-    if (user) {
-      _registerIfUserNotPresent();
-      _loadUserIndexVisibility();
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        _registerIfUserNotPresent();
+        _loadUserIndexVisibility();
 
-      const displayName = user.displayName;
-      const photoURL = 'url(' + user.photoURL + ')';
+        const displayName = user.displayName;
+        const photoURL = 'url(' + user.photoURL + ')';
 
-      document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
+        document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
 
-      document.getElementById('settings-account-name').innerHTML = displayName;
-      document.getElementById('settings-account-picture').style.backgroundImage = photoURL;
-      document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
-      document.getElementById('profile-icon').style.backgroundImage = photoURL;
-      document.getElementById('profile-icon').style.backgroundSize = 'cover';
+        document.getElementById('settings-account-name').innerHTML = displayName;
+        document.getElementById('settings-account-picture').style.backgroundImage = photoURL;
+        document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
+        document.getElementById('profile-icon').style.backgroundImage = photoURL;
+        document.getElementById('profile-icon').style.backgroundSize = 'cover';
 
-      _loadUserTrips();
-      _loadUserPlaces();
+        _loadUserTrips();
+        _loadUserPlaces();
 
-    } else {
-      _unloadUserIndexVisibility();
-    }
+      } else {
+        _unloadUserIndexVisibility();
+      }
+    });
   } catch (error) {
     _stopLoadingScreen();
     _displayErrorMessage(error);
@@ -409,11 +413,11 @@ function _loadUserPlacesHTML(userPlaces) {
   div.innerHTML = text;
 }
 
-function _editTrip(code){
+function _editTrip(code) {
   window.location.href = `editar-viagem.html?v=${code}`;
 }
 
-function _viewTrip(code){
+function _viewTrip(code) {
   window.location.href = `viagem.html?v=${code}`;
 }
 
