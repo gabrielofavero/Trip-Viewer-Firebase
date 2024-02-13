@@ -302,8 +302,8 @@ function _loadEventListeners() {
   document.getElementById('salvar').addEventListener('click', () => {
     _setViagem();
   });
-  document.getElementById('voltar').addEventListener('click', () => {
-    _closeModal();
+  document.getElementById('re-editar').addEventListener('click', () => {
+    _reEdit(tripID, 'viagens');
   });
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();

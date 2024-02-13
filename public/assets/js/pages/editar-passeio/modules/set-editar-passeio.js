@@ -225,7 +225,7 @@ async function _setPasseio() {
         let result;
 
         if (placesID && passeio) {
-            result = await _updateObjectDB(passeio, placesID, "passeios");
+            result = await _updateUserObjectDB(passeio, placesID, "passeios");
         } else if (passeio) {
             result = await _newUserObjectDB(passeio, "passeios");
         }
@@ -233,8 +233,6 @@ async function _setPasseio() {
         console.log(result);
 
         document.getElementById('modal-inner-text').innerText = result.message;
-        document.getElementById('set-complete').style.display = 'block';
-        document.getElementById('voltar-box').style.display = 'none';
 
         _stopLoadingScreen();
         _openModal('modal');

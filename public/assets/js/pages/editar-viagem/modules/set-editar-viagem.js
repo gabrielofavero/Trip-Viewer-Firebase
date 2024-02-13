@@ -3,8 +3,6 @@ var uploadLogoLight = false;
 var uploadLogoDark = false;
 var uploadGaleria = [];
 
-var SUCCESS = false;
-
 var CLEAR_IMAGES = {
     background: false,
     claro: false,
@@ -410,23 +408,21 @@ function _buildGaleriaObject() {
 async function _setViagem() {
     _startLoadingScreen();
     _validateRequiredInputs();
-    let message;
 
     if (!_isModalOpen()) {
         const viagem = await _buildTripObject();
         let result;
 
         if (tripID && viagem) {
-            result = await _updateObjectDB(viagem.data, viagem.id, "viagens");
+            result = await _updateUserObjectDB(viagem.data, viagem.id, "viagens");
         } else if (viagem) {
-            result = await _newUserObjectDB(passeio, "viagens");
+            result = await _newUserObjectDB(viagem.data, "viagens");
+            tripID = result?.data?.id;
         }
 
-        console.log(result);
-        message = result.message;
+        let message = result.message;
 
         if (result.success == true) {
-            SUCCESS = true;
             
             if (uploadLogoLight || uploadLogoDark || uploadBackground || uploadGaleria.length > 0) {
                 let newMessage = '';
@@ -470,7 +466,6 @@ async function _setViagem() {
         }
 
         document.getElementById('modal-inner-text').innerText = message;
-        document.getElementById('set-complete').style.display = 'block';
 
         _stopLoadingScreen();
         _openModal('modal');

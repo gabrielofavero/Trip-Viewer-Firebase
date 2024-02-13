@@ -367,7 +367,7 @@ async function _addToUserArray(type, value) {
   }
 }
 
-async function _updateUserObjectDB(object, placesID, ) {
+async function _updateUserObjectDB(object, placesID, type) {
   if (await _getUID()) {
     try {
       return await _update(`${type}/${placesID}`, object)
@@ -386,6 +386,7 @@ async function _newUserObjectDB(object, type) {
     if (result.data) {
       const id = _getIdFromOjbectDB(result);
       _addToUserArray(type, id);
+    return result;
   }
   } else return "Usuário não logado"
 }

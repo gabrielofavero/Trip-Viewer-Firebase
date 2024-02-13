@@ -8,6 +8,7 @@
 
 var blockLoadingEnd = false;
 var placesID;
+var FIRESTORE_PLACES_DATA;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -287,8 +288,8 @@ function _loadEventListeners() {
   document.getElementById('salvar').addEventListener('click', () => {
     _setPasseio();
   });
-  document.getElementById('voltar').addEventListener('click', () => {
-    _closeModal();
+  document.getElementById('re-editar').addEventListener('click', () => {
+    _reEdit(placesID, 'passeios');
   });
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();
@@ -308,7 +309,7 @@ async function _loadPlaces() {
   blockLoadingEnd = true;
   document.getElementById('delete-text').style.display = 'block';
   _startLoadingScreen();
-  const FIRESTORE_PLACES_DATA = await _getSinglePlaces();
+  FIRESTORE_PLACES_DATA = await _getSinglePlaces();
   console.log(FIRESTORE_PLACES_DATA);
   _loadPlacesData(FIRESTORE_PLACES_DATA);
   _stopLoadingScreen();

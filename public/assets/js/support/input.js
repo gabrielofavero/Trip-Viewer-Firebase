@@ -74,10 +74,22 @@ function _getInvalidInputsText(invalidFields) {
     return text + '</ul>';
 }
 
-function _reEdit(type, id) {
-    if (SUCCESS == true && newTrip == true && id) {
-        window.location.href = `editar-${type}.html?${type[0]}=${id}`;
+function _reEdit(id, type) {
+    let param;
+    let url;
+
+    if (type == 'viagens') {
+        param = 'v';
+        url = 'editar-viagem.html';
+    } else if (type == 'passeios') {
+        param = 'p';
+        url = 'editar-passeio.html';
+    }
+
+
+    if (param && id) {
+        window.location.href = `${url}?${param}=${id}`;
     } else {
-        _closeModal();
+        window.location.href = 'index.html';
     }
 }
