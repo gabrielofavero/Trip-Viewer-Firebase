@@ -176,30 +176,6 @@ section {
   border-top: 1px solid #DADADA;
 }
 
-.custom-nav-toggle {
-  position: absolute;
-  right: 10px;
-  top: 25px;
-  z-index: 9998;
-  border: 0;
-  background: none;
-  font-size: 28px;
-  transition: all 0.4s;
-  outline: none !important;
-  line-height: 0;
-  cursor: pointer;
-  border-radius: 50px;
-  padding: 5px;
-}
-
-.custom-nav-toggle {
-  right: 50px;
-}
-
-.custom-nav-toggle i {
-  color: #45505B;
-}
-
 @media screen and (max-width: 600px) {
   #accordion {
     width: 400px;
@@ -332,26 +308,6 @@ section {
 /**
 * Mobile Navigation 
 */
-.mobile-nav-toggle,
-.custom-nav-toggle {
-  position: fixed;
-  right: 10px;
-  top: 10px;
-  z-index: 9998;
-  border: 0;
-  background: none;
-  font-size: 28px;
-  outline: none !important;
-  line-height: 0;
-  cursor: pointer;
-  border-radius: 50px;
-  padding: 5px;
-}
-
-.custom-nav-toggle {
-  right: 50px;
-  top: 25px;
-}
 
 .top-bar {
   position: fixed;
@@ -389,24 +345,6 @@ section {
   color: inherit;
   display: flex;
   align-items: center;
-}
-
-.mobile-nav-toggle i,
-.custom-nav-toggle i {
-  color: #4F5051;
-}
-
-.mobile-nav-active {
-  overflow: hidden;
-}
-
-.mobile-nav-active #header {
-  left: 0;
-}
-
-.mobile-nav-active .mobile-nav-toggle {
-  color: #fff;
-  background-color: #5859a7;
 }
 
 /*--------------------------------------------------------------
@@ -475,6 +413,16 @@ section {
   height: 36px;
 }
 
-.mobile-nav-toggle:hover, .custom-nav-toggle:hover {
-  color: #7a7a7a;
+.icons-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-buttons {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  margin: 0 7px 0 7px;
 }
