@@ -14,11 +14,10 @@
 
 ### Prioridade Alta
 - ⚔️ Testagem Geral e bug fixes
-- 🐞 Ícone do user não carrega corretamente no primeiro login
 
 ### Prioridade Média
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
-- 🐞 Em dispositivos iOS, acima da barra superior existe uma área transparente que não é coberta pelo background;
+- 🐞 Ícone do user não carrega corretamente no primeiro login
 - ⚔️ Front-End Ovehaul
 
 ### Prioridade Baixa
