@@ -109,6 +109,7 @@ a:hover {
 /**
 * Mobile Navigation 
 */
+
 .top-bar {
   position: fixed;
   background-color: #fff;
@@ -988,7 +989,7 @@ table {
   background: #fff
 }
 
-.nice-form-group>input[type=file] {
+.nice-form-group>input[type=file], .upload-box {
   background: rgba(0, 0, 0, .025);
   padding: var(--nf-input-size);
   display: block;
@@ -1000,7 +1001,9 @@ table {
 }
 
 .nice-form-group>input[type=file]:focus,
-.nice-form-group>input[type=file]:hover {
+.nice-form-group>input[type=file]:hover,
+.upload-box:focus,
+.upload-box:focus  {
   border-color: var(--nf-input-focus-border-color)
 }
 
@@ -1081,7 +1084,7 @@ body {
   .demo-page .demo-page-navigation {
     display: none
   }
-
+  
   .demo-page {
     justify-content: center;
     align-items: center;
@@ -1200,6 +1203,11 @@ section h1.package-name {
   font-size: 2rem;
   margin-bottom: .75rem;
   margin-top: -.5rem
+}
+
+section strong {
+  font-weight: 500;
+  color: #000
 }
 
 section p {
@@ -1399,7 +1407,7 @@ details summary::-webkit-details-marker {
 
 .side-by-side {
   flex: 1;
-  margin-right: 10px;
+  margin-right: 10px; 
 }
 
 .side-by-side-box-fixed {
@@ -1409,7 +1417,7 @@ details summary::-webkit-details-marker {
 
 .side-by-side-fixed {
   flex: 1;
-  margin-right: 10px;
+  margin-right: 10px; 
 }
 
 .item-title {
@@ -1428,18 +1436,16 @@ details summary::-webkit-details-marker {
   color: #A6A6A6;
 }
 
-.button-box, .button-box-right {
+
+.button-box-gray {
   text-align: right;
+  background: #f1f1f1;
 }
 
 @media (max-width: 480px) {
-  .button-box {
+  .button-box-gray {
     text-align: center;
   }
-}
-
-.btn-margin {
-  margin-left: 20px;
 }
 
 .button-box-formatted {
@@ -1455,7 +1461,7 @@ details summary::-webkit-details-marker {
   padding: 1.5em 2em
 }
 
-#double-button-section {
+#double-button-section{
   background: #f1f1f1;
 }
 
@@ -1473,9 +1479,7 @@ details summary::-webkit-details-marker {
   color: #fff;
 }
 
-.demo-page,
-.demo-page-navigation,
-#dark-mode {
+.demo-page, .demo-page-navigation, #dark-mode {
   color: #1f2937;
 }
 
@@ -1504,8 +1508,7 @@ details summary::-webkit-details-marker {
   color: #1f2937;
 }
 
-.accordion-button:focus,
-.purple:focus {
+.accordion-button:focus, .purple:focus {
   box-shadow: 0 0 0 0.3rem rgba(88, 89, 167, 0.25);
 }
 
@@ -1540,7 +1543,7 @@ details summary::-webkit-details-marker {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
-.deletar-box {
+.deletar-box{
   margin: 10px;
   text-align: right;
 }
@@ -1579,23 +1582,24 @@ details summary::-webkit-details-marker {
   }
 }
 
-.icons-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.transparent-background{
+  background: rgba(0, 0, 0, .005);
+  margin-top: 10px;
+  padding-top: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  width: 100%;
+  border-radius: var(--nf-input-border-radius);
 }
 
-.icon-buttons {
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  font-size: 30px;
-  margin: 0 7px 0 7px;
-}
-
-#delete-title {
-  text-decoration: double;
-  margin-bottom: 20px;
+.transparent-background-color{
+  background: rgba(0, 0, 0, .005);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  width: 100%;
+  border-radius: var(--nf-input-border-radius);
 }
 
 #delete-text {
@@ -1630,6 +1634,43 @@ details summary::-webkit-details-marker {
   .delete-modal-content {
     width: 90%;
   }
+}
+
+.button-box {
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .button-box {
+    text-align: center;
+  }
+}
+
+.btn-margin {
+  margin-left: 20px;
+}
+
+#delete-title {
+  text-decoration: double;
+  margin-bottom: 20px;
+}
+
+.enable-link {
+  margin-top: 0px;
+}
+
+.icons-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-buttons {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  margin: 0 7px 0 7px;
 }
 
 #cancel-icon {

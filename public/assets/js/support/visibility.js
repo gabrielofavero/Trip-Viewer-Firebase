@@ -81,7 +81,7 @@ function _loadDarkMode() {
 
      const name = _getHTMLpage();
      var link = document.createElement("link");
-     link.href = `assets/css/${name}/${name}-dark.css`;
+     link.href = _getCssHref(name, true);
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
@@ -102,7 +102,7 @@ function _loadLightMode() {
 
      const name = _getHTMLpage();
      var link = document.createElement("link");
-     link.href = `assets/css/${name}/${name}.css`;
+     link.href = _getCssHref(name, false);
      link.type = "text/css";
      link.rel = "stylesheet";
      document.getElementsByTagName("head")[0].appendChild(link);
@@ -152,6 +152,17 @@ function _loadTripViewerLogo() {
 }
 
 // ======= GETTERS =======
+function _getCssHref(name, dark=false) {
+     const darkMode = dark ? "-dark" : "";
+     const editar = ["editar-viagem", "editar-passeio", "editar-listagem"];
+     
+     if (editar.includes(name)) {
+          return `assets/css/editar/editar${darkMode}.css`
+     } else {
+          return `assets/css/${name}/${name}${darkMode}.css`
+     }
+}
+
 function _getLocalColors() {
      try {
           return JSON.parse(localStorage.getItem("localColors"));

@@ -78,7 +78,6 @@ async function _delete(path) {
   }
 }
 
-
 // Backup & Config
 async function _getBackup() {
   try {
@@ -191,31 +190,6 @@ async function _isTripPublic(tripID) {
   }
 }
 
-async function _getUserTrips() {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    var viagens = [];
-
-    if (userData) {
-      for (const viagemID of userData.viagens) {
-        const viagem = await _get(`viagens/${viagemID}`);
-        viagens.push({
-          code: viagemID,
-          titulo: viagem.titulo,
-          inicio: viagem.inicio,
-          fim: viagem.fim,
-        });
-      }
-    }
-
-    return viagens;
-
-  } else {
-    _logger(ERROR, "Usuário não logado");
-  }
-}
-
 async function _updateTripImages(body) {
   if (await _getUID()) {
     try {
@@ -261,29 +235,6 @@ async function _updateTripImages(body) {
 }
 
 // Passeios
-async function _getUserPlaces() {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    var passeios = [];
-
-    if (userData) {
-      for (const passeioID of userData.passeios) {
-        const passeio = await _get(`passeios/${passeioID}`);
-        passeios.push({
-          code: passeioID,
-          titulo: passeio.titulo
-        })
-      }
-    }
-
-    return passeios
-
-  } else {
-    _logger(ERROR, "Usuário não logado");
-  }
-}
-
 async function _getSinglePlaces() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -350,7 +301,6 @@ async function _deleteAccount() {
   }
 }
 
-
 async function _addToUserArray(type, value) {
   const uid = await _getUID();
   if (uid) {
@@ -393,4 +343,34 @@ async function _newUserObjectDB(object, type) {
     return result;
   }
   } else return "Usuário não logado"
+}
+
+async function _getUserList(type) {
+  const uid = await _getUID();
+  if (uid) {
+    const userData = await _get(`usuarios/${uid}`);
+    var result = [];
+
+    if (userData) {
+      for (const id of userData[type]) {
+        const data = await _get(`${type}/${id}`);
+        var singleResult = {
+          code: id,
+          titulo: data.titulo,
+        }
+
+        if (data.inicio && data.fim) {
+          singleResult.inicio = data.inicio;
+          singleResult.fim = data.fim;
+        }
+
+        result.push(singleResult);
+      }
+    }
+
+    return result;
+
+  } else {
+    _logger(ERROR, "Usuário não logado");
+  }
 }

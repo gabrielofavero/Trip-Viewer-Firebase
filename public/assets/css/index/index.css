@@ -489,9 +489,7 @@ section {
 }
 
 /* ---------- Minhas Viagens ---------- */
-.myTrips-box,
-.myPlaces-box,
-.myPlacesLists-box .logged-menu {
+.userList-box, .logged-menu {
   margin-top: 30px;
   margin-bottom: 20px;
 }
@@ -600,12 +598,6 @@ section {
   justify-content: center;
 }
 
-.myTrips-list-item-clickable {
-  background: #ECEEF0;
-  display: flex;
-  cursor: pointer;
-}
-
 /* ---------- Visualizar Viagem ---------- */
 .trip-view-box {
   margin-top: 30px;
@@ -635,9 +627,9 @@ section {
   color: red;
 }
 
-#no-trips,
-#no-places,
-#no-places-lists {
+#sem-viagens,
+#sem-passeios,
+#sem-listagens {
   display: flex;
   width: 100%;
   height: 60px;
@@ -660,8 +652,8 @@ section {
   margin-bottom: 15px;
 }
 
-#add-trip:hover,
-.trip-data-icon:hover,
+#new-viagem:hover,
+.user-data-icon:hover,
 .index-buttons:hover,
 .custom-nav-toggle:hover,
 .logged-menu-item:hover,
@@ -715,20 +707,20 @@ section {
   }
 }
 
-.trip-data-item {
+.user-data-item {
   width: 300px;
 }
 
-.trip-data-item {
+.user-data-item {
   border-bottom: 0.5px solid #D9D9D9;
   padding: 7px;
 }
 
-.trip-data-item {
+.user-data-item {
   display: flex;
 }
 
-.trip-data-item-text {
+.user-data-item-text {
   flex: 1 1 70%;
 }
 
@@ -736,20 +728,20 @@ section {
   flex: 1 1 30%;
 }
 
-.trip-data-item {
+.user-data-item {
   text-align: left;
 }
 
-.trip-data-item-title {
+.user-data-item-title {
   font-weight: bold;
 }
 
-.trip-data-item-date {
+.user-data-item-date {
   font-size: 13px;
   color: #737473;
 }
 
-.trip-data-icon {
+.user-data-icon {
   margin-right: 4px;
   margin-left: 4px;
   height: 30px;

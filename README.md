@@ -43,6 +43,7 @@
 - 🏆 Adicionada Transparência em background mobile
 - 🏆 Reeditar agora não retoma a home caso tenha dado erro no salvamento
 - ⚔️ Testagem Geral e bug fixes
+- 📈 Condensados CSSs de editar-viagem e editar-passeio em CSSs únicos (editar.css e editar-dark.css)
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

@@ -123,10 +123,6 @@ strong {
   border: 0.5px solid #383838;
 }
 
-.myTrips-list-item-clickable {
-  background: #515151;
-}
-
 #trip-view-input {
   background: #404040;
   border: 0.5px solid #383838;
@@ -137,8 +133,8 @@ strong {
   color: #E2E2E2;
 }
 
-#add-trip:hover,
-.trip-data-icon:hover,
+#new-viagem:hover,
+.user-data-icon:hover,
 .index-buttons:hover,
 .custom-nav-toggle:hover,
 .logged-menu-item:hover,
@@ -146,11 +142,11 @@ strong {
   color: #c7c6c6;
 }
 
-.trip-data-item {
+.user-data-item {
   border-bottom: 0.5px solid #383838;
 }
 
-.trip-data-item-date {
+.user-data-item-date {
   color: #767676;
 }
 

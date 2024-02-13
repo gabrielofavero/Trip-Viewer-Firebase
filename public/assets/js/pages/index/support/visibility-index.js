@@ -76,12 +76,12 @@ function _loadUserIndexVisibility() {
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'block';
   document.getElementById('tripViewer').style.display = 'block';
-  document.getElementById('myTrips-box').style.display = 'none';
-  document.getElementById('myPlaces-box').style.display = 'none';
+  document.getElementById('viagens-box').style.display = 'none';
+  document.getElementById('passeios-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'none';
-  document.getElementById('myPlacesLists-box').style.display = 'none';
+  document.getElementById('listagens-box').style.display = 'none';
 }
 
 function _unloadUserIndexVisibility() {
@@ -90,12 +90,12 @@ function _unloadUserIndexVisibility() {
   document.getElementById('login-box').style.display = 'block';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'block';
-  document.getElementById('myTrips-box').style.display = 'none';
-  document.getElementById('myPlaces-box').style.display = 'none';
+  document.getElementById('viagens-box').style.display = 'none';
+  document.getElementById('passeios-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'none';
   document.getElementById('back').style.display = 'none';
-  document.getElementById('myPlacesLists-box').style.display = 'none';
+  document.getElementById('listagens-box').style.display = 'none';
 }
 
 function _loadSettingsVisibility() {
@@ -104,12 +104,12 @@ function _loadSettingsVisibility() {
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('myTrips-box').style.display = 'none';
-  document.getElementById('myPlaces-box').style.display = 'none';
+  document.getElementById('viagens-box').style.display = 'none';
+  document.getElementById('passeios-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'block';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
-  document.getElementById('myPlacesLists-box').style.display = 'none';
+  document.getElementById('listagens-box').style.display = 'none';
 }
 
 function _loadMyTripsVisibility() {
@@ -118,12 +118,12 @@ function _loadMyTripsVisibility() {
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('myTrips-box').style.display = 'block';
-  document.getElementById('myPlaces-box').style.display = 'none';
+  document.getElementById('viagens-box').style.display = 'block';
+  document.getElementById('passeios-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
-  document.getElementById('myPlacesLists-box').style.display = 'none';
+  document.getElementById('listagens-box').style.display = 'none';
 }
 
 function _loadMyPlacesVisibility() {
@@ -132,12 +132,12 @@ function _loadMyPlacesVisibility() {
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('myTrips-box').style.display = 'none';
-  document.getElementById('myPlaces-box').style.display = 'block';
+  document.getElementById('viagens-box').style.display = 'none';
+  document.getElementById('passeios-box').style.display = 'block';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
-  document.getElementById('myPlacesLists-box').style.display = 'none';
+  document.getElementById('listagens-box').style.display = 'none';
 }
 
 function _loadMyPlacesListVisibility() {
@@ -146,12 +146,12 @@ function _loadMyPlacesListVisibility() {
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('myTrips-box').style.display = 'none';
-  document.getElementById('myPlaces-box').style.display = 'none';
+  document.getElementById('viagens-box').style.display = 'none';
+  document.getElementById('passeios-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
-  document.getElementById('myPlacesLists-box').style.display = 'block';
+  document.getElementById('listagens-box').style.display = 'block';
 }
 
 function _closeDeleteModal() {

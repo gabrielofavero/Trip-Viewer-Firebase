@@ -6,8 +6,11 @@
     - Modified by: Gabriel Fávero
 */
 
-var userData = {};
-
+var blockLoadingEnd = false;
+var tripID;
+var FIRESTORE_DATA;
+var newTrip = false;
+var wasSaved = false;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -221,210 +224,152 @@ document.addEventListener('DOMContentLoaded', function () {
         mirror: false
       })
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    tripID = urlParams.get('v');
+
     _loadVisibilityIndex();
 
-    _loadListenersIndex();
+    _loadHabilitados();
 
-    _loadUserIndex();
+    if (tripID) {
+      _loadTrip()
+    } else {
+      _loadNewTrip();
+    }
 
+    _loadImageSelector('background');
+    _loadLogoSelector();
+
+    _loadEventListeners();
+
+    if (!blockLoadingEnd) {
+      _stopLoadingScreen();
+    }
     $('body').css('overflow', 'auto');
 
   } catch (error) {
     _displayErrorMessage(error);
+    if (window.location.href.includes('editar-template.html')) {
+      _overrideError();
+    }
     throw error;
   }
 });
 
-function _loadListenersIndex() {
-  document.getElementById('google-login-button').addEventListener('click', function () {
-    _signInGoogle();
+function _loadHabilitados() {
+  _loadEditModule('imagens');
+  _loadEditModule('cores');
+  _loadEditModule('links');
+  _loadEditModule('editores');
+  _loadEditModule('transporte');
+  _loadEditModule('hospedagem');
+  _loadEditModule('programacao');
+  _loadEditModule('passeios');
+  _loadEditModule('galeria');
+}
+
+function _loadUploadSelectors() {
+  _loadUploadSelector('background');
+  _loadUploadSelector('logo');
+}
+
+function _loadEventListeners() {
+  document.getElementById('transporte-adicionar').addEventListener('click', () => {
+    _addTransporte();
   });
 
-  document.getElementById('myTrips').addEventListener('click', function () {
-    _loadMyTripsVisibility();
+  document.getElementById('hospedagem-adicionar').addEventListener('click', () => {
+    _addHospedagem();
   });
 
-  document.getElementById('myPlaces').addEventListener('click', function () {
-    _loadMyPlacesVisibility();
+  document.getElementById('passeios-adicionar').addEventListener('click', () => {
+    _addPasseios();
   });
 
-  document.getElementById('profile-icon').addEventListener('click', function () {
-    _loadSettingsVisibility();
+  document.getElementById('galeria-adicionar').addEventListener('click', () => {
+    _addGaleria();
   });
 
-  document.getElementById('new-viagem').addEventListener('click', function () {
-    _viagensNovo();
+  document.getElementById('cancelar').addEventListener('click', () => {
+    window.location.href = `index.html`;
   });
 
-  document.getElementById('new-passeio').addEventListener('click', function () {
-    _passeiosNovo();
+  document.getElementById('inicio').addEventListener('input', () => {
+    _loadProgramacao();
+    document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
   });
 
-  document.getElementById('new-listagem').addEventListener('click', function () {
-    _listagensNovo();
+  document.getElementById('fim').addEventListener('change', () => {
+    _loadProgramacao();
   });
 
-  document.getElementById('back').addEventListener('click', function () {
-    _loadUserIndexVisibility();
+  document.getElementById('editores-adicionar').addEventListener('click', () => {
+    _addEditores();
   });
 
-  document.getElementById('myPlacesLists').addEventListener('click', function () {
-    _loadMyPlacesListVisibility();
+  document.getElementById('logo-tamanho').addEventListener('input', (event) => {
+    _formatAltura(event.target.value);
+  });
+  
+  document.getElementById('salvar').addEventListener('click', () => {
+    _setViagem();
   });
 
-  document.getElementById('apagar').addEventListener('click', async function () {
-    _startLoadingScreen();
-    await _deleteAccount();
+  document.getElementById('re-editar').addEventListener('click', () => {
+    _reEdit(tripID, 'viagens', wasSaved);
+  });
+
+  document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();
-    _signOut();
-    _stopLoadingScreen();
   });
 
-  document.getElementById('trip-view-continue').addEventListener('click', async function () {
-    document.getElementById('trip-view-invalid').style.display = 'none';
-    document.getElementById('trip-view-private').style.display = 'none';
-    document.getElementById('trip-view-reminder').style.display = 'none';
-
-    let viagem = document.getElementById('trip-view-input').value;
-    if (viagem) {
-      const viagemValue = viagem.trim();
-      const tripExists = await _exists(`viagens/${viagemValue}`);
-
-      if (tripExists) {
-        const isPublic = await _isTripPublic(viagemValue);
-        if (isPublic) {
-          window.location.href = `viagem.html?v=${viagemValue}`;
-        } else {
-          document.getElementById('trip-view-private').style.display = 'block';
-        }
-      } else {
-        document.getElementById('trip-view-invalid').style.display = 'block';
-      }
-    } else {
-      document.getElementById('trip-view-reminder').style.display = 'block';
+  document.getElementById('apagar').addEventListener('click', async () => {
+    if (tripID) {
+      await _deleteUserObjectDB(tripID, "viagens");
+      window.location.href = `index.html`;
     }
+  });
+
+  document.getElementById('home').addEventListener('click', () => {
+    window.location.href = `index.html`;
   });
 }
 
-async function _loadUserIndex() {
-  try {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        _registerIfUserNotPresent();
-        _loadUserIndexVisibility();
+function _loadNewTrip() {
+  newTrip = true;
+  _loadDadosBasicosNewTrip();
+  _loadProgramacao();
+  _loadPasseios();
+}
 
-        const displayName = user.displayName;
-        const photoURL = 'url(' + user.photoURL + ')';
-
-        document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
-
-        document.getElementById('settings-account-name').innerHTML = displayName;
-        document.getElementById('settings-account-picture').style.backgroundImage = photoURL;
-        document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
-        document.getElementById('profile-icon').style.backgroundImage = photoURL;
-        document.getElementById('profile-icon').style.backgroundSize = 'cover';
-
-        _loadUserDataList('viagens');
-        _loadUserDataList('passeios');
-        _loadUserDataList('listagens');
-
-      } else {
-        _unloadUserIndexVisibility();
-      }
-    });
-  } catch (error) {
-    _stopLoadingScreen();
-    _displayErrorMessage(error);
-    throw error;
-  }
+async function _loadTrip() {
+  newTrip = false;
+  document.getElementById('delete-text').style.display = 'block';
+  blockLoadingEnd = true;
+  _startLoadingScreen();
+  FIRESTORE_DATA = await _getSingleTrip();
+  _loadTripData(FIRESTORE_DATA);
   _stopLoadingScreen();
 }
 
-async function _loadUserDataList(type) {
-  userData[type] = await _getUserList(type);
-  localStorage.setItem(`${type}User`, JSON.stringify(userData[type]));
+async function _uploadBackground(id = tripID) {
+  return await _uploadImage(`trips/${id}/hero-bg.jpg`, 'upload-background');
+}
 
-  if (userData[type] && userData[type].length > 0) {
-    document.getElementById(`sem-${type}`).style.display = 'none';
-    _loadUserDataHTML(userData[type], type);
+async function _uploadLogoLight(id = tripID) {
+  return await _uploadImage(`trips/${id}/logo.png`, 'upload-logo-light');
+}
+
+async function _uploadLogoDark(id = tripID) {
+  return await _uploadImage(`trips/${id}/logo-dark.png`, 'upload-logo-dark');
+}
+
+async function _uploadGaleria(id = tripID, uploadGaleria = uploadGaleria) {
+  let result = [];
+  for (const i of uploadGaleria) {
+    const url = await _uploadImage(`trips/${id}/galeria/${i}.jpg`, `upload-galeria-${i}`);
+    result.push(url);
   }
-}
-
-function _loadUserDataHTML(data, type) {
-  const div = document.getElementById(`dados-${type}`);
-
-  let text = '';
-  for (let i = 0; i < data.length; i++) {
-    let inicioFimDiv = '';
-    let visualizarDiv = '';
-    
-    if (data[i].inicio && data[i].fim) {
-      const inicioDate = _convertFromFirestoreDate(data[i].inicio);
-      const fimDate = _convertFromFirestoreDate(data[i].fim);
-  
-      const inicio = _jsDateToDate(inicioDate);
-      const fim = _jsDateToDate(fimDate);
-
-      inicioFimDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
-    }
-
-    const titulo = data[i].titulo;
-    const code = data[i].code;
-
-    if (typeof window[`_${type}Visualizar`] === 'function') {
-      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${type}Visualizar('${code}')" data-icon="fluent:eye-16-regular"></i>`
-    }
-
-    text += `
-    <div class="user-data-item">
-      <div class="user-data-item-text">
-        <div class="user-data-item-title">${titulo}</div>
-        ${inicioFimDiv}
-      </div>
-      <div class="trip-data-icons">
-        <i class="iconify user-data-icon" onclick="_${type}Editar('${code}')" data-icon="tabler:edit"></i>
-        ${visualizarDiv}
-      </div>
-    </div>`
-  }
-
-  div.innerHTML = text;
-}
-
-function _viagensEditar(code) {
-  window.location.href = `editar-viagem.html?v=${code}`;
-}
-
-function _viagensVisualizar(code) {
-  window.location.href = `viagem.html?v=${code}`;
-}
-
-function _viagensNovo() {
-  localStorage.setItem('viagensUser', JSON.stringify(userData['viagens']));
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
-  window.location.href = `editar-viagem.html`;
-}
-
-function _passeiosNovo() {
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
-  window.location.href = `editar-passeio.html`;
-}
-
-function _passeiosEditar(code) {
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
-  window.location.href = `editar-passeio.html?p=${code}`;
-}
-
-function _viagensEditar(code) {
-  window.location.href = `editar-listagem.html?v=${code}`;
-}
-
-function _listagensVisualizar(code) {
-  window.location.href = `viagem.html?l=${code}`;
-}
-
-function _listagensNovo() {
-  localStorage.setItem('listagensUser', JSON.stringify(userData['listagens']));
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
-  window.location.href = `editar-listagem.html`;
+  return result;
 }
