@@ -2,7 +2,7 @@
 
  // ======= LOADERS =======
  function _loadPortfolioLightbox() {
-    const portfolioLightbox = GLightbox({
+    GLightbox({
         selector: '.portfolio-lightbox',
         autofocusVideos: false,
         touchNavigation: true,
@@ -10,6 +10,7 @@
         width: 'auto',
         height: 'auto'
     });
+    _adjustPortfolioHeight();
 }
 
 function _loadGallery() {
@@ -56,3 +57,18 @@ function _loadGalleryPhotos(photos) {
     photosDiv.innerHTML = result;
     _loadPortfolioLightbox();
 }
+
+function _adjustPortfolioHeight() {
+    const container = document.getElementById('portfolio-container');
+    if (!container) return;
+
+    container.style.height = 'auto';
+  
+    let totalHeight = 0;
+    const items = container.querySelectorAll('.portfolio-item');
+    items.forEach(item => {
+        totalHeight += item.offsetHeight + parseInt(window.getComputedStyle(item).marginBottom, 10);
+    });
+  
+    container.style.height = `${totalHeight}px`;
+  }
