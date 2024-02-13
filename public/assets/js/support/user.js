@@ -41,7 +41,7 @@ async function _registerIfUserNotPresent() {
 async function _getUID() {
     return new Promise((resolve, reject) => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-            unsubscribe(); // Unsubscribe to avoid memory leaks
+            unsubscribe();
 
             if (user) {
                 resolve(user.uid);

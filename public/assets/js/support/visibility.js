@@ -251,8 +251,7 @@ function _clearCustomColors() {
      }
 }
 
-function _ChangeBarColorIOS(color) {
-     // Useful for iOS devices     
+function _ChangeBarColorIOS(color) {     
      let metaThemeColor = document.querySelector("meta[name=theme-color]");
      metaThemeColor.setAttribute("content", color);
 }

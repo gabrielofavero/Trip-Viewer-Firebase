@@ -7,20 +7,16 @@ async function _uploadImage(path, id) {
       const storageRef = await firebase.storage().ref();
       const imageRef = storageRef.child(path);
 
-      // Upload the file
       const snapshot = await imageRef.put(file);
-
-      // Get the download URL
       const downloadURL = await snapshot.ref.getDownloadURL();
 
       console.log('Image uploaded successfully!');
       console.log('Download URL:', downloadURL);
 
-      // Return the download URL
       return downloadURL;
     } catch (error) {
       console.error('Error uploading image:', error);
-      return null; // Return null or handle the error as needed
+      return null;
     }
   }
 }

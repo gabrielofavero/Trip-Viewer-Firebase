@@ -55,7 +55,6 @@ function _loadTransportationLogoBoxes() {
 
     const text = `<a href="${link}" target="_blank"><img class="transpStayBox" src="${img}"></a>`
 
-    // checks if element already exists in group array
     if (!group.includes(text)) {
       group.push(text);
     }

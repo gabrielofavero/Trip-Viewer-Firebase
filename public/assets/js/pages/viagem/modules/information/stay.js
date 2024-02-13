@@ -60,7 +60,6 @@ function _loadStayModule() {
   
       const text = `<a href="${link}" target="_blank"><img class="transpStayBox${generic}" src="${img}"></a>`
   
-      // checks if element already exists in group array
       if (!group.includes(text)) {
         group.push(text);
       }
