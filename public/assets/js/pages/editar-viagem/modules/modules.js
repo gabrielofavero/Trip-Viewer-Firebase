@@ -15,7 +15,7 @@ var FIREBASE_IMAGES = {
 // Viagem Existente
 function _loadTripData(FIRESTORE_DATA) {
   try {
-    _loadDadosBasicosData(FIRESTORE_DATA);
+    _loadDadosBasicosViagemData(FIRESTORE_DATA);
     _loadCompartilhamentoData(FIRESTORE_DATA);
     _loadCustomizacaoData(FIRESTORE_DATA);
     _loadMeiosDeTransporteData(FIRESTORE_DATA);
@@ -132,7 +132,7 @@ function _loadPasseios() {
     }
 
     let i = 1;
-    const options = '<option value="0"></option>' + PASSEIOS_SELECT_OPTIONS;
+    const options = '<option value="0">Selecione um Passeio</option>' + PASSEIOS_SELECT_OPTIONS;
     while (document.getElementById(`select-passeios-${i}`)) {
       document.getElementById(`select-passeios-${i}`).innerHTML = options;
       i++;
@@ -378,7 +378,7 @@ function _addPasseios(id) {
 
   $('#com-passeios').append(`
   <br><br><select class="mini-select" id="select-passeios-${i}">
-  '<option value="0"></option>'
+  '<option value="0">Selecione um Passeio</option>'
     ${PASSEIOS_SELECT_OPTIONS}
   </select>
   `);
@@ -498,7 +498,7 @@ function _deleteGaleria(i) {
 }
 
 // Módulos: Viagem Existente
-function _loadDadosBasicosData(FIRESTORE_DATA) {
+function _loadDadosBasicosViagemData(FIRESTORE_DATA) {
   document.getElementById('titulo').value = FIRESTORE_DATA.titulo;
   document.getElementById('moeda').value = FIRESTORE_DATA.moeda;
 
@@ -840,7 +840,7 @@ function _loadPasseiosData(FIRESTORE_DATA) {
     }
   }
 
-  _loadPasseios(true);
+  _loadPasseios();
 
   if (cidades && cidades.length > 0) {
     for (let i = 1; i <= cidades.length; i++) {

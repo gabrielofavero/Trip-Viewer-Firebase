@@ -148,39 +148,7 @@
                 </svg>
                 Customização</a>
             </li>
-            <li>
-              <a href="#meios-de-transporte">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                    <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3-5a9 9 0 0 0 6-8a3 3 0 0 0-3-3a9 9 0 0 0-8 6a6 6 0 0 0-5 3">
-                    </path>
-                    <path d="M7 14a6 6 0 0 0-3 6a6 6 0 0 0 6-3m4-8a1 1 0 1 0 2 0a1 1 0 1 0-2 0"></path>
-                  </g>
-                </svg>
-                Meios de Transporte</a>
-            </li>
-            <li>
-              <a href="#hospedagens">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3s1.34 3 3 3m0-4c.55 0 1 .45 1 1s-.45 1-1 1s-1-.45-1-1s.45-1 1-1m12-3h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4m2 8h-8V9h6c1.1 0 2 .9 2 2Z">
-                  </path>
-                </svg>
-                Hospedagem</a>
-            </li>
 
-            <li>
-              <a href="#programacao">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-calendar">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-                Programação</a>
-            </li>
             <li>
               <a href="#passeios">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
@@ -190,17 +158,7 @@
                 </svg>
                 Passeios</a>
             </li>
-            <li>
-              <a href="#galeria">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"></path>
-                  <circle cx="9.503" cy="7.497" r="1.503" fill="currentColor"></circle>
-                  <path fill="currentColor"
-                    d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2m0 14H5V5c0-.806.55-.988 1-1h13z">
-                  </path>
-                </svg>
-                Galeria</a>
-            </li>
+
             <li>
               <a href="#double-buttons">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -228,12 +186,17 @@
           </h1>
 
           <p>
-            Adicione aqui as principais informações da sua viagem.
+            Adicione aqui as principais informações da sua listagem de passeios.
           </p>
 
           <div class="nice-form-group">
-            <label>Título da Viagem</label>
-            <input required id="titulo" type="text" placeholder="Minha Viagem para São Paulo" />
+            <label>Título da Listagem</label>
+            <input required id="titulo" type="text" placeholder="Melhores Destinos Internacionais" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Descrição <span class="opcional"> (Opcional)</span></label>
+            <textarea id="descricao" rows="3" placeholder="Lista de coisas para fazer dos melhores destinos internacionais que visitei em 2024"></textarea>
           </div>
 
           <div class="nice-form-group">
@@ -267,25 +230,16 @@
             </select>
           </div>
 
-          <div class="side-by-side-box">
-            <div class="nice-form-group side-by-side">
-              <label>Início</label>
-              <input class="flex-input" id="inicio" type="date" value="2023-01-22" />
-            </div>
-
-            <div class="nice-form-group side-by-side">
-              <label>Fim</label>
-              <input class="flex-input" id="fim" type="date" value="2023-01-22" />
-            </div>
-          </div>
-
           <div class="nice-form-group">
-            <label>Quantidade de Pessoas</label>
-            <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" />
+            <input id="habilitado-atualizacao" type="checkbox" class="switch" checked="">
+            <label id="habilitado-atualizacao-label" for="habilitado-atualizacao">
+              Exibir Data da Última Atualização
+              <small>Quando um ponto turístico for atualizado, a data será atualizada</small>
+            </label>
           </div>
 
           <div id="delete-text" style="display: none;">
-            <a href="#" onclick="_openModal('delete-modal')">Apagar Viagem</a>
+            <a href="#" onclick="_openModal('delete-modal')">Apagar Listagem</a>
           </div>
 
         </section>
@@ -301,14 +255,14 @@
             Compartilhamento
           </h1>
           <p>
-            Determine quem pode ver e editar sua viagem.<br>Apenas você poderá excluí-la.
+            Determine quem pode ver e editar sua listagem.
           </p>
 
           <div class="nice-form-group">
             <input id="habilitado-publico" type="checkbox" id="check-4" class="switch" checked />
             <label for="check-4">
-              Viagem Pública
-              <small>Todos com o link de acesso podem visualizar sua viagem</small>
+              Listagem Pública
+              <small>Todos com o link de acesso podem visualizar sua listagem</small>
             </label>
           </div>
 
@@ -357,7 +311,7 @@
             </svg>
             Customização
           </h1>
-          <p>Dê uma cara única para a sua viagem.</p>
+          <p>Dê uma cara única para a sua Listagem.</p>
 
 
           <div class="nice-form-group">
@@ -505,123 +459,6 @@
         </section>
 
         <section>
-          <div class="href-target" id="meios-de-transporte"></div>
-          <h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3-5a9 9 0 0 0 6-8a3 3 0 0 0-3-3a9 9 0 0 0-8 6a6 6 0 0 0-5 3">
-                </path>
-                <path d="M7 14a6 6 0 0 0-3 6a6 6 0 0 0 6-3m4-8a1 1 0 1 0 2 0a1 1 0 1 0-2 0"></path>
-              </g>
-            </svg>
-            Meios de Transporte
-          </h1>
-          <p>
-            Cadastre os principais deslocamentos de ida e volta.
-          </p>
-
-          <div class="nice-form-group">
-            <input id="habilitado-transporte" type="checkbox" class="switch" />
-            <label for="habilitado-transporte">
-              Habilitado
-            </label>
-          </div>
-
-          <div id="habilitado-transporte-content">
-            <div class="item-box accordion transporte-box" id="transporte-box">
-            </div>
-          </div>
-
-          <div class="button-box-formatted" id="transporte-adicionar-box">
-            <button id="transporte-adicionar" class="btn btn-purple" onclick="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                  <path
-                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                  </path>
-                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                  </path>
-                </g>
-              </svg>
-              Adicionar Trajeto
-            </button>
-          </div>
-
-        </section>
-
-        <section>
-          <div class="href-target" id="hospedagens"></div>
-          <h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path fill="currentColor"
-                d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3s1.34 3 3 3m0-4c.55 0 1 .45 1 1s-.45 1-1 1s-1-.45-1-1s.45-1 1-1m12-3h-8v8H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4m2 8h-8V9h6c1.1 0 2 .9 2 2Z">
-              </path>
-            </svg>
-            Hospedagem
-          </h1>
-          <p>
-            Cadastre onde você ficará hospedado durante a viagem.
-          </p>
-
-          <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-hospedagem" class="switch" />
-            <label for="habilitado-hospedagem">
-              Habilitado
-            </label>
-          </div>
-
-          <div id="habilitado-hospedagem-content">
-            <div class="item-box accordion hospedagem-box" id="hospedagem-box">
-            </div>
-          </div>
-          <div class="button-box-formatted" id="hospedagem-adicionar-box">
-            <button id="hospedagem-adicionar" class="btn btn-purple">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                  <path
-                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                  </path>
-                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                  </path>
-                </g>
-              </svg>
-              Adicionar Hospedagem
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <div class="href-target" id="programacao"></div>
-          <h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="feather feather-calendar">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
-            Programação
-          </h1>
-          <p>
-            Inclua aqui a sua programação diária.
-          </p>
-
-          <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-programacao" class="switch" />
-            <label for="habilitado-programacao">
-              Habilitado
-            </label>
-          </div>
-
-          <div id="habilitado-programacao-content">
-            <div class="item-box accordion programacao-box" id="programacao-box">
-            </div>
-          </div>
-
-        </section>
-
-        <section>
           <div class="href-target" id="passeios"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
@@ -632,26 +469,17 @@
             Passeios
           </h1>
           <p>
-            O que fazer durante a viagem? Onde comer? Onde visitar?
+            Insira os destinos que farão parte da sua listagem.
           </p>
-
-          <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-passeios" class="switch" />
-            <label for="habilitado-passeios">
-              Habilitado
-            </label>
-          </div>
 
           <div id="habilitado-passeios-content">
             <div class="nice-form-group" id="sem-passeios">
-              <label>Meus Pontos Turísticos</label>
               <input type="text" readonly placeholder='Sem passeios cadastrados' />
             </div>
 
             <div class="nice-form-group" id="com-passeios" style="display: none">
-              <label>Meus Pontos Turísticos</label>
               <select id="select-passeios-1">
-                <option value="0"></option>
+                <option value="0">Selecione um Passeio</option>
               </select>
             </div>
 
@@ -669,50 +497,6 @@
                 </g>
               </svg>
               Adicionar Passeio
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <div class="href-target" id="galeria"></div>
-          <h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"></path>
-              <circle cx="9.503" cy="7.497" r="1.503" fill="currentColor"></circle>
-              <path fill="currentColor"
-                d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2m0 14H5V5c0-.806.55-.988 1-1h13z">
-              </path>
-            </svg>
-            Galeria
-          </h1>
-          <p>
-            Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros.
-          </p>
-
-          <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-galeria" class="switch" />
-            <label for="habilitado-galeria">
-              Habilitado
-            </label>
-          </div>
-
-          <div id="habilitado-galeria-content">
-            <div class="item-box accordion galeria-box" id="galeria-box">
-            </div>
-          </div>
-
-          <div class="button-box-formatted" id="galeria-adicionar-box">
-            <button id="galeria-adicionar" class="btn btn-purple">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                  <path
-                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                  </path>
-                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                  </path>
-                </g>
-              </svg>
-              Adicionar Imagem
             </button>
           </div>
         </section>
@@ -793,8 +577,8 @@
             </svg>
           </a>
         </div>
-        <div class="modal-title" id="delete-title">Apagar Viagem</div>
-        <p>Tem certeza que deseja realizar a exclusão da viagem? A ação não poderá ser desfeita.</p>
+        <div class="modal-title" id="delete-title">Apagar Listagem</div>
+        <p>Tem certeza que deseja realizar a exclusão da listagem? A ação não poderá ser desfeita.</p>
       </div>
       <div class="button-box">
         <button id="delete-cancelar" class="btn btn-secondary btn-margin" type="button"
@@ -868,7 +652,7 @@
   <script src="assets/js/support/device.js"></script>
   <script src="assets/js/support/loading.js"></script>
   <script src="assets/js/support/input.js"></script>
-  <script src="assets/js/pages/editar-listagem/modules/modules.js"></script>
+  <script src="assets/js/pages/editar-viagem/modules/modules.js"></script>
   <script src="assets/js/pages/editar-listagem/modules/set-editar-listagem.js"></script>
   <script src="assets/js/pages/editar-listagem/editar-listagem.js"></script>
 

@@ -7,9 +7,8 @@
 */
 
 var blockLoadingEnd = false;
-var tripID;
+var listID;
 var FIRESTORE_DATA;
-var newTrip = false;
 var wasSaved = false;
 _startLoadingScreen();
 
@@ -226,16 +225,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-    tripID = urlParams.get('v');
+    listID = urlParams.get('l');
 
     _loadVisibilityIndex();
 
     _loadHabilitados();
 
-    if (tripID) {
-      _loadTrip()
+    if (listID) {
+      _carregarListagem()
     } else {
-      _loadNewTrip();
+      _novaListagem();
     }
 
     _loadImageSelector('background');
@@ -262,11 +261,6 @@ function _loadHabilitados() {
   _loadEditModule('cores');
   _loadEditModule('links');
   _loadEditModule('editores');
-  _loadEditModule('transporte');
-  _loadEditModule('hospedagem');
-  _loadEditModule('programacao');
-  _loadEditModule('passeios');
-  _loadEditModule('galeria');
 }
 
 function _loadUploadSelectors() {
@@ -275,33 +269,12 @@ function _loadUploadSelectors() {
 }
 
 function _loadEventListeners() {
-  document.getElementById('transporte-adicionar').addEventListener('click', () => {
-    _addTransporte();
-  });
-
-  document.getElementById('hospedagem-adicionar').addEventListener('click', () => {
-    _addHospedagem();
-  });
-
   document.getElementById('passeios-adicionar').addEventListener('click', () => {
     _addPasseios();
   });
 
-  document.getElementById('galeria-adicionar').addEventListener('click', () => {
-    _addGaleria();
-  });
-
   document.getElementById('cancelar').addEventListener('click', () => {
     window.location.href = `index.html`;
-  });
-
-  document.getElementById('inicio').addEventListener('input', () => {
-    _loadProgramacao();
-    document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
-  });
-
-  document.getElementById('fim').addEventListener('change', () => {
-    _loadProgramacao();
   });
 
   document.getElementById('editores-adicionar').addEventListener('click', () => {
@@ -317,7 +290,7 @@ function _loadEventListeners() {
   });
 
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(tripID, 'viagens', wasSaved);
+    _reEdit(listID, 'viagens', wasSaved);
   });
 
   document.getElementById('cancelar').addEventListener('click', () => {
@@ -325,8 +298,8 @@ function _loadEventListeners() {
   });
 
   document.getElementById('apagar').addEventListener('click', async () => {
-    if (tripID) {
-      await _deleteUserObjectDB(tripID, "viagens");
+    if (listID) {
+      await _deleteUserObjectDB(listID, "listagens");
       window.location.href = `index.html`;
     }
   });
@@ -336,36 +309,33 @@ function _loadEventListeners() {
   });
 }
 
-function _loadNewTrip() {
-  newTrip = true;
-  _loadDadosBasicosNewTrip();
-  _loadProgramacao();
+function _novaListagem() {
+  document.getElementById('moeda').value = 'R$';
   _loadPasseios();
 }
 
-async function _loadTrip() {
-  newTrip = false;
+async function _carregarListagem() {
   document.getElementById('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
-  FIRESTORE_DATA = await _getSingleTrip();
-  _loadTripData(FIRESTORE_DATA);
+  FIRESTORE_DATA = await _getSingleData('listagem');
+  _loadListData(FIRESTORE_DATA);
   _stopLoadingScreen();
 }
 
-async function _uploadBackground(id = tripID) {
+async function _uploadBackground(id = listID) {
   return await _uploadImage(`trips/${id}/hero-bg.jpg`, 'upload-background');
 }
 
-async function _uploadLogoLight(id = tripID) {
+async function _uploadLogoLight(id = listID) {
   return await _uploadImage(`trips/${id}/logo.png`, 'upload-logo-light');
 }
 
-async function _uploadLogoDark(id = tripID) {
+async function _uploadLogoDark(id = listID) {
   return await _uploadImage(`trips/${id}/logo-dark.png`, 'upload-logo-dark');
 }
 
-async function _uploadGaleria(id = tripID, uploadGaleria = uploadGaleria) {
+async function _uploadGaleria(id = listID, uploadGaleria = uploadGaleria) {
   let result = [];
   for (const i of uploadGaleria) {
     const url = await _uploadImage(`trips/${id}/galeria/${i}.jpg`, `upload-galeria-${i}`);

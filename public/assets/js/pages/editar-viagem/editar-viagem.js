@@ -9,7 +9,6 @@
 var blockLoadingEnd = false;
 var tripID;
 var FIRESTORE_DATA;
-var newTrip = false;
 var wasSaved = false;
 _startLoadingScreen();
 
@@ -337,18 +336,16 @@ function _loadEventListeners() {
 }
 
 function _loadNewTrip() {
-  newTrip = true;
   _loadDadosBasicosNewTrip();
   _loadProgramacao();
   _loadPasseios();
 }
 
 async function _loadTrip() {
-  newTrip = false;
   document.getElementById('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
-  FIRESTORE_DATA = await _getSingleTrip();
+  FIRESTORE_DATA = await _getSingleData('viagens');
   _loadTripData(FIRESTORE_DATA);
   _stopLoadingScreen();
 }

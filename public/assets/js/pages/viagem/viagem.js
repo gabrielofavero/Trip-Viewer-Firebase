@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     });
 
-    Promise.all([_getConfig(), _getSingleTrip()])
+    Promise.all([_getConfig(), _getSingleData('viagens')])
     .then(([configData, firestoreData]) => {
       CONFIG = configData;
       FIRESTORE_DATA = firestoreData;

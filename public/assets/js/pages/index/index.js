@@ -284,21 +284,26 @@ function _loadListenersIndex() {
     document.getElementById('trip-view-invalid').style.display = 'none';
     document.getElementById('trip-view-private').style.display = 'none';
     document.getElementById('trip-view-reminder').style.display = 'none';
+    document.getElementById('trip-view-error').style.display = 'none';
 
     let viagem = document.getElementById('trip-view-input').value;
     if (viagem) {
       const viagemValue = viagem.trim();
-      const tripExists = await _exists(`viagens/${viagemValue}`);
+      const status = await _getStatus(`viagens/${viagemValue}`);
 
-      if (tripExists) {
-        const isPublic = await _isTripPublic(viagemValue);
-        if (isPublic) {
+      switch (status) {
+        case 'Found':
           window.location.href = `viagem.html?v=${viagemValue}`;
-        } else {
+          break;
+        case 'Forbidden':
           document.getElementById('trip-view-private').style.display = 'block';
-        }
-      } else {
-        document.getElementById('trip-view-invalid').style.display = 'block';
+          break;
+        case 'Not Found':
+          document.getElementById('trip-view-invalid').style.display = 'block';
+          break;
+        default:
+          document.getElementById('trip-view-error').style.display = 'block';
+          break;
       }
     } else {
       document.getElementById('trip-view-reminder').style.display = 'block';
@@ -357,11 +362,11 @@ function _loadUserDataHTML(data, type) {
   for (let i = 0; i < data.length; i++) {
     let inicioFimDiv = '';
     let visualizarDiv = '';
-    
+
     if (data[i].inicio && data[i].fim) {
       const inicioDate = _convertFromFirestoreDate(data[i].inicio);
       const fimDate = _convertFromFirestoreDate(data[i].fim);
-  
+
       const inicio = _jsDateToDate(inicioDate);
       const fim = _jsDateToDate(fimDate);
 
@@ -415,7 +420,7 @@ function _passeiosEditar(code) {
   window.location.href = `editar-passeio.html?p=${code}`;
 }
 
-function _viagensEditar(code) {
+function _listagensEditar(code) {
   window.location.href = `editar-listagem.html?v=${code}`;
 }
 

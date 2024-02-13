@@ -77,7 +77,7 @@ function _overrideError() {
   }
 }
 
-function _displayNoTripError(type='viagem') {
+function _displayNoDataError(type) {
   const preloader = document.getElementById('preloader');
 
   if (preloader) {
@@ -105,8 +105,4 @@ function _displayNoTripError(type='viagem') {
   } else {
       _logger(WARN, 'No preloader element found');
   }
-}
-
-function _displayNoPlaceError() {
-  _displayNoTripError('passeio');
 }

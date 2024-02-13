@@ -14,6 +14,7 @@
 
 ### Prioridade Alta
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
+- 📈 Validar Inputs em Adicionar Passeio (Remover os que já foram preenchidos)
 
 ### Prioridade Média
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;

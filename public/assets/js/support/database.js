@@ -28,16 +28,42 @@ async function _get(path) {
 
 }
 
-async function _exists(path) {
+async function _getStatus(path) {
   try {
     const docRef = firebase.firestore().doc(path);
     const snapshot = await docRef.get();
 
-    return snapshot.exists;
+    if (snapshot.exists) {
+      return 'Found';
+    } else {
+      return 'Not Found';
+    }
+
   } catch (e) {
-    _logger(ERROR, e.message);
+    const message = e.message;
+    if (message.includes('Missing or insufficient permissions')) {
+      return 'Forbidden';
+    } else {
+      _logger(ERROR, message);
+      return 'Unknown';
+    }
+  }
+}
+
+async function _hasReadPermission(path) {
+  try {
+    const docRef = firebase.firestore().doc(path);
+    const snapshot = await docRef.get();
+
+    if (!snapshot.exists) {
+      _logger(WARN, `O documento '${path}' não existe restrições de leitura, mas não pode existe`);
+    }
+
+    return true;
+  } catch (e) {
     return false;
   }
+
 }
 
 async function _create(collection, data, docName = "") {
@@ -76,6 +102,35 @@ async function _delete(path) {
     _logger(ERROR, error.message);
     return _buildDatabaseObject(false, {}, 'Erro ao deletar o documento: ' + error.message)
   }
+}
+
+// Generic Data
+async function _getSingleData(type) {
+  let data;
+  try {
+    const param = type[0];
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get(param);
+
+    data = await _get(`${type}/${id}`);
+
+    if (data) {
+      for (let i = 0; i < data?.cidades?.length; i++) {
+        const place = await _get(`passeios/${data.cidades[i].passeiosID}`);
+        data.cidades[i].passeios = place
+      }
+    } else {
+      _displayNoDataError(type)
+    }
+  } catch (error) {
+    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+  }
+
+  return data;
+}
+
+async function _isDataPublic(id, type) {
+
 }
 
 // Backup & Config
@@ -160,36 +215,6 @@ async function _getVisibility() {
 }
 
 // Viagens
-async function _getSingleTrip() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tripID = urlParams.get('v');
-
-    let trip = await _get(`viagens/${tripID}`);
-
-    for (let i = 0; i < trip.cidades.length; i++) {
-      const place = await _get(`passeios/${trip.cidades[i].passeiosID}`);
-      trip.cidades[i].passeios = place
-    }
-
-    return trip;
-
-  } catch (error) {
-    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
-    return null;
-  }
-}
-
-async function _isTripPublic(tripID) {
-  try {
-    const trip = await _get(`viagens/${tripID}`);
-    return trip.compartilhamento.ativo;
-  } catch (error) {
-    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
-    return null;
-  }
-}
-
 async function _updateTripImages(body) {
   if (await _getUID()) {
     try {
@@ -232,27 +257,6 @@ async function _updateTripImages(body) {
 
 
   } else return "Usuário não logado"
-}
-
-// Passeios
-async function _getSinglePlaces() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const placesID = urlParams.get('p');
-
-    let place = await _get(`passeios/${placesID}`);
-
-    if (place == null) {
-      _displayNoPlaceError();
-    }
-
-    return place;
-
-  } catch (error) {
-    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
-    _displayNoPlaceError();
-    return null;
-  }
 }
 
 // Usuário
@@ -304,20 +308,20 @@ async function _deleteAccount() {
 async function _addToUserArray(type, value) {
   const uid = await _getUID();
   if (uid) {
-      const userDoc = await _get(`usuarios/${uid}`);
-      if (userDoc) {
-          let list = userDoc[type];
-          if (!list) {
-              list = [];
-          }
-          if (!list.includes(value)) {
-              list.push(value);
-              await _update(`usuarios/${uid}`, {
-                  [type]: list
-              });
-          }
-          console.log("Dados de usuário atualizados");
+    const userDoc = await _get(`usuarios/${uid}`);
+    if (userDoc) {
+      let list = userDoc[type];
+      if (!list) {
+        list = [];
       }
+      if (!list.includes(value)) {
+        list.push(value);
+        await _update(`usuarios/${uid}`, {
+          [type]: list
+        });
+      }
+      console.log("Dados de usuário atualizados");
+    }
   }
 }
 
@@ -340,8 +344,8 @@ async function _newUserObjectDB(object, type) {
     if (result.data) {
       const id = _getIdFromOjbectDB(result);
       _addToUserArray(type, id);
-    return result;
-  }
+      return result;
+    }
   } else return "Usuário não logado"
 }
 

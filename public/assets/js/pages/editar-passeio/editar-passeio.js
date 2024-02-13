@@ -310,7 +310,7 @@ async function _loadPlaces() {
   blockLoadingEnd = true;
   document.getElementById('delete-text').style.display = 'block';
   _startLoadingScreen();
-  FIRESTORE_PLACES_DATA = await _getSinglePlaces();
+  FIRESTORE_PLACES_DATA = await _getSingleData('passeios');
   console.log(FIRESTORE_PLACES_DATA);
   _loadPlacesData(FIRESTORE_PLACES_DATA);
   _stopLoadingScreen();
