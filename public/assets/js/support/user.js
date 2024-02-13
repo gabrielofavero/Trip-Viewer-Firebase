@@ -40,17 +40,17 @@ async function _registerIfUserNotPresent() {
 
 async function _getUID() {
     return new Promise((resolve, reject) => {
-      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-        unsubscribe(); // Unsubscribe to avoid memory leaks
-  
-        if (user) {
-          resolve(user.uid);
-        } else {
-          resolve(null)
-        }
-      });
+        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            unsubscribe(); // Unsubscribe to avoid memory leaks
+
+            if (user) {
+                resolve(user.uid);
+            } else {
+                resolve(null)
+            }
+        });
     });
-  }
+}
 
 async function _getFirebaseIdToken(user) {
     if (!user) {
@@ -60,34 +60,6 @@ async function _getFirebaseIdToken(user) {
         return await user.getIdToken();
     } else {
         return Promise.reject("User is not authenticated.");
-    }
-}
-
-async function _deleteAccount() {
-    const uid = await _getUID();
-    if (uid) {
-        const userDoc = await _get(`usuarios/${uid}`);
-
-        if (userDoc) {
-            for (const viagemID of userDoc.viagens) {
-                const viagemDoc = await _get(`viagens/${viagemID}`);
-                if (uid == viagemDoc.compartilhamento.dono) {
-                    _delete(`viagens/${viagemID}`);
-                }
-            }
-
-            for (const passeioID of userDoc.passeios) {
-                const passeioDoc = await _get(`passeios/${passeioID}`);
-                if (uid == passeioDoc.compartilhamento.dono) {
-                    _delete(`passeios/${passeioID}`);
-                }
-            }
-
-            await _delete(`usuarios/${uid}`)
-        }
-
-    } else {
-        _logger(ERROR, "Usuário não logado");
     }
 }
 

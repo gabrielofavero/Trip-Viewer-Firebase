@@ -270,8 +270,9 @@ function _loadListenersIndex() {
     _loadMyPlacesListVisibility();
   });
 
-  document.getElementById('apagar').addEventListener('click', function () {
-    _deleteAccount();
+  document.getElementById('apagar').addEventListener('click', async function () {
+    await _deleteAccount();
+    _signOut();
   });
 
   document.getElementById('trip-view-continue').addEventListener('click', async function () {
@@ -302,29 +303,28 @@ function _loadListenersIndex() {
 
 async function _loadUserIndex() {
   try {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        _registerIfUserNotPresent();
-        _loadUserIndexVisibility();
+    const user = await _getUser();
+    if (user) {
+      _registerIfUserNotPresent();
+      _loadUserIndexVisibility();
 
-        const displayName = user.displayName;
-        const photoURL = 'url(' + user.photoURL + ')';
+      const displayName = user.displayName;
+      const photoURL = 'url(' + user.photoURL + ')';
 
-        document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
+      document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
 
-        document.getElementById('settings-account-name').innerHTML = displayName;
-        document.getElementById('settings-account-picture').style.backgroundImage = photoURL;
-        document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
-        document.getElementById('profile-icon').style.backgroundImage = photoURL;
-        document.getElementById('profile-icon').style.backgroundSize = 'cover';
+      document.getElementById('settings-account-name').innerHTML = displayName;
+      document.getElementById('settings-account-picture').style.backgroundImage = photoURL;
+      document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
+      document.getElementById('profile-icon').style.backgroundImage = photoURL;
+      document.getElementById('profile-icon').style.backgroundSize = 'cover';
 
-        _loadUserTrips();
-        _loadUserPlaces();
+      _loadUserTrips();
+      _loadUserPlaces();
 
-      } else {
-        _unloadUserIndexVisibility();
-      }
-    });
+    } else {
+      _unloadUserIndexVisibility();
+    }
   } catch (error) {
     _stopLoadingScreen();
     _displayErrorMessage(error);

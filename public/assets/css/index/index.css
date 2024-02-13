@@ -516,10 +516,6 @@ section {
   margin-bottom: 30px;
 }
 
-.settings-account-item {
-  margin-bottom: 20px;
-}
-
 #settings-account-picture {
   width: 75px;
   height: 75px;
@@ -531,20 +527,28 @@ section {
   align-items: center;
   flex-shrink: 0;
   flex-grow: 0;
-
 }
 
 #settings-account {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* changed from center to start */
   min-height: 100px;
   width: 300px;
   background: #f7f8f9;
   border: 0.5px solid #D9D9D9;
   border-radius: 5px;
   padding: 10px;
+}
+
+#delete-account-container {
+  width: 300px;
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+#settings-delete-account {
+  text-align: end;
 }
 
 #settings-account-text {

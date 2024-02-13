@@ -328,24 +328,29 @@ async function _deleteAccount() {
   const uid = await _getUID();
   if (uid) {
     const userData = await _get(`usuarios/${uid}`);
+    const promises = [];
 
     for (const viagemID of userData.viagens) {
       const viagem = await _get(`viagens/${viagemID}`);
       const dono = viagem.compartilhamento.dono;
-      if (viagemID == dono) {
-        _deleteUserObjectDB(viagemID, "viagens")
+      if (uid == dono) {
+        promises.push(_deleteUserObjectDB(viagemID, "viagens"));
       }
     }
 
     for (const passeioID of userData.passeios) {
       const passeio = await _get(`passeios/${passeioID}`);
       const dono = passeio.compartilhamento.dono;
-      if (passeioID == dono) {
-        _deleteUserObjectDB(passeioID, "passeios")
+      if (uid == dono) {
+        promises.push(_deleteUserObjectDB(passeioID, "passeios"));
       }
     }
+
+    await Promise.all(promises);
+    return await _delete(`usuarios/${uid}`);
   }
 }
+
 
 async function _addToUserArray(type, value) {
   const uid = await _getUID();

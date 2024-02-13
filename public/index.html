@@ -181,12 +181,16 @@
       </div>
 
       <div class="settings-box" id="settings-box" style="display: none">
-        <div id="#settings-account-container">
+        <div id="settings-account-container">
           <div id="settings-account" class="settings-account-item">
             <div id="settings-account-picture"></div>
             <div id="settings-account-text">
               <div id="settings-account-name"></div>
             </div>
+          </div>
+
+          <div id="delete-account-container">
+            <a id="settings-delete-account" href="#" onclick="_openModal()">Apagar Conta</a>
           </div>
 
           <div class="settings-account-item">
@@ -211,9 +215,10 @@
           </div>
         </div>
 
-        <button id="settings-sign-out" class="btn btn-purple" onclick="_signOut()" type="button">Sair da Conta</button>
-
-        <button id="settings-delete-account" class="btn btn-secondary" type="button">Apagar Conta</button>
+        <button id="settings-sign-out" class="btn btn-purple" onclick="_signOut()" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z"></path></svg>
+          Sair da Conta
+        </button>
       </div>
 
     </div>
