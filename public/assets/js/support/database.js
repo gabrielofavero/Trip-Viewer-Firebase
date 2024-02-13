@@ -347,7 +347,8 @@ async function _deleteAccount() {
     }
 
     await Promise.all(promises);
-    return await _delete(`usuarios/${uid}`);
+    await _delete(`usuarios/${uid}`);
+    await firebase.auth().currentUser.delete();
   }
 }
 
