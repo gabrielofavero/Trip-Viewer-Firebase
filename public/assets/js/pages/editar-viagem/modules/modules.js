@@ -3,7 +3,6 @@ const TOMORROW = _getTomorrowFormatted();
 
 const FIREBASE_IMAGE_ORIGIN = 'https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/';
 
-var PASSEIOS_SELECT_OPTIONS = "";
 var PROGRAMACAO = {};
 
 var FIREBASE_IMAGES = {
@@ -121,23 +120,16 @@ function _loadPasseios() {
 
   if (myPlaces && myPlaces.length > 0) {
     document.getElementById('sem-passeios').style.display = 'none';
+    document.getElementById('com-passeios').style.display = 'block';
 
-    const comPasseios = document.getElementById('com-passeios');
-    comPasseios.style.display = 'block';
+    const first = document.getElementById(`select-passeios-1`);
 
-    for (const place of myPlaces) {
-      if (!PASSEIOS_SELECT_OPTIONS.includes(place.code)) {
-        PASSEIOS_SELECT_OPTIONS += `<option value="${place.code}">${place.titulo}</option>`
-      }
+    if (first) {
+      first.addEventListener('change', () => {
+        _buildPasseiosSelect();
+      });
     }
-
-    let i = 1;
-    const options = '<option value="0">Selecione um Passeio</option>' + PASSEIOS_SELECT_OPTIONS;
-    while (document.getElementById(`select-passeios-${i}`)) {
-      document.getElementById(`select-passeios-${i}`).innerHTML = options;
-      i++;
-    }
-
+    _buildPasseiosSelect();
   }
 }
 
@@ -370,22 +362,32 @@ function _addHospedagem() {
     `);
 }
 
-function _addPasseios(id) {
+function _addPasseios() {
   let i = 1;
   while (document.getElementById(`select-passeios-${i}`)) {
     i++;
   };
 
   $('#com-passeios').append(`
-  <br><br><select class="mini-select" id="select-passeios-${i}">
-  '<option value="0">Selecione um Passeio</option>'
-    ${PASSEIOS_SELECT_OPTIONS}
-  </select>
+  <div class="nice-form-group" id="com-passeios-${i}">
+    <select id="select-passeios-${i}">
+      <option value="0">Selecione um Passeio</option>
+    </select>
+    <div class="deletar-box">
+      <button id="passeios-deletar-${i}" class="btn btn-secondary" onclick="_deletePasseio(${i})">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
   `);
 
-  if (id) {
-    _setSelectedPasseios(id, i);
-  }
+  document.getElementById(`select-passeios-${i}`).addEventListener('change', () => {
+    _buildPasseiosSelect();
+  });
+
+  _buildPasseiosSelect();
 }
 
 function _addEditores() {
@@ -833,13 +835,6 @@ function _loadPasseiosData(FIRESTORE_DATA) {
 
   const cidades = FIRESTORE_DATA.cidades;
 
-  if (cidades && cidades > 0) {
-    for (const cidade of cidades) {
-      const id = cidade.passeiosID;
-      PASSEIOS_SELECT_OPTIONS += `<option value="${id}">${cidade.passeios.titulo}</option>`;
-    }
-  }
-
   _loadPasseios();
 
   if (cidades && cidades.length > 0) {
@@ -848,9 +843,10 @@ function _loadPasseiosData(FIRESTORE_DATA) {
       const id = cidades[j].passeiosID;
 
       if (i === 1) {
-        _setSelectedPasseios(id, i);
+        _setPasseioSelectValue(1, id);
       } else {
-        _addPasseios(id);
+        _addPasseios();
+        _setPasseioSelectValue(i, id);
       }
     }
   }
@@ -893,16 +889,6 @@ function _loadGaleriaData(FIRESTORE_DATA) {
   }
 }
 
-function _setSelectedPasseios(optionValue, index) {
-  var selectElement = document.getElementById(`select-passeios-${index}`);
-  for (var i = 0; i < selectElement.options.length; i++) {
-    if (selectElement.options[i].value === optionValue) {
-      selectElement.options[i].selected = true;
-      break;
-    }
-  }
-}
-
 function _updateTransporteTitle(i) {
   const cidadePartida = document.getElementById(`cidade-partida-${i}`).value;
   const cidadeChegada = document.getElementById(`cidade-chegada-${i}`).value;
@@ -911,10 +897,62 @@ function _updateTransporteTitle(i) {
   document.getElementById(`transporte-title-${i}`).innerText = `${cidadePartida} → ${cidadeChegada}`;
 }
 
-function _formatAltura(value) {    
+function _formatAltura(value) {
   if (value == 0) {
     value = 1;
     document.getElementById('logo-tamanho').value = value;
   }
   document.getElementById('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
+}
+
+// Passeios: Funções Genéricas
+function _buildPasseiosSelect() {
+  const userPlaces = localStorage.getItem('userPlaces');
+  const myPlaces = userPlaces ? JSON.parse(userPlaces) : [];
+  const childs = _getChildIDs('com-passeios');
+
+  let used = [];
+
+  for (const child of childs) {
+    const i = child.split('-')[2];
+    const select = document.getElementById(`select-passeios-${i}`);
+    const value = select.value;
+    if (value !== '0') {
+      used.push(value);
+    }
+  }
+
+  for (const child of childs) {
+    const i = child.split('-')[2];
+    const select = document.getElementById(`select-passeios-${i}`);
+    const value = select.value;
+
+    let options = '<option value="0">Selecione um Passeio</option>';
+    for (let j = 0; j < myPlaces.length; j++) {
+      const code = myPlaces[j].code;
+      if (value == code || !used.includes(code)) {
+        const selected = value === code ? ' selected' : '';
+        options += `<option value="${code}"${selected}>${myPlaces[j].titulo}</option>`;
+      }
+    }
+
+    if (options === '<option value="0">Selecione um Passeio</option>') {
+      _deletePasseio(i);
+      document.getElementById('todos-passeios-utilizados').style.display = 'block';
+    } else {
+      select.innerHTML = options;
+      document.getElementById('todos-passeios-utilizados').style.display = 'none';
+    }
+  }
+}
+
+function _setPasseioSelectValue(i, value) {
+  const select = document.getElementById(`select-passeios-${i}`);
+  select.value = value;
+  _buildPasseiosSelect();
+}
+
+function _deletePasseio(i) {
+  _deleteType(`com-passeios-${i}`);
+  _buildPasseiosSelect();
 }

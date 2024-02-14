@@ -14,7 +14,6 @@
 
 ### Prioridade Alta
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
-- 📈 Validar Inputs em Adicionar Passeio (Remover os que já foram preenchidos)
 
 ### Prioridade Média
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
@@ -45,6 +44,7 @@
 - 🏆 Reeditar agora não retoma a home caso tenha dado erro no salvamento
 - ⚔️ Testagem Geral e bug fixes
 - 📈 Condensados CSSs de editar-viagem e editar-passeio em CSSs únicos (editar.css e editar-dark.css)
+- 📈 Validar Inputs em Adicionar Passeio (Remover os que já foram preenchidos)
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

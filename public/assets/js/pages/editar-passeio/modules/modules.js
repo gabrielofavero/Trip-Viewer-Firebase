@@ -1,7 +1,6 @@
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
-var PASSEIOS_SELECT_OPTIONS = "";
 var PROGRAMACAO = {};
 
 // Passeio Existente
@@ -20,8 +19,6 @@ function _loadPlacesData(FIRESTORE_PLACES_DATA) {
     _displayErrorMessage(e);
     throw e;
   }
-
-
 }
 
 // Adicionar

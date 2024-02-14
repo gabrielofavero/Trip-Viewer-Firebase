@@ -1681,3 +1681,17 @@ details summary::-webkit-details-marker {
   font-family: "Raleway", sans-serif;
   font-size: 21.642px;
 }
+
+.passeio-label {
+  margin-top: 20px;
+}
+
+.red {
+  color: red;
+}
+
+.message-text {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: none;
+}
