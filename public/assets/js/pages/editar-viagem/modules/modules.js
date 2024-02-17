@@ -200,6 +200,7 @@ function _addTransporte() {
         <div class="nice-form-group">
           <label>Meio de Transporte</label>
           <select id="transporte-codigo-${i}">
+            <option value="voo">Avião</option>
             <option value="carro">Carro</option>
             <option value="onibus">Ônibus</option>
             <option value="bondinho">Bondinho</option>
