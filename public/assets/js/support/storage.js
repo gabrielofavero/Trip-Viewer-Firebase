@@ -72,3 +72,15 @@ async function _checkAndClearFirebaseImages(id = tripID) {
     _deleteImage(path + 'logo-dark.png');
   }
 }
+
+async function _uploadBackground(id, dir) {
+  return await _uploadImage(`${dir}/${id}/hero-bg.jpg`, 'upload-background');
+}
+
+async function _uploadLogoLight(id, dir) {
+  return await _uploadImage(`${dir}/${id}/logo.png`, 'upload-logo-light');
+}
+
+async function _uploadLogoDark(id, dir) {
+  return await _uploadImage(`${dir}/${id}/logo-dark.png`, 'upload-logo-dark');
+}

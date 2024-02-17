@@ -350,18 +350,6 @@ async function _loadTrip() {
   _stopLoadingScreen();
 }
 
-async function _uploadBackground(id = tripID) {
-  return await _uploadImage(`trips/${id}/hero-bg.jpg`, 'upload-background');
-}
-
-async function _uploadLogoLight(id = tripID) {
-  return await _uploadImage(`trips/${id}/logo.png`, 'upload-logo-light');
-}
-
-async function _uploadLogoDark(id = tripID) {
-  return await _uploadImage(`trips/${id}/logo-dark.png`, 'upload-logo-dark');
-}
-
 async function _uploadGaleria(id = tripID, uploadGaleria = uploadGaleria) {
   let result = [];
   for (const i of uploadGaleria) {

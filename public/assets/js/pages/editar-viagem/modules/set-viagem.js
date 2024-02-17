@@ -38,7 +38,10 @@ async function _buildTripObject() {
             },
             quantidadePessoas: 1,
             titulo: "",
-            transportes: {}
+            transportes: {},
+            versao: {
+                ultimaAtualizacao: new Date().toISOString()
+            }
         }
     }
 
@@ -52,12 +55,10 @@ async function _buildTripObject() {
     }
 
     const divTitulo = document.getElementById(`titulo`);
-    const valueTitulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
-    result.data.titulo = valueTitulo;
+    result.data.titulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
 
     const divMoeda = document.getElementById(`moeda`);
-    const valueMoeda = divMoeda ? _returnEmptyIfNoValue(divMoeda.value) : "";
-    result.data.moeda = valueMoeda;
+    result.data.moeda = divMoeda ? _returnEmptyIfNoValue(divMoeda.value) : "";
 
     const divInicio = document.getElementById(`inicio`);
     const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
@@ -360,7 +361,7 @@ function _buildCidadesArray() {
         divSelectPasseios = document.getElementById(`select-passeios-${j}`);
         valueSelectPasseios = divSelectPasseios ? _returnEmptyIfNoValue(divSelectPasseios.value) : "";
 
-        if (valueSelectPasseios && valueSelectPasseios != '0') {
+        if (valueSelectPasseios) {
             innerResult.passeiosID = valueSelectPasseios;
             result.push(innerResult);
         }
@@ -390,7 +391,7 @@ function _buildGaleriaObject() {
             uploadGaleria.push(j);
         }
 
-        if (!result.filtros.includes(filter)){
+        if (!result.filtros.includes(filter)) {
             result.filtros.push(filter);
         }
 
@@ -407,7 +408,15 @@ function _buildGaleriaObject() {
 
 async function _setViagem() {
     _startLoadingScreen();
-    _validateRequiredInputs();
+
+    if (document.getElementById('habilitado-passeios').checked) {
+        for (const child of _getChildIDs('com-passeios')) {
+            const i = parseInt(child.split("-")[2]);
+            _setRequired(`select-passeios-${i}`)
+        }
+    }
+
+    _validateRequiredFields();
 
     if (!_isModalOpen()) {
         const viagem = await _buildTripObject();
@@ -424,40 +433,41 @@ async function _setViagem() {
 
         if (result.success == true) {
             wasSaved = true;
-            
+
             if (uploadLogoLight || uploadLogoDark || uploadBackground || uploadGaleria.length > 0) {
                 let newMessage = '';
                 let logoLight = '';
                 let logoDark = ''
                 let background = '';
                 let galeria = [];
-    
+
                 if (uploadLogoLight) {
-                    logoLight = await _uploadLogoLight(tripID);
+                    logoLight = await _uploadLogoLight(tripID, 'trips');
                 }
-    
+
                 if (uploadLogoDark) {
-                    logoDark = await _uploadLogo(tripID);
+                    logoDark = await _uploadLogoDark(tripID, 'trips');
                 }
-    
+
                 if (uploadBackground) {
-                    background = await _uploadBackground(tripID);
+                    background = await _uploadBackground(tripID, 'trips');
                 }
 
                 if (uploadGaleria.length > 0) {
                     galeria = await _uploadGaleria(tripID, uploadGaleria);
                 }
-    
+
                 body = {
-                    viagemID: tripID,
+                    id: tripID,
+                    type: "viagens",
                     background: background,
                     logoLight: logoLight,
                     logoDark: logoDark,
                     galeria: galeria
                 }
-    
-                newMessage = await _updateTripImages(body)
-    
+
+                newMessage = await _updateImages(body)
+
                 if (!newMessage.includes('sucesso')) {
                     message += '. Falha no upload de imagem(s): ' + newMessage;
                 } else {

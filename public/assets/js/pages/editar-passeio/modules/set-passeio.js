@@ -10,7 +10,10 @@ async function _buildPasseiosObject() {
         moeda: "",
         myMaps: "",
         modulos: {},
-        compartilhamento: {}
+        compartilhamento: {},
+        versao: {
+            ultimaAtualizacao: new Date().toISOString()
+        }
     }
 
     const divTitulo = document.getElementById(`titulo`);
@@ -218,7 +221,7 @@ function _buildPasseioLineupObject() {
 
 async function _setPasseio() {
     _startLoadingScreen();
-    _validateRequiredInputs();
+    _validateRequiredFields();
 
     if (!_isModalOpen()) {
         const passeio = await _buildPasseiosObject();

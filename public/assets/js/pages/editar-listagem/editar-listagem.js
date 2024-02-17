@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (listID) {
       _carregarListagem()
     } else {
-      _novaListagem();
+      _loadPasseios();
     }
 
     _loadImageSelector('background');
@@ -286,11 +286,11 @@ function _loadEventListeners() {
   });
   
   document.getElementById('salvar').addEventListener('click', () => {
-    _setViagem();
+    _setListagem();
   });
 
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(listID, 'viagens', wasSaved);
+    _reEdit(listID, 'listagens', wasSaved);
   });
 
   document.getElementById('cancelar').addEventListener('click', () => {
@@ -309,37 +309,11 @@ function _loadEventListeners() {
   });
 }
 
-function _novaListagem() {
-  document.getElementById('moeda').value = 'R$';
-  _loadPasseios();
-}
-
 async function _carregarListagem() {
   document.getElementById('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
-  FIRESTORE_DATA = await _getSingleData('listagem');
+  FIRESTORE_DATA = await _getSingleData('listagens');
   _loadListData(FIRESTORE_DATA);
   _stopLoadingScreen();
-}
-
-async function _uploadBackground(id = listID) {
-  return await _uploadImage(`trips/${id}/hero-bg.jpg`, 'upload-background');
-}
-
-async function _uploadLogoLight(id = listID) {
-  return await _uploadImage(`trips/${id}/logo.png`, 'upload-logo-light');
-}
-
-async function _uploadLogoDark(id = listID) {
-  return await _uploadImage(`trips/${id}/logo-dark.png`, 'upload-logo-dark');
-}
-
-async function _uploadGaleria(id = listID, uploadGaleria = uploadGaleria) {
-  let result = [];
-  for (const i of uploadGaleria) {
-    const url = await _uploadImage(`trips/${id}/galeria/${i}.jpg`, `upload-galeria-${i}`);
-    result.push(url);
-  }
-  return result;
 }

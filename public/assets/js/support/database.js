@@ -215,7 +215,7 @@ async function _getVisibility() {
 }
 
 // Viagens
-async function _updateTripImages(body) {
+async function _updateImages(body) {
   if (await _getUID()) {
     try {
       if (body.background || body.logoLight || body.logoDark) {
@@ -234,7 +234,7 @@ async function _updateTripImages(body) {
         }
 
         if (body.galeria?.length > 0) {
-          var galeria = await _get(`viagens/${body.viagemID}/galeria`);
+          var galeria = await _get(`${body.type}/${body.id}/galeria`);
           if (galeria) {
             for (let j = 0; j < body.galeria.length; j++) {
               const i = body.galeria[j] - 1;
@@ -246,13 +246,13 @@ async function _updateTripImages(body) {
           }
         }
 
-        await _update(`viagens/${body.viagemID}`, uploadObject);
+        await _update(`${body.type}/${body.id}`, uploadObject);
       }
 
-      return `Viagem '${body.viagemID}' atualizada com sucesso`;
+      return `Imagens de '${body.type}/${body.id}' atualizadas com sucesso`;
 
     } catch (e) {
-      return `Erro ao atualizar viagem: ${e.message}`;
+      return `Erro ao atualizar imagens: ${e.message}`;
     }
 
 

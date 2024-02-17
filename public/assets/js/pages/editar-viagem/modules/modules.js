@@ -371,7 +371,7 @@ function _addPasseios() {
   $('#com-passeios').append(`
   <div class="nice-form-group" id="com-passeios-${i}">
     <select id="select-passeios-${i}">
-      <option value="0">Selecione um Passeio</option>
+      <option value="">Selecione um Passeio</option>
     </select>
     <div class="deletar-box">
       <button id="passeios-deletar-${i}" class="btn btn-secondary" onclick="_deletePasseio(${i})">
@@ -917,7 +917,7 @@ function _buildPasseiosSelect() {
     const i = child.split('-')[2];
     const select = document.getElementById(`select-passeios-${i}`);
     const value = select.value;
-    if (value !== '0') {
+    if (value) {
       used.push(value);
     }
   }
@@ -927,7 +927,7 @@ function _buildPasseiosSelect() {
     const select = document.getElementById(`select-passeios-${i}`);
     const value = select.value;
 
-    let options = '<option value="0">Selecione um Passeio</option>';
+    let options = '<option value="">Selecione um Passeio</option>';
     for (let j = 0; j < myPlaces.length; j++) {
       const code = myPlaces[j].code;
       if (value == code || !used.includes(code)) {
@@ -936,7 +936,7 @@ function _buildPasseiosSelect() {
       }
     }
 
-    if (options === '<option value="0">Selecione um Passeio</option>') {
+    if (options === '<option value="">Selecione um Passeio</option>') {
       _deletePasseio(i);
       document.getElementById('todos-passeios-utilizados').style.display = 'block';
     } else {

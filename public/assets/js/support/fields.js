@@ -1,23 +1,25 @@
-function _validateRequiredInputs() {
-    var inputs = document.querySelectorAll('input[required]');
+function _validateRequiredFields() {
     var invalidFields = [];
+    
+    var inputs = document.querySelectorAll('input[required]');
+    var selects = document.querySelectorAll('select[required]');
+    var fields = Array.from(inputs).concat(Array.from(selects));
 
-    inputs.forEach(function (input) {
-        if (input.value.trim() === '') {
-            invalidFields.push(input.id);
+    fields.forEach(function (field) {
+        if (field.value.trim() === '') {
+            invalidFields.push(field.id);
         }
     });
 
     if (invalidFields.length > 0) {
         wasSaved = false;
-        const text = _getInvalidInputsText(invalidFields);
-        document.getElementById('modal-inner-text').innerHTML = text;
+        document.getElementById('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields);
         _openModal();
         _stopLoadingScreen();
     }
 }
 
-function _getInvalidInputsText(invalidFields) {
+function _getInvalidFieldsText(invalidFields) {
     const dadosBasicos = ['titulo', 'moeda'];
 
     let text = 'Os seguintes campos obrigatórios não foram preenchidos:<br><br>'

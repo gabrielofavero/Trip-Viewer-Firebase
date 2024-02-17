@@ -190,8 +190,13 @@
           </p>
 
           <div class="nice-form-group">
-            <label>Título da Listagem</label>
+            <label>Título</label>
             <input required id="titulo" type="text" placeholder="Melhores Destinos Internacionais" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Sub-Título <span class="opcional"> (Opcional)</span></label>
+            <input id="subtitulo" type="text" placeholder="Edição 2024" />
           </div>
 
           <div class="nice-form-group">
@@ -200,41 +205,10 @@
           </div>
 
           <div class="nice-form-group">
-            <label>Moeda</label>
-            <select id="moeda" name="currency">
-              <option value="R$">Real (R$)</option>
-              <option value="$">Dólar Americano ($)</option>
-              <option value="€">Euro (€)</option>
-              <option value="£">Libra Esterlina (£)</option>
-              <option value="¥">Iene / Yuan (¥)</option>
-              <option value="₹">Rúpia Indiana (₹)</option>
-              <option value="₽">Rublo Russo (₽)</option>
-              <option value="C$">Dólar Canadense (C$)</option>
-              <option value="A$">Dólar Australiano (A$)</option>
-              <option value="CHF">Franco Suíço (CHF)</option>
-              <option value="SEK">Coroa Sueca (SEK)</option>
-              <option value="NOK">Coroa Norueguesa (NOK)</option>
-              <option value="DKK">Coroa Dinamarquesa (DKK)</option>
-              <option value="NZ$">Dólar Neozelandês (NZ$)</option>
-              <option value="MX$">Peso Mexicano (MX$)</option>
-              <option value="ZAR">Rand Sul-Africano (ZAR)</option>
-              <option value="₩">Won Sul-Coreano (₩)</option>
-              <option value="₺">Lira Turca (₺)</option>
-              <option value="SGD">Dólar de Singapura (SGD)</option>
-              <option value="HK$">Dólar de Hong Kong (HK$)</option>
-              <option value="₪">Novo Shekel Israelense (₪)</option>
-              <option value="PLN">Złoty Polonês (PLN)</option>
-              <option value="HUF">Forint Húngaro (HUF)</option>
-              <option value="NT$">Dólar de Taiwan (NT$)</option>
-              <option value="฿">Baht Tailandês (฿)</option>
-            </select>
-          </div>
-
-          <div class="nice-form-group">
-            <input id="habilitado-atualizacao" type="checkbox" class="switch" checked="">
-            <label id="habilitado-atualizacao-label" for="habilitado-atualizacao">
+            <input id="exibir-em-passeios" type="checkbox" class="switch" checked="">
+            <label id="exibir-em-passeios-label" for="exibir-em-passeios">
               Exibir Data da Última Atualização
-              <small>Quando um ponto turístico for atualizado, a data será atualizada</small>
+              <small>Exibe a data de quando a listagem ou algum passeio for atualizado</small>
             </label>
           </div>
 
@@ -480,7 +454,7 @@
             <div id="com-passeios" style="display: none">
               <div class="nice-form-group" id="com-passeios-1">
                 <select id="select-passeios-1">
-                  <option value="0">Selecione um Passeio</option>
+                  <option value="">Selecione um Passeio</option>
                 </select>
                 <div class="deletar-box">
                   <button id="passeios-deletar-1" class="btn btn-secondary" onclick="_deleteType('com-passeios-1')">
@@ -660,9 +634,10 @@
   <script src="assets/js/pages/index/support/visibility-index.js"></script>
   <script src="assets/js/support/device.js"></script>
   <script src="assets/js/support/loading.js"></script>
-  <script src="assets/js/support/input.js"></script>
+  <script src="assets/js/support/fields.js"></script>
   <script src="assets/js/pages/editar-viagem/modules/modules.js"></script>
-  <script src="assets/js/pages/editar-listagem/modules/set-editar-listagem.js"></script>
+  <script src="assets/js/pages/editar-viagem/modules/set-viagem.js"></script>
+  <script src="assets/js/pages/editar-listagem/modules/set-listagem.js"></script>
   <script src="assets/js/pages/editar-listagem/editar-listagem.js"></script>
 
 </body>
