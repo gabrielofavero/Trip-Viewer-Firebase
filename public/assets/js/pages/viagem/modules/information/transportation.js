@@ -8,7 +8,7 @@ function _loadTransportationModule() {
     data: [],
   };
   _loadTransportationLogoBoxes();
-  for (let i = 1; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
+  for (let i = 0; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
     const title = FIRESTORE_DATA.transportes.trajetos[i];
     const periodo = _getPeriodo(FIRESTORE_DATA.transportes.datas[i]);
     const reservaCompanhia = _getReservaEmpresa(FIRESTORE_DATA.transportes.reservas[i], FIRESTORE_DATA.transportes.empresas[i]);
@@ -24,49 +24,57 @@ function _loadTransportationModule() {
 }
 
 function _loadTransportationLogoBoxes() {
-  const logoBoxes = document.getElementById('logoBoxes');
   let innerHTML = "";
-  let added = [];
-  let group = [];
-
-
+  
+  const logoBoxes = document.getElementById('logoBoxes');
+  
   const empresas = FIRESTORE_DATA.transportes.empresas;
   const transportes = FIRESTORE_DATA.transportes.transportes;
+  let added = [];
+  let uniqueData = [];
 
   for (let i = 0; i < empresas.length; i++) {
-    let empresa = empresas[i];
+    const transporte = transportes[i];
+    const empresa = empresas[i];
 
     if (added.includes(empresa)) continue;
-
     added.push(empresa);
+    uniqueData.push({
+      empresa: empresa,
+      transporte: transporte
+    });
+  }
 
+  let group = [];
+  const groupLimit = 2;
+
+  for (let i = 0; i < uniqueData.length; i++) {
+    const empresa = uniqueData[i].empresa;
+    const transporte = uniqueData[i].transporte;
+    
     let link;
     let img;
     let generic = "";
 
-    if (CONFIG.transportes[transportes[i]] && CONFIG.transportes[transportes[i]][empresas[i]]) {
-      link = CONFIG.transportes[transportes[i]][empresa].link;
-      img = `assets/img/transportation/${transportes[i]}/${empresas[i]}.png`
+    if (CONFIG.transportes[transporte] && CONFIG.transportes[transporte][empresa]) {
+      link = CONFIG.transportes[transporte][empresa].link;
+      img = `assets/img/transportation/${transporte}/${empresa}.png`
     } else {
       link = `https://www.google.com/search?q=${empresa.toLowerCase().replace(" ", "+")}`;
-      img = `assets/img/transportation/generico/${transportes[i]}.png`
+      img = `assets/img/transportation/generico/${transporte}.png`
       generic = "generic";
     }
 
     const text = `<a href="${link}" target="_blank"><img class="transpStayBox" src="${img}"></a>`
+    group.push(text);
 
-    if (!group.includes(text)) {
-      group.push(text);
-    }
-
-    if (group.length == 2 || i == empresas.length - 1) {
+    if (group.length == groupLimit || i == uniqueData.length - 1) {
       innerHTML += `<div class="logoBox">${group.join("")}</div>`;
       group = [];
     }
   }
 
   logoBoxes.innerHTML = innerHTML;
-
 }
 
 function _loadTransportationHTML(transportation) {
@@ -123,21 +131,21 @@ function _getTransportationTitle(transportes) {
 }
 
 function _getPeriodo(datas) {
-  const inicio = datas.inicio;
-  const fim = datas.fim;
-  if (inicio && fim) {
-    let inicioDate = _convertFromFirestoreDate(inicio);
-    let fimDate = _convertFromFirestoreDate(fim);
+  const partida = datas.partida;
+  const chegada = datas.chegada;
+  if (partida && chegada) {
+    let inicioDate = _convertFromFirestoreDate(partida);
+    let fimDate = _convertFromFirestoreDate(chegada);
 
     let inicioDia = inicioDate.getDate();
     let inicioMes = inicioDate.getMonth() + 1;
     let inicioAno = inicioDate.getFullYear();
-    let inicioHorario = inicioDate.getHours() + ":" + inicioDate.getMinutes();
+    let inicioHorario = inicioDate.toLocaleTimeString().slice(0, 5);
 
     let fimDia = fimDate.getDate();
     let fimMes = fimDate.getMonth() + 1;
     let fimAno = fimDate.getFullYear();
-    let fimHorario = fimDate.getHours() + ":" + fimDate.getMinutes();
+    let fimHorario = fimDate.toLocaleTimeString().slice(0, 5);
 
     if (inicioDia == fimDia && inicioMes == fimMes && inicioAno == fimAno) {
       return `${inicioDia}/${inicioMes}/${inicioAno}, de ${inicioHorario} até ${fimHorario}. `;

@@ -15,8 +15,6 @@
 
 ### Prioridade Alta
 - 🐞 Fazer título da imagem também mudar no accordeon
-- 🐞 Link de transporte não deveria ser obrigatório
-- 🐞 Imagem de meio de transporte não carregou corretamente (Exemplo: Lolla 2024)
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
 
 ### Prioridade Média
@@ -52,6 +50,8 @@
 - 📈 Condensados CSSs de editar-viagem e editar-passeio em CSSs únicos (editar.css e editar-dark.css)
 - 📈 Validar Inputs em Adicionar Passeio (Remover os que já foram preenchidos)
 - ⚔️ Passeios renomeado para Destinos
+- 🐞 Link de transporte não deveria ser obrigatório
+- 🐞 Imagem de meio de transporte não carregou corretamente (Exemplo: Lolla 2024)
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;
