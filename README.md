@@ -14,9 +14,14 @@
 ## To-Do
 
 ### Prioridade Alta
+- 🐞 Fazer título da imagem também mudar no accordeon
+- 🐞 Link de transporte não deveria ser obrigatório
+- 🐞 Imagem de meio de transporte não carregou corretamente (Exemplo: Lolla 2024)
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
 
 ### Prioridade Média
+- 📈 Tornar módulo de programação mais personalizável
+- 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida) 
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
 - 🐞 Ícone do user não carrega corretamente no primeiro login
 
