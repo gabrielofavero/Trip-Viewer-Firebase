@@ -371,7 +371,7 @@ function _addDestinos() {
   $('#com-destinos').append(`
   <div class="nice-form-group" id="com-destinos-${i}">
     <select id="select-destinos-${i}">
-      <option value="">Selecione um Passeio</option>
+      <option value="">Selecione um Destino</option>
     </select>
     <div class="deletar-box">
       <button id="destinos-deletar-${i}" class="btn btn-secondary" onclick="_deletePasseio(${i})">
@@ -833,7 +833,7 @@ function _loadDestinosData(FIRESTORE_DATA) {
     document.getElementById('destinos-adicionar-box').style.display = 'none';
   }
 
-  const cidades = FIRESTORE_DATA.cidades;
+  const cidades = FIRESTORE_DATA.destinos;
 
   _loadDestinos();
 
@@ -927,7 +927,7 @@ function _buildDestinosSelect() {
     const select = document.getElementById(`select-destinos-${i}`);
     const value = select.value;
 
-    let options = '<option value="">Selecione um Passeio</option>';
+    let options = '<option value="">Selecione um Destino</option>';
     for (let j = 0; j < myPlaces.length; j++) {
       const code = myPlaces[j].code;
       if (value == code || !used.includes(code)) {
@@ -936,7 +936,7 @@ function _buildDestinosSelect() {
       }
     }
 
-    if (options === '<option value="">Selecione um Passeio</option>') {
+    if (options === '<option value="">Selecione um Destino</option>') {
       _deletePasseio(i);
       document.getElementById('todos-destinos-utilizados').style.display = 'block';
     } else {

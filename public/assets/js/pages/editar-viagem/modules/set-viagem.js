@@ -13,7 +13,7 @@ async function _buildTripObject() {
     let result = {
         id: "",
         data: {
-            cidades: [],
+            destinos: [],
             compartilhamento: {},
             cores: {},
             fim: {},
@@ -85,7 +85,7 @@ async function _buildTripObject() {
     result.data.transportes = _buildTransporteObject();
     result.data.hospedagens = _buildHospedagemObject();
     result.data.programacoes = _buildProgramacaoObject();
-    result.data.cidades = _buildCidadesArray();
+    result.data.destinos = _buildCidadesArray();
     result.data.galeria = _buildGaleriaObject();
 
     if (tripID) {

@@ -3,12 +3,12 @@
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var CURRENT_PLACES_SIZE = 0;
-var CIDADES = [];
+var DESTINOS = [];
 
 // ======= LOADERS =======
 function _loadPlaces() {
-  for (let i = 0; i < CIDADES.length; i++) {
-    P_RESULT[CIDADES[i].destinos.sigla] = CIDADES[i].destinos;
+  for (let i = 0; i < DESTINOS.length; i++) {
+    P_RESULT[DESTINOS[i].destinos.sigla] = DESTINOS[i].destinos;
   }
 
   window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
@@ -25,24 +25,24 @@ function _loadPlaces() {
 function _loadPlacesSelect() {
   let select = document.getElementById("destinos-select");
   let firstOption = document.createElement("option");
-  CIDADES = FIRESTORE_DATA.cidades;
+  DESTINOS = FIRESTORE_DATA.destinos;
 
-  const firstSigla = _getNewPlacesSigla(CIDADES[0].destinos.titulo);
-  CIDADES[0].destinos.sigla = firstSigla;
+  const firstSigla = _getNewPlacesSigla(DESTINOS[0].destinos.titulo);
+  DESTINOS[0].destinos.sigla = firstSigla;
 
   firstOption.value = firstSigla;
-  firstOption.text = CIDADES[0].titulo;
+  firstOption.text = DESTINOS[0].titulo;
   select.add(firstOption);
   firstOption.selected = true;
 
-  if (CIDADES.length > 1) {
-    for (let i = 1; i < CIDADES.length; i++) {
+  if (DESTINOS.length > 1) {
+    for (let i = 1; i < DESTINOS.length; i++) {
       let newOption = document.createElement("option");
-      let sigla = _getNewPlacesSigla(CIDADES[i].destinos.titulo);
-      CIDADES[i].destinos.sigla = sigla;
+      let sigla = _getNewPlacesSigla(DESTINOS[i].destinos.titulo);
+      DESTINOS[i].destinos.sigla = sigla;
 
       newOption.value = sigla;
-      newOption.text = CIDADES[i].titulo;
+      newOption.text = DESTINOS[i].titulo;
       select.add(newOption);
     };
   } else {
@@ -50,10 +50,10 @@ function _loadPlacesSelect() {
   };
 
   select.addEventListener("change", function () {
-    for (let i = 0; i < CIDADES.length; i++) {
-      const sigla = CIDADES[i].destinos.sigla;
+    for (let i = 0; i < DESTINOS.length; i++) {
+      const sigla = DESTINOS[i].destinos.sigla;
       if (sigla === select.value) {
-        _loadPlacesHTML(FIRESTORE_DATA.cidades[i].destinos);
+        _loadPlacesHTML(FIRESTORE_DATA.destinos[i].destinos);
         _adjustPlacesHTML();
         break;
       }
@@ -119,7 +119,7 @@ function _getPlacesHeaders(module) {
 
 function getPlacesSelectValue() {
   let select = document.getElementById("destinos-select");
-  return select.value || CIDADES[0].destinos.sigla;
+  return select.value || DESTINOS[0].destinos.sigla;
 }
 
 function _getPlacesBoxesIndex(i) {
@@ -146,8 +146,8 @@ function _getNewPlacesSigla(name) {
   var original = _codifyText(name);
   var result = original;
   let j = 0;
-  for (let i = 0; i < CIDADES.length; i++) {
-    const sigla = CIDADES[i].destinos.sigla;
+  for (let i = 0; i < DESTINOS.length; i++) {
+    const sigla = DESTINOS[i].destinos.sigla;
     if (result == sigla) {
       result += original + j;
       j++;

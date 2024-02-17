@@ -96,7 +96,7 @@ function _loadModules() {
   }
 
   // Cities
-  if (FIRESTORE_DATA.cidades.length <= 1) {
+  if (FIRESTORE_DATA.destinos.length <= 1) {
     document.getElementById("cities").innerHTML = "";
     document.getElementById("cities").style.display = "none";
   }
@@ -134,7 +134,7 @@ function _loadModules() {
   // Places
   if (FIRESTORE_DATA.modulos.destinos) {
     _loadPlacesSelect();
-    _loadPlacesHTML(CIDADES[0].destinos);
+    _loadPlacesHTML(DESTINOS[0].destinos);
     CALL_SYNC.push(_loadPlaces);
   } else {
     document.getElementById('destinos').style.display = "none";

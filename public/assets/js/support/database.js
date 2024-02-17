@@ -115,9 +115,9 @@ async function _getSingleData(type) {
     data = await _get(`${type}/${id}`);
 
     if (data) {
-      for (let i = 0; i < data?.cidades?.length; i++) {
-        const place = await _get(`destinos/${data.cidades[i].destinosID}`);
-        data.cidades[i].destinos = place
+      for (let i = 0; i < data?.destinos?.length; i++) {
+        const place = await _get(`destinos/${data.destinos[i].destinosID}`);
+        data.destinos[i].destinos = place
       }
     } else {
       _displayNoDataError(type)

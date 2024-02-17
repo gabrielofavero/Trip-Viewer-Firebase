@@ -13,7 +13,7 @@ async function _buildListObject() {
     let result = {
         id: "",
         data: {
-            cidades: [],
+            destinos: [],
             compartilhamento: {
                 hospedagens: false,
                 destinos: true,
@@ -58,7 +58,7 @@ async function _buildListObject() {
         escuro: _returnEmptyIfNoValue(document.getElementById('escuro').value)
     }
 
-    result.data.cidades = _buildCidadesArray();
+    result.data.destinos = _buildDestinosArray();
 
     if (listID) {
         result.id = listID;

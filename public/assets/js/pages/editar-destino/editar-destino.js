@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-    destinosID = urlParams.get('p');
+    destinosID = urlParams.get('d');
 
     _loadVisibilityIndex();
 

@@ -23,7 +23,6 @@ function _closeLightbox() {
   document.getElementById('night-mode').style.display = 'block';
   document.getElementById('menu').style.display = 'block';
   document.getElementById('navbar').style.display = 'block';
-  document.getElementById('share').style.display = 'block';
   _enableScroll();
   window.scrollTo({
     top: savedScrollPosition,
