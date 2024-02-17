@@ -8,6 +8,7 @@
 
 ## Doing
 - 🏆 Criar Função de Visualizador de Passeios
+- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 - 🏆 Criar/Organizar Lineup por dia
 
 ## To-Do
