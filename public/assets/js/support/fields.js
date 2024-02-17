@@ -1,6 +1,6 @@
 function _validateRequiredFields() {
     var invalidFields = [];
-    
+
     var inputs = document.querySelectorAll('input[required]');
     var selects = document.querySelectorAll('select[required]');
     var fields = Array.from(inputs).concat(Array.from(selects));
@@ -23,8 +23,12 @@ function _getInvalidFieldsText(invalidFields) {
     const dadosBasicos = ['titulo', 'moeda'];
 
     let text = 'Os seguintes campos obrigatórios não foram preenchidos:<br><br>'
-    let title = 'Dados Básicos'
-    text += `<strong>${title}:</strong><br><ul>`;
+    let title = '';
+
+    if (dadosBasicos.includes(invalidFields[0])) {
+        title = 'Dados Básicos'
+        text += `<strong>${title}:</strong><br><ul>`
+    }
 
     for (const id of invalidFields) {
         const label = document.getElementById(id + '-label');
@@ -48,20 +52,20 @@ function _getInvalidFieldsText(invalidFields) {
             }
         } else {
             innerTitle = _firstCharToUpperCase(idSplit[0])
-            
-            for (let i = 1; i < idSplit.length; i++) {
-                innerText += _firstCharToUpperCase(idSplit[i]) + " ";
-            }
-
-            innerText = innerText.trim();
+            innerText = _getInnerText(idSplit);
         }
 
         if (title == innerTitle || dadosBasicos.includes(id)) {
             text += `
             <li>
-                ${innerText}
+                ${innerText || innerTitle}
             </li>`
         } else {
+            
+            if (innerTitle == 'Select') {
+                innerTitle = innerText.replace(/[0-9]/g, '').trim();
+            }
+
             title = innerTitle
             text += `
             </ul><br>
@@ -77,7 +81,7 @@ function _getInvalidFieldsText(invalidFields) {
     return text + '</ul>';
 }
 
-function _reEdit(id, type, wasSaved=true) {
+function _reEdit(id, type, wasSaved = true) {
     let param;
     let url;
 
@@ -97,4 +101,16 @@ function _reEdit(id, type, wasSaved=true) {
     } else {
         window.location.href = 'index.html';
     }
+}
+
+function _getInnerText(idSplit) {
+    let innerText = '';
+    for (let i = 1; i < idSplit.length; i++) {
+        innerText += _firstCharToUpperCase(idSplit[i]) + " ";
+    }
+    return innerText.trim();
+}
+
+function _getInnerTextNoNumbers(innerText) {
+    return ;
 }

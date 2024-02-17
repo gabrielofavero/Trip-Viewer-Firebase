@@ -129,10 +129,6 @@ async function _getSingleData(type) {
   return data;
 }
 
-async function _isDataPublic(id, type) {
-
-}
-
 // Backup & Config
 async function _getBackup() {
   try {
@@ -366,6 +362,12 @@ async function _getUserList(type) {
         if (data.inicio && data.fim) {
           singleResult.inicio = data.inicio;
           singleResult.fim = data.fim;
+        }
+
+        if (data.versao?.ultimaAtualizacao) {
+          const date = new Date(data.versao.ultimaAtualizacao);
+          const dateString = _jsDateToDate(date, "dd/mm/yyyy");
+          singleResult.ultimaAtualizacao = `Última Atualização em ${dateString}`;
         }
 
         result.push(singleResult);
