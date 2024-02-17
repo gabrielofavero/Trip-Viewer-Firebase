@@ -89,7 +89,7 @@ strong {
 
 @media (max-width: 600px) {
   .content-box {
-    background-color: rgba(48, 48, 48, 0.90);
+    background-color: rgba(48, 48, 48, 0.80);
   }
 }
 
