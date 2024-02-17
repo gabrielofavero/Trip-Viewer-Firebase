@@ -343,7 +343,7 @@ function _addHospedagem() {
 
         <div class="nice-form-group">
           <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-          <input required id="link-hospedagem-${i}" type="url" placeholder="www.google.com" value=""
+          <input id="link-hospedagem-${i}" type="url" placeholder="www.google.com" value=""
             class="icon-right" />
         </div>
       </div>
