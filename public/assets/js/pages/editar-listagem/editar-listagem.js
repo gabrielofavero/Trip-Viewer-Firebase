@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (listID) {
       _carregarListagem()
     } else {
-      _loadPasseios();
+      _loadDestinos();
     }
 
     _loadImageSelector('background');
@@ -269,8 +269,8 @@ function _loadUploadSelectors() {
 }
 
 function _loadEventListeners() {
-  document.getElementById('passeios-adicionar').addEventListener('click', () => {
-    _addPasseios();
+  document.getElementById('destinos-adicionar').addEventListener('click', () => {
+    _addDestinos();
   });
 
   document.getElementById('cancelar').addEventListener('click', () => {

@@ -264,7 +264,7 @@ function _loadHabilitados() {
   _loadEditModule('transporte');
   _loadEditModule('hospedagem');
   _loadEditModule('programacao');
-  _loadEditModule('passeios');
+  _loadEditModule('destinos');
   _loadEditModule('galeria');
 }
 
@@ -282,8 +282,8 @@ function _loadEventListeners() {
     _addHospedagem();
   });
 
-  document.getElementById('passeios-adicionar').addEventListener('click', () => {
-    _addPasseios();
+  document.getElementById('destinos-adicionar').addEventListener('click', () => {
+    _addDestinos();
   });
 
   document.getElementById('galeria-adicionar').addEventListener('click', () => {
@@ -338,7 +338,7 @@ function _loadEventListeners() {
 function _loadNewTrip() {
   _loadDadosBasicosNewTrip();
   _loadProgramacao();
-  _loadPasseios();
+  _loadDestinos();
 }
 
 async function _loadTrip() {

@@ -1,7 +1,7 @@
 // ======= Visibility JS =======
 const INDEX = "index";
 const VIAGEM = "viagem"
-const PASSEIOS = "passeios";
+const PASSEIOS = "destinos";
 var THEME_COLOR;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
@@ -154,7 +154,7 @@ function _loadTripViewerLogo() {
 // ======= GETTERS =======
 function _getCssHref(name, dark=false) {
      const darkMode = dark ? "-dark" : "";
-     const editar = ["editar-viagem", "editar-passeio", "editar-listagem"];
+     const editar = ["editar-viagem", "editar-destino", "editar-listagem"];
      
      if (editar.includes(name)) {
           return `assets/css/editar/editar${darkMode}.css`
@@ -229,7 +229,7 @@ function _applyCustomColors() {
                break;
           case PASSEIOS:
                _loadLogoColors();
-               _applyCustomColorsPasseios();
+               _applyCustomColorsDestinos();
                break;
           default:
                break;

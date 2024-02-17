@@ -8,14 +8,14 @@ var CIDADES = [];
 // ======= LOADERS =======
 function _loadPlaces() {
   for (let i = 0; i < CIDADES.length; i++) {
-    P_RESULT[CIDADES[i].passeios.sigla] = CIDADES[i].passeios;
+    P_RESULT[CIDADES[i].destinos.sigla] = CIDADES[i].destinos;
   }
 
   window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
   window.localStorage.setItem('CURRENCY', FIRESTORE_DATA.moeda);
-  window.localStorage.setItem('CURRENCY_JSON', JSON.stringify(CONFIG.places.currency));
-  window.localStorage.setItem('PLACES_JSON', JSON.stringify(CONFIG.places.places));
-  window.localStorage.setItem('PLACES_SETTINGS_JSON', JSON.stringify(CONFIG.places.settings));
+  window.localStorage.setItem('CURRENCY_JSON', JSON.stringify(CONFIG.destinos.currency));
+  window.localStorage.setItem('PLACES_JSON', JSON.stringify(CONFIG.destinos.destinos));
+  window.localStorage.setItem('PLACES_SETTINGS_JSON', JSON.stringify(CONFIG.destinos.settings));
 
   window.addEventListener("resize", function () {
     _adjustPlacesHTML();
@@ -23,12 +23,12 @@ function _loadPlaces() {
 }
 
 function _loadPlacesSelect() {
-  let select = document.getElementById("places-select");
+  let select = document.getElementById("destinos-select");
   let firstOption = document.createElement("option");
   CIDADES = FIRESTORE_DATA.cidades;
 
-  const firstSigla = _getNewPlacesSigla(CIDADES[0].passeios.titulo);
-  CIDADES[0].passeios.sigla = firstSigla;
+  const firstSigla = _getNewPlacesSigla(CIDADES[0].destinos.titulo);
+  CIDADES[0].destinos.sigla = firstSigla;
 
   firstOption.value = firstSigla;
   firstOption.text = CIDADES[0].titulo;
@@ -38,8 +38,8 @@ function _loadPlacesSelect() {
   if (CIDADES.length > 1) {
     for (let i = 1; i < CIDADES.length; i++) {
       let newOption = document.createElement("option");
-      let sigla = _getNewPlacesSigla(CIDADES[i].passeios.titulo);
-      CIDADES[i].passeios.sigla = sigla;
+      let sigla = _getNewPlacesSigla(CIDADES[i].destinos.titulo);
+      CIDADES[i].destinos.sigla = sigla;
 
       newOption.value = sigla;
       newOption.text = CIDADES[i].titulo;
@@ -51,9 +51,9 @@ function _loadPlacesSelect() {
 
   select.addEventListener("change", function () {
     for (let i = 0; i < CIDADES.length; i++) {
-      const sigla = CIDADES[i].passeios.sigla;
+      const sigla = CIDADES[i].destinos.sigla;
       if (sigla === select.value) {
-        _loadPlacesHTML(FIRESTORE_DATA.cidades[i].passeios);
+        _loadPlacesHTML(FIRESTORE_DATA.cidades[i].destinos);
         _adjustPlacesHTML();
         break;
       }
@@ -61,25 +61,25 @@ function _loadPlacesSelect() {
   });
 }
 
-function _loadPlacesHTML(passeio) {
-  let div = document.getElementById("passeiosBox");
+function _loadPlacesHTML(destino) {
+  let div = document.getElementById("destinosBox");
   let text = "";
 
-  const headers = _getPlacesHeaders(passeio.modulos);
+  const headers = _getPlacesHeaders(destino.modulos);
   CURRENT_PLACES_SIZE = headers.length;
 
   let linktype = _getLinkType();
 
   for (let i = 0; i < headers.length; i++) {
     const j = i + 1;
-    const box = CONFIG.places.boxes[_getPlacesBoxesIndex(i)];
-    const title = CONFIG.places.places[headers[i]]["title"];
+    const box = CONFIG.destinos.boxes[_getPlacesBoxesIndex(i)];
+    const title = CONFIG.destinos.destinos[headers[i]]["title"];
     const code = headers[i];
-    const href = code === "mapa" ? passeio.myMaps : "#";
+    const href = code === "mapa" ? destino.myMaps : "#";
     const lt = code === "mapa" ? linktype : "";
-    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getPlacesHref(code, passeio)}')"`;
-    const icon = CONFIG.places.places[headers[i]]["icon"];
-    const description = CONFIG.places.places[headers[i]]["description"];
+    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getPlacesHref(code, destino)}')"`;
+    const icon = CONFIG.destinos.destinos[headers[i]]["icon"];
+    const description = CONFIG.destinos.destinos[headers[i]]["description"];
     text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
     <a href="${href}" ${lt} ${onclick} id="ba${j}">
@@ -118,13 +118,13 @@ function _getPlacesHeaders(module) {
 }
 
 function getPlacesSelectValue() {
-  let select = document.getElementById("places-select");
-  return select.value || CIDADES[0].passeios.sigla;
+  let select = document.getElementById("destinos-select");
+  return select.value || CIDADES[0].destinos.sigla;
 }
 
 function _getPlacesBoxesIndex(i) {
-  if (i > CONFIG.places.boxes.length - 1) {
-    return i % CONFIG.places.boxes.length;
+  if (i > CONFIG.destinos.boxes.length - 1) {
+    return i % CONFIG.destinos.boxes.length;
   } else return i
 }
 
@@ -136,10 +136,10 @@ function _getLinkType() {
   }
 }
 
-function _getPlacesHref(code, passeio) {
+function _getPlacesHref(code, destino) {
   if (code == "mapa") {
-    return passeio.myMaps;
-  } else return `passeios.html?passeio=${passeio.sigla}&type=${code}`;
+    return destino.myMaps;
+  } else return `destinos.html?destino=${destino.sigla}&type=${code}`;
 }
 
 function _getNewPlacesSigla(name) {
@@ -147,7 +147,7 @@ function _getNewPlacesSigla(name) {
   var result = original;
   let j = 0;
   for (let i = 0; i < CIDADES.length; i++) {
-    const sigla = CIDADES[i].passeios.sigla;
+    const sigla = CIDADES[i].destinos.sigla;
     if (result == sigla) {
       result += original + j;
       j++;

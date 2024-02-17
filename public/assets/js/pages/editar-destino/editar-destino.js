@@ -7,7 +7,7 @@
 */
 
 var blockLoadingEnd = false;
-var placesID;
+var destinosID;
 var FIRESTORE_PLACES_DATA;
 wasSaved = false;
 _startLoadingScreen();
@@ -225,13 +225,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-    placesID = urlParams.get('p');
+    destinosID = urlParams.get('p');
 
     _loadVisibilityIndex();
 
     _loadHabilitados();
 
-    if (placesID) {
+    if (destinosID) {
       _loadPlaces()
     }
 
@@ -290,14 +290,14 @@ function _loadEventListeners() {
     _setPasseio();
   });
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(placesID, 'passeios', wasSaved);
+    _reEdit(destinosID, 'destinos', wasSaved);
   });
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();
   });
   document.getElementById('apagar').addEventListener('click', async () => {
-    if (placesID) {
-      await _deleteUserObjectDB(placesID, "passeios");
+    if (destinosID) {
+      await _deleteUserObjectDB(destinosID, "destinos");
       window.location.href = `index.html`;
     }
   });
@@ -310,7 +310,7 @@ async function _loadPlaces() {
   blockLoadingEnd = true;
   document.getElementById('delete-text').style.display = 'block';
   _startLoadingScreen();
-  FIRESTORE_PLACES_DATA = await _getSingleData('passeios');
+  FIRESTORE_PLACES_DATA = await _getSingleData('destinos');
   console.log(FIRESTORE_PLACES_DATA);
   _loadPlacesData(FIRESTORE_PLACES_DATA);
   _stopLoadingScreen();

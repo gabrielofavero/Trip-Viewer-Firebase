@@ -34,7 +34,7 @@
             }
         ]
     },
-    "places": {
+    "destinos": {
         "boxes": [
             {
                 "color": "blue",
@@ -118,7 +118,7 @@
                 "-": "Gratuito"
             }
         },
-        "places": {
+        "destinos": {
             "mapa": {
                 "subtitle": "",
                 "icon": "bx bx-map-alt",

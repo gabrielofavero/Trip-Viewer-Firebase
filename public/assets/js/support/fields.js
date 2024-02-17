@@ -88,9 +88,9 @@ function _reEdit(id, type, wasSaved = true) {
     if (type == 'viagens') {
         param = 'v';
         url = 'editar-viagem.html';
-    } else if (type == 'passeios') {
+    } else if (type == 'destinos') {
         param = 'p';
-        url = 'editar-passeio.html';
+        url = 'editar-destino.html';
     }
 
 

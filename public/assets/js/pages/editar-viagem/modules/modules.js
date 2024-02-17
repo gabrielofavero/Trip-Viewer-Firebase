@@ -20,7 +20,7 @@ function _loadTripData(FIRESTORE_DATA) {
     _loadMeiosDeTransporteData(FIRESTORE_DATA);
     _loadHospedagemData(FIRESTORE_DATA);
     _loadProgramacaoData(FIRESTORE_DATA);
-    _loadPasseiosData(FIRESTORE_DATA);
+    _loadDestinosData(FIRESTORE_DATA);
     _loadGaleriaData(FIRESTORE_DATA);
 
   } catch (e) {
@@ -114,22 +114,22 @@ function _loadProgramacao() {
   }
 }
 
-function _loadPasseios() {
+function _loadDestinos() {
   const userPlaces = localStorage.getItem('userPlaces');
   const myPlaces = userPlaces ? JSON.parse(userPlaces) : [];
 
   if (myPlaces && myPlaces.length > 0) {
-    document.getElementById('sem-passeios').style.display = 'none';
-    document.getElementById('com-passeios').style.display = 'block';
+    document.getElementById('sem-destinos').style.display = 'none';
+    document.getElementById('com-destinos').style.display = 'block';
 
-    const first = document.getElementById(`select-passeios-1`);
+    const first = document.getElementById(`select-destinos-1`);
 
     if (first) {
       first.addEventListener('change', () => {
-        _buildPasseiosSelect();
+        _buildDestinosSelect();
       });
     }
-    _buildPasseiosSelect();
+    _buildDestinosSelect();
   }
 }
 
@@ -362,19 +362,19 @@ function _addHospedagem() {
     `);
 }
 
-function _addPasseios() {
+function _addDestinos() {
   let i = 1;
-  while (document.getElementById(`select-passeios-${i}`)) {
+  while (document.getElementById(`select-destinos-${i}`)) {
     i++;
   };
 
-  $('#com-passeios').append(`
-  <div class="nice-form-group" id="com-passeios-${i}">
-    <select id="select-passeios-${i}">
+  $('#com-destinos').append(`
+  <div class="nice-form-group" id="com-destinos-${i}">
+    <select id="select-destinos-${i}">
       <option value="">Selecione um Passeio</option>
     </select>
     <div class="deletar-box">
-      <button id="passeios-deletar-${i}" class="btn btn-secondary" onclick="_deletePasseio(${i})">
+      <button id="destinos-deletar-${i}" class="btn btn-secondary" onclick="_deletePasseio(${i})">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
         </svg>
@@ -383,11 +383,11 @@ function _addPasseios() {
   </div>
   `);
 
-  document.getElementById(`select-passeios-${i}`).addEventListener('change', () => {
-    _buildPasseiosSelect();
+  document.getElementById(`select-destinos-${i}`).addEventListener('change', () => {
+    _buildDestinosSelect();
   });
 
-  _buildPasseiosSelect();
+  _buildDestinosSelect();
 }
 
 function _addEditores() {
@@ -820,32 +820,32 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
   }
 }
 
-function _loadPasseiosData(FIRESTORE_DATA) {
-  if (FIRESTORE_DATA.modulos.passeios === true) {
-    document.getElementById('habilitado-passeios').checked = true;
-    document.getElementById('habilitado-passeios-content').style.display = 'block';
-    document.getElementById('sem-passeios').style.display = 'none';
-    document.getElementById('com-passeios').style.display = 'block';
-    document.getElementById('passeios-adicionar-box').style.display = 'block';
+function _loadDestinosData(FIRESTORE_DATA) {
+  if (FIRESTORE_DATA.modulos.destinos === true) {
+    document.getElementById('habilitado-destinos').checked = true;
+    document.getElementById('habilitado-destinos-content').style.display = 'block';
+    document.getElementById('sem-destinos').style.display = 'none';
+    document.getElementById('com-destinos').style.display = 'block';
+    document.getElementById('destinos-adicionar-box').style.display = 'block';
   } else {
-    document.getElementById('sem-passeios').style.display = 'block';
-    document.getElementById('com-passeios').style.display = 'none';
-    document.getElementById('passeios-adicionar-box').style.display = 'none';
+    document.getElementById('sem-destinos').style.display = 'block';
+    document.getElementById('com-destinos').style.display = 'none';
+    document.getElementById('destinos-adicionar-box').style.display = 'none';
   }
 
   const cidades = FIRESTORE_DATA.cidades;
 
-  _loadPasseios();
+  _loadDestinos();
 
   if (cidades && cidades.length > 0) {
     for (let i = 1; i <= cidades.length; i++) {
       const j = i - 1;
-      const id = cidades[j].passeiosID;
+      const id = cidades[j].destinosID;
 
       if (i === 1) {
         _setPasseioSelectValue(1, id);
       } else {
-        _addPasseios();
+        _addDestinos();
         _setPasseioSelectValue(i, id);
       }
     }
@@ -905,17 +905,17 @@ function _formatAltura(value) {
   document.getElementById('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
 }
 
-// Passeios: Funções Genéricas
-function _buildPasseiosSelect() {
+// Destinos: Funções Genéricas
+function _buildDestinosSelect() {
   const userPlaces = localStorage.getItem('userPlaces');
   const myPlaces = userPlaces ? JSON.parse(userPlaces) : [];
-  const childs = _getChildIDs('com-passeios');
+  const childs = _getChildIDs('com-destinos');
 
   let used = [];
 
   for (const child of childs) {
     const i = child.split('-')[2];
-    const select = document.getElementById(`select-passeios-${i}`);
+    const select = document.getElementById(`select-destinos-${i}`);
     const value = select.value;
     if (value) {
       used.push(value);
@@ -924,7 +924,7 @@ function _buildPasseiosSelect() {
 
   for (const child of childs) {
     const i = child.split('-')[2];
-    const select = document.getElementById(`select-passeios-${i}`);
+    const select = document.getElementById(`select-destinos-${i}`);
     const value = select.value;
 
     let options = '<option value="">Selecione um Passeio</option>';
@@ -938,21 +938,21 @@ function _buildPasseiosSelect() {
 
     if (options === '<option value="">Selecione um Passeio</option>') {
       _deletePasseio(i);
-      document.getElementById('todos-passeios-utilizados').style.display = 'block';
+      document.getElementById('todos-destinos-utilizados').style.display = 'block';
     } else {
       select.innerHTML = options;
-      document.getElementById('todos-passeios-utilizados').style.display = 'none';
+      document.getElementById('todos-destinos-utilizados').style.display = 'none';
     }
   }
 }
 
 function _setPasseioSelectValue(i, value) {
-  const select = document.getElementById(`select-passeios-${i}`);
+  const select = document.getElementById(`select-destinos-${i}`);
   select.value = value;
-  _buildPasseiosSelect();
+  _buildDestinosSelect();
 }
 
 function _deletePasseio(i) {
-  _deleteType(`com-passeios-${i}`);
-  _buildPasseiosSelect();
+  _deleteType(`com-destinos-${i}`);
+  _buildDestinosSelect();
 }

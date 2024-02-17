@@ -31,7 +31,7 @@ async function _registerIfUserNotPresent() {
             await _create(`usuarios`, {
                 listagens: [],
                 viagens: [],
-                passeios: [],
+                destinos: [],
                 visibilidade: 'dinamico'
             }, user.uid)
         }

@@ -628,7 +628,7 @@ section {
 }
 
 #sem-viagens,
-#sem-passeios,
+#sem-destinos,
 #sem-listagens {
   display: flex;
   width: 100%;

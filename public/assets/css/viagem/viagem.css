@@ -1124,7 +1124,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Services - Todos os Passeios
+# Services - Todos os Destinos
 --------------------------------------------------------------*/
 .services .icon-box {
   text-align: center;
@@ -1293,7 +1293,7 @@ section {
   overflow: hidden;
 }
 
-#passeiosBox a {
+#destinosBox a {
   color: #272829;
 }
 
@@ -1576,7 +1576,7 @@ section {
 }
 
 #subject,
-#places-select {
+#destinos-select {
   transition: all ease-in-out 0.3s;
   background: #fff;
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
@@ -1693,7 +1693,7 @@ section {
   }
 
   #subject,
-  #places-select {
+  #destinos-select {
     width: 70%;
   }
 }
@@ -1705,7 +1705,7 @@ section {
   }
 
   #subject,
-  #places-select {
+  #destinos-select {
     width: 90%;
   }
 }
@@ -1885,7 +1885,7 @@ section {
 @media only screen and (max-device-width: 480px) {
 
   #subject,
-  #places-select {
+  #destinos-select {
     text-align-last: center;
     text-align: center;
   }

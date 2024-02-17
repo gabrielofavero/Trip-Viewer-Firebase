@@ -1,4 +1,4 @@
-async function _buildPasseiosObject() {
+async function _buildDestinosObject() {
     let result = {
         lanches: {},
         lojas: {},
@@ -224,13 +224,13 @@ async function _setPasseio() {
     _validateRequiredFields();
 
     if (!_isModalOpen()) {
-        const passeio = await _buildPasseiosObject();
+        const destino = await _buildDestinosObject();
         let result;
 
-        if (placesID && passeio) {
-            result = await _updateUserObjectDB(passeio, placesID, "passeios");
-        } else if (passeio) {
-            result = await _newUserObjectDB(passeio, "passeios");
+        if (destinosID && destino) {
+            result = await _updateUserObjectDB(destino, destinosID, "destinos");
+        } else if (destino) {
+            result = await _newUserObjectDB(destino, "destinos");
         }
 
         console.log(result);

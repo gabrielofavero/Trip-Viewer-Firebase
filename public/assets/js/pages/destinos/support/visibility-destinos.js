@@ -1,4 +1,4 @@
-function _adjustButtonsPositionPasseios() {
+function _adjustButtonsPositionDestinos() {
     const first = "10px";
     const second = "50px";
 
@@ -9,7 +9,7 @@ function _adjustButtonsPositionPasseios() {
     nightMode.style.right = second;
 }
 
-function _applyCustomColorsPasseios() {
+function _applyCustomColorsDestinos() {
     const text = document.getElementById("trip-viewer-text");
     text.style.color = THEME_COLOR;
     _addCSSRule('.section-title h2::after', 'background', THEME_COLOR);

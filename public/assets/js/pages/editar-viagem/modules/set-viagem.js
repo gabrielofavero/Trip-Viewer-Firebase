@@ -47,7 +47,7 @@ async function _buildTripObject() {
 
     result.data.modulos = {
         hospedagens: document.getElementById('habilitado-hospedagem').checked,
-        passeios: document.getElementById('habilitado-passeios').checked,
+        destinos: document.getElementById('habilitado-destinos').checked,
         programacao: document.getElementById('habilitado-programacao').checked,
         resumo: true,
         transportes: document.getElementById('habilitado-transporte').checked,
@@ -350,19 +350,19 @@ function _getInnerProgramacao(turno, j) {
 
 function _buildCidadesArray() {
     let result = [];
-    const childIds = _getChildIDs('com-passeios');
+    const childIds = _getChildIDs('com-destinos');
 
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[2]);
         var innerResult = {
-            passeiosID: ""
+            destinosID: ""
         }
 
-        divSelectPasseios = document.getElementById(`select-passeios-${j}`);
-        valueSelectPasseios = divSelectPasseios ? _returnEmptyIfNoValue(divSelectPasseios.value) : "";
+        divSelectDestinos = document.getElementById(`select-destinos-${j}`);
+        valueSelectDestinos = divSelectDestinos ? _returnEmptyIfNoValue(divSelectDestinos.value) : "";
 
-        if (valueSelectPasseios) {
-            innerResult.passeiosID = valueSelectPasseios;
+        if (valueSelectDestinos) {
+            innerResult.destinosID = valueSelectDestinos;
             result.push(innerResult);
         }
     }
@@ -409,10 +409,10 @@ function _buildGaleriaObject() {
 async function _setViagem() {
     _startLoadingScreen();
 
-    if (document.getElementById('habilitado-passeios').checked) {
-        for (const child of _getChildIDs('com-passeios')) {
+    if (document.getElementById('habilitado-destinos').checked) {
+        for (const child of _getChildIDs('com-destinos')) {
             const i = parseInt(child.split("-")[2]);
-            _setRequired(`select-passeios-${i}`)
+            _setRequired(`select-destinos-${i}`)
         }
     }
 

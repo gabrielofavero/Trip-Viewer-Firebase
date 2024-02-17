@@ -150,13 +150,13 @@
             </li>
 
             <li>
-              <a href="#passeios">
+              <a href="#destinos">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
                   <path fill="currentColor"
                     d="m12.596 11.596l-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193a6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z">
                   </path>
                 </svg>
-                Pontos Turísticos</a>
+                Destinos</a>
             </li>
 
             <li>
@@ -186,7 +186,7 @@
           </h1>
 
           <p>
-            Adicione aqui as principais informações da sua listagem de passeios.
+            Adicione aqui as principais informações da sua listagem de destinos.
           </p>
 
           <div class="nice-form-group">
@@ -205,10 +205,10 @@
           </div>
 
           <div class="nice-form-group">
-            <input id="exibir-em-passeios" type="checkbox" class="switch" checked="">
-            <label id="exibir-em-passeios-label" for="exibir-em-passeios">
+            <input id="exibir-em-destinos" type="checkbox" class="switch" checked="">
+            <label id="exibir-em-destinos-label" for="exibir-em-destinos">
               Exibir Data da Última Atualização
-              <small>Exibe a data de quando a listagem ou algum passeio for atualizado</small>
+              <small>Exibe a data de quando a listagem ou algum destino for atualizado</small>
             </label>
           </div>
 
@@ -433,31 +433,31 @@
         </section>
 
         <section>
-          <div class="href-target" id="passeios"></div>
+          <div class="href-target" id="destinos"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
               <path fill="currentColor"
                 d="m12.596 11.596l-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193a6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z">
               </path>
             </svg>
-            Pontos Turísticos
+            Destinos
           </h1>
           <p>
             Insira os destinos que farão parte da sua listagem.
           </p>
 
-          <div id="habilitado-passeios-content">
-            <div class="nice-form-group" id="sem-passeios">
-              <input type="text" readonly placeholder='Sem passeios cadastrados' />
+          <div id="habilitado-destinos-content">
+            <div class="nice-form-group" id="sem-destinos">
+              <input type="text" readonly placeholder='Sem destinos cadastrados' />
             </div>
 
-            <div id="com-passeios" style="display: none">
-              <div class="nice-form-group" id="com-passeios-1">
-                <select id="select-passeios-1">
+            <div id="com-destinos" style="display: none">
+              <div class="nice-form-group" id="com-destinos-1">
+                <select id="select-destinos-1">
                   <option value="">Selecione um Passeio</option>
                 </select>
                 <div class="deletar-box">
-                  <button id="passeios-deletar-1" class="btn btn-secondary" onclick="_deleteType('com-passeios-1')">
+                  <button id="destinos-deletar-1" class="btn btn-secondary" onclick="_deleteType('com-destinos-1')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                       <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
                     </svg>
@@ -465,11 +465,11 @@
                 </div>
               </div>
             </div>
-            <div id="todos-passeios-utilizados" class="message-text"> <i class='red'>*</i> Não é possível adicionar novos passeios. Todos os passeios cadastrados nessa conta já foram utilizados</div>
+            <div id="todos-destinos-utilizados" class="message-text"> <i class='red'>*</i> Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados</div>
           </div>
 
-          <div class="button-box-formatted" id="passeios-adicionar-box">
-            <button id="passeios-adicionar" class="btn btn-purple">
+          <div class="button-box-formatted" id="destinos-adicionar-box">
+            <button id="destinos-adicionar" class="btn btn-purple">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path

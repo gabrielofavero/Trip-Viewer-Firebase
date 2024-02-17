@@ -116,8 +116,8 @@ async function _getSingleData(type) {
 
     if (data) {
       for (let i = 0; i < data?.cidades?.length; i++) {
-        const place = await _get(`passeios/${data.cidades[i].passeiosID}`);
-        data.cidades[i].passeios = place
+        const place = await _get(`destinos/${data.cidades[i].destinosID}`);
+        data.cidades[i].destinos = place
       }
     } else {
       _displayNoDataError(type)
@@ -137,7 +137,7 @@ async function _getBackup() {
       const collections = [
         "admin",
         "config",
-        "passeios",
+        "destinos",
         "usuarios",
         "viagens",
       ];
@@ -168,14 +168,14 @@ async function _getConfig() {
   try {
     const callSyncOrder = await _get('config/call-sync-order');
     const information = await _get('config/information');
-    const places = await _get('config/places');
+    const destinos = await _get('config/destinos');
     const transportes = await _get('config/transportes');
     const cores = await _get('config/cores');
 
     const config = {
       callSyncOrder: callSyncOrder,
       information: information,
-      places: places,
+      destinos: destinos,
       transportes: transportes,
       cores: cores,
     };
@@ -287,11 +287,11 @@ async function _deleteAccount() {
       }
     }
 
-    for (const passeioID of userData.passeios) {
-      const passeio = await _get(`passeios/${passeioID}`);
-      const dono = passeio.compartilhamento.dono;
+    for (const destinoID of userData.destinos) {
+      const destino = await _get(`destinos/${destinoID}`);
+      const dono = destino.compartilhamento.dono;
       if (uid == dono) {
-        promises.push(_deleteUserObjectDB(passeioID, "passeios"));
+        promises.push(_deleteUserObjectDB(destinoID, "destinos"));
       }
     }
 
@@ -321,10 +321,10 @@ async function _addToUserArray(type, value) {
   }
 }
 
-async function _updateUserObjectDB(object, placesID, type) {
+async function _updateUserObjectDB(object, destinosID, type) {
   if (await _getUID()) {
     try {
-      return await _update(`${type}/${placesID}`, object)
+      return await _update(`${type}/${destinosID}`, object)
     } catch (error) {
       console.error('Error fetching data:', error);
       return error.message;

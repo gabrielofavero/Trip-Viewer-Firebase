@@ -16,7 +16,7 @@ async function _buildListObject() {
             cidades: [],
             compartilhamento: {
                 hospedagens: false,
-                passeios: true,
+                destinos: true,
                 programacao: false,
                 resumo: true,
                 transportes: false,
@@ -31,7 +31,7 @@ async function _buildListObject() {
             descricao: "",
             versao: {
                 ultimaAtualizacao: new Date().toISOString(),
-                exibirEmPasseios: false
+                exibirEmDestinos: false
             }
         }
     }
@@ -45,8 +45,8 @@ async function _buildListObject() {
     const divDescricao = document.getElementById(`descricao`);
     result.data.descricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
 
-    const exibirEmPasseios = document.getElementById(`exibir-em-passeios`);
-    result.data.versao.exibirEmPasseios = exibirEmPasseios ? exibirEmPasseios.checked : false;
+    const exibirEmDestinos = document.getElementById(`exibir-em-destinos`);
+    result.data.versao.exibirEmDestinos = exibirEmDestinos ? exibirEmDestinos.checked : false;
 
     result.data.compartilhamento = await _buildCompartilhamentoObject();
     result.data.imagem = _buildImagemObject();
@@ -70,9 +70,9 @@ async function _buildListObject() {
 async function _setListagem() {
     _startLoadingScreen();
 
-    for (const child of _getChildIDs('com-passeios')) {
+    for (const child of _getChildIDs('com-destinos')) {
         const i = parseInt(child.split("-")[2]);
-        _setRequired(`select-passeios-${i}`)
+        _setRequired(`select-destinos-${i}`)
     }
 
     _validateRequiredFields();
@@ -100,15 +100,15 @@ async function _setListagem() {
                 let background = '';
 
                 if (uploadLogoLight) {
-                    logoLight = await _uploadLogoLight(listID, 'placesLists');
+                    logoLight = await _uploadLogoLight(listID, 'destinosLists');
                 }
 
                 if (uploadLogoDark) {
-                    logoDark = await _uploadLogoDark(listID, 'placesLists');
+                    logoDark = await _uploadLogoDark(listID, 'destinosLists');
                 }
 
                 if (uploadBackground) {
-                    background = await _uploadBackground(listID, 'placesLists');
+                    background = await _uploadBackground(listID, 'destinosLists');
                 }
 
                 body = {

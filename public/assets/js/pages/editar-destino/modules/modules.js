@@ -6,7 +6,7 @@ var PROGRAMACAO = {};
 // Passeio Existente
 function _loadPlacesData(FIRESTORE_PLACES_DATA) {
   try {
-    _loadDadosBasicosPasseiosData(FIRESTORE_PLACES_DATA);
+    _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA);
     _loadRestaurantesData(FIRESTORE_PLACES_DATA);
     _loadLanchesData(FIRESTORE_PLACES_DATA);
     _loadSaidasData(FIRESTORE_PLACES_DATA);
@@ -602,7 +602,7 @@ function _deleteType(tipo) {
 }
 
 // Módulos: Passeio Existente
-function _loadDadosBasicosPasseiosData(FIRESTORE_PLACES_DATA) {
+function _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA) {
   document.getElementById('titulo').value = FIRESTORE_PLACES_DATA.titulo;
   document.getElementById('moeda').value = FIRESTORE_PLACES_DATA.moeda;
 }

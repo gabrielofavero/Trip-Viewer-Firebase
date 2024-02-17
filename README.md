@@ -7,7 +7,7 @@
 - ⚔️: Epic
 
 ## Doing
-- 🏆 Criar Função de Visualizador de Passeios
+- 🏆 Criar Função de Listas de Destinos
 - 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 - 🏆 Criar/Organizar Lineup por dia
 
@@ -46,6 +46,7 @@
 - ⚔️ Testagem Geral e bug fixes
 - 📈 Condensados CSSs de editar-viagem e editar-passeio em CSSs únicos (editar.css e editar-dark.css)
 - 📈 Validar Inputs em Adicionar Passeio (Remover os que já foram preenchidos)
+- ⚔️ Passeios renomeado para Destinos
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

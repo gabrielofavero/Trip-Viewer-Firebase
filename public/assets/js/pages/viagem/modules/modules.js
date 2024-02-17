@@ -132,13 +132,13 @@ function _loadModules() {
   }
 
   // Places
-  if (FIRESTORE_DATA.modulos.passeios) {
+  if (FIRESTORE_DATA.modulos.destinos) {
     _loadPlacesSelect();
-    _loadPlacesHTML(CIDADES[0].passeios);
+    _loadPlacesHTML(CIDADES[0].destinos);
     CALL_SYNC.push(_loadPlaces);
   } else {
-    document.getElementById('places').style.display = "none";
-    document.getElementById("placesNav").innerHTML = "";
+    document.getElementById('destinos').style.display = "none";
+    document.getElementById("destinosNav").innerHTML = "";
   }
 
   // Gallery

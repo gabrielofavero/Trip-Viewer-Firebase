@@ -256,8 +256,8 @@ function _loadListenersIndex() {
     _viagensNovo();
   });
 
-  document.getElementById('new-passeio').addEventListener('click', function () {
-    _passeiosNovo();
+  document.getElementById('new-destino').addEventListener('click', function () {
+    _destinosNovo();
   });
 
   document.getElementById('new-listagem').addEventListener('click', function () {
@@ -330,7 +330,7 @@ async function _loadUserIndex() {
         document.getElementById('profile-icon').style.backgroundSize = 'cover';
 
         _loadUserDataList('viagens');
-        _loadUserDataList('passeios');
+        _loadUserDataList('destinos');
         _loadUserDataList('listagens');
 
       } else {
@@ -406,18 +406,18 @@ function _viagensVisualizar(code) {
 
 function _viagensNovo() {
   localStorage.setItem('viagensUser', JSON.stringify(userData['viagens']));
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
+  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
   window.location.href = `editar-viagem.html`;
 }
 
-function _passeiosNovo() {
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
-  window.location.href = `editar-passeio.html`;
+function _destinosNovo() {
+  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
+  window.location.href = `editar-destino.html`;
 }
 
-function _passeiosEditar(code) {
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
-  window.location.href = `editar-passeio.html?p=${code}`;
+function _destinosEditar(code) {
+  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
+  window.location.href = `editar-destino.html?p=${code}`;
 }
 
 function _listagensEditar(code) {
@@ -430,6 +430,6 @@ function _listagensVisualizar(code) {
 
 function _listagensNovo() {
   localStorage.setItem('listagensUser', JSON.stringify(userData['listagens']));
-  localStorage.setItem('passeiosUser', JSON.stringify(userData['passeios']));
+  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
   window.location.href = `editar-listagem.html`;
 }

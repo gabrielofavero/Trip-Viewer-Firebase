@@ -77,7 +77,7 @@ function _loadUserIndexVisibility() {
   document.getElementById('logged-menu').style.display = 'block';
   document.getElementById('tripViewer').style.display = 'block';
   document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('passeios-box').style.display = 'none';
+  document.getElementById('destinos-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'none';
@@ -91,7 +91,7 @@ function _unloadUserIndexVisibility() {
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'block';
   document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('passeios-box').style.display = 'none';
+  document.getElementById('destinos-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'none';
   document.getElementById('back').style.display = 'none';
@@ -105,7 +105,7 @@ function _loadSettingsVisibility() {
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
   document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('passeios-box').style.display = 'none';
+  document.getElementById('destinos-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'block';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
@@ -119,7 +119,7 @@ function _loadMyTripsVisibility() {
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
   document.getElementById('viagens-box').style.display = 'block';
-  document.getElementById('passeios-box').style.display = 'none';
+  document.getElementById('destinos-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
@@ -133,7 +133,7 @@ function _loadMyPlacesVisibility() {
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
   document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('passeios-box').style.display = 'block';
+  document.getElementById('destinos-box').style.display = 'block';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
@@ -147,7 +147,7 @@ function _loadMyPlacesListVisibility() {
   document.getElementById('logged-menu').style.display = 'none';
   document.getElementById('tripViewer').style.display = 'none';
   document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('passeios-box').style.display = 'none';
+  document.getElementById('destinos-box').style.display = 'none';
   document.getElementById('settings-box').style.display = 'none';
   document.getElementById('profile-icon').style.display = 'block';
   document.getElementById('back').style.display = 'block';
