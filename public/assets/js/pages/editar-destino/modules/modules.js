@@ -3,7 +3,7 @@ const TOMORROW = _getTomorrowFormatted();
 
 var PROGRAMACAO = {};
 
-// Passeio Existente
+// Destino Existente
 function _loadPlacesData(FIRESTORE_PLACES_DATA) {
   try {
     _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA);

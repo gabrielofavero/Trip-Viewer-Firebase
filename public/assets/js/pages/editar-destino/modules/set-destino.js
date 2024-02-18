@@ -43,6 +43,7 @@ async function _buildDestinosObject() {
 function _buildDestinoModulos() {
     let result = {
         lanches: false,
+        lineup: false,
         lojas: false,
         mapa: false,
         restaurantes: false,

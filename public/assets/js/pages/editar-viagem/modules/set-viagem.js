@@ -383,6 +383,7 @@ function _buildLineupObject() {
         const selectValue = document.getElementById(`lineup-local-${i}`).value;
         if (!result[selectValue]) {
             result[selectValue] = {
+                data: [],
                 descricao: [],
                 head: [],
                 horario: [],

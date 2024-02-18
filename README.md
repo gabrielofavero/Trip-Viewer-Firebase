@@ -12,8 +12,6 @@
 ## To-Do
 
 ### Prioridade Alta
-- 🏆 Consertar gráfico de cities (está estático no viagens)
-- 🏆 Migrar Lineup para Viagens (Remover de Destinos)
 - 🏆 Criar/Organizar Lineup por dia
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
 
@@ -34,6 +32,7 @@
 - 🏆 Adicionar animações no index.html;
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
 - ⚔️ Migrar Projeto para outro domínio
+- 🏆 Consertar gráfico de cities (está estático no viagens)
 
 ## Done
 
@@ -54,6 +53,7 @@
 - 🐞 Link de transporte não deveria ser obrigatório
 - 🐞 Imagem de meio de transporte não carregou corretamente (Exemplo: Lolla 2024)
 - 🏆 Criar Função de Listas de Destinos
+- 🏆 Migrar Lineup para Viagens (Remover de Destinos)
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;

@@ -10,7 +10,7 @@ function _loadPlaces() {
   for (let i = 0; i < DESTINOS.length; i++) {
     P_RESULT[DESTINOS[i].destinos.sigla] = DESTINOS[i].destinos;
   }
-
+  
   window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
   window.localStorage.setItem('CURRENCY', FIRESTORE_DATA.moeda);
   window.localStorage.setItem('CURRENCY_JSON', JSON.stringify(CONFIG.destinos.currency));
@@ -25,7 +25,7 @@ function _loadPlaces() {
 function _loadPlacesSelect() {
   let select = document.getElementById("destinos-select");
   let firstOption = document.createElement("option");
-  DESTINOS = FIRESTORE_DATA.destinos;
+  _buildDestinosObject();
 
   const firstSigla = _getNewPlacesSigla(DESTINOS[0].destinos.titulo);
   DESTINOS[0].destinos.sigla = firstSigla;
@@ -102,9 +102,9 @@ function _loadPlacesHTML(destino) {
 }
 
 function _getPlacesHeaders(module) {
-  const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', 'mapa']
+  const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', "lineup", 'mapa']
   const headerMap = new Map(headerBase.map((element, index) => [element, index]));
-  
+
   let result = [];
   const keys = Object.keys(module);
 
@@ -156,6 +156,54 @@ function _getNewPlacesSigla(name) {
   return result;
 }
 
+function _mergeSetlistObjects(obj1, obj2) {
+  let result = {
+    descricao: [],
+    head: [],
+    horario: [],
+    hyperlink: {
+      name: []
+    },
+    nome: [],
+    nota: [],
+    palco: [],
+    site: [],
+  };
+
+  // Iterate over the keys of the result object
+  Object.keys(result).forEach(key => {
+    if (key === 'hyperlink') {
+      // Special handling for the 'hyperlink' object
+      result[key].name = [...obj1[key].name, ...obj2[key].name];
+    } else {
+      // Merge arrays from both objects for this key
+      result[key] = [...obj1[key], ...obj2[key]];
+    }
+  });
+
+  return result;
+}
+
+function _buildDestinosObject() {
+  DESTINOS = FIRESTORE_DATA.destinos;
+  if (FIRESTORE_DATA.modulos.lineup && FIRESTORE_DATA.lineup) {
+    const lineupKeys = Object.keys(FIRESTORE_DATA.lineup);
+    for (let i = 0; i < DESTINOS.length; i++) {
+      if (lineupKeys.includes(DESTINOS[i].destinosID) || lineupKeys.includes('generico')) {
+        DESTINOS[i].destinos.modulos.lineup = true;
+        const genericoLineup = FIRESTORE_DATA.lineup.generico;
+        const destinoLineup = FIRESTORE_DATA.lineup[DESTINOS[i].destinosID];
+  
+        if (destinoLineup && genericoLineup) {
+          const mergedSetlist = _mergeSetlistObjects(genericoLineup, destinoLineup);
+          DESTINOS[i].destinos.lineup = mergedSetlist;
+        } else {
+          DESTINOS[i].destinos.lineup = destinoLineup || genericoLineup;
+        }
+      }
+    }
+  }
+}
 
 // ======= SETTERS =======
 function _adjustPlacesHTML() {

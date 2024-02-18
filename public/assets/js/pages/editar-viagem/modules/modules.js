@@ -21,6 +21,7 @@ function _loadTripData(FIRESTORE_DATA) {
     _loadHospedagemData(FIRESTORE_DATA);
     _loadProgramacaoData(FIRESTORE_DATA);
     _loadDestinosData(FIRESTORE_DATA);
+    _loadLineupData(FIRESTORE_DATA);
     _loadGaleriaData(FIRESTORE_DATA);
 
   } catch (e) {
@@ -970,56 +971,66 @@ function _loadDestinosData(FIRESTORE_DATA) {
   }
 }
 
-function _loadLineupData(FIRESTORE_PLACES_DATA) {
-  if (FIRESTORE_PLACES_DATA.modulos.lineup === true) {
+function _loadLineupData(FIRESTORE_DATA) {
+  if (FIRESTORE_DATA.modulos.lineup === true) {
     document.getElementById('habilitado-lineup').checked = true;
     document.getElementById('habilitado-lineup-content').style.display = 'block';
 
-    const size = FIRESTORE_PLACES_DATA.lineup.nome.length;
-    if (size > 0) {
-      for (let i = 1; i <= size; i++) {
-        const j = i - 1;
-        _addLineup();
-
-        const headliner = FIRESTORE_PLACES_DATA.lineup.headliner;
-        if (headliner && headliner[j]) {
-          document.getElementById(`lineup-headliner-${i}`).checked = headliner[j];
-        }
-
-        const nome = FIRESTORE_PLACES_DATA.lineup.nome;
-        if (nome && nome[j]) {
-          document.getElementById(`lineup-nome-${i}`).value = nome[j];
-          document.getElementById(`lineup-title-${i}`).innerText = nome[j];
-        }
-
-        const genero = FIRESTORE_PLACES_DATA.lineup.descricao;
-        if (genero && genero[j]) {
-          document.getElementById(`lineup-descricao-${i}`).value = genero[j];
-        }
-
-        const palco = FIRESTORE_PLACES_DATA.lineup.palco;
-        if (palco && palco[j]) {
-          document.getElementById(`lineup-palco-${i}`).value = palco[j];
-        }
-
-        const inicio = FIRESTORE_PLACES_DATA.lineup.inicio;
-        if (inicio && inicio[j]) {
-          document.getElementById(`lineup-inicio-${i}`).value = inicio[j];
-        }
-
-        const fim = FIRESTORE_PLACES_DATA.lineup.fim;
-        if (fim && fim[j]) {
-          document.getElementById(`lineup-fim-${i}`).value = fim[j];
-        }
-
-        const midia = FIRESTORE_PLACES_DATA.lineup.hyperlink.video;
-        if (midia && midia[j]) {
-          document.getElementById(`lineup-midia-${i}`).value = midia[j];
-        }
-
-        const nota = FIRESTORE_PLACES_DATA.lineup.nota;
-        if (nota && nota[j]) {
-          document.getElementById(`lineup-nota-${i}`).value = nota[j];
+    const keys = Object.keys(FIRESTORE_DATA.lineup);
+    if (keys.length > 0) {
+      let i = 1;
+      for (const key of keys) {
+        const size = FIRESTORE_DATA.lineup[key].nome.length;
+        for (let j = 0; j < size; j++, i++) {
+          _addLineup();
+  
+          const headliner = FIRESTORE_DATA.lineup[key].head;
+          if (headliner && headliner[j]) {
+            document.getElementById(`lineup-headliner-${i}`).checked = headliner[j];
+          }
+  
+          const nome = FIRESTORE_DATA.lineup[key].nome;
+          if (nome && nome[j]) {
+            document.getElementById(`lineup-nome-${i}`).value = nome[j];
+            document.getElementById(`lineup-title-${i}`).innerText = nome[j];
+          }
+  
+          document.getElementById(`lineup-local-${i}`).value = key;
+  
+          const genero = FIRESTORE_DATA.lineup[key].descricao;
+          if (genero && genero[j]) {
+            document.getElementById(`lineup-descricao-${i}`).value = genero[j];
+          }
+  
+          const palco = FIRESTORE_DATA.lineup[key].palco;
+          if (palco && palco[j]) {
+            document.getElementById(`lineup-palco-${i}`).value = palco[j];
+          }
+  
+          const data = FIRESTORE_DATA.lineup[key].data;
+          if (data && data[j]) {
+            document.getElementById(`lineup-data-${i}`).value = data[j];
+          }
+  
+          const inicio = FIRESTORE_DATA.lineup[key].inicio;
+          if (inicio && inicio[j]) {
+            document.getElementById(`lineup-inicio-${i}`).value = inicio[j];
+          }
+  
+          const fim = FIRESTORE_DATA.lineup[key].fim;
+          if (fim && fim[j]) {
+            document.getElementById(`lineup-fim-${i}`).value = fim[j];
+          }
+  
+          const midia = FIRESTORE_DATA.lineup[key].hyperlink.video;
+          if (midia && midia[j]) {
+            document.getElementById(`lineup-midia-${i}`).value = midia[j];
+          }
+  
+          const nota = FIRESTORE_DATA.lineup[key].nota;
+          if (nota && nota[j]) {
+            document.getElementById(`lineup-nota-${i}`).value = nota[j];
+          }
         }
       }
     }
