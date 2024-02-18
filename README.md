@@ -12,7 +12,8 @@
 ## To-Do
 
 ### Prioridade Alta
-- 🏆 Criar/Organizar Lineup por dia
+- 🏆 Organizar Lineup por dia (Editar e Viagem)
+- 🏆 Melhorias Editar Viagem / Lineup (Estrela de Lineup no título, auto selecionar destino)
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
 
 ### Prioridade Média
