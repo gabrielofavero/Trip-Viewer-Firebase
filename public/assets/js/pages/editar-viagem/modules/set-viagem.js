@@ -29,6 +29,7 @@ async function _buildTripObject() {
             },
             imagem: {},
             inicio: {},
+            lineup: {},
             links: {},
             modulos: {},
             moeda: "",
@@ -48,6 +49,7 @@ async function _buildTripObject() {
     result.data.modulos = {
         hospedagens: document.getElementById('habilitado-hospedagem').checked,
         destinos: document.getElementById('habilitado-destinos').checked,
+        lineup: document.getElementById(`habilitado-lineup`).checked,
         programacao: document.getElementById('habilitado-programacao').checked,
         resumo: true,
         transportes: document.getElementById('habilitado-transporte').checked,
@@ -86,6 +88,7 @@ async function _buildTripObject() {
     result.data.hospedagens = _buildHospedagemObject();
     result.data.programacoes = _buildProgramacaoObject();
     result.data.destinos = _buildDestinosArray();
+    result.data.lineup = _buildLineupObject();
     result.data.galeria = _buildGaleriaObject();
 
     if (tripID) {
@@ -365,6 +368,78 @@ function _buildDestinosArray() {
             innerResult.destinosID = valueSelectDestinos;
             result.push(innerResult);
         }
+    }
+
+    return result;
+}
+
+function _buildLineupObject() {
+    const childIDs = _getChildIDs("lineup-box");
+
+    let result = {};
+
+    for (const child of childIDs) {
+        const i = child.split("-")[1];
+        const selectValue = document.getElementById(`lineup-local-${i}`).value;
+        if (!result[selectValue]) {
+            result[selectValue] = {
+                descricao: [],
+                head: [],
+                horario: [],
+                hyperlink: {
+                    name: []
+                },
+                nome: [],
+                nota: [],
+                palco: [],
+                site: [],
+            };
+        }
+    }
+
+    for (let i = 0; i < childIDs.length; i++) {
+        const j = parseInt(childIDs[i].split("-")[1]);
+        const selectValue = document.getElementById(`lineup-local-${j}`).value;
+
+        const divHead = document.getElementById(`lineup-headliner-${j}`);
+        const valueHead = (divHead && divHead.checked) ? "✔" : "";
+        result[selectValue].head.push(valueHead);
+
+        const divNome = document.getElementById(`lineup-nome-${j}`);
+        const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
+        result[selectValue].nome.push(valueNome);
+
+        const divDescricao = document.getElementById(`lineup-descricao-${j}`);
+        const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
+        result[selectValue].descricao.push(valueDescricao);
+
+        const divPalco = document.getElementById(`lineup-palco-${j}`);
+        const valuePalco = divPalco ? _returnEmptyIfNoValue(divPalco.value) : "";
+        result[selectValue].palco.push(valuePalco);
+
+        const divData = document.getElementById(`lineup-data-${j}`);
+        const valueData = divData ? _returnEmptyIfNoValue(divData.value) : "";
+        result[selectValue].data.push(valueData);
+
+        const divInicio = document.getElementById(`lineup-horario-${j}`);
+        const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
+
+        const divFim = document.getElementById(`lineup-horario-fim-${j}`);
+        const valueFim = divFim ? _returnEmptyIfNoValue(divFim.value) : "";
+
+        if (valueInicio || valueFim) {
+            result[selectValue].horario.push(`${valueInicio} - ${valueFim}`);
+        } else {
+            result[selectValue].horario.push("");
+        }
+
+        divMidia = document.getElementById(`lineup-midia-${j}`);
+        valueMidia = divMidia ? _returnEmptyIfNoValue(divMidia.value) : "";
+        result[selectValue].hyperlink.name.push(valueMidia);
+
+        divNota = document.getElementById(`lineup-nota-${j}`);
+        valueNota = divNota ? _returnEmptyIfNoValue(divNota.value) : "";
+        result[selectValue].nota.push(valueNota);
     }
 
     return result;

@@ -13,7 +13,6 @@ function _loadPlacesData(FIRESTORE_PLACES_DATA) {
     _loadTurismoData(FIRESTORE_PLACES_DATA);
     _loadLojasData(FIRESTORE_PLACES_DATA);
     _loadMapaData(FIRESTORE_PLACES_DATA);
-    _loadLineupData(FIRESTORE_PLACES_DATA);
 
   } catch (e) {
     _displayErrorMessage(e);
@@ -509,92 +508,6 @@ function _addLojas() {
   });
 }
 
-function _addLineup() {
-  let i = 1;
-  while (document.getElementById(`lineup-${i}`)) {
-    i++;
-  }
-
-  $('#lineup-box').append(`
-  <div id="lineup-${i}" class="accordion-item">
-    <h2 class="accordion-header" id="heading-lineup-${i}">
-      <button id="lineup-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#collapse-lineup-${i}" aria-expanded="true" aria-controls="collapse-lineup-${i}">
-        Banda / Artista ${i}
-      </button>
-    </h2>
-    <div id="collapse-lineup-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lineup-${i}"
-      data-bs-parent="#lineup-box">
-      <div class="accordion-body">
-
-        <div class="nice-form-group">
-          <input type="checkbox" id="lineup-headliner-${i}" class="switch" />
-          <label for="lineup-headliner-${i}">
-            Headliner
-          </label>
-        </div>
-
-        <div class="nice-form-group">
-          <label>Nome</label>
-          <input required id="lineup-nome-${i}" type="text" placeholder="Games We Play" />
-        </div>
-
-        <div class="nice-form-group">
-          <label>Gênero <span class="opcional"> (Opcional)</span></label>
-          <input id="lineup-descricao-${i}" type="text" placeholder="Pop Punk Gen-Z" />
-        </div>
-
-        <div class="nice-form-group">
-          <label>Palco <span class="opcional"> (Opcional)</span></label>
-          <input id="lineup-palco-${i}" type="text" placeholder="Stripe Stage" />
-        </div>
-
-        <div class="side-by-side-box">
-          <div class="nice-form-group side-by-side">
-            <label>Início <span class="opcional"> (Opcional)</span></label>
-            <input id="lineup-inicio-${i}" type="time" value="11:15" />
-          </div>
-
-          <div class="nice-form-group side-by-side">
-            <label>Fim <span class="opcional"> (Opcional)</span></label>
-            <input id="lineup-fim-${i}" type="time" value="11:45" />
-          </div>
-        </div>
-
-        <div class="nice-form-group">
-          <label>Link Spotify <span class="opcional"> (Playlist ou página do artista)</span></label>
-          <input id="lineup-midia-${i}" type="url"
-            placeholder="https://open.spotify.com/playlist/16mG20ZrC9QttUB6Sozqep?si=da0794cde4914a17"
-            value="" class="icon-right" />
-        </div>
-
-        <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
-          <input required id="lineup-nota-${i}" type="text" placeholder="100%" />
-        </div>
-
-      </div>
-
-      <div class="deletar-box">
-        <button id="lineup-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('lineup-${i}')">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" fill-rule="evenodd"
-              d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-              clip-rule="evenodd"></path>
-        </svg>
-        </button>
-      </div>
-
-    </div>
-  </div>
-  `);
-
-  const nome = document.getElementById(`lineup-nome-${i}`);
-  nome.addEventListener('change', function () {
-    document.getElementById(`lineup-title-${i}`).innerText = nome.value;
-  });
-}
-
 // Deletar
 function _deleteType(tipo) {
   const div = document.getElementById(tipo);
@@ -931,62 +844,6 @@ function _loadMapaData(FIRESTORE_PLACES_DATA) {
     }
   } else {
     mapaLink.removeAttribute('required');
-  }
-}
-
-function _loadLineupData(FIRESTORE_PLACES_DATA) {
-  if (FIRESTORE_PLACES_DATA.modulos.lineup === true) {
-    document.getElementById('habilitado-lineup').checked = true;
-    document.getElementById('habilitado-lineup-content').style.display = 'block';
-
-    const size = FIRESTORE_PLACES_DATA.lineup.nome.length;
-    if (size > 0) {
-      for (let i = 1; i <= size; i++) {
-        const j = i - 1;
-        _addLineup();
-
-        const headliner = FIRESTORE_PLACES_DATA.lineup.headliner;
-        if (headliner && headliner[j]) {
-          document.getElementById(`lineup-headliner-${i}`).checked = headliner[j];
-        }
-
-        const nome = FIRESTORE_PLACES_DATA.lineup.nome;
-        if (nome && nome[j]) {
-          document.getElementById(`lineup-nome-${i}`).value = nome[j];
-          document.getElementById(`lineup-title-${i}`).innerText = nome[j];
-        }
-
-        const genero = FIRESTORE_PLACES_DATA.lineup.descricao;
-        if (genero && genero[j]) {
-          document.getElementById(`lineup-descricao-${i}`).value = genero[j];
-        }
-
-        const palco = FIRESTORE_PLACES_DATA.lineup.palco;
-        if (palco && palco[j]) {
-          document.getElementById(`lineup-palco-${i}`).value = palco[j];
-        }
-
-        const inicio = FIRESTORE_PLACES_DATA.lineup.inicio;
-        if (inicio && inicio[j]) {
-          document.getElementById(`lineup-inicio-${i}`).value = inicio[j];
-        }
-
-        const fim = FIRESTORE_PLACES_DATA.lineup.fim;
-        if (fim && fim[j]) {
-          document.getElementById(`lineup-fim-${i}`).value = fim[j];
-        }
-
-        const midia = FIRESTORE_PLACES_DATA.lineup.hyperlink.video;
-        if (midia && midia[j]) {
-          document.getElementById(`lineup-midia-${i}`).value = midia[j];
-        }
-
-        const nota = FIRESTORE_PLACES_DATA.lineup.nota;
-        if (nota && nota[j]) {
-          document.getElementById(`lineup-nota-${i}`).value = nota[j];
-        }
-      }
-    }
   }
 }
 

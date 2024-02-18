@@ -265,6 +265,7 @@ function _loadHabilitados() {
   _loadEditModule('hospedagem');
   _loadEditModule('programacao');
   _loadEditModule('destinos');
+  _loadEditModule('lineup');
   _loadEditModule('galeria');
 }
 
@@ -284,6 +285,10 @@ function _loadEventListeners() {
 
   document.getElementById('destinos-adicionar').addEventListener('click', () => {
     _addDestinos();
+  });
+
+  document.getElementById('lineup-adicionar').addEventListener('click', () => {
+    _addLineup();
   });
 
   document.getElementById('galeria-adicionar').addEventListener('click', () => {

@@ -102,7 +102,7 @@ function _loadPlacesHTML(destino) {
 }
 
 function _getPlacesHeaders(module) {
-  const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', 'mapa', 'lineup']
+  const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', 'mapa']
   const headerMap = new Map(headerBase.map((element, index) => [element, index]));
   
   let result = [];

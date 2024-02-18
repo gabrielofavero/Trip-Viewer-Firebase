@@ -255,7 +255,6 @@ function _loadHabilitados() {
   _loadEditModule('turismo');
   _loadEditModule('lojas');
   _loadEditModule('mapa');
-  _loadEditModule('lineup');
 
   const mapa = document.getElementById('habilitado-mapa');
   mapa.addEventListener('change', function () {
@@ -283,11 +282,8 @@ function _loadEventListeners() {
   document.getElementById('lojas-adicionar').addEventListener('click', () => {
     _addLojas();
   });
-  document.getElementById('lineup-adicionar').addEventListener('click', () => {
-    _addLineup();
-  });
   document.getElementById('salvar').addEventListener('click', () => {
-    _setPasseio();
+    _setDestino();
   });
   document.getElementById('re-editar').addEventListener('click', () => {
     _reEdit(destinosID, 'destinos', wasSaved);

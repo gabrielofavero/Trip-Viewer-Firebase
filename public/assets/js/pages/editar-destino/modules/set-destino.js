@@ -5,7 +5,6 @@ async function _buildDestinosObject() {
         restaurantes: {},
         saidas: {},
         turismo: {},
-        lineup: {},
         titulo: "",
         moeda: "",
         myMaps: "",
@@ -31,21 +30,19 @@ async function _buildDestinosObject() {
 
     result.compartilhamento.dono = FIRESTORE_PLACES_DATA ? FIRESTORE_PLACES_DATA.compartilhamento.dono : await _getUID();
 
-    result.modulos = _buildPasseioModulos();
-    result.restaurantes = _buildPasseioCategoryObject("restaurantes");
-    result.lanches = _buildPasseioCategoryObject("lanches");
-    result.saidas = _buildPasseioCategoryObject("saidas");
-    result.turismo = _buildPasseioCategoryObject("turismo");
-    result.lojas = _buildPasseioCategoryObject("lojas");
-    result.lineup = _buildPasseioLineupObject();
+    result.modulos = _buildDestinoModulos();
+    result.restaurantes = _buildDestinoCategoryObject("restaurantes");
+    result.lanches = _buildDestinoCategoryObject("lanches");
+    result.saidas = _buildDestinoCategoryObject("saidas");
+    result.turismo = _buildDestinoCategoryObject("turismo");
+    result.lojas = _buildDestinoCategoryObject("lojas");
 
     return result;
 }
 
-function _buildPasseioModulos() {
+function _buildDestinoModulos() {
     let result = {
         lanches: false,
-        lineup: false,
         lojas: false,
         mapa: false,
         restaurantes: false,
@@ -83,15 +80,10 @@ function _buildPasseioModulos() {
         result.mapa = divMapa.checked;
     }
 
-    const divLineup = document.getElementById(`habilitado-lineup`);
-    if (divLineup) {
-        result.lineup = divLineup.checked;
-    }
-
     return result;
 }
 
-function _buildPasseioCategoryObject(type) {
+function _buildDestinoCategoryObject(type) {
     const childIDs = _getChildIDs(`${type}-box`);
 
     let result = {
@@ -161,66 +153,7 @@ function _buildPasseioCategoryObject(type) {
     return result;
 }
 
-function _buildPasseioLineupObject() {
-    const childIDs = _getChildIDs("lineup-box");
-
-    let result = {
-        descricao: [],
-        head: [],
-        horario: [],
-        hyperlink: {
-            name: []
-        },
-        nome: [],
-        nota: [],
-        palco: [],
-        site: [],
-    }
-
-    for (let i = 0; i < childIDs.length; i++) {
-        const j = parseInt(childIDs[i].split("-")[1]);
-
-        const divHead = document.getElementById(`lineup-headliner-${j}`);
-        const valueHead = (divHead && divHead.checked) ? "✔" : "";
-        result.head.push(valueHead);
-
-        const divNome = document.getElementById(`lineup-nome-${j}`);
-        const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
-        result.nome.push(valueNome);
-
-        const divDescricao = document.getElementById(`lineup-descricao-${j}`);
-        const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
-        result.descricao.push(valueDescricao);
-
-        const divPalco = document.getElementById(`lineup-palco-${j}`);
-        const valuePalco = divPalco ? _returnEmptyIfNoValue(divPalco.value) : "";
-        result.palco.push(valuePalco);
-
-        const divInicio = document.getElementById(`lineup-horario-${j}`);
-        const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
-
-        const divFim = document.getElementById(`lineup-horario-fim-${j}`);
-        const valueFim = divFim ? _returnEmptyIfNoValue(divFim.value) : "";
-
-        if (valueInicio || valueFim) {
-            result.horario.push(`${valueInicio} - ${valueFim}`);
-        } else {
-            result.horario.push("");
-        }
-
-        divMidia = document.getElementById(`lineup-midia-${j}`);
-        valueMidia = divMidia ? _returnEmptyIfNoValue(divMidia.value) : "";
-        result.hyperlink.name.push(valueMidia);
-
-        divNota = document.getElementById(`lineup-nota-${j}`);
-        valueNota = divNota ? _returnEmptyIfNoValue(divNota.value) : "";
-        result.nota.push(valueNota);
-    }
-
-    return result;
-}
-
-async function _setPasseio() {
+async function _setDestino() {
     _startLoadingScreen();
     _validateRequiredFields();
 
