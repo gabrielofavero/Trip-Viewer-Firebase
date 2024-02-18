@@ -26,7 +26,7 @@ async function _buildDestinosObject() {
     result.myMaps = valueMyMaps;
 
     
-    result.versao.ultimaAtualizacao = new Date().toLocaleString();
+    result.versao.ultimaAtualizacao = new Date().toISOString();
 
     result.compartilhamento.dono = FIRESTORE_PLACES_DATA ? FIRESTORE_PLACES_DATA.compartilhamento.dono : await _getUID();
 
