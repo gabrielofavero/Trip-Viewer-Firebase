@@ -975,6 +975,7 @@ function _loadLineupData(FIRESTORE_DATA) {
   if (FIRESTORE_DATA.modulos.lineup === true) {
     document.getElementById('habilitado-lineup').checked = true;
     document.getElementById('habilitado-lineup-content').style.display = 'block';
+    document.getElementById('lineup-adicionar-box').style.display = 'block';
 
     const keys = Object.keys(FIRESTORE_DATA.lineup);
     if (keys.length > 0) {
@@ -1159,7 +1160,10 @@ function _buildLineupSelects() {
     }
 
     for (const select of lineupSelects) {
-      document.getElementById(select).innerHTML = options;
+      const div = document.getElementById(select);
+      const value = div.value;
+      div.innerHTML = options;
+      div.value = value;
     }
 
   } else {
