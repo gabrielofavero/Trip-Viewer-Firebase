@@ -823,7 +823,12 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
 
 function _loadDestinosData(FIRESTORE_DATA) {
   if (FIRESTORE_DATA.modulos.destinos === true) {
-    document.getElementById('habilitado-destinos').checked = true;
+    const habilitadoDestinos = document.getElementById('habilitado-destinos');
+
+    if (habilitadoDestinos) {
+      habilitadoDestinos.checked = true;
+    }
+
     document.getElementById('habilitado-destinos-content').style.display = 'block';
     document.getElementById('sem-destinos').style.display = 'none';
     document.getElementById('com-destinos').style.display = 'block';

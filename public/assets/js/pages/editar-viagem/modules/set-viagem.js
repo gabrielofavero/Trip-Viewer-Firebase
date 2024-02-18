@@ -85,7 +85,7 @@ async function _buildTripObject() {
     result.data.transportes = _buildTransporteObject();
     result.data.hospedagens = _buildHospedagemObject();
     result.data.programacoes = _buildProgramacaoObject();
-    result.data.destinos = _buildCidadesArray();
+    result.data.destinos = _buildDestinosArray();
     result.data.galeria = _buildGaleriaObject();
 
     if (tripID) {
@@ -348,7 +348,7 @@ function _getInnerProgramacao(turno, j) {
     return array;
 }
 
-function _buildCidadesArray() {
+function _buildDestinosArray() {
     let result = [];
     const childIds = _getChildIDs('com-destinos');
 

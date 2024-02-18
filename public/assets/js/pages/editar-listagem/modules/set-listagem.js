@@ -14,7 +14,11 @@ async function _buildListObject() {
         id: "",
         data: {
             destinos: [],
-            compartilhamento: {
+            compartilhamento: {},
+            cores: {},
+            imagem: {},
+            links: {},
+            modulos: {
                 hospedagens: false,
                 destinos: true,
                 programacao: false,
@@ -22,10 +26,6 @@ async function _buildListObject() {
                 transportes: false,
                 galeria: false
             },
-            cores: {},
-            imagem: {},
-            links: {},
-            modulos: {},
             titulo: "",
             subtitulo: "",
             descricao: "",

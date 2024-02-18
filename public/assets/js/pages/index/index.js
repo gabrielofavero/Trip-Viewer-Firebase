@@ -360,34 +360,39 @@ function _loadUserDataHTML(data, type) {
 
   let text = '';
   for (let i = 0; i < data.length; i++) {
-    let inicioFimDiv = '';
+    let secondaryDiv = '';
     let visualizarDiv = '';
 
-    if (data[i].inicio && data[i].fim) {
-      const inicioDate = _convertFromFirestoreDate(data[i].inicio);
-      const fimDate = _convertFromFirestoreDate(data[i].fim);
-
-      const inicio = _jsDateToDate(inicioDate);
-      const fim = _jsDateToDate(fimDate);
-
-      inicioFimDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
+    switch (type) {
+      case 'viagens':
+        const inicioDate = _convertFromFirestoreDate(data[i].inicio);
+        const fimDate = _convertFromFirestoreDate(data[i].fim);
+        const inicio = _jsDateToDate(inicioDate);
+        const fim = _jsDateToDate(fimDate);
+        secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
+        break;
+      case 'destinos':
+        secondaryDiv = `<div class="user-data-item-date">${data[i].ultimaAtualizacao}</div>`;
+        break;
+      case 'listagens':
+        secondaryDiv = `<div class="user-data-item-date">${data[i].subtitulo || data[i].ultimaAtualizacao}</div>`;
+        break;
+      default:
+        break;
     }
 
-    const titulo = data[i].titulo;
-    const code = data[i].code;
-
     if (typeof window[`_${type}Visualizar`] === 'function') {
-      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${type}Visualizar('${code}')" data-icon="fluent:eye-16-regular"></i>`
+      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${type}Visualizar('${data[i].code}')" data-icon="fluent:eye-16-regular"></i>`
     }
 
     text += `
     <div class="user-data-item">
       <div class="user-data-item-text">
-        <div class="user-data-item-title">${titulo}</div>
-        ${inicioFimDiv}
+        <div class="user-data-item-title">${data[i].titulo}</div>
+        ${secondaryDiv}
       </div>
       <div class="trip-data-icons">
-        <i class="iconify user-data-icon" onclick="_${type}Editar('${code}')" data-icon="tabler:edit"></i>
+        <i class="iconify user-data-icon" onclick="_${type}Editar('${data[i].code}')" data-icon="tabler:edit"></i>
         ${visualizarDiv}
       </div>
     </div>`
@@ -417,11 +422,11 @@ function _destinosNovo() {
 
 function _destinosEditar(code) {
   localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
-  window.location.href = `editar-destino.html?p=${code}`;
+  window.location.href = `editar-destino.html?d=${code}`;
 }
 
 function _listagensEditar(code) {
-  window.location.href = `editar-listagem.html?v=${code}`;
+  window.location.href = `editar-listagem.html?l=${code}`;
 }
 
 function _listagensVisualizar(code) {

@@ -9,17 +9,18 @@
 ## Doing
 - 🏆 Criar Função de Listas de Destinos
 - 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
-- 🏆 Criar/Organizar Lineup por dia
 
 ## To-Do
 
 ### Prioridade Alta
-- 🐞 Fazer título da imagem também mudar no accordeon
+- 🏆 Migrar Lineup para Viagens (Remover de Destinos)
+- 🏆 Criar/Organizar Lineup por dia
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
 
 ### Prioridade Média
 - 📈 Tornar módulo de programação mais personalizável
 - 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida) 
+- 🐞 Fazer título da imagem também mudar no accordeon
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
 - 🐞 Ícone do user não carrega corretamente no primeiro login
 

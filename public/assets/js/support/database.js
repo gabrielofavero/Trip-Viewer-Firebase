@@ -367,7 +367,11 @@ async function _getUserList(type) {
         if (data.versao?.ultimaAtualizacao) {
           const date = new Date(data.versao.ultimaAtualizacao);
           const dateString = _jsDateToDate(date, "dd/mm/yyyy");
-          singleResult.ultimaAtualizacao = `Última Atualização em ${dateString}`;
+          singleResult.ultimaAtualizacao = `Atualizado em ${dateString}`;
+        }
+
+        if (data.subtitulo) {
+          singleResult.subtitulo = data.subtitulo;
         }
 
         result.push(singleResult);
