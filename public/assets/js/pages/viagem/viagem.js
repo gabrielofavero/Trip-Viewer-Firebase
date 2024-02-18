@@ -218,7 +218,14 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     });
 
-    Promise.all([_getConfig(), _getSingleData('viagens')])
+    const urlParams = new URLSearchParams(window.location.search);
+    let type = 'viagens';
+
+    if (urlParams.has('l')) {
+      type = 'listagens';
+    }
+
+    Promise.all([_getConfig(), _getSingleData(type)])
     .then(([configData, firestoreData]) => {
       CONFIG = configData;
       FIRESTORE_DATA = firestoreData;

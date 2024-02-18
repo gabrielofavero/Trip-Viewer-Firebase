@@ -307,6 +307,19 @@ function _loadEventListeners() {
   document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
+
+  document.getElementById('upload-background').addEventListener('change', function(event) {
+    _checkFileSize('upload-background');
+  });
+
+  document.getElementById('upload-logo-light').addEventListener('change', function(event) {
+    _checkFileSize('upload-logo-light');
+  });
+
+  document.getElementById('upload-logo-dark').addEventListener('change', function(event) {
+    _checkFileSize('upload-logo-dark');
+  });
+  
 }
 
 async function _carregarListagem() {

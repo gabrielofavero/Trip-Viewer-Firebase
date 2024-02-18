@@ -447,6 +447,7 @@ function _addGaleria() {
       <div class="nice-form-group customization-box" id="galeria-${i}-box">
         <label>Imagem</label>
         <input id="upload-galeria-${i}" type="file" accept=".jpg" />
+        <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</div>
       </div>
 
       <div class="nice-form-group">
@@ -484,6 +485,9 @@ function _addGaleria() {
 
   _loadImageSelector(`galeria-${i}`);
 
+  document.getElementById(`galeria-${i}`).addEventListener('change', function(event) {
+    _checkFileSize(`galeria-${i}`);
+  });
 }
 
 // Deletar

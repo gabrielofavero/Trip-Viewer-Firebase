@@ -22,7 +22,7 @@ async function _buildListObject() {
                 hospedagens: false,
                 destinos: true,
                 programacao: false,
-                resumo: true,
+                resumo: false,
                 transportes: false,
                 galeria: false
             },
@@ -100,29 +100,38 @@ async function _setListagem() {
                 let background = '';
 
                 if (uploadLogoLight) {
-                    logoLight = await _uploadLogoLight(listID, 'destinosLists');
+                    logoLight = await _uploadLogoLight(listID, 'lists');
                 }
 
                 if (uploadLogoDark) {
-                    logoDark = await _uploadLogoDark(listID, 'destinosLists');
+                    logoDark = await _uploadLogoDark(listID, 'lists');
                 }
 
                 if (uploadBackground) {
-                    background = await _uploadBackground(listID, 'destinosLists');
+                    background = await _uploadBackground(listID, 'lists');
                 }
 
                 body = {
                     id: listID,
                     type: 'listagens',
-                    background: background,
-                    logoLight: logoLight,
-                    logoDark: logoDark,
+                    background: background.url,
+                    logoLight: logoLight.url,
+                    logoDark: logoDark.url,
                 }
 
                 newMessage = await _updateImages(body)
 
-                if (!newMessage.includes('sucesso')) {
-                    message += '. Falha no upload de imagem(s): ' + newMessage;
+                if (!newMessage.includes('sucesso') || (uploadBackground && !background.url) || (uploadLogoLight && !logoLight.url) || (uploadLogoDark && !logoDark.url)) {
+                    message += `, porém não foi possível realizar o carregamento das imagens.`;
+                    console.log(
+                        {
+                            updateImages: newMessage,
+                            background: background,
+                            logoLight: logoLight,
+                            logoDark: logoDark
+                        }
+                    );
+                    
                 } else {
                     await _checkAndClearFirebaseImages(listID);
                 }

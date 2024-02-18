@@ -1,4 +1,9 @@
 async function _uploadImage(path, id) {
+  let result = {
+    url: null,
+    message: 'Image uploaded successfully!',
+  }
+
   const fileInput = document.getElementById(id);
   const file = fileInput.files[0];
 
@@ -10,15 +15,17 @@ async function _uploadImage(path, id) {
       const snapshot = await imageRef.put(file);
       const downloadURL = await snapshot.ref.getDownloadURL();
 
-      console.log('Image uploaded successfully!');
+      console.log(result.message);
       console.log('Download URL:', downloadURL);
 
-      return downloadURL;
+      result.url = downloadURL;
     } catch (error) {
       console.error('Error uploading image:', error);
-      return null;
+      result.message = error.message;
     }
   }
+
+  return result;
 }
 
 async function _canUpload() {
@@ -41,7 +48,7 @@ async function _deleteImage(path) {
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(path);
     await fileRef.delete();
-    
+
     console.log(`Image ${path} deleted successfully.`);
   } catch (error) {
     console.error(`Error deleting image ${path}: ${error.message}`);
@@ -83,4 +90,16 @@ async function _uploadLogoLight(id, dir) {
 
 async function _uploadLogoDark(id, dir) {
   return await _uploadImage(`${dir}/${id}/logo-dark.png`, 'upload-logo-dark');
+}
+
+function _checkFileSize(id) {
+  const fileInput = document.getElementById(id);
+  const file = fileInput.files[0];
+  
+  if (file.size > 1048576) { // 1MB = 1 * 1024 * 1024 = 1048576 bytes
+    document.getElementById(`${id}-size-message`).style.display = 'block';
+    fileInput.value = '';
+  } else {
+    document.getElementById(`${id}-size-message`).style.display = 'none';
+  }
 }

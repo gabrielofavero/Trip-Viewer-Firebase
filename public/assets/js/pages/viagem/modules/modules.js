@@ -16,8 +16,32 @@ function _start() {
 // ======= LOADERS =======
 function _loadHeader() {
   document.title = FIRESTORE_DATA.titulo;
-  document.getElementById("header1").innerHTML = "<h1>" + FIRESTORE_DATA.titulo + "</h1>";
+  document.getElementById("header1").innerHTML = FIRESTORE_DATA.titulo;
   document.getElementById("header2").style.display = "none";
+  
+  if (FIRESTORE_DATA.subtitulo) {
+    document.getElementById("subtitulo").innerHTML = FIRESTORE_DATA.subtitulo;
+  }
+
+  if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
+    let datas = [new Date(FIRESTORE_DATA.versao.ultimaAtualizacao)];
+
+    for (const destino of FIRESTORE_DATA.destinos) {
+      const ultimaAtualizacao = destino.destinos.versao.ultimaAtualizacao;
+      if (ultimaAtualizacao) {
+        datas.push(new Date(ultimaAtualizacao));
+      }
+    }
+
+    const mostRecentDate = datas.reduce((a, b) => a > b ? a : b);
+    const mostRecentDateString = _jsDateToDate(mostRecentDate, "dd/mm/yyyy");
+
+    document.getElementById("dUpdate").innerHTML = `Atualizado em ${mostRecentDateString}`;
+  }
+
+  if (FIRESTORE_DATA.descricao) {
+    document.getElementById("dDescription").innerHTML = FIRESTORE_DATA.descricao;
+  }
 
   if (FIRESTORE_DATA.links.ativo) {
 
@@ -93,6 +117,7 @@ function _loadModules() {
     document.getElementById("keypointsNav").innerHTML = "";
     document.getElementById("keypoints").innerHTML = "";
     document.getElementById("keypoints").style.display = "none";
+    document.getElementById("cities").style.display = "none";
   }
 
   // Cities

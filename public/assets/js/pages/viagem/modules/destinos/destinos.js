@@ -31,7 +31,7 @@ function _loadPlacesSelect() {
   DESTINOS[0].destinos.sigla = firstSigla;
 
   firstOption.value = firstSigla;
-  firstOption.text = DESTINOS[0].titulo;
+  firstOption.text = DESTINOS[0].destinos.titulo;
   select.add(firstOption);
   firstOption.selected = true;
 
@@ -42,7 +42,7 @@ function _loadPlacesSelect() {
       DESTINOS[i].destinos.sigla = sigla;
 
       newOption.value = sigla;
-      newOption.text = DESTINOS[i].titulo;
+      newOption.text = DESTINOS[i].destinos.titulo;
       select.add(newOption);
     };
   } else {

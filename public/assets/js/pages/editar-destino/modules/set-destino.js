@@ -11,9 +11,7 @@ async function _buildDestinosObject() {
         myMaps: "",
         modulos: {},
         compartilhamento: {},
-        versao: {
-            ultimaAtualizacao: new Date().toISOString()
-        }
+        versao: {}
     }
 
     const divTitulo = document.getElementById(`titulo`);
@@ -27,6 +25,9 @@ async function _buildDestinosObject() {
     const divMyMaps = document.getElementById(`mapa-link`);
     const valueMyMaps = divMyMaps ? _returnEmptyIfNoValue(divMyMaps.value) : "";
     result.myMaps = valueMyMaps;
+
+    
+    result.versao.ultimaAtualizacao = new Date().toLocaleString();
 
     result.compartilhamento.dono = FIRESTORE_PLACES_DATA ? FIRESTORE_PLACES_DATA.compartilhamento.dono : await _getUID();
 
