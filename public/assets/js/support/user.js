@@ -1,7 +1,7 @@
 function _unloadPageUserFunctions() {
     const html = _getHTMLpage();
     if (html == 'index') {
-        _unloadUserIndexVisibility();
+        _openIndexPage('unlogged', 0, 1);
     };
 }
 
@@ -19,7 +19,11 @@ async function _signInGoogle() {
 
 function _signOut() {
     firebase.auth().signOut()
-    window.location.href = 'index.html';
+    if (window.location.href.includes('index.html')) {
+        _openIndexPage('unlogged', 0, 1);
+    } else {
+        window.location.href = 'index.html';
+    }
 }
 
 async function _registerIfUserNotPresent() {

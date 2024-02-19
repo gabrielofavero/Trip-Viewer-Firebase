@@ -1,3 +1,23 @@
+function _animate(fadeIn, fadeOut, from=0, to=0){
+    if (fadeIn && fadeOut){
+        if (from == to) {
+            _fade(fadeOut, fadeIn);
+        } else if (from > to) {
+            _swipe(fadeOut, fadeIn, 'right');
+        } else {
+            _swipe(fadeOut, fadeIn, 'left');
+        }
+    } else if (fadeIn) {
+        if (from == to) {
+            _fadeIn(fadeIn);
+        } else if (from > to) {
+            _swipeIn(fadeIn, 'right');
+        } else {
+            _swipeIn(fadeIn, 'left');
+        }
+    }
+  }
+
 // Fade
 function _fadeOut(elementIds, mili = 250) {
     elementIds.forEach(function (id) {

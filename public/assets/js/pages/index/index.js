@@ -24,15 +24,15 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('myTrips').addEventListener('click', function () {
-    _loadMyTripsVisibility();
+    _openIndexPage('viagens', 0, 1);
   });
 
   document.getElementById('myPlaces').addEventListener('click', function () {
-    _loadMyPlacesVisibility();
+    _openIndexPage('destinos', 0, 1);
   });
 
   document.getElementById('profile-icon').addEventListener('click', function () {
-    _loadSettingsVisibility();
+    _openIndexPage('settings', 0, 1);
   });
 
   document.getElementById('new-viagem').addEventListener('click', function () {
@@ -48,11 +48,11 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('back').addEventListener('click', function () {
-    _loadUserIndexVisibility();
+    _openIndexPage('logged', 1, 0);
   });
 
   document.getElementById('myPlacesLists').addEventListener('click', function () {
-    _loadMyPlacesListVisibility();
+    _openIndexPage('listagens', 0, 1);
   });
 
   document.getElementById('apagar').addEventListener('click', async function () {
@@ -99,7 +99,7 @@ async function _loadUserIndex() {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         _registerIfUserNotPresent();
-        _loadUserIndexVisibility();
+        _openIndexPage('logged');
 
         const displayName = user.displayName;
         const photoURL = 'url(' + user.photoURL + ')';
@@ -117,7 +117,7 @@ async function _loadUserIndex() {
         _loadUserDataList('listagens');
 
       } else {
-        _unloadUserIndexVisibility();
+        _openIndexPage('unlogged');
       }
     });
   } catch (error) {
