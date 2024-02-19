@@ -1119,8 +1119,8 @@ function _buildDestinosSelect() {
 
   for (const child of childs) {
     const i = child.split('-')[2];
-    const select = document.getElementById(`select-destinos-${i}`);
-    const value = select.value;
+    const selectDiv = document.getElementById(`select-destinos-${i}`);
+    const value = selectDiv.value;
     if (value) {
       used.push(value);
     }
@@ -1128,8 +1128,8 @@ function _buildDestinosSelect() {
 
   for (const child of childs) {
     const i = child.split('-')[2];
-    const select = document.getElementById(`select-destinos-${i}`);
-    const value = select.value;
+    const selectDiv = document.getElementById(`select-destinos-${i}`);
+    const value = selectDiv.value;
 
     let options = '<option value="">Selecione um Destino</option>';
     for (let j = 0; j < myPlaces.length; j++) {
@@ -1144,7 +1144,7 @@ function _buildDestinosSelect() {
       _deletePasseio(i);
       document.getElementById('todos-destinos-utilizados').style.display = 'block';
     } else {
-      select.innerHTML = options;
+      selectDiv.innerHTML = options;
       document.getElementById('todos-destinos-utilizados').style.display = 'none';
     }
   }
@@ -1168,16 +1168,16 @@ function _buildLineupSelects() {
 
     for (const child of destinoChilds) {
       const i = child.split('-')[2];
-      const select = document.getElementById(`select-destinos-${i}`);
-      const text = select.options[select.selectedIndex].text;
-      const value = select[select.selectedIndex].value;
+      const selectDiv = document.getElementById(`select-destinos-${i}`);
+      const text = selectDiv.options[selectDiv.selectedIndex].text;
+      const value = selectDiv[selectDiv.selectedIndex].value;
       if (value) {
         options += `<option value="${value}">${text}</option>`;
       }
     }
 
-    for (const select of lineupSelects) {
-      const div = document.getElementById(select);
+    for (const selectDiv of lineupSelects) {
+      const div = document.getElementById(selectDiv);
       const value = div.value;
       div.innerHTML = options;
       div.value = value;

@@ -7,19 +7,19 @@
 - ⚔️: Epic
 
 ## Doing
-- 🏆 Organizar Lineup por dia (Editar e Viagem)
-- 🏆 Melhorias Editar Viagem / Lineup (Estrela de Lineup no título, auto selecionar destino)
-- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
+- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
 
 ## To-Do
 
 ### Prioridade Alta
-- ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
+- 🏆 Organizar Lineup por dia (Editar e Viagem)
+- 🏆 Melhorias Editar Viagem / Lineup (Estrela de Lineup no título, auto selecionar destino)
+- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
+- ⚔️ Novo Front-End (BLOCKED - Aguardando o Guilherme)
 
 ### Prioridade Média
 - 📈 Tornar módulo de programação mais personalizável
 - 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida) 
-- 🐞 Fazer título da imagem também mudar no accordeon
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
 - 🐞 Ícone do user não carrega corretamente no primeiro login
 
@@ -55,6 +55,7 @@
 - 🐞 Imagem de meio de transporte não carregou corretamente (Exemplo: Lolla 2024)
 - 🏆 Criar Função de Listas de Destinos
 - 🏆 Migrar Lineup para Viagens (Remover de Destinos)
+- 🐞 Fazer título da imagem também mudar no accordeon
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;
