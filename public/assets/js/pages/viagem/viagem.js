@@ -6,6 +6,26 @@
     - Modified by: Gabriel Fávero
 */
 
+const select = (el, all = false) => {
+  el = el.trim();
+  if (all) {
+    return [...document.querySelectorAll(el)];
+  } else {
+    return document.querySelector(el);
+  }
+};
+
+const on = (type, el, listener, all = false) => {
+  let selectEl = select(el, all); // Make sure 'select' is also globally accessible
+  if (selectEl) {
+    if (all) {
+      selectEl.forEach(e => e.addEventListener(type, listener));
+    } else {
+      selectEl.addEventListener(type, listener);
+    }
+  }
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   try {
     "use strict";
@@ -226,14 +246,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     Promise.all([_getConfig(), _getSingleData(type)])
-    .then(([configData, firestoreData]) => {
-      CONFIG = configData;
-      FIRESTORE_DATA = firestoreData;
-      console.log('Dados do Firestore Database carregados com sucesso');
-      _start();
-      _mainLoad();
-      $('body').css('overflow', 'auto');
-    })
+      .then(([configData, firestoreData]) => {
+        CONFIG = configData;
+        FIRESTORE_DATA = firestoreData;
+        console.log('Dados do Firestore Database carregados com sucesso');
+        _start();
+        _mainLoad();
+        $('body').css('overflow', 'auto');
+      })
 
   } catch (error) {
     _displayErrorMessage(error);

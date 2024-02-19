@@ -1,7 +1,9 @@
- // ======= Gallery JS =======
+// ======= Gallery JS =======
 
- // ======= LOADERS =======
- function _loadPortfolioLightbox() {
+var filterMap = new BiMap();
+
+// ======= LOADERS =======
+function _loadPortfolioLightbox() {
     GLightbox({
         selector: '.portfolio-lightbox',
         autofocusVideos: false,
@@ -10,12 +12,13 @@
         width: 'auto',
         height: 'auto'
     });
-    _adjustPortfolioHeight();
 }
 
 function _loadGallery() {
     _loadGalleryFilters(FIRESTORE_DATA.galeria.filtros);
     _loadGalleryPhotos(FIRESTORE_DATA.galeria.imagens);
+    _adjustPortfolioHeight();
+    _initializeOrRefreshFilters();
 }
 
 function _loadGalleryFilters(filters) {
@@ -23,38 +26,39 @@ function _loadGalleryFilters(filters) {
     let filtersDiv = document.getElementById("portfolio-flters");
 
     filters.forEach(filter => {
-        result += `<li data-filter=".${filter.replace(/ /g, "-")}">${filter}</li>`;
+        const filterClass = _loadFilterClass(filter);
+        result += `<li data-filter=".${filterClass}">${filter}</li>`;
     });
 
     filtersDiv.innerHTML += result;
 }
 
-function _loadGalleryPhotos(photos) {
+function _loadGalleryPhotos(fotos) {
     let result = "";
-    let photosDiv = document.getElementById("portfolio-container");
+    let div = document.getElementById("portfolio-container");
 
-    photos.forEach(photo => {
-        let src = photo.link;
-        let title = photo.titulo;
-        let description = photo.descricao;
-        let filter = photo.filtro;
+    fotos.forEach(foto => {
+        let src = foto.link;
+        let titulo = foto.titulo;
+        let descricao = foto.descricao;
+        let filtro = filterMap.getByValue(foto.filtro);
 
         result += `
-       <div class="col-lg-4 col-md-6 portfolio-item ${filter}">
+       <div class="col-lg-4 col-md-6 portfolio-item ${filtro}">
            <div class="portfolio-wrap">
            <img src="${src}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
            <div class="portfolio-info">
-               <h4>${title}</h4>
-               <p>${description}</p>
+               <h4>${titulo}</h4>
+               <p>${descricao}</p>
                <div class="portfolio-links">
-               <a href="${src}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="${description}"><i class="bx bx-zoom-in"></i></a>
+               <a href="${src}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="${descricao}"><i class="bx bx-zoom-in"></i></a>
                </div>
            </div>
            </div>
        </div>`
     });
 
-    photosDiv.innerHTML = result;
+    div.innerHTML = result;
     _loadPortfolioLightbox();
 }
 
@@ -63,12 +67,49 @@ function _adjustPortfolioHeight() {
     if (!container) return;
 
     container.style.height = 'auto';
-  
+
     let totalHeight = 0;
     const items = container.querySelectorAll('.portfolio-item');
     items.forEach(item => {
         totalHeight += item.offsetHeight + parseInt(window.getComputedStyle(item).marginBottom, 10);
     });
-  
+
     container.style.height = `${totalHeight}px`;
-  }
+}
+
+function _loadFilterClass(filter) {
+    let filterName = 'filter-' + _codifyText(filter);
+
+    if (filterMap[filterName]) {
+        filterName += '-' + Object.keys(filterMap).length;
+    }
+
+    filterMap.set(filterName, filter);
+    return filterName;
+}
+
+function _initializeOrRefreshFilters() {
+    let portfolioContainer = select('.portfolio-container');
+    if (portfolioContainer) {
+        let portfolioIsotope = new Isotope(portfolioContainer, {
+            itemSelector: '.portfolio-item'
+        });
+
+        let portfolioFilters = select('#portfolio-flters li', true);
+
+        on('click', '#portfolio-flters li', function (e) {
+            e.preventDefault();
+            portfolioFilters.forEach(function (el) {
+                el.classList.remove('filter-active');
+            });
+            this.classList.add('filter-active');
+
+            portfolioIsotope.arrange({
+                filter: this.getAttribute('data-filter')
+            });
+            portfolioIsotope.on('arrangeComplete', function () {
+                AOS.refresh();
+            });
+        }, true);
+    }
+}
