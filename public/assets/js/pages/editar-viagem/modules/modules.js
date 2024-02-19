@@ -516,9 +516,21 @@ function _addLineup() {
   _buildLineupSelects();
 
   const nome = document.getElementById(`lineup-nome-${i}`);
+  const title = document.getElementById(`lineup-title-${i}`);
+  const headliner = document.getElementById(`lineup-headliner-${i}`);
   nome.addEventListener('change', function () {
-    document.getElementById(`lineup-title-${i}`).innerText = nome.value;
+    title.innerText = nome.value;
+    if (headliner.checked) {
+      title.innerText += ' ⭐';
+    }
   });
+  headliner.addEventListener('change', function () {
+    title.innerText = nome.value;
+    if (headliner.checked) {
+      title.innerText += ' ⭐';
+    }
+  });
+
 }
 
 function _addGaleria() {
@@ -596,6 +608,10 @@ function _addGaleria() {
 
   document.getElementById(`upload-galeria-${i}`).addEventListener('change', function (event) {
     _checkFileSize(`galeria-${i}`);
+  });
+
+  document.getElementById(`galeria-titulo-${i}`).addEventListener('change', function () {
+    document.getElementById(`galeria-title-${i}`).innerText = document.getElementById(`galeria-titulo-${i}`).value;
   });
 }
 
@@ -985,15 +1001,16 @@ function _loadLineupData(FIRESTORE_DATA) {
         for (let j = 0; j < size; j++, i++) {
           _addLineup();
   
-          const headliner = FIRESTORE_DATA.lineup[key].head;
-          if (headliner && headliner[j]) {
-            document.getElementById(`lineup-headliner-${i}`).checked = headliner[j];
-          }
-  
           const nome = FIRESTORE_DATA.lineup[key].nome;
           if (nome && nome[j]) {
             document.getElementById(`lineup-nome-${i}`).value = nome[j];
             document.getElementById(`lineup-title-${i}`).innerText = nome[j];
+          }
+
+          const headliner = FIRESTORE_DATA.lineup[key].head;
+          if (headliner && headliner[j]) {
+            document.getElementById(`lineup-headliner-${i}`).checked = headliner[j];
+            document.getElementById(`lineup-title-${i}`).innerText += ' ⭐';
           }
   
           document.getElementById(`lineup-local-${i}`).value = key;

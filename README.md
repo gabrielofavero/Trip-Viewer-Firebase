@@ -7,13 +7,13 @@
 - ⚔️: Epic
 
 ## Doing
+- 🏆 Organizar Lineup por dia (Editar e Viagem)
+- 🏆 Melhorias Editar Viagem / Lineup (Estrela de Lineup no título, auto selecionar destino)
 - 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 
 ## To-Do
 
 ### Prioridade Alta
-- 🏆 Organizar Lineup por dia (Editar e Viagem)
-- 🏆 Melhorias Editar Viagem / Lineup (Estrela de Lineup no título, auto selecionar destino)
 - ⚔️ Front-End Ovehaul (BLOCKED - Aguardando o Guilherme)
 
 ### Prioridade Média

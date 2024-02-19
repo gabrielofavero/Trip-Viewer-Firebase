@@ -10,7 +10,7 @@ function _loadPlaces() {
   for (let i = 0; i < DESTINOS.length; i++) {
     P_RESULT[DESTINOS[i].destinos.sigla] = DESTINOS[i].destinos;
   }
-  
+
   window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
   window.localStorage.setItem('CURRENCY', FIRESTORE_DATA.moeda);
   window.localStorage.setItem('CURRENCY_JSON', JSON.stringify(CONFIG.destinos.currency));
@@ -22,10 +22,10 @@ function _loadPlaces() {
   });
 }
 
-function _loadPlacesSelect() {
+function _loadPlacesSelect(lineupExclusive = false) {
   let select = document.getElementById("destinos-select");
   let firstOption = document.createElement("option");
-  _buildDestinosObject();
+  _buildDestinosObject(lineupExclusive);
 
   const firstSigla = _getNewPlacesSigla(DESTINOS[0].destinos.titulo);
   DESTINOS[0].destinos.sigla = firstSigla;
@@ -184,8 +184,13 @@ function _mergeSetlistObjects(obj1, obj2) {
   return result;
 }
 
-function _buildDestinosObject() {
-  DESTINOS = FIRESTORE_DATA.destinos;
+function _buildDestinosObject(lineupExclusive = false) {
+  if (lineupExclusive) {
+    _buildLineupDestinosObject();
+  }
+  else {
+    DESTINOS = FIRESTORE_DATA.destinos;
+  }
   if (FIRESTORE_DATA.modulos.lineup && FIRESTORE_DATA.lineup) {
     const lineupKeys = Object.keys(FIRESTORE_DATA.lineup);
     for (let i = 0; i < DESTINOS.length; i++) {
@@ -193,7 +198,7 @@ function _buildDestinosObject() {
         DESTINOS[i].destinos.modulos.lineup = true;
         const genericoLineup = FIRESTORE_DATA.lineup.generico;
         const destinoLineup = FIRESTORE_DATA.lineup[DESTINOS[i].destinosID];
-  
+
         if (destinoLineup && genericoLineup) {
           const mergedSetlist = _mergeSetlistObjects(genericoLineup, destinoLineup);
           DESTINOS[i].destinos.lineup = mergedSetlist;
@@ -203,6 +208,52 @@ function _buildDestinosObject() {
       }
     }
   }
+}
+
+function _buildLineupDestinosObject() {
+  const emptyObj = {
+    "valor": [],
+    "hyperlink": {
+      "video": [],
+      "name": []
+    },
+    "nome": [],
+    "regiao": [],
+    "novo": [],
+    "emoji": [],
+    "nota": [],
+    "descricao": []
+  }
+  DESTINOS = [{
+    destinosID: "lineup",
+    destinos: {
+      "compartilhamento": {
+        "dono": FIRESTORE_DATA.compartilhamento.dono,
+      },
+      "saidas": emptyObj,
+      "lojas": emptyObj,
+      "modulos": {
+        "lineup": true,
+        "lanches": false,
+        "mapa": false,
+        "lojas": false,
+        "saidas": false,
+        "turismo": false,
+        "restaurantes": false
+      },
+      "turismo": emptyObj,
+      "titulo": "Lineup",
+      "versao": {
+        "ultimaAtualizacao": new Date().toISOString(),
+      },
+      "lanches": emptyObj,
+      "restaurantes": emptyObj,
+      "moeda": "R$",
+      "lineup": FIRESTORE_DATA.lineup.generico,
+      "myMaps": ""
+    }
+  }
+  ];
 }
 
 // ======= SETTERS =======

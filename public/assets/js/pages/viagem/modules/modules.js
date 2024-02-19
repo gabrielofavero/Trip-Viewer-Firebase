@@ -161,6 +161,11 @@ function _loadModules() {
     _loadPlacesSelect();
     _loadPlacesHTML(DESTINOS[0].destinos);
     CALL_SYNC.push(_loadPlaces);
+  } else if (FIRESTORE_DATA.modulos.lineup) {
+    _loadPlacesSelect(true);
+    _loadPlacesHTML(DESTINOS[0].destinos);
+    document.getElementById('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
+    document.getElementById('dTitle').innerHTML = "Lineup";
   } else {
     document.getElementById('destinos').style.display = "none";
     document.getElementById("destinosNav").innerHTML = "";

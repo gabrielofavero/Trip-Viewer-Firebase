@@ -546,6 +546,7 @@ function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
         const emoji = FIRESTORE_PLACES_DATA.restaurantes.emoji;
         if (emoji && emoji[j]) {
           document.getElementById(`restaurantes-emoji-${i}`).value = emoji[j];
+          document.getElementById(`restaurantes-title-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.restaurantes.descricao;
@@ -608,6 +609,7 @@ function _loadLanchesData(FIRESTORE_PLACES_DATA) {
         const emoji = FIRESTORE_PLACES_DATA.lanches.emoji;
         if (emoji && emoji[j]) {
           document.getElementById(`lanches-emoji-${i}`).value = emoji[j];
+          document.getElementById(`lanches-title-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lanches.descricao;
@@ -670,6 +672,7 @@ function _loadSaidasData(FIRESTORE_PLACES_DATA) {
         const emoji = FIRESTORE_PLACES_DATA.saidas.emoji;
         if (emoji && emoji[j]) {
           document.getElementById(`saidas-emoji-${i}`).value = emoji[j];
+          document.getElementById(`saidas-title-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.saidas.descricao;
@@ -732,6 +735,7 @@ function _loadTurismoData(FIRESTORE_PLACES_DATA) {
         const emoji = FIRESTORE_PLACES_DATA.turismo.emoji;
         if (emoji && emoji[j]) {
           document.getElementById(`turismo-emoji-${i}`).value = emoji[j];
+          document.getElementById(`turismo-title-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.turismo.descricao;
@@ -794,6 +798,7 @@ function _loadLojasData(FIRESTORE_PLACES_DATA) {
         const emoji = FIRESTORE_PLACES_DATA.lojas.emoji;
         if (emoji && emoji[j]) {
           document.getElementById(`lojas-emoji-${i}`).value = emoji[j];
+          document.getElementById(`lojas-title-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lojas.descricao;
