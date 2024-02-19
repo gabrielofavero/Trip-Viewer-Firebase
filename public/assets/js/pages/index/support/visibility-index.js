@@ -71,87 +71,39 @@ function _expandContentBox() {
 }
 
 function _loadUserIndexVisibility() {
-  document.getElementById('index-unlogged-title').style.display = 'none';
-  document.getElementById('index-logged-title').style.display = 'block';
-  document.getElementById('login-box').style.display = 'none';
-  document.getElementById('logged-menu').style.display = 'block';
-  document.getElementById('tripViewer').style.display = 'block';
-  document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('destinos-box').style.display = 'none';
-  document.getElementById('settings-box').style.display = 'none';
-  document.getElementById('profile-icon').style.display = 'block';
-  document.getElementById('back').style.display = 'none';
-  document.getElementById('listagens-box').style.display = 'none';
+  const fadeOut = ['index-unlogged-title', 'login-box', 'viagens-box', 'destinos-box', 'settings-box', 'listagens-box', 'back'];
+  const fadeIn = ['index-logged-title', 'logged-menu', 'tripViewer', 'profile-icon'];
+  _fade(fadeOut, fadeIn);
 }
 
 function _unloadUserIndexVisibility() {
-  document.getElementById('index-unlogged-title').style.display = 'block';
-  document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('login-box').style.display = 'block';
-  document.getElementById('logged-menu').style.display = 'none';
-  document.getElementById('tripViewer').style.display = 'block';
-  document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('destinos-box').style.display = 'none';
-  document.getElementById('settings-box').style.display = 'none';
-  document.getElementById('profile-icon').style.display = 'none';
-  document.getElementById('back').style.display = 'none';
-  document.getElementById('listagens-box').style.display = 'none';
+  const fadeOut = ['index-logged-title', 'logged-menu', 'profile-icon', 'viagens-box', 'destinos-box', 'settings-box', 'listagens-box', 'back'];
+  const fadeIn = ['index-unlogged-title', 'login-box', 'tripViewer'];
+  _fade(fadeOut, fadeIn);
 }
 
 function _loadSettingsVisibility() {
-  document.getElementById('index-unlogged-title').style.display = 'none';
-  document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('login-box').style.display = 'none';
-  document.getElementById('logged-menu').style.display = 'none';
-  document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('destinos-box').style.display = 'none';
-  document.getElementById('settings-box').style.display = 'block';
-  document.getElementById('profile-icon').style.display = 'block';
-  document.getElementById('back').style.display = 'block';
-  document.getElementById('listagens-box').style.display = 'none';
+  const fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'viagens-box', 'destinos-box', 'listagens-box'];
+  const fadeIn = ['settings-box', 'profile-icon', 'back'];
+  _fade(fadeOut, fadeIn);
 }
 
 function _loadMyTripsVisibility() {
-  document.getElementById('index-unlogged-title').style.display = 'none';
-  document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('login-box').style.display = 'none';
-  document.getElementById('logged-menu').style.display = 'none';
-  document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('viagens-box').style.display = 'block';
-  document.getElementById('destinos-box').style.display = 'none';
-  document.getElementById('settings-box').style.display = 'none';
-  document.getElementById('profile-icon').style.display = 'block';
-  document.getElementById('back').style.display = 'block';
-  document.getElementById('listagens-box').style.display = 'none';
+  const fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'destinos-box', 'settings-box', 'listagens-box'];
+  const fadeIn = ['viagens-box', 'profile-icon', 'back'];
+  _fade(fadeOut, fadeIn);
 }
 
 function _loadMyPlacesVisibility() {
-  document.getElementById('index-unlogged-title').style.display = 'none';
-  document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('login-box').style.display = 'none';
-  document.getElementById('logged-menu').style.display = 'none';
-  document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('destinos-box').style.display = 'block';
-  document.getElementById('settings-box').style.display = 'none';
-  document.getElementById('profile-icon').style.display = 'block';
-  document.getElementById('back').style.display = 'block';
-  document.getElementById('listagens-box').style.display = 'none';
+  const fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'viagens-box', 'settings-box', 'listagens-box'];
+  const fadeIn = ['destinos-box', 'profile-icon', 'back'];
+  _fade(fadeOut, fadeIn);
 }
 
 function _loadMyPlacesListVisibility() {
-  document.getElementById('index-unlogged-title').style.display = 'none';
-  document.getElementById('index-logged-title').style.display = 'none';
-  document.getElementById('login-box').style.display = 'none';
-  document.getElementById('logged-menu').style.display = 'none';
-  document.getElementById('tripViewer').style.display = 'none';
-  document.getElementById('viagens-box').style.display = 'none';
-  document.getElementById('destinos-box').style.display = 'none';
-  document.getElementById('settings-box').style.display = 'none';
-  document.getElementById('profile-icon').style.display = 'block';
-  document.getElementById('back').style.display = 'block';
-  document.getElementById('listagens-box').style.display = 'block';
+  const fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'viagens-box', 'settings-box', 'destinos-box'];
+  const fadeIn = ['listagens-box', 'profile-icon', 'back'];
+  _fade(fadeOut, fadeIn);
 }
 
 function _closeDeleteModal() {

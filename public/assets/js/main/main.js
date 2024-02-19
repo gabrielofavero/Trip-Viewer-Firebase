@@ -31,6 +31,7 @@ const onscroll = (el, listener) => {
   el.addEventListener('scroll', listener)
 }
 
+
 // Application Start Functions
 function _startFirebase() {
   let app = firebase.app();

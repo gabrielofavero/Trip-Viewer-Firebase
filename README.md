@@ -7,13 +7,14 @@
 - ⚔️: Epic
 
 ## Doing
-- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
+- ⚔️ Animações em todo o site
 
 ## To-Do
 
 ### Prioridade Alta
 - 🏆 Organizar Lineup por dia (Editar e Viagem)
 - 🏆 Melhorias Editar Viagem / Lineup (Estrela de Lineup no título, auto selecionar destino)
+- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
 - 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 - ⚔️ Novo Front-End (BLOCKED - Aguardando o Guilherme)
 
@@ -30,7 +31,6 @@
 - 🏆 Criar Keypoints personalizáveis.
 - 📈 Validar inputs de links;
 - 🏆 Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
-- 🏆 Adicionar animações no index.html;
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
 - ⚔️ Migrar Projeto para outro domínio
 - 🏆 Consertar gráfico de cities (está estático no viagens)
@@ -56,6 +56,7 @@
 - 🏆 Criar Função de Listas de Destinos
 - 🏆 Migrar Lineup para Viagens (Remover de Destinos)
 - 🐞 Fazer título da imagem também mudar no accordeon
+- 🏆 Adicionar animações no index.html;
 
 ### Janeiro 2024
 - ⚔️ Migração do Projeto para Plano Spark;
