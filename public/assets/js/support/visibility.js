@@ -299,11 +299,11 @@ function _isCustomColorsActive() {
 
 // ======= Modal Functions =======
 function _openModal(modalID = 'modal') {
-     _swipeIn([modalID], 'up');
+     _fadeIn([modalID]);
 }
 
 function _closeModal(modalID = 'modal') {
-     _swipeOut([modalID], 'down');
+     _fadeOut([modalID], 'down');
 }
 
 function _isModalOpen(modalID = 'modal') {

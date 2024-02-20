@@ -1,4 +1,4 @@
-// ======= Places JS =======
+// ======= Destinations JS =======
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
@@ -6,7 +6,7 @@ var CURRENT_PLACES_SIZE = 0;
 var DESTINOS = [];
 
 // ======= LOADERS =======
-function _loadPlaces() {
+function _loadDestinations() {
   for (let i = 0; i < DESTINOS.length; i++) {
     P_RESULT[DESTINOS[i].destinos.sigla] = DESTINOS[i].destinos;
   }
@@ -18,16 +18,16 @@ function _loadPlaces() {
   window.localStorage.setItem('PLACES_SETTINGS_JSON', JSON.stringify(CONFIG.destinos.settings));
 
   window.addEventListener("resize", function () {
-    _adjustPlacesHTML();
+    _adjustDestinationsHTML();
   });
 }
 
-function _loadPlacesSelect(lineupExclusive = false) {
+function _loadDestinationsSelect(lineupExclusive = false) {
   let select = document.getElementById("destinos-select");
   let firstOption = document.createElement("option");
   _buildDestinosObject(lineupExclusive);
 
-  const firstSigla = _getNewPlacesSigla(DESTINOS[0].destinos.titulo);
+  const firstSigla = _getNewDestinationsSigla(DESTINOS[0].destinos.titulo);
   DESTINOS[0].destinos.sigla = firstSigla;
 
   firstOption.value = firstSigla;
@@ -38,7 +38,7 @@ function _loadPlacesSelect(lineupExclusive = false) {
   if (DESTINOS.length > 1) {
     for (let i = 1; i < DESTINOS.length; i++) {
       let newOption = document.createElement("option");
-      let sigla = _getNewPlacesSigla(DESTINOS[i].destinos.titulo);
+      let sigla = _getNewDestinationsSigla(DESTINOS[i].destinos.titulo);
       DESTINOS[i].destinos.sigla = sigla;
 
       newOption.value = sigla;
@@ -53,31 +53,31 @@ function _loadPlacesSelect(lineupExclusive = false) {
     for (let i = 0; i < DESTINOS.length; i++) {
       const sigla = DESTINOS[i].destinos.sigla;
       if (sigla === select.value) {
-        _loadPlacesHTML(FIRESTORE_DATA.destinos[i].destinos);
-        _adjustPlacesHTML();
+        _loadDestinationsHTML(FIRESTORE_DATA.destinos[i].destinos);
+        _adjustDestinationsHTML();
         break;
       }
     }
   });
 }
 
-function _loadPlacesHTML(destino) {
+function _loadDestinationsHTML(destino) {
   let div = document.getElementById("destinosBox");
   let text = "";
 
-  const headers = _getPlacesHeaders(destino.modulos);
+  const headers = _getDestinationsHeaders(destino.modulos);
   CURRENT_PLACES_SIZE = headers.length;
 
   let linktype = _getLinkType();
 
   for (let i = 0; i < headers.length; i++) {
     const j = i + 1;
-    const box = CONFIG.destinos.boxes[_getPlacesBoxesIndex(i)];
+    const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
     const title = CONFIG.destinos.destinos[headers[i]]["title"];
     const code = headers[i];
     const href = code === "mapa" ? destino.myMaps : "#";
     const lt = code === "mapa" ? linktype : "";
-    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getPlacesHref(code, destino)}')"`;
+    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getDestinationsHref(code, destino)}')"`;
     const icon = CONFIG.destinos.destinos[headers[i]]["icon"];
     const description = CONFIG.destinos.destinos[headers[i]]["description"];
     text += `
@@ -98,10 +98,10 @@ function _loadPlacesHTML(destino) {
   }
 
   div.innerHTML = text;
-  _adjustPlacesHTML();
+  _adjustDestinationsHTML();
 }
 
-function _getPlacesHeaders(module) {
+function _getDestinationsHeaders(module) {
   const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', "lineup", 'mapa']
   const headerMap = new Map(headerBase.map((element, index) => [element, index]));
 
@@ -117,12 +117,12 @@ function _getPlacesHeaders(module) {
   return result.sort((a, b) => headerMap.get(a) - headerMap.get(b));
 }
 
-function getPlacesSelectValue() {
+function getDestinationsSelectValue() {
   let select = document.getElementById("destinos-select");
   return select.value || DESTINOS[0].destinos.sigla;
 }
 
-function _getPlacesBoxesIndex(i) {
+function _getDestinationsBoxesIndex(i) {
   if (i > CONFIG.destinos.boxes.length - 1) {
     return i % CONFIG.destinos.boxes.length;
   } else return i
@@ -136,13 +136,13 @@ function _getLinkType() {
   }
 }
 
-function _getPlacesHref(code, destino) {
+function _getDestinationsHref(code, destino) {
   if (code == "mapa") {
     return destino.myMaps;
   } else return `destinos.html?destino=${destino.sigla}&type=${code}`;
 }
 
-function _getNewPlacesSigla(name) {
+function _getNewDestinationsSigla(name) {
   var original = _codifyText(name);
   var result = original;
   let j = 0;
@@ -257,7 +257,7 @@ function _buildLineupDestinosObject() {
 }
 
 // ======= SETTERS =======
-function _adjustPlacesHTML() {
+function _adjustDestinationsHTML() {
   let heights = [];
   let maxHeight = 0;
 

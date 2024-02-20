@@ -116,10 +116,10 @@ function _loadProgramacao() {
 }
 
 function _loadDestinos() {
-  const userPlaces = localStorage.getItem('userPlaces');
-  const myPlaces = userPlaces ? JSON.parse(userPlaces) : [];
+  const userDestinations = localStorage.getItem('userDestinations');
+  const myDestinations = userDestinations ? JSON.parse(userDestinations) : [];
 
-  if (myPlaces && myPlaces.length > 0) {
+  if (myDestinations && myDestinations.length > 0) {
     document.getElementById('sem-destinos').style.display = 'none';
     document.getElementById('com-destinos').style.display = 'block';
 
@@ -1111,8 +1111,8 @@ function _formatAltura(value) {
 
 // Destinos: Funções Genéricas
 function _buildDestinosSelect() {
-  const userPlaces = localStorage.getItem('userPlaces');
-  const myPlaces = userPlaces ? JSON.parse(userPlaces) : [];
+  const userDestinations = localStorage.getItem('userDestinations');
+  const myDestinations = userDestinations ? JSON.parse(userDestinations) : [];
   const childs = _getChildIDs('com-destinos');
 
   let used = [];
@@ -1132,11 +1132,11 @@ function _buildDestinosSelect() {
     const value = selectDiv.value;
 
     let options = '<option value="">Selecione um Destino</option>';
-    for (let j = 0; j < myPlaces.length; j++) {
-      const code = myPlaces[j].code;
+    for (let j = 0; j < myDestinations.length; j++) {
+      const code = myDestinations[j].code;
       if (value == code || !used.includes(code)) {
         const selected = value === code ? ' selected' : '';
-        options += `<option value="${code}"${selected}>${myPlaces[j].titulo}</option>`;
+        options += `<option value="${code}"${selected}>${myDestinations[j].titulo}</option>`;
       }
     }
 

@@ -7,7 +7,7 @@
             "_loadScheduleCalendar",
             "_loadKeypointsStandAlone",
             "_loadCostModule",
-            "_loadPlaces"
+            "_loadDestinations"
         ]
     },
     "information": {

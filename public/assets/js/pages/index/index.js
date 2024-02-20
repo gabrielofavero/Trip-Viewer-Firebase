@@ -27,11 +27,13 @@ function _loadListenersIndex() {
     _openIndexPage('viagens', 0, 1);
   });
 
-  document.getElementById('myPlaces').addEventListener('click', function () {
+  document.getElementById('myDestinations').addEventListener('click', function () {
     _openIndexPage('destinos', 0, 1);
   });
 
   document.getElementById('profile-icon').addEventListener('click', function () {
+    back.classList.remove('bx-arrow-back');
+    back.classList.add('bx-up-arrow-alt');
     _openIndexPage('settings', 0, 1);
   });
 
@@ -48,10 +50,19 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('back').addEventListener('click', function () {
-    _openIndexPage('logged', 1, 0);
+    const back = select('#back');
+    if (back.style.display !== 'none') {
+      _openIndexPage('logged', 1, 0, false);
+      setTimeout(() => {
+        back.classList.remove('bx-up-arrow-alt');
+        back.classList.add('bx-arrow-back');
+      }, 300);
+    } else {
+      _openIndexPage('logged', 1, 0);
+    }
   });
 
-  document.getElementById('myPlacesLists').addEventListener('click', function () {
+  document.getElementById('myDestinationsLists').addEventListener('click', function () {
     _openIndexPage('listagens', 0, 1);
   });
 

@@ -1,4 +1,4 @@
-// ======= Places HTML JS =======
+// ======= Destinations HTML JS =======
 
 // ======= LOADERS =======
 function _loadP() {

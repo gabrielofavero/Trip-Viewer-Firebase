@@ -1,19 +1,23 @@
-function _animate(fadeIn, fadeOut, from=0, to=0){
+function _animate(fadeIn, fadeOut, from=0, to=0, horizontal=true){
+    const forward = horizontal ? 'left' : 'down';
+    const backwards = horizontal ? 'right' : 'up';
+    
+    
     if (fadeIn && fadeOut){
         if (from == to) {
             _fade(fadeOut, fadeIn);
         } else if (from > to) {
-            _swipe(fadeOut, fadeIn, 'right');
+            _swipe(fadeOut, fadeIn, backwards);
         } else {
-            _swipe(fadeOut, fadeIn, 'left');
+            _swipe(fadeOut, fadeIn, forward);
         }
     } else if (fadeIn) {
         if (from == to) {
             _fadeIn(fadeIn);
         } else if (from > to) {
-            _swipeIn(fadeIn, 'right');
+            _swipeIn(fadeIn, backwards);
         } else {
-            _swipeIn(fadeIn, 'left');
+            _swipeIn(fadeIn, forward);
         }
     }
   }

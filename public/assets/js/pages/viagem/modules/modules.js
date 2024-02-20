@@ -156,16 +156,22 @@ function _loadModules() {
     document.getElementById("calendario-credit").style.display = "none";
   }
 
-  // Places
+  // Destinations
   if (FIRESTORE_DATA.modulos.destinos) {
-    _loadPlacesSelect();
-    _loadPlacesHTML(DESTINOS[0].destinos);
-    CALL_SYNC.push(_loadPlaces);
+    _loadDestinationsSelect();
+    _loadDestinationsHTML(DESTINOS[0].destinos);
+    
+    CALL_SYNC.push(_loadDestinations);
+
   } else if (FIRESTORE_DATA.modulos.lineup) {
-    _loadPlacesSelect(true);
-    _loadPlacesHTML(DESTINOS[0].destinos);
+    _loadDestinationsSelect(true);
+    _loadDestinationsHTML(DESTINOS[0].destinos);
+    
+    CALL_SYNC.push(_loadDestinations);
+    
     document.getElementById('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
     document.getElementById('dTitle').innerHTML = "Lineup";
+
   } else {
     document.getElementById('destinos').style.display = "none";
     document.getElementById("destinosNav").innerHTML = "";

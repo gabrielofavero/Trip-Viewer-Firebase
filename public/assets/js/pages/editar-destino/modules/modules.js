@@ -4,7 +4,7 @@ const TOMORROW = _getTomorrowFormatted();
 var PROGRAMACAO = {};
 
 // Destino Existente
-function _loadPlacesData(FIRESTORE_PLACES_DATA) {
+function _loadDestinationsData(FIRESTORE_PLACES_DATA) {
   try {
     _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA);
     _loadRestaurantesData(FIRESTORE_PLACES_DATA);
