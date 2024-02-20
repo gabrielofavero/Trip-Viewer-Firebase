@@ -18,7 +18,7 @@ function _loadGallery() {
     _loadGalleryFilters(FIRESTORE_DATA.galeria.filtros);
     _loadGalleryPhotos(FIRESTORE_DATA.galeria.imagens);
     _adjustPortfolioHeight();
-    _initializeOrRefreshFilters();
+    _refreshFilters();
 }
 
 function _loadGalleryFilters(filters) {
@@ -88,7 +88,7 @@ function _loadFilterClass(filter) {
     return filterName;
 }
 
-function _initializeOrRefreshFilters() {
+function _refreshFilters() {
     let portfolioContainer = select('.portfolio-container');
     if (portfolioContainer) {
         let portfolioIsotope = new Isotope(portfolioContainer, {

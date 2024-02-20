@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Dados do Firestore Database carregados com sucesso');
         _start();
         _mainLoad();
+        _adjustPortfolioHeight();
+        _refreshFilters();
         $('body').css('overflow', 'auto');
       })
   } catch (error) {
