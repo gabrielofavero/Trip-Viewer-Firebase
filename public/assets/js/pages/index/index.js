@@ -51,7 +51,8 @@ function _loadListenersIndex() {
 
   document.getElementById('back').addEventListener('click', function () {
     const back = select('#back');
-    if (back.style.display !== 'none') {
+    const settings = select('#settings-box');
+    if (settings.style.display !== 'none') {
       _openIndexPage('logged', 1, 0, false);
       setTimeout(() => {
         back.classList.remove('bx-up-arrow-alt');

@@ -509,9 +509,15 @@ section {
   overflow-x: hidden;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px) and (min-height: 720px) {
   .content-list {
     height: 500px;
+  }
+}
+
+@media (max-width: 600px) and (max-height: 719px) {
+  .content-list {
+    height: 95%;
   }
 }
 

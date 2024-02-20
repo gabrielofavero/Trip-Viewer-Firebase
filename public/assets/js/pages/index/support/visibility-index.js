@@ -75,6 +75,7 @@ function _closeDeleteModal() {
 }
 
 function _openIndexPage(id, from=0, to=0, horizontal=true) {
+  const contentBox = select('.content-box');
   let fadeIn = [];
   let fadeOut = [];
 
@@ -121,7 +122,9 @@ function _openIndexPage(id, from=0, to=0, horizontal=true) {
       fadeInNoDirection = ['back'];
     }
 
+  contentBox.style.overflowY = 'hidden';
   _animate(fadeIn, fadeOut, from, to, horizontal);
   _fadeIn(fadeInNoDirection);
   _fadeOut(fadeOutNoDirection);
+  contentBox.style.overflowY = 'auto';
 }
