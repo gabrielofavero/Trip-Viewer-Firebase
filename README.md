@@ -6,23 +6,31 @@
 - 📈: Improvement
 - ⚔️: Epic
 
+- 🚦: Bloqueado
+- ❓: Sem solução aparente
+
 ## Doing
-- ⚔️ Animações em todo o site
+- 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index)
+- 🏆 Animações em todo o site
 
 ## To-Do
 
 ### Prioridade Alta
-- 🏆 Organizar Lineup por dia (Editar e Viagem)
-- 🏆 Melhorias Editar Viagem / Lineup (Estrela de Lineup no título, auto selecionar destino)
-- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
+- 🐞 Corrigir altura da lista no index para celulares pequenos
+- 🐞 Corrigir playlist do spotify não carregando
 - 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
-- ⚔️ Novo Front-End (BLOCKED - Aguardando o Guilherme)
+- 🏆 Criar boxes de visualização (Hospedagens, Transportes)
+- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
 
 ### Prioridade Média
 - 📈 Tornar módulo de programação mais personalizável
 - 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida) 
+- 🏆 Organizar Lineup por dia (Editar e Viagem)
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
 - 🐞 Ícone do user não carrega corretamente no primeiro login
+- ⚔️ Novo Front-End: Destinos.html
+- ⚔️🚦 Novo Front-End: Viagens.html 
+- ⚔️🚦 Novo Front-End: Index.html
 
 ### Prioridade Baixa
 - 🐞 O loading em viagens não está pegando a cor customizada;
