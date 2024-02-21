@@ -20,6 +20,7 @@
 - 🐞 Corrigir playlist do spotify não carregando
 - 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 - 🏆 Criar boxes de visualização (Hospedagens, Transportes)
+- 🏆 Ícone Customizado (Verificar se é possível)
 - ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
 
 ### Prioridade Média
