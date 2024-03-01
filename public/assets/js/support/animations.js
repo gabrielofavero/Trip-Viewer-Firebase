@@ -111,6 +111,6 @@ function _getSwipeDirection(direction, isEntering) {
 
 function _swipe(swipeOutIds, swipeInIds, direction) {
     _swipeOut(swipeOutIds, direction);
-    setTimeout(() => _swipeIn(swipeInIds, direction), 300);
+    setTimeout(() => _swipeIn(swipeInIds, direction), 500);
 }
 

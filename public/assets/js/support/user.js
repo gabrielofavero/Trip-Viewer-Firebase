@@ -7,11 +7,13 @@ function _unloadPageUserFunctions() {
 
 async function _signInGoogle() {
     try {
+        alert('alouuu')
         await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         var provider = new firebase.auth.GoogleAuthProvider();
         await firebase.auth().signInWithPopup(provider);
         await _registerIfUserNotPresent();
     } catch (error) {
+        alert('deu ruimmm')
         _logger(ERROR, error.message);
         throw error;
     }
