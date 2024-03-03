@@ -209,10 +209,7 @@ function _addLanches() {
   </div>
   `);
 
-  const nome = document.getElementById(`lanches-nome-${i}`);
-  nome.addEventListener('change', function () {
-    document.getElementById(`lanches-title-${i}`).innerText = nome.value;
-  });
+  _applyOnChangeListeners(i, 'lanches');
 }
 
 function _addSaidas() {
@@ -306,10 +303,7 @@ function _addSaidas() {
   </div>
   `);
 
-  const nome = document.getElementById(`saidas-nome-${i}`);
-  nome.addEventListener('change', function () {
-    document.getElementById(`saidas-title-${i}`).innerText = nome.value;
-  });
+  _applyOnChangeListeners(i, 'saidas');
 }
 
 function _addTurismo() {
@@ -404,10 +398,7 @@ function _addTurismo() {
   </div>
   `);
 
-  const nome = document.getElementById(`turismo-nome-${i}`);
-  nome.addEventListener('change', function () {
-    document.getElementById(`turismo-title-${i}`).innerText = nome.value;
-  });
+  _applyOnChangeListeners(i, 'turismo');
 }
 
 function _addLojas() {
@@ -502,10 +493,7 @@ function _addLojas() {
   </div>
   `);
 
-  const nome = document.getElementById(`lojas-nome-${i}`);
-  nome.addEventListener('change', function () {
-    document.getElementById(`lojas-title-${i}`).innerText = nome.value;
-  });
+  _applyOnChangeListeners(i, 'lojas');
 }
 
 // Deletar
