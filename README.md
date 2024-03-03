@@ -5,20 +5,15 @@
 - 🏆: Feature
 - 📈: Improvement
 - ⚔️: Epic
-
 - 🚦: Bloqueado
 - ❓: Sem solução aparente
 
 ## Doing
-- 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index)
-- 🏆 Animações em todo o site
+- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 
 ## To-Do
 
 ### Prioridade Alta
-- 🐞 Corrigir altura da lista no index para celulares pequenos
-- 🐞 Corrigir playlist do spotify não carregando
-- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 - 🏆 Criar boxes de visualização (Hospedagens, Transportes)
 - 🏆 Ícone Customizado (Verificar se é possível)
 - ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
@@ -28,7 +23,8 @@
 - 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida) 
 - 🏆 Organizar Lineup por dia (Editar e Viagem)
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens;
-- 🐞 Ícone do user não carrega corretamente no primeiro login
+- ⚔️ Implementação: Lista de desejos
+- ⚔️ Implementação: Gastos
 - ⚔️ Novo Front-End: Destinos.html
 - ⚔️🚦 Novo Front-End: Viagens.html 
 - ⚔️🚦 Novo Front-End: Index.html
@@ -43,8 +39,12 @@
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
 - ⚔️ Migrar Projeto para outro domínio
 - 🏆 Consertar gráfico de cities (está estático no viagens)
+- 🏆 Animações em todo o site
 
 ## Done
+
+### Março 2024
+- 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index)
 
 ### Fevereiro 2024
 - 🏆 Mini melhoria de front mobile
@@ -129,3 +129,7 @@
 - ⚔️ Importação de HTML, CSS e JS do projeto estático;
 - ⚔️ Desenvolvimento de estrutura básica do back-end via Cloud Functions (NodeJS com TypeScript);
 - ⚔️ Criação de funções de leitura principais no back-end (get.ts);
+
+## Cannot Reproduce
+- 🐞 Corrigir playlist do spotify não carregando
+- 🐞 Ícone do user não carrega corretamente no primeiro login
