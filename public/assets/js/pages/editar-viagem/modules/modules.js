@@ -116,8 +116,8 @@ function _loadProgramacao() {
 }
 
 function _loadDestinos() {
-  const userDestinations = localStorage.getItem('userDestinations');
-  const myDestinations = userDestinations ? JSON.parse(userDestinations) : [];
+  const destinosUser = localStorage.getItem('destinosUser');
+  const myDestinations = destinosUser ? JSON.parse(destinosUser) : [];
 
   if (myDestinations && myDestinations.length > 0) {
     document.getElementById('sem-destinos').style.display = 'none';
@@ -1111,8 +1111,8 @@ function _formatAltura(value) {
 
 // Destinos: Funções Genéricas
 function _buildDestinosSelect() {
-  const userDestinations = localStorage.getItem('userDestinations');
-  const myDestinations = userDestinations ? JSON.parse(userDestinations) : [];
+  const destinosUser = localStorage.getItem('destinosUser');
+  const myDestinations = destinosUser ? JSON.parse(destinosUser) : [];
   const childs = _getChildIDs('com-destinos');
 
   let used = [];

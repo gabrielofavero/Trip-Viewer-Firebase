@@ -128,6 +128,8 @@ async function _loadUserIndex() {
         _loadUserDataList('destinos');
         _loadUserDataList('listagens');
 
+        localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
+
       } else {
         _openIndexPage('unlogged');
       }
@@ -142,7 +144,6 @@ async function _loadUserIndex() {
 
 async function _loadUserDataList(type) {
   userData[type] = await _getUserList(type);
-  localStorage.setItem(`${type}User`, JSON.stringify(userData[type]));
 
   if (userData[type] && userData[type].length > 0) {
     document.getElementById(`sem-${type}`).style.display = 'none';
@@ -205,18 +206,14 @@ function _viagensVisualizar(code) {
 }
 
 function _viagensNovo() {
-  localStorage.setItem('viagensUser', JSON.stringify(userData['viagens']));
-  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
   window.location.href = `editar-viagem.html`;
 }
 
 function _destinosNovo() {
-  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
   window.location.href = `editar-destino.html`;
 }
 
 function _destinosEditar(code) {
-  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
   window.location.href = `editar-destino.html?d=${code}`;
 }
 
@@ -229,7 +226,5 @@ function _listagensVisualizar(code) {
 }
 
 function _listagensNovo() {
-  localStorage.setItem('listagensUser', JSON.stringify(userData['listagens']));
-  localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
   window.location.href = `editar-listagem.html`;
 }
