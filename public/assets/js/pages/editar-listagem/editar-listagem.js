@@ -110,6 +110,6 @@ async function _carregarListagem() {
   blockLoadingEnd = true;
   _startLoadingScreen();
   FIRESTORE_DATA = await _getSingleData('listagens');
-  _loadListData(FIRESTORE_DATA);
+  await _loadListData(FIRESTORE_DATA);
   _stopLoadingScreen();
 }

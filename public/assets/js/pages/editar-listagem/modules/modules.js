@@ -1,6 +1,7 @@
 // Listagem Existente
-function _loadListData(FIRESTORE_DATA) {
+async function _loadListData(FIRESTORE_DATA) {
     try {
+      DESTINOS = await _getUserList('destinos');
       _loadDadosBasicosListagemData(FIRESTORE_DATA);
       _loadCompartilhamentoData(FIRESTORE_DATA);
       _loadCustomizacaoData(FIRESTORE_DATA);

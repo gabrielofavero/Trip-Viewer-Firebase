@@ -40,6 +40,7 @@
 - ⚔️ Migrar Projeto para outro domínio
 - 🏆 Consertar gráfico de cities (está estático no viagens)
 - 🏆 Animações em todo o site
+- 🐞 Nem todos os hrefs estão indo para as categorias (editar viagem e destinos)
 
 ## Done
 
