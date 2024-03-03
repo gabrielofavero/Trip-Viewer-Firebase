@@ -1,3 +1,5 @@
+var refreshed = false;
+
 document.addEventListener('DOMContentLoaded', function () {
   try {
     _main();
@@ -7,6 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
     if (urlParams.has('l')) {
       type = 'listagens';
     }
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 0) {
+        if (!refreshed) {
+          _refreshFilters();
+          refreshed = true;
+        }
+      } else {
+        refreshed = false;
+      }
+    });	
 
     Promise.all([_getConfig(), _getSingleData(type)])
       .then(([configData, firestoreData]) => {

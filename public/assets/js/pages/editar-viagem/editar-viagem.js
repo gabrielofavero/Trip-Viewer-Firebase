@@ -146,7 +146,7 @@ async function _loadTrip() {
   blockLoadingEnd = true;
   _startLoadingScreen();
   FIRESTORE_DATA = await _getSingleData('viagens');
-  _loadTripData(FIRESTORE_DATA);
+  await _loadTripData(FIRESTORE_DATA);
   _stopLoadingScreen();
 }
 

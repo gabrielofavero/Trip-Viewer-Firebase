@@ -1,4 +1,4 @@
-var userData = {};
+var USER_DATA = {};
 
 _startLoadingScreen();
 
@@ -125,10 +125,8 @@ async function _loadUserIndex() {
         document.getElementById('profile-icon').style.backgroundSize = 'cover';
 
         _loadUserDataList('viagens');
-        _loadUserDataList('destinos');
         _loadUserDataList('listagens');
-
-        localStorage.setItem('destinosUser', JSON.stringify(userData['destinos']));
+        _loadUserDataList('destinos');
 
       } else {
         _openIndexPage('unlogged');
@@ -143,11 +141,11 @@ async function _loadUserIndex() {
 }
 
 async function _loadUserDataList(type) {
-  userData[type] = await _getUserList(type);
+  USER_DATA[type] = await _getUserList(type);
 
-  if (userData[type] && userData[type].length > 0) {
+  if (USER_DATA[type] && USER_DATA[type].length > 0) {
     document.getElementById(`sem-${type}`).style.display = 'none';
-    _loadUserDataHTML(userData[type], type);
+    _loadUserDataHTML(USER_DATA[type], type);
   }
 }
 

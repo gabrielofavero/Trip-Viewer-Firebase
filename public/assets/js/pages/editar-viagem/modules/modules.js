@@ -4,6 +4,7 @@ const TOMORROW = _getTomorrowFormatted();
 const FIREBASE_IMAGE_ORIGIN = 'https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/';
 
 var PROGRAMACAO = {};
+var DESTINOS = [];
 
 var FIREBASE_IMAGES = {
   background: false,
@@ -12,8 +13,9 @@ var FIREBASE_IMAGES = {
 }
 
 // Viagem Existente
-function _loadTripData(FIRESTORE_DATA) {
+async function _loadTripData(FIRESTORE_DATA) {
   try {
+    DESTINOS = await _getUserList('destinos');
     _loadDadosBasicosViagemData(FIRESTORE_DATA);
     _loadCompartilhamentoData(FIRESTORE_DATA);
     _loadCustomizacaoData(FIRESTORE_DATA);
@@ -116,10 +118,7 @@ function _loadProgramacao() {
 }
 
 function _loadDestinos() {
-  const destinosUser = localStorage.getItem('destinosUser');
-  const myDestinations = destinosUser ? JSON.parse(destinosUser) : [];
-
-  if (myDestinations && myDestinations.length > 0) {
+  if (DESTINOS && DESTINOS.length > 0) {
     document.getElementById('sem-destinos').style.display = 'none';
     document.getElementById('com-destinos').style.display = 'block';
 
@@ -1111,8 +1110,6 @@ function _formatAltura(value) {
 
 // Destinos: Funções Genéricas
 function _buildDestinosSelect() {
-  const destinosUser = localStorage.getItem('destinosUser');
-  const myDestinations = destinosUser ? JSON.parse(destinosUser) : [];
   const childs = _getChildIDs('com-destinos');
 
   let used = [];
@@ -1132,11 +1129,11 @@ function _buildDestinosSelect() {
     const value = selectDiv.value;
 
     let options = '<option value="">Selecione um Destino</option>';
-    for (let j = 0; j < myDestinations.length; j++) {
-      const code = myDestinations[j].code;
+    for (let j = 0; j < DESTINOS.length; j++) {
+      const code = DESTINOS[j].code;
       if (value == code || !used.includes(code)) {
         const selected = value === code ? ' selected' : '';
-        options += `<option value="${code}"${selected}>${myDestinations[j].titulo}</option>`;
+        options += `<option value="${code}"${selected}>${DESTINOS[j].titulo}</option>`;
       }
     }
 
