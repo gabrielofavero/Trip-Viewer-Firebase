@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function _loadListenersIndex() {
+  document.getElementById('google-login-button').addEventListener('click', function () {
+    _signInGoogle();
+  });
+  
   document.getElementById('myTrips').addEventListener('click', function () {
     _openIndexPage('viagens', 0, 1);
   });

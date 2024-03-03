@@ -8,23 +8,29 @@ const ERROR = 'ERROR';
 function _logger(type = "", message = "Hello World!") {
     switch (type) {
         case ERROR:
-            let e = new Error();
-            e = e.stack.split("\n")[2].split(":");
-            e.pop();
-            let line = ":" + e.pop();
-            let caller;
             try {
-                if (message && message.includes("@at:")) {
-                    caller = message.split("@at:")[1];
-                    message = message.split("@at:")[0];
-                } else {
+                let e = new Error();
+                e = e.stack.split("\n")[2].split(":");
+                e.pop();
+                let line = ":" + e.pop();
+                let caller;
+                try {
+                    if (message && message.includes("@at:")) {
+                        caller = message.split("@at:")[1];
+                        message = message.split("@at:")[0];
+                    } else {
+                        caller = _getCallerFile() + line;
+                    }
+                } catch (e) {
                     caller = _getCallerFile() + line;
                 }
-            } catch (e) {
-                caller = _getCallerFile() + line;
+    
+                console.log(ERROR + " | " + caller + " | " + message);
+            } catch(e) {
+                console.log(ERROR + " | Generic Error ");
+                console.log(message);
             }
-
-            console.log(ERROR + " | " + caller + " | " + message);
+            
             break;
         case WARN:
             console.log(WARN + " | " + message);
