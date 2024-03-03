@@ -488,6 +488,10 @@ section {
   border-radius: 5px;
 }
 
+.login-item:hover, .login-item:focus {
+  background: #f0f1f2;
+}
+
 /* ---------- Minhas Viagens ---------- */
 .userList-box, .logged-menu {
   margin-top: 30px;

@@ -103,6 +103,10 @@ strong {
   background: #404040;
 }
 
+.login-item:hover, .login-item:focus {
+  background: rgb(68, 68, 68);
+}
+
 .content-list {
   background: #404040;
   border: 0.5px solid #383838;
