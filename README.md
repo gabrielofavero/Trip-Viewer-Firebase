@@ -14,38 +14,41 @@
 ## To-Do
 
 ### Prioridade Alta
-- 🏆 Criar boxes de visualização (Hospedagens, Transportes)
-- 🏆 Ícone Customizado (Verificar se é possível)
-- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações)
+- 🏆 Criar boxes de visualização (Hospedagens, Transportes);
+- 🏆 Ícone Customizado (Verificar se é possível);
+- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações).
 
 ### Prioridade Média
-- 📈 Tornar módulo de programação mais personalizável
-- 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida) 
-- 🏆 Organizar Lineup por dia (Editar e Viagem)
-- 🏆 Adicionar mensagem customizada para erro no upload de imagens;
-- ⚔️ Implementação: Lista de desejos
-- ⚔️ Implementação: Gastos
-- ⚔️ Novo Front-End: Destinos.html
-- ⚔️🚦 Novo Front-End: Viagens.html 
-- ⚔️🚦 Novo Front-End: Index.html
+- 📈 Tornar módulo de programação mais personalizável;
+- 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida);
+- 🏆 Adicionar opções re re-ordenação de destinos (na tela de edição e viagens): Nota, nome (A-Z, Z-A), data/horário (lineup);
+- 🏆 Ordenar listas do index + Opção de viagens anteriores;
+- 🏆 Criar botões triplos no modal quando salvar (visualizar, home e reeditar);
+- ⚔️ Implementação: Lista de desejos;
+- ⚔️ Implementação: Gastos;
+- ⚔️ Novo Front-End: Destinos.html;
+- ⚔️🚦 Novo Front-End: Viagens.html;
+- ⚔️🚦 Novo Front-End: Index.html.
 
 ### Prioridade Baixa
 - 🐞 O loading em viagens não está pegando a cor customizada;
 - 🐞 Ao editar a cor no passeio, ela não é salva globalmente;
 - 🐞 Botão de "transportation" em viagem.html não está deselecionando corretamente;
-- 🏆 Criar Keypoints personalizáveis.
+- 🏆 Criar Keypoints personalizáveis;
 - 📈 Validar inputs de links;
-- 🏆 Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios.
+- 🏆 Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios;
 - 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
-- ⚔️ Migrar Projeto para outro domínio
-- 🏆 Consertar gráfico de cities (está estático no viagens)
-- 🏆 Animações em todo o site
-- 🐞 Nem todos os hrefs estão indo para as categorias (editar viagem e destinos)
+- ⚔️ Migrar Projeto para outro domínio;
+- 🏆 Consertar gráfico de cities (está estático no viagens);
+- 🏆 Animações em todo o site;
+- 🐞 Nem todos os hrefs estão indo para as categorias (editar viagem e destinos);
+- 🏆 Adicionar mensagem customizada para erro no upload de imagens.
 
 ## Done
 
 ### Março 2024
 - 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index)
+- 🏆 Adicionada opção de arrastar accordions
 
 ### Fevereiro 2024
 - 🏆 Mini melhoria de front mobile
