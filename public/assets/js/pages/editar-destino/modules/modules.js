@@ -856,13 +856,18 @@ function _onChangeName(i, type) {
   const emojiDiv = document.getElementById(`${type}-emoji-${i}`);
 
   const nome = nomeDiv.value;
-  const emoji = emojiDiv.value.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '');
+  const emojiUntreated = emojiDiv.value;
+  const emojiTreated = emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '');
 
-  if (emoji && nome) {
-    titleDiv.innerText = `${nome} ${emoji}`
-  } else if (emoji) {
+  if (emojiTreated && nome) {
+    titleDiv.innerText = `${nome} ${emojiTreated}`
+  } else if (nome) {
     titleDiv.innerText = nome;
-  } else {
+  }
+
+  if (emojiTreated && emojiUntreated && emojiTreated !== emojiUntreated) {
+    emojiDiv.value = emojiTreated;
+  } else if (!emojiTreated && emojiUntreated) {
     emojiDiv.value = '';
     emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
   }
