@@ -55,7 +55,7 @@ function _loadProgramacao() {
   for (let i = 1; i <= dates.length; i++) {
     const date = _changeFormat(dates[i - 1], 'dd/mm/yyyy');
     box.innerHTML += `
-    <div id="programacao-${i}" class="accordion-item">
+    <div id="programacao-${i}" class="accordion-item accordion-programacao" draggable="true">
     <h2 class="accordion-header" id="heading-programacao-${i}">
       <button id="programacao-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-programacao-${i}" aria-expanded="false"
@@ -98,6 +98,7 @@ function _loadProgramacao() {
   </div>
     `
     newDates.push(_removeSlashesFromDate(date));
+    _addDragListeners('programacao');
   }
 
   for (let i = 1; i <= newDates.length; i++) {
@@ -153,7 +154,7 @@ function _addTransporte() {
   }
 
   $('#transporte-box').append(`
-    <div id="transporte-${i}" class="accordion-item">
+    <div id="transporte-${i}" class="accordion-item accordion-transporte" draggable="true">
     <h2 class="accordion-header" id="heading-transporte-${i}">
       <button id="transporte-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-transporte-${i}" aria-expanded="false" aria-controls="collapse-transporte-${i}">
@@ -260,6 +261,7 @@ function _addTransporte() {
   </div>
     `);
 
+  _addDragListeners('transporte');
 }
 
 function _addHospedagem() {
@@ -269,7 +271,7 @@ function _addHospedagem() {
   }
 
   $('#hospedagem-box').append(`
-    <div id="hospedagem-${i}" class="accordion-item">
+    <div id="hospedagem-${i}" class="accordion-item accordion-hospedagem" draggable="true">
     <h2 class="accordion-header" id="heading-hospedagem-${i}">
       <button id="hospedagem-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-hospedagem-${i}" aria-expanded="false" aria-controls="collapse-hospedagem-${i}">
@@ -362,6 +364,8 @@ function _addHospedagem() {
     </div>
   </div>
     `);
+
+  _addDragListeners('hospedagem');
 }
 
 function _addDestinos() {
@@ -420,7 +424,7 @@ function _addLineup() {
   }
 
   $('#lineup-box').append(`
-  <div id="lineup-${i}" class="accordion-item">
+  <div id="lineup-${i}" class="accordion-item accordion-lineup" draggable="true">
     <h2 class="accordion-header" id="heading-lineup-${i}">
       <button id="lineup-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-lineup-${i}" aria-expanded="true" aria-controls="collapse-lineup-${i}">
@@ -530,6 +534,7 @@ function _addLineup() {
     }
   });
 
+  _addDragListeners('lineup');
 }
 
 function _addGaleria() {
@@ -539,7 +544,7 @@ function _addGaleria() {
   }
 
   $('#galeria-box').append(`
-    <div id="galeria-${i}" class="accordion-item">
+    <div id="galeria-${i}" class="accordion-item accordion-galeria" draggable="true">
     <h2 class="accordion-header" id="heading-galeria-${i}">
       <button id="galeria-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-galeria-${i}" aria-expanded="false" aria-controls="collapse-hospedagem-${i}">
@@ -612,6 +617,8 @@ function _addGaleria() {
   document.getElementById(`galeria-titulo-${i}`).addEventListener('change', function () {
     document.getElementById(`galeria-title-${i}`).innerText = document.getElementById(`galeria-titulo-${i}`).value;
   });
+
+  _addDragListeners('galeria');
 }
 
 // Deletar

@@ -28,7 +28,7 @@ function _addRestaurantes() {
   }
 
   $('#restaurantes-box').append(`
-  <div id="restaurantes-${i}" class="accordion-item">
+  <div id="restaurantes-${i}" class="accordion-item accordion-restaurantes" draggable="true">
     <h2 class="accordion-header" id="heading-restaurantes-${i}">
       <button id="restaurantes-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-restaurantes-${i}" aria-expanded="true"
@@ -113,8 +113,8 @@ function _addRestaurantes() {
   </div>
   `);
 
-  _applyOnChangeListeners(i, 'restaurantes');
-
+  _applyAccordionListeners(i, 'restaurantes');
+  _addDragListeners('restaurantes');
 }
 
 function _addLanches() {
@@ -124,7 +124,7 @@ function _addLanches() {
   }
 
   $('#lanches-box').append(`
-  <div id="lanches-${i}" class="accordion-item">
+  <div id="lanches-${i}" class="accordion-item accordion-lanches" draggable="true">
     <h2 class="accordion-header" id="heading-lanches-${i}">
       <button id="lanches-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-lanches-${i}" aria-expanded="true" aria-controls="collapse-lanches-${i}">
@@ -209,7 +209,8 @@ function _addLanches() {
   </div>
   `);
 
-  _applyOnChangeListeners(i, 'lanches');
+  _applyAccordionListeners(i, 'lanches');
+  _addDragListeners('lanches');
 }
 
 function _addSaidas() {
@@ -219,7 +220,7 @@ function _addSaidas() {
   }
 
   $('#saidas-box').append(`
-  <div id="saidas-${i}" class="accordion-item">
+  <div id="saidas-${i}" class="accordion-item accordion-saidas" draggable="true">
     <h2 class="accordion-header" id="heading-saidas-${i}">
       <button id="saidas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-saidas-${i}" aria-expanded="true" aria-controls="collapse-saidas-${i}">
@@ -303,7 +304,8 @@ function _addSaidas() {
   </div>
   `);
 
-  _applyOnChangeListeners(i, 'saidas');
+  _applyAccordionListeners(i, 'saidas');
+  _addDragListeners('saidas');
 }
 
 function _addTurismo() {
@@ -313,7 +315,7 @@ function _addTurismo() {
   }
 
   $('#turismo-box').append(`
-  <div id="turismo-${i}" class="accordion-item">
+  <div id="turismo-${i}" class="accordion-item accordion-turismo" draggable="true">
     <h2 class="accordion-header" id="heading-turismo-${i}">
       <button id="turismo-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-turismo-${i}" aria-expanded="true" aria-controls="collapse-turismo-${i}">
@@ -398,7 +400,8 @@ function _addTurismo() {
   </div>
   `);
 
-  _applyOnChangeListeners(i, 'turismo');
+  _applyAccordionListeners(i, 'turismo');
+  _addDragListeners('turismo');
 }
 
 function _addLojas() {
@@ -408,7 +411,7 @@ function _addLojas() {
   }
 
   $('#lojas-box').append(`
-  <div id="lojas-${i}" class="accordion-item">
+  <div id="lojas-${i}" class="accordion-item accordion-lojas" draggable="true">
     <h2 class="accordion-header" id="heading-lojas-${i}">
       <button id="lojas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
         data-bs-target="#collapse-lojas-${i}" aria-expanded="true" aria-controls="collapse-lojas-${i}">
@@ -493,7 +496,8 @@ function _addLojas() {
   </div>
   `);
 
-  _applyOnChangeListeners(i, 'lojas');
+  _applyAccordionListeners(i, 'lojas');
+  _addDragListeners('lojas');
 }
 
 // Deletar
@@ -837,38 +841,5 @@ function _loadMapaData(FIRESTORE_PLACES_DATA) {
     }
   } else {
     mapaLink.removeAttribute('required');
-  }
-}
-
-// Listeners
-function _applyOnChangeListeners(i, type) {
-  document.getElementById(`${type}-nome-${i}`).addEventListener('change', function () {
-    _onChangeName(i, type);
-  });
-  document.getElementById(`${type}-emoji-${i}`).addEventListener('change', function () {
-    _onChangeName(i, type);
-  });
-}
-
-function _onChangeName(i, type) {
-  const titleDiv = document.getElementById(`${type}-title-${i}`);
-  const nomeDiv = document.getElementById(`${type}-nome-${i}`);
-  const emojiDiv = document.getElementById(`${type}-emoji-${i}`);
-
-  const nome = nomeDiv.value;
-  const emojiUntreated = emojiDiv.value;
-  const emojiTreated = emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '');
-
-  if (emojiTreated && nome) {
-    titleDiv.innerText = `${nome} ${emojiTreated}`
-  } else if (nome) {
-    titleDiv.innerText = nome;
-  }
-
-  if (emojiTreated && emojiUntreated && emojiTreated !== emojiUntreated) {
-    emojiDiv.value = emojiTreated;
-  } else if (!emojiTreated && emojiUntreated) {
-    emojiDiv.value = '';
-    emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
   }
 }

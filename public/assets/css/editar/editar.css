@@ -1485,6 +1485,11 @@ details summary::-webkit-details-marker {
 
 .accordion-item {
   background-color: #fff;
+  cursor: move;
+}
+
+.accordion-item.dragging {
+  opacity: 0.5;
 }
 
 .accordion-header {
