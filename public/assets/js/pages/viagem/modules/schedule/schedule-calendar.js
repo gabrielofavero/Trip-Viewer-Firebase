@@ -156,9 +156,10 @@ function _getCalendarTitle(date) {
         const currentDate = _convertFromFirestoreDate(programacao[i].data);
         if (currentDate.getDate() == date.getDate() && currentDate.getMonth() == date.getMonth() && currentDate.getFullYear() == date.getFullYear()) {
             const titulo = programacao[i].titulo;
-            if (titulo.includes(":")) {
+            const isDate = titulo.split(' de ').length === 3 && !isNaN(titulo.split(' de ')[0]) && !isNaN(titulo.split(' de ')[2]);
+            if (!titulo || titulo[titulo.length - 1] == ":" || isDate) {
                 return titulo;
-            } else return `${programacao[i].titulo}: `;
+            } else return `${titulo}: `;
         }
     }
     return "";

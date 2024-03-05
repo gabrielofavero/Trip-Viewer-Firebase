@@ -1,6 +1,7 @@
 ![alt text](https://i.imgur.com/jm7wA0u.png)
 
 # Tarefas
+
 - 🐞: Bug
 - 🏆: Feature
 - 📈: Improvement
@@ -9,16 +10,22 @@
 - ❓: Sem solução aparente
 
 ## Doing
-- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
+
+- 🐞 Corrigir problema no carregamento de lineup
+- 🐞 Corrigir carregamento problemático de destino
 
 ## To-Do
 
 ### Prioridade Alta
+
+- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
+- 🏆 Adicionar opção de arrastar accordions (Mobile);
 - 🏆 Criar boxes de visualização (Hospedagens, Transportes);
 - 🏆 Ícone Customizado (Verificar se é possível);
 - ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações).
 
 ### Prioridade Média
+
 - 📈 Tornar módulo de programação mais personalizável;
 - 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida);
 - 🏆 Adicionar opções re re-ordenação de destinos (na tela de edição e viagens): Nota, nome (A-Z, Z-A), data/horário (lineup);
@@ -31,6 +38,7 @@
 - ⚔️🚦 Novo Front-End: Index.html.
 
 ### Prioridade Baixa
+
 - 🐞 O loading em viagens não está pegando a cor customizada;
 - 🐞 Ao editar a cor no passeio, ela não é salva globalmente;
 - 🐞 Botão de "transportation" em viagem.html não está deselecionando corretamente;
@@ -47,10 +55,13 @@
 ## Done
 
 ### Março 2024
-- 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index)
-- 🏆 Adicionada opção de arrastar accordions
+
+- 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index);
+- 🏆 Adicionada opção de arrastar accordions (Desktop);
+- 🐞 Corrigido ":" quando título não é preenchido
 
 ### Fevereiro 2024
+
 - 🏆 Mini melhoria de front mobile
 - 🏆 Adicionada forma de deletar passeios / viagens
 - 🏆 Criado Módulo de Galeria
@@ -72,6 +83,7 @@
 - 🏆 Adicionar animações no index.html;
 
 ### Janeiro 2024
+
 - ⚔️ Migração do Projeto para Plano Spark;
 - 🏆 Limitação do tamanho de upload + forma no backend para deixar mais seguro;
 - 🐞 Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios;
@@ -84,6 +96,7 @@
 - 🐞 Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
 
 ### Dezembro 2023
+
 - 🐞 Consertada posição do select de transporte de editar-viagem;
 - 🏆 Criadas funções de front-end para edição de viagens e passeios;
 - 🏆 Criado sistema de imagens;
@@ -96,6 +109,7 @@
 - ⚔️ Security Overhaul.
 
 ### Novembro 2023
+
 - 📈 Automatizadas cores tema definidas pelo usuário;
 - 🐞 Corrigido bugs do modo escuro;
 - 🏆 Criada Página de Login;
@@ -108,6 +122,7 @@
 - 🏆 Criadas funções de front-end para o index.html;
 
 ### Outubro 2023
+
 - 🏆 Migração de 'Transporte' ao Firestore;
 - 🏆 Criação de artes de transporte / hospedagem;
 - 🏆 Migração de Jsons de configuração ao Firestore;
@@ -123,10 +138,12 @@
 - 🏆 Inserção de autenticação no back-end e front-end;
 
 ### Setembro 2023
+
 - 🏆 Migração de 'Passeios' ao Firestore;
 - 🏆 Migração de 'Programação' ao Firestore;
 
 ### Anteriormente
+
 - ⚔️ Criação de Git do projeto;
 - ⚔️ Criação de projeto no Firebase;
 - ⚔️ Criação de banco de dados Firestore;
@@ -135,5 +152,6 @@
 - ⚔️ Criação de funções de leitura principais no back-end (get.ts);
 
 ## Cannot Reproduce
+
 - 🐞 Corrigir playlist do spotify não carregando
 - 🐞 Ícone do user não carrega corretamente no primeiro login
