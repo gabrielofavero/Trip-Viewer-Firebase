@@ -11,40 +11,40 @@
 
 ## Doing
 
-- 🐞 Corrigir carregamento problemático de destino
+- 📈 Melhoria de performance em destinos.html.
 
 ## To-Do
 
 ### Prioridade Alta
 
-- 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
-- 🏆 Adicionar opção de arrastar accordions (Mobile);
-- 🏆 Criar boxes de visualização
+- 🐞 Correção de erros de CSS causados por unificação de CSSs de edição
+- 🏆 Criação de opção de arrastar accordions (Mobile);
+- 🏆 Criação de boxes de visualização;
   - Hospedagens, Transportes;
   - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
-- 📈 Ícone Customizado
+- 📈 Ícone Customizado em viagens.html;
   - Verificar se é possível;
-- 📈 Bloqueio upload
+- 📈 Bloqueio upload;
   - Já está parcialmente implementado
-- ⚔️ Melhorias Back-End
+- ⚔️ Melhorias Back-End.
   - Código duplicado, Code smells e otimizações (Implementar Sonar);
   - Verificar viabilidade e, se possível, implementar React.js
 
 ### Prioridade Média
 
-- 📈 Tornar módulo de programação mais personalizável;
+- 📈 Melhoria de tornar módulo de programação mais personalizável;
   - Incluir Horário;
   - Permitir adicionar itens
-- 📈 Tornar módulo de transporte mais automatizado
+- 📈 Melhoria de tornar módulo de transporte mais automatizado
   - Se user clicou em volta e não há dados, reverte tudo da ida
-- 🏆 Adicionar opções re re-ordenação de destinos
+- 🏆 Criação de opções re re-ordenação de destinos
   - Na tela de edição e viagens;
   - Ordenação por nota e por nome (↑↓);
-- 📈 Melhorar listas do index;
+- 📈 Melhoria de listas do index;
   - Ordenar por data (crescente) em viagens;
   - Adicionar Viagens anteriores em viagens;
   - Ordernar por data de atualização em Destinos e Listagens
-- 🏆 Criar botões triplos no modal quando salvar
+- 🏆 Criação de botões triplos no modal quando salvar
   - Reeditar (sem fundo)
   - Home (cinza)
   - Visualizar (roxo);
@@ -65,92 +65,95 @@
 
 ### Prioridade Baixa
 
-- 🐞 O loading em viagens não está pegando a cor customizada;
-- 🐞 Ao fazer o switch de visibilidade dentro de um lightbox, não é mantido ao sair;
+- 🐞 Correção de loading em viagens não estar pegando a cor customizada;
+- 🐞 Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair;
   - Colocar booleano no método de switch se é um lightbox;
   - Salva localmente;
   - Ao fechar lightbox, verifica a variável, aplica e a limpa
-- 🐞 Botão de "transportation" em viagem.html não está deselecionando corretamente;
-- 🏆 Criar Keypoints personalizáveis;
-- 📈 Validar inputs de links;
+- 🐞 Correção de deseleção incorreta no botão de de "transportation" em viagem.html;
+- 🏆 Criação de Keypoints personalizáveis;
+- 📈 Validação de inputs de links;
   - URLS;
   - Emojis (Atualmente apaga carateres inválidos. Verificar se pode de fato bloquear de aparecer no input)
-- 📈 Centralizar demo-box nas telas de edição quando em modo tablet;
-- ⚔️ Migrar Projeto para outro domínio;
-- 🏆 Consertar gráfico de cities (está estático no viagens.html);
-- 🏆 Animações em todo o site;
-- 🐞 Nem todos os hrefs estão indo para as categorias (telas de edição);
-- 🏆 Adicionar mensagem customizada para erro no upload de imagens.
+- 📈 Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet;
+- ⚔️ Migração de projeto para outro domínio;
+- 🐞 Correção de gráfico de cities (está estático no viagens.html);
+- 🏆 Criação de animações em todo o site;
+- 🐞 Correção de erro de nem todos os hrefs estarem indo para as categorias (telas de edição);
+- 🏆 Criação de mensagem customizada para erro no upload de imagens.
 
 ## Done
 
 ### Março 2024
 
-- 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index);
-- 🏆 Adicionada opção de arrastar accordions (Desktop);
-- 🐞 Corrigido ":" quando título não é preenchido
-- 🐞 Corrigir problema no carregamento de lineup
+- 🐞 Correção de bug de login no safari (provavelmente relacionado com animação no index);
+- 🏆 Criação de opção de arrastar accordions (Desktop);
+- 🐞 Correção de ":" quando título não é preenchido;
+- 🐞 Corrreção de problema no carregamento de lineup.
 
 ### Fevereiro 2024
 
-- 🏆 Mini melhoria de front mobile
-- 🏆 Adicionada forma de deletar passeios / viagens
-- 🏆 Criado Módulo de Galeria
-- 🐞 Dados estavam se perdendo no load do editar-viagem quando o user não deixava o dado ativo
-- 🐞 Ajustada posição do night mode em editar-viagem e editar-passeio
-- 🏆 Colocada seta de voltar em editar-viagens e editar-passeios
-- 🐞 Corrigido Título de modal desformatado
-- 🏆 Adicionada Transparência em background mobile
-- 🏆 Reeditar agora não retoma a home caso tenha dado erro no salvamento
-- ⚔️ Testagem Geral e bug fixes
-- 📈 Condensados CSSs de editar-viagem e editar-passeio em CSSs únicos (editar.css e editar-dark.css)
-- 📈 Validar Inputs em Adicionar Passeio (Remover os que já foram preenchidos)
-- ⚔️ Passeios renomeado para Destinos
-- 🐞 Link de transporte não deveria ser obrigatório
-- 🐞 Imagem de meio de transporte não carregou corretamente (Exemplo: Lolla 2024)
-- 🏆 Criar Função de Listas de Destinos
-- 🏆 Migrar Lineup para Viagens (Remover de Destinos)
-- 🐞 Fazer título da imagem também mudar no accordeon
-- 🏆 Adicionar animações no index.html;
+- 📈 Mini melhoria de front mobile;
+- 🏆 Criação de forma de deletar passeios / viagens;
+- 🏆 Criação de Módulo de Galeria;
+- 🐞 Correção de dados se perdendo no load do editar-viagem quando o user não deixa o dado ativo;
+- 🐞 Ajuste posição do night mode em editar-viagem e editar-passeio;
+- 🏆 Criação de seta de voltar em editar-viagens e editar-passeios;
+- 🐞 Correção de Título de modal desformatado;
+- 📈 Melhoria de Transparência aumentada em background mobile;
+- 📈 Melhoria de botão de Reeditar não retornar a home caso tenha dado erro no salvamento;
+- ⚔️ Testagem Geral e bug fixes;
+- 📈 Condensação de CSSs de editar-viagem e editar-passeio em CSSs únicos (editar.css e editar-dark.css);
+- 📈 Validação de Inputs em Adicionar Passeio (Remover os que já foram preenchidos);
+- ⚔️ Mudança de nome de "Passeios" para "Destinos";
+- 🐞 Correção de Link de transporte não deveria ser obrigatório;
+- 🐞 Correção de imagem de meio de transporte não carregando corretamente (Exemplo: Lolla 2024);
+- 🏆 Criação de Função de Listas de Destinos;
+- 🏆 Migração de Lineup para Viagens (Remover de Destinos);
+- 🐞 Fazer título da imagem também mudar no accordeon;
+- 🏆 Criação de animações no index.html.
 
 ### Janeiro 2024
 
 - ⚔️ Migração do Projeto para Plano Spark;
-- 🏆 Limitação do tamanho de upload + forma no backend para deixar mais seguro;
+- 🏆 Criação de Limitação do tamanho de upload + forma no backend para deixar mais seguro;
 - 🐞 Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios;
-- 🏆 Criar opção de fornecer link de imagem ao invés de upload;
-- 🏆 Adicionar suporte a links personalizáveis;
-- 🏆 Implementar Set para links personalizáveis;
-- 🏆 Implementar modo ativo/inativo em links, imagens e cores para não perder os dados do user caso ele só queira mudar a exibição.
-- 📈 Redução do CSS em modo escuro
-- 📈 Editada caixa de perfil no index para tratar strings muito longas;
-- 🐞 Ajustar Links para a home (Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo)
+- 🏆 Criação de opção de fornecer link de imagem ao invés de upload;
+- 🏆 Criação de suporte a links personalizáveis;
+- 🏆 Criação de Set para links personalizáveis;
+- 🏆 Criação de modo ativo/inativo em links, imagens e cores;
+    - para não perder os dados do user caso ele só queira mudar a exibição;
+- 📈 Redução do CSS em modo escuro;
+- 📈 Edição de caixa de perfil no index para tratar strings muito longas;
+- 🐞 Ajuste de Links para a home. 
+    - Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo.
 
 ### Dezembro 2023
 
-- 🐞 Consertada posição do select de transporte de editar-viagem;
-- 🏆 Criadas funções de front-end para edição de viagens e passeios;
-- 🏆 Criado sistema de imagens;
-- 🏆 Implementado compartilhamento de viagens via botão no viagem.html.
-- 🏆 Implementado get de imagens em viagem.html;
-- 🏆 Implementados bloqueios de edição de viagens e passeios;
-- 🏆 Night Mode interativo do user;
-- 📈 Linkado e validado funções de back-end para edição de viagens e passeios;
-- ⚔️ Otimizado BD (simplificar estrutura);
-- ⚔️ Security Overhaul.
+- 🐞 Correção de posição do select de transporte de editar-viagem;
+- 🏆 Criação de funções de front-end para edição de viagens e passeios;
+- 🏆 Criação de sistema de imagens;
+- 🏆 Criação de compartilhamento de viagens via botão no viagem.html.
+- 🏆 Criação de get de imagens em viagem.html;
+- 🏆 Criação de bloqueios de edição de viagens e passeios;
+- 🏆 Implementação de Night Mode interativo do user;
+- 📈 Melhoria de Linkar e validar funções de back-end para edição de viagens e passeios;
+- ⚔️ Simplificação de estrutura do BD;
+- ⚔️ Reimplementação da segurança da aplicação.
 
 ### Novembro 2023
 
-- 📈 Automatizadas cores tema definidas pelo usuário;
-- 🐞 Corrigido bugs do modo escuro;
-- 🏆 Criada Página de Login;
-- 🏆 Criada Página de Usuário logado;
-- 🏆 Criado sistema de compartilhamento de viagens via link (URL do viagem.html e botão no index.html);
-- 🏆 Criada funcionalidade "Minhas Viagens";
-- 🏆 Criada página de edição/criação de viagens;
-- 🏆 Criada página de edição/criação de passeios;
-- 🏆 Criada página de configurações;
-- 🏆 Criadas funções de front-end para o index.html;
+- 📈 Automação de cores tema definidas pelo usuário;
+- 🐞 Correção de bugs do modo escuro;
+- 🏆 Criação de Página de Login;
+- 🏆 Criação de Página de Usuário logado;
+- 🏆 Criação de sistema de compartilhamento de viagens via link;
+    - URL do viagem.html e botão no index.html;
+- 🏆 Criação de funcionalidade "Minhas Viagens";
+- 🏆 Criação de página de edição/criação de viagens;
+- 🏆 Criação de página de edição/criação de passeios;
+- 🏆 Criação de página de configurações;
+- 🏆 Criação de funções de front-end para o index.html;
 
 ### Outubro 2023
 
@@ -162,16 +165,16 @@
 - 🏆 Migração de  'Resumo'(Keypoints) ao Firestore;
 - 🏆 Criação de tratamento para falha de conexão com o banco de dados;
 - 🏆 Inserção de calendário dinâmico (swiper);
-- 🐞 Bug Fixes diversos;
-- 🏆 Logo Interativo de acordo com a cor definida pelo usuário;
-- 🏆 Criado esqueleto para a Home Page (Login);
-- 🐞 Corrigido bugs do modo escuro;
-- 🏆 Inserção de autenticação no back-end e front-end;
+- 🐞 Correção de Bug Fixes diversos;
+- 🏆 Implementação de Logo Interativo de acordo com a cor definida pelo usuário;
+- 🏆 Criação de esqueleto para a Home Page (Login);
+- 🐞 Correção de bugs do modo escuro;
+- 🏆 Inserção de autenticação no back-end e front-end.
 
 ### Setembro 2023
 
 - 🏆 Migração de 'Passeios' ao Firestore;
-- 🏆 Migração de 'Programação' ao Firestore;
+- 🏆 Migração de 'Programação' ao Firestore.
 
 ### Anteriormente
 
@@ -180,9 +183,10 @@
 - ⚔️ Criação de banco de dados Firestore;
 - ⚔️ Importação de HTML, CSS e JS do projeto estático;
 - ⚔️ Desenvolvimento de estrutura básica do back-end via Cloud Functions (NodeJS com TypeScript);
-- ⚔️ Criação de funções de leitura principais no back-end (get.ts);
+- ⚔️ Criação de funções de leitura principais no back-end (get.ts).
 
 ## Cannot Reproduce
 
-- 🐞 Corrigir playlist do spotify não carregando
-- 🐞 Ícone do user não carrega corretamente no primeiro login
+- 🐞 Correção de playlist do spotify não carregando;
+- 🐞 Correção de erro de ícone do user não carregar corretamente no primeiro login;
+- 🐞 Correção de erro de, ao editar a cor no passeio, ela não é salva globalmente;
