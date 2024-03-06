@@ -1,4 +1,4 @@
-![alt text](https://i.imgur.com/jm7wA0u.png)
+![alt text](https://i.imgur.com/vejNzOv.png)
 
 # Tarefas
 
