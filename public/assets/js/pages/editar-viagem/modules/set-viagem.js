@@ -380,7 +380,7 @@ function _buildLineupObject() {
 
     for (const child of childIDs) {
         const i = child.split("-")[1];
-        const selectValue = document.getElementById(`lineup-local-${i}`).value;
+        const selectValue = document.getElementById(`lineup-local-${i}`).value || 'generico';
         if (!result[selectValue]) {
             result[selectValue] = {
                 data: [],
@@ -400,7 +400,7 @@ function _buildLineupObject() {
 
     for (let i = 0; i < childIDs.length; i++) {
         const j = parseInt(childIDs[i].split("-")[1]);
-        const selectValue = document.getElementById(`lineup-local-${j}`).value;
+        const selectValue = document.getElementById(`lineup-local-${j}`).value || 'generico';
 
         const divHead = document.getElementById(`lineup-headliner-${j}`);
         const valueHead = (divHead && divHead.checked) ? "✔" : "";

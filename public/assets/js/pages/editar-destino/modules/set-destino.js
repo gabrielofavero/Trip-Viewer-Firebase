@@ -25,7 +25,6 @@ async function _buildDestinosObject() {
     const valueMyMaps = divMyMaps ? _returnEmptyIfNoValue(divMyMaps.value) : "";
     result.myMaps = valueMyMaps;
 
-    
     result.versao.ultimaAtualizacao = new Date().toISOString();
 
     result.compartilhamento.dono = FIRESTORE_PLACES_DATA ? FIRESTORE_PLACES_DATA.compartilhamento.dono : await _getUID();
