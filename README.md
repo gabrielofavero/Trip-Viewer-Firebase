@@ -11,7 +11,6 @@
 
 ## Doing
 
-- 🐞 Corrigir problema no carregamento de lineup
 - 🐞 Corrigir carregamento problemático de destino
 
 ## To-Do
@@ -20,36 +19,67 @@
 
 - 🐞 Corrigir erros de CSS causados por unificação de CSSs de edição
 - 🏆 Adicionar opção de arrastar accordions (Mobile);
-- 🏆 Criar boxes de visualização (Hospedagens, Transportes);
-- 🏆 Ícone Customizado (Verificar se é possível);
-- ⚔️ Melhorias Back-End (Remoção de código duplicado, code smells, otimizações).
+- 🏆 Criar boxes de visualização
+  - Hospedagens, Transportes;
+  - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
+- 📈 Ícone Customizado
+  - Verificar se é possível;
+- 📈 Bloqueio upload
+  - Já está parcialmente implementado
+- ⚔️ Melhorias Back-End
+  - Código duplicado, Code smells e otimizações (Implementar Sonar);
+  - Verificar viabilidade e, se possível, implementar React.js
 
 ### Prioridade Média
 
 - 📈 Tornar módulo de programação mais personalizável;
-- 📈 Tornar módulo de transporte mais automatizado (na volta reverte tudo da ida);
-- 🏆 Adicionar opções re re-ordenação de destinos (na tela de edição e viagens): Nota, nome (A-Z, Z-A), data/horário (lineup);
-- 🏆 Ordenar listas do index + Opção de viagens anteriores;
-- 🏆 Criar botões triplos no modal quando salvar (visualizar, home e reeditar);
+  - Incluir Horário;
+  - Permitir adicionar itens
+- 📈 Tornar módulo de transporte mais automatizado
+  - Se user clicou em volta e não há dados, reverte tudo da ida
+- 🏆 Adicionar opções re re-ordenação de destinos
+  - Na tela de edição e viagens;
+  - Ordenação por nota e por nome (↑↓);
+- 📈 Melhorar listas do index;
+  - Ordenar por data (crescente) em viagens;
+  - Adicionar Viagens anteriores em viagens;
+  - Ordernar por data de atualização em Destinos e Listagens
+- 🏆 Criar botões triplos no modal quando salvar
+  - Reeditar (sem fundo)
+  - Home (cinza)
+  - Visualizar (roxo);
 - ⚔️ Implementação: Lista de desejos;
+  - Procurar template na web e aplicar (colocar fonte nos créditos)
 - ⚔️ Implementação: Gastos;
+  - Procurar template na web e aplicar (colocar fonte nos créditos)
+- ⚔️ Implementação: Lineup.
+  - Categoria nova;
+  - Lineup Dinâmico que abre modal;
+  - Quadro de horários vibe App Lollapalooza;
 - ⚔️ Novo Front-End: Destinos.html;
-- ⚔️🚦 Novo Front-End: Viagens.html;
-- ⚔️🚦 Novo Front-End: Index.html.
+  - Guilherme já fez um template. Ver se está finalizado
+- ⚔️ Novo Front-End: Viagens.html;
+  - 🚦Aguardando template do Guilherme
+- ⚔️ Novo Front-End: Index.html.
+  - 🚦Aguardando template do Guilherme
 
 ### Prioridade Baixa
 
 - 🐞 O loading em viagens não está pegando a cor customizada;
-- 🐞 Ao editar a cor no passeio, ela não é salva globalmente;
+- 🐞 Ao fazer o switch de visibilidade dentro de um lightbox, não é mantido ao sair;
+  - Colocar booleano no método de switch se é um lightbox;
+  - Salva localmente;
+  - Ao fechar lightbox, verifica a variável, aplica e a limpa
 - 🐞 Botão de "transportation" em viagem.html não está deselecionando corretamente;
 - 🏆 Criar Keypoints personalizáveis;
 - 📈 Validar inputs de links;
-- 🏆 Remover o auto selecionar de accordions quando um módulo é habilitado em editar-viagens / editar-passeios;
-- 📈 Centralizar demo-box no editar-viagens / editar-passeios quando em modo tablet;
+  - URLS;
+  - Emojis (Atualmente apaga carateres inválidos. Verificar se pode de fato bloquear de aparecer no input)
+- 📈 Centralizar demo-box nas telas de edição quando em modo tablet;
 - ⚔️ Migrar Projeto para outro domínio;
-- 🏆 Consertar gráfico de cities (está estático no viagens);
+- 🏆 Consertar gráfico de cities (está estático no viagens.html);
 - 🏆 Animações em todo o site;
-- 🐞 Nem todos os hrefs estão indo para as categorias (editar viagem e destinos);
+- 🐞 Nem todos os hrefs estão indo para as categorias (telas de edição);
 - 🏆 Adicionar mensagem customizada para erro no upload de imagens.
 
 ## Done
@@ -59,6 +89,7 @@
 - 🐞 Corrigir bug de login no safari (provavelmente relacionado com animação no index);
 - 🏆 Adicionada opção de arrastar accordions (Desktop);
 - 🐞 Corrigido ":" quando título não é preenchido
+- 🐞 Corrigir problema no carregamento de lineup
 
 ### Fevereiro 2024
 
