@@ -11,13 +11,11 @@
 
 ## Doing
 
-- 📈 Melhoria de performance em destinos.html.
 
 ## To-Do
 
 ### Prioridade Alta
 
-- 🐞 Correção de erros de CSS causados por unificação de CSSs de edição
 - 🏆 Criação de opção de arrastar accordions (Mobile);
 - 🏆 Criação de boxes de visualização;
   - Hospedagens, Transportes;
@@ -89,7 +87,10 @@
 - 🐞 Correção de bug de login no safari (provavelmente relacionado com animação no index);
 - 🏆 Criação de opção de arrastar accordions (Desktop);
 - 🐞 Correção de ":" quando título não é preenchido;
-- 🐞 Corrreção de problema no carregamento de lineup.
+- 🐞 Corrreção de problema no carregamento de lineup;
+- 📈 Melhoria de performance em destinos.html;
+- 🐞 Correção de ícone do TripViewer em destinos.html estar indo para a home e dentro do lightbox;
+- 📈 Melhor organização de JavaScript relacionados a destinos.html
 
 ### Fevereiro 2024
 
@@ -122,11 +123,11 @@
 - 🏆 Criação de suporte a links personalizáveis;
 - 🏆 Criação de Set para links personalizáveis;
 - 🏆 Criação de modo ativo/inativo em links, imagens e cores;
-    - para não perder os dados do user caso ele só queira mudar a exibição;
+  - para não perder os dados do user caso ele só queira mudar a exibição;
 - 📈 Redução do CSS em modo escuro;
 - 📈 Edição de caixa de perfil no index para tratar strings muito longas;
-- 🐞 Ajuste de Links para a home. 
-    - Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo.
+- 🐞 Ajuste de Links para a home.
+  - Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo.
 
 ### Dezembro 2023
 
@@ -148,7 +149,7 @@
 - 🏆 Criação de Página de Login;
 - 🏆 Criação de Página de Usuário logado;
 - 🏆 Criação de sistema de compartilhamento de viagens via link;
-    - URL do viagem.html e botão no index.html;
+  - URL do viagem.html e botão no index.html;
 - 🏆 Criação de funcionalidade "Minhas Viagens";
 - 🏆 Criação de página de edição/criação de viagens;
 - 🏆 Criação de página de edição/criação de passeios;

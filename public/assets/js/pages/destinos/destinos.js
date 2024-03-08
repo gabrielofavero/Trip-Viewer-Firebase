@@ -1,5 +1,7 @@
 // ======= Destinations HTML JS =======
 
+var MEDIA_HYPERLINKS = [];
+
 // ======= LOADERS =======
 function _loadP() {
   _loadVisibilityPasseio();
@@ -8,7 +10,10 @@ function _loadP() {
     window.parent._closeLightbox();
   };
 
-  _logger(INFO, "Passeio HTML Page Loaded");
+  document.getElementById("logo-link").onclick = function () {
+    window.parent._closeLightbox();
+  };
+
   const NOME = "nome";
   const REGIAO = "regiao";
   const DESCRICAO = "descricao";
@@ -24,21 +29,20 @@ function _loadP() {
   const WEED = "weed";
   const EMOJI = "emoji";
   const NOVO = "novo";
-  const VIDEO = "video";
 
   var P_RESULT = JSON.parse(window.localStorage.getItem('P_RESULT'));
   const CURRENCY_JSON = JSON.parse(window.localStorage.getItem('CURRENCY_JSON'));
-  const PLACES_JSON = JSON.parse(window.localStorage.getItem('PLACES_JSON'));
-  const PLACES_SETTINGS_JSON = JSON.parse(window.localStorage.getItem('PLACES_SETTINGS_JSON'));
+  const DESTINOS_JSON = JSON.parse(window.localStorage.getItem('PLACES_JSON'));
+  const DESTINOS_CONFIGS_JSON = JSON.parse(window.localStorage.getItem('PLACES_SETTINGS_JSON'));
   var HTML_PARAMS = _getParamsHTML();
   var CITY = HTML_PARAMS["destino"];
   var TYPE = HTML_PARAMS["type"];
-  var TYPE_TITLE = PLACES_JSON[TYPE].title;
-  var TYPE_SUBTITLE = PLACES_JSON[TYPE].subtitle;
-  var PLACE = P_RESULT[CITY][TYPE];
+  var TYPE_TITLE = DESTINOS_JSON[TYPE].title;
+  var TYPE_SUBTITLE = DESTINOS_JSON[TYPE].subtitle;
+  var DESTINO = P_RESULT[CITY][TYPE];
   var CURRENCY = window.localStorage.getItem('CURRENCY');
 
-  if (PLACE) {
+  if (DESTINO) {
     let result = [];
 
     document.title = TYPE_TITLE;
@@ -48,39 +52,39 @@ function _loadP() {
     }
 
     var MOEDA_OBJ = CURRENCY_JSON[CURRENCY] || CURRENCY_JSON["R$"];
-    var NOTAS_OBJ = PLACES_SETTINGS_JSON["scores"];
-    var SINGLE_SCORES_OBJ = _getSingleScoresObj(PLACE, NOTAS_OBJ);
+    var NOTAS_OBJ = DESTINOS_CONFIGS_JSON["scores"];
+    var SINGLE_SCORES_OBJ = _getSingleScoresObj(DESTINO, NOTAS_OBJ);
 
-    let P_NOME = PLACE[NOME];
-    let P_NOTA = PLACE[NOTA];
-    let P_VALOR = PLACE[VALOR];
-    let P_VISITADO = PLACE[VISITADO];
-    let P_HYPERLINK = PLACE[HYPERLINK];
-    let P_DESCRICAO = PLACE[DESCRICAO];
-    let P_REGIAO = PLACE[REGIAO];
-    let P_DUO = PLACE[DUO];
-    let P_VEG = PLACE[VEG];
-    let P_HEAD = PLACE[HEAD];
-    let P_HORARIO = PLACE[HORARIO];
-    let P_PALCO = PLACE[PALCO];
-    let P_WEED = PLACE[WEED];
-    let P_EMOJI = PLACE[EMOJI];
-    let P_NOVO = PLACE[NOVO];
+    let P_NOME = DESTINO[NOME];
+    let P_NOTA = DESTINO[NOTA];
+    let P_VALOR = DESTINO[VALOR];
+    let P_VISITADO = DESTINO[VISITADO];
+    let P_HYPERLINK = DESTINO[HYPERLINK];
+    let P_DESCRICAO = DESTINO[DESCRICAO];
+    let P_REGIAO = DESTINO[REGIAO];
+    let P_DUO = DESTINO[DUO];
+    let P_VEG = DESTINO[VEG];
+    let P_HEAD = DESTINO[HEAD];
+    let P_HORARIO = DESTINO[HORARIO];
+    let P_PALCO = DESTINO[PALCO];
+    let P_WEED = DESTINO[WEED];
+    let P_EMOJI = DESTINO[EMOJI];
+    let P_NOVO = DESTINO[NOVO];
 
     let novoExists = _newExists(P_NOVO);
 
-    for (let i = 0; i < PLACE[NOME].length; i++) {
+    for (let i = 0; i < DESTINO[NOME].length; i++) {
 
       // Required
       let nome = P_NOME[i];
-      let nota = _getScore(P_NOTA[i], PLACES_SETTINGS_JSON, SINGLE_SCORES_OBJ, i);
+      let nota = _getScore(P_NOTA[i], DESTINOS_CONFIGS_JSON, SINGLE_SCORES_OBJ, i);
       let notaNumerica = _getNumericScore(nota);
       let cor = _getScoreColor(nota);
 
       // Optional
       let valor = P_VALOR ? _getCost(P_VALOR[i], MOEDA_OBJ) : "";
-      let nameHyperlink = _getHyperlinkItem(P_HYPERLINK, i, "name");
-      let mediaHyperlink = _getHyperlinkItem(P_HYPERLINK, i, "video");
+      let nomeHyperlink = _getHyperlinkItem(P_HYPERLINK, i, "name");
+      let embed = _getHyperlinkItem(P_HYPERLINK, i, "video");
       let descricao = P_DESCRICAO ? _AdaptNulls(P_DESCRICAO[i]) : "";
       let visitado = _replace(P_VISITADO, i, "✓");
       let duo = _replace(P_DUO, i, "Aceita Duo Gourmet");
@@ -100,19 +104,13 @@ function _loadP() {
         nota = novo ? novo : "";
       }
 
-      if (mediaHyperlink) {
-        mediaHyperlink = _getVideoEmbed(mediaHyperlink, name);
-      }
+      _loadEmbed(embed, nome, nomeHyperlink);
 
-      if (nameHyperlink) {
-        if (nameHyperlink.includes("open.spotify.com")) {
-          if (!mediaHyperlink) {
-            mediaHyperlink = _getSpotifyEmbed(nameHyperlink);
-            nameHyperlink = "";
-          } else {
-            _logger(WARN, `Spotify link found for place '${nome}', but video link already exists. Ignoring Spotify link.`)
-          }
-        };
+      let isSpotify = _isSpotify(nomeHyperlink);
+      if (isSpotify && !embed) {
+        nomeHyperlink = "";
+      } else if (isSpotify && embed) {
+        _logger(WARN, `Spotify link found for DESTINO '${nome}', but video link already exists. Ignoring Spotify link.`)
       }
 
       innerResult = {
@@ -122,14 +120,13 @@ function _loadP() {
         "notaNumerica": notaNumerica,
         "cor": cor,
         "valor": valor,
-        "nameHyperlink": nameHyperlink,
-        "mediaHyperlink": mediaHyperlink,
+        "nameHyperlink": nomeHyperlink,
         "descricao": descricao,
         "detalhes": detalhes,
       }
       result.push(innerResult);
     }
-    
+
     result.sort(function (a, b) {
       return b.notaNumerica - a.notaNumerica || a.nome.localeCompare(b.nome); // Ordena por Nota (Desc) e Nome (Asc)
     });
@@ -149,109 +146,6 @@ function _getCost(valor, MOEDA_OBJ) {
     defaultResult = MOEDA_OBJ["default"];
   }
   return result || defaultResult || "Valor Desconhecido";
-}
-
-function _getScoreColor(score) {
-  if (score == "?") {
-    return "#ead1dc";
-  } else {
-    let numb = parseInt(score);
-    if (numb == 100) {
-      return "#CFE2F3";
-    } else if (numb >= 75) {
-      return "#D9EAD3";
-    } else if (numb >= 50) {
-      return "#FFF2CC";
-    } else if (numb >= 25) {
-      return "#FCE5CD";
-    } else return "#F4CCCC";
-  }
-}
-
-function _getScore(score, PLACES_SETTINGS_JSON, SINGLE_SCORES_OBJ, i) {
-  let possibleValues = PLACES_SETTINGS_JSON["scores"]["possibleValues"]
-  if (score && !possibleValues.includes(score)) {
-    return score;
-  } else if (score && possibleValues.includes(score)) {
-    return _getIndividualScore(score);
-  } else {
-    let values = [];
-    let keys = Object.keys(SINGLE_SCORES_OBJ);
-    for (let j = 0; j < keys.length; j++) {
-      let currentValues = SINGLE_SCORES_OBJ[keys[j]][i];
-      if (currentValues) {
-        values.push(currentValues);
-      }
-    }
-    if (values.length > 0) {
-      return _getMultipleScores(values);
-    } else return "?";
-  }
-
-}
-
-function _getIndividualScore(singleScore) {
-  switch (singleScore) {
-    case "!":
-      return "100%";
-    case "1":
-      return "75%";
-    case "2":
-      return "50%";
-    case "3":
-      return "25%";
-    case "4":
-      return "0%";
-    default:
-      return "?";
-  }
-}
-
-function _getMultipleScores(multipleScores) {
-  let result = 0;
-  let count = 0;
-  for (let i = 0; i < multipleScores.length; i++) {
-    let currentScore = _getIndividualScore(multipleScores[i]);
-    if (currentScore != "?") {
-      result += parseInt(currentScore);
-      count++;
-    }
-  }
-  if (count > 0) {
-    return Math.round(result / count) + "%";
-  } else {
-    return "?";
-  }
-}
-
-function _getSingleScoresObj(pass, NOTAS_OBJ) {
-  let knownKeys = NOTAS_OBJ["knownKeys"];
-  let possibleValues = NOTAS_OBJ["possibleValues"];
-  let keys = Object.keys(pass);
-  let result = {};
-  for (let i = 0; i < keys.length; i++) {
-    if (!knownKeys.includes(keys[i])) {
-      let possibleVauluesArray = pass[keys[i]];
-      let isSingleScore = true;
-      for (let j = 0; j < possibleVauluesArray.length; j++) {
-        if (!possibleValues.includes(possibleVauluesArray[j])) {
-          isSingleScore = false;
-          break;
-        }
-      }
-      if (isSingleScore) {
-        result[keys[i]] = possibleVauluesArray;
-      }
-    }
-  }
-  return result;
-}
-
-function _getNumericScore(score) {
-  let filteredScore = score.replace("%", "");
-  if (!isNaN(filteredScore)) {
-    return parseInt(filteredScore);
-  } else return -1;
 }
 
 function _getDetails(detailsArray) {
@@ -289,79 +183,6 @@ function _getHyperlinkItem(hyperlinkArray, index, item) {
   return result;
 }
 
-function _getVideoEmbed(videoLink, name) {
-  let result = "";
-  if (videoLink.includes("youtu.be/") || videoLink.includes("youtube.com")) {
-    result = _getVideoEmbedYoutube(videoLink);
-  } else if (videoLink.includes("tiktok")) {
-    result = _getVideoEmbedTikTok(videoLink, name);
-  } else if (videoLink) {
-    result = _getGenericLink(videoLink);
-  }
-  return result;
-}
-
-function _getVideoEmbedYoutube(videoLink) {
-  let videoID = "";
-  if (videoLink && videoLink.includes("youtu.be/")) {
-    videoID = videoLink.split("youtu.be/")[1].split("&")[0];
-  } else if (videoLink && videoLink.includes("youtube.com")) {
-    videoID = videoLink.split("v=")[1].split("&")[0];
-  }
-  if (videoID) {
-    let url = `https://www.youtube.com/embed/${videoID}`;
-    return _getIframe(url, "youtube");
-  } else return "";
-}
-
-function _getVideoEmbedTikTok(videoLink, name) {
-  let videoID = "";
-  if (!videoLink.includes("vm.")) {
-    try {
-      videoID = videoLink.split("/video/")[1].split("?")[0];
-    } catch (e) {
-      _logger(ERROR, `Cannot get TikTok video ID from '${name}'`);
-    }
-  } else {
-    _logger(ERROR, `Short TikTok videos are not supported. Please fix the link for '${name}'`);
-  }
-  if (videoID) {
-    let url = `https://www.tiktok.com/embed/v3/${videoID}`;
-    return _getIframe(url, "tiktok")
-  } else return "";
-}
-
-function _getSpotifyEmbed(link) {
-  let typeAndID = link.split("spotify.com/")[1].split("?")[0];
-  return `<iframe class="spotify" style="border-radius:12px" src="https://open.spotify.com/embed/${typeAndID}?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
-}
-
-function _getIframe(url, iframeClass = "") {
-  if (url) {
-    let classItem = iframeClass ? `class="${iframeClass}"` : "";
-    return `<br><iframe ${classItem} src="${url}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-  } else return "";
-}
-
-function _getGenericLink(videoLink) {
-  return `<a href="${videoLink}">${_extractDomain(videoLink)}</a>`;
-}
-
-function _extractDomain(url) {
-  var domain;
-  if (url.indexOf("://") > -1) {
-    domain = url.split('/')[2];
-  } else {
-    domain = url.split('/')[0];
-  }
-
-  domain = domain.split(':')[0];
-  domain = domain.replace("www.", "");
-  domain = domain.split('.')[0];
-
-  return _firstCharToUpperCase(domain);
-}
-
 function _getNameHyperlinkHTML(name, hyperlink) {
   if (hyperlink) {
     return `<a id="title" href="${hyperlink}" target="_blank">${name}</a>`
@@ -369,8 +190,19 @@ function _getNameHyperlinkHTML(name, hyperlink) {
 }
 
 // ======= SETTERS =======
-function _openOrClosePlaceID(id) {
-  $('#collapse' + id).collapse('toggle')
+function _interactWithAccordion(i) {
+  const div = $('#collapse-' + i);
+  
+  if (div && div.hasClass('opened')) {
+    div.collapse('toggle');
+    div.removeClass('opened');
+    _unloadMedia(i);
+  } else if (div && !div.hasClass('opened')) {
+    div.addClass('opened');
+    _loadMedia(i);
+    div.collapse('toggle');
+  }
+  
 }
 
 function _setInnerHTML(result) {
@@ -379,17 +211,17 @@ function _setInnerHTML(result) {
     resultText += `
     <div id="accordion">
       <div class="card">
-        <div id="headerP" onclick=_openOrClosePlaceID(${i})>
-          <div class="card-header" id="heading${i}">
+        <div id="headerP" onclick=_interactWithAccordion(${i})>
+          <div class="card-header" id="heading-${i}">
             <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true"
-                aria-controls="collapse${i}">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-${i}" aria-expanded="true"
+                aria-controls="collapse-${i}">
                 ${result[i].nome + " " + result[i].nameEmojis}
                 </button></h5>
             </div>
-            <div style="background-color: ${result[i].cor};" class="score" id="score${i}">${result[i].nota}</div>
+            <div style="background-color: ${result[i].cor};" class="score" id="score-${i}">${result[i].nota}</div>
         </div>
-        <div id="collapse${i}" class="collapse collapsed" aria-labelledby="heading${i}" data-parent="#accordion">
+        <div id="collapse-${i}" class="collapse collapsed" aria-labelledby="heading-${i}" data-parent="#accordion">
           <div class="card-body" id="pText${i}">
             ${_getNameHyperlinkHTML(result[i].nome, result[i].nameHyperlink)}
             <div class="subtitle">
@@ -398,7 +230,7 @@ function _setInnerHTML(result) {
               <br>
             </div>
             ${result[i].descricao}
-            ${result[i].mediaHyperlink}
+            <div id="media-${i}"></div>
           </div>
         </div>
       </div>
