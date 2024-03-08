@@ -89,6 +89,7 @@
 - 🐞 Correção de ":" quando título não é preenchido;
 - 🐞 Corrreção de problema no carregamento de lineup;
 - 📈 Melhoria de performance em destinos.html;
+  - Restringir carregamento de embeds para apenas quando o accordeon é aberto
 - 🐞 Correção de ícone do TripViewer em destinos.html estar indo para a home e dentro do lightbox;
 - 📈 Melhor organização de JavaScript relacionados a destinos.html
 
