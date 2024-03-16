@@ -23,13 +23,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     Promise.all([_getConfig(), _getSingleData(type)])
       .then(([configData, firestoreData]) => {
-        CONFIG = configData;
-        FIRESTORE_DATA = firestoreData;
-        console.log('Dados do Firestore Database carregados com sucesso');
-        _start();
-        _mainLoad();
-        _adjustPortfolioHeight();
-        _refreshFilters();
+
+        if (getErrorMsg) {
+          const permission = getErrorMsg.includes('Missing or insufficient permissions')
+          const msg = permission ? '<br>O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.' : '';
+          const innerMsg = permission ? '' : getErrorMsg;
+          _displayErrorMessage(innerMsg, msg);
+          _stopLoadingScreen();
+        } else {
+          CONFIG = configData;
+          FIRESTORE_DATA = firestoreData;
+          console.log('Dados do Firestore Database carregados com sucesso');
+          _start();
+          _mainLoad();
+          _adjustPortfolioHeight();
+          _refreshFilters();
+        }
+
         $('body').css('overflow', 'auto');
       })
   } catch (error) {

@@ -10,6 +10,7 @@
 - ❓: Sem solução aparente
 
 ## Doing
+- 🐞 Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
 
 ## To-Do
 
@@ -93,6 +94,8 @@
   - Reeditar (sem fundo)
   - Home (cinza)
   - Visualizar (roxo);
+- 🏆 Criação de mensagem de "Documento Privado"
+- 🐞 Correção de embeds de destino.html estarem fora de ordem
 
 ### Fevereiro 2024
 

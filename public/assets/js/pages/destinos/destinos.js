@@ -1,7 +1,5 @@
 // ======= Destinations HTML JS =======
 
-var MEDIA_HYPERLINKS = [];
-
 // ======= LOADERS =======
 function _loadP() {
   _loadVisibilityPasseio();
@@ -104,7 +102,7 @@ function _loadP() {
         nota = novo ? novo : "";
       }
 
-      _loadEmbed(embed, nome, nomeHyperlink);
+      _loadEmbed(embed, nome, nomeHyperlink, i);
 
       let isSpotify = _isSpotify(nomeHyperlink);
       if (isSpotify && !embed) {
@@ -114,6 +112,7 @@ function _loadP() {
       }
 
       innerResult = {
+        "id": i,
         "nome": nome,
         "nameEmojis": nameEmojis,
         "nota": nota,
@@ -190,7 +189,7 @@ function _getNameHyperlinkHTML(name, hyperlink) {
 }
 
 // ======= SETTERS =======
-function _interactWithAccordion(i) {
+function _interactWithAccordion(i, id) {
   const div = $('#collapse-' + i);
   
   if (div && div.hasClass('opened')) {
@@ -199,7 +198,7 @@ function _interactWithAccordion(i) {
     _unloadMedia(i);
   } else if (div && !div.hasClass('opened')) {
     div.addClass('opened');
-    _loadMedia(i);
+    _loadMedia(i, id);
     div.collapse('toggle');
   }
   
@@ -211,7 +210,7 @@ function _setInnerHTML(result) {
     resultText += `
     <div id="accordion">
       <div class="card">
-        <div id="headerP" onclick=_interactWithAccordion(${i})>
+        <div id="headerP" onclick=_interactWithAccordion(${i},${result[i].id})>
           <div class="card-header" id="heading-${i}">
             <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-${i}" aria-expanded="true"

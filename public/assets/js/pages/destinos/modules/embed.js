@@ -1,4 +1,6 @@
-function _loadEmbed(embed, nome, nomeHyperlink) {
+var MEDIA_HYPERLINKS = {};
+
+function _loadEmbed(embed, nome, nomeHyperlink, i) {
   let result = "";
   
   if (embed) {
@@ -7,13 +9,13 @@ function _loadEmbed(embed, nome, nomeHyperlink) {
     result = _getSpotifyEmbed(nomeHyperlink);
   }
 
-  MEDIA_HYPERLINKS.push(result);
+  MEDIA_HYPERLINKS[i] = result;
 }
 
-function _loadMedia(i) {
+function _loadMedia(i, id) {
   div = document.getElementById(`media-${i}`);
   if (div) {
-    div.innerHTML = MEDIA_HYPERLINKS[i];
+    div.innerHTML = MEDIA_HYPERLINKS[id];
   }
 }
 

@@ -23,7 +23,7 @@ function _stopLoadingScreen() {
 }
 
 // ======= ERROR MESSAGE =======
-function _displayErrorMessage(errorMessage = "") {
+function _displayErrorMessage(errorMessage = "", customMessage) {
   const preloader = document.getElementById('preloader');
 
   if (preloader) {
@@ -37,12 +37,17 @@ function _displayErrorMessage(errorMessage = "") {
     errorTitle.innerText = "Erro ao carregar a página 🙁";
     errorText.appendChild(errorTitle);
     const errorDescription = document.createElement('p');
-    errorDescription.innerHTML = "Não foi possível carregar a página. <a href=\"mailto:gabriel.o.favero@live.com\">Contate o administrador</a> para solucionar o problema.";
+    errorDescription.innerHTML = customMessage || "Não foi possível carregar a página. <a href=\"mailto:gabriel.o.favero@live.com\">Contate o administrador</a> para solucionar o problema.";
     errorText.appendChild(errorDescription);
 
-    const stackTrace = (new Error()).stack;
-    let errorLocation = stackTrace.split('\n')[2];
-    errorLocation = errorLocation.split("/")[errorLocation.split("/").length - 1]
+
+    let errorLocation = "";
+
+    if (errorMessage) {
+      const stackTrace = (new Error()).stack;
+      errorLocation = stackTrace.split('\n')[2];
+      errorLocation = errorLocation.split("/")[errorLocation.split("/").length - 1]
+    }
 
     const errorMessageWithLocation = errorMessage + " " + errorLocation;
     const errorMessageElement = document.createElement('p');

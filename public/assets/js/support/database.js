@@ -1,3 +1,5 @@
+var getErrorMsg = "";
+
 // Constructors
 function _buildDatabaseObject(success, data, message = "") {
   return ({
@@ -23,6 +25,7 @@ async function _get(path) {
     }
   } catch (e) {
     _logger(ERROR, e.message);
+    getErrorMsg = e.message;
     return;
   }
 
