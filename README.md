@@ -11,7 +11,6 @@
 
 ## Doing
 
-
 ## To-Do
 
 ### Prioridade Alta
@@ -24,9 +23,7 @@
   - Verificar se é possível;
 - 📈 Bloqueio upload;
   - Já está parcialmente implementado
-- ⚔️ Melhorias Back-End.
-  - Código duplicado, Code smells e otimizações (Implementar Sonar);
-  - Verificar viabilidade e, se possível, implementar React.js
+- 🐞 Correção de dados de lineup não serem salvos se desabilitado
 
 ### Prioridade Média
 
@@ -42,10 +39,6 @@
   - Ordenar por data (crescente) em viagens;
   - Adicionar Viagens anteriores em viagens;
   - Ordernar por data de atualização em Destinos e Listagens
-- 🏆 Criação de botões triplos no modal quando salvar
-  - Reeditar (sem fundo)
-  - Home (cinza)
-  - Visualizar (roxo);
 - ⚔️ Implementação: Lista de desejos;
   - Procurar template na web e aplicar (colocar fonte nos créditos)
 - ⚔️ Implementação: Gastos;
@@ -60,6 +53,9 @@
   - 🚦Aguardando template do Guilherme
 - ⚔️ Novo Front-End: Index.html.
   - 🚦Aguardando template do Guilherme
+- ⚔️ Melhorias Back-End.
+  - Código duplicado, Code smells e otimizações (Implementar Sonar);
+  - Verificar viabilidade e, se possível, implementar React.js
 
 ### Prioridade Baixa
 
@@ -92,6 +88,11 @@
   - Restringir carregamento de embeds para apenas quando o accordeon é aberto
 - 🐞 Correção de ícone do TripViewer em destinos.html estar indo para a home e dentro do lightbox;
 - 📈 Melhor organização de JavaScript relacionados a destinos.html
+- 🐞 Correção de erros de CSS causados por unificação de CSSs de edição
+- 🏆 Criação de botões triplos no modal quando salvar
+  - Reeditar (sem fundo)
+  - Home (cinza)
+  - Visualizar (roxo);
 
 ### Fevereiro 2024
 
@@ -124,7 +125,7 @@
 - 🏆 Criação de suporte a links personalizáveis;
 - 🏆 Criação de Set para links personalizáveis;
 - 🏆 Criação de modo ativo/inativo em links, imagens e cores;
-  - para não perder os dados do user caso ele só queira mudar a exibição;
+  - Para não perder os dados do user caso ele só queira mudar a exibição;
 - 📈 Redução do CSS em modo escuro;
 - 📈 Edição de caixa de perfil no index para tratar strings muito longas;
 - 🐞 Ajuste de Links para a home.

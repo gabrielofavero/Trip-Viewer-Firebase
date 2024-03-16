@@ -53,33 +53,46 @@ function _loadEventListeners() {
   document.getElementById('restaurantes-adicionar').addEventListener('click', () => {
     _addRestaurantes();
   });
+
   document.getElementById('lanches-adicionar').addEventListener('click', () => {
     _addLanches();
   });
+
   document.getElementById('saidas-adicionar').addEventListener('click', () => {
     _addSaidas();
   });
+
   document.getElementById('turismo-adicionar').addEventListener('click', () => {
     _addTurismo();
   });
+
   document.getElementById('lojas-adicionar').addEventListener('click', () => {
     _addLojas();
   });
+
   document.getElementById('salvar').addEventListener('click', () => {
     _setDestino();
   });
+
   document.getElementById('re-editar').addEventListener('click', () => {
     _reEdit(destinosID, 'destinos', wasSaved);
   });
+
   document.getElementById('cancelar').addEventListener('click', () => {
     _closeModal();
   });
+
+  document.getElementById('home').addEventListener('click', () => {
+    window.location.href = `index.html`;
+  });
+
   document.getElementById('apagar').addEventListener('click', async () => {
     if (destinosID) {
       await _deleteUserObjectDB(destinosID, "destinos");
       window.location.href = `index.html`;
     }
   });
+
   document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });

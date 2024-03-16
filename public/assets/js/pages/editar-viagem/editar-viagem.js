@@ -82,6 +82,18 @@ function _loadEventListeners() {
     window.location.href = `index.html`;
   });
 
+  document.getElementById('home').addEventListener('click', () => {
+    window.location.href = `index.html`;
+  });
+
+  document.getElementById('visualizar').addEventListener('click', () => {
+    if (tripID) {
+      window.location.href = `viagem.html?v=${tripID}`;
+    } else {
+      window.location.href = `index.html`;
+    }
+  });
+
   document.getElementById('inicio').addEventListener('input', () => {
     _loadProgramacao();
     document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);

@@ -60,6 +60,18 @@ function _loadEventListeners() {
     window.location.href = `index.html`;
   });
 
+  document.getElementById('home').addEventListener('click', () => {
+    window.location.href = `index.html`;
+  });
+
+  document.getElementById('visualizar').addEventListener('click', () => {
+    if (listID) {
+      window.location.href = `viagem.html?l=${tripID}`;
+    } else {
+      window.location.href = `index.html`;
+    }
+  });
+
   document.getElementById('editores-adicionar').addEventListener('click', () => {
     _addEditores();
   });

@@ -1469,17 +1469,29 @@ details summary::-webkit-details-marker {
   margin-left: 20px;
 }
 
-.btn-purple {
+.btn-basic {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #5859a7;
+  color: #5859a7;
+  background: none;
+}
+
+.btn-purple, 
+.btn-basic:hover, 
+.btn-basic:focus {
   background: #5859a7;
   color: #fff;
 }
 
-.btn-purple:hover {
+.btn-purple:hover, 
+.btn-purple:focus {
   background: #505197;
   color: #fff;
 }
 
-.demo-page, .demo-page-navigation, #dark-mode {
+.demo-page, 
+.demo-page-navigation, #dark-mode {
   color: #1f2937;
 }
 
@@ -1651,8 +1663,9 @@ details summary::-webkit-details-marker {
   }
 }
 
-.btn-margin {
-  margin-left: 20px;
+.btn-format {
+  margin: 5px;
+  width: 95px;
 }
 
 #delete-title {

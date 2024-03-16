@@ -154,11 +154,20 @@ details .toggle-code:hover {
   background: #404040;
 }
 
-.btn-purple {
-  background: #7f75b6;
+.btn-basic {
+  border-color: #E2E2E2;
+  color: #E2E2E2;
 }
 
-.btn-purple:hover {
+.btn-purple,
+.btn-basic:hover, 
+.btn-basic:focus {
+  background: #7f75b6;
+  color: #E2E2E2;
+}
+
+.btn-purple:hover,
+.btn-purple:focus {
   background: #665e94;
 }
 
