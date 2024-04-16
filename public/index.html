@@ -141,12 +141,16 @@
         <div id="trip-view-title">Visualizar Viagem</div>
         <input id="trip-view-input" type="text" placeholder="Código da Viagem">
         <br>
-        <div id="trip-view-reminder" class="trip-view-text"> <i class='red'>*</i> Insira o código da viagem para continuar <br> (Exemplo:
+        <div id="trip-view-reminder" class="trip-view-text"> <i class='red'>*</i> Insira o código da viagem para
+          continuar <br> (Exemplo:
           g4nx5cyNKW2geSnQVXX8)</div>
-        <div id="trip-view-invalid" class="trip-view-text"> <i class='red'>*</i> Código Inválido. Insira o código da viagem para continuar <br> (Exemplo:
+        <div id="trip-view-invalid" class="trip-view-text"> <i class='red'>*</i> Código Inválido. Insira o código da
+          viagem para continuar <br> (Exemplo:
           g4nx5cyNKW2geSnQVXX8)</div>
-        <div id="trip-view-private" class="trip-view-text"> <i class='red'>*</i> A viagem selecionada está definida como privada</div>
-        <div id="trip-view-error" class="trip-view-text"> <i class='red'>*</i> Erro ao tentar localizar viagem. Contate o administrador do sistema</div>
+        <div id="trip-view-private" class="trip-view-text"> <i class='red'>*</i> A viagem selecionada está definida como
+          privada</div>
+        <div id="trip-view-error" class="trip-view-text"> <i class='red'>*</i> Erro ao tentar localizar viagem. Contate
+          o administrador do sistema</div>
         <button id="trip-view-continue" class="btn btn-purple" type="button">Prosseguir</button>
       </div>
 
@@ -155,8 +159,9 @@
         <div class="content-list">
           <div id="sem-viagens">Sem Viagens Cadastradas 😔</div>
           <div id="dados-viagens"></div>
-          <div class="new" id="new-viagem">Nova Viagem <i class="iconify add" data-icon="gridicons:add-outline"></i></div>
         </div>
+        <button id="new-viagem" class="btn btn-purple" type="button"><i class="iconify add"
+            data-icon="gridicons:add-outline"></i>Nova Viagem</button>
       </div>
 
       <div class="userList-box" id="destinos-box" style="display: none">
@@ -164,10 +169,9 @@
         <div class="content-list">
           <div id="sem-destinos">Sem Destinos Cadastrados 😔</div>
           <div id="dados-destinos"></div>
-          <div class="new" id="new-destino">Novo Destino <i class="iconify add"
-              data-icon="gridicons:add-outline"></i>
-          </div>
         </div>
+        <button id="new-destino" class="btn btn-purple" type="button"><i class="iconify add"
+            data-icon="gridicons:add-outline"></i>Novo Destino</button>
       </div>
 
       <div class="userList-box" id="listagens-box" style="display: none">
@@ -175,10 +179,9 @@
         <div class="content-list">
           <div id="sem-listagens">Sem Listas Cadastradas 😔</div>
           <div id="dados-listagens"></div>
-          <div class="new" id="new-listagem">Nova Lista de Destinos <i class="iconify add"
-              data-icon="gridicons:add-outline"></i>
-          </div>
         </div>
+        <button id="new-listagem" class="btn btn-purple" type="button"><i class="iconify add"
+            data-icon="gridicons:add-outline"></i>Nova Lista de Destinos</button>
       </div>
 
       <div class="settings-box" id="settings-box" style="display: none">
@@ -217,7 +220,11 @@
         </div>
 
         <button id="settings-sign-out" class="btn btn-purple" onclick="_signOut()" type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z">
+            </path>
+          </svg>
           Sair da Conta
         </button>
       </div>
@@ -269,7 +276,7 @@
       <div class="credits">
         Site Feito por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. Logo adaptado de <a
           href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph">studiogstock</a>
-         e fundo de <a
+        e fundo de <a
           href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph">jcomp</a>
         no Freepik
       </div>
@@ -310,7 +317,7 @@
   <script src="https://apis.google.com/js/api.js"></script>
 
   <!-- App JS Files -->
-  <script src="assets/js/main/main.js"></script>  
+  <script src="assets/js/main/main.js"></script>
   <script src="assets/js/support/animations.js"></script>
   <script src="assets/js/support/logger.js"></script>
   <script src="assets/js/support/date.js"></script>

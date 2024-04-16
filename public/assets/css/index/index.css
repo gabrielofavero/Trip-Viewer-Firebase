@@ -649,18 +649,6 @@ section {
   margin-top: 15px;
 }
 
-.new {
-  display: flex;
-  cursor: pointer;
-  width: 100%;
-  height: 30px;
-  align-items: flex-end;
-  justify-content: flex-end;
-  text-align: right;
-  color: #4F5051;
-  margin: 15px;
-}
-
 #new-viagem:hover,
 .user-data-icon:hover,
 .index-buttons:hover,
@@ -689,8 +677,10 @@ section {
   top: 0;
 }
 
-.new {
-  text-align: left
+#new-viagem,
+#new-destino,
+#new-listagem {
+  margin-top: 20px;
 }
 
 @media (max-height: 896px) {
