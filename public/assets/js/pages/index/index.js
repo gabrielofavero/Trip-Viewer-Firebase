@@ -22,7 +22,7 @@ function _loadListenersIndex() {
   document.getElementById('google-login-button').addEventListener('click', function () {
     _signInGoogle();
   });
-  
+
   document.getElementById('myTrips').addEventListener('click', function () {
     _openIndexPage('viagens', 0, 1);
   });
@@ -151,8 +151,18 @@ async function _loadUserDataList(type) {
 
 function _loadUserDataHTML(data, type) {
   const div = document.getElementById(`dados-${type}`);
-
   let text = '';
+
+  if (type === 'viagens') {
+    data.sort((a, b) => {
+      return _convertFromFirestoreDate(b.inicio) - _convertFromFirestoreDate(a.inicio);
+    });
+  } else if (data[0].ultimaAtualizacao) {
+    data.sort((a, b) => {
+      return new Date(b.ultimaAtualizacao).getTime() - new Date(a.ultimaAtualizacao).getTime();
+    });
+  }
+
   for (let i = 0; i < data.length; i++) {
     let secondaryDiv = '';
     let visualizarDiv = '';
@@ -166,10 +176,8 @@ function _loadUserDataHTML(data, type) {
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
         break;
       case 'destinos':
-        secondaryDiv = `<div class="user-data-item-date">${data[i].ultimaAtualizacao}</div>`;
-        break;
       case 'listagens':
-        secondaryDiv = `<div class="user-data-item-date">${data[i].subtitulo || data[i].ultimaAtualizacao}</div>`;
+        secondaryDiv = `<div class="user-data-item-date">${data[i].ultimaAtualizacaoText}</div>`;
         break;
       default:
         break;
