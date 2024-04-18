@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Viagem</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Apple Data -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Viagem" />
+    <meta name="theme-color" content="#fff">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="msapplication-TileColor" content="#e4ebdb">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../vendor/aos/aos.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="../css/viagem/viagem.css" rel="stylesheet">
+
+
+    <style>
+        .hotel-box {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .hotel-img {
+            width: 150px;
+            position: relative;
+            background-image: url('https://www.citystyleandliving.com/wordpress/wp-content/uploads/2019/01/outside.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hotel-img::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 10%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        .hotel-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .hotel-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .left-title {
+            flex: 3;
+        }
+
+        .right-title {
+            flex: 2;
+            text-align: right;
+            align-self: flex-start;
+            font-weight: bold;
+            color: #505253;
+        }
+
+        .map-mobile {
+            display: none;
+        }
+
+        .hotel-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #505253;
+        }
+
+        .hotel-address {
+            margin-top: 5px;
+            font-size: 13px;
+            color: #4F5051;
+        }
+
+        .hotel-map {
+            font-size: 13px;
+            margin-bottom: 5px;
+            margin-left: 17px;
+        }
+
+        .hotel-text {
+            font-size: 13px;
+            color: #3A3838;
+        }
+
+        .hotel-check-in,
+        .hotel-check-out {
+            margin-bottom: 5px;
+        }
+
+        .color-icon {
+            color: #4299E1
+        }
+
+        @media (max-width: 800px) {
+            .hotel-box {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hotel-box {
+                flex-direction: column;
+            }
+
+            .hotel-img {
+                height: 150px;
+                width: 100%;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .hotel-title {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+
+            .left-title,
+            .right-title {
+                flex-basis: 50%;
+                flex-grow: 1;
+                text-align: left;
+            }
+
+            .right-title {
+                text-align: right;
+                font-weight: bold;
+                color: #505253;
+            }
+
+            .hotel-content {
+                padding: 20px;
+            }
+
+            .map-desktop {
+                display: none;
+            }
+
+            .map-mobile {
+                display: block;
+                border-bottom: 1px solid #ddd;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ======= Hero ======= -->
+
+    <main id="main" style="margin-top: 50px;">
+
+        <div class="hotel-box">
+            <div class="hotel-img"></div>
+            <div class="hotel-content">
+                <div class="hotel-title">
+                    <div class="left-title">
+                        <div class="hotel-name">Hotel Ibis Ibirapuera Plus+</div>
+                        <div class="map-desktop">
+                            <div class="hotel-address"><i class="bx bxs-map color-icon"></i> Avenida dos Imarés, 288
+                                Apto 221</div>
+                            <div class="hotel-map"><a href="#">Mostrar no Mapa</a></div>
+                        </div>
+                    </div>
+                    <div class="right-title">
+                        <div class="hotel-code">#ABC123</div>
+                        <div class="hotel-nights">2 noites</div>
+                    </div>
+                </div>
+                <div class="hotel-text">
+                    <div class="map-mobile">
+                        <div class="hotel-address"><i class="bx bxs-map color-icon"></i> Avenida dos Imarés, 288
+                            Apto 221</div>
+                        <div class="hotel-map"><a href="#">Mostrar no Mapa</a></div>
+                    </div>
+                    <div class="hotel-check-in"><i class="bi bi-chevron-right color-icon"></i><strong>Check-in:
+                        </strong> 14:00, 12/03/2025</div>
+                    <div class="hotel-check-out"><i class="bi bi-chevron-right color-icon"></i><strong>Check-out:
+                        </strong> 12:00, 14/03/2025</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Vendor JS Files -->
+    <script src="../vendor/aos/aos.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../vendor/php-email-form/validate.js"></script>
+    <script src="../vendor/typed.js/typed.min.js"></script>
+    <script src="../vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <script src="../js/main/main.js"></script>
+    <script src="../js/support/logger.js"></script>
+    <script src="../js/support/loading.js"></script>
+</body>
+
+</html>
