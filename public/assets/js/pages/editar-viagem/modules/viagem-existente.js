@@ -272,7 +272,7 @@ function _loadHospedagemData(FIRESTORE_DATA) {
 
             const link = FIRESTORE_DATA.hospedagens.links[j];
             if (link) {
-                document.getElementById(`link-hospedagem-${i}`).value = link;
+                document.getElementById(`link-reserva-hospedagem-${i}`).value = link;
             }
 
             hospedagemNome.addEventListener('change', function () {

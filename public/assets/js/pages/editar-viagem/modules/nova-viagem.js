@@ -301,12 +301,41 @@ function _addHospedagem() {
           <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
           <input id="reserva-hospedagem-${i}" type="text" placeholder="#ABC123" />
         </div>
+
+        <div class="nice-form-group">
+          <label>Descrição <span class="opcional"> (Opcional)</span></label>
+          <input id="reserva-descricao-${i}" type="text" placeholder="Quarto Duplo, camas King" />
+        </div>
   
+        <div class="nice-form-group">
+          <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
+          <input id="link-reserva-hospedagem-${i}" type="url" placeholder="www.google.com" value=""
+            class="icon-right" />
+        </div>
+
+        <div class="nice-form-group customization-box" id="hospedagem-${i}-box">
+          <label>Imagem <span class="opcional"> (Opcional)</span></label>
+          <input id="upload-hospedagem-${i}" type="file" accept=".jpg" />
+          <p id="upload-hospedagem-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</p>
+        </div>
+
+        <div class="nice-form-group">
+          <input id="link-hospedagem-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
+            class="icon-right">
+        </div>
+
+        <fieldset class="nice-form-group" id="upload-checkbox-hospedagem-${i}">
           <div class="nice-form-group">
-            <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="link-hospedagem-${i}" type="url" placeholder="www.google.com" value=""
-              class="icon-right" />
+            <input type="radio" name="type-hospedagem-${i}" id="enable-link-hospedagem-${i}" checked>
+            <label for="enable-link-hospedagem-${i}">Fornecer link</label>
           </div>
+
+          <div class="nice-form-group">
+            <input type="radio" name="type-hospedagem-${i}" id="enable-upload-hospedagem-${i}">
+            <label for="enable-upload-hospedagem-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+          </div>
+        </fieldset>
+          
         </div>
   
         <div class="deletar-box">
@@ -324,6 +353,10 @@ function _addHospedagem() {
       `);
 
   _addDragListeners('hospedagem');
+  _loadImageSelector(`hospedagem-${i}`);
+  document.getElementById(`upload-hospedagem-${i}`).addEventListener('change', function (event) {
+    _checkFileSize(`upload-hospedagem-${i}`);
+  });
 }
 
 function _addDestinos() {
@@ -569,7 +602,7 @@ function _addGaleria() {
   _loadImageSelector(`galeria-${i}`);
 
   document.getElementById(`upload-galeria-${i}`).addEventListener('change', function (event) {
-    _checkFileSize(`galeria-${i}`);
+    _checkFileSize(`upload-galeria-${i}`);
   });
 
   document.getElementById(`galeria-titulo-${i}`).addEventListener('change', function () {

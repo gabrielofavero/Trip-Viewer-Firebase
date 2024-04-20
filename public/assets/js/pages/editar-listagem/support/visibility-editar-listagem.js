@@ -1,4 +1,4 @@
-function _loadEditModule(type, loadListener=true) {
+function _loadEditModule(type, loadListener = true) {
     const habilitado = document.getElementById(`habilitado-${type}`);
     if (habilitado.checked) {
         _showContent(type);
@@ -62,13 +62,13 @@ function _loadImageSelector(type) {
 
     const link = document.getElementById(`link-${type}`);
     const upload = document.getElementById(`upload-${type}`);
-    
+
     if (checkboxLink.checked) {
         link.style.display = 'block';
         upload.style.display = 'none';
     } else {
         link.style.display = 'none';
-        upload.style.display = 'block'; 
+        upload.style.display = 'block';
     }
 
     checkboxLink.addEventListener('change', function () {
@@ -77,7 +77,7 @@ function _loadImageSelector(type) {
             upload.style.display = 'none';
         } else {
             link.style.display = 'none';
-            upload.style.display = 'block'; 
+            upload.style.display = 'block';
         }
     });
     checkboxUpload.addEventListener('change', function () {
@@ -86,7 +86,7 @@ function _loadImageSelector(type) {
             upload.style.display = 'block';
         } else {
             link.style.display = 'block';
-            upload.style.display = 'none'; 
+            upload.style.display = 'none';
         }
     });
 }
@@ -101,7 +101,7 @@ function _removeImageSelectorListeners(type) {
             upload.style.display = 'none';
         } else {
             link.style.display = 'none';
-            upload.style.display = 'block'; 
+            upload.style.display = 'block';
         }
     });
     checkboxUpload.removeEventListener('change', function () {
@@ -110,7 +110,7 @@ function _removeImageSelectorListeners(type) {
             upload.style.display = 'block';
         } else {
             link.style.display = 'block';
-            upload.style.display = 'none'; 
+            upload.style.display = 'none';
         }
     });
 
@@ -125,8 +125,8 @@ function _loadLogoSelector() {
     const uploadLight = document.getElementById(`upload-logo-light`);
 
     const linkDark = document.getElementById(`link-logo-dark`);
-    const uploadDark = document.getElementById(`upload-logo-dark`); 
-    
+    const uploadDark = document.getElementById(`upload-logo-dark`);
+
     if (checkboxLink.checked) {
         linkLight.style.display = 'block';
         linkDark.style.display = 'block';
@@ -145,13 +145,13 @@ function _loadLogoSelector() {
         if (checkboxLink.checked) {
             linkLight.style.display = 'block';
             linkDark.style.display = 'block';
-    
+
             uploadLight.style.display = 'none';
             uploadDark.style.display = 'none';
         } else {
             linkLight.style.display = 'none';
             linkDark.style.display = 'none';
-    
+
             uploadLight.style.display = 'block';
             uploadDark.style.display = 'block';
         }
@@ -160,13 +160,13 @@ function _loadLogoSelector() {
         if (checkboxUpload.checked) {
             linkLight.style.display = 'none';
             linkDark.style.display = 'none';
-    
+
             uploadLight.style.display = 'block';
             uploadDark.style.display = 'block';
         } else {
             linkLight.style.display = 'block';
             linkDark.style.display = 'block';
-    
+
             uploadLight.style.display = 'none';
             uploadDark.style.display = 'none';
         }

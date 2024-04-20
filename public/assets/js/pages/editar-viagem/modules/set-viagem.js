@@ -305,7 +305,7 @@ function _buildHospedagemObject() {
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
         result.reservas.push(valueReserva);
 
-        const divLink = document.getElementById(`link-hospedagem-${j}`);
+        const divLink = document.getElementById(`link-reserva-hospedagem-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
     }

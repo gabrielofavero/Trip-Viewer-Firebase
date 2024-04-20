@@ -3,14 +3,17 @@ var tripID;
 var FIRESTORE_DATA;
 var wasSaved = false;
 var changedOnce = false;
+var PERMISSOES;
+
 _startLoadingScreen();
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
   try {
     _main();
 
     const urlParams = new URLSearchParams(window.location.search);
     tripID = urlParams.get('v');
+    PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
     _loadHabilitados();

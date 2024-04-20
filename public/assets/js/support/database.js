@@ -388,3 +388,12 @@ async function _getUserList(type) {
     _logger(ERROR, "Usuário não logado");
   }
 }
+
+async function _getPermissoes() {
+  // Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
+  const uid = await _getUID();
+  if (uid) {
+    const userData = await _get(`usuarios/${uid}`);
+    return userData?.permissoes;
+  }
+}

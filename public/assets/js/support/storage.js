@@ -95,11 +95,12 @@ async function _uploadLogoDark(id, dir) {
 function _checkFileSize(id) {
   const fileInput = document.getElementById(id);
   const file = fileInput.files[0];
-  
-  if (file.size > 1048576) { // 1MB = 1 * 1024 * 1024 = 1048576 bytes
+
+  if ((PERMISSOES && PERMISSOES['tamanhoUploadIrrestrito'] === true) ||
+    (file.size <= 1048576)) { // 1MB = 1 * 1024 * 1024 = 1048576 bytes
+    document.getElementById(`${id}-size-message`).style.display = 'none'
+  } else {
     document.getElementById(`${id}-size-message`).style.display = 'block';
     fileInput.value = '';
-  } else {
-    document.getElementById(`${id}-size-message`).style.display = 'none';
   }
 }

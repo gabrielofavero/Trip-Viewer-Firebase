@@ -10,20 +10,18 @@
 - ❓: Sem solução aparente
 
 ## Doing
-- 🐞 Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
+
+- 🏆 Criação de boxes de visualização;
+  - Hospedagens, Transportes;
+  - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
 
 ## To-Do
 
 ### Prioridade Alta
 
 - 🏆 Criação de opção de arrastar accordions (Mobile);
-- 🏆 Criação de boxes de visualização;
-  - Hospedagens, Transportes;
-  - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
 - 📈 Ícone Customizado em viagens.html;
   - Verificar se é possível;
-- 📈 Bloqueio upload;
-  - Já está parcialmente implementado
 - 🐞 Correção de dados de lineup não serem salvos se desabilitado
 
 ### Prioridade Média
@@ -55,8 +53,10 @@
 - ⚔️ Novo Front-End: Index.html.
   - 🚦Aguardando template do Guilherme
 - ⚔️ Melhorias Back-End.
-  - Código duplicado, Code smells e otimizações (Implementar Sonar);
-  - Verificar viabilidade e, se possível, implementar React.js
+  - Código duplicado;
+  - Code smells;
+  - Refatorações;
+  - Sonarqube.
 
 ### Prioridade Baixa
 
@@ -78,6 +78,13 @@
 - 🏆 Criação de mensagem customizada para erro no upload de imagens.
 
 ## Done
+
+### Abril 2024
+
+- 🐞 Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
+  - Solução Parcial (liberação de permissões)
+- 📈 Bloqueio upload;
+  - Já está parcialmente implementado
 
 ### Março 2024
 
