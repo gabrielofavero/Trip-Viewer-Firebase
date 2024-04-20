@@ -90,6 +90,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
+            min-height: 124px;
         }
 
         .left-text,
@@ -191,6 +192,111 @@
                 order: 3;
             }
         }
+
+        .swiper-pagination {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .swiper-pagination-bullet {
+            width: 8px;
+            height: 8px;
+            background-color: #888;
+            opacity: 0.5;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            background-color: #333;
+        }
+    </style>
+
+    <style>
+        .flight-box {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 600px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            color: #505253;
+        }
+
+        .flight-diagram {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .flight-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding: 15px;
+            justify-content: space-between;
+        }
+
+        .flight-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .left-text,
+        .center-text,
+        .right-text {
+            text-align: center;
+            flex-basis: 33%;
+        }
+
+        .center-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 750px) {
+            .flight-box {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .flight-text {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .flight-text {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+
+            .left-text,
+            .center-text,
+            .right-text {
+                flex-basis: auto;
+                text-align: center;
+                margin: 10px 0;
+            }
+        }
     </style>
 
 </head>
@@ -229,9 +335,57 @@
             </div>
         </div>
 
+        <div class="flight-box" style="margin-top: 50px;">
+            <div class="flight-diagram">
+                <div class="flight-title">
+                    <img class="flight-img"
+                        src="https://upload.wikimedia.org/wikipedia/commons/5/52/Logo_da_Azul_Linhas_A%C3%A9reas_Brasileiras.svg"
+                        style="display: none">
+                    <div class="flight-title-text" style="display: block">Voo de Ida #1</div>
+                    <div class="flight-code" style="display: none">#ABC123</div>
+                </div>
+                <div class="flight-text">
+                    <div class="left-text">
+                        <div class="flight-date" style="display: none">14/11</div>
+                        <div class="flight-time">10:00</div>
+                        <div class="flight-location" style="display: none">Belo Horizonte</div>
+                    </div>
+                    <div class="center-text">
+                        <i class="flight-line">_________</i>
+                        <i class="iconify flight-icon" data-icon="fa-solid:plane"></i>
+                        <div class="flight-duration">15h 14m</div>
+                    </div>
+                    <div class="right-text" id="rt1">
+                        <div class="flight-date" style="display: none">14/11</div>
+                        <div class="flight-time">23:30</div>
+                        <div class="flight-location" style="display: none">Las Vegas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Vendor JS Files -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var swiper = new Swiper('.swiper-container', {
+                speed: 600,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false
+                },
+                slidesPerView: 'auto',
+                pagination: {
+                    el: '.swiper-pagination',
+                    type: 'bullets',
+                    clickable: true
+                }
+            });
+        });
+    </script>
+
     <script src="../vendor/aos/aos.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../vendor/glightbox/js/glightbox.min.js"></script>
@@ -241,6 +395,7 @@
     <script src="../vendor/waypoints/noframework.waypoints.js"></script>
     <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
     <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/swiper/swiper-bundle.min.js"></script>
 
     <script src="https://apis.google.com/js/api.js"></script>
 

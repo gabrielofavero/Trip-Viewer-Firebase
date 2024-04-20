@@ -125,6 +125,10 @@
             color: #3A3838;
         }
 
+        .hotel-check-in {
+            margin-top: 10px;
+        }
+
         .hotel-check-in,
         .hotel-check-out {
             margin-bottom: 5px;
@@ -184,6 +188,12 @@
                 margin-bottom: 5px;
             }
         }
+
+        @media (max-width: 350px) {
+            .hotel-box {
+                word-break: break-all;
+            }
+        }
     </style>
 
 </head>
@@ -194,12 +204,12 @@
 
     <main id="main" style="margin-top: 50px;">
 
-        <div class="hotel-box">
+        <div class="hotel-box" id="hb1">
             <div class="hotel-img"></div>
             <div class="hotel-content">
-                <div class="hotel-title">
+                <div class="hotel-title" id="ht1">
                     <div class="left-title">
-                        <div class="hotel-name">Hotel Ibis Ibirapuera Plus+</div>
+                        <div class="hotel-name">Hotel Ibis Ibirapueraaa asdavasd asdf asd as s</div>
                         <div class="map-desktop">
                             <div class="hotel-address"><i class="bx bxs-map color-icon"></i> Avenida dos Imarés, 288
                                 Apto 221</div>
@@ -207,7 +217,7 @@
                         </div>
                     </div>
                     <div class="right-title">
-                        <div class="hotel-code">#ABC123</div>
+                        <div class="hotel-code">#ABC1231231</div>
                         <div class="hotel-nights">2 noites</div>
                     </div>
                 </div>
@@ -225,6 +235,38 @@
             </div>
         </div>
 
+        <div class="hotel-box" id="hb2" style="margin-top: 50px; align-items: center;">
+            <div class="hotel-img" style="display: none"></div>
+            <div class="hotel-content">
+                <div class="hotel-title">
+                    <div class="left-title">
+                        <div class="hotel-name">Hotel Ibis Ibirapuera Plus+</div>
+                        <div class="map-desktop">
+                            <div class="hotel-address" style="display: none"><i class="bx bxs-map color-icon"></i>
+                                Avenida dos Imarés, 288
+                                Apto 221</div>
+                            <div class="hotel-map" style="display: none"><a href="#">Mostrar no Mapa</a></div>
+                        </div>
+                    </div>
+                    <div class="right-title">
+                        <div class="hotel-code" style="display: none">#ABC123</div>
+                        <div class="hotel-nights">2 noites</div>
+                    </div>
+                </div>
+                <div class="hotel-text">
+                    <div class="map-mobile">
+                        <div class="hotel-address" style="display: none"><i class="bx bxs-map color-icon"></i> Avenida
+                            dos Imarés, 288
+                            Apto 221</div>
+                        <div class="hotel-map" style="display: none"><a href="#">Mostrar no Mapa</a></div>
+                    </div>
+                    <div class="hotel-check-in"><i class="bi bi-chevron-right color-icon"></i><strong>Check-in:
+                        </strong> 14:00, 12/03/2025</div>
+                    <div class="hotel-check-out"><i class="bi bi-chevron-right color-icon"></i><strong>Check-out:
+                        </strong> 12:00, 14/03/2025</div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Vendor JS Files -->
