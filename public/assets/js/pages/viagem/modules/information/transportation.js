@@ -191,6 +191,35 @@ function _getTitleIcon(title) {
   }
 }
 
+function _getFlightBoxIcon(code) {
+  switch (code) {
+    case "voo":
+      return "fa-solid:plane";
+    case "onibus":
+      return "mingcute:bus-2-fill";
+    case "carro":
+      return "fa-solid:car-side";
+    case "moto":
+      return "ri:motorbike-fill";
+    case "bicicleta":
+      return "mingcute:bike-fill";
+    case "metro":
+      return "mdi:metro";
+    case "navio":
+      return "icon-park-solid:sailboat-one";
+    case "helicoptero":
+      return "fa6-solid:helicopter";
+    case "locomotiva":
+      return "cil:locomotive";
+    case "bondinho":
+      return "ph:cable-car-fill";
+    case "trem-bala":
+      return "mingcute:train-fill";
+    default:
+      return "mingcute:rocket-fill";
+  }
+}
+
 function _getTransportationSubtitle(reservas){
   const unique = [...new Set(reservas)];
 

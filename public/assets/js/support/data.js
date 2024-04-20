@@ -133,3 +133,14 @@ function _removeRequired(id) {
     div.removeAttribute('required');
   }
 }
+
+function _getOptionsFromSelect(id) {
+  const selectElement = document.getElementById(id);
+  let optionValues = [];
+
+  for (let i = 0; i < selectElement.options.length; i++) {
+    optionValues.push(selectElement.options[i].value);
+  }
+
+  return optionValues;
+}

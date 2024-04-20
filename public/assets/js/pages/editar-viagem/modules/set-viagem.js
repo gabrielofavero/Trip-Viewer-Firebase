@@ -175,9 +175,9 @@ function _buildTransporteObject() {
         datas: [],
         empresas: [],
         idaVolta: [],
+        links: [],
         pontos: [],
         reservas: [],
-        trajetos: [],
         transportes: [],
         viagem: ""
     }
@@ -211,23 +211,12 @@ function _buildTransporteObject() {
         result.datas.push(data);
         result.transportes.push(document.getElementById(`transporte-codigo-${j}`).value);
 
-        const divEmpresa = document.getElementById(`empresa-${j}`);
-        const valueEmpresa = divEmpresa ? _returnEmptyIfNoValue(divEmpresa.value) : "";
+        const valueEmpresa = _getValueEmpresa(j);
         result.empresas.push(valueEmpresa.toLowerCase());
 
         const divReserva = document.getElementById(`reserva-transp-${j}`);
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
         result.reservas.push(valueReserva);
-
-        const divCidadePartida = document.getElementById(`cidade-partida-${j}`);
-        const valueCidadePartida = divCidadePartida ? _returnEmptyIfNoValue(divCidadePartida.value) : "";
-
-        const divCidadeChegada = document.getElementById(`cidade-chegada-${j}`);
-        const valueCidadeChegada = divCidadeChegada ? _returnEmptyIfNoValue(divCidadeChegada.value) : "";
-
-        if (valueCidadePartida && valueCidadeChegada) {
-            result.trajetos.push(`${valueCidadePartida} → ${valueCidadeChegada}`);
-        }
 
         var pontos = {
             partida: "",
@@ -242,10 +231,29 @@ function _buildTransporteObject() {
         const valuePontoChegada = divPontoChegada ? _returnEmptyIfNoValue(divPontoChegada.value) : "";
         pontos.chegada = valuePontoChegada;
 
+        const divLink = document.getElementById(`link-transp-${j}`);
+        const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
+        result.links.push(valueLink);
+
         result.pontos.push(pontos);
     }
 
     return result;
+}
+
+function _getValueEmpresa(j) {
+    const divSelect = document.getElementById(`empresa-select-${j}`);
+    const divEmpresa = document.getElementById(`empresa-${j}`);
+
+    if (divSelect && divEmpresa) {
+        if (divSelect.value == 'outra' || divSelect.value == 'selecione') {
+            return _returnEmptyIfNoValue(divEmpresa.value);
+        } else {
+            return divSelect.value;
+        }
+    }
+
+    return "";
 }
 
 function _buildHospedagemObject() {

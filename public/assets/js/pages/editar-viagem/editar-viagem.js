@@ -2,6 +2,7 @@ var blockLoadingEnd = false;
 var tripID;
 var FIRESTORE_DATA;
 var wasSaved = false;
+var changedOnce = false;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -97,6 +98,10 @@ function _loadEventListeners() {
   document.getElementById('inicio').addEventListener('input', () => {
     _loadProgramacao();
     document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
+    if (!tripID || (tripID && !changedOnce)) {
+      changedOnce = true;
+      document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
+    }
   });
 
   document.getElementById('fim').addEventListener('change', () => {
@@ -110,7 +115,7 @@ function _loadEventListeners() {
   document.getElementById('logo-tamanho').addEventListener('input', (event) => {
     _formatAltura(event.target.value);
   });
-  
+
   document.getElementById('salvar').addEventListener('click', () => {
     _setViagem();
   });
@@ -134,23 +139,17 @@ function _loadEventListeners() {
     window.location.href = `index.html`;
   });
 
-  document.getElementById('upload-background').addEventListener('change', function(event) {
+  document.getElementById('upload-background').addEventListener('change', function (event) {
     _checkFileSize('upload-background');
   });
 
-  document.getElementById('upload-logo-light').addEventListener('change', function(event) {
+  document.getElementById('upload-logo-light').addEventListener('change', function (event) {
     _checkFileSize('upload-logo-light');
   });
 
-  document.getElementById('upload-logo-dark').addEventListener('change', function(event) {
+  document.getElementById('upload-logo-dark').addEventListener('change', function (event) {
     _checkFileSize('upload-logo-dark');
   });
-}
-
-function _loadNewTrip() {
-  _loadDadosBasicosNewTrip();
-  _loadProgramacao();
-  _loadDestinos();
 }
 
 async function _loadTrip() {

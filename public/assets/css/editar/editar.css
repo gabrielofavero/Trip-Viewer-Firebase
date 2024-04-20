@@ -1550,10 +1550,6 @@ details summary::-webkit-details-marker {
   .flex-input {
     width: 100% !important;
   }
-
-  .time {
-    margin-top: -10px;
-  }
 }
 
 .accordion-button::after {
