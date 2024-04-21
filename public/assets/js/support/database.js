@@ -213,51 +213,6 @@ async function _getVisibility() {
   }
 }
 
-// Viagens
-async function _updateImages(body) {
-  if (await _getUID()) {
-    try {
-      if (body.background || body.logoLight || body.logoDark) {
-        let uploadObject = {};
-
-        if (body.background) {
-          uploadObject['imagem.background'] = body.background;
-        }
-
-        if (body.logoLight) {
-          uploadObject['imagem.claro'] = body.logoLight;
-        }
-
-        if (body.logoDark) {
-          uploadObject['imagem.escuro'] = body.logoDark;
-        }
-
-        if (body.galeria?.length > 0) {
-          var galeria = await _get(`${body.type}/${body.id}/galeria`);
-          if (galeria) {
-            for (let j = 0; j < body.galeria.length; j++) {
-              const i = body.galeria[j] - 1;
-              if (galeria.imagens[i]) {
-                galeria.imagens[i].link = body.galeria[j].link;
-              }
-            }
-            uploadObject['galeria'] = galeria;
-          }
-        }
-
-        await _update(`${body.type}/${body.id}`, uploadObject);
-      }
-
-      return `Imagens de '${body.type}/${body.id}' atualizadas com sucesso`;
-
-    } catch (e) {
-      return `Erro ao atualizar imagens: ${e.message}`;
-    }
-
-
-  } else return "Usuário não logado"
-}
-
 // Usuário
 async function _deleteUserObjectDB(id, type) {
   const uid = await _getUID();

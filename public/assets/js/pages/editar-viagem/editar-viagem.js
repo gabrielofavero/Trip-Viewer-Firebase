@@ -141,18 +141,6 @@ function _loadEventListeners() {
   document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
-
-  document.getElementById('upload-background').addEventListener('change', function (event) {
-    _checkFileSize('upload-background');
-  });
-
-  document.getElementById('upload-logo-light').addEventListener('change', function (event) {
-    _checkFileSize('upload-logo-light');
-  });
-
-  document.getElementById('upload-logo-dark').addEventListener('change', function (event) {
-    _checkFileSize('upload-logo-dark');
-  });
 }
 
 async function _loadTrip() {
@@ -164,11 +152,18 @@ async function _loadTrip() {
   _stopLoadingScreen();
 }
 
-async function _uploadGaleria(id = tripID, uploadGaleria = uploadGaleria) {
-  let result = [];
-  for (const i of uploadGaleria) {
-    const url = await _uploadImage(`trips/${id}/galeria/${i}.jpg`, `upload-galeria-${i}`);
-    result.push(url);
+async function _uploadViagemItens(viagemID = tripID, uploadIDs, item) {
+  const allIDs = _getChildIDs(`${item}-box`);
+  if (!uploadIDs) {
+    uploadIDs = allIDs;
   }
-  return result;
+  return await _uploadBathImages(`viagens/${viagemID}/${item}`, uploadIDs, allIDs);
+}
+
+async function _uploadGaleria(viagemID = tripID, uploadIDs) {
+  return await _uploadViagemItens(viagemID, uploadIDs, 'galeria');
+}
+
+async function _uploadHospedagem(viagemID = tripID, uploadIDs) {
+  return await _uploadViagemItens(viagemID, uploadIDs, 'hospedagem');
 }

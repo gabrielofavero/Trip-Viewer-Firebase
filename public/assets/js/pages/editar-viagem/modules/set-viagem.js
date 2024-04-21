@@ -1,7 +1,11 @@
 var uploadBackground = false;
 var uploadLogoLight = false;
 var uploadLogoDark = false;
-var uploadGaleria = [];
+
+var uploadItens = {
+    hospedagem: [],
+    galeria: []
+};
 
 var CLEAR_IMAGES = {
     background: false,
@@ -260,8 +264,10 @@ function _buildHospedagemObject() {
     let result = {
         codigos: [],
         datas: [],
+        descricao: [],
         endereco: [],
         hospedagem: [],
+        imagens: [],
         links: [],
         reservas: [],
         viagem: ""
@@ -301,6 +307,10 @@ function _buildHospedagemObject() {
         const valueCodigo = divCodigo ? _returnEmptyIfNoValue(divCodigo.value) : "";
         result.codigos.push(valueCodigo);
 
+        const divDescricao = document.getElementById(`hospedagem-descricao-${j}`);
+        const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
+        result.descricao.push(valueDescricao);
+
         const divReserva = document.getElementById(`reserva-hospedagem-${j}`);
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
         result.reservas.push(valueReserva);
@@ -308,6 +318,15 @@ function _buildHospedagemObject() {
         const divLink = document.getElementById(`link-reserva-hospedagem-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
+
+        let valueImagem = "";
+        if (document.getElementById(`enable-link-hospedagem-${j}`).checked) {
+            valueImagem = document.getElementById(`link-hospedagem-${j}`).value;
+        } else {
+            uploadItens.hospedagem.push(`hospedagem-${j}`);
+        }
+        result.imagens.push(valueImagem);
+
     }
     return result;
 }
@@ -472,7 +491,7 @@ function _buildGaleriaObject() {
         if (document.getElementById(`enable-link-galeria-${j}`).checked) {
             link = document.getElementById(`link-galeria-${j}`).value;
         } else {
-            uploadGaleria.push(j);
+            uploadItens.galeria.push(`galeria-${j}`);
         }
 
         if (!result.filtros.includes(filter)) {
@@ -518,27 +537,33 @@ async function _setViagem() {
         if (result.success == true) {
             wasSaved = true;
 
-            if (uploadLogoLight || uploadLogoDark || uploadBackground || uploadGaleria.length > 0) {
-                let newMessage = '';
+            if (uploadLogoLight || uploadLogoDark || uploadBackground || 
+                    uploadItens.galeria.length > 0 || uploadItens.hospedagem.length > 0) {
+                
                 let logoLight = '';
                 let logoDark = ''
                 let background = '';
                 let galeria = [];
+                let hospedagem = [];
 
                 if (uploadLogoLight) {
-                    logoLight = await _uploadLogoLight(tripID, 'trips');
+                    logoLight = await _uploadLogoLight(tripID, 'viagens');
                 }
 
                 if (uploadLogoDark) {
-                    logoDark = await _uploadLogoDark(tripID, 'trips');
+                    logoDark = await _uploadLogoDark(tripID, 'viagens');
                 }
 
                 if (uploadBackground) {
-                    background = await _uploadBackground(tripID, 'trips');
+                    background = await _uploadBackground(tripID, 'viagens');
                 }
 
-                if (uploadGaleria.length > 0) {
-                    galeria = await _uploadGaleria(tripID, uploadGaleria);
+                if (uploadItens.galeria.length > 0) {
+                    galeria = await _uploadGaleria(tripID, uploadItens.galeria);
+                }
+
+                if (uploadItens.hospedagem.length > 0) {
+                    hospedagem = await _uploadHospedagem(tripID, uploadItens.hospedagem);
                 }
 
                 body = {
@@ -547,17 +572,19 @@ async function _setViagem() {
                     background: background,
                     logoLight: logoLight,
                     logoDark: logoDark,
-                    galeria: galeria
+                    custom: {
+                        galeria: galeria,
+                        hospedagens: hospedagem
+                    }
                 }
 
-                newMessage = await _updateImages(body)
+                await _updateImages(body);
 
-                if (!newMessage.includes('sucesso')) {
-                    message += '. Falha no upload de imagem(s): ' + newMessage;
-                } else {
-                    await _checkAndClearFirebaseImages(tripID);
+                if (!UPDATE_IMAGES_STATUS.includes('sucesso')) {
+                    message += '. Falha no upload de imagem(s): ' + UPDATE_IMAGES_STATUS;
                 }
             }
+            await _deleteUnusedImages(FIRESTORE_DATA, await _get(`viagens/${tripID}`));
         }
 
         document.getElementById('modal-inner-text').innerText = message;

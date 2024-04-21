@@ -57,17 +57,9 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
         document.getElementById('habilitado-imagens-content').style.display = 'block';
     }
 
-    if (background) {
-        document.getElementById('link-background').value = background;
-    }
-
-    if (logoClaro) {
-        document.getElementById('link-logo-light').value = logoClaro;
-    }
-
-    if (logoEscuro) {
-        document.getElementById('link-logo-dark').value = logoEscuro;
-    }
+    _loadCustomizacaoImageData(background, 'link-background');
+    _loadCustomizacaoImageData(logoClaro, 'link-logo-light');
+    _loadCustomizacaoImageData(logoEscuro, 'link-logo-dark');
 
     if (altura) {
         const alturaValue = altura.replace('px', '');
@@ -77,18 +69,17 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
         }
     }
 
-    if (background.includes(FIREBASE_IMAGE_ORIGIN)) {
+    if (_imageDataIncludes(background, FIREBASE_IMAGE_ORIGIN)) {
         FIREBASE_IMAGES.background = true;
     }
-
-    if (logoClaro.includes(FIREBASE_IMAGE_ORIGIN)) {
+    
+    if (_imageDataIncludes(logoClaro, FIREBASE_IMAGE_ORIGIN)) {
         FIREBASE_IMAGES.claro = true;
     }
 
-    if (logoEscuro.includes(FIREBASE_IMAGE_ORIGIN)) {
+    if (_imageDataIncludes(logoEscuro, FIREBASE_IMAGE_ORIGIN)) {
         FIREBASE_IMAGES.escuro = true;
     }
-
 
     // Cores
     const claro = document.getElementById('claro');
@@ -144,6 +135,23 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
     if (vacina) {
         document.getElementById('link-vacina').value = vacina;
     }
+}
+
+function _loadCustomizacaoImageData(value, id) {
+    if (value && typeof value === 'string') {
+        document.getElementById(id).value = value;
+    } else if (value && value.link) {
+        document.getElementById(id).value = value.link;
+    }
+}
+
+function _imageDataIncludes(value, includes) {
+    if (value && typeof value === 'string') {
+        return value.includes(includes);
+    } else if (value && value.url) {
+        return value.url.includes(includes);
+    }
+    return false;
 }
 
 function _loadMeiosDeTransporteData(FIRESTORE_DATA) {

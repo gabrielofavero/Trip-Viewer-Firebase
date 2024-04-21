@@ -1,7 +1,6 @@
 var uploadBackground = false;
 var uploadLogoLight = false;
 var uploadLogoDark = false;
-var uploadGaleria = [];
 
 var CLEAR_IMAGES = {
     background: false,
@@ -100,15 +99,15 @@ async function _setListagem() {
                 let background = '';
 
                 if (uploadLogoLight) {
-                    logoLight = await _uploadLogoLight(listID, 'lists');
+                    logoLight = await _uploadLogoLight(listID, 'listagens');
                 }
 
                 if (uploadLogoDark) {
-                    logoDark = await _uploadLogoDark(listID, 'lists');
+                    logoDark = await _uploadLogoDark(listID, 'listagens');
                 }
 
                 if (uploadBackground) {
-                    background = await _uploadBackground(listID, 'lists');
+                    background = await _uploadBackground(listID, 'listagens');
                 }
 
                 body = {
@@ -132,8 +131,6 @@ async function _setListagem() {
                         }
                     );
                     
-                } else {
-                    await _checkAndClearFirebaseImages(listID);
                 }
             }
         }

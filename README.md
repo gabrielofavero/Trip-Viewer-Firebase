@@ -11,7 +11,17 @@
 
 ## Doing
 
+- 📈 Bloqueio upload / Melhoria de segurança;
+
+  - Atualizar Regras Storage
+  - Criar sistema de permissões
+  - Validar / Consertar fluxo de upload
+  - Consertar função de checar e apagar
+  - Consertar apagar tudo (viagem/listagem)
+  - implementar em listagens
+  - Adaptar em viagens
 - 🏆 Criação de boxes de visualização;
+
   - Hospedagens, Transportes;
   - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
 
@@ -83,8 +93,6 @@
 
 - 🐞 Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
   - Solução Parcial (liberação de permissões)
-- 📈 Bloqueio upload;
-  - Já está parcialmente implementado
 
 ### Março 2024
 

@@ -171,7 +171,7 @@ function _addTransporte() {
               <input class="flex-input" id="partida-${i}" type="date" value="${day}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input" id="partida-horario-${i}" type="time" value="00:00" />
+              <input class="flex-input mini-box" id="partida-horario-${i}" type="time" value="00:00" />
             </div>
           </div>
   
@@ -181,7 +181,7 @@ function _addTransporte() {
               <input class="flex-input" id="chegada-${i}" type="date" value="${day}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input" id="chegada-horario-${i}" type="time" value="00:30" />
+              <input class="flex-input mini-box" id="chegada-horario-${i}" type="time" value="00:30" />
             </div>
           </div>
   
@@ -283,7 +283,7 @@ function _addHospedagem() {
               <input class="flex-input" id="check-in-${i}" type="date" value="${TODAY}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input" id="check-in-horario-${i}" type="time" value="14:00" />
+              <input class="flex-input mini-box" id="check-in-horario-${i}" type="time" value="14:00" />
             </div>
           </div>
   
@@ -293,7 +293,7 @@ function _addHospedagem() {
               <input class="flex-input" id="check-out-${i}" type="date" value="${TOMORROW}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input" id="check-out-horario-${i}" type="time" value="12:00" />
+              <input class="flex-input mini-box" id="check-out-horario-${i}" type="time" value="12:00" />
             </div>
           </div>
   
@@ -354,9 +354,6 @@ function _addHospedagem() {
 
   _addDragListeners('hospedagem');
   _loadImageSelector(`hospedagem-${i}`);
-  document.getElementById(`upload-hospedagem-${i}`).addEventListener('change', function (event) {
-    _checkFileSize(`upload-hospedagem-${i}`);
-  });
 }
 
 function _addDestinos() {
@@ -600,10 +597,6 @@ function _addGaleria() {
       `);
 
   _loadImageSelector(`galeria-${i}`);
-
-  document.getElementById(`upload-galeria-${i}`).addEventListener('change', function (event) {
-    _checkFileSize(`upload-galeria-${i}`);
-  });
 
   document.getElementById(`galeria-titulo-${i}`).addEventListener('change', function () {
     document.getElementById(`galeria-title-${i}`).innerText = document.getElementById(`galeria-titulo-${i}`).value;

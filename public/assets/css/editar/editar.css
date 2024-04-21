@@ -1537,6 +1537,10 @@ details summary::-webkit-details-marker {
   margin-top: 10px;
 }
 
+.mini-box {
+  margin-top: 21.5px;
+}
+
 @media (max-width: 790px) {
   .side-by-side-box {
     flex-direction: column;
@@ -1550,6 +1554,11 @@ details summary::-webkit-details-marker {
   .flex-input {
     width: 100% !important;
   }
+
+  .mini-box {
+    margin-top: 0;
+  }
+
 }
 
 .accordion-button::after {
