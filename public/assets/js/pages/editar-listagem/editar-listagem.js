@@ -2,14 +2,16 @@ var blockLoadingEnd = false;
 var listID;
 var FIRESTORE_DATA;
 var wasSaved = false;
+var PERMISSOES;
 _startLoadingScreen();
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
   try {
     _main();
 
     const urlParams = new URLSearchParams(window.location.search);
     listID = urlParams.get('l');
+    PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
     _loadHabilitados();
@@ -79,7 +81,7 @@ function _loadEventListeners() {
   document.getElementById('logo-tamanho').addEventListener('input', (event) => {
     _formatAltura(event.target.value);
   });
-  
+
   document.getElementById('salvar').addEventListener('click', () => {
     _setListagem();
   });

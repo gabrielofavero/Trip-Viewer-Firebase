@@ -1,9 +1,13 @@
-var uploadBackground = false;
-var uploadLogoLight = false;
-var uploadLogoDark = false;
+var TO_UPLOAD = {
+    background: false,
+    logoLight: false,
+    logoDark: false,
+    hospedagens: false,
+    galeria: false
+};
 
-var uploadItens = {
-    hospedagem: [],
+var UPLOAD_FILES = {
+    hospedagens: [],
     galeria: []
 };
 
@@ -12,6 +16,8 @@ var CLEAR_IMAGES = {
     claro: false,
     escuro: false
 }
+
+var FIRESTORE_NEW_DATA = {};
 
 async function _buildTripObject() {
     let result = {
@@ -51,7 +57,7 @@ async function _buildTripObject() {
     }
 
     result.data.modulos = {
-        hospedagens: document.getElementById('habilitado-hospedagem').checked,
+        hospedagens: document.getElementById('habilitado-hospedagens').checked,
         destinos: document.getElementById('habilitado-destinos').checked,
         lineup: document.getElementById(`habilitado-lineup`).checked,
         programacao: document.getElementById('habilitado-programacao').checked,
@@ -141,19 +147,19 @@ function _buildImagemObject() {
     }
 
     if (document.getElementById('upload-background').value) {
-        uploadBackground = true;
+        TO_UPLOAD.background = true;
     } else if (result.background && FIREBASE_IMAGES.background && !result.background.includes(FIREBASE_IMAGE_ORIGIN)) {
         CLEAR_IMAGES.background = true;
     }
 
     if (document.getElementById('upload-logo-light').value) {
-        uploadLogoLight = true;
+        TO_UPLOAD.logoLight = true;
     } else if (result.claro && FIREBASE_IMAGES.claro && !result.claro.includes(FIREBASE_IMAGE_ORIGIN)) {
         CLEAR_IMAGES.claro = true;
     }
 
     if (document.getElementById('upload-logo-dark').value) {
-        uploadLogoDark = true;
+        TO_UPLOAD.logoDark = true;
     } else if (result.escuro && FIREBASE_IMAGES.escuro && !result.escuro.includes(FIREBASE_IMAGE_ORIGIN)) {
         CLEAR_IMAGES.escuro = true;
     }
@@ -273,16 +279,16 @@ function _buildHospedagemObject() {
         viagem: ""
     }
 
-    const childIds = _getChildIDs('hospedagem-box');
+    const childIds = _getChildIDs('hospedagens-box');
 
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[1]);
 
-        const divNome = document.getElementById(`hospedagem-nome-${j}`);
+        const divNome = document.getElementById(`hospedagens-nome-${j}`);
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
         result.hospedagem.push(valueNome);
 
-        const divEndereco = document.getElementById(`hospedagem-endereco-${j}`);
+        const divEndereco = document.getElementById(`hospedagens-endereco-${j}`);
         const valueEndereco = divEndereco ? _returnEmptyIfNoValue(divEndereco.value) : "";
         result.endereco.push(valueEndereco);
 
@@ -303,26 +309,34 @@ function _buildHospedagemObject() {
 
         result.datas.push(data);
 
-        const divCodigo = document.getElementById(`hospedagem-codigo-${j}`);
+        const divCodigo = document.getElementById(`hospedagens-codigo-${j}`);
         const valueCodigo = divCodigo ? _returnEmptyIfNoValue(divCodigo.value) : "";
         result.codigos.push(valueCodigo);
 
-        const divDescricao = document.getElementById(`hospedagem-descricao-${j}`);
+        const divDescricao = document.getElementById(`hospedagens-descricao-${j}`);
         const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
         result.descricao.push(valueDescricao);
 
-        const divReserva = document.getElementById(`reserva-hospedagem-${j}`);
+        const divReserva = document.getElementById(`reserva-hospedagens-${j}`);
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
         result.reservas.push(valueReserva);
 
-        const divLink = document.getElementById(`link-reserva-hospedagem-${j}`);
+        const divLink = document.getElementById(`link-reserva-hospedagens-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
 
-        let valueImagem = document.getElementById(`link-hospedagem-${j}`).value || "";
-        _addToUploadItens('hospedagem', j);
-        result.imagens.push(valueImagem);
-
+        if (document.getElementById(`enable-upload-hospedagens-${j}`).checked) {
+            TO_UPLOAD.hospedagens = true;
+            result.imagens.push({});
+            UPLOAD_FILES.hospedagens.push(j)
+        } else {
+            const divImagem = document.getElementById(`link-hospedagens-${j}`);
+            const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
+            const valueResult = valueImagem ? _getImageObject(valueImagem, 'hospedagens') : "";
+            
+            result.imagens.push(valueResult);
+            UPLOAD_FILES.hospedagens.push({});
+        }
     }
     return result;
 }
@@ -471,30 +485,37 @@ function _buildLineupObject() {
 
 function _buildGaleriaObject() {
     let result = {
-        filtros: [],
-        imagens: []
+        descricoes: [],
+        categorias: [],
+        imagens: [],
+        titulos: []
     }
 
     const childIds = _getChildIDs('galeria-box');
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[1]);
-        const filter = _firstCharToUpperCaseAllWords(document.getElementById(`galeria-categoria-${j}`).value);
-        const title = document.getElementById(`galeria-titulo-${j}`).value;
-        const descricao = document.getElementById(`galeria-descricao-${j}`).value;
-
-        var link = document.getElementById(`link-galeria-${j}`).value;
-        _addToUploadItens('galeria', j);
-
-        if (!result.filtros.includes(filter)) {
-            result.filtros.push(filter);
+        
+        const descricao = document.getElementById(`galeria-descricao-${j}`).value || "";
+        result.descricoes.push(descricao);
+        
+        const categoria = _firstCharToUpperCaseAllWords(document.getElementById(`galeria-categoria-${j}`).value);
+        result.categorias.push(categoria);
+        
+        const titulo = document.getElementById(`galeria-titulo-${j}`).value || "";
+        result.titulos.push(titulo);
+        
+        if (document.getElementById(`enable-upload-hospedagens-${j}`).checked) {
+            TO_UPLOAD.galeria = true;
+            result.imagens.push({});
+            UPLOAD_FILES.galeria.push(j)
+        } else {
+            const divImagem = document.getElementById(`link-hospedagens-${j}`);
+            const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
+            const valueResult = valueImagem ? _getImageObject(valueImagem, 'galeria') : "";
+            
+            result.imagens.push(valueResult);
+            UPLOAD_FILES.galeria.push({});
         }
-
-        result.imagens.push({
-            link: link,
-            titulo: title,
-            descricao: descricao,
-            filtro: filter
-        });
     }
 
     return result;
@@ -523,35 +544,35 @@ async function _setViagem() {
             tripID = result?.data?.id;
         }
 
+        FIRESTORE_NEW_DATA = viagem.data;
         let message = result.message;
 
         if (result.success == true) {
             wasSaved = true;
+
             try {
-                if (uploadLogoLight || uploadLogoDark || uploadBackground ||
-                    uploadItens.galeria.length > 0 || uploadItens.hospedagem.length > 0) {
-                    body = {
-                        id: tripID,
-                        type: "viagens",
-                        background: uploadBackground ? await _uploadBackground(tripID, 'viagens') : '',
-                        logoLight: uploadLogoLight ? await _uploadLogoLight(tripID, 'viagens') : '',
-                        logoDark: uploadLogoDark ? await _uploadLogoDark(tripID, 'viagens') : '',
-                        custom: {
-                            galeria: uploadItens.galeria.length > 0 ? await _uploadGaleria(tripID, uploadItens.galeria) : [],
-                            hospedagens: uploadItens.hospedagem.length > 0 ? await _uploadHospedagem(tripID, uploadItens.hospedagem) : []
-                        }
-                    }
-
-                    await _updateImages(body);
-
-                    if (!UPDATE_IMAGES_STATUS.includes('sucesso')) {
-                        message += '. Falha no upload de imagem(s): ' + UPDATE_IMAGES_STATUS;
+                const body = {
+                    id: tripID,
+                    type: "viagens",
+                    background: TO_UPLOAD.background ? await _uploadBackground(tripID, 'viagens') : '',
+                    logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight(tripID, 'viagens') : '',
+                    logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark(tripID, 'viagens') : '',
+                    custom: {
+                        hospedagens: TO_UPLOAD.hospedagens ? await _uploadHospedagem(tripID, UPLOAD_FILES.hospedagens) : [],
+                        galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(tripID, UPLOAD_FILES.galeria) : []
                     }
                 }
+
+                await _updateImages(body);
                 await _deleteUnusedImages(FIRESTORE_DATA, await _get(`viagens/${tripID}`));
+
             } catch (error) {
-                message += '. Falha no upload de imagem(s): ' + error;
-                throw error;
+                IMAGE_UPLOAD_ERROR = true;
+                _logger(ERROR, error);
+            }
+
+            if (IMAGE_UPLOAD_ERROR) {
+                message += ', porém houve um erro ao tentar salvar as imagens. Tente novamente e, caso o erro persista, contate o administrador do sistema.';
             }
         }
 

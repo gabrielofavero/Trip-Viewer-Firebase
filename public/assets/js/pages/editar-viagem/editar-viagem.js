@@ -49,7 +49,7 @@ function _loadHabilitados() {
   _loadEditModule('links');
   _loadEditModule('editores');
   _loadEditModule('transporte');
-  _loadEditModule('hospedagem');
+  _loadEditModule('hospedagens');
   _loadEditModule('programacao');
   _loadEditModule('destinos');
   _loadEditModule('lineup');
@@ -66,7 +66,7 @@ function _loadEventListeners() {
     _addTransporte();
   });
 
-  document.getElementById('hospedagem-adicionar').addEventListener('click', () => {
+  document.getElementById('hospedagens-adicionar').addEventListener('click', () => {
     _addHospedagem();
   });
 
@@ -153,14 +153,16 @@ async function _loadTrip() {
 }
 
 async function _uploadViagemItens(viagemID = tripID, uploadItens, item) {
-  const allIDs = _getChildIDs(`${item}-box`);
-  if (!uploadItens) {
-    uploadItens = [];
-    for (const id of allIDs) {
-      uploadItens.push(_getUploadItem(true, `upload-${id}`));
+  let result = FIRESTORE_NEW_DATA[item].imagens;
+  for (let i = 0; i < uploadItens.length; i++) {
+    if (!isNaN(uploadItens[i])) {
+      const upload = await _uploadImage(`viagens/${viagemID}/${item}`, `upload-${item}-${uploadItens[i]}`);
+      if (upload.link != null) {
+        result[i] = upload;
+      }
     }
   }
-  return await _uploadBathImages(`viagens/${viagemID}/${item}`, uploadItens);
+  return result;
 }
 
 async function _uploadGaleria(viagemID = tripID, uploadItens) {
@@ -168,6 +170,6 @@ async function _uploadGaleria(viagemID = tripID, uploadItens) {
 }
 
 async function _uploadHospedagem(viagemID = tripID, uploadItens) {
-  return await _uploadViagemItens(viagemID, uploadItens, 'hospedagem');
+  return await _uploadViagemItens(viagemID, uploadItens, 'hospedagens');
 }
 

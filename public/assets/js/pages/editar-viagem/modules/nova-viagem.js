@@ -252,29 +252,29 @@ function _addTransporte() {
 
 function _addHospedagem() {
   var i = 1;
-  while (document.getElementById('hospedagem-' + i)) {
+  while (document.getElementById('hospedagens-' + i)) {
     i++;
   }
 
-  $('#hospedagem-box').append(`
-      <div id="hospedagem-${i}" class="accordion-item accordion-hospedagem" draggable="true">
-      <h2 class="accordion-header" id="heading-hospedagem-${i}">
-        <button id="hospedagem-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-hospedagem-${i}" aria-expanded="false" aria-controls="collapse-hospedagem-${i}">
+  $('#hospedagens-box').append(`
+      <div id="hospedagens-${i}" class="accordion-item accordion-hospedagens" draggable="true">
+      <h2 class="accordion-header" id="heading-hospedagens-${i}">
+        <button id="hospedagens-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-hospedagens-${i}" aria-expanded="false" aria-controls="collapse-hospedagens-${i}">
           Hospedagem ${i}
         </button>
       </h2>
-      <div id="collapse-hospedagem-${i}" class="accordion-collapse collapse"
-        aria-labelledby="heading-hospedagem-${i}" data-bs-parent="#hospedagem-box">
+      <div id="collapse-hospedagens-${i}" class="accordion-collapse collapse"
+        aria-labelledby="heading-hospedagens-${i}" data-bs-parent="#hospedagens-box">
         <div class="accordion-body">
           <div class="nice-form-group">
             <label>Nome da Hospedagem</label>
-            <input required id="hospedagem-nome-${i}" type="text" placeholder="Casa da Fernanda" />
+            <input required id="hospedagens-nome-${i}" type="text" placeholder="Casa da Fernanda" />
           </div>
   
           <div class="nice-form-group">
             <label>Endereço</label>
-            <input required id="hospedagem-endereco-${i}" type="text" placeholder="Rua ABC, número 0" />
+            <input required id="hospedagens-endereco-${i}" type="text" placeholder="Rua ABC, número 0" />
           </div>
   
           <div class="side-by-side-box">
@@ -299,47 +299,47 @@ function _addHospedagem() {
   
           <div class="nice-form-group">
             <label>Descrição <span class="opcional"> (Opcional)</span></label>
-            <input id="reserva-descricao-${i}" type="text" placeholder="Quarto Duplo, camas King" />
+            <input id="hospedagens-descricao-${i}" type="text" placeholder="Quarto Duplo, camas King" />
           </div>
 
           <div class="nice-form-group">
             <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="reserva-hospedagem-${i}" type="text" placeholder="#ABC123" />
+            <input id="reserva-hospedagens-${i}" type="text" placeholder="#ABC123" />
           </div>
     
           <div class="nice-form-group">
             <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="link-reserva-hospedagem-${i}" type="url" placeholder="www.google.com" value=""
+            <input id="link-reserva-hospedagens-${i}" type="url" placeholder="www.google.com" value=""
               class="icon-right" />
           </div>
 
-          <div class="nice-form-group customization-box" id="hospedagem-${i}-box">
+          <div class="nice-form-group customization-box" id="hospedagens-${i}-box">
             <label>Imagem <span class="opcional"> (Opcional)</span></label>
-            <input id="upload-hospedagem-${i}" type="file" accept=".jpg" />
-            <p id="upload-hospedagem-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</p>
+            <input id="upload-hospedagens-${i}" type="file" accept=".jpg" />
+            <p id="upload-hospedagens-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</p>
           </div>
 
           <div class="nice-form-group">
-            <input id="link-hospedagem-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
+            <input id="link-hospedagens-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
               class="icon-right">
           </div>
 
-          <fieldset class="nice-form-group" id="upload-checkbox-hospedagem-${i}">
+          <fieldset class="nice-form-group" id="upload-checkbox-hospedagens-${i}">
             <div class="nice-form-group">
-              <input type="radio" name="type-hospedagem-${i}" id="enable-link-hospedagem-${i}" checked>
-              <label for="enable-link-hospedagem-${i}">Fornecer link</label>
+              <input type="radio" name="type-hospedagens-${i}" id="enable-link-hospedagens-${i}" checked>
+              <label for="enable-link-hospedagens-${i}">Fornecer link</label>
             </div>
 
             <div class="nice-form-group">
-              <input type="radio" name="type-hospedagem-${i}" id="enable-upload-hospedagem-${i}">
-              <label for="enable-upload-hospedagem-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+              <input type="radio" name="type-hospedagens-${i}" id="enable-upload-hospedagens-${i}">
+              <label for="enable-upload-hospedagens-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
             </div>
           </fieldset>
             
           </div>
     
           <div class="deletar-box">
-            <button id="hospedagem-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('hospedagem-${i}')">
+            <button id="hospedagens-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('hospedagens-${i}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -352,8 +352,8 @@ function _addHospedagem() {
     </div>
       `);
 
-  _addDragListeners('hospedagem');
-  _loadImageSelector(`hospedagem-${i}`);
+  _addDragListeners('hospedagens');
+  _loadImageSelector(`hospedagens-${i}`);
 }
 
 function _addDestinos() {
@@ -441,15 +441,17 @@ function _addLineup() {
               <option value="generico">Destino Não Especificado</option>
             </select>
           </div>
-  
-          <div class="nice-form-group">
+
+          <div class="nice-form-group" id="lineup-descricao-select-form-group-${i}">
             <label>Gênero <span class="opcional"> (Opcional)</span></label>
-            <input id="lineup-descricao-${i}" type="text" placeholder="Pop Punk Gen-Z" />
+            <select id="lineup-descricao-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="lineup-descricao-${i}" type="text" placeholder="Pop Punk" />
           </div>
-  
-          <div class="nice-form-group">
+
+          <div class="nice-form-group" id="lineup-palco-select-form-group-${i}">
             <label>Palco <span class="opcional"> (Opcional)</span></label>
-            <input id="lineup-palco-${i}" type="text" placeholder="Stripe Stage" />
+            <select id="lineup-palco-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="lineup-palco-${i}" type="text" placeholder="Stripe Stage" />
           </div>
   
           <div class="nice-form-group side-by-side">
@@ -504,24 +506,8 @@ function _addLineup() {
     </div>
     `);
 
-  _buildLineupSelects();
-
-  const nome = document.getElementById(`lineup-nome-${i}`);
-  const title = document.getElementById(`lineup-title-${i}`);
-  const headliner = document.getElementById(`lineup-headliner-${i}`);
-  nome.addEventListener('change', function () {
-    title.innerText = nome.value;
-    if (headliner.checked) {
-      title.innerText += ' ⭐';
-    }
-  });
-  headliner.addEventListener('change', function () {
-    title.innerText = nome.value;
-    if (headliner.checked) {
-      title.innerText += ' ⭐';
-    }
-  });
-
+    _buildLineupSelects();
+    _loadLineupListeners(i);
   _addDragListeners('lineup');
 }
 
@@ -535,7 +521,7 @@ function _addGaleria() {
       <div id="galeria-${i}" class="accordion-item accordion-galeria" draggable="true">
       <h2 class="accordion-header" id="heading-galeria-${i}">
         <button id="galeria-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-galeria-${i}" aria-expanded="false" aria-controls="collapse-hospedagem-${i}">
+          data-bs-target="#collapse-galeria-${i}" aria-expanded="false" aria-controls="collapse-hospedagens-${i}">
           Imagem ${i}
         </button>
       </h2>
@@ -546,41 +532,42 @@ function _addGaleria() {
             <label>Título</label>
             <input required id="galeria-titulo-${i}" type="text" placeholder="Lineup por dia" />
           </div>
-  
-          <div class="nice-form-group">
+
+          <div class="nice-form-group" id="galeria-select-form-group-${i}">
             <label>Categoria</label>
-            <input required id="galeria-categoria-${i}" type="text" placeholder="Lineup" />
+            <select id="galeria-categoria-select-${i}" style="display: none;"></select>
+            <input required class="nice-form-group" id="galeria-categoria-${i}" type="text" placeholder="Mapa do Evento" />
           </div>
-  
-        <div class="nice-form-group">
-          <label>Descrição <span class="opcional"> (Opcional)</span></label>
-          <input id="galeria-descricao-${i}" type="text" placeholder="Lineup oficial para os três dias de evento" />
-        </div>
-  
-        <div class="nice-form-group customization-box" id="galeria-${i}-box">
-          <label>Imagem</label>
-          <input id="upload-galeria-${i}" type="file" accept=".jpg" />
-          <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</div>
-        </div>
-  
-        <div class="nice-form-group">
-          <input id="link-galeria-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
-            class="icon-right">
-        </div>
-  
-        <fieldset class="nice-form-group">
-          <div class="nice-form-group enable-link">
-            <input type="radio" name="type-galeria-${i}" id="enable-link-galeria-${i}" checked>
-            <label for="enable-link-galeria-${i}">Fornecer link</label>
-          </div>
-  
+    
           <div class="nice-form-group">
-            <input type="radio" name="type-galeria-${i}" id="enable-upload-galeria-${i}">
-            <label for="enable-upload-galeria-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+            <label>Descrição <span class="opcional"> (Opcional)</span></label>
+            <input id="galeria-descricao-${i}" type="text" placeholder="Mapa oficial do evento" />
           </div>
-        </fieldset>
-  
-        </div>
+    
+          <div class="nice-form-group customization-box" id="galeria-${i}-box">
+            <label>Imagem</label>
+            <input id="upload-galeria-${i}" type="file" accept=".jpg" />
+            <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</div>
+          </div>
+    
+          <div class="nice-form-group">
+            <input id="link-galeria-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
+              class="icon-right">
+          </div>
+    
+          <fieldset class="nice-form-group">
+            <div class="nice-form-group enable-link">
+              <input type="radio" name="type-galeria-${i}" id="enable-link-galeria-${i}" checked>
+              <label for="enable-link-galeria-${i}">Fornecer link</label>
+            </div>
+    
+            <div class="nice-form-group">
+              <input type="radio" name="type-galeria-${i}" id="enable-upload-galeria-${i}">
+              <label for="enable-upload-galeria-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+            </div>
+          </fieldset>
+    
+          </div>
   
         <div class="deletar-box">
           <button id="galeria-deletar-${i}" class="btn btn-secondary" onclick="_deleteGaleria(${i})">
@@ -597,10 +584,6 @@ function _addGaleria() {
       `);
 
   _loadImageSelector(`galeria-${i}`);
-
-  document.getElementById(`galeria-titulo-${i}`).addEventListener('change', function () {
-    document.getElementById(`galeria-title-${i}`).innerText = document.getElementById(`galeria-titulo-${i}`).value;
-  });
-
+  _loadGaleriaListeners(i);
   _addDragListeners('galeria');
 }

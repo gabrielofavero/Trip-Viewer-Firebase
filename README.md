@@ -11,17 +11,10 @@
 
 ## Doing
 
-- 📈 Bloqueio upload / Melhoria de segurança;
-
-  - Atualizar Regras Storage
-  - Criar sistema de permissões
-  - Validar / Consertar fluxo de upload
-  - Consertar função de checar e apagar
-  - Consertar apagar tudo (viagem/listagem)
-  - implementar em listagens
-  - Adaptar em viagens
+- 📈 Melhorias editar-viagem
+  - Selects dinâmicos para que user possa escolher entre os dados já cadastrados (Galeria e Lineup);
+  - Automações para facilitar preenchimento de dados e visualização;
 - 🏆 Criação de boxes de visualização;
-
   - Hospedagens, Transportes;
   - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
 
@@ -93,6 +86,12 @@
 
 - 🐞 Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
   - Solução Parcial (liberação de permissões)
+- 📈 Bloqueio upload / Melhoria de segurança;
+  - Criação de sistema de permissões no banco e storage rules;
+  - Exibição HTML interativa de acordo com a permissão
+  - Sistema inteligente de uploads, com exclusão de imagens não utilizadas
+  - Sistema de inserção de imagens customizadas de acordo com a página (hospedagens e galeria para o caso de editar-viagens)
+  - Ajustes na página de viagem para receber a nova estrutura de imagem
 
 ### Março 2024
 

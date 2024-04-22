@@ -1,12 +1,16 @@
-var uploadBackground = false;
-var uploadLogoLight = false;
-var uploadLogoDark = false;
+var TO_UPLOAD = {
+    background: false,
+    logoLight: false,
+    logoDark: false
+};
 
 var CLEAR_IMAGES = {
     background: false,
     claro: false,
     escuro: false
 }
+
+var FIRESTORE_NEW_DATA = {};
 
 async function _buildListObject() {
     let result = {
@@ -87,51 +91,32 @@ async function _setListagem() {
             listID = result?.data?.id;
         }
 
+        FIRESTORE_NEW_DATA = listagem.data;
         let message = result.message;
 
         if (result.success == true) {
             wasSaved = true;
 
-            if (uploadLogoLight || uploadLogoDark || uploadBackground) {
-                let newMessage = '';
-                let logoLight = '';
-                let logoDark = ''
-                let background = '';
-
-                if (uploadLogoLight) {
-                    logoLight = await _uploadLogoLight(listID, 'listagens');
-                }
-
-                if (uploadLogoDark) {
-                    logoDark = await _uploadLogoDark(listID, 'listagens');
-                }
-
-                if (uploadBackground) {
-                    background = await _uploadBackground(listID, 'listagens');
-                }
-
-                body = {
+            try {
+                const body = {
                     id: listID,
-                    type: 'listagens',
-                    background: background.url,
-                    logoLight: logoLight.url,
-                    logoDark: logoDark.url,
+                    type: "viagens",
+                    background: TO_UPLOAD.background ? await _uploadBackground(listID, 'listagens') : '',
+                    logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight(listID, 'listagens') : '',
+                    logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark(listID, 'listagens') : '',
+                    custom: {}
                 }
 
-                newMessage = await _updateImages(body)
+                await _updateImages(body);
+                await _deleteUnusedImages(FIRESTORE_DATA, await _get(`listagens/${listID}`));
 
-                if (!newMessage.includes('sucesso') || (uploadBackground && !background.url) || (uploadLogoLight && !logoLight.url) || (uploadLogoDark && !logoDark.url)) {
-                    message += `, porém não foi possível realizar o carregamento das imagens.`;
-                    console.log(
-                        {
-                            updateImages: newMessage,
-                            background: background,
-                            logoLight: logoLight,
-                            logoDark: logoDark
-                        }
-                    );
-                    
-                }
+            } catch (error) {
+                IMAGE_UPLOAD_ERROR = true;
+                _logger(ERROR, error);
+            }
+
+            if (IMAGE_UPLOAD_ERROR) {
+                message += ', porém houve um erro ao tentar salvar as imagens. Tente novamente e, caso o erro persista, contate o administrador do sistema.';
             }
         }
 

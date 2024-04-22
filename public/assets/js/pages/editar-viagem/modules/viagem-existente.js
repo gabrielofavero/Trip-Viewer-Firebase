@@ -230,9 +230,9 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
 
 function _loadHospedagemData(FIRESTORE_DATA) {
     if (FIRESTORE_DATA.modulos.hospedagens === true) {
-        document.getElementById('habilitado-hospedagem').checked = true;
-        document.getElementById('habilitado-hospedagem-content').style.display = 'block';
-        document.getElementById('hospedagem-adicionar-box').style.display = 'block';
+        document.getElementById('habilitado-hospedagens').checked = true;
+        document.getElementById('habilitado-hospedagens-content').style.display = 'block';
+        document.getElementById('hospedagens-adicionar-box').style.display = 'block';
     }
 
     const hospedagemSize = FIRESTORE_DATA.hospedagens.hospedagem.length;
@@ -241,8 +241,8 @@ function _loadHospedagemData(FIRESTORE_DATA) {
             const j = i - 1;
             _addHospedagem();
 
-            const hospedagemTitle = document.getElementById(`hospedagem-title-${i}`);
-            const hospedagemNome = document.getElementById(`hospedagem-nome-${i}`);
+            const hospedagemTitle = document.getElementById(`hospedagens-title-${i}`);
+            const hospedagemNome = document.getElementById(`hospedagens-nome-${i}`);
 
             const hospedagem = FIRESTORE_DATA.hospedagens.hospedagem[j];
             if (hospedagem) {
@@ -252,7 +252,7 @@ function _loadHospedagemData(FIRESTORE_DATA) {
 
             const endereco = FIRESTORE_DATA.hospedagens.endereco[j];
             if (endereco) {
-                document.getElementById(`hospedagem-endereco-${i}`).value = endereco;
+                document.getElementById(`hospedagens-endereco-${i}`).value = endereco;
             }
 
             const dataCheckIn = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkin);
@@ -274,22 +274,24 @@ function _loadHospedagemData(FIRESTORE_DATA) {
 
             const descricao = FIRESTORE_DATA.hospedagens.descricao[j];
             if (descricao) {
-                document.getElementById(`hospedagem-descricao-${i}`).value = descricao;
+                document.getElementById(`hospedagens-descricao-${i}`).value = descricao;
             }
 
             const reserva = FIRESTORE_DATA.hospedagens.reservas[j];
             if (reserva) {
-                document.getElementById(`reserva-hospedagem-${i}`).value = reserva;
+                document.getElementById(`hospedagens-descricao-${i}`).value = reserva;
             }
 
             const linkReserva = FIRESTORE_DATA.hospedagens.links[j];
             if (linkReserva) {
-                document.getElementById(`link-reserva-hospedagem-${i}`).value = linkReserva;
+                document.getElementById(`link-reserva-hospedagens-${i}`).value = linkReserva;
             }
 
             const imagem = FIRESTORE_DATA.hospedagens.imagens[j];
-            if (imagem) {
-                document.getElementById(`link-hospedagem-${i}`).value = imagem.link || imagem;
+            if (_isInternalImage(imagem)) {
+                document.getElementById(`link-hospedagens-${i}`).value = imagem.link;
+            } else if (_isExternalImage(imagem)) {
+                document.getElementById(`link-hospedagens-${i}`).value = imagem;
             }
 
             hospedagemNome.addEventListener('change', function () {
@@ -490,9 +492,11 @@ function _loadGaleriaData(FIRESTORE_DATA) {
                 document.getElementById(`galeria-descricao-${i}`).value = descricao;
             }
 
-            const link = FIRESTORE_DATA.galeria.imagens[j].link;
-            if (link) {
-                document.getElementById(`link-galeria-${i}`).value = link;
+            const imagem = FIRESTORE_DATA.galeria.imagens[j];
+            if (_isInternalImage(imagem)) {
+                document.getElementById(`link-galeria-${i}`).value = imagem.link;
+            } else if (_isExternalImage(imagem)) {
+                document.getElementById(`link-galeria-${i}`).value = imagem;
             }
         }
     }

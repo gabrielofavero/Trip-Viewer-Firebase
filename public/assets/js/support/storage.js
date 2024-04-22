@@ -1,18 +1,14 @@
-var UPDATE_IMAGES_STATUS = '';
+var IMAGE_UPLOAD_ERROR = false;
 
 async function _uploadImage(path, divID) {
   let result = {
     nome: null,
     link: null,
     caminho: null,
-    status: {
-      sucesso: true,
-      mensagem: 'Image uploaded successfully!'
-    }
   };
 
   const file = document.getElementById(divID)?.files[0];
-  if (file) {
+  if (file && !IMAGE_UPLOAD_ERROR) {
     try {
       const storageRef = await firebase.storage().ref();
       const imageRef = storageRef.child(`${path}/${file.name}`);
@@ -20,17 +16,14 @@ async function _uploadImage(path, divID) {
       const snapshot = await imageRef.put(file);
       const downloadURL = await snapshot.ref.getDownloadURL();
 
-      console.log(result.status.mensagem);
-      console.log('Download URL:', downloadURL);
-
       result.nome = file.name;
       result.link = downloadURL;
       result.caminho = snapshot.ref.fullPath;
 
+      console.log(`Imagem '${result.nome}' carregada com sucesso: ${result.link}`);
+
     } catch (error) {
-      console.error('Error uploading image:', error);
-      result.status.mensagem = error.message;
-      result.status.sucesso = false;
+      console.error('Erro ao fazer upload da imagem:', error);
     }
   }
 
@@ -38,43 +31,34 @@ async function _uploadImage(path, divID) {
 }
 
 async function _updateImages(body) {
-  if (await _getUID()) {
-    try {
-      let uploadObject = {};
+  if (await _getUID() && !IMAGE_UPLOAD_ERROR) {
+    let uploadObject = {};
 
-      if (body.background) {
-        uploadObject['imagem.background'] = body.background;
-      }
+    if (body.background) {
+      uploadObject['imagem.background'] = body.background;
+    }
 
-      if (body.logoLight) {
-        uploadObject['imagem.claro'] = body.logoLight;
-      }
+    if (body.logoLight) {
+      uploadObject['imagem.claro'] = body.logoLight;
+    }
 
-      if (body.logoDark) {
-        uploadObject['imagem.escuro'] = body.logoDark;
-      }
+    if (body.logoDark) {
+      uploadObject['imagem.escuro'] = body.logoDark;
+    }
 
-      if (_objectExistsAndHasKeys(body.custom)) {
-        const db = await _get(`${body.type}/${body.id}`);
-        if (_objectExistsAndHasKeys(db)) {
-          for (const customKey of Object.keys(body.custom)) {
-            const result = body.custom[customKey];
-            const dbResult = db[customKey].imagens;
-            if (_objectExistsAndHasKeys(result) && result !== dbResult) {
-              uploadObject[`${customKey}.imagens`] = result
-            }
-          }
+    if (_objectExistsAndHasKeys(body.custom)) {
+      for (const key in body.custom) {
+        if (TO_UPLOAD[key]) {
+          uploadObject[`${key}.imagens`] = body.custom[key];
         }
       }
-      await _update(`${body.type}/${body.id}`, uploadObject);
-
-      UPDATE_IMAGES_STATUS = `Imagens de '${body.type}/${body.id}' atualizadas com sucesso`;
-
-    } catch (e) {
-      UPDATE_IMAGES_STATUS = `Erro ao atualizar imagens: ${e.message}`;
     }
-  } else {
-    UPDATE_IMAGES_STATUS = "Usuário não logado"
+
+    if (_objectExistsAndHasKeys(uploadObject)) {
+      await _update(`${body.type}/${body.id}`, uploadObject);
+      IMAGE_UPDATE_MADE = true;
+    } else {
+    }
   }
 }
 
@@ -136,9 +120,9 @@ async function _deleteImage(path) {
     const fileRef = storageRef.child(path);
     await fileRef.delete();
 
-    console.log(`Image ${path} deleted successfully.`);
+    console.log(`Imagem ${path} apagada com sucesso.`);
   } catch (error) {
-    console.error(`Error deleting image ${path}: ${error.message}`);
+    console.error(`Erro ao apagar imagem ${path}: ${error.message}`);
   }
 }
 
@@ -152,20 +136,6 @@ async function _uploadLogoLight(viagemID, type) {
 
 async function _uploadLogoDark(viagemID, type) {
   return await _uploadImage(`${type}/${viagemID}/logo-dark`, 'upload-logo-dark');
-}
-
-async function _uploadBathImages(path, uploadItens) {
-  result = [];
-  for (const item of uploadItens) {
-    if (item.toUpload) {
-      result.push(await _uploadImage(path, item.value));
-    } else if (_isObject(item)){
-      result.push(item.value);
-    } else {
-      result.push(item);
-    }
-  }
-  return result;
 }
 
 function _checkFileSize(fileInput, type) {
@@ -342,35 +312,24 @@ function _isInternalImage(value) {
   }
 }
 
-function _getUploadItem(toUpload, value) {
-  return {
-    toUpload: toUpload,
-    value: value
-  }
-}
-
-function _getImageObjectFromDB(link, arrayDB) {
-  let result = link;
-  for (const item of arrayDB) {
-    if (item && item.link === link) {
-      result = item;
-      break;
+function _getImageObject(link, type) {
+  const values = FIRESTORE_DATA[type].imagens;
+  for (const value of values) {
+    if (_objectExistsAndHasKeys(value) && value.link === link) {
+      return value;
     }
   }
-  return result;
+  return link;
 }
 
-function _addToUploadItens(type, j) {
-  if (!uploadItens) {
-    _logger(ERROR, 'Função _addToUploadItens chamada fora de contexto');
-    return;
-  }
-
-  const id = `${type}-${j}`;
-  if (document.getElementById(`enable-link-${id}`).checked) {
-    const link = document.getElementById(`link-${id}`).value;
-    uploadItens[type].push(_getUploadItem(false, link));
+function _getImageLink(object) {
+  if (_objectExistsAndHasKeys(object)) {
+    return object.link;
   } else {
-    uploadItens[type].push(_getUploadItem(true, `upload-${id}`));
+    return object;
   }
+}
+
+function _imageExists(object) {
+  return (_isInternalImage(object) || _isExternalImage(object));
 }

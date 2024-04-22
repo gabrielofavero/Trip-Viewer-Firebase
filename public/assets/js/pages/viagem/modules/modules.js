@@ -90,15 +90,18 @@ function _loadHeader() {
 
   if (FIRESTORE_DATA.imagem.ativo) {
 
-    if (FIRESTORE_DATA.imagem.background) {
+    const background = FIRESTORE_DATA.imagem.background;
+    const claro = FIRESTORE_DATA.imagem.claro;
+
+    if (_imageExists(background)) {
       var hero = document.getElementById('hero');
-      hero.style.background = 'url("' + FIRESTORE_DATA.imagem.background + '") top center no-repeat';
+      hero.style.background = 'url("' + _getImageLink(background) + '") top center no-repeat';
       hero.style.backgroundSize = 'cover';
     }
 
-    if (FIRESTORE_DATA.imagem.claro) {
-      const escuro = FIRESTORE_DATA.imagem.escuro || FIRESTORE_DATA.imagem.claro;
-      document.getElementById("header2").src = _isOnDarkMode() ? escuro : FIRESTORE_DATA.imagem.claro;
+    if (_imageExists(claro)) {
+      const escuro = _imageExists(escuro) ? _getImageLink(escuro) : _getImageLink(claro);
+      document.getElementById("header2").src = _isOnDarkMode() ? escuro : _getImageLink(claro);
       document.getElementById("header1").style.display = "none";
       document.getElementById("header2").style.display = "block";
 
