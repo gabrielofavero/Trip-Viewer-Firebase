@@ -319,12 +319,8 @@ function _buildHospedagemObject() {
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
 
-        let valueImagem = "";
-        if (document.getElementById(`enable-link-hospedagem-${j}`).checked) {
-            valueImagem = document.getElementById(`link-hospedagem-${j}`).value;
-        } else {
-            uploadItens.hospedagem.push(`hospedagem-${j}`);
-        }
+        let valueImagem = document.getElementById(`link-hospedagem-${j}`).value || "";
+        _addToUploadItens('hospedagem', j);
         result.imagens.push(valueImagem);
 
     }
@@ -486,13 +482,8 @@ function _buildGaleriaObject() {
         const title = document.getElementById(`galeria-titulo-${j}`).value;
         const descricao = document.getElementById(`galeria-descricao-${j}`).value;
 
-        var link = "";
-
-        if (document.getElementById(`enable-link-galeria-${j}`).checked) {
-            link = document.getElementById(`link-galeria-${j}`).value;
-        } else {
-            uploadItens.galeria.push(`galeria-${j}`);
-        }
+        var link = document.getElementById(`link-galeria-${j}`).value;
+        _addToUploadItens('galeria', j);
 
         if (!result.filtros.includes(filter)) {
             result.filtros.push(filter);
@@ -536,55 +527,32 @@ async function _setViagem() {
 
         if (result.success == true) {
             wasSaved = true;
-
-            if (uploadLogoLight || uploadLogoDark || uploadBackground || 
+            try {
+                if (uploadLogoLight || uploadLogoDark || uploadBackground ||
                     uploadItens.galeria.length > 0 || uploadItens.hospedagem.length > 0) {
-                
-                let logoLight = '';
-                let logoDark = ''
-                let background = '';
-                let galeria = [];
-                let hospedagem = [];
+                    body = {
+                        id: tripID,
+                        type: "viagens",
+                        background: uploadBackground ? await _uploadBackground(tripID, 'viagens') : '',
+                        logoLight: uploadLogoLight ? await _uploadLogoLight(tripID, 'viagens') : '',
+                        logoDark: uploadLogoDark ? await _uploadLogoDark(tripID, 'viagens') : '',
+                        custom: {
+                            galeria: uploadItens.galeria.length > 0 ? await _uploadGaleria(tripID, uploadItens.galeria) : [],
+                            hospedagens: uploadItens.hospedagem.length > 0 ? await _uploadHospedagem(tripID, uploadItens.hospedagem) : []
+                        }
+                    }
 
-                if (uploadLogoLight) {
-                    logoLight = await _uploadLogoLight(tripID, 'viagens');
-                }
+                    await _updateImages(body);
 
-                if (uploadLogoDark) {
-                    logoDark = await _uploadLogoDark(tripID, 'viagens');
-                }
-
-                if (uploadBackground) {
-                    background = await _uploadBackground(tripID, 'viagens');
-                }
-
-                if (uploadItens.galeria.length > 0) {
-                    galeria = await _uploadGaleria(tripID, uploadItens.galeria);
-                }
-
-                if (uploadItens.hospedagem.length > 0) {
-                    hospedagem = await _uploadHospedagem(tripID, uploadItens.hospedagem);
-                }
-
-                body = {
-                    id: tripID,
-                    type: "viagens",
-                    background: background,
-                    logoLight: logoLight,
-                    logoDark: logoDark,
-                    custom: {
-                        galeria: galeria,
-                        hospedagens: hospedagem
+                    if (!UPDATE_IMAGES_STATUS.includes('sucesso')) {
+                        message += '. Falha no upload de imagem(s): ' + UPDATE_IMAGES_STATUS;
                     }
                 }
-
-                await _updateImages(body);
-
-                if (!UPDATE_IMAGES_STATUS.includes('sucesso')) {
-                    message += '. Falha no upload de imagem(s): ' + UPDATE_IMAGES_STATUS;
-                }
+                await _deleteUnusedImages(FIRESTORE_DATA, await _get(`viagens/${tripID}`));
+            } catch (error) {
+                message += '. Falha no upload de imagem(s): ' + error;
+                throw error;
             }
-            await _deleteUnusedImages(FIRESTORE_DATA, await _get(`viagens/${tripID}`));
         }
 
         document.getElementById('modal-inner-text').innerText = message;

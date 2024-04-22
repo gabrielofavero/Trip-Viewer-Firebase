@@ -72,7 +72,7 @@ function _loadCustomizacaoData(FIRESTORE_DATA) {
     if (_imageDataIncludes(background, FIREBASE_IMAGE_ORIGIN)) {
         FIREBASE_IMAGES.background = true;
     }
-    
+
     if (_imageDataIncludes(logoClaro, FIREBASE_IMAGE_ORIGIN)) {
         FIREBASE_IMAGES.claro = true;
     }
@@ -256,8 +256,6 @@ function _loadHospedagemData(FIRESTORE_DATA) {
             }
 
             const dataCheckIn = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkin);
-            const dataCheckOut = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkout)
-
             if (dataCheckIn) {
                 const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, 'yyyy-mm-dd');
                 const horarioCheckIn = _jsDateToTime(dataCheckIn);
@@ -265,6 +263,7 @@ function _loadHospedagemData(FIRESTORE_DATA) {
                 document.getElementById(`check-in-horario-${i}`).value = horarioCheckIn;
             }
 
+            const dataCheckOut = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[j].checkout)
             if (dataCheckOut) {
                 const dataFormattedCheckOut = _jsDateToDate(dataCheckOut, "yyyy-mm-dd");
                 const horarioCheckOut = _jsDateToTime(dataCheckOut);
@@ -273,14 +272,24 @@ function _loadHospedagemData(FIRESTORE_DATA) {
                 document.getElementById(`check-out-horario-${i}`).value = horarioCheckOut;
             }
 
+            const descricao = FIRESTORE_DATA.hospedagens.descricao[j];
+            if (descricao) {
+                document.getElementById(`hospedagem-descricao-${i}`).value = descricao;
+            }
+
             const reserva = FIRESTORE_DATA.hospedagens.reservas[j];
             if (reserva) {
                 document.getElementById(`reserva-hospedagem-${i}`).value = reserva;
             }
 
-            const link = FIRESTORE_DATA.hospedagens.links[j];
-            if (link) {
-                document.getElementById(`link-reserva-hospedagem-${i}`).value = link;
+            const linkReserva = FIRESTORE_DATA.hospedagens.links[j];
+            if (linkReserva) {
+                document.getElementById(`link-reserva-hospedagem-${i}`).value = linkReserva;
+            }
+
+            const imagem = FIRESTORE_DATA.hospedagens.imagens[j];
+            if (imagem) {
+                document.getElementById(`link-hospedagem-${i}`).value = imagem.link || imagem;
             }
 
             hospedagemNome.addEventListener('change', function () {
@@ -485,7 +494,6 @@ function _loadGaleriaData(FIRESTORE_DATA) {
             if (link) {
                 document.getElementById(`link-galeria-${i}`).value = link;
             }
-
         }
     }
 }

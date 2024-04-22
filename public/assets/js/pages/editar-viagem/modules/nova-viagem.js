@@ -297,56 +297,56 @@ function _addHospedagem() {
             </div>
           </div>
   
-        <div class="nice-form-group">
-          <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-          <input id="reserva-hospedagem-${i}" type="text" placeholder="#ABC123" />
-        </div>
-
-        <div class="nice-form-group">
-          <label>Descrição <span class="opcional"> (Opcional)</span></label>
-          <input id="reserva-descricao-${i}" type="text" placeholder="Quarto Duplo, camas King" />
-        </div>
-  
-        <div class="nice-form-group">
-          <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-          <input id="link-reserva-hospedagem-${i}" type="url" placeholder="www.google.com" value=""
-            class="icon-right" />
-        </div>
-
-        <div class="nice-form-group customization-box" id="hospedagem-${i}-box">
-          <label>Imagem <span class="opcional"> (Opcional)</span></label>
-          <input id="upload-hospedagem-${i}" type="file" accept=".jpg" />
-          <p id="upload-hospedagem-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</p>
-        </div>
-
-        <div class="nice-form-group">
-          <input id="link-hospedagem-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
-            class="icon-right">
-        </div>
-
-        <fieldset class="nice-form-group" id="upload-checkbox-hospedagem-${i}">
           <div class="nice-form-group">
-            <input type="radio" name="type-hospedagem-${i}" id="enable-link-hospedagem-${i}" checked>
-            <label for="enable-link-hospedagem-${i}">Fornecer link</label>
+            <label>Descrição <span class="opcional"> (Opcional)</span></label>
+            <input id="reserva-descricao-${i}" type="text" placeholder="Quarto Duplo, camas King" />
           </div>
 
           <div class="nice-form-group">
-            <input type="radio" name="type-hospedagem-${i}" id="enable-upload-hospedagem-${i}">
-            <label for="enable-upload-hospedagem-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+            <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
+            <input id="reserva-hospedagem-${i}" type="text" placeholder="#ABC123" />
           </div>
-        </fieldset>
-          
-        </div>
-  
-        <div class="deletar-box">
-          <button id="hospedagem-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('hospedagem-${i}')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-          </svg>
-          </button>
-        </div>
+    
+          <div class="nice-form-group">
+            <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
+            <input id="link-reserva-hospedagem-${i}" type="url" placeholder="www.google.com" value=""
+              class="icon-right" />
+          </div>
+
+          <div class="nice-form-group customization-box" id="hospedagem-${i}-box">
+            <label>Imagem <span class="opcional"> (Opcional)</span></label>
+            <input id="upload-hospedagem-${i}" type="file" accept=".jpg" />
+            <p id="upload-hospedagem-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</p>
+          </div>
+
+          <div class="nice-form-group">
+            <input id="link-hospedagem-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
+              class="icon-right">
+          </div>
+
+          <fieldset class="nice-form-group" id="upload-checkbox-hospedagem-${i}">
+            <div class="nice-form-group">
+              <input type="radio" name="type-hospedagem-${i}" id="enable-link-hospedagem-${i}" checked>
+              <label for="enable-link-hospedagem-${i}">Fornecer link</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input type="radio" name="type-hospedagem-${i}" id="enable-upload-hospedagem-${i}">
+              <label for="enable-upload-hospedagem-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+            </div>
+          </fieldset>
+            
+          </div>
+    
+          <div class="deletar-box">
+            <button id="hospedagem-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('hospedagem-${i}')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" fill-rule="evenodd"
+                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                  clip-rule="evenodd"></path>
+            </svg>
+            </button>
+          </div>
         
       </div>
     </div>

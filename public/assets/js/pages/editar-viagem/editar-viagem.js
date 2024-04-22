@@ -152,18 +152,22 @@ async function _loadTrip() {
   _stopLoadingScreen();
 }
 
-async function _uploadViagemItens(viagemID = tripID, uploadIDs, item) {
+async function _uploadViagemItens(viagemID = tripID, uploadItens, item) {
   const allIDs = _getChildIDs(`${item}-box`);
-  if (!uploadIDs) {
-    uploadIDs = allIDs;
+  if (!uploadItens) {
+    uploadItens = [];
+    for (const id of allIDs) {
+      uploadItens.push(_getUploadItem(true, `upload-${id}`));
+    }
   }
-  return await _uploadBathImages(`viagens/${viagemID}/${item}`, uploadIDs, allIDs);
+  return await _uploadBathImages(`viagens/${viagemID}/${item}`, uploadItens);
 }
 
-async function _uploadGaleria(viagemID = tripID, uploadIDs) {
-  return await _uploadViagemItens(viagemID, uploadIDs, 'galeria');
+async function _uploadGaleria(viagemID = tripID, uploadItens) {
+  return await _uploadViagemItens(viagemID, uploadItens, 'galeria');
 }
 
-async function _uploadHospedagem(viagemID = tripID, uploadIDs) {
-  return await _uploadViagemItens(viagemID, uploadIDs, 'hospedagem');
+async function _uploadHospedagem(viagemID = tripID, uploadItens) {
+  return await _uploadViagemItens(viagemID, uploadItens, 'hospedagem');
 }
+

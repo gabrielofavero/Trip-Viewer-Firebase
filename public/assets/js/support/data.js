@@ -84,6 +84,14 @@ function _returnEmptyIfNoValue(value) {
   }
 }
 
+function _isObject(obj) {
+  return obj === Object(obj);
+}
+
+function _objectExistsAndHasKeys(obj) {
+  return obj && Object.keys(obj).length > 0;
+}
+
 function _firestoreReferencetoPath(ref) {
   if (ref && ref._path && ref._path.segments) {
     return ref._path.segments.join("/");

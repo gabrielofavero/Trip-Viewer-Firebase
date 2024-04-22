@@ -54,28 +54,17 @@ async function _updateImages(body) {
         uploadObject['imagem.escuro'] = body.logoDark;
       }
 
-      if (body.custom && Object.keys(body.custom).length > 0) {
+      if (_objectExistsAndHasKeys(body.custom)) {
         const db = await _get(`${body.type}/${body.id}`);
-        if (db) {
+        if (_objectExistsAndHasKeys(db)) {
           for (const customKey of Object.keys(body.custom)) {
-            if (db[customKey]) {
-              let imagensDB = db[customKey].imagens;
-              const uploads = body.custom[customKey];
-  
-              if (imagensDB && imagensDB.length > 0 && uploads && uploads.length > 0) {
-                for (let i = 0; i < imagensDB.length; i++) {
-                  let upload = uploads[i];
-                  if (Object.keys(upload).length > 0 && upload.status.success === true) {
-                    delete upload.status;
-                    imagensDB[i] = upload;
-                  }
-                }
-                uploadObject[`${customKey}.imagens`] = imagensDB;
-              }
+            const result = body.custom[customKey];
+            const dbResult = db[customKey].imagens;
+            if (_objectExistsAndHasKeys(result) && result !== dbResult) {
+              uploadObject[`${customKey}.imagens`] = result
             }
           }
         }
-
       }
       await _update(`${body.type}/${body.id}`, uploadObject);
 
@@ -165,22 +154,17 @@ async function _uploadLogoDark(viagemID, type) {
   return await _uploadImage(`${type}/${viagemID}/logo-dark`, 'upload-logo-dark');
 }
 
-async function _uploadBathImages(path, uploadIDs, allIDs = []) {
+async function _uploadBathImages(path, uploadItens) {
   result = [];
-  if (allIDs.length === 0) {
-    for (const id of uploadIDs) {
-      result.push(await _uploadImage(path, `upload-${id}`));
-    }
-  } else {
-    for (const id of allIDs) {
-      if (uploadIDs.includes(id)) {
-        result.push(await _uploadImage(path, `upload-${id}`));
-      } else {
-        result.push({});
-      }
+  for (const item of uploadItens) {
+    if (item.toUpload) {
+      result.push(await _uploadImage(path, item.value));
+    } else if (_isObject(item)){
+      result.push(item.value);
+    } else {
+      result.push(item);
     }
   }
-
   return result;
 }
 
@@ -355,5 +339,38 @@ function _isInternalImage(value) {
     return true;
   } else {
     return false;
+  }
+}
+
+function _getUploadItem(toUpload, value) {
+  return {
+    toUpload: toUpload,
+    value: value
+  }
+}
+
+function _getImageObjectFromDB(link, arrayDB) {
+  let result = link;
+  for (const item of arrayDB) {
+    if (item && item.link === link) {
+      result = item;
+      break;
+    }
+  }
+  return result;
+}
+
+function _addToUploadItens(type, j) {
+  if (!uploadItens) {
+    _logger(ERROR, 'Função _addToUploadItens chamada fora de contexto');
+    return;
+  }
+
+  const id = `${type}-${j}`;
+  if (document.getElementById(`enable-link-${id}`).checked) {
+    const link = document.getElementById(`link-${id}`).value;
+    uploadItens[type].push(_getUploadItem(false, link));
+  } else {
+    uploadItens[type].push(_getUploadItem(true, `upload-${id}`));
   }
 }
