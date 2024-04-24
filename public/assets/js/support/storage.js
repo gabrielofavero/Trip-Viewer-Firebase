@@ -1,4 +1,6 @@
 var IMAGE_UPLOAD_ERROR = false;
+var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
+var IMAGES_SIZES = [];
 
 async function _uploadImage(path, divID) {
   let result = {
@@ -126,6 +128,27 @@ async function _deleteImage(path) {
   }
 }
 
+async function _deleteImageFolderContents(folderPath) {
+  try {
+    const storageRef = firebase.storage().ref();
+    const folderRef = storageRef.child(folderPath);
+
+    // List all items (files) in the folder
+    const items = await folderRef.listAll();
+
+    // Iterate over each item and delete it
+    await Promise.all(
+      items.items.map(async (item) => {
+        await _deleteFile(item.fullPath);
+      })
+    );
+
+    console.log(`All files in folder ${folderPath} deleted successfully.`);
+  } catch (error) {
+    console.error(`Error deleting folder contents ${folderPath}: ${error.message}`);
+  }
+}
+
 async function _uploadBackground(viagemID, type) {
   return await _uploadImage(`${type}/${viagemID}/background`, 'upload-background');
 }
@@ -142,7 +165,7 @@ function _checkFileSize(fileInput, type) {
   const file = fileInput.files[0];
 
   if ((PERMISSOES && PERMISSOES['tamanhoUploadIrrestrito'] === true) ||
-    (file.size <= 1048576)) { // 1MB = 1 * 1024 * 1024 = 1048576 bytes
+    (file.size <= UPLOAD_SIZE)) {
     document.getElementById(`upload-${type}-size-message`).style.display = 'none'
   } else {
     document.getElementById(`upload-${type}-size-message`).style.display = 'block';

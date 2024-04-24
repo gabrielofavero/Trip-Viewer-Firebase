@@ -3,7 +3,6 @@ var tripID;
 var FIRESTORE_DATA;
 var wasSaved = false;
 var changedOnce = false;
-var PERMISSOES;
 
 _startLoadingScreen();
 

@@ -2,7 +2,6 @@ var blockLoadingEnd = false;
 var listID;
 var FIRESTORE_DATA;
 var wasSaved = false;
-var PERMISSOES;
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {

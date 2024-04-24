@@ -316,7 +316,7 @@ function _addHospedagem() {
           <div class="nice-form-group customization-box" id="hospedagens-${i}-box">
             <label>Imagem <span class="opcional"> (Opcional)</span></label>
             <input id="upload-hospedagens-${i}" type="file" accept=".jpg" />
-            <p id="upload-hospedagens-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</p>
+            <p id="upload-hospedagens-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
           </div>
 
           <div class="nice-form-group">
@@ -332,7 +332,7 @@ function _addHospedagem() {
 
             <div class="nice-form-group">
               <input type="radio" name="type-hospedagens-${i}" id="enable-upload-hospedagens-${i}">
-              <label for="enable-upload-hospedagens-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+              <label for="enable-upload-hospedagens-${i}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
             </div>
           </fieldset>
             
@@ -547,7 +547,7 @@ function _addGaleria() {
           <div class="nice-form-group customization-box" id="galeria-${i}-box">
             <label>Imagem</label>
             <input id="upload-galeria-${i}" type="file" accept=".jpg" />
-            <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1MB</div>
+            <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</div>
           </div>
     
           <div class="nice-form-group">
@@ -563,7 +563,7 @@ function _addGaleria() {
     
             <div class="nice-form-group">
               <input type="radio" name="type-galeria-${i}" id="enable-upload-galeria-${i}">
-              <label for="enable-upload-galeria-${i}">Carregar imagem <span class="opcional"> (Até 1MB)</span></label>
+              <label for="enable-upload-galeria-${i}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
             </div>
           </fieldset>
     
