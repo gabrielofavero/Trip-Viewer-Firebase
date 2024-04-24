@@ -25,7 +25,7 @@ function _deleteType(tipo) {
 
 
 // Geral: Dynamic Select
-function _dynamicSelectAction(tipo, subtipo, copy, categorias, requred=false, init = false) {
+function _dynamicSelectAction(tipo, subtipo, copy, categorias, init = false) {
   if (copy.length !== categorias.length || !copy.every((value, index) => value === categorias[index])) {
     _loadDynamicSelect(tipo, subtipo, categorias, init);
   }
@@ -55,7 +55,7 @@ function _pushIfValidCategoria(div, categorias) {
   }
 }
 
-function _loadDynamicSelect(tipo, subtipo, categorias, required = true, init = false) {
+function _loadDynamicSelect(tipo, subtipo, categorias, init = false) {
   const childs = _getChildIDs(`${tipo}-box`);
   const selectOptions = [];
 
@@ -82,51 +82,40 @@ function _loadDynamicSelect(tipo, subtipo, categorias, required = true, init = f
     }
 
     input.value = "";
-    _loadDynamicSelectVisibility(select, input, required, init);
+    _loadDynamicSelectVisibility(select, input, init);
   }
 }
 
-function _loadDynamicSelectVisibility(select, input, required, init) {
+function _loadDynamicSelectVisibility(select, input, init) {
   if (init && select.innerHTML === '') {
     select.style.display = 'none';
     input.style.display = 'block';
-
-    if (required) {
-      input.required = true;
-    }
 
   } else if (init) {
     select.style.display = 'block';
     input.style.display = 'none';
 
-    if (required) {
-      input.required = false;
-    }
 
   } else if (select.value === 'outra') {
     select.style.display = 'block';
     input.style.display = 'block';
 
-    if (required) {
-      input.required = true;
-    }
-
   } else if (select.value === 'selecione') {
     select.style.display = 'block';
     input.style.display = 'none';
-
-    if (required) {
-      input.required = true;
-    }
 
   } else {
     select.style.display = 'block';
     input.style.display = 'none';
 
-    if (required) {
-      input.required = false;
-    }
   }
+}
+
+function _getDynamicSelectValue(tipo, subtipo, i) {
+  const select = document.getElementById(`${tipo}-${subtipo}-select-${i}`);
+  if (select && select.value && select.value !== 'selecione' && select.value !== 'outra') {
+    return select.options[select.selectedIndex].text;
+  } else return '';
 }
 
 
@@ -410,13 +399,13 @@ function _loadLineupListeners(i) {
 function _lineupGeneroSelectAction(tipo, subtipo, init=false) {
   let copy = LINEUP_GENEROS;
   LINEUP_GENEROS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-  _dynamicSelectAction(tipo, subtipo, copy, LINEUP_GENEROS, false, init);
+  _dynamicSelectAction(tipo, subtipo, copy, LINEUP_GENEROS, init);
 }
 
 function _lineupPalcoSelectAction(tipo, subtipo, init=false) {
   let copy = LINEUP_PALCOS;
   LINEUP_PALCOS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-  _dynamicSelectAction(tipo, subtipo, copy, LINEUP_PALCOS, false, init);
+  _dynamicSelectAction(tipo, subtipo, copy, LINEUP_PALCOS, init);
 }
 
 
@@ -443,7 +432,7 @@ function _loadGaleriaListeners(i) {
 function _galeriaSelectAction(tipo, subtipo, init=false) {
   let copy = GALERIA_CATEGORIAS;
   GALERIA_CATEGORIAS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-  _dynamicSelectAction(tipo, subtipo, copy, GALERIA_CATEGORIAS, true, init);
+  _dynamicSelectAction(tipo, subtipo, copy, GALERIA_CATEGORIAS, init);
 }
 
 function _deleteGaleria(i) {

@@ -182,7 +182,7 @@ function _loadModules() {
 
   // Gallery
   if (FIRESTORE_DATA.modulos.galeria) {
-    CALL_SYNC.push(_loadGallery);
+    CALL_SYNC.push(_loadGaleria);
   } else {
     document.getElementById("portfolioM").innerHTML = "";
     document.getElementById("portfolio").style.display = "none";

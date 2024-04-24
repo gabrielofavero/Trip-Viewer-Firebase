@@ -423,9 +423,9 @@ function _loadLineupData(FIRESTORE_DATA) {
 
                     document.getElementById(`lineup-local-${i}`).value = key;
 
-                    const genero = FIRESTORE_DATA.lineup[key].descricao;
+                    const genero = FIRESTORE_DATA.lineup[key].genero;
                     if (genero && genero[j]) {
-                        document.getElementById(`lineup-descricao-${i}`).value = genero[j];
+                        document.getElementById(`lineup-genero-${i}`).value = genero[j];
                     }
 
                     const palco = FIRESTORE_DATA.lineup[key].palco;
@@ -476,18 +476,18 @@ function _loadGaleriaData(FIRESTORE_DATA) {
             const j = i - 1;
             _addGaleria();
 
-            const titulo = FIRESTORE_DATA.galeria.imagens[j].titulo;
+            const titulo = FIRESTORE_DATA.galeria.titulos[j];
             if (titulo) {
                 document.getElementById(`galeria-titulo-${i}`).value = titulo;
                 document.getElementById(`galeria-title-${i}`).innerText = titulo;
             }
 
-            const filtro = FIRESTORE_DATA.galeria.imagens[j].filtro;
-            if (filtro) {
-                document.getElementById(`galeria-categoria-${i}`).value = filtro;
+            const categoria = FIRESTORE_DATA.galeria.categorias[j];
+            if (categoria) {
+                document.getElementById(`galeria-categoria-${i}`).value = categoria;
             }
 
-            const descricao = FIRESTORE_DATA.galeria.imagens[j].descricao;
+            const descricao = FIRESTORE_DATA.galeria.descricoes[j];
             if (descricao) {
                 document.getElementById(`galeria-descricao-${i}`).value = descricao;
             }

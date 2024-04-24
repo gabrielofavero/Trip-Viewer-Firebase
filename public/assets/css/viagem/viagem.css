@@ -1296,10 +1296,16 @@ section {
   overflow: hidden;
 }
 
+.centered-destino-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 #destinosBox a {
   color: #272829;
 }
-
 
 /*--------------------------------------------------------------
 # Testimonials - Resumo

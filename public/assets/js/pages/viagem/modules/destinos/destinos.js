@@ -17,6 +17,14 @@ function _loadDestinations() {
   window.localStorage.setItem('PLACES_JSON', JSON.stringify(CONFIG.destinos.destinos));
   window.localStorage.setItem('PLACES_SETTINGS_JSON', JSON.stringify(CONFIG.destinos.settings));
 
+  if (DESTINOS.length % 2 === 1) { // Ímpar
+    document.getElementById('destinosBox').classList.add('centered-destino-box');
+  }
+
+  if (DESTINOS.length === 1 && document.getElementById("destinos-select").style.display === 'none') {
+    document.getElementById('destinosTitleContainer').style.display = 'none';
+  }
+
   window.addEventListener("resize", function () {
     _adjustDestinationsHTML();
   });

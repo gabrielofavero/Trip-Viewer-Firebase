@@ -11,9 +11,6 @@
 
 ## Doing
 
-- 📈 Melhorias editar-viagem
-  - Selects dinâmicos para que user possa escolher entre os dados já cadastrados (Galeria e Lineup);
-  - Automações para facilitar preenchimento de dados e visualização;
 - 🏆 Criação de boxes de visualização;
   - Hospedagens, Transportes;
   - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
@@ -22,10 +19,16 @@
 
 ### Prioridade Alta
 
-- 🏆 Criação de opção de arrastar accordions (Mobile);
+- 📈 Melhorias no arrastamento de accordions (páginas de editar)
+  - Criação de opção de arrastar accordions (Mobile);
+  - Desabilitar arrastamento quando accordion está aberto
 - 📈 Ícone Customizado em viagens.html;
   - Verificar se é possível;
-- 🐞 Correção de dados de lineup não serem salvos se desabilitado
+- 🐞 Correção de loading as vezes carregar eternamente;
+  - Salvar 'retryLoad' no localStorage como booleano (iniciar em false);
+  - Adicionar timer enquanto a tela de carregamento está ativa;
+  - Se timer ultrapassar 15s, ativar 'retryLoad' e recarregar a página;
+  - Se timer novamente ultrapassar 15s, mostrar mensagem de erro.
 
 ### Prioridade Média
 
@@ -34,10 +37,10 @@
   - Permitir adicionar itens
 - 📈 Melhoria de tornar módulo de transporte mais automatizado
   - Se user clicou em volta e não há dados, reverte tudo da ida
-- 🏆 Criação de opções re re-ordenação de destinos
+- 🏆 Criação de opções de re-ordenação de destinos
   - Na tela de edição e viagens;
   - Ordenação por nota e por nome (↑↓);
-- 📈 Melhoria de listas do index;
+- 📈 Melhoria de listas (Minhas viagens, passeios e listas) do index.html;
   - Ordenar por data (crescente) em viagens;
   - Adicionar Viagens anteriores em viagens;
   - Ordernar por data de atualização em Destinos e Listagens
@@ -45,7 +48,7 @@
   - Procurar template na web e aplicar (colocar fonte nos créditos)
 - ⚔️ Implementação: Gastos;
   - Procurar template na web e aplicar (colocar fonte nos créditos)
-- ⚔️ Implementação: Lineup.
+- 📈 Melhoria: Lineup.
   - Categoria nova;
   - Lineup Dinâmico que abre modal;
   - Quadro de horários vibe App Lollapalooza;
@@ -62,7 +65,7 @@
   - Sonarqube.
 
 ### Prioridade Baixa
-
+- 🐞 Correção de dados de lineup não serem salvos se desabilitado
 - 🐞 Correção de loading em viagens não estar pegando a cor customizada;
 - 🐞 Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair;
   - Colocar booleano no método de switch se é um lightbox;
@@ -92,6 +95,12 @@
   - Sistema inteligente de uploads, com exclusão de imagens não utilizadas
   - Sistema de inserção de imagens customizadas de acordo com a página (hospedagens e galeria para o caso de editar-viagens)
   - Ajustes na página de viagem para receber a nova estrutura de imagem
+- 📈 Melhorias editar-viagem
+  - Selects dinâmicos para que user possa escolher entre os dados já cadastrados (Galeria e Lineup);
+  - Automações para facilitar preenchimento de dados e visualização;
+- 📈 Melhoria em Destinos do viagens.html;
+  - Se houver uma quantidade ímpar de categorias, centraliza os itens (melhoria de visibilidade no desktop);
+  - Se só houver destinos para uma cidade e só houver uma categoria, o título é ocultado
 
 ### Março 2024
 

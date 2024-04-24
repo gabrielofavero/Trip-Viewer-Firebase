@@ -421,7 +421,7 @@ function _buildLineupObject() {
         if (!result[selectValue]) {
             result[selectValue] = {
                 data: [],
-                descricao: [],
+                genero: [],
                 head: [],
                 horario: [],
                 hyperlink: {
@@ -447,12 +447,10 @@ function _buildLineupObject() {
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
         result[selectValue].nome.push(valueNome);
 
-        const divDescricao = document.getElementById(`lineup-descricao-${j}`);
-        const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
-        result[selectValue].descricao.push(valueDescricao);
+        const valueGenero = _getDynamicSelectValue('lineup', 'genero', j);
+        result[selectValue].genero.push(valueGenero);
 
-        const divPalco = document.getElementById(`lineup-palco-${j}`);
-        const valuePalco = divPalco ? _returnEmptyIfNoValue(divPalco.value) : "";
+        const valuePalco = _getDynamicSelectValue('lineup', 'palco', j);
         result[selectValue].palco.push(valuePalco);
 
         const divData = document.getElementById(`lineup-data-${j}`);
@@ -498,18 +496,18 @@ function _buildGaleriaObject() {
         const descricao = document.getElementById(`galeria-descricao-${j}`).value || "";
         result.descricoes.push(descricao);
         
-        const categoria = _firstCharToUpperCaseAllWords(document.getElementById(`galeria-categoria-${j}`).value);
+        const categoria = _getDynamicSelectValue('galeria', 'categoria', j);
         result.categorias.push(categoria);
         
         const titulo = document.getElementById(`galeria-titulo-${j}`).value || "";
         result.titulos.push(titulo);
         
-        if (document.getElementById(`enable-upload-hospedagens-${j}`).checked) {
+        if (document.getElementById(`enable-upload-galeria-${j}`).checked) {
             TO_UPLOAD.galeria = true;
             result.imagens.push({});
             UPLOAD_FILES.galeria.push(j)
         } else {
-            const divImagem = document.getElementById(`link-hospedagens-${j}`);
+            const divImagem = document.getElementById(`link-galeria-${j}`);
             const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
             const valueResult = valueImagem ? _getImageObject(valueImagem, 'galeria') : "";
             

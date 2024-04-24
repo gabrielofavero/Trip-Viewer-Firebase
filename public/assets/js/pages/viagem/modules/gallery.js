@@ -14,14 +14,14 @@ function _loadPortfolioLightbox() {
     });
 }
 
-function _loadGallery() {
-    _loadGalleryFilters(FIRESTORE_DATA.galeria.filtros);
-    _loadGalleryPhotos(FIRESTORE_DATA.galeria.imagens);
+function _loadGaleria() {
+    _loadGaleriaCategorias(FIRESTORE_DATA.galeria.categorias);
+    _loadGaleriaBody(FIRESTORE_DATA.galeria);
     _adjustPortfolioHeight();
-    _refreshFilters();
+    _refreshCategorias();
 }
 
-function _loadGalleryFilters(filters) {
+function _loadGaleriaCategorias(filters) {
     let result = "";
     let filtersDiv = document.getElementById("portfolio-flters");
 
@@ -33,44 +33,47 @@ function _loadGalleryFilters(filters) {
     filtersDiv.innerHTML += result;
 }
 
-function _loadGalleryPhotos(fotos) {
+function _loadGaleriaBody(galeria) {
     let result = "";
-    let div = document.getElementById("portfolio-container");
-
-    fotos.forEach(foto => {
-        let src = foto.link;
-        let titulo = foto.titulo;
-        let descricao = foto.descricao;
-        let filtro = filterMap.getByValue(foto.filtro);
-
+    for (let i = 0; i < galeria.titulos.length; i++) {
+        const link = _getGaleriaLink(galeria.imagens[i]);
         result += `
-       <div class="col-lg-4 col-md-6 portfolio-item ${filtro}">
-           <div class="portfolio-wrap">
-           <img src="${src}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
-           <div class="portfolio-info">
-               <h4>${titulo}</h4>
-               <p>${descricao}</p>
-               <div class="portfolio-links">
-               <a href="${src}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="${descricao}"><i class="bx bx-zoom-in"></i></a>
-               </div>
-           </div>
-           </div>
-       </div>`
-    });
+        <div class="col-lg-4 col-md-6 portfolio-item ${galeria.descricoes[i]}">
+            <div class="portfolio-wrap">
+            <img src="${link}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
+            <div class="portfolio-info">
+                <h4>${galeria.titulos[i]}</h4>
+                <p>${galeria.descricoes[i]}</p>
+                <div class="portfolio-links">
+                <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="${galeria.descricoes[i]}"><i class="bx bx-zoom-in"></i></a>
+                </div>
+            </div>
+            </div>
+        </div>`
+    }
 
-    div.innerHTML = result;
+    document.getElementById("portfolio-container").innerHTML = result;
     _loadPortfolioLightbox();
 }
 
+function _getGaleriaLink(imagem) {
+    if (_isObject(imagem)) {
+        return imagem.link;
+    } else {
+        return imagem;
+    }
+}
+
+
 function _adjustPortfolioHeight() {
     const container = document.getElementById('portfolio-container');
+    
     if (!container) return;
 
     container.style.height = 'auto';
-
     let totalHeight = 0;
-    const items = container.querySelectorAll('.portfolio-item');
-    items.forEach(item => {
+
+    container.querySelectorAll('.portfolio-item').forEach(item => {
         totalHeight += item.offsetHeight + parseInt(window.getComputedStyle(item).marginBottom, 10);
     });
 
@@ -88,7 +91,7 @@ function _loadFilterClass(filter) {
     return filterName;
 }
 
-function _refreshFilters() {
+function _refreshCategorias() {
     let portfolioContainer = select('.portfolio-container');
     if (portfolioContainer) {
         let portfolioIsotope = new Isotope(portfolioContainer, {

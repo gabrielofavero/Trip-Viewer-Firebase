@@ -442,10 +442,10 @@ function _addLineup() {
             </select>
           </div>
 
-          <div class="nice-form-group" id="lineup-descricao-select-form-group-${i}">
+          <div class="nice-form-group" id="lineup-genero-select-form-group-${i}">
             <label>Gênero <span class="opcional"> (Opcional)</span></label>
-            <select id="lineup-descricao-select-${i}" style="display: none;"></select>
-            <input class="nice-form-group" id="lineup-descricao-${i}" type="text" placeholder="Pop Punk" />
+            <select id="lineup-genero-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="lineup-genero-${i}" type="text" placeholder="Pop Punk" />
           </div>
 
           <div class="nice-form-group" id="lineup-palco-select-form-group-${i}">
@@ -472,7 +472,7 @@ function _addLineup() {
           </div>
   
           <div class="nice-form-group">
-            <label>Link Spotify <span class="opcional"> (Playlist ou página do artista)</span></label>
+            <label>Spotify <span class="opcional"> (Playlist ou página do artista)</span></label>
             <input id="lineup-midia-${i}" type="url"
               placeholder="https://open.spotify.com/playlist/16mG20ZrC9QttUB6Sozqep?si=da0794cde4914a17"
               value="" class="icon-right" />
@@ -536,7 +536,7 @@ function _addGaleria() {
           <div class="nice-form-group" id="galeria-select-form-group-${i}">
             <label>Categoria</label>
             <select id="galeria-categoria-select-${i}" style="display: none;"></select>
-            <input required class="nice-form-group" id="galeria-categoria-${i}" type="text" placeholder="Mapa do Evento" />
+            <input class="nice-form-group" id="galeria-categoria-${i}" type="text" placeholder="Mapa do Evento" />
           </div>
     
           <div class="nice-form-group">

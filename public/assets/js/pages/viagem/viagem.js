@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 0) {
         if (!refreshed) {
-          _refreshFilters();
+          _refreshCategorias();
           refreshed = true;
         }
       } else {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
           _start();
           _mainLoad();
           _adjustPortfolioHeight();
-          _refreshFilters();
+          _refreshCategorias();
         }
 
         $('body').css('overflow', 'auto');

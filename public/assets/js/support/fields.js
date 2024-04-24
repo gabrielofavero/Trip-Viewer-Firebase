@@ -6,7 +6,8 @@ function _validateRequiredFields() {
     var fields = Array.from(inputs).concat(Array.from(selects));
 
     fields.forEach(function (field) {
-        if (field.value.trim() === '') {
+        const value = field.value.trim();
+        if (value == '' || value == 'selecione' || value == 'outra') {
             invalidFields.push(field.id);
         }
     });
