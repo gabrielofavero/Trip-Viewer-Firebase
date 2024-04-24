@@ -89,7 +89,7 @@ function _isObject(obj) {
 }
 
 function _objectExistsAndHasKeys(obj) {
-  return obj && Object.keys(obj).length > 0;
+  return _isObject(obj) && obj && Object.keys(obj).length > 0;
 }
 
 function _firestoreReferencetoPath(ref) {

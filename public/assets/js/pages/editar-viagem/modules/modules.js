@@ -95,7 +95,6 @@ function _loadDynamicSelectVisibility(select, input, init) {
     select.style.display = 'block';
     input.style.display = 'none';
 
-
   } else if (select.value === 'outra') {
     select.style.display = 'block';
     input.style.display = 'block';

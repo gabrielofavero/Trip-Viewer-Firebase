@@ -92,6 +92,7 @@ function _loadHeader() {
 
     const background = FIRESTORE_DATA.imagem.background;
     const claro = FIRESTORE_DATA.imagem.claro;
+    const escuro = _imageExists(FIRESTORE_DATA.imagem.escuro) ? _getImageLink(FIRESTORE_DATA.imagem.escuro) : _getImageLink(claro);
 
     if (_imageExists(background)) {
       var hero = document.getElementById('hero');
@@ -100,7 +101,6 @@ function _loadHeader() {
     }
 
     if (_imageExists(claro)) {
-      const escuro = _imageExists(escuro) ? _getImageLink(escuro) : _getImageLink(claro);
       document.getElementById("header2").src = _isOnDarkMode() ? escuro : _getImageLink(claro);
       document.getElementById("header1").style.display = "none";
       document.getElementById("header2").style.display = "block";

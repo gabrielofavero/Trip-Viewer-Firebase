@@ -41,6 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         $('body').css('overflow', 'auto');
+        setTimeout(() => {
+          _adjustPortfolioHeight();
+          _refreshCategorias();
+        }, 1000);
       })
   } catch (error) {
     _displayErrorMessage(error);

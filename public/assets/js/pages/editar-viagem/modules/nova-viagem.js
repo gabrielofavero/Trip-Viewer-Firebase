@@ -534,9 +534,9 @@ function _addGaleria() {
           </div>
 
           <div class="nice-form-group" id="galeria-select-form-group-${i}">
-            <label>Categoria</label>
+            <label>Categoria <span class="opcional"> (Opcional)</span></label>
             <select id="galeria-categoria-select-${i}" style="display: none;"></select>
-            <input class="nice-form-group" id="galeria-categoria-${i}" type="text" placeholder="Mapa do Evento" />
+            <input class="nice-form-group" id="galeria-categoria-${i}" type="text" placeholder="Mapa" />
           </div>
     
           <div class="nice-form-group">
