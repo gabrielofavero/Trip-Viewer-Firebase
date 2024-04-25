@@ -32,6 +32,7 @@
 
 ### Prioridade Média
 
+- 🏆 Firebase Firestore Rules no Front-End
 - 📈 Melhoria de tornar módulo de programação mais personalizável;
   - Incluir Horário;
   - Permitir adicionar itens
@@ -102,7 +103,7 @@
 - 📈 Melhoria em Destinos do viagens.html;
   - Se houver uma quantidade ímpar de categorias, centraliza os itens (melhoria de visibilidade no desktop);
   - Se só houver destinos para uma cidade e só houver uma categoria, o título é ocultado
-- 🏆 Firebase Rules no Front-End
+- 🏆 Firebase Storage Rules no Front-End
  - Criação de forma de verificação de permissões no front-end
  - O responsável pela aprovação continua sendo o Firebase Console. O front-end apenas exibe a mensagem de erro tratada.
 
