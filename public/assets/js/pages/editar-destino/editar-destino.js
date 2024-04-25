@@ -1,5 +1,4 @@
 var blockLoadingEnd = false;
-var destinosID;
 var FIRESTORE_PLACES_DATA;
 wasSaved = false;
 _startLoadingScreen();
@@ -9,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
     _main();
 
     const urlParams = new URLSearchParams(window.location.search);
-    destinosID = urlParams.get('d');
+    DOCUMENT_ID = urlParams.get('d');
 
     _loadVisibilityIndex();
     _loadHabilitados();
 
-    if (destinosID) {
+    if (DOCUMENT_ID) {
       _loadDestinations()
     }
 
@@ -75,7 +74,7 @@ function _loadEventListeners() {
   });
 
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(destinosID, 'destinos', wasSaved);
+    _reEdit('destinos', wasSaved);
   });
 
   document.getElementById('cancelar').addEventListener('click', () => {
@@ -87,8 +86,8 @@ function _loadEventListeners() {
   });
 
   document.getElementById('apagar').addEventListener('click', async () => {
-    if (destinosID) {
-      await _deleteUserObjectDB(destinosID, "destinos");
+    if (DOCUMENT_ID) {
+      await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
       window.location.href = `index.html`;
     }
   });

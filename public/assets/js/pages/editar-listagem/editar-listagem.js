@@ -1,5 +1,4 @@
 var blockLoadingEnd = false;
-var listID;
 var FIRESTORE_DATA;
 var wasSaved = false;
 _startLoadingScreen();
@@ -9,13 +8,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     _main();
 
     const urlParams = new URLSearchParams(window.location.search);
-    listID = urlParams.get('l');
+    DOCUMENT_ID = urlParams.get('l');
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
     _loadHabilitados();
 
-    if (listID) {
+    if (DOCUMENT_ID) {
       _carregarListagem()
     } else {
       _loadDestinos();
@@ -66,8 +65,8 @@ function _loadEventListeners() {
   });
 
   document.getElementById('visualizar').addEventListener('click', () => {
-    if (listID) {
-      window.location.href = `viagem.html?l=${tripID}`;
+    if (DOCUMENT_ID) {
+      window.location.href = `viagem.html?l=${DOCUMENT_ID}`;
     } else {
       window.location.href = `index.html`;
     }
@@ -86,7 +85,7 @@ function _loadEventListeners() {
   });
 
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(listID, 'listagens', wasSaved);
+    _reEdit('listagens', wasSaved);
   });
 
   document.getElementById('cancelar').addEventListener('click', () => {
@@ -94,8 +93,8 @@ function _loadEventListeners() {
   });
 
   document.getElementById('apagar').addEventListener('click', async () => {
-    if (listID) {
-      await _deleteUserObjectDB(listID, "listagens");
+    if (DOCUMENT_ID) {
+      await _deleteUserObjectDB(DOCUMENT_ID, "listagens");
       window.location.href = `index.html`;
     }
   });

@@ -35,7 +35,7 @@ function _firstCharToUpperCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function _firstCharToUpperCaseAllWords(str) {
+function _firstCharsToUpperCase(str) {
   return str.replace(/\b\w/g, l => l.toUpperCase());
 }
 
@@ -43,6 +43,10 @@ function _codifyText(inputString) {
   let lowercaseString = inputString.toLowerCase();
   let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, '');
   return validFolderName;
+}
+
+function _uncodifyText(inputString) {
+  return _firstCharsToUpperCase(inputString.replace(/_/g, ' '));
 }
 
 function _getChildIDs(parentId) {
@@ -149,6 +153,16 @@ function _getOptionsFromSelect(id) {
   for (let i = 0; i < selectElement.options.length; i++) {
     optionValues.push(selectElement.options[i].value);
   }
-
   return optionValues;
+}
+
+function _printObjectHTML(obj) {
+  var str = "<br>";
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const formattedKey = _uncodifyText(key);
+      str += `<br><strong>${formattedKey}:</strong> ${obj[key]}`
+    }
+  }
+  return str;
 }

@@ -1,3 +1,5 @@
+var DOCUMENT_ID;
+
 var getErrorMsg = "";
 
 // Constructors
@@ -279,10 +281,10 @@ async function _addToUserArray(type, value) {
   }
 }
 
-async function _updateUserObjectDB(object, destinosID, type) {
+async function _updateUserObjectDB(object, id, type) {
   if (await _getUID()) {
     try {
-      return await _update(`${type}/${destinosID}`, object)
+      return await _update(`${type}/${id}`, object)
     } catch (error) {
       console.error('Error fetching data:', error);
       return error.message;

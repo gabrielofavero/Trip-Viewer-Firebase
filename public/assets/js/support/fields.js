@@ -82,7 +82,7 @@ function _getInvalidFieldsText(invalidFields) {
     return text + '</ul>';
 }
 
-function _reEdit(id, type, wasSaved = true) {
+function _reEdit(type, wasSaved = true) {
     let param;
     let url;
 
@@ -97,9 +97,8 @@ function _reEdit(id, type, wasSaved = true) {
         url = 'editar-listagem.html';
     }
 
-
-    if (param && id && wasSaved) {
-        window.location.href = `${url}?${param}=${id}`;
+    if (param && DOCUMENT_ID && wasSaved) {
+        window.location.href = `${url}?${param}=${DOCUMENT_ID}`;
     } else if (!wasSaved) {
         _closeModal();
     } else {

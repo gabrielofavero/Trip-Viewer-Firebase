@@ -1,5 +1,4 @@
 var blockLoadingEnd = false;
-var tripID;
 var FIRESTORE_DATA;
 var wasSaved = false;
 var changedOnce = false;
@@ -11,13 +10,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     _main();
 
     const urlParams = new URLSearchParams(window.location.search);
-    tripID = urlParams.get('v');
+    DOCUMENT_ID = urlParams.get('v');
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
     _loadHabilitados();
 
-    if (tripID) {
+    if (DOCUMENT_ID) {
       _loadTrip()
     } else {
       _loadNewTrip();
@@ -90,8 +89,8 @@ function _loadEventListeners() {
   });
 
   document.getElementById('visualizar').addEventListener('click', () => {
-    if (tripID) {
-      window.location.href = `viagem.html?v=${tripID}`;
+    if (DOCUMENT_ID) {
+      window.location.href = `viagem.html?v=${DOCUMENT_ID}`;
     } else {
       window.location.href = `index.html`;
     }
@@ -100,7 +99,7 @@ function _loadEventListeners() {
   document.getElementById('inicio').addEventListener('input', () => {
     _loadProgramacao();
     document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
-    if (!tripID || (tripID && !changedOnce)) {
+    if (!DOCUMENT_ID || (DOCUMENT_ID && !changedOnce)) {
       changedOnce = true;
       document.getElementById('fim').value = _getNextDay(document.getElementById('inicio').value);
     }
@@ -123,7 +122,7 @@ function _loadEventListeners() {
   });
 
   document.getElementById('re-editar').addEventListener('click', () => {
-    _reEdit(tripID, 'viagens', wasSaved);
+    _reEdit('viagens', wasSaved);
   });
 
   document.getElementById('cancelar').addEventListener('click', () => {
@@ -131,8 +130,8 @@ function _loadEventListeners() {
   });
 
   document.getElementById('apagar').addEventListener('click', async () => {
-    if (tripID) {
-      await _deleteUserObjectDB(tripID, "viagens");
+    if (DOCUMENT_ID) {
+      await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
       window.location.href = `index.html`;
     }
   });
@@ -151,11 +150,11 @@ async function _loadTrip() {
   _stopLoadingScreen();
 }
 
-async function _uploadViagemItens(viagemID = tripID, uploadItens, item) {
+async function _uploadViagemItens(uploadItens, item) {
   let result = FIRESTORE_NEW_DATA[item].imagens;
   for (let i = 0; i < uploadItens.length; i++) {
     if (!isNaN(uploadItens[i])) {
-      const upload = await _uploadImage(`viagens/${viagemID}/${item}`, `upload-${item}-${uploadItens[i]}`);
+      const upload = await _uploadImage(`viagens/${DOCUMENT_ID}/${item}`, `upload-${item}-${uploadItens[i]}`);
       if (upload.link != null) {
         result[i] = upload;
       }
@@ -164,11 +163,11 @@ async function _uploadViagemItens(viagemID = tripID, uploadItens, item) {
   return result;
 }
 
-async function _uploadGaleria(viagemID = tripID, uploadItens) {
-  return await _uploadViagemItens(viagemID, uploadItens, 'galeria');
+async function _uploadGaleria(uploadItens) {
+  return await _uploadViagemItens(uploadItens, 'galeria');
 }
 
-async function _uploadHospedagem(viagemID = tripID, uploadItens) {
-  return await _uploadViagemItens(viagemID, uploadItens, 'hospedagens');
+async function _uploadHospedagem(uploadItens) {
+  return await _uploadViagemItens(uploadItens, 'hospedagens');
 }
 

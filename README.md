@@ -65,6 +65,7 @@
   - Sonarqube.
 
 ### Prioridade Baixa
+
 - 🐞 Correção de dados de lineup não serem salvos se desabilitado
 - 🐞 Correção de loading em viagens não estar pegando a cor customizada;
 - 🐞 Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair;
@@ -101,6 +102,9 @@
 - 📈 Melhoria em Destinos do viagens.html;
   - Se houver uma quantidade ímpar de categorias, centraliza os itens (melhoria de visibilidade no desktop);
   - Se só houver destinos para uma cidade e só houver uma categoria, o título é ocultado
+- 🏆 Firebase Rules no Front-End
+ - Criação de forma de verificação de permissões no front-end
+ - O responsável pela aprovação continua sendo o Firebase Console. O front-end apenas exibe a mensagem de erro tratada.
 
 ### Março 2024
 

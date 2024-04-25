@@ -1,4 +1,7 @@
-var IMAGE_UPLOAD_ERROR = false;
+var IMAGE_UPLOAD_ERROR = {
+  status: false,
+  messages: {}
+}
 var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
 var IMAGES_SIZES = [];
 
@@ -10,8 +13,9 @@ async function _uploadImage(path, divID) {
   };
 
   const file = document.getElementById(divID)?.files[0];
-  if (file && !IMAGE_UPLOAD_ERROR) {
+  if (file && IMAGE_UPLOAD_ERROR.status === false) {
     try {
+      IMAGES_SIZES.push(file.size);
       const storageRef = await firebase.storage().ref();
       const imageRef = storageRef.child(`${path}/${file.name}`);
 
@@ -25,7 +29,13 @@ async function _uploadImage(path, divID) {
       console.log(`Imagem '${result.nome}' carregada com sucesso: ${result.link}`);
 
     } catch (error) {
-      console.error('Erro ao fazer upload da imagem:', error);
+      IMAGE_UPLOAD_ERROR.status = true;
+      console.error('Erro ao fazer upload da imagem:', error.message || error);
+      
+      const type = path.split('/')[0];
+      const key = _codifyText(_getLastDir(path));
+      value = await _getStorageErrorMessage(error, path, type, 'escrever');
+      IMAGE_UPLOAD_ERROR.messages[key] = value;
     }
   }
 
@@ -33,7 +43,7 @@ async function _uploadImage(path, divID) {
 }
 
 async function _updateImages(body) {
-  if (await _getUID() && !IMAGE_UPLOAD_ERROR) {
+  if (await _getUID() && IMAGE_UPLOAD_ERROR.status === false) {
     let uploadObject = {};
 
     if (body.background) {
@@ -71,21 +81,6 @@ async function _deleteUnusedImages(beforeDB, afterDB) {
 
   _validateMultiValueAndDeleteImage(beforeDB?.hospedagens?.imagens, afterDB?.hospedagens?.imagens);
   _validateMultiValueAndDeleteImage(beforeDB?.galeria?.imagens, afterDB?.galeria?.imagens);
-}
-
-async function _canUpload() {
-  const user = firebase.auth().currentUser;
-
-  if (user) {
-    const uid = user.uid;
-    const canUploadList = await _get('admin/canUpload');
-
-    if (canUploadList && canUploadList.users && canUploadList.users.includes(uid)) {
-      return true;
-    }
-  }
-
-  return false;
 }
 
 async function _validateSingleValueAndDeleteImage(before, after) {
@@ -149,16 +144,16 @@ async function _deleteImageFolderContents(folderPath) {
   }
 }
 
-async function _uploadBackground(viagemID, type) {
-  return await _uploadImage(`${type}/${viagemID}/background`, 'upload-background');
+async function _uploadBackground(type) {
+  return await _uploadImage(`${type}/${DOCUMENT_ID}/background`, 'upload-background');
 }
 
-async function _uploadLogoLight(viagemID, type) {
-  return await _uploadImage(`${type}/${viagemID}/logo-light`, 'upload-logo-light');
+async function _uploadLogoLight(type) {
+  return await _uploadImage(`${type}/${DOCUMENT_ID}/logo-light`, 'upload-logo-light');
 }
 
-async function _uploadLogoDark(viagemID, type) {
-  return await _uploadImage(`${type}/${viagemID}/logo-dark`, 'upload-logo-dark');
+async function _uploadLogoDark(type) {
+  return await _uploadImage(`${type}/${DOCUMENT_ID}/logo-dark`, 'upload-logo-dark');
 }
 
 function _checkFileSize(fileInput, type) {
@@ -355,4 +350,22 @@ function _getImageLink(object) {
 
 function _imageExists(object) {
   return (_isInternalImage(object) || _isExternalImage(object));
+}
+
+function _getLastDir(path) {
+  if (path && typeof path === 'string') {
+    const splitPath = path.split('/');
+    if (splitPath.length > 0) {
+      return splitPath[splitPath.length - 1];
+    }
+  }
+  return 'Pasta Desconhecida';
+}
+
+function _getStorageErrorMessage(error, path, type, action, data = FIRESTORE_DATA) {
+  if (error.code == 'storage/unauthorized') {
+    return _getStoragePermissionMessage(path, type, action, data);
+  } else {
+    return `Erro ao ${action} imagem ${_getLastDir(path)}: ${error.message}`;
+  }
 }

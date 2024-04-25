@@ -161,15 +161,15 @@ async function _setDestino() {
         const destino = await _buildDestinosObject();
         let result;
 
-        if (destinosID && destino) {
-            result = await _updateUserObjectDB(destino, destinosID, "destinos");
+        if (DOCUMENT_ID && destino) {
+            result = await _updateUserObjectDB(destino, DOCUMENT_ID, "destinos");
         } else if (destino) {
             result = await _newUserObjectDB(destino, "destinos");
         }
 
         console.log(result);
 
-        document.getElementById('modal-inner-text').innerText = result.message;
+        document.getElementById('modal-inner-text').innerHTML = result.message;
 
         wasSaved = result.success;
 

@@ -48,7 +48,7 @@ function _pushIfValidCategoria(div, categorias) {
     let value = _codifyText(div.value);
     if (!categorias.find(item => item.value === value)) {
       categorias.push({
-        title: _firstCharToUpperCaseAllWords(div.value),
+        title: _firstCharsToUpperCase(div.value),
         value: _codifyText(div.value)
       });
     }

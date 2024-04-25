@@ -63,8 +63,8 @@ async function _buildListObject() {
 
     result.data.destinos = _buildDestinosArray();
 
-    if (listID) {
-        result.id = listID;
+    if (DOCUMENT_ID) {
+        result.id = DOCUMENT_ID;
     }
 
     return result;
@@ -84,11 +84,11 @@ async function _setListagem() {
         const listagem = await _buildListObject();
         let result;
 
-        if (listID && listagem) {
-            result = await _updateUserObjectDB(listagem.data, listagem.id, "listagens");
+        if (DOCUMENT_ID && listagem) {
+            result = await _updateUserObjectDB(listagem.data, DOCUMENT_ID, "listagens");
         } else if (listagem) {
             result = await _newUserObjectDB(listagem.data, "listagens");
-            listID = result?.data?.id;
+            DOCUMENT_ID = result?.data?.id;
         }
 
         FIRESTORE_NEW_DATA = listagem.data;
@@ -99,28 +99,29 @@ async function _setListagem() {
 
             try {
                 const body = {
-                    id: listID,
+                    id: DOCUMENT_ID,
                     type: "viagens",
-                    background: TO_UPLOAD.background ? await _uploadBackground(listID, 'listagens') : '',
-                    logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight(listID, 'listagens') : '',
-                    logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark(listID, 'listagens') : '',
+                    background: TO_UPLOAD.background ? await _uploadBackground('listagens') : '',
+                    logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight('listagens') : '',
+                    logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark('listagens') : '',
                     custom: {}
                 }
 
                 await _updateImages(body);
-                await _deleteUnusedImages(FIRESTORE_DATA, await _get(`listagens/${listID}`));
+                await _deleteUnusedImages(FIRESTORE_DATA, await _get(`listagens/${DOCUMENT_ID}`));
 
             } catch (error) {
-                IMAGE_UPLOAD_ERROR = true;
+                IMAGE_UPLOAD_ERROR.status = true;
                 _logger(ERROR, error);
             }
 
-            if (IMAGE_UPLOAD_ERROR) {
-                message += ', porém houve um erro ao tentar salvar as imagens. Tente novamente e, caso o erro persista, contate o administrador do sistema.';
+            if (IMAGE_UPLOAD_ERROR.status === true) {
+                const errorsHTML = _printObjectHTML(IMAGE_UPLOAD_ERROR.messages);
+                message += `, porém houve um erro ao tentar salvar as imagens: ${errorsHTML}`;
             }
         }
 
-        document.getElementById('modal-inner-text').innerText = message;
+        document.getElementById('modal-inner-text').innerHTML = message;
 
         _stopLoadingScreen();
         _openModal('modal');

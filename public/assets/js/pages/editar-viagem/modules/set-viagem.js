@@ -101,8 +101,8 @@ async function _buildTripObject() {
     result.data.lineup = _buildLineupObject();
     result.data.galeria = _buildGaleriaObject();
 
-    if (tripID) {
-        result.id = tripID;
+    if (DOCUMENT_ID) {
+        result.id = DOCUMENT_ID;
     }
 
     return result;
@@ -333,7 +333,7 @@ function _buildHospedagemObject() {
             const divImagem = document.getElementById(`link-hospedagens-${j}`);
             const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
             const valueResult = valueImagem ? _getImageObject(valueImagem, 'hospedagens') : "";
-            
+
             result.imagens.push(valueResult);
             UPLOAD_FILES.hospedagens.push({});
         }
@@ -492,16 +492,16 @@ function _buildGaleriaObject() {
     const childIds = _getChildIDs('galeria-box');
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[1]);
-        
+
         const descricao = document.getElementById(`galeria-descricao-${j}`).value || "";
         result.descricoes.push(descricao);
-        
+
         const categoria = _getDynamicSelectValue('galeria', 'categoria', j);
         result.categorias.push(categoria);
-        
+
         const titulo = document.getElementById(`galeria-titulo-${j}`).value || "";
         result.titulos.push(titulo);
-        
+
         if (document.getElementById(`enable-upload-galeria-${j}`).checked) {
             TO_UPLOAD.galeria = true;
             result.imagens.push({});
@@ -510,7 +510,7 @@ function _buildGaleriaObject() {
             const divImagem = document.getElementById(`link-galeria-${j}`);
             const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
             const valueResult = valueImagem ? _getImageObject(valueImagem, 'galeria') : "";
-            
+
             result.imagens.push(valueResult);
             UPLOAD_FILES.galeria.push({});
         }
@@ -535,11 +535,11 @@ async function _setViagem() {
         const viagem = await _buildTripObject();
         let result;
 
-        if (tripID && viagem) {
-            result = await _updateUserObjectDB(viagem.data, viagem.id, "viagens");
+        if (DOCUMENT_ID && viagem) {
+            result = await _updateUserObjectDB(viagem.data, DOCUMENT_ID, "viagens");
         } else if (viagem) {
             result = await _newUserObjectDB(viagem.data, "viagens");
-            tripID = result?.data?.id;
+            DOCUMENT_ID = result?.data?.id;
         }
 
         FIRESTORE_NEW_DATA = viagem.data;
@@ -550,31 +550,32 @@ async function _setViagem() {
 
             try {
                 const body = {
-                    id: tripID,
+                    id: DOCUMENT_ID,
                     type: "viagens",
-                    background: TO_UPLOAD.background ? await _uploadBackground(tripID, 'viagens') : '',
-                    logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight(tripID, 'viagens') : '',
-                    logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark(tripID, 'viagens') : '',
+                    background: TO_UPLOAD.background ? await _uploadBackground('viagens') : '',
+                    logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight('viagens') : '',
+                    logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark('viagens') : '',
                     custom: {
-                        hospedagens: TO_UPLOAD.hospedagens ? await _uploadHospedagem(tripID, UPLOAD_FILES.hospedagens) : [],
-                        galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(tripID, UPLOAD_FILES.galeria) : []
+                        hospedagens: TO_UPLOAD.hospedagens ? await _uploadHospedagem(UPLOAD_FILES.hospedagens) : [],
+                        galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(UPLOAD_FILES.galeria) : []
                     }
                 }
 
                 await _updateImages(body);
-                await _deleteUnusedImages(FIRESTORE_DATA, await _get(`viagens/${tripID}`));
+                await _deleteUnusedImages(FIRESTORE_DATA, await _get(`viagens/${DOCUMENT_ID}`));
 
             } catch (error) {
-                IMAGE_UPLOAD_ERROR = true;
+                IMAGE_UPLOAD_ERROR.status = true;
                 _logger(ERROR, error);
             }
 
-            if (IMAGE_UPLOAD_ERROR) {
-                message += ', porém houve um erro ao tentar salvar as imagens. Tente novamente e, caso o erro persista, contate o administrador do sistema.';
+            if (IMAGE_UPLOAD_ERROR.status === true) {
+                const errorsHTML = _printObjectHTML(IMAGE_UPLOAD_ERROR.messages);
+                message += `, porém houve um erro ao tentar salvar as imagens: ${errorsHTML}`;
             }
         }
 
-        document.getElementById('modal-inner-text').innerText = message;
+        document.getElementById('modal-inner-text').innerHTML = message;
 
         _stopLoadingScreen();
         _openModal('modal');
