@@ -11,6 +11,7 @@
 
 ## Doing
 
+- 🐞 Testes para verificar falhas críticas na aplicação
 - 🏆 Criação de boxes de visualização;
   - Hospedagens, Transportes;
   - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
@@ -103,9 +104,6 @@
 - 📈 Melhoria em Destinos do viagens.html;
   - Se houver uma quantidade ímpar de categorias, centraliza os itens (melhoria de visibilidade no desktop);
   - Se só houver destinos para uma cidade e só houver uma categoria, o título é ocultado
-- 🏆 Firebase Storage Rules no Front-End
- - Criação de forma de verificação de permissões no front-end
- - O responsável pela aprovação continua sendo o Firebase Console. O front-end apenas exibe a mensagem de erro tratada.
 
 ### Março 2024
 
