@@ -3,7 +3,7 @@ var IMAGE_UPLOAD_ERROR = {
   messages: {}
 }
 var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
-var IMAGES_SIZES = [];
+var PERMISSOES;
 
 async function _uploadImage(path, divID) {
   let result = {
@@ -15,7 +15,6 @@ async function _uploadImage(path, divID) {
   const file = document.getElementById(divID)?.files[0];
   if (file && IMAGE_UPLOAD_ERROR.status === false) {
     try {
-      IMAGES_SIZES.push(file.size);
       const storageRef = await firebase.storage().ref();
       const imageRef = storageRef.child(`${path}/${file.name}`);
 
@@ -32,10 +31,8 @@ async function _uploadImage(path, divID) {
       IMAGE_UPLOAD_ERROR.status = true;
       console.error('Erro ao fazer upload da imagem:', error.message || error);
       
-      const type = path.split('/')[0];
       const key = _codifyText(_getLastDir(path));
-      value = await _getStorageErrorMessage(error, path, type, 'escrever');
-      IMAGE_UPLOAD_ERROR.messages[key] = value;
+      IMAGE_UPLOAD_ERROR.messages[key] = _getStorageErrorMessage(error);
     }
   }
 
@@ -362,10 +359,10 @@ function _getLastDir(path) {
   return 'Pasta Desconhecida';
 }
 
-function _getStorageErrorMessage(error, path, type, action, data = FIRESTORE_DATA) {
+function _getStorageErrorMessage(error) {
   if (error.code == 'storage/unauthorized') {
-    return _getStoragePermissionMessage(path, type, action, data);
+    return 'Você não possui permissão para fazer upload de arquivos.';
   } else {
-    return `Erro ao ${action} imagem ${_getLastDir(path)}: ${error.message}`;
+    return `Erro "${error.code}" ao fazer upload de arquivos. Contate o administrador do sistema`;
   }
 }

@@ -315,7 +315,7 @@ function _addHospedagem() {
 
           <div class="nice-form-group customization-box" id="hospedagens-${i}-box">
             <label>Imagem <span class="opcional"> (Opcional)</span></label>
-            <input id="upload-hospedagens-${i}" type="file" accept=".jpg" />
+            <input id="upload-hospedagens-${i}" type="file" accept=".jpg, .jpeg, .png" />
             <p id="upload-hospedagens-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
           </div>
 
@@ -546,7 +546,7 @@ function _addGaleria() {
     
           <div class="nice-form-group customization-box" id="galeria-${i}-box">
             <label>Imagem</label>
-            <input id="upload-galeria-${i}" type="file" accept=".jpg" />
+            <input id="upload-galeria-${i}" type="file" accept=".jpg, .jpeg, .png" />
             <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</div>
           </div>
     
