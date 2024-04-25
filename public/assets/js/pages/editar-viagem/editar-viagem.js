@@ -132,6 +132,7 @@ function _loadEventListeners() {
   document.getElementById('apagar').addEventListener('click', async () => {
     if (DOCUMENT_ID) {
       await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
+      await _deleteUserObjectStorage();
       window.location.href = `index.html`;
     }
   });

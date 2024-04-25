@@ -120,6 +120,38 @@ async function _deleteImage(path) {
   }
 }
 
+async function _deleteUserObjectStorage() {
+  const paths = [];
+  const addPathIfExists = (path) => {
+    if (path) {
+      paths.push(path);
+    }
+  };
+
+  if (FIRESTORE_DATA) {
+    const { imagem, hospedagens, galeria } = FIRESTORE_DATA;
+
+    addPathIfExists(imagem?.background?.caminho);
+    addPathIfExists(imagem?.claro?.caminho);
+    addPathIfExists(imagem?.escuro?.caminho);
+
+    if (hospedagens?.imagens) {
+      hospedagens.imagens.forEach(({ caminho }) => addPathIfExists(caminho));
+    }
+
+    if (galeria?.imagens) {
+      galeria.imagens.forEach(({ caminho }) => addPathIfExists(caminho));
+    }
+
+    for (const caminho of paths) {
+      await _deleteImage(caminho);
+    }
+  }
+
+  // Agora você pode usar o array 'paths' para processar os caminhos a serem deletados
+  console.log(paths);
+}
+
 async function _deleteImageFolderContents(folderPath) {
   try {
     const storageRef = firebase.storage().ref();
