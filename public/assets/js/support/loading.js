@@ -2,9 +2,7 @@ var ERROR_MODE = false;
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;
 
-////////////////////
-// Loading Screen //
-////////////////////
+// Loading Screen
 
 function _startLoadingScreen() {
   _startLoadingTimer();
@@ -28,18 +26,14 @@ function _stopLoadingScreen() {
   }
 }
 
-///////////////////
 // Loading Timer //
-///////////////////
 
-// Function to start the timer
 function _startLoadingTimer() {
   if (LOADING_TIMER == null) {
     LOADING_SECONDS = 0;
     LOADING_TIMER = setInterval(() => {
       const firstLoad = localStorage.getItem('firstLoad');
       LOADING_SECONDS++;
-      console.log(`Timer: ${LOADING_SECONDS} seconds`);
       if (LOADING_SECONDS >= 10 && (firstLoad == 'true' || firstLoad == null)) {
         _stopLoadingTimer();
         localStorage.setItem('firstLoad', 'false');
@@ -53,7 +47,6 @@ function _startLoadingTimer() {
   }
 }
 
-// Function to stop the timer
 function _stopLoadingTimer() {
   if (LOADING_TIMER) {
     clearInterval(LOADING_TIMER);
@@ -64,9 +57,7 @@ function _stopLoadingTimer() {
 }
 
 
-///////////////////
-// Error Message //
-///////////////////
+// Error Message 
 
 function _displayErrorMessage(errorMessage = "", customMessage) {
   const preloader = document.getElementById('preloader');
