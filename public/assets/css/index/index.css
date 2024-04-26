@@ -377,7 +377,7 @@ section {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 450px;
-  height: 300px;
+  height: auto;
   background: #fff;
   border-radius: 10px;
   text-align: center;
@@ -389,8 +389,16 @@ section {
   overflow-wrap: break-word;
 }
 
-.error-text {
+.error-text-container {
   width: 100%;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.error-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .error-message {
@@ -488,12 +496,14 @@ section {
   border-radius: 5px;
 }
 
-.login-item:hover, .login-item:focus {
+.login-item:hover,
+.login-item:focus {
   background: #f0f1f2;
 }
 
 /* ---------- Minhas Viagens ---------- */
-.userList-box, .logged-menu {
+.userList-box,
+.logged-menu {
   margin-top: 30px;
   margin-bottom: 20px;
 }

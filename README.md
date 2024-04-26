@@ -25,11 +25,6 @@
   - Desabilitar arrastamento quando accordion está aberto
 - 📈 Ícone Customizado em viagens.html;
   - Verificar se é possível;
-- 🐞 Correção de loading as vezes carregar eternamente;
-  - Salvar 'retryLoad' no localStorage como booleano (iniciar em false);
-  - Adicionar timer enquanto a tela de carregamento está ativa;
-  - Se timer ultrapassar 15s, ativar 'retryLoad' e recarregar a página;
-  - Se timer novamente ultrapassar 15s, mostrar mensagem de erro.
 
 ### Prioridade Média
 
@@ -104,6 +99,7 @@
 - 📈 Melhoria em Destinos do viagens.html;
   - Se houver uma quantidade ímpar de categorias, centraliza os itens (melhoria de visibilidade no desktop);
   - Se só houver destinos para uma cidade e só houver uma categoria, o título é ocultado
+- 🐞 Correção de loading as vezes carregar eternamente;
 
 ### Março 2024
 

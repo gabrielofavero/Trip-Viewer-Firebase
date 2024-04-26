@@ -1948,8 +1948,16 @@ iframe {
   overflow-wrap: break-word;
 }
 
-.error-text {
+.error-text-container {
   width: 100%;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.error-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .error-message {
@@ -1973,7 +1981,8 @@ iframe {
   text-align: center;
 }
 
-#previous, #next {
+#previous,
+#next {
   background-color: #5859a7;
   color: #fff;
   border-radius: 5px;
@@ -2003,7 +2012,8 @@ iframe {
   color: #D9D9D9;
 }
 
-.mobile-nav-toggle:hover, .custom-nav-toggle:hover {
+.mobile-nav-toggle:hover,
+.custom-nav-toggle:hover {
   color: #7a7a7a;
 }
 
@@ -2043,7 +2053,8 @@ iframe {
   }
 }
 
-#fechar, #copiar {
+#fechar,
+#copiar {
   margin-left: 20px;
 }
 
@@ -2067,6 +2078,6 @@ iframe {
   text-align: justify;
 }
 
-#dUpdate{
+#dUpdate {
   color: #9F9FAB;
 }

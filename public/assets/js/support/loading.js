@@ -1,8 +1,13 @@
-// ======= Loading JS =======
 var ERROR_MODE = false;
+var LOADING_TIMER;
+var LOADING_SECONDS = 0;
 
-// ======= LOADING SCREEN =======
+////////////////////
+// Loading Screen //
+////////////////////
+
 function _startLoadingScreen() {
+  _startLoadingTimer();
   const preloader = document.getElementById('preloader');
   if (preloader) {
     preloader.style.display = 'block';
@@ -11,6 +16,7 @@ function _startLoadingScreen() {
 }
 
 function _stopLoadingScreen() {
+  _stopLoadingTimer();
   if (!ERROR_MODE) {
     const preloader = document.getElementById('preloader');
     if (preloader) {
@@ -22,7 +28,46 @@ function _stopLoadingScreen() {
   }
 }
 
-// ======= ERROR MESSAGE =======
+///////////////////
+// Loading Timer //
+///////////////////
+
+// Function to start the timer
+function _startLoadingTimer() {
+  if (LOADING_TIMER == null) {
+    LOADING_SECONDS = 0;
+    LOADING_TIMER = setInterval(() => {
+      const firstLoad = localStorage.getItem('firstLoad');
+      LOADING_SECONDS++;
+      console.log(`Timer: ${LOADING_SECONDS} seconds`);
+      if (LOADING_SECONDS >= 10 && (firstLoad == 'true' || firstLoad == null)) {
+        _stopLoadingTimer();
+        localStorage.setItem('firstLoad', 'false');
+        window.location.reload();
+      } else if (LOADING_SECONDS >= 10 && firstLoad == 'false') {
+        _stopLoadingTimer();
+        localStorage.setItem('firstLoad', 'true');
+        _displayErrorMessage("", "Não foi possível carregar a página. Verifique sua conexão com a internet e tente novamente.");
+      }
+    }, 1000);
+  }
+}
+
+// Function to stop the timer
+function _stopLoadingTimer() {
+  if (LOADING_TIMER) {
+    clearInterval(LOADING_TIMER);
+    LOADING_TIMER = null;
+  } else {
+    _logger(WARN, 'Timer is not running');
+  }
+}
+
+
+///////////////////
+// Error Message //
+///////////////////
+
 function _displayErrorMessage(errorMessage = "", customMessage) {
   const preloader = document.getElementById('preloader');
 
@@ -32,11 +77,13 @@ function _displayErrorMessage(errorMessage = "", customMessage) {
     const errorContainer = document.createElement('div');
     errorContainer.className = 'error-container';
     const errorText = document.createElement('div');
-    errorText.className = 'error-text';
-    const errorTitle = document.createElement('h2');
+    errorText.className = 'error-text-container';
+    const errorTitle = document.createElement('div');
+    errorTitle.className = 'error-title';
     errorTitle.innerText = "Erro ao carregar a página 🙁";
     errorText.appendChild(errorTitle);
-    const errorDescription = document.createElement('p');
+    const errorDescription = document.createElement('div');
+    errorDescription.className = 'error-description';
     errorDescription.innerHTML = customMessage || "Não foi possível carregar a página. <a href=\"mailto:gabriel.o.favero@live.com\">Contate o administrador</a> para solucionar o problema.";
     errorText.appendChild(errorDescription);
 
@@ -86,28 +133,28 @@ function _displayNoDataError(type) {
   const preloader = document.getElementById('preloader');
 
   if (preloader) {
-      ERROR_MODE = true;
-      _disableScroll();
-      const errorContainer = document.createElement('div');
-      errorContainer.className = 'error-container';
-      const errorText = document.createElement('div');
-      errorText.className = 'error-text';
-      const errorTitle = document.createElement('h2');
-      errorTitle.innerText = "Erro ao carregar a página 🙁";
-      errorText.appendChild(errorTitle);
-      const errorDescription = document.createElement('p');
-      errorDescription.innerHTML = `<br>Não foi possível carregar a página. Não há um código de ${type} válido na URL.<br><br><br> Caso você acredite que esse seja um erro, <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a>`;
-      errorText.appendChild(errorDescription);
+    ERROR_MODE = true;
+    _disableScroll();
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'error-container';
+    const errorText = document.createElement('div');
+    errorText.className = 'error-text';
+    const errorTitle = document.createElement('h2');
+    errorTitle.innerText = "Erro ao carregar a página 🙁";
+    errorText.appendChild(errorTitle);
+    const errorDescription = document.createElement('p');
+    errorDescription.innerHTML = `<br>Não foi possível carregar a página. Não há um código de ${type} válido na URL.<br><br><br> Caso você acredite que esse seja um erro, <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a>`;
+    errorText.appendChild(errorDescription);
 
-      errorContainer.appendChild(errorText);
-      preloader.innerHTML = '';
-      preloader.style.background = 'rgba(0, 0, 0, 0.6)';
-      preloader.appendChild(errorContainer);
+    errorContainer.appendChild(errorText);
+    preloader.innerHTML = '';
+    preloader.style.background = 'rgba(0, 0, 0, 0.6)';
+    preloader.appendChild(errorContainer);
 
-      if (preloader.style.display != 'block') {
-          preloader.style.display = 'block';
-      }
+    if (preloader.style.display != 'block') {
+      preloader.style.display = 'block';
+    }
   } else {
-      _logger(WARN, 'No preloader element found');
+    _logger(WARN, 'No preloader element found');
   }
 }
