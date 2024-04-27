@@ -148,8 +148,6 @@ async function _deleteUserObjectStorage() {
     }
   }
 
-  // Agora você pode usar o array 'paths' para processar os caminhos a serem deletados
-  console.log(paths);
 }
 
 async function _deleteImageFolderContents(folderPath) {

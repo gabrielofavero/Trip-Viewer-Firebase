@@ -11,7 +11,6 @@
 
 ## Doing
 
-- 🐞 Testes para verificar falhas críticas na aplicação
 - 🏆 Criação de boxes de visualização;
   - Hospedagens, Transportes;
   - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
@@ -86,7 +85,6 @@
 ### Abril 2024
 
 - 🐞 Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
-  - Solução Parcial (liberação de permissões)
 - 📈 Bloqueio upload / Melhoria de segurança;
   - Criação de sistema de permissões no banco e storage rules;
   - Exibição HTML interativa de acordo com a permissão
@@ -100,6 +98,7 @@
   - Se houver uma quantidade ímpar de categorias, centraliza os itens (melhoria de visibilidade no desktop);
   - Se só houver destinos para uma cidade e só houver uma categoria, o título é ocultado
 - 🐞 Correção de loading as vezes carregar eternamente;
+- 🐞 Correção de tamanho de botões de deleção em editar-x.html;
 
 ### Março 2024
 
