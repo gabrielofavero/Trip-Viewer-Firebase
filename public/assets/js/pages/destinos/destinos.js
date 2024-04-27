@@ -108,7 +108,7 @@ function _loadP() {
       if (isSpotify && !embed) {
         nomeHyperlink = "";
       } else if (isSpotify && embed) {
-        _logger(WARN, `Spotify link found for DESTINO '${nome}', but video link already exists. Ignoring Spotify link.`)
+        console.warn(`Spotify link found for DESTINO '${nome}', but video link already exists. Ignoring Spotify link.`)
       }
 
       innerResult = {
@@ -132,7 +132,7 @@ function _loadP() {
 
     _setInnerHTML(result);
   } else {
-    _logger(ERROR, "O Código não foi localizado na base de dados");
+    console.error("O Código não foi localizado na base de dados");
   }
 }
 

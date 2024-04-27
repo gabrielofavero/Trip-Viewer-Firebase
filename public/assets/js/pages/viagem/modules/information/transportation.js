@@ -2,25 +2,25 @@
 
 // ======= LOADERS =======
 function _loadTransportationModule() {
-  let transportation = {
-    title: _getTransportationTitle(FIRESTORE_DATA.transportes.transportes),
-    subtitle: _getTransportationSubtitle(FIRESTORE_DATA.transportes.reservas),
-    data: [],
-  };
-  _loadTransportationLogoBoxes();
-  for (let i = 0; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
-    const title = FIRESTORE_DATA.transportes.trajetos[i];
-    const periodo = _getPeriodo(FIRESTORE_DATA.transportes.datas[i]);
-    const reservaCompanhia = _getReservaEmpresa(FIRESTORE_DATA.transportes.reservas[i], FIRESTORE_DATA.transportes.empresas[i]);
-    const pontos = _getPontos(FIRESTORE_DATA.transportes.pontos[i]);
+  // let transportation = {
+  //   title: _getTransportationTitle(FIRESTORE_DATA.transportes.transportes),
+  //   subtitle: _getTransportationSubtitle(FIRESTORE_DATA.transportes.reservas),
+  //   data: [],
+  // };
+  // _loadTransportationLogoBoxes();
+  // for (let i = 0; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
+  //   const title = FIRESTORE_DATA.transportes.trajetos[i];
+  //   const periodo = _getPeriodo(FIRESTORE_DATA.transportes.datas[i]);
+  //   const reservaCompanhia = _getReservaEmpresa(FIRESTORE_DATA.transportes.reservas[i], FIRESTORE_DATA.transportes.empresas[i]);
+  //   const pontos = _getPontos(FIRESTORE_DATA.transportes.pontos[i]);
 
-    const info = {
-      title: title,
-      text: periodo + reservaCompanhia + pontos
-    }
-    transportation.data.push(info)
-  }
-  _loadTransportationHTML(transportation);
+  //   const info = {
+  //     title: title,
+  //     text: periodo + reservaCompanhia + pontos
+  //   }
+  //   transportation.data.push(info)
+  // }
+  // _loadTransportationHTML(transportation);
 }
 
 function _loadTransportationLogoBoxes() {

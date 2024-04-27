@@ -60,7 +60,7 @@ async function _mainLoad() {
         _function();
       }
     } else {
-      _logger(WARNING, "No functions to sync");
+      console.warn("No functions to sync");
     }
     // Loading Screen
     _stopLoadingScreen();

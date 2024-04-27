@@ -22,11 +22,11 @@ async function _get(path) {
       return snapshot.data();
     } else {
       const message = `O documento buscado não existe: ${path}`;
-      _logger(WARN, message);
+      console.warn(message);
       return;
     }
   } catch (e) {
-    _logger(ERROR, e.message);
+    console.error(e.message);
     getErrorMsg = e.message;
     return;
   }
@@ -49,7 +49,7 @@ async function _getStatus(path) {
     if (message.includes('Missing or insufficient permissions')) {
       return 'Forbidden';
     } else {
-      _logger(ERROR, message);
+      console.error(message);
       return 'Unknown';
     }
   }
@@ -61,7 +61,7 @@ async function _hasReadPermission(path) {
     const snapshot = await docRef.get();
 
     if (!snapshot.exists) {
-      _logger(WARN, `O documento '${path}' não existe restrições de leitura, mas não pode existe`);
+      console.warn(`O documento '${path}' não existe restrições de leitura, mas não pode existe`);
     }
 
     return true;
@@ -82,7 +82,7 @@ async function _create(collection, data, docName = "") {
     return _buildDatabaseObject(true, docRef, `Documento criado com sucesso`)
 
   } catch (error) {
-    _logger(ERROR, error.message);
+    console.error(error.message);
     return _buildDatabaseObject(false, {}, 'Erro ao criar o documento: ' + error.message)
   }
 }
@@ -93,7 +93,7 @@ async function _update(path, newData) {
     const update = await docRef.update(newData);
     return _buildDatabaseObject(true, update, 'Documento atualizado com sucesso');
   } catch (error) {
-    _logger(ERROR, error.message);
+    console.error(error.message);
     return _buildDatabaseObject(false, {}, 'Erro ao atualizar o documento: ' + error.message)
   }
 }
@@ -104,7 +104,7 @@ async function _delete(path) {
     const deleteObj = await docRef.delete();
     return _buildDatabaseObject(true, deleteObj, 'Documento atualizado com sucesso');
   } catch (error) {
-    _logger(ERROR, error.message);
+    console.error(error.message);
     return _buildDatabaseObject(false, {}, 'Erro ao deletar o documento: ' + error.message)
   }
 }
@@ -128,7 +128,7 @@ async function _getSingleData(type) {
       _displayNoDataError(type)
     }
   } catch (error) {
-    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+    console.error('Error fetching data from Firestore:', error.message);
   }
 
   return data;
@@ -154,7 +154,7 @@ async function _getBackup() {
           const docs = snapshot.docs.map((doc) => doc.data());
           return { collection: collectionName, docs };
         } catch (error) {
-          _logger(ERROR, `Error fetching data from ${collectionName}:`, error);
+          console.error(`Error fetching data from ${collectionName}:`, error);
           throw error;
         }
       });
@@ -165,7 +165,7 @@ async function _getBackup() {
       console.log("No authenticated user found.");
     }
   } catch (error) {
-    _logger(ERROR, "Error while fetching data:", error);
+    console.error("Error while fetching data:", error);
   }
 }
 
@@ -188,7 +188,7 @@ async function _getConfig() {
     return config;
 
   } catch (error) {
-    _logger(ERROR, 'Error fetching data from Firestore:', error.message);
+    console.error('Error fetching data from Firestore:', error.message);
   }
 }
 
@@ -197,13 +197,13 @@ async function _updateVisibility(visibility) {
   const uid = await _getUID();
   if (uid) {
     if (!visibility || !["dinamico", "claro", "escuro"].includes(visibility)) {
-      _logger(ERROR, "Visibilidade inválida");
+      console.error("Visibilidade inválida");
     } else {
       const result = await _update(`usuarios/${uid}`, { visibilidade: visibility })
       console.log(result);
     }
   } else {
-    _logger(ERROR, "Usuário não logado");
+    console.error("Usuário não logado");
   }
 }
 
@@ -342,7 +342,7 @@ async function _getUserList(type) {
     return result;
 
   } else {
-    _logger(ERROR, "Usuário não logado");
+    console.error("Usuário não logado");
   }
 }
 

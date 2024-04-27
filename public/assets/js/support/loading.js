@@ -22,7 +22,7 @@ function _stopLoadingScreen() {
       _enableScroll();
     }
   } else {
-    _logger(WARN, 'Cannot stop loading in error mode');
+    console.warn('Cannot stop loading in error mode');
   }
 }
 
@@ -51,8 +51,6 @@ function _stopLoadingTimer() {
   if (LOADING_TIMER) {
     clearInterval(LOADING_TIMER);
     LOADING_TIMER = null;
-  } else {
-    _logger(WARN, 'Timer is not running');
   }
 }
 
@@ -102,7 +100,7 @@ function _displayErrorMessage(errorMessage = "", customMessage) {
       preloader.style.display = 'block';
     }
   } else {
-    _logger(WARN, 'No preloader element found');
+    console.warn('No preloader element found');
   }
 }
 
@@ -116,7 +114,7 @@ function _overrideError() {
     ERROR_MODE = false;
     _stopLoadingScreen();
   } else {
-    _logger(WARN, 'No error to override');
+    console.warn('No error to override');
   }
 }
 
@@ -146,6 +144,6 @@ function _displayNoDataError(type) {
       preloader.style.display = 'block';
     }
   } else {
-    _logger(WARN, 'No preloader element found');
+    console.warn('No preloader element found');
   }
 }

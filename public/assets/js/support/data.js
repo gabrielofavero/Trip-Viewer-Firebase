@@ -118,7 +118,7 @@ function _getIdFromOjbectDB(dbObject) {
     return segments[segments.length - 1];
 
   } catch (e) {
-    _logger(ERROR, 'Falha ao obter ID de DB: ' + e.message)
+    console.error('Falha ao obter ID de DB: ' + e.message)
     return;
   }
 }
@@ -128,7 +128,7 @@ function _add(type) {
   if (typeof window[dynamicFunctionName] === 'function') {
     window[dynamicFunctionName]();
   } else {
-    _logger(ERROR, `${dynamicFunctionName} is not defined.`);
+    console.error(`${dynamicFunctionName} is not defined.`);
   }
 }
 

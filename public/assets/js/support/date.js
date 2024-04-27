@@ -41,7 +41,7 @@ function _numberToMonth(number) {
         case 12:
             return "Dezembro";
         default:
-            _logger(WARN, "Mês não encontrado: " + number + ".")
+            console.warn("Mês não encontrado: " + number + ".")
             return "?";
     }
 }
@@ -97,7 +97,7 @@ function _jsDateToDate(date, format = "dd/mm/yyyy") {
                 result += year.toString().substr(-2);
                 break;
             default:
-                _logger(WARN, "Formato de data não encontrado: " + formatParts[i] + ".");
+                console.warn("Formato de data não encontrado: " + formatParts[i] + ".");
         }
         if (i < formatParts.length - 1) {
             result += separator;

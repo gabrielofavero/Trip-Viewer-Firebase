@@ -57,10 +57,10 @@ function _getVideoEmbedTikTok(videoLink, name) {
     try {
       videoID = videoLink.split("/video/")[1].split("?")[0];
     } catch (e) {
-      _logger(ERROR, `Cannot get TikTok video ID from '${name}'`);
+      console.error(`Cannot get TikTok video ID from '${name}'`);
     }
   } else {
-    _logger(ERROR, `Short TikTok videos are not supported. Please fix the link for '${name}'`);
+    console.error(`Short TikTok videos are not supported. Please fix the link for '${name}'`);
   }
   if (videoID) {
     let url = `https://www.tiktok.com/embed/v3/${videoID}`;

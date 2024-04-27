@@ -11,7 +11,7 @@ async function _signInGoogle() {
         var provider = new firebase.auth.GoogleAuthProvider();
         await firebase.auth().signInWithRedirect(provider);
     } catch (error) {
-        _logger(ERROR, error.message);
+        console.error(error.message);
         throw error;
     }
 }

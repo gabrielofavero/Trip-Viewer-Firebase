@@ -112,7 +112,7 @@ async function _setListagem() {
 
             } catch (error) {
                 IMAGE_UPLOAD_ERROR.status = true;
-                _logger(ERROR, error);
+                console.error(error);
             }
 
             if (IMAGE_UPLOAD_ERROR.status === true) {

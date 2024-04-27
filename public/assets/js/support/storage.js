@@ -110,6 +110,7 @@ async function _validateMultiValueAndDeleteImage(beforeArr, afterArr) {
 
 async function _deleteImage(path) {
   try {
+    if (!path) return
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(path);
     await fileRef.delete();
@@ -165,9 +166,8 @@ async function _deleteImageFolderContents(folderPath) {
       })
     );
 
-    console.log(`All files in folder ${folderPath} deleted successfully.`);
   } catch (error) {
-    console.error(`Error deleting folder contents ${folderPath}: ${error.message}`);
+    console.error(`Erro ao deletar imagens em ${folderPath}: ${error.message}`);
   }
 }
 
