@@ -68,7 +68,7 @@ function _loadListenersIndex() {
   });
 
   document.getElementById('apagar').addEventListener('click', async function () {
-    _startLoadingScreen();
+    _startLoadingScreen(false);
     await _deleteAccount();
     _closeModal();
     _signOut();

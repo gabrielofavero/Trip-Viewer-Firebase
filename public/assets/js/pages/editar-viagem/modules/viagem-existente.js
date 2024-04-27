@@ -171,6 +171,9 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
                 case 'ida':
                     document.getElementById(`ida-${i}`).checked = true;
                     break;
+                case 'durante':
+                    document.getElementById(`durante-${i}`).checked = true;
+                    break;
                 case 'volta':
                     document.getElementById(`volta-${i}`).checked = true;
             }
@@ -188,23 +191,29 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
                 document.getElementById(`chegada-horario-${i}`).value = _jsDateToTime(chegada);
             }
 
-            if (FIRESTORE_DATA.transportes.transportes[j]) {
-                document.getElementById(`transporte-codigo-${i}`).value = FIRESTORE_DATA.transportes.transportes[j];
+            const transportes = FIRESTORE_DATA.transportes?.transportes
+            if (transportes && transportes[j]) {
+                document.getElementById(`transporte-codigo-${i}`).value = transportes[j];
             }
 
-            const empresa = FIRESTORE_DATA.transportes.empresas[j];
-            if (empresa) {
-                if (_getOptionsFromSelect(`empresa-select-${i}`).includes(empresa)) {
-                    document.getElementById(`empresa-select-${i}`).value = empresa;
+            const duracoes = FIRESTORE_DATA.transportes.duracoes;
+            if (duracoes && duracoes[j]) {
+                document.getElementById(`transporte-duracao-${i}`).value = duracoes[j];
+            }
+
+            const empresas = FIRESTORE_DATA.transportes.empresas;
+            if (empresas && empresas[j]) {
+                if (_getOptionsFromSelect(`empresa-select-${i}`).includes(empresas[j])) {
+                    document.getElementById(`empresa-select-${i}`).value = empresas[j];
                 } else {
                     document.getElementById(`empresa-select-${i}`).value = 'outra';
-                    document.getElementById(`empresa-${i}`).value = _firstCharToUpperCase(empresa);
+                    document.getElementById(`empresa-${i}`).value = _firstCharToUpperCase(empresas[j]);
                 }
             }
 
-            const reserva = FIRESTORE_DATA.transportes.reservas[j];
-            if (reserva) {
-                document.getElementById(`reserva-transp-${i}`).value = reserva;
+            const reservas = FIRESTORE_DATA.transportes.reservas;
+            if (reservas[j]) {
+                document.getElementById(`reserva-transp-${i}`).value = reservas[j];
             }
 
             const pontoPartida = FIRESTORE_DATA.transportes.pontos[j].partida;

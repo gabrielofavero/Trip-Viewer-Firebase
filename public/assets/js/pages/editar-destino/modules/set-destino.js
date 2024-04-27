@@ -154,7 +154,7 @@ function _buildDestinoCategoryObject(type) {
 }
 
 async function _setDestino() {
-    _startLoadingScreen();
+    _startLoadingScreen(false);
     _validateRequiredFields();
 
     if (!_isModalOpen()) {

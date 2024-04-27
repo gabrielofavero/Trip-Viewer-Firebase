@@ -3,7 +3,7 @@
 var savedScrollPosition = 0;
 
 function _openLightbox(link) {
-  _startLoadingScreen();
+  _startLoadingScreen(false);
   savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
   var lightboxIframe = document.getElementById('lightbox-iframe');
   lightboxIframe.src = 'about:blank';

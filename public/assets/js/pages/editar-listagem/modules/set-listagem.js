@@ -71,7 +71,7 @@ async function _buildListObject() {
 }
 
 async function _setListagem() {
-    _startLoadingScreen();
+    _startLoadingScreen(false);
 
     for (const child of _getChildIDs('com-destinos')) {
         const i = parseInt(child.split("-")[2]);

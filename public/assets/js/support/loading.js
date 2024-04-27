@@ -4,8 +4,10 @@ var LOADING_SECONDS = 0;
 
 // Loading Screen
 
-function _startLoadingScreen() {
-  _startLoadingTimer();
+function _startLoadingScreen(useTimer = true) {
+  if (useTimer) {
+    _startLoadingTimer();
+  }
   const preloader = document.getElementById('preloader');
   if (preloader) {
     preloader.style.display = 'block';
@@ -58,6 +60,7 @@ function _stopLoadingTimer() {
 // Error Message 
 
 function _displayErrorMessage(errorMessage = "", customMessage) {
+  _stopLoadingTimer();
   const preloader = document.getElementById('preloader');
 
   if (preloader) {
