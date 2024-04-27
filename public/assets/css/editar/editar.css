@@ -1728,6 +1728,7 @@ details summary::-webkit-details-marker {
   display: none;
 }
 
-#delete-cancelar, #apagar {
+#delete-cancelar,
+#apagar {
   width: 120px;
 }
