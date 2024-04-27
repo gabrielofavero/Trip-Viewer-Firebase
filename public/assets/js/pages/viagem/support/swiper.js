@@ -1,12 +1,16 @@
-function _initSwiper(className = 'swiper-container') {
-    new Swiper(`.${className}`, {
+function _initSwiper(className = 'testimonials-slider') {
+    // Get the element
+    const swiperElement = document.querySelector(`.${className}`);
+
+    // Set custom properties directly on the style of the element
+    swiperElement.style.setProperty('--swiper-navigation-color', THEME_COLOR);
+    swiperElement.style.setProperty('--swiper-pagination-color', THEME_COLOR);
+
+    // Initialize Swiper
+    const swiper = new Swiper(swiperElement, {
         speed: 600,
         loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false
-        },
-        slidesPerView: 'auto',
+        spaceBetween: 30,
         pagination: {
             el: '.swiper-pagination',
             type: 'bullets',
@@ -15,32 +19,18 @@ function _initSwiper(className = 'swiper-container') {
     });
 }
 
-function _getSwipperHTML(id, className, items) {
-    let swiper = document.createElement('div');
-    swiper.id = id;
-    swiper.className = className;
-    let swiperWrapper = document.createElement('div');
-    swiperWrapper.className = 'swiper-wrapper';
-    items.forEach(item => {
-        let swiperSlide = document.createElement('div');
-        swiperSlide.className = 'swiper-slide';
-        swiperSlide.innerHTML = item;
-        swiperWrapper.appendChild(swiperSlide);
-    });
-    swiper.appendChild(swiperWrapper);
-    let swiperPagination = document.createElement('div');
-    swiperPagination.className = 'swiper-pagination';
-    swiper.appendChild(swiperPagination);
-    return swiper;
-}
+function _loadSwiperHTML(id, itensHTML) {
+    const swiper = document.getElementById(id);
+    let text = '';
 
-function _addItensToSwiperHTML(swiperID, items) {
-    let swiper = document.getElementById(swiperID);
-    let swiperWrapper = swiper.querySelector('.swiper-wrapper');
-    items.forEach(item => {
-        let swiperSlide = document.createElement('div');
-        swiperSlide.className = 'swiper-slide';
-        swiperSlide.innerHTML = item;
-        swiperWrapper.appendChild(swiperSlide);
-    });
+    for (const item of itensHTML) {
+        text += `
+        <div class="swiper-slide">
+            <div class="testimonial-item">
+                ${item}
+            </div>
+        </div>`;
+    }
+
+    swiper.innerHTML = text;
 }

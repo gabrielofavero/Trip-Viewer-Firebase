@@ -158,7 +158,6 @@ function _addTransporte() {
               <label for="durante-${i}">Durante a Viagem</label>
             </div>
   
-  
             <div class="nice-form-group">
               <input type="radio" name="idaVolta-${i}" id="volta-${i}" ${checkedVolta} />
               <label for="volta-${i}">Volta</label>
@@ -168,26 +167,26 @@ function _addTransporte() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Partida</label>
-              <input class="flex-input" id="partida-${i}" type="date" value="${day}" />
+              <input required class="flex-input" id="partida-${i}" type="date" value="${day}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input mini-box" id="partida-horario-${i}" type="time" value="00:00" />
+              <input required class="flex-input mini-box" id="partida-horario-${i}" type="time" value="00:00" />
             </div>
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Chegada</label>
-              <input class="flex-input" id="chegada-${i}" type="date" value="${day}" />
+              <input required class="flex-input" id="chegada-${i}" type="date" value="${day}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input mini-box" id="chegada-horario-${i}" type="time" value="00:30" />
+              <input required class="flex-input mini-box" id="chegada-horario-${i}" type="time" value="00:30" />
             </div>
           </div>
   
           <div class="nice-form-group">
             <label>Meio de Transporte</label>
-            <select id="transporte-codigo-${i}">
+            <select required id="transporte-codigo-${i}">
               <option value="voo">Avião</option>
               <option value="carro">Carro</option>
               <option value="onibus">Ônibus</option>
@@ -200,6 +199,11 @@ function _addTransporte() {
               <option value="trem-bala">Trem Bala</option>
               <option value="outro">Outro</option>
             </select>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Duração <span class="opcional"> (Opcional)</span></label>
+            <input class="flex-input" id="transporte-duracao-${i}" type="time" />
           </div>
   
           <div class="nice-form-group">

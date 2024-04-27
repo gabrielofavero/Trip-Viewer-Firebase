@@ -183,6 +183,7 @@ function _buildLinksObject() {
 function _buildTransporteObject() {
     let result = {
         datas: [],
+        duracoes: [],
         empresas: [],
         idaVolta: [],
         links: [],
@@ -199,6 +200,8 @@ function _buildTransporteObject() {
 
         if (document.getElementById(`ida-${j}`).checked) {
             result.idaVolta.push('ida');
+        } else if (document.getElementById(`durante-${j}`).checked) {
+            result.idaVolta.push('durante');
         } else {
             result.idaVolta.push('volta');
         }
@@ -220,6 +223,10 @@ function _buildTransporteObject() {
 
         result.datas.push(data);
         result.transportes.push(document.getElementById(`transporte-codigo-${j}`).value);
+
+        const divDuracao = document.getElementById(`transporte-duracao-${j}`);
+        const valueDuracao = divDuracao ? _returnEmptyIfNoValue(divDuracao.value) : "";
+        result.duracoes.push(valueDuracao);
 
         const valueEmpresa = _getValueEmpresa(j);
         result.empresas.push(valueEmpresa.toLowerCase());
@@ -520,7 +527,7 @@ function _buildGaleriaObject() {
 }
 
 async function _setViagem() {
-    _startLoadingScreen();
+    _startLoadingScreen(false);
 
     if (document.getElementById('habilitado-destinos').checked) {
         for (const child of _getChildIDs('com-destinos')) {

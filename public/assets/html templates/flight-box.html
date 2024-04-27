@@ -215,87 +215,17 @@
             opacity: 1;
             background-color: #333;
         }
-    </style>
 
-    <style>
-        .flight-box {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            width: 600px;
-            margin: 0 auto;
-            font-family: Arial, sans-serif;
+        .wait-box {
+            text-align: center;
+            justify-content: center;
+            height: auto;
             color: #505253;
         }
-
-        .flight-diagram {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .flight-title {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-            padding: 15px;
-            justify-content: space-between;
-        }
-
-        .flight-text {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .left-text,
-        .center-text,
-        .right-text {
-            text-align: center;
-            flex-basis: 33%;
-        }
-
-        .center-text {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            white-space: nowrap;
-            text-align: center;
-            flex-grow: 1;
-        }
-
-        @media (max-width: 750px) {
-            .flight-box {
-                width: 80%;
-            }
-        }
-
-        @media (max-width: 450px) {
-            .flight-text {
-                padding: 10px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .flight-text {
-                flex-direction: column;
-                align-items: center;
-                padding: 10px;
-            }
-
-            .left-text,
-            .center-text,
-            .right-text {
-                flex-basis: auto;
-                text-align: center;
-                margin: 10px 0;
-            }
+        
+        .wait-icon {
+            font-size: 50px;
+            color: #888
         }
     </style>
 
@@ -314,6 +244,7 @@
                         src="https://upload.wikimedia.org/wikipedia/commons/5/52/Logo_da_Azul_Linhas_A%C3%A9reas_Brasileiras.svg">
                     <div class="flight-title-text">Voo de Ida #1</div>
                     <div class="flight-code">#ABC123</div>
+                    <a style="display: none" class="flight-code" href="https://www.google.com" target="_blank">#ABC123</a>
                 </div>
                 <div class="flight-text" id="ft1">
                     <div class="left-text" id="lt1">
@@ -362,6 +293,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="wait-box">
+            <i class="iconify wait-icon" data-icon="mingcute:time-line"></i>
+            <div class="flight-duration">Espera: <br> 10h 20m</div>
         </div>
 
     </main>

@@ -2081,3 +2081,157 @@ iframe {
 #dUpdate {
   color: #9F9FAB;
 }
+
+/* Flight Box */
+
+.flight-box {
+  display: flex;
+  flex-direction: column;
+  border: 0.5px solid #D9D9D9;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 600px;
+  height: auto;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  color: #4F5051;
+  background-color: #fff;
+}
+
+.flight-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 0.5px solid #D9D9D9;
+  padding: 15px;
+  justify-content: space-between;
+}
+
+.flight-img {
+  height: 20px;
+  margin-right: 5px;
+}
+
+.flight-title-text {
+  flex-grow: 1;
+  font-weight: bold;
+  font-size: 18px;
+  display: none;
+}
+
+.flight-code {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+.flight-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  min-height: 124px;
+}
+
+.left-text,
+.right-text {
+  text-align: center;
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.center-text {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 50px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+
+.flight-date,
+.flight-time,
+.flight-location {
+  font-size: 14px;
+  margin: -2px;
+}
+
+.flight-time {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.iconify {
+  font-size: 24px;
+}
+
+.flight-line {
+  position: absolute;
+  transform: translateY(-77%);
+  color: #D9D9D9;
+  z-index: 0;
+}
+
+.flight-icon {
+  color: #505197;
+  font-size: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.flight-duration {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+@media (max-width: 767px) {
+  .flight-box {
+    width: 100%;
+  }
+
+  .center-text {
+    margin: 0 10%;
+  }
+}
+
+@media (max-width: 450px) {
+  .flight-text {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .flight-text {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .left-text,
+  .center-text,
+  .right-text {
+    flex-basis: auto;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .left-text {
+    order: 1;
+  }
+
+  .center-text {
+    order: 2;
+  }
+
+  .right-text {
+    order: 3;
+  }
+}
+.swiper-wrapper{
+  padding-bottom: 45px;
+}

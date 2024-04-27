@@ -6,6 +6,7 @@ var THEME_COLOR;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
 var CUSTOM_COLORS = false;
+var CHANGED_SVGS = [];
 
 // ======= LOADERS =======
 function _loadVisibility() {
@@ -252,6 +253,17 @@ function _addCSSRule(selector, property, value) {
           styleSheet.insertRule(selector + '{ ' + rule + ' }', 0);
      } else if (styleSheet.addRule) {
           styleSheet.addRule(selector, rule, 0);
+     }
+}
+
+function _changeFillColorSVG(className, color) {
+     const svgElement = document.querySelector(`.${className}`);
+     if (svgElement) {
+          CHANGED_SVGS.push(className);
+          const pathElement = svgElement.querySelector('path');
+          if (pathElement) {
+               pathElement.setAttribute('fill', color);
+          }
      }
 }
 

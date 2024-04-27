@@ -427,3 +427,17 @@ a:hover {
 .btn-purple:hover {
   background: #7367b4;
 }
+
+.flight-box {
+  border: 0.5px solid #414040;
+  color: #E2E2E2;
+  background-color: #303030;
+}
+
+.flight-title {
+  border-bottom: 0.5px solid #414040;
+}
+
+.flight-line {
+  color: #414040;
+}

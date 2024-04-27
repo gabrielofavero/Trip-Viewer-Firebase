@@ -46,6 +46,7 @@ function _applyCustomColorsViagem() {
     _addCSSRule('#next', 'background-color', THEME_COLOR);
     _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
+    _changeFillColorSVG('flight-icon', THEME_COLOR);
 }
 
 function _openShare() {
