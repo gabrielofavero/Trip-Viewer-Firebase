@@ -2230,3 +2230,63 @@ iframe {
 .swiper-wrapper{
   padding-bottom: 45px;
 }
+
+.transporte-categoria {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 27%;
+}
+
+.transporte-categoria:first-child {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 1399px) {
+  .transporte-categoria {
+    margin-left: 23.5%;
+  }
+}
+
+@media screen and (max-width: 1220px) {
+  .transporte-categoria {
+    margin-left: 23%;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .transporte-categoria {
+    margin-left: 18.5%;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .transporte-categoria {
+    margin-left: 17.7%;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .transporte-categoria {
+    margin-left: 17%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .transporte-categoria {
+    margin-left: 16%;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .transporte-categoria {
+    margin-left: 7.5%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .transporte-categoria {
+    margin-left: 1%;
+  }
+}
