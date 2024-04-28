@@ -136,12 +136,14 @@ function _loadModules() {
   const share = getID('share');
   if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share) {
     share.addEventListener('click', () => {
+      const title = FIRESTORE_DATA.titulo || document.title;
+
       navigator.share({
         title: FIRESTORE_DATA.titulo || document.title,
-        text: `Venha visualizar minha viagem criada no TripViewer, com início em ${INICIO} e fim em ${FIM}`,
-        url: window.location.href,
-        icon: FIRESTORE_DATA.icone || 'https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftrip-viewer%2Flogo-mobile.png?alt=media&token=6ab5da43-aa94-42d1-b919-33851954c8a0'
+        text: `Venha visualizar minha viagem "${title}" criada no TripViewer, com início em ${INICIO.text} e fim em ${FIM.text}`,
+        url: window.location.href,  
     })
+
     .then(() => console.log('Link compartilhado com sucesso!'))
     .catch((error) => console.error('Erro ao compartilhar link:', error));
     });
