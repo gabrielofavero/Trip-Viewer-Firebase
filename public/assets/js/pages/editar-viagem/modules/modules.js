@@ -237,12 +237,13 @@ function _loadTransporteVisibility(i) {
 }
 
 function _updateTransporteTitle(i) {
+  const condensar = document.getElementById('condensar').checked;
   const partida = document.getElementById(`ponto-partida-${i}`).value;
   const chegada = document.getElementById(`ponto-chegada-${i}`).value;
-  const tipo = _getTransporteTipo(i)
 
   if (partida && chegada) {
-    document.getElementById(`transporte-title-${i}`).innerText = `${tipo}: ${partida} → ${chegada}`;
+    const texto = condensar ? `${partida} → ${chegada}` : `${_getTransporteTipo(i)}: ${partida} → ${chegada}`;
+    document.getElementById(`transporte-title-${i}`).innerText = texto;
   };
 }
 
@@ -253,6 +254,18 @@ function _getTransporteTipo(i) {
 
   return ida || durante || volta;
 }
+
+function _applyIdaVoltaVisibility() {
+  const visibility = getID('condensar').checked == true ? 'none' : 'block';
+  const childs = _getChildIDs('transporte-box');
+ 
+  for (const child of childs) {
+      const i = child.split('-')[1];
+      _updateTransporteTitle(i);
+      getID(`idaVolta-box-${i}`).style.display = visibility;
+  }
+}
+
 
 function _addTransporteListeners(i) {
   const select = document.getElementById(`empresa-select-${i}`);

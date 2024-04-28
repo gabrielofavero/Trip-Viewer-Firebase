@@ -140,6 +140,14 @@ function _loadEventListeners() {
   document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
+
+  getID('condensar').addEventListener('change', () => {
+    _applyIdaVoltaVisibility();
+  });
+
+  getID('separar').addEventListener('change', () => {
+    _applyIdaVoltaVisibility();
+  });
 }
 
 async function _loadTrip() {

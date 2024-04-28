@@ -190,7 +190,12 @@ function _buildTransporteObject() {
         pontos: [],
         reservas: [],
         transportes: [],
-        viagem: ""
+        viagem: "",
+        visualizacaoSimplificada: true
+    }
+
+    if (document.getElementById('separar').checked) {
+        result.visualizacaoSimplificada = false;
     }
 
     const childIds = _getChildIDs('transporte-box');

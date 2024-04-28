@@ -114,14 +114,25 @@ function _getDuracaoHTML(j) {
 }
 
 function _buildTransporteSwiper(swiperData) {
-  for (const key of Object.keys(swiperData)) {
+  let keys, data;
+
+  if (FIRESTORE_DATA.transportes.visualizacaoSimplificada == true) {
+    keys = ['ida'];
+    data = swiperData['ida'].join("") + swiperData['durante'].join("") + swiperData['volta'].join("");
+    getID('transporte-ida-titulo').style.display = "none";
+  }
+  else {
+    keys = Object.keys(swiperData)
+  }
+
+  for (const key of keys) {
     const div = document.getElementById(`transporte-${key}`);
     const cnt = document.getElementById(`transporte-${key}-content`)
-    if (swiperData[key].length > 0) {
+    if (swiperData[key].length > 0 || data) {
       div.style.display = "block";
       cnt.innerHTML = `<div id="transporte-swiper-${key}" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                         <div class="swiper-wrapper">
-                          ${swiperData[key].join("")}
+                          ${data || swiperData[key].join("")}
                         </div>
                         <div class="swiper-pagination"></div>
                       </div>`;

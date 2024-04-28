@@ -147,7 +147,7 @@ function _addTransporte() {
       <div id="collapse-transporte-${i}" class="accordion-collapse collapse"
         aria-labelledby="heading-transporte-${i}" data-bs-parent="#transporte-box">
         <div class="accordion-body">
-          <fieldset class="nice-form-group">
+          <fieldset class="nice-form-group" id="idaVolta-box-${i}">
             <div class="nice-form-group" style="margin-top: -15px">
               <input type="radio" name="idaVolta-${i}" id="ida-${i}" ${checkedIda} />
               <label for="ida-${i}">Ida</label>
@@ -163,6 +163,16 @@ function _addTransporte() {
               <label for="volta-${i}">Volta</label>
             </div>
           </fieldset>
+
+          <div class="nice-form-group">
+            <label>Ponto de Partida <span class="opcional"> (Opcional)</span></label>
+            <input id="ponto-partida-${i}" type="text" placeholder="Belo Horizonte" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Ponto de Chegada <span class="opcional"> (Opcional)</span></label>
+            <input id="ponto-chegada-${i}" type="text" placeholder="Las Vegas" />
+          </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
@@ -204,16 +214,6 @@ function _addTransporte() {
           <div class="nice-form-group">
             <label>Duração <span class="opcional"> (Opcional)</span></label>
             <input class="flex-input" id="transporte-duracao-${i}" type="time" />
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Ponto de Partida <span class="opcional"> (Opcional)</span></label>
-            <input id="ponto-partida-${i}" type="text" placeholder="Belo Horizonte" />
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Ponto de Chegada <span class="opcional"> (Opcional)</span></label>
-            <input id="ponto-chegada-${i}" type="text" placeholder="Las Vegas" />
           </div>
 
           <div class="nice-form-group" id="empresa-select-form-group-${i}">

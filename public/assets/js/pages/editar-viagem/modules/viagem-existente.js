@@ -161,6 +161,10 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
         document.getElementById('transporte-adicionar-box').style.display = 'block';
     }
 
+    if (FIRESTORE_DATA?.transportes?.visualizacaoSimplificada === false) {
+        getID('separar').checked = true;
+    }
+
     const transporteSize = FIRESTORE_DATA?.transportes?.datas.length;
     if (transporteSize > 0) {
         for (let i = 1; i <= transporteSize; i++) {
@@ -234,6 +238,7 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
 
             _updateTransporteTitle(i);
         }
+        _applyIdaVoltaVisibility();
     }
 }
 
