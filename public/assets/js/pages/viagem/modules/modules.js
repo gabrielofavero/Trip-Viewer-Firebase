@@ -1,19 +1,39 @@
-// ======= Modules JS =======
+var INICIO = {
+  date: null,
+  text: ''
+};
+
+var FIM = {
+  date: null,
+  text: ''
+};
+
 
 // ======= MAIN FUNCTION =======
 function _start() {
-  // Visibility
+  // Dados Básicos
+  _loadInicioFim();
+
+  // Visibilidade
   _loadVisibility();
   _loadToggle();
 
-  // Header
+  // Cabeçalho
   _loadHeader();
 
-  // Modules
+  // Módulos 
   _loadModules();
 }
 
 // ======= LOADERS =======
+function _loadInicioFim() {
+  INICIO.date = _convertFromFirestoreDate(FIRESTORE_DATA.inicio);
+  INICIO.text = `${INICIO.date.getDate()}/${INICIO.date.getMonth() + 1}`;
+
+  FIM.date = _convertFromFirestoreDate(FIRESTORE_DATA.fim);
+  FIM.text = `${FIM.date.getDate()}/${FIM.date.getMonth() + 1}`;
+}
+
 function _loadHeader() {
   document.title = FIRESTORE_DATA.titulo;
   document.getElementById("header1").innerHTML = FIRESTORE_DATA.titulo;
@@ -113,9 +133,26 @@ function _loadHeader() {
 }
 
 function _loadModules() {
-  // Keypoints
+  const share = getID('share');
+  if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share) {
+    share.addEventListener('click', () => {
+      navigator.share({
+        title: FIRESTORE_DATA.titulo || document.title,
+        text: `Venha visualizar minha viagem criada no TripViewer, com início em ${INICIO} e fim em ${FIM}`,
+        url: window.location.href,
+        icon: FIRESTORE_DATA.icone || 'https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftrip-viewer%2Flogo-mobile.png?alt=media&token=6ab5da43-aa94-42d1-b919-33851954c8a0'
+    })
+    .then(() => console.log('Link compartilhado com sucesso!'))
+    .catch((error) => console.error('Erro ao compartilhar link:', error));
+    });
+  } else {
+    share.style.display = 'none';
+  }
+  
+
+  // Resumo
   if (FIRESTORE_DATA.modulos.resumo) {
-    CALL_SYNC.push(_loadKeypointsStandAlone);
+    CALL_SYNC.push(_loadResumo);
   } else {
     document.getElementById("keypointsNav").innerHTML = "";
     document.getElementById("keypoints").innerHTML = "";
@@ -129,7 +166,7 @@ function _loadModules() {
     document.getElementById("cities").style.display = "none";
   }
 
-  // Transportation
+  // Transporte
   if (FIRESTORE_DATA.modulos.transportes) {
     CALL_SYNC.push(_loadTransporte);
   } else {
@@ -138,7 +175,7 @@ function _loadModules() {
     document.getElementById("transportation").style.display = "none";
   }
 
-  // Stay
+  // Hospedagem
   if (FIRESTORE_DATA.modulos.hospedagens) {
     CALL_SYNC.push(_loadStayModule);
   } else {
@@ -147,7 +184,7 @@ function _loadModules() {
     document.getElementById("stay").style.display = "none";
   }
 
-  // Schedule: Calendar
+  // Programação
   if (FIRESTORE_DATA.modulos.programacao) {
     CALL_SYNC.push(_loadCalendar);
     CALL_SYNC.push(_loadScheduleCalendar);
@@ -159,7 +196,7 @@ function _loadModules() {
     document.getElementById("calendario-credit").style.display = "none";
   }
 
-  // Destinations
+  // Destinos
   if (FIRESTORE_DATA.modulos.destinos) {
     _loadDestinationsSelect();
     _loadDestinationsHTML(DESTINOS[0].destinos);
