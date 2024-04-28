@@ -11,9 +11,8 @@
 
 ## Doing
 
-- 🏆 Criação de boxes de visualização;
-  - Hospedagens, Transportes;
-  - Inspirar em Booking / Hotéis.com / Skyscanner / Airbnb
+- 🏆 Criação de box de visualização de Hospedagens em viagens.html;
+- 📈 Ícone Customizado em viagens.html;
 
 ## To-Do
 
@@ -22,8 +21,6 @@
 - 📈 Melhorias no arrastamento de accordions (páginas de editar)
   - Criação de opção de arrastar accordions (Mobile);
   - Desabilitar arrastamento quando accordion está aberto
-- 📈 Ícone Customizado em viagens.html;
-  - Verificar se é possível;
 
 ### Prioridade Média
 
@@ -99,6 +96,8 @@
   - Se só houver destinos para uma cidade e só houver uma categoria, o título é ocultado
 - 🐞 Correção de loading as vezes carregar eternamente;
 - 🐞 Correção de tamanho de botões de deleção em editar-x.html;
+- 🏆 Criação de box de visualização de Transportes em viagens.html;
+- 🏆 Criação botão de compartilhar para viagens.html;
 
 ### Março 2024
 
