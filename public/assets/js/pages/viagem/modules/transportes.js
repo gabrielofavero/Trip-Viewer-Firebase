@@ -1,3 +1,5 @@
+var TRANSPORTE_ICONES = [];
+
 function _loadTransporte() {
   document.getElementById('transporte-subtitulo').innerText = _loadTransporteSubtitulo(FIRESTORE_DATA.transportes.reservas);
   const swiperData = {
@@ -83,7 +85,7 @@ function _getReservaHTML(j, empresa) {
   if (!reserva) return ""
   reserva = reserva[0] === "#" ? reserva.slice(1) : reserva;
 
-  if (link) return `<a class="flight-code" href="https://www.google.com" target="_blank">#${reserva}</a>`;
+  if (link) return `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>`;
   else return `<div class="flight-code">#${reserva}</div>`
 }
 
@@ -100,7 +102,9 @@ function _getPartidaChegadaHTML(j, tipo) {
 
 function _getTransporteIcon(j) {
   const tipo = FIRESTORE_DATA.transportes.transportes[j - 1];
-  return CONFIG.transportes.icones[tipo] || CONFIG.transportes.icones.outro;
+  const icone = CONFIG.transportes.icones[tipo] || CONFIG.transportes.icones.outro;
+  TRANSPORTE_ICONES.push(icone);
+  return icone;
 }
 
 function _getDuracaoHTML(j) {
@@ -147,5 +151,12 @@ function _loadTransporteImagens() {
     }
 
     j++;
+  }
+}
+
+function _loadIconeGeralTransporte() {
+  const unique = [...new Set(TRANSPORTE_ICONES)];
+  if (unique.length == 1) {
+    document.getElementById('transporte-nav').setAttribute('data-icon', unique[0]);
   }
 }
