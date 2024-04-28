@@ -131,7 +131,7 @@ function _loadModules() {
 
   // Transportation
   if (FIRESTORE_DATA.modulos.transportes) {
-    CALL_SYNC.push(_loadTransportationModule);
+    CALL_SYNC.push(_loadTransporte);
   } else {
     document.getElementById("transportationNav").innerHTML = "";
     document.getElementById("transportation").innerHTML = "";

@@ -93,7 +93,7 @@ function _loadDarkMode() {
      _loadTripViewerLogo();
 
      if (_isCustomColorsActive()) {
-          _applyCustomColors();
+          _applyCustomVisibilityRules();
      }
 }
 
@@ -114,7 +114,7 @@ function _loadLightMode() {
      _loadTripViewerLogo();
 
      if (_isCustomColorsActive()) {
-          _applyCustomColors();
+          _applyCustomVisibilityRules();
      }
 }
 
@@ -127,7 +127,7 @@ function _loadLightModeLite() {
      _loadTripViewerLogo();
 
      if (_isCustomColorsActive()) {
-          _applyCustomColors();
+          _applyCustomVisibilityRules();
      }
 }
 
@@ -220,13 +220,14 @@ function _autoVisibility() {
      }
 }
 
-function _applyCustomColors() {
+function _applyCustomVisibilityRules() {
      const html = _getHTMLpage()
      _clearCustomColors();
      switch (html) {
           case VIAGEM:
                _loadLogoColors();
                _applyCustomColorsViagem();
+               _loadTransporteImagens();
                break;
           case PASSEIOS:
                _loadLogoColors();
@@ -256,16 +257,19 @@ function _addCSSRule(selector, property, value) {
      }
 }
 
-function _changeFillColorSVG(className, color) {
-     const svgElement = document.querySelector(`.${className}`);
-     if (svgElement) {
-          CHANGED_SVGS.push(className);
-          const pathElement = svgElement.querySelector('path');
-          if (pathElement) {
-               pathElement.setAttribute('fill', color);
-          }
+function _changeFillColorSVGs(className, color) {
+     const svgElements = document.querySelectorAll(`.${className}`);
+     if (svgElements.length > 0) {
+         CHANGED_SVGS.push(className);
+         svgElements.forEach(svgElement => {
+             const pathElement = svgElement.querySelector('path');
+             if (pathElement) {
+                 pathElement.setAttribute('fill', color);
+             }
+         });
      }
-}
+ }
+ 
 
 function _clearCustomColors() {
      var styleElement = document.getElementById('custom-styles');

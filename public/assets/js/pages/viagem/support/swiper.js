@@ -1,13 +1,14 @@
-function _initSwiper(className = 'testimonials-slider') {
+function _initSwipers(className = 'testimonials-slider') {
     // Get the element
-    const swiperElement = document.querySelector(`.${className}`);
+    const swiperElements = document.querySelectorAll(`.${className}`);
 
+    for (const swiperElement of swiperElements) {
     // Set custom properties directly on the style of the element
     swiperElement.style.setProperty('--swiper-navigation-color', THEME_COLOR);
     swiperElement.style.setProperty('--swiper-pagination-color', THEME_COLOR);
 
     // Initialize Swiper
-    const swiper = new Swiper(swiperElement, {
+    new Swiper(swiperElement, {
         speed: 600,
         loop: true,
         spaceBetween: 30,
@@ -17,6 +18,7 @@ function _initSwiper(className = 'testimonials-slider') {
             clickable: true
         }
     });
+}
 }
 
 function _loadSwiperHTML(id, itensHTML) {

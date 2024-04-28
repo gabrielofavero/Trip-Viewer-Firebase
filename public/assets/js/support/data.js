@@ -166,3 +166,20 @@ function _printObjectHTML(obj) {
   }
   return str;
 }
+
+function _getIfExists(objString) {
+  try {
+    return eval(objString);
+  } catch (error) {
+    return undefined;
+  }
+}
+
+function _replaceLast(text, search, replacement) {
+  var target = text;
+  return target.replace(new RegExp(search + "(?![\\s\\S]*" + search + ")", "g"), replacement);
+}
+
+function _getReadableArray(array) {
+  return _replaceLast(array.join(", "), ",", " e");
+}

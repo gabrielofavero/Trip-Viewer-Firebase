@@ -1,234 +1,151 @@
-// ======= Transportation JS =======
+function _loadTransporte() {
+  document.getElementById('transporte-subtitulo').innerText = _loadTransporteSubtitulo(FIRESTORE_DATA.transportes.reservas);
+  const swiperData = {
+    ida: [],
+    durante: [],
+    volta: [],
+  }
 
-// ======= LOADERS =======
-function _loadTransportationModule() {
-  // let transportation = {
-  //   title: _getTransportationTitle(FIRESTORE_DATA.transportes.transportes),
-  //   subtitle: _getTransportationSubtitle(FIRESTORE_DATA.transportes.reservas),
-  //   data: [],
-  // };
-  // _loadTransportationLogoBoxes();
-  // for (let i = 0; i < FIRESTORE_DATA.transportes.trajetos.length; i++) {
-  //   const title = FIRESTORE_DATA.transportes.trajetos[i];
-  //   const periodo = _getPeriodo(FIRESTORE_DATA.transportes.datas[i]);
-  //   const reservaCompanhia = _getReservaEmpresa(FIRESTORE_DATA.transportes.reservas[i], FIRESTORE_DATA.transportes.empresas[i]);
-  //   const pontos = _getPontos(FIRESTORE_DATA.transportes.pontos[i]);
+  for (let i = 0; i < FIRESTORE_DATA.transportes.datas.length; i++) {
+    const htmlContent = _getTransporteHTML(i+1);
+    swiperData[FIRESTORE_DATA.transportes.idaVolta[i]].push(htmlContent);
+  }
 
-  //   const info = {
-  //     title: title,
-  //     text: periodo + reservaCompanhia + pontos
-  //   }
-  //   transportation.data.push(info)
-  // }
-  // _loadTransportationHTML(transportation);
+  _buildTransporteSwiper(swiperData);
+  _initSwipers('testimonials-slider');
 }
 
-function _loadTransportationLogoBoxes() {
-  let innerHTML = "";
-  
-  const logoBoxes = document.getElementById('logoBoxes');
-  
-  const empresas = FIRESTORE_DATA.transportes.empresas;
-  const transportes = FIRESTORE_DATA.transportes.transportes;
-  let added = [];
-  let uniqueData = [];
 
-  for (let i = 0; i < empresas.length; i++) {
-    const transporte = transportes[i];
-    const empresa = empresas[i];
-
-    if (added.includes(empresa)) continue;
-    added.push(empresa);
-    uniqueData.push({
-      empresa: empresa,
-      transporte: transporte
-    });
-  }
-
-  let group = [];
-  const groupLimit = 2;
-
-  for (let i = 0; i < uniqueData.length; i++) {
-    const empresa = uniqueData[i].empresa;
-    const transporte = uniqueData[i].transporte;
-    
-    let link;
-    let img;
-    let generic = "";
-
-    if (CONFIG.transportes[transporte] && CONFIG.transportes[transporte][empresa]) {
-      link = CONFIG.transportes[transporte][empresa].link;
-      img = `assets/img/transportation/${transporte}/${empresa}.png`
-    } else {
-      link = `https://www.google.com/search?q=${empresa.toLowerCase().replace(" ", "+")}`;
-      img = `assets/img/transportation/generico/${transporte}.png`
-      generic = "generic";
-    }
-
-    const text = `<a href="${link}" target="_blank"><img class="transpStayBox" src="${img}"></a>`
-    group.push(text);
-
-    if (group.length == groupLimit || i == uniqueData.length - 1) {
-      innerHTML += `<div class="logoBox">${group.join("")}</div>`;
-      group = [];
-    }
-  }
-
-  logoBoxes.innerHTML = innerHTML;
+function _getTransporteHTML(j) {
+  const empresa = _getEmpresaObj(j);
+  return `<div class="swiper-slide" id="transporte-slide-${j}">
+            <div class="testimonial-item">
+                <div class="flight-box" id="fb${j}">
+                  <div class="flight-diagram">
+                    <div class="flight-title">
+                      ${_getImagemHTML(j, empresa)}
+                      ${_getReservaHTML(j, empresa)}
+                    </div>
+                    <div class="flight-text" id="ft${j}">
+                      <div class="left-text" id="lt${j}">
+                        ${_getPartidaChegadaHTML(j, "partida")}
+                      </div>
+                      <div class="center-text" id="ct${j}">
+                        <i class="flight-line">_________</i>
+                        <i class="iconify flight-icon" data-icon="${_getTransporteIcon(j)}"></i>
+                        ${_getDuracaoHTML(j)}
+                      </div>
+                      <div class="right-text" id="rt${j}">
+                        ${_getPartidaChegadaHTML(j, "chegada")}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`
 }
 
-function _loadTransportationHTML(transportation) {
-  const title = transportation.title;
-  const subtitle = transportation.subtitle;
-  const data = transportation.data;
+function _getEmpresaObj(j) {
+  const tipo = FIRESTORE_DATA.transportes.transportes[j - 1];
+  const titulo = FIRESTORE_DATA.transportes.empresas[j - 1];
 
-  const tt = document.getElementById("transportationTitle");
-  const ts = document.getElementById("transportationSubtitle");
-  const ti1 = document.getElementById("transportationItems1");
-  const ti2 = document.getElementById("transportationItems2");
+  const tituloConfig = _getIfExists(`CONFIG.transportes.empresas.${tipo}.${titulo}`);
+  const siteConfig = _getIfExists(`CONFIG.transportes.sites.${tipo}.${titulo}`);
+  const imagemConfig = _getIfExists(`CONFIG.transportes.imagens.${tipo}.${titulo}`);
 
-  const size1 = Math.ceil(transportation.data.length / 2);
-  const size2 = transportation.data.length - size1;
-
-  let innerHTML1 = "";
-  let innerHTML2 = "";
-
-  for (let i = 0; i < size1; i++) {
-    innerHTML1 += `<li><i class="bi bi-chevron-right"></i><div><strong>${data[i].title}:</strong><span>${data[i].text}</span></div></li>`;
-  }
-
-  for (let i = 0; i < size2; i++) {
-    innerHTML2 += `<li><i class="bi bi-chevron-right"></i><div><strong>${data[i + size1].title}:</strong><span>${data[i + size1].text}</span></div></li>`;
-  }
-
-  tt.innerHTML = title;
-  ts.innerHTML = subtitle;
-  ti1.innerHTML = innerHTML1;
-  ti2.innerHTML = innerHTML2;
-
-  if (title != "Transporte") {
-    const nav = document.getElementById("transportationNav");
-    nav.innerHTML = nav.innerHTML.replace("Transporte", title).replace("bx-rocket", _getTitleIcon(title));
+  return {
+    titulo: tituloConfig || titulo,
+    imagens: imagemConfig || {},
+    site: siteConfig || "",
+    isCustom: !tituloConfig
   }
 }
 
-// ======= GETTERS =======
-function _getTransportationTitle(transportes) {
-  const categorias = CONFIG.transportes.categorias;
-  let result = "";
-  for (const transporte of transportes) {
-    const text = categorias[transporte];
-    if (!result) {
-      result = text;
-    } else {
-      if (result != text) {
-        result = "Transporte";
-        break;
-      }
-    }
+function _getImagemHTML(j, empresa) {
+  if (!empresa.isCustom) {
+    return `<a href="${empresa.site}">
+              <img class="flight-img" id="flight-img-claro-${j}" src="${empresa.imagens.claro}"
+                style="display: ${_isOnDarkMode() ? 'none' : 'block'};">
+              <img class="flight-img" id="flight-img-escuro-${j}" src="${empresa.imagens.escuro}"
+                style="display: ${_isOnDarkMode() ? 'block' : 'none'};">
+            </a>`;
+  } else if (empresa.titulo) {
+    return `<div class="flight-title-text">${empresa.titulo}</div>`
+  } else {
+    return `<div class="flight-title-text">Trajeto #${j}</div>`
   }
+}
+
+function _getReservaHTML(j, empresa) {
+  let reserva = FIRESTORE_DATA.transportes.reservas[j - 1];
+  const link = FIRESTORE_DATA.transportes.links[j - 1] || empresa.site;
+
+  if (!reserva) return ""
+  reserva = reserva[0] === "#" ? reserva.slice(1) : reserva;
+
+  if (link) return `<a class="flight-code" href="https://www.google.com" target="_blank">#${reserva}</a>`;
+  else return `<div class="flight-code">#${reserva}</div>`
+}
+
+function _getPartidaChegadaHTML(j, tipo) {
+  const data = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j - 1][tipo]);
+  const local = FIRESTORE_DATA.transportes.pontos[j - 1][tipo];
+
+  let result = `<div class="flight-date">${_jsDateToDate(data, 'dd/mm')}</div>
+                <div class="flight-time">${_jsDateToTime(data)}</div>`;
+
+  if (local) result += `<div class="flight-location">${local}</div>`;
   return result;
 }
 
-function _getPeriodo(datas) {
-  const partida = datas.partida;
-  const chegada = datas.chegada;
-  if (partida && chegada) {
-    let inicioDate = _convertFromFirestoreDate(partida);
-    let fimDate = _convertFromFirestoreDate(chegada);
+function _getTransporteIcon(j) {
+  const tipo = FIRESTORE_DATA.transportes.transportes[j - 1];
+  return CONFIG.transportes.icones[tipo] || CONFIG.transportes.icones.outro;
+}
 
-    let inicioDia = inicioDate.getDate();
-    let inicioMes = inicioDate.getMonth() + 1;
-    let inicioAno = inicioDate.getFullYear();
-    let inicioHorario = inicioDate.toLocaleTimeString().slice(0, 5);
+function _getDuracaoHTML(j) {
+  const duracao = FIRESTORE_DATA.transportes.duracoes[j - 1];
+  if (!duracao) return "";
+  else return `<div class="flight-duration">${_jsTimeToVisualTime(duracao)}</div>`;
+}
 
-    let fimDia = fimDate.getDate();
-    let fimMes = fimDate.getMonth() + 1;
-    let fimAno = fimDate.getFullYear();
-    let fimHorario = fimDate.toLocaleTimeString().slice(0, 5);
-
-    if (inicioDia == fimDia && inicioMes == fimMes && inicioAno == fimAno) {
-      return `${inicioDia}/${inicioMes}/${inicioAno}, de ${inicioHorario} até ${fimHorario}. `;
+function _buildTransporteSwiper(swiperData) {
+  for (const key of Object.keys(swiperData)) {
+    const div = document.getElementById(`transporte-${key}`);
+    const cnt = document.getElementById(`transporte-${key}-content`)
+    if (swiperData[key].length > 0) {
+      div.style.display = "block";
+      cnt.innerHTML = `<div id="transporte-swiper-${key}" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                        <div class="swiper-wrapper">
+                          ${swiperData[key].join("")}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                      </div>`;
     }
-  } else return "";
-}
-
-function _getReservaEmpresa(reserva, empresa) {
-
-  const empresaCaps = empresa ? empresa.charAt(0).toUpperCase() + empresa.slice(1) : "";
-
-  if (reserva && empresa) {
-    return `Reserva ${reserva} na empresa ${empresaCaps}. `;
-  } else if (reserva) {
-    return `Reserva ${reserva}. `;
-  } else if (empresa) {
-    return `Empresa ${empresaCaps}. `;
-  } else return "";
-}
-
-function _getPontos(pontos) {
-  const partida = pontos.partida;
-  const chegada = pontos.chegada;
-
-  if (partida && chegada) {
-    return `Partida em ${partida} e chegada em ${chegada}.`;
   }
 }
 
-function _getTitleIcon(title) {
-  if (!title) {
-    title = document.getElementById('transportationNav').innerText;
-  }
-  switch (title) {
-    case "Transporte":
-      return "bx-rocket";
-    case "Ônibus":
-      return "bx-bus";
-    case "Carro":
-      return "bx-car";
-    case "Voo":
-      return "bxs-plane-alt";
-  }
-}
-
-function _getFlightBoxIcon(code) {
-  switch (code) {
-    case "voo":
-      return "fa-solid:plane";
-    case "onibus":
-      return "mingcute:bus-2-fill";
-    case "carro":
-      return "fa-solid:car-side";
-    case "moto":
-      return "ri:motorbike-fill";
-    case "bicicleta":
-      return "mingcute:bike-fill";
-    case "metro":
-      return "mdi:metro";
-    case "navio":
-      return "icon-park-solid:sailboat-one";
-    case "helicoptero":
-      return "fa6-solid:helicopter";
-    case "locomotiva":
-      return "cil:locomotive";
-    case "bondinho":
-      return "ph:cable-car-fill";
-    case "trem-bala":
-      return "mingcute:train-fill";
-    default:
-      return "mingcute:rocket-fill";
-  }
-}
-
-function _getTransportationSubtitle(reservas){
+function _loadTransporteSubtitulo(reservas) {
+  if (!reservas) return "";
   const unique = [...new Set(reservas)];
+  const filtered = unique.filter(reserva => reserva);
+  const size = filtered.length;
 
-  switch (unique.length) {
-    case 0:
-      return "";
-    case 1:
-      return "Reserva " + unique[0];
-    default:
-      return "Reservas " + unique.join(", ");
+  if (size == 0) return "";
+  else return size == 1 ? `Reserva ${filtered[0]}` : `Reservas ${_getReadableArray(filtered)}`;
+}
+
+function _loadTransporteImagens() {
+  let j = 1;
+  while (document.getElementById(`transporte-slide-${j}`)) {
+    const claro = document.getElementById(`flight-img-claro-${j}`);
+    const escuro = document.getElementById(`flight-img-escuro-${j}`);
+
+    if (claro && escuro) {
+      claro.style.display = _isOnDarkMode() ? "none" : "block";
+      escuro.style.display = _isOnDarkMode() ? "block" : "none";
+    }
+
+    j++;
   }
 }

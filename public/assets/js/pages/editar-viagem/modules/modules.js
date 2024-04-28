@@ -187,10 +187,15 @@ function _loadTransporteVisibility(i) {
     case "carro":
       selectOptions = `
       <option value="99">99</option>
-      <option value="localiza">Localiza Hertz</option>
+      <option value="avis">Avis</option>
+      <option value="cabify">Cabify</option>
+      <option value="hertz">Hertz</option>
+      <option value="localiza">Localiza</option>
+      <option value="lyft">Lyft</option>
       <option value="movida">Movida</option>
       <option value="uber">Uber</option>
       <option value="unidas">Unidas</option>
+      <option value="">Nenhuma</option>
       `
       selectValid = true;
       break;

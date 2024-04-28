@@ -222,6 +222,7 @@ function _buildTransporteObject() {
         data.chegada = chegadaValue;
 
         result.datas.push(data);
+        
         result.transportes.push(document.getElementById(`transporte-codigo-${j}`).value);
 
         const divDuracao = document.getElementById(`transporte-duracao-${j}`);

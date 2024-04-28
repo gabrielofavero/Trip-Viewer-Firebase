@@ -177,3 +177,16 @@ function _jsDateToTime(date) {
 function _removeSlashesFromDate(date) {
     return date.replace(/\//g, "");
 }
+
+function _jsTimeToVisualTime(time) {
+    let result = [];
+    const parts = time.split(":");
+    const units = ['h', 'm', 's']
+    const searchSize = parts.length <= 3 ? parts.length : 3;
+
+    for (let i = 0; i < searchSize; i++) {
+        result.push(`${parts[i]}${units[i]}`);
+    }
+
+    return result.join(" ");
+}

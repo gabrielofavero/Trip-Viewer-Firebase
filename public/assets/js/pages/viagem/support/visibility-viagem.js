@@ -46,27 +46,5 @@ function _applyCustomColorsViagem() {
     _addCSSRule('#next', 'background-color', THEME_COLOR);
     _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
-    _changeFillColorSVG('flight-icon', THEME_COLOR);
-}
-
-function _openShare() {
-    var modal = document.getElementById('shareModal');
-    modal.style.display = 'block';
-}
-
-function _closeShare() {
-    var modal = document.getElementById('shareModal');
-    modal.style.display = 'none';
-}
-
-function _copyShareLink() {
-    var divElement = document.getElementById('share-link');
-    var textarea = document.createElement('textarea');
-
-    textarea.value = divElement.innerText;
-
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
+    _addCSSRule('.flight-icon', 'color', `${THEME_COLOR} !important`);
 }
