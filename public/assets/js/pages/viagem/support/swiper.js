@@ -10,7 +10,7 @@ function _initSwipers(className = 'testimonials-slider') {
     // Initialize Swiper
     new Swiper(swiperElement, {
         speed: 600,
-        loop: true,
+        loop: false,
         spaceBetween: 30,
         pagination: {
             el: '.swiper-pagination',
