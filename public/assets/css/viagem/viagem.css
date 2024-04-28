@@ -2234,9 +2234,14 @@ iframe {
 .transporte-categoria {
   font-size: 18px;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 20%;
   margin-bottom: 10px;
   margin-left: 27%;
+}
+
+#transporte-ida,
+#transporte-durante {
+  margin-bottom: 50px;
 }
 
 .transporte-categoria:first-child {
