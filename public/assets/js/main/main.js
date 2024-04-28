@@ -31,6 +31,10 @@ const onscroll = (el, listener) => {
   el.addEventListener('scroll', listener)
 }
 
+const getID = (id) => {
+  return document.getElementById(id);
+}
+
 
 // Application Start Functions
 function _startFirebase() {
