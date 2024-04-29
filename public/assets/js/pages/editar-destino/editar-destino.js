@@ -95,6 +95,14 @@ function _loadEventListeners() {
   document.getElementById('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
+
+  getID('moeda').addEventListener('change', () => {
+    if (getID('moeda').value == "outra") {
+      getID('outra-moeda').style.display = 'block';
+    } else {
+      getID('outra-moeda').style.display = 'none';
+    }
+  });
 }
 
 async function _loadDestinations() {
@@ -102,7 +110,6 @@ async function _loadDestinations() {
   document.getElementById('delete-text').style.display = 'block';
   _startLoadingScreen();
   FIRESTORE_PLACES_DATA = await _getSingleData('destinos');
-  console.log(FIRESTORE_PLACES_DATA);
   _loadDestinationsData(FIRESTORE_PLACES_DATA);
   _stopLoadingScreen();
 }

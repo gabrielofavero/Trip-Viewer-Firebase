@@ -509,7 +509,17 @@ function _deleteType(tipo) {
 // Módulos: Passeio Existente
 function _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA) {
   document.getElementById('titulo').value = FIRESTORE_PLACES_DATA.titulo;
-  document.getElementById('moeda').value = FIRESTORE_PLACES_DATA.moeda;
+
+  const moedaValue = FIRESTORE_PLACES_DATA.moeda;
+  const moedaDiv = document.getElementById('moeda');
+
+  if (moedaDiv.querySelector(`option[value="${moedaValue}"]`)) {
+    moedaDiv.value = moedaValue;
+  } else {
+    getID('outra-moeda').style.display = 'block';
+    getID('outra-moeda').value = moedaValue;
+    moedaDiv.value = 'outra';
+  }
 }
 
 function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {

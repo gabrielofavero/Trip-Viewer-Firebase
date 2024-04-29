@@ -13,21 +13,14 @@ async function _buildDestinosObject() {
         versao: {}
     }
 
-    const divTitulo = document.getElementById(`titulo`);
-    const valueTitulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
-    result.titulo = valueTitulo;
-
-    const divMoeda = document.getElementById(`moeda`);
-    const valueMoeda = divMoeda ? _returnEmptyIfNoValue(divMoeda.value) : "";
-    result.moeda = valueMoeda;
-
-    const divMyMaps = document.getElementById(`mapa-link`);
-    const valueMyMaps = divMyMaps ? _returnEmptyIfNoValue(divMyMaps.value) : "";
-    result.myMaps = valueMyMaps;
-
+    result.titulo = document.getElementById(`titulo`).value;
+    result.myMaps = document.getElementById(`mapa-link`).value;
     result.versao.ultimaAtualizacao = new Date().toISOString();
+    result.compartilhamento.dono = FIRESTORE_PLACES_DATA?.compartilhamento?.dono || await _getUID();
 
-    result.compartilhamento.dono = FIRESTORE_PLACES_DATA ? FIRESTORE_PLACES_DATA.compartilhamento.dono : await _getUID();
+    let moeda = document.getElementById(`moeda`).value;
+    if (moeda == "outra") moeda = document.getElementById(`outra-moeda`).value;
+    result.moeda = moeda;
 
     result.modulos = _buildDestinoModulos();
     result.restaurantes = _buildDestinoCategoryObject("restaurantes");
