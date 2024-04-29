@@ -20,10 +20,10 @@ function _loadScheduleCalendar() {
 }
 
 function _loadModalContentCalendar(prog) {
-    let title = document.getElementById("progTitle");
-    let manha = document.getElementById("pc1");
-    let tarde = document.getElementById("pc2");
-    let noite = document.getElementById("pc3");
+    let title = getID("progTitle");
+    let manha = getID("pc1");
+    let tarde = getID("pc2");
+    let noite = getID("pc3");
 
     manha.innerHTML = "";
     tarde.innerHTML = "";
@@ -43,14 +43,14 @@ function _openModalCalendar(prog) {
     _loadModalContentCalendar(prog);
     $("#prog").show()
     setTimeout(() => {
-        document.getElementById("prog").classList.toggle('show')
+        getID("prog").classList.toggle('show')
     }, 100);
 
 }
 
 function _closeModalCalendar() {
     PROG_IS_HIDDEN = true;
-    document.getElementById("prog").classList.toggle('show')
+    getID("prog").classList.toggle('show')
     setTimeout(() => {
         $("#prog").hide()
     }, 300);
@@ -58,10 +58,10 @@ function _closeModalCalendar() {
 }
 
 function _reloadModalCalendar(prog) {
-    document.getElementById("progContent").classList.toggle('show');
+    getID("progContent").classList.toggle('show');
     setTimeout(() => {
         _loadModalContentCalendar(prog);
-        document.getElementById("progContent").classList.toggle('show');
+        getID("progContent").classList.toggle('show');
     }, 300);
 }
 
@@ -121,31 +121,31 @@ function _adaptModalCalendarInnerHTML(manha, tarde, noite) {
     let innerN = noite.innerHTML;
 
     if (innerM && innerT && innerN) {
-        document.getElementById("progHorarioM").style.display = "block";
-        document.getElementById("progHorarioT").style.display = "block";
-        document.getElementById("progHorarioN").style.display = "block";
-        document.getElementById("progNoData").style.display = "none";
+        getID("progHorarioM").style.display = "block";
+        getID("progHorarioT").style.display = "block";
+        getID("progHorarioN").style.display = "block";
+        getID("progNoData").style.display = "none";
     } else {
         if (innerM) {
-            document.getElementById("progHorarioM").style.display = "block";
-            document.getElementById("progNoData").style.display = "none";
+            getID("progHorarioM").style.display = "block";
+            getID("progNoData").style.display = "none";
         } else {
-            document.getElementById("progHorarioM").style.display = "none";
+            getID("progHorarioM").style.display = "none";
         }
         if (innerT) {
-            document.getElementById("progHorarioT").style.display = "block";
-            document.getElementById("progNoData").style.display = "none";
+            getID("progHorarioT").style.display = "block";
+            getID("progNoData").style.display = "none";
         } else {
-            document.getElementById("progHorarioT").style.display = "none";
+            getID("progHorarioT").style.display = "none";
         }
         if (innerN) {
-            document.getElementById("progHorarioN").style.display = "block";
-            document.getElementById("progNoData").style.display = "none";
+            getID("progHorarioN").style.display = "block";
+            getID("progNoData").style.display = "none";
         } else {
-            document.getElementById("progHorarioN").style.display = "none";
+            getID("progHorarioN").style.display = "none";
         }
         if (!innerM && !innerT && !innerN) {
-            document.getElementById("progNoData").style.display = "block";
+            getID("progNoData").style.display = "block";
         }
     }
 }

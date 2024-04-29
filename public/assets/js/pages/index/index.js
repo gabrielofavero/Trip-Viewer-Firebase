@@ -19,37 +19,37 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function _loadListenersIndex() {
-  document.getElementById('google-login-button').addEventListener('click', function () {
+  getID('google-login-button').addEventListener('click', function () {
     _signInGoogle();
   });
 
-  document.getElementById('myTrips').addEventListener('click', function () {
+  getID('myTrips').addEventListener('click', function () {
     _openIndexPage('viagens', 0, 1);
   });
 
-  document.getElementById('myDestinations').addEventListener('click', function () {
+  getID('myDestinations').addEventListener('click', function () {
     _openIndexPage('destinos', 0, 1);
   });
 
-  document.getElementById('profile-icon').addEventListener('click', function () {
+  getID('profile-icon').addEventListener('click', function () {
     back.classList.remove('bx-arrow-back');
     back.classList.add('bx-up-arrow-alt');
     _openIndexPage('settings', 0, 1);
   });
 
-  document.getElementById('new-viagem').addEventListener('click', function () {
+  getID('new-viagem').addEventListener('click', function () {
     _viagensNovo();
   });
 
-  document.getElementById('new-destino').addEventListener('click', function () {
+  getID('new-destino').addEventListener('click', function () {
     _destinosNovo();
   });
 
-  document.getElementById('new-listagem').addEventListener('click', function () {
+  getID('new-listagem').addEventListener('click', function () {
     _listagensNovo();
   });
 
-  document.getElementById('back').addEventListener('click', function () {
+  getID('back').addEventListener('click', function () {
     const back = select('#back');
     const settings = select('#settings-box');
     if (settings.style.display !== 'none') {
@@ -63,11 +63,11 @@ function _loadListenersIndex() {
     }
   });
 
-  document.getElementById('myDestinationsLists').addEventListener('click', function () {
+  getID('myDestinationsLists').addEventListener('click', function () {
     _openIndexPage('listagens', 0, 1);
   });
 
-  document.getElementById('apagar').addEventListener('click', async function () {
+  getID('apagar').addEventListener('click', async function () {
     _startLoadingScreen(false);
     await _deleteAccount();
     _closeModal();
@@ -75,13 +75,13 @@ function _loadListenersIndex() {
     _stopLoadingScreen();
   });
 
-  document.getElementById('trip-view-continue').addEventListener('click', async function () {
-    document.getElementById('trip-view-invalid').style.display = 'none';
-    document.getElementById('trip-view-private').style.display = 'none';
-    document.getElementById('trip-view-reminder').style.display = 'none';
-    document.getElementById('trip-view-error').style.display = 'none';
+  getID('trip-view-continue').addEventListener('click', async function () {
+    getID('trip-view-invalid').style.display = 'none';
+    getID('trip-view-private').style.display = 'none';
+    getID('trip-view-reminder').style.display = 'none';
+    getID('trip-view-error').style.display = 'none';
 
-    let viagem = document.getElementById('trip-view-input').value;
+    let viagem = getID('trip-view-input').value;
     if (viagem) {
       const viagemValue = viagem.trim();
       const status = await _getStatus(`viagens/${viagemValue}`);
@@ -91,17 +91,17 @@ function _loadListenersIndex() {
           window.location.href = `viagem.html?v=${viagemValue}`;
           break;
         case 'Forbidden':
-          document.getElementById('trip-view-private').style.display = 'block';
+          getID('trip-view-private').style.display = 'block';
           break;
         case 'Not Found':
-          document.getElementById('trip-view-invalid').style.display = 'block';
+          getID('trip-view-invalid').style.display = 'block';
           break;
         default:
-          document.getElementById('trip-view-error').style.display = 'block';
+          getID('trip-view-error').style.display = 'block';
           break;
       }
     } else {
-      document.getElementById('trip-view-reminder').style.display = 'block';
+      getID('trip-view-reminder').style.display = 'block';
     }
   });
 }
@@ -116,13 +116,13 @@ async function _loadUserIndex() {
         const displayName = user.displayName;
         const photoURL = 'url(' + user.photoURL + ')';
 
-        document.getElementById('title-name').innerHTML = displayName.split(' ')[0];
+        getID('title-name').innerHTML = displayName.split(' ')[0];
 
-        document.getElementById('settings-account-name').innerHTML = displayName;
-        document.getElementById('settings-account-picture').style.backgroundImage = photoURL;
-        document.getElementById('settings-account-picture').style.backgroundSize = 'cover';
-        document.getElementById('profile-icon').style.backgroundImage = photoURL;
-        document.getElementById('profile-icon').style.backgroundSize = 'cover';
+        getID('settings-account-name').innerHTML = displayName;
+        getID('settings-account-picture').style.backgroundImage = photoURL;
+        getID('settings-account-picture').style.backgroundSize = 'cover';
+        getID('profile-icon').style.backgroundImage = photoURL;
+        getID('profile-icon').style.backgroundSize = 'cover';
 
         _loadUserDataList('viagens');
         _loadUserDataList('listagens');
@@ -144,13 +144,13 @@ async function _loadUserDataList(type) {
   USER_DATA[type] = await _getUserList(type);
 
   if (USER_DATA[type] && USER_DATA[type].length > 0) {
-    document.getElementById(`sem-${type}`).style.display = 'none';
+    getID(`sem-${type}`).style.display = 'none';
     _loadUserDataHTML(USER_DATA[type], type);
   }
 }
 
 function _loadUserDataHTML(data, type) {
-  const div = document.getElementById(`dados-${type}`);
+  const div = getID(`dados-${type}`);
   let text = '';
 
   if (type === 'viagens') {

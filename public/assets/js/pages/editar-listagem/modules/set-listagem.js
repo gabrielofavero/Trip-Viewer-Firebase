@@ -39,16 +39,16 @@ async function _buildListObject() {
         }
     }
 
-    const divTitulo = document.getElementById(`titulo`);
+    const divTitulo = getID(`titulo`);
     result.data.titulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
 
-    const divSubtitulo = document.getElementById(`subtitulo`);
+    const divSubtitulo = getID(`subtitulo`);
     result.data.subtitulo = divSubtitulo ? _returnEmptyIfNoValue(divSubtitulo.value) : "";
 
-    const divDescricao = document.getElementById(`descricao`);
+    const divDescricao = getID(`descricao`);
     result.data.descricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
 
-    const exibirEmDestinos = document.getElementById(`exibir-em-destinos`);
+    const exibirEmDestinos = getID(`exibir-em-destinos`);
     result.data.versao.exibirEmDestinos = exibirEmDestinos ? exibirEmDestinos.checked : false;
 
     result.data.compartilhamento = await _buildCompartilhamentoObject();
@@ -56,9 +56,9 @@ async function _buildListObject() {
     result.data.links = _buildLinksObject();
 
     result.data.cores = {
-        ativo: document.getElementById('habilitado-cores').checked,
-        claro: _returnEmptyIfNoValue(document.getElementById('claro').value),
-        escuro: _returnEmptyIfNoValue(document.getElementById('escuro').value)
+        ativo: getID('habilitado-cores').checked,
+        claro: _returnEmptyIfNoValue(getID('claro').value),
+        escuro: _returnEmptyIfNoValue(getID('escuro').value)
     }
 
     result.data.destinos = _buildDestinosArray();
@@ -121,7 +121,7 @@ async function _setListagem() {
             }
         }
 
-        document.getElementById('modal-inner-text').innerHTML = message;
+        getID('modal-inner-text').innerHTML = message;
 
         _stopLoadingScreen();
         _openModal('modal');

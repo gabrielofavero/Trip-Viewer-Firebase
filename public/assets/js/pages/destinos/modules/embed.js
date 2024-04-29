@@ -2,7 +2,7 @@ var MEDIA_HYPERLINKS = {};
 
 function _loadEmbed(embed, nome, nomeHyperlink, i) {
   let result = "";
-  
+
   if (embed) {
     result = _getEmbed(embed, nome);
   } else if (nomeHyperlink && _isSpotify(nomeHyperlink)) {
@@ -13,14 +13,14 @@ function _loadEmbed(embed, nome, nomeHyperlink, i) {
 }
 
 function _loadMedia(i, id) {
-  div = document.getElementById(`media-${i}`);
+  div = getID(`media-${i}`);
   if (div) {
     div.innerHTML = MEDIA_HYPERLINKS[id];
   }
 }
 
 function _unloadMedia(i) {
-  div = document.getElementById(`media-${i}`);
+  div = getID(`media-${i}`);
   if (div) {
     div.innerHTML = "";
   }

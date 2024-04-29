@@ -50,7 +50,7 @@ function _uncodifyText(inputString) {
 }
 
 function _getChildIDs(parentId) {
-  var parentElement = document.getElementById(parentId);
+  var parentElement = getID(parentId);
 
   if (parentElement) {
     var childElements = parentElement.children;
@@ -133,21 +133,21 @@ function _add(type) {
 }
 
 function _setRequired(id) {
-  const div = document.getElementById(id);
+  const div = getID(id);
   if (div) {
     div.setAttribute('required', "");
   }
 }
 
 function _removeRequired(id) {
-  const div = document.getElementById(id);
+  const div = getID(id);
   if (div) {
     div.removeAttribute('required');
   }
 }
 
 function _getOptionsFromSelect(id) {
-  const selectElement = document.getElementById(id);
+  const selectElement = getID(id);
   let optionValues = [];
 
   for (let i = 0; i < selectElement.options.length; i++) {
@@ -182,4 +182,9 @@ function _replaceLast(text, search, replacement) {
 
 function _getReadableArray(array) {
   return _replaceLast(array.join(", "), ",", " e");
+}
+
+function _removeChild(tipo) {
+  const div = getID(tipo);
+  div.parentNode.removeChild(div);
 }

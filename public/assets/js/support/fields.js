@@ -14,7 +14,7 @@ function _validateRequiredFields() {
 
     if (invalidFields.length > 0) {
         wasSaved = false;
-        document.getElementById('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields);
+        getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields);
         _openModal();
         _stopLoadingScreen();
     }
@@ -32,7 +32,7 @@ function _getInvalidFieldsText(invalidFields) {
     }
 
     for (const id of invalidFields) {
-        const label = document.getElementById(id + '-label');
+        const label = getID(id + '-label');
         const idSplit = id.split('-');
 
         let innerTitle = title;
@@ -46,7 +46,7 @@ function _getInvalidFieldsText(invalidFields) {
 
             if (!isNaN(lastChar)) {
                 let position = idSplit[idSplit.length - 1];
-                const typeTitle = document.getElementById(`${innerTitle}-title-${position}`);
+                const typeTitle = getID(`${innerTitle}-title-${position}`);
                 if (typeTitle && typeTitle.innerText) {
                     innerTitle = typeTitle.innerText;
                 }
@@ -62,7 +62,7 @@ function _getInvalidFieldsText(invalidFields) {
                 ${innerText || innerTitle}
             </li>`
         } else {
-            
+
             if (innerTitle == 'Select') {
                 innerTitle = innerText.replace(/[0-9]/g, '').trim();
             }
@@ -112,8 +112,4 @@ function _getInnerText(idSplit) {
         innerText += _firstCharToUpperCase(idSplit[i]) + " ";
     }
     return innerText.trim();
-}
-
-function _getInnerTextNoNumbers(innerText) {
-    return ;
 }

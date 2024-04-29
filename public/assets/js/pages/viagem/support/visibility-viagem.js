@@ -1,5 +1,5 @@
 function _applyCustomColorsViagem() {
-    const text = document.getElementById("trip-viewer-text");
+    const text = getID("trip-viewer-text");
     text.style.color = THEME_COLOR;
 
     _addCSSRule('.back-to-top', 'background', THEME_COLOR);

@@ -8,29 +8,29 @@ function _loadVisibilityIndex() {
   _applyUserVisibility();
   _loadLogoColors();
 
-  document.getElementById("night-mode").onclick = function () {
+  getID("night-mode").onclick = function () {
     _switchVisibility();
   };
 
   if (html == 'index') {
-    document.getElementById("visibilidade-dinamico").addEventListener("click", function () {
-      if (document.getElementById("visibilidade-dinamico").checked) {
+    getID("visibilidade-dinamico").addEventListener("click", function () {
+      if (getID("visibilidade-dinamico").checked) {
         _autoVisibility();
         localStorage.setItem("visibilidade", "dinamico");
         _updateVisibility("dinamico");
       };
     });
 
-    document.getElementById("visibilidade-claro").addEventListener("click", function () {
-      if (document.getElementById("visibilidade-claro").checked) {
+    getID("visibilidade-claro").addEventListener("click", function () {
+      if (getID("visibilidade-claro").checked) {
         _loadLightMode();
         localStorage.setItem("visibilidade", "claro");
         _updateVisibility("claro");
       }
     });
 
-    document.getElementById("visibilidade-escuro").addEventListener("click", function () {
-      if (document.getElementById("visibilidade-escuro").checked) {
+    getID("visibilidade-escuro").addEventListener("click", function () {
+      if (getID("visibilidade-escuro").checked) {
         _loadDarkMode();
         localStorage.setItem("visibilidade", "escuro");
         _updateVisibility("escuro");
@@ -50,16 +50,16 @@ async function _loadUserVisibility() {
   localVisibility = localStorage.getItem("visibilidade");
   switch (localVisibility) {
     case 'dinamico':
-      document.getElementById("visibilidade-dinamico").checked = true;
+      getID("visibilidade-dinamico").checked = true;
       break;
     case 'claro':
-      document.getElementById("visibilidade-claro").checked = true;
+      getID("visibilidade-claro").checked = true;
       break;
     case 'escuro':
-      document.getElementById("visibilidade-escuro").checked = true;
+      getID("visibilidade-escuro").checked = true;
       break;
     default:
-      document.getElementById("visibilidade-dinamico").checked = true;
+      getID("visibilidade-dinamico").checked = true;
       break;
   }
 }
@@ -74,7 +74,7 @@ function _closeDeleteModal() {
   _closeModal('delete-modal');
 }
 
-function _openIndexPage(id, from=0, to=0, horizontal=true) {
+function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
   const contentBox = select('.content-box');
   let fadeIn = [];
   let fadeOut = [];
@@ -86,7 +86,7 @@ function _openIndexPage(id, from=0, to=0, horizontal=true) {
     case 'logged':
       fadeIn = ['index-logged-title', 'logged-menu', 'tripViewer'];
       fadeOut = ['index-unlogged-title', 'login-box', 'viagens-box', 'destinos-box', 'settings-box', 'listagens-box'];
-      
+
       if (from === 0 && to === 0) {
         fadeIn.push('profile-icon');
       }
@@ -120,7 +120,7 @@ function _openIndexPage(id, from=0, to=0, horizontal=true) {
       fadeIn = ['listagens-box'];
       fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'viagens-box', 'settings-box', 'destinos-box'];
       fadeInNoDirection = ['back'];
-    }
+  }
 
   contentBox.style.overflowY = 'hidden';
   _animate(fadeIn, fadeOut, from, to, horizontal);

@@ -5,20 +5,20 @@ function _loadNewTrip() {
 }
 
 function _loadDadosBasicosNewTrip() {
-  document.getElementById('inicio').value = TODAY;
-  document.getElementById('fim').value = TOMORROW;
+  getID('inicio').value = TODAY;
+  getID('fim').value = TOMORROW;
 
-  document.getElementById('moeda').value = 'R$';
-  document.getElementById('quantidadePessoas').value = 1;
+  getID('moeda').value = 'R$';
+  getID('quantidadePessoas').value = 1;
 }
 
 function _loadProgramacao() {
-  const inicio = document.getElementById('inicio').value;
-  const fim = document.getElementById('fim').value;
+  const inicio = getID('inicio').value;
+  const fim = getID('fim').value;
 
   const dates = _getArrayOfFormattedDates(inicio, fim);
 
-  const box = document.getElementById('programacao-box');
+  const box = getID('programacao-box');
   box.innerHTML = '';
 
   var newDates = [];
@@ -82,31 +82,31 @@ function _loadProgramacao() {
     const formatted = newDates[i - 1];
     if (PROGRAMACAO && PROGRAMACAO[i, formatted]) {
       _updateProgramacaoTitle(i, formatted)
-      document.getElementById(`programacao-inner-title-${i}`).value = PROGRAMACAO[formatted].titulo || '';
-      document.getElementById(`manha-1-${i}`).value = PROGRAMACAO[formatted][`manha-1`] || '';
-      document.getElementById(`manha-2-${i}`).value = PROGRAMACAO[formatted][`manha-2`] || '';
-      document.getElementById(`manha-3-${i}`).value = PROGRAMACAO[formatted][`manha-3`] || '';
-      document.getElementById(`tarde-1-${i}`).value = PROGRAMACAO[formatted][`tarde-1`] || '';
-      document.getElementById(`tarde-2-${i}`).value = PROGRAMACAO[formatted][`tarde-2`] || '';
-      document.getElementById(`tarde-3-${i}`).value = PROGRAMACAO[formatted][`tarde-3`] || '';
-      document.getElementById(`noite-1-${i}`).value = PROGRAMACAO[formatted][`noite-1`] || '';
-      document.getElementById(`noite-2-${i}`).value = PROGRAMACAO[formatted][`noite-2`] || '';
-      document.getElementById(`noite-3-${i}`).value = PROGRAMACAO[formatted][`noite-3`] || '';
+      getID(`programacao-inner-title-${i}`).value = PROGRAMACAO[formatted].titulo || '';
+      getID(`manha-1-${i}`).value = PROGRAMACAO[formatted][`manha-1`] || '';
+      getID(`manha-2-${i}`).value = PROGRAMACAO[formatted][`manha-2`] || '';
+      getID(`manha-3-${i}`).value = PROGRAMACAO[formatted][`manha-3`] || '';
+      getID(`tarde-1-${i}`).value = PROGRAMACAO[formatted][`tarde-1`] || '';
+      getID(`tarde-2-${i}`).value = PROGRAMACAO[formatted][`tarde-2`] || '';
+      getID(`tarde-3-${i}`).value = PROGRAMACAO[formatted][`tarde-3`] || '';
+      getID(`noite-1-${i}`).value = PROGRAMACAO[formatted][`noite-1`] || '';
+      getID(`noite-2-${i}`).value = PROGRAMACAO[formatted][`noite-2`] || '';
+      getID(`noite-3-${i}`).value = PROGRAMACAO[formatted][`noite-3`] || '';
     }
   }
 
   for (const child of _getChildIDs('programacao-box')) {
     const i = child.split('-')[child.split('-').length - 1];
-    document.getElementById(`programacao-inner-title-${i}`).addEventListener('change', () => _updateProgramacaoTitle(i))
+    getID(`programacao-inner-title-${i}`).addEventListener('change', () => _updateProgramacaoTitle(i))
   }
 }
 
 function _loadDestinos() {
   if (DESTINOS && DESTINOS.length > 0) {
-    document.getElementById('sem-destinos').style.display = 'none';
-    document.getElementById('com-destinos').style.display = 'block';
+    getID('sem-destinos').style.display = 'none';
+    getID('com-destinos').style.display = 'block';
 
-    const first = document.getElementById(`select-destinos-1`);
+    const first = getID(`select-destinos-1`);
 
     if (first) {
       first.addEventListener('change', () => {
@@ -120,7 +120,7 @@ function _loadDestinos() {
 
 function _addTransporte() {
   var i = 1;
-  while (document.getElementById('transporte-' + i)) {
+  while (getID('transporte-' + i)) {
     i++;
   }
 
@@ -130,10 +130,10 @@ function _addTransporte() {
 
   if (i === 1) {
     checkedIda = 'checked';
-    day = document.getElementById('inicio').value;
+    day = getID('inicio').value;
   } else {
     checkedVolta = 'checked';
-    day = document.getElementById('fim').value;
+    day = getID('fim').value;
   }
 
   $('#transporte-box').append(`
@@ -236,7 +236,7 @@ function _addTransporte() {
         </div>
   
         <div class="deletar-box">
-          <button id="transporte-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('transporte-${i}')">
+          <button id="transporte-deletar-${i}" class="btn btn-secondary" onclick="_removeChild('transporte-${i}')">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -256,7 +256,7 @@ function _addTransporte() {
 
 function _addHospedagem() {
   var i = 1;
-  while (document.getElementById('hospedagens-' + i)) {
+  while (getID('hospedagens-' + i)) {
     i++;
   }
 
@@ -343,7 +343,7 @@ function _addHospedagem() {
           </div>
     
           <div class="deletar-box">
-            <button id="hospedagens-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('hospedagens-${i}')">
+            <button id="hospedagens-deletar-${i}" class="btn btn-secondary" onclick="_removeChild('hospedagens-${i}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -362,7 +362,7 @@ function _addHospedagem() {
 
 function _addDestinos() {
   let i = 1;
-  while (document.getElementById(`select-destinos-${i}`)) {
+  while (getID(`select-destinos-${i}`)) {
     i++;
   };
 
@@ -372,7 +372,7 @@ function _addDestinos() {
         <option value="">Selecione um Destino</option>
       </select>
       <div class="deletar-box">
-        <button id="destinos-deletar-${i}" class="btn btn-secondary" onclick="_deletePasseio(${i})">
+        <button id="destinos-deletar-${i}" class="btn btn-secondary" onclick="_deleteDestino(${i})">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
           </svg>
@@ -381,7 +381,7 @@ function _addDestinos() {
     </div>
     `);
 
-  document.getElementById(`select-destinos-${i}`).addEventListener('change', () => {
+  getID(`select-destinos-${i}`).addEventListener('change', () => {
     _buildDestinosSelect();
     _buildLineupSelects();
   });
@@ -391,7 +391,7 @@ function _addDestinos() {
 
 function _addEditores() {
   let i = 1;
-  while (document.getElementById(`editores-email-${i}`)) {
+  while (getID(`editores-email-${i}`)) {
     i++;
   };
 
@@ -411,7 +411,7 @@ function _addEditores() {
 
 function _addLineup() {
   let i = 1;
-  while (document.getElementById(`lineup-${i}`)) {
+  while (getID(`lineup-${i}`)) {
     i++;
   }
 
@@ -497,7 +497,7 @@ function _addLineup() {
         </div>
   
         <div class="deletar-box">
-          <button id="lineup-deletar-${i}" class="btn btn-secondary" onclick="_deleteType('lineup-${i}')">
+          <button id="lineup-deletar-${i}" class="btn btn-secondary" onclick="_removeChild('lineup-${i}')">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -510,14 +510,14 @@ function _addLineup() {
     </div>
     `);
 
-    _buildLineupSelects();
-    _loadLineupListeners(i);
+  _buildLineupSelects();
+  _loadLineupListeners(i);
   _addDragListeners('lineup');
 }
 
 function _addGaleria() {
   var i = 1;
-  while (document.getElementById('galeria-' + i)) {
+  while (getID('galeria-' + i)) {
     i++;
   }
 

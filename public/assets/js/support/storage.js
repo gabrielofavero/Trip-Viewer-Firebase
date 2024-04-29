@@ -12,7 +12,7 @@ async function _uploadImage(path, divID) {
     caminho: null,
   };
 
-  const file = document.getElementById(divID)?.files[0];
+  const file = getID(divID)?.files[0];
   if (file && IMAGE_UPLOAD_ERROR.status === false) {
     try {
       const storageRef = await firebase.storage().ref();
@@ -30,7 +30,7 @@ async function _uploadImage(path, divID) {
     } catch (error) {
       IMAGE_UPLOAD_ERROR.status = true;
       console.error('Erro ao fazer upload da imagem:', error.message || error);
-      
+
       const key = _codifyText(_getLastDir(path));
       IMAGE_UPLOAD_ERROR.messages[key] = _getStorageErrorMessage(error);
     }
@@ -188,20 +188,20 @@ function _checkFileSize(fileInput, type) {
 
   if ((PERMISSOES && PERMISSOES['tamanhoUploadIrrestrito'] === true) ||
     (file.size <= UPLOAD_SIZE)) {
-    document.getElementById(`upload-${type}-size-message`).style.display = 'none'
+    getID(`upload-${type}-size-message`).style.display = 'none'
   } else {
-    document.getElementById(`upload-${type}-size-message`).style.display = 'block';
+    getID(`upload-${type}-size-message`).style.display = 'block';
     fileInput.value = '';
   }
 }
 
 function _loadImageSelector(type) {
-  const checkboxLink = document.getElementById(`enable-link-${type}`);
-  const checkboxUpload = document.getElementById(`enable-upload-${type}`);
-  const checkboxGroup = document.getElementById(`upload-checkbox-${type}`);
+  const checkboxLink = getID(`enable-link-${type}`);
+  const checkboxUpload = getID(`enable-upload-${type}`);
+  const checkboxGroup = getID(`upload-checkbox-${type}`);
 
-  const link = document.getElementById(`link-${type}`);
-  const upload = document.getElementById(`upload-${type}`);
+  const link = getID(`link-${type}`);
+  const upload = getID(`upload-${type}`);
 
   if (PERMISSOES && PERMISSOES['upload'] === true) {
     if (checkboxLink.checked) {
@@ -241,8 +241,8 @@ function _loadImageSelector(type) {
 }
 
 function _removeImageSelectorListeners(type) {
-  const checkboxLink = document.getElementById(`enable-link-${type}`);
-  const checkboxUpload = document.getElementById(`enable-upload-${type}`);
+  const checkboxLink = getID(`enable-link-${type}`);
+  const checkboxUpload = getID(`enable-upload-${type}`);
 
   checkboxLink.removeEventListener('change', function () {
     if (checkboxLink.checked) {
@@ -269,14 +269,14 @@ function _removeImageSelectorListeners(type) {
 }
 
 function _loadLogoSelector() {
-  const checkboxLink = document.getElementById(`enable-link-logo`);
-  const checkboxUpload = document.getElementById(`enable-upload-logo`);
+  const checkboxLink = getID(`enable-link-logo`);
+  const checkboxUpload = getID(`enable-upload-logo`);
 
-  const linkLight = document.getElementById(`link-logo-light`);
-  const uploadLight = document.getElementById(`upload-logo-light`);
+  const linkLight = getID(`link-logo-light`);
+  const uploadLight = getID(`upload-logo-light`);
 
-  const linkDark = document.getElementById(`link-logo-dark`);
-  const uploadDark = document.getElementById(`upload-logo-dark`);
+  const linkDark = getID(`link-logo-dark`);
+  const uploadDark = getID(`upload-logo-dark`);
 
   if (PERMISSOES && PERMISSOES['upload'] === true) {
     if (checkboxLink.checked) {

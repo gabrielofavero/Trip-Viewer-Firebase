@@ -52,19 +52,19 @@ function _loadUploadSelectors() {
 }
 
 function _loadEventListeners() {
-  document.getElementById('destinos-adicionar').addEventListener('click', () => {
+  getID('destinos-adicionar').addEventListener('click', () => {
     _addDestinos();
   });
 
-  document.getElementById('cancelar').addEventListener('click', () => {
+  getID('cancelar').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
 
-  document.getElementById('home').addEventListener('click', () => {
+  getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
 
-  document.getElementById('visualizar').addEventListener('click', () => {
+  getID('visualizar').addEventListener('click', () => {
     if (DOCUMENT_ID) {
       window.location.href = `viagem.html?l=${DOCUMENT_ID}`;
     } else {
@@ -72,27 +72,27 @@ function _loadEventListeners() {
     }
   });
 
-  document.getElementById('editores-adicionar').addEventListener('click', () => {
+  getID('editores-adicionar').addEventListener('click', () => {
     _addEditores();
   });
 
-  document.getElementById('logo-tamanho').addEventListener('input', (event) => {
+  getID('logo-tamanho').addEventListener('input', (event) => {
     _formatAltura(event.target.value);
   });
 
-  document.getElementById('salvar').addEventListener('click', () => {
+  getID('salvar').addEventListener('click', () => {
     _setListagem();
   });
 
-  document.getElementById('re-editar').addEventListener('click', () => {
+  getID('re-editar').addEventListener('click', () => {
     _reEdit('listagens', wasSaved);
   });
 
-  document.getElementById('cancelar').addEventListener('click', () => {
+  getID('cancelar').addEventListener('click', () => {
     _closeModal();
   });
 
-  document.getElementById('apagar').addEventListener('click', async () => {
+  getID('apagar').addEventListener('click', async () => {
     if (DOCUMENT_ID) {
       await _deleteUserObjectDB(DOCUMENT_ID, "listagens");
       await _deleteUserObjectStorage();
@@ -100,13 +100,13 @@ function _loadEventListeners() {
     }
   });
 
-  document.getElementById('home').addEventListener('click', () => {
+  getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
 }
 
 async function _carregarListagem() {
-  document.getElementById('delete-text').style.display = 'block';
+  getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
   FIRESTORE_DATA = await _getSingleData('listagens');

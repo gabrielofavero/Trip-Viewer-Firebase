@@ -18,11 +18,11 @@ function _loadDestinations() {
   window.localStorage.setItem('PLACES_SETTINGS_JSON', JSON.stringify(CONFIG.destinos.settings));
 
   if (DESTINOS.length % 2 === 1) { // Ímpar
-    document.getElementById('destinosBox').classList.add('centered-destino-box');
+    getID('destinosBox').classList.add('centered-destino-box');
   }
 
-  if (DESTINOS.length === 1 && document.getElementById("destinos-select").style.display === 'none') {
-    document.getElementById('destinosTitleContainer').style.display = 'none';
+  if (DESTINOS.length === 1 && getID("destinos-select").style.display === 'none') {
+    getID('destinosTitleContainer').style.display = 'none';
   }
 
   window.addEventListener("resize", function () {
@@ -31,7 +31,7 @@ function _loadDestinations() {
 }
 
 function _loadDestinationsSelect(lineupExclusive = false) {
-  let select = document.getElementById("destinos-select");
+  let select = getID("destinos-select");
   let firstOption = document.createElement("option");
   _buildDestinosObject(lineupExclusive);
 
@@ -70,7 +70,7 @@ function _loadDestinationsSelect(lineupExclusive = false) {
 }
 
 function _loadDestinationsHTML(destino) {
-  let div = document.getElementById("destinosBox");
+  let div = getID("destinosBox");
   let text = "";
 
   const headers = _getDestinationsHeaders(destino.modulos);
@@ -126,7 +126,7 @@ function _getDestinationsHeaders(module) {
 }
 
 function getDestinationsSelectValue() {
-  let select = document.getElementById("destinos-select");
+  let select = getID("destinos-select");
   return select.value || DESTINOS[0].destinos.sigla;
 }
 
@@ -270,7 +270,7 @@ function _adjustDestinationsHTML() {
   let maxHeight = 0;
 
   for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
-    let height = document.getElementById(`b${i}d`).offsetHeight;
+    let height = getID(`b${i}d`).offsetHeight;
     if (height > maxHeight) {
       maxHeight = height;
     }
@@ -278,6 +278,6 @@ function _adjustDestinationsHTML() {
   }
 
   for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
-    document.getElementById(`b${i}d`).style.height = `${maxHeight}px`;
+    getID(`b${i}d`).style.height = `${maxHeight}px`;
   }
 }

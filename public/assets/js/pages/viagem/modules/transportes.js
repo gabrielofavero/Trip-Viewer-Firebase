@@ -1,7 +1,7 @@
 var TRANSPORTE_ICONES = [];
 
 function _loadTransporte() {
-  document.getElementById('transporte-subtitulo').innerText = _loadTransporteSubtitulo(FIRESTORE_DATA.transportes.reservas);
+  getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo(FIRESTORE_DATA.transportes.reservas);
   const swiperData = {
     ida: [],
     durante: [],
@@ -9,7 +9,7 @@ function _loadTransporte() {
   }
 
   for (let i = 0; i < FIRESTORE_DATA.transportes.datas.length; i++) {
-    const htmlContent = _getTransporteHTML(i+1);
+    const htmlContent = _getTransporteHTML(i + 1);
     swiperData[FIRESTORE_DATA.transportes.idaVolta[i]].push(htmlContent);
   }
 
@@ -126,8 +126,8 @@ function _buildTransporteSwiper(swiperData) {
   }
 
   for (const key of keys) {
-    const div = document.getElementById(`transporte-${key}`);
-    const cnt = document.getElementById(`transporte-${key}-content`)
+    const div = getID(`transporte-${key}`);
+    const cnt = getID(`transporte-${key}-content`)
     if (swiperData[key].length > 0 || data) {
       div.style.display = "block";
       cnt.innerHTML = `<div id="transporte-swiper-${key}" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
@@ -152,9 +152,9 @@ function _loadTransporteSubtitulo(reservas) {
 
 function _loadTransporteImagens() {
   let j = 1;
-  while (document.getElementById(`transporte-slide-${j}`)) {
-    const claro = document.getElementById(`flight-img-claro-${j}`);
-    const escuro = document.getElementById(`flight-img-escuro-${j}`);
+  while (getID(`transporte-slide-${j}`)) {
+    const claro = getID(`flight-img-claro-${j}`);
+    const escuro = getID(`flight-img-escuro-${j}`);
 
     if (claro && escuro) {
       claro.style.display = _isOnDarkMode() ? "none" : "block";
@@ -168,6 +168,6 @@ function _loadTransporteImagens() {
 function _loadIconeGeralTransporte() {
   const unique = [...new Set(TRANSPORTE_ICONES)];
   if (unique.length == 1) {
-    document.getElementById('transporte-nav').setAttribute('data-icon', unique[0]);
+    getID('transporte-nav').setAttribute('data-icon', unique[0]);
   }
 }

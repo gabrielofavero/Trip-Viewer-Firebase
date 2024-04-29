@@ -8,7 +8,7 @@ function _startLoadingScreen(useTimer = true) {
   if (useTimer) {
     _startLoadingTimer();
   }
-  const preloader = document.getElementById('preloader');
+  const preloader = getID('preloader');
   if (preloader) {
     preloader.style.display = 'block';
     _disableScroll();
@@ -18,7 +18,7 @@ function _startLoadingScreen(useTimer = true) {
 function _stopLoadingScreen() {
   _stopLoadingTimer();
   if (!ERROR_MODE) {
-    const preloader = document.getElementById('preloader');
+    const preloader = getID('preloader');
     if (preloader) {
       preloader.style.display = 'none';
       _enableScroll();
@@ -61,7 +61,7 @@ function _stopLoadingTimer() {
 
 function _displayErrorMessage(errorMessage = "", customMessage) {
   _stopLoadingTimer();
-  const preloader = document.getElementById('preloader');
+  const preloader = getID('preloader');
 
   if (preloader) {
     ERROR_MODE = true;
@@ -109,7 +109,7 @@ function _displayErrorMessage(errorMessage = "", customMessage) {
 
 function _overrideError() {
   if (ERROR_MODE) {
-    const preloader = document.getElementById('preloader');
+    const preloader = getID('preloader');
     if (preloader) {
       preloader.innerHTML = '';
       preloader.style.background = '';
@@ -122,7 +122,7 @@ function _overrideError() {
 }
 
 function _displayNoDataError(type) {
-  const preloader = document.getElementById('preloader');
+  const preloader = getID('preloader');
 
   if (preloader) {
     ERROR_MODE = true;

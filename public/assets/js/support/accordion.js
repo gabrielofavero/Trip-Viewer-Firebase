@@ -60,12 +60,12 @@ function _getDragQuerySelector(classType, properties) {
 
 // Listeners
 function _applyAccordionListeners(i, type) {
-    const nome = document.getElementById(`${type}-nome-${i}`);
+    const nome = getID(`${type}-nome-${i}`);
     nome.addEventListener('change', function () {
         _accordionOnChange(i, type);
     });
 
-    const emoji = document.getElementById(`${type}-emoji-${i}`);
+    const emoji = getID(`${type}-emoji-${i}`);
     if (emoji) {
         emoji.addEventListener('change', function () {
             _accordionOnChange(i, type);
@@ -74,9 +74,9 @@ function _applyAccordionListeners(i, type) {
 }
 
 function _accordionOnChange(i, type) {
-    const titleDiv = document.getElementById(`${type}-title-${i}`);
-    const nomeDiv = document.getElementById(`${type}-nome-${i}`);
-    const emojiDiv = document.getElementById(`${type}-emoji-${i}`);
+    const titleDiv = getID(`${type}-title-${i}`);
+    const nomeDiv = getID(`${type}-nome-${i}`);
+    const emojiDiv = getID(`${type}-emoji-${i}`);
 
     const nome = nomeDiv.value;
     const emojiUntreated = emojiDiv ? emojiDiv.value : "";

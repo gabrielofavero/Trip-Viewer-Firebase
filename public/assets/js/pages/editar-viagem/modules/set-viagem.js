@@ -57,30 +57,30 @@ async function _buildTripObject() {
     }
 
     result.data.modulos = {
-        hospedagens: document.getElementById('habilitado-hospedagens').checked,
-        destinos: document.getElementById('habilitado-destinos').checked,
-        lineup: document.getElementById(`habilitado-lineup`).checked,
-        programacao: document.getElementById('habilitado-programacao').checked,
+        hospedagens: getID('habilitado-hospedagens').checked,
+        destinos: getID('habilitado-destinos').checked,
+        lineup: getID(`habilitado-lineup`).checked,
+        programacao: getID('habilitado-programacao').checked,
         resumo: true,
-        transportes: document.getElementById('habilitado-transporte').checked,
-        galeria: document.getElementById('habilitado-galeria').checked
+        transportes: getID('habilitado-transporte').checked,
+        galeria: getID('habilitado-galeria').checked
     }
 
-    const divTitulo = document.getElementById(`titulo`);
+    const divTitulo = getID(`titulo`);
     result.data.titulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
 
-    const divMoeda = document.getElementById(`moeda`);
+    const divMoeda = getID(`moeda`);
     result.data.moeda = divMoeda ? _returnEmptyIfNoValue(divMoeda.value) : "";
 
-    const divInicio = document.getElementById(`inicio`);
+    const divInicio = getID(`inicio`);
     const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
     result.data.inicio = _formattedDateToFirestoreDate(valueInicio);
 
-    const divFim = document.getElementById(`fim`);
+    const divFim = getID(`fim`);
     const valueFim = divFim ? _returnEmptyIfNoValue(divFim.value) : "";
     result.data.fim = _formattedDateToFirestoreDate(valueFim);
 
-    const divQuantidadePessoas = document.getElementById(`quantidadePessoas`);
+    const divQuantidadePessoas = getID(`quantidadePessoas`);
     const valueQuantidadePessoas = divQuantidadePessoas ? _returnEmptyIfNoValue(divQuantidadePessoas.value) : "";
     result.data.quantidadePessoas = !isNaN(valueQuantidadePessoas) ? parseInt(valueQuantidadePessoas) : 0;
 
@@ -89,9 +89,9 @@ async function _buildTripObject() {
     result.data.links = _buildLinksObject();
 
     result.data.cores = {
-        ativo: document.getElementById('habilitado-cores').checked,
-        claro: _returnEmptyIfNoValue(document.getElementById('claro').value),
-        escuro: _returnEmptyIfNoValue(document.getElementById('escuro').value)
+        ativo: getID('habilitado-cores').checked,
+        claro: _returnEmptyIfNoValue(getID('claro').value),
+        escuro: _returnEmptyIfNoValue(getID('escuro').value)
     }
 
     result.data.transportes = _buildTransporteObject();
@@ -109,8 +109,8 @@ async function _buildTripObject() {
 }
 
 async function _buildCompartilhamentoObject() {
-    const publica = document.getElementById('habilitado-publico').checked;
-    const editores = document.getElementById('habilitado-editores').checked;
+    const publica = getID('habilitado-publico').checked;
+    const editores = getID('habilitado-editores').checked;
     var editoresArray = [];
     var dono;
 
@@ -124,7 +124,7 @@ async function _buildCompartilhamentoObject() {
         const childIds = _getChildIDs('habilitado-editores-content');
         for (var i = 0; i < childIds.length; i++) {
             const j = parseInt(childIds[i].split("-")[1]);
-            const divEditor = document.getElementById(`editores-email-${j}`);
+            const divEditor = getID(`editores-email-${j}`);
             const valueEditor = divEditor ? _returnEmptyIfNoValue(divEditor.value) : "";
             editoresArray.push(valueEditor);
         }
@@ -139,26 +139,26 @@ async function _buildCompartilhamentoObject() {
 
 function _buildImagemObject() {
     let result = {
-        ativo: document.getElementById('habilitado-imagens').checked,
-        altura: `${document.getElementById('logo-tamanho').value * 25}px`,
-        background: document.getElementById('link-background').value || "",
-        claro: document.getElementById('link-logo-light').value || "",
-        escuro: document.getElementById('link-logo-dark').value || "",
+        ativo: getID('habilitado-imagens').checked,
+        altura: `${getID('logo-tamanho').value * 25}px`,
+        background: getID('link-background').value || "",
+        claro: getID('link-logo-light').value || "",
+        escuro: getID('link-logo-dark').value || "",
     }
 
-    if (document.getElementById('upload-background').value) {
+    if (getID('upload-background').value) {
         TO_UPLOAD.background = true;
     } else if (result.background && FIREBASE_IMAGES.background && !result.background.includes(FIREBASE_IMAGE_ORIGIN)) {
         CLEAR_IMAGES.background = true;
     }
 
-    if (document.getElementById('upload-logo-light').value) {
+    if (getID('upload-logo-light').value) {
         TO_UPLOAD.logoLight = true;
     } else if (result.claro && FIREBASE_IMAGES.claro && !result.claro.includes(FIREBASE_IMAGE_ORIGIN)) {
         CLEAR_IMAGES.claro = true;
     }
 
-    if (document.getElementById('upload-logo-dark').value) {
+    if (getID('upload-logo-dark').value) {
         TO_UPLOAD.logoDark = true;
     } else if (result.escuro && FIREBASE_IMAGES.escuro && !result.escuro.includes(FIREBASE_IMAGE_ORIGIN)) {
         CLEAR_IMAGES.escuro = true;
@@ -169,14 +169,14 @@ function _buildImagemObject() {
 
 function _buildLinksObject() {
     return {
-        ativo: document.getElementById('habilitado-links').checked,
-        attachments: document.getElementById('link-attachments').value || "",
-        drive: document.getElementById('link-drive').value || "",
-        maps: document.getElementById('link-maps').value || "",
-        pdf: document.getElementById('link-pdf').value || "",
-        ppt: document.getElementById('link-ppt').value || "",
-        sheet: document.getElementById('link-sheet').value || "",
-        vacina: document.getElementById('link-vacina').value || "",
+        ativo: getID('habilitado-links').checked,
+        attachments: getID('link-attachments').value || "",
+        drive: getID('link-drive').value || "",
+        maps: getID('link-maps').value || "",
+        pdf: getID('link-pdf').value || "",
+        ppt: getID('link-ppt').value || "",
+        sheet: getID('link-sheet').value || "",
+        vacina: getID('link-vacina').value || "",
     }
 }
 
@@ -194,7 +194,7 @@ function _buildTransporteObject() {
         visualizacaoSimplificada: true
     }
 
-    if (document.getElementById('separar').checked) {
+    if (getID('separar').checked) {
         result.visualizacaoSimplificada = false;
     }
 
@@ -203,9 +203,9 @@ function _buildTransporteObject() {
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[1]);
 
-        if (document.getElementById(`ida-${j}`).checked) {
+        if (getID(`ida-${j}`).checked) {
             result.idaVolta.push('ida');
-        } else if (document.getElementById(`durante-${j}`).checked) {
+        } else if (getID(`durante-${j}`).checked) {
             result.idaVolta.push('durante');
         } else {
             result.idaVolta.push('volta');
@@ -216,28 +216,28 @@ function _buildTransporteObject() {
             chegada: ""
         }
 
-        const partidaData = document.getElementById(`partida-${j}`).value;
-        const partidaHorario = document.getElementById(`partida-horario-${j}`).value;
+        const partidaData = getID(`partida-${j}`).value;
+        const partidaHorario = getID(`partida-horario-${j}`).value;
         const partidaValue = _formattedDateToFirestoreDate(partidaData, partidaHorario);
         data.partida = partidaValue;
 
-        const chegadaData = document.getElementById(`chegada-${j}`).value;
-        const chegadaHorario = document.getElementById(`chegada-horario-${j}`).value;
+        const chegadaData = getID(`chegada-${j}`).value;
+        const chegadaHorario = getID(`chegada-horario-${j}`).value;
         const chegadaValue = _formattedDateToFirestoreDate(chegadaData, chegadaHorario);
         data.chegada = chegadaValue;
 
         result.datas.push(data);
-        
-        result.transportes.push(document.getElementById(`transporte-codigo-${j}`).value);
 
-        const divDuracao = document.getElementById(`transporte-duracao-${j}`);
+        result.transportes.push(getID(`transporte-codigo-${j}`).value);
+
+        const divDuracao = getID(`transporte-duracao-${j}`);
         const valueDuracao = divDuracao ? _returnEmptyIfNoValue(divDuracao.value) : "";
         result.duracoes.push(valueDuracao);
 
         const valueEmpresa = _getValueEmpresa(j);
         result.empresas.push(valueEmpresa.toLowerCase());
 
-        const divReserva = document.getElementById(`reserva-transp-${j}`);
+        const divReserva = getID(`reserva-transp-${j}`);
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
         result.reservas.push(valueReserva);
 
@@ -246,15 +246,15 @@ function _buildTransporteObject() {
             chegada: ""
         }
 
-        const divPontoPartida = document.getElementById(`ponto-partida-${j}`);
+        const divPontoPartida = getID(`ponto-partida-${j}`);
         const valuePontoPartida = divPontoPartida ? _returnEmptyIfNoValue(divPontoPartida.value) : "";
         pontos.partida = valuePontoPartida;
 
-        const divPontoChegada = document.getElementById(`ponto-chegada-${j}`);
+        const divPontoChegada = getID(`ponto-chegada-${j}`);
         const valuePontoChegada = divPontoChegada ? _returnEmptyIfNoValue(divPontoChegada.value) : "";
         pontos.chegada = valuePontoChegada;
 
-        const divLink = document.getElementById(`link-transp-${j}`);
+        const divLink = getID(`link-transp-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
 
@@ -265,8 +265,8 @@ function _buildTransporteObject() {
 }
 
 function _getValueEmpresa(j) {
-    const divSelect = document.getElementById(`empresa-select-${j}`);
-    const divEmpresa = document.getElementById(`empresa-${j}`);
+    const divSelect = getID(`empresa-select-${j}`);
+    const divEmpresa = getID(`empresa-${j}`);
 
     if (divSelect && divEmpresa) {
         if (divSelect.value == 'outra' || divSelect.value == 'selecione') {
@@ -297,11 +297,11 @@ function _buildHospedagemObject() {
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[1]);
 
-        const divNome = document.getElementById(`hospedagens-nome-${j}`);
+        const divNome = getID(`hospedagens-nome-${j}`);
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
         result.hospedagem.push(valueNome);
 
-        const divEndereco = document.getElementById(`hospedagens-endereco-${j}`);
+        const divEndereco = getID(`hospedagens-endereco-${j}`);
         const valueEndereco = divEndereco ? _returnEmptyIfNoValue(divEndereco.value) : "";
         result.endereco.push(valueEndereco);
 
@@ -310,40 +310,40 @@ function _buildHospedagemObject() {
             checkout: ""
         }
 
-        const checkinData = document.getElementById(`check-in-${j}`).value;
-        const checkinHorario = document.getElementById(`check-in-horario-${j}`).value;
+        const checkinData = getID(`check-in-${j}`).value;
+        const checkinHorario = getID(`check-in-horario-${j}`).value;
         const checkinValue = _formattedDateToFirestoreDate(checkinData, checkinHorario);
         data.checkin = checkinValue;
 
-        const checkoutData = document.getElementById(`check-out-${j}`).value;
-        const checkoutHorario = document.getElementById(`check-out-horario-${j}`).value;
+        const checkoutData = getID(`check-out-${j}`).value;
+        const checkoutHorario = getID(`check-out-horario-${j}`).value;
         const checkoutValue = _formattedDateToFirestoreDate(checkoutData, checkoutHorario);
         data.checkout = checkoutValue;
 
         result.datas.push(data);
 
-        const divCodigo = document.getElementById(`hospedagens-codigo-${j}`);
+        const divCodigo = getID(`hospedagens-codigo-${j}`);
         const valueCodigo = divCodigo ? _returnEmptyIfNoValue(divCodigo.value) : "";
         result.codigos.push(valueCodigo);
 
-        const divDescricao = document.getElementById(`hospedagens-descricao-${j}`);
+        const divDescricao = getID(`hospedagens-descricao-${j}`);
         const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
         result.descricao.push(valueDescricao);
 
-        const divReserva = document.getElementById(`reserva-hospedagens-${j}`);
+        const divReserva = getID(`reserva-hospedagens-${j}`);
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
         result.reservas.push(valueReserva);
 
-        const divLink = document.getElementById(`link-reserva-hospedagens-${j}`);
+        const divLink = getID(`link-reserva-hospedagens-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
 
-        if (document.getElementById(`enable-upload-hospedagens-${j}`).checked) {
+        if (getID(`enable-upload-hospedagens-${j}`).checked) {
             TO_UPLOAD.hospedagens = true;
             result.imagens.push({});
             UPLOAD_FILES.hospedagens.push(j)
         } else {
-            const divImagem = document.getElementById(`link-hospedagens-${j}`);
+            const divImagem = getID(`link-hospedagens-${j}`);
             const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
             const valueResult = valueImagem ? _getImageObject(valueImagem, 'hospedagens') : "";
 
@@ -370,10 +370,10 @@ function _buildProgramacaoObject() {
             noite: [],
             titulo: ""
         }
-        divTitulo = document.getElementById(`programacao-inner-title-${j}`);
+        divTitulo = getID(`programacao-inner-title-${j}`);
         innerResult.titulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
 
-        const dataOriginal = document.getElementById(`programacao-title-${j}`).innerText;
+        const dataOriginal = getID(`programacao-title-${j}`).innerText;
         const dataSplit = dataOriginal.split("/");
         const data = `${dataSplit[2]}-${dataSplit[1]}-${dataSplit[0]}`;
         innerResult.data = _formattedDateToFirestoreDate(data);
@@ -392,7 +392,7 @@ function _buildProgramacaoObject() {
 function _getInnerProgramacao(turno, j) {
     let array = [];
     for (let i = 1; i <= 3; i++) {
-        div = document.getElementById(`${turno}-${i}-${j}`);
+        div = getID(`${turno}-${i}-${j}`);
         value = div ? _returnEmptyIfNoValue(div.value) : "";
         if (value) {
             array.push(value);
@@ -411,7 +411,7 @@ function _buildDestinosArray() {
             destinosID: ""
         }
 
-        divSelectDestinos = document.getElementById(`select-destinos-${j}`);
+        divSelectDestinos = getID(`select-destinos-${j}`);
         valueSelectDestinos = divSelectDestinos ? _returnEmptyIfNoValue(divSelectDestinos.value) : "";
 
         if (valueSelectDestinos) {
@@ -430,7 +430,7 @@ function _buildLineupObject() {
 
     for (const child of childIDs) {
         const i = child.split("-")[1];
-        const selectValue = document.getElementById(`lineup-local-${i}`).value || 'generico';
+        const selectValue = getID(`lineup-local-${i}`).value || 'generico';
         if (!result[selectValue]) {
             result[selectValue] = {
                 data: [],
@@ -450,13 +450,13 @@ function _buildLineupObject() {
 
     for (let i = 0; i < childIDs.length; i++) {
         const j = parseInt(childIDs[i].split("-")[1]);
-        const selectValue = document.getElementById(`lineup-local-${j}`).value || 'generico';
+        const selectValue = getID(`lineup-local-${j}`).value || 'generico';
 
-        const divHead = document.getElementById(`lineup-headliner-${j}`);
+        const divHead = getID(`lineup-headliner-${j}`);
         const valueHead = (divHead && divHead.checked) ? "✔" : "";
         result[selectValue].head.push(valueHead);
 
-        const divNome = document.getElementById(`lineup-nome-${j}`);
+        const divNome = getID(`lineup-nome-${j}`);
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
         result[selectValue].nome.push(valueNome);
 
@@ -466,14 +466,14 @@ function _buildLineupObject() {
         const valuePalco = _getDynamicSelectValue('lineup', 'palco', j);
         result[selectValue].palco.push(valuePalco);
 
-        const divData = document.getElementById(`lineup-data-${j}`);
+        const divData = getID(`lineup-data-${j}`);
         const valueData = divData ? _returnEmptyIfNoValue(divData.value) : "";
         result[selectValue].data.push(valueData);
 
-        const divInicio = document.getElementById(`lineup-horario-${j}`);
+        const divInicio = getID(`lineup-horario-${j}`);
         const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
 
-        const divFim = document.getElementById(`lineup-horario-fim-${j}`);
+        const divFim = getID(`lineup-horario-fim-${j}`);
         const valueFim = divFim ? _returnEmptyIfNoValue(divFim.value) : "";
 
         if (valueInicio || valueFim) {
@@ -482,11 +482,11 @@ function _buildLineupObject() {
             result[selectValue].horario.push("");
         }
 
-        divMidia = document.getElementById(`lineup-midia-${j}`);
+        divMidia = getID(`lineup-midia-${j}`);
         valueMidia = divMidia ? _returnEmptyIfNoValue(divMidia.value) : "";
         result[selectValue].hyperlink.name.push(valueMidia);
 
-        divNota = document.getElementById(`lineup-nota-${j}`);
+        divNota = getID(`lineup-nota-${j}`);
         valueNota = divNota ? _returnEmptyIfNoValue(divNota.value) : "";
         result[selectValue].nota.push(valueNota);
     }
@@ -506,21 +506,21 @@ function _buildGaleriaObject() {
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[1]);
 
-        const descricao = document.getElementById(`galeria-descricao-${j}`).value || "";
+        const descricao = getID(`galeria-descricao-${j}`).value || "";
         result.descricoes.push(descricao);
 
         const categoria = _getDynamicSelectValue('galeria', 'categoria', j);
         result.categorias.push(categoria);
 
-        const titulo = document.getElementById(`galeria-titulo-${j}`).value || "";
+        const titulo = getID(`galeria-titulo-${j}`).value || "";
         result.titulos.push(titulo);
 
-        if (document.getElementById(`enable-upload-galeria-${j}`).checked) {
+        if (getID(`enable-upload-galeria-${j}`).checked) {
             TO_UPLOAD.galeria = true;
             result.imagens.push({});
             UPLOAD_FILES.galeria.push(j)
         } else {
-            const divImagem = document.getElementById(`link-galeria-${j}`);
+            const divImagem = getID(`link-galeria-${j}`);
             const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
             const valueResult = valueImagem ? _getImageObject(valueImagem, 'galeria') : "";
 
@@ -535,7 +535,7 @@ function _buildGaleriaObject() {
 async function _setViagem() {
     _startLoadingScreen(false);
 
-    if (document.getElementById('habilitado-destinos').checked) {
+    if (getID('habilitado-destinos').checked) {
         for (const child of _getChildIDs('com-destinos')) {
             const i = parseInt(child.split("-")[2]);
             _setRequired(`select-destinos-${i}`)
@@ -588,7 +588,7 @@ async function _setViagem() {
             }
         }
 
-        document.getElementById('modal-inner-text').innerHTML = message;
+        getID('modal-inner-text').innerHTML = message;
 
         _stopLoadingScreen();
         _openModal('modal');

@@ -28,16 +28,16 @@ function _loadVisibility() {
      _saveLocalColors();
      _applyUserVisibility();
 
-     document.getElementById("night-mode").onclick = function () {
+     getID("night-mode").onclick = function () {
           _switchVisibility();
      };
 }
 
 function _loadLogoColors() {
-     const lightColor1 = document.getElementById("light-color-1");
-     const lightColor2 = document.getElementById("light-color-2");
-     const darkColor1 = document.getElementById("dark-color-1");
-     const darkColor2 = document.getElementById("dark-color-2");
+     const lightColor1 = getID("light-color-1");
+     const lightColor2 = getID("light-color-2");
+     const darkColor1 = getID("dark-color-1");
+     const darkColor2 = getID("dark-color-2");
 
      lightColor1.style.fill = CLARO;
      lightColor2.style.fill = CLARO;
@@ -58,14 +58,14 @@ function _loadVisibilityPasseio() {
           _loadLightMode();
      }
 
-     document.getElementById("night-mode").style.display = "block";
-     document.getElementById("night-mode").onclick = function () {
+     getID("night-mode").style.display = "block";
+     getID("night-mode").onclick = function () {
           _switchVisibility();
      };
 }
 
 function _loadToggle() {
-     var element = document.getElementById("night-mode");
+     var element = getID("night-mode");
      var darkMode = _isOnDarkMode();
      if (darkMode && element.classList.contains("bx-moon")) {
           element.classList.remove("bx-moon");
@@ -133,9 +133,9 @@ function _loadLightModeLite() {
 
 function _loadTripViewerLogo() {
      try {
-          const header2 = document.getElementById("header2");
-          const logoLight = document.getElementById("logo-light");
-          const logoDark = document.getElementById("logo-dark");
+          const header2 = getID("header2");
+          const logoLight = getID("logo-light");
+          const logoDark = getID("logo-dark");
           if (_isOnDarkMode()) {
                logoLight.style.display = "none";
                logoDark.style.display = "block";
@@ -240,7 +240,7 @@ function _applyCustomVisibilityRules() {
 
 function _addCSSRule(selector, property, value) {
      const rule = `${property}: ${value};`;
-     var styleElement = document.getElementById('custom-styles');
+     var styleElement = getID('custom-styles');
 
      if (!styleElement) {
           styleElement = document.createElement('style');
@@ -260,19 +260,19 @@ function _addCSSRule(selector, property, value) {
 function _changeFillColorSVGs(className, color) {
      const svgElements = document.querySelectorAll(`.${className}`);
      if (svgElements.length > 0) {
-         CHANGED_SVGS.push(className);
-         svgElements.forEach(svgElement => {
-             const pathElement = svgElement.querySelector('path');
-             if (pathElement) {
-                 pathElement.setAttribute('fill', color);
-             }
-         });
+          CHANGED_SVGS.push(className);
+          svgElements.forEach(svgElement => {
+               const pathElement = svgElement.querySelector('path');
+               if (pathElement) {
+                    pathElement.setAttribute('fill', color);
+               }
+          });
      }
- }
- 
+}
+
 
 function _clearCustomColors() {
-     var styleElement = document.getElementById('custom-styles');
+     var styleElement = getID('custom-styles');
      if (styleElement) {
           styleElement.parentNode.removeChild(styleElement);
      }
@@ -323,15 +323,15 @@ function _closeModal(modalID = 'modal') {
 }
 
 function _isModalOpen(modalID = 'modal') {
-     return document.getElementById(modalID).style.display === 'block';
+     return getID(modalID).style.display === 'block';
 }
 
 // ======= Páginas de Editar =======
 function _loadEditModule(type, loadListener = true) {
-     const habilitado = document.getElementById(`habilitado-${type}`);
+     const habilitado = getID(`habilitado-${type}`);
      if (habilitado.checked) {
           _showContent(type);
-          if (!document.getElementById(`habilitado-${type}-content`).innerText) {
+          if (!getID(`habilitado-${type}-content`).innerText) {
                _add(_firstCharToUpperCase(type).trim())
           }
      } else {
@@ -343,11 +343,11 @@ function _loadEditModule(type, loadListener = true) {
 }
 
 function _loadListener(type) {
-     const habilitado = document.getElementById(`habilitado-${type}`);
+     const habilitado = getID(`habilitado-${type}`);
      habilitado.addEventListener('change', function () {
           if (habilitado.checked) {
                _showContent(type);
-               if (!document.getElementById(`habilitado-${type}-content`).innerText) {
+               if (!getID(`habilitado-${type}-content`).innerText) {
                     _add(_firstCharToUpperCase(type).trim())
                }
           } else {
@@ -357,10 +357,10 @@ function _loadListener(type) {
 }
 
 function _showContent(type) {
-     const habilitadoContent = document.getElementById(`habilitado-${type}-content`);
+     const habilitadoContent = getID(`habilitado-${type}-content`);
      habilitadoContent.style.display = 'block';
 
-     const adicionarBox = document.getElementById(`${type}-adicionar-box`);
+     const adicionarBox = getID(`${type}-adicionar-box`);
      if (adicionarBox) {
           adicionarBox.style.display = 'block';
      }
@@ -368,7 +368,7 @@ function _showContent(type) {
      let i = 1;
      let text = `collapse-${type}-${i}`;
 
-     while (document.getElementById(text)) {
+     while (getID(text)) {
           $(`#${text}`).collapse('hide');
           i++;
           text = `${type}-${i}`;
@@ -376,10 +376,10 @@ function _showContent(type) {
 }
 
 function _hideContent(type) {
-     const habilitadoContent = document.getElementById(`habilitado-${type}-content`);
+     const habilitadoContent = getID(`habilitado-${type}-content`);
      habilitadoContent.style.display = 'none';
 
-     const adicionarBox = document.getElementById(`${type}-adicionar-box`);
+     const adicionarBox = getID(`${type}-adicionar-box`);
      if (adicionarBox) {
           adicionarBox.style.display = 'none';
      }

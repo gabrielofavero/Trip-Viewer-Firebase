@@ -1,8 +1,8 @@
 function _loadEditModule(type, loadListener = true) {
-    const habilitado = document.getElementById(`habilitado-${type}`);
+    const habilitado = getID(`habilitado-${type}`);
     if (habilitado.checked) {
         _showContent(type);
-        if (!document.getElementById(`habilitado-${type}-content`).innerText) {
+        if (!getID(`habilitado-${type}-content`).innerText) {
             _add(_firstCharToUpperCase(type).trim())
         }
     } else {
@@ -14,11 +14,11 @@ function _loadEditModule(type, loadListener = true) {
 }
 
 function _loadListener(type) {
-    const habilitado = document.getElementById(`habilitado-${type}`);
+    const habilitado = getID(`habilitado-${type}`);
     habilitado.addEventListener('change', function () {
         if (habilitado.checked) {
             _showContent(type);
-            if (!document.getElementById(`habilitado-${type}-content`).innerText) {
+            if (!getID(`habilitado-${type}-content`).innerText) {
                 _add(_firstCharToUpperCase(type).trim())
             }
         } else {
@@ -28,10 +28,10 @@ function _loadListener(type) {
 }
 
 function _showContent(type) {
-    const habilitadoContent = document.getElementById(`habilitado-${type}-content`);
+    const habilitadoContent = getID(`habilitado-${type}-content`);
     habilitadoContent.style.display = 'block';
 
-    const adicionarBox = document.getElementById(`${type}-adicionar-box`);
+    const adicionarBox = getID(`${type}-adicionar-box`);
     if (adicionarBox) {
         adicionarBox.style.display = 'block';
     }
@@ -39,7 +39,7 @@ function _showContent(type) {
     let i = 1;
     let text = `collapse-${type}-${i}`;
 
-    while (document.getElementById(text)) {
+    while (getID(text)) {
         $(`#${text}`).collapse('hide');
         i++;
         text = `${type}-${i}`;
@@ -47,21 +47,21 @@ function _showContent(type) {
 }
 
 function _hideContent(type) {
-    const habilitadoContent = document.getElementById(`habilitado-${type}-content`);
+    const habilitadoContent = getID(`habilitado-${type}-content`);
     habilitadoContent.style.display = 'none';
 
-    const adicionarBox = document.getElementById(`${type}-adicionar-box`);
+    const adicionarBox = getID(`${type}-adicionar-box`);
     if (adicionarBox) {
         adicionarBox.style.display = 'none';
     }
 }
 
 function _loadImageSelector(type) {
-    const checkboxLink = document.getElementById(`enable-link-${type}`);
-    const checkboxUpload = document.getElementById(`enable-upload-${type}`);
+    const checkboxLink = getID(`enable-link-${type}`);
+    const checkboxUpload = getID(`enable-upload-${type}`);
 
-    const link = document.getElementById(`link-${type}`);
-    const upload = document.getElementById(`upload-${type}`);
+    const link = getID(`link-${type}`);
+    const upload = getID(`upload-${type}`);
 
     if (checkboxLink.checked) {
         link.style.display = 'block';
@@ -92,8 +92,8 @@ function _loadImageSelector(type) {
 }
 
 function _removeImageSelectorListeners(type) {
-    const checkboxLink = document.getElementById(`enable-link-${type}`);
-    const checkboxUpload = document.getElementById(`enable-upload-${type}`);
+    const checkboxLink = getID(`enable-link-${type}`);
+    const checkboxUpload = getID(`enable-upload-${type}`);
 
     checkboxLink.removeEventListener('change', function () {
         if (checkboxLink.checked) {
@@ -118,14 +118,14 @@ function _removeImageSelectorListeners(type) {
 
 
 function _loadLogoSelector() {
-    const checkboxLink = document.getElementById(`enable-link-logo`);
-    const checkboxUpload = document.getElementById(`enable-upload-logo`);
+    const checkboxLink = getID(`enable-link-logo`);
+    const checkboxUpload = getID(`enable-upload-logo`);
 
-    const linkLight = document.getElementById(`link-logo-light`);
-    const uploadLight = document.getElementById(`upload-logo-light`);
+    const linkLight = getID(`link-logo-light`);
+    const uploadLight = getID(`upload-logo-light`);
 
-    const linkDark = document.getElementById(`link-logo-dark`);
-    const uploadDark = document.getElementById(`upload-logo-dark`);
+    const linkDark = getID(`link-logo-dark`);
+    const uploadDark = getID(`upload-logo-dark`);
 
     if (checkboxLink.checked) {
         linkLight.style.display = 'block';

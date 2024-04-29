@@ -1069,7 +1069,6 @@ body {
   display: -webkit-flex;
   display: flex;
   max-width: 55em;
-  margin-top: 80px;
 }
 
 .demo-page .demo-page-navigation {

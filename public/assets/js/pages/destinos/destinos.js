@@ -4,11 +4,11 @@
 function _loadP() {
   _loadVisibilityPasseio();
 
-  document.getElementById("closeButton").onclick = function () {
+  getID("closeButton").onclick = function () {
     window.parent._closeLightbox();
   };
 
-  document.getElementById("logo-link").onclick = function () {
+  getID("logo-link").onclick = function () {
     window.parent._closeLightbox();
   };
 
@@ -44,9 +44,9 @@ function _loadP() {
     let result = [];
 
     document.title = TYPE_TITLE;
-    document.getElementById("titleP").innerHTML = "<h2>" + document.title + "</h2>";
+    getID("titleP").innerHTML = "<h2>" + document.title + "</h2>";
     if (TYPE_SUBTITLE) {
-      document.getElementById("subTitleP").innerHTML = "<h5>" + TYPE_SUBTITLE + "</h5>";
+      getID("subTitleP").innerHTML = "<h5>" + TYPE_SUBTITLE + "</h5>";
     }
 
     var MOEDA_OBJ = CURRENCY_JSON[CURRENCY] || CURRENCY_JSON["R$"];
@@ -191,7 +191,7 @@ function _getNameHyperlinkHTML(name, hyperlink) {
 // ======= SETTERS =======
 function _interactWithAccordion(i, id) {
   const div = $('#collapse-' + i);
-  
+
   if (div && div.hasClass('opened')) {
     div.collapse('toggle');
     div.removeClass('opened');
@@ -201,7 +201,7 @@ function _interactWithAccordion(i, id) {
     _loadMedia(i, id);
     div.collapse('toggle');
   }
-  
+
 }
 
 function _setInnerHTML(result) {
@@ -235,7 +235,7 @@ function _setInnerHTML(result) {
       </div>
     </div>`
   }
-  document.getElementById("content").innerHTML = resultText;
+  getID("content").innerHTML = resultText;
   _adaptHeight();
 }
 
@@ -249,10 +249,10 @@ function _AdaptNulls(text) {
 }
 
 function _adaptHeight() {
-  let divsSize = document.getElementById("content").children.length;
+  let divsSize = getID("content").children.length;
   for (let i = 1; i <= divsSize; i++) {
-    let score = document.getElementById("score" + i);
-    let heading = document.getElementById("heading" + i);
+    let score = getID("score" + i);
+    let heading = getID("heading" + i);
     if ((score && heading) && (score.clientHeight != heading.clientHeight)) {
       score.style.height = heading.clientHeight + "px";
     }

@@ -13,13 +13,13 @@ async function _buildDestinosObject() {
         versao: {}
     }
 
-    result.titulo = document.getElementById(`titulo`).value;
-    result.myMaps = document.getElementById(`mapa-link`).value;
+    result.titulo = getID(`titulo`).value;
+    result.myMaps = getID(`mapa-link`).value;
     result.versao.ultimaAtualizacao = new Date().toISOString();
     result.compartilhamento.dono = FIRESTORE_PLACES_DATA?.compartilhamento?.dono || await _getUID();
 
-    let moeda = document.getElementById(`moeda`).value;
-    if (moeda == "outra") moeda = document.getElementById(`outra-moeda`).value;
+    let moeda = getID(`moeda`).value;
+    if (moeda == "outra") moeda = getID(`outra-moeda`).value;
     result.moeda = moeda;
 
     result.modulos = _buildDestinoModulos();
@@ -43,32 +43,32 @@ function _buildDestinoModulos() {
         turismo: false
     }
 
-    const divRestaurantes = document.getElementById(`habilitado-restaurantes`);
+    const divRestaurantes = getID(`habilitado-restaurantes`);
     if (divRestaurantes) {
         result.restaurantes = divRestaurantes.checked;
     }
 
-    const divLanches = document.getElementById(`habilitado-lanches`);
+    const divLanches = getID(`habilitado-lanches`);
     if (divLanches) {
         result.lanches = divLanches.checked;
     }
 
-    const divSaidas = document.getElementById(`habilitado-saidas`);
+    const divSaidas = getID(`habilitado-saidas`);
     if (divSaidas) {
         result.saidas = divSaidas.checked;
     }
 
-    const divTurismo = document.getElementById(`habilitado-turismo`);
+    const divTurismo = getID(`habilitado-turismo`);
     if (divTurismo) {
         result.turismo = divTurismo.checked;
     }
 
-    const divLojas = document.getElementById(`habilitado-lojas`);
+    const divLojas = getID(`habilitado-lojas`);
     if (divLojas) {
         result.lojas = divLojas.checked;
     }
 
-    const divMapa = document.getElementById(`habilitado-mapa`);
+    const divMapa = getID(`habilitado-mapa`);
     if (divMapa) {
         result.mapa = divMapa.checked;
     }
@@ -96,39 +96,39 @@ function _buildDestinoCategoryObject(type) {
     for (let i = 0; i < childIDs.length; i++) {
         const j = parseInt(childIDs[i].split("-")[1]);
 
-        const divNovo = document.getElementById(`${type}-novo-${j}`);
+        const divNovo = getID(`${type}-novo-${j}`);
         const valueNovo = (divNovo && divNovo.checked) ? "✔" : "";
         result.novo.push(valueNovo);
 
-        const divNome = document.getElementById(`${type}-nome-${j}`);
+        const divNome = getID(`${type}-nome-${j}`);
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
         result.nome.push(valueNome);
 
-        const divEmoji = document.getElementById(`${type}-emoji-${j}`);
+        const divEmoji = getID(`${type}-emoji-${j}`);
         const valueEmoji = divEmoji ? _returnEmptyIfNoValue(divEmoji.value) : "";
         result.emoji.push(valueEmoji);
 
-        const divDescricao = document.getElementById(`${type}-descricao-${j}`);
+        const divDescricao = getID(`${type}-descricao-${j}`);
         const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
         result.descricao.push(valueDescricao);
 
-        const divLink = document.getElementById(`${type}-link-${j}`);
+        const divLink = getID(`${type}-link-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.hyperlink.name.push(valueLink);
 
-        const divRegiao = document.getElementById(`${type}-regiao-${j}`);
+        const divRegiao = getID(`${type}-regiao-${j}`);
         const valueRegiao = divRegiao ? _returnEmptyIfNoValue(divRegiao.value) : "";
         result.regiao.push(valueRegiao);
 
-        const divValor = document.getElementById(`${type}-valor-${j}`);
+        const divValor = getID(`${type}-valor-${j}`);
         const valueValor = divValor ? _returnEmptyIfNoValue(divValor.value) : "";
         result.valor.push(valueValor);
 
-        const divMidia = document.getElementById(`${type}-midia-${j}`);
+        const divMidia = getID(`${type}-midia-${j}`);
         const valueMidia = divMidia ? _returnEmptyIfNoValue(divMidia.value) : "";
-        result.hyperlink.video.push(valueMidia); 
+        result.hyperlink.video.push(valueMidia);
 
-        const divNota = document.getElementById(`${type}-nota-${j}`);
+        const divNota = getID(`${type}-nota-${j}`);
         const valueNota = divNota ? _returnEmptyIfNoValue(divNota.value) : "";
         result.nota.push(valueNota);
     }
@@ -162,7 +162,7 @@ async function _setDestino() {
 
         console.log(result);
 
-        document.getElementById('modal-inner-text').innerHTML = result.message;
+        getID('modal-inner-text').innerHTML = result.message;
 
         wasSaved = result.success;
 

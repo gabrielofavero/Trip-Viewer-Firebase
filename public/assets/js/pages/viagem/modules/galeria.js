@@ -23,7 +23,7 @@ function _loadGaleria() {
 
 function _loadGaleriaCategorias(filters) {
     let result = "";
-    let filtersDiv = document.getElementById("portfolio-flters");
+    let filtersDiv = getID("portfolio-flters");
 
     filters = filters.filter((item, index) => filters.indexOf(item) === index && item !== null && item !== undefined && item !== '');
 
@@ -45,7 +45,7 @@ function _loadGaleriaBody(galeria) {
         const descricao = _getGaleriaDescricoes(galeria, i);
         const link = _getGaleriaLink(galeria.imagens[i]);
         const categoria = _getGaleriaCategoria(galeria, i);
-       
+
         result += `
         <div class="col-lg-4 col-md-6 portfolio-item ${categoria}">
             <div class="portfolio-wrap">
@@ -61,7 +61,7 @@ function _loadGaleriaBody(galeria) {
         </div>`
     }
 
-    document.getElementById("portfolio-container").innerHTML = result;
+    getID("portfolio-container").innerHTML = result;
     _loadPortfolioLightbox();
 }
 
@@ -105,8 +105,8 @@ function _getGaleriaLink(imagem) {
 
 
 function _adjustPortfolioHeight() {
-    const container = document.getElementById('portfolio-container');
-    
+    const container = getID('portfolio-container');
+
     if (!container) return;
 
     container.style.height = 'auto';

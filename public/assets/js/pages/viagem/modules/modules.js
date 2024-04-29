@@ -36,11 +36,11 @@ function _loadInicioFim() {
 
 function _loadHeader() {
   document.title = FIRESTORE_DATA.titulo;
-  document.getElementById("header1").innerHTML = FIRESTORE_DATA.titulo;
-  document.getElementById("header2").style.display = "none";
-  
+  getID("header1").innerHTML = FIRESTORE_DATA.titulo;
+  getID("header2").style.display = "none";
+
   if (FIRESTORE_DATA.subtitulo) {
-    document.getElementById("subtitulo").innerHTML = FIRESTORE_DATA.subtitulo;
+    getID("subtitulo").innerHTML = FIRESTORE_DATA.subtitulo;
   }
 
   if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
@@ -56,55 +56,55 @@ function _loadHeader() {
     const mostRecentDate = datas.reduce((a, b) => a > b ? a : b);
     const mostRecentDateString = _jsDateToDate(mostRecentDate, "dd/mm/yyyy");
 
-    document.getElementById("dUpdate").innerHTML = `Atualizado em ${mostRecentDateString}`;
+    getID("dUpdate").innerHTML = `Atualizado em ${mostRecentDateString}`;
   }
 
   if (FIRESTORE_DATA.descricao) {
-    document.getElementById("dDescription").innerHTML = FIRESTORE_DATA.descricao;
+    getID("dDescription").innerHTML = FIRESTORE_DATA.descricao;
   }
 
   if (FIRESTORE_DATA.links.ativo) {
 
     if (FIRESTORE_DATA.links.attachments) {
-      document.getElementById("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
+      getID("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
     } else {
-      document.getElementById("attachmentsLink").style.display = "none";
+      getID("attachmentsLink").style.display = "none";
     }
 
     if (FIRESTORE_DATA.links.sheet) {
-      document.getElementById("sheetLink").href = FIRESTORE_DATA.links.sheet;
+      getID("sheetLink").href = FIRESTORE_DATA.links.sheet;
     } else {
-      document.getElementById("sheetLink").style.display = "none";
+      getID("sheetLink").style.display = "none";
     }
 
     if (FIRESTORE_DATA.links.ppt) {
-      document.getElementById("pptLink").href = FIRESTORE_DATA.links.ppt;
+      getID("pptLink").href = FIRESTORE_DATA.links.ppt;
     } else {
-      document.getElementById("pptLink").style.display = "none";
+      getID("pptLink").style.display = "none";
     }
 
     if (FIRESTORE_DATA.links.drive) {
-      document.getElementById("driveLink").href = FIRESTORE_DATA.links.drive;
+      getID("driveLink").href = FIRESTORE_DATA.links.drive;
     } else {
-      document.getElementById("driveLink").style.display = "none";
+      getID("driveLink").style.display = "none";
     }
 
     if (FIRESTORE_DATA.links.vacina) {
-      document.getElementById("vaccineLink").href = FIRESTORE_DATA.links.vacina;
+      getID("vaccineLink").href = FIRESTORE_DATA.links.vacina;
     } else {
-      document.getElementById("vaccineLink").style.display = "none";
+      getID("vaccineLink").style.display = "none";
     }
 
     if (FIRESTORE_DATA.links.pdf) {
-      document.getElementById("pdfLink").href = FIRESTORE_DATA.links.pdf;
+      getID("pdfLink").href = FIRESTORE_DATA.links.pdf;
     } else {
-      document.getElementById("pdfLink").style.display = "none";
+      getID("pdfLink").style.display = "none";
     }
 
     if (FIRESTORE_DATA.links.maps) {
-      document.getElementById("mapsLink").href = FIRESTORE_DATA.links.maps;
+      getID("mapsLink").href = FIRESTORE_DATA.links.maps;
     } else {
-      document.getElementById("mapsLink").style.display = "none";
+      getID("mapsLink").style.display = "none";
     }
   }
 
@@ -115,18 +115,18 @@ function _loadHeader() {
     const escuro = _imageExists(FIRESTORE_DATA.imagem.escuro) ? _getImageLink(FIRESTORE_DATA.imagem.escuro) : _getImageLink(claro);
 
     if (_imageExists(background)) {
-      var hero = document.getElementById('hero');
+      var hero = getID('hero');
       hero.style.background = 'url("' + _getImageLink(background) + '") top center no-repeat';
       hero.style.backgroundSize = 'cover';
     }
 
     if (_imageExists(claro)) {
-      document.getElementById("header2").src = _isOnDarkMode() ? escuro : _getImageLink(claro);
-      document.getElementById("header1").style.display = "none";
-      document.getElementById("header2").style.display = "block";
+      getID("header2").src = _isOnDarkMode() ? escuro : _getImageLink(claro);
+      getID("header1").style.display = "none";
+      getID("header2").style.display = "block";
 
       if (FIRESTORE_DATA.imagem.altura) {
-        document.getElementById("header2").style.height = FIRESTORE_DATA.imagem.altura;
+        getID("header2").style.height = FIRESTORE_DATA.imagem.altura;
       }
     }
   }
@@ -141,89 +141,89 @@ function _loadModules() {
       navigator.share({
         title: FIRESTORE_DATA.titulo || document.title,
         text: `Venha visualizar minha viagem "${title}" criada no TripViewer, com início em ${INICIO.text} e fim em ${FIM.text}`,
-        url: window.location.href,  
-    })
+        url: window.location.href,
+      })
 
-    .then(() => console.log('Link compartilhado com sucesso!'))
-    .catch((error) => console.error('Erro ao compartilhar link:', error));
+        .then(() => console.log('Link compartilhado com sucesso!'))
+        .catch((error) => console.error('Erro ao compartilhar link:', error));
     });
   } else {
     share.style.display = 'none';
   }
-  
+
 
   // Resumo
   if (FIRESTORE_DATA.modulos.resumo) {
     CALL_SYNC.push(_loadResumo);
   } else {
-    document.getElementById("keypointsNav").innerHTML = "";
-    document.getElementById("keypoints").innerHTML = "";
-    document.getElementById("keypoints").style.display = "none";
-    document.getElementById("cities").style.display = "none";
+    getID("keypointsNav").innerHTML = "";
+    getID("keypoints").innerHTML = "";
+    getID("keypoints").style.display = "none";
+    getID("cities").style.display = "none";
   }
 
   // Cities
   if (FIRESTORE_DATA.destinos.length <= 1) {
-    document.getElementById("cities").innerHTML = "";
-    document.getElementById("cities").style.display = "none";
+    getID("cities").innerHTML = "";
+    getID("cities").style.display = "none";
   }
 
   // Transporte
   if (FIRESTORE_DATA.modulos.transportes) {
     CALL_SYNC.push(_loadTransporte);
   } else {
-    document.getElementById("transportationNav").innerHTML = "";
-    document.getElementById("transportation").innerHTML = "";
-    document.getElementById("transportation").style.display = "none";
+    getID("transportationNav").innerHTML = "";
+    getID("transportation").innerHTML = "";
+    getID("transportation").style.display = "none";
   }
 
   // Hospedagem
   if (FIRESTORE_DATA.modulos.hospedagens) {
     CALL_SYNC.push(_loadStayModule);
   } else {
-    document.getElementById("stayNav").innerHTML = "";
-    document.getElementById("stay").innerHTML = "";
-    document.getElementById("stay").style.display = "none";
+    getID("stayNav").innerHTML = "";
+    getID("stay").innerHTML = "";
+    getID("stay").style.display = "none";
   }
 
   // Programação
   if (FIRESTORE_DATA.modulos.programacao) {
     CALL_SYNC.push(_loadCalendar);
     CALL_SYNC.push(_loadScheduleCalendar);
-    document.getElementById("calendario-credit").style.display = "inline";
+    getID("calendario-credit").style.display = "inline";
   } else {
-    document.getElementById("scheduleCalendarNav").innerHTML = "";
-    document.getElementById("scheduleCalendar").innerHTML = "";
-    document.getElementById("scheduleCalendar").style.display = "none";
-    document.getElementById("calendario-credit").style.display = "none";
+    getID("scheduleCalendarNav").innerHTML = "";
+    getID("scheduleCalendar").innerHTML = "";
+    getID("scheduleCalendar").style.display = "none";
+    getID("calendario-credit").style.display = "none";
   }
 
   // Destinos
   if (FIRESTORE_DATA.modulos.destinos) {
     _loadDestinationsSelect();
     _loadDestinationsHTML(DESTINOS[0].destinos);
-    
+
     CALL_SYNC.push(_loadDestinations);
 
   } else if (FIRESTORE_DATA.modulos.lineup) {
     _loadDestinationsSelect(true);
     _loadDestinationsHTML(DESTINOS[0].destinos);
-    
+
     CALL_SYNC.push(_loadDestinations);
-    
-    document.getElementById('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
-    document.getElementById('dTitle').innerHTML = "Lineup";
+
+    getID('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
+    getID('dTitle').innerHTML = "Lineup";
 
   } else {
-    document.getElementById('destinos').style.display = "none";
-    document.getElementById("destinosNav").innerHTML = "";
+    getID('destinos').style.display = "none";
+    getID("destinosNav").innerHTML = "";
   }
 
   // Gallery
   if (FIRESTORE_DATA.modulos.galeria) {
     CALL_SYNC.push(_loadGaleria);
   } else {
-    document.getElementById("portfolioM").innerHTML = "";
-    document.getElementById("portfolio").style.display = "none";
+    getID("portfolioM").innerHTML = "";
+    getID("portfolio").style.display = "none";
   }
 }

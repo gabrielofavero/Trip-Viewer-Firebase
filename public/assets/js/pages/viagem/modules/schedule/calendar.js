@@ -14,13 +14,13 @@ var calendarTitle;
 function _loadCalendar() {
     start = _convertFromFirestoreDate(FIRESTORE_DATA.inicio);
     end = _convertFromFirestoreDate(FIRESTORE_DATA.fim);
-    
+
     startMonth = start.getMonth();
     startYear = start.getFullYear();
     endMonth = end.getMonth();
     endYear = end.getFullYear();
-    
-    calendarTitle = document.getElementById("calendarTitle");
+
+    calendarTitle = getID("calendarTitle");
     _showCalendar(startMonth, startYear);
 }
 
@@ -40,7 +40,7 @@ function _showCalendar(month, year) {
     let firstDay = (new Date(year, month)).getDay();
     let daysInMonth = 32 - new Date(year, month, 32).getDate();
 
-    let tbl = document.getElementById("calendar-body");
+    let tbl = getID("calendar-body");
 
     tbl.innerHTML = "";
     calendarTitle.innerHTML = months[month] + " de " + year;
@@ -83,7 +83,7 @@ function _showCalendar(month, year) {
 
         tbl.appendChild(row);
 
-        if (_isTripMultiMonth()){
+        if (_isTripMultiMonth()) {
             _showMonthSelector();
         } else {
             _hideMonthSelector();
@@ -92,14 +92,14 @@ function _showCalendar(month, year) {
 
 }
 
-function _showMonthSelector(){
-    document.getElementById('calendarMonthSelector').style.display = 'block'
+function _showMonthSelector() {
+    getID('calendarMonthSelector').style.display = 'block'
 }
 
-function _hideMonthSelector(){
-    document.getElementById('calendarMonthSelector').style.display = 'none'
+function _hideMonthSelector() {
+    getID('calendarMonthSelector').style.display = 'none'
 }
 
-function _isTripMultiMonth(){
+function _isTripMultiMonth() {
     return startMonth != endMonth || startYear != endYear;
 }

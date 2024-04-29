@@ -1,9 +1,14 @@
 var blockLoadingEnd = false;
 var FIRESTORE_PLACES_DATA;
 wasSaved = false;
-_startLoadingScreen();
+
+const TODAY = _getTodayFormatted();
+const TOMORROW = _getTomorrowFormatted();
+
+var PROGRAMACAO = {};
 
 document.addEventListener('DOMContentLoaded', function () {
+  _startLoadingScreen();
   try {
     _main();
 
@@ -38,7 +43,7 @@ function _loadHabilitados() {
   _loadEditModule('lojas');
   _loadEditModule('mapa');
 
-  const mapa = document.getElementById('habilitado-mapa');
+  const mapa = getID('habilitado-mapa');
   mapa.addEventListener('change', function () {
     if (mapa.checked) {
       _setRequired('mapa-link');
@@ -49,50 +54,50 @@ function _loadHabilitados() {
 }
 
 function _loadEventListeners() {
-  document.getElementById('restaurantes-adicionar').addEventListener('click', () => {
+  getID('restaurantes-adicionar').addEventListener('click', () => {
     _addRestaurantes();
   });
 
-  document.getElementById('lanches-adicionar').addEventListener('click', () => {
+  getID('lanches-adicionar').addEventListener('click', () => {
     _addLanches();
   });
 
-  document.getElementById('saidas-adicionar').addEventListener('click', () => {
+  getID('saidas-adicionar').addEventListener('click', () => {
     _addSaidas();
   });
 
-  document.getElementById('turismo-adicionar').addEventListener('click', () => {
+  getID('turismo-adicionar').addEventListener('click', () => {
     _addTurismo();
   });
 
-  document.getElementById('lojas-adicionar').addEventListener('click', () => {
+  getID('lojas-adicionar').addEventListener('click', () => {
     _addLojas();
   });
 
-  document.getElementById('salvar').addEventListener('click', () => {
+  getID('salvar').addEventListener('click', () => {
     _setDestino();
   });
 
-  document.getElementById('re-editar').addEventListener('click', () => {
+  getID('re-editar').addEventListener('click', () => {
     _reEdit('destinos', wasSaved);
   });
 
-  document.getElementById('cancelar').addEventListener('click', () => {
+  getID('cancelar').addEventListener('click', () => {
     _closeModal();
   });
 
-  document.getElementById('home').addEventListener('click', () => {
+  getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
 
-  document.getElementById('apagar').addEventListener('click', async () => {
+  getID('apagar').addEventListener('click', async () => {
     if (DOCUMENT_ID) {
       await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
       window.location.href = `index.html`;
     }
   });
 
-  document.getElementById('home').addEventListener('click', () => {
+  getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
 
@@ -107,7 +112,7 @@ function _loadEventListeners() {
 
 async function _loadDestinations() {
   blockLoadingEnd = true;
-  document.getElementById('delete-text').style.display = 'block';
+  getID('delete-text').style.display = 'block';
   _startLoadingScreen();
   FIRESTORE_PLACES_DATA = await _getSingleData('destinos');
   _loadDestinationsData(FIRESTORE_PLACES_DATA);
