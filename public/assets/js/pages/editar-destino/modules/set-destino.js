@@ -97,8 +97,7 @@ function _buildDestinoCategoryObject(type) {
         const j = parseInt(childIDs[i].split("-")[1]);
 
         const divNovo = getID(`${type}-novo-${j}`);
-        const valueNovo = (divNovo && divNovo.checked) ? "✔" : "";
-        result.novo.push(valueNovo);
+        result.novo.push(divNovo && divNovo.checked);
 
         const divNome = getID(`${type}-nome-${j}`);
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";

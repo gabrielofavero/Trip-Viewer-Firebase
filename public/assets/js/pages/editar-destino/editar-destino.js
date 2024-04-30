@@ -118,3 +118,52 @@ async function _loadDestinations() {
   _loadDestinationsData(FIRESTORE_PLACES_DATA);
   _stopLoadingScreen();
 }
+
+// Listeners
+function _applyDestinosListeners(i, type) {
+  const nome = getID(`${type}-nome-${i}`);
+  nome.addEventListener('change', function () {
+      _accordionDestinosOnChange(i, type);
+  });
+
+  const emoji = getID(`${type}-emoji-${i}`);
+  if (emoji) {
+      emoji.addEventListener('change', function () {
+          _accordionDestinosOnChange(i, type);
+      });
+  }
+
+  const novo = getID(`${type}-novo-${i}`);
+  novo.addEventListener('click', function () {
+      _accordionDestinosOnChange(i, type);
+  });
+}
+
+function _accordionDestinosOnChange(i, type) {
+  const titleDiv = getID(`${type}-title-text-${i}`);
+  const emojiDiv = getID(`${type}-emoji-${i}`);
+  const novoIcon = getID(`${type}-title-icon-${i}`);
+
+  const nome = getID(`${type}-nome-${i}`).value;
+  const emojiUntreated = emojiDiv ? emojiDiv.value : "";
+  const emojiTreated = emojiDiv ? emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
+
+  if (emojiTreated && nome) {
+      titleDiv.innerText = `${nome} ${emojiTreated}`
+  } else if (nome) {
+      titleDiv.innerText = nome;
+  }
+
+  if (emojiTreated && emojiUntreated && emojiTreated !== emojiUntreated) {
+      emojiDiv.value = emojiTreated;
+  } else if (!emojiTreated && emojiUntreated) {
+      emojiDiv.value = '';
+      emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
+  }
+
+  if (getID(`${type}-novo-${i}`).checked) {
+      novoIcon.style.display = 'block';
+  } else {
+      novoIcon.style.display = 'none';
+  }
+}

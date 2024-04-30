@@ -453,8 +453,7 @@ function _buildLineupObject() {
         const selectValue = getID(`lineup-local-${j}`).value || 'generico';
 
         const divHead = getID(`lineup-headliner-${j}`);
-        const valueHead = (divHead && divHead.checked) ? "✔" : "";
-        result[selectValue].head.push(valueHead);
+        result[selectValue].head.push(divHead && divHead.checked);
 
         const divNome = getID(`lineup-nome-${j}`);
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";

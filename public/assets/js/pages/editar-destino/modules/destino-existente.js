@@ -44,20 +44,21 @@ function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
         _addRestaurantes();
 
         const novo = FIRESTORE_PLACES_DATA.restaurantes.novo;
-        if (novo && novo[j] && novo[j] === '✔') {
+        if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`restaurantes-novo-${i}`).checked = true;
+          getID(`restaurantes-title-icon-${i}`).style.display = 'block';
         }
 
         const nome = FIRESTORE_PLACES_DATA.restaurantes.nome;
         if (nome && nome[j]) {
           getID(`restaurantes-nome-${i}`).value = nome[j];
-          getID(`restaurantes-title-${i}`).innerText = nome[j];
+          getID(`restaurantes-title-text-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.restaurantes.emoji;
         if (emoji && emoji[j]) {
           getID(`restaurantes-emoji-${i}`).value = emoji[j];
-          getID(`restaurantes-title-${i}`).innerText += ` ${emoji[j]}`;
+          getID(`restaurantes-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.restaurantes.descricao;
@@ -107,20 +108,21 @@ function _loadLanchesData(FIRESTORE_PLACES_DATA) {
         _addLanches();
 
         const novo = FIRESTORE_PLACES_DATA.lanches.novo;
-        if (novo && novo[j] && novo[j] === '✔') {
+        if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`lanches-novo-${i}`).checked = true;
+          getID(`lanches-title-icon-${i}`).style.display = 'block';
         }
 
         const nome = FIRESTORE_PLACES_DATA.lanches.nome;
         if (nome && nome[j]) {
           getID(`lanches-nome-${i}`).value = nome[j];
-          getID(`lanches-title-${i}`).innerText = nome[j];
+          getID(`lanches-title-text-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.lanches.emoji;
         if (emoji && emoji[j]) {
           getID(`lanches-emoji-${i}`).value = emoji[j];
-          getID(`lanches-title-${i}`).innerText += ` ${emoji[j]}`;
+          getID(`lanches-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lanches.descricao;
@@ -170,20 +172,21 @@ function _loadSaidasData(FIRESTORE_PLACES_DATA) {
         _addSaidas();
 
         const novo = FIRESTORE_PLACES_DATA.saidas.novo;
-        if (novo && novo[j] && novo[j] === '✔') {
+        if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`saidas-novo-${i}`).checked = true;
+          getID(`saidas-title-icon-${i}`).style.display = 'block';
         }
 
         const nome = FIRESTORE_PLACES_DATA.saidas.nome;
         if (nome && nome[j]) {
           getID(`saidas-nome-${i}`).value = nome[j];
-          getID(`saidas-title-${i}`).innerText = nome[j];
+          getID(`saidas-title-text-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.saidas.emoji;
         if (emoji && emoji[j]) {
           getID(`saidas-emoji-${i}`).value = emoji[j];
-          getID(`saidas-title-${i}`).innerText += ` ${emoji[j]}`;
+          getID(`saidas-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.saidas.descricao;
@@ -233,20 +236,21 @@ function _loadTurismoData(FIRESTORE_PLACES_DATA) {
         _addTurismo();
 
         const novo = FIRESTORE_PLACES_DATA.turismo.novo;
-        if (novo && novo[j] && novo[j] === '✔') {
+        if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`turismo-novo-${i}`).checked = true;
+          getID(`turismo-title-icon-${i}`).style.display = 'block';
         }
 
         const nome = FIRESTORE_PLACES_DATA.turismo.nome;
         if (nome && nome[j]) {
           getID(`turismo-nome-${i}`).value = nome[j];
-          getID(`turismo-title-${i}`).innerText = nome[j];
+          getID(`turismo-title-text-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.turismo.emoji;
         if (emoji && emoji[j]) {
           getID(`turismo-emoji-${i}`).value = emoji[j];
-          getID(`turismo-title-${i}`).innerText += ` ${emoji[j]}`;
+          getID(`turismo-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.turismo.descricao;
@@ -296,20 +300,21 @@ function _loadLojasData(FIRESTORE_PLACES_DATA) {
         _addLojas();
 
         const novo = FIRESTORE_PLACES_DATA.lojas.novo;
-        if (novo && novo[j] && novo[j] === '✔') {
+        if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`lojas-novo-${i}`).checked = true;
+          getID(`lojas-title-icon-${i}`).style.display = 'block';
         }
 
         const nome = FIRESTORE_PLACES_DATA.lojas.nome;
         if (nome && nome[j]) {
           getID(`lojas-nome-${i}`).value = nome[j];
-          getID(`lojas-title-${i}`).innerText = nome[j];
+          getID(`lojas-title-text-${i}`).innerText = nome[j];
         }
 
         const emoji = FIRESTORE_PLACES_DATA.lojas.emoji;
         if (emoji && emoji[j]) {
           getID(`lojas-emoji-${i}`).value = emoji[j];
-          getID(`lojas-title-${i}`).innerText += ` ${emoji[j]}`;
+          getID(`lojas-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
         const descricao = FIRESTORE_PLACES_DATA.lojas.descricao;

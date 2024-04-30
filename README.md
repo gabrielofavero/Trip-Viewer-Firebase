@@ -8,8 +8,8 @@
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 27    | 21     | 6         |
 | 🏆     | Feature  | F000    | 48    | 42     | 6         |
-| 📈     | Melhoria | M000    | 25    | 16     | 9         |
-| ⚔️   | Épico   | E000    | 20    | 12     | 8         |
+| 📈     | Melhoria | M000    | 26    | 16     | 9         |
+| ⚔️     | Épico    | E000    | 20    | 12     | 8         |
 
 ### Status
 
@@ -19,7 +19,6 @@
 ## Doing
 
 - 🏆 **F048:** Dynamic Select em editar-destinos.html
-- 📈 **M025:** Novo ícone de "Novo" editar-destinos.html e destinos.html
 
 ## To-Do
 
@@ -84,6 +83,7 @@
 - 🏆 **F044:** Criação de animações em todo o site;
 - 🐞 **B022:** Correção de erro de nem todos os hrefs estarem indo para as categorias (telas de edição);
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
+- 📈 **M026:** Novo ícone de "Novo" destinos.html
 
 ## Done
 
@@ -108,6 +108,7 @@
 - 🏆 **F041:** Criação botão de compartilhar para viagens.html;
 - 📈 **M016:** Refatoramento: utilizar método getID e otimizar arquivos de editar;
 - 🏆 **F042:** Criar moeda customizável para Destinos
+- 📈 **M025:** Novo ícone de "Novo" editar-destinos.html e destinos.html
 
 ### Março 2024
 

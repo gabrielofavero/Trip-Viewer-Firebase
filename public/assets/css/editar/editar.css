@@ -1375,7 +1375,7 @@ details summary::-webkit-details-marker {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
   overflow-wrap: break-word;
 }
 
@@ -1730,4 +1730,15 @@ details summary::-webkit-details-marker {
 #delete-cancelar,
 #apagar {
   width: 120px;
+}
+
+.new {
+  color: #5859a7;
+  font-size: 25px;
+  display: none;
+  margin-right: 10px;
+}
+
+.title-text {
+  flex-grow: 1;
 }

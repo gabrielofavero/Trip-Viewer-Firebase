@@ -8,10 +8,11 @@ function _addRestaurantes() {
   $('#restaurantes-box').append(`
     <div id="restaurantes-${i}" class="accordion-item accordion-restaurantes" draggable="true">
       <h2 class="accordion-header" id="heading-restaurantes-${i}">
-        <button id="restaurantes-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        <button id="restaurantes-title-${i}" class="accordion-button collapsed flex-button" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-restaurantes-${i}" aria-expanded="true"
           aria-controls="collapse-restaurantes-${i}">
-          Restaurante ${i}
+          <span class="title-text" id="restaurantes-title-text-${i}">Restaurante ${i}</span> 
+          <div class="icon-container"><i class="iconify new" id="restaurantes-title-icon-${i}" data-icon="mdi:new-box"></i></div>
         </button>
       </h2>
       <div id="collapse-restaurantes-${i}" class="accordion-collapse collapse"
@@ -21,7 +22,7 @@ function _addRestaurantes() {
           <div class="nice-form-group">
             <input type="checkbox" id="restaurantes-novo-${i}" class="switch" />
             <label for="restaurantes-novo-${i}">
-              Novo
+              Recém Adicionado
             </label>
           </div>
   
@@ -91,7 +92,7 @@ function _addRestaurantes() {
     </div>
     `);
 
-  _applyAccordionListeners(i, 'restaurantes');
+  _applyDestinosListeners(i, 'restaurantes');
   _addDragListeners('restaurantes');
 }
 
@@ -106,7 +107,8 @@ function _addLanches() {
       <h2 class="accordion-header" id="heading-lanches-${i}">
         <button id="lanches-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lanches-${i}" aria-expanded="true" aria-controls="collapse-lanches-${i}">
-          Lanche ${i}
+          <span class="title-text" id="lanches-title-text-${i}">Lanche ${i}</span> 
+          <div class="icon-container"><i class="iconify new" id="lanches-title-icon-${i}" data-icon="mdi:new-box"></i></div>
         </button>
       </h2>
       <div id="collapse-lanches-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lanches-${i}"
@@ -116,7 +118,7 @@ function _addLanches() {
         <div class="nice-form-group">
           <input type="checkbox" id="lanches-novo-${i}" class="switch" />
           <label for="lanches-novo-${i}">
-            Novo
+            Recém Adicionado
           </label>
         </div>
   
@@ -187,7 +189,7 @@ function _addLanches() {
     </div>
     `);
 
-  _applyAccordionListeners(i, 'lanches');
+  _applyDestinosListeners(i, 'lanches');
   _addDragListeners('lanches');
 }
 
@@ -202,7 +204,8 @@ function _addSaidas() {
       <h2 class="accordion-header" id="heading-saidas-${i}">
         <button id="saidas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-saidas-${i}" aria-expanded="true" aria-controls="collapse-saidas-${i}">
-          Saída ${i}
+          <span class="title-text" id="saidas-title-text-${i}">Saída ${i}</span> 
+          <div class="icon-container"><i class="iconify new" id="saidas-title-icon-${i}" data-icon="mdi:new-box"></i></div>
         </button>
       </h2>
       <div id="collapse-saidas-${i}" class="accordion-collapse collapse" aria-labelledby="heading-saidas-${i}"
@@ -212,7 +215,7 @@ function _addSaidas() {
         <div class="nice-form-group">
           <input type="checkbox" id="saidas-novo-${i}" class="switch" />
           <label for="saidas-novo-${i}">
-            Novo
+            Recém Adicionado
           </label>
         </div>
   
@@ -282,7 +285,7 @@ function _addSaidas() {
     </div>
     `);
 
-  _applyAccordionListeners(i, 'saidas');
+  _applyDestinosListeners(i, 'saidas');
   _addDragListeners('saidas');
 }
 
@@ -297,7 +300,8 @@ function _addTurismo() {
       <h2 class="accordion-header" id="heading-turismo-${i}">
         <button id="turismo-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-turismo-${i}" aria-expanded="true" aria-controls="collapse-turismo-${i}">
-          Turismo ${i}
+          <span class="title-text" id="turismo-title-text-${i}">Turismo ${i}</span> 
+          <div class="icon-container"><i class="iconify new" id="turismo-title-icon-${i}" data-icon="mdi:new-box"></i></div>
         </button>
       </h2>
       <div id="collapse-turismo-${i}" class="accordion-collapse collapse" aria-labelledby="heading-turismo-${i}"
@@ -307,7 +311,7 @@ function _addTurismo() {
         <div class="nice-form-group">
           <input type="checkbox" id="turismo-novo-${i}" class="switch" />
           <label for="turismo-novo-${i}">
-            Novo
+            Recém Adicionado
           </label>
         </div>
   
@@ -378,7 +382,7 @@ function _addTurismo() {
     </div>
     `);
 
-  _applyAccordionListeners(i, 'turismo');
+  _applyDestinosListeners(i, 'turismo');
   _addDragListeners('turismo');
 }
 
@@ -393,7 +397,8 @@ function _addLojas() {
       <h2 class="accordion-header" id="heading-lojas-${i}">
         <button id="lojas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lojas-${i}" aria-expanded="true" aria-controls="collapse-lojas-${i}">
-          Loja ${i}
+          <span class="title-text" id="lojas-title-text-${i}">Loja ${i}</span> 
+          <div class="icon-container"><i class="iconify new" id="lojas-title-icon-${i}" data-icon="mdi:new-box"></i></div>
         </button>
       </h2>
       <div id="collapse-lojas-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lojas-${i}"
@@ -403,7 +408,7 @@ function _addLojas() {
         <div class="nice-form-group">
           <input type="checkbox" id="lojas-novo-${i}" class="switch" />
           <label for="lojas-novo-${i}">
-            Novo
+            Recém Adicionado
           </label>
         </div>
   
@@ -474,6 +479,6 @@ function _addLojas() {
     </div>
     `);
 
-  _applyAccordionListeners(i, 'lojas');
+  _applyDestinosListeners(i, 'lojas');
   _addDragListeners('lojas');
 }
