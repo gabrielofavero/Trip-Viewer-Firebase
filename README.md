@@ -6,18 +6,22 @@
 
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 27    | 21     | 6         |
+| 🐞     | Bug      | B000    | 28    | 21     | 7         |
 | 🏆     | Feature  | F000    | 48    | 42     | 6         |
-| 📈     | Melhoria | M000    | 26    | 16     | 9         |
+| 📈     | Melhoria | M000    | 28    | 16     | 11        |
 | ⚔️     | Épico    | E000    | 20    | 12     | 8         |
 
 ### Status
 
 - 🚦: Bloqueado
-- ❓: Sem solução aparente
+- ❔: Sem solução aparente
+- ❗️: Crítico
 
 ## Doing
 
+- 🐞❗️ **M028:** Correção de caregamento de listagens
+- 📈 **M027:** Melhoria de responsividade das barras de viagem do index.html
+- 📈 **M028:** Melhoria no carregamento do index.com para não exibir "Sem Viagens" quando o carregamento não tiver acabado
 - 🏆 **F048:** Dynamic Select em editar-destinos.html
 
 ## To-Do
@@ -54,10 +58,10 @@
   - *Quadro de horários vibe App Lollapalooza;*
 - ⚔️ **E016:** Novo Front-End: Destinos.html;
   - *Guilherme já fez um template. Ver se está finalizado*
-- ⚔️ **E017:** Novo Front-End: Viagens.html;
-  - *🚦Aguardando template do Guilherme*
-- ⚔️ **E018:** Novo Front-End: Index.html.
-  - *🚦Aguardando template do Guilherme*
+- ⚔️🚦**E017:** Novo Front-End: Viagens.html;
+  - *Aguardando template do Guilherme*
+- ⚔️🚦 **E018:** Novo Front-End: Index.html.
+  - *Aguardando template do Guilherme*
 - ⚔️ **E019:** Melhorias JavaScript.
   - *Código duplicado;*
   - *Code smells;*
