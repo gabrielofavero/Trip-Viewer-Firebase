@@ -2,6 +2,7 @@ var refreshed = false;
 
 document.addEventListener('DOMContentLoaded', function () {
   try {
+    _startLoadingTimer();
     _main();
     const urlParams = new URLSearchParams(window.location.search);
     let type = 'viagens';
@@ -24,31 +25,47 @@ document.addEventListener('DOMContentLoaded', function () {
     Promise.all([_getConfig(), _getSingleData(type)])
       .then(([configData, firestoreData]) => {
 
-        if (getErrorMsg) {
-          const permission = getErrorMsg.includes('Missing or insufficient permissions')
-          const msg = permission ? '<br>O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.' : '';
-          const innerMsg = permission ? '' : getErrorMsg;
-          _displayErrorMessage(innerMsg, msg);
-          _stopLoadingScreen();
-        } else {
+        if (!getErrorMsg) {
+          
           CONFIG = configData;
           FIRESTORE_DATA = firestoreData;
           console.log('Dados do Firestore Database carregados com sucesso');
+          
           _start();
           _mainLoad();
           _adjustPortfolioHeight();
           _refreshCategorias();
+
+        } else {
+
+          const permission = getErrorMsg.includes('Missing or insufficient permissions')
+          const msg = permission ? '<br>O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.' : '';
+          const innerMsg = permission ? '' : getErrorMsg;
+          
+          _displayErrorMessage(innerMsg, msg);
+          _stopLoadingScreen();
+
         }
 
         $('body').css('overflow', 'auto');
+
         setTimeout(() => {
+
           _adjustPortfolioHeight();
           _refreshCategorias();
         }, 1000);
-      })
+
+      }).catch((error) => {
+
+        _displayErrorMessage(error);
+        throw error;
+
+      });
   } catch (error) {
+
     _displayErrorMessage(error);
     throw error;
+
   }
 });
 

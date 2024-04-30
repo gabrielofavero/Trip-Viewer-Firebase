@@ -1,3 +1,5 @@
+var DESTINOS = [];
+
 function _loadNewTrip() {
   _loadDadosBasicosNewTrip();
   _loadProgramacao();

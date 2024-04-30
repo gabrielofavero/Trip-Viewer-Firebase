@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 28    | 20     | 8         |
+| 🐞     | Bug      | B000    | 28    | 21     | 7         |
 | 🏆     | Feature  | F000    | 48    | 42     | 6         |
 | 📈     | Melhoria | M000    | 28    | 16     | 11        |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
@@ -70,7 +70,6 @@
 ### Prioridade Baixa
 
 - 🐞 **B027:** Correção de dados de lineup não serem salvos se desabilitado
-- 🐞 **B026:** Correção de loading em viagens não estar pegando a cor customizada;
 - 🐞 **B025:** Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair;
   - *Colocar booleano no método de switch se é um lightbox;*
   - *Salva localmente;*
@@ -113,6 +112,9 @@
 - 🏆 **F042:** Criar moeda customizável para Destinos
 - 📈 **M025:** Novo ícone de "Novo" editar-destinos.html e destinos.html
 - 🐞❗️**B028:** Correção de caregamento de listagens
+- 🐞 **B026:** Correção de loading em viagens não estar pegando a cor customizada;
+  - Aplicado, mas a cor só é exibida em loadings após o inicial;
+  - A maior parte do loading é a para ter dados do Firestore. Só com eles é possível obter a cor customizada
 
 ### Março 2024
 

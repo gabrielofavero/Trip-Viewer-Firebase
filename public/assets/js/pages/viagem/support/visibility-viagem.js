@@ -1,6 +1,6 @@
 function _applyCustomColorsViagem() {
-    const text = getID("trip-viewer-text");
-    text.style.color = THEME_COLOR;
+    getID("trip-viewer-text").style.color = THEME_COLOR;
+    _applyCustomColorsPreloader();
 
     _addCSSRule('.back-to-top', 'background', THEME_COLOR);
     _addCSSRule('.back-to-top:hover', 'background', THEME_COLOR);
@@ -47,4 +47,9 @@ function _applyCustomColorsViagem() {
     _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.flight-icon', 'color', `${THEME_COLOR} !important`);
+}
+
+function _applyCustomColorsPreloader(){
+    _addCSSRule('#preloader:before', 'border-right-color', THEME_COLOR);
+    _addCSSRule('#preloader:before', 'border-left-color', THEME_COLOR);
 }
