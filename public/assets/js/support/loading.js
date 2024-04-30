@@ -31,7 +31,7 @@ function _stopLoadingScreen() {
 // Loading Timer //
 
 function _startLoadingTimer() {
-  if (LOADING_TIMER == null) {
+  if (LOADING_TIMER == null && ERROR_MODE == false) {
     LOADING_SECONDS = 0;
     LOADING_TIMER = setInterval(() => {
       const firstLoad = localStorage.getItem('firstLoad');

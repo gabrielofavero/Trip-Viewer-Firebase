@@ -100,7 +100,7 @@ async function _setListagem() {
             try {
                 const body = {
                     id: DOCUMENT_ID,
-                    type: "viagens",
+                    type: "listagens",
                     background: TO_UPLOAD.background ? await _uploadBackground('listagens') : '',
                     logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight('listagens') : '',
                     logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark('listagens') : '',

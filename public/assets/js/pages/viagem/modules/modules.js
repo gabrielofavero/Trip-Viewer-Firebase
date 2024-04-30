@@ -12,7 +12,9 @@ var FIM = {
 // ======= MAIN FUNCTION =======
 function _start() {
   // Dados Básicos
-  _loadInicioFim();
+  if (FIRESTORE_DATA.inicio && FIRESTORE_DATA.fim) {
+    _loadInicioFim();
+  }
 
   // Visibilidade
   _loadVisibility();
@@ -151,6 +153,7 @@ function _loadModules() {
     share.style.display = 'none';
   }
 
+  const cities = getID('cities');
 
   // Resumo
   if (FIRESTORE_DATA.modulos.resumo) {
@@ -159,13 +162,13 @@ function _loadModules() {
     getID("keypointsNav").innerHTML = "";
     getID("keypoints").innerHTML = "";
     getID("keypoints").style.display = "none";
-    getID("cities").style.display = "none";
+    if (cities) cities.style.display = "none";
   }
 
   // Cities
-  if (FIRESTORE_DATA.destinos.length <= 1) {
-    getID("cities").innerHTML = "";
-    getID("cities").style.display = "none";
+  if (cities && FIRESTORE_DATA.destinos.length <= 1) {
+    cities.innerHTML = "";
+    cities.style.display = "none";
   }
 
   // Transporte

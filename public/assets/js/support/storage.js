@@ -1,3 +1,11 @@
+const FIREBASE_IMAGE_ORIGIN = 'https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/';
+
+var FIREBASE_IMAGES = {
+  background: false,
+  claro: false,
+  escuro: false
+}
+
 var IMAGE_UPLOAD_ERROR = {
   status: false,
   messages: {}

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (DOCUMENT_ID) {
       _carregarListagem()
     } else {
+      DESTINOS = await _getUserList('destinos');
       _loadDestinos();
     }
 
