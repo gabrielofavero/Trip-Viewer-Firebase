@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 28    | 21     | 7         |
+| 🐞     | Bug      | B000    | 29    | 21     | 8         |
 | 🏆     | Feature  | F000    | 48    | 42     | 6         |
-| 📈     | Melhoria | M000    | 28    | 17     | 10        |
+| 📈     | Melhoria | M000    | 27    | 17     | 9        |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
 
 ### Status
@@ -19,7 +19,7 @@
 
 ## Doing
 
-- 📈 **M028:** Melhoria no carregamento do index.com para não exibir "Sem Viagens" quando o carregamento não tiver acabado
+- 🐞 **M029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
 - 🏆 **F048:** Dynamic Select em editar-destinos.html
 
 ## To-Do
