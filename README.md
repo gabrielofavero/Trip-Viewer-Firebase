@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 28    | 21     | 7         |
 | 🏆     | Feature  | F000    | 48    | 42     | 6         |
-| 📈     | Melhoria | M000    | 28    | 16     | 11        |
+| 📈     | Melhoria | M000    | 28    | 17     | 10        |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
 
 ### Status
@@ -19,7 +19,6 @@
 
 ## Doing
 
-- 📈 **M027:** Melhoria de responsividade das barras de viagem do index.html
 - 📈 **M028:** Melhoria no carregamento do index.com para não exibir "Sem Viagens" quando o carregamento não tiver acabado
 - 🏆 **F048:** Dynamic Select em editar-destinos.html
 
@@ -115,6 +114,7 @@
 - 🐞 **B026:** Correção de loading em viagens não estar pegando a cor customizada;
   - Aplicado, mas a cor só é exibida em loadings após o inicial;
   - A maior parte do loading é a para ter dados do Firestore. Só com eles é possível obter a cor customizada
+- 📈 **M027:** Melhoria de responsividade das barras de viagem do index.html
 
 ### Março 2024
 
