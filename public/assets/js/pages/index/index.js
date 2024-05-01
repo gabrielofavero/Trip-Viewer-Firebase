@@ -1,5 +1,11 @@
 var USER_DATA = {};
 
+var TENTATIVAS = {
+  viagens: 0,
+  destinos: 0,
+  listagens: 0
+}
+
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -141,11 +147,51 @@ async function _loadUserIndex() {
 }
 
 async function _loadUserDataList(type) {
-  USER_DATA[type] = await _getUserList(type);
+  let segundos = 0;
 
-  if (USER_DATA[type] && USER_DATA[type].length > 0) {
-    getID(`sem-${type}`).style.display = 'none';
-    _loadUserDataHTML(USER_DATA[type], type);
+  const preloader = getID(`preloader-${type}`);
+  const demoraCarregamento = getID(`demora-carregamento-${type}`);
+  const semDados = getID(`sem-${type}`);
+
+  let timer = setInterval(() => {
+    segundos++;
+    if (segundos >= 10) {
+      clearInterval(timer);
+      preloader.style.display = 'none';
+      if (semDados.innerHTML === '') {
+        demoraCarregamento.style.display = 'block';
+      }
+    }
+  }, 1000);
+
+  USER_DATA[type] = await _getUserList(type);
+  
+  if (Array.isArray(USER_DATA[type])) {
+    clearInterval(timer);
+
+    preloader.style.display = 'none';
+    demoraCarregamento.style.display = 'none';
+
+    if (USER_DATA[type].length === 0) {
+      semDados.style.display = 'block';
+    } else {
+      semDados.style.display = 'none';
+      _loadUserDataHTML(USER_DATA[type], type);
+    }
+
+  }
+}
+
+function _manualListLoad(type) {
+  TENTATIVAS[type]++;
+
+  getID(`preloader-${type}`).style.display = 'block';
+  getID(`demora-carregamento-${type}`).style.display = 'none';
+
+  if (TENTATIVAS[type] < 2) {
+    _loadUserDataList(type);
+  } else {
+    window.location.reload();
   }
 }
 

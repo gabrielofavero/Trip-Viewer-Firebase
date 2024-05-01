@@ -157,7 +157,13 @@
       <div class="userList-box" id="viagens-box" style="display: none">
         <h4>Minhas Viagens</h4>
         <div class="content-list">
-          <div id="sem-viagens">Sem Viagens Cadastradas 😔</div>
+          <div id="preloader-viagens"></div>
+          <div class="demora-carregamento" id="demora-carregamento-viagens" style="display:none">
+            O carregamento está demorando mais que o esperado. Recarregue a página, aguarde ou tente novamente:<br>
+            <button id="carregar-novamente-destinos" class="btn btn-purple carregar-novamente" type="button" onclick="_manualListLoad('viagens')">
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i>Tentar Novamente</button>
+          </div>
+          <div id="sem-viagens" style="display:none">Sem Viagens Cadastradas 😔</div>
           <div id="dados-viagens"></div>
         </div>
         <button id="new-viagem" class="btn btn-purple" type="button"><i class="iconify add"
@@ -167,7 +173,13 @@
       <div class="userList-box" id="destinos-box" style="display: none">
         <h4>Meus Destinos</h4>
         <div class="content-list">
-          <div id="sem-destinos">Sem Destinos Cadastrados 😔</div>
+          <div id="preloader-destinos"></div>
+          <div class="demora-carregamento" id="demora-carregamento-destinos" style="display:none">
+            O carregamento está demorando mais que o esperado. Recarregue a página, aguarde ou tente novamente:<br>
+            <button id="carregar-novamente-destinos" class="btn btn-purple carregar-novamente" type="button" onclick="_manualListLoad('destinos')">
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i>Tentar Novamente</button>
+          </div>
+          <div id="sem-destinos" style="display:none">Sem Destinos Cadastrados 😔</div>
           <div id="dados-destinos"></div>
         </div>
         <button id="new-destino" class="btn btn-purple" type="button"><i class="iconify add"
@@ -177,7 +189,13 @@
       <div class="userList-box" id="listagens-box" style="display: none">
         <h4>Minhas Listas</h4>
         <div class="content-list">
-          <div id="sem-listagens">Sem Listas Cadastradas 😔</div>
+          <div id="preloader-listagens"></div>
+          <div class="demora-carregamento" id="demora-carregamento-listagens" style="display:none">
+            O carregamento está demorando mais que o esperado. Recarregue a página, aguarde ou tente novamente:<br>
+            <button id="carregar-novamente-destinos" class="btn btn-purple carregar-novamente" type="button" onclick="_manualListLoad('listagens')">
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i>Tentar Novamente</button>
+          </div>
+          <div id="sem-listagens" style="display:none">Sem Listas Cadastradas 😔</div>
           <div id="dados-listagens"></div>
         </div>
         <button id="new-listagem" class="btn btn-purple" type="button"><i class="iconify add"

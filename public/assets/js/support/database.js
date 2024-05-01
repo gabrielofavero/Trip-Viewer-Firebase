@@ -342,7 +342,7 @@ async function _getUserList(type) {
     return result;
 
   } else {
-    console.error("Usuário não logado");
+    throw new Error(`Não foi possível carregar a lista de ${type} pois o usuário não está logado`);
   }
 }
 

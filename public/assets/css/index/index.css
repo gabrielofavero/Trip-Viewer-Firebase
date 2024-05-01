@@ -45,7 +45,10 @@ h6 {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-#preloader {
+#preloader,
+#preloader-viagens,
+#preloader-destinos,
+#preloader-listagens {
   position: fixed;
   top: 0;
   left: 0;
@@ -53,22 +56,33 @@ h6 {
   bottom: 0;
   z-index: 9999;
   overflow: hidden;
+}
+
+#preloader {
   background: #fff;
 }
 
-#preloader:before {
+#preloader:before,
+#preloader-viagens:before,
+#preloader-destinos:before,
+#preloader-listagens:before {
   content: "";
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
   border: 6px solid #5B509E;
-  border-top-color: #fff;
-  border-bottom-color: #fff;
+  border-top-color: #f7f8f9;
+  border-bottom-color: #f7f8f9;
   border-radius: 50%;
   width: 60px;
   height: 60px;
   -webkit-animation: animate-preloader 1s linear infinite;
   animation: animate-preloader 1s linear infinite;
+}
+
+#preloader:before {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
 }
 
 @-webkit-keyframes animate-preloader {
@@ -861,4 +875,14 @@ section {
 .btn-purple:hover {
   background: #505197;
   color: #fff;
+}
+
+.demora-carregamento {
+  margin-top: 30px;
+  padding: 10px;
+}
+
+.carregar-novamente{
+  margin-top: 20px;
+  cursor: pointer;
 }

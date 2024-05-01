@@ -10,8 +10,16 @@ strong {
   background: #303030;
 }
 
-#preloader:before {
+#preloader:before,
+#preloader-viagens:before,
+#preloader-destinos:before,
+#preloader-listagens:before {
   border: 6px solid #7F75B9;
+  border-top-color: #404040;
+  border-bottom-color: #404040;
+}
+
+#preloader:before {
   border-top-color: #303030;
   border-bottom-color: #303030;
 }

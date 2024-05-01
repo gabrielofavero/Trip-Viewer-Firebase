@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 29    | 21     | 8         |
+| 🐞     | Bug      | B000    | 29    | 22     | 7         |
 | 🏆     | Feature  | F000    | 48    | 42     | 6         |
 | 📈     | Melhoria | M000    | 28    | 18     | 9         |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
@@ -19,7 +19,6 @@
 
 ## Doing
 
-- 🐞 **M029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
 - 🏆 **F048:** Dynamic Select em editar-destinos.html
 
 ## To-Do
@@ -89,7 +88,9 @@
 ## Done
 
 ### Maio 2024
+
 - 📈 **M028:** Melhoria na função de compartilhar para exibir texto adaptado (viagem/listagem)
+- 🐞 **M029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
 
 ### Abril 2024
 
