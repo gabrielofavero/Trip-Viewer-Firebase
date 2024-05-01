@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 29    | 21     | 8         |
 | 🏆     | Feature  | F000    | 48    | 42     | 6         |
-| 📈     | Melhoria | M000    | 27    | 17     | 9        |
+| 📈     | Melhoria | M000    | 28    | 18     | 9         |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
 
 ### Status
@@ -87,6 +87,9 @@
 - 📈 **M026:** Novo ícone de "Novo" destinos.html
 
 ## Done
+
+### Maio 2024
+- 📈 **M028:** Melhoria na função de compartilhar para exibir texto adaptado (viagem/listagem)
 
 ### Abril 2024
 

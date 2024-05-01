@@ -138,11 +138,13 @@ function _loadModules() {
   const share = getID('share');
   if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share) {
     share.addEventListener('click', () => {
-      const title = FIRESTORE_DATA.titulo || document.title;
+      const titulo = FIRESTORE_DATA.titulo || document.title;
+      let tipo = TYPE == 'listagens' ? 'listagem' : 'viagem';
+      let complemento = TYPE == 'listagens' ? '' : `, com início em ${INICIO.text} e fim em ${FIM.text}`;
 
       navigator.share({
         title: FIRESTORE_DATA.titulo || document.title,
-        text: `Venha visualizar minha viagem "${title}" criada no TripViewer, com início em ${INICIO.text} e fim em ${FIM.text}`,
+        text: `Venha visualizar minha ${tipo} "${titulo}" criada no TripViewer${complemento}`,
         url: window.location.href,
       })
 

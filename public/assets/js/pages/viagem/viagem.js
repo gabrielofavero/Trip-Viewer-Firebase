@@ -1,28 +1,29 @@
-var refreshed = false;
+var REFRESHED = false;
+var TYPE = 'viagens';
 
 document.addEventListener('DOMContentLoaded', function () {
   try {
     _startLoadingTimer();
     _main();
     const urlParams = new URLSearchParams(window.location.search);
-    let type = 'viagens';
+    TYPE = 'viagens';
 
     if (urlParams.has('l')) {
-      type = 'listagens';
+      TYPE = 'listagens';
     }
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 0) {
-        if (!refreshed) {
+        if (!REFRESHED) {
           _refreshCategorias();
-          refreshed = true;
+          REFRESHED = true;
         }
       } else {
-        refreshed = false;
+        REFRESHED = false;
       }
     });	
 
-    Promise.all([_getConfig(), _getSingleData(type)])
+    Promise.all([_getConfig(), _getSingleData(TYPE)])
       .then(([configData, firestoreData]) => {
 
         if (!getErrorMsg) {
