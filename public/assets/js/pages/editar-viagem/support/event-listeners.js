@@ -5,7 +5,7 @@ function _loadEventListeners() {
     });
 
     getID('hospedagens-adicionar').addEventListener('click', () => {
-        _addHospedagem();
+        _addHospedagens();
     });
 
     getID('destinos-adicionar').addEventListener('click', () => {

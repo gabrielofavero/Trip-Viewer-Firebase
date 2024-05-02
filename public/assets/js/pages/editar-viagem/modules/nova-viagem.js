@@ -256,7 +256,7 @@ function _addTransporte() {
   _addTransporteListeners(i);
 }
 
-function _addHospedagem() {
+function _addHospedagens() {
   var i = 1;
   while (getID('hospedagens-' + i)) {
     i++;

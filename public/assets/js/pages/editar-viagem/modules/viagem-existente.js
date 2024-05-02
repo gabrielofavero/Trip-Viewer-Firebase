@@ -253,7 +253,7 @@ function _loadHospedagemData(FIRESTORE_DATA) {
     if (hospedagemSize > 0) {
         for (let i = 1; i <= hospedagemSize; i++) {
             const j = i - 1;
-            _addHospedagem();
+            _addHospedagens();
 
             const hospedagemTitle = getID(`hospedagens-title-${i}`);
             const hospedagemNome = getID(`hospedagens-nome-${i}`);

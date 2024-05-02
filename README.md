@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 29    | 22     | 7         |
+| 🐞     | Bug      | B000    | 30    | 23     | 7         |
 | 🏆     | Feature  | F000    | 49    | 43     | 6         |
-| 📈     | Melhoria | M000    | 29    | 20     | 9        |
+| 📈     | Melhoria | M000    | 29    | 20     | 9         |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
 
 ### Status
@@ -94,6 +94,7 @@
 - 🐞 **M029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
 - 🏆 **F048:** Dynamic Select de "Valor" em editar-destinos.html
 - 📈 **M029:** Otimizar destinos.html para receber do localStorage apenas os dados necessários
+- 🐞 **B030:** Correção de erros em novas viagens de editar-viagens.html
 
 ### Abril 2024
 

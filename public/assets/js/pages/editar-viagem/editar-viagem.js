@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (DOCUMENT_ID) {
       _loadTrip()
     } else {
+      DESTINOS = await _getUserList('destinos');
       _loadNewTrip();
     }
 

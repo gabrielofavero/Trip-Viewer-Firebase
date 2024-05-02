@@ -347,9 +347,13 @@ function _loadListener(type) {
      habilitado.addEventListener('change', function () {
           if (habilitado.checked) {
                _showContent(type);
-               if (!getID(`habilitado-${type}-content`).innerText) {
+               const box = getID(`${type}-box`);
+               const habilitadoContent = getID(`habilitado-${type}-content`);
+
+               if ((box && !box.innerText) || (habilitadoContent && !habilitadoContent.innerText)) {
                     _add(_firstCharToUpperCase(type).trim())
                }
+
           } else {
                _hideContent(type);
           }
