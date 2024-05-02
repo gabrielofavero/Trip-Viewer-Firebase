@@ -129,7 +129,7 @@ async function _loadDestinos() {
 }
 
 // Listeners
-function _applyDestinosListeners(i, categoria) {
+function _addDestinosListeners(categoria, i) {
   const nome = getID(`${categoria}-nome-${i}`);
   nome.addEventListener('change', function () {
       _accordionDestinosOnChange(i, categoria);

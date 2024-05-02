@@ -188,3 +188,21 @@ function _removeChild(tipo) {
   const div = getID(tipo);
   div.parentNode.removeChild(div);
 }
+
+function _removeChildWithValidation(tipo, i) {
+  _removeChild(`${tipo}-${i}`);
+  if (_getChildIDs(`${tipo}-box`).length === 0) {
+       getID(`habilitado-${tipo}`).checked = false;
+       _hideContent(tipo);
+  }
+}
+
+function _removeChildDestinosWithValidation(i) {
+  _removeChild(`com-destinos-${i}`);
+  if (_getChildIDs(`com-destinos`).length === 0) {
+    if(getID(`habilitado-destinos`)) {
+      getID(`habilitado-destinos`).checked = false;
+      _hideContent('destinos');
+    }
+  }
+}

@@ -238,7 +238,7 @@ function _addTransporte() {
         </div>
   
         <div class="deletar-box">
-          <button id="transporte-deletar-${i}" class="btn btn-secondary" onclick="_removeChild('transporte-${i}')">
+          <button id="remove-transporte-${i}" class="btn btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -254,6 +254,7 @@ function _addTransporte() {
   _addDragListeners('transporte');
   _loadTransporteVisibility(i);
   _addTransporteListeners(i);
+  _addRemoveChildListener('transporte', i);
 }
 
 function _addHospedagens() {
@@ -345,7 +346,7 @@ function _addHospedagens() {
           </div>
     
           <div class="deletar-box">
-            <button id="hospedagens-deletar-${i}" class="btn btn-secondary" onclick="_removeChild('hospedagens-${i}')">
+            <button id="remove-hospedagens-${i}" class="btn btn-secondary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -360,6 +361,7 @@ function _addHospedagens() {
 
   _addDragListeners('hospedagens');
   _loadImageSelector(`hospedagens-${i}`);
+  _addRemoveChildListener('hospedagens', i);
 }
 
 function _addDestinos() {
@@ -374,7 +376,7 @@ function _addDestinos() {
         <option value="">Selecione um Destino</option>
       </select>
       <div class="deletar-box">
-        <button id="destinos-deletar-${i}" class="btn btn-secondary" onclick="_deleteDestino(${i})">
+        <button id="remove-destinos-${i}" class="btn btn-secondary" onclick="_deleteDestino(${i})">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
           </svg>
@@ -499,7 +501,7 @@ function _addLineup() {
         </div>
   
         <div class="deletar-box">
-          <button id="lineup-deletar-${i}" class="btn btn-secondary" onclick="_removeChild('lineup-${i}')">
+          <button id="remove-lineup-${i}" class="btn btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -515,6 +517,7 @@ function _addLineup() {
   _buildLineupSelects();
   _loadLineupListeners(i);
   _addDragListeners('lineup');
+  _addRemoveChildListener('lineup', i);
 }
 
 function _addGaleria() {
@@ -576,7 +579,7 @@ function _addGaleria() {
           </div>
   
         <div class="deletar-box">
-          <button id="galeria-deletar-${i}" class="btn btn-secondary" onclick="_deleteGaleria(${i})">
+          <button id="remove-galeria-${i}" class="btn btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -592,4 +595,5 @@ function _addGaleria() {
   _loadImageSelector(`galeria-${i}`);
   _loadGaleriaListeners(i);
   _addDragListeners('galeria');
+  _addRemoveChildListener('galeria', i);
 }

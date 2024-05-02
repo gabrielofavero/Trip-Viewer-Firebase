@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 30    | 23     | 7         |
 | 🏆     | Feature  | F000    | 49    | 44     | 5         |
-| 📈     | Melhoria | M000    | 29    | 20     | 9         |
+| 📈     | Melhoria | M000    | 29    | 21     | 8         |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
 
 ### Status
@@ -19,13 +19,12 @@
 
 ## Doing
 
-
+- ⚔️ **E020:** Criação de box de visualização de Hospedagens em viagens.html;
 
 ## To-Do
 
 ### Prioridade Alta
 
-- ⚔️ **E020:** Criação de box de visualização de Hospedagens em viagens.html;
 - 📈 **M023:** Melhorias no arrastamento de accordions (páginas de editar)
   - *Criação de opção de arrastar accordions (Mobile);*
   - *Desabilitar arrastamento quando accordion está aberto*
@@ -84,7 +83,6 @@
 - 🐞 **B022:** Correção de erro de nem todos os hrefs estarem indo para as categorias (telas de edição);
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
 - 📈 **M026:** Novo ícone de "Novo" destinos.html
-- 📈 **M029:** Melhoria de, se o usuário apaga todos os itens de uma categoria, ela é automaticamente desabilitada
 
 ## Done
 
@@ -96,6 +94,7 @@
 - 📈 **M029:** Otimizar destinos.html para receber do localStorage apenas os dados necessários
 - 🐞 **B030:** Correção de erros em novas viagens de editar-viagens.html
 - 🏆 **F049:** Dynamic Select de "Região" em editar-destinos.html
+- 📈 **M029:** Melhoria de, se o usuário apaga todos os itens de uma categoria, ela é automaticamente desabilitada
 
 ### Abril 2024
 

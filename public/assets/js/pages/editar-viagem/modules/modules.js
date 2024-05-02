@@ -38,7 +38,7 @@ function _buildDestinosSelect() {
 }
 
 function _deleteDestino(i) {
-    _removeChild(`com-destinos-${i}`);
+    _removeChildDestinosWithValidation(i);
     _buildDestinosSelect();
 }
 

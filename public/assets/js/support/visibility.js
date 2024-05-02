@@ -388,3 +388,9 @@ function _hideContent(type) {
           adicionarBox.style.display = 'none';
      }
 }
+
+function _addRemoveChildListener(type, i) {
+     getID(`remove-${type}-${i}`).addEventListener('click', function () {
+          _removeChildWithValidation(type, i);
+     });
+}
