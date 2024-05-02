@@ -54,8 +54,11 @@ function _addRestaurantes() {
           </div>
   
           <div class="nice-form-group">
-            <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
-            <input id="restaurantes-valor-${i}" type="text" placeholder="R$50 - R$100" />
+            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <select id="restaurantes-valor-${i}" style="display: ${_getValorVisibility()};">
+            ${MOEDA_OPTIONS}
+          </select>
+            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="restaurantes-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
           <div class="nice-form-group">
@@ -150,8 +153,11 @@ function _addLanches() {
           </div>
   
           <div class="nice-form-group">
-            <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
-            <input id="lanches-valor-${i}" type="text" placeholder="R$50 - R$100" />
+            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <select id="lanches-valor-${i}" style="display: ${_getValorVisibility()};">
+            ${MOEDA_OPTIONS}
+          </select>
+            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lanches-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
           <div class="nice-form-group">
@@ -247,8 +253,11 @@ function _addSaidas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
-            <input id="saidas-valor-${i}" type="text" placeholder="R$50 - R$100" />
+            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <select id="saidas-valor-${i}" style="display: ${_getValorVisibility()};">
+            ${MOEDA_OPTIONS}
+          </select>
+            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="saidas-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
           <div class="nice-form-group">
@@ -344,7 +353,10 @@ function _addTurismo() {
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <input id="turismo-valor-${i}" type="text" placeholder="Gratuito" />
+            <select id="turismo-valor-${i}" style="display: ${_getValorVisibility()};">
+              ${MOEDA_OPTIONS}
+            </select>
+            <input style="display: ${_getOutroValorVisibility()}" sclass="nice-form-group" id="turismo-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
           <div class="nice-form-group">
@@ -441,8 +453,11 @@ function _addLojas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Valor Aproximado <span class="opcional"> (Opcional)</span></label>
-            <input id="lojas-valor-${i}" type="text" placeholder="O valor varia conforme a loja" />
+            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <select id="lojas-valor-${i}" style="display: ${_getValorVisibility()};">
+            ${MOEDA_OPTIONS}
+          </select>
+            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lojas-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
           <div class="nice-form-group">

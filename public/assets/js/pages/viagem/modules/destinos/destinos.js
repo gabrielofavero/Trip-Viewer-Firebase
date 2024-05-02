@@ -4,24 +4,20 @@ var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var CURRENT_PLACES_SIZE = 0;
 var DESTINOS = [];
+var DESTINO_EXPORT = {};
 
 // ======= LOADERS =======
-function _loadDestinations() {
+function _loadDestinos() {
   for (let i = 0; i < DESTINOS.length; i++) {
-    P_RESULT[DESTINOS[i].destinos.sigla] = DESTINOS[i].destinos;
+    P_RESULT[DESTINOS[i].destinos.destinosID] = DESTINOS[i].destinos;
   }
-
-  window.localStorage.setItem('P_RESULT', JSON.stringify(P_RESULT));
-  window.localStorage.setItem('CURRENCY', FIRESTORE_DATA.moeda);
-  window.localStorage.setItem('CURRENCY_JSON', JSON.stringify(CONFIG.destinos.currency));
-  window.localStorage.setItem('PLACES_JSON', JSON.stringify(CONFIG.destinos.destinos));
-  window.localStorage.setItem('PLACES_SETTINGS_JSON', JSON.stringify(CONFIG.destinos.settings));
 
   if (DESTINOS.length % 2 === 1) { // Ímpar
     getID('destinosBox').classList.add('centered-destino-box');
   }
 
-  if (DESTINOS.length === 1 && getID("destinos-select").style.display === 'none') {
+  if (DESTINOS.length === 1 && getID("destinos-select").style.display === 'none'
+    && _getChildIDs('destinosBox').length <= 1) {
     getID('destinosTitleContainer').style.display = 'none';
   }
 
@@ -35,10 +31,7 @@ function _loadDestinationsSelect(lineupExclusive = false) {
   let firstOption = document.createElement("option");
   _buildDestinosObject(lineupExclusive);
 
-  const firstSigla = _getNewDestinationsSigla(DESTINOS[0].destinos.titulo);
-  DESTINOS[0].destinos.sigla = firstSigla;
-
-  firstOption.value = firstSigla;
+  firstOption.value = DESTINOS[0].destinosID;
   firstOption.text = DESTINOS[0].destinos.titulo;
   select.add(firstOption);
   firstOption.selected = true;
@@ -46,10 +39,8 @@ function _loadDestinationsSelect(lineupExclusive = false) {
   if (DESTINOS.length > 1) {
     for (let i = 1; i < DESTINOS.length; i++) {
       let newOption = document.createElement("option");
-      let sigla = _getNewDestinationsSigla(DESTINOS[i].destinos.titulo);
-      DESTINOS[i].destinos.sigla = sigla;
 
-      newOption.value = sigla;
+      newOption.value = DESTINOS[i].destinosID;
       newOption.text = DESTINOS[i].destinos.titulo;
       select.add(newOption);
     };
@@ -59,9 +50,8 @@ function _loadDestinationsSelect(lineupExclusive = false) {
 
   select.addEventListener("change", function () {
     for (let i = 0; i < DESTINOS.length; i++) {
-      const sigla = DESTINOS[i].destinos.sigla;
-      if (sigla === select.value) {
-        _loadDestinationsHTML(FIRESTORE_DATA.destinos[i].destinos);
+      if (DESTINOS[i].destinosID === select.value) {
+        _loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
         _adjustDestinationsHTML();
         break;
       }
@@ -73,21 +63,24 @@ function _loadDestinationsHTML(destino) {
   let div = getID("destinosBox");
   let text = "";
 
-  const headers = _getDestinationsHeaders(destino.modulos);
+  const headers = _getDestinationsHeaders(destino.destinos.modulos);
   CURRENT_PLACES_SIZE = headers.length;
 
   let linktype = _getLinkType();
 
   for (let i = 0; i < headers.length; i++) {
+    const code = headers[i];
+    _buildDestinoExport(destino, code)
+
     const j = i + 1;
     const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
     const title = CONFIG.destinos.destinos[headers[i]]["title"];
-    const code = headers[i];
-    const href = code === "mapa" ? destino.myMaps : "#";
+    const href = code === "mapa" ? destino.destinos.myMaps : "#";
     const lt = code === "mapa" ? linktype : "";
-    const onclick = code === "mapa" ? "" : `onclick="_openLightbox('${_getDestinationsHref(code, destino)}')"`;
+    const onclick = code === "mapa" ? "" : `onclick="_loadAndOpenDestino('${code}')"`;
     const icon = CONFIG.destinos.destinos[headers[i]]["icon"];
     const description = CONFIG.destinos.destinos[headers[i]]["description"];
+
     text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
     <a href="${href}" ${lt} ${onclick} id="ba${j}">
@@ -109,6 +102,22 @@ function _loadDestinationsHTML(destino) {
   _adjustDestinationsHTML();
 }
 
+function _buildDestinoExport(destino, code) {
+  DESTINO_EXPORT[code] = {
+    data: destino.destinos[code],
+    moeda: destino.destinos.moeda,
+    valores: CONFIG.destinos.currency[destino.destinos.moeda] || CONFIG.destinos.currency["R$"],
+    notas: CONFIG.destinos.settings.scores,
+    categoria: code,
+    descricao: CONFIG.destinos.destinos[code],
+  }
+}
+
+function _loadAndOpenDestino(code) {
+  window.localStorage.setItem('DESTINO', JSON.stringify(DESTINO_EXPORT[code]));
+  _openLightbox('destinos.html')
+}
+
 function _getDestinationsHeaders(module) {
   const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', "lineup", 'mapa']
   const headerMap = new Map(headerBase.map((element, index) => [element, index]));
@@ -127,7 +136,7 @@ function _getDestinationsHeaders(module) {
 
 function getDestinationsSelectValue() {
   let select = getID("destinos-select");
-  return select.value || DESTINOS[0].destinos.sigla;
+  return select.value || DESTINOS[0].destinosID;
 }
 
 function _getDestinationsBoxesIndex(i) {
@@ -142,26 +151,6 @@ function _getLinkType() {
   } else {
     return "target='_blank'";
   }
-}
-
-function _getDestinationsHref(code, destino) {
-  if (code == "mapa") {
-    return destino.myMaps;
-  } else return `destinos.html?destino=${destino.sigla}&type=${code}`;
-}
-
-function _getNewDestinationsSigla(name) {
-  var original = _codifyText(name);
-  var result = original;
-  let j = 0;
-  for (let i = 0; i < DESTINOS.length; i++) {
-    const sigla = DESTINOS[i].destinos.sigla;
-    if (result == sigla) {
-      result += original + j;
-      j++;
-    }
-  }
-  return result;
 }
 
 function _mergeSetlistObjects(obj1, obj2) {

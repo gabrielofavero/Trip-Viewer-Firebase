@@ -1,3 +1,5 @@
+let FIRESTORE_DESTINOS_NEW_DATA = {};
+
 async function _buildDestinosObject() {
     let result = {
         lanches: {},
@@ -16,7 +18,7 @@ async function _buildDestinosObject() {
     result.titulo = getID(`titulo`).value;
     result.myMaps = getID(`mapa-link`).value;
     result.versao.ultimaAtualizacao = new Date().toISOString();
-    result.compartilhamento.dono = FIRESTORE_PLACES_DATA?.compartilhamento?.dono || await _getUID();
+    result.compartilhamento.dono = FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || await _getUID();
 
     let moeda = getID(`moeda`).value;
     if (moeda == "outra") moeda = getID(`outra-moeda`).value;
@@ -29,7 +31,7 @@ async function _buildDestinosObject() {
     result.turismo = _buildDestinoCategoryObject("turismo");
     result.lojas = _buildDestinoCategoryObject("lojas");
 
-    return result;
+    FIRESTORE_DESTINOS_NEW_DATA = result;
 }
 
 function _buildDestinoModulos() {
@@ -99,37 +101,31 @@ function _buildDestinoCategoryObject(type) {
         const divNovo = getID(`${type}-novo-${j}`);
         result.novo.push(divNovo && divNovo.checked);
 
-        const divNome = getID(`${type}-nome-${j}`);
-        const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
-        result.nome.push(valueNome);
+        const nome = getID(`${type}-nome-${j}`).value;
+        result.nome.push(nome);
 
-        const divEmoji = getID(`${type}-emoji-${j}`);
-        const valueEmoji = divEmoji ? _returnEmptyIfNoValue(divEmoji.value) : "";
-        result.emoji.push(valueEmoji);
+        const emoji = getID(`${type}-emoji-${j}`).value;
+        result.emoji.push(emoji);
 
-        const divDescricao = getID(`${type}-descricao-${j}`);
-        const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
-        result.descricao.push(valueDescricao);
+        const descricao = getID(`${type}-descricao-${j}`).value;
+        result.descricao.push(descricao);
 
-        const divLink = getID(`${type}-link-${j}`);
-        const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
-        result.hyperlink.name.push(valueLink);
+        const link = getID(`${type}-link-${j}`).value;
+        result.hyperlink.name.push(link);
 
-        const divRegiao = getID(`${type}-regiao-${j}`);
-        const valueRegiao = divRegiao ? _returnEmptyIfNoValue(divRegiao.value) : "";
-        result.regiao.push(valueRegiao);
+        const regiao = getID(`${type}-regiao-${j}`).value;
+        result.regiao.push(regiao);
 
-        const divValor = getID(`${type}-valor-${j}`);
-        const valueValor = divValor ? _returnEmptyIfNoValue(divValor.value) : "";
-        result.valor.push(valueValor);
+        const valorDiv = getID(`${type}-valor-${j}`);
+        const outroValor = getID(`${type}-outro-valor-${j}`).value;
+        const valor = valorDiv.innerHTML && valorDiv.value != 'outro' ? valorDiv.value : outroValor;
+        result.valor.push(valor);
 
-        const divMidia = getID(`${type}-midia-${j}`);
-        const valueMidia = divMidia ? _returnEmptyIfNoValue(divMidia.value) : "";
-        result.hyperlink.video.push(valueMidia);
+        const midia = getID(`${type}-midia-${j}`).value;
+        result.hyperlink.video.push(midia);
 
-        const divNota = getID(`${type}-nota-${j}`);
-        const valueNota = divNota ? _returnEmptyIfNoValue(divNota.value) : "";
-        result.nota.push(valueNota);
+        const nota = getID(`${type}-nota-${j}`).value;
+        result.nota.push(nota);
     }
 
     result.novo = _removeEmptyValuesFromEndArray(result.novo);
@@ -150,16 +146,14 @@ async function _setDestino() {
     _validateRequiredFields();
 
     if (!_isModalOpen()) {
-        const destino = await _buildDestinosObject();
+        await _buildDestinosObject();
         let result;
 
-        if (DOCUMENT_ID && destino) {
-            result = await _updateUserObjectDB(destino, DOCUMENT_ID, "destinos");
-        } else if (destino) {
-            result = await _newUserObjectDB(destino, "destinos");
+        if (DOCUMENT_ID && FIRESTORE_DESTINOS_NEW_DATA) {
+            result = await _updateUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, DOCUMENT_ID, "destinos");
+        } else if (FIRESTORE_DESTINOS_NEW_DATA) {
+            result = await _newUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, "destinos");
         }
-
-        console.log(result);
 
         getID('modal-inner-text').innerHTML = result.message;
 

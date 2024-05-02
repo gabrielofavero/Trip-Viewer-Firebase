@@ -1,17 +1,21 @@
 var blockLoadingEnd = false;
-var FIRESTORE_PLACES_DATA;
+var FIRESTORE_DESTINOS_DATA;
 wasSaved = false;
 
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
+var CONFIG;
+
 var PROGRAMACAO = {};
 
-document.addEventListener('DOMContentLoaded', function () {
+var REGIOES = [];
+
+document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
     _main();
-
+    CONFIG = await _getConfig();
     const urlParams = new URLSearchParams(window.location.search);
     DOCUMENT_ID = urlParams.get('d');
 
@@ -19,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     _loadHabilitados();
 
     if (DOCUMENT_ID) {
-      _loadDestinations()
+      _loadDestinos()
     }
 
     _loadEventListeners();
@@ -107,35 +111,52 @@ function _loadEventListeners() {
     } else {
       getID('outra-moeda').style.display = 'none';
     }
+    _loadCurrencySelects();
+  });
+
+  getID('outra-moeda').addEventListener('change', () => {
+    _loadCurrencySelects();
   });
 }
 
-async function _loadDestinations() {
+async function _loadDestinos() {
   blockLoadingEnd = true;
   getID('delete-text').style.display = 'block';
   _startLoadingScreen();
-  FIRESTORE_PLACES_DATA = await _getSingleData('destinos');
-  _loadDestinationsData(FIRESTORE_PLACES_DATA);
+  FIRESTORE_DESTINOS_DATA = await _getSingleData('destinos');
+  _loadDestinationsData(FIRESTORE_DESTINOS_DATA);
   _stopLoadingScreen();
 }
 
 // Listeners
-function _applyDestinosListeners(i, type) {
-  const nome = getID(`${type}-nome-${i}`);
+function _applyDestinosListeners(i, categoria) {
+  const nome = getID(`${categoria}-nome-${i}`);
   nome.addEventListener('change', function () {
-      _accordionDestinosOnChange(i, type);
+      _accordionDestinosOnChange(i, categoria);
   });
 
-  const emoji = getID(`${type}-emoji-${i}`);
+  const emoji = getID(`${categoria}-emoji-${i}`);
   if (emoji) {
       emoji.addEventListener('change', function () {
-          _accordionDestinosOnChange(i, type);
+          _accordionDestinosOnChange(i, categoria);
       });
   }
 
-  const novo = getID(`${type}-novo-${i}`);
+  const novo = getID(`${categoria}-novo-${i}`);
   novo.addEventListener('click', function () {
-      _accordionDestinosOnChange(i, type);
+      _accordionDestinosOnChange(i, categoria);
+  });
+
+  const valor = getID(`${categoria}-valor-${i}`);
+  const outroValor = getID(`${categoria}-outro-valor-${i}`);
+  valor.addEventListener('change', () => {
+      if (valor.value == 'outro') {
+          outroValor.style.display = 'block';
+          outroValor.required = true;
+      } else {
+          outroValor.style.display = 'none';
+          outroValor.required = false;
+      }
   });
 }
 

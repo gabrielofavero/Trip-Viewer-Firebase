@@ -7,8 +7,8 @@
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 29    | 22     | 7         |
-| 🏆     | Feature  | F000    | 48    | 42     | 6         |
-| 📈     | Melhoria | M000    | 28    | 18     | 9         |
+| 🏆     | Feature  | F000    | 49    | 43     | 6         |
+| 📈     | Melhoria | M000    | 29    | 20     | 9        |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
 
 ### Status
@@ -19,7 +19,7 @@
 
 ## Doing
 
-- 🏆 **F048:** Dynamic Select em editar-destinos.html
+- 🏆 **F049:** Dynamic Select de "Região" em editar-destinos.html
 
 ## To-Do
 
@@ -84,6 +84,7 @@
 - 🐞 **B022:** Correção de erro de nem todos os hrefs estarem indo para as categorias (telas de edição);
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
 - 📈 **M026:** Novo ícone de "Novo" destinos.html
+- 📈 **M029:** Melhoria de, se o usuário apaga todos os itens de uma categoria, ela é automaticamente desabilitada
 
 ## Done
 
@@ -91,6 +92,8 @@
 
 - 📈 **M028:** Melhoria na função de compartilhar para exibir texto adaptado (viagem/listagem)
 - 🐞 **M029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
+- 🏆 **F048:** Dynamic Select de "Valor" em editar-destinos.html
+- 📈 **M029:** Otimizar destinos.html para receber do localStorage apenas os dados necessários
 
 ### Abril 2024
 

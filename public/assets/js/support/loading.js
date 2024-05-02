@@ -17,6 +17,7 @@ function _startLoadingScreen(useTimer = true) {
 
 function _stopLoadingScreen() {
   _stopLoadingTimer();
+  localStorage.setItem('firstLoad', 'true');
   if (!ERROR_MODE) {
     const preloader = getID('preloader');
     if (preloader) {

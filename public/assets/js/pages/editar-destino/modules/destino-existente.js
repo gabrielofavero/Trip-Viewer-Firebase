@@ -1,13 +1,13 @@
 // Destino Existente
-function _loadDestinationsData(FIRESTORE_PLACES_DATA) {
+function _loadDestinationsData(FIRESTORE_DESTINOS_DATA) {
   try {
-    _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA);
-    _loadRestaurantesData(FIRESTORE_PLACES_DATA);
-    _loadLanchesData(FIRESTORE_PLACES_DATA);
-    _loadSaidasData(FIRESTORE_PLACES_DATA);
-    _loadTurismoData(FIRESTORE_PLACES_DATA);
-    _loadLojasData(FIRESTORE_PLACES_DATA);
-    _loadMapaData(FIRESTORE_PLACES_DATA);
+    _loadDadosBasicosDestinosData(FIRESTORE_DESTINOS_DATA);
+    _loadRestaurantesData(FIRESTORE_DESTINOS_DATA);
+    _loadLanchesData(FIRESTORE_DESTINOS_DATA);
+    _loadSaidasData(FIRESTORE_DESTINOS_DATA);
+    _loadTurismoData(FIRESTORE_DESTINOS_DATA);
+    _loadLojasData(FIRESTORE_DESTINOS_DATA);
+    _loadMapaData(FIRESTORE_DESTINOS_DATA);
 
   } catch (e) {
     _displayErrorMessage(e);
@@ -16,10 +16,10 @@ function _loadDestinationsData(FIRESTORE_PLACES_DATA) {
 }
 
 // Módulos: Passeio Existente
-function _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA) {
-  getID('titulo').value = FIRESTORE_PLACES_DATA.titulo;
+function _loadDadosBasicosDestinosData(FIRESTORE_DESTINOS_DATA) {
+  getID('titulo').value = FIRESTORE_DESTINOS_DATA.titulo;
 
-  const moedaValue = FIRESTORE_PLACES_DATA.moeda;
+  const moedaValue = FIRESTORE_DESTINOS_DATA.moeda;
   const moedaDiv = getID('moeda');
 
   if (moedaDiv.querySelector(`option[value="${moedaValue}"]`)) {
@@ -29,64 +29,66 @@ function _loadDadosBasicosDestinosData(FIRESTORE_PLACES_DATA) {
     getID('outra-moeda').value = moedaValue;
     moedaDiv.value = 'outra';
   }
+
+  _loadMoedaOptions();
 }
 
-function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
-  if (FIRESTORE_PLACES_DATA.modulos.restaurantes === true) {
+function _loadRestaurantesData(FIRESTORE_DESTINOS_DATA) {
+  if (FIRESTORE_DESTINOS_DATA.modulos.restaurantes === true) {
     getID('habilitado-restaurantes').checked = true;
     getID('habilitado-restaurantes-content').style.display = 'block';
     getID('restaurantes-adicionar-box').style.display = 'block';
 
-    const restaurantesSize = FIRESTORE_PLACES_DATA.restaurantes.nome.length;
+    const restaurantesSize = FIRESTORE_DESTINOS_DATA.restaurantes.nome.length;
     if (restaurantesSize > 0) {
       for (let i = 1; i <= restaurantesSize; i++) {
         const j = i - 1;
         _addRestaurantes();
 
-        const novo = FIRESTORE_PLACES_DATA.restaurantes.novo;
+        const novo = FIRESTORE_DESTINOS_DATA.restaurantes.novo;
         if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`restaurantes-novo-${i}`).checked = true;
           getID(`restaurantes-title-icon-${i}`).style.display = 'block';
         }
 
-        const nome = FIRESTORE_PLACES_DATA.restaurantes.nome;
+        const nome = FIRESTORE_DESTINOS_DATA.restaurantes.nome;
         if (nome && nome[j]) {
           getID(`restaurantes-nome-${i}`).value = nome[j];
           getID(`restaurantes-title-text-${i}`).innerText = nome[j];
         }
 
-        const emoji = FIRESTORE_PLACES_DATA.restaurantes.emoji;
+        const emoji = FIRESTORE_DESTINOS_DATA.restaurantes.emoji;
         if (emoji && emoji[j]) {
           getID(`restaurantes-emoji-${i}`).value = emoji[j];
           getID(`restaurantes-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
-        const descricao = FIRESTORE_PLACES_DATA.restaurantes.descricao;
+        const descricao = FIRESTORE_DESTINOS_DATA.restaurantes.descricao;
         if (descricao && descricao[j]) {
           getID(`restaurantes-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_PLACES_DATA.restaurantes.hyperlink.name;
+        const link = FIRESTORE_DESTINOS_DATA.restaurantes.hyperlink.name;
         if (link && link[j]) {
           getID(`restaurantes-link-${i}`).value = link[j];
         }
 
-        const regiao = FIRESTORE_PLACES_DATA.restaurantes.regiao;
+        const regiao = FIRESTORE_DESTINOS_DATA.restaurantes.regiao;
         if (regiao && regiao[j]) {
           getID(`restaurantes-regiao-${i}`).value = regiao[j];
         }
 
-        const valor = FIRESTORE_PLACES_DATA.restaurantes.valor;
+        const valor = FIRESTORE_DESTINOS_DATA.restaurantes.valor;
         if (valor && valor[j]) {
-          getID(`restaurantes-valor-${i}`).value = valor[j];
+          _getValorDivAndLoadVisibility(valor[j], 'restaurantes', i).value = valor[j];
         }
 
-        const midia = FIRESTORE_PLACES_DATA.restaurantes.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.restaurantes.hyperlink.video;
         if (midia && midia[j]) {
           getID(`restaurantes-midia-${i}`).value = midia[j];
         }
 
-        const nota = FIRESTORE_PLACES_DATA.restaurantes.nota;
+        const nota = FIRESTORE_DESTINOS_DATA.restaurantes.nota;
         if (nota && nota[j]) {
           getID(`restaurantes-nota-${i}`).value = nota[j];
         }
@@ -95,62 +97,62 @@ function _loadRestaurantesData(FIRESTORE_PLACES_DATA) {
   }
 }
 
-function _loadLanchesData(FIRESTORE_PLACES_DATA) {
-  if (FIRESTORE_PLACES_DATA.modulos.lanches === true) {
+function _loadLanchesData(FIRESTORE_DESTINOS_DATA) {
+  if (FIRESTORE_DESTINOS_DATA.modulos.lanches === true) {
     getID('habilitado-lanches').checked = true;
     getID('habilitado-lanches-content').style.display = 'block';
     getID('lanches-adicionar-box').style.display = 'block';
 
-    const lanchesSize = FIRESTORE_PLACES_DATA.lanches.nome.length;
+    const lanchesSize = FIRESTORE_DESTINOS_DATA.lanches.nome.length;
     if (lanchesSize > 0) {
       for (let i = 1; i <= lanchesSize; i++) {
         const j = i - 1;
         _addLanches();
 
-        const novo = FIRESTORE_PLACES_DATA.lanches.novo;
+        const novo = FIRESTORE_DESTINOS_DATA.lanches.novo;
         if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`lanches-novo-${i}`).checked = true;
           getID(`lanches-title-icon-${i}`).style.display = 'block';
         }
 
-        const nome = FIRESTORE_PLACES_DATA.lanches.nome;
+        const nome = FIRESTORE_DESTINOS_DATA.lanches.nome;
         if (nome && nome[j]) {
           getID(`lanches-nome-${i}`).value = nome[j];
           getID(`lanches-title-text-${i}`).innerText = nome[j];
         }
 
-        const emoji = FIRESTORE_PLACES_DATA.lanches.emoji;
+        const emoji = FIRESTORE_DESTINOS_DATA.lanches.emoji;
         if (emoji && emoji[j]) {
           getID(`lanches-emoji-${i}`).value = emoji[j];
           getID(`lanches-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
-        const descricao = FIRESTORE_PLACES_DATA.lanches.descricao;
+        const descricao = FIRESTORE_DESTINOS_DATA.lanches.descricao;
         if (descricao && descricao[j]) {
           getID(`lanches-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_PLACES_DATA.lanches.hyperlink.name;
+        const link = FIRESTORE_DESTINOS_DATA.lanches.hyperlink.name;
         if (link && link[j]) {
           getID(`lanches-link-${i}`).value = link[j];
         }
 
-        const regiao = FIRESTORE_PLACES_DATA.lanches.regiao;
+        const regiao = FIRESTORE_DESTINOS_DATA.lanches.regiao;
         if (regiao && regiao[j]) {
           getID(`lanches-regiao-${i}`).value = regiao[j];
         }
 
-        const valor = FIRESTORE_PLACES_DATA.lanches.valor;
+        const valor = FIRESTORE_DESTINOS_DATA.lanches.valor;
         if (valor && valor[j]) {
-          getID(`lanches-valor-${i}`).value = valor[j];
+          _getValorDivAndLoadVisibility(valor[j], 'lanches', i).value .value = valor[j];
         }
 
-        const midia = FIRESTORE_PLACES_DATA.lanches.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.lanches.hyperlink.video;
         if (midia && midia[j]) {
           getID(`lanches-midia-${i}`).value = midia[j];
         }
 
-        const nota = FIRESTORE_PLACES_DATA.lanches.nota;
+        const nota = FIRESTORE_DESTINOS_DATA.lanches.nota;
         if (nota && nota[j]) {
           getID(`lanches-nota-${i}`).value = nota[j];
         }
@@ -159,62 +161,62 @@ function _loadLanchesData(FIRESTORE_PLACES_DATA) {
   }
 }
 
-function _loadSaidasData(FIRESTORE_PLACES_DATA) {
-  if (FIRESTORE_PLACES_DATA.modulos.saidas === true) {
+function _loadSaidasData(FIRESTORE_DESTINOS_DATA) {
+  if (FIRESTORE_DESTINOS_DATA.modulos.saidas === true) {
     getID('habilitado-saidas').checked = true;
     getID('habilitado-saidas-content').style.display = 'block';
     getID('saidas-adicionar-box').style.display = 'block';
 
-    const saidasSize = FIRESTORE_PLACES_DATA.saidas.nome.length;
+    const saidasSize = FIRESTORE_DESTINOS_DATA.saidas.nome.length;
     if (saidasSize > 0) {
       for (let i = 1; i <= saidasSize; i++) {
         const j = i - 1;
         _addSaidas();
 
-        const novo = FIRESTORE_PLACES_DATA.saidas.novo;
+        const novo = FIRESTORE_DESTINOS_DATA.saidas.novo;
         if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`saidas-novo-${i}`).checked = true;
           getID(`saidas-title-icon-${i}`).style.display = 'block';
         }
 
-        const nome = FIRESTORE_PLACES_DATA.saidas.nome;
+        const nome = FIRESTORE_DESTINOS_DATA.saidas.nome;
         if (nome && nome[j]) {
           getID(`saidas-nome-${i}`).value = nome[j];
           getID(`saidas-title-text-${i}`).innerText = nome[j];
         }
 
-        const emoji = FIRESTORE_PLACES_DATA.saidas.emoji;
+        const emoji = FIRESTORE_DESTINOS_DATA.saidas.emoji;
         if (emoji && emoji[j]) {
           getID(`saidas-emoji-${i}`).value = emoji[j];
           getID(`saidas-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
-        const descricao = FIRESTORE_PLACES_DATA.saidas.descricao;
+        const descricao = FIRESTORE_DESTINOS_DATA.saidas.descricao;
         if (descricao && descricao[j]) {
           getID(`saidas-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_PLACES_DATA.saidas.hyperlink.name;
+        const link = FIRESTORE_DESTINOS_DATA.saidas.hyperlink.name;
         if (link && link[j]) {
           getID(`saidas-link-${i}`).value = link[j];
         }
 
-        const regiao = FIRESTORE_PLACES_DATA.saidas.regiao;
+        const regiao = FIRESTORE_DESTINOS_DATA.saidas.regiao;
         if (regiao && regiao[j]) {
           getID(`saidas-regiao-${i}`).value = regiao[j];
         }
 
-        const valor = FIRESTORE_PLACES_DATA.saidas.valor;
+        const valor = FIRESTORE_DESTINOS_DATA.saidas.valor;
         if (valor && valor[j]) {
-          getID(`saidas-valor-${i}`).value = valor[j];
+          _getValorDivAndLoadVisibility(valor[j], 'saidas', i).value .value = valor[j];
         }
 
-        const midia = FIRESTORE_PLACES_DATA.saidas.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.saidas.hyperlink.video;
         if (midia && midia[j]) {
           getID(`saidas-midia-${i}`).value = midia[j];
         }
 
-        const nota = FIRESTORE_PLACES_DATA.saidas.nota;
+        const nota = FIRESTORE_DESTINOS_DATA.saidas.nota;
         if (nota && nota[j]) {
           getID(`saidas-nota-${i}`).value = nota[j];
         }
@@ -223,62 +225,62 @@ function _loadSaidasData(FIRESTORE_PLACES_DATA) {
   }
 }
 
-function _loadTurismoData(FIRESTORE_PLACES_DATA) {
-  if (FIRESTORE_PLACES_DATA.modulos.turismo === true) {
+function _loadTurismoData(FIRESTORE_DESTINOS_DATA) {
+  if (FIRESTORE_DESTINOS_DATA.modulos.turismo === true) {
     getID('habilitado-turismo').checked = true;
     getID('habilitado-turismo-content').style.display = 'block';
     getID('turismo-adicionar-box').style.display = 'block';
 
-    const turismoSize = FIRESTORE_PLACES_DATA.turismo.nome.length;
+    const turismoSize = FIRESTORE_DESTINOS_DATA.turismo.nome.length;
     if (turismoSize > 0) {
       for (let i = 1; i <= turismoSize; i++) {
         const j = i - 1;
         _addTurismo();
 
-        const novo = FIRESTORE_PLACES_DATA.turismo.novo;
+        const novo = FIRESTORE_DESTINOS_DATA.turismo.novo;
         if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`turismo-novo-${i}`).checked = true;
           getID(`turismo-title-icon-${i}`).style.display = 'block';
         }
 
-        const nome = FIRESTORE_PLACES_DATA.turismo.nome;
+        const nome = FIRESTORE_DESTINOS_DATA.turismo.nome;
         if (nome && nome[j]) {
           getID(`turismo-nome-${i}`).value = nome[j];
           getID(`turismo-title-text-${i}`).innerText = nome[j];
         }
 
-        const emoji = FIRESTORE_PLACES_DATA.turismo.emoji;
+        const emoji = FIRESTORE_DESTINOS_DATA.turismo.emoji;
         if (emoji && emoji[j]) {
           getID(`turismo-emoji-${i}`).value = emoji[j];
           getID(`turismo-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
-        const descricao = FIRESTORE_PLACES_DATA.turismo.descricao;
+        const descricao = FIRESTORE_DESTINOS_DATA.turismo.descricao;
         if (descricao && descricao[j]) {
           getID(`turismo-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_PLACES_DATA.turismo.hyperlink.name;
+        const link = FIRESTORE_DESTINOS_DATA.turismo.hyperlink.name;
         if (link && link[j]) {
           getID(`turismo-link-${i}`).value = link[j];
         }
 
-        const regiao = FIRESTORE_PLACES_DATA.turismo.regiao;
+        const regiao = FIRESTORE_DESTINOS_DATA.turismo.regiao;
         if (regiao && regiao[j]) {
           getID(`turismo-regiao-${i}`).value = regiao[j];
         }
 
-        const valor = FIRESTORE_PLACES_DATA.turismo.valor;
+        const valor = FIRESTORE_DESTINOS_DATA.turismo.valor;
         if (valor && valor[j]) {
-          getID(`turismo-valor-${i}`).value = valor[j];
+          _getValorDivAndLoadVisibility(valor[j], 'turismo', i).value .value = valor[j];
         }
 
-        const midia = FIRESTORE_PLACES_DATA.turismo.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.turismo.hyperlink.video;
         if (midia && midia[j]) {
           getID(`turismo-midia-${i}`).value = midia[j];
         }
 
-        const nota = FIRESTORE_PLACES_DATA.turismo.nota;
+        const nota = FIRESTORE_DESTINOS_DATA.turismo.nota;
         if (nota && nota[j]) {
           getID(`turismo-nota-${i}`).value = nota[j];
         }
@@ -287,62 +289,62 @@ function _loadTurismoData(FIRESTORE_PLACES_DATA) {
   }
 }
 
-function _loadLojasData(FIRESTORE_PLACES_DATA) {
-  if (FIRESTORE_PLACES_DATA.modulos.lojas === true) {
+function _loadLojasData(FIRESTORE_DESTINOS_DATA) {
+  if (FIRESTORE_DESTINOS_DATA.modulos.lojas === true) {
     getID('habilitado-lojas').checked = true;
     getID('habilitado-lojas-content').style.display = 'block';
     getID('lojas-adicionar-box').style.display = 'block';
 
-    const lojasSize = FIRESTORE_PLACES_DATA.lojas.nome.length;
+    const lojasSize = FIRESTORE_DESTINOS_DATA.lojas.nome.length;
     if (lojasSize > 0) {
       for (let i = 1; i <= lojasSize; i++) {
         const j = i - 1;
         _addLojas();
 
-        const novo = FIRESTORE_PLACES_DATA.lojas.novo;
+        const novo = FIRESTORE_DESTINOS_DATA.lojas.novo;
         if (novo && novo[j] && (novo[j] === '✔' || novo[j] === true)) {
           getID(`lojas-novo-${i}`).checked = true;
           getID(`lojas-title-icon-${i}`).style.display = 'block';
         }
 
-        const nome = FIRESTORE_PLACES_DATA.lojas.nome;
+        const nome = FIRESTORE_DESTINOS_DATA.lojas.nome;
         if (nome && nome[j]) {
           getID(`lojas-nome-${i}`).value = nome[j];
           getID(`lojas-title-text-${i}`).innerText = nome[j];
         }
 
-        const emoji = FIRESTORE_PLACES_DATA.lojas.emoji;
+        const emoji = FIRESTORE_DESTINOS_DATA.lojas.emoji;
         if (emoji && emoji[j]) {
           getID(`lojas-emoji-${i}`).value = emoji[j];
           getID(`lojas-title-text-${i}`).innerText += ` ${emoji[j]}`;
         }
 
-        const descricao = FIRESTORE_PLACES_DATA.lojas.descricao;
+        const descricao = FIRESTORE_DESTINOS_DATA.lojas.descricao;
         if (descricao && descricao[j]) {
           getID(`lojas-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_PLACES_DATA.lojas.hyperlink.name;
+        const link = FIRESTORE_DESTINOS_DATA.lojas.hyperlink.name;
         if (link && link[j]) {
           getID(`lojas-link-${i}`).value = link[j];
         }
 
-        const regiao = FIRESTORE_PLACES_DATA.lojas.regiao;
+        const regiao = FIRESTORE_DESTINOS_DATA.lojas.regiao;
         if (regiao && regiao[j]) {
           getID(`lojas-regiao-${i}`).value = regiao[j];
         }
 
-        const valor = FIRESTORE_PLACES_DATA.lojas.valor;
+        const valor = FIRESTORE_DESTINOS_DATA.lojas.valor;
         if (valor && valor[j]) {
-          getID(`lojas-valor-${i}`).value = valor[j];
+          _getValorDivAndLoadVisibility(valor[j], 'lojas', i).value .value = valor[j];
         }
 
-        const midia = FIRESTORE_PLACES_DATA.lojas.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.lojas.hyperlink.video;
         if (midia && midia[j]) {
           getID(`lojas-midia-${i}`).value = midia[j];
         }
 
-        const nota = FIRESTORE_PLACES_DATA.lojas.nota;
+        const nota = FIRESTORE_DESTINOS_DATA.lojas.nota;
         if (nota && nota[j]) {
           getID(`lojas-nota-${i}`).value = nota[j];
         }
@@ -351,15 +353,15 @@ function _loadLojasData(FIRESTORE_PLACES_DATA) {
   }
 }
 
-function _loadMapaData(FIRESTORE_PLACES_DATA) {
+function _loadMapaData(FIRESTORE_DESTINOS_DATA) {
   const mapaLink = getID('mapa-link');
 
-  if (FIRESTORE_PLACES_DATA.modulos.mapa === true) {
+  if (FIRESTORE_DESTINOS_DATA.modulos.mapa === true) {
     getID('habilitado-mapa').checked = true;
     getID('habilitado-mapa-content').style.display = 'block';
     mapaLink.setAttribute('required', "");
 
-    const mapa = FIRESTORE_PLACES_DATA.myMaps;
+    const mapa = FIRESTORE_DESTINOS_DATA.myMaps;
     if (mapa) {
       mapaLink.value = mapa;
     }

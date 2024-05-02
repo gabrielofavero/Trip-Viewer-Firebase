@@ -206,15 +206,15 @@ function _loadModules() {
   // Destinos
   if (FIRESTORE_DATA.modulos.destinos) {
     _loadDestinationsSelect();
-    _loadDestinationsHTML(DESTINOS[0].destinos);
+    _loadDestinationsHTML(DESTINOS[0]);
 
-    CALL_SYNC.push(_loadDestinations);
+    CALL_SYNC.push(_loadDestinos);
 
   } else if (FIRESTORE_DATA.modulos.lineup) {
     _loadDestinationsSelect(true);
-    _loadDestinationsHTML(DESTINOS[0].destinos);
+    _loadDestinationsHTML(DESTINOS[0]);
 
-    CALL_SYNC.push(_loadDestinations);
+    CALL_SYNC.push(_loadDestinos);
 
     getID('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
     getID('dTitle').innerHTML = "Lineup";
