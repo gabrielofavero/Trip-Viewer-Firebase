@@ -1,19 +1,27 @@
 const VALORES_KEYS = ['-', '$', '$$', '$$$', '$$$$', 'default'];
-var MOEDA_OPTIONS = '';
+const DESTINOS_CATEGORIAS = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas'];
+
+var VALOR_OPTIONS = '';
+var SELECT_REGIOES = {
+    'restaurantes': [],
+    'lanches': [],
+    'saidas': [],
+    'turismo': [],
+    'lojas': []
+}
 
 // Moeda
 function _loadCurrencySelects() {
     _loadMoedaOptions();
-    const categorias = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas'];
     
-    for (const categoria of categorias) {
+    for (const categoria of DESTINOS_CATEGORIAS) {
         const childs = _getChildIDs(`${categoria}-box`);
         for (const child of childs) {
             const i = child.split('-').pop();
-            if (MOEDA_OPTIONS) {
+            if (VALOR_OPTIONS) {
                 const select = getID(`${categoria}-valor-${i}`);
                 const value = select.value;
-                select.innerHTML = MOEDA_OPTIONS;
+                select.innerHTML = VALOR_OPTIONS;
                 select.value = value;
             } else {
                 getID(`${categoria}-valor-${i}`).style.display = 'none';
@@ -25,25 +33,25 @@ function _loadCurrencySelects() {
 
 function _loadMoedaOptions() {
     const moeda = getID('moeda').value;
-    MOEDA_OPTIONS = '';
+    VALOR_OPTIONS = '';
 
     if (moeda != 'outra' && CONFIG.destinos.currency[moeda]) {  
         for (const categoria of VALORES_KEYS) {
-            MOEDA_OPTIONS += `<option value="${categoria}">${CONFIG.destinos.currency[moeda][categoria]}</option>`;
+            VALOR_OPTIONS += `<option value="${categoria}">${CONFIG.destinos.currency[moeda][categoria]}</option>`;
         }
-        if (MOEDA_OPTIONS) {
-            MOEDA_OPTIONS += '<option value="outro">Outro</option>';
+        if (VALOR_OPTIONS) {
+            VALOR_OPTIONS += '<option value="outro">Outro</option>';
         }
     }
 }
 
 function _getValorVisibility() {
-    if (MOEDA_OPTIONS) return 'block';
+    if (VALOR_OPTIONS) return 'block';
     else return 'none';
 }
 
 function _getOutroValorVisibility() {
-    if (MOEDA_OPTIONS) return 'none';
+    if (VALOR_OPTIONS) return 'none';
     else return 'block';
 }
 
@@ -51,11 +59,31 @@ function _getValorDivAndLoadVisibility(valor, categoria, i) {
     const valorDiv = getID(`${categoria}-valor-${i}`);
     const outroValorDiv = getID(`${categoria}-outro-valor-${i}`);
     
-    if (MOEDA_OPTIONS && VALORES_KEYS.includes(valor)) {
+    if (VALOR_OPTIONS && VALORES_KEYS.includes(valor)) {
         return valorDiv;
     } else {
         valorDiv.value = 'outro';
         outroValorDiv.style.display = 'block';
         return outroValorDiv;
     }
+}
+
+// Região
+function _regiaoSelectAction(categoria, init = false) {
+    let copy = SELECT_REGIOES[categoria];
+    SELECT_REGIOES[categoria] = _getUpdatedDynamicSelectArray(categoria, 'regiao');
+    _dynamicSelectAction(categoria, 'regiao', copy, SELECT_REGIOES[categoria], init);
+}
+
+function _loadRegiaoListeners(i, categoria) {
+    // Dynamic Select: Categoria
+    getID(`${categoria}-regiao-select-${i}`).addEventListener('change', function () {
+        _regiaoSelectAction(categoria);
+    });
+    getID(`${categoria}-regiao-${i}`).addEventListener('change', function () {
+        _regiaoSelectAction(categoria);
+    });
+
+    // Load Listener Actions
+    _regiaoSelectAction(categoria, true);
 }

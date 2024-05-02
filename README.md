@@ -7,7 +7,7 @@
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 30    | 23     | 7         |
-| 🏆     | Feature  | F000    | 49    | 43     | 6         |
+| 🏆     | Feature  | F000    | 49    | 44     | 5         |
 | 📈     | Melhoria | M000    | 29    | 20     | 9         |
 | ⚔️   | Épico   | E000    | 20    | 12     | 8         |
 
@@ -19,7 +19,7 @@
 
 ## Doing
 
-- 🏆 **F049:** Dynamic Select de "Região" em editar-destinos.html
+
 
 ## To-Do
 
@@ -95,6 +95,7 @@
 - 🏆 **F048:** Dynamic Select de "Valor" em editar-destinos.html
 - 📈 **M029:** Otimizar destinos.html para receber do localStorage apenas os dados necessários
 - 🐞 **B030:** Correção de erros em novas viagens de editar-viagens.html
+- 🏆 **F049:** Dynamic Select de "Região" em editar-destinos.html
 
 ### Abril 2024
 

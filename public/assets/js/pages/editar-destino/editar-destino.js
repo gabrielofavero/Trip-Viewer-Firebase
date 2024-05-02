@@ -158,6 +158,8 @@ function _applyDestinosListeners(i, categoria) {
           outroValor.required = false;
       }
   });
+
+  _loadRegiaoListeners(i, categoria);
 }
 
 function _accordionDestinosOnChange(i, type) {

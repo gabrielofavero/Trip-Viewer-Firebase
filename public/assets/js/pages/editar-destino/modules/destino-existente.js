@@ -93,6 +93,7 @@ function _loadRestaurantesData(FIRESTORE_DESTINOS_DATA) {
           getID(`restaurantes-nota-${i}`).value = nota[j];
         }
       }
+      _regiaoSelectAction('restaurantes');
     }
   }
 }
@@ -157,6 +158,7 @@ function _loadLanchesData(FIRESTORE_DESTINOS_DATA) {
           getID(`lanches-nota-${i}`).value = nota[j];
         }
       }
+      _regiaoSelectAction('lanches');
     }
   }
 }
@@ -221,6 +223,7 @@ function _loadSaidasData(FIRESTORE_DESTINOS_DATA) {
           getID(`saidas-nota-${i}`).value = nota[j];
         }
       }
+      _regiaoSelectAction('saidas');
     }
   }
 }
@@ -286,6 +289,7 @@ function _loadTurismoData(FIRESTORE_DESTINOS_DATA) {
         }
       }
     }
+    _regiaoSelectAction('turismo');
   }
 }
 
@@ -349,6 +353,7 @@ function _loadLojasData(FIRESTORE_DESTINOS_DATA) {
           getID(`lojas-nota-${i}`).value = nota[j];
         }
       }
+      _regiaoSelectAction('lojas');
     }
   }
 }

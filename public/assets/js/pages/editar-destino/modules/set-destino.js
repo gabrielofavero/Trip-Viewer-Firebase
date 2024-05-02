@@ -113,7 +113,7 @@ function _buildDestinoCategoryObject(type) {
         const link = getID(`${type}-link-${j}`).value;
         result.hyperlink.name.push(link);
 
-        const regiao = getID(`${type}-regiao-${j}`).value;
+        const regiao = _getDynamicSelectValue(type, 'regiao', j);
         result.regiao.push(regiao);
 
         const valorDiv = getID(`${type}-valor-${j}`);

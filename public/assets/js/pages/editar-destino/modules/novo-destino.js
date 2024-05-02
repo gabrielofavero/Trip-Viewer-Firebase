@@ -50,13 +50,14 @@ function _addRestaurantes() {
   
           <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <input id="restaurantes-regiao-${i}" type="text" placeholder="Sapucaí" />
+            <select id="restaurantes-regiao-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="restaurantes-regiao-${i}" type="text" placeholder="Sapucaí" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
             <select id="restaurantes-valor-${i}" style="display: ${_getValorVisibility()};">
-            ${MOEDA_OPTIONS}
+            ${VALOR_OPTIONS}
           </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="restaurantes-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
@@ -149,14 +150,15 @@ function _addLanches() {
   
           <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <input id="lanches-regiao-${i}" type="text" placeholder="Jardim Paulista" />
+            <select id="lanches-regiao-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="lanches-regiao-${i}" type="text" placeholder="Jardim Paulista" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
             <select id="lanches-valor-${i}" style="display: ${_getValorVisibility()};">
-            ${MOEDA_OPTIONS}
-          </select>
+              ${VALOR_OPTIONS}
+            </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lanches-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
@@ -249,13 +251,14 @@ function _addSaidas() {
   
           <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <input id="saidas-regiao-${i}" type="text" placeholder="Jardim Paulista" />
+            <select id="saidas-regiao-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="saidas-regiao-${i}" type="text" placeholder="Jardim Paulista" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
             <select id="saidas-valor-${i}" style="display: ${_getValorVisibility()};">
-            ${MOEDA_OPTIONS}
+            ${VALOR_OPTIONS}
           </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="saidas-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
@@ -348,13 +351,14 @@ function _addTurismo() {
   
           <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <input id="turismo-regiao-${i}" type="text" placeholder="Centro da Cidade" />
+            <select id="turismo-regiao-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="turismo-regiao-${i}" type="text" placeholder="Centro da Cidade" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
             <select id="turismo-valor-${i}" style="display: ${_getValorVisibility()};">
-              ${MOEDA_OPTIONS}
+              ${VALOR_OPTIONS}
             </select>
             <input style="display: ${_getOutroValorVisibility()}" sclass="nice-form-group" id="turismo-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
@@ -449,14 +453,15 @@ function _addLojas() {
   
           <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <input id="lojas-regiao-${i}" type="text" placeholder="Las Vegas Strip (Norte)" />
+            <select id="lojas-regiao-select-${i}" style="display: none;"></select>
+            <input class="nice-form-group" id="lojas-regiao-${i}" type="text" placeholder="Las Vegas Strip (Norte)" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
             <select id="lojas-valor-${i}" style="display: ${_getValorVisibility()};">
-            ${MOEDA_OPTIONS}
-          </select>
+              ${VALOR_OPTIONS}
+            </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lojas-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
@@ -495,5 +500,6 @@ function _addLojas() {
     `);
 
   _applyDestinosListeners(i, 'lojas');
+  
   _addDragListeners('lojas');
 }
