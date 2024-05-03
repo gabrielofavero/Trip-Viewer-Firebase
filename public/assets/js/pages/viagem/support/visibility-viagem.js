@@ -70,8 +70,8 @@ function _adjustCardsHeights() {
     }
 }
 
-function _adjustSingleCardsHeights(tipo) {
-    let innerID = tipo === 'hospedagens' ? 'nome' : 'box';
+function _adjustSingleCardsHeights(tipo, second=false) {
+    let innerID = (tipo === 'hospedagens' && !second) ? 'nome' : 'box';
 
     const sliders = _getChildIDs(`${tipo}-wrapper`);
     let maxHeight = 0;
@@ -79,17 +79,25 @@ function _adjustSingleCardsHeights(tipo) {
     for (const slider of sliders) {
         const j = slider.split('-').pop();
         const box = getID(`${tipo}-${innerID}-${j}`);
-        
-        box.style.height = 'auto';
 
-        const height = box.offsetHeight;
-        if (height > maxHeight) {
-            maxHeight = height;
+        if (box) {
+            box.style.height = 'auto';
+            const height = box.offsetHeight;
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
         }
     }
   
     for (const slider of sliders) {
         const j = slider.split('-').pop();
-        getID(`${tipo}-${innerID}-${j}`).style.height = `${maxHeight}px`;
+        const div = getID(`${tipo}-${innerID}-${j}`);
+        if (div) {
+            div.style.height = `${maxHeight}px`;
+        }
+    }
+
+    if (tipo === 'hospedagens' && !second) {
+        _adjustSingleCardsHeights('hospedagens', true);
     }
   }
