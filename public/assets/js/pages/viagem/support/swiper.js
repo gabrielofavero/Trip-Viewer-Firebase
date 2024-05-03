@@ -1,22 +1,19 @@
-function _initSwipers(className = 'testimonials-slider') {
-    // Get the element
-    const swiperElements = document.querySelectorAll(`.${className}`);
+function _initSwiper(id) {
+    const swiper = getID(`${id}-swiper`);
 
-    for (const swiperElement of swiperElements) {
-        swiperElement.style.setProperty('--swiper-navigation-color', THEME_COLOR);
-        swiperElement.style.setProperty('--swiper-pagination-color', THEME_COLOR);
+    swiper.style.setProperty('--swiper-navigation-color', THEME_COLOR);
+    swiper.style.setProperty('--swiper-pagination-color', THEME_COLOR);
 
-        new Swiper(swiperElement, {
-            speed: 600,
-            loop: false,
-            spaceBetween: 30,
-            pagination: {
-                el: '.swiper-pagination',
-                type: 'bullets',
-                clickable: true
-            }
-        });
-    }
+    new Swiper(swiper, {
+        speed: 600,
+        loop: false,
+        spaceBetween: 30,
+        pagination: {
+            el: `.${id}-pagination`,
+            type: 'bullets',
+            clickable: true
+        }
+    });
 }
 
 function _loadSwiperHTML(id, itensHTML) {

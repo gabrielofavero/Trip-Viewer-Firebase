@@ -15,7 +15,6 @@ function _loadTransporte() {
   }
 
   _buildTransporteSwiper(swiperData);
-  _initSwipers();
 }
 
 
@@ -141,14 +140,15 @@ function _buildTransporteSwiper(swiperData) {
     const cnt = getID(`transporte-${key}-content`)
     if (swiperData[key].length > 0 || data) {
       div.style.display = "block";
-      cnt.innerHTML = `<div id="transporte-swiper-${key}" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+      cnt.innerHTML = `<div id="transporte-${key}-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                         <div class="swiper-wrapper" id="transporte-${key}-wrapper">
                           ${data || swiperData[key].join("")}
                         </div>
-                        <div class="swiper-pagination"></div>
+                        <div class="swiper-pagination transporte-${key}-pagination"></div>
                       </div>`;
 
-                      ADJUST_HEIGHT_CARDS.push(`transporte-${key}`)
+                      ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
+                      _initSwiper(`transporte-${key}`)
     }
   }
 }

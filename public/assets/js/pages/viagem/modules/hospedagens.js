@@ -7,7 +7,6 @@ function _loadHospedagens() {
   }
 
   _buildHospedagensSwiper(swiperData);
-  _initSwipers();
 }
 
 function _getHospedagensHTML(i) {
@@ -84,7 +83,8 @@ function _buildHospedagensSwiper(swiperData) {
                                           <div class="swiper-wrapper" id="hospedagens-wrapper">
                                             ${swiperData.join("")}
                                           </div>
-                                          <div class="swiper-pagination"></div>
+                                          <div class="swiper-pagination hospedagens-pagination"></div>
                                         </div>`;
-                                        ADJUST_HEIGHT_CARDS.push('hospedagens')
+  ADJUST_HEIGHT_CARDS.push('hospedagens')
+  _initSwiper('hospedagens');
 }
