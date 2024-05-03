@@ -1,97 +1,90 @@
-// ======= Transportation JS =======
+function _loadHospedagens() {
+  let swiperData = []
 
-// ======= LOADERS =======
-function _loadStayModule() {
-  let stayData = [];
-
-  _loadStayLogoBoxes();
   for (let i = 0; i < FIRESTORE_DATA.hospedagens.hospedagem.length; i++) {
-    const title = FIRESTORE_DATA.hospedagens.hospedagem[i];
-    const endereco = FIRESTORE_DATA.hospedagens.endereco[i];
-
-    const dataCheckIn = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkin);
-    const dataCheckOut = _convertFromFirestoreDate(FIRESTORE_DATA.hospedagens.datas[i].checkout)
-
-    const dataFormattedCheckIn = _jsDateToDate(dataCheckIn, "dd/mm/yyyy");
-    const dataFormattedCheckOut = _jsDateToDate(dataCheckOut, "dd/mm/yyyy");
-
-    const horarioCheckIn = _jsDateToTime(dataCheckIn);
-    const horarioCheckOut = _jsDateToTime(dataCheckOut);
-
-
-    const checkInOut = `Check-in ${dataFormattedCheckIn} às ${horarioCheckIn} e check-out ${dataFormattedCheckOut} às ${horarioCheckOut}`;
-
-    const info = {
-      title: title,
-      text: `${endereco}. ${checkInOut}`
-    }
-    stayData.push(info)
+    const htmlContent = _getHospedagensHTML(i);
+    swiperData.push(htmlContent);
   }
-  _loadStayHTML(stayData);
+
+  _buildHospedagensSwiper(swiperData);
+  _initSwipers();
 }
 
-function _loadStayLogoBoxes() {
-  const logoBoxes = getID('logoBoxesStay');
-  let innerHTML = "";
-  let added = [];
-  let group = [];
+function _getHospedagensHTML(i) {
+  const j = i + 1;
 
-  const hospedagens = FIRESTORE_DATA.hospedagens.hospedagem;
-  const links = FIRESTORE_DATA.hospedagens.links;
-  const codes = FIRESTORE_DATA.hospedagens.codigos;
-
-  for (let i = 0; i < hospedagens.length; i++) {
-    let hospedagem = hospedagens[i];
-
-    if (added.includes(hospedagem)) continue;
-
-    added.push(hospedagem);
-
-    let link = links[i];
-    let img;
-    let generic = "";
-
-    if (codes[i]) {
-      img = `assets/img/stays/${codes[i]}.png`
-    } else {
-      img = `assets/img/stays/generico.png`
-      generic = " generic";
-    }
-
-    const text = `<a href="${link}" target="_blank"><img class="transpStayBox${generic}" src="${img}"></a>`
-
-    if (!group.includes(text)) {
-      group.push(text);
-    }
-
-    if (group.length == 2 || i == hospedagens.length - 1) {
-      innerHTML += `<div class="logoBox">${group.join("")}</div>`;
-      group = [];
-    }
+  const hospedagem = {
+    cafe: FIRESTORE_DATA.hospedagens.cafe ? FIRESTORE_DATA.hospedagens.cafe[i] : false,
+    checkIn: _getHospedagensData(FIRESTORE_DATA.hospedagens.datas[i].checkin),
+    checkOut: _getHospedagensData(FIRESTORE_DATA.hospedagens.datas[i].checkout),
+    descricao: FIRESTORE_DATA.hospedagens.descricao ? FIRESTORE_DATA.hospedagens.descricao[i] : "",
+    endereco: FIRESTORE_DATA.hospedagens.enderecos ? FIRESTORE_DATA.hospedagens.enderecos[i] : "",
+    hospedagem: FIRESTORE_DATA.hospedagens.hospedagem ? FIRESTORE_DATA.hospedagens.hospedagem[i] : "",
+    imagem: FIRESTORE_DATA.hospedagens.imagens ? FIRESTORE_DATA.hospedagens.imagens[i] : "",
+    link: FIRESTORE_DATA.hospedagens.links ? FIRESTORE_DATA.hospedagens.links[i] : "",
   }
 
-  logoBoxes.innerHTML = innerHTML;
-
+  return `<div class="swiper-slide" id="hospedagens-slide-${j}">
+            <div class="testimonial-item">
+              <div class="hotel-box" id="hospedagens-box-${j}">
+              <div class="hotel-img" ${_getHospedagemImagem(hospedagem.imagem)}>
+                <div class="hotel-img-text-container">
+                  <div class="hotel-img-text" style="display: ${hospedagem.cafe ? 'block' : 'none'}">
+                    <i class="bx bx-coffee-togo"></i> Café da Manhã
+                  </div>
+                </div>
+              </div>
+              <div class="hotel-content">
+                <div class="hotel-title">
+                  <div class="left-title">
+                    <div class="hotel-name" id="hospedagens-nome-${j}">
+                      ${hospedagem.hospedagem}
+                      <div>
+                        <i style="display: ${hospedagem.link ? 'block' : 'none'}" class="iconify external-link" 
+                        data-icon="tabler:external-link" onclick="window.open('${hospedagem.link}', '_blank')"></i>
+                      </div> 
+                    </div>
+                    <div class="hotel-address" style="display: ${hospedagem.endereco ? 'block' : 'none'}">
+                      <i class="bx bxs-map color-icon"></i> 
+                      ${hospedagem.endereco}
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel-text">
+                  <div class="hotel-description" style="display: ${hospedagem.descricao ? 'block' : 'none'}">
+                    <i class="bx bxs-hotel color-icon"></i> 
+                    ${hospedagem.descricao}
+                  </div>
+                    <div class="hotel-description">
+                      <div>
+                        <i class="bi bi-chevron-right color-icon"></i><strong>Check-in:</strong> <span>${hospedagem.checkIn}</span> 
+                      </div>
+                      <div>
+                        <i class="bi bi-chevron-right color-icon"></i><strong>Check-out:</strong> <span>${hospedagem.checkOut}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`
 }
 
-function _loadStayHTML(stayData) {
-  const s1 = getID("s1");
-  const s2 = getID("s2");
+function _getHospedagemImagem(imagem) {
+  return imagem ? `style="background-image: url('${imagem}');"` : `style="display: none;"`;
+}
 
-  const size1 = Math.ceil(stayData.length / 2);
-  const size2 = stayData.length - size1;
+function _getHospedagensData(dataFirestore) {
+  const date = _convertFromFirestoreDate(dataFirestore);
+  return `${_jsDateToDate(date)}, ${_jsDateToTime(date)}`;
+}
 
-  let innerHTML1 = "";
-  let innerHTML2 = "";
-
-  for (let i = 0; i < size1; i++) {
-    innerHTML1 += `<li><i class="bi bi-chevron-right"></i><div><strong>${stayData[i].title}:</strong><span>${stayData[i].text}</span></div></li>`;
-  }
-
-  for (let i = 0; i < size2; i++) {
-    innerHTML2 += `<li><i class="bi bi-chevron-right"></i><div><strong>${stayData[i + size1].title}:</strong><span>${stayData[i + size1].text}</span></div></li>`;
-  }
-
-  s1.innerHTML = innerHTML1;
-  s2.innerHTML = innerHTML2;
+function _buildHospedagensSwiper(swiperData) {
+  getID(`hospedagens-box`).innerHTML = `<div id="hospedagens-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                                          <div class="swiper-wrapper" id="hospedagens-wrapper">
+                                            ${swiperData.join("")}
+                                          </div>
+                                          <div class="swiper-pagination"></div>
+                                        </div>`;
+                                        ADJUST_HEIGHT_CARDS.push('hospedagens')
 }

@@ -9,35 +9,36 @@ function _loadTransporte() {
   }
 
   for (let i = 0; i < FIRESTORE_DATA.transportes.datas.length; i++) {
-    const htmlContent = _getTransporteHTML(i + 1);
-    swiperData[FIRESTORE_DATA.transportes.idaVolta[i]].push(htmlContent);
+    const idaVolta = FIRESTORE_DATA.transportes.idaVolta[i];
+    const htmlContent = _getTransporteHTML(i + 1, idaVolta);
+    swiperData[idaVolta].push(htmlContent);
   }
 
   _buildTransporteSwiper(swiperData);
-  _initSwipers('testimonials-slider');
+  _initSwipers();
 }
 
 
-function _getTransporteHTML(j) {
+function _getTransporteHTML(j, idaVolta) {
   const empresa = _getEmpresaObj(j);
   return `<div class="swiper-slide" id="transporte-slide-${j}">
             <div class="testimonial-item">
-                <div class="flight-box" id="fb${j}">
+                <div class="flight-box" id="transporte-${idaVolta}-box-${j}">
                   <div class="flight-diagram">
                     <div class="flight-title">
                       ${_getImagemHTML(j, empresa)}
                       ${_getReservaHTML(j, empresa)}
                     </div>
-                    <div class="flight-text" id="ft${j}">
-                      <div class="left-text" id="lt${j}">
+                    <div class="flight-text">
+                      <div class="left-text">
                         ${_getPartidaChegadaHTML(j, "partida")}
                       </div>
-                      <div class="center-text" id="ct${j}">
-                        <i class="flight-line">_________</i>
+                      <div class="center-text">
+                        <i class="flight-line" ${_adjustFlightLine(j)}">_________</i>
                         <i class="iconify flight-icon" data-icon="${_getTransporteIcon(j)}"></i>
                         ${_getDuracaoHTML(j)}
                       </div>
-                      <div class="right-text" id="rt${j}">
+                      <div class="right-text">
                         ${_getPartidaChegadaHTML(j, "chegada")}
                       </div>
                     </div>
@@ -80,7 +81,11 @@ function _getImagemHTML(j, empresa) {
 
 function _getReservaHTML(j, empresa) {
   let reserva = FIRESTORE_DATA.transportes.reservas[j - 1];
-  const link = FIRESTORE_DATA.transportes.links[j - 1] || empresa.site;
+  let link = empresa.site || "";
+
+  if (FIRESTORE_DATA.transportes.links && FIRESTORE_DATA.transportes.links[j - 1]) {
+    link = FIRESTORE_DATA.transportes.links[j - 1];
+  }
 
   if (!reserva) return ""
   reserva = reserva[0] === "#" ? reserva.slice(1) : reserva;
@@ -108,9 +113,15 @@ function _getTransporteIcon(j) {
 }
 
 function _getDuracaoHTML(j) {
-  const duracao = FIRESTORE_DATA.transportes.duracoes[j - 1];
-  if (!duracao) return "";
+  const duracao = FIRESTORE_DATA.transportes.duracoes ? FIRESTORE_DATA.transportes.duracoes[j - 1] : "";
+  if (!duracao) return ""
   else return `<div class="flight-duration">${_jsTimeToVisualTime(duracao)}</div>`;
+}
+
+function _adjustFlightLine(j) {
+  const duracao = FIRESTORE_DATA.transportes.duracoes ? FIRESTORE_DATA.transportes.duracoes[j - 1] : "";
+  if (!duracao) return "style='transform: translateY(-33.75%);'";
+  else return "";
 }
 
 function _buildTransporteSwiper(swiperData) {
@@ -131,11 +142,13 @@ function _buildTransporteSwiper(swiperData) {
     if (swiperData[key].length > 0 || data) {
       div.style.display = "block";
       cnt.innerHTML = `<div id="transporte-swiper-${key}" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                        <div class="swiper-wrapper">
+                        <div class="swiper-wrapper" id="transporte-${key}-wrapper">
                           ${data || swiperData[key].join("")}
                         </div>
                         <div class="swiper-pagination"></div>
                       </div>`;
+
+                      ADJUST_HEIGHT_CARDS.push(`transporte-${key}`)
     }
   }
 }

@@ -441,3 +441,23 @@ a:hover {
 .flight-line {
   color: #414040;
 }
+
+.flight-icon {
+  color: #7367b4;
+}
+
+.hotel-box {
+  color: #E2E2E2;
+  border: 0.5px solid #414040;
+}
+
+.hotel-img {
+  background-color: #a5a5a5;
+}
+.hotel-title {
+  border-bottom: 0.5px solid #414040;
+}
+
+.external-link {
+  color: #92caff;
+}

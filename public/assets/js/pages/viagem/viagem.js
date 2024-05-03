@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('body').css('overflow', 'auto');
 
         setTimeout(() => {
-
+          _adjustCardsHeights();
           _adjustPortfolioHeight();
           _refreshCategorias();
         }, 1000);

@@ -1,3 +1,5 @@
+var ADJUST_HEIGHT_CARDS = [];
+
 function _applyCustomColorsViagem() {
     getID("trip-viewer-text").style.color = THEME_COLOR;
     _applyCustomColorsPreloader();
@@ -47,9 +49,47 @@ function _applyCustomColorsViagem() {
     _addCSSRule('.calendarTrip:hover', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.calendarTrip:active', 'background-color', `${THEME_COLOR} !important`);
     _addCSSRule('.flight-icon', 'color', `${THEME_COLOR} !important`);
+    _addCSSRule('.external-link', 'color', THEME_COLOR);
+    _addCSSRule('.color-icon', 'color', THEME_COLOR);
 }
 
 function _applyCustomColorsPreloader(){
     _addCSSRule('#preloader:before', 'border-right-color', THEME_COLOR);
     _addCSSRule('#preloader:before', 'border-left-color', THEME_COLOR);
 }
+
+function _loadAdjustCardsHeightsListener() {
+    window.addEventListener('resize', _adjustCardsHeights);
+}
+
+function _adjustCardsHeights() {
+    if (ADJUST_HEIGHT_CARDS.length > 0) {
+        for (const card of ADJUST_HEIGHT_CARDS) {
+            _adjustSingleCardsHeights(card);
+        }
+    }
+}
+
+function _adjustSingleCardsHeights(tipo) {
+    let innerID = tipo === 'hospedagens' ? 'nome' : 'box';
+
+    const sliders = _getChildIDs(`${tipo}-wrapper`);
+    let maxHeight = 0;
+  
+    for (const slider of sliders) {
+        const j = slider.split('-').pop();
+        const box = getID(`${tipo}-${innerID}-${j}`);
+        
+        box.style.height = 'auto';
+
+        const height = box.offsetHeight;
+        if (height > maxHeight) {
+            maxHeight = height;
+        }
+    }
+  
+    for (const slider of sliders) {
+        const j = slider.split('-').pop();
+        getID(`${tipo}-${innerID}-${j}`).style.height = `${maxHeight}px`;
+    }
+  }

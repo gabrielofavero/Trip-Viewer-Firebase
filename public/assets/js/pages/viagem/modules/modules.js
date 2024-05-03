@@ -19,6 +19,7 @@ function _start() {
   // Visibilidade
   _loadVisibility();
   _loadToggle();
+  _loadAdjustCardsHeightsListener();
 
   // Cabeçalho
   _loadHeader();
@@ -184,7 +185,7 @@ function _loadModules() {
 
   // Hospedagem
   if (FIRESTORE_DATA.modulos.hospedagens) {
-    CALL_SYNC.push(_loadStayModule);
+    CALL_SYNC.push(_loadHospedagens);
   } else {
     getID("stayNav").innerHTML = "";
     getID("stay").innerHTML = "";
