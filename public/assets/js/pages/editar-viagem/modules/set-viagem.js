@@ -235,7 +235,7 @@ function _buildTransporteObject() {
         result.duracoes.push(valueDuracao);
 
         const valueEmpresa = _getValueEmpresa(j);
-        result.empresas.push(valueEmpresa.toLowerCase());
+        result.empresas.push(valueEmpresa);
 
         const divReserva = getID(`reserva-transp-${j}`);
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
@@ -281,6 +281,7 @@ function _getValueEmpresa(j) {
 
 function _buildHospedagemObject() {
     let result = {
+        cafe: [],
         codigos: [],
         datas: [],
         descricao: [],
@@ -288,7 +289,6 @@ function _buildHospedagemObject() {
         hospedagem: [],
         imagens: [],
         links: [],
-        reservas: [],
         viagem: ""
     }
 
@@ -296,6 +296,9 @@ function _buildHospedagemObject() {
 
     for (var i = 0; i < childIds.length; i++) {
         const j = parseInt(childIds[i].split("-")[1]);
+
+        const divCafe = getID(`hospedagens-cafe-${j}`);
+        result.cafe.push(divCafe.checked);
 
         const divNome = getID(`hospedagens-nome-${j}`);
         const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
@@ -329,10 +332,6 @@ function _buildHospedagemObject() {
         const divDescricao = getID(`hospedagens-descricao-${j}`);
         const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
         result.descricao.push(valueDescricao);
-
-        const divReserva = getID(`reserva-hospedagens-${j}`);
-        const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
-        result.reservas.push(valueReserva);
 
         const divLink = getID(`link-reserva-hospedagens-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";

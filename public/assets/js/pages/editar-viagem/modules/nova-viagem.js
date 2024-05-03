@@ -252,7 +252,6 @@ function _addTransporte() {
       `);
 
   _addDragListeners('transporte');
-  _loadTransporteVisibility(i);
   _addTransporteListeners(i);
   _addRemoveChildListener('transporte', i);
 }
@@ -274,6 +273,13 @@ function _addHospedagens() {
       <div id="collapse-hospedagens-${i}" class="accordion-collapse collapse"
         aria-labelledby="heading-hospedagens-${i}" data-bs-parent="#hospedagens-box">
         <div class="accordion-body">
+          <div class="nice-form-group">
+            <input id="hospedagens-cafe-${i}" type="checkbox" class="switch">
+            <label for="hospedagens-cafe-${i}">
+              Café da Manhã Incluso
+            </label>
+          </div>
+
           <div class="nice-form-group">
             <label>Nome da Hospedagem</label>
             <input required id="hospedagens-nome-${i}" type="text" placeholder="Casa da Fernanda" />
@@ -307,11 +313,6 @@ function _addHospedagens() {
           <div class="nice-form-group">
             <label>Descrição <span class="opcional"> (Opcional)</span></label>
             <input id="hospedagens-descricao-${i}" type="text" placeholder="Quarto Duplo, camas King" />
-          </div>
-
-          <div class="nice-form-group">
-            <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="reserva-hospedagens-${i}" type="text" placeholder="#ABC123" />
           </div>
     
           <div class="nice-form-group">

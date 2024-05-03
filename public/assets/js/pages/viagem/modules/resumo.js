@@ -1,5 +1,5 @@
 function _loadResumo() {
-  const dias = Math.ceil((FIM.date - INICIO.date) / (1000 * 60 * 60 * 24));
+  const dias = Math.ceil((FIM.date - INICIO.date) / (1000 * 60 * 60 * 24)) + 1;
   const pessoas = FIRESTORE_DATA.quantidadePessoas;
 
   // Dado 1

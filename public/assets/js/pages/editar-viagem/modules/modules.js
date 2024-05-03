@@ -130,13 +130,6 @@ function _loadTransporteVisibility(i) {
         select.style.display = 'none';
         empresa.style.display = 'block';
     }
-
-    if (select.style.display == 'block' && empresa.style.display == 'block') {
-        empresa.style.marginTop = '30px';
-    } else {
-        empresa.style.marginTop = '0';
-
-    }
 }
 
 function _applyIdaVoltaVisibility() {

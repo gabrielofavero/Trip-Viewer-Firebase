@@ -207,11 +207,13 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
 
             const empresas = FIRESTORE_DATA.transportes.empresas;
             if (empresas && empresas[j]) {
+                _loadTransporteVisibility(i);
                 if (_getOptionsFromSelect(`empresa-select-${i}`).includes(empresas[j])) {
                     getID(`empresa-select-${i}`).value = empresas[j];
                 } else {
                     getID(`empresa-select-${i}`).value = 'outra';
-                    getID(`empresa-${i}`).value = _firstCharToUpperCase(empresas[j]);
+                    getID(`empresa-${i}`).value = empresas[j];
+                    _loadTransporteVisibility(i);
                 }
             }
 
@@ -255,6 +257,11 @@ function _loadHospedagemData(FIRESTORE_DATA) {
             const j = i - 1;
             _addHospedagens();
 
+            const cafe = FIRESTORE_DATA.hospedagens.cafe;
+            if (cafe && (cafe[j] === true || cafe[j] === false)) {
+                getID(`hospedagens-cafe-${i}`).checked = cafe;
+            }
+
             const hospedagemTitle = getID(`hospedagens-title-${i}`);
             const hospedagemNome = getID(`hospedagens-nome-${i}`);
 
@@ -289,11 +296,6 @@ function _loadHospedagemData(FIRESTORE_DATA) {
             const descricao = FIRESTORE_DATA.hospedagens.descricao[j];
             if (descricao) {
                 getID(`hospedagens-descricao-${i}`).value = descricao;
-            }
-
-            const reserva = FIRESTORE_DATA.hospedagens.reservas[j];
-            if (reserva) {
-                getID(`hospedagens-descricao-${i}`).value = reserva;
             }
 
             const linkReserva = FIRESTORE_DATA.hospedagens.links[j];
