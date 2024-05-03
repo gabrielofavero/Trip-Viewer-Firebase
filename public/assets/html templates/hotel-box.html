@@ -56,11 +56,12 @@
         }
 
         .hotel-img {
-            width: 150px;
+            width: 180px;
             position: relative;
             background-image: url('https://www.citystyleandliving.com/wordpress/wp-content/uploads/2019/01/outside.jpg');
             background-size: cover;
             background-position: center;
+            color: #fff; 
         }
 
         .hotel-img::before {
@@ -70,7 +71,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 10%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 10%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        .hotel-img-text-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 5px;
+        }
+
+        .hotel-img-text {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            text-align: center;
         }
 
         .hotel-content {
@@ -79,63 +94,41 @@
         }
 
         .hotel-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 10px;
             border-bottom: 1px solid #ddd;
         }
 
-        .left-title {
-            flex: 3;
-        }
-
-        .right-title {
-            flex: 2;
-            text-align: right;
-            align-self: flex-start;
-            font-weight: bold;
-            color: #505253;
-        }
-
-        .map-mobile {
-            display: none;
-        }
-
         .hotel-name {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
             color: #505253;
+            display: flex;
+            align-items: center;
         }
 
         .hotel-address {
             margin-top: 5px;
-            font-size: 13px;
-            color: #4F5051;
-        }
-
-        .hotel-map {
-            font-size: 13px;
-            margin-bottom: 5px;
-            margin-left: 17px;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
 
         .hotel-text {
-            font-size: 13px;
+            font-size: 16px;
             color: #3A3838;
-        }
-
-        .hotel-check-in {
-            margin-top: 10px;
-        }
-
-        .hotel-check-in,
-        .hotel-check-out {
-            margin-bottom: 5px;
         }
 
         .color-icon {
             color: #4299E1
+        }
+
+        .hotel-description {
+            margin-top: 10px;
+        }
+
+        .external-link {
+            color: #4299E1;
+            font-size: 20px;
+            margin-left: 5px;
         }
 
         @media (max-width: 800px) {
@@ -155,43 +148,11 @@
                 background-size: cover;
                 background-position: center;
             }
-
-            .hotel-title {
-                border-bottom: none;
-                margin-bottom: 0;
-            }
-
-            .left-title,
-            .right-title {
-                flex-basis: 50%;
-                flex-grow: 1;
-                text-align: left;
-            }
-
-            .right-title {
-                text-align: right;
-                font-weight: bold;
-                color: #505253;
-            }
-
-            .hotel-content {
-                padding: 20px;
-            }
-
-            .map-desktop {
-                display: none;
-            }
-
-            .map-mobile {
-                display: block;
-                border-bottom: 1px solid #ddd;
-                margin-bottom: 5px;
-            }
         }
 
-        @media (max-width: 350px) {
+        @media (max-width: 700px) {
             .hotel-box {
-                word-break: break-all;
+                width: 90%;
             }
         }
     </style>
@@ -205,65 +166,31 @@
     <main id="main" style="margin-top: 50px;">
 
         <div class="hotel-box" id="hb1">
-            <div class="hotel-img"></div>
+            <div class="hotel-img">
+                <div class="hotel-img-text-container">
+                    <div class="hotel-img-text">
+                        <i class="bx bx-coffee-togo"></i>
+                        Café da Manhã
+                    </div>
+                </div>
+            </div>
             <div class="hotel-content">
                 <div class="hotel-title" id="ht1">
                     <div class="left-title">
-                        <div class="hotel-name">Hotel Ibis Ibirapueraaa asdavasd asdf asd as s</div>
-                        <div class="map-desktop">
-                            <div class="hotel-address"><i class="bx bxs-map color-icon"></i> Avenida dos Imarés, 288
-                                Apto 221</div>
-                            <div class="hotel-map"><a href="#">Mostrar no Mapa</a></div>
-                        </div>
-                    </div>
-                    <div class="right-title">
-                        <div class="hotel-code">#ABC1231231</div>
-                        <div class="hotel-nights">2 noites</div>
+                        <div class="hotel-name">Hotel Ibis <i class="iconify external-link" data-icon="tabler:external-link"></i></div>
+                        <div class="hotel-address"><i class="bx bxs-map color-icon"></i> Avenida dos Imarés, 288 Apto 221</div>
                     </div>
                 </div>
                 <div class="hotel-text">
-                    <div class="map-mobile">
-                        <div class="hotel-address"><i class="bx bxs-map color-icon"></i> Avenida dos Imarés, 288
-                            Apto 221</div>
-                        <div class="hotel-map"><a href="#">Mostrar no Mapa</a></div>
-                    </div>
-                    <div class="hotel-check-in"><i class="bi bi-chevron-right color-icon"></i><strong>Check-in:
-                        </strong> 14:00, 12/03/2025</div>
-                    <div class="hotel-check-out"><i class="bi bi-chevron-right color-icon"></i><strong>Check-out:
-                        </strong> 12:00, 14/03/2025</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="hotel-box" id="hb2" style="margin-top: 50px; align-items: center;">
-            <div class="hotel-img" style="display: none"></div>
-            <div class="hotel-content">
-                <div class="hotel-title">
-                    <div class="left-title">
-                        <div class="hotel-name">Hotel Ibis Ibirapuera Plus+</div>
-                        <div class="map-desktop">
-                            <div class="hotel-address" style="display: none"><i class="bx bxs-map color-icon"></i>
-                                Avenida dos Imarés, 288
-                                Apto 221</div>
-                            <div class="hotel-map" style="display: none"><a href="#">Mostrar no Mapa</a></div>
+                    <div class="hotel-description"><i class="bx bxs-hotel color-icon"></i> Quarto Simples, Casal</div>
+                    <div class="hotel-description">
+                        <div>
+                            <i class="bi bi-chevron-right color-icon"></i><strong>Check-in:</strong> <span>12/03/2025, 14:00</span> 
+                        </div>
+                        <div>
+                            <i class="bi bi-chevron-right color-icon"></i><strong>Check-out:</strong> <span>14/03/2025, 12:00</span>
                         </div>
                     </div>
-                    <div class="right-title">
-                        <div class="hotel-code" style="display: none">#ABC123</div>
-                        <div class="hotel-nights">2 noites</div>
-                    </div>
-                </div>
-                <div class="hotel-text">
-                    <div class="map-mobile">
-                        <div class="hotel-address" style="display: none"><i class="bx bxs-map color-icon"></i> Avenida
-                            dos Imarés, 288
-                            Apto 221</div>
-                        <div class="hotel-map" style="display: none"><a href="#">Mostrar no Mapa</a></div>
-                    </div>
-                    <div class="hotel-check-in"><i class="bi bi-chevron-right color-icon"></i><strong>Check-in:
-                        </strong> 14:00, 12/03/2025</div>
-                    <div class="hotel-check-out"><i class="bi bi-chevron-right color-icon"></i><strong>Check-out:
-                        </strong> 12:00, 14/03/2025</div>
                 </div>
             </div>
         </div>
