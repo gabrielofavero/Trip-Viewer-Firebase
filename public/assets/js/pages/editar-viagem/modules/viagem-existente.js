@@ -259,7 +259,7 @@ function _loadHospedagemData(FIRESTORE_DATA) {
 
             const cafe = FIRESTORE_DATA.hospedagens.cafe;
             if (cafe && (cafe[j] === true || cafe[j] === false)) {
-                getID(`hospedagens-cafe-${i}`).checked = cafe;
+                getID(`hospedagens-cafe-${i}`).checked = cafe[j];
             }
 
             const hospedagemTitle = getID(`hospedagens-title-${i}`);
