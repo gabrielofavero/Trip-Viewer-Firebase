@@ -5,7 +5,7 @@ var filterMap = new BiMap();
 // ======= LOADERS =======
 function _loadPortfolioLightbox() {
     GLightbox({
-        selector: '.portfolio-lightbox',
+        selector: '.galeria',
         autofocusVideos: false,
         touchNavigation: true,
         touchFollowAxis: true,
@@ -49,14 +49,14 @@ function _loadGaleriaBody(galeria) {
         result += `
         <div class="col-lg-4 col-md-6 portfolio-item ${categoria}">
             <div class="portfolio-wrap">
-            <img src="${link}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
-            <div class="portfolio-info">
-                <h4>${titulo}</h4>
-                <p>${descricao}</p>
-                <div class="portfolio-links">
-                <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="${descricao}"><i class="bx bx-zoom-in"></i></a>
+                <img src="${link}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
+                <div class="portfolio-info">
+                    <h4>${titulo}</h4>
+                    <p>${descricao}</p>
+                    <div class="portfolio-links">
+                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox galeria" title="${descricao}"><i class="bx bx-zoom-in"></i></a>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>`
     }
