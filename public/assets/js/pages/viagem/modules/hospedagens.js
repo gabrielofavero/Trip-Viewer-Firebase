@@ -19,7 +19,7 @@ function _getHospedagensHTML(i) {
     descricao: FIRESTORE_DATA.hospedagens.descricao ? FIRESTORE_DATA.hospedagens.descricao[i] : "",
     endereco: FIRESTORE_DATA.hospedagens.enderecos ? FIRESTORE_DATA.hospedagens.enderecos[i] : "",
     hospedagem: FIRESTORE_DATA.hospedagens.hospedagem ? FIRESTORE_DATA.hospedagens.hospedagem[i] : "",
-    imagem: FIRESTORE_DATA.hospedagens.imagens ? FIRESTORE_DATA.hospedagens.imagens[i] : "",
+    imagem: FIRESTORE_DATA.hospedagens.imagens ? _getImageLink(FIRESTORE_DATA.hospedagens.imagens[i]) : "",
     link: FIRESTORE_DATA.hospedagens.links ? FIRESTORE_DATA.hospedagens.links[i] : "",
   }
 
