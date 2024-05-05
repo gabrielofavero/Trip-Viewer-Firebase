@@ -80,7 +80,7 @@ function _loadRestaurantesData(FIRESTORE_DESTINOS_DATA) {
 
         const valor = FIRESTORE_DESTINOS_DATA.restaurantes.valor;
         if (valor && valor[j]) {
-          _getValorDivAndLoadVisibility(valor[j], 'restaurantes', i).value = valor[j];
+          _loadMoedaValorAndVisibility(valor[j], 'restaurantes', i);
         }
 
         const midia = FIRESTORE_DESTINOS_DATA.restaurantes.hyperlink.video;
@@ -145,7 +145,7 @@ function _loadLanchesData(FIRESTORE_DESTINOS_DATA) {
 
         const valor = FIRESTORE_DESTINOS_DATA.lanches.valor;
         if (valor && valor[j]) {
-          _getValorDivAndLoadVisibility(valor[j], 'lanches', i).value .value = valor[j];
+          _loadMoedaValorAndVisibility(valor[j], 'lanches', i);
         }
 
         const midia = FIRESTORE_DESTINOS_DATA.lanches.hyperlink.video;
@@ -210,7 +210,7 @@ function _loadSaidasData(FIRESTORE_DESTINOS_DATA) {
 
         const valor = FIRESTORE_DESTINOS_DATA.saidas.valor;
         if (valor && valor[j]) {
-          _getValorDivAndLoadVisibility(valor[j], 'saidas', i).value .value = valor[j];
+          _loadMoedaValorAndVisibility(valor[j], 'saidas', i);
         }
 
         const midia = FIRESTORE_DESTINOS_DATA.saidas.hyperlink.video;
@@ -275,7 +275,7 @@ function _loadTurismoData(FIRESTORE_DESTINOS_DATA) {
 
         const valor = FIRESTORE_DESTINOS_DATA.turismo.valor;
         if (valor && valor[j]) {
-          _getValorDivAndLoadVisibility(valor[j], 'turismo', i).value .value = valor[j];
+          _loadMoedaValorAndVisibility(valor[j], 'turismo', i);
         }
 
         const midia = FIRESTORE_DESTINOS_DATA.turismo.hyperlink.video;
@@ -340,7 +340,7 @@ function _loadLojasData(FIRESTORE_DESTINOS_DATA) {
 
         const valor = FIRESTORE_DESTINOS_DATA.lojas.valor;
         if (valor && valor[j]) {
-          _getValorDivAndLoadVisibility(valor[j], 'lojas', i).value .value = valor[j];
+          _loadMoedaValorAndVisibility(valor[j], 'lojas', i);
         }
 
         const midia = FIRESTORE_DESTINOS_DATA.lojas.hyperlink.video;

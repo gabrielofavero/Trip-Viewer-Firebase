@@ -59,23 +59,33 @@ function _loadHabilitados() {
 
 function _loadEventListeners() {
   getID('restaurantes-adicionar').addEventListener('click', () => {
+    _closeAccordions('restaurantes');
     _addRestaurantes();
+    _openLastAccordion('restaurantes');
   });
 
   getID('lanches-adicionar').addEventListener('click', () => {
+    _closeAccordions('lanches');
     _addLanches();
+    _openLastAccordion('lanches');
   });
 
   getID('saidas-adicionar').addEventListener('click', () => {
+    _closeAccordions('saidas');
     _addSaidas();
+    _openLastAccordion('saidas');
   });
 
   getID('turismo-adicionar').addEventListener('click', () => {
+    _closeAccordions('turismo');
     _addTurismo();
+    _openLastAccordion('turismo');
   });
 
   getID('lojas-adicionar').addEventListener('click', () => {
+    _closeAccordions('lojas');
     _addLojas();
+    _openLastAccordion('lojas');
   });
 
   getID('salvar').addEventListener('click', () => {
@@ -130,8 +140,7 @@ async function _loadDestinos() {
 
 // Listeners
 function _addDestinosListeners(categoria, i) {
-  const nome = getID(`${categoria}-nome-${i}`);
-  nome.addEventListener('change', function () {
+  getID(`${categoria}-nome-${i}`).addEventListener('change', function () {
       _accordionDestinosOnChange(i, categoria);
   });
 
@@ -142,8 +151,7 @@ function _addDestinosListeners(categoria, i) {
       });
   }
 
-  const novo = getID(`${categoria}-novo-${i}`);
-  novo.addEventListener('click', function () {
+  getID(`${categoria}-novo-${i}`).addEventListener('click', function () {
       _accordionDestinosOnChange(i, categoria);
   });
 

@@ -226,20 +226,20 @@ function _setDestinoSelectValue(i, value) {
 function _lineupGeneroSelectAction(tipo, subtipo, init = false) {
     let copy = LINEUP_GENEROS;
     LINEUP_GENEROS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-    _dynamicSelectAction(tipo, subtipo, copy, LINEUP_GENEROS, init);
+    _loadDynamicSelect(tipo, subtipo, copy, LINEUP_GENEROS, init);
 }
 
 function _lineupPalcoSelectAction(tipo, subtipo, init = false) {
     let copy = LINEUP_PALCOS;
     LINEUP_PALCOS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-    _dynamicSelectAction(tipo, subtipo, copy, LINEUP_PALCOS, init);
+    _loadDynamicSelect(tipo, subtipo, copy, LINEUP_PALCOS, init);
 }
 
 // Galeria
 function _galeriaSelectAction(tipo, subtipo, init = false) {
     let copy = GALERIA_CATEGORIAS;
     GALERIA_CATEGORIAS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-    _dynamicSelectAction(tipo, subtipo, copy, GALERIA_CATEGORIAS, init);
+    _loadDynamicSelect(tipo, subtipo, copy, GALERIA_CATEGORIAS, init);
 }
 
 async function _uploadGaleria(uploadItens) {

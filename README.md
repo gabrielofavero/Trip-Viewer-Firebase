@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Feitos | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 30    | 23     | 7         |
+| 🐞     | Bug      | B000    | 31    | 23     | 8         |
 | 🏆     | Feature  | F000    | 49    | 44     | 5         |
-| 📈     | Melhoria | M000    | 30    | 22     | 8         |
+| 📈     | Melhoria | M000    | 31    | 22     | 9         |
 | ⚔️   | Épico   | E000    | 20    | 13     | 7         |
 
 ### Status
@@ -19,13 +19,17 @@
 
 ## Doing
 
+- 📈 **M023:** Melhorias nos accordions (páginas de editar)
+  - *Criação de opção de arrastar accordions (Mobile);*
+  - *Desabilitar arrastamento quando accordion está aberto*
+  - *Quando um novo item da categoria é adicionado, os accordions da categoria são fechados*
+
 ## To-Do
 
 ### Prioridade Alta
 
-- 📈 **M023:** Melhorias no arrastamento de accordions (páginas de editar)
-  - *Criação de opção de arrastar accordions (Mobile);*
-  - *Desabilitar arrastamento quando accordion está aberto*
+- 📈 **M031:** Melhoria no card de hospedagem
+  - *Opção de zoom na imagem do quarto;*
 
 ### Prioridade Média
 
@@ -82,6 +86,7 @@
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
 - 📈 **M026:** Novo ícone de "Novo" destinos.html
 - 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
+- 🐞 **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox 
 
 ## Done
 

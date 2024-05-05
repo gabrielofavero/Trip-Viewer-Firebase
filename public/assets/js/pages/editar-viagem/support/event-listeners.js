@@ -1,11 +1,15 @@
 // Geral
 function _loadEventListeners() {
     getID('transporte-adicionar').addEventListener('click', () => {
+        _closeAccordions('transporte');
         _addTransporte();
+        _openLastAccordion('transporte');
     });
 
     getID('hospedagens-adicionar').addEventListener('click', () => {
+        _closeAccordions('hospedagens');
         _addHospedagens();
+        _openLastAccordion('hospedagens');
     });
 
     getID('destinos-adicionar').addEventListener('click', () => {
@@ -13,11 +17,15 @@ function _loadEventListeners() {
     });
 
     getID('lineup-adicionar').addEventListener('click', () => {
+        _closeAccordions('lineup');
         _addLineup();
+        _openLastAccordion('lineup');
     });
 
     getID('galeria-adicionar').addEventListener('click', () => {
+        _closeAccordions('galeria');
         _addGaleria();
+        _openLastAccordion('galeria');
     });
 
     getID('cancelar').addEventListener('click', () => {

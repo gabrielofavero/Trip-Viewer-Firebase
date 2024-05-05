@@ -1,8 +1,30 @@
 
 // Funções Principais
-function _dynamicSelectAction(tipo, subtipo, copy, categorias, init = false) {
+function _loadDynamicSelect(tipo, subtipo, copy, categorias, init = false) {
   if (copy.length !== categorias.length || !copy.every((value, index) => value === categorias[index])) {
-    _loadDynamicSelect(tipo, subtipo, categorias, init);
+    const childs = _getChildIDs(`${tipo}-box`);
+    const selectOptions = [];
+  
+    for (const categoria of categorias) {
+      selectOptions.push(`<option value="${categoria}">${categoria}</option>`);
+    }
+  
+    for (let i = 1; i <= childs.length; i++) {
+      const select = getID(`${tipo}-${subtipo}-select-${i}`);
+      const input = getID(`${tipo}-${subtipo}-${i}`);
+  
+      const selectValue = select.value;
+      const inputValue = input.value;
+  
+      select.innerHTML = `<option value="selecione">Selecione</option>
+                          ${selectOptions}
+                          <option value="outra">Outra</option>`;
+  
+      select.value = inputValue || selectValue || 'selecione';
+  
+      input.value = "";
+      _loadDynamicSelectVisibility(select, input, init);
+    }
   }
 }
 
@@ -37,34 +59,6 @@ function _pushIfValidCategoria(div, categorias) {
   }
 }
 
-function _loadDynamicSelect(tipo, subtipo, categorias, init = false) {
-  const childs = _getChildIDs(`${tipo}-box`);
-  const selectOptions = [];
-
-  for (const categoria of categorias) {
-    selectOptions.push(`<option value="${categoria}">${categoria}</option>`);
-  }
-
-  for (let i = 1; i <= childs.length; i++) {
-    const select = getID(`${tipo}-${subtipo}-select-${i}`);
-    const input = getID(`${tipo}-${subtipo}-${i}`);
-
-    const selectValue = select.value;
-    const inputValue = input.value;
-
-    select.innerHTML = `
-      <option value="selecione">Selecione</option>
-      ${selectOptions}
-      <option value="outra">Outra</option>`;
-
-
-      select.value = inputValue || selectValue || 'selecione';
-
-    input.value = "";
-    _loadDynamicSelectVisibility(select, input, init);
-  }
-}
-
 function _loadDynamicSelectVisibility(select, input, init) {
   if (init && select.innerHTML === '') {
     select.style.display = 'none';
@@ -85,7 +79,6 @@ function _loadDynamicSelectVisibility(select, input, init) {
   } else {
     select.style.display = 'block';
     input.style.display = 'none';
-
   }
 }
 

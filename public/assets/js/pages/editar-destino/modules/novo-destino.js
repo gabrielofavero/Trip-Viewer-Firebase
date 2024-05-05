@@ -363,7 +363,7 @@ function _addTurismo() {
             <select id="turismo-valor-${i}" style="display: ${_getValorVisibility()};">
               ${VALOR_OPTIONS}
             </select>
-            <input style="display: ${_getOutroValorVisibility()}" sclass="nice-form-group" id="turismo-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
+            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="turismo-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
           </div>
   
           <div class="nice-form-group">
