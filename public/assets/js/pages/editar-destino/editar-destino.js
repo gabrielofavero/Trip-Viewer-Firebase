@@ -67,30 +67,35 @@ function _loadEventListeners() {
   getID('restaurantes-adicionar').addEventListener('click', () => {
     _closeAccordions('restaurantes');
     _addRestaurantes();
+    _loadNewRegiaoSelect('restaurantes');
     _openLastAccordion('restaurantes');
   });
 
   getID('lanches-adicionar').addEventListener('click', () => {
     _closeAccordions('lanches');
     _addLanches();
+    _loadNewRegiaoSelect('lanches');
     _openLastAccordion('lanches');
   });
 
   getID('saidas-adicionar').addEventListener('click', () => {
     _closeAccordions('saidas');
     _addSaidas();
+    _loadNewRegiaoSelect('saidas');
     _openLastAccordion('saidas');
   });
 
   getID('turismo-adicionar').addEventListener('click', () => {
     _closeAccordions('turismo');
     _addTurismo();
+    _loadNewRegiaoSelect('turismo');
     _openLastAccordion('turismo');
   });
 
   getID('lojas-adicionar').addEventListener('click', () => {
     _closeAccordions('lojas');
     _addLojas();
+    _loadNewRegiaoSelect('lojas');
     _openLastAccordion('lojas');
   });
 

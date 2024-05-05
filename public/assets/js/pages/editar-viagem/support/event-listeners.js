@@ -19,12 +19,14 @@ function _loadEventListeners() {
     getID('lineup-adicionar').addEventListener('click', () => {
         _closeAccordions('lineup');
         _addLineup();
+        _loadNewLineupSelects();
         _openLastAccordion('lineup');
     });
 
     getID('galeria-adicionar').addEventListener('click', () => {
         _closeAccordions('galeria');
         _addGaleria();
+        _loadNewGaleriaSelect();
         _openLastAccordion('galeria');
     });
 
@@ -127,18 +129,18 @@ function _loadLineupListeners(i) {
 
     // Dynamic Select: Gênero
     getID(`lineup-genero-select-${i}`).addEventListener('change', function () {
-        _lineupGeneroSelectAction('lineup', 'genero');
+        _lineupGeneroSelectAction();
     });
     getID(`lineup-genero-${i}`).addEventListener('change', function () {
-        _lineupGeneroSelectAction('lineup', 'genero');
+        _lineupGeneroSelectAction();
     });
 
     // Dynamic Select: Palco
     getID(`lineup-palco-select-${i}`).addEventListener('change', function () {
-        _lineupPalcoSelectAction('lineup', 'palco');
+        _lineupPalcoSelectAction();
     });
     getID(`lineup-palco-${i}`).addEventListener('change', function () {
-        _lineupPalcoSelectAction('lineup', 'palco');
+        _lineupPalcoSelectAction();
     });
 
     // Dynamic Title
@@ -159,17 +161,17 @@ function _loadLineupListeners(i) {
     });
 
     // Load Listener Actions
-    _lineupGeneroSelectAction('lineup', 'genero', true);
-    _lineupPalcoSelectAction('lineup', 'palco', true);
+    _lineupGeneroSelectAction(true);
+    _lineupPalcoSelectAction(true);
 }
 
 function _loadGaleriaListeners(i) {
     // Dynamic Select: Categoria
     getID(`galeria-categoria-select-${i}`).addEventListener('change', function () {
-        _galeriaSelectAction('galeria', 'categoria');
+        _galeriaSelectAction();
     });
     getID(`galeria-categoria-${i}`).addEventListener('change', function () {
-        _galeriaSelectAction('galeria', 'categoria');
+        _galeriaSelectAction();
     });
 
     // Dynamic Title
@@ -178,5 +180,5 @@ function _loadGaleriaListeners(i) {
     });
 
     // Load Listener Actions
-    _galeriaSelectAction('galeria', 'categoria', true);
+    _galeriaSelectAction(true);
 }

@@ -223,23 +223,32 @@ function _setDestinoSelectValue(i, value) {
     _buildDestinosSelect();
 }
 
-function _lineupGeneroSelectAction(tipo, subtipo, init = false) {
+function _lineupGeneroSelectAction(init = false, updateLast = false) {
     let copy = LINEUP_GENEROS;
-    LINEUP_GENEROS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-    _loadDynamicSelect(tipo, subtipo, copy, LINEUP_GENEROS, init);
+    LINEUP_GENEROS = _getUpdatedDynamicSelectArray('lineup', 'genero');
+    _loadDynamicSelect('lineup', 'genero', copy, LINEUP_GENEROS, init, updateLast);
 }
 
-function _lineupPalcoSelectAction(tipo, subtipo, init = false) {
+function _lineupPalcoSelectAction(init = false, updateLast = false) {
     let copy = LINEUP_PALCOS;
-    LINEUP_PALCOS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-    _loadDynamicSelect(tipo, subtipo, copy, LINEUP_PALCOS, init);
+    LINEUP_PALCOS = _getUpdatedDynamicSelectArray('lineup', 'palco');
+    _loadDynamicSelect('lineup', 'palco', copy, LINEUP_PALCOS, init, updateLast);
+}
+
+function _loadNewLineupSelects() {
+    _lineupGeneroSelectAction(false, true);
+    _lineupPalcoSelectAction(false, true);
 }
 
 // Galeria
-function _galeriaSelectAction(tipo, subtipo, init = false) {
+function _galeriaSelectAction(init = false, updateLast = false) {
     let copy = GALERIA_CATEGORIAS;
-    GALERIA_CATEGORIAS = _getUpdatedDynamicSelectArray(tipo, subtipo);
-    _loadDynamicSelect(tipo, subtipo, copy, GALERIA_CATEGORIAS, init);
+    GALERIA_CATEGORIAS = _getUpdatedDynamicSelectArray('galeria', 'categoria');
+    _loadDynamicSelect('galeria', 'categoria', copy, GALERIA_CATEGORIAS, init, updateLast);
+}
+
+function _loadNewGaleriaSelect() {
+    _galeriaSelectAction(false, true);
 }
 
 async function _uploadGaleria(uploadItens) {

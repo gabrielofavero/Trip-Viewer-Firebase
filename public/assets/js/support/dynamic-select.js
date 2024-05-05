@@ -1,7 +1,10 @@
 
 // Funções Principais
-function _loadDynamicSelect(tipo, subtipo, copy, categorias, init = false) {
-  if (copy.length !== categorias.length || !copy.every((value, index) => value === categorias[index])) {
+function _loadDynamicSelect(tipo, subtipo, copy, categorias, init = false, updateLast=false) {
+  const differentSizes = copy.length !== categorias.length;
+  const differentValues = !copy.every((value, index) => value === categorias[index]);
+
+  if (differentSizes || differentValues || updateLast) {
     const childs = _getChildIDs(`${tipo}-box`);
     const selectOptions = [];
   
@@ -9,7 +12,7 @@ function _loadDynamicSelect(tipo, subtipo, copy, categorias, init = false) {
       selectOptions.push(`<option value="${categoria}">${categoria}</option>`);
     }
   
-    for (let i = 1; i <= childs.length; i++) {
+    for (let i = updateLast ? childs.length : 1; i <= childs.length; i++) {
       const select = getID(`${tipo}-${subtipo}-select-${i}`);
       const input = getID(`${tipo}-${subtipo}-${i}`);
   
@@ -40,7 +43,6 @@ function _getUpdatedDynamicSelectArray(tipo, subtipo) {
   // Filtro para remover duplicatas
   return categorias.filter((item, index) => categorias.indexOf(item) === index).sort();
 }
-
 
 // Função de set
 function _getDynamicSelectValue(tipo, subtipo, i) {

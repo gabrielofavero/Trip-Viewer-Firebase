@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 33    | 27     | 6         |
+| 🐞     | Bug      | B000    | 34    | 28     | 6         |
 | 🏆     | Feature  | F000    | 49    | 45     | 4         |
 | 📈     | Melhoria | M000    | 33    | 23     | 10        |
 | ⚔️     | Épico    | E000    | 20    | 14     | 6         |
@@ -102,6 +102,7 @@
 - 🐞 **B032:** Correção de páginas de editar não estaren exibindo/importando corretamente dados dos selects dinâmicos
 - 🐞 **B033:** Correção em que usuários podiam acessar livremente um editar de outro usuário
   - *O sistema (firestore rules) já possuia bloqueios para impedir o salvamento, mas o front-end também deve fazer uma pré-verificação*
+- 🐞 **B034:** Correção Novos itens com dynamic selects (Galeria, Lineup e Região) não estarem carregando o select
 
 ### Abril 2024
 

@@ -475,8 +475,8 @@ function _loadLineupData(FIRESTORE_DATA) {
                     }
                 }
             }
-            _lineupGeneroSelectAction('lineup', 'genero');
-            _lineupPalcoSelectAction('lineup', 'palco');
+            _lineupGeneroSelectAction();
+            _lineupPalcoSelectAction();
         }
     }
 }
@@ -518,7 +518,7 @@ function _loadGaleriaData(FIRESTORE_DATA) {
             }
         }
 
-        _galeriaSelectAction('galeria', 'categoria');
+        _galeriaSelectAction();
     }
 }
 

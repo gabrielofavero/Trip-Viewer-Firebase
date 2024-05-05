@@ -76,10 +76,14 @@ function _loadMoedaValorAndVisibility(valor, categoria, i) {
 }
 
 // Região
-function _regiaoSelectAction(categoria, init = false) {
+function _regiaoSelectAction(categoria, init = false, updateLast=false) {
     let copy = SELECT_REGIOES[categoria];
     SELECT_REGIOES[categoria] = _getUpdatedDynamicSelectArray(categoria, 'regiao');
-    _loadDynamicSelect(categoria, 'regiao', copy, SELECT_REGIOES[categoria], init);
+    _loadDynamicSelect(categoria, 'regiao', copy, SELECT_REGIOES[categoria], init, updateLast);
+}
+
+function _loadNewRegiaoSelect(categoria) {
+    _regiaoSelectAction(categoria, false, true);
 }
 
 function _loadRegiaoListeners(i, categoria) {
@@ -97,6 +101,3 @@ function _loadRegiaoListeners(i, categoria) {
         _regiaoSelectAction(categoria);
     });
 }
-
-// Accordion
-
