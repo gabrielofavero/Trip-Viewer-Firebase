@@ -557,7 +557,7 @@ async function _setViagem() {
         let message = result.message;
 
         if (result.success == true) {
-            wasSaved = true;
+            WAS_SAVED = true;
 
             try {
                 const body = {

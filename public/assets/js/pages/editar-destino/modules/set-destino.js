@@ -157,7 +157,7 @@ async function _setDestino() {
 
         getID('modal-inner-text').innerHTML = result.message;
 
-        wasSaved = result.success;
+        WAS_SAVED = result.success;
 
         _stopLoadingScreen();
         _openModal('modal');

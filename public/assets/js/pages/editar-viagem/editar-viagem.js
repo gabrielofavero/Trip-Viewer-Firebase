@@ -1,6 +1,9 @@
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
-var wasSaved = false;
+
+var WAS_SAVED = false;
+var CAN_EDIT = false;
+
 var changedOnce = false;
 
 const TODAY = _getTodayFormatted();
@@ -20,21 +23,20 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const urlParams = new URLSearchParams(window.location.search);
     DOCUMENT_ID = urlParams.get('v');
-    
-    const canEdit = await _canEdit();
-    if (!canEdit) return;
-    
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
     _loadHabilitados();
 
     if (DOCUMENT_ID) {
-      _loadTrip()
+      _loadTrip();
     } else {
+      CAN_EDIT = true;
       DESTINOS = await _getUserList('destinos');
       _loadNewTrip();
     }
+
+    if (!CAN_EDIT) return;
 
     _loadImageSelector('background');
     _loadLogoSelector();
@@ -77,9 +79,14 @@ async function _loadTrip() {
   getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
+
   FIRESTORE_DATA = await _getSingleData('viagens');
-  await _loadTripData(FIRESTORE_DATA);
-  _stopLoadingScreen();
+  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
+
+  if (CAN_EDIT) {
+    await _loadTripData(FIRESTORE_DATA);
+    _stopLoadingScreen();
+  }
 }
 
 async function _uploadViagemItens(uploadItens, item) {

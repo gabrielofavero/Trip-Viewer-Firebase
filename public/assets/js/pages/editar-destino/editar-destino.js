@@ -1,6 +1,8 @@
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
-wasSaved = false;
+
+WAS_SAVED = false;
+var CAN_EDIT = false;
 
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
@@ -19,15 +21,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     const urlParams = new URLSearchParams(window.location.search);
     DOCUMENT_ID = urlParams.get('d');
 
-    const canEdit = await _canEdit();
-    if (!canEdit) return;
-
     _loadVisibilityIndex();
     _loadHabilitados();
 
     if (DOCUMENT_ID) {
       _loadDestinos()
     }
+
+    if (!CAN_EDIT) return;
 
     _loadEventListeners();
 
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _displayErrorMe6ssage(error);
+    _displayErrorMessage(error);
     throw error;
   }
 });
@@ -96,7 +97,7 @@ function _loadEventListeners() {
   });
 
   getID('re-editar').addEventListener('click', () => {
-    _reEdit('destinos', wasSaved);
+    _reEdit('destinos', WAS_SAVED);
   });
 
   getID('cancelar').addEventListener('click', () => {
@@ -136,42 +137,47 @@ async function _loadDestinos() {
   blockLoadingEnd = true;
   getID('delete-text').style.display = 'block';
   _startLoadingScreen();
+
   FIRESTORE_DESTINOS_DATA = await _getSingleData('destinos');
-  _loadDestinationsData(FIRESTORE_DESTINOS_DATA);
-  _stopLoadingScreen();
+  CAN_EDIT = await _canEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono, []);
+
+  if (CAN_EDIT) {
+    _loadDestinationsData(FIRESTORE_DESTINOS_DATA);
+    _stopLoadingScreen();
+  }
 }
 
 // Listeners
 function _addDestinosListeners(categoria, i) {
   // Nome
   getID(`${categoria}-nome-${i}`).addEventListener('change', function () {
-      _accordionDestinosOnChange(i, categoria);
+    _accordionDestinosOnChange(i, categoria);
   });
 
   // Emoji
   const emoji = getID(`${categoria}-emoji-${i}`);
   if (emoji) {
-      emoji.addEventListener('change', function () {
-          _accordionDestinosOnChange(i, categoria);
-      });
+    emoji.addEventListener('change', function () {
+      _accordionDestinosOnChange(i, categoria);
+    });
   }
 
   // Novo
   getID(`${categoria}-novo-${i}`).addEventListener('click', function () {
-      _accordionDestinosOnChange(i, categoria);
+    _accordionDestinosOnChange(i, categoria);
   });
 
   // Valor
   const valor = getID(`${categoria}-valor-${i}`);
   const outroValor = getID(`${categoria}-outro-valor-${i}`);
   valor.addEventListener('change', () => {
-      if (valor.value == 'outro') {
-          outroValor.style.display = 'block';
-          outroValor.required = true;
-      } else {
-          outroValor.style.display = 'none';
-          outroValor.required = false;
-      }
+    if (valor.value == 'outro') {
+      outroValor.style.display = 'block';
+      outroValor.required = true;
+    } else {
+      outroValor.style.display = 'none';
+      outroValor.required = false;
+    }
   });
 
   // Região
@@ -196,21 +202,21 @@ function _accordionDestinosOnChange(i, type) {
   const emojiTreated = emojiDiv ? emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
 
   if (emojiTreated && nome) {
-      titleDiv.innerText = `${nome} ${emojiTreated}`
+    titleDiv.innerText = `${nome} ${emojiTreated}`
   } else if (nome) {
-      titleDiv.innerText = nome;
+    titleDiv.innerText = nome;
   }
 
   if (emojiTreated && emojiUntreated && emojiTreated !== emojiUntreated) {
-      emojiDiv.value = emojiTreated;
+    emojiDiv.value = emojiTreated;
   } else if (!emojiTreated && emojiUntreated) {
-      emojiDiv.value = '';
-      emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
+    emojiDiv.value = '';
+    emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
   }
 
   if (getID(`${type}-novo-${i}`).checked) {
-      novoIcon.style.display = 'block';
+    novoIcon.style.display = 'block';
   } else {
-      novoIcon.style.display = 'none';
+    novoIcon.style.display = 'none';
   }
 }

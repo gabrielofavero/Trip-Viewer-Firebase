@@ -1,6 +1,9 @@
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
-var wasSaved = false;
+
+var WAS_SAVED = false;
+var CAN_EDIT = false;
+
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -9,10 +12,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const urlParams = new URLSearchParams(window.location.search);
     DOCUMENT_ID = urlParams.get('l');
-
-    const canEdit = await _canEdit();
-    if (!canEdit) return;
-
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
@@ -24,6 +23,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       DESTINOS = await _getUserList('destinos');
       _loadDestinos();
     }
+
+    if (!CAN_EDIT) return;
 
     _loadImageSelector('background');
     _loadLogoSelector();
@@ -90,7 +91,7 @@ function _loadEventListeners() {
   });
 
   getID('re-editar').addEventListener('click', () => {
-    _reEdit('listagens', wasSaved);
+    _reEdit('listagens', WAS_SAVED);
   });
 
   getID('cancelar').addEventListener('click', () => {
@@ -114,7 +115,12 @@ async function _carregarListagem() {
   getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
+
   FIRESTORE_DATA = await _getSingleData('listagens');
-  await _loadListData(FIRESTORE_DATA);
-  _stopLoadingScreen();
+  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
+
+  if (CAN_EDIT) {
+    await _loadListData(FIRESTORE_DATA);
+    _stopLoadingScreen();
+  }
 }

@@ -13,7 +13,7 @@ function _validateRequiredFields() {
     });
 
     if (invalidFields.length > 0) {
-        wasSaved = false;
+        WAS_SAVED = false;
         getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields);
         _openModal();
         _stopLoadingScreen();
@@ -82,7 +82,7 @@ function _getInvalidFieldsText(invalidFields) {
     return text + '</ul>';
 }
 
-function _reEdit(type, wasSaved = true) {
+function _reEdit(type, WAS_SAVED = true) {
     let param;
     let url;
 
@@ -97,9 +97,9 @@ function _reEdit(type, wasSaved = true) {
         url = 'editar-listagem.html';
     }
 
-    if (param && DOCUMENT_ID && wasSaved) {
+    if (param && DOCUMENT_ID && WAS_SAVED) {
         window.location.href = `${url}?${param}=${DOCUMENT_ID}`;
-    } else if (!wasSaved) {
+    } else if (!WAS_SAVED) {
         _closeModal();
     } else {
         window.location.href = 'index.html';

@@ -70,7 +70,7 @@ function _loadEventListeners() {
     });
 
     getID('re-editar').addEventListener('click', () => {
-        _reEdit('viagens', wasSaved);
+        _reEdit('viagens', WAS_SAVED);
     });
 
     getID('cancelar').addEventListener('click', () => {
