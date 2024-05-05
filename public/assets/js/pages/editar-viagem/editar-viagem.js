@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadHabilitados();
 
     if (DOCUMENT_ID) {
-      _loadTrip();
+      await _loadTrip();
     } else {
       CAN_EDIT = true;
       DESTINOS = await _getUserList('destinos');

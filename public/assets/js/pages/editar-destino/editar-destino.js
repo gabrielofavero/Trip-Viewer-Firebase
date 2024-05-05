@@ -25,7 +25,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadHabilitados();
 
     if (DOCUMENT_ID) {
-      _loadDestinos()
+      await _loadDestinos()
+    } else {
+      CAN_EDIT = true;
     }
 
     if (!CAN_EDIT) return;

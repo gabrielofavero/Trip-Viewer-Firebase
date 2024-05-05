@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadHabilitados();
 
     if (DOCUMENT_ID) {
-      _carregarListagem()
+      await _carregarListagem()
     } else {
+      CAN_EDIT = true;
       DESTINOS = await _getUserList('destinos');
       _loadDestinos();
     }
