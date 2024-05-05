@@ -4,12 +4,12 @@
 
 ### Legenda
 
-| Ícone | Título  | Código | Total | Feitos | Pendentes |
+| Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 31    | 23     | 8         |
-| 🏆     | Feature  | F000    | 49    | 44     | 5         |
-| 📈     | Melhoria | M000    | 31    | 22     | 9         |
-| ⚔️   | Épico   | E000    | 20    | 13     | 7         |
+| 🐞     | Bug      | B000    | 33    | 27     | 6         |
+| 🏆     | Feature  | F000    | 49    | 45     | 4         |
+| 📈     | Melhoria | M000    | 33    | 23     | 10        |
+| ⚔️     | Épico    | E000    | 20    | 14     | 6         |
 
 ### Status
 
@@ -18,11 +18,6 @@
 - ❗️: Crítico
 
 ## Doing
-
-- 📈 **M023:** Melhorias nos accordions (páginas de editar)
-  - *Criação de opção de arrastar accordions (Mobile);*
-  - *Desabilitar arrastamento quando accordion está aberto*
-  - *Quando um novo item da categoria é adicionado, os accordions da categoria são fechados*
 
 ## To-Do
 
@@ -33,13 +28,16 @@
 
 ### Prioridade Média
 
-- 🏆 **F046:** Firebase Firestore Rules no Front-End
+- 📈 **M033:** Inclusão de botão para retornar a Home quando um erro ocorre (todo a aplicação)
+- 📈 **M023:** Melhorias nos accordions (páginas de editar)
+  - *Criação de opção de arrastar accordions (Mobile);*
+  - *Desabilitar arrastamento quando accordion está aberto*
 - 📈 **M019:** Melhoria de tornar módulo de programação mais personalizável;
   - *Incluir Horário;*
   - *Permitir adicionar itens*
 - 📈 **M020:** Melhoria de tornar módulo de transporte mais automatizado
   - *Se user clicou em volta e não há dados, reverte tudo da ida*
-- 🏆 **F047:** Criação de opções de re-ordenação de destinos
+- 🏆 **F046:** Criação de opções de re-ordenação de destinos
   - *Na tela de edição e viagens;*
   - *Ordenação por nota e por nome (↑↓);*
 - 📈 **M021:** Melhoria de listas (Minhas viagens, passeios e listas) do index.html;
@@ -100,6 +98,10 @@
 - 🏆 **F049:** Dynamic Select de "Região" em editar-destinos.html
 - 📈 **M029:** Melhoria de, se o usuário apaga todos os itens de uma categoria, ela é automaticamente desabilitada
 - ⚔️ **E020:** Criação de box de visualização de Hospedagens em viagens.html;
+- 📈 **M032:** Quando um novo item da categoria é adicionado, os accordions da categoria são fechados
+- 🐞 **B032:** Correção de páginas de editar não estaren exibindo/importando corretamente dados dos selects dinâmicos
+- 🐞 **B033:** Correção em que usuários podiam acessar livremente um editar de outro usuário
+  - *O sistema (firestore rules) já possuia bloqueios para impedir o salvamento, mas o front-end também deve fazer uma pré-verificação*
 
 ### Abril 2024
 
@@ -240,3 +242,7 @@
 - ⚔️ **E004:** Importação de HTML, CSS e JS do projeto estático;
 - ⚔️ **E005:** Desenvolvimento de estrutura básica do back-end via Cloud Functions (NodeJS com TypeScript);
 - ⚔️ **E006:** Criação de funções de leitura principais no back-end (get.ts).
+
+### Descartados
+- 🏆 **F046:** Firebase Firestore Rules no Front-End
+ - *Risco de segurança expor ao user as regras*

@@ -29,8 +29,7 @@ function _stopLoadingScreen() {
   }
 }
 
-// Loading Timer //
-
+// Loading Timer
 function _startLoadingTimer() {
   if (LOADING_TIMER == null && ERROR_MODE == false) {
     LOADING_SECONDS = 0;
@@ -59,7 +58,6 @@ function _stopLoadingTimer() {
 
 
 // Error Message 
-
 function _displayErrorMessage(errorMessage = "", customMessage) {
   _stopLoadingTimer();
   const preloader = getID('preloader');
@@ -150,4 +148,13 @@ function _displayNoDataError(type) {
   } else {
     console.warn('No preloader element found');
   }
+}
+
+// Editar sem permissão
+async function _canEdit() {
+  const uid = await _getUID();
+  if (DOCUMENT_ID && (!uid || uid != DOCUMENT_ID)) {
+    _displayErrorMessage("", "Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.");
+    return false;
+  } else return true;
 }

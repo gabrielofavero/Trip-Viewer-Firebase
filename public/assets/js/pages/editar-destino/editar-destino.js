@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     const urlParams = new URLSearchParams(window.location.search);
     DOCUMENT_ID = urlParams.get('d');
 
+    const canEdit = await _canEdit();
+    if (!canEdit) return;
+
     _loadVisibilityIndex();
     _loadHabilitados();
 
@@ -140,10 +143,12 @@ async function _loadDestinos() {
 
 // Listeners
 function _addDestinosListeners(categoria, i) {
+  // Nome
   getID(`${categoria}-nome-${i}`).addEventListener('change', function () {
       _accordionDestinosOnChange(i, categoria);
   });
 
+  // Emoji
   const emoji = getID(`${categoria}-emoji-${i}`);
   if (emoji) {
       emoji.addEventListener('change', function () {
@@ -151,10 +156,12 @@ function _addDestinosListeners(categoria, i) {
       });
   }
 
+  // Novo
   getID(`${categoria}-novo-${i}`).addEventListener('click', function () {
       _accordionDestinosOnChange(i, categoria);
   });
 
+  // Valor
   const valor = getID(`${categoria}-valor-${i}`);
   const outroValor = getID(`${categoria}-outro-valor-${i}`);
   valor.addEventListener('change', () => {
@@ -167,7 +174,16 @@ function _addDestinosListeners(categoria, i) {
       }
   });
 
+  // Região
   _loadRegiaoListeners(i, categoria);
+
+  // Abrir-Fechar Accordion
+  $(`#collapse-${categoria}-${i}`).on('show.bs.collapse', function () {
+    _removeDragListeners(categoria);
+  });
+  $(`#collapse-${categoria}-${i}`).on('hide.bs.collapse', function () {
+    _addDragListeners(categoria);
+  });
 }
 
 function _accordionDestinosOnChange(i, type) {

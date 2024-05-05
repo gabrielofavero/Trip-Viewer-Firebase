@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const urlParams = new URLSearchParams(window.location.search);
     DOCUMENT_ID = urlParams.get('l');
+
+    const canEdit = await _canEdit();
+    if (!canEdit) return;
+
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
