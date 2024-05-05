@@ -56,13 +56,22 @@ function _getOutroValorVisibility() {
 }
 
 function _getValorDivAndLoadVisibility(valor, categoria, i) {
-    const valorDiv = getID(`${categoria}-valor-${i}`);
+    const valorSelect = getID(`${categoria}-valor-${i}`);
     const outroValorDiv = getID(`${categoria}-outro-valor-${i}`);
-    
-    if (VALOR_OPTIONS && VALORES_KEYS.includes(valor)) {
-        return valorDiv;
+
+    const texts = Array.from(valorSelect.options).map(option => option.text);
+    const values = Array.from(valorSelect.options).map(option => option.value);
+
+    if (VALOR_OPTIONS && values.includes(valor)) {
+        valorSelect.value = valor;
+        outroValorDiv.style.display = 'none';
+        return valorSelect;
+    } else if (VALOR_OPTIONS && texts.includes(valor)) {
+        valorSelect.value = values[texts.indexOf(valor)];
+        outroValorDiv.style.display = 'none';
+        return valorSelect;
     } else {
-        valorDiv.value = 'outro';
+        valorSelect.value = 'outro';
         outroValorDiv.style.display = 'block';
         return outroValorDiv;
     }

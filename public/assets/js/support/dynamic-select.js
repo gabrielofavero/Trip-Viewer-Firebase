@@ -32,7 +32,7 @@ function _getDynamicSelectValue(tipo, subtipo, i) {
 function _pushIfValidCategoria(div, categorias) {
   if (div.value && div.value !== 'selecione' && div.value !== 'outra') {
     if (!categorias.find(item => item === div.value)) {
-      categorias.push(_firstCharsToUpperCase(div.value));
+      categorias.push(div.value);
     }
   }
 }
@@ -57,11 +57,8 @@ function _loadDynamicSelect(tipo, subtipo, categorias, init = false) {
       ${selectOptions}
       <option value="outra">Outra</option>`;
 
-    if (inputValue) {
-      select.value = inputValue;
-    } else if (selectValue) {
-      select.value = selectValue;
-    }
+
+      select.value = inputValue || selectValue || 'selecione';
 
     input.value = "";
     _loadDynamicSelectVisibility(select, input, init);
