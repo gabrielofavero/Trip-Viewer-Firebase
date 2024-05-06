@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 33    | 27     | 6         |
 | 🏆     | Feature  | F000    | 49    | 45     | 4         |
-| 📈     | Melhoria | M000    | 33    | 23     | 10        |
+| 📈     | Melhoria | M000    | 34    | 23     | 11        |
 | ⚔️     | Épico    | E000    | 20    | 14     | 6         |
 
 ### Status
@@ -85,6 +85,7 @@
 - 📈 **M026:** Novo ícone de "Novo" destinos.html
 - 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
 - 🐞 **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox 
+- 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
 
 ## Done
 
