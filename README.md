@@ -25,10 +25,10 @@
 
 - 📈 **M031:** Melhoria no card de hospedagem
   - *Opção de zoom na imagem do quarto;*
+- 📈 **M033:** Inclusão de botão para retornar a Home quando um erro ocorre (todo a aplicação)
 
 ### Prioridade Média
 
-- 📈 **M033:** Inclusão de botão para retornar a Home quando um erro ocorre (todo a aplicação)
 - 📈 **M023:** Melhorias nos accordions (páginas de editar)
   - *Criação de opção de arrastar accordions (Mobile);*
   - *Desabilitar arrastamento quando accordion está aberto*
