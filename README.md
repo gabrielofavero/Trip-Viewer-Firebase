@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ------ | --------- |
 | 🐞     | Bug      | B000    | 34    | 28     | 6         |
 | 🏆     | Feature  | F000    | 49    | 45     | 4         |
-| 📈     | Melhoria | M000    | 34    | 23     | 11        |
+| 📈     | Melhoria | M000    | 36    | 23     | 13        |
 | ⚔️     | Épico    | E000    | 20    | 14     | 6         |
 
 ### Status
@@ -86,6 +86,8 @@
 - 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
 - 🐞 **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox 
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
+- 📈 **M035:** Dynamic Select em editar-destinos ser geral, ao invés de separado por categoria
+- 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 
 ## Done
 
