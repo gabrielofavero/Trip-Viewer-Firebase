@@ -87,8 +87,8 @@ function _getScheduleCalendarByDate(stringDayMonth) {
             PROG_CURRENT_YEAR = year;
             if (day != 0) {
                 for (let i = 0; i < SCHEDULE_CALENDAR.length; i++) {
-                    var title = _getCalendarTitle(date);
-                    if (SCHEDULE_CALENDAR[i]["titulo"] == title) {
+                    var currentDate = _convertFromFirestoreDate(SCHEDULE_CALENDAR[i].data);
+                    if (currentDate.getDate() == day && currentDate.getMonth() == month - 1 && currentDate.getFullYear() == year){
                         if (PROG_IS_HIDDEN) {
                             PROG_IS_HIDDEN = false;
                             _openModalCalendar(SCHEDULE_CALENDAR[i]);

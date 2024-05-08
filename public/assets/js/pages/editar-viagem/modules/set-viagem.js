@@ -377,7 +377,6 @@ function _buildProgramacaoObject() {
         const data = `${dataSplit[2]}-${dataSplit[1]}-${dataSplit[0]}`;
         innerResult.data = _formattedDateToFirestoreDate(data);
 
-
         innerResult.manha = _getInnerProgramacao('manha', j);
         innerResult.tarde = _getInnerProgramacao('tarde', j);
         innerResult.noite = _getInnerProgramacao('noite', j);
