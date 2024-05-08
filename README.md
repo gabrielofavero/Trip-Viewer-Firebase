@@ -5,11 +5,11 @@
 ### Legenda
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
-| ------ | -------- | ------- | ----- | ------ | --------- |
-| 🐞     | Bug      | B000    | 34    | 28     | 6         |
-| 🏆     | Feature  | F000    | 49    | 45     | 4         |
-| 📈     | Melhoria | M000    | 37    | 23     | 14        |
-| ⚔️     | Épico    | E000    | 20    | 14     | 6         |
+| ------ | -------- | ------- | ----- | ----------- | --------- |
+| 🐞     | Bug      | B000    | 35    | 28          | 7         |
+| 🏆     | Feature  | F000    | 49    | 45          | 4         |
+| 📈     | Melhoria | M000    | 37    | 23          | 14        |
+| ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
 
@@ -84,11 +84,12 @@
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
 - 📈 **M026:** Novo ícone de "Novo" destinos.html
 - 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
-- 🐞 **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox 
+- 🐞 **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
 - 📈 **M035:** Dynamic Select em editar-destinos ser geral, ao invés de separado por categoria
 - 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
+- 🐞 **B031:** Correção Módulo de programação não mostrar título no load, apenas como listener
 
 ## Done
 
@@ -249,5 +250,6 @@
 - ⚔️ **E006:** Criação de funções de leitura principais no back-end (get.ts).
 
 ### Descartados
+
 - 🏆 **F046:** Firebase Firestore Rules no Front-End
- - *Risco de segurança expor ao user as regras*
+- *Risco de segurança expor ao user as regras*
