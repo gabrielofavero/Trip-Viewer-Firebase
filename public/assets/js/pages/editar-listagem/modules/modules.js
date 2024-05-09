@@ -7,9 +7,9 @@ async function _loadListData(FIRESTORE_DATA) {
     _loadCustomizacaoData(FIRESTORE_DATA);
     _loadDestinosData(FIRESTORE_DATA);
 
-  } catch (e) {
-    _displayErrorMessage(e);
-    throw e;
+  } catch (error) {
+    _displayErrorMessage(error);
+    throw error;
   }
 }
 

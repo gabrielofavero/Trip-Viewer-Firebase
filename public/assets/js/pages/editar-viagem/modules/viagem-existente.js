@@ -16,9 +16,9 @@ async function _loadTripData(FIRESTORE_DATA) {
             _updateProgramacaoTitle(i);
         }
 
-    } catch (e) {
-        _displayErrorMessage(e);
-        throw e;
+    } catch (error) {
+        _displayErrorMessage(error);
+        throw error;
     }
 }
 

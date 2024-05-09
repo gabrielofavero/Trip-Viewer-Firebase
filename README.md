@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 35    | 28          | 7         |
 | 🏆     | Feature  | F000    | 49    | 45          | 4         |
-| 📈     | Melhoria | M000    | 37    | 23          | 14        |
+| 📈     | Melhoria | M000    | 40    | 23          | 16        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
@@ -19,13 +19,18 @@
 
 ## Doing
 
+- 📈 **M033:** Inclusão de botões em modais de mensagem
+ - *Informação fecha e erro vai para a home*
+
 ## To-Do
 
 ### Prioridade Alta
 
 - 📈 **M031:** Melhoria no card de hospedagem
   - *Opção de zoom na imagem do quarto;*
-- 📈 **M033:** Inclusão de botão para retornar a Home quando um erro ocorre (todo a aplicação)
+- 📈 **M040:** Validação de input de Embed em editar-destinos.html
+ - *Reutilização parcial de função que existe em página de destinos. Se não for um link válido, notifica o usuário*
+ - *Mensagem específica caso o link seja do TikTok Mobile, pois a API apenas suporta links desktop*
 
 ### Prioridade Média
 
@@ -108,6 +113,8 @@
 - 🐞 **B033:** Correção em que usuários podiam acessar livremente um editar de outro usuário
   - *O sistema (firestore rules) já possuia bloqueios para impedir o salvamento, mas o front-end também deve fazer uma pré-verificação*
 - 🐞 **B034:** Correção Novos itens com dynamic selects (Galeria, Lineup e Região) não estarem carregando o select
+- 📈 **M038:** Melhorar pop-ups de mensagem para incluir tanto mensagens comuns (fecháveis) quanto de erro
+- 📈 **M039:** Criar sistema de abrir-fechar cadastro de usuários com mensagem customizada
 
 ### Abril 2024
 

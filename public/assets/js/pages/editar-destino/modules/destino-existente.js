@@ -9,9 +9,9 @@ function _loadDestinationsData(FIRESTORE_DESTINOS_DATA) {
     _loadLojasData(FIRESTORE_DESTINOS_DATA);
     _loadMapaData(FIRESTORE_DESTINOS_DATA);
 
-  } catch (e) {
-    _displayErrorMessage(e);
-    throw e;
+  } catch (error) {
+    _displayErrorMessage(error);
+    throw error;
   }
 }
 

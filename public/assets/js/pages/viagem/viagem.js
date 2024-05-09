@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Promise.all([_getConfig(), _getSingleData(TYPE)])
       .then(([configData, firestoreData]) => {
 
-        if (!getErrorMsg) {
-          
+        if (!ERROR_FROM_GET_REQUEST) {
           CONFIG = configData;
           FIRESTORE_DATA = firestoreData;
           console.log('Dados do Firestore Database carregados com sucesso');
@@ -37,24 +36,23 @@ document.addEventListener('DOMContentLoaded', function () {
           _adjustPortfolioHeight();
           _refreshCategorias();
 
-        } else {
-
-          const permission = getErrorMsg.includes('Missing or insufficient permissions')
-          const msg = permission ? '<br>O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.' : '';
-          const innerMsg = permission ? '' : getErrorMsg;
-          
-          _displayErrorMessage(innerMsg, msg);
+        } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
+          _displayErrorMessage('O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.');
           _stopLoadingScreen();
-
+        } else {
+          _displayErrorMessage(ERROR_FROM_GET_REQUEST);
+          _stopLoadingScreen();
         }
 
         $('body').css('overflow', 'auto');
-
-        setTimeout(() => {
-          _adjustCardsHeights();
-          _adjustPortfolioHeight();
-          _refreshCategorias();
-        }, 1000);
+        
+        if (!MESSAGE_MODAL_OPEN) {
+          setTimeout(() => {
+            _adjustCardsHeights();
+            _adjustPortfolioHeight();
+            _refreshCategorias();
+          }, 1000);
+        }
 
       }).catch((error) => {
 
@@ -63,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       });
   } catch (error) {
-
     _displayErrorMessage(error);
     throw error;
 

@@ -2,7 +2,6 @@
 
 var CALL_SYNC = [];
 var FIRESTORE_DATA;
-var CONFIG;
 
 var SHEET_DATA;
 var P_DATA;

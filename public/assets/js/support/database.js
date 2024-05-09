@@ -1,6 +1,7 @@
 var DOCUMENT_ID;
+var CONFIG;
 
-var getErrorMsg = "";
+var ERROR_FROM_GET_REQUEST = "";
 
 // Constructors
 function _buildDatabaseObject(success, data, message = "") {
@@ -25,9 +26,9 @@ async function _get(path) {
       console.warn(message);
       return;
     }
-  } catch (e) {
-    console.error(e.message);
-    getErrorMsg = e.message;
+  } catch (error) {
+    console.error(error.message);
+    ERROR_FROM_GET_REQUEST = error;
     return;
   }
 
@@ -125,7 +126,7 @@ async function _getSingleData(type) {
         data.destinos[i].destinos = place
       }
     } else {
-      _displayNoDataError(type)
+      _displayErrorMessage(`Não foi possível carregar a página. Não há um código de ${type} válido na URL`);
     }
   } catch (error) {
     console.error('Error fetching data from Firestore:', error.message);

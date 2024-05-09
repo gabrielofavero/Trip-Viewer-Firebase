@@ -28,16 +28,31 @@ function _signOut() {
 async function _registerIfUserNotPresent() {
     const user = firebase.auth().currentUser;
 
-    if (user) {
-        const userDoc = await _get(`usuarios/${user.uid}`);
-        if (!userDoc) {
-            await _create(`usuarios`, {
-                listagens: [],
-                viagens: [],
-                destinos: [],
-                visibilidade: 'dinamico'
-            }, user.uid)
-        }
+    if (!user) {
+        _signOut();
+        _displayErrorMessage('Não é possível fazer o registro sem um usuário autenticado.');
+        return;
+    }
+
+    const userDoc = await _get(`usuarios/${user.uid}`);
+    const config = CONFIG ? CONFIG : await _getConfig();
+    const registrationOpen = (config?.system?.registrationOpen == true)
+
+    if (!userDoc && !registrationOpen) {
+        _signOut();
+        const title = 'Você chegou muito cedo! 😅';
+        const content = 'Olá! O TripViewer ainda não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀';
+        _displayMessage(title, content);
+        return;
+    }
+
+    if (!userDoc && registrationOpen) {
+        await _create(`usuarios`, {
+            listagens: [],
+            viagens: [],
+            destinos: [],
+            visibilidade: 'dinamico'
+        }, user.uid)
     }
 }
 
@@ -82,3 +97,12 @@ async function _getUser() {
         });
     });
 }
+
+// Editar sem permissão
+async function _canEdit(dono, editores) {
+    const uid = await _getUID();
+    if (DOCUMENT_ID && (!uid || (uid != dono && !editores.includes(uid)))) {
+      _displayErrorMessage('Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.');
+      return false;
+    } else return true;
+  }

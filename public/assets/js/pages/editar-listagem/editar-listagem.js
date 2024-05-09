@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   } catch (error) {
     _displayErrorMessage(error);
     if (window.location.href.includes('editar-template.html')) {
-      _overrideError();
+      _closeDisplayMessage();
     }
     throw error;
   }
