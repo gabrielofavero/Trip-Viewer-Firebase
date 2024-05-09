@@ -132,14 +132,35 @@ function _loadTransporteVisibility(i) {
     }
 }
 
-function _applyIdaVoltaVisibility() {
+function _applyIdaVoltaVisibility(i) {
     const visibility = getID('condensar').checked == true ? 'none' : 'block';
-    const childs = _getChildIDs('transporte-box');
-
-    for (const child of childs) {
-        const i = child.split('-')[1];
+    
+    if (!i) {
+        for (const child of _getChildIDs('transporte-box')) {
+            const j = child.split('-')[1];
+            _updateTransporteTitle(j);
+            getID(`idaVolta-box-${j}`).style.display = visibility;
+        }
+    } else {
         _updateTransporteTitle(i);
         getID(`idaVolta-box-${i}`).style.display = visibility;
+    }
+
+}
+
+function _loadAutoDuration(i) {
+    const div = getID(`transporte-duracao-${i}`);
+ 
+    const startDate = getID(`partida-${i}`).value;
+    const startTime = getID(`partida-horario-${i}`).value;
+
+    const endDate = getID(`chegada-${i}`).value;
+    const endTime = getID(`chegada-horario-${i}`).value;
+
+    if (startDate != "" && startTime != "" && endDate != "" && endTime != "") {
+        const start = new Date(`${startDate}T${startTime}`);
+        const end = new Date(`${endDate}T${endTime}`);
+        div.value = _getTimeBetweenDates(start, end);
     }
 }
 

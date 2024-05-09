@@ -254,6 +254,8 @@ function _addTransporte() {
   _addDragListeners('transporte');
   _addTransporteListeners(i);
   _addRemoveChildListener('transporte', i);
+  _loadTransporteVisibility(i);
+  _applyIdaVoltaVisibility(i);
 }
 
 function _addHospedagens() {

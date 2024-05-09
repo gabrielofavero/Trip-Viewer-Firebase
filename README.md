@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 35    | 28          | 7         |
+| 🐞     | Bug      | B000    | 36    | 29          | 7         |
 | 🏆     | Feature  | F000    | 49    | 45          | 4         |
-| 📈     | Melhoria | M000    | 40    | 23          | 16        |
+| 📈     | Melhoria | M000    | 40    | 25          | 15        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
@@ -88,7 +88,6 @@
 - 🐞 **B022:** Correção de erro de nem todos os hrefs estarem indo para as categorias (telas de edição);
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
 - 📈 **M026:** Novo ícone de "Novo" destinos.html
-- 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
 - 🐞 **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
 - 📈 **M035:** Dynamic Select em editar-destinos ser geral, ao invés de separado por categoria
@@ -115,6 +114,8 @@
 - 🐞 **B034:** Correção Novos itens com dynamic selects (Galeria, Lineup e Região) não estarem carregando o select
 - 📈 **M038:** Melhorar pop-ups de mensagem para incluir tanto mensagens comuns (fecháveis) quanto de erro
 - 📈 **M039:** Criar sistema de abrir-fechar cadastro de usuários com mensagem customizada
+- 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
+- 🐞 **B036:** Correção automações no módulo de transportes em editar-viagem.html não estarem carregando no primeiro load
 
 ### Abril 2024
 

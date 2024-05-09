@@ -48,10 +48,13 @@ function _loadEventListeners() {
 
     getID('inicio').addEventListener('input', () => {
         _loadProgramacao();
-        getID('fim').value = _getNextDay(getID('inicio').value);
-        if (!DOCUMENT_ID || (DOCUMENT_ID && !changedOnce)) {
-            changedOnce = true;
-            getID('fim').value = _getNextDay(getID('inicio').value);
+        const nextDay = _getNextDay(getID('inicio').value);
+        if (nexDay) {
+            getID('fim').value = nextDay;
+            if (!DOCUMENT_ID || (DOCUMENT_ID && !changedOnce)) {
+                changedOnce = true;
+                getID('fim').value = nextDay;
+            }
         }
     });
 
@@ -101,28 +104,19 @@ function _loadEventListeners() {
 }
 
 function _addTransporteListeners(i) {
-    const select = getID(`empresa-select-${i}`);
-    const codigo = getID(`transporte-codigo-${i}`);
+    getID(`empresa-select-${i}`).addEventListener('change', () => _loadTransporteVisibility(i));
+    getID(`transporte-codigo-${i}`).addEventListener('change', () => _loadTransporteVisibility(i));
 
-    select.addEventListener('change', function () {
-        _loadTransporteVisibility(i);
-    });
+    getID(`ponto-partida-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+    getID(`ponto-chegada-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+    getID(`ida-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+    getID(`durante-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+    getID(`volta-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
 
-    codigo.addEventListener('change', function () {
-        _loadTransporteVisibility(i);
-    });
-
-    const partida = getID(`ponto-partida-${i}`);
-    const chegada = getID(`ponto-chegada-${i}`);
-    const ida = getID(`ida-${i}`);
-    const durante = getID(`durante-${i}`);
-    const volta = getID(`volta-${i}`);
-
-    partida.addEventListener('change', () => _updateTransporteTitle(i));
-    chegada.addEventListener('change', () => _updateTransporteTitle(i));
-    ida.addEventListener('change', () => _updateTransporteTitle(i));
-    durante.addEventListener('change', () => _updateTransporteTitle(i));
-    volta.addEventListener('change', () => _updateTransporteTitle(i));
+    getID(`partida-${i}`).addEventListener('change', () => _loadAutoDuration(i));
+    getID(`partida-horario-${i}`).addEventListener('change', () => _loadAutoDuration(i));
+    getID(`chegada-${i}`).addEventListener('change', () => _loadAutoDuration(i));
+    getID(`chegada-horario-${i}`).addEventListener('change', () => _loadAutoDuration(i));
 }
 
 function _loadLineupListeners(i) {

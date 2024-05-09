@@ -190,3 +190,14 @@ function _jsTimeToVisualTime(time) {
 
     return result.join(" ");
 }
+
+function _getTimeBetweenDates(startDate, endDate) {
+    const diff = endDate.getTime() - startDate.getTime();
+    const hours = Math.floor(diff / 1000 / 60 / 60);
+    const minutes = Math.floor(diff / 1000 / 60) - (hours * 60);
+
+    const formattedHours = hours < 10 ? `0${hours}` : hours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${formattedHours}:${formattedMinutes}`;
+}
