@@ -1,7 +1,7 @@
 var MESSAGE_MODAL_OPEN = false;
 const DEFAULT_PROPERTIES = {
   errorData: {},
-  buttons: ['close']
+  buttons: ['ok']
 }
 
 // Mensagem Genérica
@@ -28,7 +28,7 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
 
     const titleDiv = document.createElement('div');
     titleDiv.className = 'message-title';
-    titleDiv.innerText = title;
+    titleDiv.innerHTML = title;
     textDiv.appendChild(titleDiv);
 
     const descriptionDiv = document.createElement('div');
@@ -177,7 +177,7 @@ function _getButton(buttonType) {
     case 'home':
       return _getHomeButton();
     default:
-      return _getCloseButton();
+      return _getOkButton();
   }
 }
 
@@ -215,19 +215,13 @@ function _getTryAgainButton() {
   return button;
 }
 
-function _getCloseButton() {
+function _getOkButton() {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', '_closeDisplayMessage();')
 
-  const icon = document.createElement('i');
-  icon.id = 'transporte-nav';
-  icon.className = 'iconify';
-  icon.setAttribute('data-icon', 'material-symbols-light:close');
-
-  button.appendChild(icon);
-  button.innerHTML += ' Fechar';
+  button.innerHTML = 'Entendi';
 
   return button;
 }

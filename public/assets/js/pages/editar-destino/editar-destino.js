@@ -154,47 +154,37 @@ async function _loadDestinos() {
 
 // Listeners
 function _addDestinosListeners(categoria, i) {
-  // Nome
-  getID(`${categoria}-nome-${i}`).addEventListener('change', function () {
-    _accordionDestinosOnChange(i, categoria);
-  });
-
-  // Emoji
-  const emoji = getID(`${categoria}-emoji-${i}`);
-  if (emoji) {
-    emoji.addEventListener('change', function () {
-      _accordionDestinosOnChange(i, categoria);
-    });
-  }
-
-  // Novo
-  getID(`${categoria}-novo-${i}`).addEventListener('click', function () {
-    _accordionDestinosOnChange(i, categoria);
-  });
+  // Título Interativo
+  getID(`${categoria}-nome-${i}`).addEventListener('change', () => _accordionDestinosOnChange(i, categoria));
+  getID(`${categoria}-emoji-${i}`).addEventListener('change', () => _accordionDestinosOnChange(i, categoria));
+  getID(`${categoria}-novo-${i}`).addEventListener('click', () => _accordionDestinosOnChange(i, categoria));
 
   // Valor
-  const valor = getID(`${categoria}-valor-${i}`);
-  const outroValor = getID(`${categoria}-outro-valor-${i}`);
-  valor.addEventListener('change', () => {
-    if (valor.value == 'outro') {
-      outroValor.style.display = 'block';
-      outroValor.required = true;
-    } else {
-      outroValor.style.display = 'none';
-      outroValor.required = false;
-    }
-  });
+  getID(`${categoria}-valor-${i}`).addEventListener('change', () => _valorListenerAction(i, categoria));
 
   // Região
   _loadRegiaoListeners(i, categoria);
 
+  // Links
+  getID(`${categoria}-link-${i}`).addEventListener('change', () => _validateLink(i, categoria));
+  getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(i, categoria));
+
   // Abrir-Fechar Accordion
-  $(`#collapse-${categoria}-${i}`).on('show.bs.collapse', function () {
-    _removeDragListeners(categoria);
-  });
-  $(`#collapse-${categoria}-${i}`).on('hide.bs.collapse', function () {
-    _addDragListeners(categoria);
-  });
+  $(`#collapse-${categoria}-${i}`).on('show.bs.collapse', () => _removeDragListeners(categoria));
+  $(`#collapse-${categoria}-${i}`).on('hide.bs.collapse', () => _addDragListeners(categoria));
+}
+
+function _valorListenerAction(i, categoria) {
+  const valor = getID(`${categoria}-valor-${i}`);
+  const outroValor = getID(`${categoria}-outro-valor-${i}`);
+
+  if (valor.value == 'outro') {
+    outroValor.style.display = 'block';
+    outroValor.required = true;
+  } else {
+    outroValor.style.display = 'none';
+    outroValor.required = false;
+  }
 }
 
 function _accordionDestinosOnChange(i, type) {

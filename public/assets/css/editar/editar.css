@@ -1741,3 +1741,25 @@ details summary::-webkit-details-marker {
 .title-text {
   flex-grow: 1;
 }
+
+.icon-button {
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.icon-button:hover {
+  color: #c7c6c6;
+}
+
+#copy-msg {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  font-size: 12px;
+  margin-bottom: -10px;
+}
+
+#copy-msg.visible {
+  opacity: 1;
+  visibility: visible;
+}

@@ -394,3 +394,16 @@ function _addRemoveChildListener(type, i) {
           _removeChildWithValidation(type, i);
      });
 }
+
+function _toggleFadingVisibility(id = 'copy-msg') {
+     var div = getID(id);
+     div.classList.toggle("visible");
+     div.classList.toggle("hidden");
+     
+     if (div.classList.contains("visible")) {
+       setTimeout(function() {
+         div.classList.remove("visible");
+         div.classList.add("hidden");
+       }, 3000);
+     }
+   }
