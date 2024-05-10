@@ -63,7 +63,7 @@ function _addRestaurantes() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
             <input id="restaurantes-midia-${i}" type="url"
               placeholder="https://www.youtube.com/watch?v=GAirUeYBvQI" value="" class="icon-right" />
           </div>
@@ -164,7 +164,7 @@ function _addLanches() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
             <input id="lanches-midia-${i}" type="url"
               placeholder="https://www.tiktok.com/@viajeparacomer/video/7172239210282274053?q=bottanikafe&t=1700768671502"
               value="" class="icon-right" />
@@ -266,7 +266,7 @@ function _addSaidas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
             <input id="saidas-midia-${i}" type="url" placeholder="https://www.youtube.com/watch?v=M1qd2Y2T4ZA"
               value="" class="icon-right" />
           </div>
@@ -367,7 +367,7 @@ function _addTurismo() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
             <input id="turismo-midia-${i}" type="url"
               placeholder="https://www.tiktok.com/@pompsie/video/7214164412616166699?q=las%20vegas%20sign&t=1700778158244"
               value="" class="icon-right" />
@@ -470,7 +470,7 @@ function _addLojas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo ou Playlist <span class="opcional"> (TikTok, YouTube ou Spotify)</span></label>
+            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
             <input id="lojas-midia-${i}" type="url" placeholder="https://www.youtube.com/watch?v=2LVCuEXZ3bk"
               value="" class="icon-right" />
           </div>

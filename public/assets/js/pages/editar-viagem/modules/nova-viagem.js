@@ -198,7 +198,7 @@ function _addTransporte() {
   
           <div class="nice-form-group">
             <label>Meio de Transporte</label>
-            <select required id="transporte-codigo-${i}">
+            <select required id="transporte-tipo-${i}">
               <option value="voo">Avião</option>
               <option value="carro">Carro</option>
               <option value="onibus">Ônibus</option>
@@ -226,12 +226,12 @@ function _addTransporte() {
 
           <div class="nice-form-group">
             <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="reserva-transp-${i}" type="text" placeholder="ABC123" />
+            <input id="reserva-transporte-${i}" type="text" placeholder="ABC123" />
           </div>
 
           <div class="nice-form-group">
             <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="link-transp-${i}" type="url" placeholder="www.google.com" value=""
+            <input id="transporte-link-${i}" type="url" placeholder="https://www.google.com/" value=""
               class="icon-right" />
           </div>
   
@@ -252,7 +252,7 @@ function _addTransporte() {
       `);
 
   _addDragListeners('transporte');
-  _addTransporteListeners(i);
+  _loadTransporteListeners(i);
   _addRemoveChildListener('transporte', i);
   _loadTransporteVisibility(i);
   _applyIdaVoltaVisibility(i);
@@ -319,7 +319,7 @@ function _addHospedagens() {
     
           <div class="nice-form-group">
             <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="link-reserva-hospedagens-${i}" type="url" placeholder="www.google.com" value=""
+            <input id="reserva-hospedagens-link-${i}" type="url" placeholder="https://www.google.com/" value=""
               class="icon-right" />
           </div>
 
@@ -483,7 +483,7 @@ function _addLineup() {
           </div>
   
           <div class="nice-form-group">
-            <label>Spotify <span class="opcional"> (Playlist ou página do artista)</span></label>
+            <label>Playlist ou Página do Artista <span class="opcional"> (Spotify)</span></label>
             <input id="lineup-midia-${i}" type="url"
               placeholder="https://open.spotify.com/playlist/16mG20ZrC9QttUB6Sozqep?si=da0794cde4914a17"
               value="" class="icon-right" />

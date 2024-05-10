@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 36    | 29          | 7         |
 | 🏆     | Feature  | F000    | 49    | 45          | 4         |
-| 📈     | Melhoria | M000    | 40    | 27          | 13        |
+| 📈     | Melhoria | M000    | 40    | 28          | 12        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
@@ -70,24 +70,22 @@
   - *Colocar booleano no método de switch se é um lightbox;*
   - *Salva localmente;*
   - *Ao fechar lightbox, verifica a variável, aplica e a limpa*
-- 🐞 **B024:** Correção de deseleção incorreta no botão de de "transportation" em viagem.html;
+- 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html;
 - 🏆 **F043:** Criação de Keypoints personalizáveis;
-- 📈 **M017:** Validação de inputs de links;
-  - *URLS;*
-  - *Emojis (Atualmente apaga carateres inválidos. Verificar se pode de fato bloquear de aparecer no input)*
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet;
 - ⚔️ **E013:** Migração de projeto para outro domínio;
-- 🐞 **B023:** Correção de gráfico de cities (está estático no viagens.html);
+- 🐞 **B023:** Correção de gráfico de dias por cidade estático no viagens.html;
 - 🏆 **F044:** Criação de animações em todo o site;
 - 🐞 **B022:** Correção de erro de nem todos os hrefs estarem indo para as categorias (telas de edição);
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
-- 📈 **M026:** Novo ícone de "Novo" destinos.html
-- 🐞 **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
+- 📈 **M026:** Novo ícone de "Novo" em destinos.html
+- 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
-- 📈 **M035:** Dynamic Select em editar-destinos ser geral, ao invés de separado por categoria
+- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
-- 🐞 **B031:** Correção Módulo de programação não mostrar título no load, apenas como listener
+- 🐞 **B031:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
+  - *O título completo apenas aparece quando o usuário edita o input (listener)*
 
 ## Done
 
@@ -113,6 +111,8 @@
 - 📈 **M033:** Inclusão de botões em modais de mensagem
   - *Informação fecha e erro vai para a home*
 - 📈 **M040:** Validação de input de Link e Embed em editar-destinos.html
+- 📈 **M017:** Validação de inputs nas páginas de editar
+  - *Emojis, Links Genéricos, Links de Imagens, Links de Playlists e Links de Vídeos*
 
 ### Abril 2024
 
@@ -257,4 +257,4 @@
 ### Descartados
 
 - 🏆 **F046:** Firebase Firestore Rules no Front-End
-- *Risco de segurança expor ao user as regras*
+  - *Risco de segurança expor ao user as regras*

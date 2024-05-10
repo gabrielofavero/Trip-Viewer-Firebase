@@ -273,7 +273,6 @@ function _removeImageSelectorListeners(type) {
       _checkFileSize(upload, type);
     });
   });
-
 }
 
 function _loadLogoSelector() {

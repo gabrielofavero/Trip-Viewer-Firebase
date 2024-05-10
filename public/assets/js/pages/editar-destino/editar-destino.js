@@ -155,9 +155,12 @@ async function _loadDestinos() {
 // Listeners
 function _addDestinosListeners(categoria, i) {
   // Título Interativo
-  getID(`${categoria}-nome-${i}`).addEventListener('change', () => _accordionDestinosOnChange(i, categoria));
-  getID(`${categoria}-emoji-${i}`).addEventListener('change', () => _accordionDestinosOnChange(i, categoria));
-  getID(`${categoria}-novo-${i}`).addEventListener('click', () => _accordionDestinosOnChange(i, categoria));
+  getID(`${categoria}-nome-${i}`).addEventListener('change', () => _updateDestinosTitle(i, categoria));
+  getID(`${categoria}-emoji-${i}`).addEventListener('change', () => _updateDestinosTitle(i, categoria));
+  getID(`${categoria}-novo-${i}`).addEventListener('click', () => _updateDestinosTitle(i, categoria));
+
+  // Validação de Emoji
+  getID(`${categoria}-emoji-${i}`).addEventListener('input', () => _emojisOnInputAction(i, categoria));
 
   // Valor
   getID(`${categoria}-valor-${i}`).addEventListener('change', () => _valorListenerAction(i, categoria));
@@ -166,8 +169,8 @@ function _addDestinosListeners(categoria, i) {
   _loadRegiaoListeners(i, categoria);
 
   // Links
-  getID(`${categoria}-link-${i}`).addEventListener('change', () => _validateLink(i, categoria));
-  getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(i, categoria));
+  getID(`${categoria}-link-${i}`).addEventListener('change', () => _validateLink(`${categoria}-link-${i}`));
+  getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${i}`));
 
   // Abrir-Fechar Accordion
   $(`#collapse-${categoria}-${i}`).on('show.bs.collapse', () => _removeDragListeners(categoria));
@@ -187,32 +190,32 @@ function _valorListenerAction(i, categoria) {
   }
 }
 
-function _accordionDestinosOnChange(i, type) {
-  const titleDiv = getID(`${type}-title-text-${i}`);
-  const emojiDiv = getID(`${type}-emoji-${i}`);
-  const novoIcon = getID(`${type}-title-icon-${i}`);
+function _updateDestinosTitle(i, categoria) {
+  const titleDiv = getID(`${categoria}-title-text-${i}`);
+  const emojiDiv = getID(`${categoria}-emoji-${i}`);
 
-  const nome = getID(`${type}-nome-${i}`).value;
-  const emojiUntreated = emojiDiv ? emojiDiv.value : "";
-  const emojiTreated = emojiDiv ? emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
+  const nome = getID(`${categoria}-nome-${i}`).value;
+  const emoji = emojiDiv.value ? emojiDiv.value.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
 
-  if (emojiTreated && nome) {
-    titleDiv.innerText = `${nome} ${emojiTreated}`
+  if (emoji && nome) {
+    titleDiv.innerText = `${nome} ${emoji}`
   } else if (nome) {
     titleDiv.innerText = nome;
   }
+
+  getID(`${categoria}-title-icon-${i}`).style.display = getID(`${categoria}-novo-${i}`).checked ? 'block' : 'none';
+}
+
+function _emojisOnInputAction(i, categoria) {
+  const emojiDiv = getID(`${categoria}-emoji-${i}`);
+  const emojiUntreated = emojiDiv.value;
+  const emojiTreated = emojiUntreated ? _getTreatedEmoji(emojiUntreated) : "";
 
   if (emojiTreated && emojiUntreated && emojiTreated !== emojiUntreated) {
     emojiDiv.value = emojiTreated;
   } else if (!emojiTreated && emojiUntreated) {
     emojiDiv.value = '';
     emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
-  }
-
-  if (getID(`${type}-novo-${i}`).checked) {
-    novoIcon.style.display = 'block';
-  } else {
-    novoIcon.style.display = 'none';
   }
 }
 

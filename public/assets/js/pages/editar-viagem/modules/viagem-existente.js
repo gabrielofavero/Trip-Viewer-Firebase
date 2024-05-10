@@ -197,7 +197,7 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
 
             const transportes = FIRESTORE_DATA.transportes?.transportes
             if (transportes && transportes[j]) {
-                getID(`transporte-codigo-${i}`).value = transportes[j];
+                getID(`transporte-tipo-${i}`).value = transportes[j];
             }
 
             const duracoes = FIRESTORE_DATA.transportes.duracoes;
@@ -219,7 +219,7 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
 
             const reservas = FIRESTORE_DATA.transportes.reservas;
             if (reservas[j]) {
-                getID(`reserva-transp-${i}`).value = reservas[j];
+                getID(`reserva-transporte-${i}`).value = reservas[j];
             }
 
             const pontoPartida = FIRESTORE_DATA.transportes.pontos[j].partida;
@@ -235,7 +235,7 @@ function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
 
             const links = FIRESTORE_DATA.transportes.links;
             if (links && links[j]) {
-                getID(`link-transp-${i}`).value = links[j];
+                getID(`transporte-link-${i}`).value = links[j];
             }
 
             _updateTransporteTitle(i);
@@ -300,7 +300,7 @@ function _loadHospedagemData(FIRESTORE_DATA) {
 
             const linkReserva = FIRESTORE_DATA.hospedagens.links[j];
             if (linkReserva) {
-                getID(`link-reserva-hospedagens-${i}`).value = linkReserva;
+                getID(`reserva-hospedagens-link-${i}`).value = linkReserva;
             }
 
             const imagem = FIRESTORE_DATA.hospedagens.imagens[j];

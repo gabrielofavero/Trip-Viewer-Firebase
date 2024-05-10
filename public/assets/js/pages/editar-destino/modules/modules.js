@@ -10,6 +10,12 @@ var SELECT_REGIOES = {
     'lojas': []
 }
 
+// Emoji
+
+function _getTreatedEmoji(emoji) {
+    return emoji.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '');
+}
+
 // Moeda
 function _loadCurrencySelects() {
     _loadMoedaOptions();
@@ -100,47 +106,4 @@ function _loadRegiaoListeners(i, categoria) {
     input.addEventListener('change', function () {
         _regiaoSelectAction(categoria);
     });
-}
-
-// Validação de links
-function _validateLink(i, categoria) {
-    const div = getID(`${categoria}-link-${i}`);
-    const link = div.value;
-
-    if (link.startsWith('http://') || link.startsWith('https://')) return;
-
-    const linkI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>'
-    _displayMessage('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`);
-    div.value = '';
-}
-
-function _validateMediaLink(i, categoria) {
-    const div = getID(`${categoria}-midia-${i}`);
-    const link = div.value;
-
-    const validDomains = ['spotify.com', 'youtu.be/', 'youtube.com', 'tiktok.com'];
-    const ishttp = link.startsWith('http://') || link.startsWith('https://');
-
-    if (!link || (ishttp && validDomains.some(domain => link.includes(domain)) && !link.includes('vm.tiktok.com'))) return;
-
-    if (ishttp && link.includes("vm.tiktok")) {
-        div.value = '';
-        const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
-        const copyI = `<i class="iconify icon-button" style="margin-left: 5px" data-icon="ph:copy" onclick="_copyToClipboard('${link}')"></i>`;
-        const copiedDiv = `<div id="copy-msg" class="hidden">Link copiado com sucesso</div>`;
-        _displayMessage('Link de TikTok Inválido ' + tiktokI, `Você forneceu um link de TikTok Móvel (vm.tiktok.com), mas apenas links da versão web são suportados.<br><br>
-                                                               Copie o seu link e cole em uma nova aba de seu navegador para obter o link correto.<br><br>
-                                                               <input type="text" disabled="" style="width: auto" placeholder="${link}" value=""> ${copyI}
-                                                               ${copiedDiv}`);
-    } else {
-        div.value = '';
-        const linkI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>'
-        const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
-        const spotifyI = '<i class="iconify" data-icon="mdi:spotify"></i>'
-        const youtubeI = '<i class="iconify" data-icon="mdi:youtube"></i>'
-        _displayMessage('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                                   ${tiktokI} <strong>TikTok</strong> (Versão Web)<br>
-                                                   ${youtubeI} <strong>Youtube</strong><br>
-                                                   ${spotifyI} <strong>Spotify</strong>`);
-    }
 }

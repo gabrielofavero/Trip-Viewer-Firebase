@@ -1,3 +1,4 @@
+// Required Fields
 function _validateRequiredFields() {
     var invalidFields = [];
 
@@ -112,4 +113,100 @@ function _getInnerText(idSplit) {
         innerText += _firstCharToUpperCase(idSplit[i]) + " ";
     }
     return innerText.trim();
+}
+
+// Selects
+function _closeAllSelects(excludeElement) {
+    var selectElements = document.getElementsByTagName('select');
+    for (var i = 0; i < selectElements.length; i++) {
+        var select = selectElements[i];
+        if (select !== excludeElement && select.hasAttribute('open')) {
+            select.removeAttribute('open');
+        }
+    }
+}
+
+// Validação de links
+function _validateLink(id) {
+    const div = getID(id);
+    const link = div.value;
+
+    if (link.startsWith('http://') || link.startsWith('https://')) return;
+    
+    _closeAllSelects();
+    div.value = '';
+
+    _displayMessage('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>', 
+                    `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`);
+}
+
+function _validateMediaLink(id) {
+    const div = getID(id);
+    const link = div.value;
+
+    const validDomains = ['youtu.be/', 'youtube.com', 'tiktok.com'];
+    const ishttp = link.startsWith('http://') || link.startsWith('https://');
+
+    if (!link || (ishttp && validDomains.some(domain => link.includes(domain)) && !link.includes('vm.tiktok.com'))) return;
+
+    if (ishttp && link.includes("vm.tiktok")) {
+        div.value = '';
+        const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
+        const copyI = `<i class="iconify icon-button" style="margin-left: 5px" data-icon="ph:copy" onclick="_copyToClipboard('${link}')"></i>`;
+        const copiedDiv = `<div id="copy-msg" class="hidden">Link copiado com sucesso</div>`;
+        _displayMessage('Link de TikTok Inválido ' + tiktokI, `Você forneceu um link de TikTok Móvel (vm.tiktok.com), mas apenas links da versão web são suportados.<br><br>
+                                                               Copie o seu link e cole em uma nova aba de seu navegador para obter o link correto.<br><br>
+                                                               <input type="text" disabled="" style="width: auto" placeholder="${link}" value=""> ${copyI}
+                                                               ${copiedDiv}`);
+    } else {
+        div.value = '';
+        const linkI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>'
+        const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
+        const youtubeI = '<i class="iconify" data-icon="mdi:youtube"></i>'
+        _displayMessage('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
+                                                   ${tiktokI} <strong>TikTok</strong> (Versão Web)<br>
+                                                   ${youtubeI} <strong>Youtube</strong>`);
+    }
+}
+
+function _validatePlaylistLink(id) {
+    const div = getID(id);
+    const link = div.value;
+
+    const validDomains = ['spotify.com'];
+    const ishttp = link.startsWith('http://') || link.startsWith('https://');
+
+    if (!link || (ishttp && validDomains.some(domain => link.includes(domain)))) return;
+
+    div.value = '';
+
+    const linkI = '<i class="iconify" data-icon="ic:baseline-music-off"></i>'
+    const spotifyI = '<i class="iconify" data-icon="mdi:spotify"></i>'
+    _displayMessage('Playlist / Página do Artista Inválida ' + linkI, `A playlist ou Página do do Artista fornecida não é válida. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
+                                               ${spotifyI} <strong>Spotify</strong>`);
+}
+
+
+function _validateImageLink(id) {
+    const div = getID(id);
+    const imageLink = div.value;
+
+    if ((imageLink.startsWith('http://') || imageLink.startsWith('https://')) && !imageLink.includes('pbs.twimg.com')) return;
+
+    let title = '';
+    let content = '';
+
+    if (imageLink.includes('pbs.twimg.com')) {
+        title = 'Imagem do Twitter Inválida <i class="iconify" data-icon="mdi:twitter"></i>';
+        content = `O sistema não suporta imagens vindas do Twitter (Vulgo <i class="iconify" data-icon="fa6-brands:x-twitter"></i> se você for uma pessoa chata).<br><br> 
+                   Por favor, utilize outra fonte externa para suas imagens.`;
+    } else {
+        title = 'Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>';
+        content = `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`;
+    }
+
+    _closeAllSelects();
+    div.value = '';
+
+    _displayMessage(title, content);
 }

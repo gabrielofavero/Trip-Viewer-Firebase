@@ -228,7 +228,7 @@ function _buildTransporteObject() {
 
         result.datas.push(data);
 
-        result.transportes.push(getID(`transporte-codigo-${j}`).value);
+        result.transportes.push(getID(`transporte-tipo-${j}`).value);
 
         const divDuracao = getID(`transporte-duracao-${j}`);
         const valueDuracao = divDuracao ? _returnEmptyIfNoValue(divDuracao.value) : "";
@@ -237,7 +237,7 @@ function _buildTransporteObject() {
         const valueEmpresa = _getValueEmpresa(j);
         result.empresas.push(valueEmpresa);
 
-        const divReserva = getID(`reserva-transp-${j}`);
+        const divReserva = getID(`reserva-transporte-${j}`);
         const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
         result.reservas.push(valueReserva);
 
@@ -254,7 +254,7 @@ function _buildTransporteObject() {
         const valuePontoChegada = divPontoChegada ? _returnEmptyIfNoValue(divPontoChegada.value) : "";
         pontos.chegada = valuePontoChegada;
 
-        const divLink = getID(`link-transp-${j}`);
+        const divLink = getID(`transporte-link-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
 
@@ -333,7 +333,7 @@ function _buildHospedagemObject() {
         const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
         result.descricao.push(valueDescricao);
 
-        const divLink = getID(`link-reserva-hospedagens-${j}`);
+        const divLink = getID(`reserva-hospedagens-link-${j}`);
         const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
         result.links.push(valueLink);
 

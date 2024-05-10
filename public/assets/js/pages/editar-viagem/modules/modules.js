@@ -66,12 +66,12 @@ function _loadTransporteVisibility(i) {
     const select = getID(`empresa-select-${i}`);
     const value = select.value;
     const empresa = getID(`empresa-${i}`);
-    const codigo = getID(`transporte-codigo-${i}`);
+    const tipo = getID(`transporte-tipo-${i}`);
 
     let selectValid = false;
     let selectOptions = "";
 
-    switch (codigo.value) {
+    switch (tipo.value) {
         case "voo":
             selectOptions = `
         <option value="americanAirlines">American Airlines</option>
