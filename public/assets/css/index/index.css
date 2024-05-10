@@ -692,6 +692,7 @@ section {
 }
 
 .user-data-icon:hover,
+.user-data-icon:focus,
 .index-buttons:hover,
 .custom-nav-toggle:hover,
 .logged-menu-item:hover,
