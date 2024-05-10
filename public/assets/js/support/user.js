@@ -41,7 +41,7 @@ async function _registerIfUserNotPresent() {
     if (!userDoc && !registrationOpen) {
         _signOut();
         const title = 'Você chegou muito cedo! 😅';
-        const content = 'Olá! O TripViewer ainda não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀';
+        const content = 'Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀';
         _displayMessage(title, content);
         return;
     }

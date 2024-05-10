@@ -1,9 +1,13 @@
 var MESSAGE_MODAL_OPEN = false;
+const DEFAULT_PROPERTIES = {
+  errorData: {},
+  buttons: ['close']
+}
 
 // Mensagem Genérica
-function _displayMessage(title, content, errorObj = {}) {
+function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
   const preloader = getID('preloader');
-  const isErrorMessage = errorObj?.isError === true;
+  const isErrorMessage = properties.errorData?.isError === true;
 
   _stopLoadingTimer();
 
@@ -12,29 +16,42 @@ function _displayMessage(title, content, errorObj = {}) {
     _disableScroll();
 
     const container = document.createElement('div');
-    container.className = 'error-container';
+    container.className = 'message-container';
 
     const textDiv = document.createElement('div');
-    textDiv.className = 'error-text-container';
+    textDiv.className = 'message-text-container';
 
     if (!isErrorMessage) {
-      const cancelIcon = _getCancelIcon();
+      const cancelIcon = _getCloseIcon();
       textDiv.appendChild(cancelIcon);
-    } 
+    }
 
     const titleDiv = document.createElement('div');
-    titleDiv.className = 'error-title';
+    titleDiv.className = 'message-title';
     titleDiv.innerText = title;
     textDiv.appendChild(titleDiv);
 
     const descriptionDiv = document.createElement('div');
-    descriptionDiv.className = 'error-description';
+    descriptionDiv.className = 'message-description';
     descriptionDiv.innerHTML = content;
     textDiv.appendChild(descriptionDiv);
 
     if (isErrorMessage) {
-      const errorElement = _getErrorElement(errorObj, textDiv);
+      const errorElement = _getErrorElement(properties.errorData, textDiv);
       textDiv.appendChild(errorElement);
+    }
+
+    if (properties.buttons && properties.buttons.length > 0) {
+      const buttonBox = document.createElement('div');
+      buttonBox.className = 'button-box';
+      buttonBox.style.marginTop = '25px';
+
+      for (const buttonType of properties.buttons) {
+        const button = _getButton(buttonType);
+        buttonBox.appendChild(button);
+      }
+
+      textDiv.appendChild(buttonBox);
     }
 
     container.appendChild(textDiv);
@@ -51,7 +68,7 @@ function _displayMessage(title, content, errorObj = {}) {
 }
 
 // Mensagem de Erro
-function _displayErrorMessage(error, customMessage="", showLocation = true) {
+function _displayErrorMessage(error, customMessage = "", showLocation = true) {
   const title = "Erro no Carregamento 🙁";
   let isErrorInstance = error instanceof Error;
   let content = 'Um erro inesperado impediu o carregamento da página. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.';
@@ -59,21 +76,30 @@ function _displayErrorMessage(error, customMessage="", showLocation = true) {
   if (isErrorInstance && customMessage) {
     content = customMessage;
   } else if (!isErrorInstance && error && !customMessage) {
-    content = `${error}. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.` ;
-  } else if (!isErrorInstance && error && customMessage) { 
+    content = `${error}. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.`;
+  } else if (!isErrorInstance && error && customMessage) {
     error = new Error(error);
     content = customMessage;
     showLocation = false;
     isErrorInstance = true;
   }
 
-  const errorObj = {
-    isError: true,
-    error: isErrorInstance ? error : "",
-    showLocation: isErrorInstance ? showLocation : false
+  let buttons = ['tryAgain'];
+
+  if (!window.location.href.includes('index.html')) {
+    buttons.push('home');
   }
 
-  _displayMessage(title, content, errorObj);
+  const properties = {
+    errorData: {
+      isError: true,
+      error: isErrorInstance ? error : "",
+      showLocation: isErrorInstance ? showLocation : false
+    },
+    buttons: buttons
+  }
+
+  _displayMessage(title, content, properties);
 }
 
 // Fechar Mensagem
@@ -92,11 +118,11 @@ function _closeDisplayMessage() {
 }
 
 // Funções de Suporte
-function _getCancelIcon() {
+function _getCloseIcon() {
   const iconContainer = document.createElement('div');
   iconContainer.className = 'icon-container';
   iconContainer.style.textAlign = 'right';
-  
+
   const cancelIcon = document.createElement('i');
   cancelIcon.id = 'cancel-icon';
   cancelIcon.className = 'iconify';
@@ -111,13 +137,13 @@ function _getCancelIcon() {
   return iconContainer;
 }
 
-function _getErrorElement(errorObj) {
+function _getErrorElement(errorData) {
 
   // TO-DO block exit message, add button to home and add stack if configured
 
   let location = "";
-  if (errorObj?.showLocation) {
-    const stackTrace = errorObj.error ? errorObj.error.stack : (new Error()).stack;
+  if (errorData?.showLocation) {
+    const stackTrace = errorData.error ? errorData.error.stack : (new Error()).stack;
     const stackSplit = stackTrace.split('\n');
     location = stackSplit[2] ? stackSplit[2] : stackSplit[stackSplit.length - 1];
     location = location.split("/")[location.split("/").length - 1]
@@ -126,10 +152,10 @@ function _getErrorElement(errorObj) {
 
   let errorMessage = "";
 
-  if (location && errorObj.error && errorObj.error instanceof Error) {
-    errorMessage = `Erro "${errorObj.error.message}" localizado em ${location}`;
-  } else if (errorObj.error && errorObj.error instanceof Error) {
-    errorMessage = `Erro "${errorObj.error.message}"`;
+  if (location && errorData.error && errorData.error instanceof Error) {
+    errorMessage = `Erro "${errorData.error.message}" localizado em ${location}`;
+  } else if (errorData.error && errorData.error instanceof Error) {
+    errorMessage = `Erro "${errorData.error.message}"`;
   }
 
   const errorElement = document.createElement('p');
@@ -141,4 +167,67 @@ function _getErrorElement(errorObj) {
   }
 
   return errorElement;
+}
+
+// Botões
+function _getButton(buttonType) {
+  switch (buttonType) {
+    case 'tryAgain':
+      return _getTryAgainButton();
+    case 'home':
+      return _getHomeButton();
+    default:
+      return _getCloseButton();
+  }
+}
+
+function _getHomeButton() {
+  const button = document.createElement('button');
+  button.className = 'btn btn-purple btn-format';
+  button.type = 'submit';
+  button.setAttribute('onclick', 'window.location.href = "index.html";')
+
+  const icon = document.createElement('i');
+  icon.id = 'transporte-nav';
+  icon.className = 'iconify';
+  icon.setAttribute('data-icon', 'bx:home');
+
+  button.appendChild(icon);
+  button.innerHTML += ' Home';
+
+  return button;
+}
+
+function _getTryAgainButton() {
+  const button = document.createElement('button');
+  button.className = 'btn btn-secondary btn-format';
+  button.type = 'submit';
+  button.setAttribute('onclick', 'window.location.reload(true);')
+
+  const icon = document.createElement('i');
+  icon.id = 'transporte-nav';
+  icon.className = 'iconify';
+  icon.setAttribute('data-icon', 'pajamas:retry');
+
+  button.appendChild(icon);
+  button.innerHTML += ' Tentar Novamente';
+
+  return button;
+}
+
+function _getCloseButton() {
+  const button = document.createElement('button');
+  button.className = 'btn btn-secondary btn-format';
+  button.type = 'submit';
+  button.setAttribute('onclick', '_closeDisplayMessage();')
+
+  const icon = document.createElement('i');
+  icon.id = 'transporte-nav';
+  icon.className = 'iconify';
+  icon.setAttribute('data-icon', 'material-symbols-light:close');
+
+  button.appendChild(icon);
+  button.innerHTML += ' Fechar';
+
+  return button;
 }

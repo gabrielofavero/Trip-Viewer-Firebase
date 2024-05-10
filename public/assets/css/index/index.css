@@ -385,7 +385,7 @@ section {
   height: 36px;
 }
 
-.error-container {
+.message-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -399,17 +399,17 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 30px;
   overflow-wrap: break-word;
 }
 
-.error-text-container {
+.message-text-container {
   width: 100%;
   font-size: 18px;
   line-height: 1.5;
 }
 
-.error-title {
+.message-title {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 20px;
@@ -422,9 +422,9 @@ section {
 }
 
 @media (max-width: 520px) {
-  .error-container {
+  .message-container {
     width: 90%;
-    height: calc(300px + (520px - 100vw) * 0.5);
+    height: auto;
   }
 }
 
@@ -855,6 +855,10 @@ section {
   vertical-align: initial;
   margin: 2em -2em -2em;
   padding: 1.5em 2em
+}
+
+.btn-format {
+  margin: 5px;
 }
 
 #cancelar,

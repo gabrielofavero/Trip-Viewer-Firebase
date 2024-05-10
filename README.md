@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 36    | 29          | 7         |
 | 🏆     | Feature  | F000    | 49    | 45          | 4         |
-| 📈     | Melhoria | M000    | 40    | 25          | 15        |
+| 📈     | Melhoria | M000    | 40    | 26          | 14        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
@@ -19,18 +19,16 @@
 
 ## Doing
 
-- 📈 **M033:** Inclusão de botões em modais de mensagem
- - *Informação fecha e erro vai para a home*
+- 📈 **M031:** Melhoria no card de hospedagem
+  - *Opção de zoom na imagem do quarto;*
 
 ## To-Do
 
 ### Prioridade Alta
 
-- 📈 **M031:** Melhoria no card de hospedagem
-  - *Opção de zoom na imagem do quarto;*
 - 📈 **M040:** Validação de input de Embed em editar-destinos.html
- - *Reutilização parcial de função que existe em página de destinos. Se não for um link válido, notifica o usuário*
- - *Mensagem específica caso o link seja do TikTok Mobile, pois a API apenas suporta links desktop*
+  - *Reutilização parcial de função que existe em página de destinos. Se não for um link válido, notifica o usuário*
+  - *Mensagem específica caso o link seja do TikTok Mobile, pois a API apenas suporta links desktop*
 
 ### Prioridade Média
 
@@ -116,6 +114,8 @@
 - 📈 **M039:** Criar sistema de abrir-fechar cadastro de usuários com mensagem customizada
 - 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
 - 🐞 **B036:** Correção automações no módulo de transportes em editar-viagem.html não estarem carregando no primeiro load
+- 📈 **M033:** Inclusão de botões em modais de mensagem
+  - *Informação fecha e erro vai para a home*
 
 ### Abril 2024
 
