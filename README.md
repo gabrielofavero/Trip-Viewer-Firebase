@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 36    | 29          | 7         |
+| 🐞     | Bug      | B000    | 36    | 30          | 6         |
 | 🏆     | Feature  | F000    | 49    | 45          | 4         |
 | 📈     | Melhoria | M000    | 40    | 29          | 11        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
@@ -76,14 +76,12 @@
 - 🐞 **B022:** Correção de erro de nem todos os hrefs estarem indo para as categorias (telas de edição);
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens.
 - 📈 **M026:** Novo ícone de "Novo" em destinos.html
-- 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
   - *O título completo apenas aparece quando o usuário edita o input (listener)*
-- 📈 **M031:** Melhoria de opção de zoom no card de hospedagem em viagem.html
 
 ## Done
 
@@ -111,6 +109,7 @@
 - 📈 **M040:** Validação de input de Link e Embed em editar-destinos.html
 - 📈 **M017:** Validação de inputs nas páginas de editar
   - *Emojis, Links Genéricos, Links de Imagens, Links de Playlists e Links de Vídeos*
+- 📈 **M031:** Melhoria de opção de zoom no card de hospedagem em viagem.html
 
 ### Abril 2024
 
@@ -256,3 +255,4 @@
 
 - 🏆 **F046:** Firebase Firestore Rules no Front-End
   - *Risco de segurança expor ao user as regras*
+- 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox

@@ -93,9 +93,9 @@ function _setDestinosInnerHTML(result) {
   let resultText = "";
   for (let i = 0; i < result.length; i++) {
     resultText += `
-    <div id="accordion">
+    <div class="accordion">
       <div class="card">
-        <div id="headerP" onclick=_interactWithAccordion(${i},${result[i].id})>
+        <div class="headerP" onclick=_interactWithAccordion(${i},${result[i].id})>
           <div class="card-header" id="heading-${i}">
             <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-${i}" aria-expanded="true"

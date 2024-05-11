@@ -773,13 +773,17 @@ section {
     margin-right: auto;
     width: 700px;
   }
+
+  #prog {
+    width: 700px;
+  }
+
 }
 
 #prog {
   display: none;
   opacity: 0;
   transition: opacity 0.2s linear;
-  width: 100%;
   margin-top: 20px;
   margin-bottom: 0px;
   margin-left: auto;

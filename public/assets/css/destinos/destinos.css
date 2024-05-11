@@ -81,7 +81,7 @@ section {
   margin-bottom: 0;
 }
 
-#accordion {
+.accordion {
   color: #272829;
   text-align: center;
   width: 500px;
@@ -100,14 +100,16 @@ section {
   color: #3A3838;
 }
 
-#headerP {
+.headerP {
+  background-color: #F9F9F9;
   cursor: pointer;
 }
 
 .card-header {
-  background-color: #F9F9F9;
   width: 425px;
   float: left;
+  border-bottom: none;
+  background-color: #F9F9F9;
 }
 
 .youtube {
@@ -155,11 +157,9 @@ section {
   float: left;
   font-weight: bold;
   font-size: 15px;
-  border-bottom-color: #DADADA;
   height: 55px;
   line-height: 55px;
   text-align: center;
-  border-bottom: 1px solid #DADADA;
   border-left: 1px solid #DADADA;
 }
 
@@ -177,7 +177,7 @@ section {
 }
 
 @media screen and (max-width: 600px) {
-  #accordion {
+  .accordion {
     width: 400px;
   }
 
@@ -192,11 +192,11 @@ section {
 }
 
 @media screen and (max-width: 450px) {
-  #accordion {
+  .accordion {
     width: 300px;
   }
 
-  #headerP {
+  .headerP {
     white-space: nowrap;
   }
 
