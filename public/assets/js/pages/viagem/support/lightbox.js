@@ -1,10 +1,8 @@
-// ======= Lightbox JS =======
-
-var savedScrollPosition = 0;
+var SAVED_SCROLL_POSITION = 0;
 
 function _openLightbox(link) {
   _startLoadingScreen(false);
-  savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  SAVED_SCROLL_POSITION = window.pageYOffset || document.documentElement.scrollTop;
   var lightboxIframe = getID('lightbox-iframe');
   lightboxIframe.src = 'about:blank';
   lightboxIframe.onload = function () {
@@ -25,7 +23,18 @@ function _closeLightbox() {
   getID('navbar').style.display = 'block';
   _enableScroll();
   window.scrollTo({
-    top: savedScrollPosition,
+    top: SAVED_SCROLL_POSITION,
     behavior: 'instant'
+  });
+}
+
+function _loadImageLightbox(className) {
+  GLightbox({
+    selector: `.${className}`,
+    autofocusVideos: false,
+    touchNavigation: true,
+    touchFollowAxis: true,
+    width: 'auto',
+    height: 'auto'
   });
 }

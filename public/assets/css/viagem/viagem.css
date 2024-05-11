@@ -903,11 +903,11 @@ section {
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
-.portfolio .portfolio-item {
+.portfolio-item {
   margin-bottom: 30px;
 }
 
-.portfolio #portfolio-flters {
+#portfolio-flters {
   padding: 0;
   margin: 0 auto 25px auto;
   list-style: none;
@@ -917,7 +917,7 @@ section {
   padding: 2px 15px;
 }
 
-.portfolio #portfolio-flters li {
+#portfolio-flters li {
   cursor: pointer;
   display: inline-block;
   padding: 10px 15px;
@@ -930,16 +930,16 @@ section {
   transition: all 0.3s ease-in-out;
 }
 
-.portfolio #portfolio-flters li:hover,
-.portfolio #portfolio-flters li.filter-active {
+#portfolio-flters li:hover,
+#portfolio-flters li.filter-active {
   color: #5859a7;
 }
 
-.portfolio #portfolio-flters li:last-child {
+#portfolio-flters li:last-child {
   margin-right: 0;
 }
 
-.portfolio .portfolio-wrap {
+.portfolio-wrap {
   transition: 0.3s;
   position: relative;
   overflow: hidden;
@@ -947,7 +947,7 @@ section {
   background: rgba(69, 80, 91, 0.8);
 }
 
-.portfolio .portfolio-wrap::before {
+.portfolio-wrap::before {
   content: "";
   background: rgba(255, 255, 255, 0.7);
   position: absolute;
@@ -960,7 +960,7 @@ section {
   opacity: 0;
 }
 
-.portfolio .portfolio-wrap .portfolio-info {
+.portfolio-wrap .portfolio-info {
   opacity: 0;
   position: absolute;
   top: 0;
@@ -976,7 +976,7 @@ section {
   align-items: center;
 }
 
-.portfolio .portfolio-wrap .portfolio-info::before {
+.portfolio-wrap .portfolio-info::before {
   display: block;
   content: "";
   width: 48px;
@@ -990,7 +990,7 @@ section {
   z-index: 9994;
 }
 
-.portfolio .portfolio-wrap .portfolio-info::after {
+.portfolio-wrap .portfolio-info::after {
   display: block;
   content: "";
   width: 48px;
@@ -1004,13 +1004,13 @@ section {
   z-index: 9994;
 }
 
-.portfolio .portfolio-wrap .portfolio-info h4 {
+.portfolio-wrap .portfolio-info h4 {
   font-size: 20px;
   color: #4F5051;
   font-weight: 600;
 }
 
-.portfolio .portfolio-wrap .portfolio-info p {
+.portfolio-wrap .portfolio-info p {
   color: #4F5051;
   font-size: 14px;
   text-transform: uppercase;
@@ -1018,12 +1018,12 @@ section {
   margin: 0;
 }
 
-.portfolio .portfolio-wrap .portfolio-links {
+.portfolio-wrap .portfolio-links {
   text-align: center;
   z-index: 4;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a {
+.portfolio-wrap .portfolio-links a {
   color: #4F5051;
   margin: 0 2px;
   font-size: 28px;
@@ -1031,11 +1031,11 @@ section {
   transition: 0.3s;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a:hover {
+.portfolio-wrap .portfolio-links a:hover {
   color: #5859a7;
 }
 
-.portfolio .portfolio-wrap:hover::before {
+.portfolio-wrap:hover::before {
   top: 0;
   left: 0;
   right: 0;
@@ -1043,16 +1043,16 @@ section {
   opacity: 1;
 }
 
-.portfolio .portfolio-wrap:hover .portfolio-info {
+.portfolio-wrap:hover .portfolio-info {
   opacity: 1;
 }
 
-.portfolio .portfolio-wrap:hover .portfolio-info::before {
+.portfolio-wrap:hover .portfolio-info::before {
   top: 15px;
   left: 15px;
 }
 
-.portfolio .portfolio-wrap:hover .portfolio-info::after {
+.portfolio-wrap:hover .portfolio-info::after {
   bottom: 15px;
   right: 15px;
 }
@@ -2263,6 +2263,7 @@ iframe {
 
 .hotel-img {
   width: 180px;
+  height: 100%;
   position: relative;
   background-color: #F2F2F2;
   background-size: cover;

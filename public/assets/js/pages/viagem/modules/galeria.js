@@ -1,19 +1,6 @@
-// ======= Gallery JS =======
+var FILTER_MAP = new BiMap();
 
-var filterMap = new BiMap();
-
-// ======= LOADERS =======
-function _loadPortfolioLightbox() {
-    GLightbox({
-        selector: '.galeria',
-        autofocusVideos: false,
-        touchNavigation: true,
-        touchFollowAxis: true,
-        width: 'auto',
-        height: 'auto'
-    });
-}
-
+// Carregamento
 function _loadGaleria() {
     _loadGaleriaCategorias(FIRESTORE_DATA.galeria.categorias || FIRESTORE_DATA.galeria.filtros);
     _loadGaleriaBody(FIRESTORE_DATA.galeria);
@@ -62,9 +49,21 @@ function _loadGaleriaBody(galeria) {
     }
 
     getID("portfolio-container").innerHTML = result;
-    _loadPortfolioLightbox();
+    _loadImageLightbox('galeria');
 }
 
+function _loadFilterClass(filter) {
+    let filterName = 'filter-' + _codifyText(filter);
+
+    if (FILTER_MAP[filterName]) {
+        filterName += '-' + Object.keys(FILTER_MAP).length;
+    }
+
+    FILTER_MAP.set(filterName, filter);
+    return filterName;
+}
+
+// Getters
 function _getGaleriaTitulo(galeria, i) {
     let titulo = '';
     if (galeria.titulos && galeria.titulos[i]) { // Implementação Atual
@@ -88,9 +87,9 @@ function _getGaleriaDescricoes(galeria, i) {
 function _getGaleriaCategoria(galeria, i) {
     let categoria = '';
     if (galeria.categorias && galeria.categorias[i]) { // Implementação Atual
-        categoria = filterMap.getByValue(galeria.categorias[i]);
+        categoria = FILTER_MAP.getByValue(galeria.categorias[i]);
     } else if (galeria.imagens && galeria.imagens[i] && galeria.imagens[i].filtro) { // Implementação Antiga
-        categoria = filterMap.getByValue(galeria.imagens[i].filtro);
+        categoria = FILTER_MAP.getByValue(galeria.imagens[i].filtro);
     }
     return categoria || '';
 }
@@ -103,7 +102,7 @@ function _getGaleriaLink(imagem) {
     }
 }
 
-
+// Visibility
 function _adjustPortfolioHeight() {
     const container = getID('portfolio-container');
 
@@ -117,17 +116,6 @@ function _adjustPortfolioHeight() {
     });
 
     container.style.height = `${totalHeight}px`;
-}
-
-function _loadFilterClass(filter) {
-    let filterName = 'filter-' + _codifyText(filter);
-
-    if (filterMap[filterName]) {
-        filterName += '-' + Object.keys(filterMap).length;
-    }
-
-    filterMap.set(filterName, filter);
-    return filterName;
 }
 
 function _refreshCategorias() {

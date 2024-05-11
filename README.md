@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 36    | 29          | 7         |
 | 🏆     | Feature  | F000    | 49    | 45          | 4         |
-| 📈     | Melhoria | M000    | 40    | 28          | 12        |
+| 📈     | Melhoria | M000    | 40    | 29          | 11        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
@@ -18,9 +18,6 @@
 - ❗️: Crítico
 
 ## Doing
-
-- 📈 **M031:** Melhoria no card de hospedagem
-  - *Opção de zoom na imagem do quarto;*
 
 ## To-Do
 
@@ -84,15 +81,16 @@
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
-- 🐞 **B031:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
+- 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
   - *O título completo apenas aparece quando o usuário edita o input (listener)*
+- 📈 **M031:** Melhoria de opção de zoom no card de hospedagem em viagem.html
 
 ## Done
 
 ### Maio 2024
 
 - 📈 **M028:** Melhoria na função de compartilhar para exibir texto adaptado (viagem/listagem)
-- 🐞 **M029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
+- 🐞 **B029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
 - 🏆 **F048:** Dynamic Select de "Valor" em editar-destinos.html
 - 📈 **M029:** Otimizar destinos.html para receber do localStorage apenas os dados necessários
 - 🐞 **B030:** Correção de erros em novas viagens de editar-viagens.html

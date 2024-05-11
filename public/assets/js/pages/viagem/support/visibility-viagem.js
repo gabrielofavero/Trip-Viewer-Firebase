@@ -21,9 +21,9 @@ function _applyCustomColorsViagem() {
     _addCSSRule('.about .progress-bar', 'background-color', THEME_COLOR);
     _addCSSRule('#calendarTitle', 'background', THEME_COLOR);
     _addCSSRule('.resume .resume-item', 'border-left', `2px solid ${THEME_COLOR}`);
-    _addCSSRule('.portfolio #portfolio-flters li:hover', 'color', THEME_COLOR);
-    _addCSSRule('.portfolio #portfolio-flters li.filter-active', 'color', THEME_COLOR);
-    _addCSSRule('.portfolio .portfolio-wrap .portfolio-links a:hover', 'color', THEME_COLOR);
+    _addCSSRule('#portfolio-flters li:hover', 'color', THEME_COLOR);
+    _addCSSRule('#portfolio-flters li.filter-active', 'color', THEME_COLOR);
+    _addCSSRule('.portfolio-wrap .portfolio-links a:hover', 'color', THEME_COLOR);
     _addCSSRule('.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet', 'border', `1px solid ${THEME_COLOR}`);
     _addCSSRule('.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active', 'background-color', THEME_COLOR);
     _addCSSRule('.testimonials .swiper-pagination .swiper-pagination-bullet', 'border', `1px solid ${THEME_COLOR}`);
