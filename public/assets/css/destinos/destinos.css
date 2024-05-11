@@ -130,19 +130,19 @@ section {
   height: 352px;
 }
 
-#money {
+.money {
   font-weight: bold;
   color: #009242;
   margin: 5px
 }
 
-#title,
-#title-no-link {
+.title,
+.title-no-link {
   font-weight: bold;
   font-size: 18px;
 }
 
-#title {
+.title {
   text-decoration: underline;
 }
 
@@ -163,7 +163,7 @@ section {
   border-left: 1px solid #DADADA;
 }
 
-#details {
+.details {
   font-size: 15px;
   font-weight: normal;
   font-style: italic;
@@ -213,6 +213,7 @@ section {
     padding-left: none;
     margin-left: -16px;
   }
+
 }
 
 /*--------------------------------------------------------------

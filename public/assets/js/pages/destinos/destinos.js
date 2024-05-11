@@ -109,7 +109,7 @@ function _setDestinosInnerHTML(result) {
           <div class="card-body" id="pText${i}">
             ${_getNameHyperlinkHTML(result[i].nome, result[i].nameHyperlink)}
             <div class="subtitle">
-              <div id="money">${result[i].valor}</div>
+              <div class="money">${result[i].valor}</div>
               ${result[i].detalhes}
               <br>
             </div>
@@ -152,7 +152,7 @@ function _getDetalhes(detalhesArr) {
       text += separator + detalhesArr[i];
     }
   }
-  return `<div id="details">${text}</div>`
+  return `<div class="details">${text}</div>`
 }
 
 
@@ -228,8 +228,8 @@ function _getHyperlinkItem(item, i) {
 
 function _getNameHyperlinkHTML(name, hyperlink) {
   if (hyperlink) {
-    return `<a id="title" href="${hyperlink}" target="_blank">${name}</a>`
-  } else return `<div id="title-no-link">${name}</div>`
+    return `<a class="title" href="${hyperlink}" target="_blank">${name}</a>`
+  } else return `<div class="title-no-link">${name}</div>`
 }
 
 
