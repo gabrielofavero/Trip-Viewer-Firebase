@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 36    | 30          | 6         |
-| 🏆     | Feature  | F000    | 49    | 45          | 4         |
-| 📈     | Melhoria | M000    | 40    | 29          | 11        |
+| 🐞     | Bug      | B000    | 37    | 30          | 7         |
+| 🏆     | Feature  | F000    | 50    | 45          | 5         |
+| 📈     | Melhoria | M000    | 43    | 29          | 14        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
@@ -23,8 +23,14 @@
 
 ### Prioridade Alta
 
+- 📈 **M043:** Melhoria visual em destinos.html
+  - *Accordions no padrão da página de editar*
+  - *Texto no padrão do box de hospedagens*
+  - *Vídeo do TikTok utilizando chamada de API na versão v2*
+
 ### Prioridade Média
 
+- 🐞 **B037:** Barra de scroll em páginas de editar não está funcionando
 - 📈 **M023:** Melhorias nos accordions (páginas de editar)
   - *Criação de opção de arrastar accordions (Mobile);*
   - *Desabilitar arrastamento quando accordion está aberto*
@@ -82,6 +88,9 @@
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
   - *O título completo apenas aparece quando o usuário edita o input (listener)*
+- 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
+- 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
+- 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop;
 
 ## Done
 
