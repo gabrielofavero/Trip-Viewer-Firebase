@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 37    | 30          | 7         |
 | 🏆     | Feature  | F000    | 50    | 45          | 5         |
-| 📈     | Melhoria | M000    | 43    | 29          | 14        |
+| 📈     | Melhoria | M000    | 44    | 29          | 15        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
 ### Status
@@ -91,6 +91,7 @@
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop;
+- 📈 **M044:** Criar botão de atribuições no footer que coloca todas os créditos em um modal
 
 ## Done
 
