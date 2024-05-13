@@ -120,8 +120,6 @@ section {
 
 .tiktok {
   margin-top: 20px;
-  width: 239.06px;
-  height: 425px;
 }
 
 .spotify {
@@ -352,11 +350,10 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #f7f8f9;
   color: #4F5051;
   font-size: 14px;
   text-align: center;
-  padding: 30px 0;
+  padding: 20px 0;
 }
 
 #footer h3 {
@@ -480,12 +477,28 @@ section {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
-.nota {
+.nota,
+.nota-sem-margem {
   font-size: 25px;
   color: #1f2937;
   margin-right: 10px;
   border-radius: 50%;
   padding: 3px;
+}
+
+.nota-sem-margem {
+  margin-right: 0;
+}
+
+.notas-box {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.nota-texto {
+  color: #4F5051;
+  font-weight: bold;
+  margin-right: -5px;
 }
 
 .nota-5 {
@@ -496,16 +509,17 @@ section {
   padding: 20px;
 }
 
-.hotel-title {
+.destinos-title {
   margin-bottom: 10px;
   border-bottom: 0.5px solid #D9D9D9;
 }
 
-.hotel-name {
+.destinos-nome {
   font-weight: bold;
   font-size: 20px;
   display: flex;
   align-items: center;
+  /* margin-bottom: 20px; */
 }
 
 .external-link {
@@ -515,8 +529,17 @@ section {
   cursor: pointer;
 }
 
-.hotel-address {
+.destinos-address {
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 16px;
+}
+
+.color-icon {
+  font-size: 20px;
+  color: #505197
+}
+
+.destinos-descricao {
+  margin-bottom: 10px;
 }
