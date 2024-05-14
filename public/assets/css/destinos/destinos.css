@@ -491,8 +491,7 @@ section {
 }
 
 .notas-box {
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 
 .nota-texto {
@@ -503,6 +502,22 @@ section {
 
 .nota-5 {
   background-color: #CFE2F3;
+}
+
+.nota-4 {
+  background-color: #D9EAD3;
+}
+
+.nota-3 {
+  background-color: #FFF2CC;
+}
+
+.nota-2 {
+  background-color: #FCE5CD;
+}
+
+.nota-1 {
+  background-color: #F4CCCC;
 }
 
 .accordion-body {
