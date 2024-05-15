@@ -16,14 +16,30 @@ strong {
   color: #3A3838;
 }
 
-a {
+a,
+.link {
   color: #3d85c6;
   text-decoration: none;
 }
 
-a:hover {
+a:hover,
+.link:hover {
   color: #195b96;
   text-decoration: none;
+}
+
+.link {
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.links-container {
+  display: flex;
+  margin-top: 7.5px;
+}
+
+.links-container .iconify {
+  margin-left: 8px;
 }
 
 h1,
@@ -81,15 +97,6 @@ section {
   margin-bottom: 0;
 }
 
-.accordion {
-  color: #272829;
-  text-align: center;
-  width: 500px;
-  display: block;
-  margin: auto;
-  margin-bottom: 30px;
-}
-
 .btn {
   text-decoration: none;
   font-weight: bold;
@@ -100,11 +107,6 @@ section {
   color: #3A3838;
 }
 
-.headerP {
-  background-color: #F9F9F9;
-  cursor: pointer;
-}
-
 .card-header {
   width: 425px;
   float: left;
@@ -112,36 +114,18 @@ section {
   background-color: #F9F9F9;
 }
 
-.youtube {
-  margin-top: 20px;
-  width: 425px;
-  height: 239.06px;
+.embed {
+  margin-top: 16px;
 }
 
-.tiktok {
-  margin-top: 20px;
+.youtube-embed {
+  width: 458px;
+  height: 258px;
 }
 
-.spotify {
-  margin-top: 20px;
+.spotify-embed {
   width: 100%;
-  height: 352px;
-}
-
-.money {
-  font-weight: bold;
-  color: #009242;
-  margin: 5px
-}
-
-.title,
-.title-no-link {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.title {
-  text-decoration: underline;
+  height: 400px;
 }
 
 .subtitle {
@@ -175,24 +159,16 @@ section {
 }
 
 @media screen and (max-width: 600px) {
-  .accordion {
-    width: 400px;
-  }
-
   .card-header {
     width: 325px;
   }
 
-  .youtube {
-    width: 325px;
-    height: 182.81px;
+  .youtube-embed {
+    width: 100%;
   }
 }
 
 @media screen and (max-width: 450px) {
-  .accordion {
-    width: 300px;
-  }
 
   .headerP {
     white-space: nowrap;
@@ -202,16 +178,10 @@ section {
     width: 225px;
   }
 
-  .youtube {
-    width: 225px;
-    height: 126.56px;
-  }
-
   .btn {
     padding-left: none;
     margin-left: -16px;
   }
-
 }
 
 /*--------------------------------------------------------------
@@ -428,7 +398,6 @@ section {
 .accordion-item {
   background-color: #fff;
   color: #272829;
-  cursor: move;
   width: 500px;
   display: block;
   margin: auto;
@@ -467,10 +436,9 @@ section {
 }
 
 .new {
-  color: #5859a7;
-  font-size: 25px;
-  display: none;
+  fill: #5859a7;
   margin-right: 10px;
+  font-size: 20px;
 }
 
 .accordion-button::after {
@@ -491,7 +459,10 @@ section {
 }
 
 .notas-box {
-  margin-bottom: 18px;
+  display: block;
+  white-space: nowrap;
+  margin-top: 5px;
+  margin-bottom: 20px;
 }
 
 .nota-texto {
@@ -524,8 +495,10 @@ section {
   padding: 20px;
 }
 
-.destinos-title {
-  margin-bottom: 10px;
+.destinos-titulo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
   border-bottom: 0.5px solid #D9D9D9;
 }
 
@@ -534,7 +507,6 @@ section {
   font-size: 20px;
   display: flex;
   align-items: center;
-  /* margin-bottom: 20px; */
 }
 
 .external-link {
@@ -556,5 +528,32 @@ section {
 }
 
 .destinos-descricao {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.destinos-topicos-box {
   margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.destinos-topico {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.data-lineup {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #4F5051;
+  text-align: center;
+}
+
+.data-box {
+  margin-top: 50px;
+}
+
+.data-box:first-child {
+  margin-top: 0;
 }
