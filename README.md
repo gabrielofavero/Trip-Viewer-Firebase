@@ -7,7 +7,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 37    | 30          | 7         |
-| 🏆     | Feature  | F000    | 50    | 45          | 5         |
+| 🏆     | Feature  | F000    | 52    | 45          | 7         |
 | 📈     | Melhoria | M000    | 44    | 29          | 15        |
 | ⚔️   | Épico   | E000    | 20    | 14          | 6         |
 
@@ -19,14 +19,11 @@
 
 ## Doing
 
+- 📈 **M043:** Melhoria visual em destinos.html e destinos.js
+
 ## To-Do
 
 ### Prioridade Alta
-
-- 📈 **M043:** Melhoria visual em destinos.html
-  - *Accordions no padrão da página de editar*
-  - *Texto no padrão do box de hospedagens*
-  - *Vídeo do TikTok utilizando chamada de API na versão v2*
 
 ### Prioridade Média
 
@@ -91,7 +88,10 @@
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop;
-- 📈 **M044:** Criar botão de atribuições no footer que coloca todas os créditos em um modal
+- 📈 **M044:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
+- 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
+  - Tanto destinos.html quanto editar-destinos.html
+- 🏆 **F052:** Implementação botões de ordenação de conteúdo em destinos.html
 
 ## Done
 
