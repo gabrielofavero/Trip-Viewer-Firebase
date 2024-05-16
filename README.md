@@ -9,7 +9,7 @@
 | 🐞     | Bug      | B000    | 37    | 30          | 7         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
 | 📈     | Melhoria | M000    | 44    | 30          | 14        |
-| ⚔️   | Épico   | E000    | 22    | 14          | 7         |
+| ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
 
@@ -19,6 +19,7 @@
 
 ## Doing
 
+- ⚔️ **E023:** Destinos v1.1
 - 📈 **M043:** Melhoria visual em destinos.html e destinos.js
 
 ## To-Do

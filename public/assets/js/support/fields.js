@@ -127,11 +127,15 @@ function _closeAllSelects(excludeElement) {
 }
 
 // Validação de links
+function _isHttp(link) {
+    return link.startsWith('http://') || link.startsWith('https://');
+}
+
 function _validateLink(id) {
     const div = getID(id);
     const link = div.value;
 
-    if (link.startsWith('http://') || link.startsWith('https://')) return;
+    if (_isHttp(link)) return;
     
     _closeAllSelects();
     div.value = '';
@@ -140,14 +144,45 @@ function _validateLink(id) {
                     `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`);
 }
 
+function _validateMapLink(id) {
+    const div = getID(id);
+    const link = div.value;
+
+    const isGoogleMaps = (link.includes('google') && link.includes('maps')) || link.includes('goo.gl/maps') ||  link.includes('maps.app.goo.gl');
+    const isAppleMaps = link.includes('maps.apple.com');
+
+    if (!link || (_isHttp(link) && (isGoogleMaps || isAppleMaps))) return;
+
+    _closeAllSelects();
+    div.value = '';
+
+    const mapsI = '<i class="iconify" data-icon="hugeicons:maps"></i>'
+    const googleMapsI = '<i class="iconify" data-icon="simple-icons:googlemaps"></i>'
+    const appleMapsI = '<i class="iconify" data-icon="ic:baseline-apple"></i>'
+    _displayMessage('Link de Mapa Inválido ' + mapsI, `O link de mapa fornecido não é válido. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
+                                               ${googleMapsI} <strong>Google Maps</strong><br>
+                                               ${appleMapsI} <strong>Apple Maps</strong><br>`);
+}
+
+function _validateInstagramLink(id) {
+    const div = getID(id);
+    const link = div.value;
+
+    if (!link || (_isHttp(link) && link.includes('instagram.com'))) return;
+
+    div.value = '';
+
+    const linkI = '<i class="iconify" data-icon="mdi:instagram"></i>';
+    _displayMessage('Link do Instagram Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "https://www.instagram.com".`);
+}
+
 function _validateMediaLink(id) {
     const div = getID(id);
     const link = div.value;
 
     const validDomains = ['youtu.be/', 'youtube.com', 'tiktok.com'];
-    const ishttp = link.startsWith('http://') || link.startsWith('https://');
 
-    if (!link || (ishttp && validDomains.some(domain => link.includes(domain)) && !link.includes('vm.tiktok.com'))) return;
+    if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)) && !link.includes('vm.tiktok.com'))) return;
 
     if (ishttp && link.includes("vm.tiktok")) {
         div.value = '';
@@ -174,24 +209,22 @@ function _validatePlaylistLink(id) {
     const link = div.value;
 
     const validDomains = ['spotify.com'];
-    const ishttp = link.startsWith('http://') || link.startsWith('https://');
 
-    if (!link || (ishttp && validDomains.some(domain => link.includes(domain)))) return;
+    if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)))) return;
 
     div.value = '';
 
-    const linkI = '<i class="iconify" data-icon="ic:baseline-music-off"></i>'
-    const spotifyI = '<i class="iconify" data-icon="mdi:spotify"></i>'
+    const linkI = '<i class="iconify" data-icon="ic:baseline-music-off"></i>';
+    const spotifyI = '<i class="iconify" data-icon="mdi:spotify"></i>';
     _displayMessage('Playlist / Página do Artista Inválida ' + linkI, `A playlist ou Página do do Artista fornecida não é válida. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
                                                ${spotifyI} <strong>Spotify</strong>`);
 }
-
 
 function _validateImageLink(id) {
     const div = getID(id);
     const imageLink = div.value;
 
-    if ((imageLink.startsWith('http://') || imageLink.startsWith('https://')) && !imageLink.includes('pbs.twimg.com')) return;
+    if (_isHttp(link) && !imageLink.includes('pbs.twimg.com')) return;
 
     let title = '';
     let content = '';

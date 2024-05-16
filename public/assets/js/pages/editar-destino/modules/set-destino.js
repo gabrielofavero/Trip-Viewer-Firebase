@@ -84,15 +84,15 @@ function _buildDestinoCategoryObject(type) {
     let result = {
         descricao: [],
         emoji: [],
-        hyperlink: {
-            name: [],
-            video: [],
-        },
+        instagram: [],
+        mapa: [],
+        midia: [],
         nome: [],
         nota: [],
         novo: [],
         regiao: [],
         valor: [],
+        website: [],
     }
 
     for (let i = 0; i < childIDs.length; i++) {
@@ -110,8 +110,14 @@ function _buildDestinoCategoryObject(type) {
         const descricao = getID(`${type}-descricao-${j}`).value;
         result.descricao.push(descricao);
 
-        const link = getID(`${type}-website-${j}`).value;
-        result.hyperlink.name.push(link);
+        const website = getID(`${type}-website-${j}`).value;
+        result.website.push(website);
+
+        const instagram = getID(`${type}-instagram-${j}`).value;
+        result.instagram.push(instagram);
+
+        const mapa = getID(`${type}-mapa-${j}`).value;
+        result.mapa.push(mapa);
 
         const regiao = _getDynamicSelectValue(type, 'regiao', j);
         result.regiao.push(regiao);
@@ -122,7 +128,7 @@ function _buildDestinoCategoryObject(type) {
         result.valor.push(valor);
 
         const midia = getID(`${type}-midia-${j}`).value;
-        result.hyperlink.video.push(midia);
+        result.midia.push(midia);
 
         const nota = getID(`${type}-nota-${j}`).value;
         result.nota.push(nota);

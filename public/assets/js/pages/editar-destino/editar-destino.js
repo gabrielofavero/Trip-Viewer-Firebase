@@ -170,6 +170,8 @@ function _addDestinosListeners(categoria, i) {
 
   // Links
   getID(`${categoria}-website-${i}`).addEventListener('change', () => _validateLink(`${categoria}-website-${i}`));
+  getID(`${categoria}-mapa-${i}`).addEventListener('change', () => _validateMapLink(`${categoria}-mapa-${i}`));
+  getID(`${categoria}-instagram-${i}`).addEventListener('change', () => _validateInstagramLink(`${categoria}-instagram-${i}`));
   getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${i}`));
 
   // Abrir-Fechar Accordion
