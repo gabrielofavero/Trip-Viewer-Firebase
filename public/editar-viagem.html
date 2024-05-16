@@ -386,17 +386,17 @@
 
             <div class="nice-form-group customization-box" id="background-box">
               <label>Papel de Parede <span class="opcional"> (Opcional)</span></label>
-              <input id="upload-background" type="file" accept=".jpg, .jpeg, .png" />
+              <input id="upload-background" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
               <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até
                 1.5MB</p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-background" type="url" placeholder="https://link.com/imagem.jpg" value=""
+              <input id="link-background" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
                 class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group" id="upload-checkbox-background">
+            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-background">
               <div class="nice-form-group">
                 <input type="radio" name="type-background" id="enable-link-background" checked>
                 <label for="enable-link-background">Fornecer link</label>
@@ -416,23 +416,23 @@
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-light" type="url" placeholder="https://link.com/imagem.png" value=""
+              <input id="link-logo-light" class="imagem-input" type="url" placeholder="https://link.com/imagem.png" value=""
                 class="icon-right">
             </div>
 
             <div class="nice-form-group customization-box">
               <label>Título: Modo Escuro <span class="opcional"> (Opcional)</span></label>
-              <input id="upload-logo-dark" type="file" accept=".png" />
+              <input id="upload-logo-dark" class="imagem-uploadbox" type="file" accept=".png" />
               <p id="upload-logo-dark-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até
                 1.5MB</p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-dark" type="url" placeholder="https://link.com/imagem.png" value=""
+              <input id="link-logo-dark" class="imagem-input" type="url" placeholder="https://link.com/imagem.png" value=""
                 class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group" id="upload-checkbox-logo">
+            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-logo">
               <div class="nice-form-group">
                 <input type="radio" name="type-logo" id="enable-link-logo" checked>
                 <label for="enable-link-logo">Fornecer link</label>
@@ -473,7 +473,7 @@
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-links" type="checkbox" id="check-4" class="switch" />
+            <input id="habilitado-links" style="margin-top: 0px;" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               Links Personalizados
               <small>Adicione links de comprovantes, planilhas, entre outros</small>
@@ -481,7 +481,7 @@
           </div>
 
           <div class="transparent-background" id="habilitado-links-content">
-            <div class="nice-form-group">
+            <div class="nice-form-group" style="margin-top: 10px;">
               <label>Anexo <span class="opcional"> (Opcional)</span></label>
               <input id="link-attachments" type="url" placeholder="https://drive.google.com/drive" value=""
                 class="icon-right">

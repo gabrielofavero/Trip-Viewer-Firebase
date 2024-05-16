@@ -169,7 +169,7 @@ function _addDestinosListeners(categoria, i) {
   _loadRegiaoListeners(i, categoria);
 
   // Links
-  getID(`${categoria}-link-${i}`).addEventListener('change', () => _validateLink(`${categoria}-link-${i}`));
+  getID(`${categoria}-website-${i}`).addEventListener('change', () => _validateLink(`${categoria}-website-${i}`));
   getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${i}`));
 
   // Abrir-Fechar Accordion

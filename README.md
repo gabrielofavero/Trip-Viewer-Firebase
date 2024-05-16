@@ -8,8 +8,8 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 37    | 30          | 7         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 43    | 29          | 14        |
-| ⚔️   | Épico   | E000    | 21    | 14          | 6         |
+| 📈     | Melhoria | M000    | 44    | 30          | 14        |
+| ⚔️   | Épico   | E000    | 22    | 14          | 7         |
 
 ### Status
 
@@ -29,6 +29,7 @@
 
 ### Prioridade Média
 
+- ⚔️ **E022:** Funções de migrações (Cloud Functions)
 - 📈 **M023:** Melhorias nos accordions (páginas de editar)
   - *Criação de opção de arrastar accordions (Mobile)*
   - *Desabilitar arrastamento quando accordion está aberto*
@@ -123,6 +124,7 @@
   - *Emojis, Links Genéricos, Links de Imagens, Links de Playlists e Links de Vídeos*
 - 📈 **M031:** Melhoria de opção de zoom no card de hospedagem em viagem.html
 - 📈 **M026:** Novo ícone de "Novo" em destinos.html
+- 📈 **M044:** Melhoria de espaçamentos em páginas de editar
 
 ### Abril 2024
 

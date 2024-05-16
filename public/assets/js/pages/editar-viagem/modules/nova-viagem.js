@@ -325,16 +325,16 @@ function _addHospedagens() {
 
           <div class="nice-form-group customization-box" id="hospedagens-${i}-box">
             <label>Imagem <span class="opcional"> (Opcional)</span></label>
-            <input id="upload-hospedagens-${i}" type="file" accept=".jpg, .jpeg, .png" />
+            <input id="upload-hospedagens-${i}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
             <p id="upload-hospedagens-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
           </div>
 
           <div class="nice-form-group">
-            <input id="link-hospedagens-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
+            <input id="link-hospedagens-${i}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
               class="icon-right">
           </div>
 
-          <fieldset class="nice-form-group" id="upload-checkbox-hospedagens-${i}">
+          <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-hospedagens-${i}">
             <div class="nice-form-group">
               <input type="radio" name="type-hospedagens-${i}" id="enable-link-hospedagens-${i}" checked>
               <label for="enable-link-hospedagens-${i}">Fornecer link</label>
@@ -378,13 +378,15 @@ function _addDestinos() {
       <select id="select-destinos-${i}">
         <option value="">Selecione um Destino</option>
       </select>
-      <div class="deletar-box">
+
+      <div class="deletar-box-destinos">
         <button id="remove-destinos-${i}" class="btn btn-secondary" onclick="_deleteDestino(${i})">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
           </svg>
         </button>
       </div>
+
     </div>
     `);
 
@@ -483,21 +485,22 @@ function _addLineup() {
           </div>
   
           <div class="nice-form-group">
-            <label>Playlist ou Página do Artista <span class="opcional"> (Spotify)</span></label>
+            <label>Playlist ou Página do Artista <span class="opcional"> (Opcional)</span></label>
             <input id="lineup-midia-${i}" type="url"
               placeholder="https://open.spotify.com/playlist/16mG20ZrC9QttUB6Sozqep?si=da0794cde4914a17"
               value="" class="icon-right" />
+            <div class="legenda">Apenas links Spotify</div>
           </div>
   
           <div class="nice-form-group">
-            <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+            <label>Avaliação <span class="opcional">(Opcional)</span></label>
             <select id="lineup-nota-${i}">
-              <option value="?">Desconhecido</option>
-              <option value="!">100%</option>
-              <option value="1">75%</option>
-              <option value="2">50%</option>
-              <option value="3">25%</option>
-              <option value="4">0%</option>
+            <option value="?">Desconhecido</option>
+            <option value="5">5 - Artista obrigatório de ver ao vivo!</option>
+            <option value="4">4 - Bom artista para ver ao vivo</option>
+            <option value="3">3 - Artista razoável para ver ao vivo</option>
+            <option value="2">2 - Apenas se sobrar tempo</option>
+            <option value="1">1 - Não vale a pena ver ao vivo</option>
             </select>
           </div>
   
@@ -558,16 +561,16 @@ function _addGaleria() {
     
           <div class="nice-form-group customization-box" id="galeria-${i}-box">
             <label>Imagem</label>
-            <input id="upload-galeria-${i}" type="file" accept=".jpg, .jpeg, .png" />
+            <input id="upload-galeria-${i}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
             <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</div>
           </div>
     
           <div class="nice-form-group">
-            <input id="link-galeria-${i}" type="url" placeholder="https://link.com/imagem.jpg" value=""
+            <input id="link-galeria-${i}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
               class="icon-right">
           </div>
     
-          <fieldset class="nice-form-group">
+          <fieldset class="nice-form-group imagem-checkbox">
             <div class="nice-form-group enable-link">
               <input type="radio" name="type-galeria-${i}" id="enable-link-galeria-${i}" checked>
               <label for="enable-link-galeria-${i}">Fornecer link</label>

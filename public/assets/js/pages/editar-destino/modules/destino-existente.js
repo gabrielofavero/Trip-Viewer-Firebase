@@ -70,7 +70,7 @@ function _loadRestaurantesData(FIRESTORE_DESTINOS_DATA) {
 
         const link = FIRESTORE_DESTINOS_DATA.restaurantes.hyperlink.name;
         if (link && link[j]) {
-          getID(`restaurantes-link-${i}`).value = link[j];
+          getID(`restaurantes-website-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.restaurantes.regiao;
@@ -135,7 +135,7 @@ function _loadLanchesData(FIRESTORE_DESTINOS_DATA) {
 
         const link = FIRESTORE_DESTINOS_DATA.lanches.hyperlink.name;
         if (link && link[j]) {
-          getID(`lanches-link-${i}`).value = link[j];
+          getID(`lanches-website-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.lanches.regiao;
@@ -200,7 +200,7 @@ function _loadSaidasData(FIRESTORE_DESTINOS_DATA) {
 
         const link = FIRESTORE_DESTINOS_DATA.saidas.hyperlink.name;
         if (link && link[j]) {
-          getID(`saidas-link-${i}`).value = link[j];
+          getID(`saidas-website-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.saidas.regiao;
@@ -265,7 +265,7 @@ function _loadTurismoData(FIRESTORE_DESTINOS_DATA) {
 
         const link = FIRESTORE_DESTINOS_DATA.turismo.hyperlink.name;
         if (link && link[j]) {
-          getID(`turismo-link-${i}`).value = link[j];
+          getID(`turismo-website-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.turismo.regiao;
@@ -330,7 +330,7 @@ function _loadLojasData(FIRESTORE_DESTINOS_DATA) {
 
         const link = FIRESTORE_DESTINOS_DATA.lojas.hyperlink.name;
         if (link && link[j]) {
-          getID(`lojas-link-${i}`).value = link[j];
+          getID(`lojas-website-${i}`).value = link[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.lojas.regiao;

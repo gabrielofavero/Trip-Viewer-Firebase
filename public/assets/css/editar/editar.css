@@ -1424,6 +1424,7 @@ details summary::-webkit-details-marker {
 .side-by-side-fixed {
   flex: 1;
   margin-right: 10px;
+  margin-top: 10px;
 }
 
 .item-title {
@@ -1440,6 +1441,13 @@ details summary::-webkit-details-marker {
 
 .opcional {
   color: #A6A6A6;
+}
+
+.legenda {
+  margin-top: 5px;
+  margin-left: 3px;
+  color: #A6A6A6;
+  font-size: 12px;
 }
 
 
@@ -1574,6 +1582,12 @@ details summary::-webkit-details-marker {
 }
 
 .deletar-box {
+  margin: 22px;
+  margin-top: 0px;
+  text-align: right;
+}
+
+.deletar-box-destinos {
   margin-top: 10px;
   text-align: right;
 }
@@ -1625,10 +1639,11 @@ details summary::-webkit-details-marker {
 
 .transparent-background-color {
   background: rgba(0, 0, 0, .005);
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 25px;
+  padding-left: 20px;
+  padding-right: 5px;
+  padding-bottom: 5px;
   width: 100%;
+  margin-top: 0px;
   border-radius: var(--nf-input-border-radius);
 }
 
@@ -1762,4 +1777,16 @@ details summary::-webkit-details-marker {
 #copy-msg.visible {
   opacity: 1;
   visibility: visible;
+}
+
+.imagem-input {
+  margin-top: -16px
+}
+
+.imagem-checkbox {
+  margin-top: 8px;
+}
+
+.imagem-uploadbox {
+  margin-bottom: -18px;
 }

@@ -41,11 +41,24 @@ function _addRestaurantes() {
             <textarea id="restaurantes-descricao-${i}" rows="3"
               placeholder="Restaurante famoso por seus embutidos. Oferece feijoada à vontade nos domingos."></textarea>
           </div>
+
+          <div class="nice-form-group">
+            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <input id="restaurantes-mapa-${i}" type="url" placeholder="https://maps.app.goo.gl/s2PqbWArH5rJWCLF8" value=""
+              class="icon-right" />
+            <div class="legenda">Google Maps ou Apple Maps</div>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <input id="restaurantes-instagram-${i}" type="url" placeholder="https://www.instagram.com/salumeria.central/" value=""
+              class="icon-right" />
+          </div>
   
           <div class="nice-form-group">
-            <label>Link <span class="opcional"> (Opcional)</span></label>
-            <input id="restaurantes-link-${i}" type="url"
-              placeholder="https://www.instagram.com/salumeria.central/" value="" class="icon-right" />
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="restaurantes-website-${i}" type="url"
+              placeholder="https://www.salumeriacentral.com/" value="" class="icon-right" />
           </div>
   
           <div class="nice-form-group">
@@ -63,20 +76,21 @@ function _addRestaurantes() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
+            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="restaurantes-midia-${i}" type="url"
               placeholder="https://www.youtube.com/watch?v=GAirUeYBvQI" value="" class="icon-right" />
+            <div class="legenda">TikTok (Web) ou YouTube</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <label>Avaliação <span class="opcional">(Opcional)</span></label>
             <select id="restaurantes-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="!">100%</option>
-              <option value="1">75%</option>
-              <option value="2">50%</option>
-              <option value="3">25%</option>
-              <option value="4">0%</option>
+              <option value="5">5 - Passeio Obrigatório!</option>
+              <option value="4">4 - Ótimo Passeio</option>
+              <option value="3">3 - Passeio Razoável</option>
+              <option value="2">2 - Apenas Se Sobrar Tempo</option>
+              <option value="1">1 - O Passeio Não Compensa</option>
             </select>
           </div>
   
@@ -142,10 +156,23 @@ function _addLanches() {
             <textarea id="lanches-descricao-${i}" rows="3"
               placeholder="Bastante conhecido pelo ovo porchê, bowls e smoothies, é um excelente lugar para brunchs."></textarea>
           </div>
-  
+
           <div class="nice-form-group">
-            <label>Link <span class="opcional"> (Opcional)</span></label>
-            <input id="lanches-link-${i}" type="url" placeholder="https://www.instagram.com/botanikafe/" value=""
+            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <input id="lanches-mapa-${i}" type="url" placeholder="https://maps.app.goo.gl/Yd4rDKAKG8vfPV2c7" value=""
+              class="icon-right" />
+            <div class="legenda">Google Maps ou Apple Maps</div>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <input id="lanches-instagram-${i}" type="url" placeholder="https://www.instagram.com/botanikafe/" value=""
+              class="icon-right" />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="lanches-website-${i}" type="url" placeholder="https://www.botanikafe.com/"" value=""
               class="icon-right" />
           </div>
   
@@ -164,21 +191,22 @@ function _addLanches() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
+            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="lanches-midia-${i}" type="url"
               placeholder="https://www.tiktok.com/@viajeparacomer/video/7172239210282274053?q=bottanikafe&t=1700768671502"
               value="" class="icon-right" />
+            <div class="legenda">TikTok (Web) ou YouTube</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <label>Avaliação <span class="opcional">(Opcional)</span></label>
             <select id="lanches-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="!">100%</option>
-              <option value="1">75%</option>
-              <option value="2">50%</option>
-              <option value="3">25%</option>
-              <option value="4">0%</option>
+              <option value="5">5 - Passeio Obrigatório!</option>
+              <option value="4">4 - Ótimo Passeio</option>
+              <option value="3">3 - Passeio Razoável</option>
+              <option value="2">2 - Apenas Se Sobrar Tempo</option>
+              <option value="1">1 - O Passeio Não Compensa</option>
             </select>
           </div>
   
@@ -244,10 +272,23 @@ function _addSaidas() {
             <textarea id="saidas-descricao-${i}" rows="3"
               placeholder="Pub irlandês autêntico e próximo da paulista. Cervejas diferentes, drinks e comida irlandesa. English Karaoke nas segundas."></textarea>
           </div>
+
+          <div class="nice-form-group">
+            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <input id="saidas-mapa-${i}" type="url" placeholder="https://maps.app.goo.gl/dVU9471auDGxgNBD6" value=""
+              class="icon-right" />
+            <div class="legenda">Google Maps ou Apple Maps</div>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <input id="saidas-instagram-${i}" type="url" placeholder="https://www.instagram.com/omalleysbar/" value=""
+              class="icon-right" />
+          </div>
   
           <div class="nice-form-group">
-            <label>Link <span class="opcional"> (Opcional)</span></label>
-            <input id="saidas-link-${i}" type="url" placeholder="https://www.instagram.com/omalleysbar/" value=""
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="saidas-website-${i}" type="url" placeholder="https://www.omalleysbar.net/" value=""
               class="icon-right" />
           </div>
   
@@ -266,20 +307,21 @@ function _addSaidas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
+            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="saidas-midia-${i}" type="url" placeholder="https://www.youtube.com/watch?v=M1qd2Y2T4ZA"
               value="" class="icon-right" />
+            <div class="legenda">TikTok (Web) ou YouTube</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <label>Avaliação <span class="opcional">(Opcional)</span></label>
             <select id="saidas-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="!">100%</option>
-              <option value="1">75%</option>
-              <option value="2">50%</option>
-              <option value="3">25%</option>
-              <option value="4">0%</option>
+              <option value="5">5 - Passeio Obrigatório!</option>
+              <option value="4">4 - Ótimo Passeio</option>
+              <option value="3">3 - Passeio Razoável</option>
+              <option value="2">2 - Apenas Se Sobrar Tempo</option>
+              <option value="1">1 - O Passeio Não Compensa</option>
             </select>
           </div>
   
@@ -345,10 +387,23 @@ function _addTurismo() {
             <textarea id="turismo-descricao-${i}" rows="3"
               placeholder="Famosa placa de Las Vegas. Costuma ter fila, então importante chegar cedo."></textarea>
           </div>
+
+          <div class="nice-form-group">
+            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <input id="turismo-mapa-${i}" type="url" placeholder="https://maps.app.goo.gl/on4sJh1d2RNhvPXf6" value=""
+              class="icon-right" />
+            <div class="legenda">Google Maps ou Apple Maps</div>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <input id="turismo-instagram-${i}" type="url" placeholder="https://www.instagram.com/lasvegassign/" value=""
+              class="icon-right" />
+          </div>
   
           <div class="nice-form-group">
-            <label>Link <span class="opcional"> (Opcional)</span></label>
-            <input id="turismo-link-${i}" type="url" placeholder="https://maps.app.goo.gl/on4sJh1d2RNhvPXf6"
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="turismo-website-${i}" type="url" placeholder="https://www.visitlasvegas.com/listing/welcome-to-fabulous-las-vegas-sign/35219/"
               value="" class="icon-right" />
           </div>
   
@@ -367,24 +422,24 @@ function _addTurismo() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
+            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="turismo-midia-${i}" type="url"
               placeholder="https://www.tiktok.com/@pompsie/video/7214164412616166699?q=las%20vegas%20sign&t=1700778158244"
               value="" class="icon-right" />
+            <div class="legenda">TikTok (Web) ou YouTube</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <label>Avaliação <span class="opcional">(Opcional)</span></label>
             <select id="turismo-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="!">100%</option>
-              <option value="1">75%</option>
-              <option value="2">50%</option>
-              <option value="3">25%</option>
-              <option value="4">0%</option>
+              <option value="5">5 - Passeio Obrigatório!</option>
+              <option value="4">4 - Ótimo Passeio</option>
+              <option value="3">3 - Passeio Razoável</option>
+              <option value="2">2 - Apenas Se Sobrar Tempo</option>
+              <option value="1">1 - O Passeio Não Compensa</option>
             </select>
           </div>
-  
         </div>
   
         <div class="deletar-box">
@@ -421,6 +476,7 @@ function _addLojas() {
           <div class="icon-container"><i class="iconify new" id="lojas-title-icon-${i}" data-icon="mdi:new-box"></i></div>
         </button>
       </h2>
+
       <div id="collapse-lojas-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lojas-${i}"
         data-bs-parent="#lojas-box">
         <div class="accordion-body">
@@ -447,10 +503,23 @@ function _addLojas() {
             <textarea id="lojas-descricao-${i}" rows="3"
               placeholder="Centro de compras. Possui loja da Forever 21, Calvin Klein, Lacoste, entre outros."></textarea>
           </div>
+
+          <div class="nice-form-group">
+            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <input id="lojas-mapa-${i}" type="url" placeholder="https://maps.app.goo.gl/G7hHLwVMgGVHvmkS7" value=""
+              class="icon-right" />
+            <div class="legenda">Google Maps ou Apple Maps</div>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <input id="lojas-instagram-${i}" type="url" placeholder="https://www.instagram.com/explore/locations/234523919/las-vegas-premium-outlets/" value=""
+              class="icon-right" />
+          </div>
   
           <div class="nice-form-group">
-            <label>Link <span class="opcional"> (Opcional)</span></label>
-            <input id="lojas-link-${i}" type="url"
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="lojas-website-${i}" type="url"
               placeholder="https://www.premiumoutlets.com/outlet/las-vegas-north" value=""
               class="icon-right" />
           </div>
@@ -470,20 +539,21 @@ function _addLojas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (TikTok Web ou YouTube)</span></label>
+            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="lojas-midia-${i}" type="url" placeholder="https://www.youtube.com/watch?v=2LVCuEXZ3bk"
               value="" class="icon-right" />
+            <div class="legenda">TikTok (Web) ou YouTube</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Nota / Interesse <span class="opcional"> (de 0% a 100%)</span></label>
+          <label>Avaliação <span class="opcional">(Opcional)</span></label>
             <select id="lojas-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="!">100%</option>
-              <option value="1">75%</option>
-              <option value="2">50%</option>
-              <option value="3">25%</option>
-              <option value="4">0%</option>
+              <option value="5">5 - Passeio Obrigatório!</option>
+              <option value="4">4 - Ótimo Passeio</option>
+              <option value="3">3 - Passeio Razoável</option>
+              <option value="2">2 - Apenas Se Sobrar Tempo</option>
+              <option value="1">1 - O Passeio Não Compensa</option>
             </select>
           </div>
   

@@ -186,7 +186,11 @@
                                 <div class="destinos-descricao">
                                     Restaurante europeu, com massas, pizzas e saladas. Possui estrela Michelin.
                                 </div>
-                                <blockquote class="tiktok-embed"
+
+                                <div id="teste"></div>
+
+
+                                <!-- <blockquote class="tiktok-embed"
                                     cite="https://www.tiktok.com/@keerthee94/video/7080902972376517934"
                                     data-video-id="7080902972376517934" data-embed-from="oembed"
                                     style="max-width:605px; min-width:300px;">
@@ -218,7 +222,7 @@
                                             href="https://www.tiktok.com/music/Angels-Don't-F-7067411208743159809?refer=embed">♬
                                             Angels Don't F*** - Insincere</a>
                                     </section>
-                                </blockquote>
+                                </blockquote> -->
                                 <script async src="https://www.tiktok.com/embed.js"></script>
                             </div>
                         </div>
@@ -467,6 +471,10 @@
                                         Palco / Região
                                     </div>
                                     <div class="destinos-topico">
+                                        <i class="iconify color-icon" data-icon="bx:dollar"></i>
+                                        $26 - $50
+                                    </div>
+                                    <div class="destinos-topico">
                                         <i class="iconify color-icon" data-icon="mingcute:music-fill"></i>
                                         Gênero
                                     </div>
@@ -530,6 +538,32 @@
         <script src="../vendor/waypoints/noframework.waypoints.js"></script>
         <script src="../vendor/jquery/jquery.min.js"></script>
         <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+
+        <script>
+
+            document.getElementById('teste').innerHTML = _getIframe('https://www.tiktok.com/embed/v2/7080902972376517934', 'tiktok-embed-v2', 'max-width:605px; min-width:300px;');
+
+            function _getIframe(url, iframeClass = "", style = "") {
+    if (url) {
+        const classItem = iframeClass ? `class="${iframeClass}"` : "";
+        const styleItem = style ? `style="${style}"` : "";
+        return `<iframe ${classItem} src="${url}" ${styleItem} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    } else return "";
+}
+
+            async function getEmbeddedVideo(url = 'https://www.tiktok.com/@scout2015/video/6718335390845095173') {
+                const apiUrl = `https://www.tiktok.com/oembed?url=${encodeURIComponent(url)}`;
+
+                try {
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching embedded video:', error);
+                    return null;
+                }
+            }
+        </script>
 </body>
 
 </html>
