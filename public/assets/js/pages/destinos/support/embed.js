@@ -1,7 +1,7 @@
 var MEDIA_HYPERLINKS = {};
 
 // Loader
-function _loadEmbed(link, i, isLineup) {
+function _loadEmbed(link, isLineup, i) {
     let result = "";
 
     if (isLineup) {
@@ -11,7 +11,7 @@ function _loadEmbed(link, i, isLineup) {
     }
 
     if (result) {
-        MEDIA_HYPERLINKS[`media-${i}`] = result;
+        MEDIA_HYPERLINKS[`midia-${i}`] = result;
     }
 }
 
@@ -83,7 +83,7 @@ function _getSpotifyEmbed(link) {
 function _getIframe(url, iframeClass = "") {
     if (url) {
         const classItem = iframeClass ? `class="${iframeClass}"` : "";
-        return `<iframe ${classItem} src="${url}" ${styleItem} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+        return `<iframe ${classItem} src="${url}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
     } else return "";
 }
 

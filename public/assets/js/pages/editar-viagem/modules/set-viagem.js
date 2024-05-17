@@ -435,9 +435,7 @@ function _buildLineupObject() {
                 genero: [],
                 head: [],
                 horario: [],
-                hyperlink: {
-                    name: []
-                },
+                midia: [],
                 nome: [],
                 nota: [],
                 palco: [],
@@ -481,7 +479,7 @@ function _buildLineupObject() {
 
         divMidia = getID(`lineup-midia-${j}`);
         valueMidia = divMidia ? _returnEmptyIfNoValue(divMidia.value) : "";
-        result[selectValue].hyperlink.name.push(valueMidia);
+        result[selectValue].midia.push(valueMidia);
 
         divNota = getID(`lineup-nota-${j}`);
         valueNota = divNota ? _returnEmptyIfNoValue(divNota.value) : "";

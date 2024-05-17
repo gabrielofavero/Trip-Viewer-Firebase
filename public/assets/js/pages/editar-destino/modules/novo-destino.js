@@ -12,7 +12,7 @@ function _addRestaurantes() {
           data-bs-target="#collapse-restaurantes-${i}" aria-expanded="true"
           aria-controls="collapse-restaurantes-${i}">
           <span class="title-text" id="restaurantes-title-text-${i}">Restaurante ${i}</span> 
-          <div class="icon-container"><i class="iconify new" id="restaurantes-title-icon-${i}" data-icon="mdi:new-box"></i></div>
+          <div class="icon-container">${_getNewSvg(`restaurantes-title-icon-${i}`)}</div>
         </button>
       </h2>
       <div id="collapse-restaurantes-${i}" class="accordion-collapse collapse"
@@ -84,13 +84,13 @@ function _addRestaurantes() {
   
           <div class="nice-form-group">
           <label>Avaliação <span class="opcional">(Opcional)</span></label>
-            <select id="restaurantes-nota-${i}">
+            <select class="editar-select" id="restaurantes-nota-${i}">
               <option value="?">Desconhecido</option>
               <option value="5">5 - Passeio Obrigatório!</option>
               <option value="4">4 - Ótimo Passeio</option>
               <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Apenas Se Sobrar Tempo</option>
-              <option value="1">1 - O Passeio Não Compensa</option>
+              <option value="2">2 - Só se sobrar tempo</option>
+              <option value="1">1 - Não Compensa</option>
             </select>
           </div>
   
@@ -127,7 +127,7 @@ function _addLanches() {
         <button id="lanches-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lanches-${i}" aria-expanded="true" aria-controls="collapse-lanches-${i}">
           <span class="title-text" id="lanches-title-text-${i}">Lanche ${i}</span> 
-          <div class="icon-container"><i class="iconify new" id="lanches-title-icon-${i}" data-icon="mdi:new-box"></i></div>
+          <div class="icon-container">${_getNewSvg(`lanches-title-icon-${i}`)}</div>
         </button>
       </h2>
       <div id="collapse-lanches-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lanches-${i}"
@@ -200,13 +200,13 @@ function _addLanches() {
   
           <div class="nice-form-group">
           <label>Avaliação <span class="opcional">(Opcional)</span></label>
-            <select id="lanches-nota-${i}">
+            <select class="editar-select" id="lanches-nota-${i}">
               <option value="?">Desconhecido</option>
               <option value="5">5 - Passeio Obrigatório!</option>
               <option value="4">4 - Ótimo Passeio</option>
               <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Apenas Se Sobrar Tempo</option>
-              <option value="1">1 - O Passeio Não Compensa</option>
+              <option value="2">2 - Só se sobrar tempo</option>
+              <option value="1">1 - Não Compensa</option>
             </select>
           </div>
   
@@ -243,7 +243,7 @@ function _addSaidas() {
         <button id="saidas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-saidas-${i}" aria-expanded="true" aria-controls="collapse-saidas-${i}">
           <span class="title-text" id="saidas-title-text-${i}">Saída ${i}</span> 
-          <div class="icon-container"><i class="iconify new" id="saidas-title-icon-${i}" data-icon="mdi:new-box"></i></div>
+          <div class="icon-container">${_getNewSvg(`saidas-title-icon-${i}`)}</i></div>
         </button>
       </h2>
       <div id="collapse-saidas-${i}" class="accordion-collapse collapse" aria-labelledby="heading-saidas-${i}"
@@ -315,13 +315,13 @@ function _addSaidas() {
   
           <div class="nice-form-group">
           <label>Avaliação <span class="opcional">(Opcional)</span></label>
-            <select id="saidas-nota-${i}">
+            <select class="editar-select" id="saidas-nota-${i}">
               <option value="?">Desconhecido</option>
               <option value="5">5 - Passeio Obrigatório!</option>
               <option value="4">4 - Ótimo Passeio</option>
               <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Apenas Se Sobrar Tempo</option>
-              <option value="1">1 - O Passeio Não Compensa</option>
+              <option value="2">2 - Só se sobrar tempo</option>
+              <option value="1">1 - Não Compensa</option>
             </select>
           </div>
   
@@ -358,7 +358,7 @@ function _addTurismo() {
         <button id="turismo-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-turismo-${i}" aria-expanded="true" aria-controls="collapse-turismo-${i}">
           <span class="title-text" id="turismo-title-text-${i}">Turismo ${i}</span> 
-          <div class="icon-container"><i class="iconify new" id="turismo-title-icon-${i}" data-icon="mdi:new-box"></i></div>
+          <div class="icon-container">${_getNewSvg(`turismo-title-icon-${i}`)}</div>
         </button>
       </h2>
       <div id="collapse-turismo-${i}" class="accordion-collapse collapse" aria-labelledby="heading-turismo-${i}"
@@ -431,13 +431,13 @@ function _addTurismo() {
   
           <div class="nice-form-group">
           <label>Avaliação <span class="opcional">(Opcional)</span></label>
-            <select id="turismo-nota-${i}">
+            <select class="editar-select" id="turismo-nota-${i}">
               <option value="?">Desconhecido</option>
               <option value="5">5 - Passeio Obrigatório!</option>
               <option value="4">4 - Ótimo Passeio</option>
               <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Apenas Se Sobrar Tempo</option>
-              <option value="1">1 - O Passeio Não Compensa</option>
+              <option value="2">2 - Só se sobrar tempo</option>
+              <option value="1">1 - Não Compensa</option>
             </select>
           </div>
         </div>
@@ -473,7 +473,7 @@ function _addLojas() {
         <button id="lojas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lojas-${i}" aria-expanded="true" aria-controls="collapse-lojas-${i}">
           <span class="title-text" id="lojas-title-text-${i}">Loja ${i}</span> 
-          <div class="icon-container"><i class="iconify new" id="lojas-title-icon-${i}" data-icon="mdi:new-box"></i></div>
+          <div class="icon-container">${_getNewSvg(`lojas-title-icon-${i}`)}</div>
         </button>
       </h2>
 
@@ -547,13 +547,13 @@ function _addLojas() {
   
           <div class="nice-form-group">
           <label>Avaliação <span class="opcional">(Opcional)</span></label>
-            <select id="lojas-nota-${i}">
+            <select class="editar-select" id="lojas-nota-${i}">
               <option value="?">Desconhecido</option>
               <option value="5">5 - Passeio Obrigatório!</option>
               <option value="4">4 - Ótimo Passeio</option>
               <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Apenas Se Sobrar Tempo</option>
-              <option value="1">1 - O Passeio Não Compensa</option>
+              <option value="2">2 - Passeio com Baixa Prioridade</option>
+              <option value="1">1 - Passeio Não Recomendado</option>
             </select>
           </div>
   

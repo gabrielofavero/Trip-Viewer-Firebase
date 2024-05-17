@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 37    | 30          | 7         |
+| 🐞     | Bug      | B000    | 38    | 30          | 8         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 44    | 30          | 14        |
+| 📈     | Melhoria | M000    | 45    | 30          | 15        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -27,6 +27,7 @@
 ### Prioridade Alta
 
 - 🐞 **B037:** Correção de Barra de scroll em páginas de editar não ser clicável
+- 🐞 **B038:** Correção de mensagem customizada de erro de carregamento de listas não aparecer (index.html)
 
 ### Prioridade Média
 
@@ -94,6 +95,7 @@
 - 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
   - Tanto destinos.html quanto editar-destinos.html
 - 🏆 **F052:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
+- 📈 **M045:** Exibir nota dentro do accordion de editar-destinos e ordenar por Nota + título
 
 ## Done
 

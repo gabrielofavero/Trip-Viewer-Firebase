@@ -13,4 +13,41 @@ function _applyCustomColorsDestinos() {
     const text = getID("trip-viewer-text");
     text.style.color = THEME_COLOR;
     _addCSSRule('.section-title h2::after', 'background', THEME_COLOR);
+    _addCSSRule('.new', 'fill', THEME_COLOR);
+    _addCSSRule('.color-icon', 'color', THEME_COLOR);
+}
+
+function _getDestinosTituloVisibility(item) {
+    if (item.nota || item.mapa || item.site || item.instagram) return "flex";
+    else return "none";
+}
+
+function _getLinksContainerVisibility(item, isLineup) {
+    if (!isLineup && (item.mapa || item.site || item.instagram)) return "flex";
+    else return "none";
+}
+
+function _getHeadlinerVisibility(item, isLineup) {
+    if (isLineup && item.headliner) return "block";
+    else return "none";
+}
+
+function _getGeneroVisibility(item, isLineup) {
+    if (isLineup) return "block";
+    else return item.genero ? "block" : "none";
+}
+
+function _getPalcoRegiaoVisibility(item, isLineup) {
+    if (isLineup) return item.palco ? "block" : "none";
+    else return item.regiao ? "block" : "none";
+}
+
+function _getValorVisibility(item, isLineup) {
+    if (isLineup) return "none";
+    else return item.valor ? "block" : "none";
+}
+
+function _getDescricaoVisibility(item, isLineup) {
+    if (isLineup) return "none";
+    else return item.descricao ? "block" : "none";
 }

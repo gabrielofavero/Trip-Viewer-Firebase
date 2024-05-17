@@ -37,7 +37,6 @@ async function _buildDestinosObject() {
 function _buildDestinoModulos() {
     let result = {
         lanches: false,
-        lineup: false,
         lojas: false,
         mapa: false,
         restaurantes: false,
@@ -134,15 +133,17 @@ function _buildDestinoCategoryObject(type) {
         result.nota.push(nota);
     }
 
-    result.novo = _removeEmptyValuesFromEndArray(result.novo);
-    result.nome = _removeEmptyValuesFromEndArray(result.nome);
-    result.emoji = _removeEmptyValuesFromEndArray(result.emoji);
     result.descricao = _removeEmptyValuesFromEndArray(result.descricao);
-    result.hyperlink.name = _removeEmptyValuesFromEndArray(result.hyperlink.name);
-    result.hyperlink.video = _removeEmptyValuesFromEndArray(result.hyperlink.video);
+    result.emoji = _removeEmptyValuesFromEndArray(result.emoji);
+    result.instagram = _removeEmptyValuesFromEndArray(result.instagram);
+    result.mapa = _removeEmptyValuesFromEndArray(result.mapa);
+    result.midia = _removeEmptyValuesFromEndArray(result.midia);
+    result.nome = _removeEmptyValuesFromEndArray(result.nome);
+    result.nota = _removeEmptyValuesFromEndArray(result.nota);
+    result.novo = _removeEmptyValuesFromEndArray(result.novo);
     result.regiao = _removeEmptyValuesFromEndArray(result.regiao);
     result.valor = _removeEmptyValuesFromEndArray(result.valor);
-    result.nota = _removeEmptyValuesFromEndArray(result.nota);
+    result.website = _removeEmptyValuesFromEndArray(result.website);
 
     return result;
 }

@@ -464,7 +464,7 @@ function _loadLineupData(FIRESTORE_DATA) {
                         getID(`lineup-fim-${i}`).value = fim[j];
                     }
 
-                    const midia = FIRESTORE_DATA.lineup[key].hyperlink.video;
+                    const midia = FIRESTORE_DATA.lineup[key].midia;
                     if (midia && midia[j]) {
                         getID(`lineup-midia-${i}`).value = midia[j];
                     }

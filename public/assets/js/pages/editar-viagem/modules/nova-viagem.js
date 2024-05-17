@@ -493,14 +493,14 @@ function _addLineup() {
           </div>
   
           <div class="nice-form-group">
-            <label>Avaliação <span class="opcional">(Opcional)</span></label>
-            <select id="lineup-nota-${i}">
+            <label>Prioridade <span class="opcional">(Opcional)</span></label>
+            <select class="editar-select" id="lineup-nota-${i}">
             <option value="?">Desconhecido</option>
-            <option value="5">5 - Artista obrigatório de ver ao vivo!</option>
-            <option value="4">4 - Bom artista para ver ao vivo</option>
-            <option value="3">3 - Artista razoável para ver ao vivo</option>
-            <option value="2">2 - Apenas se sobrar tempo</option>
-            <option value="1">1 - Não vale a pena ver ao vivo</option>
+            <option value="5">5 - Artista Excelente!</option>
+            <option value="4">4 - Ótimo Artista</option>
+            <option value="3">3 - Artista Razoável</option>
+            <option value="2">2 - Artista com Baixa Prioridade</option>
+            <option value="1">1 - Artista Não Recomendado</option>
             </select>
           </div>
   

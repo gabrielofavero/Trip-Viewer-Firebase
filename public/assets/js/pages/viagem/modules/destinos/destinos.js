@@ -156,9 +156,7 @@ function _mergeSetlistObjects(obj1, obj2) {
     descricao: [],
     head: [],
     horario: [],
-    hyperlink: {
-      name: []
-    },
+    midia: [],
     nome: [],
     nota: [],
     palco: [],
@@ -167,13 +165,7 @@ function _mergeSetlistObjects(obj1, obj2) {
 
   // Iterate over the keys of the result object
   Object.keys(result).forEach(key => {
-    if (key === 'hyperlink') {
-      // Special handling for the 'hyperlink' object
-      result[key].name = [...obj1[key].name, ...obj2[key].name];
-    } else {
-      // Merge arrays from both objects for this key
-      result[key] = [...obj1[key], ...obj2[key]];
-    }
+    result[key] = [...obj1[key], ...obj2[key]];
   });
 
   return result;
@@ -208,10 +200,7 @@ function _buildDestinosObject(lineupExclusive = false) {
 function _buildLineupDestinosObject() {
   const emptyObj = {
     "valor": [],
-    "hyperlink": {
-      "video": [],
-      "name": []
-    },
+    "midia": [],
     "nome": [],
     "regiao": [],
     "novo": [],
@@ -219,6 +208,7 @@ function _buildLineupDestinosObject() {
     "nota": [],
     "descricao": []
   }
+  
   DESTINOS = [{
     destinosID: "lineup",
     destinos: {

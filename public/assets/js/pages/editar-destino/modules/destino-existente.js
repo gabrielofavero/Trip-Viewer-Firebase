@@ -68,9 +68,19 @@ function _loadRestaurantesData(FIRESTORE_DESTINOS_DATA) {
           getID(`restaurantes-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_DESTINOS_DATA.restaurantes.hyperlink.name;
-        if (link && link[j]) {
-          getID(`restaurantes-website-${i}`).value = link[j];
+        const website = FIRESTORE_DESTINOS_DATA.restaurantes.website;
+        if (website && website[j]) {
+          getID(`restaurantes-website-${i}`).value = website[j];
+        }
+
+        const mapa = FIRESTORE_DESTINOS_DATA.restaurantes.mapa;
+        if (mapa && mapa[j]) {
+          getID(`restaurantes-mapa-${i}`).value = mapa[j];
+        }
+
+        const instagram = FIRESTORE_DESTINOS_DATA.restaurantes.instagram;
+        if (instagram && instagram[j]) {
+          getID(`restaurantes-instagram-${i}`).value = instagram[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.restaurantes.regiao;
@@ -83,7 +93,7 @@ function _loadRestaurantesData(FIRESTORE_DESTINOS_DATA) {
           _loadMoedaValorAndVisibility(valor[j], 'restaurantes', i);
         }
 
-        const midia = FIRESTORE_DESTINOS_DATA.restaurantes.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.restaurantes.midia;
         if (midia && midia[j]) {
           getID(`restaurantes-midia-${i}`).value = midia[j];
         }
@@ -133,9 +143,19 @@ function _loadLanchesData(FIRESTORE_DESTINOS_DATA) {
           getID(`lanches-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_DESTINOS_DATA.lanches.hyperlink.name;
-        if (link && link[j]) {
-          getID(`lanches-website-${i}`).value = link[j];
+        const website = FIRESTORE_DESTINOS_DATA.lanches.website;
+        if (website && website[j]) {
+          getID(`lanches-website-${i}`).value = website[j];
+        }
+
+        const mapa = FIRESTORE_DESTINOS_DATA.lanches.mapa;
+        if (mapa && mapa[j]) {
+          getID(`lanches-mapa-${i}`).value = mapa[j];
+        }
+
+        const instagram = FIRESTORE_DESTINOS_DATA.lanches.instagram;
+        if (instagram && instagram[j]) {
+          getID(`lanches-instagram-${i}`).value = instagram[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.lanches.regiao;
@@ -148,7 +168,7 @@ function _loadLanchesData(FIRESTORE_DESTINOS_DATA) {
           _loadMoedaValorAndVisibility(valor[j], 'lanches', i);
         }
 
-        const midia = FIRESTORE_DESTINOS_DATA.lanches.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.lanches.midia;
         if (midia && midia[j]) {
           getID(`lanches-midia-${i}`).value = midia[j];
         }
@@ -198,9 +218,19 @@ function _loadSaidasData(FIRESTORE_DESTINOS_DATA) {
           getID(`saidas-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_DESTINOS_DATA.saidas.hyperlink.name;
-        if (link && link[j]) {
-          getID(`saidas-website-${i}`).value = link[j];
+        const website = FIRESTORE_DESTINOS_DATA.saidas.website;
+        if (website && website[j]) {
+          getID(`saidas-website-${i}`).value = website[j];
+        }
+
+        const mapa = FIRESTORE_DESTINOS_DATA.saidas.mapa;
+        if (mapa && mapa[j]) {
+          getID(`saidas-mapa-${i}`).value = mapa[j];
+        }
+
+        const instagram = FIRESTORE_DESTINOS_DATA.saidas.instagram;
+        if (instagram && instagram[j]) {
+          getID(`saidas-instagram-${i}`).value = instagram[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.saidas.regiao;
@@ -213,7 +243,7 @@ function _loadSaidasData(FIRESTORE_DESTINOS_DATA) {
           _loadMoedaValorAndVisibility(valor[j], 'saidas', i);
         }
 
-        const midia = FIRESTORE_DESTINOS_DATA.saidas.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.saidas.midia;
         if (midia && midia[j]) {
           getID(`saidas-midia-${i}`).value = midia[j];
         }
@@ -263,9 +293,19 @@ function _loadTurismoData(FIRESTORE_DESTINOS_DATA) {
           getID(`turismo-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_DESTINOS_DATA.turismo.hyperlink.name;
-        if (link && link[j]) {
-          getID(`turismo-website-${i}`).value = link[j];
+        const website = FIRESTORE_DESTINOS_DATA.turismo.website;
+        if (website && website[j]) {
+          getID(`turismo-website-${i}`).value = website[j];
+        }
+
+        const mapa = FIRESTORE_DESTINOS_DATA.turismo.mapa;
+        if (mapa && mapa[j]) {
+          getID(`turismo-mapa-${i}`).value = mapa[j];
+        }
+
+        const instagram = FIRESTORE_DESTINOS_DATA.turismo.instagram;
+        if (instagram && instagram[j]) {
+          getID(`turismo-instagram-${i}`).value = instagram[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.turismo.regiao;
@@ -278,7 +318,7 @@ function _loadTurismoData(FIRESTORE_DESTINOS_DATA) {
           _loadMoedaValorAndVisibility(valor[j], 'turismo', i);
         }
 
-        const midia = FIRESTORE_DESTINOS_DATA.turismo.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.turismo.midia;
         if (midia && midia[j]) {
           getID(`turismo-midia-${i}`).value = midia[j];
         }
@@ -328,9 +368,19 @@ function _loadLojasData(FIRESTORE_DESTINOS_DATA) {
           getID(`lojas-descricao-${i}`).value = descricao[j];
         }
 
-        const link = FIRESTORE_DESTINOS_DATA.lojas.hyperlink.name;
-        if (link && link[j]) {
-          getID(`lojas-website-${i}`).value = link[j];
+        const website = FIRESTORE_DESTINOS_DATA.lojas.website;
+        if (website && website[j]) {
+          getID(`lojas-website-${i}`).value = website[j];
+        }
+
+        const mapa = FIRESTORE_DESTINOS_DATA.lojas.mapa;
+        if (mapa && mapa[j]) {
+          getID(`lojas-mapa-${i}`).value = mapa[j];
+        }
+
+        const instagram = FIRESTORE_DESTINOS_DATA.lojas.instagram;
+        if (instagram && instagram[j]) {
+          getID(`lojas-instagram-${i}`).value = instagram[j];
         }
 
         const regiao = FIRESTORE_DESTINOS_DATA.lojas.regiao;
@@ -343,7 +393,7 @@ function _loadLojasData(FIRESTORE_DESTINOS_DATA) {
           _loadMoedaValorAndVisibility(valor[j], 'lojas', i);
         }
 
-        const midia = FIRESTORE_DESTINOS_DATA.lojas.hyperlink.video;
+        const midia = FIRESTORE_DESTINOS_DATA.lojas.midia;
         if (midia && midia[j]) {
           getID(`lojas-midia-${i}`).value = midia[j];
         }

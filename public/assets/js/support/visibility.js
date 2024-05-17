@@ -1,7 +1,7 @@
 // ======= Visibility JS =======
 const INDEX = "index";
 const VIAGEM = "viagem"
-const PASSEIOS = "destinos";
+const DESTINOS = "destinos";
 var THEME_COLOR;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
@@ -229,7 +229,7 @@ function _applyCustomVisibilityRules() {
                _applyCustomColorsViagem();
                _loadTransporteImagens();
                break;
-          case PASSEIOS:
+          case DESTINOS:
                _loadLogoColors();
                _applyCustomColorsDestinos();
                break;
@@ -306,7 +306,7 @@ function _isOnDarkMode() {
 
 function _isCustomColorsActive() {
      const html = _getHTMLpage();
-     if (html === PASSEIOS) {
+     if (html === DESTINOS) {
           return localStorage.getItem("customColors") === "true";
      } else {
           return CUSTOM_COLORS

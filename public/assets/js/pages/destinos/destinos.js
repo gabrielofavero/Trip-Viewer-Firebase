@@ -1,10 +1,5 @@
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
-var CONTENT = {
-  semData: {
-    titulo: "",
-    innerHTML: [],
-  }
-}
+var CONTENT = {};
 
 // Métodos Principais
 function _loadDestinosHTML() {
@@ -28,9 +23,9 @@ function _loadDestinosHTML() {
     const isLineup = DESTINO.descricao.title == "Lineup";
 
     for (let i = 1; i <= DESTINO.data.nome.length; i++) {
-      const item = _getCurrentData(i);
-      const tituloKey = isLineup ? item.data[i] || "semData" : "semData";
-      const key = tituloKey == "semData" ? "" : item.data[i].split("-").join("");
+      const item = _getCurrentItem(i);
+      const data = isLineup ? _getLineupData(item) : "";
+      const key = isLineup ? _getLineupKey(item) : "semData";
 
       const innerHTML = `<div class="accordion-group">
                           <div id="destinos-${i}" class="accordion-item" draggable="true" data-drag-listener="true">
@@ -63,12 +58,12 @@ function _loadDestinosHTML() {
                               <div id="collapse-destinos-${i}" class="accordion-collapse collapse"
                                   aria-labelledby="heading-destinos-${i}" data-bs-parent="#destinos-box">
                                   <div class="accordion-body">
-                                      <div class="destinos-titulo" style="display: ${_getDisplayDestinosTitulo(item)}">
+                                      <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
                                           <div class="notas-box">
                                               <i class="iconify nota-sem-margem ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
-                                              <span class="nota-texto">Template</span>
+                                              <span class="nota-texto">${_getNotaText(item, isLineup)}</span>
                                           </div>
-                                          <div class="links-container" style="display: ${_getDisplayLinksContainer(item, isLineup)}">
+                                          <div class="links-container" style="display: ${_getLinksContainerVisibility(item, isLineup)}">
                                               <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? 'block' : 'none'}"${_getLinkOnClick(item, 'mapa')}></i>
                                               <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"${_getLinkOnClick(item, 'instagram')}></i>
                                               <i class="iconify link" data-icon="tabler:world" style="display: ${item.link ? 'block' : 'none'}"${_getLinkOnClick(item, 'link')}></i>
@@ -76,7 +71,7 @@ function _loadDestinosHTML() {
                                       </div>
                                       <div class="destinos-text">
                                           <div class="destinos-topicos-box" style="display: block">
-                                              <div class="destinos-topico" style="display: ${_getDisplayHeadliner(item, isLineup)}">
+                                              <div class="destinos-topico" style="display: ${_getHeadlinerVisibility(item, isLineup)}">
                                                   <i class="iconify color-icon" data-icon="ph:star-bold"></i>
                                                   Headliner
                                               </div>
@@ -84,7 +79,7 @@ function _loadDestinosHTML() {
                                                   <i class="iconify color-icon" data-icon="mingcute:time-line"></i>
                                                   ${isLineup ? item.horario : ""}
                                               </div>
-                                              <div class="destinos-topico" style="display: ${_getPalcoRegiaoDisplay(item, isLineup)}">
+                                              <div class="destinos-topico" style="display: ${_getPalcoRegiaoVisibility(item, isLineup)}">
                                                   <i class="iconify color-icon" data-icon="mingcute:location-line"></i>
                                                   ${_getPalcoRegiaoValue(item, isLineup)}
                                               </div>
@@ -100,17 +95,18 @@ function _loadDestinosHTML() {
                                           <div class="destinos-descricao" style="display: ${_getDescricaoVisibility(item, isLineup)}">
                                               ${_getDescricaoValue(item, isLineup)}
                                           </div>
-                                          <div id="media-${i}"></div>
+                                          <div id="midia-${i}"></div>
                                       </div>
                                   </div>
                               </div>
                           </div>
                       </div>`;
-      _loadEmbed(item, isLineup, i)
-      _setContent(item, key, innerHTML);
+      _loadEmbed(item?.midia, isLineup, i)
+      _setInnerContent(item, key, data, innerHTML);
     }
 
     _applyContent();
+    _applyMediaListeners();
     _adaptHeight();
 
   } else {
@@ -119,39 +115,81 @@ function _loadDestinosHTML() {
 }
 
 // Getters
-function _getCurrentData(i) {
+function _getCurrentItem(i) {
   let result = {};
   const keys = Object.keys(DESTINO.data);
+
+  if (!keys.length) return {};
+
   for (const key of keys) {
     result[key] = DESTINO.data[key][i - 1];
   }
+
+  return result;
+}
+
+function _getLineupData(item) {
+  if (item.data) {
+    const dataSplit = item.data.split("-");
+    if (dataSplit.length === 3) {
+      const dia = dataSplit[0].length === 1 ? "0" + dataSplit[0] : dataSplit[0];
+      const mes = dataSplit[1].length === 1 ? "0" + dataSplit[1] : dataSplit[1];
+      const ano = dataSplit[2];
+      return `${dia}/${mes}/${ano}`;
+    }
+  }
+  return "";
+}
+
+function _getLineupKey(item) {
+  if (item.data) {
+    const filteredData = item.data.split("-").join("");
+    if (filteredData && !isNaN(filteredData)) return filteredData;
+  }
+  return 'semData';
 }
 
 
 // Setters
-function _applyContent() {
-  const div = getID("content");
-  div.innerHTML = "";
-  for (const key in CONTENT) {
-    const titulo = CONTENT[key].titulo ? `<div class="data-lineup">${CONTENT[key].titulo}</div>` : "";
-    div.innerHTML += titulo + CONTENT[key].innerHTML.join("");
-  }
-}
-
-function _setContent(item, key, innerHTML) {
-  const result = {
-    titulo: _getTitulo(item),
+function _setInnerContent(item, key, data, innerHTML) {  
+  const innerContent = {
+    titulo: item.nome,
+    nota: item.nota || "?",
     innerHTML: innerHTML
   }
 
-  if (CONTENT[key]) {
-    CONTENT[key].innerHTML.push(result);
-  } else {
+  if (!CONTENT[key]) {
     CONTENT[key] = {
-      titulo: tituloKey,
-      innerHTML: [innerHTML]
+      titulo: data,
+      innerContents: [innerContent]
     };
+  } else {
+    CONTENT[key].innerContents.push(innerContent);
   }
+}
+
+function _applyContent() {
+  const div = getID("content");
+  const keys = Object.keys(CONTENT).sort((a, b) => a - b); // Ordem Crescente
+
+  div.innerHTML = "";
+  for (const key of keys) {
+    const titulo = CONTENT[key].titulo ? `<div class="data-lineup">${CONTENT[key].titulo}</div>` : "";
+    const innerHTMLs = _orderInnerHTMLs(CONTENT[key].innerContents);
+    div.innerHTML += titulo + innerHTMLs.join("")
+  }
+}
+
+function _orderInnerHTMLs(innerContents) {
+  innerContents.sort((a, b) => {
+      // Ordena por nota em ordem decrescente
+      if (b.nota !== a.nota) {
+          return b.nota - a.nota;
+      }
+      // Se as notas são iguais, ordena por título em ordem crescente
+      return a.titulo.localeCompare(b.titulo);
+  });
+  return innerContents.map(item => item.innerHTML);
 }
 
 

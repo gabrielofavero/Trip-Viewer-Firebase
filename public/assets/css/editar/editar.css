@@ -1574,7 +1574,6 @@ details summary::-webkit-details-marker {
   .mini-box {
     margin-top: 0;
   }
-
 }
 
 .accordion-button::after {
@@ -1747,8 +1746,8 @@ details summary::-webkit-details-marker {
 }
 
 .new {
-  color: #5859a7;
-  font-size: 25px;
+  fill: #5859a7;
+  font-size: 18px;
   display: none;
   margin-right: 10px;
 }
@@ -1789,4 +1788,8 @@ details summary::-webkit-details-marker {
 
 .imagem-uploadbox {
   margin-bottom: -18px;
+}
+
+.editar-select {
+  height: 48px !important;
 }

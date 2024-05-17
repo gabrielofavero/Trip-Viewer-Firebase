@@ -222,3 +222,7 @@ details .toggle-code:hover {
 .transparent-background-color{
   background: rgba(255, 255, 255, .005);
 }
+
+.new {
+  fill: #7f75b6;
+}
