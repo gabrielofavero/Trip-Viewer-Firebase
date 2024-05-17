@@ -87,8 +87,7 @@ function _getIframe(url, iframeClass = "") {
     } else return "";
 }
 
-// Descontinuado
-function _getVideoEmbedTikTok(link, version=2) {
+function _getVideoEmbedTikTok(link, version=3) {
     let videoID = "";
     if (!link.includes("vm.")) {
         try {

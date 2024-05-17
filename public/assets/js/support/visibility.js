@@ -1,7 +1,4 @@
 // ======= Visibility JS =======
-const INDEX = "index";
-const VIAGEM = "viagem"
-const DESTINOS = "destinos";
 var THEME_COLOR;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
@@ -224,12 +221,12 @@ function _applyCustomVisibilityRules() {
      const html = _getHTMLpage()
      _clearCustomColors();
      switch (html) {
-          case VIAGEM:
+          case 'viagem':
                _loadLogoColors();
                _applyCustomColorsViagem();
                _loadTransporteImagens();
                break;
-          case DESTINOS:
+          case 'destinos':
                _loadLogoColors();
                _applyCustomColorsDestinos();
                break;
@@ -240,7 +237,7 @@ function _applyCustomVisibilityRules() {
 
 function _addCSSRule(selector, property, value) {
      const rule = `${property}: ${value};`;
-     var styleElement = getID('custom-styles');
+     let styleElement = document.getElementById('custom-styles');
 
      if (!styleElement) {
           styleElement = document.createElement('style');
@@ -248,12 +245,29 @@ function _addCSSRule(selector, property, value) {
           document.head.appendChild(styleElement);
      }
 
-     var styleSheet = styleElement.sheet;
+     const styleSheet = styleElement.sheet;
+     let ruleIndex = -1;
 
-     if (styleSheet.insertRule) {
-          styleSheet.insertRule(selector + '{ ' + rule + ' }', 0);
-     } else if (styleSheet.addRule) {
-          styleSheet.addRule(selector, rule, 0);
+     for (let i = 0; i < styleSheet.cssRules.length; i++) {
+          const cssRule = styleSheet.cssRules[i];
+          if (cssRule.selectorText === selector) {
+               ruleIndex = i;
+               break;
+          }
+     }
+
+     if (ruleIndex !== -1) {
+          if (styleSheet.cssRules[ruleIndex].style) {
+               styleSheet.cssRules[ruleIndex].style[property] = value;
+          } else {
+               styleSheet.cssRules[ruleIndex].style.setProperty(property, value);
+          }
+     } else {
+          if (styleSheet.insertRule) {
+               styleSheet.insertRule(`${selector} { ${rule} }`, 0);
+          } else if (styleSheet.addRule) {
+               styleSheet.addRule(selector, rule, 0);
+          }
      }
 }
 
@@ -306,7 +320,7 @@ function _isOnDarkMode() {
 
 function _isCustomColorsActive() {
      const html = _getHTMLpage();
-     if (html === DESTINOS) {
+     if (html === 'destinos') {
           return localStorage.getItem("customColors") === "true";
      } else {
           return CUSTOM_COLORS
@@ -399,11 +413,11 @@ function _toggleFadingVisibility(id = 'copy-msg') {
      var div = getID(id);
      div.classList.toggle("visible");
      div.classList.toggle("hidden");
-     
+
      if (div.classList.contains("visible")) {
-       setTimeout(function() {
-         div.classList.remove("visible");
-         div.classList.add("hidden");
-       }, 3000);
+          setTimeout(function () {
+               div.classList.remove("visible");
+               div.classList.add("hidden");
+          }, 3000);
      }
-   }
+}

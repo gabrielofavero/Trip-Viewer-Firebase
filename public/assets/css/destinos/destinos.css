@@ -35,7 +35,7 @@ a:hover,
 
 .links-container {
   display: flex;
-  margin-top: 7.5px;
+  margin-top: 4.5px;
 }
 
 .links-container .iconify {
@@ -416,7 +416,7 @@ section {
   border-radius: .75rem;
 }
 
-.accordion-button[aria-expanded="false"] {
+ .accordion-button {
   background-color: #f1f1f1;
   color: #1f2937;
 }
@@ -443,7 +443,7 @@ section {
 }
 
 .accordion-button::after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' class='teste' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
 .nota,
@@ -469,7 +469,8 @@ section {
 .nota-texto {
   color: #4F5051;
   font-weight: bold;
-  margin-right: -5px;
+  position: relative;
+  top: 1.5px;
 }
 
 .nota-5 {
@@ -565,11 +566,17 @@ section {
 
 .tiktok-embed-v2 {
   width: 100%;
-  height: 750px;
+  height: 775px;
 }
 
 .tiktok-embed-v3 {
-  margin-top: 20px;
-  width: 239.06px;
-  height: 425px;
+  width: 458.5px;
+  height: 815px;
+}
+
+@media screen and (max-width: 550px) {
+  .tiktok-embed-v3 {
+    width: 100%;
+    /* height calculated in js function _applyTikTokHeight */
+  }
 }

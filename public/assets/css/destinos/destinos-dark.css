@@ -17,6 +17,10 @@ a:hover {
   color: #A6A6A6;
 }
 
+.section-title h2::before {
+  background: #A6A6A6;
+}
+
 .section-title h2::after {
   background: #7f75b6;
 }
@@ -37,12 +41,23 @@ a:hover {
   background-color: #404040;
 }
 
-#money {
-  color: #01B36B;
+.score {
+  color: #e6e9ec;
+  width: 73px;
+  float: left;
+  font-weight: bold;
+  font-size: 15px;
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+  border-left: 1px solid #404040;
 }
 
-#details {
-  color: #A6A6A6;
+.details {
+  font-size: 15px;
+  font-weight: normal;
+  font-style: italic;
+  color: #595959;
 }
 
 .card-body {
@@ -59,6 +74,13 @@ a:hover {
 .nav-menu a span,
 .nav-menu a:focus span {
   color: #F2F2F2;
+}
+
+@media (min-width: 992px) {
+  .nav-menu a span,
+  .nav-menu a:focus span {
+    color: #303030;
+  }
 }
 
 .nav-menu a:hover,
@@ -112,6 +134,46 @@ a:hover {
 
 #footer .social-links a:hover {
   background: #7f75b6;
+}
+
+.accordion-item {
+  background-color: #303030;
+  color: #E2E2E2;
+}
+
+.accordion-header {
+  background-color: #404040;
+  color: #f1f1f1;
+  border-radius: .75rem;
+}
+
+.accordion-button[aria-expanded="true"] {
+  background-color: #404040;
+  color: #f1f1f1;
+}
+
+.new {
+  fill: #7f75b6;
+}
+
+.nota-texto {
+  color: #F2F2F2;
+}
+
+.destinos-titulo {
+  border-bottom: 0.5px solid #383838;
+}
+
+.external-link {
+  color: #78a4ca;
+}
+
+.color-icon {
+  color: #7f75b6
+}
+
+.data-lineup {
+  color: #F2F2F2;
 }
 
 .mobile-nav-toggle:hover, .custom-nav-toggle:hover {

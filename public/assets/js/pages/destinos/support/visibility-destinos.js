@@ -15,7 +15,25 @@ function _applyCustomColorsDestinos() {
     _addCSSRule('.section-title h2::after', 'background', THEME_COLOR);
     _addCSSRule('.new', 'fill', THEME_COLOR);
     _addCSSRule('.color-icon', 'color', THEME_COLOR);
+    _applyAccordionArrowCustomColor();
 }
+
+function _applyTikTokHeight() {
+    const keys = Object.keys(MEDIA_HYPERLINKS);
+    if (keys.length > 0) {
+        const firstDiv = getID('accordion-body-1');
+        const width = firstDiv.offsetWidth - 40; // 20px padding em cada lado
+        const height = (width * 16) / 9;
+        _addCSSRule('.tiktok-embed-v3', 'height', `${height}px`);
+    }
+}
+
+function _applyAccordionArrowCustomColor() {
+    const color = THEME_COLOR.replace("#", "%23");
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='${color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>`;
+    _addCSSRule('.accordion-button::after', 'background-image', `url("data:image/svg+xml,${svg}") !important`);
+}
+
 
 function _getDestinosTituloVisibility(item) {
     if (item.nota || item.mapa || item.site || item.instagram) return "flex";

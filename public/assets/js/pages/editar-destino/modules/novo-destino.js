@@ -6,7 +6,7 @@ function _addRestaurantes() {
   }
 
   $('#restaurantes-box').append(`
-    <div id="restaurantes-${i}" class="accordion-item accordion-restaurantes" draggable="true">
+    <div id="restaurantes-${i}" class="accordion-item accordion-restaurantes" >
       <h2 class="accordion-header" id="heading-restaurantes-${i}">
         <button id="restaurantes-title-${i}" class="accordion-button collapsed flex-button" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-restaurantes-${i}" aria-expanded="true"
@@ -111,8 +111,7 @@ function _addRestaurantes() {
     `);
 
   _addDestinosListeners('restaurantes', i);
-  _addDragListeners('restaurantes');
-  _addRemoveChildListener('restaurantes', i);
+  _addRemoveChildListener('restauranlltes', i);
 }
 
 function _addLanches() {
@@ -122,7 +121,7 @@ function _addLanches() {
   }
 
   $('#lanches-box').append(`
-    <div id="lanches-${i}" class="accordion-item accordion-lanches" draggable="true">
+    <div id="lanches-${i}" class="accordion-item accordion-lanches" >
       <h2 class="accordion-header" id="heading-lanches-${i}">
         <button id="lanches-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lanches-${i}" aria-expanded="true" aria-controls="collapse-lanches-${i}">
@@ -227,7 +226,6 @@ function _addLanches() {
     `);
 
   _addDestinosListeners('lanches', i);
-  _addDragListeners('lanches');
   _addRemoveChildListener('lanches', i);
 }
 
@@ -238,7 +236,7 @@ function _addSaidas() {
   }
 
   $('#saidas-box').append(`
-    <div id="saidas-${i}" class="accordion-item accordion-saidas" draggable="true">
+    <div id="saidas-${i}" class="accordion-item accordion-saidas" >
       <h2 class="accordion-header" id="heading-saidas-${i}">
         <button id="saidas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-saidas-${i}" aria-expanded="true" aria-controls="collapse-saidas-${i}">
@@ -342,7 +340,6 @@ function _addSaidas() {
     `);
 
   _addDestinosListeners('saidas', i);
-  _addDragListeners('saidas');
   _addRemoveChildListener('saidas', i);
 }
 
@@ -353,7 +350,7 @@ function _addTurismo() {
   }
 
   $('#turismo-box').append(`
-    <div id="turismo-${i}" class="accordion-item accordion-turismo" draggable="true">
+    <div id="turismo-${i}" class="accordion-item accordion-turismo" >
       <h2 class="accordion-header" id="heading-turismo-${i}">
         <button id="turismo-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-turismo-${i}" aria-expanded="true" aria-controls="collapse-turismo-${i}">
@@ -457,7 +454,6 @@ function _addTurismo() {
     `);
 
   _addDestinosListeners('turismo', i);
-  _addDragListeners('turismo');
   _addRemoveChildListener('turismo', i);
 }
 
@@ -468,7 +464,7 @@ function _addLojas() {
   }
 
   $('#lojas-box').append(`
-    <div id="lojas-${i}" class="accordion-item accordion-lojas" draggable="true">
+    <div id="lojas-${i}" class="accordion-item accordion-lojas" >
       <h2 class="accordion-header" id="heading-lojas-${i}">
         <button id="lojas-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lojas-${i}" aria-expanded="true" aria-controls="collapse-lojas-${i}">
@@ -574,6 +570,5 @@ function _addLojas() {
     `);
 
   _addDestinosListeners('lojas', i);
-  _addDragListeners('lojas');
   _addRemoveChildListener('lojas', i);
 }

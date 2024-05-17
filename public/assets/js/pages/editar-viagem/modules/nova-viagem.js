@@ -34,7 +34,7 @@ function _loadProgramacao() {
     }
 
     box.innerHTML += `
-      <div id="programacao-${i}" class="accordion-item accordion-programacao" draggable="true">
+      <div id="programacao-${i}" class="accordion-item accordion-programacao" >
       <h2 class="accordion-header" id="heading-programacao-${i}">
         <button id="programacao-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-programacao-${i}" aria-expanded="false"
@@ -139,7 +139,7 @@ function _addTransporte() {
   }
 
   $('#transporte-box').append(`
-      <div id="transporte-${i}" class="accordion-item accordion-transporte" draggable="true">
+      <div id="transporte-${i}" class="accordion-item accordion-transporte" >
       <h2 class="accordion-header" id="heading-transporte-${i}">
         <button id="transporte-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-transporte-${i}" aria-expanded="false" aria-controls="collapse-transporte-${i}">
@@ -251,7 +251,6 @@ function _addTransporte() {
     </div>
       `);
 
-  _addDragListeners('transporte');
   _loadTransporteListeners(i);
   _addRemoveChildListener('transporte', i);
   _loadTransporteVisibility(i);
@@ -265,7 +264,7 @@ function _addHospedagens() {
   }
 
   $('#hospedagens-box').append(`
-      <div id="hospedagens-${i}" class="accordion-item accordion-hospedagens" draggable="true">
+      <div id="hospedagens-${i}" class="accordion-item accordion-hospedagens" >
       <h2 class="accordion-header" id="heading-hospedagens-${i}">
         <button id="hospedagens-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-hospedagens-${i}" aria-expanded="false" aria-controls="collapse-hospedagens-${i}">
@@ -362,7 +361,6 @@ function _addHospedagens() {
     </div>
       `);
 
-  _addDragListeners('hospedagens');
   _loadImageSelector(`hospedagens-${i}`);
   _addRemoveChildListener('hospedagens', i);
 }
@@ -425,7 +423,7 @@ function _addLineup() {
   }
 
   $('#lineup-box').append(`
-    <div id="lineup-${i}" class="accordion-item accordion-lineup" draggable="true">
+    <div id="lineup-${i}" class="accordion-item accordion-lineup" >
       <h2 class="accordion-header" id="heading-lineup-${i}">
         <button id="lineup-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lineup-${i}" aria-expanded="true" aria-controls="collapse-lineup-${i}">
@@ -522,7 +520,6 @@ function _addLineup() {
 
   _buildLineupSelects();
   _loadLineupListeners(i);
-  _addDragListeners('lineup');
   _addRemoveChildListener('lineup', i);
 }
 
@@ -533,7 +530,7 @@ function _addGaleria() {
   }
 
   $('#galeria-box').append(`
-      <div id="galeria-${i}" class="accordion-item accordion-galeria" draggable="true">
+      <div id="galeria-${i}" class="accordion-item accordion-galeria" >
       <h2 class="accordion-header" id="heading-galeria-${i}">
         <button id="galeria-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-galeria-${i}" aria-expanded="false" aria-controls="collapse-hospedagens-${i}">
@@ -600,6 +597,5 @@ function _addGaleria() {
 
   _loadImageSelector(`galeria-${i}`);
   _loadGaleriaListeners(i);
-  _addDragListeners('galeria');
   _addRemoveChildListener('galeria', i);
 }

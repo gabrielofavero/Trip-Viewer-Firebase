@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 38    | 30          | 8         |
+| 🐞     | Bug      | B000    | 40    | 32          | 8         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 45    | 30          | 15        |
+| 📈     | Melhoria | M000    | 46    | 30          | 16        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -18,9 +18,6 @@
 - ❗️: Crítico
 
 ## Doing
-
-- ⚔️ **E023:** Destinos v1.1
-- 📈 **M043:** Melhoria visual em destinos.html e destinos.js
 
 ## To-Do
 
@@ -32,9 +29,7 @@
 ### Prioridade Média
 
 - ⚔️ **E022:** Funções de migrações (Cloud Functions)
-- 📈 **M023:** Melhorias nos accordions (páginas de editar)
-  - *Criação de opção de arrastar accordions (Mobile)*
-  - *Desabilitar arrastamento quando accordion está aberto*
+- 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 - 📈 **M019:** Módulo de programação mais personalizável
   - *Incluir Horário*
   - *Melhorar Título*
@@ -95,7 +90,8 @@
 - 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
   - Tanto destinos.html quanto editar-destinos.html
 - 🏆 **F052:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
-- 📈 **M045:** Exibir nota dentro do accordion de editar-destinos e ordenar por Nota + título
+- 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
+- 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
 
 ## Done
 
@@ -128,6 +124,12 @@
 - 📈 **M031:** Melhoria de opção de zoom no card de hospedagem em viagem.html
 - 📈 **M026:** Novo ícone de "Novo" em destinos.html
 - 📈 **M044:** Melhoria de espaçamentos em páginas de editar
+- ⚔️ **E023:** Destinos v1.1
+- 📈 **M043:** Melhoria visual em destinos.html e destinos.js
+- 🐞 **B039:** Correção de função de aplicar cores customizadas em classes não funcionar mais de uma vez para algumas propriedades
+- 🐞 **B040:** Remoção de função de arrastamento de accordion
+  - *Não funcionava como o esperado no Desktop e não funcionava no Mobile*
+  - *Reimplementar posteriormente*
 
 ### Abril 2024
 

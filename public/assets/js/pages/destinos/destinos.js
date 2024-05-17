@@ -28,11 +28,11 @@ function _loadDestinosHTML() {
       const key = isLineup ? _getLineupKey(item) : "semData";
 
       const innerHTML = `<div class="accordion-group">
-                          <div id="destinos-${i}" class="accordion-item" draggable="true" data-drag-listener="true">
+                          <div id="destinos-${i}" class="accordion-item"  data-drag-listener="true">
                               <h2 class="accordion-header" id="heading-destinos-${i}">
                                   <button id="destinos-titulo-${i}" class="accordion-button flex-button collapsed" type="button"
                                       data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${i}" aria-expanded="false"
-                                      aria-controls="collapse-destinos-${i}">
+                                      aria-controls="collapse-destinos-${i}" onclick="_toggleMedia(${i})">
                                       <span class="title-text" id="destinos-titulo-text-${i}">${_getTitulo(item)}</span>
                                       <div class="icon-container new-box" style="display: ${item.novo ? 'block' : 'none'}">
                                           <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@ function _loadDestinosHTML() {
                               </h2>
                               <div id="collapse-destinos-${i}" class="accordion-collapse collapse"
                                   aria-labelledby="heading-destinos-${i}" data-bs-parent="#destinos-box">
-                                  <div class="accordion-body">
+                                  <div class="accordion-body" id="accordion-body-${i}">
                                       <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
                                           <div class="notas-box">
                                               <i class="iconify nota-sem-margem ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
@@ -106,8 +106,10 @@ function _loadDestinosHTML() {
     }
 
     _applyContent();
-    _applyMediaListeners();
     _adaptHeight();
+
+    _applyTikTokHeight();
+    window.addEventListener("resize", _applyTikTokHeight);
 
   } else {
     console.error("O Código não foi localizado na base de dados");
@@ -199,21 +201,14 @@ function openLinkInNewTab(url) {
   win.focus();
 }
 
-function _toggleMedia(id) {
-  var $accordion = $(`#collapse-destinos-${id.split("-")[1]}`);
-  if ($accordion.hasClass('show')) {
+function _toggleMedia(i) {
+  const button = getID(`destinos-titulo-${i}`);
+  const id = `midia-${i}`;
+  if (button.classList.contains("collapsed")) {
     _unloadMedia(id);
   } else {
     _loadMedia(id);
-  }
-}
-
-// Visibility
-function _applyMediaListeners() {
-  for (const mediaID of Object.keys(MEDIA_HYPERLINKS)) {
-    getID(mediaID).onclick = function () {
-      _toggleMedia(mediaID);
-    }
+    _applyTikTokHeight();
   }
 }
 

@@ -1512,7 +1512,6 @@ details summary::-webkit-details-marker {
 
 .accordion-item {
   background-color: #fff;
-  cursor: move;
 }
 
 .accordion-item.dragging {

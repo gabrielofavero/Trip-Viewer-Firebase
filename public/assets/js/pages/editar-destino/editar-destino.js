@@ -173,10 +173,6 @@ function _addDestinosListeners(categoria, i) {
   getID(`${categoria}-mapa-${i}`).addEventListener('change', () => _validateMapLink(`${categoria}-mapa-${i}`));
   getID(`${categoria}-instagram-${i}`).addEventListener('change', () => _validateInstagramLink(`${categoria}-instagram-${i}`));
   getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${i}`));
-
-  // Abrir-Fechar Accordion
-  $(`#collapse-${categoria}-${i}`).on('show.bs.collapse', () => _removeDragListeners(categoria));
-  $(`#collapse-${categoria}-${i}`).on('hide.bs.collapse', () => _addDragListeners(categoria));
 }
 
 function _valorListenerAction(i, categoria) {
