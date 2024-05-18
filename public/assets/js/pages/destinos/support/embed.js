@@ -47,8 +47,8 @@ function _getEmbed(link) {
     let conteudo = "";
 
     if (!link) return "";
-    
-    if (link.includes("youtu.be/") || link.includes("youtube.com")) {
+
+    if ((link.includes("youtu.be/") || link.includes("youtube.com")) && (!link.includes("/shorts/"))) {
         tipo = "youtube";
         conteudo = _getVideoEmbedYoutube(link);
     } else if (link.includes("tiktok")) {
@@ -73,7 +73,7 @@ function _getVideoEmbedYoutube(videoLink) {
     }
     if (videoID) {
         let url = `https://www.youtube.com/embed/${videoID}`;
-        return _getIframe(url, "youtube");
+        return _getIframe(url, "youtube-embed");
     } else return "";
 }
 

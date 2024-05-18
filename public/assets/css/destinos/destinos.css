@@ -119,8 +119,7 @@ section {
 }
 
 .youtube-embed {
-  width: 458px;
-  height: 258px;
+  width: 100%;
 }
 
 .spotify-embed {
@@ -161,10 +160,6 @@ section {
 @media screen and (max-width: 600px) {
   .card-header {
     width: 325px;
-  }
-
-  .youtube-embed {
-    width: 100%;
   }
 }
 
@@ -577,6 +572,6 @@ section {
 @media screen and (max-width: 550px) {
   .tiktok-embed-v3 {
     width: 100%;
-    /* height calculated in js function _applyTikTokHeight */
+    /* height calculated in js function _applyDestinosMediaHeight */
   }
 }

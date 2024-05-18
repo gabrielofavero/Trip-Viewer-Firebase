@@ -106,10 +106,9 @@ function _loadDestinosHTML() {
     }
 
     _applyContent();
-    _adaptHeight();
 
-    _applyTikTokHeight();
-    window.addEventListener("resize", _applyTikTokHeight);
+    _applyDestinosMediaHeight();
+    window.addEventListener("resize", _applyDestinosMediaHeight);
 
   } else {
     console.error("O Código não foi localizado na base de dados");
@@ -208,17 +207,6 @@ function _toggleMedia(i) {
     _unloadMedia(id);
   } else {
     _loadMedia(id);
-    _applyTikTokHeight();
-  }
-}
-
-function _adaptHeight() {
-  let divsSize = getID("content").children.length;
-  for (let i = 1; i <= divsSize; i++) {
-    let score = getID("score" + i);
-    let heading = getID("heading" + i);
-    if ((score && heading) && (score.clientHeight != heading.clientHeight)) {
-      score.style.height = heading.clientHeight + "px";
-    }
+    _applyDestinosMediaHeight();
   }
 }

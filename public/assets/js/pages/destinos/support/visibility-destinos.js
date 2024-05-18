@@ -18,13 +18,17 @@ function _applyCustomColorsDestinos() {
     _applyAccordionArrowCustomColor();
 }
 
-function _applyTikTokHeight() {
+function _applyDestinosMediaHeight() {
     const keys = Object.keys(MEDIA_HYPERLINKS);
     if (keys.length > 0) {
-        const firstDiv = getID('accordion-body-1');
+        const firstDiv = getID('destinos-1');
         const width = firstDiv.offsetWidth - 40; // 20px padding em cada lado
-        const height = (width * 16) / 9;
-        _addCSSRule('.tiktok-embed-v3', 'height', `${height}px`);
+        
+        const heightPortrait = (width * 16) / 9;
+        const heightLandscape = (width * 9) / 16;
+        
+        _addCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
+        _addCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
     }
 }
 
