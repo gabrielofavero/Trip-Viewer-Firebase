@@ -147,6 +147,11 @@ a:hover {
   border-radius: .75rem;
 }
 
+.accordion-button {
+  background-color: #404040;
+  color: #f1f1f1;
+}
+
 .accordion-button[aria-expanded="true"] {
   background-color: #404040;
   color: #f1f1f1;

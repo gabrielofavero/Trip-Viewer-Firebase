@@ -48,6 +48,12 @@ function _addRestaurantes() {
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
+  
+          <div class="nice-form-group">
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="restaurantes-website-${i}" type="url"
+              placeholder="https://www.salumeriacentral.com/" value="" class="icon-right" />
+          </div>
 
           <div class="nice-form-group">
             <label>Instagram <span class="opcional"> (Opcional)</span></label>
@@ -56,20 +62,14 @@ function _addRestaurantes() {
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
-            <input id="restaurantes-website-${i}" type="url"
-              placeholder="https://www.salumeriacentral.com/" value="" class="icon-right" />
-          </div>
-  
-          <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <select id="restaurantes-regiao-select-${i}" style="display: none;"></select>
+            <select class="editar-select" id="restaurantes-regiao-select-${i}" style="display: none;"></select>
             <input class="nice-form-group" id="restaurantes-regiao-${i}" type="text" placeholder="Sapucaí" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select id="restaurantes-valor-${i}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="restaurantes-valor-${i}" style="display: ${_getValorVisibility()};">
             ${VALOR_OPTIONS}
           </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="restaurantes-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
@@ -111,7 +111,7 @@ function _addRestaurantes() {
     `);
 
   _addDestinosListeners('restaurantes', i);
-  _addRemoveChildListener('restauranlltes', i);
+  _addRemoveChildListener('restaurantes', i);
 }
 
 function _addLanches() {
@@ -164,26 +164,26 @@ function _addLanches() {
           </div>
 
           <div class="nice-form-group">
-            <label>Instagram <span class="opcional"> (Opcional)</span></label>
-            <input id="lanches-instagram-${i}" type="url" placeholder="https://www.instagram.com/botanikafe/" value=""
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="lanches-website-${i}" type="url" placeholder="https://www.botanikafe.com/"" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
-            <input id="lanches-website-${i}" type="url" placeholder="https://www.botanikafe.com/"" value=""
+            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <input id="lanches-instagram-${i}" type="url" placeholder="https://www.instagram.com/botanikafe/" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <select id="lanches-regiao-select-${i}" style="display: none;"></select>
+            <select class="editar-select" id="lanches-regiao-select-${i}" style="display: none;"></select>
             <input class="nice-form-group" id="lanches-regiao-${i}" type="text" placeholder="Jardim Paulista" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select id="lanches-valor-${i}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="lanches-valor-${i}" style="display: ${_getValorVisibility()};">
               ${VALOR_OPTIONS}
             </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lanches-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
@@ -277,6 +277,12 @@ function _addSaidas() {
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
+  
+          <div class="nice-form-group">
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="saidas-website-${i}" type="url" placeholder="https://www.omalleysbar.net/" value=""
+              class="icon-right" />
+          </div>
 
           <div class="nice-form-group">
             <label>Instagram <span class="opcional"> (Opcional)</span></label>
@@ -285,20 +291,14 @@ function _addSaidas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
-            <input id="saidas-website-${i}" type="url" placeholder="https://www.omalleysbar.net/" value=""
-              class="icon-right" />
-          </div>
-  
-          <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <select id="saidas-regiao-select-${i}" style="display: none;"></select>
+            <select class="editar-select" id="saidas-regiao-select-${i}" style="display: none;"></select>
             <input class="nice-form-group" id="saidas-regiao-${i}" type="text" placeholder="Jardim Paulista" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select id="saidas-valor-${i}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="saidas-valor-${i}" style="display: ${_getValorVisibility()};">
             ${VALOR_OPTIONS}
           </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="saidas-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
@@ -391,6 +391,12 @@ function _addTurismo() {
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
+  
+          <div class="nice-form-group">
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="turismo-website-${i}" type="url" placeholder="https://www.visitlasvegas.com/listing/welcome-to-fabulous-las-vegas-sign/35219/"
+              value="" class="icon-right" />
+          </div>
 
           <div class="nice-form-group">
             <label>Instagram <span class="opcional"> (Opcional)</span></label>
@@ -399,20 +405,14 @@ function _addTurismo() {
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
-            <input id="turismo-website-${i}" type="url" placeholder="https://www.visitlasvegas.com/listing/welcome-to-fabulous-las-vegas-sign/35219/"
-              value="" class="icon-right" />
-          </div>
-  
-          <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <select id="turismo-regiao-select-${i}" style="display: none;"></select>
+            <select class="editar-select" id="turismo-regiao-select-${i}" style="display: none;"></select>
             <input class="nice-form-group" id="turismo-regiao-${i}" type="text" placeholder="Centro da Cidade" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select id="turismo-valor-${i}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="turismo-valor-${i}" style="display: ${_getValorVisibility()};">
               ${VALOR_OPTIONS}
             </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="turismo-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />
@@ -506,6 +506,13 @@ function _addLojas() {
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
+  
+          <div class="nice-form-group">
+            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <input id="lojas-website-${i}" type="url"
+              placeholder="https://www.premiumoutlets.com/outlet/las-vegas-north" value=""
+              class="icon-right" />
+          </div>
 
           <div class="nice-form-group">
             <label>Instagram <span class="opcional"> (Opcional)</span></label>
@@ -514,21 +521,14 @@ function _addLojas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
-            <input id="lojas-website-${i}" type="url"
-              placeholder="https://www.premiumoutlets.com/outlet/las-vegas-north" value=""
-              class="icon-right" />
-          </div>
-  
-          <div class="nice-form-group">
             <label>Região <span class="opcional"> (Opcional)</span></label>
-            <select id="lojas-regiao-select-${i}" style="display: none;"></select>
+            <select class="editar-select" id="lojas-regiao-select-${i}" style="display: none;"></select>
             <input class="nice-form-group" id="lojas-regiao-${i}" type="text" placeholder="Las Vegas Strip (Norte)" />
           </div>
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select id="lojas-valor-${i}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="lojas-valor-${i}" style="display: ${_getValorVisibility()};">
               ${VALOR_OPTIONS}
             </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lojas-outro-valor-${i}" type="text" placeholder="R$50 - R$100" />

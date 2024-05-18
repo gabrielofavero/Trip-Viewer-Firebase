@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 40    | 32          | 8         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 46    | 30          | 16        |
+| 📈     | Melhoria | M000    | 47    | 30          | 17        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -92,6 +92,7 @@
 - 🏆 **F052:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
+- 📈 **M047:** Trocar mensagens em modal para mensagens em bottomsheet
 
 ## Done
 
