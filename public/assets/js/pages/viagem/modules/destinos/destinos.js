@@ -105,7 +105,7 @@ function _buildDestinoExport(destino, code) {
     data: destino.destinos[code],
     moeda: destino.destinos.moeda,
     valores: CONFIG.destinos.currency[destino.destinos.moeda] || CONFIG.destinos.currency["R$"],
-    notas: CONFIG.destinos.settings.scores,
+    notas: CONFIG.destinos.notas,
     categoria: code,
     descricao: CONFIG.destinos.destinos[code],
   }

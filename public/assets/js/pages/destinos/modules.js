@@ -36,42 +36,8 @@ function _getNotaClass (item) {
     }
 }
 
-function _getNotaText(item, isLineup) {
-    return isLineup ? _getNotaTextLineup(item) : _getNotaTextGeneric(item);
-}
-
-function _getNotaTextGeneric(item) {
-    switch (item.nota) {
-        case "5":
-            return "Passeio Obrigatório!";
-        case "4":
-            return "Ótimo Passeio";
-        case "3":
-            return "Passeio Razoável";
-        case "2":
-            return "Passeio com Baixa Prioridade";
-        case "1":
-            return "Passeio Não Recomendado";
-        default:
-            return "Passeio Sem Avaliação"
-    }
-}
-
-function _getNotaTextLineup(item) {
-    switch (item.nota) {
-        case "5":
-            return "Obrigatório Assistir";
-        case "4":
-            return "Recomendado Assistir";
-        case "3":
-            return "Opção Razoável para Assistir";
-        case "2":
-            return "Assistir apenas se sobrar tempo";
-        case "1":
-            return "Não Assistir";
-        default:
-            return "Prioridade não definida"
-    }
+function _getNotaText(item) {
+    return DESTINO.notas[item.nota] || DESTINO.notas['default'] || "Não Avaliado";
 }
 
 // Links

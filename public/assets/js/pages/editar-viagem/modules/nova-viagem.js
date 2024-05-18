@@ -497,8 +497,8 @@ function _addLineup() {
             <option value="5">5 - Artista Excelente!</option>
             <option value="4">4 - Ótimo Artista</option>
             <option value="3">3 - Artista Razoável</option>
-            <option value="2">2 - Artista com Baixa Prioridade</option>
-            <option value="1">1 - Artista Não Recomendado</option>
+            <option value="2">2 - Baixa Prioridade</option>
+            <option value="1">1 - Não Recomendado</option>
             </select>
           </div>
   

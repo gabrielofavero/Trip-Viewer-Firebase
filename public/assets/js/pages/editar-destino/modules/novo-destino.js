@@ -83,14 +83,14 @@ function _addRestaurantes() {
           </div>
   
           <div class="nice-form-group">
-          <label>Avaliação <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="restaurantes-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="5">5 - Passeio Obrigatório!</option>
-              <option value="4">4 - Ótimo Passeio</option>
-              <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Só se sobrar tempo</option>
-              <option value="1">1 - Não Compensa</option>
+              <option value="5">5 - Restaurante Obrigatório!</option>
+              <option value="4">4 - Ótimo Restaurante</option>
+              <option value="3">3 - Restaurante Razoável</option>
+              <option value="2">2 - Baixa Prioridade</option>
+              <option value="1">1 - Não Recomendado</option>
             </select>
           </div>
   
@@ -198,14 +198,14 @@ function _addLanches() {
           </div>
   
           <div class="nice-form-group">
-          <label>Avaliação <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="lanches-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="5">5 - Passeio Obrigatório!</option>
-              <option value="4">4 - Ótimo Passeio</option>
-              <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Só se sobrar tempo</option>
-              <option value="1">1 - Não Compensa</option>
+              <option value="5">5 - Lanche Obrigatório!</option>
+              <option value="4">4 - Ótimo Lanche</option>
+              <option value="3">3 - Lanche Razoável</option>
+              <option value="2">2 - Baixa Prioridade</option>
+              <option value="1">1 - Não Recomendado</option>
             </select>
           </div>
   
@@ -312,14 +312,14 @@ function _addSaidas() {
           </div>
   
           <div class="nice-form-group">
-          <label>Avaliação <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="saidas-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="5">5 - Passeio Obrigatório!</option>
-              <option value="4">4 - Ótimo Passeio</option>
-              <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Só se sobrar tempo</option>
-              <option value="1">1 - Não Compensa</option>
+              <option value="5">5 - Saída Obrigatória!</option>
+              <option value="4">4 - Ótima Saída</option>
+              <option value="3">3 - Saída Razoável</option>
+              <option value="2">2 - Baixa Prioridade</option>
+              <option value="1">1 - Não Recomendado</option>
             </select>
           </div>
   
@@ -427,14 +427,14 @@ function _addTurismo() {
           </div>
   
           <div class="nice-form-group">
-          <label>Avaliação <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="turismo-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="5">5 - Passeio Obrigatório!</option>
-              <option value="4">4 - Ótimo Passeio</option>
-              <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Só se sobrar tempo</option>
-              <option value="1">1 - Não Compensa</option>
+              <option value="5">5 - Turismo Obrigatório!</option>
+              <option value="4">4 - Ótimo Turismo</option>
+              <option value="3">3 - Turismo Razoável</option>
+              <option value="2">2 - Baixa Prioridade</option>
+              <option value="1">1 - Não Recomendado</option>
             </select>
           </div>
         </div>
@@ -542,14 +542,14 @@ function _addLojas() {
           </div>
   
           <div class="nice-form-group">
-          <label>Avaliação <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="lojas-nota-${i}">
               <option value="?">Desconhecido</option>
-              <option value="5">5 - Passeio Obrigatório!</option>
-              <option value="4">4 - Ótimo Passeio</option>
-              <option value="3">3 - Passeio Razoável</option>
-              <option value="2">2 - Passeio com Baixa Prioridade</option>
-              <option value="1">1 - Passeio Não Recomendado</option>
+              <option value="5">5 - Loja Obrigatória!</option>
+              <option value="4">4 - Ótima Loja</option>
+              <option value="3">3 - Loja Razoável</option>
+              <option value="2">2 - Baixa Prioridade</option>
+              <option value="1">1 - Não Recomendado</option>
             </select>
           </div>
   
