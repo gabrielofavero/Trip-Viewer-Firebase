@@ -66,7 +66,7 @@ function _loadDestinosHTML() {
                                           <div class="links-container" style="display: ${_getLinksContainerVisibility(item, isLineup)}">
                                               <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? 'block' : 'none'}"${_getLinkOnClick(item, 'mapa')}></i>
                                               <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"${_getLinkOnClick(item, 'instagram')}></i>
-                                              <i class="iconify link" data-icon="tabler:world" style="display: ${item.link ? 'block' : 'none'}"${_getLinkOnClick(item, 'link')}></i>
+                                              <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? 'block' : 'none'}"${_getLinkOnClick(item, 'website')}></i>
                                           </div>
                                       </div>
                                       <div class="destinos-text">
