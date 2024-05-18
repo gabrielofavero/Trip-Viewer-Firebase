@@ -19,11 +19,14 @@
 
 ## Doing
 
+- 🐞 **B037:** Correçõe visuais em páginas de editar
+  - Barra de scroll  não ser clicável
+  - Botão de salvar não acessível no mobile (navegador)
+
 ## To-Do
 
 ### Prioridade Alta
 
-- 🐞 **B037:** Correção de Barra de scroll em páginas de editar não ser clicável
 - 🐞 **B038:** Correção de mensagem customizada de erro de carregamento de listas não aparecer (index.html)
 
 ### Prioridade Média
