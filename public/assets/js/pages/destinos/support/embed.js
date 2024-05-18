@@ -46,6 +46,8 @@ function _getEmbed(link) {
     let tipo = "";
     let conteudo = "";
 
+    if (!link) return "";
+    
     if (link.includes("youtu.be/") || link.includes("youtube.com")) {
         tipo = "youtube";
         conteudo = _getVideoEmbedYoutube(link);
