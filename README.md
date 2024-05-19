@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 40    | 32          | 8         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 47    | 30          | 17        |
+| 📈     | Melhoria | M000    | 48    | 30          | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -19,24 +19,28 @@
 
 ## Doing
 
-- 🐞 **B037:** Correçõe visuais em páginas de editar
-  - Barra de scroll  não ser clicável
-  - Botão de salvar não acessível no mobile (navegador)
+- 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
+- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
+- 📈 **M019:** Módulo de programação mais personalizável
+  - *Incluir Horário*
+  - *Melhorar Título*
+  - *Permitir adicionar itens*
+- 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
+  - *O título completo apenas aparece quando o usuário edita o input (listener)*
 
 ## To-Do
 
 ### Prioridade Alta
 
+- 🐞 **B037:** Correções visuais em páginas de editar
+  - Barra de scroll  não ser clicável
+  - Botão de salvar não acessível no mobile (navegador)
 - 🐞 **B038:** Correção de mensagem customizada de erro de carregamento de listas não aparecer (index.html)
 
 ### Prioridade Média
 
 - ⚔️ **E022:** Funções de migrações (Cloud Functions)
 - 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
-- 📈 **M019:** Módulo de programação mais personalizável
-  - *Incluir Horário*
-  - *Melhorar Título*
-  - *Permitir adicionar itens*
 - 📈 **M020:** Módulo de transporte mais automatizado
   - *Se user clicou em volta e não há dados, reverte tudo da ida*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
@@ -54,7 +58,6 @@
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
   - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
-- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 - ⚔️🚦 **E016:** Novo Front-End: Destinos.html
   - *Aguardando Guilherme desenvolver nova versão do template*
 - ⚔️🚦**E017:** Novo Front-End: Viagens.html
@@ -85,8 +88,6 @@
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
-- 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
-  - *O título completo apenas aparece quando o usuário edita o input (listener)*
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
