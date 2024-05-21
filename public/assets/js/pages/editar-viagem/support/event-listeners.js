@@ -2,7 +2,7 @@
 function _loadEventListeners() {
     // Inputs
     getID('inicio').addEventListener('input', () => _inicioListenerAction());
-    getID('fim').addEventListener('change', () => _loadProgramacao());
+    getID('fim').addEventListener('change', () => _reloadProgramacao());
     getID('logo-tamanho').addEventListener('input', (event) => _formatAltura(event.target.value));
 
     // Botões
@@ -67,6 +67,27 @@ function _loadHospedagemListeners(i) {
     getID(`link-hospedagens-${i}`).addEventListener('change', () => _validateImageLink(`link-hospedagens-${i}`));
 }
 
+function _loadInnerProgramacaoListeners(i) {
+    const id = `inner-programacao-${i}`;
+    const childs = _getChildIDs(id);
+
+    for (const child of childs) {
+        const index = child.replace(`atividade-box-`, '');
+        const inicio = getID(`inicio-${index}`);
+        inicio.addEventListener('change', () => {
+            if (inicio.value) {
+                const hours = parseInt(inicio.value.split(':')[0]);
+                const turno = hours < 6 ? 'madrugada' : hours < 12 ? 'manha' : hours < 18 ? 'tarde' : 'noite';
+                getID(`turno-${index}`).value = turno;
+              } else {
+                getID(`turno-${index}`).value = 'livre';
+              }
+        });
+    }
+
+
+}
+
 function _loadLineupListeners(i) {
     // Dynamic Select: Gênero
     getID(`lineup-genero-select-${i}`).addEventListener('change', () => _lineupGeneroSelectAction());
@@ -118,7 +139,6 @@ function _loadGaleriaListeners(i) {
 
 // Actions
 function _inicioListenerAction() {
-    _loadProgramacao();
     const nextDay = _getNextDay(getID('inicio').value);
     if (nextDay) {
         getID('fim').value = nextDay;

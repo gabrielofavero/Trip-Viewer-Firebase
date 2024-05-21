@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 40    | 32          | 8         |
+| 🐞     | Bug      | B000    | 41    | 33          | 8         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 48    | 30          | 18        |
+| 📈     | Melhoria | M000    | 49    | 30          | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -19,19 +19,20 @@
 
 ## Doing
 
-- 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
-- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 - 📈 **M019:** Módulo de programação mais personalizável
   - *Incluir Horário*
   - *Melhorar Título*
   - *Permitir adicionar itens*
-- 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
-  - *O título completo apenas aparece quando o usuário edita o input (listener)*
 
 ## To-Do
 
 ### Prioridade Alta
 
+- 🐞 **B041:** Correção salvamento de viagens retornar NaN na data da programação
+  - *O título completo apenas aparece quando o usuário edita o input (listener)*
+- 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
+- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
+- 📈 **M049:** Adição de dark-mode para zoom de hospedagens/galerias
 - 🐞 **B037:** Correções visuais em páginas de editar
   - Barra de scroll  não ser clicável
   - Botão de salvar não acessível no mobile (navegador)
@@ -135,6 +136,7 @@
 - 🐞 **B040:** Remoção de função de arrastamento de accordion
   - *Não funcionava como o esperado no Desktop e não funcionava no Mobile*
   - *Reimplementar posteriormente*
+- 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
 
 ### Abril 2024
 

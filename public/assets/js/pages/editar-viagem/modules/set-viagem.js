@@ -541,6 +541,7 @@ async function _setViagem() {
 
     if (!_isModalOpen()) {
         const viagem = await _buildTripObject();
+        FIRESTORE_NEW_DATA = viagem.data;
         let result;
 
         if (DOCUMENT_ID && viagem) {
@@ -549,8 +550,7 @@ async function _setViagem() {
             result = await _newUserObjectDB(viagem.data, "viagens");
             DOCUMENT_ID = result?.data?.id;
         }
-
-        FIRESTORE_NEW_DATA = viagem.data;
+        
         let message = result.message;
 
         if (result.success == true) {

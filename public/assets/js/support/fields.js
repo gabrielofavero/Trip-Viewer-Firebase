@@ -136,19 +136,19 @@ function _validateLink(id) {
     const link = div.value;
 
     if (_isHttp(link)) return;
-    
+
     _closeAllSelects();
     div.value = '';
 
-    _displayMessage('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>', 
-                    `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`);
+    _displayMessage('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>',
+        `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`);
 }
 
 function _validateMapLink(id) {
     const div = getID(id);
     const link = div.value;
 
-    const isGoogleMaps = (link.includes('google') && link.includes('maps')) || link.includes('goo.gl/maps') ||  link.includes('maps.app.goo.gl');
+    const isGoogleMaps = (link.includes('google') && link.includes('maps')) || link.includes('goo.gl/maps') || link.includes('maps.app.goo.gl');
     const isAppleMaps = link.includes('maps.apple.com');
 
     if (!link || (_isHttp(link) && (isGoogleMaps || isAppleMaps))) return;

@@ -170,32 +170,32 @@ async function _uploadHospedagem(uploadItens) {
 }
 
 // Programação
-function _updateProgramacaoTitle(i, key) {
-    if (!PROGRAMACAO) return;
+function _updateProgramacaoTitle(j) {
+    const div = getID(`programacao-title-${j}`);
+    const titulo = getID(`programacao-inner-title-${j}`).value;
+    const data = DATAS[j-1]
+    const dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
+    div.innerText = _getProgramacaoTitle(dataFormatada, titulo);
+}
 
-    const title = getID(`programacao-title-${i}`);
+function _getProgramacaoTitle(dataFormatada, titulo='') {
+    if (titulo) return `${titulo}: ${dataFormatada}`;
+    else return dataFormatada;
+}
 
-    if (!title) return;
+function _deleteInnerProgramacao(j, k) {
+    const div = getID(`atividade-box-${j}-${k}`);
+    div.parentNode.removeChild(div);
+}
 
-    if (!key) {
-        const innerText = title.innerText;
-        key = innerText.includes(': ') ? innerText.split(': ')[1].replace(/\//g, '') : innerText.replace(/\//g, '');
-    }
+function _reloadProgramacao() {
+    // Build programacao module
 
-    if (!PROGRAMACAO[key]) return;
+    // limpa div
 
-    const data = PROGRAMACAO[key].data;
-    const innerTitle = getID(`programacao-inner-title-${i}`).value;
-    let titulo = PROGRAMACAO[key].titulo
+    // função do load
 
-
-    if (innerTitle && innerTitle != titulo) {
-        titulo = innerTitle;
-    }
-
-    if (titulo && data) {
-        title.innerText = `${titulo}: ${data}`;
-    }
+    // re-adiciona valores para datas existentes
 }
 
 // Lineup

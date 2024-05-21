@@ -1,4 +1,5 @@
 var DESTINOS = [];
+var DATAS = [];
 
 function _loadNewTrip() {
   _loadDadosBasicosNewTrip();
@@ -18,88 +19,143 @@ function _loadProgramacao() {
   const inicio = getID('inicio').value;
   const fim = getID('fim').value;
 
-  const dates = _getArrayOfFormattedDates(inicio, fim);
+  DATAS = _getArrayOfDates(inicio, fim);
 
-  const box = getID('programacao-box');
-  box.innerHTML = '';
+  const programacaoBox = getID('programacao-box');
+  programacaoBox.innerHTML = '';
 
-  var newDates = [];
+  for (let j = 1; j <= DATAS.length; j++) {
+    const data = DATAS[j - 1];
+    let dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
 
-  for (let i = 1; i <= dates.length; i++) {
-    const date = _changeFormat(dates[i - 1], 'dd/mm/yyyy');
-    let title = date;
-
-    if (PROGRAMACAO && PROGRAMACAO[i] && PROGRAMACAO[i].titulo) {
-      title = `${PROGRAMACAO[i].titulo}: ${date}`;
-    }
-
-    box.innerHTML += `
-      <div id="programacao-${i}" class="accordion-item accordion-programacao" >
-      <h2 class="accordion-header" id="heading-programacao-${i}">
-        <button id="programacao-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-programacao-${i}" aria-expanded="false"
-          aria-controls="collapse-programacao-${i}">
-          ${title}
+    programacaoBox.innerHTML += `
+      <div id="programacao-${j}" class="accordion-item accordion-programacao" >
+      <h2 class="accordion-header" id="heading-programacao-${j}">
+        <button id="programacao-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-programacao-${j}" aria-expanded="false"
+          aria-controls="collapse-programacao-${j}">
+          ${dataFormatada}
         </button>
       </h2>
-      <div id="collapse-programacao-${i}" class="accordion-collapse collapse"
-        aria-labelledby="heading-programacao-${i}" data-bs-parent="#programacao-box">
+      <div id="collapse-programacao-${j}" class="accordion-collapse collapse"
+        aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
         <div class="accordion-body">
           <h1 class="item-title"></h1>
 
           <div class="nice-form-group">
             <label>Local / Título <span class="opcional"> (Opcional)</span></label>
-            <input id="programacao-inner-title-${i}" type="text" placeholder="São Paulo" />
+            <input id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" />
           </div>
-  
-          <div class="nice-form-group">
-            <label>Manhã</label>
-            <input id="manha-1-${i}" type="text" placeholder="Fazer isso" /><br><br>
-            <input id="manha-2-${i}" type="text" placeholder="Depois aquilo" /><br><br>
-            <input id="manha-3-${i}" type="text" placeholder="Por fim, isso" />
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Tarde</label>
-            <input id="tarde-1-${i}" type="text" placeholder="Fazer isso" /><br><br>
-            <input id="tarde-2-${i}" type="text" placeholder="Depois aquilo" /><br><br>
-            <input id="tarde-3-${i}" type="text" placeholder="Por fim, isso" />
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Noite</label>
-            <input id="noite-1-${i}" type="text" placeholder="Fazer isso" /><br><br>
-            <input id="noite-2-${i}" type="text" placeholder="Depois aquilo" /><br><br>
-            <input id="noite-3-${i}" type="text" placeholder="Por fim, isso" />
+
+          <div class="inner-programacao" id="inner-programacao-${j}"></div>
+
+          <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block;">
+            <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_addInnerProgramacao(${j})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Programação
+            </button>
           </div>
 
         </div>
       </div>
     </div>
       `
-    newDates.push(_removeSlashesFromDate(date));
-  }
-
-  for (let i = 1; i <= newDates.length; i++) {
-    const formatted = newDates[i - 1];
-    if (PROGRAMACAO && PROGRAMACAO[i, formatted]) {
-      _updateProgramacaoTitle(i, formatted)
-      getID(`programacao-inner-title-${i}`).value = PROGRAMACAO[formatted].titulo || '';
-      getID(`manha-1-${i}`).value = PROGRAMACAO[formatted][`manha-1`] || '';
-      getID(`manha-2-${i}`).value = PROGRAMACAO[formatted][`manha-2`] || '';
-      getID(`manha-3-${i}`).value = PROGRAMACAO[formatted][`manha-3`] || '';
-      getID(`tarde-1-${i}`).value = PROGRAMACAO[formatted][`tarde-1`] || '';
-      getID(`tarde-2-${i}`).value = PROGRAMACAO[formatted][`tarde-2`] || '';
-      getID(`tarde-3-${i}`).value = PROGRAMACAO[formatted][`tarde-3`] || '';
-      getID(`noite-1-${i}`).value = PROGRAMACAO[formatted][`noite-1`] || '';
-      getID(`noite-2-${i}`).value = PROGRAMACAO[formatted][`noite-2`] || '';
-      getID(`noite-3-${i}`).value = PROGRAMACAO[formatted][`noite-3`] || '';
-    }
   }
 
   for (const child of _getChildIDs('programacao-box')) {
-    const i = child.split('-')[child.split('-').length - 1];
-    getID(`programacao-inner-title-${i}`).addEventListener('change', () => _updateProgramacaoTitle(i))
+    const j = child.split('-')[child.split('-').length - 1];
+    getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
+  }
+}
+
+function _addInnerProgramacao(j, k) {
+  const id = `inner-programacao-${j}`;
+  const container = getID(id);
+
+  const storedInputs = _storeInnerProgramacao(j);
+
+  if (!k) {
+    const childs = _getChildIDs(id);
+    const lastChild = childs[childs.length - 1];
+    k = lastChild ? parseInt(lastChild.split('-')[lastChild.split('-').length - 1]) + 1 : 1;
+  }
+
+  // Adiciona o novo HTML
+  container.innerHTML += `<div class="atividade" id="atividade-box-${j}-${k}">
+                            <div class="nice-form-group">
+                              <label>Atividade</label>
+                              <input required class="nice-form-group" id="atividade-${j}-${k}" type="text" placeholder="Ir para..." />
+                            </div>
+
+                            <div class="side-by-side-box">
+                              <div class="nice-form-group side-by-side">
+                                <label>Início <span class="opcional"> (Opcional)</span></label>
+                                <input class="flex-input" id="inicio-${j}-${k}" type="time">
+                              </div>
+
+                              <div class="nice-form-group side-by-side">
+                                <label>Fim <span class="opcional"> (Opcional)</span></label>
+                                <input class="flex-input" id="fim-${j}-${k}" type="time">
+                              </div>
+                            </div>
+
+                            <div class="nice-form-group editar-select">
+                              <label>Turno</label>
+                              <select id="turno-${j}-${k}">
+                                <option value="livre">Livre</option>
+                                <option value="madrugada">Madrugada</option>
+                                <option value="manha">Manhã</option>
+                                <option value="tarde">Tarde</option>
+                                <option value="noite">Noite</option>
+                              </select>
+                            </div>
+
+                            <div class="deletar-box-programacao">
+                              <button id="remove-atividade-${j}-${k}" class="btn btn-secondary inner-button" onclick="_deleteInnerProgramacao(${j}, ${k})">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
+                              </svg>
+                              </button>
+                            </div>
+                          </div>`;
+
+  _restoreInnerProgramacao(storedInputs);
+  _loadInnerProgramacaoListeners(j);
+}
+
+function _storeInnerProgramacao(j) {
+  const childs = _getChildIDs(`inner-programacao-${j}`);
+
+  let storedInputs = {};
+  
+  for (const child of childs) {
+    let result = {};
+    const index = child.replace('atividade-box-', '');
+    result[`atividade-${index}`] = getID(`atividade-${index}`).value;
+    result[`inicio-${index}`] = getID(`inicio-${index}`).value;
+    result[`fim-${index}`] = getID(`fim-${index}`).value;
+    result[`turno-${index}`] = getID(`turno-${index}`).value;
+    storedInputs[child] = result;
+  }
+
+  return storedInputs;
+}
+
+function _restoreInnerProgramacao(storedInputs) {
+  for (const id in storedInputs) {
+    if (getID(id)) {
+      const inputs = storedInputs[id];
+      for (const input in inputs) {
+        getID(input).value = inputs[input];
+      }
+    }
   }
 }
 
@@ -373,7 +429,7 @@ function _addDestinos() {
 
   $('#com-destinos').append(`
     <div class="nice-form-group" id="com-destinos-${i}">
-      <select id="select-destinos-${i}">
+      <select id="select-destinos-${i}" class="editar-select">
         <option value="">Selecione um Destino</option>
       </select>
 

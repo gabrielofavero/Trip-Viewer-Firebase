@@ -1590,6 +1590,12 @@ details summary::-webkit-details-marker {
   text-align: right;
 }
 
+.deletar-box-programacao {
+  margin: 4px;
+  margin-top: 30px;
+  text-align: right;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -1791,4 +1797,9 @@ details summary::-webkit-details-marker {
 
 .editar-select {
   height: 48px !important;
+}
+
+.atividade {
+  margin-top: 48px;
+  margin-bottom: 48px;
 }

@@ -11,11 +11,6 @@ async function _loadTripData(FIRESTORE_DATA) {
         _loadLineupData(FIRESTORE_DATA);
         _loadGaleriaData(FIRESTORE_DATA);
 
-        for (const child of _getChildIDs('programacao-box')) {
-            const i = child.split('-')[child.split('-').length - 1];
-            _updateProgramacaoTitle(i);
-        }
-
     } catch (error) {
         _displayErrorMessage(error);
         throw error;
@@ -323,54 +318,42 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
         getID('habilitado-programacao').checked = true;
         getID('habilitado-programacao-content').style.display = 'block';
     }
+
     _loadProgramacao();
 
-    let i = 1;
+    let j = 1;
 
-    while (getID(`programacao-title-${i}`)) {
-        let prog = {};
-        const j = i - 1;
-        let progTitle = j;
+    while (getID(`programacao-title-${j}`)) {
+        let diaDeProgramacao = {};
+        const i = j - 1;
+        const firestoreData = FIRESTORE_DATA.programacoes.programacao[i].data;
 
-        const data = FIRESTORE_DATA.programacoes.programacao[j]?.data;
-        if (data) {
-            const formatted = _formatFirestoreDate(data, 'dd/mm/yyyy');
-            prog.data = formatted;
-            progTitle = _removeSlashesFromDate(formatted);
-        }
+        if (firestoreData) {
+            const jsDate = _convertFromFirestoreDate(firestoreData);
+            const diaDaSemana = _jsDateToDayOfTheWeekAndDateTitle(jsDate);
 
-        const titulo = FIRESTORE_DATA.programacoes.programacao[j]?.titulo;
-        if (titulo) {
-            getID(`programacao-inner-title-${i}`).value = titulo;
-            prog.titulo = titulo;
-        }
-
-        const manha = FIRESTORE_DATA.programacoes.programacao[j]?.manha;
-        if (manha && manha.length > 0) {
-            for (let k = 1; k <= manha.length; k++) {
-                getID(`manha-${k}-${i}`).value = manha[k - 1];
-                prog[`manha-${k}`] = manha[k - 1];
+            const titulo = FIRESTORE_DATA.programacoes.programacao[i]?.titulo;
+            if (titulo) {
+                getID(`programacao-inner-title-${j}`).value = titulo;
+                diaDeProgramacao.titulo = titulo;
             }
-        }
 
-        const tarde = FIRESTORE_DATA.programacoes.programacao[j]?.tarde;
-        if (tarde && tarde.length > 0) {
-            for (let k = 1; k <= tarde.length; k++) {
-                getID(`tarde-${k}-${i}`).value = tarde[k - 1];
-                prog[`tarde-${k}`] = tarde[k - 1];
-            }
-        }
+            getID(`programacao-title-${j}`).innerText = _getProgramacaoTitle(diaDaSemana, titulo);
 
-        const noite = FIRESTORE_DATA.programacoes.programacao[j]?.noite;
-        if (noite && noite.length > 0) {
-            for (let k = 1; k <= noite.length; k++) {
-                getID(`noite-${k}-${i}`).value = noite[k - 1];
-                prog[`noite-${k}`] = noite[k - 1];
-            }
-        }
+            // const atividades = FIRESTORE_DATA.programacoes.programacao[j]?.atividades;
+            // if (atividades && atividades.length > 0) {
+            //     for (let k = 1; k <= manha.length; k++) {
+            //         _addInnerProgramacao(j, k);
+            //         getID(`atividade-${j}-${k}`).value = atividades[k - 1].atividade;
+            //         getID(`inicio-${j}-${k}`).value = atividades[k - 1].atividade;
+            //         getID(`fim-${j}-${k}`).value = atividades[k - 1].atividade;
+            //         getID(`turno-${j}-${k}`).value = atividades[k - 1].atividade;
+            //     }
+            // }
 
-        PROGRAMACAO[progTitle] = prog;
-        i++;
+            _migration(FIRESTORE_DATA, j);
+        }
+        j++;
     }
 }
 
@@ -528,4 +511,28 @@ function _formatAltura(value) {
         getID('logo-tamanho').value = value;
     }
     getID('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
+}
+
+// Migração
+
+function _migration(FIRESTORE_DATA, j) {
+
+    const manha = FIRESTORE_DATA.programacoes.programacao[j-1]?.manha;
+    const tarde = FIRESTORE_DATA.programacoes.programacao[j-1]?.tarde;
+    const noite = FIRESTORE_DATA.programacoes.programacao[j-1]?.noite;
+
+    const manhaSize = manha?.length || 0;
+    const tardeSize = tarde?.length || 0;
+    const noiteSize = noite?.length || 0;
+
+    for (let k = 1; k <= manhaSize + tardeSize + noiteSize; k++) {
+        const tipo = (k <= manhaSize) ? 'manha' : (k <= manhaSize + tardeSize) ? 'tarde' : 'noite';
+        const arr = (tipo === 'manha') ? manha : (tipo === 'tarde') ? tarde : noite;
+        const atividade = arr[k - 1] || '';
+        if (atividade) {
+            _addInnerProgramacao(j, k);
+            getID(`atividade-${j}-${k}`).value = atividade;
+            getID(`turno-${j}-${k}`).value = tipo;
+        }
+    }
 }

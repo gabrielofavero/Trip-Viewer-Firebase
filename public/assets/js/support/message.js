@@ -117,6 +117,10 @@ function _closeDisplayMessage() {
   }
 }
 
+function _overrideErrorMessage() {
+  _closeDisplayMessage();
+}
+
 // Funções de Suporte
 function _getCloseIcon() {
   const iconContainer = document.createElement('div');

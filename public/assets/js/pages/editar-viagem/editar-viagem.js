@@ -9,8 +9,6 @@ var changedOnce = false;
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
-var PROGRAMACAO = {};
-
 var GALERIA_CATEGORIAS = [];
 var LINEUP_GENEROS = [];
 var LINEUP_PALCOS = [];

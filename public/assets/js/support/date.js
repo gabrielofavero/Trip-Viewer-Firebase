@@ -126,14 +126,14 @@ function _getNextDay(inputDate) {
     return nextDay;
 }
 
-function _getArrayOfFormattedDates(formattedStart, formattedEnd, format = 'yyyy-mm-dd') {
+function _getArrayOfDates(formattedStart, formattedEnd) {
     const start = _formattedDateToDate(formattedStart);
     const end = _formattedDateToDate(formattedEnd);
 
     const dates = [];
     let currentDate = start;
     while (currentDate <= end) {
-        dates.push(_jsDateToDate(currentDate, format));
+        dates.push(currentDate);
         currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
     }
     return dates;
@@ -200,4 +200,35 @@ function _getTimeBetweenDates(startDate, endDate) {
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
     return `${formattedHours}:${formattedMinutes}`;
+}
+
+function _dayToDayOfWeekText(day) {
+    return ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][day];
+}
+
+function _monthToText(month) {
+    return ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
+        'Setembro', 'Outubro', 'Novembro', 'Dezembro'][month];
+}
+
+function _jsDateToDayOfTheWeekAndDateTitle(jsDate, showYear = false) {
+    const dia = jsDate.getDate();
+    const mes = jsDate.getMonth();
+    const ano = showYear ? ` de ${jsDate.getFullYear()}` : '';
+    const diaDaSemana = _dayToDayOfWeekText(jsDate.getDay());
+    return `${diaDaSemana}, ${dia} de ${_monthToText(mes)}${ano}`;
+}
+
+function _firestoreDateToKey(firestoreDate) {
+    const jsDate = _convertFromFirestoreDate(firestoreDate);
+    return _jsDateToKey(jsDate);
+}
+
+function _jsDateToKey(jsDate) {
+    const inputDate = _jsDateToDate(jsDate, 'yyyy-mm-dd');
+    return _inputDateToKey(inputDate);
+}
+
+function _inputDateToKey(inputDate) {
+    return inputDate.split("-").join("");
 }
