@@ -239,36 +239,52 @@ a:hover {
   border: 2px solid #404040;
 }
 
-.portfolio #portfolio-flters {
+#portfolio-flters {
   background: #303030;
 }
 
-.portfolio #portfolio-flters li {
+#portfolio-flters li {
   color: #F2F2F2;
 }
 
-.portfolio #portfolio-flters li:hover,
-.portfolio #portfolio-flters li.filter-active {
+#portfolio-flters li:hover,
+#portfolio-flters li.filter-active {
   color: #7f75b6;
 }
 
-.portfolio .portfolio-wrap::before {
+.portfolio-wrap::before {
   background: rgba(48, 48, 48, 0.7);
 }
 
-.portfolio .portfolio-wrap .portfolio-info h4 {
+.portfolio-wrap .portfolio-info::before {
+  border-top: 3px solid #4F5051;
+  border-left: 3px solid #4F5051;
+
+}
+
+.portfolio-wrap .portfolio-info::after {
+  border-bottom: 3px solid #4F5051;
+  border-right: 3px solid #4F5051;
+}
+
+.portfolio-wrap .portfolio-info h4 {
+  color: #d7dce1;
+}
+
+
+.portfolio-wrap .portfolio-info h4 {
   color: #F2F2F2;
 }
 
-.portfolio .portfolio-wrap .portfolio-info p {
+.portfolio-wrap .portfolio-info p {
   color: #F2F2F2;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a {
+.portfolio-wrap .portfolio-links a {
   color: #F2F2F2;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a:hover {
+.portfolio-wrap .portfolio-links a:hover {
   color: #7f75b6;
 }
 

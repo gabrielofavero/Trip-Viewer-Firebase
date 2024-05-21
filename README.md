@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 33          | 8         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 50    | 31         | 19        |
+| 📈     | Melhoria | M000    | 50    | 32         | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -32,7 +32,6 @@
   - *O título completo apenas aparece quando o usuário edita o input (listener)*
 - 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 - 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
-- 📈 **M049:** Adição de dark-mode para zoom de hospedagens/galerias
 - 🐞 **B037:** Correções visuais em páginas de editar
   - Barra de scroll  não ser clicável
   - Botão de salvar não acessível no mobile (navegador)
@@ -140,6 +139,7 @@
 - 📈 **M050:** Melhoria no módulo de destinos (editar)
   - *Troca de selects por check-boxes*
   - *Função de busca*
+- 📈 **M049:** Adição de dark-mode para zoom de hospedagens/galerias
 
 ### Abril 2024
 
