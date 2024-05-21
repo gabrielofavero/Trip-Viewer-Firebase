@@ -196,12 +196,10 @@ function _loadModules() {
   if (FIRESTORE_DATA.modulos.programacao) {
     CALL_SYNC.push(_loadCalendar);
     CALL_SYNC.push(_loadScheduleCalendar);
-    getID("calendario-credit").style.display = "inline";
   } else {
     getID("scheduleCalendarNav").innerHTML = "";
     getID("scheduleCalendar").innerHTML = "";
     getID("scheduleCalendar").style.display = "none";
-    getID("calendario-credit").style.display = "none";
   }
 
   // Destinos

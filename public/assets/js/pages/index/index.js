@@ -155,7 +155,7 @@ async function _loadUserDataList(type) {
 
   let timer = setInterval(() => {
     segundos++;
-    if (segundos >= 10) {
+    if (segundos >= 8) {
       clearInterval(timer);
       preloader.style.display = 'none';
       if (semDados.innerHTML === '') {

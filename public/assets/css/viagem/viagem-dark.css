@@ -99,8 +99,8 @@ a:hover {
   background-color: #7f75b6;
 }
 
-#hero:before {
-  background: rgba(48, 48, 48, 0.8);
+#hero {
+  background: url("https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Fbackgrounds%2Fhome-dark.jpg?alt=media&token=be82fea2-a1fb-4012-80e3-f3c9d93b2e85") top center no-repeat;
 }
 
 #hero h1 {

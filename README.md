@@ -7,7 +7,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 33          | 8         |
-| 🏆     | Feature  | F000    | 53    | 46          | 7         |
+| 🏆     | Feature  | F000    | 53    | 47          | 6         |
 | 📈     | Melhoria | M000    | 50    | 32         | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
@@ -93,7 +93,6 @@
 - 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
 - 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
   - Tanto destinos.html quanto editar-destinos.html
-- 🏆 **F052:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
 - 📈 **M047:** Trocar mensagens em modal para mensagens em bottomsheet
@@ -140,6 +139,7 @@
   - *Troca de selects por check-boxes*
   - *Função de busca*
 - 📈 **M049:** Adição de dark-mode para zoom de hospedagens/galerias
+- 🏆 **F052:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
 
 ### Abril 2024
 
