@@ -226,3 +226,17 @@ details .toggle-code:hover {
 .new {
   fill: #7f75b6;
 }
+
+.inner-programacao-botao
+.inner-programacao-botao-input {
+  background-color: #404040;
+  border: 1px solid #383838;
+  color: #E2E2E2;
+}
+
+.inner-programacao-botao:hover,
+.inner-programacao-botao:focus,
+.inner-programacao-botao-input:hover,
+.inner-programacao-botao-input:focus {
+  background-color: #444444; 
+}

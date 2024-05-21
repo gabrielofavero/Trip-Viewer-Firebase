@@ -392,8 +392,8 @@
             </div>
 
             <div class="nice-form-group">
-              <input id="link-background" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
-                class="icon-right">
+              <input id="link-background" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg"
+                value="" class="icon-right">
             </div>
 
             <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-background">
@@ -416,8 +416,8 @@
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-light" class="imagem-input" type="url" placeholder="https://link.com/imagem.png" value=""
-                class="icon-right">
+              <input id="link-logo-light" class="imagem-input" type="url" placeholder="https://link.com/imagem.png"
+                value="" class="icon-right">
             </div>
 
             <div class="nice-form-group customization-box">
@@ -428,8 +428,8 @@
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-dark" class="imagem-input" type="url" placeholder="https://link.com/imagem.png" value=""
-                class="icon-right">
+              <input id="link-logo-dark" class="imagem-input" type="url" placeholder="https://link.com/imagem.png"
+                value="" class="icon-right">
             </div>
 
             <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-logo">
@@ -459,7 +459,7 @@
           </div>
 
           <div class="transparent-background-color" id="habilitado-cores-content">
-            <div class="side-by-side-box-fixed" id="cores">
+            <div class="side-by-side-color-box" id="cores">
               <div class="nice-form-group side-by-side-fixed">
                 <label>Tema: Claro</label>
                 <input id="claro" type="color" value="#5859a7" />
@@ -555,7 +555,8 @@
               </div>
               <div class="nice-form-group">
                 <input type="radio" name="condensar-transportes" id="separar" />
-                <label for="separar">Separar por categoria<br><span class="opcional">(Ida, Volta, Durante a Viagem)</span></label>
+                <label for="separar">Separar por categoria<br><span class="opcional">(Ida, Volta, Durante a
+                    Viagem)</span></label>
               </div>
             </fieldset>
             <div class="item-box accordion transporte-box" id="transporte-box">
@@ -645,22 +646,11 @@
             <div class="nice-form-group" id="sem-destinos">
               <input type="text" readonly placeholder='Sem destinos cadastrados' />
             </div>
-
             <div id="com-destinos" style="display: none">
-              <div class="nice-form-group" id="com-destinos-1">
-                <select id="select-destinos-1" class="editar-select">
-                  <option value="">Selecione um Destino</option>
-                </select>
-                <div class="deletar-box-destinos">
-                  <button id="destinos-deletar-1" class="btn btn-secondary" onclick="_removeChildDestinosWithValidation(1)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                      <path fill="currentColor" fill-rule="evenodd"
-                        d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                        clip-rule="evenodd"></path>
-                    </svg>
-                  </button>
-                </div>
+              <div class="nice-form-group">
+                <input type="search" id="destinos-search" placeholder="Pesquisar destino cadastrado" value="">
               </div>
+              <fieldset class="nice-form-group destinos-checkboxes" id="destinos-checkboxes"></fieldset>
             </div>
             <div id="todos-destinos-utilizados" class="message-text"> <i class='red'>*</i> Não é possível adicionar
               novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados</div>

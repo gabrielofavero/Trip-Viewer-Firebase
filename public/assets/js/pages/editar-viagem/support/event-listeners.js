@@ -37,6 +37,9 @@ function _loadEventListeners() {
     getID('link-ppt').addEventListener('change', () => _validateLink('link-ppt'));
     getID('link-sheet').addEventListener('change', () => _validateLink('link-sheet'));
     getID('link-vacina').addEventListener('change', () => _validateLink('link-vacina'));
+
+    // Barra de pesquisa em destinos
+    getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
 }
 
 function _loadTransporteListeners(i) {
@@ -65,27 +68,6 @@ function _loadHospedagemListeners(i) {
     // Validação de Link
     getID(`reserva-hospedagens-link-${i}`).addEventListener('change', () => _validateLink(`reserva-hospedagens-link-${i}`));
     getID(`link-hospedagens-${i}`).addEventListener('change', () => _validateImageLink(`link-hospedagens-${i}`));
-}
-
-function _loadInnerProgramacaoListeners(i) {
-    const id = `inner-programacao-${i}`;
-    const childs = _getChildIDs(id);
-
-    for (const child of childs) {
-        const index = child.replace(`atividade-box-`, '');
-        const inicio = getID(`inicio-${index}`);
-        inicio.addEventListener('change', () => {
-            if (inicio.value) {
-                const hours = parseInt(inicio.value.split(':')[0]);
-                const turno = hours < 6 ? 'madrugada' : hours < 12 ? 'manha' : hours < 18 ? 'tarde' : 'noite';
-                getID(`turno-${index}`).value = turno;
-              } else {
-                getID(`turno-${index}`).value = 'livre';
-              }
-        });
-    }
-
-
 }
 
 function _loadLineupListeners(i) {
@@ -189,4 +171,15 @@ function _transporteAdicionarListenerAction() {
     _closeAccordions('transporte');
     _addTransporte();
     _openLastAccordion('transporte');
+}
+
+function _searchDestinosListenerAction() {
+    const childs = _getChildIDs('destinos-checkboxes');
+    const search = getID('destinos-search').value.toLowerCase();
+
+    for (const child of childs) {
+        const j = child.split('-')[child.split('-').length - 1];
+        const label = getID(`check-label-${j}`).innerText.toLowerCase();
+        getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
+    }
 }

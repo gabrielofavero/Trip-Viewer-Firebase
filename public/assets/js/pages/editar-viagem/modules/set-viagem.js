@@ -377,9 +377,7 @@ function _buildProgramacaoObject() {
         const data = `${dataSplit[2]}-${dataSplit[1]}-${dataSplit[0]}`;
         innerResult.data = _formattedDateToFirestoreDate(data);
 
-        innerResult.manha = _getInnerProgramacao('manha', j);
-        innerResult.tarde = _getInnerProgramacao('tarde', j);
-        innerResult.noite = _getInnerProgramacao('noite', j);
+        // Pegar Inner Programacao
 
         result.programacao.push(innerResult);
     }
@@ -387,34 +385,17 @@ function _buildProgramacaoObject() {
     return result;
 }
 
-function _getInnerProgramacao(turno, j) {
-    let array = [];
-    for (let i = 1; i <= 3; i++) {
-        div = getID(`${turno}-${i}-${j}`);
-        value = div ? _returnEmptyIfNoValue(div.value) : "";
-        if (value) {
-            array.push(value);
-        }
-    }
-    return array;
-}
-
 function _buildDestinosArray() {
     let result = [];
-    const childIds = _getChildIDs('com-destinos');
+    const childIds = _getChildIDs('destinos-checkboxes');
 
-    for (var i = 0; i < childIds.length; i++) {
-        const j = parseInt(childIds[i].split("-")[2]);
-        var innerResult = {
-            destinosID: ""
-        }
-
-        divSelectDestinos = getID(`select-destinos-${j}`);
-        valueSelectDestinos = divSelectDestinos ? _returnEmptyIfNoValue(divSelectDestinos.value) : "";
-
-        if (valueSelectDestinos) {
-            innerResult.destinosID = valueSelectDestinos;
-            result.push(innerResult);
+    for (const child of childIds) {
+        const j = child.split("-")[child.split("-").length - 1];
+        const checkbox = getID(`check-${j}`);
+        if (checkbox.checked) {
+            result.push({
+                destinosID: checkbox.value
+            })
         }
     }
 

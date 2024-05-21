@@ -1,7 +1,12 @@
 var MESSAGE_MODAL_OPEN = false;
 const DEFAULT_PROPERTIES = {
   errorData: {},
-  buttons: ['ok']
+  buttons: [{
+    type: 'ok',
+    action: ''
+  }],
+  container: '',
+  buttonBox: ''
 }
 
 // Mensagem Genérica
@@ -16,7 +21,7 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
     _disableScroll();
 
     const container = document.createElement('div');
-    container.className = 'message-container';
+    container.className = properties.container || 'message-container';
 
     const textDiv = document.createElement('div');
     textDiv.className = 'message-text-container';
@@ -43,7 +48,7 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
 
     if (properties.buttons && properties.buttons.length > 0) {
       const buttonBox = document.createElement('div');
-      buttonBox.className = 'button-box';
+      buttonBox.className = properties.buttonBox || 'button-box';
       buttonBox.style.marginTop = '25px';
 
       for (const buttonType of properties.buttons) {
@@ -67,6 +72,21 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
   }
 }
 
+function _displayInputModal(title, content, deleteAction, confirmAction='_closeDisplayMessage();') {
+  let properties = {
+    errorData: {},
+    buttons: [{
+      type: 'apagar',
+      action: deleteAction
+    }, {
+      type: 'confirmar',
+      action: confirmAction
+    }],
+    container: 'input-container',
+    buttonBox: 'button-box-right'
+  }
+  _displayMessage(title, content, properties);
+}
 // Mensagem de Erro
 function _displayErrorMessage(error, customMessage = "", showLocation = true) {
   const title = "Erro no Carregamento 🙁";
@@ -84,10 +104,10 @@ function _displayErrorMessage(error, customMessage = "", showLocation = true) {
     isErrorInstance = true;
   }
 
-  let buttons = ['tryAgain'];
+  let buttons = [{type: 'tryAgain'}];
 
   if (!window.location.href.includes('index.html')) {
-    buttons.push('home');
+    buttons.push({type: 'home'});
   }
 
   const properties = {
@@ -96,7 +116,8 @@ function _displayErrorMessage(error, customMessage = "", showLocation = true) {
       error: isErrorInstance ? error : "",
       showLocation: isErrorInstance ? showLocation : false
     },
-    buttons: buttons
+    buttons: buttons,
+    container: 'message-container'
   }
 
   _displayMessage(title, content, properties);
@@ -174,12 +195,20 @@ function _getErrorElement(errorData) {
 }
 
 // Botões
-function _getButton(buttonType) {
-  switch (buttonType) {
+function _getButton(button) {
+  switch (button.type) {
     case 'tryAgain':
       return _getTryAgainButton();
     case 'home':
       return _getHomeButton();
+    case 'fechar':
+      return _getCloseButton();
+    case 'cancelar':
+      return _getCancelButton();
+    case 'confirmar':
+      return _getConfirmButton(button.action);
+    case 'apagar':
+      return _getDeleteButton(button.action);
     default:
       return _getOkButton();
   }
@@ -219,13 +248,48 @@ function _getTryAgainButton() {
   return button;
 }
 
-function _getOkButton() {
+function _getCloseButton(name='Fechar') {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', '_closeDisplayMessage();')
 
-  button.innerHTML = 'Entendi';
+  button.innerHTML = name;
+  return button;
+}
+
+function _getOkButton() {
+  return _getCloseButton('Entendi');
+}
+
+function _getCancelButton() {
+  return _getCloseButton('Cancelar');
+}
+
+function _getConfirmButton(onclick='_closeDisplayMessage();') {
+  const button = document.createElement('button');
+  button.className = 'btn btn-purple btn-format';
+  button.type = 'submit';
+  button.setAttribute('onclick', onclick)
+
+  button.innerHTML = 'Confirmar';
+
+  return button;
+}
+
+function _getDeleteButton(onclick) {
+  const button = document.createElement('button');
+  button.className = 'btn btn-secondary btn-format';
+  button.type = 'submit';
+  button.setAttribute('onclick', onclick)
+
+  const icon = document.createElement('i');
+  icon.id = 'transporte-nav';
+  icon.className = 'iconify';
+  icon.setAttribute('data-icon', 'mingcute:delete-2-fill');
+
+  button.appendChild(icon);
+  button.innerHTML += ' Apagar';
 
   return button;
 }

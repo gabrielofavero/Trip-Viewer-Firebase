@@ -50,7 +50,7 @@ function _loadProgramacao() {
           <div class="inner-programacao" id="inner-programacao-${j}"></div>
 
           <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block;">
-            <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_addInnerProgramacao(${j})">
+            <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_addInnerProgramacaoButton(${j})">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
@@ -75,104 +75,22 @@ function _loadProgramacao() {
   }
 }
 
-function _addInnerProgramacao(j, k) {
-  const id = `inner-programacao-${j}`;
-  const container = getID(id);
-
-  const storedInputs = _storeInnerProgramacao(j);
-
-  if (!k) {
-    const childs = _getChildIDs(id);
-    const lastChild = childs[childs.length - 1];
-    k = lastChild ? parseInt(lastChild.split('-')[lastChild.split('-').length - 1]) + 1 : 1;
-  }
-
-  // Adiciona o novo HTML
-  container.innerHTML += `<div class="atividade" id="atividade-box-${j}-${k}">
-                            <div class="nice-form-group">
-                              <label>Atividade</label>
-                              <input required class="nice-form-group" id="atividade-${j}-${k}" type="text" placeholder="Ir para..." />
-                            </div>
-
-                            <div class="side-by-side-box">
-                              <div class="nice-form-group side-by-side">
-                                <label>Início <span class="opcional"> (Opcional)</span></label>
-                                <input class="flex-input" id="inicio-${j}-${k}" type="time">
-                              </div>
-
-                              <div class="nice-form-group side-by-side">
-                                <label>Fim <span class="opcional"> (Opcional)</span></label>
-                                <input class="flex-input" id="fim-${j}-${k}" type="time">
-                              </div>
-                            </div>
-
-                            <div class="nice-form-group editar-select">
-                              <label>Turno</label>
-                              <select id="turno-${j}-${k}">
-                                <option value="livre">Livre</option>
-                                <option value="madrugada">Madrugada</option>
-                                <option value="manha">Manhã</option>
-                                <option value="tarde">Tarde</option>
-                                <option value="noite">Noite</option>
-                              </select>
-                            </div>
-
-                            <div class="deletar-box-programacao">
-                              <button id="remove-atividade-${j}-${k}" class="btn btn-secondary inner-button" onclick="_deleteInnerProgramacao(${j}, ${k})">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
-                              </svg>
-                              </button>
-                            </div>
-                          </div>`;
-
-  _restoreInnerProgramacao(storedInputs);
-  _loadInnerProgramacaoListeners(j);
-}
-
-function _storeInnerProgramacao(j) {
-  const childs = _getChildIDs(`inner-programacao-${j}`);
-
-  let storedInputs = {};
-  
-  for (const child of childs) {
-    let result = {};
-    const index = child.replace('atividade-box-', '');
-    result[`atividade-${index}`] = getID(`atividade-${index}`).value;
-    result[`inicio-${index}`] = getID(`inicio-${index}`).value;
-    result[`fim-${index}`] = getID(`fim-${index}`).value;
-    result[`turno-${index}`] = getID(`turno-${index}`).value;
-    storedInputs[child] = result;
-  }
-
-  return storedInputs;
-}
-
-function _restoreInnerProgramacao(storedInputs) {
-  for (const id in storedInputs) {
-    if (getID(id)) {
-      const inputs = storedInputs[id];
-      for (const input in inputs) {
-        getID(input).value = inputs[input];
-      }
-    }
-  }
-}
-
 function _loadDestinos() {
   if (DESTINOS && DESTINOS.length > 0) {
+    let destinos = DESTINOS;
+    destinos.sort((a, b) => a.titulo.localeCompare(b.titulo));
     getID('sem-destinos').style.display = 'none';
     getID('com-destinos').style.display = 'block';
 
-    const first = getID(`select-destinos-1`);
-
-    if (first) {
-      first.addEventListener('change', () => {
-        _buildDestinosSelect();
-        _buildLineupSelects();
-      });
+    const fieldset = getID('destinos-checkboxes');
+    fieldset.innerHTML = '';
+    for (let j=1; j < destinos.length; j++) {
+      const i = j - 1;
+      fieldset.innerHTML += `<div class="nice-form-group" id="checkbox-${j}">
+                              <input type="checkbox" id="check-${j}" value="${destinos[i].code}">
+                              <label id=check-label-${j} for="check-${j}">${destinos[i].titulo}</label>
+                             </div>`
     }
-    _buildDestinosSelect();
   }
 }
 

@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadHabilitados();
 
     if (DOCUMENT_ID) {
-      await _loadTrip();
+      await _loadTrip(true);
     } else {
       CAN_EDIT = true;
-      DESTINOS = await _getUserList('destinos');
+      DESTINOS = await _getUserList('destinos', true);
       _loadNewTrip();
     }
 
@@ -73,12 +73,19 @@ function _loadUploadSelectors() {
   _loadUploadSelector('logo');
 }
 
-async function _loadTrip() {
+async function _loadTrip(stripped=false) {
   getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
 
-  FIRESTORE_DATA = await _getSingleData('viagens');
+  if (stripped) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('v');
+    FIRESTORE_DATA = await _get(`viagens/${id}`);
+  } else {
+    FIRESTORE_DATA = await _getSingleData('viagens');
+  }
+
   CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
 
   if (CAN_EDIT) {

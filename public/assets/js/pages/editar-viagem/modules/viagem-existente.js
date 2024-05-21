@@ -1,6 +1,6 @@
 async function _loadTripData(FIRESTORE_DATA) {
     try {
-        DESTINOS = await _getUserList('destinos');
+        DESTINOS = await _getUserList('destinos', true);
         _loadDadosBasicosViagemData(FIRESTORE_DATA);
         _loadCompartilhamentoData(FIRESTORE_DATA);
         _loadCustomizacaoData(FIRESTORE_DATA);
@@ -344,14 +344,20 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
             // if (atividades && atividades.length > 0) {
             //     for (let k = 1; k <= manha.length; k++) {
             //         _addInnerProgramacao(j, k);
-            //         getID(`atividade-${j}-${k}`).value = atividades[k - 1].atividade;
-            //         getID(`inicio-${j}-${k}`).value = atividades[k - 1].atividade;
-            //         getID(`fim-${j}-${k}`).value = atividades[k - 1].atividade;
-            //         getID(`turno-${j}-${k}`).value = atividades[k - 1].atividade;
+            // INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+            //     programacao: atividades[k - 1].programacao,
+            //     inicio: atividades[k - 1].inicio,
+            //     fim: atividades[k - 1].fim
+            // };
+            //         getID(`inner-programacao-${j}-${k}`).value = atividades[k - 1].programacao;
+            //         getID(`inicio-${j}-${k}`).value = atividades[k - 1].inner-programacao;
+            //         getID(`fim-${j}-${k}`).value = atividades[k - 1].inner-programacao;
             //     }
             // }
 
             _migration(FIRESTORE_DATA, j);
+
+
         }
         j++;
     }
@@ -375,20 +381,14 @@ function _loadDestinosData(FIRESTORE_DATA) {
         getID('destinos-adicionar-box').style.display = 'none';
     }
 
-    const cidades = FIRESTORE_DATA.destinos;
-
     _loadDestinos();
-
-    if (cidades && cidades.length > 0) {
-        for (let i = 1; i <= cidades.length; i++) {
-            const j = i - 1;
-            const id = cidades[j].destinosID;
-
-            if (i === 1) {
-                _setDestinoSelectValue(1, id);
-            } else {
-                _addDestinos();
-                _setDestinoSelectValue(i, id);
+    const checkboxes = document.querySelectorAll('#destinos-checkboxes input[type="checkbox"]');
+    for (const destino of FIRESTORE_DATA.destinos) {
+        const id = destino.destinosID;
+        for (const checkbox of checkboxes) {
+            if (checkbox.value === id) {
+                checkbox.checked = true;
+                break;
             }
         }
     }
@@ -516,23 +516,42 @@ function _formatAltura(value) {
 // Migração
 
 function _migration(FIRESTORE_DATA, j) {
+    const manha = FIRESTORE_DATA.programacoes.programacao[j - 1]?.manha;
+    const tarde = FIRESTORE_DATA.programacoes.programacao[j - 1]?.tarde;
+    const noite = FIRESTORE_DATA.programacoes.programacao[j - 1]?.noite;
 
-    const manha = FIRESTORE_DATA.programacoes.programacao[j-1]?.manha;
-    const tarde = FIRESTORE_DATA.programacoes.programacao[j-1]?.tarde;
-    const noite = FIRESTORE_DATA.programacoes.programacao[j-1]?.noite;
+    let k = 1;
 
-    const manhaSize = manha?.length || 0;
-    const tardeSize = tarde?.length || 0;
-    const noiteSize = noite?.length || 0;
+    for (const itemManha of manha) {
+        _addInnerProgramacaoButton(j, k);(j, k);
+        INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+            programacao: itemManha,
+            inicio: '',
+            fim: ''
+        };
+        _updateInnerProgramacaoBotaoText(j, k);
+        k++;
+    }
 
-    for (let k = 1; k <= manhaSize + tardeSize + noiteSize; k++) {
-        const tipo = (k <= manhaSize) ? 'manha' : (k <= manhaSize + tardeSize) ? 'tarde' : 'noite';
-        const arr = (tipo === 'manha') ? manha : (tipo === 'tarde') ? tarde : noite;
-        const atividade = arr[k - 1] || '';
-        if (atividade) {
-            _addInnerProgramacao(j, k);
-            getID(`atividade-${j}-${k}`).value = atividade;
-            getID(`turno-${j}-${k}`).value = tipo;
-        }
+    for (const itemTarde of tarde) {
+        _addInnerProgramacaoButton(j, k);(j, k);
+        INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+            programacao: itemTarde,
+            inicio: '',
+            fim: ''
+        };
+        _updateInnerProgramacaoBotaoText(j, k);
+        k++;
+    }
+
+    for (const itemNoite of noite) {
+        _addInnerProgramacaoButton(j, k);(j, k);
+        INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+            programacao: itemNoite,
+            inicio: '',
+            fim: ''
+        };
+        _updateInnerProgramacaoBotaoText(j, k);
+        k++;
     }
 }

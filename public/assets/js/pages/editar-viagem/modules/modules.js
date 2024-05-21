@@ -1,3 +1,5 @@
+INNER_PROGRAMACAO = {};
+
 // Destinos
 function _buildDestinosSelect() {
     const childs = _getChildIDs('com-destinos');
@@ -134,7 +136,7 @@ function _loadTransporteVisibility(i) {
 
 function _applyIdaVoltaVisibility(i) {
     const visibility = getID('condensar').checked == true ? 'none' : 'block';
-    
+
     if (!i) {
         for (const child of _getChildIDs('transporte-box')) {
             const j = child.split('-')[1];
@@ -150,7 +152,7 @@ function _applyIdaVoltaVisibility(i) {
 
 function _loadAutoDuration(i) {
     const div = getID(`transporte-duracao-${i}`);
- 
+
     const startDate = getID(`partida-${i}`).value;
     const startTime = getID(`partida-horario-${i}`).value;
 
@@ -173,29 +175,110 @@ async function _uploadHospedagem(uploadItens) {
 function _updateProgramacaoTitle(j) {
     const div = getID(`programacao-title-${j}`);
     const titulo = getID(`programacao-inner-title-${j}`).value;
-    const data = DATAS[j-1]
+    const data = DATAS[j - 1]
     const dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
     div.innerText = _getProgramacaoTitle(dataFormatada, titulo);
 }
 
-function _getProgramacaoTitle(dataFormatada, titulo='') {
+function _getProgramacaoTitle(dataFormatada, titulo = '') {
     if (titulo) return `${titulo}: ${dataFormatada}`;
     else return dataFormatada;
 }
 
-function _deleteInnerProgramacao(j, k) {
-    const div = getID(`atividade-box-${j}-${k}`);
-    div.parentNode.removeChild(div);
+function _openInnerProgramacao(j, k) {
+    const title = `Adicionar Programação`;
+    const content = `<div class="inner-programacao" id="inner-programacao-box-${j}-${k}">
+                      <div class="nice-form-group">
+                        <label>Atividade</label>
+                        <input required class="nice-form-group" id="inner-programacao-${j}-${k}" type="text" placeholder="Ir para..." />
+                      </div>
+                      <div class="side-by-side-box-fixed">
+                        <div class="nice-form-group side-by-side-fixed">
+                          <label>
+                            Início<br>
+                            <span class="opcional">(Opcional)</span>
+                          </label>
+                          <input class="flex-input-50-50" id="inicio-${j}-${k}" type="time">
+                        </div>
+                        <div class="nice-form-group side-by-side-fixed">
+                          <label>
+                            Fim<br>
+                            <span class="opcional">(Opcional)</span>
+                          </label>
+                          <input class="flex-input-50-50" id="fim-${j}-${k}" type="time">
+                        </div>
+                      </div>
+                      <div class="nice-form-group">
+                        <label>Passeio Associado <span class="opcional"> (Opcional)</span></label>
+                        <button id="passeio-inner-programacao-${j}-${k}" class="btn inner-programacao-botao-input">
+                        Selecionar Passeio
+                        </button>
+                      </div>
+                    </div>`;
+
+    const deleteAction = `_deleteInnerProgramacao(${j}, ${k})`
+    const confirmAction = `_addInnerProgramacao(${j}, ${k})`;
+
+    _displayInputModal(title, content, deleteAction, confirmAction);
+
+    const id = `inner-programacao-box-${j}-${k}`;
+    if (INNER_PROGRAMACAO[id]) {
+        getID(`inner-programacao-${j}-${k}`).value = INNER_PROGRAMACAO[id].programacao;
+        getID(`inicio-${j}-${k}`).value = INNER_PROGRAMACAO[id].inicio;
+        getID(`fim-${j}-${k}`).value = INNER_PROGRAMACAO[id].fim;
+    }
 }
 
-function _reloadProgramacao() {
-    // Build programacao module
+function _addInnerProgramacao(j, k) {
+    const id = `inner-programacao-box-${j}-${k}`;
+    const programacao = getID(`inner-programacao-${j}-${k}`).value;
+    const inicio = getID(`inicio-${j}-${k}`).value;
+    const fim = getID(`fim-${j}-${k}`).value;
 
-    // limpa div
+    INNER_PROGRAMACAO[id] = {
+        programacao: programacao,
+        inicio: inicio,
+        fim: fim
+    };
 
-    // função do load
+    _updateInnerProgramacaoBotaoText(j, k);
+}
 
-    // re-adiciona valores para datas existentes
+function _addInnerProgramacaoButton(j, k) {
+    const id = `inner-programacao-${j}`;
+
+    if (!k) {
+        const childs = _getChildIDs(id);
+        const lastChild = childs[childs.length - 1];
+        k = lastChild ? parseInt(lastChild.split('-')[lastChild.split('-').length - 1]) + 1 : 1;
+    }
+
+    const innerHTML = `<button id="inner-programacao-botao-${j}-${k}" class="btn inner-programacao-botao" onclick="_openInnerProgramacao(${j}, ${k})">
+                        Adicionar Programação
+                       </button>`
+    getID(`inner-programacao-${j}`).innerHTML += innerHTML;
+}
+
+function _updateInnerProgramacaoBotaoText(j, k) {
+    const botao = getID(`inner-programacao-botao-${j}-${k}`);
+    const chave = `inner-programacao-box-${j}-${k}`;
+    if (INNER_PROGRAMACAO[chave] && INNER_PROGRAMACAO[chave].programacao) {
+        botao.innerText = INNER_PROGRAMACAO[chave].programacao;
+    }
+}
+
+function _deleteInnerProgramacao(j, k) {
+    const id = `inner-programacao-box-${j}-${k}`;
+    delete INNER_PROGRAMACAO[id];
+
+    const buttonContainerID = `inner-programacao-botao-${j}-${k}`;
+    const ids = _getChildIDs(`inner-programacao-${j}`);
+
+    if (ids.includes(buttonContainerID)) {
+        getID(buttonContainerID).parentNode.removeChild(getID(buttonContainerID));
+    }
+
+    _closeDisplayMessage();
 }
 
 // Lineup

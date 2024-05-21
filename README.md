@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 33          | 8         |
 | 🏆     | Feature  | F000    | 53    | 46          | 7         |
-| 📈     | Melhoria | M000    | 49    | 30          | 19        |
+| 📈     | Melhoria | M000    | 50    | 31         | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -137,6 +137,9 @@
   - *Não funcionava como o esperado no Desktop e não funcionava no Mobile*
   - *Reimplementar posteriormente*
 - 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
+- 📈 **M050:** Melhoria no módulo de destinos (editar)
+  - *Troca de selects por check-boxes*
+  - *Função de busca*
 
 ### Abril 2024
 

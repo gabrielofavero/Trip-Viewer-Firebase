@@ -191,7 +191,7 @@ function _manualListLoad(type) {
   if (TENTATIVAS[type] < 2) {
     _loadUserDataList(type);
   } else {
-    window.location.reload();
+    window.location.reload(true);
   }
 }
 

@@ -306,7 +306,7 @@ async function _newUserObjectDB(object, type) {
   } else return "Usuário não logado"
 }
 
-async function _getUserList(type) {
+async function _getUserList(type, includeData = false) {
   const uid = await _getUID();
   if (uid) {
     const userData = await _get(`usuarios/${uid}`);
@@ -334,6 +334,10 @@ async function _getUserList(type) {
 
         if (data.subtitulo) {
           singleResult.subtitulo = data.subtitulo;
+        }
+
+        if (includeData) {
+          singleResult.data = data;
         }
 
         result.push(singleResult);
