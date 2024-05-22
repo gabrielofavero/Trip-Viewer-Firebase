@@ -160,7 +160,7 @@ a:hover {
   overflow: auto;
   border-radius: 0;
   position: relative;
-  top: 0px;
+  top: 20px;
 }
 
 @media (min-width: 992px) {
@@ -1061,6 +1061,7 @@ body {
   display: -webkit-flex;
   display: flex;
   max-width: 55em;
+  margin-top: 50px;
 }
 
 .demo-page .demo-page-navigation {
@@ -1086,7 +1087,7 @@ body {
 .demo-page .demo-page-navigation nav {
   position: -webkit-sticky;
   position: sticky;
-  top: 2em;
+  top: 5.7em;
   background: #fff;
   padding: .5em;
   border-radius: .75rem;
@@ -1118,7 +1119,6 @@ body {
 .demo-page .demo-page-content {
   padding: 2em 1em;
   max-width: 100%;
-  margin-bottom: 2rem;
 }
 
 @media only screen and (min-width:750px) {
