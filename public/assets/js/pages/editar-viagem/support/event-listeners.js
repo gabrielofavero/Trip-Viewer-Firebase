@@ -16,7 +16,6 @@ function _loadEventListeners() {
     getID('cancelar').addEventListener('click', () => window.location.href = `index.html`);
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
-    getID('destinos-adicionar').addEventListener('click', () => _addDestinos());
     getID('lineup-adicionar').addEventListener('click', () => _lineupAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
 
@@ -171,15 +170,4 @@ function _transporteAdicionarListenerAction() {
     _closeAccordions('transporte');
     _addTransporte();
     _openLastAccordion('transporte');
-}
-
-function _searchDestinosListenerAction() {
-    const childs = _getChildIDs('destinos-checkboxes');
-    const search = getID('destinos-search').value.toLowerCase();
-
-    for (const child of childs) {
-        const j = child.split('-')[child.split('-').length - 1];
-        const label = getID(`check-label-${j}`).innerText.toLowerCase();
-        getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
-    }
 }

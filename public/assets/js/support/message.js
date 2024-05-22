@@ -77,8 +77,8 @@ function _displayInputModal(title, content, deleteAction, confirmAction='_closeD
   let properties = {
     errorData: {},
     buttons: [{
-      type: 'apagar',
-      action: deleteAction
+      type: 'cancelar',
+      action: ''
     }, {
       type: 'confirmar',
       action: confirmAction
@@ -124,6 +124,7 @@ function _displayErrorMessage(error, customMessage = "", showLocation = true) {
   _displayMessage(title, content, properties);
 }
 
+// Atribuições
 function _openAtribuicoes() {
   const page = window.location.href.split('/').pop();
   const title = '';
@@ -244,6 +245,8 @@ function _getButton(button) {
       return _getConfirmButton(button.action);
     case 'apagar':
       return _getDeleteButton(button.action);
+    case 'apagar-basico':
+      return _getDeleteButtonBasic(button.action);
     default:
       return _getOkButton();
   }
@@ -312,14 +315,13 @@ function _getConfirmButton(onclick='_closeDisplayMessage();') {
   return button;
 }
 
-function _getDeleteButton(onclick) {
+function _getDeleteButton(onclick, buttonClass='btn-secondary') {
   const button = document.createElement('button');
-  button.className = 'btn btn-secondary btn-format';
+  button.className = `btn ${buttonClass} btn-format`;
   button.type = 'submit';
   button.setAttribute('onclick', onclick)
 
   const icon = document.createElement('i');
-  icon.id = 'transporte-nav';
   icon.className = 'iconify';
   icon.setAttribute('data-icon', 'mingcute:delete-2-fill');
 
@@ -327,4 +329,8 @@ function _getDeleteButton(onclick) {
   button.innerHTML += ' Apagar';
 
   return button;
+}
+
+function _getDeleteButtonBasic(onclick) {
+  return _getDeleteButton(onclick, 'btn-basic');
 }

@@ -59,10 +59,6 @@ function _loadUploadSelectors() {
 }
 
 function _loadEventListeners() {
-  getID('destinos-adicionar').addEventListener('click', () => {
-    _addDestinos();
-  });
-
   getID('cancelar').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
@@ -110,6 +106,8 @@ function _loadEventListeners() {
   getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
+
+  getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
 }
 
 async function _carregarListagem() {

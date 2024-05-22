@@ -1,48 +1,5 @@
-INNER_PROGRAMACAO = {};
-
-// Destinos
-function _buildDestinosSelect() {
-    const childs = _getChildIDs('com-destinos');
-
-    let used = [];
-
-    for (const child of childs) {
-        const i = child.split('-')[2];
-        const selectDiv = getID(`select-destinos-${i}`);
-        const value = selectDiv.value;
-        if (value) {
-            used.push(value);
-        }
-    }
-
-    for (const child of childs) {
-        const i = child.split('-')[2];
-        const selectDiv = getID(`select-destinos-${i}`);
-        const value = selectDiv.value;
-
-        let options = '<option value="">Selecione um Destino</option>';
-        for (let j = 0; j < DESTINOS.length; j++) {
-            const code = DESTINOS[j].code;
-            if (value == code || !used.includes(code)) {
-                const selected = value === code ? ' selected' : '';
-                options += `<option value="${code}"${selected}>${DESTINOS[j].titulo}</option>`;
-            }
-        }
-
-        if (options === '<option value="">Selecione um Destino</option>') {
-            _deleteDestino(i);
-            getID('todos-destinos-utilizados').style.display = 'block';
-        } else {
-            selectDiv.innerHTML = options;
-            getID('todos-destinos-utilizados').style.display = 'none';
-        }
-    }
-}
-
-function _deleteDestino(i) {
-    _removeChildDestinosWithValidation(i);
-    _buildDestinosSelect();
-}
+var INNER_PROGRAMACAO = {};
+var DESTINO_SELECT = [];
 
 // Transportes
 function _updateTransporteTitle(i) {
@@ -171,13 +128,96 @@ async function _uploadHospedagem(uploadItens) {
     return await _uploadViagemItens(uploadItens, 'hospedagens');
 }
 
+// Destinos
+function _getDestinosAtivos() {
+    if (!getID('habilitado-destinos').checked) return;
+
+    const childIds = _getChildIDs('destinos-checkboxes');
+    let result = [];
+
+    for (const child of childIds) {
+        const j = child.split("-")[child.split("-").length - 1];
+        const checkbox = getID(`check-${j}`);
+        if (checkbox.checked) {
+            result.push({
+                titulo: getID(`check-label-${j}`).innerText,
+                destinosID: checkbox.value
+            })
+        }
+    }
+
+    return result;
+}
+
+function _loadDestinosSelect() {
+    const destinosAtivos = _getDestinosAtivos();
+    DESTINO_SELECT = [];
+    if (destinosAtivos && destinosAtivos.length > 0) {
+        DESTINO_SELECT.push({
+            value: 'generico',
+            innerHTML: '<option value="generico">Destino Não Especificado</option>'
+        });
+        for (const destino of destinosAtivos) {
+            DESTINO_SELECT.push({
+                value: destino.destinosID,
+                innerHTML: `<option value="${destino.destinosID}">${destino.titulo}</option>`
+            });
+        }
+    }
+}
+
+function _getDestinosSelectOptions() {
+    return DESTINO_SELECT.map(destino => destino.innerHTML).join('');
+}
+
+function _getDestinosSelectVisibility() {
+    return DESTINO_SELECT.length > 0 ? 'block' : 'none';
+}
+
+function _writeDestinosSelects() {
+    _loadDestinosSelect();
+    _writeDestinosSelect('programacao');
+    _writeDestinosSelect('lineup');
+}
+
+function _writeDestinosSelect(tipo) {
+    const childs = _getChildIDs(`${tipo}-box`);
+    const visibility = DESTINO_SELECT.length > 0 ? 'block' : 'none';
+    const values = DESTINO_SELECT.map(destino => destino.value);
+    const innerHTML = DESTINO_SELECT.map(destino => destino.innerHTML).join('');
+
+    for (const child of childs) {
+        const j = child.split('-')[1];
+        const originalValue = getID(`${tipo}-local-${j}`).value;
+        getID(`${tipo}-local-${j}`).innerHTML = innerHTML;
+        getID(`${tipo}-local-box-${j}`).style.display = visibility;
+
+        if (values.includes(originalValue)) {
+            getID(`${tipo}-local-${j}`).value = originalValue;
+        }
+    }
+}
+
 // Programação
 function _updateProgramacaoTitle(j) {
     const div = getID(`programacao-title-${j}`);
-    const titulo = getID(`programacao-inner-title-${j}`).value;
+    const tituloInput = getID(`programacao-inner-title-${j}`);
+    const tituloSelect = getID(`programacao-inner-title-select-${j}`);
+
+    let titulo = '';
+
+    if (tituloSelect.value == 'outro') {
+        titulo = tituloInput.value;
+        tituloInput.style.display = 'block';
+    } else {
+        titulo = tituloSelect.value;
+        tituloInput.style.display = 'none';
+    }
+
     const data = DATAS[j - 1]
     const dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
-    div.innerText = _getProgramacaoTitle(dataFormatada, titulo);
+    
+    div.innerText = _getProgramacaoTitle(dataFormatada, tituloInput);
 }
 
 function _getProgramacaoTitle(dataFormatada, titulo = '') {
@@ -214,6 +254,14 @@ function _openInnerProgramacao(j, k) {
                         Selecionar Passeio
                         </button>
                       </div>
+
+                      <div class="button-box-right" style="margin-top: 8px; margin-bottom: -18px">
+                        <button onclick="_deleteInnerProgramacao(${j}, ${k})" class="btn btn-basic btn-format">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        </div>
                     </div>`;
 
     const deleteAction = `_deleteInnerProgramacao(${j}, ${k})`
@@ -244,7 +292,7 @@ function _addInnerProgramacao(j, k) {
     _updateInnerProgramacaoBotaoText(j, k);
 }
 
-function _addInnerProgramacaoButton(j, k) {
+function _addInnerProgramacaoButton(j, k, open=true) {
     const id = `inner-programacao-${j}`;
 
     if (!k) {
@@ -257,6 +305,8 @@ function _addInnerProgramacaoButton(j, k) {
                         Adicionar Programação
                        </button>`
     getID(`inner-programacao-${j}`).innerHTML += innerHTML;
+
+    if (open) _openInnerProgramacao(j, k);
 }
 
 function _updateInnerProgramacaoBotaoText(j, k) {
@@ -281,52 +331,33 @@ function _deleteInnerProgramacao(j, k) {
     _closeDisplayMessage();
 }
 
+function _programacaoLocalSelectAction(categoria, init = false, updateLast = false) {
+    let copy = SELECT_DESTINO_SELECT[categoria];
+    SELECT_DESTINO_SELECT[categoria] = _getUpdatedDynamicSelectArray(categoria, 'local');
+    _loadDynamicSelect(categoria, 'local', copy, SELECT_DESTINO_SELECT[categoria], init, updateLast);
+}
+
+function _loadNewLocalSelect(categoria) {
+    _programacaoLocalSelectAction(categoria, false, true);
+}
+
+function _loadProgramacaoListeners(j) {
+    const select = getID(`programacao-local-select-${j}`);
+    const input = getID(`programacao-local-${j}`);
+
+    select.addEventListener('change', function () {
+        _programacaoLocalSelectAction(categoria);
+        if (select.value === 'outra') {
+            input.style.display = 'block';
+        }
+    });
+
+    input.addEventListener('change', function () {
+        _programacaoLocalSelectAction(categoria);
+    });
+}
+
 // Lineup
-function _buildLineupSelects() {
-    const lineupChilds = _getChildIDs('lineup-box');
-    let lineupSelectBoxes = [];
-    let lineupSelects = [];
-
-    for (const child of lineupChilds) {
-        const i = child.split('-')[1];
-        lineupSelectBoxes.push(`lineup-local-box-${i}`);
-        lineupSelects.push(`lineup-local-${i}`);
-    }
-
-    if (getID('habilitado-destinos').checked && getID('habilitado-lineup').checked) {
-
-        const destinoChilds = _getChildIDs('com-destinos');
-        let options = '<option value="generico">Destino Não Especificado</option>';
-
-        for (const child of destinoChilds) {
-            const i = child.split('-')[2];
-            const selectDiv = getID(`select-destinos-${i}`);
-            const text = selectDiv.options[selectDiv.selectedIndex].text;
-            const value = selectDiv[selectDiv.selectedIndex].value;
-            if (value) {
-                options += `<option value="${value}">${text}</option>`;
-            }
-        }
-
-        for (const selectDiv of lineupSelects) {
-            const div = getID(selectDiv);
-            const value = div.value;
-            div.innerHTML = options;
-            div.value = value;
-        }
-
-    } else {
-        for (const box of lineupSelectBoxes) {
-            getID(box).style.display = 'none';
-        }
-    }
-}
-
-function _setDestinoSelectValue(i, value) {
-    getID(`select-destinos-${i}`).value = value;
-    _buildDestinosSelect();
-}
-
 function _lineupGeneroSelectAction(init = false, updateLast = false) {
     let copy = LINEUP_GENEROS;
     LINEUP_GENEROS = _getUpdatedDynamicSelectArray('lineup', 'genero');

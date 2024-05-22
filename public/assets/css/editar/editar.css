@@ -1773,7 +1773,6 @@ details summary::-webkit-details-marker {
 }
 
 .inner-programacao {
-  margin-top: 24px;
   margin-bottom: 24px;
 }
 
@@ -1784,7 +1783,7 @@ details summary::-webkit-details-marker {
   width: 100%;
   border: 1px solid #c0c4c9;
   border-radius: 0.25rem;
-  margin-top: 10px;
+  margin-top: 16px;
   text-align: left;
   height: auto;
   font-size: 14px;
@@ -1792,7 +1791,10 @@ details summary::-webkit-details-marker {
   padding-left: 10px;
 }
 
-.inner-programacao-botao:first-child,
+.inner-programacao-botao:first-child {
+  margin-top: 4px;
+}
+
 .inner-programacao-botao-input {
   margin-top: 0px;
 }

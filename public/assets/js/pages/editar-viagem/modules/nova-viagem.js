@@ -42,11 +42,26 @@ function _loadProgramacao() {
         <div class="accordion-body">
           <h1 class="item-title"></h1>
 
-          <div class="nice-form-group">
-            <label>Local / Título <span class="opcional"> (Opcional)</span></label>
-            <input id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" />
+          <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosSelectVisibility()}">
+            <label>Local<span class="opcional"> (Opcional)</span></label>
+            <select class="editar-select" id="programacao-local-${j}">
+              ${_getDestinosSelectOptions()}
+            </select>
           </div>
 
+          <div class="nice-form-group">
+            <label>Título<span class="opcional"> (Opcional)</span></label>
+              <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
+                <option value="">Sem Título</option>
+                <option value="Ida">Ida</option>
+                <option value="Volta">Volta</option>
+                <option value="Transporte">Transporte</option>
+                <option value="outro">Outro</option>
+              </select>  
+            <input class="nice-form-group" id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" style="display: none;">
+          </div>
+
+          <label style="margin-top: 24px;">Programação</label>
           <div class="inner-programacao" id="inner-programacao-${j}"></div>
 
           <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block;">
@@ -71,26 +86,34 @@ function _loadProgramacao() {
 
   for (const child of _getChildIDs('programacao-box')) {
     const j = child.split('-')[child.split('-').length - 1];
+    getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
   }
 }
 
 function _loadDestinos() {
-  if (DESTINOS && DESTINOS.length > 0) {
-    let destinos = DESTINOS;
-    destinos.sort((a, b) => a.titulo.localeCompare(b.titulo));
-    getID('sem-destinos').style.display = 'none';
-    getID('com-destinos').style.display = 'block';
+  if (!DESTINOS || DESTINOS.length === 0) return;
 
-    const fieldset = getID('destinos-checkboxes');
-    fieldset.innerHTML = '';
-    for (let j=1; j < destinos.length; j++) {
-      const i = j - 1;
-      fieldset.innerHTML += `<div class="nice-form-group" id="checkbox-${j}">
-                              <input type="checkbox" id="check-${j}" value="${destinos[i].code}">
-                              <label id=check-label-${j} for="check-${j}">${destinos[i].titulo}</label>
-                             </div>`
-    }
+  let destinos = DESTINOS;
+  destinos.sort((a, b) => a.titulo.localeCompare(b.titulo));
+  getID('sem-destinos').style.display = 'none';
+  getID('com-destinos').style.display = 'block';
+
+  const fieldset = getID('destinos-checkboxes');
+  fieldset.innerHTML = '';
+  for (let j=1; j <= destinos.length; j++) {
+    const i = j - 1;
+    fieldset.innerHTML += `<div class="nice-form-group" id="checkbox-${j}">
+                            <input type="checkbox" id="check-${j}" value="${destinos[i].code}">
+                            <label id=check-label-${j} for="check-${j}">${destinos[i].titulo}</label>
+                           </div>`
+  }
+
+  _loadDestinosSelect();
+
+  for (const child of _getChildIDs('destinos-checkboxes')) {
+    const j = child.split('-')[child.split('-').length - 1];
+    getID(`check-${j}`).addEventListener('change', () => _writeDestinosSelects())
   }
 }
 
@@ -172,7 +195,7 @@ function _addTransporte() {
   
           <div class="nice-form-group">
             <label>Meio de Transporte</label>
-            <select required id="transporte-tipo-${i}">
+            <select class="editar-select" required id="transporte-tipo-${i}">
               <option value="voo">Avião</option>
               <option value="carro">Carro</option>
               <option value="onibus">Ônibus</option>
@@ -194,7 +217,7 @@ function _addTransporte() {
 
           <div class="nice-form-group" id="empresa-select-form-group-${i}">
             <label>Nome da Empresa <span class="opcional"> (Opcional)</span></label>
-            <select id="empresa-select-${i}" style="display: none;"></select>
+            <select class="editar-select" id="empresa-select-${i}" style="display: none;"></select>
             <input class="nice-form-group" id="empresa-${i}" type="text" placeholder="Empresa de Transporte" />
           </div>
 
@@ -339,37 +362,6 @@ function _addHospedagens() {
   _addRemoveChildListener('hospedagens', i);
 }
 
-function _addDestinos() {
-  let i = 1;
-  while (getID(`select-destinos-${i}`)) {
-    i++;
-  };
-
-  $('#com-destinos').append(`
-    <div class="nice-form-group" id="com-destinos-${i}">
-      <select id="select-destinos-${i}" class="editar-select">
-        <option value="">Selecione um Destino</option>
-      </select>
-
-      <div class="deletar-box-destinos">
-        <button id="remove-destinos-${i}" class="btn btn-secondary" onclick="_deleteDestino(${i})">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-
-    </div>
-    `);
-
-  getID(`select-destinos-${i}`).addEventListener('change', () => {
-    _buildDestinosSelect();
-    _buildLineupSelects();
-  });
-
-  _buildDestinosSelect();
-}
-
 function _addEditores() {
   let i = 1;
   while (getID(`editores-email-${i}`)) {
@@ -422,8 +414,8 @@ function _addLineup() {
   
           <div class="nice-form-group" id="lineup-local-box-${i}">
             <label>Local</label>
-            <select id="lineup-local-${i}">
-              <option value="generico">Destino Não Especificado</option>
+            <select class="editar-select" id="lineup-local-${i}" style="display: ${_getDestinosSelectVisibility()}">
+              ${_getDestinosSelectOptions()}
             </select>
           </div>
 
@@ -492,7 +484,6 @@ function _addLineup() {
     </div>
     `);
 
-  _buildLineupSelects();
   _loadLineupListeners(i);
   _addRemoveChildListener('lineup', i);
 }

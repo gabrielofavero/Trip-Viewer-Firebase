@@ -340,24 +340,26 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
 
             getID(`programacao-title-${j}`).innerText = _getProgramacaoTitle(diaDaSemana, titulo);
 
-            // const atividades = FIRESTORE_DATA.programacoes.programacao[j]?.atividades;
-            // if (atividades && atividades.length > 0) {
-            //     for (let k = 1; k <= manha.length; k++) {
-            //         _addInnerProgramacao(j, k);
-            // INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
-            //     programacao: atividades[k - 1].programacao,
-            //     inicio: atividades[k - 1].inicio,
-            //     fim: atividades[k - 1].fim
-            // };
-            //         getID(`inner-programacao-${j}-${k}`).value = atividades[k - 1].programacao;
-            //         getID(`inicio-${j}-${k}`).value = atividades[k - 1].inner-programacao;
-            //         getID(`fim-${j}-${k}`).value = atividades[k - 1].inner-programacao;
-            //     }
-            // }
+            const atividades = FIRESTORE_DATA.programacoes.programacao[j]?.atividades;
+            if (atividades && atividades.length > 0) {
+                for (let k = 1; k <= manha.length; k++) {
+                    _addInnerProgramacao(j, k);
+                    INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+                        destino: atividades[k - 1].destino,
+                        titulo: atividades[k - 1].titulo,
+                        programacao: atividades[k - 1].programacao,
+                        inicio: atividades[k - 1].inicio,
+                        fim: atividades[k - 1].fim
+                    };
+                    getID(`inner-programacao-${j}-${k}`).value = atividades[k - 1].programacao;
+                    getID(`inicio-${j}-${k}`).value = atividades[k - 1].inner - programacao;
+                    getID(`fim-${j}-${k}`).value = atividades[k - 1].inner - programacao;
+                }
+            }
 
             _migration(FIRESTORE_DATA, j);
 
-
+            _writeDestinosSelect('lineup');
         }
         j++;
     }
@@ -365,20 +367,16 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
 
 function _loadDestinosData(FIRESTORE_DATA) {
     if (FIRESTORE_DATA.modulos.destinos === true) {
-        const habilitadoDestinos = getID('habilitado-destinos');
-
-        if (habilitadoDestinos) {
-            habilitadoDestinos.checked = true;
+        if (getID('habilitado-destinos')) {
+            getID('habilitado-destinos').checked = true;
         }
 
         getID('habilitado-destinos-content').style.display = 'block';
         getID('sem-destinos').style.display = 'none';
         getID('com-destinos').style.display = 'block';
-        getID('destinos-adicionar-box').style.display = 'block';
     } else {
         getID('sem-destinos').style.display = 'block';
         getID('com-destinos').style.display = 'none';
-        getID('destinos-adicionar-box').style.display = 'none';
     }
 
     _loadDestinos();
@@ -458,6 +456,7 @@ function _loadLineupData(FIRESTORE_DATA) {
                     }
                 }
             }
+            _writeDestinosSelect('lineup');
             _lineupGeneroSelectAction();
             _lineupPalcoSelectAction();
         }
@@ -523,7 +522,7 @@ function _migration(FIRESTORE_DATA, j) {
     let k = 1;
 
     for (const itemManha of manha) {
-        _addInnerProgramacaoButton(j, k);(j, k);
+        _addInnerProgramacaoButton(j, k, false);
         INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
             programacao: itemManha,
             inicio: '',
@@ -534,7 +533,7 @@ function _migration(FIRESTORE_DATA, j) {
     }
 
     for (const itemTarde of tarde) {
-        _addInnerProgramacaoButton(j, k);(j, k);
+        _addInnerProgramacaoButton(j, k, false);
         INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
             programacao: itemTarde,
             inicio: '',
@@ -545,7 +544,7 @@ function _migration(FIRESTORE_DATA, j) {
     }
 
     for (const itemNoite of noite) {
-        _addInnerProgramacaoButton(j, k);(j, k);
+        _addInnerProgramacaoButton(j, k, false);
         INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
             programacao: itemNoite,
             inicio: '',
