@@ -95,7 +95,7 @@ function _loadDestinosHTML() {
                                           <div class="destinos-descricao" style="display: ${_getDescricaoVisibility(item, isLineup)}">
                                               ${_getDescricaoValue(item, isLineup)}
                                           </div>
-                                          <div id="midia-${j}"></div>
+                                          <div id="midia-${j}" class="midia-container"></div>
                                       </div>
                                   </div>
                               </div>

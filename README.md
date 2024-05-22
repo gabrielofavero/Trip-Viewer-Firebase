@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 34          | 7         |
 | 🏆     | Feature  | F000    | 53    | 47          | 6         |
-| 📈     | Melhoria | M000    | 51    | 33         | 18        |
+| 📈     | Melhoria | M000    | 52    | 34         | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -141,6 +141,7 @@
 - 🏆 **F052:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
 - 🐞 **B027:** Correção de dados de destinos não serem salvos se categoria for desabilitada
 - 📈 **M051:** Reorganizção de destinos para armazenar dados em objetos
+- 📈 **M052:** Redução do tamanho do box de mídia mobile em página de destinos para melhorar visualização desktop
 
 ### Abril 2024
 

@@ -27,8 +27,13 @@ function _applyDestinosMediaHeight() {
         const heightPortrait = (width * 16) / 9;
         const heightLandscape = (width * 9) / 16;
         
-        _addCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
         _addCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
+
+        if (getID('content').offsetWidth <= 550) {
+            _addCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
+        } else {
+            _addCSSRule('.tiktok-embed-v3', 'height', `533px`);
+        }
     }
 }
 
