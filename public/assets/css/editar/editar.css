@@ -158,6 +158,9 @@ a:hover {
   background-size: cover;
   background-position: 50% 50%;
   overflow: auto;
+  border-radius: 0;
+  position: relative;
+  top: 0px;
 }
 
 @media (min-width: 992px) {

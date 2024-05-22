@@ -22,18 +22,18 @@ function _loadDestinosHTML() {
 
     const isLineup = DESTINO.descricao.title == "Lineup";
 
-    for (let i = 1; i <= DESTINO.data.nome.length; i++) {
-      const item = _getCurrentItem(i);
+    for (let j = 1; j <= DESTINO.data.length; j++) {
+      const item = DESTINO.data[j-1];
       const data = isLineup ? _getLineupData(item) : "";
       const key = isLineup ? _getLineupKey(item) : "semData";
 
       const innerHTML = `<div class="accordion-group">
-                          <div id="destinos-${i}" class="accordion-item"  data-drag-listener="true">
-                              <h2 class="accordion-header" id="heading-destinos-${i}">
-                                  <button id="destinos-titulo-${i}" class="accordion-button flex-button collapsed" type="button"
-                                      data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${i}" aria-expanded="false"
-                                      aria-controls="collapse-destinos-${i}" onclick="_toggleMedia(${i})">
-                                      <span class="title-text" id="destinos-titulo-text-${i}">${_getTitulo(item)}</span>
+                          <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
+                              <h2 class="accordion-header" id="heading-destinos-${j}">
+                                  <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button"
+                                      data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false"
+                                      aria-controls="collapse-destinos-${j}" onclick="_toggleMedia(${j})">
+                                      <span class="title-text" id="destinos-titulo-text-${j}">${_getTitulo(item)}</span>
                                       <div class="icon-container new-box" style="display: ${item.novo ? 'block' : 'none'}">
                                           <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                                               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3"
@@ -55,9 +55,9 @@ function _loadDestinosHTML() {
                                       </div>
                                   </button>
                               </h2>
-                              <div id="collapse-destinos-${i}" class="accordion-collapse collapse"
-                                  aria-labelledby="heading-destinos-${i}" data-bs-parent="#destinos-box">
-                                  <div class="accordion-body" id="accordion-body-${i}">
+                              <div id="collapse-destinos-${j}" class="accordion-collapse collapse"
+                                  aria-labelledby="heading-destinos-${j}" data-bs-parent="#destinos-box">
+                                  <div class="accordion-body" id="accordion-body-${j}">
                                       <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
                                           <div class="notas-box">
                                               <i class="iconify nota-sem-margem ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
@@ -95,13 +95,13 @@ function _loadDestinosHTML() {
                                           <div class="destinos-descricao" style="display: ${_getDescricaoVisibility(item, isLineup)}">
                                               ${_getDescricaoValue(item, isLineup)}
                                           </div>
-                                          <div id="midia-${i}"></div>
+                                          <div id="midia-${j}"></div>
                                       </div>
                                   </div>
                               </div>
                           </div>
                       </div>`;
-      _loadEmbed(item?.midia, isLineup, i)
+      _loadEmbed(item?.midia, isLineup, j)
       _setInnerContent(item, key, data, innerHTML);
     }
 
@@ -116,19 +116,6 @@ function _loadDestinosHTML() {
 }
 
 // Getters
-function _getCurrentItem(i) {
-  let result = {};
-  const keys = Object.keys(DESTINO.data);
-
-  if (!keys.length) return {};
-
-  for (const key of keys) {
-    result[key] = DESTINO.data[key][i - 1];
-  }
-
-  return result;
-}
-
 function _getLineupData(item) {
   if (item.data) {
     const dataSplit = item.data.split("-");

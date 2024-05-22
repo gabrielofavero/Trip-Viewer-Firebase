@@ -68,17 +68,6 @@ function _getChildIDs(parentId) {
   }
 }
 
-function _removeEmptyValuesFromEndArray(arr) {
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (arr[i] === "") {
-      arr.pop();
-    } else {
-      break;
-    }
-  }
-  return arr;
-}
-
 function _returnEmptyIfNoValue(value) {
   if (value) {
     return value;

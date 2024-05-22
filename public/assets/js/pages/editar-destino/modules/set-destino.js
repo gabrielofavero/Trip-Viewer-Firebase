@@ -80,70 +80,28 @@ function _buildDestinoModulos() {
 function _buildDestinoCategoryObject(type) {
     const childIDs = _getChildIDs(`${type}-box`);
 
-    let result = {
-        descricao: [],
-        emoji: [],
-        instagram: [],
-        mapa: [],
-        midia: [],
-        nome: [],
-        nota: [],
-        novo: [],
-        regiao: [],
-        valor: [],
-        website: [],
-    }
+    let result = [];
 
     for (let i = 0; i < childIDs.length; i++) {
+        let item = {};
         const j = parseInt(childIDs[i].split("-")[1]);
 
-        const divNovo = getID(`${type}-novo-${j}`);
-        result.novo.push(divNovo && divNovo.checked);
+        item.novo = getID(`${type}-novo-${j}`).checked;
+        item.nome = getID(`${type}-nome-${j}`).value;
+        item.emoji = getID(`${type}-emoji-${j}`).value;
+        item.descricao = getID(`${type}-descricao-${j}`).value;
+        item.website = getID(`${type}-website-${j}`).value;
+        item.instagram = getID(`${type}-instagram-${j}`).value;
+        item.mapa = getID(`${type}-mapa-${j}`).value;
+        item.regiao = _getDynamicSelectValue(type, 'regiao', j);
+        item.midia = getID(`${type}-midia-${j}`).value;
+        item.nota = getID(`${type}-nota-${j}`).value;
 
-        const nome = getID(`${type}-nome-${j}`).value;
-        result.nome.push(nome);
+        const valor = getID(`${type}-valor-${j}`);
+        item.valor = valor.innerHTML && valor.value != 'outro' ? valor.value : getID(`${type}-outro-valor-${j}`).value;
 
-        const emoji = getID(`${type}-emoji-${j}`).value;
-        result.emoji.push(emoji);
-
-        const descricao = getID(`${type}-descricao-${j}`).value;
-        result.descricao.push(descricao);
-
-        const website = getID(`${type}-website-${j}`).value;
-        result.website.push(website);
-
-        const instagram = getID(`${type}-instagram-${j}`).value;
-        result.instagram.push(instagram);
-
-        const mapa = getID(`${type}-mapa-${j}`).value;
-        result.mapa.push(mapa);
-
-        const regiao = _getDynamicSelectValue(type, 'regiao', j);
-        result.regiao.push(regiao);
-
-        const valorDiv = getID(`${type}-valor-${j}`);
-        const outroValor = getID(`${type}-outro-valor-${j}`).value;
-        const valor = valorDiv.innerHTML && valorDiv.value != 'outro' ? valorDiv.value : outroValor;
-        result.valor.push(valor);
-
-        const midia = getID(`${type}-midia-${j}`).value;
-        result.midia.push(midia);
-
-        const nota = getID(`${type}-nota-${j}`).value;
-        result.nota.push(nota);
+        result.push(item);
     }
-
-    result.descricao = _removeEmptyValuesFromEndArray(result.descricao);
-    result.emoji = _removeEmptyValuesFromEndArray(result.emoji);
-    result.instagram = _removeEmptyValuesFromEndArray(result.instagram);
-    result.mapa = _removeEmptyValuesFromEndArray(result.mapa);
-    result.midia = _removeEmptyValuesFromEndArray(result.midia);
-    result.nome = _removeEmptyValuesFromEndArray(result.nome);
-    result.nota = _removeEmptyValuesFromEndArray(result.nota);
-    result.novo = _removeEmptyValuesFromEndArray(result.novo);
-    result.regiao = _removeEmptyValuesFromEndArray(result.regiao);
-    result.valor = _removeEmptyValuesFromEndArray(result.valor);
-    result.website = _removeEmptyValuesFromEndArray(result.website);
 
     return result;
 }

@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 41    | 33          | 8         |
+| 🐞     | Bug      | B000    | 41    | 34          | 7         |
 | 🏆     | Feature  | F000    | 53    | 47          | 6         |
-| 📈     | Melhoria | M000    | 50    | 32         | 18        |
+| 📈     | Melhoria | M000    | 51    | 33         | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -72,7 +72,6 @@
 
 ### Prioridade Baixa
 
-- 🐞 **B027:** Correção de dados de lineup não serem salvos se desabilitado
 - 🐞 **B025:** Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair
   - *Colocar booleano no método de switch se é um lightbox*
   - *Salva localmente*
@@ -140,6 +139,8 @@
   - *Função de busca*
 - 📈 **M049:** Adição de dark-mode para zoom de hospedagens/galerias
 - 🏆 **F052:** Criação de botão de atribuições no footer que coloca todas os créditos em um modal
+- 🐞 **B027:** Correção de dados de destinos não serem salvos se categoria for desabilitada
+- 📈 **M051:** Reorganizção de destinos para armazenar dados em objetos
 
 ### Abril 2024
 
