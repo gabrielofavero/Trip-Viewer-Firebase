@@ -28,7 +28,7 @@ function _updateProgramacaoTitle(j) {
 function _getProgramacaoTitleSelectOptions(j = null) {
     const semTitulo = '<option value="">Sem Título</option>'
     let destino = '';
-    
+
     if (j) {
         const localDiv = getID(`programacao-local-${j}`);
         if (localDiv.value != 'generico' && DESTINO_SELECT.length > 0) {
@@ -60,9 +60,35 @@ function _getProgramacaoTitle(dataFormatada, titulo = '') {
     else return dataFormatada;
 }
 
-function _getInnerProgramacaoSelects(j, k) {
+function _getInnerProgramacaoPasseioSelects(j, k) {
     const destinosAtivos = _getDestinosAtivos();
-    // TO-DO
+    const currentID = getID(`programacao-local-${j}`).value;
+    const idsAtivos = destinosAtivos.map(destino => destino.destinosID);
+    const todosIds = DESTINOS.map(destino => destino.code);
+
+
+    if (destinosAtivos.length < 0 || !currentID || !idsAtivos.includes(currentID)
+        || !todosIds.includes(currentID)) {
+        return {
+            ativo: false
+        }
+    };
+
+    const index = todosIds.findIndex(destino => destino == currentID);
+    const currentDestinoData = DESTINOS[index].data;
+    const categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key));
+
+    const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
+    const passeioOptions = categorias.map(categoria => {
+        const passeios = currentDestinoData[categoria];
+        return passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
+    }).join('');
+
+    return {
+        ativo: true,
+        categoriaOptions: categoriaOptions,
+        passeioOptions: passeioOptions
+    }
 }
 
 function _programacaoLocalSelectAction(categoria, init = false, updateLast = false) {
@@ -74,7 +100,7 @@ function _programacaoLocalSelectAction(categoria, init = false, updateLast = fal
 
 // Inner Programação
 function _openInnerProgramacao(j, k) {
-    const selects = _getInnerProgramacaoSelects(j, k);
+    const selects = _getInnerProgramacaoPasseioSelects(j, k);
     const title = `Adicionar Programação`;
     const content = `<div class="inner-programacao" id="inner-programacao-box-${j}-${k}">
                       <div class="nice-form-group">

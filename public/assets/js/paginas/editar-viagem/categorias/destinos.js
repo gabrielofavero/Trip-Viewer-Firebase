@@ -1,3 +1,11 @@
+const DESTINOS_CATEGORIAS = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas'];
+const DESTINOS_TITULOS = {
+    restaurantes: 'Restaurantes',
+    lanches: 'Lanches',
+    saidas: 'Saídas',
+    turismo: 'Pontos Turísticos',
+    lojas: 'Lojas'
+};
 var DESTINO_SELECT = [];
 
 function _getDestinosAtivos() {
