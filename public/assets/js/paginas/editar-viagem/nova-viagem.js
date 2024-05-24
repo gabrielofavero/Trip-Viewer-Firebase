@@ -52,11 +52,7 @@ function _loadProgramacao() {
           <div class="nice-form-group">
             <label>Título<span class="opcional"> (Opcional)</span></label>
               <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
-                <option value="">Sem Título</option>
-                <option value="Ida">Ida</option>
-                <option value="Volta">Volta</option>
-                <option value="Transporte">Transporte</option>
-                <option value="outro">Outro</option>
+                ${_getProgramacaoTitleSelectOptions()}
               </select>  
             <input class="nice-form-group" id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" style="display: none;">
           </div>
@@ -88,6 +84,7 @@ function _loadProgramacao() {
     const j = child.split('-')[child.split('-').length - 1];
     getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
+    getID(`programacao-local-${j}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j))
   }
 }
 
@@ -101,7 +98,7 @@ function _loadDestinos() {
 
   const fieldset = getID('destinos-checkboxes');
   fieldset.innerHTML = '';
-  for (let j=1; j <= destinos.length; j++) {
+  for (let j = 1; j <= destinos.length; j++) {
     const i = j - 1;
     fieldset.innerHTML += `<div class="nice-form-group" id="checkbox-${j}">
                             <input type="checkbox" id="check-${j}" value="${destinos[i].code}">

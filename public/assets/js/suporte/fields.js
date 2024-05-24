@@ -126,6 +126,20 @@ function _closeAllSelects(excludeElement) {
     }
 }
 
+function _getCurrentSelectLabel(select) {
+    return select.options[select.selectedIndex].innerText;
+}
+
+function _addValueToSelectIfExists(value, select) {
+    if (!select) return;
+    for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === value) {
+            select.value = value;
+        }
+    }
+}
+
+
 // Validação de links
 function _isHttp(link) {
     return link.startsWith('http://') || link.startsWith('https://');

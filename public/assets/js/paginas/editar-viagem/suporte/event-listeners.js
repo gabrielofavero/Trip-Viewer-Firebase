@@ -69,6 +69,22 @@ function _loadHospedagemListeners(i) {
     getID(`link-hospedagens-${i}`).addEventListener('change', () => _validateImageLink(`link-hospedagens-${i}`));
 }
 
+function _loadProgramacaoListeners(j) {
+    const select = getID(`programacao-local-select-${j}`);
+    const input = getID(`programacao-local-${j}`);
+
+    select.addEventListener('change', function () {
+        _programacaoLocalSelectAction(categoria);
+        if (select.value === 'outra') {
+            input.style.display = 'block';
+        }
+    });
+
+    input.addEventListener('change', function () {
+        _programacaoLocalSelectAction(categoria);
+    });
+}
+
 function _loadLineupListeners(i) {
     // Dynamic Select: Gênero
     getID(`lineup-genero-select-${i}`).addEventListener('change', () => _lineupGeneroSelectAction());

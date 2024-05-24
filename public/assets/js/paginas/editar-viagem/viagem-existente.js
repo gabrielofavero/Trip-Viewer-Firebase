@@ -6,8 +6,8 @@ async function _loadTripData(FIRESTORE_DATA) {
         _loadCustomizacaoData(FIRESTORE_DATA);
         _loadMeiosDeTransporteData(FIRESTORE_DATA);
         _loadHospedagemData(FIRESTORE_DATA);
-        _loadProgramacaoData(FIRESTORE_DATA);
         _loadDestinosData(FIRESTORE_DATA);
+        _loadProgramacaoData(FIRESTORE_DATA);
         _loadLineupData(FIRESTORE_DATA);
         _loadGaleriaData(FIRESTORE_DATA);
 
@@ -352,8 +352,8 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
                         fim: atividades[k - 1].fim
                     };
                     getID(`inner-programacao-${j}-${k}`).value = atividades[k - 1].programacao;
-                    getID(`inicio-${j}-${k}`).value = atividades[k - 1].inner - programacao;
-                    getID(`fim-${j}-${k}`).value = atividades[k - 1].inner - programacao;
+                    getID(`inner-programacao-inicio-${j}-${k}`).value = atividades[k - 1].inner - programacao;
+                    getID(`inner-programacao-fim-${j}-${k}`).value = atividades[k - 1].inner - programacao;
                 }
             }
 
@@ -390,6 +390,8 @@ function _loadDestinosData(FIRESTORE_DATA) {
             }
         }
     }
+
+    _loadDestinosSelect();
 }
 
 function _loadLineupData(FIRESTORE_DATA) {

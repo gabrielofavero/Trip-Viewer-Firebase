@@ -1335,6 +1335,14 @@ details summary::-webkit-details-marker {
   overflow-wrap: break-word;
 }
 
+@media (max-height: 730px) {
+  .input-container {
+    display: block;
+    height: 95% !important;
+    overflow: auto;
+  }
+}
+
 .message-container {
   text-align: center;
 }
@@ -1356,8 +1364,9 @@ details summary::-webkit-details-marker {
 }
 
 @media (max-width: 520px) {
+
   .message-container,
-  .input-container  {
+  .input-container {
     width: 90%;
     height: auto;
   }
@@ -1806,7 +1815,7 @@ details summary::-webkit-details-marker {
 .inner-programacao-botao:focus,
 .inner-programacao-botao-input:hover,
 .inner-programacao-botao-input:focus {
-  background-color: #f1f1f1; 
+  background-color: #f1f1f1;
 }
 
 .destinos-checkboxes {

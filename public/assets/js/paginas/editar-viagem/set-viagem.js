@@ -531,7 +531,7 @@ async function _setViagem() {
             result = await _newUserObjectDB(viagem.data, "viagens");
             DOCUMENT_ID = result?.data?.id;
         }
-        
+
         let message = result.message;
 
         if (result.success == true) {
@@ -545,7 +545,7 @@ async function _setViagem() {
                     logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight('viagens') : '',
                     logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark('viagens') : '',
                     custom: {
-                        hospedagens: TO_UPLOAD.hospedagens ? await _uploadHospedagem(UPLOAD_FILES.hospedagens) : [],
+                        hospedagens: TO_UPLOAD.hospedagens ? await _uploadViagemItens(UPLOAD_FILES.hospedagens, 'hospedagens') : [],
                         galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(UPLOAD_FILES.galeria) : []
                     }
                 }

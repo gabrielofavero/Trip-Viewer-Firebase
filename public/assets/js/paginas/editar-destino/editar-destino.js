@@ -207,7 +207,7 @@ function _updateDestinosTitle(i, categoria) {
 function _emojisOnInputAction(i, categoria) {
   const emojiDiv = getID(`${categoria}-emoji-${i}`);
   const emojiUntreated = emojiDiv.value;
-  const emojiTreated = emojiUntreated ? _getTreatedEmoji(emojiUntreated) : "";
+  const emojiTreated = emojiUntreated ? emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
 
   if (emojiTreated && emojiUntreated && emojiTreated !== emojiUntreated) {
     emojiDiv.value = emojiTreated;
