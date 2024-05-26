@@ -146,39 +146,63 @@ async function _loadUserIndex() {
   _stopLoadingScreen();
 }
 
-async function _loadUserDataList(type) {
-  let segundos = 0;
+async function _loadUserDataList(tipo) {
+  const promise = _getUserList(tipo);
+  let responseReceived = false;
 
-  const preloader = getID(`preloader-${type}`);
-  const demoraCarregamento = getID(`demora-carregamento-${type}`);
-  const semDados = getID(`sem-${type}`);
+  const preloader = getID(`preloader-${tipo}`);
+  const demoraCarregamento = getID(`demora-carregamento-${tipo}`);
+  const semDados = getID(`sem-${tipo}`);
 
-  let timer = setInterval(() => {
-    segundos++;
-    if (segundos >= 8) {
-      clearInterval(timer);
+  function onResponseReceived(response) {
       preloader.style.display = 'none';
-      if (semDados.innerHTML === '') {
-        demoraCarregamento.style.display = 'block';
+      demoraCarregamento.style.display = 'none';
+      if (response.length === 0) {
+          semDados.style.display = 'block';
+      } else {
+          semDados.style.display = 'none';
+          USER_DATA[tipo] = response;
+          _loadUserDataHTML(USER_DATA[tipo], tipo);
       }
-    }
-  }, 1000);
+  }
 
-  USER_DATA[type] = await _getUserList(type);
-  
-  if (Array.isArray(USER_DATA[type])) {
-    clearInterval(timer);
+  function onTimeout() {
+      preloader.style.display = 'none';
+      demoraCarregamento.style.display = 'block';
+  }
 
-    preloader.style.display = 'none';
-    demoraCarregamento.style.display = 'none';
+  async function checkResponse() {
+      try {
+          const response = await Promise.race([promise, new Promise((_, reject) => setTimeout(reject, 0))]);
+          if (response !== undefined) {
+              responseReceived = true;
+              clearInterval(intervalId);
+              onResponseReceived(response);
+          }
+      } catch (e) { }
+  }
 
-    if (USER_DATA[type].length === 0) {
-      semDados.style.display = 'block';
-    } else {
-      semDados.style.display = 'none';
-      _loadUserDataHTML(USER_DATA[type], type);
-    }
+  const intervalId = setInterval(checkResponse, 1000);
 
+  setTimeout(() => {
+      if (!responseReceived) {
+          onTimeout();
+      }
+  }, 8000); // 8 segundos
+
+  while (!responseReceived) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+
+  while (true) {
+      try {
+          const response = await promise;
+          if (response !== undefined) {
+              onResponseReceived(response);
+              break;
+          }
+      } catch (e) { }
+      await new Promise(resolve => setTimeout(resolve, 1000));
   }
 }
 

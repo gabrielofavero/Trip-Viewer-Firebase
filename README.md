@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 41    | 34          | 7         |
+| 🐞     | Bug      | B000    | 41    | 35          | 6         |
 | 🏆     | Feature  | F000    | 53    | 47          | 6         |
 | 📈     | Melhoria | M000    | 52    | 34         | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
@@ -35,7 +35,6 @@
 - 🐞 **B037:** Correções visuais em páginas de editar
   - Barra de scroll  não ser clicável
   - Botão de salvar não acessível no mobile (navegador)
-- 🐞 **B038:** Correção de mensagem customizada de erro de carregamento de listas não aparecer (index.html)
 
 ### Prioridade Média
 
@@ -142,6 +141,7 @@
 - 🐞 **B027:** Correção de dados de destinos não serem salvos se categoria for desabilitada
 - 📈 **M051:** Reorganizção de destinos para armazenar dados em objetos
 - 📈 **M052:** Redução do tamanho do box de mídia mobile em página de destinos para melhorar visualização desktop
+- 🐞 **B038:** Correção de mensagem customizada de erro de carregamento de listas não aparecer (index.html)
 
 ### Abril 2024
 
