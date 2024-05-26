@@ -12,11 +12,11 @@ function _getDestinosAtivos() {
     const habilidadoDestinos = getID('habilitado-destinos');
     if (habilidadoDestinos && !habilidadoDestinos.checked) return;
 
-    const childIds = _getChildIDs('destinos-checkboxes');
+    const childIDs = _getChildIDs('destinos-checkboxes');
     let result = [];
 
-    for (const child of childIds) {
-        const j = child.split("-")[child.split("-").length - 1];
+    for (const child of childIDs) {
+        const j = _getJ(child);
         const checkbox = getID(`check-${j}`);
         if (checkbox.checked) {
             result.push({
@@ -67,7 +67,7 @@ function _writeDestinosSelect(tipo) {
     const innerHTML = DESTINO_SELECT.map(destino => destino.innerHTML).join('');
 
     for (const child of childs) {
-        const j = child.split('-')[1];
+        const j = _getJ(child);
         const originalValue = getID(`${tipo}-local-${j}`).value;
         getID(`${tipo}-local-${j}`).innerHTML = innerHTML;
         getID(`${tipo}-local-box-${j}`).style.display = visibility;

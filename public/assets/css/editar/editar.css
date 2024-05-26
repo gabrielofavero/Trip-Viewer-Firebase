@@ -1528,6 +1528,10 @@ details summary::-webkit-details-marker {
   margin-top: 30px;
 }
 
+.customization-box:first-child {
+  margin-top: 16px;
+}
+
 #cores {
   margin-top: 10px;
 }
@@ -1821,4 +1825,8 @@ details summary::-webkit-details-marker {
 .destinos-checkboxes {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.turno-box {
+  margin-top: 24px;
 }

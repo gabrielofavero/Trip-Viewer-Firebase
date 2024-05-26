@@ -92,7 +92,7 @@ function _applyIdaVoltaVisibility(i) {
 
     if (!i) {
         for (const child of _getChildIDs('transporte-box')) {
-            const j = child.split('-')[1];
+            const j = _getJ(child);
             _updateTransporteTitle(j);
             getID(`idaVolta-box-${j}`).style.display = visibility;
         }

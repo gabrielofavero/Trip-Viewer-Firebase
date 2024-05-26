@@ -77,28 +77,29 @@ function _buildDestinoModulos() {
     return result;
 }
 
-function _buildDestinoCategoryObject(type) {
-    const childIDs = _getChildIDs(`${type}-box`);
+function _buildDestinoCategoryObject(tipo) {
+    const childIDs = _getChildIDs(`${tipo}-box`);
 
     let result = [];
 
     for (let i = 0; i < childIDs.length; i++) {
         let item = {};
-        const j = parseInt(childIDs[i].split("-")[1]);
+        const j = _getJ(childIDs[i]);
 
-        item.novo = getID(`${type}-novo-${j}`).checked;
-        item.nome = getID(`${type}-nome-${j}`).value;
-        item.emoji = getID(`${type}-emoji-${j}`).value;
-        item.descricao = getID(`${type}-descricao-${j}`).value;
-        item.website = getID(`${type}-website-${j}`).value;
-        item.instagram = getID(`${type}-instagram-${j}`).value;
-        item.mapa = getID(`${type}-mapa-${j}`).value;
-        item.regiao = _getDynamicSelectValue(type, 'regiao', j);
-        item.midia = getID(`${type}-midia-${j}`).value;
-        item.nota = getID(`${type}-nota-${j}`).value;
+        item.id = getID(`${tipo}-id-${j}`).value || _getNewDestinoID(tipo);
+        item.novo = getID(`${tipo}-novo-${j}`).checked;
+        item.nome = getID(`${tipo}-nome-${j}`).value;
+        item.emoji = getID(`${tipo}-emoji-${j}`).value;
+        item.descricao = getID(`${tipo}-descricao-${j}`).value;
+        item.website = getID(`${tipo}-website-${j}`).value;
+        item.instagram = getID(`${tipo}-instagram-${j}`).value;
+        item.mapa = getID(`${tipo}-mapa-${j}`).value;
+        item.regiao = _getDynamicSelectValue(tipo, 'regiao', j);
+        item.midia = getID(`${tipo}-midia-${j}`).value;
+        item.nota = getID(`${tipo}-nota-${j}`).value;
 
-        const valor = getID(`${type}-valor-${j}`);
-        item.valor = valor.innerHTML && valor.value != 'outro' ? valor.value : getID(`${type}-outro-valor-${j}`).value;
+        const valor = getID(`${tipo}-valor-${j}`);
+        item.valor = valor.innerHTML && valor.value != 'outro' ? valor.value : getID(`${tipo}-outro-valor-${j}`).value;
 
         result.push(item);
     }
@@ -127,4 +128,21 @@ async function _setDestino() {
         _stopLoadingScreen();
         _openModal('modal');
     }
+}
+
+function _getNewDestinoID(tipo) {
+    const js = _getJs(`${tipo}-box`);
+    let ids = [];
+
+    for (const j of js) {
+        const id = getID(`${tipo}-id-${j}`).value;
+        if (id) ids.push(id);
+    }
+
+    let newID = _getRandomID();
+    while (ids.includes(newID)) {
+        newID = _getRandomID();
+    }
+
+    return newID;
 }

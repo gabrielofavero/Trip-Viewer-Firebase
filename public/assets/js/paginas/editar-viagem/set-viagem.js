@@ -121,9 +121,9 @@ async function _buildCompartilhamentoObject() {
     }
 
     if (editores) {
-        const childIds = _getChildIDs('habilitado-editores-content');
-        for (var i = 0; i < childIds.length; i++) {
-            const j = parseInt(childIds[i].split("-")[1]);
+        const childIDs = _getChildIDs('habilitado-editores-content');
+        for (var i = 0; i < childIDs.length; i++) {
+            const j = _getJ(childIDs[i]);
             const divEditor = getID(`editores-email-${j}`);
             const valueEditor = divEditor ? _returnEmptyIfNoValue(divEditor.value) : "";
             editoresArray.push(valueEditor);
@@ -198,10 +198,10 @@ function _buildTransporteObject() {
         result.visualizacaoSimplificada = false;
     }
 
-    const childIds = _getChildIDs('transporte-box');
+    const childIDs = _getChildIDs('transporte-box');
 
-    for (var i = 0; i < childIds.length; i++) {
-        const j = parseInt(childIds[i].split("-")[1]);
+    for (var i = 0; i < childIDs.length; i++) {
+        const j = _getJ(childIDs[i]);
 
         if (getID(`ida-${j}`).checked) {
             result.idaVolta.push('ida');
@@ -292,10 +292,10 @@ function _buildHospedagemObject() {
         viagem: ""
     }
 
-    const childIds = _getChildIDs('hospedagens-box');
+    const childIDs = _getChildIDs('hospedagens-box');
 
-    for (var i = 0; i < childIds.length; i++) {
-        const j = parseInt(childIds[i].split("-")[1]);
+    for (var i = 0; i < childIDs.length; i++) {
+        const j = _getJ(childIDs[i]);
 
         const divCafe = getID(`hospedagens-cafe-${j}`);
         result.cafe.push(divCafe.checked);
@@ -359,10 +359,10 @@ function _buildProgramacaoObject() {
         viagem: ""
     }
 
-    const childIds = _getChildIDs('programacao-box');
+    const childIDs = _getChildIDs('programacao-box');
 
-    for (var i = 0; i < childIds.length; i++) {
-        const j = parseInt(childIds[i].split("-")[1]);
+    for (var i = 0; i < childIDs.length; i++) {
+        const j = _getJ(childIDs[i]);
         let innerResult = {
             manha: [],
             tarde: [],
@@ -387,10 +387,10 @@ function _buildProgramacaoObject() {
 
 function _buildDestinosArray() {
     let result = [];
-    const childIds = _getChildIDs('destinos-checkboxes');
+    const childIDs = _getChildIDs('destinos-checkboxes');
 
-    for (const child of childIds) {
-        const j = child.split("-")[child.split("-").length - 1];
+    for (const child of childIDs) {
+        const j = _getJ(child);
         const checkbox = getID(`check-${j}`);
         if (checkbox.checked) {
             result.push({
@@ -426,7 +426,7 @@ function _buildLineupObject() {
     }
 
     for (let i = 0; i < childIDs.length; i++) {
-        const j = parseInt(childIDs[i].split("-")[1]);
+        const j = _getJ(childIDs[i]);
         const selectValue = getID(`lineup-local-${j}`).value || 'generico';
 
         const divHead = getID(`lineup-headliner-${j}`);
@@ -478,9 +478,9 @@ function _buildGaleriaObject() {
         titulos: []
     }
 
-    const childIds = _getChildIDs('galeria-box');
-    for (var i = 0; i < childIds.length; i++) {
-        const j = parseInt(childIds[i].split("-")[1]);
+    const childIDs = _getChildIDs('galeria-box');
+    for (var i = 0; i < childIDs.length; i++) {
+        const j = _getJ(childIDs[i]);
 
         const descricao = getID(`galeria-descricao-${j}`).value || "";
         result.descricoes.push(descricao);

@@ -21,7 +21,6 @@ function _updateProgramacaoTitle(j) {
 
     const data = DATAS[j - 1]
     const dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
-
     div.innerText = _getProgramacaoTitle(dataFormatada, value);
 }
 
@@ -60,37 +59,6 @@ function _getProgramacaoTitle(dataFormatada, titulo = '') {
     else return dataFormatada;
 }
 
-function _getInnerProgramacaoPasseioSelects(j, k) {
-    const destinosAtivos = _getDestinosAtivos();
-    const currentID = getID(`programacao-local-${j}`).value;
-    const idsAtivos = destinosAtivos.map(destino => destino.destinosID);
-    const todosIds = DESTINOS.map(destino => destino.code);
-
-
-    if (destinosAtivos.length < 0 || !currentID || !idsAtivos.includes(currentID)
-        || !todosIds.includes(currentID)) {
-        return {
-            ativo: false
-        }
-    };
-
-    const index = todosIds.findIndex(destino => destino == currentID);
-    const currentDestinoData = DESTINOS[index].data;
-    const categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key));
-
-    const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
-    const passeioOptions = categorias.map(categoria => {
-        const passeios = currentDestinoData[categoria];
-        return passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
-    }).join('');
-
-    return {
-        ativo: true,
-        categoriaOptions: categoriaOptions,
-        passeioOptions: passeioOptions
-    }
-}
-
 function _programacaoLocalSelectAction(categoria, init = false, updateLast = false) {
     let copy = SELECT_DESTINO_SELECT[categoria];
     SELECT_DESTINO_SELECT[categoria] = _getUpdatedDynamicSelectArray(categoria, 'local');
@@ -99,8 +67,34 @@ function _programacaoLocalSelectAction(categoria, init = false, updateLast = fal
 
 
 // Inner Programação
+function _loadInnerProgramacaoHTML(j) {
+    if (Object.keys(INNER_PROGRAMACAO).length == 0) return;
+
+    const id = `inner-programacao-${j}`;
+
+    if (!k) {
+        const childs = _getChildIDs(id);
+        const lastChild = childs[childs.length - 1];
+        k = lastChild ? parseInt(lastChild.split('-')[lastChild.split('-').length - 1]) + 1 : 1;
+    }
+
+    const innerHTML = `<button id="inner-programacao-botao-${j}-${k}" class="btn inner-programacao-botao" onclick="_openInnerProgramacao(${j}, ${k})">
+                        Adicionar Programação
+                       </button>`
+    getID(`inner-programacao-${j}`).innerHTML += innerHTML;
+
+}
+
 function _openInnerProgramacao(j, k) {
-    const selects = _getInnerProgramacaoPasseioSelects(j, k);
+    const key = _jsDateToKey(DATAS[j - 1]);
+    let isNew = false;
+
+    if (!k) {
+        k = INNER_PROGRAMACAO[key].length + 1;
+        isNew = true;
+    }
+
+    const selects = _getInnerProgramacaoSelects(j);
     const title = `Adicionar Programação`;
     const content = `<div class="inner-programacao" id="inner-programacao-box-${j}-${k}">
                       <div class="nice-form-group">
@@ -134,18 +128,20 @@ function _openInnerProgramacao(j, k) {
                         </select>
                       </div>
 
-                      <div class="nice-form-group">
+                      <div class="nice-form-group" style="display: ${selects.ativo ? 'block' : 'none'}">
                         <label>Passeio Associado <span class="opcional">(Opcional)</span></label>
                         <select class="editar-select" id="inner-programacao-select-categoria-${j}-${k}">
+                            <option value="">Selecione</option>
+                            ${selects.categoriaOptions}
                         </select>
                       </div>
 
-                      <div class="nice-form-group" style="margin-top: 16px">
+                      <div class="nice-form-group" id="inner-programacao-select-passeio-box-${j}-${k}" style="margin-top: 16px; display: none">
                         <select class="editar-select" id="inner-programacao-select-passeio-${j}-${k}">
                         </select>
                       </div>
 
-                      <div class="button-box-right" style="margin-top: 8px; margin-bottom: -18px">
+                      <div class="button-box-right" style="margin-top: 8px; margin-bottom: -18px; display: ${isNew ? 'none' : 'block'}">
                         <button onclick="_deleteInnerProgramacao(${j}, ${k})" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
@@ -159,17 +155,21 @@ function _openInnerProgramacao(j, k) {
 
     _displayInputModal(title, content, deleteAction, confirmAction);
 
-    const id = `inner-programacao-box-${j}-${k}`;
     const inicio = getID(`inner-programacao-inicio-${j}-${k}`);
     const turno = getID(`inner-programacao-select-turno-${j}-${k}`);
 
-    if (INNER_PROGRAMACAO[id]) {
-        getID(`inner-programacao-${j}-${k}`).value = INNER_PROGRAMACAO[id].programacao;
-        inicio.value = INNER_PROGRAMACAO[id].inicio;
-        getID(`inner-programacao-fim-${j}-${k}`).value = INNER_PROGRAMACAO[id].fim;
-        turno.value = INNER_PROGRAMACAO[id].turno;
-        getID(`inner-programacao-select-categoria-${j}-${k}`).value = INNER_PROGRAMACAO[id].categoria;
-        getID(`inner-programacao-select-passeio-${j}-${k}`).value = INNER_PROGRAMACAO[id].passeio;
+    if (INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][k - 1]) {
+        const dados = INNER_PROGRAMACAO[key][k - 1];
+
+        getID(`inner-programacao-${j}-${k}`).value = dados.programacao;
+        getID(`inner-programacao-fim-${j}-${k}`).value = dados.fim;
+        getID(`inner-programacao-select-categoria-${j}-${k}`).value = dados.passeio.categoria;
+        getID(`inner-programacao-select-passeio-${j}-${k}`).value = dados.passeio.id;
+
+        inicio.value = dados.inicio;
+        turno.value = dados.turno;
+
+        _loadInnerProgramacaoSelectPasseio(selects, j, k);
     }
 
     const lastTurno = getID(`inner-programacao-select-turno-${j}-${k - 1}`)
@@ -183,44 +183,86 @@ function _openInnerProgramacao(j, k) {
         const turnoValue = hora < 6 ? 'madrugada' : hora < 12 ? 'manha' : hora < 18 ? 'tarde' : 'noite';
         turno.value = turnoValue;
     });
+
+    getID(`inner-programacao-select-categoria-${j}-${k}`).addEventListener('change', () => _loadInnerProgramacaoSelectPasseio(selects, j, k));
+}
+
+function _getInnerProgramacaoSelects(j) {
+    const destinosAtivos = _getDestinosAtivos();
+    const currentID = getID(`programacao-local-${j}`).value;
+    const idsAtivos = destinosAtivos.map(destino => destino.destinosID);
+    const todosIds = DESTINOS.map(destino => destino.code);
+
+    if (destinosAtivos.length < 0 || !currentID || !idsAtivos.includes(currentID)
+        || !todosIds.includes(currentID)) {
+        return {
+            ativo: false,
+            categoriaOptions: '',
+            passeioOptions: {}
+        }
+    };
+
+    const index = todosIds.findIndex(destino => destino == currentID);
+    const currentDestinoData = DESTINOS[index].data;
+
+    let categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key));
+    categorias = categorias.sort((a, b) => DESTINOS_CATEGORIAS.indexOf(a) - DESTINOS_CATEGORIAS.indexOf(b));
+    const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
+
+    let passeioOptions = {};
+    for (const categoria of categorias) {
+        const passeios = currentDestinoData[categoria];
+        passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
+    }
+
+    return {
+        ativo: true,
+        categoriaOptions: categoriaOptions,
+        passeioOptions: passeioOptions
+    }
+}
+
+function _loadInnerProgramacaoSelectPasseio(selects, j, k) {
+    const categoriaValue = getID(`inner-programacao-select-categoria-${j}-${k}`).value;
+    const passeio = getID(`inner-programacao-select-passeio-box-${j}-${k}`);
+    const passeioSelect = getID(`inner-programacao-select-passeio-${j}-${k}`);
+
+    if (categoriaValue && selects.passeioOptions[categoriaValue]) {
+        passeioSelect.innerHTML = selects.passeioOptions[categoriaValue];
+        passeio.style.display = 'block';
+    } else {
+        passeio.style.display = 'none';
+    }
 }
 
 function _addInnerProgramacao(j, k) {
-    const id = `inner-programacao-box-${j}-${k}`;
-    const programacao = getID(`inner-programacao-${j}-${k}`).value;
-    const inicio = getID(`inner-programacao-inicio-${j}-${k}`).value;
-    const fim = getID(`inner-programacao-fim-${j}-${k}`).value;
-    const turno = getID(`inner-programacao-select-turno-${j}-${k}`).value;
-    const categoria = getID(`inner-programacao-select-categoria-${j}-${k}`).value;
-    const passeio = getID(`inner-programacao-select-passeio-${j}-${k}`).value;
+    const key = _jsDateToKey(DATAS[j - 1]);
+    const programacao = getID(`inner-programacao-${j}-${k}`);
 
-    INNER_PROGRAMACAO[id] = {
-        programacao: programacao,
-        inicio: inicio,
-        fim: fim,
-        turno: turno,
-        categoria: categoria,
-        passeio: passeio
-    };
+    if (!programacao.value) {
+        programacao.reportValidity();
+    } else {
+        const result = {
+            programacao: programacao.value,
+            inicio: getID(`inner-programacao-inicio-${j}-${k}`).value,
+            fim: getID(`inner-programacao-fim-${j}-${k}`).value,
+            turno: getID(`inner-programacao-select-turno-${j}-${k}`).value,
+            passeio: {
+                categoria: getID(`inner-programacao-select-categoria-${j}-${k}`).value,
+                id: getID(`inner-programacao-select-passeio-${j}-${k}`).value
+            }
+        };
 
-    _updateInnerProgramacaoBotaoText(j, k);
+        if (!INNER_PROGRAMACAO[key]) {
+            INNER_PROGRAMACAO[key] = [];
+        }
+
+        INNER_PROGRAMACAO[key][k - 1] = result;
+    }
 }
 
-function _addInnerProgramacaoButton(j, k, open = true) {
-    const id = `inner-programacao-${j}`;
+function _setInnerProgramacAO(j, k) {
 
-    if (!k) {
-        const childs = _getChildIDs(id);
-        const lastChild = childs[childs.length - 1];
-        k = lastChild ? parseInt(lastChild.split('-')[lastChild.split('-').length - 1]) + 1 : 1;
-    }
-
-    const innerHTML = `<button id="inner-programacao-botao-${j}-${k}" class="btn inner-programacao-botao" onclick="_openInnerProgramacao(${j}, ${k})">
-                        Adicionar Programação
-                       </button>`
-    getID(`inner-programacao-${j}`).innerHTML += innerHTML;
-
-    if (open) _openInnerProgramacao(j, k);
 }
 
 function _updateInnerProgramacaoBotaoText(j, k) {

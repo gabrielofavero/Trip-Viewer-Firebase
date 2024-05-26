@@ -427,7 +427,7 @@ function _searchDestinosListenerAction() {
      const search = getID('destinos-search').value.toLowerCase();
  
      for (const child of childs) {
-         const j = child.split('-')[child.split('-').length - 1];
+         const j = _getJ(child);
          const label = getID(`check-label-${j}`).innerText.toLowerCase();
          getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
      }

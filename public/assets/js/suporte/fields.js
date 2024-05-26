@@ -139,6 +139,14 @@ function _addValueToSelectIfExists(value, select) {
     }
 }
 
+function _getAllValuesFromSelect(select) {
+    var values = [];
+    for (var i = 0; i < select.options.length; i++) {
+        values.push(select.options[i].value);
+    }
+    return values;
+}
+
 
 // Validação de links
 function _isHttp(link) {

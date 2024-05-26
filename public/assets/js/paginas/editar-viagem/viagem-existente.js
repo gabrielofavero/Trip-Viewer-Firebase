@@ -10,7 +10,6 @@ async function _loadTripData(FIRESTORE_DATA) {
         _loadProgramacaoData(FIRESTORE_DATA);
         _loadLineupData(FIRESTORE_DATA);
         _loadGaleriaData(FIRESTORE_DATA);
-
     } catch (error) {
         _displayErrorMessage(error);
         throw error;
@@ -334,30 +333,42 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
 
             const titulo = FIRESTORE_DATA.programacoes.programacao[i]?.titulo;
             if (titulo) {
-                getID(`programacao-inner-title-${j}`).value = titulo;
                 diaDeProgramacao.titulo = titulo;
+                const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
+                if (titulo.toLowerCase() == 'outro' || !selectValues.includes(titulo)) {
+                    getID(`programacao-inner-title-select-${j}`).value = 'outro';
+                    getID(`programacao-inner-title-${j}`).style.display = 'block';
+                    getID(`programacao-inner-title-${j}`).value = titulo;
+                } else {
+                    getID(`programacao-inner-title-select-${j}`).value = titulo;
+                    getID(`programacao-inner-title-${j}`).style.display = 'none';
+                }
             }
 
             getID(`programacao-title-${j}`).innerText = _getProgramacaoTitle(diaDaSemana, titulo);
+            INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = [];
 
             const atividades = FIRESTORE_DATA.programacoes.programacao[j]?.atividades;
             if (atividades && atividades.length > 0) {
                 for (let k = 1; k <= manha.length; k++) {
                     _addInnerProgramacao(j, k);
-                    INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+
+                    INNER_PROGRAMACAO[_jsDateToKey(jsDate)].push({
                         destino: atividades[k - 1].destino,
                         titulo: atividades[k - 1].titulo,
                         programacao: atividades[k - 1].programacao,
                         inicio: atividades[k - 1].inicio,
-                        fim: atividades[k - 1].fim
-                    };
+                        fim: atividades[k - 1].fim,
+                        passeio: atividades[k - 1].passeio
+                    });
+
                     getID(`inner-programacao-${j}-${k}`).value = atividades[k - 1].programacao;
                     getID(`inner-programacao-inicio-${j}-${k}`).value = atividades[k - 1].inner - programacao;
                     getID(`inner-programacao-fim-${j}-${k}`).value = atividades[k - 1].inner - programacao;
                 }
             }
 
-            _migration(FIRESTORE_DATA, j);
+            _migration(jsDate, j);
 
             _writeDestinosSelect('lineup');
         }
@@ -516,43 +527,36 @@ function _formatAltura(value) {
 
 // Migração
 
-function _migration(FIRESTORE_DATA, j) {
+function _migration(jsDate, j) {
+    const key = _jsDateToKey(jsDate);
     const manha = FIRESTORE_DATA.programacoes.programacao[j - 1]?.manha;
     const tarde = FIRESTORE_DATA.programacoes.programacao[j - 1]?.tarde;
     const noite = FIRESTORE_DATA.programacoes.programacao[j - 1]?.noite;
 
-    let k = 1;
-
     for (const itemManha of manha) {
-        _addInnerProgramacaoButton(j, k, false);
-        INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+        INNER_PROGRAMACAO[key].push({
             programacao: itemManha,
             inicio: '',
-            fim: ''
-        };
-        _updateInnerProgramacaoBotaoText(j, k);
-        k++;
+            fim: '',
+            turno: 'manha'
+        });
     }
 
     for (const itemTarde of tarde) {
-        _addInnerProgramacaoButton(j, k, false);
-        INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+        INNER_PROGRAMACAO[key].push({
             programacao: itemTarde,
             inicio: '',
-            fim: ''
-        };
-        _updateInnerProgramacaoBotaoText(j, k);
-        k++;
+            fim: '',
+            turno: 'tarde'
+        });
     }
 
     for (const itemNoite of noite) {
-        _addInnerProgramacaoButton(j, k, false);
-        INNER_PROGRAMACAO[`inner-programacao-box-${j}-${k}`] = {
+        INNER_PROGRAMACAO[key].push({
             programacao: itemNoite,
             inicio: '',
-            fim: ''
-        };
-        _updateInnerProgramacaoBotaoText(j, k);
-        k++;
+            fim: '',
+            turno: 'noite'
+        });
     }
 }

@@ -180,15 +180,15 @@ function _removeChild(tipo) {
 function _removeChildWithValidation(tipo, i) {
   _removeChild(`${tipo}-${i}`);
   if (_getChildIDs(`${tipo}-box`).length === 0) {
-       getID(`habilitado-${tipo}`).checked = false;
-       _hideContent(tipo);
+    getID(`habilitado-${tipo}`).checked = false;
+    _hideContent(tipo);
   }
 }
 
 function _removeChildDestinosWithValidation(i) {
   _removeChild(`com-destinos-${i}`);
   if (_getChildIDs(`com-destinos`).length === 0) {
-    if(getID(`habilitado-destinos`)) {
+    if (getID(`habilitado-destinos`)) {
       getID(`habilitado-destinos`).checked = false;
       _hideContent('destinos');
     }
@@ -208,4 +208,39 @@ function _copyToClipboard(text) {
   if (getID('copy-msg')) {
     _toggleFadingVisibility()
   }
+}
+
+function _getJ(id) {
+  const jSplit = id.split("-");
+  return parseInt(jSplit[jSplit.length - 1]);
+}
+
+function _getJs(parentID) {
+  let result = [];
+  for (const child of _getChildIDs(parentID)) {
+    const jSplit = child.split("-");
+    result.push(parseInt(jSplit[jSplit.length - 1]));
+  }
+  return result;
+}
+
+function _getLastJ(parentID) {
+  const js = _getJs(parentID);
+  return js.length === 0 ? 0 : js[js.length - 1];
+}
+
+function _getNextJ(parentID) {
+  return _getLastJ(parentID) + 1;
+}
+
+function _getRandomID(idLength = 5) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomId = '';
+
+  for (let i = 0; i < idLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomId += characters[randomIndex];
+  }
+
+  return randomId;
 }

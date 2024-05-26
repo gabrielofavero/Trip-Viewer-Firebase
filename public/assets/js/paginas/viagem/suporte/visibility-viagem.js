@@ -77,7 +77,7 @@ function _adjustSingleCardsHeights(tipo, second=false) {
     let maxHeight = 0;
   
     for (const slider of sliders) {
-        const j = slider.split('-').pop();
+        const j = _getJ(slider);
         const box = getID(`${tipo}-${innerID}-${j}`);
 
         if (box) {
@@ -90,7 +90,7 @@ function _adjustSingleCardsHeights(tipo, second=false) {
     }
   
     for (const slider of sliders) {
-        const j = slider.split('-').pop();
+        const j = _getJ(slider);
         const div = getID(`${tipo}-${innerID}-${j}`);
         if (div) {
             div.style.height = `${maxHeight}px`;

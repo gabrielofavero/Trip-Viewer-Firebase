@@ -46,6 +46,11 @@ function _loadDestinoExistente(tipo) {
       
       _addDestino(tipo);
 
+      const id = FIRESTORE_DESTINOS_DATA[tipo][i].id;
+      if (id) {
+        getID(`${tipo}-id-${j}`).value = id;
+      }
+
       const novo = FIRESTORE_DESTINOS_DATA[tipo][i].novo || false;
       getID(`${tipo}-novo-${j}`).checked = novo;
       getID(`${tipo}-title-icon-${j}`).style.display = novo ? 'block' : 'none';
@@ -63,7 +68,7 @@ function _loadDestinoExistente(tipo) {
       getID(`${tipo}-mapa-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].mapa || '';
       getID(`${tipo}-instagram-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].instagram || '';
       getID(`${tipo}-regiao-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].regiao || '';
-      _loadMoedaValorAndVisibility(FIRESTORE_DESTINOS_DATA[tipo][i].valor || '', tipo, j)
+      _loadMoedaValorAndVisibility(FIRESTORE_DESTINOS_DATA[tipo][i].valor || '', tipo, j);
       getID(`${tipo}-midia-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].midia || '';
       getID(`${tipo}-nota-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].nota || '';
     }

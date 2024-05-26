@@ -40,7 +40,6 @@ function _loadProgramacao() {
       <div id="collapse-programacao-${j}" class="accordion-collapse collapse"
         aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
         <div class="accordion-body">
-          <h1 class="item-title"></h1>
 
           <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosSelectVisibility()}">
             <label>Local<span class="opcional"> (Opcional)</span></label>
@@ -57,11 +56,28 @@ function _loadProgramacao() {
             <input class="nice-form-group" id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" style="display: none;">
           </div>
 
-          <label style="margin-top: 24px;">Programação</label>
-          <div class="inner-programacao" id="inner-programacao-${j}"></div>
+          <div class='turno-box' id='programacao-madrugada-${j}' style="display: none;">
+            <label>Madrugada</label>
+            <div class="inner-programacao" id="inner-programacao-madrugada-${j}"></div>
+          </div>
 
-          <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block;">
-            <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_addInnerProgramacaoButton(${j})">
+          <div class='turno-box' id='programacao-manha-${j}' style="display: none;">
+            <label>Manhã</label>
+            <div class="inner-programacao" id="inner-programacao-manha-${j}"></div>
+          </div>
+
+          <div class='turno-box' id='programacao-tarde-${j}' style="display: none;">
+            <label>Tarde</label>
+            <div class="inner-programacao" id="inner-programacao-tarde-${j}"></div>
+          </div>
+
+          <div class='turno-box' id='programacao-noite-${j}' style="display: none;">
+            <label>Noite</label>
+            <div class="inner-programacao" id="inner-programacao-noite-${j}"></div>
+          </div>
+
+          <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
+            <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_openInnerProgramacao(${j})">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
@@ -81,7 +97,7 @@ function _loadProgramacao() {
   }
 
   for (const child of _getChildIDs('programacao-box')) {
-    const j = child.split('-')[child.split('-').length - 1];
+    const j = _getJ(child);
     getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     getID(`programacao-local-${j}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j))
@@ -109,22 +125,18 @@ function _loadDestinos() {
   _loadDestinosSelect();
 
   for (const child of _getChildIDs('destinos-checkboxes')) {
-    const j = child.split('-')[child.split('-').length - 1];
+    const j = _getJ(child);
     getID(`check-${j}`).addEventListener('change', () => _writeDestinosSelects())
   }
 }
 
 function _addTransporte() {
-  var i = 1;
-  while (getID('transporte-' + i)) {
-    i++;
-  }
-
+  const j = _getNextJ('transporte-box')
   var checkedIda = '';
   var checkedVolta = '';
   var day = '';
 
-  if (i === 1) {
+  if (j === 1) {
     checkedIda = 'checked';
     day = getID('inicio').value;
   } else {
@@ -133,66 +145,66 @@ function _addTransporte() {
   }
 
   $('#transporte-box').append(`
-      <div id="transporte-${i}" class="accordion-item accordion-transporte" >
-      <h2 class="accordion-header" id="heading-transporte-${i}">
-        <button id="transporte-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-transporte-${i}" aria-expanded="false" aria-controls="collapse-transporte-${i}">
-          Trajeto ${i}
+      <div id="transporte-${j}" class="accordion-item accordion-transporte" >
+      <h2 class="accordion-header" id="heading-transporte-${j}">
+        <button id="transporte-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-transporte-${j}" aria-expanded="false" aria-controls="collapse-transporte-${j}">
+          Trajeto ${j}
         </button>
       </h2>
-      <div id="collapse-transporte-${i}" class="accordion-collapse collapse"
-        aria-labelledby="heading-transporte-${i}" data-bs-parent="#transporte-box">
+      <div id="collapse-transporte-${j}" class="accordion-collapse collapse"
+        aria-labelledby="heading-transporte-${j}" data-bs-parent="#transporte-box">
         <div class="accordion-body">
-          <fieldset class="nice-form-group" id="idaVolta-box-${i}">
+          <fieldset class="nice-form-group" id="idaVolta-box-${j}">
             <div class="nice-form-group" style="margin-top: -15px">
-              <input type="radio" name="idaVolta-${i}" id="ida-${i}" ${checkedIda} />
-              <label for="ida-${i}">Ida</label>
+              <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${checkedIda} />
+              <label for="ida-${j}">Ida</label>
             </div>
   
             <div class="nice-form-group">
-              <input type="radio" name="idaVolta-${i}" id="durante-${i}"/>
-              <label for="durante-${i}">Durante a Viagem</label>
+              <input type="radio" name="idaVolta-${j}" id="durante-${j}"/>
+              <label for="durante-${j}">Durante a Viagem</label>
             </div>
   
             <div class="nice-form-group">
-              <input type="radio" name="idaVolta-${i}" id="volta-${i}" ${checkedVolta} />
-              <label for="volta-${i}">Volta</label>
+              <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${checkedVolta} />
+              <label for="volta-${j}">Volta</label>
             </div>
           </fieldset>
 
           <div class="nice-form-group">
             <label>Ponto de Partida <span class="opcional"> (Opcional)</span></label>
-            <input id="ponto-partida-${i}" type="text" placeholder="Belo Horizonte" />
+            <input id="ponto-partida-${j}" type="text" placeholder="Belo Horizonte" />
           </div>
 
           <div class="nice-form-group">
             <label>Ponto de Chegada <span class="opcional"> (Opcional)</span></label>
-            <input id="ponto-chegada-${i}" type="text" placeholder="Las Vegas" />
+            <input id="ponto-chegada-${j}" type="text" placeholder="Las Vegas" />
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Partida</label>
-              <input required class="flex-input" id="partida-${i}" type="date" value="${day}" />
+              <input required class="flex-input" id="partida-${j}" type="date" value="${day}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input required class="flex-input mini-box" id="partida-horario-${i}" type="time" value="00:00" />
+              <input required class="flex-input mini-box" id="partida-horario-${j}" type="time" value="00:00" />
             </div>
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Chegada</label>
-              <input required class="flex-input" id="chegada-${i}" type="date" value="${day}" />
+              <input required class="flex-input" id="chegada-${j}" type="date" value="${day}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input required class="flex-input mini-box" id="chegada-horario-${i}" type="time" value="00:30" />
+              <input required class="flex-input mini-box" id="chegada-horario-${j}" type="time" value="00:30" />
             </div>
           </div>
   
           <div class="nice-form-group">
             <label>Meio de Transporte</label>
-            <select class="editar-select" required id="transporte-tipo-${i}">
+            <select class="editar-select" required id="transporte-tipo-${j}">
               <option value="voo">Avião</option>
               <option value="carro">Carro</option>
               <option value="onibus">Ônibus</option>
@@ -209,30 +221,30 @@ function _addTransporte() {
 
           <div class="nice-form-group">
             <label>Duração <span class="opcional"> (Opcional)</span></label>
-            <input class="flex-input" id="transporte-duracao-${i}" type="time" />
+            <input class="flex-input" id="transporte-duracao-${j}" type="time" />
           </div>
 
-          <div class="nice-form-group" id="empresa-select-form-group-${i}">
+          <div class="nice-form-group" id="empresa-select-form-group-${j}">
             <label>Nome da Empresa <span class="opcional"> (Opcional)</span></label>
-            <select class="editar-select" id="empresa-select-${i}" style="display: none;"></select>
-            <input class="nice-form-group" id="empresa-${i}" type="text" placeholder="Empresa de Transporte" />
+            <select class="editar-select" id="empresa-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="empresa-${j}" type="text" placeholder="Empresa de Transporte" />
           </div>
 
           <div class="nice-form-group">
             <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="reserva-transporte-${i}" type="text" placeholder="ABC123" />
+            <input id="reserva-transporte-${j}" type="text" placeholder="ABC123" />
           </div>
 
           <div class="nice-form-group">
             <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="transporte-link-${i}" type="url" placeholder="https://www.google.com/" value=""
+            <input id="transporte-link-${j}" type="url" placeholder="https://www.google.com/" value=""
               class="icon-right" />
           </div>
   
         </div>
   
         <div class="deletar-box">
-          <button id="remove-transporte-${i}" class="btn btn-secondary">
+          <button id="remove-transporte-${j}" class="btn btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -245,104 +257,100 @@ function _addTransporte() {
     </div>
       `);
 
-  _loadTransporteListeners(i);
-  _addRemoveChildListener('transporte', i);
-  _loadTransporteVisibility(i);
-  _applyIdaVoltaVisibility(i);
+  _loadTransporteListeners(j);
+  _addRemoveChildListener('transporte', j);
+  _loadTransporteVisibility(j);
+  _applyIdaVoltaVisibility(j);
 }
 
 function _addHospedagens() {
-  var i = 1;
-  while (getID('hospedagens-' + i)) {
-    i++;
-  }
-
+  const j = _getNextJ('hospedagens-box');
   $('#hospedagens-box').append(`
-      <div id="hospedagens-${i}" class="accordion-item accordion-hospedagens" >
-      <h2 class="accordion-header" id="heading-hospedagens-${i}">
-        <button id="hospedagens-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-hospedagens-${i}" aria-expanded="false" aria-controls="collapse-hospedagens-${i}">
-          Hospedagem ${i}
+      <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens" >
+      <h2 class="accordion-header" id="heading-hospedagens-${j}">
+        <button id="hospedagens-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-hospedagens-${j}" aria-expanded="false" aria-controls="collapse-hospedagens-${j}">
+          Hospedagem ${j}
         </button>
       </h2>
-      <div id="collapse-hospedagens-${i}" class="accordion-collapse collapse"
-        aria-labelledby="heading-hospedagens-${i}" data-bs-parent="#hospedagens-box">
+      <div id="collapse-hospedagens-${j}" class="accordion-collapse collapse"
+        aria-labelledby="heading-hospedagens-${j}" data-bs-parent="#hospedagens-box">
         <div class="accordion-body">
           <div class="nice-form-group">
-            <input id="hospedagens-cafe-${i}" type="checkbox" class="switch">
-            <label for="hospedagens-cafe-${i}">
+            <input id="hospedagens-cafe-${j}" type="checkbox" class="switch">
+            <label for="hospedagens-cafe-${j}">
               Café da Manhã Incluso
             </label>
           </div>
 
           <div class="nice-form-group">
             <label>Nome da Hospedagem</label>
-            <input required id="hospedagens-nome-${i}" type="text" placeholder="Casa da Fernanda" />
+            <input required id="hospedagens-nome-${j}" type="text" placeholder="Casa da Fernanda" />
           </div>
   
           <div class="nice-form-group">
             <label>Endereço</label>
-            <input required id="hospedagens-endereco-${i}" type="text" placeholder="Rua ABC, número 0" />
+            <input required id="hospedagens-endereco-${j}" type="text" placeholder="Rua ABC, número 0" />
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Check-In</label>
-              <input class="flex-input" id="check-in-${i}" type="date" value="${TODAY}" />
+              <input class="flex-input" id="check-in-${j}" type="date" value="${TODAY}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input mini-box" id="check-in-horario-${i}" type="time" value="14:00" />
+              <input class="flex-input mini-box" id="check-in-horario-${j}" type="time" value="14:00" />
             </div>
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Check-Out</label>
-              <input class="flex-input" id="check-out-${i}" type="date" value="${TOMORROW}" />
+              <input class="flex-input" id="check-out-${j}" type="date" value="${TOMORROW}" />
             </div>
             <div class="nice-form-group side-by-side">
-              <input class="flex-input mini-box" id="check-out-horario-${i}" type="time" value="12:00" />
+              <input class="flex-input mini-box" id="check-out-horario-${j}" type="time" value="12:00" />
             </div>
           </div>
   
           <div class="nice-form-group">
             <label>Descrição <span class="opcional"> (Opcional)</span></label>
-            <input id="hospedagens-descricao-${i}" type="text" placeholder="Quarto Duplo, camas King" />
+            <input id="hospedagens-descricao-${j}" type="text" placeholder="Quarto Duplo, camas King" />
           </div>
     
           <div class="nice-form-group">
             <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
-            <input id="reserva-hospedagens-link-${i}" type="url" placeholder="https://www.google.com/" value=""
+            <input id="reserva-hospedagens-link-${j}" type="url" placeholder="https://www.google.com/" value=""
               class="icon-right" />
           </div>
 
-          <div class="nice-form-group customization-box" id="hospedagens-${i}-box">
+          <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
             <label>Imagem <span class="opcional"> (Opcional)</span></label>
-            <input id="upload-hospedagens-${i}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-            <p id="upload-hospedagens-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
+            <input id="upload-hospedagens-${j}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+            <p id="upload-hospedagens-${j}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
           </div>
 
           <div class="nice-form-group">
-            <input id="link-hospedagens-${i}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
+            <input id="link-hospedagens-${j}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
               class="icon-right">
           </div>
 
-          <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-hospedagens-${i}">
+          <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-hospedagens-${j}">
             <div class="nice-form-group">
-              <input type="radio" name="type-hospedagens-${i}" id="enable-link-hospedagens-${i}" checked>
-              <label for="enable-link-hospedagens-${i}">Fornecer link</label>
+              <input type="radio" name="type-hospedagens-${j}" id="enable-link-hospedagens-${j}" checked>
+              <label for="enable-link-hospedagens-${j}">Fornecer link</label>
             </div>
 
             <div class="nice-form-group">
-              <input type="radio" name="type-hospedagens-${i}" id="enable-upload-hospedagens-${i}">
-              <label for="enable-upload-hospedagens-${i}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
+              <input type="radio" name="type-hospedagens-${j}" id="enable-upload-hospedagens-${j}">
+              <label for="enable-upload-hospedagens-${j}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
             </div>
           </fieldset>
             
           </div>
     
           <div class="deletar-box">
-            <button id="remove-hospedagens-${i}" class="btn btn-secondary">
+            <button id="remove-hospedagens-${j}" class="btn btn-secondary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -355,21 +363,17 @@ function _addHospedagens() {
     </div>
       `);
 
-  _loadImageSelector(`hospedagens-${i}`);
-  _addRemoveChildListener('hospedagens', i);
+  _loadImageSelector(`hospedagens-${j}`);
+  _addRemoveChildListener('hospedagens', j);
 }
 
 function _addEditores() {
-  let i = 1;
-  while (getID(`editores-email-${i}`)) {
-    i++;
-  };
-
+  const j = _getNextJ('habilitado-editores-content');
   $('#habilitado-editores-content').append(`
-    <div class="nice-form-group" id="editores-${i}">
-      <label>Editor ${i}</label>
+    <div class="nice-form-group" id="editores-${j}">
+      <label>Editor ${j}</label>
       <input
-        id="editores-email-${i}"
+        id="editores-email-${j}"
         type="email"
         placeholder="Email cadastrado no TripViewer"
         value=""
@@ -380,74 +384,70 @@ function _addEditores() {
 }
 
 function _addLineup() {
-  let i = 1;
-  while (getID(`lineup-${i}`)) {
-    i++;
-  }
-
+  const j = _getNextJ('lineup-box');
   $('#lineup-box').append(`
-    <div id="lineup-${i}" class="accordion-item accordion-lineup" >
-      <h2 class="accordion-header" id="heading-lineup-${i}">
-        <button id="lineup-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-lineup-${i}" aria-expanded="true" aria-controls="collapse-lineup-${i}">
-          Banda / Artista ${i}
+    <div id="lineup-${j}" class="accordion-item accordion-lineup" >
+      <h2 class="accordion-header" id="heading-lineup-${j}">
+        <button id="lineup-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-lineup-${j}" aria-expanded="true" aria-controls="collapse-lineup-${j}">
+          Banda / Artista ${j}
         </button>
       </h2>
-      <div id="collapse-lineup-${i}" class="accordion-collapse collapse" aria-labelledby="heading-lineup-${i}"
+      <div id="collapse-lineup-${j}" class="accordion-collapse collapse" aria-labelledby="heading-lineup-${j}"
         data-bs-parent="#lineup-box">
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="lineup-headliner-${i}" class="switch" />
-            <label for="lineup-headliner-${i}">
+            <input type="checkbox" id="lineup-headliner-${j}" class="switch" />
+            <label for="lineup-headliner-${j}">
               Headliner
             </label>
           </div>
   
           <div class="nice-form-group">
             <label>Nome</label>
-            <input required id="lineup-nome-${i}" type="text" placeholder="Games We Play" />
+            <input required id="lineup-nome-${j}" type="text" placeholder="Games We Play" />
           </div>
   
-          <div class="nice-form-group" id="lineup-local-box-${i}">
+          <div class="nice-form-group" id="lineup-local-box-${j}">
             <label>Local</label>
-            <select class="editar-select" id="lineup-local-${i}" style="display: ${_getDestinosSelectVisibility()}">
+            <select class="editar-select" id="lineup-local-${j}" style="display: ${_getDestinosSelectVisibility()}">
               ${_getDestinosSelectOptions()}
             </select>
           </div>
 
-          <div class="nice-form-group" id="lineup-genero-select-form-group-${i}">
+          <div class="nice-form-group" id="lineup-genero-select-form-group-${j}">
             <label>Gênero <span class="opcional"> (Opcional)</span></label>
-            <select id="lineup-genero-select-${i}" style="display: none;"></select>
-            <input class="nice-form-group" id="lineup-genero-${i}" type="text" placeholder="Pop Punk" />
+            <select id="lineup-genero-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="lineup-genero-${j}" type="text" placeholder="Pop Punk" />
           </div>
 
-          <div class="nice-form-group" id="lineup-palco-select-form-group-${i}">
+          <div class="nice-form-group" id="lineup-palco-select-form-group-${j}">
             <label>Palco <span class="opcional"> (Opcional)</span></label>
-            <select id="lineup-palco-select-${i}" style="display: none;"></select>
-            <input class="nice-form-group" id="lineup-palco-${i}" type="text" placeholder="Stripe Stage" />
+            <select id="lineup-palco-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="lineup-palco-${j}" type="text" placeholder="Stripe Stage" />
           </div>
   
           <div class="nice-form-group side-by-side">
             <label>Data <span class="opcional"> (Opcional)</span></label>
-            <input class="flex-input" id="lineup-data-${i}" type="date" value="">
+            <input class="flex-input" id="lineup-data-${j}" type="date" value="">
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Início <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-inicio-${i}" type="time" value="" />
+              <input id="lineup-inicio-${j}" type="time" value="" />
             </div>
   
             <div class="nice-form-group side-by-side">
               <label>Fim <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-fim-${i}" type="time" value="" />
+              <input id="lineup-fim-${j}" type="time" value="" />
             </div>
           </div>
   
           <div class="nice-form-group">
             <label>Playlist ou Página do Artista <span class="opcional"> (Opcional)</span></label>
-            <input id="lineup-midia-${i}" type="url"
+            <input id="lineup-midia-${j}" type="url"
               placeholder="https://open.spotify.com/playlist/16mG20ZrC9QttUB6Sozqep?si=da0794cde4914a17"
               value="" class="icon-right" />
             <div class="legenda">Apenas links Spotify</div>
@@ -455,7 +455,7 @@ function _addLineup() {
   
           <div class="nice-form-group">
             <label>Prioridade <span class="opcional">(Opcional)</span></label>
-            <select class="editar-select" id="lineup-nota-${i}">
+            <select class="editar-select" id="lineup-nota-${j}">
             <option value="?">Desconhecido</option>
             <option value="5">5 - Artista Excelente!</option>
             <option value="4">4 - Ótimo Artista</option>
@@ -468,7 +468,7 @@ function _addLineup() {
         </div>
   
         <div class="deletar-box">
-          <button id="remove-lineup-${i}" class="btn btn-secondary">
+          <button id="remove-lineup-${j}" class="btn btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -481,70 +481,66 @@ function _addLineup() {
     </div>
     `);
 
-  _loadLineupListeners(i);
-  _addRemoveChildListener('lineup', i);
+  _loadLineupListeners(j);
+  _addRemoveChildListener('lineup', j);
 }
 
 function _addGaleria() {
-  var i = 1;
-  while (getID('galeria-' + i)) {
-    i++;
-  }
-
+  const j = _getNextJ('galeria-box');
   $('#galeria-box').append(`
-      <div id="galeria-${i}" class="accordion-item accordion-galeria" >
-      <h2 class="accordion-header" id="heading-galeria-${i}">
-        <button id="galeria-title-${i}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-galeria-${i}" aria-expanded="false" aria-controls="collapse-hospedagens-${i}">
-          Imagem ${i}
+      <div id="galeria-${j}" class="accordion-item accordion-galeria" >
+      <h2 class="accordion-header" id="heading-galeria-${j}">
+        <button id="galeria-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-galeria-${j}" aria-expanded="false" aria-controls="collapse-hospedagens-${j}">
+          Imagem ${j}
         </button>
       </h2>
-      <div id="collapse-galeria-${i}" class="accordion-collapse collapse"
-        aria-labelledby="heading-galeria-${i}" data-bs-parent="#galeria-box">
+      <div id="collapse-galeria-${j}" class="accordion-collapse collapse"
+        aria-labelledby="heading-galeria-${j}" data-bs-parent="#galeria-box">
         <div class="accordion-body">
           <div class="nice-form-group">
             <label>Título</label>
-            <input required id="galeria-titulo-${i}" type="text" placeholder="Lineup por dia" />
+            <input required id="galeria-titulo-${j}" type="text" placeholder="Lineup por dia" />
           </div>
 
-          <div class="nice-form-group" id="galeria-select-form-group-${i}">
+          <div class="nice-form-group" id="galeria-select-form-group-${j}">
             <label>Categoria <span class="opcional"> (Opcional)</span></label>
-            <select id="galeria-categoria-select-${i}" style="display: none;"></select>
-            <input class="nice-form-group" id="galeria-categoria-${i}" type="text" placeholder="Mapa" />
+            <select id="galeria-categoria-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="galeria-categoria-${j}" type="text" placeholder="Mapa" />
           </div>
     
           <div class="nice-form-group">
             <label>Descrição <span class="opcional"> (Opcional)</span></label>
-            <input id="galeria-descricao-${i}" type="text" placeholder="Mapa oficial do evento" />
+            <input id="galeria-descricao-${j}" type="text" placeholder="Mapa oficial do evento" />
           </div>
     
-          <div class="nice-form-group customization-box" id="galeria-${i}-box">
+          <div class="nice-form-group customization-box" id="galeria-${j}-box">
             <label>Imagem</label>
-            <input id="upload-galeria-${i}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-            <div id="upload-galeria-${i}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</div>
+            <input id="upload-galeria-${j}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+            <div id="upload-galeria-${j}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</div>
           </div>
     
           <div class="nice-form-group">
-            <input id="link-galeria-${i}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
+            <input id="link-galeria-${j}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
               class="icon-right">
           </div>
     
           <fieldset class="nice-form-group imagem-checkbox">
             <div class="nice-form-group enable-link">
-              <input type="radio" name="type-galeria-${i}" id="enable-link-galeria-${i}" checked>
-              <label for="enable-link-galeria-${i}">Fornecer link</label>
+              <input type="radio" name="type-galeria-${j}" id="enable-link-galeria-${j}" checked>
+              <label for="enable-link-galeria-${j}">Fornecer link</label>
             </div>
     
             <div class="nice-form-group">
-              <input type="radio" name="type-galeria-${i}" id="enable-upload-galeria-${i}">
-              <label for="enable-upload-galeria-${i}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
+              <input type="radio" name="type-galeria-${j}" id="enable-upload-galeria-${j}">
+              <label for="enable-upload-galeria-${j}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
             </div>
           </fieldset>
     
           </div>
   
         <div class="deletar-box">
-          <button id="remove-galeria-${i}" class="btn btn-secondary">
+          <button id="remove-galeria-${j}" class="btn btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -557,7 +553,7 @@ function _addGaleria() {
     </div>
       `);
 
-  _loadImageSelector(`galeria-${i}`);
-  _loadGaleriaListeners(i);
-  _addRemoveChildListener('galeria', i);
+  _loadImageSelector(`galeria-${j}`);
+  _loadGaleriaListeners(j);
+  _addRemoveChildListener('galeria', j);
 }
