@@ -354,32 +354,35 @@ function _buildHospedagemObject() {
 }
 
 function _buildProgramacaoObject() {
-    let result = {
-        programacao: [],
-        viagem: ""
-    }
+    let result = [];
 
-    const childIDs = _getChildIDs('programacao-box');
-
-    for (var i = 0; i < childIDs.length; i++) {
-        const j = _getJ(childIDs[i]);
-        let innerResult = {
+    for (let j = 1; j <= DATAS.length; j++) {
+        const innerResult = {
+            destinoID: '',
+            titulo: '',
+            madrugada: [],
             manha: [],
             tarde: [],
-            noite: [],
-            titulo: ""
+            noite: []
         }
-        divTitulo = getID(`programacao-inner-title-${j}`);
-        innerResult.titulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
 
-        const dataOriginal = getID(`programacao-title-${j}`).innerText;
-        const dataSplit = dataOriginal.split("/");
-        const data = `${dataSplit[2]}-${dataSplit[1]}-${dataSplit[0]}`;
-        innerResult.data = _formattedDateToFirestoreDate(data);
+        innerResult.destinoID = getID(`programacao-local-${j}`).value;
 
-        // Pegar Inner Programacao
+        const tituloSelectValue = getID(`programacao-inner-title-select-${j}`).value; 
+        if (tituloSelectValue == 'outro') {
+            innerResult.titulo = getID(`programacao-inner-title-${j}`).value;
+        } else {
+            innerResult.titulo = tituloSelectValue;
+        }
 
-        result.programacao.push(innerResult);
+        if (DATAS[j-1] && DATAS[j-1] && INNER_PROGRAMACAO[_jsDateToKey(DATAS[j-1])]) {
+            const turnos = INNER_PROGRAMACAO[_jsDateToKey(DATAS[j-1])];
+            innerResult.madrugada = turnos.madrugada;
+            innerResult.manha = turnos.manha;
+            innerResult.tarde = turnos.tarde;
+            innerResult.noite = turnos.noite;
+        }
+        result.push(innerResult);
     }
 
     return result;

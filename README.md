@@ -20,21 +20,18 @@
 ## Doing
 
 - 📈 **M019:** Módulo de programação mais personalizável
-  - *Incluir Horário*
-  - *Melhorar Título*
-  - *Permitir adicionar itens*
+  - *Inclusão de Horário*
+  - *Automação Título*
+  - *Quantidade dinâmica de itens*
+  - *Novo design na programação por dia em viagens.html*
+  - *Possibilidade de abrir um item de destino associado a programação em viagens.html*
 
 ## To-Do
 
 ### Prioridade Alta
 
-- 🐞 **B041:** Correção salvamento de viagens retornar NaN na data da programação
-  - *O título completo apenas aparece quando o usuário edita o input (listener)*
 - 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 - 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
-- 🐞 **B037:** Correções visuais em páginas de editar
-  - Barra de scroll  não ser clicável
-  - Botão de salvar não acessível no mobile (navegador)
 
 ### Prioridade Média
 
@@ -142,6 +139,11 @@
 - 📈 **M051:** Reorganizção de destinos para armazenar dados em objetos
 - 📈 **M052:** Redução do tamanho do box de mídia mobile em página de destinos para melhorar visualização desktop
 - 🐞 **B038:** Correção de mensagem customizada de erro de carregamento de listas não aparecer (index.html)
+- 🐞 **B037:** Correções visuais em páginas de editar
+  - Barra de scroll  não ser clicável
+  - Botão de salvar não acessível no mobile (navegador)
+- 🐞 **B041:** Correção salvamento de viagens retornar NaN na data da programação
+  - *O título completo apenas aparece quando o usuário edita o input (listener)*
 
 ### Abril 2024
 

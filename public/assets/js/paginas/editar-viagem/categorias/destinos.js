@@ -34,12 +34,13 @@ function _loadDestinosSelect() {
     DESTINO_SELECT = [];
     if (destinosAtivos && destinosAtivos.length > 0) {
         DESTINO_SELECT.push({
-            value: 'generico',
-            innerHTML: '<option value="generico">Destino Não Especificado</option>'
+            value: '',
+            innerHTML: '<option value="">Destino Não Especificado</option>'
         });
         for (const destino of destinosAtivos) {
             DESTINO_SELECT.push({
                 value: destino.destinosID,
+                label: destino.titulo,
                 innerHTML: `<option value="${destino.destinosID}">${destino.titulo}</option>`
             });
         }

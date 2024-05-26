@@ -1,4 +1,5 @@
 var INNER_PROGRAMACAO = {};
+var DEFAULT_PROGRAMACAO_INNER_TITLE_SELECT_VALUES = ['', 'Ida', 'Volta', 'Deslocamento', 'outro'];
 
 function _updateProgramacaoTitle(j) {
     const div = getID(`programacao-title-${j}`);
@@ -14,7 +15,7 @@ function _updateProgramacaoTitle(j) {
     } else {
         titulo = tituloSelect.value;
         tituloInput.style.display = 'none';
-        if (value == 'destino') {
+        if (!DEFAULT_PROGRAMACAO_INNER_TITLE_SELECT_VALUES.includes(value)) {
             value = _getCurrentSelectLabel(tituloSelect);
         }
     }
@@ -30,8 +31,8 @@ function _getProgramacaoTitleSelectOptions(j = null) {
 
     if (j) {
         const localDiv = getID(`programacao-local-${j}`);
-        if (localDiv.value != 'generico' && DESTINO_SELECT.length > 0) {
-            destino = `<option value="destino">${_getCurrentSelectLabel(localDiv)}</option>`;
+        if (localDiv.value && DESTINO_SELECT.length > 0) {
+            destino = `<option value="${localDiv.value}">${_getCurrentSelectLabel(localDiv)}</option>`;
         }
     }
 
@@ -167,7 +168,7 @@ function _openInnerProgramacao(j, k, turno) {
                         </div>
                     </div>`;
 
-    const confirmAction = `_addInnerProgramacao(${j}, ${k}, '${turno}')`;
+    const confirmAction = turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`;
 
     _displayInputModal(title, content, confirmAction);
 
@@ -191,7 +192,7 @@ function _openInnerProgramacao(j, k, turno) {
         const inicioValue = event.target.value;
         const hora = parseInt(inicioValue.split(':')[0]);
         const turnoValue = hora < 6 ? 'madrugada' : hora < 12 ? 'manha' : hora < 18 ? 'tarde' : 'noite';
-        turno.value = turnoValue;
+        getID('inner-programacao-select-turno').value = turnoValue;
     });
 
     getID(`inner-programacao-fim`).addEventListener('change', function (event) {
