@@ -68,38 +68,55 @@ function _programacaoLocalSelectAction(categoria, init = false, updateLast = fal
 
 // Inner Programação
 function _loadInnerProgramacaoHTML(j) {
-    if (Object.keys(INNER_PROGRAMACAO).length == 0) return;
+    const key = _jsDateToKey(DATAS[j - 1]);
+    if (Object.keys(INNER_PROGRAMACAO).length == 0 || !INNER_PROGRAMACAO[key]) return;
 
-    const id = `inner-programacao-${j}`;
+    getID(`inner-programacao-madrugada-${j}`).innerHTML = '';
+    getID(`programacao-madrugada-${j}`).style.display = 'none';
 
-    if (!k) {
-        const childs = _getChildIDs(id);
-        const lastChild = childs[childs.length - 1];
-        k = lastChild ? parseInt(lastChild.split('-')[lastChild.split('-').length - 1]) + 1 : 1;
+    getID(`inner-programacao-manha-${j}`).innerHTML = '';
+    getID(`programacao-manha-${j}`).style.display = 'none';
+
+    getID(`inner-programacao-tarde-${j}`).innerHTML = '';
+    getID(`programacao-tarde-${j}`).style.display = 'none';
+
+    getID(`inner-programacao-noite-${j}`).innerHTML = '';
+    getID(`programacao-noite-${j}`).style.display = 'none';
+
+    for (turno in INNER_PROGRAMACAO[key]) {
+        const turnoDados = INNER_PROGRAMACAO[key][turno];
+        for (let k = 1; k <= turnoDados.length; k++) {
+            const dado = turnoDados[k - 1];
+            const div = getID(`inner-programacao-${turno}-${j}`);
+
+            if (dado.programacao) {
+                let texto = dado.programacao;
+                if (dado.inicio && dado.fim) {
+                    texto = `<span class="time">${dado.inicio} - ${dado.fim}:</span> ${texto}`;
+                } else if (dado.inicio) {
+                    texto = `<span class="time">${dado.inicio}:</span> ${texto}`;
+                }
+                div.innerHTML += `<button id="inner-programacao-botao-${turno}-${j}-${k}" class="btn inner-programacao-botao" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
+                                    ${texto}
+                                  </button>`;
+            }
+
+            getID(`programacao-${turno}-${j}`).style.display = div.innerHTML ? 'block' : 'none';
+        }
     }
-
-    const innerHTML = `<button id="inner-programacao-botao-${j}-${k}" class="btn inner-programacao-botao" onclick="_openInnerProgramacao(${j}, ${k})">
-                        Adicionar Programação
-                       </button>`
-    getID(`inner-programacao-${j}`).innerHTML += innerHTML;
 
 }
 
-function _openInnerProgramacao(j, k) {
+function _openInnerProgramacao(j, k, turno) {
     const key = _jsDateToKey(DATAS[j - 1]);
-    let isNew = false;
-
-    if (!k) {
-        k = INNER_PROGRAMACAO[key].length + 1;
-        isNew = true;
-    }
+    let isNew = (!k && !turno);
 
     const selects = _getInnerProgramacaoSelects(j);
     const title = `Adicionar Programação`;
-    const content = `<div class="inner-programacao" id="inner-programacao-box-${j}-${k}">
+    const content = `<div class="inner-programacao" id="inner-programacao-box">
                       <div class="nice-form-group">
                         <label>Atividade</label>
-                        <input required class="nice-form-group" id="inner-programacao-${j}-${k}" type="text" placeholder="Ir para..." />
+                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." />
                       </div>
                       <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">
@@ -107,20 +124,20 @@ function _openInnerProgramacao(j, k) {
                             Início<br>
                             <span class="opcional">(Opcional)</span>
                           </label>
-                          <input class="flex-input-50-50" id="inner-programacao-inicio-${j}-${k}" type="time">
+                          <input class="flex-input-50-50" id="inner-programacao-inicio" type="time">
                         </div>
                         <div class="nice-form-group side-by-side-fixed">
                           <label>
                             Fim<br>
                             <span class="opcional">(Opcional)</span>
                           </label>
-                          <input class="flex-input-50-50" id="inner-programacao-fim-${j}-${k}" type="time">
+                          <input class="flex-input-50-50" id="inner-programacao-fim" type="time">
                         </div>
                       </div>
 
                       <div class="nice-form-group">
                         <label>Turno</label>
-                        <select class="editar-select" id="inner-programacao-select-turno-${j}-${k}">
+                        <select class="editar-select" id="inner-programacao-select-turno">
                             <option value="madrugada">Madrugada</option>
                             <option value="manha">Manhã</option>
                             <option value="tarde">Tarde</option>
@@ -130,19 +147,19 @@ function _openInnerProgramacao(j, k) {
 
                       <div class="nice-form-group" style="display: ${selects.ativo ? 'block' : 'none'}">
                         <label>Passeio Associado <span class="opcional">(Opcional)</span></label>
-                        <select class="editar-select" id="inner-programacao-select-categoria-${j}-${k}">
+                        <select class="editar-select" id="inner-programacao-select-categoria">
                             <option value="">Selecione</option>
                             ${selects.categoriaOptions}
                         </select>
                       </div>
 
-                      <div class="nice-form-group" id="inner-programacao-select-passeio-box-${j}-${k}" style="margin-top: 16px; display: none">
-                        <select class="editar-select" id="inner-programacao-select-passeio-${j}-${k}">
+                      <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px; display: none">
+                        <select class="editar-select" id="inner-programacao-select-passeio">
                         </select>
                       </div>
 
                       <div class="button-box-right" style="margin-top: 8px; margin-bottom: -18px; display: ${isNew ? 'none' : 'block'}">
-                        <button onclick="_deleteInnerProgramacao(${j}, ${k})" class="btn btn-basic btn-format">
+                        <button onclick="_deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
                             </svg>
@@ -150,41 +167,49 @@ function _openInnerProgramacao(j, k) {
                         </div>
                     </div>`;
 
-    const deleteAction = `_deleteInnerProgramacao(${j}, ${k})`
-    const confirmAction = `_addInnerProgramacao(${j}, ${k})`;
+    const confirmAction = `_addInnerProgramacao(${j}, ${k}, '${turno}')`;
 
-    _displayInputModal(title, content, deleteAction, confirmAction);
+    _displayInputModal(title, content, confirmAction);
 
-    const inicio = getID(`inner-programacao-inicio-${j}-${k}`);
-    const turno = getID(`inner-programacao-select-turno-${j}-${k}`);
-
-    if (INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][k - 1]) {
-        const dados = INNER_PROGRAMACAO[key][k - 1];
-
-        getID(`inner-programacao-${j}-${k}`).value = dados.programacao;
-        getID(`inner-programacao-fim-${j}-${k}`).value = dados.fim;
-        getID(`inner-programacao-select-categoria-${j}-${k}`).value = dados.passeio.categoria;
-        getID(`inner-programacao-select-passeio-${j}-${k}`).value = dados.passeio.id;
-
-        inicio.value = dados.inicio;
-        turno.value = dados.turno;
-
-        _loadInnerProgramacaoSelectPasseio(selects, j, k);
+    if (turno) {
+        getID(`inner-programacao-select-turno`).value = turno;
     }
 
-    const lastTurno = getID(`inner-programacao-select-turno-${j}-${k - 1}`)
-    if (!turno.value && lastTurno && lastTurno.value) {
-        turno.value = lastTurno.value;
+    if (!isNew && INNER_PROGRAMACAO && INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][turno] && INNER_PROGRAMACAO[key][turno][k - 1]) {
+        const dados = INNER_PROGRAMACAO[key][turno][k - 1];
+
+        getID(`inner-programacao`).value = dados.programacao;
+        getID(`inner-programacao-inicio`).value = dados.inicio;
+        getID(`inner-programacao-fim`).value = dados.fim;
+        getID(`inner-programacao-select-categoria`).value = dados.passeio.categoria;
+        getID(`inner-programacao-select-passeio`).value = dados.passeio.id;
+
+        _loadInnerProgramacaoSelectPasseio(selects);
     }
 
-    inicio.addEventListener('change', function (event) {
+    getID(`inner-programacao-inicio`).addEventListener('change', function (event) {
         const inicioValue = event.target.value;
         const hora = parseInt(inicioValue.split(':')[0]);
         const turnoValue = hora < 6 ? 'madrugada' : hora < 12 ? 'manha' : hora < 18 ? 'tarde' : 'noite';
         turno.value = turnoValue;
     });
 
-    getID(`inner-programacao-select-categoria-${j}-${k}`).addEventListener('change', () => _loadInnerProgramacaoSelectPasseio(selects, j, k));
+    getID(`inner-programacao-fim`).addEventListener('change', function (event) {
+        const fimValue = event.target.value;
+        const fimHora = parseInt(fimValue.split(':')[0]);
+        const fimMinuto = parseInt(fimValue.split(':')[1]);
+
+        const inicioValue = getID(`inner-programacao-inicio`).value;
+        const inicioHora = parseInt(inicioValue.split(':')[0]);
+        const inicioMinuto = parseInt(inicioValue.split(':')[1]);
+
+        if (fimHora < inicioHora || (fimHora == inicioHora && fimMinuto < inicioMinuto)) {
+            getID(`inner-programacao-fim`).value = '';
+            getID(`inner-programacao-fim`).reportValidity();
+        }
+    });
+
+    getID(`inner-programacao-select-categoria`).addEventListener('change', () => _loadInnerProgramacaoSelectPasseio(selects));
 }
 
 function _getInnerProgramacaoSelects(j) {
@@ -222,10 +247,10 @@ function _getInnerProgramacaoSelects(j) {
     }
 }
 
-function _loadInnerProgramacaoSelectPasseio(selects, j, k) {
-    const categoriaValue = getID(`inner-programacao-select-categoria-${j}-${k}`).value;
-    const passeio = getID(`inner-programacao-select-passeio-box-${j}-${k}`);
-    const passeioSelect = getID(`inner-programacao-select-passeio-${j}-${k}`);
+function _loadInnerProgramacaoSelectPasseio(selects) {
+    const categoriaValue = getID(`inner-programacao-select-categoria`).value;
+    const passeio = getID(`inner-programacao-select-passeio-box`);
+    const passeioSelect = getID(`inner-programacao-select-passeio`);
 
     if (categoriaValue && selects.passeioOptions[categoriaValue]) {
         passeioSelect.innerHTML = selects.passeioOptions[categoriaValue];
@@ -235,54 +260,49 @@ function _loadInnerProgramacaoSelectPasseio(selects, j, k) {
     }
 }
 
-function _addInnerProgramacao(j, k) {
+function _addInnerProgramacao(j, k, turno) {
     const key = _jsDateToKey(DATAS[j - 1]);
-    const programacao = getID(`inner-programacao-${j}-${k}`);
+    const programacao = getID(`inner-programacao`);
+    const isNew = (!k && !turno);
 
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
         const result = {
             programacao: programacao.value,
-            inicio: getID(`inner-programacao-inicio-${j}-${k}`).value,
-            fim: getID(`inner-programacao-fim-${j}-${k}`).value,
-            turno: getID(`inner-programacao-select-turno-${j}-${k}`).value,
+            inicio: getID(`inner-programacao-inicio`).value,
+            fim: getID(`inner-programacao-fim`).value,
             passeio: {
-                categoria: getID(`inner-programacao-select-categoria-${j}-${k}`).value,
-                id: getID(`inner-programacao-select-passeio-${j}-${k}`).value
+                categoria: getID(`inner-programacao-select-categoria`).value,
+                id: getID(`inner-programacao-select-passeio`).value
             }
         };
 
-        if (!INNER_PROGRAMACAO[key]) {
-            INNER_PROGRAMACAO[key] = [];
+        const inputTurno = getID(`inner-programacao-select-turno`).value;
+
+        if (isNew) {
+            INNER_PROGRAMACAO[key][inputTurno].push(result);
+        } else if (turno == inputTurno) {
+            INNER_PROGRAMACAO[key][turno][k - 1] = result;
+        } else {
+            INNER_PROGRAMACAO[key][inputTurno].push(result);
+            INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
         }
 
-        INNER_PROGRAMACAO[key][k - 1] = result;
+        _loadInnerProgramacaoHTML(j);
+        _closeDisplayMessage();
     }
 }
 
-function _setInnerProgramacAO(j, k) {
-
-}
-
-function _updateInnerProgramacaoBotaoText(j, k) {
-    const botao = getID(`inner-programacao-botao-${j}-${k}`);
-    const chave = `inner-programacao-box-${j}-${k}`;
-    if (INNER_PROGRAMACAO[chave] && INNER_PROGRAMACAO[chave].programacao) {
-        botao.innerText = INNER_PROGRAMACAO[chave].programacao;
+function _deleteInnerProgramacao(j, k, turno) {
+    const isNew = (!k && !turno);
+    if (isNew) {
+        _closeDisplayMessage();
+        return;
+    } else {
+        const key = _jsDateToKey(DATAS[j - 1]);
+        INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
+        _loadInnerProgramacaoHTML(j);
+        _closeDisplayMessage();
     }
-}
-
-function _deleteInnerProgramacao(j, k) {
-    const id = `inner-programacao-box-${j}-${k}`;
-    delete INNER_PROGRAMACAO[id];
-
-    const buttonContainerID = `inner-programacao-botao-${j}-${k}`;
-    const ids = _getChildIDs(`inner-programacao-${j}`);
-
-    if (ids.includes(buttonContainerID)) {
-        getID(buttonContainerID).parentNode.removeChild(getID(buttonContainerID));
-    }
-
-    _closeDisplayMessage();
 }

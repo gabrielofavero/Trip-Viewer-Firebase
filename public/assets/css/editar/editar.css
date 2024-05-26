@@ -1799,7 +1799,7 @@ details summary::-webkit-details-marker {
   width: 100%;
   border: 1px solid #c0c4c9;
   border-radius: 0.25rem;
-  margin-top: 16px;
+  margin-top: 8px;
   text-align: left;
   height: auto;
   font-size: 14px;
@@ -1829,4 +1829,8 @@ details summary::-webkit-details-marker {
 
 .turno-box {
   margin-top: 24px;
+}
+
+.time {
+  font-weight: bold;
 }

@@ -346,30 +346,33 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
             }
 
             getID(`programacao-title-${j}`).innerText = _getProgramacaoTitle(diaDaSemana, titulo);
-            INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = [];
+            INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = {
+                madrugada: [],
+                manha: [],
+                tarde: [],
+                noite: []
+            };
 
             const atividades = FIRESTORE_DATA.programacoes.programacao[j]?.atividades;
             if (atividades && atividades.length > 0) {
-                for (let k = 1; k <= manha.length; k++) {
-                    _addInnerProgramacao(j, k);
-
-                    INNER_PROGRAMACAO[_jsDateToKey(jsDate)].push({
+                for (const turno of Object.keys(atividades)) {
+                    _addInnerProgramacao(j, k, turno);
+                    INNER_PROGRAMACAO[_jsDateToKey(jsDate)][turno].push({
                         destino: atividades[k - 1].destino,
                         titulo: atividades[k - 1].titulo,
                         programacao: atividades[k - 1].programacao,
                         inicio: atividades[k - 1].inicio,
                         fim: atividades[k - 1].fim,
-                        passeio: atividades[k - 1].passeio
+                        passeio: atividades[k - 1].passeio || {}
                     });
-
-                    getID(`inner-programacao-${j}-${k}`).value = atividades[k - 1].programacao;
-                    getID(`inner-programacao-inicio-${j}-${k}`).value = atividades[k - 1].inner - programacao;
-                    getID(`inner-programacao-fim-${j}-${k}`).value = atividades[k - 1].inner - programacao;
+                    getID(`inner-programacao-${turno}-${j}-${k}`).value = atividades[k - 1].programacao;
+                    getID(`inner-programacao-${turno}-inicio-${j}-${k}`).value = atividades[k - 1].inner - programacao;
+                    getID(`inner-programacao-${turno}-fim-${j}-${k}`).value = atividades[k - 1].inner - programacao;
                 }
             }
 
             _migration(jsDate, j);
-
+            _loadInnerProgramacaoHTML(j);
             _writeDestinosSelect('lineup');
         }
         j++;
@@ -534,29 +537,38 @@ function _migration(jsDate, j) {
     const noite = FIRESTORE_DATA.programacoes.programacao[j - 1]?.noite;
 
     for (const itemManha of manha) {
-        INNER_PROGRAMACAO[key].push({
+        INNER_PROGRAMACAO[key].manha.push({
             programacao: itemManha,
             inicio: '',
             fim: '',
-            turno: 'manha'
+            passeio: {
+                categoria: '',
+                id: '',
+            }
         });
     }
 
     for (const itemTarde of tarde) {
-        INNER_PROGRAMACAO[key].push({
+        INNER_PROGRAMACAO[key].tarde.push({
             programacao: itemTarde,
             inicio: '',
             fim: '',
-            turno: 'tarde'
+            passeio: {
+                categoria: '',
+                id: '',
+            }
         });
     }
 
     for (const itemNoite of noite) {
-        INNER_PROGRAMACAO[key].push({
+        INNER_PROGRAMACAO[key].noite.push({
             programacao: itemNoite,
             inicio: '',
             fim: '',
-            turno: 'noite'
+            passeio: {
+                categoria: '',
+                id: '',
+            }
         });
     }
 }

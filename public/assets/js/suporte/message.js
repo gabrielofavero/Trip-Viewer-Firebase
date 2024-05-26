@@ -73,7 +73,7 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
 }
 
 // Mensagem de Input
-function _displayInputModal(title, content, deleteAction, confirmAction='_closeDisplayMessage();') {
+function _displayInputModal(title, content, confirmAction='_closeDisplayMessage();') {
   let properties = {
     errorData: {},
     buttons: [{
