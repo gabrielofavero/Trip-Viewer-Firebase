@@ -9,7 +9,7 @@ function _getCurrentHour() {
 // ======= CONVERTERS =======
 function _dateToTitle(date, showDayOfWeek = true, showYear = false) {
     const dayOfWeek = showDayOfWeek ? `${_dayToDayOfWeekText(date.getDay())}, ` : '';
-    const dayMonth = `${date.getDate()} de ${_monthToText(date.getMonth() + 1)}`;
+    const dayMonth = `${date.getDate()} de ${_monthToText(date.getMonth())}`;
     const year = showYear ? ` de ${date.getFullYear()}` : '';
     return dayOfWeek + dayMonth + year;
 }
