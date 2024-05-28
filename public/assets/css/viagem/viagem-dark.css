@@ -203,18 +203,22 @@ a:hover {
   border: 0.5px solid #414040;
 }
 
-#prog {
+#programacao-box {
   background: #414040;
 }
 
-#progTitle,
-#progClose {
+#programacao-titulo,
+#programacao-fechar {
   color: white;
 }
 
-#progHorarioM,
-#progHorarioT,
-#progHorarioN {
+.programacao-linha,
+.flight-title,
+.hotel-title {
+  border-bottom: 0.5px solid #414040;
+}
+
+.programacao-item {
   color: white;
 }
 
@@ -296,6 +300,7 @@ a:hover {
 .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #7f75b6;
 }
+
 .services .icon-box {
   color: #E2E2E2;
   background: #303030;
@@ -405,7 +410,8 @@ a:hover {
   color: #ADADAD;
 }
 
-#previous, #next {
+#previous,
+#next {
   background-color: #7f75b6;
 }
 
@@ -424,7 +430,8 @@ a:hover {
   color: #595959;
 }
 
-.mobile-nav-toggle:hover, .custom-nav-toggle:hover {
+.mobile-nav-toggle:hover,
+.custom-nav-toggle:hover {
   color: #aaaaaa;
 }
 
@@ -450,10 +457,6 @@ a:hover {
   background-color: #303030;
 }
 
-.flight-title {
-  border-bottom: 0.5px solid #414040;
-}
-
 .flight-line {
   color: #414040;
 }
@@ -469,9 +472,6 @@ a:hover {
 
 .hotel-img {
   background-color: #a5a5a5;
-}
-.hotel-title {
-  border-bottom: 0.5px solid #414040;
 }
 
 .external-link {

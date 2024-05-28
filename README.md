@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 35          | 6         |
 | 🏆     | Feature  | F000    | 53    | 47          | 6         |
-| 📈     | Melhoria | M000    | 52    | 34         | 18        |
+| 📈     | Melhoria | M000    | 53    | 34         | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -25,6 +25,7 @@
   - *Quantidade dinâmica de itens*
   - *Novo design na programação por dia em viagens.html*
   - *Possibilidade de abrir um item de destino associado a programação em viagens.html*
+- 📈 **M053:** Possibilidade de incluir mais de um local para o mesmo dia de programação
 
 ## To-Do
 

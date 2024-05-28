@@ -7,43 +7,15 @@ function _getCurrentHour() {
 }
 
 // ======= CONVERTERS =======
-function _dateToTitle(date) {
-    const day = date.getDate();
-    const month = _numberToMonth(date.getMonth() + 1);
-    const year = date.getFullYear();
-    return `${day} de ${month} de ${year}`;
+function _dateToTitle(date, showDayOfWeek = true, showYear = false) {
+    const dayOfWeek = showDayOfWeek ? `${_dayToDayOfWeekText(date.getDay())}, ` : '';
+    const dayMonth = `${date.getDate()} de ${_monthToText(date.getMonth() + 1)}`;
+    const year = showYear ? ` de ${date.getFullYear()}` : '';
+    return dayOfWeek + dayMonth + year;
 }
 
-function _numberToMonth(number) {
-    switch (number) {
-        case 1:
-            return "Janeiro";
-        case 2:
-            return "Fevereiro";
-        case 3:
-            return "Março";
-        case 4:
-            return "Abril";
-        case 5:
-            return "Maio";
-        case 6:
-            return "Junho";
-        case 7:
-            return "Julho";
-        case 8:
-            return "Agosto";
-        case 9:
-            return "Setembro";
-        case 10:
-            return "Outubro";
-        case 11:
-            return "Novembro";
-        case 12:
-            return "Dezembro";
-        default:
-            console.warn("Mês não encontrado: " + number + ".")
-            return "?";
-    }
+function _dayToDayOfWeekText(day) {
+    return ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][day];
 }
 
 function _getDateNoTime(date) {
@@ -200,10 +172,6 @@ function _getTimeBetweenDates(startDate, endDate) {
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
     return `${formattedHours}:${formattedMinutes}`;
-}
-
-function _dayToDayOfWeekText(day) {
-    return ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][day];
 }
 
 function _monthToText(month) {

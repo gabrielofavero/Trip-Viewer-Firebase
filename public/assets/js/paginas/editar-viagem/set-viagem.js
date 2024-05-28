@@ -358,15 +358,14 @@ function _buildProgramacaoObject() {
 
     for (let j = 1; j <= DATAS.length; j++) {
         const innerResult = {
-            destinoID: '',
+            data: _convertToFirestoreDate(DATAS[j-1]),
+            destinoID: getID(`programacao-local-${j}`).value,
             titulo: '',
             madrugada: [],
             manha: [],
             tarde: [],
             noite: []
         }
-
-        innerResult.destinoID = getID(`programacao-local-${j}`).value;
 
         const tituloSelectValue = getID(`programacao-inner-title-select-${j}`).value; 
         if (tituloSelectValue == 'outro') {

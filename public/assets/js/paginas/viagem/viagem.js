@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         REFRESHED = false;
       }
-    });	
+    });
 
     Promise.all([_getConfig(), _getSingleData(TYPE)])
       .then(([configData, firestoreData]) => {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
           CONFIG = configData;
           FIRESTORE_DATA = firestoreData;
           console.log('Dados do Firestore Database carregados com sucesso');
-          
+
           _start();
           _mainLoad();
           _adjustPortfolioHeight();
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         $('body').css('overflow', 'auto');
-        
+
         if (!MESSAGE_MODAL_OPEN) {
           setTimeout(() => {
             _adjustCardsHeights();
@@ -279,7 +279,6 @@ function _loadModules() {
   // Programação
   if (FIRESTORE_DATA.modulos.programacao) {
     CALL_SYNC.push(_loadCalendar);
-    CALL_SYNC.push(_loadScheduleCalendar);
   } else {
     getID("scheduleCalendarNav").innerHTML = "";
     getID("scheduleCalendar").innerHTML = "";

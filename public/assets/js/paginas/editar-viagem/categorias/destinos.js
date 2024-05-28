@@ -61,20 +61,66 @@ function _writeDestinosSelects() {
     _writeDestinosSelect('lineup');
 }
 
-function _writeDestinosSelect(tipo) {
-    const childs = _getChildIDs(`${tipo}-box`);
+function _writeDestinosSelect(tipo, j) {
     const visibility = DESTINO_SELECT.length > 0 ? 'block' : 'none';
-    const values = DESTINO_SELECT.map(destino => destino.value);
-    const innerHTML = DESTINO_SELECT.map(destino => destino.innerHTML).join('');
+    const order = _getDestinosLocalOrder(tipo);
 
-    for (const child of childs) {
-        const j = _getJ(child);
+    const orderedDestinoSelect = DESTINO_SELECT.sort((a, b) => {
+        if (a.value === '') return -1;
+        if (b.value === '') return 1;
+        if (order.includes(a.label) && order.includes(b.label)) {
+            return order.indexOf(a.label) - order.indexOf(b.label);
+        }
+        if (order.includes(a.label)) return -1;
+        if (order.includes(b.label)) return 1;
+        return 0;
+    });
+
+    const values = orderedDestinoSelect.map(destino => destino.value);
+    const innerHTML = orderedDestinoSelect.map(destino => destino.innerHTML).join('');
+
+    function _write(tipo, j) {
         const originalValue = getID(`${tipo}-local-${j}`).value;
         getID(`${tipo}-local-${j}`).innerHTML = innerHTML;
         getID(`${tipo}-local-box-${j}`).style.display = visibility;
 
         if (values.includes(originalValue)) {
             getID(`${tipo}-local-${j}`).value = originalValue;
+        }
+    }
+
+    if (j) {
+        _write(tipo, j);
+    } else {
+        const childs = _getChildIDs(`${tipo}-box`);
+        for (const child of childs) {
+            const j = _getJ(child);
+            _write(tipo, j);
+        }
+    }
+}
+
+function _getDestinosLocalOrder(tipo) {
+    let order = [];
+    const childs = _getChildIDs(`${tipo}-box`);
+    for (const child of childs) {
+        const j = _getJ(child);
+        const select = getID(`${tipo}-local-${j}`);
+        if (select.value) {
+            const label = _getCurrentSelectLabel(select);
+            if (!order.includes(label)) {
+                order.push(label);
+            }
+        }
+    }
+    return order;
+}
+
+function _getDestinoTitle(destinoID) {
+    if (!destinoID) return '';
+    for (const destino of DESTINOS) {
+        if (destino.destinoID === destinoID) {
+            return destino.titulo;
         }
     }
 }

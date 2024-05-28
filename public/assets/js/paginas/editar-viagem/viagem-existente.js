@@ -323,19 +323,27 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
     let j = 1;
 
     while (getID(`programacao-title-${j}`)) {
-        let diaDeProgramacao = {};
-        const i = j - 1;
-        const firestoreData = FIRESTORE_DATA.programacoes.programacao[i].data;
+        const dados = FIRESTORE_DATA.programacoes[j - 1];
+        const firestoreData = dados.data;
 
         if (firestoreData) {
             const jsDate = _convertFromFirestoreDate(firestoreData);
-            const diaDaSemana = _jsDateToDayOfTheWeekAndDateTitle(jsDate);
 
-            const titulo = FIRESTORE_DATA.programacoes.programacao[i]?.titulo;
+            const destinoID = dados.destinoID;
+            if (destinoID) {
+                _addValueToSelectIfExists(destinoID, getID(`programacao-local-${j}`));
+            }
+
+            getID(`programacao-inner-title-select-${j}`).innerHTML = _getProgramacaoTitleSelectOptions(j);
+
+            let titulo = dados.titulo;
             if (titulo) {
-                diaDeProgramacao.titulo = titulo;
                 const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
-                if (titulo.toLowerCase() == 'outro' || !selectValues.includes(titulo)) {
+                if (destinoID && titulo == destinoID) {
+                    getID(`programacao-inner-title-select-${j}`).value = destinoID;
+                    getID(`programacao-inner-title-${j}`).style.display = 'none';
+                    titulo = _getDestinoTitle(destinoID);
+                } else if (titulo.toLowerCase() == 'outro' || !selectValues.includes(titulo)) {
                     getID(`programacao-inner-title-select-${j}`).value = 'outro';
                     getID(`programacao-inner-title-${j}`).style.display = 'block';
                     getID(`programacao-inner-title-${j}`).value = titulo;
@@ -345,38 +353,20 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
                 }
             }
 
-            getID(`programacao-title-${j}`).innerText = _getProgramacaoTitle(diaDaSemana, titulo);
             INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = {
-                madrugada: [],
-                manha: [],
-                tarde: [],
-                noite: []
+                madrugada: dados.madrugada || [],
+                manha: dados.manha || [],
+                tarde: dados.tarde || [],
+                noite: dados.noite || [],
             };
 
-            const atividades = FIRESTORE_DATA.programacoes.programacao[j]?.atividades;
-            if (atividades && atividades.length > 0) {
-                for (const turno of Object.keys(atividades)) {
-                    _addInnerProgramacao(j, k, turno);
-                    INNER_PROGRAMACAO[_jsDateToKey(jsDate)][turno].push({
-                        destino: atividades[k - 1].destino,
-                        titulo: atividades[k - 1].titulo,
-                        programacao: atividades[k - 1].programacao,
-                        inicio: atividades[k - 1].inicio,
-                        fim: atividades[k - 1].fim,
-                        passeio: atividades[k - 1].passeio || {}
-                    });
-                    getID(`inner-programacao-${turno}-${j}-${k}`).value = atividades[k - 1].programacao;
-                    getID(`inner-programacao-${turno}-inicio-${j}-${k}`).value = atividades[k - 1].inner - programacao;
-                    getID(`inner-programacao-${turno}-fim-${j}-${k}`).value = atividades[k - 1].inner - programacao;
-                }
-            }
-
-            _migration(jsDate, j);
+            _updateProgramacaoTitle(j);
             _loadInnerProgramacaoHTML(j);
-            _writeDestinosSelect('lineup');
         }
         j++;
     }
+
+    _writeDestinosSelect('programacao');
 }
 
 function _loadDestinosData(FIRESTORE_DATA) {
@@ -526,49 +516,4 @@ function _formatAltura(value) {
         getID('logo-tamanho').value = value;
     }
     getID('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
-}
-
-// Migração
-
-function _migration(jsDate, j) {
-    const key = _jsDateToKey(jsDate);
-    const manha = FIRESTORE_DATA.programacoes.programacao[j - 1]?.manha;
-    const tarde = FIRESTORE_DATA.programacoes.programacao[j - 1]?.tarde;
-    const noite = FIRESTORE_DATA.programacoes.programacao[j - 1]?.noite;
-
-    for (const itemManha of manha) {
-        INNER_PROGRAMACAO[key].manha.push({
-            programacao: itemManha,
-            inicio: '',
-            fim: '',
-            passeio: {
-                categoria: '',
-                id: '',
-            }
-        });
-    }
-
-    for (const itemTarde of tarde) {
-        INNER_PROGRAMACAO[key].tarde.push({
-            programacao: itemTarde,
-            inicio: '',
-            fim: '',
-            passeio: {
-                categoria: '',
-                id: '',
-            }
-        });
-    }
-
-    for (const itemNoite of noite) {
-        INNER_PROGRAMACAO[key].noite.push({
-            programacao: itemNoite,
-            inicio: '',
-            fim: '',
-            passeio: {
-                categoria: '',
-                id: '',
-            }
-        });
-    }
 }

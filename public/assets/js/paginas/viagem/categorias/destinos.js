@@ -25,36 +25,41 @@ function _loadDestinos() {
 }
 
 function _loadDestinationsSelect(lineupExclusive = false) {
-  let select = getID("destinos-select");
-  let firstOption = document.createElement("option");
   _buildDestinosObject(lineupExclusive);
-
-  firstOption.value = DESTINOS[0].destinosID;
-  firstOption.text = DESTINOS[0].destinos.titulo;
-  select.add(firstOption);
-  firstOption.selected = true;
+  const select = getID("destinos-select");
 
   if (DESTINOS.length > 1) {
-    for (let i = 1; i < DESTINOS.length; i++) {
-      let newOption = document.createElement("option");
+    const ordem = _getDestinosOrdem();
+    let destinos = ordem.length === 0 ? DESTINOS : DESTINOS.sort((a, b) => {
+      if (ordem.includes(a.destinos.titulo) && ordem.includes(b.destinos.titulo)) {
+        return ordem.indexOf(a.destinos.titulo) - ordem.indexOf(b.destinos.titulo);
+      }
+      if (ordem.includes(a.destinos.titulo)) return -1;
+      if (ordem.includes(b.destinos.titulo)) return 1;
+      return 0;
+    });
 
-      newOption.value = DESTINOS[i].destinosID;
-      newOption.text = DESTINOS[i].destinos.titulo;
-      select.add(newOption);
-    };
+    for (let i = 0; i < destinos.length; i++) {
+      const option = document.createElement("option");
+      option.value = destinos[i].destinosID;
+      option.text = destinos[i].destinos.titulo;
+      option.selected = i === 0;
+      select.add(option);
+    }
+
+    select.addEventListener("change", function () {
+      for (let i = 0; i < destinos.length; i++) {
+        if (destinos[i].destinosID === select.value) {
+          _loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
+          _adjustDestinationsHTML();
+          break;
+        }
+      }
+    });
+
   } else {
     select.style.display = "none";
-  };
-
-  select.addEventListener("change", function () {
-    for (let i = 0; i < DESTINOS.length; i++) {
-      if (DESTINOS[i].destinosID === select.value) {
-        _loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
-        _adjustDestinationsHTML();
-        break;
-      }
-    }
-  });
+  }
 }
 
 function _loadDestinationsHTML(destino) {
@@ -208,7 +213,7 @@ function _buildLineupDestinosObject() {
     "nota": [],
     "descricao": []
   }
-  
+
   DESTINOS = [{
     destinosID: "lineup",
     destinos: {
@@ -241,7 +246,6 @@ function _buildLineupDestinosObject() {
   ];
 }
 
-// ======= SETTERS =======
 function _adjustDestinationsHTML() {
   let heights = [];
   let maxHeight = 0;
@@ -257,4 +261,22 @@ function _adjustDestinationsHTML() {
   for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
     getID(`b${i}d`).style.height = `${maxHeight}px`;
   }
+}
+
+function _getDestinosOrdem() {
+  const ordem = [];
+
+  if (FIRESTORE_DATA.modulos.programacao && FIRESTORE_DATA.programacoes && FIRESTORE_DATA.programacoes.length > 0) {
+    let idsProgramacao = FIRESTORE_DATA.programacoes.map(programacao => programacao.destinoID);
+    idsProgramacao = idsProgramacao.filter((id, index) => id !== "" && idsProgramacao.indexOf(id) === index);
+    const idsDestinos = DESTINOS.map(destino => destino.destinosID);
+    for (const programacao of idsProgramacao) {
+      const index = idsDestinos.indexOf(programacao);
+      if (index !== -1 && !ordem.includes(DESTINOS[index].destinos.titulo)) {
+        ordem.push(DESTINOS[index].destinos.titulo);
+      }
+    }
+  }
+
+  return ordem;
 }

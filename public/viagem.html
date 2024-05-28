@@ -299,23 +299,39 @@
           </div>
 
 
-          <div id="prog">
-            <div id="progContent">
-              <div id="progClose" onclick="_closeModalCalendar()"><i class="iconify"
+          <div id="programacao-box">
+            <div id="programacao-modal">
+              <div id="programacao-fechar" onclick="_closeModalCalendar()"><i class="iconify"
                   data-icon="material-symbols:close"></i></div>
-              <div id="progTitle"></div>
-              <div id="progNoData">Nada programado por aqui! ☹️</div>
-
-              <div id="progHorarioM">Manhã:</div>
-              <div id="pc1">
+              
+              <div class="programacao-titulo-box">
+                <div class="programacao-linha">
+                  <div id="programacao-titulo"></div>
+                </div>
+                <div class="programacao-data-box">
+                  <i class="bx bx-calendar color-icon"></i>
+                  <span id="programacao-data"></span>
+                </div>
               </div>
 
-              <div id="progHorarioT">Tarde:</div>
-              <div id="pc2">
+
+
+              <div id="sem-programacao">Nada programado por aqui! ☹️</div>
+
+              <div class="programacao-item" id="programacao-madrugada">Madrugada:</div>
+              <div id="programacao-itens-madrugada">
               </div>
 
-              <div id="progHorarioN">Noite:</div>
-              <div id="pc3">
+              <div class="programacao-item" id="programacao-manha">Manhã:</div>
+              <div id="programacao-itens-manha">
+              </div>
+
+              <div class="programacao-item" id="programacao-tarde">Tarde:</div>
+              <div id="programacao-itens-tarde">
+              </div>
+
+              <div class="programacao-item" id="programacao-noite">Noite:</div>
+              <div id="programacao-itens-noite">
               </div>
             </div>
 
