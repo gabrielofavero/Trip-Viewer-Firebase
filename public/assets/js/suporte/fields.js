@@ -147,7 +147,6 @@ function _getAllValuesFromSelect(select) {
     return values;
 }
 
-
 // Validação de links
 function _isHttp(link) {
     return link.startsWith('http://') || link.startsWith('https://');

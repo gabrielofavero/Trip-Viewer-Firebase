@@ -312,63 +312,6 @@ function _loadHospedagemData(FIRESTORE_DATA) {
     }
 }
 
-function _loadProgramacaoData(FIRESTORE_DATA) {
-    if (FIRESTORE_DATA.modulos.programacao === true) {
-        getID('habilitado-programacao').checked = true;
-        getID('habilitado-programacao-content').style.display = 'block';
-    }
-
-    _loadProgramacao();
-
-    let j = 1;
-
-    while (getID(`programacao-title-${j}`)) {
-        const dados = FIRESTORE_DATA.programacoes[j - 1];
-        const firestoreData = dados.data;
-
-        if (firestoreData) {
-            const jsDate = _convertFromFirestoreDate(firestoreData);
-
-            const destinoID = dados.destinoID;
-            if (destinoID) {
-                _addValueToSelectIfExists(destinoID, getID(`programacao-local-${j}`));
-            }
-
-            getID(`programacao-inner-title-select-${j}`).innerHTML = _getProgramacaoTitleSelectOptions(j);
-
-            let titulo = dados.titulo;
-            if (titulo) {
-                const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
-                if (destinoID && titulo == destinoID) {
-                    getID(`programacao-inner-title-select-${j}`).value = destinoID;
-                    getID(`programacao-inner-title-${j}`).style.display = 'none';
-                    titulo = _getDestinoTitle(destinoID);
-                } else if (titulo.toLowerCase() == 'outro' || !selectValues.includes(titulo)) {
-                    getID(`programacao-inner-title-select-${j}`).value = 'outro';
-                    getID(`programacao-inner-title-${j}`).style.display = 'block';
-                    getID(`programacao-inner-title-${j}`).value = titulo;
-                } else {
-                    getID(`programacao-inner-title-select-${j}`).value = titulo;
-                    getID(`programacao-inner-title-${j}`).style.display = 'none';
-                }
-            }
-
-            INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = {
-                madrugada: dados.madrugada || [],
-                manha: dados.manha || [],
-                tarde: dados.tarde || [],
-                noite: dados.noite || [],
-            };
-
-            _updateProgramacaoTitle(j);
-            _loadInnerProgramacaoHTML(j);
-        }
-        j++;
-    }
-
-    _writeDestinosSelect('programacao');
-}
-
 function _loadDestinosData(FIRESTORE_DATA) {
     if (FIRESTORE_DATA.modulos.destinos === true) {
         if (getID('habilitado-destinos')) {
@@ -394,8 +337,62 @@ function _loadDestinosData(FIRESTORE_DATA) {
             }
         }
     }
+    _loadDestinosAtivos();
+}
 
-    _loadDestinosSelect();
+function _loadProgramacaoData(FIRESTORE_DATA) {
+    if (FIRESTORE_DATA.modulos.programacao === true) {
+        getID('habilitado-programacao').checked = true;
+        getID('habilitado-programacao-content').style.display = 'block';
+    }
+
+    _loadProgramacao();
+
+    let j = 1;
+
+    while (getID(`programacao-title-${j}`)) {
+        const dados = _migration(FIRESTORE_DATA.programacoes[j - 1]);
+        const firestoreData = dados.data;
+
+        if (firestoreData) {
+            const jsDate = _convertFromFirestoreDate(firestoreData);
+
+            const destinosIDs = dados.destinosIDs;
+            if (destinosIDs && destinosIDs.length > 0) {
+                _addValuesForDestinosAtivosCheckbox('programacao', j, destinosIDs);
+            }
+
+            getID(`programacao-inner-title-select-${j}`).innerHTML = _getProgramacaoTitleSelectOptions(j);
+
+            let titulo = dados.titulo;
+            if (titulo) {
+                const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
+                if (destinosIDs && destinosIDs.includes(titulo)) {
+                    getID(`programacao-inner-title-${j}`).style.display = 'none';
+                } else if (titulo.toLowerCase() == 'outro' || !selectValues.includes(titulo)) {
+                    getID(`programacao-inner-title-select-${j}`).value = 'outro';
+                    getID(`programacao-inner-title-${j}`).style.display = 'block';
+                    getID(`programacao-inner-title-${j}`).value = titulo;
+                } else {
+                    getID(`programacao-inner-title-select-${j}`).value = titulo;
+                    getID(`programacao-inner-title-${j}`).style.display = 'none';
+                }
+            }
+
+            INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = {
+                madrugada: dados.madrugada || [],
+                manha: dados.manha || [],
+                tarde: dados.tarde || [],
+                noite: dados.noite || [],
+            };
+
+            _updateProgramacaoTitle(j);
+            _loadInnerProgramacaoHTML(j);
+        }
+        j++;
+    }
+
+    _updateDestinosAtivosCheckboxHTML('programacao');
 }
 
 function _loadLineupData(FIRESTORE_DATA) {
@@ -462,7 +459,7 @@ function _loadLineupData(FIRESTORE_DATA) {
                     }
                 }
             }
-            _writeDestinosSelect('lineup');
+            _updateDestinosAtivosSelectHTML('lineup');
             _lineupGeneroSelectAction();
             _lineupPalcoSelectAction();
         }
@@ -516,4 +513,11 @@ function _formatAltura(value) {
         getID('logo-tamanho').value = value;
     }
     getID('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
+}
+
+function _migration(data) {
+    let result = data;
+    result.destinosIDs = [data.destinoID];
+    delete result.destinoID;
+    return data;
 }

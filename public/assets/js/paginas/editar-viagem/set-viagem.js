@@ -393,7 +393,7 @@ function _buildDestinosArray() {
 
     for (const child of childIDs) {
         const j = _getJ(child);
-        const checkbox = getID(`check-${j}`);
+        const checkbox = getID(`check-destinos-${j}`);
         if (checkbox.checked) {
             result.push({
                 destinosID: checkbox.value

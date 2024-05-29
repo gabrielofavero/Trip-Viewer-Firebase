@@ -41,63 +41,47 @@ function _loadEventListeners() {
     getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
 }
 
-function _loadTransporteListeners(i) {
+function _loadTransporteListeners(j) {
     // Selects Dinâmicos
-    getID(`empresa-select-${i}`).addEventListener('change', () => _loadTransporteVisibility(i));
-    getID(`transporte-tipo-${i}`).addEventListener('change', () => _loadTransporteVisibility(i));
+    getID(`empresa-select-${j}`).addEventListener('change', () => _loadTransporteVisibility(j));
+    getID(`transporte-tipo-${j}`).addEventListener('change', () => _loadTransporteVisibility(j));
 
     // Título Dinâmico
-    getID(`ponto-partida-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
-    getID(`ponto-chegada-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
-    getID(`ida-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
-    getID(`durante-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
-    getID(`volta-${i}`).addEventListener('change', () => _updateTransporteTitle(i));
+    getID(`ponto-partida-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`ponto-chegada-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`ida-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`durante-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`volta-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
 
     // Cálculo Automático da Duração do Trajeto
-    getID(`partida-${i}`).addEventListener('change', () => _loadAutoDuration(i));
-    getID(`partida-horario-${i}`).addEventListener('change', () => _loadAutoDuration(i));
-    getID(`chegada-${i}`).addEventListener('change', () => _loadAutoDuration(i));
-    getID(`chegada-horario-${i}`).addEventListener('change', () => _loadAutoDuration(i));
+    getID(`partida-${j}`).addEventListener('change', () => _loadAutoDuration(j));
+    getID(`partida-horario-${j}`).addEventListener('change', () => _loadAutoDuration(j));
+    getID(`chegada-${j}`).addEventListener('change', () => _loadAutoDuration(j));
+    getID(`chegada-horario-${j}`).addEventListener('change', () => _loadAutoDuration(j));
 
     // Validação de Link
-    getID(`transporte-link-${i}`).addEventListener('change', () => _validateLink(`transporte-link-${i}`));
+    getID(`transporte-link-${j}`).addEventListener('change', () => _validateLink(`transporte-link-${j}`));
 }
 
-function _loadHospedagemListeners(i) {
+function _loadHospedagemListeners(j) {
     // Validação de Link
-    getID(`reserva-hospedagens-link-${i}`).addEventListener('change', () => _validateLink(`reserva-hospedagens-link-${i}`));
-    getID(`link-hospedagens-${i}`).addEventListener('change', () => _validateImageLink(`link-hospedagens-${i}`));
+    getID(`reserva-hospedagens-link-${j}`).addEventListener('change', () => _validateLink(`reserva-hospedagens-link-${j}`));
+    getID(`link-hospedagens-${j}`).addEventListener('change', () => _validateImageLink(`link-hospedagens-${j}`));
 }
 
-function _loadProgramacaoListeners(j) {
-    const select = getID(`programacao-local-select-${j}`);
-    const input = getID(`programacao-local-${j}`);
-
-    select.addEventListener('change', function () {
-        _programacaoLocalSelectAction(categoria);
-        if (select.value === 'outra') {
-            input.style.display = 'block';
-        }
-    });
-
-    input.addEventListener('change', function () {
-        _programacaoLocalSelectAction(categoria);
-    });
-}
-
-function _loadLineupListeners(i) {
+function _loadLineupListeners(j) {
     // Dynamic Select: Gênero
-    getID(`lineup-genero-select-${i}`).addEventListener('change', () => _lineupGeneroSelectAction());
-    getID(`lineup-genero-${i}`).addEventListener('change', () => _lineupGeneroSelectAction());
+    getID(`lineup-genero-select-${j}`).addEventListener('change', () => _lineupGeneroSelectAction());
+    getID(`lineup-genero-${j}`).addEventListener('change', () => _lineupGeneroSelectAction());
 
     // Dynamic Select: Palco
-    getID(`lineup-palco-select-${i}`).addEventListener('change', () => _lineupPalcoSelectAction());
-    getID(`lineup-palco-${i}`).addEventListener('change', () => _lineupPalcoSelectAction());
+    getID(`lineup-palco-select-${j}`).addEventListener('change', () => _lineupPalcoSelectAction());
+    getID(`lineup-palco-${j}`).addEventListener('change', () => _lineupPalcoSelectAction());
 
     // Dynamic Title
-    const nome = getID(`lineup-nome-${i}`);
-    const title = getID(`lineup-title-${i}`);
-    const headliner = getID(`lineup-headliner-${i}`);
+    const nome = getID(`lineup-nome-${j}`);
+    const title = getID(`lineup-title-${j}`);
+    const headliner = getID(`lineup-headliner-${j}`);
     nome.addEventListener('change', function () {
         title.innerText = nome.value;
         if (headliner.checked) {
@@ -116,22 +100,31 @@ function _loadLineupListeners(i) {
     _lineupPalcoSelectAction(true);
 
     // Validação de Link
-    getID(`lineup-midia-${i}`).addEventListener('change', () => _validatePlaylistLink(`lineup-midia-${i}`));
+    getID(`lineup-midia-${j}`).addEventListener('change', () => _validatePlaylistLink(`lineup-midia-${j}`));
 }
 
-function _loadGaleriaListeners(i) {
+function _loadGaleriaListeners(j) {
     // Dynamic Select: Categoria
-    getID(`galeria-categoria-select-${i}`).addEventListener('change', () => _galeriaSelectAction());
-    getID(`galeria-categoria-${i}`).addEventListener('change', () => _galeriaSelectAction());
+    getID(`galeria-categoria-select-${j}`).addEventListener('change', () => _galeriaSelectAction());
+    getID(`galeria-categoria-${j}`).addEventListener('change', () => _galeriaSelectAction());
 
     // Dynamic Title
-    getID(`galeria-titulo-${i}`).addEventListener('change', () => getID(`galeria-title-${i}`).innerText = getID(`galeria-titulo-${i}`).value);
+    getID(`galeria-titulo-${j}`).addEventListener('change', () => getID(`galeria-title-${j}`).innerText = getID(`galeria-titulo-${j}`).value);
 
     // Load Listener Actions
     _galeriaSelectAction(true);
 
     // Validação de Link
-    getID(`link-galeria-${i}`).addEventListener('change', () => _validateImageLink(`link-galeria-${i}`));
+    getID(`link-galeria-${j}`).addEventListener('change', () => _validateImageLink(`link-galeria-${j}`));
+}
+
+function _loadProgramacaoListeners(j) {
+    // Checkbox Local
+    const fieldsetID = `programacao-local-${j}`;
+    for (const containerID of _getChildIDs(fieldsetID)) {
+        const ids = `${containerID.split('-')[1]}-${containerID.split('-')[2]}`;
+        getID(`check-programacao-${ids}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j));
+    }
 }
 
 // Actions

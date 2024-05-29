@@ -41,11 +41,11 @@ function _loadProgramacao() {
         aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
         <div class="accordion-body">
 
-          <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosSelectVisibility()}">
+          <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
             <label>Local<span class="opcional"> (Opcional)</span></label>
-            <select class="editar-select" id="programacao-local-${j}">
-              ${_getDestinosSelectOptions()}
-            </select>
+            <fieldset class="nice-form-group destinos-checkboxes" id="programacao-local-${j}">
+              ${_getDestinosAtivosCheckboxOptions('programacao', j)}
+            </fieldset>
           </div>
 
           <div class="nice-form-group">
@@ -92,15 +92,14 @@ function _loadProgramacao() {
 
         </div>
       </div>
-    </div>
-      `
+    </div>`
   }
 
   for (const child of _getChildIDs('programacao-box')) {
     const j = _getJ(child);
     getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
-    getID(`programacao-local-${j}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j))
+    _loadProgramacaoListeners(j);
   }
 }
 
@@ -116,17 +115,12 @@ function _loadDestinos() {
   fieldset.innerHTML = '';
   for (let j = 1; j <= destinos.length; j++) {
     const i = j - 1;
-    fieldset.innerHTML += `<div class="nice-form-group" id="checkbox-${j}">
-                            <input type="checkbox" id="check-${j}" value="${destinos[i].code}">
-                            <label id=check-label-${j} for="check-${j}">${destinos[i].titulo}</label>
-                           </div>`
+    fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].code, destinos[i].titulo);
   }
-
-  _loadDestinosSelect();
 
   for (const child of _getChildIDs('destinos-checkboxes')) {
     const j = _getJ(child);
-    getID(`check-${j}`).addEventListener('change', () => _writeDestinosSelects())
+    getID(`check-destinos-${j}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
   }
 }
 
@@ -411,8 +405,8 @@ function _addLineup() {
   
           <div class="nice-form-group" id="lineup-local-box-${j}">
             <label>Local</label>
-            <select class="editar-select" id="lineup-local-${j}" style="display: ${_getDestinosSelectVisibility()}">
-              ${_getDestinosSelectOptions()}
+            <select class="editar-select" id="lineup-local-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
+              ${_getDestinosAtivosSelectOptions()}
             </select>
           </div>
 

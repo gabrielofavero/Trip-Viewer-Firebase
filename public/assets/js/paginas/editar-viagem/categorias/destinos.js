@@ -6,9 +6,11 @@ const DESTINOS_TITULOS = {
     turismo: 'Pontos Turísticos',
     lojas: 'Lojas'
 };
-var DESTINO_SELECT = [];
+var DESTINOS_ATIVOS = [];
 
-function _getDestinosAtivos() {
+// Destinos Ativos
+function _loadDestinosAtivos() {
+    DESTINOS_ATIVOS = [];
     const habilidadoDestinos = getID('habilitado-destinos');
     if (habilidadoDestinos && !habilidadoDestinos.checked) return;
 
@@ -17,71 +19,49 @@ function _getDestinosAtivos() {
 
     for (const child of childIDs) {
         const j = _getJ(child);
-        const checkbox = getID(`check-${j}`);
+        const checkbox = getID(`check-destinos-${j}`);
         if (checkbox.checked) {
             result.push({
-                titulo: getID(`check-label-${j}`).innerText,
-                destinosID: checkbox.value
-            })
-        }
-    }
-
-    return result;
-}
-
-function _loadDestinosSelect() {
-    const destinosAtivos = _getDestinosAtivos();
-    DESTINO_SELECT = [];
-    if (destinosAtivos && destinosAtivos.length > 0) {
-        DESTINO_SELECT.push({
-            value: '',
-            innerHTML: '<option value="">Destino Não Especificado</option>'
-        });
-        for (const destino of destinosAtivos) {
-            DESTINO_SELECT.push({
-                value: destino.destinosID,
-                label: destino.titulo,
-                innerHTML: `<option value="${destino.destinosID}">${destino.titulo}</option>`
+                titulo: getID(`check-destinos-label-${j}`).innerText,
+                destinosID: checkbox.value,
             });
         }
     }
+
+    DESTINOS_ATIVOS = result;
 }
 
-function _getDestinosSelectOptions() {
-    return DESTINO_SELECT.map(destino => destino.innerHTML).join('');
+function _updateDestinosAtivosHTMLs() {
+    _loadDestinosAtivos();
+    _updateDestinosAtivosCheckboxHTML('programacao');
+    _updateDestinosAtivosSelectHTML('lineup');
 }
 
-function _getDestinosSelectVisibility() {
-    return DESTINO_SELECT.length > 0 ? 'block' : 'none';
-}
-
-function _writeDestinosSelects() {
-    _loadDestinosSelect();
-    _writeDestinosSelect('programacao');
-    _writeDestinosSelect('lineup');
-}
-
-function _writeDestinosSelect(tipo, j) {
-    const visibility = DESTINO_SELECT.length > 0 ? 'block' : 'none';
-    const order = _getDestinosLocalOrder(tipo);
-
-    const orderedDestinoSelect = DESTINO_SELECT.sort((a, b) => {
-        if (a.value === '') return -1;
-        if (b.value === '') return 1;
-        if (order.includes(a.label) && order.includes(b.label)) {
-            return order.indexOf(a.label) - order.indexOf(b.label);
+function _getOrderedDestinosAtivosByOrderArray(order) {
+    return DESTINOS_ATIVOS.sort((a, b) => {
+        if (a.destinosID === '') return -1;
+        if (b.destinosID === '') return 1;
+        if (order.includes(a.destinosID) && order.includes(b.destinosID)) {
+            return order.indexOf(a.destinosID) - order.indexOf(b.destinosID);
         }
-        if (order.includes(a.label)) return -1;
-        if (order.includes(b.label)) return 1;
+        if (order.includes(a.destinosID)) return -1;
+        if (order.includes(b.destinosID)) return 1;
         return 0;
     });
+}
 
-    const values = orderedDestinoSelect.map(destino => destino.value);
-    const innerHTML = orderedDestinoSelect.map(destino => destino.innerHTML).join('');
+// Destinos Ativos Select (Para Lineup)
+function _updateDestinosAtivosSelectHTML(tipo, j) {
+    const visibility = DESTINOS_ATIVOS.length > 0 ? 'block' : 'none';
+    const order = _getDestinosAtivosSelectOrder(tipo);
+    const orderedDestinosAtivos = _getOrderedDestinosAtivosByOrderArray(order);
+
+    const values = orderedDestinosAtivos.map(destino => destino.destinosID);
+    const options = _getDestinosAtivosSelectOptions(orderedDestinosAtivos);
 
     function _write(tipo, j) {
         const originalValue = getID(`${tipo}-local-${j}`).value;
-        getID(`${tipo}-local-${j}`).innerHTML = innerHTML;
+        getID(`${tipo}-local-${j}`).innerHTML = options;
         getID(`${tipo}-local-box-${j}`).style.display = visibility;
 
         if (values.includes(originalValue)) {
@@ -100,26 +80,142 @@ function _writeDestinosSelect(tipo, j) {
     }
 }
 
-function _getDestinosLocalOrder(tipo) {
+function _getDestinosAtivosSelectOrder(tipo) {
     let order = [];
     const childs = _getChildIDs(`${tipo}-box`);
     for (const child of childs) {
         const j = _getJ(child);
         const select = getID(`${tipo}-local-${j}`);
-        if (select.value) {
-            const label = _getCurrentSelectLabel(select);
-            if (!order.includes(label)) {
-                order.push(label);
+        if (select.value && !order.includes(select.value)) {
+            order.push(select.value);
+        }
+    }
+    return order;
+}
+
+function _getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
+    let result = '<option value="">Destino Não Especificado</option>';
+    for (const destino of destinosAtivos) {
+        result += `<option value="${destino.destinosID}">${destino.titulo}</option>`;
+    }
+    return result;
+}
+
+function _getDestinosAtivosSelectVisibility() {
+    return DESTINOS_ATIVOS.length > 0 ? 'block' : 'none';
+}
+
+// Destinos Checkbox (Para Destinos e Programação)
+function _updateDestinosAtivosCheckboxHTML(tipo, j) {
+    const visibility = DESTINOS_ATIVOS.length > 0 ? 'block' : 'none';
+    const order = _getDestinosAtivosCheckboxOrder(tipo);
+    const orderedDestinosAtivos = _getOrderedDestinosAtivosByOrderArray(order);
+
+    const values = orderedDestinosAtivos.map(destino => destino.destinosID);
+
+    function _write(tipo, j) {
+        const id = `${tipo}-local-${j}`;
+        const childs = _getChildIDs(id);
+        const div = getID(id);
+
+        div.style.display = visibility;
+        const originalValues = [];
+
+        for (const child of childs) {
+            const k = child.split('-')[2];
+            const checkbox = getID(`check-${tipo}-${j}-${k}`);
+            if (values.includes(checkbox.value) && checkbox.checked) {
+                originalValues.push(checkbox.value);
+            }
+        }
+
+        div.innerHTML = _getDestinosAtivosCheckboxOptions(tipo, j, orderedDestinosAtivos);
+
+        if (originalValues.length > 0) {
+            for (const child of childs) {
+                const k = child.split('-')[2];
+                const checkbox = getID(`check-${tipo}-${j}-${k}`);
+                if (checkbox && originalValues.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                }
+            }
+        }
+        _loadDestinosCheckboxListeners(tipo, j);
+    }
+
+    if (j) {
+        _write(tipo, j);
+    } else {
+        const childs = _getChildIDs(`${tipo}-box`);
+        for (const child of childs) {
+            const innerJ = _getJ(child);
+            _write(tipo, innerJ);
+        }
+    }
+}
+
+function _getDestinosAtivosCheckboxOrder(tipo) {
+    let order = [];
+    const childs = _getChildIDs(`${tipo}-box`);
+    for (const child of childs) {
+        const j = _getJ(child);
+        const checkbox = getID(`${tipo}-local-${j}`);
+        if (checkbox.checked) {
+            if (!order.includes(checkbox.value)) {
+                order.push(checkbox.value);
             }
         }
     }
     return order;
 }
 
+function _getDestinosAtivosCheckboxOptions(tipo, j, destinosAtivos = DESTINOS_ATIVOS) {
+    let items = [];
+    for (let k = 1; k <= destinosAtivos.length; k++) {
+        const destino = destinosAtivos[k - 1];
+        items.push(_getDestinosItemCheckbox(j, destino.destinosID, destino.titulo, tipo, k));
+    }
+    return items.join('');
+}
+
+function _getDestinosAtivosCheckboxOptionWithID(checkboxOption, tipo) {
+    return checkboxOption.replace(/check-destinos/g, `check-${tipo}`);
+}
+
+function _addValuesForDestinosAtivosCheckbox(tipo, j, values) {
+    const fieldsetID = `${tipo}-local-${j}`;
+    for (const containerID of _getChildIDs(fieldsetID)) {
+        const ids = `${containerID.split('-')[1]}-${containerID.split('-')[2]}`;
+        const checkbox = getID(`check-${tipo}-${ids}`);
+        if (values.includes(checkbox.value)) {
+            checkbox.checked = true;
+        }
+    }
+}
+
+function _getDestinosItemCheckbox(j, destinosID, titulo, tipo = 'destinos', k) {
+    if (!j) {
+        console.error('Erro ao tentar criar um item de checkbox de destinos. O valor de j não foi fornecido.')
+    }
+    const ids = k ? `${j}-${k}` : j;
+    return `<div class="nice-form-group" id="checkbox-${ids}">
+                <input type="checkbox" id="check-${tipo}-${ids}" value="${destinosID}">
+                <label id=check-${tipo}-label-${ids} for="check-${tipo}-${ids}">${titulo}</label>
+            </div>`
+}
+
+function _loadDestinosCheckboxListeners(tipo, j) {
+    switch (tipo) {
+        case 'programacao':
+            _loadProgramacaoListeners(j);
+    }
+}
+
+// Outros (Genérico)
 function _getDestinoTitle(destinoID) {
     if (!destinoID) return '';
     for (const destino of DESTINOS) {
-        if (destino.destinoID === destinoID) {
+        if (destino.code === destinoID) {
             return destino.titulo;
         }
     }

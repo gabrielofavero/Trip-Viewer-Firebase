@@ -1,5 +1,4 @@
 var INNER_PROGRAMACAO = {};
-var DEFAULT_PROGRAMACAO_INNER_TITLE_SELECT_VALUES = ['', 'Ida', 'Volta', 'Deslocamento', 'outro'];
 
 function _updateProgramacaoTitle(j) {
     const div = getID(`programacao-title-${j}`);
@@ -15,8 +14,11 @@ function _updateProgramacaoTitle(j) {
     } else {
         titulo = tituloSelect.value;
         tituloInput.style.display = 'none';
-        if (!DEFAULT_PROGRAMACAO_INNER_TITLE_SELECT_VALUES.includes(value)) {
-            value = _getCurrentSelectLabel(tituloSelect);
+        if (!['', 'Ida', 'Volta', 'Deslocamento', 'outro'].includes(value)) { // Destino
+            value = _getDestinoTitle(titulo);
+            if (!value) { // Múltiplos Destinos
+                value = titulo;
+            }
         }
     }
 
@@ -30,9 +32,26 @@ function _getProgramacaoTitleSelectOptions(j = null) {
     let destino = '';
 
     if (j) {
-        const localDiv = getID(`programacao-local-${j}`);
-        if (localDiv.value && DESTINO_SELECT.length > 0) {
-            destino = `<option value="${localDiv.value}">${_getCurrentSelectLabel(localDiv)}</option>`;
+        let labels = [];
+        let values = [];
+
+        for (const child of _getChildIDs(`programacao-local-${j}`)) {
+            const ids = child.replace('checkbox-', '');
+            const checkbox = getID(`check-programacao-${ids}`);
+            if (checkbox.checked) {
+                labels.push(getID(`check-programacao-label-${ids}`).innerText);
+                values.push(checkbox.value);
+            }
+        }
+
+        if (values.length > 0 && DESTINOS_ATIVOS.length > 0) {
+            for (let i = 0; i < values.length; i++) {
+                destino += `<option value="${values[i]}">${labels[i]}</option>`;
+            }
+            if (labels.length > 1) {
+                const text = _getReadableArray(labels);
+                destino += `<option value="${text}">${text}</option>`;
+            }
         }
     }
 
@@ -59,13 +78,6 @@ function _getProgramacaoTitle(dataFormatada, titulo = '') {
     if (titulo) return `${titulo}: ${dataFormatada}`;
     else return dataFormatada;
 }
-
-function _programacaoLocalSelectAction(categoria, init = false, updateLast = false) {
-    let copy = SELECT_DESTINO_SELECT[categoria];
-    SELECT_DESTINO_SELECT[categoria] = _getUpdatedDynamicSelectArray(categoria, 'local');
-    _loadDynamicSelect(categoria, 'local', copy, SELECT_DESTINO_SELECT[categoria], init, updateLast);
-}
-
 
 // Inner Programação
 function _loadInnerProgramacaoHTML(j) {
@@ -225,12 +237,11 @@ function _openInnerProgramacao(j, k, turno) {
 }
 
 function _getInnerProgramacaoSelects(j) {
-    const destinosAtivos = _getDestinosAtivos();
     const currentID = getID(`programacao-local-${j}`).value;
-    const idsAtivos = destinosAtivos.map(destino => destino.destinosID);
+    const idsAtivos = DESTINOS_ATIVOS.map(destino => destino.destinosID);
     const todosIds = DESTINOS.map(destino => destino.code);
 
-    if (destinosAtivos.length < 0 || !currentID || !idsAtivos.includes(currentID)
+    if (DESTINOS_ATIVOS.length < 0 || !currentID || !idsAtivos.includes(currentID)
         || !todosIds.includes(currentID)) {
         return {
             ativo: false,
