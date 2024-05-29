@@ -211,6 +211,21 @@ function _loadDestinosCheckboxListeners(tipo, j) {
     }
 }
 
+function _getDestinosFromCheckbox(tipo, j) {
+    result = [];
+    for (const child of _getChildIDs(`${tipo}-local-${j}`)) {
+        const k = child.split('-')[2];
+        const checkbox = getID(`check-${tipo}-${j}-${k}`);
+        if (checkbox.checked) {
+            result.push({
+                titulo: getID(`check-${tipo}-label-${j}-${k}`).innerText,
+                destinosID: checkbox.value,
+            });
+        }
+    }
+    return result;
+}
+
 // Outros (Genérico)
 function _getDestinoTitle(destinoID) {
     if (!destinoID) return '';

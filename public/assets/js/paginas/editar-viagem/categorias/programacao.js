@@ -159,7 +159,7 @@ function _openInnerProgramacao(j, k, turno) {
                         </select>
                         </div>
 
-                        <div class="nice-form-group" style="display: ${selects.ativo ? 'block' : 'none'}">
+                        <div class="nice-form-group" style="display: ${selects.ativo > 0 ? 'block' : 'none'}">
                             <label style="margin-bottom: 0px;">Passeio Associado <span class="opcional">(Opcional)</span></label>
                             <button id="inner-programacao-passeio-associado" class="btn inner-programacao-botao")">
                                 Adicionar Passeio
@@ -175,11 +175,16 @@ function _openInnerProgramacao(j, k, turno) {
                         </div>
                       </div>
                       <div id="inner-programacao-tela-passeio-associado" style="display: none;">
-                        <div class="nice-form-group"">
+                        <div class="nice-form-group">
+                            <label>Local <span class="opcional">(Opcional)</span></label>
+                            <select class="editar-select" id="inner-programacao-select-local">
+                                ${selects.localOptions}
+                            </select>
+                        </div>
+
+                        <div class="nice-form-group">
                             <label>Categoria <span class="opcional">(Opcional)</span></label>
                             <select class="editar-select" id="inner-programacao-select-categoria">
-                                <option value="">Selecione</option>
-                                ${selects.categoriaOptions}
                             </select>
                         </div>
 
@@ -192,7 +197,6 @@ function _openInnerProgramacao(j, k, turno) {
                     </div>`;
 
     const confirmAction = turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`;
-
     _displayInputModal(title, content, confirmAction);
 
     if (turno) {
@@ -205,6 +209,8 @@ function _openInnerProgramacao(j, k, turno) {
         getID(`inner-programacao`).value = dados.programacao;
         getID(`inner-programacao-inicio`).value = dados.inicio;
         getID(`inner-programacao-fim`).value = dados.fim;
+
+        getID(`inner-programacao-select-local`).value = dados.passeio.local;
         getID(`inner-programacao-select-categoria`).value = dados.passeio.categoria;
         getID(`inner-programacao-select-passeio`).value = dados.passeio.id;
 
@@ -237,37 +243,54 @@ function _openInnerProgramacao(j, k, turno) {
 }
 
 function _getInnerProgramacaoSelects(j) {
-    const currentID = getID(`programacao-local-${j}`).value;
+    const destinoFromCheckbox = _getDestinosFromCheckbox('programacao', j);
     const idsAtivos = DESTINOS_ATIVOS.map(destino => destino.destinosID);
     const todosIds = DESTINOS.map(destino => destino.code);
 
-    if (DESTINOS_ATIVOS.length < 0 || !currentID || !idsAtivos.includes(currentID)
-        || !todosIds.includes(currentID)) {
+    if (DESTINOS_ATIVOS.length === 0 || destinoFromCheckbox.length === 0) {
         return {
             ativo: false,
-            categoriaOptions: '',
-            passeioOptions: {}
-        }
+        };
     };
 
-    const index = todosIds.findIndex(destino => destino == currentID);
-    const currentDestinoData = DESTINOS[index].data;
-
-    let categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key));
-    categorias = categorias.sort((a, b) => DESTINOS_CATEGORIAS.indexOf(a) - DESTINOS_CATEGORIAS.indexOf(b));
-    const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
-
-    let passeioOptions = {};
-    for (const categoria of categorias) {
-        const passeios = currentDestinoData[categoria];
-        passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
-    }
-
-    return {
+    let result = {
         ativo: true,
-        categoriaOptions: categoriaOptions,
-        passeioOptions: passeioOptions
+        localOptions: '',
+        locais: {}
+    };
+
+    let localOptions = '';
+    let ativo = false;
+
+    for (const destino of destinoFromCheckbox) {
+        const currentID = destino.destinosID;
+        if (!idsAtivos.includes(currentID)) continue;
+
+        const index = todosIds.findIndex(destino => destino == currentID);
+        if (index > -1) {
+            ativo = true;
+            localOptions += `<option value="${currentID}">${destino.titulo}</option>`;
+            let innerResult = {};
+
+            const currentDestinoData = DESTINOS[index].data;
+            let categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key));
+            categorias = categorias.sort((a, b) => DESTINOS_CATEGORIAS.indexOf(a) - DESTINOS_CATEGORIAS.indexOf(b));
+            const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
+            innerResult.categoriaOptions = categoriaOptions;
+
+            let passeioOptions = {};
+            for (const categoria of categorias) {
+                const passeios = currentDestinoData[categoria];
+                passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
+            }
+            innerResult.passeioOptions = passeioOptions;
+
+            result.locais[currentID] = innerResult;
+        }
     }
+
+    result.ativo = ativo;
+    return result;
 }
 
 function _loadInnerProgramacaoSelectPasseio(selects) {
@@ -296,6 +319,7 @@ function _addInnerProgramacao(j, k, turno) {
             inicio: getID(`inner-programacao-inicio`).value,
             fim: getID(`inner-programacao-fim`).value,
             passeio: {
+                local: getID(`inner-programacao-select-local`).value,
                 categoria: getID(`inner-programacao-select-categoria`).value,
                 id: getID(`inner-programacao-select-passeio`).value
             }
