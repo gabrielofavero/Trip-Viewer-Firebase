@@ -574,3 +574,28 @@ async function _setViagem() {
         _openModal('modal');
     }
 }
+
+function _getNewDestinoID(tipo) {
+    const js = _getJs(`${tipo}-box`);
+    let ids = [];
+
+    for (const j of js) {
+        const id = getID(`${tipo}-id-${j}`).value;
+        if (id) ids.push(id);
+    }
+
+    let newID = _getRandomID();
+    while (ids.includes(newID)) {
+        newID = _getRandomID();
+    }
+
+    return newID;
+}
+
+function _getNewTransporteID() {
+    
+}
+
+function _migration() {
+
+}

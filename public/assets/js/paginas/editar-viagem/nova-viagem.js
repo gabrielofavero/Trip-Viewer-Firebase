@@ -148,7 +148,12 @@ function _addTransporte() {
       </h2>
       <div id="collapse-transporte-${j}" class="accordion-collapse collapse"
         aria-labelledby="heading-transporte-${j}" data-bs-parent="#transporte-box">
-        <div class="accordion-body">
+          <div class="accordion-body">
+            <div class="nice-form-group" style="display: none">
+            <label>Identificador</label>
+            <input id="transporte-id-${j}" type="text" disabled />
+          </div>
+
           <fieldset class="nice-form-group" id="idaVolta-box-${j}">
             <div class="nice-form-group" style="margin-top: -15px">
               <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${checkedIda} />
@@ -269,7 +274,12 @@ function _addHospedagens() {
       </h2>
       <div id="collapse-hospedagens-${j}" class="accordion-collapse collapse"
         aria-labelledby="heading-hospedagens-${j}" data-bs-parent="#hospedagens-box">
-        <div class="accordion-body">
+          <div class="accordion-body">
+            <div class="nice-form-group" style="display: none">
+            <label>Identificador</label>
+            <input id="hospedagens-id-${j}" type="text" disabled />
+          </div>
+
           <div class="nice-form-group">
             <input id="hospedagens-cafe-${j}" type="checkbox" class="switch">
             <label for="hospedagens-cafe-${j}">

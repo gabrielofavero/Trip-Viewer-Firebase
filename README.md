@@ -7,8 +7,8 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 35          | 6         |
-| 🏆     | Feature  | F000    | 53    | 47          | 6         |
-| 📈     | Melhoria | M000    | 53    | 35         | 18        |
+| 🏆     | Feature  | F000    | 55    | 47          | 8         |
+| 📈     | Melhoria | M000    | 54    | 35          | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -24,7 +24,8 @@
   - *Automação Título*
   - *Quantidade dinâmica de itens*
   - *Novo design na programação por dia em viagens.html*
-  - *Possibilidade de abrir um item de destino associado a programação em viagens.html*
+  - *Possibilidade de abrir um item associado a programação em viagens.html (destino, hospedagem ou transporte)*
+- 🏆 **F054:** Implementar sistema de IDs para transporte e hospedagem, para poderem ser utilizados como referência em programacao
 
 ## To-Do
 
@@ -91,6 +92,8 @@
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
 - 📈 **M047:** Trocar mensagens em modal para mensagens em bottomsheet
+- 📈 **M054:** Melhorar funções relacionadas ao getJs para mais cenários
+- 🏆 **F055:** Implementar função de getKs
 
 ## Done
 
