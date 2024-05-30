@@ -359,13 +359,15 @@ function _buildProgramacaoObject() {
     for (let j = 1; j <= DATAS.length; j++) {
         const innerResult = {
             data: _convertToFirestoreDate(DATAS[j-1]),
-            destinoID: getID(`programacao-local-${j}`).value,
+            destinosIDs: [],
             titulo: '',
             madrugada: [],
             manha: [],
             tarde: [],
             noite: []
         }
+
+        innerResult.destinosIDs = _getDestinosFromCheckbox('programacao', j);
 
         const tituloSelectValue = getID(`programacao-inner-title-select-${j}`).value; 
         if (tituloSelectValue == 'outro') {

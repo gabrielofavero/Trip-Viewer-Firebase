@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 35          | 6         |
 | 🏆     | Feature  | F000    | 53    | 47          | 6         |
-| 📈     | Melhoria | M000    | 53    | 34         | 19        |
+| 📈     | Melhoria | M000    | 53    | 35         | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -25,7 +25,6 @@
   - *Quantidade dinâmica de itens*
   - *Novo design na programação por dia em viagens.html*
   - *Possibilidade de abrir um item de destino associado a programação em viagens.html*
-- 📈 **M053:** Possibilidade de incluir mais de um local para o mesmo dia de programação
 
 ## To-Do
 
@@ -145,6 +144,7 @@
   - Botão de salvar não acessível no mobile (navegador)
 - 🐞 **B041:** Correção salvamento de viagens retornar NaN na data da programação
   - *O título completo apenas aparece quando o usuário edita o input (listener)*
+- 📈 **M053:** Possibilidade de incluir mais de um local para o mesmo dia de programação
 
 ### Abril 2024
 

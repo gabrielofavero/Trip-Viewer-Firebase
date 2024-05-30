@@ -121,125 +121,17 @@ function _loadInnerProgramacaoHTML(j) {
 }
 
 function _openInnerProgramacao(j, k, turno) {
-    const key = _jsDateToKey(DATAS[j - 1]);
-    let isNew = (!k && !turno);
-
     const selects = _getInnerProgramacaoSelects(j);
-    const title = `Adicionar Programação`;
-    const content = `<div class="inner-programacao" id="inner-programacao-box">
-                      <div id="inner-programacao-tela-principal">
-                        <div class="nice-form-group">
-                            <label>Atividade</label>
-                            <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." />
-                        </div>
-                        <div class="side-by-side-box-fixed">
-                            <div class="nice-form-group side-by-side-fixed">
-                            <label>
-                                Início<br>
-                                <span class="opcional">(Opcional)</span>
-                            </label>
-                            <input class="flex-input-50-50" id="inner-programacao-inicio" type="time">
-                        </div>
-                        <div class="nice-form-group side-by-side-fixed">
-                            <label>
-                            Fim<br>
-                            <span class="opcional">(Opcional)</span>
-                            </label>
-                            <input class="flex-input-50-50" id="inner-programacao-fim" type="time">
-                        </div>
-                        </div>
+    const isNew = (!k && !turno);
 
-                        <div class="nice-form-group">
-                        <label>Turno</label>
-                        <select class="editar-select" id="inner-programacao-select-turno">
-                            <option value="madrugada">Madrugada</option>
-                            <option value="manha">Manhã</option>
-                            <option value="tarde">Tarde</option>
-                            <option value="noite">Noite</option>
-                        </select>
-                        </div>
+    _displayInputMessage('Adicionar Programação',
+                         _getInnerProgramacaoContent(j, k, turno, selects, isNew),
+                         '_closePasseioAssociado()',
+                         turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`);
 
-                        <div class="nice-form-group" style="display: ${selects.ativo > 0 ? 'block' : 'none'}">
-                            <label style="margin-bottom: 0px;">Passeio Associado <span class="opcional">(Opcional)</span></label>
-                            <button id="inner-programacao-passeio-associado" class="btn inner-programacao-botao")">
-                                Adicionar Passeio
-                            </button>
-                        </div>  
-                        
-                        <div class="button-box-right" style="margin-top: 8px; margin-bottom: -18px; display: ${isNew ? 'none' : 'block'}">
-                            <button onclick="_deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
-                        </div>
-                      </div>
-                      <div id="inner-programacao-tela-passeio-associado" style="display: none;">
-                        <div class="nice-form-group">
-                            <label>Local <span class="opcional">(Opcional)</span></label>
-                            <select class="editar-select" id="inner-programacao-select-local">
-                                ${selects.localOptions}
-                            </select>
-                        </div>
-
-                        <div class="nice-form-group">
-                            <label>Categoria <span class="opcional">(Opcional)</span></label>
-                            <select class="editar-select" id="inner-programacao-select-categoria">
-                            </select>
-                        </div>
-
-                        <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px; display: none">
-                            <label>Passeio <span class="opcional">(Opcional)</span></label>
-                            <select class="editar-select" id="inner-programacao-select-passeio">
-                            </select>
-                        </div>            
-                      </div>
-                    </div>`;
-
-    const confirmAction = turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`;
-    _displayInputModal(title, content, confirmAction);
-
-    if (turno) {
-        getID(`inner-programacao-select-turno`).value = turno;
-    }
-
-    if (!isNew && INNER_PROGRAMACAO && INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][turno] && INNER_PROGRAMACAO[key][turno][k - 1]) {
-        const dados = INNER_PROGRAMACAO[key][turno][k - 1];
-
-        getID(`inner-programacao`).value = dados.programacao;
-        getID(`inner-programacao-inicio`).value = dados.inicio;
-        getID(`inner-programacao-fim`).value = dados.fim;
-
-        getID(`inner-programacao-select-local`).value = dados.passeio.local;
-        getID(`inner-programacao-select-categoria`).value = dados.passeio.categoria;
-        getID(`inner-programacao-select-passeio`).value = dados.passeio.id;
-
-        _loadInnerProgramacaoSelectPasseio(selects);
-    }
-
-    getID(`inner-programacao-inicio`).addEventListener('change', function (event) {
-        const inicioValue = event.target.value;
-        const hora = parseInt(inicioValue.split(':')[0]);
-        const turnoValue = hora < 6 ? 'madrugada' : hora < 12 ? 'manha' : hora < 18 ? 'tarde' : 'noite';
-        getID('inner-programacao-select-turno').value = turnoValue;
-    });
-
-    getID(`inner-programacao-fim`).addEventListener('change', function (event) {
-        const fimValue = event.target.value;
-        const fimHora = parseInt(fimValue.split(':')[0]);
-        const fimMinuto = parseInt(fimValue.split(':')[1]);
-
-        const inicioValue = getID(`inner-programacao-inicio`).value;
-        const inicioHora = parseInt(inicioValue.split(':')[0]);
-        const inicioMinuto = parseInt(inicioValue.split(':')[1]);
-
-        if (fimHora < inicioHora || (fimHora == inicioHora && fimMinuto < inicioMinuto)) {
-            getID(`inner-programacao-fim`).value = '';
-            getID(`inner-programacao-fim`).reportValidity();
-        }
-    });
-
-    getID(`inner-programacao-select-categoria`).addEventListener('change', () => _loadInnerProgramacaoSelectPasseio(selects));
+    _loadPasseioAssociadoListeners(selects);
+    _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
+    _loadInnerProgramacaoEventListeners();
 }
 
 function _getInnerProgramacaoSelects(j) {
@@ -289,21 +181,171 @@ function _getInnerProgramacaoSelects(j) {
         }
     }
 
+    result.localOptions = localOptions;
     result.ativo = ativo;
     return result;
 }
 
-function _loadInnerProgramacaoSelectPasseio(selects) {
-    const categoriaValue = getID(`inner-programacao-select-categoria`).value;
-    const passeio = getID(`inner-programacao-select-passeio-box`);
-    const passeioSelect = getID(`inner-programacao-select-passeio`);
+function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
+    return `<div class="inner-programacao" id="inner-programacao-box">
+                <div id="inner-programacao-tela-principal">
+                    <div class="nice-form-group">
+                        <label>Atividade</label>
+                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." />
+                    </div>
+                    <div class="side-by-side-box-fixed">
+                        <div class="nice-form-group side-by-side-fixed">
+                        <label>
+                            Início<br>
+                            <span class="opcional">(Opcional)</span>
+                        </label>
+                        <input class="flex-input-50-50" id="inner-programacao-inicio" type="time">
+                    </div>
+                    <div class="nice-form-group side-by-side-fixed">
+                        <label>
+                            Fim<br>
+                            <span class="opcional">(Opcional)</span>
+                        </label>
+                        <input class="flex-input-50-50" id="inner-programacao-fim" type="time">
+                    </div>
+                    </div>
 
-    if (categoriaValue && selects.passeioOptions[categoriaValue]) {
-        passeioSelect.innerHTML = selects.passeioOptions[categoriaValue];
-        passeio.style.display = 'block';
-    } else {
-        passeio.style.display = 'none';
+                    <div class="nice-form-group">
+                    <label>Turno</label>
+                    <select class="editar-select" id="inner-programacao-select-turno">
+                        <option value="madrugada">Madrugada</option>
+                        <option value="manha">Manhã</option>
+                        <option value="tarde">Tarde</option>
+                        <option value="noite">Noite</option>
+                    </select>
+                    </div>
+
+                    <div class="nice-form-group" style="display: ${selects.ativo > 0 ? 'block' : 'none'}">
+                        <label style="margin-bottom: 0px;">Passeio Associado <span class="opcional">(Opcional)</span></label>
+                        <button id="inner-programacao-passeio-associado" class="btn inner-programacao-botao" onclick="_openPasseioAssociado()">
+                            Adicionar Passeio
+                        </button>
+                    </div>  
+                    
+                    <div class="button-box-right" style="margin-top: 8px; margin-bottom: -18px; display: ${isNew ? 'none' : 'block'}">
+                        <button onclick="_deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    </div>
+                    <div id="inner-programacao-tela-passeio-associado" style="display: none;">
+                    <div class="nice-form-group">
+                        <label>Local <span class="opcional">(Opcional)</span></label>
+                        <select class="editar-select" id="inner-programacao-select-local">
+                            ${selects.localOptions}
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+
+                    <div class="nice-form-group">
+                        <label>Categoria <span class="opcional">(Opcional)</span></label>
+                        <select class="editar-select" id="inner-programacao-select-categoria">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+
+                    <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px;">
+                        <label>Passeio <span class="opcional">(Opcional)</span></label>
+                        <select class="editar-select" id="inner-programacao-select-passeio">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>            
+                </div>
+            </div>`;
+}
+
+function _loadPasseioAssociadoListeners(selects) {
+    const selectLocal = getID(`inner-programacao-select-local`);
+    const selectCategoria = getID(`inner-programacao-select-categoria`);
+    const selectPasseio = getID(`inner-programacao-select-passeio`);
+    const passeioAssociado = getID(`inner-programacao-passeio-associado`);
+
+    selectLocal.addEventListener('change', () => {
+        if (selectLocal.value && selects.locais[selectLocal.value]) {
+            selectCategoria.innerHTML = '<option value="">Selecione</option>' + selects.locais[selectLocal.value].categoriaOptions;
+        } else {
+            selectCategoria.innerHTML = '<option value="">Selecione um Local</option>';
+            selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
+        }
+    });
+
+    selectCategoria.addEventListener('change', () => {
+        if (selectLocal.value && selectCategoria.value && selects.locais[selectLocal.value].passeioOptions[selectCategoria.value]) {
+            selectPasseio.innerHTML = '<option value="">Selecione</option>' + selects.locais[selectLocal.value].passeioOptions[selectCategoria.value];
+        } else selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
+    });
+
+    selectPasseio.addEventListener('change', () => {
+        if (selectPasseio.value) {
+            passeioAssociado.innerText = _getCurrentSelectLabel(selectPasseio);
+        } else passeioAssociado.innerText = 'Adicionar Passeio';
+    });
+}
+
+function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
+    if (turno) {
+        getID(`inner-programacao-select-turno`).value = turno;
     }
+
+    if (getID(`inner-programacao-select-local`).value) {
+        getID(`inner-programacao-select-categoria`).innerHTML = '<option value="">Selecione</option>' +
+            selects.locais[getID(`inner-programacao-select-local`).value].categoriaOptions;
+    }
+
+    const key = _jsDateToKey(DATAS[j - 1]);
+    if (!isNew && INNER_PROGRAMACAO && INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][turno] && INNER_PROGRAMACAO[key][turno][k - 1]) {
+        const dados = INNER_PROGRAMACAO[key][turno][k - 1];
+
+        getID(`inner-programacao`).value = dados.programacao;
+        getID(`inner-programacao-inicio`).value = dados.inicio;
+        getID(`inner-programacao-fim`).value = dados.fim;
+
+        if (dados.passeio.local) getID(`inner-programacao-select-local`).value = dados.passeio.local;
+        if (dados.passeio.categoria) getID(`inner-programacao-select-categoria`).value = dados.passeio.categoria;
+        if (dados.passeio.id) getID(`inner-programacao-select-passeio`).value = dados.passeio.id;
+    }
+}
+
+function _loadInnerProgramacaoEventListeners() {
+    getID('inner-programacao-inicio').addEventListener('change', function (event) {
+        const inicioValue = event.target.value;
+        const inicioHora = parseInt(inicioValue.split(':')[0]);
+        getID('inner-programacao-select-turno').value = inicioHora < 6 ? 'madrugada' : inicioHora < 12 ? 'manha' : inicioHora < 18 ? 'tarde' : 'noite';
+    });
+
+    getID(`inner-programacao-fim`).addEventListener('change', function (event) {
+        const fimValue = event.target.value;
+        const fimHora = parseInt(fimValue.split(':')[0]);
+        const fimMinuto = parseInt(fimValue.split(':')[1]);
+
+        const inicioValue = getID(`inner-programacao-inicio`).value;
+        const inicioHora = parseInt(inicioValue.split(':')[0]);
+        const inicioMinuto = parseInt(inicioValue.split(':')[1]);
+
+        if (fimHora < inicioHora || (fimHora == inicioHora && fimMinuto < inicioMinuto)) {
+            getID(`inner-programacao-fim`).value = '';
+            getID(`inner-programacao-fim`).reportValidity();
+        }
+    });
+}
+
+function _openPasseioAssociado() {
+    const height = getID('inner-programacao-tela-principal').offsetHeight;
+    const passeioAssociado = getID('inner-programacao-tela-passeio-associado');
+
+    passeioAssociado.style.height = `${height}px`;
+    _animate(['inner-programacao-tela-passeio-associado', 'back-icon'], ['inner-programacao-tela-principal'])
+}
+
+function _closePasseioAssociado() {
+    _animate(['inner-programacao-tela-principal'], ['inner-programacao-tela-passeio-associado', 'back-icon'])
 }
 
 function _addInnerProgramacao(j, k, turno) {

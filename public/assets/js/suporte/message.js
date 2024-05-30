@@ -1,6 +1,10 @@
 var MESSAGE_MODAL_OPEN = false;
 const DEFAULT_PROPERTIES = {
   errorData: {},
+  backButton: {
+    active: false,
+    action: ''
+  },
   buttons: [{
     type: 'ok',
     action: ''
@@ -27,8 +31,8 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
     textDiv.className = 'message-text-container';
 
     if (!isErrorMessage) {
-      const cancelIcon = _getCloseIcon();
-      textDiv.appendChild(cancelIcon);
+      const buttonsBox = _getButtonsBox(properties.backButton);
+      textDiv.appendChild(buttonsBox);
     }
 
     const titleDiv = document.createElement('div');
@@ -72,22 +76,6 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
   }
 }
 
-// Mensagem de Input
-function _displayInputModal(title, content, confirmAction='_closeDisplayMessage();') {
-  let properties = {
-    errorData: {},
-    buttons: [{
-      type: 'cancelar',
-      action: ''
-    }, {
-      type: 'confirmar',
-      action: confirmAction
-    }],
-    container: 'input-container',
-    buttonBox: 'button-box-right'
-  }
-  _displayMessage(title, content, properties);
-}
 // Mensagem de Erro
 function _displayErrorMessage(error, customMessage = "", showLocation = true) {
   const title = "Erro no Carregamento 🙁";
@@ -105,13 +93,17 @@ function _displayErrorMessage(error, customMessage = "", showLocation = true) {
     isErrorInstance = true;
   }
 
-  let buttons = [{type: 'tryAgain'}];
+  let buttons = [{ type: 'tryAgain' }];
 
   if (!window.location.href.includes('index.html')) {
-    buttons.push({type: 'home'});
+    buttons.push({ type: 'home' });
   }
 
   const properties = {
+    backButton: {
+      active: false,
+      action: ''
+    },
     errorData: {
       isError: true,
       error: isErrorInstance ? error : "",
@@ -124,11 +116,32 @@ function _displayErrorMessage(error, customMessage = "", showLocation = true) {
   _displayMessage(title, content, properties);
 }
 
+// Mensagem de Input
+function _displayInputMessage(title, content, backAction, confirmAction = '_closeDisplayMessage();') {
+  let properties = {
+    errorData: {},
+    backButton: {
+      active: backAction ? true : false,
+      action: backAction
+    },
+    buttons: [{
+      type: 'cancelar',
+      action: ''
+    }, {
+      type: 'confirmar',
+      action: confirmAction
+    }],
+    container: 'input-container',
+    buttonBox: 'button-box-right'
+  }
+  _displayMessage(title, content, properties);
+}
+
 // Atribuições
 function _openAtribuicoes() {
   const page = window.location.href.split('/').pop();
   const title = '';
-  const buttons = [{type: 'ok'}];
+  const buttons = [{ type: 'ok' }];
 
   let content = '';
   let atribuicoes = [];
@@ -138,7 +151,7 @@ function _openAtribuicoes() {
   const formularios = `<strong>Formulários: </strong> <a href="https://github.com/nielsVoogt/nice-forms.css" target="_blank">Niels Voogt</a> (Adaptado)`;
   const calendario = `<strong>Calendário: </strong> <a href="https://www.cssscript.com/minimal-calendar-ui-generator/" target="_blank">niinpatel</a> (Adaptado)`
   const accordion = `<strong>Accordion: </strong> <a href="https://github.com/nielsVoogt/nice-forms.css" target="_blank">Niels Voogt</a> (Adaptado)`
-  
+
   atribuicoes.push(logotipo);
 
   if (page.includes('index')) {
@@ -156,7 +169,7 @@ function _openAtribuicoes() {
 
   content = atribuicoes.join('<br>');
 
-  _displayMessage(title, content, {buttons: buttons});
+  _displayMessage(title, content, { buttons: buttons });
 }
 
 // Fechar Mensagem
@@ -179,10 +192,24 @@ function _overrideErrorMessage() {
 }
 
 // Funções de Suporte
-function _getCloseIcon() {
+function _getButtonsBox(backButton = {}) {
   const iconContainer = document.createElement('div');
   iconContainer.className = 'icon-container';
   iconContainer.style.textAlign = 'right';
+
+  if (backButton.active) {
+    const backIcon = document.createElement('i');
+    backIcon.id = 'back-icon';
+    backIcon.className = 'iconify';
+    backIcon.setAttribute('data-icon', 'bx:arrow-back');
+    backIcon.setAttribute('onclick', backButton.action);
+    backIcon.style.cursor = 'pointer';
+    backIcon.style.marginBottom = '-25px';
+    backIcon.style.fontSize = '25px';
+    backIcon.style.display = 'none';
+
+    iconContainer.appendChild(backIcon);
+  }
 
   const cancelIcon = document.createElement('i');
   cancelIcon.id = 'cancel-icon';
@@ -286,7 +313,7 @@ function _getTryAgainButton() {
   return button;
 }
 
-function _getCloseButton(name='Fechar') {
+function _getCloseButton(name = 'Fechar') {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
@@ -304,7 +331,7 @@ function _getCancelButton() {
   return _getCloseButton('Cancelar');
 }
 
-function _getConfirmButton(onclick='_closeDisplayMessage();') {
+function _getConfirmButton(onclick = '_closeDisplayMessage();') {
   const button = document.createElement('button');
   button.className = 'btn btn-purple btn-format';
   button.type = 'submit';
@@ -315,7 +342,7 @@ function _getConfirmButton(onclick='_closeDisplayMessage();') {
   return button;
 }
 
-function _getDeleteButton(onclick, buttonClass='btn-secondary') {
+function _getDeleteButton(onclick, buttonClass = 'btn-secondary') {
   const button = document.createElement('button');
   button.className = `btn ${buttonClass} btn-format`;
   button.type = 'submit';
