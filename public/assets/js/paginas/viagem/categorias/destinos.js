@@ -267,7 +267,11 @@ function _getDestinosOrdem() {
   const ordem = [];
 
   if (FIRESTORE_DATA.modulos.programacao && FIRESTORE_DATA.programacoes && FIRESTORE_DATA.programacoes.length > 0) {
-    let idsProgramacao = FIRESTORE_DATA.programacoes.map(programacao => programacao.destinoID);
+    const destinosObjects = FIRESTORE_DATA.programacoes.map(programacao => programacao.destinosIDs).flat(1);
+    const filteredDestinos = [];
+
+    // To-Do
+
     idsProgramacao = idsProgramacao.filter((id, index) => id !== "" && idsProgramacao.indexOf(id) === index);
     const idsDestinos = DESTINOS.map(destino => destino.destinosID);
     for (const programacao of idsProgramacao) {

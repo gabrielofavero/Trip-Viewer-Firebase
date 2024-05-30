@@ -477,3 +477,11 @@ a:hover {
 .external-link {
   color: #92caff;
 }
+
+.destinos-titulo {
+  border-bottom: 0.5px solid #383838;
+}
+
+.nota-texto {
+  color: #F2F2F2;
+}

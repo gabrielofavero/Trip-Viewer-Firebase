@@ -137,6 +137,14 @@ function _displayInputMessage(title, content, backAction, confirmAction = '_clos
   _displayMessage(title, content, properties);
 }
 
+// Mensagem de Destino
+function _displayDestinoMessage(title, content) {
+  let properties = DEFAULT_PROPERTIES;
+  properties.buttons = [];
+  properties.container = 'destino-container';
+  _displayMessage(title, content, properties);
+}
+
 // Atribuições
 function _openAtribuicoes() {
   const page = window.location.href.split('/').pop();
@@ -226,9 +234,6 @@ function _getButtonsBox(backButton = {}) {
 }
 
 function _getErrorElement(errorData) {
-
-  // TO-DO block exit message, add button to home and add stack if configured
-
   let location = "";
   if (errorData?.showLocation) {
     const stackTrace = errorData.error ? errorData.error.stack : (new Error()).stack;

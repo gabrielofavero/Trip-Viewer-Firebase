@@ -1946,22 +1946,38 @@ iframe {
   border: none;
 }
 
-.message-container {
+.message-container,
+.destino-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 450px;
-  height: 300px;
+  height: auto;
   background: #fff;
   border-radius: 10px;
-  text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px;
   overflow-wrap: break-word;
+}
+
+.message-container {
+  text-align: center;
+}
+
+.destino-container {
+  padding: 20px;
+}
+
+@media (max-height: 730px) {
+  .destino-container {
+    max-height: 95% !important;
+    overflow: auto;
+    display: block;
+  }
 }
 
 .message-text-container {
@@ -1983,7 +1999,8 @@ iframe {
 }
 
 @media (max-width: 520px) {
-  .message-container {
+  .message-container,
+  .destino-container {
     width: 90%;
     height: auto;
   }
@@ -2374,5 +2391,112 @@ iframe {
 @media (max-width: 700px) {
   .hotel-box {
     width: 90%;
+  }
+}
+
+.destinos-titulo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-bottom: 0.5px solid #D9D9D9;
+}
+
+.notas-box {
+  display: block;
+  white-space: nowrap;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.nota-sem-margem {
+  font-size: 25px;
+  color: #1f2937;
+  border-radius: 50%;
+  padding: 3px;
+  margin-right: 0;
+}
+
+.nota-5 {
+  background-color: #CFE2F3;
+}
+
+.nota-4 {
+  background-color: #D9EAD3;
+}
+
+.nota-3 {
+  background-color: #FFF2CC;
+}
+
+.nota-2 {
+  background-color: #FCE5CD;
+}
+
+.nota-1 {
+  background-color: #F4CCCC;
+}
+
+.nota-ausente {
+  background-color: #ead1dc;
+}
+
+.nota-texto {
+  color: #4F5051;
+  font-weight: bold;
+  position: relative;
+  top: 1.5px;
+}
+
+.links-container {
+  display: flex;
+  margin-top: 4.5px;
+}
+
+.links-container .iconify {
+  margin-left: 8px;
+}
+
+.link {
+  color: #3d85c6;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.link:hover {
+  color: #195b96;
+  text-decoration: none;
+}
+
+.destinos-topicos-box {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.destinos-descricao {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.midia-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tiktok-embed-v2 {
+  width: 100%;
+  height: 775px;
+}
+
+.tiktok-embed-v3 {
+  width: 300px;
+  height: 533px;
+}
+
+@media screen and (max-width: 550px) {
+  .tiktok-embed-v3 {
+    width: 100%;
+    /* height calculated in js function _applyDestinosMediaHeight */
   }
 }

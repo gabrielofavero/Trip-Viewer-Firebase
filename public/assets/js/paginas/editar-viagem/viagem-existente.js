@@ -351,14 +351,16 @@ function _loadProgramacaoData(FIRESTORE_DATA) {
     let j = 1;
 
     while (getID(`programacao-title-${j}`)) {
-        const dados = _migration(FIRESTORE_DATA.programacoes[j - 1]);
+        const dados = FIRESTORE_DATA.programacoes[j - 1];
         const firestoreData = dados.data;
 
         if (firestoreData) {
             const jsDate = _convertFromFirestoreDate(firestoreData);
 
-            const destinosIDs = dados.destinosIDs;
-            if (destinosIDs && destinosIDs.length > 0) {
+            const destinosIDsObject = dados.destinosIDs;
+            let destinosIDs = [];
+            if (destinosIDsObject && destinosIDsObject.length > 0) {
+                destinosIDs = destinosIDsObject.map(destino => destino.destinosID);
                 _addValuesForDestinosAtivosCheckbox('programacao', j, destinosIDs);
             }
 
@@ -513,11 +515,4 @@ function _formatAltura(value) {
         getID('logo-tamanho').value = value;
     }
     getID('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
-}
-
-function _migration(data) {
-    let result = data;
-    result.destinosIDs = [data.destinoID];
-    delete result.destinoID;
-    return data;
 }

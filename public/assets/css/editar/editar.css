@@ -1364,7 +1364,6 @@ details summary::-webkit-details-marker {
 }
 
 @media (max-width: 520px) {
-
   .message-container,
   .input-container {
     width: 90%;
