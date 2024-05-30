@@ -244,3 +244,24 @@ function _getRandomID(idLength = 5) {
 
   return randomId;
 }
+
+function _getCategoriaID(tipo, j) {
+  const js = _getJs(`${tipo}-box`);
+  let ids = [];
+
+  for (const innerJ of js) {
+    const id = getID(`${tipo}-id-${innerJ}`).value;
+    if (id) ids.push(id);
+  }
+
+  const currentID = getID(`${tipo}-id-${j}`).value;
+  if (currentID && !ids.includes(currentID)) {
+    return currentID;
+  }
+
+  let newID = _getRandomID();
+  while (ids.includes(newID)) {
+    newID = _getRandomID();
+  }
+  return newID;
+}

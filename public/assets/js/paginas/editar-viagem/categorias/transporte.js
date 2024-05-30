@@ -118,3 +118,19 @@ function _loadAutoDuration(i) {
         div.value = _getTimeBetweenDates(start, end);
     }
 }
+
+// Set Viagem
+function _getValueEmpresa(j) {
+    const divSelect = getID(`empresa-select-${j}`);
+    const divEmpresa = getID(`empresa-${j}`);
+
+    if (divSelect && divEmpresa) {
+        if (divSelect.value == 'outra' || divSelect.value == 'selecione') {
+            return _returnEmptyIfNoValue(divEmpresa.value);
+        } else {
+            return divSelect.value;
+        }
+    }
+
+    return "";
+}

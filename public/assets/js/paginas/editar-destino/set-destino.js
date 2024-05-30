@@ -86,7 +86,7 @@ function _buildDestinoCategoryObject(tipo) {
         let item = {};
         const j = _getJ(childIDs[i]);
 
-        item.id = getID(`${tipo}-id-${j}`).value || _getNewDestinoID(tipo);
+        item.id = _getCategoriaID(tipo, j);
         item.novo = getID(`${tipo}-novo-${j}`).checked;
         item.nome = getID(`${tipo}-nome-${j}`).value;
         item.emoji = getID(`${tipo}-emoji-${j}`).value;
@@ -128,21 +128,4 @@ async function _setDestino() {
         _stopLoadingScreen();
         _openModal('modal');
     }
-}
-
-function _getNewDestinoID(tipo) {
-    const js = _getJs(`${tipo}-box`);
-    let ids = [];
-
-    for (const j of js) {
-        const id = getID(`${tipo}-id-${j}`).value;
-        if (id) ids.push(id);
-    }
-
-    let newID = _getRandomID();
-    while (ids.includes(newID)) {
-        newID = _getRandomID();
-    }
-
-    return newID;
 }

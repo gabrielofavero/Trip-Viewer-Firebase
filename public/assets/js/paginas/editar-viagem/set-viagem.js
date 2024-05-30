@@ -181,174 +181,50 @@ function _buildLinksObject() {
 }
 
 function _buildTransporteObject() {
-    let result = {
-        datas: [],
-        duracoes: [],
-        empresas: [],
-        idaVolta: [],
-        links: [],
-        pontos: [],
-        reservas: [],
-        transportes: [],
-        viagem: "",
-        visualizacaoSimplificada: true
+    const result = {
+        dados: [],
+        visualizacaoSimplificada: getID('separar').checked
     }
-
-    if (getID('separar').checked) {
-        result.visualizacaoSimplificada = false;
+    for (const child of _getChildIDs('transporte-box')) {
+        const j = _getJ(child);
+        result.dados.push({
+            datas: {
+                chegada: _formattedDateToFirestoreDate(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
+                partida: _formattedDateToFirestoreDate(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
+            },
+            duracao: getID(`transporte-duracao-${j}`).value,
+            empresa: _getValueEmpresa(j),
+            id: _getCategoriaID('transporte', j),
+            idaVolta: getID(`ida-${j}`).checked ? 'ida' : getID(`volta-${j}`).checked ? 'volta' : 'durante',
+            link: getID(`transporte-link-${j}`).value,
+            pontos: {
+                chegada: getID(`ponto-chegada-${j}`).value,
+                partida: getID(`ponto-partida-${j}`).value
+            },
+            reserva: getID(`reserva-transporte-${j}`).value,
+            transporte: getID(`transporte-tipo-${j}`).value,
+        });
     }
-
-    const childIDs = _getChildIDs('transporte-box');
-
-    for (var i = 0; i < childIDs.length; i++) {
-        const j = _getJ(childIDs[i]);
-
-        if (getID(`ida-${j}`).checked) {
-            result.idaVolta.push('ida');
-        } else if (getID(`durante-${j}`).checked) {
-            result.idaVolta.push('durante');
-        } else {
-            result.idaVolta.push('volta');
-        }
-
-        var data = {
-            partida: "",
-            chegada: ""
-        }
-
-        const partidaData = getID(`partida-${j}`).value;
-        const partidaHorario = getID(`partida-horario-${j}`).value;
-        const partidaValue = _formattedDateToFirestoreDate(partidaData, partidaHorario);
-        data.partida = partidaValue;
-
-        const chegadaData = getID(`chegada-${j}`).value;
-        const chegadaHorario = getID(`chegada-horario-${j}`).value;
-        const chegadaValue = _formattedDateToFirestoreDate(chegadaData, chegadaHorario);
-        data.chegada = chegadaValue;
-
-        result.datas.push(data);
-
-        result.transportes.push(getID(`transporte-tipo-${j}`).value);
-
-        const divDuracao = getID(`transporte-duracao-${j}`);
-        const valueDuracao = divDuracao ? _returnEmptyIfNoValue(divDuracao.value) : "";
-        result.duracoes.push(valueDuracao);
-
-        const valueEmpresa = _getValueEmpresa(j);
-        result.empresas.push(valueEmpresa);
-
-        const divReserva = getID(`reserva-transporte-${j}`);
-        const valueReserva = divReserva ? _returnEmptyIfNoValue(divReserva.value) : "";
-        result.reservas.push(valueReserva);
-
-        var pontos = {
-            partida: "",
-            chegada: ""
-        }
-
-        const divPontoPartida = getID(`ponto-partida-${j}`);
-        const valuePontoPartida = divPontoPartida ? _returnEmptyIfNoValue(divPontoPartida.value) : "";
-        pontos.partida = valuePontoPartida;
-
-        const divPontoChegada = getID(`ponto-chegada-${j}`);
-        const valuePontoChegada = divPontoChegada ? _returnEmptyIfNoValue(divPontoChegada.value) : "";
-        pontos.chegada = valuePontoChegada;
-
-        const divLink = getID(`transporte-link-${j}`);
-        const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
-        result.links.push(valueLink);
-
-        result.pontos.push(pontos);
-    }
-
     return result;
 }
 
-function _getValueEmpresa(j) {
-    const divSelect = getID(`empresa-select-${j}`);
-    const divEmpresa = getID(`empresa-${j}`);
-
-    if (divSelect && divEmpresa) {
-        if (divSelect.value == 'outra' || divSelect.value == 'selecione') {
-            return _returnEmptyIfNoValue(divEmpresa.value);
-        } else {
-            return divSelect.value;
-        }
-    }
-
-    return "";
-}
-
 function _buildHospedagemObject() {
-    let result = {
-        cafe: [],
-        codigos: [],
-        datas: [],
-        descricao: [],
-        endereco: [],
-        hospedagem: [],
-        imagens: [],
-        links: [],
-        viagem: ""
-    }
-
-    const childIDs = _getChildIDs('hospedagens-box');
-
-    for (var i = 0; i < childIDs.length; i++) {
-        const j = _getJ(childIDs[i]);
-
-        const divCafe = getID(`hospedagens-cafe-${j}`);
-        result.cafe.push(divCafe.checked);
-
-        const divNome = getID(`hospedagens-nome-${j}`);
-        const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
-        result.hospedagem.push(valueNome);
-
-        const divEndereco = getID(`hospedagens-endereco-${j}`);
-        const valueEndereco = divEndereco ? _returnEmptyIfNoValue(divEndereco.value) : "";
-        result.endereco.push(valueEndereco);
-
-        const data = {
-            checkin: "",
-            checkout: ""
-        }
-
-        const checkinData = getID(`check-in-${j}`).value;
-        const checkinHorario = getID(`check-in-horario-${j}`).value;
-        const checkinValue = _formattedDateToFirestoreDate(checkinData, checkinHorario);
-        data.checkin = checkinValue;
-
-        const checkoutData = getID(`check-out-${j}`).value;
-        const checkoutHorario = getID(`check-out-horario-${j}`).value;
-        const checkoutValue = _formattedDateToFirestoreDate(checkoutData, checkoutHorario);
-        data.checkout = checkoutValue;
-
-        result.datas.push(data);
-
-        const divCodigo = getID(`hospedagens-codigo-${j}`);
-        const valueCodigo = divCodigo ? _returnEmptyIfNoValue(divCodigo.value) : "";
-        result.codigos.push(valueCodigo);
-
-        const divDescricao = getID(`hospedagens-descricao-${j}`);
-        const valueDescricao = divDescricao ? _returnEmptyIfNoValue(divDescricao.value) : "";
-        result.descricao.push(valueDescricao);
-
-        const divLink = getID(`reserva-hospedagens-link-${j}`);
-        const valueLink = divLink ? _returnEmptyIfNoValue(divLink.value) : "";
-        result.links.push(valueLink);
-
-        if (getID(`enable-upload-hospedagens-${j}`).checked) {
-            TO_UPLOAD.hospedagens = true;
-            result.imagens.push({});
-            UPLOAD_FILES.hospedagens.push(j)
-        } else {
-            const divImagem = getID(`link-hospedagens-${j}`);
-            const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
-            const valueResult = valueImagem ? _getImageObject(valueImagem, 'hospedagens') : "";
-
-            result.imagens.push(valueResult);
-            UPLOAD_FILES.hospedagens.push({});
-        }
+    let result = [];
+    for (const id of _getChildIDs('hospedagens-box')) {
+        const j = _getJ(id);
+        result.push({
+            cafe: getID(`hospedagens-cafe-${j}`).checked,
+            data: {
+                checkin: _formattedDateToFirestoreDate(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
+                checkout: _formattedDateToFirestoreDate(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
+            },
+            descricao: getID(`hospedagens-descricao-${j}`).value,
+            endereco: getID(`hospedagens-endereco-${j}`).value,
+            id: _getCategoriaID('hospedagens', j),
+            imagem: _getImage('hospedagens', j),
+            link: getID(`reserva-hospedagens-link-${j}`).value,
+            nome: getID(`hospedagens-nome-${j}`).value,
+        });
     }
     return result;
 }
@@ -358,7 +234,7 @@ function _buildProgramacaoObject() {
 
     for (let j = 1; j <= DATAS.length; j++) {
         const innerResult = {
-            data: _convertToFirestoreDate(DATAS[j-1]),
+            data: _convertToFirestoreDate(DATAS[j - 1]),
             destinosIDs: [],
             titulo: '',
             madrugada: [],
@@ -369,15 +245,15 @@ function _buildProgramacaoObject() {
 
         innerResult.destinosIDs = _getDestinosFromCheckbox('programacao', j);
 
-        const tituloSelectValue = getID(`programacao-inner-title-select-${j}`).value; 
+        const tituloSelectValue = getID(`programacao-inner-title-select-${j}`).value;
         if (tituloSelectValue == 'outro') {
             innerResult.titulo = getID(`programacao-inner-title-${j}`).value;
         } else {
             innerResult.titulo = tituloSelectValue;
         }
 
-        if (DATAS[j-1] && DATAS[j-1] && INNER_PROGRAMACAO[_jsDateToKey(DATAS[j-1])]) {
-            const turnos = INNER_PROGRAMACAO[_jsDateToKey(DATAS[j-1])];
+        if (DATAS[j - 1] && DATAS[j - 1] && INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])]) {
+            const turnos = INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])];
             innerResult.madrugada = turnos.madrugada;
             innerResult.manha = turnos.manha;
             innerResult.tarde = turnos.tarde;
@@ -575,27 +451,15 @@ async function _setViagem() {
     }
 }
 
-function _getNewDestinoID(tipo) {
-    const js = _getJs(`${tipo}-box`);
-    let ids = [];
-
-    for (const j of js) {
-        const id = getID(`${tipo}-id-${j}`).value;
-        if (id) ids.push(id);
+function _getImage(tipo, j) {
+    if (getID(`enable-upload-${tipo}-${j}`).checked) {
+        TO_UPLOAD.hospedagens = true;
+        UPLOAD_FILES.hospedagens.push(j)
+        return {};
     }
+    UPLOAD_FILES.hospedagens.push({});
 
-    let newID = _getRandomID();
-    while (ids.includes(newID)) {
-        newID = _getRandomID();
-    }
-
-    return newID;
-}
-
-function _getNewTransporteID() {
-    
-}
-
-function _migration() {
-
+    const divImagem = getID(`link-${tipo}-${j}`);
+    const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
+    return valueImagem ? _getImageObject(valueImagem, tipo) : "";
 }

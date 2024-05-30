@@ -1,7 +1,7 @@
 function _loadHospedagens() {
   let swiperData = []
 
-  for (let i = 0; i < FIRESTORE_DATA.hospedagens.hospedagem.length; i++) {
+  for (let i = 0; i < FIRESTORE_DATA.hospedagens.length; i++) {
     const htmlContent = _getHospedagensHTML(i);
     swiperData.push(htmlContent);
   }
@@ -14,16 +14,16 @@ function _loadHospedagens() {
 
 function _getHospedagensHTML(i) {
   const j = i + 1;
-
+  const original = FIRESTORE_DATA.hospedagens[i];
   const hospedagem = {
-    cafe: FIRESTORE_DATA.hospedagens.cafe ? FIRESTORE_DATA.hospedagens.cafe[i] : false,
-    checkIn: _getHospedagensData(FIRESTORE_DATA.hospedagens.datas[i].checkin),
-    checkOut: _getHospedagensData(FIRESTORE_DATA.hospedagens.datas[i].checkout),
-    descricao: FIRESTORE_DATA.hospedagens.descricao ? FIRESTORE_DATA.hospedagens.descricao[i] : "",
-    endereco: FIRESTORE_DATA.hospedagens.enderecos ? FIRESTORE_DATA.hospedagens.enderecos[i] : "",
-    hospedagem: FIRESTORE_DATA.hospedagens.hospedagem ? FIRESTORE_DATA.hospedagens.hospedagem[i] : "",
-    imagem: FIRESTORE_DATA.hospedagens.imagens ? _getImageLink(FIRESTORE_DATA.hospedagens.imagens[i]) : "",
-    link: FIRESTORE_DATA.hospedagens.links ? FIRESTORE_DATA.hospedagens.links[i] : "",
+    cafe: original.cafe,
+    checkIn: _getHospedagensData(original.data.checkin), // To-Do: data -> datas
+    checkOut: _getHospedagensData(original.data.checkout),
+    descricao: original.descricao,
+    endereco: original.endereco,
+    imagem: _getImageLink(original.imagem),
+    link: original.link,
+    nome: original.nome
   }
 
   return `<div class="swiper-slide" id="hospedagens-slide-${j}">
@@ -50,7 +50,7 @@ function _getHospedagensHTML(i) {
                   <div class="hotel-title">
                     <div class="left-title">
                       <div class="hotel-name" id="hospedagens-nome-${j}">
-                        ${hospedagem.hospedagem}
+                        ${hospedagem.nome}
                         <div>
                           <i style="display: ${hospedagem.link ? 'block' : 'none'}" class="iconify external-link" 
                           data-icon="tabler:external-link" onclick="window.open('${hospedagem.link}', '_blank')"></i>

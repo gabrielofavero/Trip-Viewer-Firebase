@@ -266,21 +266,21 @@ function _adjustDestinationsHTML() {
 function _getDestinosOrdem() {
   const ordem = [];
 
-  if (FIRESTORE_DATA.modulos.programacao && FIRESTORE_DATA.programacoes && FIRESTORE_DATA.programacoes.length > 0) {
-    const destinosObjects = FIRESTORE_DATA.programacoes.map(programacao => programacao.destinosIDs).flat(1);
-    const filteredDestinos = [];
+  // if (FIRESTORE_DATA.modulos.programacao && FIRESTORE_DATA.programacoes && FIRESTORE_DATA.programacoes.length > 0) {
+  //   const destinosObjects = FIRESTORE_DATA.programacoes.map(programacao => programacao.destinosIDs).flat(1);
+  //   const filteredDestinos = [];
 
-    // To-Do
+  //   // To-Do
 
-    idsProgramacao = idsProgramacao.filter((id, index) => id !== "" && idsProgramacao.indexOf(id) === index);
-    const idsDestinos = DESTINOS.map(destino => destino.destinosID);
-    for (const programacao of idsProgramacao) {
-      const index = idsDestinos.indexOf(programacao);
-      if (index !== -1 && !ordem.includes(DESTINOS[index].destinos.titulo)) {
-        ordem.push(DESTINOS[index].destinos.titulo);
-      }
-    }
-  }
+  //   idsProgramacao = idsProgramacao.filter((id, index) => id !== "" && idsProgramacao.indexOf(id) === index);
+  //   const idsDestinos = DESTINOS.map(destino => destino.destinosID);
+  //   for (const programacao of idsProgramacao) {
+  //     const index = idsDestinos.indexOf(programacao);
+  //     if (index !== -1 && !ordem.includes(DESTINOS[index].destinos.titulo)) {
+  //       ordem.push(DESTINOS[index].destinos.titulo);
+  //     }
+  //   }
+  // }
 
   return ordem;
 }

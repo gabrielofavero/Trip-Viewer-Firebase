@@ -1,15 +1,15 @@
 var TRANSPORTE_ICONES = [];
 
 function _loadTransporte() {
-  getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo(FIRESTORE_DATA.transportes.reservas);
+  getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo();
   const swiperData = {
     ida: [],
     durante: [],
     volta: [],
   }
 
-  for (let i = 0; i < FIRESTORE_DATA.transportes.datas.length; i++) {
-    const idaVolta = FIRESTORE_DATA.transportes.idaVolta[i];
+  for (let i = 0; i < FIRESTORE_DATA.transportes.dados.length; i++) {
+    const idaVolta = FIRESTORE_DATA.transportes.dados[i].idaVolta;
     const htmlContent = _getTransporteHTML(i + 1, idaVolta);
     swiperData[idaVolta].push(htmlContent);
   }
@@ -48,8 +48,9 @@ function _getTransporteHTML(j, idaVolta) {
 }
 
 function _getEmpresaObj(j) {
-  const tipo = FIRESTORE_DATA.transportes.transportes[j - 1];
-  const titulo = FIRESTORE_DATA.transportes.empresas[j - 1];
+  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
+  const tipo = transporte.transporte;
+  const titulo = transporte.empresa;
 
   const tituloConfig = _getIfExists(`CONFIG.transportes.empresas.${tipo}.${titulo}`);
   const siteConfig = _getIfExists(`CONFIG.transportes.sites.${tipo}.${titulo}`);
@@ -79,11 +80,12 @@ function _getImagemHTML(j, empresa) {
 }
 
 function _getReservaHTML(j, empresa) {
-  let reserva = FIRESTORE_DATA.transportes.reservas[j - 1];
+  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
+  let reserva = transporte.reserva;
   let link = empresa.site || "";
 
-  if (FIRESTORE_DATA.transportes.links && FIRESTORE_DATA.transportes.links[j - 1]) {
-    link = FIRESTORE_DATA.transportes.links[j - 1];
+  if (transporte.link) {
+    link = transporte.link;
   }
 
   if (!reserva) return ""
@@ -94,8 +96,9 @@ function _getReservaHTML(j, empresa) {
 }
 
 function _getPartidaChegadaHTML(j, tipo) {
-  const data = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j - 1][tipo]);
-  const local = FIRESTORE_DATA.transportes.pontos[j - 1][tipo];
+  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
+  const data = _convertFromFirestoreDate(transporte.datas[tipo]);
+  const local = transporte.pontos[tipo];
 
   let result = `<div class="flight-date">${_jsDateToDate(data, 'dd/mm')}</div>
                 <div class="flight-time">${_jsDateToTime(data)}</div>`;
@@ -105,20 +108,20 @@ function _getPartidaChegadaHTML(j, tipo) {
 }
 
 function _getTransporteIcon(j) {
-  const tipo = FIRESTORE_DATA.transportes.transportes[j - 1];
+  const tipo = FIRESTORE_DATA.transportes.dados[j-1].transporte;
   const icone = CONFIG.transportes.icones[tipo] || CONFIG.transportes.icones.outro;
   TRANSPORTE_ICONES.push(icone);
   return icone;
 }
 
 function _getDuracaoHTML(j) {
-  const duracao = FIRESTORE_DATA.transportes.duracoes ? FIRESTORE_DATA.transportes.duracoes[j - 1] : "";
+  const duracao = FIRESTORE_DATA.transportes.dados[j-1].duracao;
   if (!duracao) return ""
   else return `<div class="flight-duration">${_jsTimeToVisualTime(duracao)}</div>`;
 }
 
 function _adjustFlightLine(j) {
-  const duracao = FIRESTORE_DATA.transportes.duracoes ? FIRESTORE_DATA.transportes.duracoes[j - 1] : "";
+  const duracao = FIRESTORE_DATA.transportes.dados[j-1].duracao;
   if (!duracao) return "style='transform: translateY(-33.75%);'";
   else return "";
 }
@@ -153,8 +156,8 @@ function _buildTransporteSwiper(swiperData) {
   }
 }
 
-function _loadTransporteSubtitulo(reservas) {
-  if (!reservas) return "";
+function _loadTransporteSubtitulo() {
+  const reservas = FIRESTORE_DATA.transportes.dados.map(reserva => reserva.reserva);
   const unique = [...new Set(reservas)];
   const filtered = unique.filter(reserva => reserva);
   const size = filtered.length;
