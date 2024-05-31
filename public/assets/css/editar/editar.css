@@ -1289,27 +1289,12 @@ details summary::-webkit-details-marker {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  position: fixed;
-  bottom: 0;
   background: #f7f8f9;
   color: #4F5051;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
   width: 100%;
   padding: 10px 0;
-}
-
-#footer h3 {
-  font-size: 36px;
-  font-weight: 700;
-  position: relative;
-  font-family: "Poppins", sans-serif;
-  padding: 0;
-  margin: 0 0 15px 0;
-}
-
-#footer .credits {
-  font-size: 13px;
 }
 
 .pessoa-img {
