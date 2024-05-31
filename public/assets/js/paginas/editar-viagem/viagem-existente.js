@@ -4,7 +4,7 @@ async function _loadTripData(FIRESTORE_DATA) {
         _loadDadosBasicosViagemData(FIRESTORE_DATA);
         _loadCompartilhamentoData(FIRESTORE_DATA);
         _loadCustomizacaoData(FIRESTORE_DATA);
-        _loadMeiosDeTransporteData(FIRESTORE_DATA);
+        _loadTransportesData(FIRESTORE_DATA);
         _loadHospedagemData(FIRESTORE_DATA);
         _loadDestinosData(FIRESTORE_DATA);
         _loadProgramacaoData(FIRESTORE_DATA);
@@ -148,94 +148,67 @@ function _imageDataIncludes(value, includes) {
     return false;
 }
 
-function _loadMeiosDeTransporteData(FIRESTORE_DATA) {
+function _loadTransportesData(FIRESTORE_DATA) {
     if (FIRESTORE_DATA.modulos.transportes === true) {
         getID('habilitado-transporte').checked = true;
         getID('habilitado-transporte-content').style.display = 'block';
         getID('transporte-adicionar-box').style.display = 'block';
     }
 
-    if (FIRESTORE_DATA?.transportes?.visualizacaoSimplificada === false) {
+    if (FIRESTORE_DATA.transportes.visualizacaoSimplificada === false) {
         getID('separar').checked = true;
     }
 
-    const transporteSize = FIRESTORE_DATA?.transportes?.datas.length;
-    if (transporteSize > 0) {
-        for (let i = 1; i <= transporteSize; i++) {
-            const j = i - 1;
-            _addTransporte();
+    for (let j = 1; j <= FIRESTORE_DATA.transportes; j++) {
+        _addTransporte();
+        const transporte = FIRESTORE_DATA.transportes.dados[j-1];
 
-            switch (FIRESTORE_DATA.transportes.idaVolta[j]) {
-                case 'ida':
-                    getID(`ida-${i}`).checked = true;
-                    break;
-                case 'durante':
-                    getID(`durante-${i}`).checked = true;
-                    break;
-                case 'volta':
-                    getID(`volta-${i}`).checked = true;
-            }
-
-            const partida = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].partida);
-            const chegada = _convertFromFirestoreDate(FIRESTORE_DATA.transportes.datas[j].chegada);
-
-            if (partida) {
-                getID(`partida-${i}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
-                getID(`partida-horario-${i}`).value = _jsDateToTime(partida);
-            }
-
-            if (chegada) {
-                getID(`chegada-${i}`).value = _jsDateToDate(chegada, 'yyyy-mm-dd');
-                getID(`chegada-horario-${i}`).value = _jsDateToTime(chegada);
-            }
-
-            const transportes = FIRESTORE_DATA.transportes?.transportes
-            if (transportes && transportes[j]) {
-                getID(`transporte-tipo-${i}`).value = transportes[j];
-            }
-
-            const duracoes = FIRESTORE_DATA.transportes.duracoes;
-            if (duracoes && duracoes[j]) {
-                getID(`transporte-duracao-${i}`).value = duracoes[j];
-            }
-
-            const empresas = FIRESTORE_DATA.transportes.empresas;
-            if (empresas && empresas[j]) {
-                _loadTransporteVisibility(i);
-                if (_getOptionsFromSelect(`empresa-select-${i}`).includes(empresas[j])) {
-                    getID(`empresa-select-${i}`).value = empresas[j];
-                } else {
-                    getID(`empresa-select-${i}`).value = 'outra';
-                    getID(`empresa-${i}`).value = empresas[j];
-                    _loadTransporteVisibility(i);
-                }
-            }
-
-            const reservas = FIRESTORE_DATA.transportes.reservas;
-            if (reservas[j]) {
-                getID(`reserva-transporte-${i}`).value = reservas[j];
-            }
-
-            const pontoPartida = FIRESTORE_DATA.transportes.pontos[j].partida;
-            const pontoChegada = FIRESTORE_DATA.transportes.pontos[j].chegada;
-
-            if (pontoPartida) {
-                getID(`ponto-partida-${i}`).value = pontoPartida;
-            }
-
-            if (pontoChegada) {
-                getID(`ponto-chegada-${i}`).value = pontoChegada;
-            }
-
-            const links = FIRESTORE_DATA.transportes.links;
-            if (links && links[j]) {
-                getID(`transporte-link-${i}`).value = links[j];
-            }
-
-            _updateTransporteTitle(i);
+        switch (transporte.idaVolta) {
+            case 'ida':
+                getID(`ida-${j}`).checked = true;
+                break;
+            case 'durante':
+                getID(`durante-${j}`).checked = true;
+                break;
+            case 'volta':
+                getID(`volta-${j}`).checked = true;
         }
-        _applyIdaVoltaVisibility();
+
+        const partida = _convertFromFirestoreDate(transporte.datas.partida);
+        const chegada = _convertFromFirestoreDate(transporte.datas.chegada);
+
+        if (partida) {
+            getID(`partida-${j}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
+            getID(`partida-horario-${j}`).value = _jsDateToTime(partida);
+        }
+
+        if (chegada) {
+            getID(`chegada-${j}`).value = _jsDateToDate(chegada, 'yyyy-mm-dd');
+            getID(`chegada-horario-${j}`).value = _jsDateToTime(chegada);
+        }
+
+        const empresa = transporte.empresa;
+        if (empresa) {
+            _loadTransporteVisibility(j);
+            if (_getOptionsFromSelect(`empresa-select-${j}`).includes(empresa)) {
+                getID(`empresa-select-${j}`).value = empresa;
+            } else {
+                getID(`empresa-select-${j}`).value = 'outra';
+                getID(`empresa-${j}`).value = empresa;
+                _loadTransporteVisibility(j);
+            }
+        }
+
+        getID(`transporte-tipo-${j}`).value = transporte.transporte;
+        getID(`transporte-duracao-${j}`).value = transporte.duracao;
+        getID(`reserva-transporte-${j}`).value = transporte.reserva;
+        getID(`ponto-partida-${j}`).value = transporte.pontos.partida;
+        getID(`ponto-chegada-${j}`).value = transporte.pontos.chegada;
+        getID(`transporte-link-${j}`).value = transporte.link;
+
+        _updateTransporteTitle(j);
     }
+    _applyIdaVoltaVisibility();
 }
 
 function _loadHospedagemData(FIRESTORE_DATA) {

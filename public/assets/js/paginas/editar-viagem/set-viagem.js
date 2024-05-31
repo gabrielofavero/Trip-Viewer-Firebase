@@ -214,7 +214,7 @@ function _buildHospedagemObject() {
         const j = _getJ(id);
         result.push({
             cafe: getID(`hospedagens-cafe-${j}`).checked,
-            data: {
+            datas: {
                 checkin: _formattedDateToFirestoreDate(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
                 checkout: _formattedDateToFirestoreDate(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
             },
