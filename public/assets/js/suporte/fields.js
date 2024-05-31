@@ -126,7 +126,7 @@ function _closeAllSelects(excludeElement) {
     }
 }
 
-function _getCurrentSelectLabel(select) {
+function _getSelectCurrentLabel(select) {
     return select.options[select.selectedIndex].innerText;
 }
 
@@ -245,7 +245,7 @@ function _validateImageLink(id) {
     const div = getID(id);
     const imageLink = div.value;
 
-    if (_isHttp(link) && !imageLink.includes('pbs.twimg.com')) return;
+    if (_isHttp(imageLink) && !imageLink.includes('pbs.twimg.com')) return;
 
     let title = '';
     let content = '';

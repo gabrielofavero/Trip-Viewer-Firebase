@@ -160,7 +160,8 @@ a:hover {
   overflow: auto;
   border-radius: 0;
   position: relative;
-  top: 20px;
+  top: 30px;
+  padding-bottom: 0px;
 }
 
 @media (min-width: 992px) {
@@ -1295,6 +1296,7 @@ details summary::-webkit-details-marker {
   text-align: center;
   width: 100%;
   padding: 10px 0;
+  margin-bottom: 0px;
 }
 
 .pessoa-img {
@@ -1672,6 +1674,14 @@ details summary::-webkit-details-marker {
   margin: 5px;
 }
 
+.btn-format:first-child {
+  margin-left: 0;
+}
+
+.btn-format:last-child {
+  margin-right: 0;
+}
+
 #delete-title {
   text-decoration: double;
   margin-bottom: 20px;
@@ -1770,10 +1780,6 @@ details summary::-webkit-details-marker {
 
 .editar-select {
   height: 48px !important;
-}
-
-.inner-programacao {
-  margin-bottom: 24px;
 }
 
 .inner-programacao-botao,

@@ -15,113 +15,20 @@ function _loadDadosBasicosNewTrip() {
   getID('quantidadePessoas').value = 1;
 }
 
-function _loadProgramacao() {
-  const inicio = getID('inicio').value;
-  const fim = getID('fim').value;
-
-  DATAS = _getArrayOfDates(inicio, fim);
-
-  const programacaoBox = getID('programacao-box');
-  programacaoBox.innerHTML = '';
-
-  for (let j = 1; j <= DATAS.length; j++) {
-    const data = DATAS[j - 1];
-    let dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
-
-    programacaoBox.innerHTML += `
-      <div id="programacao-${j}" class="accordion-item accordion-programacao" >
-      <h2 class="accordion-header" id="heading-programacao-${j}">
-        <button id="programacao-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-programacao-${j}" aria-expanded="false"
-          aria-controls="collapse-programacao-${j}">
-          ${dataFormatada}
-        </button>
-      </h2>
-      <div id="collapse-programacao-${j}" class="accordion-collapse collapse"
-        aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
-        <div class="accordion-body">
-
-          <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
-            <label>Local<span class="opcional"> (Opcional)</span></label>
-            <fieldset class="nice-form-group destinos-checkboxes" id="programacao-local-${j}">
-              ${_getDestinosAtivosCheckboxOptions('programacao', j)}
-            </fieldset>
-          </div>
-
-          <div class="nice-form-group">
-            <label>Título<span class="opcional"> (Opcional)</span></label>
-              <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
-                ${_getProgramacaoTitleSelectOptions()}
-              </select>  
-            <input class="nice-form-group" id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" style="display: none;">
-          </div>
-
-          <div class='turno-box' id='programacao-madrugada-${j}' style="display: none;">
-            <label>Madrugada</label>
-            <div class="inner-programacao" id="inner-programacao-madrugada-${j}"></div>
-          </div>
-
-          <div class='turno-box' id='programacao-manha-${j}' style="display: none;">
-            <label>Manhã</label>
-            <div class="inner-programacao" id="inner-programacao-manha-${j}"></div>
-          </div>
-
-          <div class='turno-box' id='programacao-tarde-${j}' style="display: none;">
-            <label>Tarde</label>
-            <div class="inner-programacao" id="inner-programacao-tarde-${j}"></div>
-          </div>
-
-          <div class='turno-box' id='programacao-noite-${j}' style="display: none;">
-            <label>Noite</label>
-            <div class="inner-programacao" id="inner-programacao-noite-${j}"></div>
-          </div>
-
-          <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
-            <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_openInnerProgramacao(${j})">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                  <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                  </path>
-                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                  </path>
-                </g>
-              </svg>
-              Adicionar Programação
-            </button>
-          </div>
-
-        </div>
-      </div>
-    </div>`
-  }
-
-  for (const child of _getChildIDs('programacao-box')) {
-    const j = _getJ(child);
-    getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
-    getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
-    _loadProgramacaoListeners(j);
-  }
-}
-
-function _loadDestinos() {
-  if (!DESTINOS || DESTINOS.length === 0) return;
-
-  let destinos = DESTINOS;
-  destinos.sort((a, b) => a.titulo.localeCompare(b.titulo));
-  getID('sem-destinos').style.display = 'none';
-  getID('com-destinos').style.display = 'block';
-
-  const fieldset = getID('destinos-checkboxes');
-  fieldset.innerHTML = '';
-  for (let j = 1; j <= destinos.length; j++) {
-    const i = j - 1;
-    fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].code, destinos[i].titulo);
-  }
-
-  for (const child of _getChildIDs('destinos-checkboxes')) {
-    const j = _getJ(child);
-    getID(`check-destinos-${j}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
-  }
+function _addEditores() {
+  const j = _getNextJ('habilitado-editores-content');
+  $('#habilitado-editores-content').append(`
+    <div class="nice-form-group" id="editores-${j}">
+      <label>Editor ${j}</label>
+      <input
+        id="editores-email-${j}"
+        type="email"
+        placeholder="Email cadastrado no TripViewer"
+        value=""
+        class="icon-left"
+      />
+    </div>
+    `);
 }
 
 function _addTransporte() {
@@ -256,6 +163,7 @@ function _addTransporte() {
     </div>
       `);
 
+  getID(`transporte-id-${j}`).value = _getCategoriaID('transporte', j);
   _loadTransporteListeners(j);
   _addRemoveChildListener('transporte', j);
   _loadTransporteVisibility(j);
@@ -367,25 +275,119 @@ function _addHospedagens() {
     </div>
       `);
 
+  getID(`hospedagens-id-${j}`).value = _getCategoriaID('hospedagens', j);
   _loadImageSelector(`hospedagens-${j}`);
   _addRemoveChildListener('hospedagens', j);
   _loadHospedagemListeners(j);
 }
 
-function _addEditores() {
-  const j = _getNextJ('habilitado-editores-content');
-  $('#habilitado-editores-content').append(`
-    <div class="nice-form-group" id="editores-${j}">
-      <label>Editor ${j}</label>
-      <input
-        id="editores-email-${j}"
-        type="email"
-        placeholder="Email cadastrado no TripViewer"
-        value=""
-        class="icon-left"
-      />
-    </div>
-    `);
+function _loadDestinos() {
+  if (!DESTINOS || DESTINOS.length === 0) return;
+
+  let destinos = DESTINOS;
+  destinos.sort((a, b) => a.titulo.localeCompare(b.titulo));
+  getID('sem-destinos').style.display = 'none';
+  getID('com-destinos').style.display = 'block';
+
+  const fieldset = getID('destinos-checkboxes');
+  fieldset.innerHTML = '';
+  for (let j = 1; j <= destinos.length; j++) {
+    const i = j - 1;
+    fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].code, destinos[i].titulo);
+  }
+
+  for (const child of _getChildIDs('destinos-checkboxes')) {
+    const j = _getJ(child);
+    getID(`check-destinos-${j}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
+  }
+}
+
+function _loadProgramacao() {
+  const inicio = getID('inicio').value;
+  const fim = getID('fim').value;
+
+  DATAS = _getArrayOfDates(inicio, fim);
+
+  const programacaoBox = getID('programacao-box');
+  programacaoBox.innerHTML = '';
+
+  for (let j = 1; j <= DATAS.length; j++) {
+    const data = DATAS[j - 1];
+    let dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
+
+    programacaoBox.innerHTML += `
+      <div id="programacao-${j}" class="accordion-item accordion-programacao" >
+      <h2 class="accordion-header" id="heading-programacao-${j}">
+        <button id="programacao-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-programacao-${j}" aria-expanded="false"
+          aria-controls="collapse-programacao-${j}">
+          ${dataFormatada}
+        </button>
+      </h2>
+      <div id="collapse-programacao-${j}" class="accordion-collapse collapse"
+        aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
+        <div class="accordion-body">
+
+          <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
+            <label>Local<span class="opcional"> (Opcional)</span></label>
+            <fieldset class="nice-form-group destinos-checkboxes" id="programacao-local-${j}">
+              ${_getDestinosAtivosCheckboxOptions('programacao', j)}
+            </fieldset>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Título<span class="opcional"> (Opcional)</span></label>
+              <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
+                ${_getProgramacaoTitleSelectOptions()}
+              </select>  
+            <input class="nice-form-group" id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" style="display: none;">
+          </div>
+
+          <div class='turno-box' id='programacao-madrugada-${j}' style="display: none;">
+            <label>Madrugada</label>
+            <div class="inner-programacao" id="inner-programacao-madrugada-${j}"></div>
+          </div>
+
+          <div class='turno-box' id='programacao-manha-${j}' style="display: none;">
+            <label>Manhã</label>
+            <div class="inner-programacao" id="inner-programacao-manha-${j}"></div>
+          </div>
+
+          <div class='turno-box' id='programacao-tarde-${j}' style="display: none;">
+            <label>Tarde</label>
+            <div class="inner-programacao" id="inner-programacao-tarde-${j}"></div>
+          </div>
+
+          <div class='turno-box' id='programacao-noite-${j}' style="display: none;">
+            <label>Noite</label>
+            <div class="inner-programacao" id="inner-programacao-noite-${j}"></div>
+          </div>
+
+          <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
+            <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_openInnerProgramacao(${j})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Programação
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>`
+  }
+
+  for (const child of _getChildIDs('programacao-box')) {
+    const j = _getJ(child);
+    getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
+    getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
+    _loadProgramacaoListeners(j);
+  }
 }
 
 function _addLineup() {

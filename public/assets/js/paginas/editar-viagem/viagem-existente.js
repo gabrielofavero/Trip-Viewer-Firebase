@@ -179,6 +179,7 @@ function _loadTransportesData() {
             }
         }
 
+        getID(`transporte-id-${j}`).value = transporte.id;
         getID(`transporte-tipo-${j}`).value = transporte.transporte;
         getID(`transporte-duracao-${j}`).value = transporte.duracao;
         getID(`reserva-transporte-${j}`).value = transporte.reserva;
@@ -202,6 +203,7 @@ function _loadHospedagemData() {
         _addHospedagens();
         const hospedagem = FIRESTORE_DATA.hospedagens[j - 1];
 
+        getID(`hospedagens-id-${j}`).value = hospedagem.id;
         getID(`hospedagens-cafe-${j}`).checked = hospedagem.cafe;
         getID(`hospedagens-nome-${j}`).value = hospedagem.nome;
         getID(`hospedagens-title-${j}`).innerText = hospedagem.nome || getID(`hospedagens-title-${j}`).innerText;

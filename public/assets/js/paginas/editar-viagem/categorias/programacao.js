@@ -126,20 +126,48 @@ function _openInnerProgramacao(j, k, turno) {
 
     _displayInputMessage('Adicionar Programação',
         _getInnerProgramacaoContent(j, k, turno, selects, isNew),
-        '_closePasseioAssociado()',
+        '_closeInnerProgramacaoItem()',
         turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`);
 
-    _loadPasseioAssociadoListeners(selects);
+    _loadInnerProgramacaoListeners(selects);
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
     _loadInnerProgramacaoEventListeners();
 }
 
 function _getInnerProgramacaoSelects(j) {
+    return {
+        transporte: _getInnerProgramacaoSelect('transporte'),
+        hospedagens: _getInnerProgramacaoSelect('hospedagens'),
+        destinos: _getInnerProgramacaoSelectsDestinos(j),
+    }
+}
+
+function _getInnerProgramacaoSelect(tipo) {
+    let ativo = false;
+    let options = '';
+
+    if (getID(`habilitado-${tipo}`).checked === true) {
+        for (const j of _getJs(`${tipo}-box`)) {
+            const label = getID(`${tipo}-title-${j}`).innerText;
+            const id = getID(`${tipo}-id-${j}`).value;
+            if (id && label) {
+                ativo = true;
+                options += `<option value="${id}">${label}</option>`;
+            }
+        }
+    }
+
+    return {
+        ativo: ativo,
+        options: options
+    };
+}
+
+function _getInnerProgramacaoSelectsDestinos(j) {
     const destinoFromCheckbox = _getDestinosFromCheckbox('programacao', j);
     const idsAtivos = DESTINOS_ATIVOS.map(destino => destino.destinosID);
     const todosIds = DESTINOS.map(destino => destino.code);
-
-    if (DESTINOS_ATIVOS.length === 0 || destinoFromCheckbox.length === 0) {
+    if (getID('habilitado-destinos').checked === false || DESTINOS_ATIVOS.length === 0 || destinoFromCheckbox.length === 0) {
         return {
             ativo: false,
         };
@@ -172,7 +200,7 @@ function _getInnerProgramacaoSelects(j) {
 
             let passeioOptions = {};
             for (const categoria of categorias) {
-                const passeios = currentDestinoData[categoria];
+                const passeios = currentDestinoData[categoria].sort((a, b) => a.nome.localeCompare(b.nome));
                 passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
             }
             innerResult.passeioOptions = passeioOptions;
@@ -220,73 +248,158 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     </select>
                     </div>
 
-                    <div class="nice-form-group" style="display: ${selects.ativo > 0 ? 'block' : 'none'}">
-                        <label style="margin-bottom: 0px;">Passeio Associado <span class="opcional">(Opcional)</span></label>
-                        <button id="inner-programacao-passeio-associado" class="btn inner-programacao-botao" onclick="_openPasseioAssociado()">
-                            Adicionar Passeio
+                    <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
+                        <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
+                        <button id="inner-programacao-item-associado" class="btn inner-programacao-botao" onclick="_openInnerProgramacaoItem()">
+                            Associar Item
                         </button>
                     </div>  
                     
-                    <div class="button-box-right" style="margin-top: 8px; margin-bottom: -18px; display: ${isNew ? 'none' : 'block'}">
+                    <div class="button-box-right" style="margin-top: 8px; margin-bottom: 8px; display: ${isNew ? 'none' : 'block'}">
                         <button onclick="_deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
                     </div>
+                </div>
+                <div id="inner-programacao-item-selecionar" class="inner-programacao" style="display: none;">
+                    <div class="nice-form-group" id="inner-programacao-item-selecionar-radio">
+                        <label>Tipo</label>
+                        <fieldset class="nice-form-group">
+                            <div class="nice-form-group" id="inner-programacao-nenhum-radio-container">
+                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-nenhum-radio">
+                                <label for="inner-programacao-item-nenhum-radio">Nenhum</label>
+                            </div>
+
+                            <div class="nice-form-group" id="inner-programacao-transporte-radio-container" style="display: ${selects.transporte.ativo ? 'block' : 'none'};">
+                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-transporte-radio">
+                                <label for="inner-programacao-item-transporte-radio">Transporte</label>
+                            </div>
+                
+                            <div class="nice-form-group" id="inner-programacao-hospedagens-radio-container" style="display: ${selects.hospedagens.ativo ? 'block' : 'none'};">
+                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-hospedagens-radio">
+                                <label for="inner-programacao-item-hospedagens-radio">Hospedagem</label>
+                            </div>
+                
+                            <div class="nice-form-group" id="inner-programacao-destinos-radio-container" style="display: ${selects.destinos.ativo ? 'block' : 'none'};">
+                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-destinos-radio">
+                                <label for="inner-programacao-item-destinos-radio">Destino</label>
+                            </div>
+                        </fieldset>
                     </div>
-                    <div id="inner-programacao-tela-passeio-associado" style="display: none;">
-                    <div class="nice-form-group">
-                        <label>Local <span class="opcional">(Opcional)</span></label>
-                        <select class="editar-select" id="inner-programacao-select-local">
-                            ${selects.localOptions}
+
+                    <div class="nice-form-group" id="inner-programacao-item-transporte" style="display: none;">
+                        <label>Transporte</label>
+                        <select class="editar-select" id="inner-programacao-select-transporte">
                             <option value="">Selecione</option>
+                            ${selects.transporte.options}
                         </select>
                     </div>
 
-                    <div class="nice-form-group">
-                        <label>Categoria <span class="opcional">(Opcional)</span></label>
-                        <select class="editar-select" id="inner-programacao-select-categoria">
-                            <option value="">Selecione</option>
-                        </select>
+                <div class="nice-form-group" id="inner-programacao-item-hospedagens" style="display: none;">
+                    <label>Hospedagem</label>
+                    <select class="editar-select" id="inner-programacao-select-hospedagens">
+                        <option value="">Selecione</option>
+                        ${selects.hospedagens.options}
+                    </select>
+                </div>
+
+                    <div id="inner-programacao-item-destinos" style="display: none;">
+                        <div class="nice-form-group">
+                            <label>Local</label>
+                            <select class="editar-select" id="inner-programacao-select-local">
+                                ${selects.destinos.localOptions}
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+
+                        <div class="nice-form-group">
+                            <label>Categoria</label>
+                            <select class="editar-select" id="inner-programacao-select-categoria">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+
+                        <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px;">
+                            <label>Passeio</label>
+                            <select class="editar-select" id="inner-programacao-select-passeio">
+                                <option value="">Selecione uma Categoria</option>
+                            </select>
+                        </div>            
                     </div>
 
-                    <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px;">
-                        <label>Passeio <span class="opcional">(Opcional)</span></label>
-                        <select class="editar-select" id="inner-programacao-select-passeio">
-                            <option value="">Selecione</option>
-                        </select>
-                    </div>            
                 </div>
             </div>`;
 }
 
-function _loadPasseioAssociadoListeners(selects) {
-    const selectLocal = getID(`inner-programacao-select-local`);
-    const selectCategoria = getID(`inner-programacao-select-categoria`);
-    const selectPasseio = getID(`inner-programacao-select-passeio`);
-    const passeioAssociado = getID(`inner-programacao-passeio-associado`);
+function _loadInnerProgramacaoListeners(selects) {
+    const itemTransporte = getID(`inner-programacao-item-transporte`);
+    const itemHospedagens = getID(`inner-programacao-item-hospedagens`);
+    const itemDestinos = getID(`inner-programacao-item-destinos`);
 
-    selectLocal.addEventListener('change', () => {
-        if (selectLocal.value && selects.locais[selectLocal.value]) {
-            selectCategoria.innerHTML = '<option value="">Selecione</option>' + selects.locais[selectLocal.value].categoriaOptions;
-        } else {
-            selectCategoria.innerHTML = '<option value="">Selecione um Local</option>';
-            selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
-        }
+    getID(`inner-programacao-item-transporte-radio`).addEventListener('change', () => {
+        itemTransporte.style.display = 'block';
+        itemHospedagens.style.display = 'none';
+        itemDestinos.style.display = 'none';
     });
+
+    getID(`inner-programacao-item-hospedagens-radio`).addEventListener('change', () => {
+        itemTransporte.style.display = 'none';
+        itemHospedagens.style.display = 'block';
+        itemDestinos.style.display = 'none';
+    });
+
+    getID(`inner-programacao-item-destinos-radio`).addEventListener('change', () => {
+        itemTransporte.style.display = 'none';
+        itemHospedagens.style.display = 'none';
+        itemDestinos.style.display = 'block';
+    });
+
+    getID(`inner-programacao-item-nenhum-radio`).addEventListener('change', () => {
+        itemTransporte.style.display = 'none';
+        itemHospedagens.style.display = 'none';
+        itemDestinos.style.display = 'none';
+    });
+
+    getID(`inner-programacao-select-local`).addEventListener('change', () => {
+        _innerProgramacaoSelectLocalAction(selects);
+    });
+
+    getID(`inner-programacao-select-categoria`).addEventListener('change', () => {
+        _innerProgramacaoSelectCategoriaAction(selects);
+    });
+
+    _innerProgramacaoSelectLocalAction(selects);
+}
+
+function _innerProgramacaoSelectLocalAction(selects) {
+    const selectLocal = getID('inner-programacao-select-local');
+    const selectCategoria = getID('inner-programacao-select-categoria');
+    const selectPasseio = getID('inner-programacao-select-passeio');
+
+    if (selectLocal.value && selects.destinos.locais[selectLocal.value]) {
+        selectCategoria.innerHTML = '<option value="">Selecione</option>' + selects.destinos.locais[selectLocal.value].categoriaOptions;
+    } else {
+        selectCategoria.innerHTML = '<option value="">Selecione um Local</option>';
+        selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
+    }
 
     selectCategoria.addEventListener('change', () => {
-        if (selectLocal.value && selectCategoria.value && selects.locais[selectLocal.value].passeioOptions[selectCategoria.value]) {
-            selectPasseio.innerHTML = '<option value="">Selecione</option>' + selects.locais[selectLocal.value].passeioOptions[selectCategoria.value];
-        } else selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
+        _innerProgramacaoSelectCategoriaAction(selects);
     });
+}
 
-    selectPasseio.addEventListener('change', () => {
-        if (selectPasseio.value) {
-            passeioAssociado.innerText = _getCurrentSelectLabel(selectPasseio);
-        } else passeioAssociado.innerText = 'Adicionar Passeio';
-    });
+function _innerProgramacaoSelectCategoriaAction(selects) {
+    const selectLocal = getID('inner-programacao-select-local');
+    const selectCategoria = getID('inner-programacao-select-categoria');
+    const selectPasseio = getID('inner-programacao-select-passeio');
+
+    if (selectLocal.value && selectCategoria.value && selects.destinos.locais[selectLocal.value].passeioOptions[selectCategoria.value]) {
+        selectPasseio.innerHTML = '<option value="">Selecione</option>' + selects.destinos.locais[selectLocal.value].passeioOptions[selectCategoria.value];
+    } else {
+        selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
+    }
 }
 
 function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
@@ -294,22 +407,45 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
         getID(`inner-programacao-select-turno`).value = turno;
     }
 
-    if (getID(`inner-programacao-select-local`).value) {
-        getID(`inner-programacao-select-categoria`).innerHTML = '<option value="">Selecione</option>' +
-            selects.locais[getID(`inner-programacao-select-local`).value].categoriaOptions;
-    }
-
     const key = _jsDateToKey(DATAS[j - 1]);
     if (!isNew && INNER_PROGRAMACAO && INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][turno] && INNER_PROGRAMACAO[key][turno][k - 1]) {
         const dados = INNER_PROGRAMACAO[key][turno][k - 1];
+        const itemAssociado = getID('inner-programacao-item-associado');
 
         getID(`inner-programacao`).value = dados.programacao;
         getID(`inner-programacao-inicio`).value = dados.inicio;
         getID(`inner-programacao-fim`).value = dados.fim;
 
-        if (dados.passeio.local) getID(`inner-programacao-select-local`).value = dados.passeio.local;
-        if (dados.passeio.categoria) getID(`inner-programacao-select-categoria`).value = dados.passeio.categoria;
-        if (dados.passeio.id) getID(`inner-programacao-select-passeio`).value = dados.passeio.id;
+        switch (dados?.item?.tipo) {
+            case 'transporte':
+                getID(`inner-programacao-item-transporte-radio`).checked = true;
+                getID(`inner-programacao-item-transporte`).style.display = 'block';
+                getID(`inner-programacao-select-transporte`).value = dados.item.id;
+                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+                break;
+            case 'hospedagens':
+                getID(`inner-programacao-item-hospedagens-radio`).checked = true;
+                getID(`inner-programacao-item-hospedagens`).style.display = 'block';
+                getID(`inner-programacao-select-hospedagens`).value = dados.item.id;
+                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+                break;
+            case 'destinos':
+                getID(`inner-programacao-item-destinos-radio`).checked = true;
+                getID('inner-programacao-item-destinos').style.display = 'block';
+
+                getID(`inner-programacao-select-local`).value = dados.item.local
+                getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
+                _innerProgramacaoSelectCategoriaAction(selects);
+
+                const passeio = getID(`inner-programacao-select-passeio`);
+                passeio.value = dados.item.id;
+                if (passeio.value) {
+                    itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+                }
+                break;
+            default:
+                getID(`inner-programacao-item-nenhum-radio`).checked = true;
+        }
     }
 }
 
@@ -336,16 +472,26 @@ function _loadInnerProgramacaoEventListeners() {
     });
 }
 
-function _openPasseioAssociado() {
+function _openInnerProgramacaoItem() {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
-    const passeioAssociado = getID('inner-programacao-tela-passeio-associado');
-
-    passeioAssociado.style.height = `${height}px`;
-    _animate(['inner-programacao-tela-passeio-associado', 'back-icon'], ['inner-programacao-tela-principal'])
+    const itemSelecionar = getID('inner-programacao-item-selecionar');
+    itemSelecionar.style.height = `${height}px`;
+    _animate(['inner-programacao-item-selecionar', 'back-icon'], ['inner-programacao-tela-principal'])
 }
 
-function _closePasseioAssociado() {
-    _animate(['inner-programacao-tela-principal'], ['inner-programacao-tela-passeio-associado', 'back-icon'])
+function _closeInnerProgramacaoItem() {
+    const itemAssociado = getID('inner-programacao-item-associado');
+    if (getID('inner-programacao-item-transporte-radio').checked) {
+        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+    } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
+        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+    } else if (getID('inner-programacao-item-destinos-radio').checked) {
+        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+    } else {
+        itemAssociado.innerText = 'Associar Item';
+    }
+
+    _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar', 'back-icon'])
 }
 
 function _addInnerProgramacao(j, k, turno) {
@@ -356,15 +502,31 @@ function _addInnerProgramacao(j, k, turno) {
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
+        let item = {
+            tipo: '',
+            id: '',
+            local: '',
+            categoria: ''
+        };
+
+        if (getID('inner-programacao-item-transporte-radio').checked && getID(`inner-programacao-select-transporte`).value) {
+            item.tipo = 'transporte';
+            item.id = getID(`inner-programacao-select-transporte`).value;
+        } else if (getID('inner-programacao-item-hospedagens-radio').checked && getID(`inner-programacao-select-hospedagens`).value) {
+            item.tipo = 'hospedagens';
+            item.id = getID(`inner-programacao-select-hospedagens`).value;
+        } else if (getID('inner-programacao-item-destinos-radio').checked && getID(`inner-programacao-select-passeio`).value) {
+            item.tipo = 'destinos';
+            item.local = getID(`inner-programacao-select-local`).value;
+            item.id = getID(`inner-programacao-select-passeio`).value;
+            item.categoria = getID(`inner-programacao-select-categoria`).value;
+        }
+
         const result = {
             programacao: programacao.value,
             inicio: getID(`inner-programacao-inicio`).value,
             fim: getID(`inner-programacao-fim`).value,
-            passeio: {
-                local: getID(`inner-programacao-select-local`).value,
-                categoria: getID(`inner-programacao-select-categoria`).value,
-                id: getID(`inner-programacao-select-passeio`).value
-            }
+            item: item
         };
 
         const inputTurno = getID(`inner-programacao-select-turno`).value;
