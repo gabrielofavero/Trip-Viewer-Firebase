@@ -21,42 +21,34 @@ var FIRESTORE_NEW_DATA = {};
 
 async function _buildTripObject() {
     let result = {
-        id: "",
+        id: DOCUMENT_ID ? DOCUMENT_ID : "",
         data: {
-            destinos: [],
-            compartilhamento: {},
-            cores: {},
-            fim: {},
-            galeria: {},
-            hospedagens: {
-                codigos: [],
-                datas: [],
-                endereco: [],
-                hospedagem: [],
-                links: [],
-                reservas: [],
-                viagem: ""
-            },
-            imagem: {},
-            inicio: {},
-            lineup: {},
-            links: {},
-            modulos: {},
-            moeda: "",
-            programacoes: {
-                programacao: [],
-                viagem: ""
-            },
-            quantidadePessoas: 1,
-            titulo: "",
-            transportes: {},
+            destinos: _buildDestinosArray(),
+            compartilhamento: await _buildCompartilhamentoObject(),
+            cores: _buildCoresObject(),
+            fim: getID(`fim`).value ? _formattedDateToFirestoreDate(getID(`fim`).value) : "",
+            galeria: _buildGaleriaObject(),
+            hospedagens: _buildHospedagemObject(),
+            imagem: _buildImagemObject(),
+            inicio: getID(`inicio`).value ? _formattedDateToFirestoreDate(getID(`inicio`).value) : "",
+            lineup: _buildLineupObject(),
+            links: _buildLinksObject(),
+            modulos: _buildModulosObject(),
+            moeda: getID(`moeda`).value,
+            programacoes: _buildProgramacaoObject(),
+            quantidadePessoas: !isNaN(getID(`quantidadePessoas`).value) ? parseInt(getID(`quantidadePessoas`).value) : 1,
+            titulo: getID(`titulo`).value,
+            transportes: _buildTransporteObject(),
             versao: {
                 ultimaAtualizacao: new Date().toISOString()
             }
         }
     }
+    return result;
+}
 
-    result.data.modulos = {
+function _buildModulosObject() {
+    return {
         hospedagens: getID('habilitado-hospedagens').checked,
         destinos: getID('habilitado-destinos').checked,
         lineup: getID(`habilitado-lineup`).checked,
@@ -65,47 +57,14 @@ async function _buildTripObject() {
         transportes: getID('habilitado-transporte').checked,
         galeria: getID('habilitado-galeria').checked
     }
+}
 
-    const divTitulo = getID(`titulo`);
-    result.data.titulo = divTitulo ? _returnEmptyIfNoValue(divTitulo.value) : "";
-
-    const divMoeda = getID(`moeda`);
-    result.data.moeda = divMoeda ? _returnEmptyIfNoValue(divMoeda.value) : "";
-
-    const divInicio = getID(`inicio`);
-    const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
-    result.data.inicio = _formattedDateToFirestoreDate(valueInicio);
-
-    const divFim = getID(`fim`);
-    const valueFim = divFim ? _returnEmptyIfNoValue(divFim.value) : "";
-    result.data.fim = _formattedDateToFirestoreDate(valueFim);
-
-    const divQuantidadePessoas = getID(`quantidadePessoas`);
-    const valueQuantidadePessoas = divQuantidadePessoas ? _returnEmptyIfNoValue(divQuantidadePessoas.value) : "";
-    result.data.quantidadePessoas = !isNaN(valueQuantidadePessoas) ? parseInt(valueQuantidadePessoas) : 0;
-
-    result.data.compartilhamento = await _buildCompartilhamentoObject();
-    result.data.imagem = _buildImagemObject();
-    result.data.links = _buildLinksObject();
-
-    result.data.cores = {
+function _buildCoresObject() {
+    return {
         ativo: getID('habilitado-cores').checked,
         claro: _returnEmptyIfNoValue(getID('claro').value),
         escuro: _returnEmptyIfNoValue(getID('escuro').value)
     }
-
-    result.data.transportes = _buildTransporteObject();
-    result.data.hospedagens = _buildHospedagemObject();
-    result.data.programacoes = _buildProgramacaoObject();
-    result.data.destinos = _buildDestinosArray();
-    result.data.lineup = _buildLineupObject();
-    result.data.galeria = _buildGaleriaObject();
-
-    if (DOCUMENT_ID) {
-        result.id = DOCUMENT_ID;
-    }
-
-    return result;
 }
 
 async function _buildCompartilhamentoObject() {
@@ -221,7 +180,7 @@ function _buildHospedagemObject() {
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
             id: _getCategoriaID('hospedagens', j),
-            imagem: _getImage('hospedagens', j),
+            imagem: _getHospedagemImage('hospedagens', j),
             link: getID(`reserva-hospedagens-link-${j}`).value,
             nome: getID(`hospedagens-nome-${j}`).value,
         });
@@ -266,19 +225,13 @@ function _buildProgramacaoObject() {
 }
 
 function _buildDestinosArray() {
-    let result = [];
-    const childIDs = _getChildIDs('destinos-checkboxes');
-
-    for (const child of childIDs) {
-        const j = _getJ(child);
-        const checkbox = getID(`check-destinos-${j}`);
-        if (checkbox.checked) {
-            result.push({
-                destinosID: checkbox.value
-            })
-        }
+    const result = [];
+    _loadDestinosOrdenados();
+    for (const destino of DESTINOS_ATIVOS) {
+        result.push({
+            destinosID: destino.destinosID
+        })
     }
-
     return result;
 }
 
@@ -376,11 +329,7 @@ function _buildGaleriaObject() {
             result.imagens.push({});
             UPLOAD_FILES.galeria.push(j)
         } else {
-            const divImagem = getID(`link-galeria-${j}`);
-            const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
-            const valueResult = valueImagem ? _getImageObject(valueImagem, 'galeria') : "";
-
-            result.imagens.push(valueResult);
+            result.imagens.push(_getImageObject(getID(`link-galeria-${j}`).value, 'galeria'));
             UPLOAD_FILES.galeria.push({});
         }
     }
@@ -449,17 +398,4 @@ async function _setViagem() {
         _stopLoadingScreen();
         _openModal('modal');
     }
-}
-
-function _getImage(tipo, j) {
-    if (getID(`enable-upload-${tipo}-${j}`).checked) {
-        TO_UPLOAD.hospedagens = true;
-        UPLOAD_FILES.hospedagens.push(j)
-        return {};
-    }
-    UPLOAD_FILES.hospedagens.push({});
-
-    const divImagem = getID(`link-${tipo}-${j}`);
-    const valueImagem = divImagem ? _returnEmptyIfNoValue(divImagem.value) : "";
-    return valueImagem ? _getImageObject(valueImagem, tipo) : "";
 }

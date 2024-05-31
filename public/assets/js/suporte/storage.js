@@ -364,14 +364,14 @@ function _isInternalImage(value) {
   }
 }
 
-function _getImageObject(link, type) {
-  const values = FIRESTORE_DATA[type].imagens;
+function _getImageObject(valueImagem, type) {
+  const values = FIRESTORE_DATA[type].imagens || FIRESTORE_DATA[type].imagem || [];
   for (const value of values) {
-    if (_objectExistsAndHasKeys(value) && value.link === link) {
+    if (_objectExistsAndHasKeys(value) && value.link === valueImagem) {
       return value;
     }
   }
-  return link;
+  return valueImagem;
 }
 
 function _getImageLink(object) {

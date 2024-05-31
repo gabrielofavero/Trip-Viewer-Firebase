@@ -7,6 +7,7 @@ const DESTINOS_TITULOS = {
     lojas: 'Lojas'
 };
 var DESTINOS_ATIVOS = [];
+var DESTINOS_ORDENADOS = [];
 
 // Destinos Ativos
 function _loadDestinosAtivos() {
@@ -37,27 +38,40 @@ function _updateDestinosAtivosHTMLs() {
     _updateDestinosAtivosSelectHTML('lineup');
 }
 
-function _getOrderedDestinosAtivosByOrderArray(order) {
-    return DESTINOS_ATIVOS.sort((a, b) => {
-        if (a.destinosID === '') return -1;
-        if (b.destinosID === '') return 1;
-        if (order.includes(a.destinosID) && order.includes(b.destinosID)) {
-            return order.indexOf(a.destinosID) - order.indexOf(b.destinosID);
+function _loadDestinosOrdenados() {
+    if (getID('habilitado-destinos').checked && getID('habilitado-programacao').checked && DESTINOS_ATIVOS.length > 0) {
+        const order = [];
+        for (const fieldsetJ of _getJs('programacao-box')) {
+            for (const child of _getChildIDs(`programacao-local-${fieldsetJ}`)) {
+                const checkbox = getID(`check-programacao-${_getIDs(child)}`);
+                if (checkbox.checked) {
+                    if (!order.includes(checkbox.value)) {
+                        order.push(checkbox.value);
+                    }
+                }
+            }
         }
-        if (order.includes(a.destinosID)) return -1;
-        if (order.includes(b.destinosID)) return 1;
-        return 0;
-    });
+
+        DESTINOS_ORDENADOS = DESTINOS_ATIVOS.sort((a, b) => {
+            if (a.destinosID === '') return -1;
+            if (b.destinosID === '') return 1;
+            if (order.includes(a.destinosID) && order.includes(b.destinosID)) {
+                return order.indexOf(a.destinosID) - order.indexOf(b.destinosID);
+            }
+            if (order.includes(a.destinosID)) return -1;
+            if (order.includes(b.destinosID)) return 1;
+            return 0;
+        });
+    }
 }
 
 // Destinos Ativos Select (Para Lineup)
 function _updateDestinosAtivosSelectHTML(tipo, j) {
     const visibility = DESTINOS_ATIVOS.length > 0 ? 'block' : 'none';
-    const order = _getDestinosAtivosSelectOrder(tipo);
-    const orderedDestinosAtivos = _getOrderedDestinosAtivosByOrderArray(order);
+    _loadDestinosOrdenados();
 
-    const values = orderedDestinosAtivos.map(destino => destino.destinosID);
-    const options = _getDestinosAtivosSelectOptions(orderedDestinosAtivos);
+    const values = DESTINOS_ORDENADOS.map(destino => destino.destinosID);
+    const options = _getDestinosAtivosSelectOptions(DESTINOS_ORDENADOS);
 
     function _write(tipo, j) {
         const originalValue = getID(`${tipo}-local-${j}`).value;
@@ -80,19 +94,6 @@ function _updateDestinosAtivosSelectHTML(tipo, j) {
     }
 }
 
-function _getDestinosAtivosSelectOrder(tipo) {
-    let order = [];
-    const childs = _getChildIDs(`${tipo}-box`);
-    for (const child of childs) {
-        const j = _getJ(child);
-        const select = getID(`${tipo}-local-${j}`);
-        if (select.value && !order.includes(select.value)) {
-            order.push(select.value);
-        }
-    }
-    return order;
-}
-
 function _getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
     let result = '<option value="">Destino Não Especificado</option>';
     for (const destino of destinosAtivos) {
@@ -108,10 +109,7 @@ function _getDestinosAtivosSelectVisibility() {
 // Destinos Checkbox (Para Destinos e Programação)
 function _updateDestinosAtivosCheckboxHTML(tipo, j) {
     const visibility = DESTINOS_ATIVOS.length > 0 ? 'block' : 'none';
-    const order = _getDestinosAtivosCheckboxOrder(tipo);
-    const orderedDestinosAtivos = _getOrderedDestinosAtivosByOrderArray(order);
-
-    const values = orderedDestinosAtivos.map(destino => destino.destinosID);
+    const values = DESTINOS_ATIVOS.map(destino => destino.destinosID);
 
     function _write(tipo, j) {
         const id = `${tipo}-local-${j}`;
@@ -129,7 +127,7 @@ function _updateDestinosAtivosCheckboxHTML(tipo, j) {
             }
         }
 
-        div.innerHTML = _getDestinosAtivosCheckboxOptions(tipo, j, orderedDestinosAtivos);
+        div.innerHTML = _getDestinosAtivosCheckboxOptions(tipo, j);
 
         if (originalValues.length > 0) {
             for (const child of childs) {
@@ -154,21 +152,6 @@ function _updateDestinosAtivosCheckboxHTML(tipo, j) {
     }
 }
 
-function _getDestinosAtivosCheckboxOrder(tipo) {
-    let order = [];
-    const childs = _getChildIDs(`${tipo}-box`);
-    for (const child of childs) {
-        const j = _getJ(child);
-        const checkbox = getID(`${tipo}-local-${j}`);
-        if (checkbox.checked) {
-            if (!order.includes(checkbox.value)) {
-                order.push(checkbox.value);
-            }
-        }
-    }
-    return order;
-}
-
 function _getDestinosAtivosCheckboxOptions(tipo, j, destinosAtivos = DESTINOS_ATIVOS) {
     let items = [];
     for (let k = 1; k <= destinosAtivos.length; k++) {
@@ -185,7 +168,7 @@ function _getDestinosAtivosCheckboxOptionWithID(checkboxOption, tipo) {
 function _addValuesForDestinosAtivosCheckbox(tipo, j, values) {
     const fieldsetID = `${tipo}-local-${j}`;
     for (const containerID of _getChildIDs(fieldsetID)) {
-        const ids = `${containerID.split('-')[1]}-${containerID.split('-')[2]}`;
+        const ids = _getIDs(containerID);
         const checkbox = getID(`check-${tipo}-${ids}`);
         if (values.includes(checkbox.value)) {
             checkbox.checked = true;

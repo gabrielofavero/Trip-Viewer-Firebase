@@ -89,7 +89,7 @@ async function _loadTrip(stripped=false) {
   CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
 
   if (CAN_EDIT) {
-    await _loadTripData(FIRESTORE_DATA);
+    await _loadTripData();
     _stopLoadingScreen();
   }
 }

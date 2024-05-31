@@ -369,6 +369,7 @@ function _addHospedagens() {
 
   _loadImageSelector(`hospedagens-${j}`);
   _addRemoveChildListener('hospedagens', j);
+  _loadHospedagemListeners(j);
 }
 
 function _addEditores() {

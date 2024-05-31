@@ -18,3 +18,26 @@ function _deleteGaleria(i) {
     const div = getID(id);
     div.parentNode.removeChild(div);
 }
+
+// Listeners
+function _loadGaleriaListeners(j) {
+    // Dynamic Select: Categoria
+    getID(`galeria-categoria-select-${j}`).addEventListener('change', () => _galeriaSelectAction());
+    getID(`galeria-categoria-${j}`).addEventListener('change', () => _galeriaSelectAction());
+
+    // Dynamic Title
+    getID(`galeria-titulo-${j}`).addEventListener('change', () => getID(`galeria-title-${j}`).innerText = getID(`galeria-titulo-${j}`).value);
+
+    // Load Listener Actions
+    _galeriaSelectAction(true);
+
+    // Validação de Link
+    getID(`link-galeria-${j}`).addEventListener('change', () => _validateImageLink(`link-galeria-${j}`));
+}
+
+function _galeriaAdicionarListenerAction() {
+    _closeAccordions('galeria');
+    _addGaleria();
+    _loadNewGaleriaSelect();
+    _openLastAccordion('galeria');
+}

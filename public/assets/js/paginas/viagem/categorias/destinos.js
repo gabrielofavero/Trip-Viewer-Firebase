@@ -29,27 +29,17 @@ function _loadDestinationsSelect(lineupExclusive = false) {
   const select = getID("destinos-select");
 
   if (DESTINOS.length > 1) {
-    const ordem = _getDestinosOrdem();
-    let destinos = ordem.length === 0 ? DESTINOS : DESTINOS.sort((a, b) => {
-      if (ordem.includes(a.destinos.titulo) && ordem.includes(b.destinos.titulo)) {
-        return ordem.indexOf(a.destinos.titulo) - ordem.indexOf(b.destinos.titulo);
-      }
-      if (ordem.includes(a.destinos.titulo)) return -1;
-      if (ordem.includes(b.destinos.titulo)) return 1;
-      return 0;
-    });
-
-    for (let i = 0; i < destinos.length; i++) {
+    for (let i = 0; i < DESTINOS.length; i++) {
       const option = document.createElement("option");
-      option.value = destinos[i].destinosID;
-      option.text = destinos[i].destinos.titulo;
+      option.value = DESTINOS[i].destinosID;
+      option.text = DESTINOS[i].destinos.titulo;
       option.selected = i === 0;
       select.add(option);
     }
 
     select.addEventListener("change", function () {
-      for (let i = 0; i < destinos.length; i++) {
-        if (destinos[i].destinosID === select.value) {
+      for (let i = 0; i < DESTINOS.length; i++) {
+        if (DESTINOS[i].destinosID === select.value) {
           _loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
           _adjustDestinationsHTML();
           break;

@@ -7,7 +7,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 41    | 35          | 6         |
-| 🏆     | Feature  | F000    | 55    | 47          | 8         |
+| 🏆     | Feature  | F000    | 55    | 48          | 7         |
 | 📈     | Melhoria | M000    | 54    | 35          | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
@@ -25,7 +25,6 @@
   - *Quantidade dinâmica de itens*
   - *Novo design na programação por dia em viagens.html*
   - *Possibilidade de abrir um item associado a programação em viagens.html (destino, hospedagem ou transporte)*
-- 🏆 **F054:** Implementar sistema de IDs para transporte e hospedagem, para poderem ser utilizados como referência em programacao
 
 ## To-Do
 
@@ -148,6 +147,7 @@
 - 🐞 **B041:** Correção salvamento de viagens retornar NaN na data da programação
   - *O título completo apenas aparece quando o usuário edita o input (listener)*
 - 📈 **M053:** Possibilidade de incluir mais de um local para o mesmo dia de programação
+- 🏆 **F054:** Implementar sistema de IDs para transporte e hospedagem, para poderem ser utilizados como referência em programacao
 
 ### Abril 2024
 

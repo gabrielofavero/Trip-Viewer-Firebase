@@ -210,6 +210,16 @@ function _copyToClipboard(text) {
   }
 }
 
+function _getIDs(divID) {
+  const ids = [];
+  for (const item of divID.split('-')) {
+    if (!isNaN(item)) {
+      ids.push(parseInt(item));
+    }
+  }
+  return ids.join('-');
+}
+
 function _getJ(id) {
   const jSplit = id.split("-");
   return parseInt(jSplit[jSplit.length - 1]);
@@ -217,6 +227,7 @@ function _getJ(id) {
 
 function _getJs(parentID) {
   let result = [];
+  if (!getID(parentID)) return result;
   for (const child of _getChildIDs(parentID)) {
     const jSplit = child.split("-");
     result.push(parseInt(jSplit[jSplit.length - 1]));

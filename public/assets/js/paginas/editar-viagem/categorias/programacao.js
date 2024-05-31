@@ -36,7 +36,7 @@ function _getProgramacaoTitleSelectOptions(j = null) {
         let values = [];
 
         for (const child of _getChildIDs(`programacao-local-${j}`)) {
-            const ids = child.replace('checkbox-', '');
+            const ids = _getIDs(child);
             const checkbox = getID(`check-programacao-${ids}`);
             if (checkbox.checked) {
                 labels.push(getID(`check-programacao-label-${ids}`).innerText);
@@ -125,9 +125,9 @@ function _openInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
 
     _displayInputMessage('Adicionar Programação',
-                         _getInnerProgramacaoContent(j, k, turno, selects, isNew),
-                         '_closePasseioAssociado()',
-                         turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`);
+        _getInnerProgramacaoContent(j, k, turno, selects, isNew),
+        '_closePasseioAssociado()',
+        turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`);
 
     _loadPasseioAssociadoListeners(selects);
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
@@ -393,5 +393,15 @@ function _deleteInnerProgramacao(j, k, turno) {
         INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
         _loadInnerProgramacaoHTML(j);
         _closeDisplayMessage();
+    }
+}
+
+// Listeners
+function _loadProgramacaoListeners(j) {
+    // Checkbox Local
+    const fieldsetID = `programacao-local-${j}`;
+    for (const containerID of _getChildIDs(fieldsetID)) {
+        const ids = _getIDs(containerID);
+        getID(`check-programacao-${ids}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j));
     }
 }

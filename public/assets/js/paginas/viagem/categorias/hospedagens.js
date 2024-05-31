@@ -17,8 +17,8 @@ function _getHospedagensHTML(i) {
   const original = FIRESTORE_DATA.hospedagens[i];
   const hospedagem = {
     cafe: original.cafe,
-    checkIn: _getHospedagensData(original.data.checkin), // To-Do: data -> datas
-    checkOut: _getHospedagensData(original.data.checkout),
+    checkIn: _getHospedagensData(original.datas.checkin),
+    checkOut: _getHospedagensData(original.datas.checkout),
     descricao: original.descricao,
     endereco: original.endereco,
     imagem: _getImageLink(original.imagem),

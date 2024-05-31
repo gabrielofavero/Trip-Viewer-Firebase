@@ -134,3 +134,32 @@ function _getValueEmpresa(j) {
 
     return "";
 }
+
+// Listeners
+function _loadTransporteListeners(j) {
+    // Selects Dinâmicos
+    getID(`empresa-select-${j}`).addEventListener('change', () => _loadTransporteVisibility(j));
+    getID(`transporte-tipo-${j}`).addEventListener('change', () => _loadTransporteVisibility(j));
+
+    // Título Dinâmico
+    getID(`ponto-partida-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`ponto-chegada-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`ida-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`durante-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+    getID(`volta-${j}`).addEventListener('change', () => _updateTransporteTitle(j));
+
+    // Cálculo Automático da Duração do Trajeto
+    getID(`partida-${j}`).addEventListener('change', () => _loadAutoDuration(j));
+    getID(`partida-horario-${j}`).addEventListener('change', () => _loadAutoDuration(j));
+    getID(`chegada-${j}`).addEventListener('change', () => _loadAutoDuration(j));
+    getID(`chegada-horario-${j}`).addEventListener('change', () => _loadAutoDuration(j));
+
+    // Validação de Link
+    getID(`transporte-link-${j}`).addEventListener('change', () => _validateLink(`transporte-link-${j}`));
+}
+
+function _transporteAdicionarListenerAction() {
+    _closeAccordions('transporte');
+    _addTransporte();
+    _openLastAccordion('transporte');
+}
