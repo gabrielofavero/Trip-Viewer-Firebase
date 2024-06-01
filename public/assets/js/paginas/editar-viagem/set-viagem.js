@@ -153,7 +153,7 @@ function _buildTransporteObject() {
             },
             duracao: getID(`transporte-duracao-${j}`).value,
             empresa: _getValueEmpresa(j),
-            id: getID(`transporte-id-${j}`).value ? getID(`transporte-id-${j}`).value :  _getCategoriaID('transporte', j),
+            id: _getIfDoesNotExistCategoriaID('transporte', j),
             idaVolta: getID(`ida-${j}`).checked ? 'ida' : getID(`volta-${j}`).checked ? 'volta' : 'durante',
             link: getID(`transporte-link-${j}`).value,
             pontos: {
@@ -179,7 +179,7 @@ function _buildHospedagemObject() {
             },
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
-            id: getID(`hospedagens-id-${j}`).value ? getID(`hospedagens-id-${j}`).value :  _getCategoriaID('hospedagens', j),
+            id: _getIfDoesNotExistCategoriaID('hospedagens', j),
             imagem: _getHospedagemImage('hospedagens', j),
             link: getID(`reserva-hospedagens-link-${j}`).value,
             nome: getID(`hospedagens-nome-${j}`).value,

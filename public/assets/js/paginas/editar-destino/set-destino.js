@@ -86,7 +86,7 @@ function _buildDestinoCategoryObject(tipo) {
         let item = {};
         const j = _getJ(childIDs[i]);
 
-        item.id = _getCategoriaID(tipo, j);
+        item.id = _getIfDoesNotExistCategoriaID(tipo, j);
         item.novo = getID(`${tipo}-novo-${j}`).checked;
         item.nome = getID(`${tipo}-nome-${j}`).value;
         item.emoji = getID(`${tipo}-emoji-${j}`).value;
