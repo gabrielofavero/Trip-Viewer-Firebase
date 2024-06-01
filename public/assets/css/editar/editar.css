@@ -120,6 +120,8 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  top: 0;
+  left: 0;
 }
 
 .logo-box {
@@ -183,10 +185,6 @@ a:hover {
 #hero p span {
   color: #5859a7;
   letter-spacing: 1px;
-}
-
-#hero {
-  margin-top: 30px;
 }
 
 #hero .social-links a {
@@ -1062,7 +1060,6 @@ body {
   display: -webkit-flex;
   display: flex;
   max-width: 55em;
-  margin-top: 50px;
 }
 
 .demo-page .demo-page-navigation {
@@ -1088,7 +1085,7 @@ body {
 .demo-page .demo-page-navigation nav {
   position: -webkit-sticky;
   position: sticky;
-  top: 5.7em;
+  top: 2em;
   background: #fff;
   padding: .5em;
   border-radius: .75rem;
@@ -1296,7 +1293,7 @@ details summary::-webkit-details-marker {
   text-align: center;
   width: 100%;
   padding: 10px 0;
-  margin-bottom: 0px;
+  margin-bottom: 32px;
 }
 
 .pessoa-img {
