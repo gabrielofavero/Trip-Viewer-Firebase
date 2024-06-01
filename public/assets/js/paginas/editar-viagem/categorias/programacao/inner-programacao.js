@@ -315,7 +315,8 @@ function _openInnerProgramacaoItem() {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemSelecionar = getID('inner-programacao-item-selecionar');
     itemSelecionar.style.height = `${height}px`;
-    _animate(['inner-programacao-item-selecionar', 'back-icon'], ['inner-programacao-tela-principal'])
+    _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
+    getID('back-icon').style.visibility = 'visible';
 }
 
 function _closeInnerProgramacaoItem() {
@@ -329,8 +330,9 @@ function _closeInnerProgramacaoItem() {
     } else {
         itemAssociado.innerText = 'Associar Item';
     }
-
-    _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar', 'back-icon'])
+    
+    getID('back-icon').style.visibility = 'hidden';
+    _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 }
 
 // Salvar / Deletar dados do Modal

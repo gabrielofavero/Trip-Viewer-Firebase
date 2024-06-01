@@ -211,13 +211,9 @@ function _getButtonsBox(backButton = {}) {
   if (backButton.active) {
     const backIcon = document.createElement('i');
     backIcon.id = 'back-icon';
-    backIcon.className = 'iconify';
-    backIcon.setAttribute('data-icon', 'bx:arrow-back');
+    backIcon.className = 'bx bx-arrow-back';
     backIcon.setAttribute('onclick', backButton.action);
-    backIcon.style.cursor = 'pointer';
-    backIcon.style.marginBottom = '-25px';
-    backIcon.style.fontSize = '25px';
-    backIcon.style.display = 'none';
+    backIcon.style.visibility = 'hidden';
 
     iconContainer.appendChild(backIcon);
   }
@@ -227,9 +223,6 @@ function _getButtonsBox(backButton = {}) {
   cancelIcon.className = 'iconify';
   cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
   cancelIcon.setAttribute('onclick', '_closeDisplayMessage()');
-  cancelIcon.style.cursor = 'pointer';
-  cancelIcon.style.marginBottom = '5px';
-  cancelIcon.style.fontSize = '25px';
 
   iconContainer.appendChild(cancelIcon);
 

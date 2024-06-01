@@ -1821,3 +1821,14 @@ details summary::-webkit-details-marker {
 .time {
   font-weight: bold;
 }
+
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#back-icon, #cancel-icon {
+  cursor: pointer;
+  font-size: 25px;
+}
