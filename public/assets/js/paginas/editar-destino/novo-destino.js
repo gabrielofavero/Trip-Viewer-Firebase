@@ -85,12 +85,12 @@ function _addRestaurantes() {
           <div class="nice-form-group">
           <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="restaurantes-nota-${j}">
-              <option value="?">Desconhecido</option>
-              <option value="5">5 - Restaurante Obrigatório!</option>
-              <option value="4">4 - Ótimo Restaurante</option>
-              <option value="3">3 - Restaurante Razoável</option>
-              <option value="2">2 - Baixa Prioridade</option>
-              <option value="1">1 - Não Recomendado</option>
+              <option value="?">Prioridade não definida</option>
+              <option value="5">5 - Altíssima prioridade</option>
+              <option value="4">4 - Alta prioridade</option>
+              <option value="3">3 - Prioridade normal</option>
+              <option value="2">2 - Baixa prioridade</option>
+              <option value="1">1 - Sem prioridade</option>
             </select>
           </div>
   
@@ -200,12 +200,12 @@ function _addLanches() {
           <div class="nice-form-group">
           <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="lanches-nota-${j}">
-              <option value="?">Desconhecido</option>
-              <option value="5">5 - Lanche Obrigatório!</option>
-              <option value="4">4 - Ótimo Lanche</option>
-              <option value="3">3 - Lanche Razoável</option>
-              <option value="2">2 - Baixa Prioridade</option>
-              <option value="1">1 - Não Recomendado</option>
+              <option value="?">Prioridade não definida</option>
+              <option value="5">5 - Altíssima prioridade</option>
+              <option value="4">4 - Alta prioridade</option>
+              <option value="3">3 - Prioridade normal</option>
+              <option value="2">2 - Baixa prioridade</option>
+              <option value="1">1 - Sem prioridade</option>
             </select>
           </div>
   
@@ -314,12 +314,12 @@ function _addSaidas() {
           <div class="nice-form-group">
           <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="saidas-nota-${j}">
-              <option value="?">Desconhecido</option>
-              <option value="5">5 - Saída Obrigatória!</option>
-              <option value="4">4 - Ótima Saída</option>
-              <option value="3">3 - Saída Razoável</option>
-              <option value="2">2 - Baixa Prioridade</option>
-              <option value="1">1 - Não Recomendado</option>
+              <option value="?">Prioridade não definida</option>
+              <option value="5">5 - Altíssima prioridade</option>
+              <option value="4">4 - Alta prioridade</option>
+              <option value="3">3 - Prioridade normal</option>
+              <option value="2">2 - Baixa prioridade</option>
+              <option value="1">1 - Sem prioridade</option>
             </select>
           </div>
   
@@ -429,12 +429,12 @@ function _addTurismo() {
           <div class="nice-form-group">
           <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="turismo-nota-${j}">
-              <option value="?">Desconhecido</option>
-              <option value="5">5 - Turismo Obrigatório!</option>
-              <option value="4">4 - Ótimo Turismo</option>
-              <option value="3">3 - Turismo Razoável</option>
-              <option value="2">2 - Baixa Prioridade</option>
-              <option value="1">1 - Não Recomendado</option>
+              <option value="?">Prioridade não definida</option>
+              <option value="5">5 - Altíssima prioridade</option>
+              <option value="4">4 - Alta prioridade</option>
+              <option value="3">3 - Prioridade normal</option>
+              <option value="2">2 - Baixa prioridade</option>
+              <option value="1">1 - Sem prioridade</option>
             </select>
           </div>
         </div>
@@ -544,12 +544,12 @@ function _addLojas() {
           <div class="nice-form-group">
           <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="lojas-nota-${j}">
-              <option value="?">Desconhecido</option>
-              <option value="5">5 - Loja Obrigatória!</option>
-              <option value="4">4 - Ótima Loja</option>
-              <option value="3">3 - Loja Razoável</option>
-              <option value="2">2 - Baixa Prioridade</option>
-              <option value="1">1 - Não Recomendado</option>
+              <option value="?">Prioridade não definida</option>
+              <option value="5">5 - Altíssima prioridade</option>
+              <option value="4">4 - Alta prioridade</option>
+              <option value="3">3 - Prioridade normal</option>
+              <option value="2">2 - Baixa prioridade</option>
+              <option value="1">1 - Sem prioridade</option>
             </select>
           </div>
   

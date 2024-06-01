@@ -456,12 +456,12 @@ function _addLineup() {
           <div class="nice-form-group">
             <label>Prioridade <span class="opcional">(Opcional)</span></label>
             <select class="editar-select" id="lineup-nota-${j}">
-            <option value="?">Desconhecido</option>
-            <option value="5">5 - Artista Excelente!</option>
-            <option value="4">4 - Ótimo Artista</option>
-            <option value="3">3 - Artista Razoável</option>
-            <option value="2">2 - Baixa Prioridade</option>
-            <option value="1">1 - Não Recomendado</option>
+              <option value="?">Prioridade não definida</option>
+              <option value="5">5 - Altíssima prioridade</option>
+              <option value="4">4 - Alta prioridade</option>
+              <option value="3">3 - Artista Razoável</option>
+              <option value="2">2 - Baixa Prioridade</option>
+              <option value="1">1 - Não Recomendado</option>
             </select>
           </div>
   

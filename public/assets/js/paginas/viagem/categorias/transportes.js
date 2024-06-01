@@ -17,34 +17,37 @@ function _loadTransporte() {
   _buildTransporteSwiper(swiperData);
 }
 
-
 function _getTransporteHTML(j, idaVolta) {
-  const empresa = _getEmpresaObj(j);
   return `<div class="swiper-slide" id="transporte-slide-${j}">
             <div class="testimonial-item">
-                <div class="flight-box" id="transporte-${idaVolta}-box-${j}">
-                  <div class="flight-diagram">
-                    <div class="flight-title">
-                      ${_getImagemHTML(j, empresa)}
-                      ${_getReservaHTML(j, empresa)}
-                    </div>
-                    <div class="flight-text">
-                      <div class="left-text">
-                        ${_getPartidaChegadaHTML(j, "partida")}
-                      </div>
-                      <div class="center-text">
-                        <i class="flight-line" ${_adjustFlightLine(j)}">_________</i>
-                        <i class="iconify flight-icon" data-icon="${_getTransporteIcon(j)}"></i>
-                        ${_getDuracaoHTML(j)}
-                      </div>
-                      <div class="right-text">
-                        ${_getPartidaChegadaHTML(j, "chegada")}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ${_getFlightBoxHTML(j, idaVolta)}
               </div>
             </div>`
+}
+
+function _getFlightBoxHTML(j, idaVolta, innerProgramacao=false) {
+  const empresa = _getEmpresaObj(j);
+  return `<div class="flight-box${innerProgramacao? " inner-programacao-item" : ''}" id="transporte-${idaVolta}-box-${j}">
+            <div class="flight-diagram">
+              <div class="flight-title">
+                ${_getImagemHTML(j, empresa)}
+                ${_getReservaHTML(j, empresa)}
+              </div>
+              <div class="flight-text">
+                <div class="left-text">
+                  ${_getPartidaChegadaHTML(j, "partida")}
+                </div>
+                <div class="center-text">
+                  <i class="flight-line" ${_adjustFlightLine(j)}">_________</i>
+                  <i class="iconify flight-icon" data-icon="${_getTransporteIcon(j)}"></i>
+                  ${_getDuracaoHTML(j)}
+                </div>
+                <div class="right-text">
+                  ${_getPartidaChegadaHTML(j, "chegada")}
+                </div>
+              </div>
+            </div>
+          </div>`
 }
 
 function _getEmpresaObj(j) {
