@@ -333,7 +333,7 @@ function _loadProgramacao() {
               <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
                 ${_getProgramacaoTitleSelectOptions()}
               </select>  
-            <input class="nice-form-group" id="programacao-inner-title-${j}" type="text" placeholder="São Paulo" style="display: none;">
+            <input class="nice-form-group" id="programacao-inner-title-${j}" maxlength="25" type="text" placeholder="São Paulo" style="display: none;">
           </div>
 
           <div class='turno-box' id='programacao-madrugada-${j}' style="display: none;">
@@ -356,7 +356,7 @@ function _loadProgramacao() {
             <div class="inner-programacao" id="inner-programacao-noite-${j}"></div>
           </div>
 
-          <div class="button-box" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
+          <div class="button-box-right" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
             <button id="programacao-adicionar-${j}" class="btn btn-purple" onclick="_openInnerProgramacao(${j})">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">

@@ -55,9 +55,7 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
       const buttonBox = document.createElement('div');
       buttonBox.className = properties.buttonBox || 'button-box';
       
-      if ( properties.container != 'input-container') {
-        buttonBox.style.marginTop = '25px';
-      }
+      buttonBox.style.marginTop = '25px';
 
       for (const buttonType of properties.buttons) {
         const button = _getButton(buttonType);

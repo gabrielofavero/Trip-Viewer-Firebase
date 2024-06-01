@@ -1423,6 +1423,10 @@ details summary::-webkit-details-marker {
   .button-box-gray {
     text-align: center;
   }
+
+  .button-box {
+    text-align: center;
+  }
 }
 
 .button-box-formatted {
@@ -1659,12 +1663,6 @@ details summary::-webkit-details-marker {
 .button-box,
 .button-box-right {
   text-align: right;
-}
-
-@media (max-width: 480px) {
-  .button-box {
-    text-align: center;
-  }
 }
 
 .btn-format {

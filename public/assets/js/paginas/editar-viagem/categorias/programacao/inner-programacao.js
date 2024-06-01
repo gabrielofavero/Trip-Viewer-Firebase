@@ -53,7 +53,7 @@ function _openInnerProgramacao(j, k, turno) {
 
     _displayInputMessage(titulo, conteudo, backAction, confirmAction);
 
-    if (Object.keys(selects.destinos.locais).length === 1) {
+    if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';
         getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
     }
@@ -316,7 +316,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
 function _openInnerProgramacaoItem() {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemSelecionar = getID('inner-programacao-item-selecionar');
-    itemSelecionar.style.height = `${height}px`;
+    itemSelecionar.style.minHeight = `${height}px`;
 
     if (getID('inner-programacao').value) {
         getID('message-title').innerText = getID('inner-programacao').value;
