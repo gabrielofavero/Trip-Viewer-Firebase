@@ -37,6 +37,7 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
 
     const titleDiv = document.createElement('div');
     titleDiv.className = 'message-title';
+    titleDiv.id = 'message-title';
     titleDiv.innerHTML = title;
     textDiv.appendChild(titleDiv);
 

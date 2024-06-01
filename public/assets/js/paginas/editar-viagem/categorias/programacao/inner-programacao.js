@@ -46,10 +46,17 @@ function _openInnerProgramacao(j, k, turno) {
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
 
-    _displayInputMessage('Adicionar Programação',
-        _getInnerProgramacaoContent(j, k, turno, selects, isNew),
-        '_closeInnerProgramacaoItem()',
-        turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`);
+    const titulo = getID(`programacao-title-${j}`).innerText;
+    const conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
+    const backAction = `_closeInnerProgramacaoItem(${j})`;
+    const confirmAction = turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`;
+
+    _displayInputMessage(titulo, conteudo, backAction, confirmAction);
+
+    if (Object.keys(selects.destinos.locais).length === 1) {
+        getID('inner-programacao-item-destinos-local').style.display = 'none';
+        getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
+    }
 
     _loadInnerProgramacaoListeners(selects);
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
@@ -116,7 +123,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
             let innerResult = {};
 
             const currentDestinoData = DESTINOS[index].data;
-            let categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key));
+            let categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key) && currentDestinoData[key].length > 1);
             categorias = categorias.sort((a, b) => DESTINOS_CATEGORIAS.indexOf(a) - DESTINOS_CATEGORIAS.indexOf(b));
             const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
             innerResult.categoriaOptions = categoriaOptions;
@@ -143,7 +150,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group">
                         <label>Atividade</label>
-                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." />
+                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." maxlength="50" />
                     </div>
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">
@@ -289,11 +296,6 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
                 getID(`inner-programacao-item-destinos-radio`).checked = true;
                 getID('inner-programacao-item-destinos').style.display = 'block';
 
-                if (Object.keys(selects.destinos.locais).length === 1) {
-                    getID('inner-programacao-item-destinos-local').style.display = 'none';
-                    getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
-                }
-                
                 getID(`inner-programacao-select-local`).value = dados.item.local
                 getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
                 _innerProgramacaoSelectCategoriaAction(selects);
@@ -315,11 +317,16 @@ function _openInnerProgramacaoItem() {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemSelecionar = getID('inner-programacao-item-selecionar');
     itemSelecionar.style.height = `${height}px`;
+
+    if (getID('inner-programacao').value) {
+        getID('message-title').innerText = getID('inner-programacao').value;
+    }
+    
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
 }
 
-function _closeInnerProgramacaoItem() {
+function _closeInnerProgramacaoItem(j) {
     const itemAssociado = getID('inner-programacao-item-associado');
     if (getID('inner-programacao-item-transporte-radio').checked) {
         itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
@@ -330,7 +337,9 @@ function _closeInnerProgramacaoItem() {
     } else {
         itemAssociado.innerText = 'Associar Item';
     }
-    
+
+    getID('message-title').innerText = getID(`programacao-title-${j}`).innerText;
+
     getID('back-icon').style.visibility = 'hidden';
     _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 }
