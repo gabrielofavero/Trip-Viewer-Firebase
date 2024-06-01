@@ -156,7 +156,7 @@ function _validateLink(id) {
     const div = getID(id);
     const link = div.value;
 
-    if (_isHttp(link)) return;
+    if (!link || _isHttp(link)) return;
 
     _closeAllSelects();
     div.value = '';

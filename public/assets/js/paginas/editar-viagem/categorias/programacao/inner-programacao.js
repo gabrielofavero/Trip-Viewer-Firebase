@@ -1,85 +1,6 @@
 var INNER_PROGRAMACAO = {};
 
-function _updateProgramacaoTitle(j) {
-    const div = getID(`programacao-title-${j}`);
-    const tituloInput = getID(`programacao-inner-title-${j}`);
-    const tituloSelect = getID(`programacao-inner-title-select-${j}`);
-
-    value = tituloSelect.value;
-
-    if (value == 'outro') {
-        titulo = tituloInput.value;
-        tituloInput.style.display = 'block';
-        value = tituloInput.value;
-    } else {
-        titulo = tituloSelect.value;
-        tituloInput.style.display = 'none';
-        if (!['', 'Ida', 'Volta', 'Deslocamento', 'outro'].includes(value)) { // Destino
-            value = _getDestinoTitle(titulo);
-            if (!value) { // Múltiplos Destinos
-                value = titulo;
-            }
-        }
-    }
-
-    const data = DATAS[j - 1]
-    const dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
-    div.innerText = _getProgramacaoTitle(dataFormatada, value);
-}
-
-function _getProgramacaoTitleSelectOptions(j = null) {
-    const semTitulo = '<option value="">Sem Título</option>'
-    let destino = '';
-
-    if (j) {
-        let labels = [];
-        let values = [];
-
-        for (const child of _getChildIDs(`programacao-local-${j}`)) {
-            const ids = _getIDs(child);
-            const checkbox = getID(`check-programacao-${ids}`);
-            if (checkbox.checked) {
-                labels.push(getID(`check-programacao-label-${ids}`).innerText);
-                values.push(checkbox.value);
-            }
-        }
-
-        if (values.length > 0 && DESTINOS_ATIVOS.length > 0) {
-            for (let i = 0; i < values.length; i++) {
-                destino += `<option value="${values[i]}">${labels[i]}</option>`;
-            }
-            if (labels.length > 1) {
-                const text = _getReadableArray(labels);
-                destino += `<option value="${text}">${text}</option>`;
-            }
-        }
-    }
-
-    return `${destino}
-            ${destino ? '' : semTitulo}
-            <option value="Ida">Ida</option>
-            <option value="Volta">Volta</option>
-            <option value="Deslocamento">Deslocamento</option>
-            ${destino ? semTitulo : ''}
-            <option value="outro">Outro</option>`;
-}
-
-function _updateProgramacaoTitleSelect(j) {
-    const select = getID(`programacao-inner-title-select-${j}`);
-    const value = select.value;
-    select.innerHTML = _getProgramacaoTitleSelectOptions(j);
-    if (value) {
-        _addValueToSelectIfExists(value, select);
-    }
-    _updateProgramacaoTitle(j);
-}
-
-function _getProgramacaoTitle(dataFormatada, titulo = '') {
-    if (titulo) return `${titulo}: ${dataFormatada}`;
-    else return dataFormatada;
-}
-
-// Inner Programação
+// Carregamento Principal
 function _loadInnerProgramacaoHTML(j) {
     const key = _jsDateToKey(DATAS[j - 1]);
     if (Object.keys(INNER_PROGRAMACAO).length == 0 || !INNER_PROGRAMACAO[key]) return;
@@ -120,6 +41,7 @@ function _loadInnerProgramacaoHTML(j) {
 
 }
 
+// Carregamento Interno (Modal)
 function _openInnerProgramacao(j, k, turno) {
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
@@ -134,6 +56,7 @@ function _openInnerProgramacao(j, k, turno) {
     _loadInnerProgramacaoEventListeners();
 }
 
+// Selects
 function _getInnerProgramacaoSelects(j) {
     return {
         transporte: _getInnerProgramacaoSelect('transporte'),
@@ -214,6 +137,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
     return result;
 }
 
+// Conteúdo do Modal (HTML)
 function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
     return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">
@@ -284,7 +208,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 
                             <div class="nice-form-group" id="inner-programacao-destinos-radio-container" style="display: ${selects.destinos.ativo ? 'block' : 'none'};">
                                 <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-destinos-radio">
-                                <label for="inner-programacao-item-destinos-radio">Destino</label>
+                                <label id="inner-programacao-item-destinos-radio-label" for="inner-programacao-item-destinos-radio">Destino</label>
                             </div>
                         </fieldset>
                     </div>
@@ -306,7 +230,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 </div>
 
                     <div id="inner-programacao-item-destinos" style="display: none;">
-                        <div class="nice-form-group">
+                        <div class="nice-form-group" id="inner-programacao-item-destinos-local">
                             <label>Local</label>
                             <select class="editar-select" id="inner-programacao-select-local">
                                 ${selects.destinos.localOptions}
@@ -333,6 +257,148 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
             </div>`;
 }
 
+// Carrega dados atuais no Modal
+function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
+    if (turno) {
+        getID(`inner-programacao-select-turno`).value = turno;
+    }
+
+    const key = _jsDateToKey(DATAS[j - 1]);
+    if (!isNew && INNER_PROGRAMACAO && INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][turno] && INNER_PROGRAMACAO[key][turno][k - 1]) {
+        const dados = INNER_PROGRAMACAO[key][turno][k - 1];
+        const itemAssociado = getID('inner-programacao-item-associado');
+
+        getID(`inner-programacao`).value = dados.programacao;
+        getID(`inner-programacao-inicio`).value = dados.inicio;
+        getID(`inner-programacao-fim`).value = dados.fim;
+
+        switch (dados?.item?.tipo) {
+            case 'transporte':
+                getID(`inner-programacao-item-transporte-radio`).checked = true;
+                getID(`inner-programacao-item-transporte`).style.display = 'block';
+                getID(`inner-programacao-select-transporte`).value = dados.item.id;
+                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+                break;
+            case 'hospedagens':
+                getID(`inner-programacao-item-hospedagens-radio`).checked = true;
+                getID(`inner-programacao-item-hospedagens`).style.display = 'block';
+                getID(`inner-programacao-select-hospedagens`).value = dados.item.id;
+                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+                break;
+            case 'destinos':
+                getID(`inner-programacao-item-destinos-radio`).checked = true;
+                getID('inner-programacao-item-destinos').style.display = 'block';
+
+                if (Object.keys(selects.destinos.locais).length === 1) {
+                    getID('inner-programacao-item-destinos-local').style.display = 'none';
+                    getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
+                }
+                
+                getID(`inner-programacao-select-local`).value = dados.item.local
+                getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
+                _innerProgramacaoSelectCategoriaAction(selects);
+
+                const passeio = getID(`inner-programacao-select-passeio`);
+                passeio.value = dados.item.id;
+                if (passeio.value) {
+                    itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+                }
+                break;
+            default:
+                getID(`inner-programacao-item-nenhum-radio`).checked = true;
+        }
+    }
+}
+
+// Navegação do Modal
+function _openInnerProgramacaoItem() {
+    const height = getID('inner-programacao-tela-principal').offsetHeight;
+    const itemSelecionar = getID('inner-programacao-item-selecionar');
+    itemSelecionar.style.height = `${height}px`;
+    _animate(['inner-programacao-item-selecionar', 'back-icon'], ['inner-programacao-tela-principal'])
+}
+
+function _closeInnerProgramacaoItem() {
+    const itemAssociado = getID('inner-programacao-item-associado');
+    if (getID('inner-programacao-item-transporte-radio').checked) {
+        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+    } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
+        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+    } else if (getID('inner-programacao-item-destinos-radio').checked) {
+        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+    } else {
+        itemAssociado.innerText = 'Associar Item';
+    }
+
+    _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar', 'back-icon'])
+}
+
+// Salvar / Deletar dados do Modal
+function _addInnerProgramacao(j, k, turno) {
+    const key = _jsDateToKey(DATAS[j - 1]);
+    const programacao = getID(`inner-programacao`);
+    const isNew = (!k && !turno);
+
+    if (!programacao.value) {
+        programacao.reportValidity();
+    } else {
+        let item = {
+            tipo: '',
+            id: '',
+            local: '',
+            categoria: ''
+        };
+
+        if (getID('inner-programacao-item-transporte-radio').checked && getID(`inner-programacao-select-transporte`).value) {
+            item.tipo = 'transporte';
+            item.id = getID(`inner-programacao-select-transporte`).value;
+        } else if (getID('inner-programacao-item-hospedagens-radio').checked && getID(`inner-programacao-select-hospedagens`).value) {
+            item.tipo = 'hospedagens';
+            item.id = getID(`inner-programacao-select-hospedagens`).value;
+        } else if (getID('inner-programacao-item-destinos-radio').checked && getID(`inner-programacao-select-passeio`).value) {
+            item.tipo = 'destinos';
+            item.local = getID(`inner-programacao-select-local`).value;
+            item.id = getID(`inner-programacao-select-passeio`).value;
+            item.categoria = getID(`inner-programacao-select-categoria`).value;
+        }
+
+        const result = {
+            programacao: programacao.value,
+            inicio: getID(`inner-programacao-inicio`).value,
+            fim: getID(`inner-programacao-fim`).value,
+            item: item
+        };
+
+        const inputTurno = getID(`inner-programacao-select-turno`).value;
+
+        if (isNew) {
+            INNER_PROGRAMACAO[key][inputTurno].push(result);
+        } else if (turno == inputTurno) {
+            INNER_PROGRAMACAO[key][turno][k - 1] = result;
+        } else {
+            INNER_PROGRAMACAO[key][inputTurno].push(result);
+            INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
+        }
+
+        _loadInnerProgramacaoHTML(j);
+        _closeDisplayMessage();
+    }
+}
+
+function _deleteInnerProgramacao(j, k, turno) {
+    const isNew = (!k && !turno);
+    if (isNew) {
+        _closeDisplayMessage();
+        return;
+    } else {
+        const key = _jsDateToKey(DATAS[j - 1]);
+        INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
+        _loadInnerProgramacaoHTML(j);
+        _closeDisplayMessage();
+    }
+}
+
+// Listeners
 function _loadInnerProgramacaoListeners(selects) {
     const itemTransporte = getID(`inner-programacao-item-transporte`);
     const itemHospedagens = getID(`inner-programacao-item-hospedagens`);
@@ -402,53 +468,6 @@ function _innerProgramacaoSelectCategoriaAction(selects) {
     }
 }
 
-function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
-    if (turno) {
-        getID(`inner-programacao-select-turno`).value = turno;
-    }
-
-    const key = _jsDateToKey(DATAS[j - 1]);
-    if (!isNew && INNER_PROGRAMACAO && INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][turno] && INNER_PROGRAMACAO[key][turno][k - 1]) {
-        const dados = INNER_PROGRAMACAO[key][turno][k - 1];
-        const itemAssociado = getID('inner-programacao-item-associado');
-
-        getID(`inner-programacao`).value = dados.programacao;
-        getID(`inner-programacao-inicio`).value = dados.inicio;
-        getID(`inner-programacao-fim`).value = dados.fim;
-
-        switch (dados?.item?.tipo) {
-            case 'transporte':
-                getID(`inner-programacao-item-transporte-radio`).checked = true;
-                getID(`inner-programacao-item-transporte`).style.display = 'block';
-                getID(`inner-programacao-select-transporte`).value = dados.item.id;
-                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
-                break;
-            case 'hospedagens':
-                getID(`inner-programacao-item-hospedagens-radio`).checked = true;
-                getID(`inner-programacao-item-hospedagens`).style.display = 'block';
-                getID(`inner-programacao-select-hospedagens`).value = dados.item.id;
-                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
-                break;
-            case 'destinos':
-                getID(`inner-programacao-item-destinos-radio`).checked = true;
-                getID('inner-programacao-item-destinos').style.display = 'block';
-
-                getID(`inner-programacao-select-local`).value = dados.item.local
-                getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
-                _innerProgramacaoSelectCategoriaAction(selects);
-
-                const passeio = getID(`inner-programacao-select-passeio`);
-                passeio.value = dados.item.id;
-                if (passeio.value) {
-                    itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
-                }
-                break;
-            default:
-                getID(`inner-programacao-item-nenhum-radio`).checked = true;
-        }
-    }
-}
-
 function _loadInnerProgramacaoEventListeners() {
     getID('inner-programacao-inicio').addEventListener('change', function (event) {
         const inicioValue = event.target.value;
@@ -470,100 +489,4 @@ function _loadInnerProgramacaoEventListeners() {
             getID(`inner-programacao-fim`).reportValidity();
         }
     });
-}
-
-function _openInnerProgramacaoItem() {
-    const height = getID('inner-programacao-tela-principal').offsetHeight;
-    const itemSelecionar = getID('inner-programacao-item-selecionar');
-    itemSelecionar.style.height = `${height}px`;
-    _animate(['inner-programacao-item-selecionar', 'back-icon'], ['inner-programacao-tela-principal'])
-}
-
-function _closeInnerProgramacaoItem() {
-    const itemAssociado = getID('inner-programacao-item-associado');
-    if (getID('inner-programacao-item-transporte-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
-    } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
-    } else if (getID('inner-programacao-item-destinos-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
-    } else {
-        itemAssociado.innerText = 'Associar Item';
-    }
-
-    _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar', 'back-icon'])
-}
-
-function _addInnerProgramacao(j, k, turno) {
-    const key = _jsDateToKey(DATAS[j - 1]);
-    const programacao = getID(`inner-programacao`);
-    const isNew = (!k && !turno);
-
-    if (!programacao.value) {
-        programacao.reportValidity();
-    } else {
-        let item = {
-            tipo: '',
-            id: '',
-            local: '',
-            categoria: ''
-        };
-
-        if (getID('inner-programacao-item-transporte-radio').checked && getID(`inner-programacao-select-transporte`).value) {
-            item.tipo = 'transporte';
-            item.id = getID(`inner-programacao-select-transporte`).value;
-        } else if (getID('inner-programacao-item-hospedagens-radio').checked && getID(`inner-programacao-select-hospedagens`).value) {
-            item.tipo = 'hospedagens';
-            item.id = getID(`inner-programacao-select-hospedagens`).value;
-        } else if (getID('inner-programacao-item-destinos-radio').checked && getID(`inner-programacao-select-passeio`).value) {
-            item.tipo = 'destinos';
-            item.local = getID(`inner-programacao-select-local`).value;
-            item.id = getID(`inner-programacao-select-passeio`).value;
-            item.categoria = getID(`inner-programacao-select-categoria`).value;
-        }
-
-        const result = {
-            programacao: programacao.value,
-            inicio: getID(`inner-programacao-inicio`).value,
-            fim: getID(`inner-programacao-fim`).value,
-            item: item
-        };
-
-        const inputTurno = getID(`inner-programacao-select-turno`).value;
-
-        if (isNew) {
-            INNER_PROGRAMACAO[key][inputTurno].push(result);
-        } else if (turno == inputTurno) {
-            INNER_PROGRAMACAO[key][turno][k - 1] = result;
-        } else {
-            INNER_PROGRAMACAO[key][inputTurno].push(result);
-            INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
-        }
-
-        _loadInnerProgramacaoHTML(j);
-        _closeDisplayMessage();
-    }
-}
-
-function _deleteInnerProgramacao(j, k, turno) {
-    const isNew = (!k && !turno);
-    if (isNew) {
-        _closeDisplayMessage();
-        return;
-    } else {
-        const key = _jsDateToKey(DATAS[j - 1]);
-        INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
-        _loadInnerProgramacaoHTML(j);
-        _closeDisplayMessage();
-    }
-}
-
-// Listeners
-function _loadProgramacaoListeners(j) {
-    // Checkbox Local
-    const fieldsetID = `programacao-local-${j}`;
-    for (const containerID of _getChildIDs(fieldsetID)) {
-        const ids = _getIDs(containerID);
-        getID(`check-programacao-${ids}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j));
-    }
 }

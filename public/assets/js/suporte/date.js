@@ -30,6 +30,11 @@ function _convertFromFirestoreDate(timestamp) {
     }
 }
 
+function _firestoneDateToInputDate(timestamp) {
+    const date = _convertFromFirestoreDate(timestamp);
+    return _jsDateToInputDate(date);
+}
+
 function _convertToFirestoreDate(date) {
     const seconds = Math.floor(date.getTime() / 1000);
     const nanoseconds = (date.getTime() % 1000) * 1000000;
@@ -91,11 +96,10 @@ function _getTomorrowFormatted(format = 'yyyy-mm-dd') {
     return _jsDateToDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), format);
 }
 
-function _getNextDay(inputDate) {
-    const currentDate = new Date(inputDate);
-    currentDate.setDate(currentDate.getDate() + 1);
-    const nextDay = currentDate.toISOString().split('T')[0];
-    return nextDay;
+function _getNextInputDay(inputDate) {
+    const currentDate = _inputDateToJsDate(inputDate);
+    const nextDay = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    return _jsDateToInputDate(nextDay);
 }
 
 function _getArrayOfDates(formattedStart, formattedEnd) {
@@ -199,4 +203,47 @@ function _jsDateToKey(jsDate) {
 
 function _inputDateToKey(inputDate) {
     return inputDate.split("-").join("");
+}
+
+function _inputDateToJsDate(inputDate) {
+    const parts = inputDate.split("-");
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+function _jsDateToInputDate(jsDate) {
+    return _jsDateToDate(jsDate, 'yyyy-mm-dd');
+}
+
+function _getNextCategoriaDate(tipo, lastEndStructure) {
+    const js = _getJs(`${tipo}-box`);
+    if (js.length === 0) {
+        return getID('inicio').value;
+    } else {
+        const lastJ = _getLastJ(`${tipo}-box`);
+        const dateInput = getID(`${lastEndStructure}-${lastJ}`).value;
+        const date = _inputDateToJsDate(dateInput);
+
+        const fimInput = getID('fim').value;
+        const fim = _inputDateToJsDate(fimInput);
+
+        if (date.getTime() < fim.getTime()) {
+            return _getNextInputDay(dateInput);
+        } else {
+            return fimInput;
+        }
+    }
+}
+
+function _getNextCategoriaInicioFim(tipo, lastEndStructure) {
+    let inicio = getID('inicio').value;
+    let fim = getID('fim').value;
+
+    const js = _getJs(`${tipo}-box`);
+
+    if (js.length != 0) {
+        const lastJ = _getLastJ(`${tipo}-box`);
+        inicio = getID(`${lastEndStructure}-${lastJ}`).value;
+    }
+
+    return { inicio, fim };
 }

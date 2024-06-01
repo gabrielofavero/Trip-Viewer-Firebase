@@ -4,8 +4,6 @@ var FIRESTORE_DATA;
 var WAS_SAVED = false;
 var CAN_EDIT = false;
 
-var changedOnce = false;
-
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 

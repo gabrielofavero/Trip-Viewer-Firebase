@@ -1,8 +1,8 @@
 // Loader
 function _loadEventListeners() {
     // Inputs
-    getID('inicio').addEventListener('input', () => _inicioListenerAction());
-    getID('fim').addEventListener('change', () => _reloadProgramacao());
+    getID('inicio').addEventListener('change', () => _inicioListenerAction());
+    getID('fim').addEventListener('change', () => _fimListenerAction());
     getID('logo-tamanho').addEventListener('input', (event) => _formatAltura(event.target.value));
 
     // Botões
@@ -43,12 +43,25 @@ function _loadEventListeners() {
 
 // Actions
 function _inicioListenerAction() {
-    const nextDay = _getNextDay(getID('inicio').value);
-    if (nextDay) {
-        getID('fim').value = nextDay;
-        if (!DOCUMENT_ID || (DOCUMENT_ID && !changedOnce)) {
-            changedOnce = true;
-            getID('fim').value = nextDay;
+    const inicio = getID('inicio').value;
+    if (inicio) {
+        getID('fim').value = _getNextInputDay(inicio);
+        _reloadProgramacao();
+    }
+}
+
+function _fimListenerAction() {
+    const fim = getID('fim').value;
+    if (fim) {
+        const inicio = getID('inicio').value;
+
+        const inicioDate = _inputDateToJsDate(inicio);
+        const fimDate = _inputDateToJsDate(fim);
+        
+        if (fimDate.getTime() < inicioDate.getTime()) {
+            getID('fim').value = '';
+        } else {
+            _reloadProgramacao();
         }
     }
 }

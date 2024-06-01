@@ -32,7 +32,9 @@ function _loadHospedagemListeners(j) {
 
     // Nome
     getID(`hospedagens-nome-${j}`).addEventListener('change', function () {
-        getID(`hospedagens-title-${j}`).innerText = getID(`hospedagens-nome-${j}`).value;
+        if (getID(`hospedagens-nome-${j}`).value) {
+            getID(`hospedagens-title-${j}`).innerText = getID(`hospedagens-nome-${j}`).value;
+        }
     });
 }
 

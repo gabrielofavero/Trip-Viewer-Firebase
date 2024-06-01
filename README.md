@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 41    | 35          | 6         |
+| 🐞     | Bug      | B000    | 42    | 36          | 6         |
 | 🏆     | Feature  | F000    | 56    | 48          | 8         |
 | 📈     | Melhoria | M000    | 54    | 35          | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
@@ -33,8 +33,8 @@
 - 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 - 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 - 🏆 **F056:** Verificação se houve mudanças nas páginas de editar
- - *Se houve, exibir mensagem de confirmação de saída e permitir salvamento*
- - *Se não houve, permite sair da página livremente e não salva de verdade (mensagem customizada)*
+  - *Se houve, exibir mensagem de confirmação de saída e permitir salvamento*
+  - *Se não houve, permite sair da página livremente e não salva de verdade (mensagem customizada)*
 
 ### Prioridade Média
 
@@ -84,7 +84,6 @@
 - 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
-- 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
@@ -98,6 +97,9 @@
 - 🏆 **F055:** Implementar função de getKs
 
 ## Done
+
+### Junho 2024
+- 🐞 **B042:** Correção de listeners em editar-viagem (inicio, fim, reloadProgramacao) não estarem funcionando
 
 ### Maio 2024
 
@@ -151,6 +153,7 @@
   - *O título completo apenas aparece quando o usuário edita o input (listener)*
 - 📈 **M053:** Possibilidade de incluir mais de um local para o mesmo dia de programação
 - 🏆 **F054:** Implementar sistema de IDs para transporte e hospedagem, para poderem ser utilizados como referência em programacao
+- 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 
 ### Abril 2024
 

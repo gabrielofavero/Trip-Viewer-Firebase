@@ -32,18 +32,10 @@ function _addEditores() {
 }
 
 function _addTransporte() {
-  const j = _getNextJ('transporte-box')
-  var checkedIda = '';
-  var checkedVolta = '';
-  var day = '';
-
-  if (j === 1) {
-    checkedIda = 'checked';
-    day = getID('inicio').value;
-  } else {
-    checkedVolta = 'checked';
-    day = getID('fim').value;
-  }
+  const j = _getNextJ('transporte-box');
+  const newDate = _getNextCategoriaDate('transporte', 'chegada');
+  const checkedIda = j === 1 ? 'checked' : '';
+  const checkedVolta = checkedIda === 'checked' ? '' : 'checked';
 
   $('#transporte-box').append(`
       <div id="transporte-${j}" class="accordion-item accordion-transporte" >
@@ -91,7 +83,7 @@ function _addTransporte() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Partida</label>
-              <input required class="flex-input" id="partida-${j}" type="date" value="${day}" />
+              <input required class="flex-input" id="partida-${j}" type="date" value="${newDate}" />
             </div>
             <div class="nice-form-group side-by-side">
               <input required class="flex-input mini-box" id="partida-horario-${j}" type="time" value="00:00" />
@@ -101,7 +93,7 @@ function _addTransporte() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Chegada</label>
-              <input required class="flex-input" id="chegada-${j}" type="date" value="${day}" />
+              <input required class="flex-input" id="chegada-${j}" type="date" value="${newDate}" />
             </div>
             <div class="nice-form-group side-by-side">
               <input required class="flex-input mini-box" id="chegada-horario-${j}" type="time" value="00:30" />
@@ -171,6 +163,7 @@ function _addTransporte() {
 }
 
 function _addHospedagens() {
+  const inicioFim = _getNextCategoriaInicioFim('hospedagens', 'check-out');
   const j = _getNextJ('hospedagens-box');
   $('#hospedagens-box').append(`
       <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens" >
@@ -208,7 +201,7 @@ function _addHospedagens() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Check-In</label>
-              <input class="flex-input" id="check-in-${j}" type="date" value="${TODAY}" />
+              <input class="flex-input" id="check-in-${j}" type="date" value="${inicioFim.inicio}" />
             </div>
             <div class="nice-form-group side-by-side">
               <input class="flex-input mini-box" id="check-in-horario-${j}" type="time" value="14:00" />
@@ -218,7 +211,7 @@ function _addHospedagens() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Check-Out</label>
-              <input class="flex-input" id="check-out-${j}" type="date" value="${TOMORROW}" />
+              <input class="flex-input" id="check-out-${j}" type="date" value="${inicioFim.fim}" />
             </div>
             <div class="nice-form-group side-by-side">
               <input class="flex-input mini-box" id="check-out-horario-${j}" type="time" value="12:00" />

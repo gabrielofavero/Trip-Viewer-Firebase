@@ -253,47 +253,10 @@ function _loadProgramacaoData() {
     _loadProgramacao();
 
     let j = 1;
-
     while (getID(`programacao-title-${j}`)) {
         const dados = FIRESTORE_DATA.programacoes[j - 1];
-        const firestoreData = dados.data;
-
-        if (firestoreData) {
-            const jsDate = _convertFromFirestoreDate(firestoreData);
-
-            const destinosIDsObject = dados.destinosIDs;
-            let destinosIDs = [];
-            if (destinosIDsObject && destinosIDsObject.length > 0) {
-                destinosIDs = destinosIDsObject.map(destino => destino.destinosID);
-                _addValuesForDestinosAtivosCheckbox('programacao', j, destinosIDs);
-            }
-
-            getID(`programacao-inner-title-select-${j}`).innerHTML = _getProgramacaoTitleSelectOptions(j);
-
-            let titulo = dados.titulo;
-            if (titulo) {
-                const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
-                if (destinosIDs && destinosIDs.includes(titulo)) {
-                    getID(`programacao-inner-title-${j}`).style.display = 'none';
-                } else if (titulo.toLowerCase() == 'outro' || !selectValues.includes(titulo)) {
-                    getID(`programacao-inner-title-select-${j}`).value = 'outro';
-                    getID(`programacao-inner-title-${j}`).style.display = 'block';
-                    getID(`programacao-inner-title-${j}`).value = titulo;
-                } else {
-                    getID(`programacao-inner-title-select-${j}`).value = titulo;
-                    getID(`programacao-inner-title-${j}`).style.display = 'none';
-                }
-            }
-
-            INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = {
-                madrugada: dados.madrugada || [],
-                manha: dados.manha || [],
-                tarde: dados.tarde || [],
-                noite: dados.noite || [],
-            };
-
-            _updateProgramacaoTitle(j);
-            _loadInnerProgramacaoHTML(j);
+        if (dados.data) {
+            _applyLoadedProgramacaoData(j, dados);
         }
         j++;
     }
