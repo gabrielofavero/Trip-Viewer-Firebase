@@ -148,6 +148,7 @@ function _loadHeader() {
 
   if (FIRESTORE_DATA.descricao) {
     getID("dDescription").innerHTML = FIRESTORE_DATA.descricao;
+    getID("dDescription").style.display = "block";
   }
 
   if (FIRESTORE_DATA.links.ativo) {
@@ -278,7 +279,7 @@ function _loadModules() {
 
   // Programação
   if (FIRESTORE_DATA.modulos.programacao) {
-    CALL_SYNC.push(_loadCalendar);
+    CALL_SYNC.push(_loadProgramacao);
   } else {
     getID("scheduleCalendarNav").innerHTML = "";
     getID("scheduleCalendar").innerHTML = "";

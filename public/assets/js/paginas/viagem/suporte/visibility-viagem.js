@@ -51,6 +51,10 @@ function _applyCustomColorsViagem() {
     _addCSSRule('.flight-icon', 'color', `${THEME_COLOR} !important`);
     _addCSSRule('.external-link', 'color', THEME_COLOR);
     _addCSSRule('.color-icon', 'color', THEME_COLOR);
+    _addCSSRule('.active-pill', 'background-color', THEME_COLOR_SECONDARY)
+    _addCSSRule('.active-circle', 'background-color', THEME_COLOR)
+    _addCSSRule('.active-calendar', 'background-color', `${THEME_COLOR_SECONDARY} !important`)
+    _addCSSRule('.pill:hover .pill-circle', 'background-color', THEME_COLOR)
 }
 
 function _applyCustomColorsPreloader(){

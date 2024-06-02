@@ -60,6 +60,7 @@ function _loadToggle() {
 function _loadDarkMode() {
      localStorage.setItem("darkMode", true);
      THEME_COLOR = ESCURO;
+     THEME_COLOR_SECONDARY = _getDarkerColor(ESCURO);
 
      const name = _getHTMLpage();
      var link = document.createElement("link");
@@ -81,6 +82,7 @@ function _loadDarkMode() {
 function _loadLightMode() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
+     THEME_COLOR_SECONDARY = _getLighterColor(CLARO);
 
      const name = _getHTMLpage();
      var link = document.createElement("link");
@@ -102,6 +104,7 @@ function _loadLightMode() {
 function _loadLightModeLite() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
+     THEME_COLOR_SECONDARY = _getLighterColor(CLARO);
 
      _loadToggle();
 

@@ -24,13 +24,13 @@ function _loadCalendar() {
     _showCalendar(startMonth, startYear);
 }
 
-function _next() {
+function _calendarNext() {
     startYear = (startMonth === 11) ? startYear + 1 : startYear;
     startMonth = (startMonth + 1) % 12;
     _showCalendar(startMonth, startYear);
 }
 
-function _previous() {
+function _calendarPrevious() {
     startYear = (startMonth === 0) ? startYear - 1 : startYear;
     startMonth = (startMonth === 0) ? 11 : startMonth - 1;
     _showCalendar(startMonth, startYear);
@@ -72,6 +72,15 @@ function _showCalendar(month, year) {
                 if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
                     cell.classList.add("calendarTrip");
                     cell.setAttribute("onclick", "_getScheduleCalendarByDate('" + day + "/" + (month + 1) + "/" + year + "')");
+
+                    const key = `${year}${month + 1}${day}`;
+                    const destinos = PROGRAMACAO_DESTINOS[key];
+                    if (destinos && destinos.length > 0) {
+                        for (const destino of destinos){
+                            cell.classList.add(`pill-${destino.destinosID}`);
+                        }
+                    }
+
                 } else {
                     cell.classList.add("calendarDisabled");
                 }
@@ -83,7 +92,7 @@ function _showCalendar(month, year) {
 
         tbl.appendChild(row);
 
-        if (_isTripMultiMonth()) {
+        if (_isCalendarMultiMonth()) {
             _showMonthSelector();
         } else {
             _hideMonthSelector();
@@ -100,6 +109,6 @@ function _hideMonthSelector() {
     getID('calendarMonthSelector').style.display = 'none'
 }
 
-function _isTripMultiMonth() {
+function _isCalendarMultiMonth() {
     return startMonth != endMonth || startYear != endYear;
 }

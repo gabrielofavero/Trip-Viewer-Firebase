@@ -1,4 +1,5 @@
 var THEME_COLOR;
+var THEME_COLOR_SECONDARY;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
 var CUSTOM_COLORS = false;

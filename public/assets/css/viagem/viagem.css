@@ -1603,9 +1603,8 @@ section {
   font-size: 20px;
   font-weight: bold;
   color: #4F5051;
-  margin-bottom: 0px;
   margin: auto;
-  margin-bottom: 30px;
+  margin-bottom: 42px;
   text-align: center;
 }
 
@@ -2120,6 +2119,7 @@ iframe {
 #dDescription {
   margin-bottom: 40px;
   text-align: center;
+  display: none;
 }
 
 #dUpdate {
@@ -2512,4 +2512,38 @@ iframe {
 
 .inner-programacao-item {
   max-width: 390px;
+}
+
+/* Programação Pills */
+.pill-box {
+  margin-top: 36px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 24px;
+}
+
+.pill-circle {
+  width: 12px;
+  height: 12px;
+  background-color: #aaabac;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.pill:hover .pill-circle {
+  background-color: #5859a7;
+}
+
+.pill {
+  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  border: 0.5px solid #D9D9D9;
+  border-radius: 9999px;
+  background-color: #F6F6F6;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  margin: 0 8px 8px 0;
 }

@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 42    | 36          | 6         |
+| 🐞     | Bug      | B000    | 43    | 37          | 6         |
 | 🏆     | Feature  | F000    | 56    | 48          | 8         |
 | 📈     | Melhoria | M000    | 54    | 36          | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
@@ -18,8 +18,6 @@
 - ❗️: Crítico
 
 ## Doing
-
-- 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 
 ## To-Do
 
@@ -100,6 +98,8 @@
   - *Quantidade dinâmica de itens*
   - *Novo design na programação por dia em viagens.html*
   - *Possibilidade de abrir um item associado a programação em viagens.html (destino, hospedagem ou transporte)*
+- 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
+- 🐞 **B043:** Correção de hero incorreto no dark mode + margens desproporcionais em viagens.html
 
 ### Maio 2024
 
