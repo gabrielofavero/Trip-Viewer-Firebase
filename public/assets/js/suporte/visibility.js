@@ -1,11 +1,7 @@
 // ======= Visibility JS =======
-var THEME_COLOR;
-var CLARO = "#5859a7";
-var ESCURO = "#7f75b6";
-var CUSTOM_COLORS = false;
 var CHANGED_SVGS = [];
 
-// ======= LOADERS =======
+// 
 function _loadVisibility() {
      try {
           if (FIRESTORE_DATA && FIRESTORE_DATA.cores && FIRESTORE_DATA.cores.ativo) {
@@ -28,18 +24,6 @@ function _loadVisibility() {
      getID("night-mode").onclick = function () {
           _switchVisibility();
      };
-}
-
-function _loadLogoColors() {
-     const lightColor1 = getID("light-color-1");
-     const lightColor2 = getID("light-color-2");
-     const darkColor1 = getID("dark-color-1");
-     const darkColor2 = getID("dark-color-2");
-
-     lightColor1.style.fill = CLARO;
-     lightColor2.style.fill = CLARO;
-     darkColor1.style.fill = ESCURO;
-     darkColor2.style.fill = ESCURO;
 }
 
 function _loadVisibilityPasseio() {
@@ -161,27 +145,6 @@ function _getCssHref(name, dark = false) {
      }
 }
 
-function _getLocalColors() {
-     try {
-          return JSON.parse(localStorage.getItem("localColors"));
-     } catch (e) {
-          return null;
-     }
-}
-
-function _getEquivalentColorAndPosition(claro) {
-     const claroObj = CONFIG.cores.claro;
-     const escuroObj = CONFIG.cores.escuro;
-
-     for (let i = 0; i < claroObj.length; i++) {
-          if (claroObj[i] === claro) {
-               return { position: i, equivalent: escuroObj[i] };
-          }
-     }
-
-     return {};
-}
-
 // ======= SETTERS =======
 function _applyUserVisibility() {
      switch (localStorage.getItem("visibilidade")) {
@@ -271,30 +234,23 @@ function _addCSSRule(selector, property, value) {
      }
 }
 
-function _changeFillColorSVGs(className, color) {
-     const svgElements = document.querySelectorAll(`.${className}`);
-     if (svgElements.length > 0) {
-          CHANGED_SVGS.push(className);
-          svgElements.forEach(svgElement => {
-               const pathElement = svgElement.querySelector('path');
-               if (pathElement) {
-                    pathElement.setAttribute('fill', color);
+function _removeCSSRule(selector, property) {
+     let styleElement = document.getElementById('custom-styles');
+     if (!styleElement) {
+          return;
+     }
+
+     const styleSheet = styleElement.sheet;
+     for (let i = 0; i < styleSheet.cssRules.length; i++) {
+          const cssRule = styleSheet.cssRules[i];
+          if (cssRule.selectorText === selector) {
+               cssRule.style.removeProperty(property);
+               if (cssRule.style.length === 0) {
+                    styleSheet.deleteRule(i);
                }
-          });
+               break;
+          }
      }
-}
-
-
-function _clearCustomColors() {
-     var styleElement = getID('custom-styles');
-     if (styleElement) {
-          styleElement.parentNode.removeChild(styleElement);
-     }
-}
-
-function _ChangeBarColorIOS(color) {
-     let metaThemeColor = document.querySelector("meta[name=theme-color]");
-     metaThemeColor.setAttribute("content", color);
 }
 
 function _disableScroll() {
@@ -305,26 +261,29 @@ function _enableScroll() {
      document.body.style.overflow = "auto";
 }
 
-function _saveLocalColors() {
-     var localColors = {
-          claro: CLARO,
-          escuro: ESCURO
-     };
-     localStorage.setItem("localColors", JSON.stringify(localColors));
+// ======= CHECKERS =======
+function _hasCSSRule(selector, property) {
+     let styleElement = document.getElementById('custom-styles');
+
+     if (!styleElement) {
+          return false; // Nenhum estilo customizado foi encontrado
+     }
+
+     const styleSheet = styleElement.sheet;
+
+     for (let i = 0; i < styleSheet.cssRules.length; i++) {
+          const cssRule = styleSheet.cssRules[i];
+          if (cssRule.selectorText === selector) {
+               if (cssRule.style.getPropertyValue(property)) {
+                    return true;
+               }
+          }
+     }
+     return false;
 }
 
-// ======= CHECKERS =======
 function _isOnDarkMode() {
      return localStorage.getItem("darkMode") === "true";
-}
-
-function _isCustomColorsActive() {
-     const html = _getHTMLpage();
-     if (html === 'destinos') {
-          return localStorage.getItem("customColors") === "true";
-     } else {
-          return CUSTOM_COLORS
-     }
 }
 
 // ======= Modal Functions =======
@@ -425,10 +384,10 @@ function _toggleFadingVisibility(id = 'copy-msg') {
 function _searchDestinosListenerAction() {
      const childs = _getChildIDs('destinos-checkboxes');
      const search = getID('destinos-search').value.toLowerCase();
- 
+
      for (const child of childs) {
-         const j = _getJ(child);
-         const label = getID(`check-label-${j}`).innerText.toLowerCase();
-         getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
+          const j = _getJ(child);
+          const label = getID(`check-label-${j}`).innerText.toLowerCase();
+          getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
      }
- }
+}

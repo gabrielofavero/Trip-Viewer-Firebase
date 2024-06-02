@@ -72,9 +72,10 @@
             border-radius: 50%;
             display: inline-block;
             margin-right: 8px;
+            transition: background-color 0.3s ease;
         }
 
-        .circle:hover {
+        .pill:hover .circle {
             background-color: #5859a7;
         }
 
@@ -105,19 +106,19 @@
 
                 <div class="pill-box">
                     <div class="pill" id="pill-1">
-                        <span class="circle"></span><span class="text">Las Vegas</span>
+                        <span class="circle" id="pill-circle-1"></span><span class="text">Las Vegas</span>
                     </div>
                     <div class="pill" id="pill-2">
-                        <span class="circle"></span><span class="text">San Diego</span>
+                        <span class="circle" id="pill-circle-2"></span><span class="text">San Diego</span>
                     </div>
                     <div class="pill" id="pill-3">
-                        <span class="circle"></span><span class="text">Los Angeles</span>
+                        <span class="circle" id="pill-circle-3"></span><span class="text">Los Angeles</span>
                     </div>
                     <div class="pill" id="pill-4">
-                        <span class="circle"></span><span class="text">Carmel / Monterey</span>
+                        <span class="circle" id="pill-circle-4"></span><span class="text">Carmel / Monterey</span>
                     </div>
                     <div class="pill" id="pill-5">
-                        <span class="circle"></span><span class="text">San Francisco</span>
+                        <span class="circle" id="pill-circle-5"></span><span class="text">San Francisco</span>
                     </div>
                 </div>
 
@@ -161,21 +162,21 @@
                                 <td class="calendarDisabled">11</td>
                                 <td class="calendarDisabled">12</td>
                                 <td class="calendarDisabled">13</td>
-                                <td class="calendarTrip" id='vegas-1'>14</td>
-                                <td class="calendarTrip" id='vegas-2'>15</td>
-                                <td class="calendarTrip" id='sandiego-1'>16</td>
+                                <td class="calendarTrip pill-1" id='vegas-1'>14</td>
+                                <td class="calendarTrip pill-1" id='vegas-2'>15</td>
+                                <td class="calendarTrip pill-2" id='sandiego-1'>16</td>
                             </tr>
                             <tr>
-                                <td class="calendarTrip" id='sandiego-2'>17</td>
-                                <td class="calendarTrip" id='sandiego-3'>18</td>
-                                <td class="calendarTrip" id='losangeles-1'>19</td>
-                                <td class="calendarTrip" id='losangeles-2'>20</td>
-                                <td class="calendarTrip" id='carmel-1'>21</td>
-                                <td class="calendarTrip" id='sanfrancisco-1'>22</td>
-                                <td class="calendarTrip" id='sanfrancisco-2'>23</td>
+                                <td class="calendarTrip pill-2" id='sandiego-2'>17</td>
+                                <td class="calendarTrip pill-2" id='sandiego-3'>18</td>
+                                <td class="calendarTrip pill-3" id='losangeles-1'>19</td>
+                                <td class="calendarTrip pill-3" id='losangeles-2'>20</td>
+                                <td class="calendarTrip pill-4" id='carmel-1'>21</td>
+                                <td class="calendarTrip pill-5" id='sanfrancisco-1'>22</td>
+                                <td class="calendarTrip pill-5" id='sanfrancisco-2'>23</td>
                             </tr>
                             <tr>
-                                <td class="calendarTrip" id='sanfrancisco-3'>24</td>
+                                <td class="calendarTrip pill-5" id='sanfrancisco-3'>24</td>
                                 <td class="calendarTrip">25</td>
                                 <td class="calendarDisabled">26</td>
                                 <td class="calendarDisabled">27</td>
@@ -298,111 +299,94 @@
         </div>
     </section>
 
+    <script src="../js/main.js"></script>
+    <script src="../js/suporte/visibility.js"></script>
+    <script src="../js/suporte/colors.js"></script>
+
     <script>
+        THEME_COLOR = '#5859a7';
+        var PILL_COLOR_LIGHT = _getLighterColor(THEME_COLOR);
+        var PILL_COLOR_DARK = _getDarkerColor(THEME_COLOR);
+        var ACTIVE_PILL = {
+            j: 0,
+            action: ''
+        };
 
-        function hexToRgb(hex) {
-            // Remove the hash at the start if it's there
-            hex = hex.replace(/^#/, '');
-
-            // Parse the r, g, b values
-            let bigint = parseInt(hex, 16);
-            let r = (bigint >> 16) & 255;
-            let g = (bigint >> 8) & 255;
-            let b = bigint & 255;
-
-            return [r, g, b];
-        }
-
-        function rgbToHex(r, g, b) {
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
-        }
-
-        function mixColors(hex1, hex2, percentage = 50) {
-            // Ensure percentage is between 0 and 100
-            if (percentage < 0) percentage = 0;
-            if (percentage > 100) percentage = 100;
-
-            // Convert percentage to a fraction
-            let ratio = percentage / 100;
-
-            // Convert hex to RGB
-            let rgb1 = hexToRgb(hex1);
-            let rgb2 = hexToRgb(hex2);
-
-            // Calculate the weighted average of each RGB component
-            let r = Math.round(rgb1[0] * ratio + rgb2[0] * (1 - ratio));
-            let g = Math.round(rgb1[1] * ratio + rgb2[1] * (1 - ratio));
-            let b = Math.round(rgb1[2] * ratio + rgb2[2] * (1 - ratio));
-
-            // Convert the result back to hex
-            return rgbToHex(r, g, b);
-        }
-
-        function setHoverAndActiveColor(mainElementId, affectedElementIds, hexColor, circleColor) {
-            const mainElement = document.getElementById(mainElementId);
-            const affectedElements = affectedElementIds.map(id => document.getElementById(id));
-
-            if (!mainElement) {
-                console.error(`Main element with ID "${mainElementId}" not found.`);
-                return;
-            }
-
-            // Store the original background color and circle color
-            const originalColor = getComputedStyle(mainElement).backgroundColor;
-            const originalCircleColor = getComputedStyle(mainElement.querySelector('.circle')).backgroundColor;
-            let activePill = null; // Track the active pill
-
-            // Function to change background color for all elements
-            function changeBackgroundColor(color) {
-                mainElement.style.setProperty('background-color', color, 'important');
-                affectedElements.forEach(el => {
-                    if (el) el.style.setProperty('background-color', color, 'important');
-                });
-            }
-
-            // Function to change circle color
-            function changeCircleColor(color) {
-                mainElement.querySelector('.circle').style.backgroundColor = color;
-            }
-
-            // Add hover effect
-            mainElement.addEventListener('mouseover', function () {
-                if (!activePill) {
-                    changeBackgroundColor(hexColor);
-                    changeCircleColor(circleColor);
+        function _loadPill(j, action) {
+            const lastAction = ACTIVE_PILL.action;
+            if (!lastAction) {
+                if (action === 'click' || action === 'mouseenter') {
+                    console.log(`[null] -> ${action}: Ativando ${j}`)
+                    ACTIVE_PILL = { j, action };
+                    _activatePill();
                 }
+            } else if (lastAction === 'click') {
+                if (action === 'click') {
+                    console.log(`Click -> Click: Desativando ${j}`)
+                    _deactivatePill();
+                }
+            } else if (lastAction === 'mouseenter') {
+                if (action === 'mouseleave') {
+                    console.log(`mouseenter -> mouseleave: Desativando ${j}`)
+                    _deactivatePill();
+                }
+                if (action === 'click') {
+                    console.log(`mouseenter -> click: Atualizando ACTIVE_PILL`)
+                    ACTIVE_PILL = { j, action };
+                }
+            } else if (lastAction === 'mouseleave') {
+                if (action === 'click' || action === 'mouseenter') {
+                    console.log(`mouseleave -> ${action}: Ativando ${j}`)
+                    ACTIVE_PILL = { j, action };
+                    _activatePill();
+                }
+            }
+        }
+
+
+
+        function _activatePill() {
+            _addCSSRule(`#pill-${ACTIVE_PILL.j}`, 'background-color', PILL_COLOR_LIGHT)
+            _addCSSRule(`#pill-circle-${ACTIVE_PILL.j}`, 'background-color', THEME_COLOR)
+            for (const calendarDay of document.getElementsByClassName(`pill-${ACTIVE_PILL.j}`)) {
+                calendarDay.classList.add('active-calendar');
+            }
+        }
+
+        function _deactivatePill() {
+            _removeCSSRule(`#pill-${ACTIVE_PILL.j}`, 'background-color')
+            _removeCSSRule(`#pill-circle-${ACTIVE_PILL.j}`, 'background-color')
+            for (const calendarDay of document.getElementsByClassName(`pill-${ACTIVE_PILL.j}`)) {
+                calendarDay.classList.remove('active-calendar');
+            }
+            ACTIVE_PILL.j = 0;
+            ACTIVE_PILL.action = '';
+        }
+
+        function _addPillListeners(j) {
+            getID(`pill-${j}`).addEventListener('mouseenter', function () {
+                _loadPill(j, 'mouseenter');
             });
 
-            mainElement.addEventListener('mouseout', function () {
-                if (!activePill) {
-                    changeBackgroundColor(originalColor);
-                    changeCircleColor(originalCircleColor);
-                }
+            getID(`pill-${j}`).addEventListener('mouseleave', function () {
+                _loadPill(j, 'mouseleave');
             });
 
-            // Add click effect
-            mainElement.addEventListener('click', function () {
-                if (activePill === mainElement) {
-                    activePill = null;
-                    changeBackgroundColor(originalColor);
-                    changeCircleColor(originalCircleColor);
-                } else {
-                    if (activePill) {
-                        // Deactivate the previously active pill
-                        activePill.click();
-                    }
-                    activePill = mainElement;
-                    changeBackgroundColor(hexColor);
-                    changeCircleColor(circleColor);
-                }
+            getID(`pill-${j}`).addEventListener('click', function () {
+                _loadPill(j, 'click');
             });
         }
 
-        setHoverAndActiveColor('pill-1', ['vegas-1', 'vegas-2'], mixColors('#D9D9D9', '#5859a7', 75));
-        setHoverAndActiveColor('pill-2', ['sandiego-1', 'sandiego-2', 'sandiego-3'], mixColors('#D9D9D9', '#5859a7', 75));
-        setHoverAndActiveColor('pill-3', ['losangeles-1', 'losangeles-2'], mixColors('#D9D9D9', '#5859a7', 75));
-        setHoverAndActiveColor('pill-4', ['carmel-1'], mixColors('#D9D9D9', '#5859a7', 75));
-        setHoverAndActiveColor('pill-5', ['sanfrancisco-1', 'sanfrancisco-2', 'sanfrancisco-3'], mixColors('#D9D9D9', '#5859a7', 75));
+        function _loadProgramacaoPills() {
+            _addCSSRule('.active-calendar', 'background-color', `${PILL_COLOR_LIGHT} !important`)
+            _addPillListeners(1);
+            _addPillListeners(2);
+            _addPillListeners(3);
+            _addPillListeners(4);
+            _addPillListeners(5);
+        }
+
+        _loadProgramacaoPills();
     </script>
 </body>
 
