@@ -726,12 +726,14 @@ section {
 #tabela {
   margin-top: 24px;
   background-color: #fff;
+  border: none;
 }
 
 #calendar {
   color: #4F5051;
   background-color: #fff;
   border: 0.5px solid #D9D9D9;
+  margin-bottom: 0px;
 }
 
 #calendarTitle {
@@ -749,6 +751,12 @@ section {
   font-size: 12px;
   font-weight: bold;
   border: 0.5px solid #D9D9D9;
+}
+
+#calendarMonthSelector {
+  border: 0.5px solid #D9D9D9;
+  border-top: none;
+  padding: 8px;
 }
 
 .linHeader {

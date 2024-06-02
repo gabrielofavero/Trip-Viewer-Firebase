@@ -85,7 +85,6 @@
 - 📈 **M047:** Trocar mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhorar funções relacionadas ao getJs para mais cenários
 - 🏆 **F055:** Implementar função de getKs
-- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 
 ## Done
 
@@ -100,6 +99,7 @@
   - *Possibilidade de abrir um item associado a programação em viagens.html (destino, hospedagem ou transporte)*
 - 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 - 🐞 **B043:** Correção de hero incorreto no dark mode + margens desproporcionais em viagens.html
+- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 
 ### Maio 2024
 
