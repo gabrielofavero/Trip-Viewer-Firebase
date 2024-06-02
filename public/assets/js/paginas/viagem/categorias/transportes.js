@@ -25,9 +25,9 @@ function _getTransporteHTML(j, idaVolta) {
             </div>`
 }
 
-function _getFlightBoxHTML(j, idaVolta, innerProgramacao=false) {
+function _getFlightBoxHTML(j, identifier, innerProgramacao=false) {
   const empresa = _getEmpresaObj(j);
-  return `<div class="flight-box${innerProgramacao? " inner-programacao-item" : ''}" id="transporte-${idaVolta}-box-${j}">
+  return `<div class="flight-box${innerProgramacao? " inner-programacao-item" : ''}" id="transporte-${identifier}-box-${j}">
             <div class="flight-diagram">
               <div class="flight-title">
                 ${_getImagemHTML(j, empresa)}

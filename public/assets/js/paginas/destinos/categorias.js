@@ -36,8 +36,8 @@ function _getNotaClass (item) {
     }
 }
 
-function _getNotaText(item) {
-    return DESTINO.notas[item.nota] || DESTINO.notas['default'] || "Não Avaliado";
+function _getNotaText(item, notas) {
+    return notas[item.nota] || notas['default'] || "Não Avaliado";
 }
 
 // Links
@@ -59,22 +59,22 @@ function _getPalcoRegiaoValue(item, isLineup) {
 }
 
 // Valor
-function _getValorValue(item, isLineup) {
+function _getValorValue(item, isLineup, valores, moeda) {
     if (isLineup) return "";
-    else return _convertValor(item.valor);
+    else return _convertValor(item.valor, valores, moeda);
 }
 
-function _convertValor(valor) {
-    if (valor && DESTINO.valores && DESTINO.valores[valor]) return DESTINO.valores[valor]
-    if (valor) return _convertCustomValor(valor)
-    if (DESTINO.valores) return DESTINO.valores["default"]
+function _convertValor(valor, valores, moeda) {
+    if (valor && valores && valores[valor]) return valores[valor];
+    if (valor) return _convertCustomValor(valor, moeda);
+    if (valores) return valores["default"];
     return "Valor Desconhecido";
 }
 
-function _convertCustomValor(valor) {
-    if (isNaN(valor) || (!isNaN(valor) && !DESTINO.moeda)) {
+function _convertCustomValor(valor, moeda) {
+    if (isNaN(valor) || (!isNaN(valor) && !moeda)) {
         return valor;
-    } else return `${DESTINO.moeda}${valor}`;
+    } else return `${moeda}${valor}`;
 }
 
 // Descrição

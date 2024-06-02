@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 42    | 36          | 6         |
 | 🏆     | Feature  | F000    | 56    | 48          | 8         |
-| 📈     | Melhoria | M000    | 54    | 35          | 19        |
+| 📈     | Melhoria | M000    | 54    | 36          | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -19,22 +19,11 @@
 
 ## Doing
 
-- 📈 **M019:** Módulo de programação mais personalizável
-  - *Inclusão de Horário*
-  - *Automação Título*
-  - *Quantidade dinâmica de itens*
-  - *Novo design na programação por dia em viagens.html*
-  - *Possibilidade de abrir um item associado a programação em viagens.html (destino, hospedagem ou transporte)*
+- 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 
 ## To-Do
 
 ### Prioridade Alta
-
-- 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
-- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
-- 🏆 **F056:** Verificação se houve mudanças nas páginas de editar
-  - *Se houve, exibir mensagem de confirmação de saída e permitir salvamento*
-  - *Se não houve, permite sair da página livremente e não salva de verdade (mensagem customizada)*
 
 ### Prioridade Média
 
@@ -68,6 +57,9 @@
   - *Code smells*
   - *Refatorações*
   - *Sonarqube*
+- 🏆 **F056:** Verificação se houve mudanças nas páginas de editar
+  - *Se houve, exibir mensagem de confirmação de saída e permitir salvamento*
+  - *Se não houve, permite sair da página livremente e não salva de verdade (mensagem customizada)*
 
 ### Prioridade Baixa
 
@@ -95,11 +87,19 @@
 - 📈 **M047:** Trocar mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhorar funções relacionadas ao getJs para mais cenários
 - 🏆 **F055:** Implementar função de getKs
+- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 
 ## Done
 
 ### Junho 2024
+
 - 🐞 **B042:** Correção de listeners em editar-viagem (inicio, fim, reloadProgramacao) não estarem funcionando
+- 📈 **M019:** Módulo de programação mais personalizável
+  - *Inclusão de Horário*
+  - *Automação Título*
+  - *Quantidade dinâmica de itens*
+  - *Novo design na programação por dia em viagens.html*
+  - *Possibilidade de abrir um item associado a programação em viagens.html (destino, hospedagem ou transporte)*
 
 ### Maio 2024
 

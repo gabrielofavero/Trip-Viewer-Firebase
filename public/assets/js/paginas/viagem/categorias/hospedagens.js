@@ -28,18 +28,21 @@ function _getHospedagensHTML(i) {
 
   return `<div class="swiper-slide" id="hospedagens-slide-${j}">
             <div class="testimonial-item">
-              ${_getHotelBoxHTML(j, hospedagem)}
+              ${_getHotelBoxHTML(hospedagem, j)}
             </div>
           </div>`
 }
 
-function _getHotelBoxHTML(j, hospedagem, innerProgramacao=false) {
-  return `<div class="hotel-box${innerProgramacao? " inner-programacao-item" : ''}" id="hospedagens-box-${j}">
-            <div class="portfolio-wrap" style="display: ${hospedagem.imagem ? 'block' : 'none'};">
-              <div class="hotel-img" style="background-image: url('${hospedagem.imagem}');">
+function _getHotelBoxHTML(hospedagem, identifier, innerProgramacao=false) {
+  const imagem = innerProgramacao ? _getImageLink(hospedagem.imagem) : hospedagem.imagem;
+  const checkIn = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkin) : hospedagem.checkIn;
+  const checkOut = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkout) : hospedagem.checkOut
+  return `<div class="hotel-box${innerProgramacao? " inner-programacao-item" : ''}" id="hospedagens-box-${identifier}">
+            <div class="portfolio-wrap" style="display: ${imagem ? 'block' : 'none'};">
+              <div class="hotel-img" style="background-image: url('${imagem}');">
                 <div class="portfolio-info">
                   <div class="portfolio-links">
-                    <a href="${hospedagem.imagem}" data-gallery="portfolioGallery" class="portfolio-lightbox hospedagens-galeria" title="${_getHospedagemImagemTitle(hospedagem)}"><i class="bx bx-zoom-in"></i></a>
+                    <a href="${imagem}" data-gallery="portfolioGallery" class="portfolio-lightbox hospedagens-galeria" title="${_getHospedagemImagemTitle(hospedagem)}"><i class="bx bx-zoom-in"></i></a>
                   </div>
                 </div>
                 <div class="hotel-img-text-container">
@@ -52,7 +55,7 @@ function _getHotelBoxHTML(j, hospedagem, innerProgramacao=false) {
             <div class="hotel-content">
               <div class="hotel-title">
                 <div class="left-title">
-                  <div class="hotel-name" id="hospedagens-nome-${j}">
+                  <div class="hotel-name" id="hospedagens-nome-${identifier}">
                     ${hospedagem.nome}
                     <div>
                       <i style="display: ${hospedagem.link ? 'block' : 'none'}" class="iconify external-link" 
@@ -72,10 +75,10 @@ function _getHotelBoxHTML(j, hospedagem, innerProgramacao=false) {
                 </div>
                   <div class="hotel-description">
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>Check-in:</strong> <span>${hospedagem.checkIn}</span> 
+                      <i class="bi bi-chevron-right color-icon"></i><strong>Check-in:</strong> <span>${checkIn}</span> 
                     </div>
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>Check-out:</strong> <span>${hospedagem.checkOut}</span>
+                      <i class="bi bi-chevron-right color-icon"></i><strong>Check-out:</strong> <span>${checkOut}</span>
                     </div>
                   </div>
                 </div>

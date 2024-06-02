@@ -99,11 +99,15 @@ function _buildDestinoExport(destino, code) {
   DESTINO_EXPORT[code] = {
     data: destino.destinos[code],
     moeda: destino.destinos.moeda,
-    valores: CONFIG.destinos.currency[destino.destinos.moeda] || CONFIG.destinos.currency["R$"],
+    valores: _getDestinoValores(destino),
     notas: CONFIG.destinos.notas,
     categoria: code,
     descricao: CONFIG.destinos.destinos[code],
   }
+}
+
+function _getDestinoValores(destino) {
+  return CONFIG.destinos.currency[destino.moeda] || CONFIG.destinos.currency["R$"];
 }
 
 function _loadAndOpenDestino(code) {

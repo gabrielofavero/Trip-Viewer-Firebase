@@ -36,11 +36,6 @@ function _loadMoedaOptions() {
     }
 }
 
-function _getValorVisibility() {
-    if (VALOR_OPTIONS) return 'block';
-    else return 'none';
-}
-
 function _getOutroValorVisibility() {
     if (VALOR_OPTIONS) return 'none';
     else return 'block';

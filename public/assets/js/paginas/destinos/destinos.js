@@ -23,9 +23,18 @@ function _loadDestinosHTML() {
     const isLineup = DESTINO.descricao.title == "Lineup";
 
     for (let j = 1; j <= DESTINO.data.length; j++) {
-      const item = DESTINO.data[j-1];
+      const item = DESTINO.data[j - 1];
       const data = isLineup ? _getLineupData(item) : "";
       const key = isLineup ? _getLineupKey(item) : "semData";
+      const params = {
+        j: j,
+        item: item,
+        isLineup: isLineup,
+        innerProgramacao: false,
+        notas: DESTINO.notas,
+        valores: DESTINO.valores,
+        moeda: DESTINO.moeda
+      }
 
       const innerHTML = `<div class="accordion-group">
                           <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
@@ -57,47 +66,7 @@ function _loadDestinosHTML() {
                               </h2>
                               <div id="collapse-destinos-${j}" class="accordion-collapse collapse"
                                   aria-labelledby="heading-destinos-${j}" data-bs-parent="#destinos-box">
-                                  <div class="accordion-body" id="accordion-body-${j}">
-                                      <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
-                                          <div class="notas-box">
-                                              <i class="iconify nota-sem-margem ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
-                                              <span class="nota-texto">${_getNotaText(item, isLineup)}</span>
-                                          </div>
-                                          <div class="links-container" style="display: ${_getLinksContainerVisibility(item, isLineup)}">
-                                              <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? 'block' : 'none'}"${_getLinkOnClick(item, 'mapa')}></i>
-                                              <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"${_getLinkOnClick(item, 'instagram')}></i>
-                                              <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? 'block' : 'none'}"${_getLinkOnClick(item, 'website')}></i>
-                                          </div>
-                                      </div>
-                                      <div class="destinos-text">
-                                          <div class="destinos-topicos-box" style="display: block">
-                                              <div class="destinos-topico" style="display: ${_getHeadlinerVisibility(item, isLineup)}">
-                                                  <i class="iconify color-icon" data-icon="ph:star-bold"></i>
-                                                  Headliner
-                                              </div>
-                                              <div class="destinos-topico" style="display: ${_getDisplayHorario(item, isLineup)}">
-                                                  <i class="iconify color-icon" data-icon="mingcute:time-line"></i>
-                                                  ${isLineup ? item.horario : ""}
-                                              </div>
-                                              <div class="destinos-topico" style="display: ${_getPalcoRegiaoVisibility(item, isLineup)}">
-                                                  <i class="iconify color-icon" data-icon="mingcute:location-line"></i>
-                                                  ${_getPalcoRegiaoValue(item, isLineup)}
-                                              </div>
-                                              <div class="destinos-topico" style="display: ${_getValorVisibility(item, isLineup)}">
-                                                  <i class="iconify color-icon" data-icon="bx:dollar"></i>
-                                                  ${_getValorValue(item, isLineup)}
-                                              </div>
-                                              <div class="destinos-topico" style="display: ${_getGeneroVisibility(item, isLineup)}">
-                                                  <i class="iconify color-icon" data-icon="mingcute:music-fill"></i>
-                                                  ${isLineup ? item.genero : ""}
-                                              </div>
-                                          </div>
-                                          <div class="destinos-descricao" style="display: ${_getDescricaoVisibility(item, isLineup)}">
-                                              ${_getDescricaoValue(item, isLineup)}
-                                          </div>
-                                          <div id="midia-${j}" class="midia-container"></div>
-                                      </div>
-                                  </div>
+                                  ${_getDestinosBoxHTML(params)}
                               </div>
                           </div>
                       </div>`;
@@ -139,7 +108,7 @@ function _getLineupKey(item) {
 
 
 // Setters
-function _setInnerContent(item, key, data, innerHTML) {  
+function _setInnerContent(item, key, data, innerHTML) {
   const innerContent = {
     titulo: item.nome,
     nota: item.nota || "?",
@@ -170,12 +139,12 @@ function _applyContent() {
 
 function _orderInnerHTMLs(innerContents) {
   innerContents.sort((a, b) => {
-      // Ordena por nota em ordem decrescente
-      if (b.nota !== a.nota) {
-          return b.nota - a.nota;
-      }
-      // Se as notas são iguais, ordena por título em ordem crescente
-      return a.titulo.localeCompare(b.titulo);
+    // Ordena por nota em ordem decrescente
+    if (b.nota !== a.nota) {
+      return b.nota - a.nota;
+    }
+    // Se as notas são iguais, ordena por título em ordem crescente
+    return a.titulo.localeCompare(b.titulo);
   });
   return innerContents.map(item => item.innerHTML);
 }

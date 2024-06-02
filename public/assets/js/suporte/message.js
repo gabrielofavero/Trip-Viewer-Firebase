@@ -54,7 +54,7 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
     if (properties.buttons && properties.buttons.length > 0) {
       const buttonBox = document.createElement('div');
       buttonBox.className = properties.buttonBox || 'button-box';
-      
+
       buttonBox.style.marginTop = '25px';
 
       for (const buttonType of properties.buttons) {
@@ -136,14 +136,6 @@ function _displayInputMessage(title, content, backAction, confirmAction = '_clos
     container: 'input-container',
     buttonBox: 'button-box-right'
   }
-  _displayMessage(title, content, properties);
-}
-
-// Mensagem de Destino
-function _displayDestinoMessage(title, content) {
-  let properties = DEFAULT_PROPERTIES;
-  properties.buttons = [];
-  properties.container = 'destino-container';
   _displayMessage(title, content, properties);
 }
 

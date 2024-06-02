@@ -1947,7 +1947,8 @@ iframe {
 }
 
 .message-container,
-.destino-container {
+.programacao-container,
+.destinos-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1964,16 +1965,20 @@ iframe {
   overflow-wrap: break-word;
 }
 
-.message-container {
+.message-container,
+.programacao-container {
   text-align: center;
 }
 
-.destino-container {
+.programacao-container,
+.destinos-container {
   padding: 20px;
+  width: 500px;
 }
 
 @media (max-height: 730px) {
-  .destino-container {
+  .programacao-container,
+  .destinos-container {
     max-height: 95%;
     overflow: auto;
     display: block;
@@ -1999,16 +2004,11 @@ iframe {
 }
 
 @media (max-width: 520px) {
-  .message-container {
+  .message-container,
+  .programacao-container,
+  .destinos-container {
     width: 90%;
     height: auto;
-  }
-  .destino-container {
-    max-height: 100%;
-    height: 100%;
-    width: 100%;
-    border-radius: 0px;
-    align-items: start;
   }
 }
 
@@ -2301,6 +2301,7 @@ iframe {
   overflow: hidden;
   width: 600px;
   margin: 0 auto;
+  text-align: start;
 }
 
 .hotel-img {
@@ -2371,7 +2372,6 @@ iframe {
 .external-link {
   color: #3d85c6;
   font-size: 20px;
-  margin-left: 5px;
   cursor: pointer;
 }
 
@@ -2384,6 +2384,7 @@ iframe {
 @media (max-width: 700px) {
   .hotel-box {
     flex-direction: column;
+    width: 90%;
   }
 
   .hotel-img {
@@ -2391,12 +2392,6 @@ iframe {
     width: 100%;
     background-size: cover;
     background-position: center;
-  }
-}
-
-@media (max-width: 700px) {
-  .hotel-box {
-    width: 90%;
   }
 }
 
@@ -2490,21 +2485,15 @@ iframe {
   align-items: center;
 }
 
-.tiktok-embed-v2 {
-  width: 100%;
-  height: 775px;
-}
-
+.tiktok-embed-v2,
 .tiktok-embed-v3 {
-  width: 300px;
-  height: 533px;
+  width: 225px;
+  height: 400px;
 }
 
-@media screen and (max-width: 550px) {
-  .tiktok-embed-v3 {
-    width: 100%;
-    /* height calculated in js function _applyDestinosMediaHeight */
-  }
+.youtube-embed {
+  width: 100%;
+  height: 213.41px;
 }
 
 .inner-programacao-item {
