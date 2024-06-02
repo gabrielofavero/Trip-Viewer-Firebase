@@ -307,60 +307,49 @@
         THEME_COLOR = '#5859a7';
         var PILL_COLOR_LIGHT = _getLighterColor(THEME_COLOR);
         var PILL_COLOR_DARK = _getDarkerColor(THEME_COLOR);
-        var ACTIVE_PILL = {
-            j: 0,
-            action: ''
-        };
+        var PILLS_ACTIONS = {};
 
         function _loadPill(j, action) {
-            const lastAction = ACTIVE_PILL.action;
+            const lastAction = PILLS_ACTIONS[j];
             if (!lastAction) {
                 if (action === 'click' || action === 'mouseenter') {
-                    console.log(`[null] -> ${action}: Ativando ${j}`)
-                    ACTIVE_PILL = { j, action };
-                    _activatePill();
+                    PILLS_ACTIONS[j] = action;
+                    _activatePill(j);
                 }
             } else if (lastAction === 'click') {
                 if (action === 'click') {
-                    console.log(`Click -> Click: Desativando ${j}`)
-                    _deactivatePill();
+                    _deactivatePill(j);
                 }
             } else if (lastAction === 'mouseenter') {
                 if (action === 'mouseleave') {
-                    console.log(`mouseenter -> mouseleave: Desativando ${j}`)
-                    _deactivatePill();
+                    _deactivatePill(j);
                 }
                 if (action === 'click') {
-                    console.log(`mouseenter -> click: Atualizando ACTIVE_PILL`)
-                    ACTIVE_PILL = { j, action };
+                    PILLS_ACTIONS[j] = action;
                 }
             } else if (lastAction === 'mouseleave') {
                 if (action === 'click' || action === 'mouseenter') {
-                    console.log(`mouseleave -> ${action}: Ativando ${j}`)
-                    ACTIVE_PILL = { j, action };
+                    PILLS_ACTIONS[j] = action;
                     _activatePill();
                 }
             }
         }
 
-
-
-        function _activatePill() {
-            _addCSSRule(`#pill-${ACTIVE_PILL.j}`, 'background-color', PILL_COLOR_LIGHT)
-            _addCSSRule(`#pill-circle-${ACTIVE_PILL.j}`, 'background-color', THEME_COLOR)
-            for (const calendarDay of document.getElementsByClassName(`pill-${ACTIVE_PILL.j}`)) {
+        function _activatePill(j) {
+            _addCSSRule(`#pill-${j}`, 'background-color', PILL_COLOR_LIGHT)
+            _addCSSRule(`#pill-circle-${j}`, 'background-color', THEME_COLOR)
+            for (const calendarDay of document.getElementsByClassName(`pill-${j}`)) {
                 calendarDay.classList.add('active-calendar');
             }
         }
 
-        function _deactivatePill() {
-            _removeCSSRule(`#pill-${ACTIVE_PILL.j}`, 'background-color')
-            _removeCSSRule(`#pill-circle-${ACTIVE_PILL.j}`, 'background-color')
-            for (const calendarDay of document.getElementsByClassName(`pill-${ACTIVE_PILL.j}`)) {
+        function _deactivatePill(j) {
+            _removeCSSRule(`#pill-${j}`, 'background-color')
+            _removeCSSRule(`#pill-circle-${j}`, 'background-color')
+            for (const calendarDay of document.getElementsByClassName(`pill-${j}`)) {
                 calendarDay.classList.remove('active-calendar');
             }
-            ACTIVE_PILL.j = 0;
-            ACTIVE_PILL.action = '';
+            delete PILLS_ACTIONS[j];
         }
 
         function _addPillListeners(j) {
