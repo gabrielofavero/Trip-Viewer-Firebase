@@ -2,232 +2,408 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>TripViewer</title>
-  <meta content="Venha visualizar minha viagem criada no TripViewer!" name="description">
-  <meta property="og:description" content="Venha visualizar minha viagem criada no TripViewer!">
-  <meta content="" name="keywords">
+    <title>TripViewer</title>
+    <meta content="Venha visualizar minha viagem criada no TripViewer!" name="description">
+    <meta property="og:description" content="Venha visualizar minha viagem criada no TripViewer!">
+    <meta content="" name="keywords">
 
-  <!-- Apple Data -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Viagem" />
-  <meta name="theme-color" content="#fff">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Apple Data -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Viagem" />
+    <meta name="theme-color" content="#fff">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="favicon.ico">
-  <meta name="msapplication-TileColor" content="#e4ebdb">
-  <meta name="msapplication-config" content="browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="msapplication-TileColor" content="#e4ebdb">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="../vendor/aos/aos.css" rel="stylesheet">
-  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="../vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="../vendor/aos/aos.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="../css/viagem/viagem.css" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="../css/viagem/viagem.css" rel="stylesheet">
 
+    <style>
+        .calendarTrip {
+            background-color: #F6F6F6 !important;
+            color: #272829;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .calendarTrip:hover,
+        .calendarTrip:active {
+            font-weight: bold;
+            background-color: #5859a7 !important;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pill-box {
+            margin-top: 24px;
+        }
+
+        .circle {
+            width: 12px;
+            height: 12px;
+            background-color: #4F5051;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .circle:hover {
+            background-color: #5859a7;
+        }
+
+        .pill {
+            padding: 4px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 0.5px solid #D9D9D9;
+            border-radius: 9999px;
+            background-color: #F6F6F6;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            margin: 0 8px 8px 0;
+        }
+    </style>
 </head>
 
 <body>
-  <section id="scheduleCalendar" class="resume">
-    <div class="container aos-init aos-animate" data-aos="fade-up">
+    <section id="scheduleCalendar" class="resume">
+        <div class="container aos-init aos-animate" data-aos="fade-up">
 
-      <div class="section-title">
-        <h2>Programação</h2>
-        <div id="progDescription">Selecione uma data para ver a programação</div>
-        <div id="pTotal"></div>
-        <div id="pAjuste"></div>
-        <div class="backup" id="dadosBackup"></div>
+            <div class="section-title">
+                <h2>Programação</h2>
+                <div id="progDescription">Selecione uma data para ver a programação</div>
+                <div id="pTotal"></div>
+                <div id="pAjuste"></div>
+                <div class="backup" id="dadosBackup"></div>
 
-        <div class="card" id="tabela">
-          <h3 class="card-header" id="calendarTitle">Novembro de 2024</h3>
-          <table class="table table-bordered table-responsive-sm" id="calendar">
-            <thead id="tabHeader">
-              <tr>
-                <th>Dom</th>
-                <th>Seg</th>
-                <th>Ter</th>
-                <th>Qua</th>
-                <th>Qui</th>
-                <th>Sex</th>
-                <th>Sáb</th>
-              </tr>
-            </thead>
+                <div class="pill-box">
+                    <div class="pill" id="pill-1">
+                        <span class="circle"></span><span class="text">Las Vegas</span>
+                    </div>
+                    <div class="pill" id="pill-2">
+                        <span class="circle"></span><span class="text">San Diego</span>
+                    </div>
+                    <div class="pill" id="pill-3">
+                        <span class="circle"></span><span class="text">Los Angeles</span>
+                    </div>
+                    <div class="pill" id="pill-4">
+                        <span class="circle"></span><span class="text">Carmel / Monterey</span>
+                    </div>
+                    <div class="pill" id="pill-5">
+                        <span class="circle"></span><span class="text">San Francisco</span>
+                    </div>
+                </div>
 
-            <tbody id="calendar-body">
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="calendarDisabled">1</td>
-                <td class="calendarDisabled">2</td>
-              </tr>
-              <tr>
-                <td class="calendarDisabled">3</td>
-                <td class="calendarDisabled">4</td>
-                <td class="calendarDisabled">5</td>
-                <td class="calendarDisabled">6</td>
-                <td class="calendarDisabled">7</td>
-                <td class="calendarDisabled">8</td>
-                <td class="calendarDisabled">9</td>
-              </tr>
-              <tr>
-                <td class="calendarDisabled">10</td>
-                <td class="calendarDisabled">11</td>
-                <td class="calendarDisabled">12</td>
-                <td class="calendarDisabled">13</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('14/11/2024')">14</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('15/11/2024')">15</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('16/11/2024')">16</td>
-              </tr>
-              <tr>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('17/11/2024')">17</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('18/11/2024')">18</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('19/11/2024')">19</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('20/11/2024')">20</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('21/11/2024')">21</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('22/11/2024')">22</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('23/11/2024')">23</td>
-              </tr>
-              <tr>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('24/11/2024')">24</td>
-                <td class="calendarTrip" onclick="_getScheduleCalendarByDate('25/11/2024')">25</td>
-                <td class="calendarDisabled">26</td>
-                <td class="calendarDisabled">27</td>
-                <td class="calendarDisabled">28</td>
-                <td class="calendarDisabled">29</td>
-                <td class="calendarDisabled">30</td>
-              </tr>
-              <tr></tr>
-            </tbody>
-          </table>
 
-          <div id="calendarMonthSelector" class="form-inline" style="display: none;">
-            <button id="previous" onclick="_previous()"><i class="bx bx-left-arrow-alt"></i></button>
-            <button id="next" onclick="_next()"><i class="bx bx-right-arrow-alt"></i></button>
-          </div>
-          <br>
+                <div class="card" id="tabela">
+                    <h3 class="card-header" id="calendarTitle">Novembro de 2024</h3>
+                    <table class="table table-bordered table-responsive-sm" id="calendar">
+                        <thead id="tabHeader">
+                            <tr>
+                                <th>Dom</th>
+                                <th>Seg</th>
+                                <th>Ter</th>
+                                <th>Qua</th>
+                                <th>Qui</th>
+                                <th>Sex</th>
+                                <th>Sáb</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="calendar-body">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="calendarDisabled">1</td>
+                                <td class="calendarDisabled">2</td>
+                            </tr>
+                            <tr>
+                                <td class="calendarDisabled">3</td>
+                                <td class="calendarDisabled">4</td>
+                                <td class="calendarDisabled">5</td>
+                                <td class="calendarDisabled">6</td>
+                                <td class="calendarDisabled">7</td>
+                                <td class="calendarDisabled">8</td>
+                                <td class="calendarDisabled">9</td>
+                            </tr>
+                            <tr>
+                                <td class="calendarDisabled">10</td>
+                                <td class="calendarDisabled">11</td>
+                                <td class="calendarDisabled">12</td>
+                                <td class="calendarDisabled">13</td>
+                                <td class="calendarTrip" id='vegas-1'>14</td>
+                                <td class="calendarTrip" id='vegas-2'>15</td>
+                                <td class="calendarTrip" id='sandiego-1'>16</td>
+                            </tr>
+                            <tr>
+                                <td class="calendarTrip" id='sandiego-2'>17</td>
+                                <td class="calendarTrip" id='sandiego-3'>18</td>
+                                <td class="calendarTrip" id='losangeles-1'>19</td>
+                                <td class="calendarTrip" id='losangeles-2'>20</td>
+                                <td class="calendarTrip" id='carmel-1'>21</td>
+                                <td class="calendarTrip" id='sanfrancisco-1'>22</td>
+                                <td class="calendarTrip" id='sanfrancisco-2'>23</td>
+                            </tr>
+                            <tr>
+                                <td class="calendarTrip" id='sanfrancisco-3'>24</td>
+                                <td class="calendarTrip">25</td>
+                                <td class="calendarDisabled">26</td>
+                                <td class="calendarDisabled">27</td>
+                                <td class="calendarDisabled">28</td>
+                                <td class="calendarDisabled">29</td>
+                                <td class="calendarDisabled">30</td>
+                            </tr>
+                            <tr></tr>
+                        </tbody>
+                    </table>
+
+                    <div id="calendarMonthSelector" class="form-inline" style="display: none;">
+                        <button id="previous" onclick="_previous()"><i class="bx bx-left-arrow-alt"></i></button>
+                        <button id="next" onclick="_next()"><i class="bx bx-right-arrow-alt"></i></button>
+                    </div>
+                    <br>
+                </div>
+
+
+                <div id="programacao-box" style="display: block;" class="show">
+                    <div id="programacao-modal">
+                        <div id="programacao-fechar" onclick="_closeModalCalendar()"><svg
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                aria-hidden="true" role="img" class="iconify iconify--material-symbols" width="1em"
+                                height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                data-icon="material-symbols:close">
+                                <path fill="currentColor"
+                                    d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6z">
+                                </path>
+                            </svg></div>
+
+                        <div class="programacao-titulo-box">
+                            <div class="programacao-linha">
+                                <div id="programacao-titulo">Ida</div>
+                            </div>
+                            <div class="programacao-data-box">
+                                <i class="bx bx-calendar color-icon"></i>
+                                <span id="programacao-data">Quinta, 14 de Novembro</span>
+                            </div>
+                        </div>
+
+                        <div id="sem-programacao" style="display: none;">Nada programado por aqui! ☹️</div>
+
+                        <div class="programacao-item" id="programacao-madrugada" style="display: none;">Madrugada:</div>
+                        <div id="programacao-itens-madrugada"></div>
+
+                        <div class="programacao-item" id="programacao-manha" style="display: block;">Manhã:</div>
+                        <div id="programacao-itens-manha">
+                            <div>
+                                <i class="bi bi-chevron-right color-icon"></i>
+                                <span class="programacao-item">10:00 - 16:30: </span>
+                                Confins → Fort Lauderdale
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    aria-hidden="true" role="img" class="iconify iconify--tabler external-link"
+                                    width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                    data-icon="tabler:external-link"
+                                    onclick="_displayInnerProgramacaoMessage(0, 'programacao-container')">
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="programacao-item" id="programacao-tarde" style="display: block;">Tarde:</div>
+                        <div id="programacao-itens-tarde">
+                            <div>
+                                <i class="bi bi-chevron-right color-icon"></i>
+
+                                Escala (4h)
+
+                            </div>
+                        </div>
+
+                        <div class="programacao-item" id="programacao-noite" style="display: block;">Noite:</div>
+                        <div id="programacao-itens-noite">
+                            <div>
+                                <i class="bi bi-chevron-right color-icon"></i>
+                                <span class="programacao-item">20:05 - 22:37: </span>
+                                Fort Lauderdale → Henry Field
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    aria-hidden="true" role="img" class="iconify iconify--tabler external-link"
+                                    width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                    data-icon="tabler:external-link"
+                                    onclick="_displayInnerProgramacaoMessage(1, 'programacao-container')">
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <i class="bi bi-chevron-right color-icon"></i>
+
+                                Check in no Ceasar Palace
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    aria-hidden="true" role="img" class="iconify iconify--tabler external-link"
+                                    width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"
+                                    data-icon="tabler:external-link"
+                                    onclick="_displayInnerProgramacaoMessage(2, 'programacao-container')">
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <i class="bi bi-chevron-right color-icon"></i>
+
+                                Janta rápida e descanso
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
+    </section>
 
+    <script>
 
-        <div id="programacao-box" style="display: block;" class="show">
-          <div id="programacao-modal">
-            <div id="programacao-fechar" onclick="_closeModalCalendar()"><svg xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                class="iconify iconify--material-symbols" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 24 24" data-icon="material-symbols:close">
-                <path fill="currentColor"
-                  d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6z">
-                </path>
-              </svg></div>
+        function hexToRgb(hex) {
+            // Remove the hash at the start if it's there
+            hex = hex.replace(/^#/, '');
 
-            <div class="programacao-titulo-box">
-              <div class="programacao-linha">
-                <div id="programacao-titulo">Ida</div>
-              </div>
-              <div class="programacao-data-box">
-                <i class="bx bx-calendar color-icon"></i>
-                <span id="programacao-data">Quinta, 14 de Novembro</span>
-              </div>
-            </div>
+            // Parse the r, g, b values
+            let bigint = parseInt(hex, 16);
+            let r = (bigint >> 16) & 255;
+            let g = (bigint >> 8) & 255;
+            let b = bigint & 255;
 
+            return [r, g, b];
+        }
 
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+        }
 
-            <div id="sem-programacao" style="display: none;">Nada programado por aqui! ☹️</div>
+        function mixColors(hex1, hex2, percentage = 50) {
+            // Ensure percentage is between 0 and 100
+            if (percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
 
-            <div class="programacao-item" id="programacao-madrugada" style="display: none;">Madrugada:</div>
-            <div id="programacao-itens-madrugada"></div>
+            // Convert percentage to a fraction
+            let ratio = percentage / 100;
 
-            <div class="programacao-item" id="programacao-manha" style="display: block;">Manhã:</div>
-            <div id="programacao-itens-manha">
-              <div>
-                <i class="bi bi-chevron-right color-icon"></i>
-                <span class="programacao-item">10:00 - 16:30: </span>
-                Confins → Fort Lauderdale
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                  role="img" class="iconify iconify--tabler external-link" width="1em" height="1em"
-                  preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="tabler:external-link"
-                  onclick="_displayInnerProgramacaoMessage(0, 'programacao-container')">
-                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5">
-                  </path>
-                </svg>
-              </div>
-            </div>
+            // Convert hex to RGB
+            let rgb1 = hexToRgb(hex1);
+            let rgb2 = hexToRgb(hex2);
 
-            <div class="programacao-item" id="programacao-tarde" style="display: block;">Tarde:</div>
-            <div id="programacao-itens-tarde">
-              <div>
-                <i class="bi bi-chevron-right color-icon"></i>
+            // Calculate the weighted average of each RGB component
+            let r = Math.round(rgb1[0] * ratio + rgb2[0] * (1 - ratio));
+            let g = Math.round(rgb1[1] * ratio + rgb2[1] * (1 - ratio));
+            let b = Math.round(rgb1[2] * ratio + rgb2[2] * (1 - ratio));
 
-                Escala (4h)
+            // Convert the result back to hex
+            return rgbToHex(r, g, b);
+        }
 
-              </div>
-            </div>
+        function setHoverAndActiveColor(mainElementId, affectedElementIds, hexColor, circleColor) {
+            const mainElement = document.getElementById(mainElementId);
+            const affectedElements = affectedElementIds.map(id => document.getElementById(id));
 
-            <div class="programacao-item" id="programacao-noite" style="display: block;">Noite:</div>
-            <div id="programacao-itens-noite">
-              <div>
-                <i class="bi bi-chevron-right color-icon"></i>
-                <span class="programacao-item">20:05 - 22:37: </span>
-                Fort Lauderdale → Henry Field
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                  role="img" class="iconify iconify--tabler external-link" width="1em" height="1em"
-                  preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="tabler:external-link"
-                  onclick="_displayInnerProgramacaoMessage(1, 'programacao-container')">
-                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5">
-                  </path>
-                </svg>
-              </div>
-              <div>
-                <i class="bi bi-chevron-right color-icon"></i>
+            if (!mainElement) {
+                console.error(`Main element with ID "${mainElementId}" not found.`);
+                return;
+            }
 
-                Check in no Ceasar Palace
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                  role="img" class="iconify iconify--tabler external-link" width="1em" height="1em"
-                  preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" data-icon="tabler:external-link"
-                  onclick="_displayInnerProgramacaoMessage(2, 'programacao-container')">
-                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5">
-                  </path>
-                </svg>
-              </div>
-              <div>
-                <i class="bi bi-chevron-right color-icon"></i>
+            // Store the original background color and circle color
+            const originalColor = getComputedStyle(mainElement).backgroundColor;
+            const originalCircleColor = getComputedStyle(mainElement.querySelector('.circle')).backgroundColor;
+            let activePill = null; // Track the active pill
 
-                Janta rápida e descanso
+            // Function to change background color for all elements
+            function changeBackgroundColor(color) {
+                mainElement.style.setProperty('background-color', color, 'important');
+                affectedElements.forEach(el => {
+                    if (el) el.style.setProperty('background-color', color, 'important');
+                });
+            }
 
-              </div>
-            </div>
-          </div>
+            // Function to change circle color
+            function changeCircleColor(color) {
+                mainElement.querySelector('.circle').style.backgroundColor = color;
+            }
 
-        </div>
+            // Add hover effect
+            mainElement.addEventListener('mouseover', function () {
+                if (!activePill) {
+                    changeBackgroundColor(hexColor);
+                    changeCircleColor(circleColor);
+                }
+            });
 
-      </div>
-    </div>
-  </section>
+            mainElement.addEventListener('mouseout', function () {
+                if (!activePill) {
+                    changeBackgroundColor(originalColor);
+                    changeCircleColor(originalCircleColor);
+                }
+            });
+
+            // Add click effect
+            mainElement.addEventListener('click', function () {
+                if (activePill === mainElement) {
+                    activePill = null;
+                    changeBackgroundColor(originalColor);
+                    changeCircleColor(originalCircleColor);
+                } else {
+                    if (activePill) {
+                        // Deactivate the previously active pill
+                        activePill.click();
+                    }
+                    activePill = mainElement;
+                    changeBackgroundColor(hexColor);
+                    changeCircleColor(circleColor);
+                }
+            });
+        }
+
+        setHoverAndActiveColor('pill-1', ['vegas-1', 'vegas-2'], mixColors('#D9D9D9', '#5859a7', 75));
+        setHoverAndActiveColor('pill-2', ['sandiego-1', 'sandiego-2', 'sandiego-3'], mixColors('#D9D9D9', '#5859a7', 75));
+        setHoverAndActiveColor('pill-3', ['losangeles-1', 'losangeles-2'], mixColors('#D9D9D9', '#5859a7', 75));
+        setHoverAndActiveColor('pill-4', ['carmel-1'], mixColors('#D9D9D9', '#5859a7', 75));
+        setHoverAndActiveColor('pill-5', ['sanfrancisco-1', 'sanfrancisco-2', 'sanfrancisco-3'], mixColors('#D9D9D9', '#5859a7', 75));
+    </script>
 </body>
 
 </html>
