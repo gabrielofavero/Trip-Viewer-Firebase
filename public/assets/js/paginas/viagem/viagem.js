@@ -200,7 +200,8 @@ function _loadHeader() {
 
     const background = FIRESTORE_DATA.imagem.background;
     const claro = FIRESTORE_DATA.imagem.claro;
-    const escuro = _imageExists(FIRESTORE_DATA.imagem.escuro) ? _getImageLink(FIRESTORE_DATA.imagem.escuro) : _getImageLink(claro);
+    const escuro = FIRESTORE_DATA.imagem.escuro;
+  
 
     if (_imageExists(background)) {
       var hero = getID('hero');
@@ -209,7 +210,14 @@ function _loadHeader() {
     }
 
     if (_imageExists(claro)) {
-      getID("header2").src = _isOnDarkMode() ? escuro : _getImageLink(claro);
+      LOGO_CLARO = _getImageLink(claro);
+      if (_imageExists(escuro)) {
+        LOGO_ESCURO = _getImageLink(escuro);
+      } else {
+        LOGO_ESCURO = LOGO_CLARO;
+      }
+      
+      getID("header2").src = _isOnDarkMode() ? LOGO_ESCURO : LOGO_CLARO;
       getID("header1").style.display = "none";
       getID("header2").style.display = "block";
 

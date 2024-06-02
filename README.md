@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 44    | 38          | 6         |
+| 🐞     | Bug      | B000    | 45    | 38          | 6         |
 | 🏆     | Feature  | F000    | 56    | 48          | 8         |
-| 📈     | Melhoria | M000    | 54    | 36          | 18        |
+| 📈     | Melhoria | M000    | 55    | 36          | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -22,6 +22,9 @@
 ## To-Do
 
 ### Prioridade Alta
+
+- 📈 **M055:** Fazer todas as mudanças de dark mode serem aplicadas via js
+ -*O modelo atual de css-dark causa problemas de cache*
 
 ### Prioridade Média
 
@@ -101,6 +104,7 @@
 - 🐞 **B043:** Correção de hero incorreto no dark mode + margens desproporcionais em viagens.html
 - 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 - 🐞 **B044:** Correções de Tela de Editar (transporte simplificado, viagem sem programação e listener de fim)
+- 🐞 **B045:** Correções de Dark Mode (Logo em viagem.html e imagem de fundo em index.html)
 
 ### Maio 2024
 

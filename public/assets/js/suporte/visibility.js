@@ -1,5 +1,7 @@
 // ======= Visibility JS =======
 var CHANGED_SVGS = [];
+var LOGO_CLARO = "";
+var LOGO_ESCURO = "";
 
 // 
 function _loadVisibility() {
@@ -116,24 +118,22 @@ function _loadLightModeLite() {
 }
 
 function _loadTripViewerLogo() {
-     try {
-          const header2 = getID("header2");
-          const logoLight = getID("logo-light");
-          const logoDark = getID("logo-dark");
-          if (_isOnDarkMode()) {
-               logoLight.style.display = "none";
-               logoDark.style.display = "block";
-               if (HEADER_IMG_ACTIVE) {
-                    header2.src = FIRESTORE_DATA.imagem.escuro;
-               }
-          } else {
-               logoLight.style.display = "block";
-               logoDark.style.display = "none";
-               if (HEADER_IMG_ACTIVE) {
-                    header2.src = FIRESTORE_DATA.imagem.claro;
-               }
+     const header2 = getID("header2");
+     const logoLight = getID("logo-light");
+     const logoDark = getID("logo-dark");
+     if (_isOnDarkMode()) {
+          logoLight.style.display = "none";
+          logoDark.style.display = "block";
+          if (header2 && LOGO_ESCURO) {
+               header2.src = LOGO_ESCURO;
           }
-     } catch (e) { }
+     } else {
+          logoLight.style.display = "block";
+          logoDark.style.display = "none";
+          if (header2 && LOGO_CLARO) {
+               header2.src = LOGO_CLARO;
+          }
+     }
 }
 
 // ======= GETTERS =======
