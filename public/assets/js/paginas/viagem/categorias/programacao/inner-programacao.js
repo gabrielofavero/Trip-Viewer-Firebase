@@ -65,9 +65,16 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
     properties.container = container;
 
     _displayMessage(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
-    if (INNER_PROGRAMACAO_ATUAL[index].midia && INNER_PROGRAMACAO_ATUAL[index].tipo === 'destinos') {
-        _loadEmbed(INNER_PROGRAMACAO_ATUAL[index].midia, false, 1);
-        _loadMedia('midia-1');
+
+    switch (INNER_PROGRAMACAO_ATUAL[index].tipo) {
+        case 'hospedagens':
+            _loadImageLightbox('programacao-galeria');
+            break;
+        case 'destinos':
+            if (INNER_PROGRAMACAO_ATUAL[index].midia) {
+                _loadEmbed(INNER_PROGRAMACAO_ATUAL[index].midia, false, 1);
+                _loadMedia('midia-1');
+            }
     }
 }
 

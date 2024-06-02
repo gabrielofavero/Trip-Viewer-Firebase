@@ -2293,7 +2293,8 @@ iframe {
 
 /* Hospedagem Box */
 
-.hotel-box {
+.hotel-box,
+.hotel-box-inner {
   display: flex;
   color: #4F5051;
   border: 0.5px solid #D9D9D9;
@@ -2302,6 +2303,18 @@ iframe {
   width: 600px;
   margin: 0 auto;
   text-align: start;
+}
+
+.hotel-box-inner {
+  flex-direction: column;
+  width: 100%;
+}
+
+.hotel-box-inner .hotel-img {
+  height: 150px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
 }
 
 .hotel-img {
@@ -2387,7 +2400,7 @@ iframe {
     width: 90%;
   }
 
-  .hotel-img {
+  .hotel-box .hotel-img {
     height: 150px;
     width: 100%;
     background-size: cover;

@@ -9,7 +9,7 @@ function _loadHospedagens() {
   if (swiperData.length === 0) return;
 
   _buildHospedagensSwiper(swiperData);
-  _loadImageLightbox('hospedagens-galeria')
+  _loadImageLightbox('hospedagens-galeria');
 }
 
 function _getHospedagensHTML(i) {
@@ -37,12 +37,13 @@ function _getHotelBoxHTML(hospedagem, identifier, innerProgramacao=false) {
   const imagem = innerProgramacao ? _getImageLink(hospedagem.imagem) : hospedagem.imagem;
   const checkIn = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkin) : hospedagem.checkIn;
   const checkOut = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkout) : hospedagem.checkOut
-  return `<div class="hotel-box${innerProgramacao? " inner-programacao-item" : ''}" id="hospedagens-box-${identifier}">
+  const galeria = innerProgramacao ? 'programacao-galeria' : 'hospedagens-galeria';
+  return `<div class="hotel-box${innerProgramacao? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${identifier}">
             <div class="portfolio-wrap" style="display: ${imagem ? 'block' : 'none'};">
               <div class="hotel-img" style="background-image: url('${imagem}');">
                 <div class="portfolio-info">
                   <div class="portfolio-links">
-                    <a href="${imagem}" data-gallery="portfolioGallery" class="portfolio-lightbox hospedagens-galeria" title="${_getHospedagemImagemTitle(hospedagem)}"><i class="bx bx-zoom-in"></i></a>
+                    <a href="${imagem}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeria}" title="${_getHospedagemImagemTitle(hospedagem)}"><i class="bx bx-zoom-in"></i></a>
                   </div>
                 </div>
                 <div class="hotel-img-text-container">

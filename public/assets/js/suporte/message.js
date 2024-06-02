@@ -205,6 +205,7 @@ function _getButtonsBox(backButton = {}) {
     backIcon.className = 'bx bx-arrow-back';
     backIcon.setAttribute('onclick', backButton.action);
     backIcon.style.visibility = 'hidden';
+    backIcon.style.cursor = 'pointer';
 
     iconContainer.appendChild(backIcon);
   }
@@ -214,6 +215,7 @@ function _getButtonsBox(backButton = {}) {
   cancelIcon.className = 'iconify';
   cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
   cancelIcon.setAttribute('onclick', '_closeDisplayMessage()');
+  cancelIcon.style.cursor = 'pointer';
 
   iconContainer.appendChild(cancelIcon);
 
