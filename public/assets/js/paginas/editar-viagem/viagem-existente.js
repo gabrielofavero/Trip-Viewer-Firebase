@@ -255,7 +255,7 @@ function _loadProgramacaoData() {
     let j = 1;
     while (getID(`programacao-title-${j}`)) {
         const dados = FIRESTORE_DATA.programacoes[j - 1];
-        if (dados.data) {
+        if (dados?.data) {
             _applyLoadedProgramacaoData(j, dados);
         }
         j++;

@@ -142,7 +142,7 @@ function _buildLinksObject() {
 function _buildTransporteObject() {
     const result = {
         dados: [],
-        visualizacaoSimplificada: getID('separar').checked
+        visualizacaoSimplificada: getID('condensar').checked
     }
     for (const child of _getChildIDs('transporte-box')) {
         const j = _getJ(child);

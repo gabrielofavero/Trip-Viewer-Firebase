@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 43    | 37          | 6         |
+| 🐞     | Bug      | B000    | 44    | 38          | 6         |
 | 🏆     | Feature  | F000    | 56    | 48          | 8         |
 | 📈     | Melhoria | M000    | 54    | 36          | 18        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
@@ -100,6 +100,7 @@
 - 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 - 🐞 **B043:** Correção de hero incorreto no dark mode + margens desproporcionais em viagens.html
 - 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
+- 🐞 **B044:** Correções de Tela de Editar (transporte simplificado, viagem sem programação e listener de fim)
 
 ### Maio 2024
 

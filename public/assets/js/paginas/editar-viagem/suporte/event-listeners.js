@@ -52,17 +52,8 @@ function _inicioListenerAction() {
 
 function _fimListenerAction() {
     const fim = getID('fim').value;
-    if (fim) {
-        const inicio = getID('inicio').value;
-
-        const inicioDate = _inputDateToJsDate(inicio);
-        const fimDate = _inputDateToJsDate(fim);
-        
-        if (fimDate.getTime() < inicioDate.getTime()) {
-            getID('fim').value = '';
-        } else {
-            _reloadProgramacao();
-        }
+    if (fim) {        
+        _reloadProgramacao();
     }
 }
 
