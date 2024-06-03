@@ -35,8 +35,8 @@ async function _registerIfUserNotPresent() {
     }
 
     const userDoc = await _get(`usuarios/${user.uid}`);
-    const config = CONFIG ? CONFIG : await _getConfig();
-    const registrationOpen = (config?.system?.registrationOpen == true)
+    const systemData = await _getSystemData();
+    const registrationOpen = (systemData?.registrationOpen == true);
 
     if (!userDoc && !registrationOpen) {
         _signOut();

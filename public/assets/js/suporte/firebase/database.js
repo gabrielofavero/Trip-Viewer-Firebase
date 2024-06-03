@@ -1,5 +1,4 @@
 var DOCUMENT_ID;
-var CONFIG;
 
 var ERROR_FROM_GET_REQUEST = "";
 
@@ -135,7 +134,7 @@ async function _getSingleData(type) {
   return data;
 }
 
-// Backup & Config
+// Backup e System
 async function _getBackup() {
   try {
     const uid = await _getUID();
@@ -170,27 +169,9 @@ async function _getBackup() {
   }
 }
 
-async function _getConfig() {
-  try {
-    const callSyncOrder = await _get('config/call-sync-order');
-    const information = await _get('config/information');
-    const destinos = await _get('config/destinos');
-    const transportes = await _get('config/transportes');
-    const cores = await _get('config/cores');
-
-    const config = {
-      callSyncOrder: callSyncOrder,
-      information: information,
-      destinos: destinos,
-      transportes: transportes,
-      cores: cores,
-    };
-
-    return config;
-
-  } catch (error) {
-    console.error('Error fetching data from Firestore:', error.message);
-  }
+async function _getSystemData() {
+  const systemData = await _get("config/system");
+  return systemData;
 }
 
 // Visibilidade

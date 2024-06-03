@@ -1,0 +1,191 @@
+{
+    "sites": {
+        "carro": {
+            "99": "https://99app.com/",
+            "movida": "https://www.movida.com.br/",
+            "unidas": "https://www.unidas.com.br/",
+            "uber": "https://www.uber.com/",
+            "avis": "https://www.avis.com/",
+            "cabify": "https://cabify.com/",
+            "hertz": "https://www.hertz.com/rentacar/reservation/",
+            "lyft": "https://www.lyft.com/",
+            "localiza": "https://www.localiza.com/"
+        },
+        "onibus": {
+            "gontijo": "https://www.gontijo.com.br/",
+            "cometa": "https://www.viacaocometa.com.br/",
+            "buser": "https://www.buser.com.br/",
+            "aguiaBranca": "https://www.aguiabranca.com.br/"
+        },
+        "voo": {
+            "gol": "https://www.voegol.com.br/",
+            "tap": "https://www.flytap.com/",
+            "azul": "https://www.voeazul.com.br/",
+            "delta": "https://delta.com/",
+            "americanAirlines": "https://www.aa.com/",
+            "jetblue": "https://www.jetblue.com/",
+            "united": "https://www.united.com/",
+            "copa": "https://www.copaair.com/",
+            "avianca": "https://www.avianca.com/",
+            "latam": "https://www.latamairlines.com/"
+        }
+    },
+    "imagens": {
+        "voo": {
+            "jetblue": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fjetblue-dark.png?alt=media&token=4e8940f1-8b88-46f7-9cd1-107f76fa934b",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fjetblue.png?alt=media&token=6b0f4fb0-7fa1-453e-a0b3-a57fe4aa169e"
+            },
+            "united": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Funited-dark.png?alt=media&token=a59cee03-8e01-4d6d-b0c9-080873d90b48",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Funited.png?alt=media&token=880ab2ee-954c-4180-809b-4e82eb151fbe"
+            },
+            "americanAirlines": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2FamericanAirlines-dark.png?alt=media&token=216eb5d0-5f1d-4cf2-bea9-b16c0c3b344e",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2FamericanAirlines.png?alt=media&token=97d812a1-42af-4b47-9c23-08be71dfa96d"
+            },
+            "azul": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fazul.png?alt=media&token=2a12542b-4853-4d17-bb36-e61c0dd66f63",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fazul-dark.png?alt=media&token=cf5e837d-d42d-4fc0-add9-f4b7f38a4555"
+            },
+            "latam": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Flatam-dark.png?alt=media&token=735a05a9-15e0-4669-bbb1-82aa3f6b1911",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Flatam.png?alt=media&token=8f666776-4a29-4ea0-aed1-3a980ac50077"
+            },
+            "avianca": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Favianca-dark.png?alt=media&token=4e86dec3-0b5b-4301-873d-24af020fa2f3",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Favianca.png?alt=media&token=dbce13a6-2e27-47e2-bcdf-78abd2476191"
+            },
+            "gol": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fgol.png?alt=media&token=ef1e3d71-49dc-41b1-91f7-ed33cb6be00c",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fgol-dark.png?alt=media&token=13f4ad36-43cc-4a60-ab2c-71e82765d8b8"
+            },
+            "tap": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Ftap-dark.png?alt=media&token=5385cdc9-94ed-455d-b21d-06927d20172d",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Ftap.png?alt=media&token=4ae8f7dc-c3cf-4dfc-be9e-2d73becee980"
+            },
+            "delta": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fdelta.png?alt=media&token=881dfa14-03ff-49a1-a173-f1d2f871d402",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fdelta-dark.png?alt=media&token=89502758-eae1-478f-bbf6-d2b7842649b2"
+            },
+            "copa": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fcopa.png?alt=media&token=8de0f37f-8494-4845-968b-7f4d80e06512",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fvoo%2Fcopa-dark.png?alt=media&token=bca6f5c7-1ddd-450e-8d7b-dd3010c1b248"
+            }
+        },
+        "onibus": {
+            "gontijo": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2Fgontijo.png?alt=media&token=5cf8414c-fe36-4e41-b592-ba5e2b96cf48",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2Fgontijo-dark.png?alt=media&token=7a2e6537-fd2b-4d91-849c-150a1e105e4b"
+            },
+            "cometa": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2Fcometa-dark.png?alt=media&token=c372667e-6709-4484-b1c6-2ed99b970c24",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2Fcometa.png?alt=media&token=a4dc6b11-2afa-424d-b1b6-ef7eb541bc01"
+            },
+            "buser": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2Fbuser-dark.png?alt=media&token=6c0eed16-bd01-4cae-bdb2-16d65554168b",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2Fbuser.png?alt=media&token=cda5f96e-1ae9-49c9-ac5d-1bb3fe804546"
+            },
+            "aguiaBranca": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2FaguiaBranca.png?alt=media&token=1fab6ad2-46ec-47c7-a1fd-0269dbe67c10",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fonibus%2FaguiaBranca-dark.png?alt=media&token=f3b8f152-9aa0-4c4f-a599-572cea0346ef"
+            }
+        },
+        "carro": {
+            "99": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2F99-dark.png?alt=media&token=c4aadc99-dc93-4e97-ab34-63dded05e61f",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2F99.png?alt=media&token=7d6f219a-9309-4ed0-b114-fdd60e42a1da"
+            },
+            "localiza": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Flocaliza-dark.png?alt=media&token=237cc093-b5be-43f5-8a98-a82a9da4f148",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Flocaliza.png?alt=media&token=6096b15b-cc63-486d-b90a-e1c2c930fb1a"
+            },
+            "movida": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fmovida-dark.png?alt=media&token=85ce8bdf-8f10-4faa-841d-e0cbad114884",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fmovida.png?alt=media&token=08115023-a6a3-4692-99ee-6485cebf630c"
+            },
+            "cabify": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fcabify-dark.png?alt=media&token=49c02e0c-0953-4b02-a30c-a18f7a916f20",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fcabify.png?alt=media&token=53381538-93a1-4c9b-8641-8ca8b4f99156"
+            },
+            "uber": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fuber.png?alt=media&token=fc41dd23-4f7b-428f-a23f-c581e1c816d7",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fuber-dark.png?alt=media&token=7f29e4ec-1de8-4918-8cb9-2462940297da"
+            },
+            "lyft": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Flyft-dark.png?alt=media&token=96242c2d-1bb3-4d27-a20e-5662ddd01941",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Flyft.png?alt=media&token=a9ed9b57-14d9-4783-98df-ddb67878a333"
+            },
+            "unidas": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Funidas-dark.png?alt=media&token=15d7b03d-3012-4a48-a4e7-acc18f3e6998",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Funidas.png?alt=media&token=c954b284-00ff-440a-b927-737bc81e5317"
+            },
+            "avis": {
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Favis-dark.png?alt=media&token=6b64978f-54df-4a90-8127-4fefd7fec96c",
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Favis.png?alt=media&token=ca085903-7ee8-4738-82f9-ab3828f43cc9"
+            },
+            "hertz": {
+                "claro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fhertz.png?alt=media&token=de8f6923-c554-4b8a-a8d4-7762353c960e",
+                "escuro": "https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Ftransportes%2Fcarro%2Fhertz-dark.png?alt=media&token=500e7ff8-8c15-424d-a1bb-aee73e4fc22e"
+            }
+        }
+    },
+    "icones": {
+        "carro": "fa-solid:car-side",
+        "bondinho": "ph:cable-car-fill",
+        "outro": "mingcute:rocket-fill",
+        "onibus": "mingcute:bus-2-fill",
+        "moto": "ri:motorbike-fill",
+        "bicicleta": "mingcute:bike-fill",
+        "trem-bala": "mingcute:train-fill",
+        "helicoptero": "fa6-solid:helicopter",
+        "metro": "mdi:metro",
+        "locomotiva": "cil:locomotive",
+        "voo": "fa-solid:plane",
+        "navio": "icon-park-solid:sailboat-one"
+    },
+    "titulos": {
+        "bondinho": "Bondinho",
+        "metro": "Metrô",
+        "navio": "Navio",
+        "outro": "Transporte",
+        "trem-bala": "Trem-bala",
+        "onibus": "Ônibus",
+        "carro": "Carro",
+        "voo": "Avião",
+        "locomotiva": "Locomotiva",
+        "moto": "Moto",
+        "helicoptero": "Helicóptero"
+    },
+    "empresas": {
+        "voo": {
+            "jetblue": "JetBlue",
+            "avianca": "Avianca",
+            "gol": "Gol",
+            "americanAirlines": "American Airlines",
+            "delta": "Delta Airlines",
+            "united": "United Airlines",
+            "tap": "TAP Air Portugal",
+            "azul": "Azul",
+            "copa": "Copa Airlines",
+            "latam": "LATAM"
+        },
+        "carro": {
+            "99": "99",
+            "cabify": "Cabify",
+            "localiza": "Localiza",
+            "hertz": "Hertz",
+            "movida": "Movida",
+            "uber": "Uber",
+            "lyft": "Lyft",
+            "unidas": "Unidas",
+            "avis": "Avis"
+        },
+        "onibus": {
+            "aguiaBranca": "Águia Branca",
+            "buser": "Buser",
+            "cometa": "Cometa",
+            "gontijo": "Gontijo"
+        }
+    }
+}

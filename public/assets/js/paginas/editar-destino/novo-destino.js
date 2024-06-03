@@ -69,7 +69,7 @@ function _addRestaurantes() {
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select class="editar-select" id="restaurantes-valor-${j}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="restaurantes-valor-${j}">
             ${VALOR_OPTIONS}
           </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="restaurantes-outro-valor-${j}" type="text" placeholder="R$50 - R$100" />
@@ -183,7 +183,7 @@ function _addLanches() {
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select class="editar-select" id="lanches-valor-${j}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="lanches-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lanches-outro-valor-${j}" type="text" placeholder="R$50 - R$100" />
@@ -298,7 +298,7 @@ function _addSaidas() {
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select class="editar-select" id="saidas-valor-${j}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="saidas-valor-${j}">
             ${VALOR_OPTIONS}
           </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="saidas-outro-valor-${j}" type="text" placeholder="R$50 - R$100" />
@@ -412,7 +412,7 @@ function _addTurismo() {
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select class="editar-select" id="turismo-valor-${j}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="turismo-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="turismo-outro-valor-${j}" type="text" placeholder="R$50 - R$100" />
@@ -528,7 +528,7 @@ function _addLojas() {
   
           <div class="nice-form-group">
             <label>Valor <span class="opcional"> (Opcional)</span></label>
-            <select class="editar-select" id="lojas-valor-${j}" style="display: ${_getValorVisibility()};">
+            <select class="editar-select" id="lojas-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
             <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lojas-outro-valor-${j}" type="text" placeholder="R$50 - R$100" />

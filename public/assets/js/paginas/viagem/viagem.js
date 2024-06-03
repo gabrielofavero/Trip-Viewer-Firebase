@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
 async function _mainLoad() {
   try {
     if (CALL_SYNC.length > 0) {
-      _sortFunctionArray(CALL_SYNC, CONFIG.callSyncOrder.data);
+      _sortByArray(CALL_SYNC, CONFIG.callSyncOrder.data);
       for (let _function of CALL_SYNC) {
         _function();
       }

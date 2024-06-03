@@ -7,6 +7,8 @@ var SHEET_DATA;
 var P_DATA;
 var HYPERLINK;
 
+var CONFIG;
+
 // ======= CONVERTERS =======
 function _formatTxt(text) {
   // áBç -> abc
@@ -22,10 +24,10 @@ function _removeComma(val) {
   return val.split(",")[0];
 }
 
-function _sortFunctionArray(functionArray, orderArray) {
-  functionArray.sort((a, b) => {
-    const indexA = orderArray.indexOf(a.name);
-    const indexB = orderArray.indexOf(b.name);
+function _sortByArray(arrayToSort, referenceArray) {
+  arrayToSort.sort((a, b) => {
+    const indexA = referenceArray.indexOf(a.name);
+    const indexB = referenceArray.indexOf(b.name);
     return indexA - indexB;
   });
 }
@@ -280,4 +282,15 @@ function _getCategoriaID(tipo, j) {
 function _getIfDoesNotExistCategoriaID(tipo, j) {
   const currentID = getID(`${tipo}-id-${j}`).value;
   return currentID ? currentID : _getCategoriaID(tipo, j);
+}
+
+async function _getConfig() {
+  let config = {};
+  const callSyncOrder = $.getJSON("assets/json/config/call-sync-order.json").then(data => config.callSyncOrder = data);
+  const cores = $.getJSON("assets/json/config/cores.json").then(data => config.cores = data);
+  const destinos = $.getJSON("assets/json/config/destinos.json").then(data => config.destinos = data);
+  const information = $.getJSON("assets/json/config/information.json").then(data => config.information = data);
+  const transportes = $.getJSON("assets/json/config/transportes.json").then(data => config.transportes = data);
+  await Promise.all([callSyncOrder, cores, destinos, information, transportes]);
+  return config;
 }

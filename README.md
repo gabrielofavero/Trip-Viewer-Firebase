@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 38          | 6         |
 | 🏆     | Feature  | F000    | 56    | 48          | 8         |
-| 📈     | Melhoria | M000    | 55    | 36          | 19        |
+| 📈     | Melhoria | M000    | 56    | 37          | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -105,6 +105,7 @@
 - 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
 - 🐞 **B044:** Correções de Tela de Editar (transporte simplificado, viagem sem programação e listener de fim)
 - 🐞 **B045:** Correções de Dark Mode (Logo em viagem.html e imagem de fundo em index.html)
+- 📈 **M056:** Reorganização de arquivos + aquivos de configuração locais (remoção de chamada desnecessária ao Firestore)
 
 ### Maio 2024
 
