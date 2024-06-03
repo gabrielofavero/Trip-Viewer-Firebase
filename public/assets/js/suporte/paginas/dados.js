@@ -286,11 +286,11 @@ function _getIfDoesNotExistCategoriaID(tipo, j) {
 
 async function _getConfig() {
   let config = {};
-  const callSyncOrder = $.getJSON("assets/json/config/call-sync-order.json").then(data => config.callSyncOrder = data);
-  const cores = $.getJSON("assets/json/config/cores.json").then(data => config.cores = data);
-  const destinos = $.getJSON("assets/json/config/destinos.json").then(data => config.destinos = data);
-  const information = $.getJSON("assets/json/config/information.json").then(data => config.information = data);
-  const transportes = $.getJSON("assets/json/config/transportes.json").then(data => config.transportes = data);
+  const callSyncOrder = $.getJSON("assets/json/call-sync-order.json").then(data => config.callSyncOrder = data);
+  const cores = $.getJSON("assets/json/cores.json").then(data => config.cores = data);
+  const destinos = $.getJSON("assets/json/destinos.json").then(data => config.destinos = data);
+  const information = $.getJSON("assets/json/information.json").then(data => config.information = data);
+  const transportes = $.getJSON("assets/json/transportes.json").then(data => config.transportes = data);
   await Promise.all([callSyncOrder, cores, destinos, information, transportes]);
   return config;
 }
