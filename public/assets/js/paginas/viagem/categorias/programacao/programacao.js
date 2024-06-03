@@ -28,7 +28,7 @@ function _getUniqueDestinosFromProgramacao() {
 }
 
 // Pills
-function _loadProgramacaoPills() {
+function _loadProgramacaoPills(multipleColors=true) {
     const destinos = _getUniqueDestinosFromProgramacao();
     if (destinos.length > 1) {
         const pillBox = getID('pill-box');
@@ -36,37 +36,41 @@ function _loadProgramacaoPills() {
 
         let innerHTML = '';
 
-        for (const destinoID of destinos) {
+        for (let i = 0; i < destinos.length; i++) {
+            const destinoID = destinos[i];
             const destino = DESTINOS.find(destino => destino.destinosID === destinoID);
             if (!destino) continue;
+
+            const circleClass = multipleColors ? `pill-circle pill-circle-${_getColorNameFromOptions(i)}` : `pill-circle pill-circle-default`;
             innerHTML += `<div class="pill" id="pill-${destinoID}">
-                            <span class="pill-circle" id="pill-circle-${destinoID}"></span><span>${destino.destinos.titulo}</span>
+                            <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destino.destinos.titulo}</span>
                           </div>`
         }
 
         pillBox.innerHTML = innerHTML;
 
-        for (const destinoID of destinos) {
-            _addPillListeners(destinoID);
+        for (let i = 0; i < destinos.length; i++) {
+            const colorIndex = multipleColors ? i : -1;
+            _addPillListeners(destinos[i], colorIndex);
         }
     }
 }
 
 
-function _loadPill(destinoID, action) {
+function _loadPill(destinoID, action, colorIndex=-1) {
     const lastAction = PILLS_ACTIONS[destinoID];
     if (!lastAction) {
         if (action === 'click' || action === 'mouseenter') {
             PILLS_ACTIONS[destinoID] = action;
-            _activatePill(destinoID);
+            _activatePill(destinoID, colorIndex);
         }
     } else if (lastAction === 'click') {
         if (action === 'click') {
-            _deactivatePill(destinoID);
+            _deactivatePill(destinoID, colorIndex);
         }
     } else if (lastAction === 'mouseenter') {
         if (action === 'mouseleave') {
-            _deactivatePill(destinoID);
+            _deactivatePill(destinoID, colorIndex);
         }
         if (action === 'click') {
             PILLS_ACTIONS[destinoID] = action;
@@ -79,45 +83,47 @@ function _loadPill(destinoID, action) {
     }
 }
 
-function _activatePill(destinoID) {
+function _activatePill(destinoID, colorIndex=-1) {
+    const pillClasses = _getPillClasses(colorIndex);
     getID(`pill-${destinoID}`).classList.add('active-pill');
-    getID(`pill-circle-${destinoID}`).classList.add('active-circle');
+    getID(`pill-circle-${destinoID}`).classList.add(pillClasses.activeCircle);
     for (const calendarDay of document.getElementsByClassName(`pill-${destinoID}`)) {
-        calendarDay.classList.add('active-calendar');
+        calendarDay.classList.add(pillClasses.activeCalendar);
     }
 }
 
-function _deactivatePill(destinoID) {
+function _deactivatePill(destinoID, colorIndex=-1) {
+    const pillClasses = _getPillClasses(colorIndex);
     getID(`pill-${destinoID}`).classList.remove('active-pill');
-    getID(`pill-circle-${destinoID}`).classList.remove('active-circle');
+    getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.activeCircle);
     for (const calendarDay of document.getElementsByClassName(`pill-${destinoID}`)) {
-        let toDelete = true;
-        const classes = calendarDay.classList;
-        for (const className of classes) {
-            if (className.startsWith('pill-') && className !== `pill-${destinoID}`) {
-                const otherDestino = className.split('-')[1];
-                if (PILLS_ACTIONS[otherDestino]) {
-                    toDelete = false;
-                }
-            }
-        }
-        if (toDelete) {
-            calendarDay.classList.remove('active-calendar');
-        }
+        calendarDay.classList.remove(pillClasses.activeCalendar);
     }
     delete PILLS_ACTIONS[destinoID];
 }
 
-function _addPillListeners(destinoID) {
+function _addPillListeners(destinoID, colorIndex) {
     getID(`pill-${destinoID}`).addEventListener('mouseenter', function () {
-        _loadPill(destinoID, 'mouseenter');
+        _loadPill(destinoID, 'mouseenter', colorIndex);
     });
 
     getID(`pill-${destinoID}`).addEventListener('mouseleave', function () {
-        _loadPill(destinoID, 'mouseleave');
+        _loadPill(destinoID, 'mouseleave', colorIndex);
     });
 
     getID(`pill-${destinoID}`).addEventListener('click', function () {
-        _loadPill(destinoID, 'click');
+        _loadPill(destinoID, 'click', colorIndex);
     });
+}
+
+function _getPillClasses(colorIndex) {
+    let activeCircle = 'active-circle';
+    let activeCalendar = 'active-calendar';
+
+    if (colorIndex >= 0) {
+        const colorName = _getColorNameFromOptions(colorIndex);
+        activeCircle = `active-circle-${colorName}`;
+        activeCalendar = `active-calendar-${colorName}`;
+    }
+    return { activeCircle, activeCalendar }
 }

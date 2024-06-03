@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 38          | 6         |
 | 🏆     | Feature  | F000    | 56    | 48          | 8         |
-| 📈     | Melhoria | M000    | 56    | 37          | 19        |
+| 📈     | Melhoria | M000    | 57    | 42          | 15        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -106,6 +106,7 @@
 - 🐞 **B044:** Correções de Tela de Editar (transporte simplificado, viagem sem programação e listener de fim)
 - 🐞 **B045:** Correções de Dark Mode (Logo em viagem.html e imagem de fundo em index.html)
 - 📈 **M056:** Reorganização de arquivos + aquivos de configuração locais (remoção de chamada desnecessária ao Firestore)
+- 📈 **M057:** Melhoria no calendário de programação para incluir múltiplas cores
 
 ### Maio 2024
 

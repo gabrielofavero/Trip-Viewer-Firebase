@@ -54,7 +54,7 @@ function _applyCustomColorsViagem() {
     _addCSSRule('.active-pill', 'background-color', THEME_COLOR_SECONDARY)
     _addCSSRule('.active-circle', 'background-color', THEME_COLOR)
     _addCSSRule('.active-calendar', 'background-color', `${THEME_COLOR_SECONDARY} !important`)
-    _addCSSRule('.pill:hover .pill-circle', 'background-color', THEME_COLOR)
+    _addCSSRule('.pill:hover .pill-circle-default', 'background-color', THEME_COLOR)
 }
 
 function _applyCustomColorsPreloader(){

@@ -20,9 +20,9 @@ function _loadLogoColors() {
 // Getters
 function _getLocalColors() {
     try {
-         return JSON.parse(localStorage.getItem("localColors"));
+        return JSON.parse(localStorage.getItem("localColors"));
     } catch (e) {
-         return null;
+        return null;
     }
 }
 
@@ -31,15 +31,15 @@ function _getEquivalentColorAndPosition(claro) {
     const escuroObj = CONFIG.cores.escuro;
 
     for (let i = 0; i < claroObj.length; i++) {
-         if (claroObj[i] === claro) {
-              return { position: i, equivalent: escuroObj[i] };
-         }
+        if (claroObj[i] === claro) {
+            return { position: i, equivalent: escuroObj[i] };
+        }
     }
 
     return {};
 }
 
-function _getLighterColor(hex, percentage=75) {
+function _getLighterColor(hex, percentage = 75) {
     let [r, g, b] = _hexToRgb(hex);
 
     r = Math.round(r + (255 - r) * (percentage / 100));
@@ -49,7 +49,7 @@ function _getLighterColor(hex, percentage=75) {
     return _rgbToHex(r, g, b);
 }
 
-function _getDarkerColor(hex, percentage=75) {
+function _getDarkerColor(hex, percentage = 75) {
     let [r, g, b] = _hexToRgb(hex);
 
     r = Math.round(r * (1 - percentage / 100));
@@ -59,28 +59,40 @@ function _getDarkerColor(hex, percentage=75) {
     return _rgbToHex(r, g, b);
 }
 
+function _getColorIndexFromOptions(i) {
+    if (i >= CONFIG.cores.opcoes.length) {
+        i = i % CONFIG.cores.opcoes.length;
+    }
+    return i;
+}
 
+function _getColorNameFromOptions(i) {
+    return CONFIG.cores.opcoes[_getColorIndexFromOptions(i)].cor;
+}
 
+function _getColorHexFromOptions(i) {
+    return CONFIG.cores.opcoes[_getColorIndexFromOptions(i)].hex;
+}
 
 
 // Setters
 function _changeFillColorSVGs(className, color) {
     const svgElements = document.querySelectorAll(`.${className}`);
     if (svgElements.length > 0) {
-         CHANGED_SVGS.push(className);
-         svgElements.forEach(svgElement => {
-              const pathElement = svgElement.querySelector('path');
-              if (pathElement) {
-                   pathElement.setAttribute('fill', color);
-              }
-         });
+        CHANGED_SVGS.push(className);
+        svgElements.forEach(svgElement => {
+            const pathElement = svgElement.querySelector('path');
+            if (pathElement) {
+                pathElement.setAttribute('fill', color);
+            }
+        });
     }
 }
 
 function _clearCustomColors() {
     var styleElement = getID('custom-styles');
     if (styleElement) {
-         styleElement.parentNode.removeChild(styleElement);
+        styleElement.parentNode.removeChild(styleElement);
     }
 }
 
@@ -91,8 +103,8 @@ function _ChangeBarColorIOS(color) {
 
 function _saveLocalColors() {
     var localColors = {
-         claro: CLARO,
-         escuro: ESCURO
+        claro: CLARO,
+        escuro: ESCURO
     };
     localStorage.setItem("localColors", JSON.stringify(localColors));
 }
@@ -118,8 +130,8 @@ function _rgbToHex(r, g, b) {
 function _isCustomColorsActive() {
     const html = _getHTMLpage();
     if (html === 'destinos') {
-         return localStorage.getItem("customColors") === "true";
+        return localStorage.getItem("customColors") === "true";
     } else {
-         return CUSTOM_COLORS
+        return CUSTOM_COLORS
     }
 }

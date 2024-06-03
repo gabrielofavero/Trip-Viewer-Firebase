@@ -493,15 +493,43 @@ a:hover {
 
 /* Programação Pills */
 
-.pill-circle {
+/* .pill-circle {
   background-color: #d7dce1;
-}
+} */
 
-.pill:hover .pill-circle {
+.pill:hover .pill-circle-default {
   background-color: #7f75b6;
 }
 
 .pill {
   border: 0.5px solid #383838;
   background-color: #3b3b3b;
+}
+
+.active-calendar-blue {
+  background-color: #3c474f !important;
+}
+
+.active-calendar-yellow {
+  background-color: #4f483a !important;
+}
+
+.active-calendar-pink {
+  background-color: #4c363f !important;
+}
+
+.active-calendar-green {
+  background-color: #3d4738 !important;
+}
+
+.active-calendar-teal {
+  background-color: #374b4a !important;
+}
+
+.active-calendar-orange {
+  background-color: #4f4640 !important;
+}
+
+.active-calendar-red {
+  background-color: #4f3e39 !important;
 }

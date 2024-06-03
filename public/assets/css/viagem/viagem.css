@@ -2540,7 +2540,7 @@ iframe {
   transition: background-color 0.3s ease;
 }
 
-.pill:hover .pill-circle {
+.pill:hover .pill-circle-default {
   background-color: #5859a7;
 }
 
@@ -2554,4 +2554,67 @@ iframe {
   transition: background-color 0.3s ease;
   cursor: pointer;
   margin: 0 8px 8px 0;
+}
+
+.pill:hover .pill-circle-blue,
+.active-circle-blue {
+  background-color: #47aeff;
+}
+
+.pill:hover .pill-circle-yellow,
+.active-circle-yellow {
+  background-color: #ffbb2c;
+}
+
+.pill:hover .pill-circle-pink,
+.active-circle-pink {
+  background-color: #e80368;
+}
+
+.pill:hover .pill-circle-green,
+.active-circle-green {
+  background-color: #52B720;
+}
+
+.pill:hover .pill-circle-teal,
+.active-circle-teal {
+  background-color: #11dbcf;
+}
+
+.pill:hover .pill-circle-orange,
+.active-circle-orange {
+  background-color: #ffa76e;
+}
+
+.pill:hover .pill-circle-red,
+.active-circle-red {
+  background-color: #ff5828;
+}
+
+.active-calendar-blue {
+  background-color: #E3F3FF !important;
+}
+
+.active-calendar-yellow {
+  background-color: #FFF5DF !important;
+}
+
+.active-calendar-pink {
+  background-color: #FCD9E8 !important;
+}
+
+.active-calendar-green {
+  background-color: #E5F4DE !important;
+}
+
+.active-calendar-teal {
+  background-color: #DBFAF8 !important;
+}
+
+.active-calendar-orange {
+  background-color: #FFF2E9 !important;
+}
+
+.active-calendar-red {
+  background-color: #FFE6DF !important;
 }
