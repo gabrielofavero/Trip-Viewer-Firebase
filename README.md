@@ -19,6 +19,18 @@
 
 ## Doing
 
+- ⚔️ **E015:** Implementação: Gastos
+  - *Template de Front-End*
+    - *Localizar template. Deve contar minimamente Filtros e Gráficos. Desejável poder separar por abas*
+    - *Criar template HTML*
+  - *API para obter cotações de turismo em tempo real (Se não encontrar, campo estático)*
+  - *Implementar campo de valor em Transporte e Hospedagem (Editar Viagem)*
+  - *Implementar categoria de Gastos em Editar Viagem* 
+    - *Gastos Prévios e Gastos Durante a Viagem*
+    - *Separar por categoria*
+    - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
+  - *Aplicar template em página de viagem* 
+
 ## To-Do
 
 ### Prioridade Alta
@@ -40,8 +52,6 @@
   - *Adicionar Viagens anteriores em viagens*
   - *Ordernar por data de atualização em Destinos e Listagens*
 - ⚔️ **E014:** Implementação: Lista de desejos
-  - *Procurar template na web e aplicar (colocar fonte nos créditos)*
-- ⚔️ **E015:** Implementação: Gastos
   - *Procurar template na web e aplicar (colocar fonte nos créditos)*
 - ⚔️ **E021:** Implementação: Lineup em viagens.html
   - *Ao invés de estar em Destinos, é uma nova categoria*
