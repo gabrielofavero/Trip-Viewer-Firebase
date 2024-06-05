@@ -95,6 +95,7 @@ function _activatePill(destinoID, colorIndex=-1) {
 function _deactivatePill(destinoID, colorIndex=-1) {
     const pillClasses = _getPillClasses(colorIndex);
     getID(`pill-${destinoID}`).classList.remove('active-pill');
+    getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.pillCircle);
     getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.activeCircle);
     for (const calendarDay of document.getElementsByClassName(`pill-${destinoID}`)) {
         calendarDay.classList.remove(pillClasses.activeCalendar);
@@ -122,8 +123,9 @@ function _getPillClasses(colorIndex) {
 
     if (colorIndex >= 0) {
         const colorName = _getColorNameFromOptions(colorIndex);
+        pillCircle = `pill-circle-${colorName}`;
         activeCircle = `active-circle-${colorName}`;
         activeCalendar = `active-calendar-${colorName}`;
     }
-    return { activeCircle, activeCalendar }
+    return { pillCircle, activeCircle, activeCalendar }
 }
