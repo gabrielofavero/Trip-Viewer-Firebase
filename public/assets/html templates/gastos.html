@@ -1,0 +1,185 @@
+<!-- Adaptado de dudebro https://codepen.io/dudebro69/pen/jOvEaVe -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Finance Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" />
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <div class="grid grid-cols-12 gap-6 p-8">
+        <div class="col-span-12 sm:col-span-6 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-lg font-medium mb-4">Income</h2>
+            <p class="text-gray-600 mb-4">$10,000</p>
+            <canvas id="incomeChart" width="300" height="200"></canvas>
+        </div>
+        <div class="col-span-12 sm:col-span-6 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-lg font-medium mb-4">Expenses</h2>
+            <p class="text-gray-600 mb-4">$5,000</p>
+            <canvas id="expensesChart" width="300" height="200"></canvas>
+        </div>
+        <div class="col-span-12 sm:col-span-6 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-lg font-medium mb-4">Net Worth</h2>
+            <p class="text-gray-600 mb-4">$50,000</p>
+            <canvas id="netWorthChart" width="300" height="200"></canvas>
+        </div>
+        <div class="col-span-12 sm:col-span-6 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-lg font-medium mb-4">Cash Flow</h2>
+            <p class="text-gray-600 mb-4">$2,000</p>
+            <canvas id="cashFlowChart" width="300" height="200"></canvas>
+        </div>
+        <div class="col-span-12 lg:col-span-8 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-lg font-medium mb-4">Transactions</h2>
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left text-gray-600">Date</th>
+                        <th class="text-left text-gray-600">Description</th>
+                        <th class="text-right text-gray-600">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="py-2 text-sm">2021-08-01</td>
+                        <td class="py-2 text-sm">Rent Payment</td>
+                        <td class="py-2 text-sm text-right">$1,500</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 text-sm">2021-08-05</td>
+                        <td class="py-2 text-sm">Grocery Store</td>
+                    <tr>
+                        <td class="py-2 text-sm">2021-08-15</td>
+                        <td class="py-2 text-sm">Utility Bill</td>
+                        <td class="py-2 text-sm text-right">$200</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 text-sm">2021-08-25</td>
+                        <td class="py-2 text-sm">Dinner</td>
+                        <td class="py-2 text-sm text-right">$60</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 text-sm">2021-08-31</td>
+                        <td class="py-2 text-sm">Internet Bill</td>
+                        <td class="py-2 text-sm text-right">$100</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-span-12 lg:col-span-4 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-lg font-medium mb-4">Budget</h2>
+            <canvas id="budgetChart" width="300" height="300"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        const incomeChart = document.getElementById("incomeChart");
+        const incomeData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "Income",
+                    data: [5000, 10000, 15000, 20000, 25000, 30000, 35000],
+                    backgroundColor: "rgba(60, 191, 174, 0.5)",
+                    borderColor: "rgba(60, 191, 174, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        };
+        const incomeConfig = {
+            type: "line",
+            data: incomeData,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: "rgba(107, 114, 128, 1)",
+                        },
+                    },
+                    x: {
+                        ticks: {
+                            color: "rgba(107, 114, 128, 1)",
+                        },
+                    },
+                },
+            },
+        };
+        const incomeChartInstance = new Chart(incomeChart, incomeConfig);
+
+        const expensesChart = document.getElementById("expensesChart");
+        const expensesData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "Expenses",
+                    data: [2000, 4000, 6000, 8000, 10000, 12000, 14000],
+                    backgroundColor: "rgba(239, 68, 68, 0.5)",
+                    borderColor: "rgba(239, 68, 68, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        };
+        const expensesConfig = {
+            type: "line",
+            data: expensesData,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: "rgba(107, 114, 128, 1)",
+                        },
+                    },
+                },
+            },
+        };
+        const expensesChartInstance = new Chart(expensesChart, expensesConfig);
+
+        const budgetChart = document.getElementById("budgetChart");
+        const budgetData = {
+            labels: ["Income", "Expenses"],
+            datasets: [
+                {
+                    label: "Budget",
+                    data: [25000, 10000],
+                    backgroundColor: ["rgba(60, 191, 174, 0.5)", "rgba(239, 68, 68, 0.5)"],
+                    borderColor: ["rgba(60, 191, 174, 1)", "rgba(239, 68, 68, 1)"],
+                    borderWidth: 1,
+                },
+            ],
+        };
+        const budgetConfig = {
+            type: "doughnut",
+            data: budgetData,
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "right",
+                        labels: {
+                            color: "rgba(107, 114, 128, 1)",
+                        },
+                    },
+                },
+            },
+        };
+        const budgetChartInstance = new Chart(budgetChart, budgetConfig);
+    </script>
+</body>
+
+</html>

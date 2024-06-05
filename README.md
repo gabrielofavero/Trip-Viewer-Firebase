@@ -21,22 +21,20 @@
 
 - ⚔️ **E015:** Implementação: Gastos
   - *Template de Front-End*
-    - *Localizar template. Deve contar minimamente Filtros e Gráficos. Desejável poder separar por abas*
-    - *Criar template HTML*
-  - *API para obter cotações de turismo em tempo real (Se não encontrar, campo estático)*
+  - *API para obter cotações de turismo em tempo real https://docs.awesomeapi.com.br/api-de-moedas*
   - *Implementar campo de valor em Transporte e Hospedagem (Editar Viagem)*
-  - *Implementar categoria de Gastos em Editar Viagem* 
+  - *Implementar categoria de Gastos em Editar Viagem*
     - *Gastos Prévios e Gastos Durante a Viagem*
     - *Separar por categoria*
     - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
-  - *Aplicar template em página de viagem* 
+  - *Aplicar template em página de viagem*
 
 ## To-Do
 
 ### Prioridade Alta
 
 - 📈 **M055:** Fazer todas as mudanças de dark mode serem aplicadas via js
- -*O modelo atual de css-dark causa problemas de cache*
+  -*O modelo atual de css-dark causa problemas de cache*
 
 ### Prioridade Média
 
