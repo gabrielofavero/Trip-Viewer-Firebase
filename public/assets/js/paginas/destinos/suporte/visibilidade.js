@@ -9,15 +9,6 @@ function _adjustButtonsPositionDestinos() {
     nightMode.style.right = second;
 }
 
-function _applyCustomColorsDestinos() {
-    const text = getID("trip-viewer-text");
-    text.style.color = THEME_COLOR;
-    _setCSSRule('.section-title h2::after', 'background', THEME_COLOR);
-    _setCSSRule('.new', 'fill', THEME_COLOR);
-    _setCSSRule('.color-icon', 'color', THEME_COLOR);
-    _applyAccordionArrowCustomColor();
-}
-
 function _applyDestinosMediaHeight() {
     const keys = Object.keys(MEDIA_HYPERLINKS);
     if (keys.length > 0) {

@@ -40,7 +40,7 @@ function _loadVisibilityPasseio() {
      } else {
           _loadLightMode();
      }
-     
+
      getID("night-mode").style.display = "block";
      getID("night-mode").onclick = function () {
           _switchVisibility();
@@ -189,79 +189,22 @@ function _applyCustomVisibilityRules() {
      switch (html) {
           case 'viagem':
                _loadLogoColors();
-               _applyCustomColorsViagem();
+               _applyCustomColors();
                _loadTransporteImagens();
                break;
           case 'destinos':
                _loadLogoColors();
-               _applyCustomColorsDestinos();
+               _applyCustomColors();
                break;
           default:
                break;
      }
 }
 
-function _setCSSRule(selector, property, value) {
-     const rule = `${property}: ${value};`;
-     let styleElement = document.getElementById('custom-styles');
 
-     if (!styleElement) {
-          styleElement = document.createElement('style');
-          styleElement.id = 'custom-styles';
-          document.head.appendChild(styleElement);
-     }
-
-     const styleSheet = styleElement.sheet;
-     let ruleIndex = -1;
-
-     for (let i = 0; i < styleSheet.cssRules.length; i++) {
-          const cssRule = styleSheet.cssRules[i];
-          if (cssRule.selectorText === selector) {
-               ruleIndex = i;
-               break;
-          }
-     }
-
-     if (ruleIndex !== -1) {
-          if (styleSheet.cssRules[ruleIndex].style) {
-               styleSheet.cssRules[ruleIndex].style[property] = value;
-          } else {
-               styleSheet.cssRules[ruleIndex].style.setProperty(property, value);
-          }
-     } else {
-          if (styleSheet.insertRule) {
-               styleSheet.insertRule(`${selector} { ${rule} }`, 0);
-          } else if (styleSheet.addRule) {
-               styleSheet.addRule(selector, rule, 0);
-          }
-     }
-}
-
-function _removeCSSRule(selector, property) {
-     let styleElement = document.getElementById('custom-styles');
-     if (!styleElement) {
-          return;
-     }
-
-     const styleSheet = styleElement.sheet;
-     for (let i = 0; i < styleSheet.cssRules.length; i++) {
-          const cssRule = styleSheet.cssRules[i];
-          if (cssRule.selectorText === selector) {
-               cssRule.style.removeProperty(property);
-               if (cssRule.style.length === 0) {
-                    styleSheet.deleteRule(i);
-               }
-               break;
-          }
-     }
-}
-
-function _setCSSVariable(variable, value) {
-     document.documentElement.style.setProperty(`--${variable}`, value);
- }
-
- function _removeCSSVariable(variable) {
-     document.documentElement.style.removeProperty(`--${variable}`);
+function _applyCustomColors() {
+     _setCSSVariable('theme-color', THEME_COLOR);
+     _setCSSVariable('theme-color-secondary', THEME_COLOR_SECONDARY);
  }
 
 function _disableScroll() {
