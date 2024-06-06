@@ -18,7 +18,9 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
   const preloader = getID('preloader');
   const isErrorMessage = properties.errorData?.isError === true;
 
-  _stopLoadingTimer();
+  if (typeof _stopLoadingTimer === 'function') {
+    _stopLoadingTimer();
+  }
 
   if (preloader) {
     MESSAGE_MODAL_OPEN = true;

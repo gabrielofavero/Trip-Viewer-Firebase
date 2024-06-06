@@ -335,8 +335,8 @@
         }
 
         function _activatePill(j) {
-            _addCSSRule(`#pill-${j}`, 'background-color', PILL_COLOR_LIGHT)
-            _addCSSRule(`#pill-circle-${j}`, 'background-color', THEME_COLOR)
+            _setCSSRule(`#pill-${j}`, 'background-color', PILL_COLOR_LIGHT)
+            _setCSSRule(`#pill-circle-${j}`, 'background-color', THEME_COLOR)
             for (const calendarDay of document.getElementsByClassName(`pill-${j}`)) {
                 calendarDay.classList.add('active-calendar');
             }
@@ -366,7 +366,7 @@
         }
 
         function _loadProgramacaoPills() {
-            _addCSSRule('.active-calendar', 'background-color', `${PILL_COLOR_LIGHT} !important`)
+            _setCSSRule('.active-calendar', 'background-color', `${PILL_COLOR_LIGHT} !important`)
             _addPillListeners(1);
             _addPillListeners(2);
             _addPillListeners(3);

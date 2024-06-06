@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Gastos</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="favicon.ico" rel="icon">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Apple Data -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="TripViewer" />
+  <meta name="theme-color" content="#fff">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/suporte/mensagens.css" rel="stylesheet">
+  <link href="assets/css/gastos/gastos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" />
+
+</head>
+
+<body>
+  <div class="top-bar">
+    <a href="#" id="logo-link" class="logo-link">
+      <div class="logo-box">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
+          <g style="isolation: isolate;">
+            <g id="Capa_1" data-name="Capa 1">
+              <g>
+                <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                  style="fill: none; stroke: #595a5a; stroke-miterlimit: 10; stroke-width: 8px;" />
+                <path id="light-color-1"
+                  d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                  style="fill: #5859a7; stroke-width: 0px;" />
+                <path
+                  d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                <path id="light-color-2"
+                  d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                  style="fill: #5859a7; stroke-width: 0px;" />
+                <path
+                  d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #595a5a; stroke-width: 0px;" />
+              </g>
+            </g>
+          </g>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
+          <g style="isolation: isolate;">
+            <g id="Capa_1" data-name="Capa 1">
+              <g>
+                <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                  style="fill: none; stroke: #bfbfbf; stroke-miterlimit: 10; stroke-width: 8px;" />
+                <path id="dark-color-1"
+                  d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                  style="fill: #7f75b6; stroke-width: 0px;" />
+                <path
+                  d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                <path id="dark-color-2"
+                  d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                  style="fill: #7f75b6; stroke-width: 0px;" />
+                <path
+                  d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #bfbfbf; stroke-width: 0px;" />
+              </g>
+            </g>
+          </g>
+        </svg>
+        <div id="trip-viewer-text">TripViewer</div>
+      </div>
+    </a>
+    <div class="icons-box" id="icons-box">
+      <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
+      <i id="night-mode" class="bx bx-moon icon-buttons"></i>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <br><br><br><br>
+    <h2>Gastos</h2>
+  </div>
+
+  <div id="gastos-container">
+    <div class="tabs-container">
+      <div class="tabs" id="tab-gastos">
+        <input type="radio" id="radio-resumo" name="tabs-gastos" checked />
+        <label class="tab" for="radio-resumo">Resumo</label>
+        <input type="radio" id="radio-gastos-previos" name="tabs-gastos" />
+        <label class="tab" for="radio-gastos-previos">Gastos Prévios</label>
+        <input type="radio" id="radio-gastos-na-viagem" name="tabs-gastos" />
+        <label class="tab" for="radio-gastos-na-viagem">Gastos na Viagem</label>
+        <span class="glider"></span>
+      </div>
+    </div>
+
+    <!-- https://pt.wikipedia.org/wiki/ISO_4217 -->
+    <div class="tabs-container">
+      <div class="tabs" id="tab-moedas">
+        <input type="radio" id="radio-moeda-1" name="tabs-moedas" checked />
+        <label class="tab-mini" for="radio-moeda-1">BRL</label>
+        <input type="radio" id="radio-moeda-2" name="tabs-moedas" />
+        <label class="tab-mini" for="radio-moeda-2">USD</label>
+        <span class="glider-mini"></span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div id="resumo">
+      <div class="gastos-container">
+        <div class="gastos-card gastos-recibo">
+          <h2 class="gastos-titulo">Gastos Prévios</h2>
+          <table class="card-full-size">
+            <thead>
+              <tr>
+                <th class="tabela-titulo-esquerda">Tipo</th>
+                <th class="tabela-titulo-direita">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tabela-texto-esquerda">Transporte</td>
+                <td class="tabela-texto-direita">$1,500</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">Hospedagens</td>
+                <td class="tabela-texto-direita">$1,500</td>
+              <tr>
+                <td class="tabela-texto-esquerda">Entretenimento</td>
+                <td class="tabela-texto-direita">$200</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">Outros</td>
+                <td class="tabela-texto-direita">$60</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="gastos-card grafico-pizza">
+          <h2 class="gastos-titulo">Tipos de Gasto</h2>
+          <canvas id="budgetChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+    <div id="gastos-previos" style="display: none">
+      <div class="gastos-container">
+        <div class="gastos-card gastos-recibo">
+          <h2 class="gastos-titulo">Gastos Prévios</h2>
+          <table class="card-full-size">
+            <thead>
+              <tr>
+                <th class="tabela-titulo-esquerda">Date</th>
+                <th class="tabela-titulo-esquerda">Description</th>
+                <th class="tabela-titulo-direita">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-01</td>
+                <td class="tabela-texto-esquerda">Rent Payment</td>
+                <td class="tabela-texto-direita">$1,500</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-05</td>
+                <td class="tabela-texto-esquerda">Grocery Store</td>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-15</td>
+                <td class="tabela-texto-esquerda">Utility Bill</td>
+                <td class="tabela-texto-direita">$200</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-25</td>
+                <td class="tabela-texto-esquerda">Dinner</td>
+                <td class="tabela-texto-direita">$60</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-31</td>
+                <td class="tabela-texto-esquerda">Internet Bill</td>
+                <td class="tabela-texto-direita">$100</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+        <div class="gastos-card grafico-pizza">
+          <h2 class="gastos-titulo">Tipos de Gasto</h2>
+          <canvas id="budgetChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+    <div id="gastos-na-viagem" style="display: none">
+      <div class="gastos-container">
+        <div class="gastos-card gastos-card gastos-recibo">
+          <h2 class="gastos-titulo">Resumo dos Gastos</h2>
+          <table class="card-full-size">
+            <thead>
+              <tr>
+                <th class="tabela-titulo-esquerda">Date</th>
+                <th class="tabela-titulo-esquerda">Description</th>
+                <th class="tabela-titulo-direita">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-01</td>
+                <td class="tabela-texto-esquerda">Rent Payment</td>
+                <td class="tabela-texto-direita">$1,500</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-05</td>
+                <td class="tabela-texto-esquerda">Grocery Store</td>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-15</td>
+                <td class="tabela-texto-esquerda">Utility Bill</td>
+                <td class="tabela-texto-direita">$200</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-25</td>
+                <td class="tabela-texto-esquerda">Dinner</td>
+                <td class="tabela-texto-direita">$60</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">2021-08-31</td>
+                <td class="tabela-texto-esquerda">Internet Bill</td>
+                <td class="tabela-texto-direita">$100</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="gastos-card grafico-pizza">
+          <h2 class="gastos-titulo">Tipos de Gasto</h2>
+          <canvas id="budgetChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="credits">
+        Desenvolvido por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
+          class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
+          Atribuições</span>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader" style="display: none"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+
+  <!-- App JS Files -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/suporte/estilos/animacoes.js"></script>
+  <script src="assets/js/suporte/paginas/dados.js"></script>
+  <script src="assets/js/suporte/estilos/svgs.js"></script>
+  <script src="assets/js/suporte/paginas/mensagens.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/embed.js"></script>
+  <script src="assets/js/paginas/destinos/categorias.js"></script>
+  <script src="assets/js/paginas/destinos/destinos-box.js"></script>
+  <script src="assets/js/paginas/destinos/destinos.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/visibilidade.js"></script>
+  <script src="assets/js/suporte/estilos/cores.js"></script>
+  <script src="assets/js/suporte/estilos/visibilidade.js"></script>
+  <script src="assets/js/suporte/paginas/dispositivos.js"></script>
+  <script src="assets/js/suporte/paginas/datas.js"></script>
+  <script src="assets/js/paginas/gastos/gastos.js"></script>
+
+</body>
+
+</html>
