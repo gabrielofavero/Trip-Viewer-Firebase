@@ -100,7 +100,7 @@ section {
 .btn {
   text-decoration: none;
   font-weight: bold;
-  color: #3A3838;
+  color: #fff;
 }
 
 .btn:hover {
@@ -580,4 +580,19 @@ section {
     width: 100%;
     /* height calculated in js function _applyDestinosMediaHeight */
   }
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #fff;
 }

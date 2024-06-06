@@ -201,7 +201,7 @@ function _applyCustomVisibilityRules() {
      }
 }
 
-function _addCSSRule(selector, property, value) {
+function _setCSSRule(selector, property, value) {
      const rule = `${property}: ${value};`;
      let styleElement = document.getElementById('custom-styles');
 
@@ -255,6 +255,14 @@ function _removeCSSRule(selector, property) {
           }
      }
 }
+
+function _setCSSVariable(variable, value) {
+     document.documentElement.style.setProperty(`--${variable}`, value);
+ }
+
+ function _removeCSSVariable(variable) {
+     document.documentElement.style.removeProperty(`--${variable}`);
+ }
 
 function _disableScroll() {
      document.body.style.overflow = "hidden";

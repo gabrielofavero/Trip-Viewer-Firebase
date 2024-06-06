@@ -12,9 +12,9 @@ function _adjustButtonsPositionDestinos() {
 function _applyCustomColorsDestinos() {
     const text = getID("trip-viewer-text");
     text.style.color = THEME_COLOR;
-    _addCSSRule('.section-title h2::after', 'background', THEME_COLOR);
-    _addCSSRule('.new', 'fill', THEME_COLOR);
-    _addCSSRule('.color-icon', 'color', THEME_COLOR);
+    _setCSSRule('.section-title h2::after', 'background', THEME_COLOR);
+    _setCSSRule('.new', 'fill', THEME_COLOR);
+    _setCSSRule('.color-icon', 'color', THEME_COLOR);
     _applyAccordionArrowCustomColor();
 }
 
@@ -27,12 +27,12 @@ function _applyDestinosMediaHeight() {
         const heightPortrait = (width * 16) / 9;
         const heightLandscape = (width * 9) / 16;
         
-        _addCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
+        _setCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
 
         if (getID('content').offsetWidth <= 550) {
-            _addCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
+            _setCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
         } else {
-            _addCSSRule('.tiktok-embed-v3', 'height', `533px`);
+            _setCSSRule('.tiktok-embed-v3', 'height', `533px`);
         }
     }
 }
@@ -40,7 +40,7 @@ function _applyDestinosMediaHeight() {
 function _applyAccordionArrowCustomColor() {
     const color = THEME_COLOR.replace("#", "%23");
     const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='${color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>`;
-    _addCSSRule('.accordion-button::after', 'background-image', `url("data:image/svg+xml,${svg}") !important`);
+    _setCSSRule('.accordion-button::after', 'background-image', `url("data:image/svg+xml,${svg}") !important`);
 }
 
 

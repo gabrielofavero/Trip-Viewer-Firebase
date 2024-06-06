@@ -1,0 +1,69 @@
+:root {
+    --background-mensagens: #fff;
+}
+
+.message-container,
+.programacao-container,
+.destinos-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: auto;
+    background: var(--background-mensagens);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    overflow-wrap: break-word;
+}
+
+.message-container,
+.programacao-container {
+    text-align: center;
+}
+
+.programacao-container,
+.destinos-container {
+    padding: 20px;
+    width: 500px;
+}
+
+.message-text-container {
+    width: 100%;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.message-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #666;
+}
+
+@media (max-height: 730px) {
+    .programacao-container,
+    .destinos-container {
+        max-height: 95%;
+        overflow: auto;
+        display: block;
+    }
+}
+
+@media (max-width: 520px) {
+    .message-container,
+    .programacao-container,
+    .destinos-container {
+        width: 90%;
+        height: auto;
+    }
+}

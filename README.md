@@ -19,6 +19,8 @@
 
 ## Doing
 
+- 📈 **M055:** Fazer todas as mudanças de dark mode serem aplicadas via js
+  -*O modelo atual de css-dark causa problemas de cache*
 - ⚔️ **E015:** Implementação: Gastos
   - *Template de Front-End*
   - *API para obter cotações de turismo em tempo real https://docs.awesomeapi.com.br/api-de-moedas*
@@ -28,13 +30,11 @@
     - *Separar por categoria*
     - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
   - *Aplicar template em página de viagem*
+- 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
 
 ## To-Do
 
 ### Prioridade Alta
-
-- 📈 **M055:** Fazer todas as mudanças de dark mode serem aplicadas via js
-  -*O modelo atual de css-dark causa problemas de cache*
 
 ### Prioridade Média
 
@@ -92,7 +92,6 @@
 - 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
   - Tanto destinos.html quanto editar-destinos.html
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
-- 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
 - 📈 **M047:** Trocar mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhorar funções relacionadas ao getJs para mais cenários
 - 🏆 **F055:** Implementar função de getKs
