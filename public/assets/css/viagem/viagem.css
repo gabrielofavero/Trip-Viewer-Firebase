@@ -3,7 +3,7 @@
 --------------------------------------------------------------*/
 
 :root {
-  --theme-color: #5859a7;;
+  --theme-color: #5859a7;
   --theme-color-secondary: #D5D6E9;
 }
 
@@ -792,7 +792,6 @@ section {
   #programacao-box {
     width: 700px;
   }
-
 }
 
 #programacao-box {
@@ -805,7 +804,7 @@ section {
   margin-right: auto;
   text-align: left;
   transition: all ease-in-out 0.3s;
-  background: #fff;
+  background-color: #fff;
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
   border: 1px solid #D9D9D9;
   border-radius: 5px;
@@ -1621,6 +1620,7 @@ section {
   margin: auto;
   margin-bottom: 42px;
   text-align: center;
+  border: 0.5px solid #D9D9D9;
 }
 
 #itemLista,
@@ -1991,6 +1991,7 @@ iframe {
 }
 
 @media (max-height: 730px) {
+
   .programacao-container,
   .destinos-container {
     max-height: 95%;
@@ -2018,6 +2019,7 @@ iframe {
 }
 
 @media (max-width: 520px) {
+
   .message-container,
   .programacao-container,
   .destinos-container {
@@ -2310,6 +2312,13 @@ iframe {
 /* Hospedagem Box */
 
 .hotel-box,
+.flight-box,
+.programacao-box,
+#calendar {
+  box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+}
+
+.hotel-box,
 .hotel-box-inner {
   display: flex;
   color: #4F5051;
@@ -2319,6 +2328,8 @@ iframe {
   width: 600px;
   margin: 0 auto;
   text-align: start;
+  transition: all ease-in-out 0.3s;
+  background-color: #fff;
 }
 
 .hotel-box-inner {
@@ -2510,7 +2521,7 @@ iframe {
   margin-bottom: 20px;
 }
 
-.midia-container{
+.midia-container {
   display: flex;
   justify-content: center;
   align-items: center;

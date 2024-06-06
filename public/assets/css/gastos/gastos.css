@@ -1,7 +1,7 @@
 :root {
   --primary-color: #5859a7;
   --secondary-color: #e6eef9;
-  --teste: white;
+  --background-mensagens: #fff;
 }
 
 @font-face {
@@ -358,4 +358,128 @@ section {
   z-index: 9999;
   overflow: hidden;
   background: #fff;
+}
+
+:root {
+  --roxo: #5859a7;
+}
+
+/*--------------------------------------------------------------
+# Botões
+--------------------------------------------------------------*/
+
+.button-box,
+.button-box-right {
+  text-align: right;
+}
+
+.btn-format {
+  margin: 5px;
+}
+
+.btn-format:first-child {
+  margin-left: 0;
+}
+
+.btn-format:last-child {
+  margin-right: 0;
+}
+
+.icon-buttons {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  margin: 0 7px 0 7px;
+}
+
+.btn-basic {
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--roxo);
+  color: var(--roxo);
+  background: none;
+}
+
+.btn-purple,
+.btn-basic:hover,
+.btn-basic:focus {
+  background: var(--roxo);
+  color: #fff;
+}
+
+.btn-purple:hover,
+.btn-purple:focus {
+  background: #505197;
+  color: #fff;
+}
+
+/*--------------------------------------------------------------
+# Botões
+--------------------------------------------------------------*/
+
+.message-container,
+.programacao-container,
+.destinos-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: auto;
+    background: var(--background-mensagens);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    overflow-wrap: break-word;
+}
+
+.message-container,
+.programacao-container {
+    text-align: center;
+}
+
+.programacao-container,
+.destinos-container {
+    padding: 20px;
+    width: 500px;
+}
+
+.message-text-container {
+    width: 100%;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.message-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #666;
+}
+
+@media (max-height: 730px) {
+    .programacao-container,
+    .destinos-container {
+        max-height: 95%;
+        overflow: auto;
+        display: block;
+    }
+}
+
+@media (max-width: 520px) {
+    .message-container,
+    .programacao-container,
+    .destinos-container {
+        width: 90%;
+        height: auto;
+    }
 }

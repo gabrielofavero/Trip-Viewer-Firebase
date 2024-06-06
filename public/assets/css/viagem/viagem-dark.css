@@ -1,3 +1,8 @@
+:root {
+  --theme-color: #7f75b6;
+  --theme-color-secondary: #D5D6E9;
+}
+
 body {
   color: #E2E2E2;
   background-color: #303030;
@@ -16,7 +21,7 @@ a:hover {
 }
 
 .back-to-top {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .back-to-top i {
@@ -24,7 +29,7 @@ a:hover {
 }
 
 .back-to-top:hover {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 #preloader {
@@ -60,7 +65,7 @@ a:hover {
 .nav-menu .active:focus,
 .nav-menu li:hover>a {
   color: #303030;
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .nav-menu a:hover span,
@@ -76,7 +81,7 @@ a:hover {
 }
 
 #trip-viewer-text {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .logo-link {
@@ -87,7 +92,7 @@ a:hover {
 }
 
 #trip-viewer-text {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .mobile-nav-toggle i,
@@ -96,7 +101,7 @@ a:hover {
 }
 
 .mobile-nav-active .mobile-nav-toggle {
-  background-color: #7f75b6;
+  background-color: var(--theme-color);
 }
 
 #hero:before {
@@ -112,7 +117,7 @@ a:hover {
 }
 
 #hero p span {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 #hero .social-links a {
@@ -120,7 +125,7 @@ a:hover {
 }
 
 #hero .social-links a:hover {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .section-title h2 {
@@ -132,11 +137,12 @@ a:hover {
 }
 
 .section-title h2::after {
-  background: #7f75b6;
+
+  background: var(--theme-color);
 }
 
 .about .content ul i {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .facts .count-box,
@@ -146,7 +152,7 @@ a:hover {
 
 .facts .count-box i,
 .about .count-box i {
-  background: #7f75b6;
+  background: var(--theme-color);
   color: #303030;
 }
 
@@ -171,7 +177,7 @@ a:hover {
 
 .skills .progress-bar,
 .about .progress-bar {
-  background-color: #7f75b6;
+  background-color: var(--theme-color);
 }
 
 #tabela {
@@ -185,7 +191,7 @@ a:hover {
 }
 
 #calendarTitle {
-  background: #7f75b6;
+  background: var(--theme-color);
   color: #303030;
 }
 
@@ -209,7 +215,8 @@ a:hover {
 }
 
 #programacao-box {
-  background: #414040;
+  background-color: #3b3b3b;
+  border: 0.5px solid #414040;
 }
 
 #programacao-titulo,
@@ -220,7 +227,7 @@ a:hover {
 .programacao-linha,
 .flight-title,
 .hotel-title {
-  border-bottom: 0.5px solid #414040;
+  border-bottom: 0.5px solid #464545;
 }
 
 .programacao-item {
@@ -232,7 +239,7 @@ a:hover {
 }
 
 .resume .resume-item {
-  border-left: 2px solid #7f75b6;
+  border-left: 2px solid var(--theme-color);
 }
 
 .resume .resume-item h4 {
@@ -258,7 +265,7 @@ a:hover {
 
 #portfolio-flters li:hover,
 #portfolio-flters li.filter-active {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .portfolio-wrap::before {
@@ -294,16 +301,16 @@ a:hover {
 }
 
 .portfolio-wrap .portfolio-links a:hover {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet {
   background-color: #303030;
-  border: 1px solid #7f75b6;
+  border: 1px solid var(--theme-color);
 }
 
 .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #7f75b6;
+  background-color: var(--theme-color);
 }
 
 .services .icon-box {
@@ -334,11 +341,11 @@ a:hover {
 
 .testimonials .swiper-pagination .swiper-pagination-bullet {
   background-color: #303030;
-  border: 1px solid #7f75b6;
+  border: 1px solid var(--theme-color);
 }
 
 .testimonials .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #7f75b6;
+  background-color: var(--theme-color);
 }
 
 .contact .info {
@@ -346,7 +353,7 @@ a:hover {
 }
 
 .contact .info i {
-  color: #7f75b6;
+  color: var(--theme-color);
   background: #303030;
 }
 
@@ -357,7 +364,7 @@ a:hover {
 .contact .info .email:hover i,
 .contact .info .address:hover i,
 .contact .info .phone:hover i {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .php-email-form {
@@ -367,30 +374,31 @@ a:hover {
 #botao,
 #botao-right,
 #botao-salvar {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 #botao:hover,
 #botao-right:hover,
 #botao-salvar:hover {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 #circulo,
 #circulo-mini {
   background: #303030;
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 #circulo:hover,
 #circulo-mini:hover {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 #subject,
 #destinos-select {
   background: #404040;
   color: #F2F2F2;
+  border: 0.5px solid #414040;
 }
 
 #footer {
@@ -399,12 +407,12 @@ a:hover {
 }
 
 #footer .social-links a {
-  background: #7f75b6;
+  background: var(--theme-color);
   color: #303030;
 }
 
 #footer .social-links a:hover {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .message-container {
@@ -417,7 +425,7 @@ a:hover {
 
 #previous,
 #next {
-  background-color: #7f75b6;
+  background-color: var(--theme-color);
 }
 
 .calendarTrip {
@@ -427,7 +435,7 @@ a:hover {
 
 .calendarTrip:hover,
 .calendarTrip:active {
-  background-color: #7f75b6 !important;
+  background-color: var(--theme-color) !important;
   color: #303030;
 }
 
@@ -449,7 +457,7 @@ a:hover {
 }
 
 .btn-purple {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .btn-purple:hover {
@@ -459,20 +467,28 @@ a:hover {
 .flight-box {
   border: 0.5px solid #414040;
   color: #E2E2E2;
-  background-color: #303030;
+  background-color: #3b3b3b;
 }
 
 .flight-line {
-  color: #414040;
+  color: #464545;
 }
 
 .flight-icon {
-  color: #7367b4;
+  color: var(--theme-color);
 }
 
 .hotel-box {
   color: #E2E2E2;
   border: 0.5px solid #414040;
+  background-color: #3b3b3b;
+}
+
+.hotel-box,
+.flight-box,
+.programacao-box,
+#calendar {
+  box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
 }
 
 .hotel-img {
@@ -484,7 +500,7 @@ a:hover {
 }
 
 .destinos-titulo {
-  border-bottom: 0.5px solid #383838;
+  border-bottom: 0.5px solid #464545;
 }
 
 .nota-texto {
@@ -498,7 +514,7 @@ a:hover {
 } */
 
 .pill:hover .pill-circle-default {
-  background-color: #7f75b6;
+  background-color: var(--theme-color);
 }
 
 .pill {
