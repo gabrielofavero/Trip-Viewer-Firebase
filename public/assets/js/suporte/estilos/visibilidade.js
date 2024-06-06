@@ -40,7 +40,7 @@ function _loadVisibilityPasseio() {
      } else {
           _loadLightMode();
      }
-
+     
      getID("night-mode").style.display = "block";
      getID("night-mode").onclick = function () {
           _switchVisibility();

@@ -4,6 +4,7 @@
 
 :root {
   --theme-color: #5859a7;;
+  --theme-color-secondary: #D5D6E9;
 }
 
 @font-face {
@@ -96,9 +97,11 @@ h6 {
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
-  border: 6px solid #5B509E;
+  border: 6px solid var(--theme-color);
   border-top-color: #fff;
   border-bottom-color: #fff;
+  border-right-color: var(--theme-color);
+  border-left-color: var(--theme-color);
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -2231,7 +2234,7 @@ iframe {
 }
 
 .flight-icon {
-  color: #505197;
+  color: var(--theme-color);
   font-size: 36px;
   position: relative;
   z-index: 1;
@@ -2387,8 +2390,10 @@ iframe {
 }
 
 .color-icon {
-  color: #505197
+  color: var(--theme-color)
 }
+
+
 
 .hotel-description,
 .programacao-data-box {

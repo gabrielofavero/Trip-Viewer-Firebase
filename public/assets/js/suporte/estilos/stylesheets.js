@@ -1,20 +1,23 @@
 function _loadStylesheetsVisibility() {
     const stylesheets = ['mensagens.css', 'botoes.css'];
     const type = _isOnDarkMode() ? 'enable' : 'disable';
+    const functions = [];
 
     for (const stylesheet of stylesheets) {
         if (_isStylesheetLoaded(stylesheet)) {
-            _enableDarkModeOnFile(stylesheet);
+            functions.push(() => `${type}DarkModeOnFile(stylesheet)`);
         }
     }
+
+    functions.forEach((func) => func());
 }
 
 function _isStylesheetLoaded(name) {
     var stylesheets = document.styleSheets;
     for (var i = 0; i < stylesheets.length; i++) {
-         if (stylesheets[i].href && stylesheets[i].href.includes(name)) {
-              return true;
-         }
+        if (stylesheets[i].href && stylesheets[i].href.includes(name)) {
+            return true;
+        }
     }
     return false;
 }
@@ -29,7 +32,7 @@ function _enableDarkModeOnFile(stylesheet) {
             break;
         case 'viagem.css':
 
-}
+    }
 }
 
 
