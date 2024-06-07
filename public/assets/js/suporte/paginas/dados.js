@@ -294,3 +294,16 @@ async function _getConfig() {
   await Promise.all([callSyncOrder, cores, destinos, information, transportes]);
   return config;
 }
+
+function _getCloudFunctionURL(functionName) {
+  if (window.location.hostname == "localhost") {
+    return `http://localhost:5001/trip-viewer-tcc/us-central1/${functionName}`;
+  } else {
+    return `https://us-central1-trip-viewer-tcc.cloudfunctions.net/${functionName}`;
+  }
+}
+
+function _postCloudFunction(functionName, body) {
+  const url = _getCloudFunctionURL(functionName);
+  return $.post(url, body);
+}

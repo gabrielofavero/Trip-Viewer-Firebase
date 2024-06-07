@@ -5,6 +5,7 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 
 export const getGastos = onRequest(async (request, response) => {
+    debugger;
     const pin = request.body.pin as string;
     const documentID = request.body.documentID as string;
 
@@ -18,7 +19,7 @@ export const getGastos = onRequest(async (request, response) => {
         const documentSnapshot = await documentRef.get();
 
         if (!documentSnapshot.exists) {
-            response.status(404).json({ error: "Documento não encontrado." });
+            response.status(404).json({ error: "Documento não encontrado" });
             return;
         }
         const documentData = documentSnapshot.data();
@@ -27,13 +28,13 @@ export const getGastos = onRequest(async (request, response) => {
         if (storedPin) {
             const isPinValid = await bcrypt.compare(pin, storedPin);
             if (!isPinValid) {
-                response.status(403).json({ error: "PIN inválido." });
+                response.status(403).json({ error: "PIN inválido" });
                 return;
             }
         }
         response.json(documentData);
     } catch (error) {
         console.error("Erro ao acessar o Firestore:", error);
-        response.status(500).json({ error: "Erro interno do servidor." });
+        response.status(500).json({ error: "Erro interno do servidor" });
     }
 });

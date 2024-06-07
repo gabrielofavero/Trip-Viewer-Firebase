@@ -1,5 +1,5 @@
-import { convertTikTokLinks } from "./tiktok";
-import { getGastos } from "./gastos";
+import { convertTikTokLinks as tiktok } from "./tiktok";
+import { getGastos as gastos } from "./gastos";
 
-export const tiktok = convertTikTokLinks;
-export const gastos = getGastos
+export const convertTikTokLinks = tiktok;
+export const getGastos = gastos
