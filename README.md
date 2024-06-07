@@ -28,6 +28,7 @@
     - *Separar por categoria*
     - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
   - *Aplicar template em página de viagem*
+- 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
 
 ## To-Do
 
@@ -85,7 +86,6 @@
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
-- 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
 - 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
   - Tanto destinos.html quanto editar-destinos.html
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
@@ -96,7 +96,7 @@
 - 📈 **M055:** Fazer todas as mudanças de dark mode serem aplicadas via js
   -*O modelo atual de css-dark causa problemas de cache*
 - 📈 **M058:** Modularizar arquivos de CSS para diminuir redundâncias
- -*Também será preciso alterar a função que calcula o dark mode*
+  -*Também será preciso alterar a função que calcula o dark mode*
 
 ## Done
 
