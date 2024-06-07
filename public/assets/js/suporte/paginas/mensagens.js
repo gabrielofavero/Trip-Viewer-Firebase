@@ -1,5 +1,7 @@
 var MESSAGE_MODAL_OPEN = false;
 const DEFAULT_PROPERTIES = {
+  isCritical: false,
+  blur: false,
   errorData: {},
   backButton: {
     active: false,
@@ -9,7 +11,7 @@ const DEFAULT_PROPERTIES = {
     type: 'ok',
     action: ''
   }],
-  container: '',
+  container: 'message-container',
   buttonBox: ''
 }
 
@@ -27,12 +29,12 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
     _disableScroll();
 
     const container = document.createElement('div');
-    container.className = properties.container || 'message-container';
+    container.className = properties.container;
 
     const textDiv = document.createElement('div');
     textDiv.className = 'message-text-container';
 
-    if (!isErrorMessage) {
+    if (!properties.isCritical) {
       const buttonsBox = _getButtonsBox(properties.backButton);
       textDiv.appendChild(buttonsBox);
     }
@@ -70,6 +72,11 @@ function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
     container.appendChild(textDiv);
     preloader.innerHTML = '';
     preloader.style.background = 'rgba(0, 0, 0, 0.6)';
+    if (properties.blur) {
+      preloader.style.backdropFilter = 'blur(10px)';
+      preloader.style.webkitBackdropFilter = 'blur(10px)';
+    }
+
     preloader.appendChild(container);
 
     if (preloader.style.display != 'block') {
@@ -104,6 +111,7 @@ function _displayErrorMessage(error, customMessage = "", showLocation = true) {
   }
 
   const properties = {
+    isCritical: true,
     backButton: {
       active: false,
       action: ''
@@ -121,23 +129,33 @@ function _displayErrorMessage(error, customMessage = "", showLocation = true) {
 }
 
 // Mensagem de Input
-function _displayInputMessage(title, content, backAction, confirmAction = '_closeDisplayMessage();') {
-  let properties = {
-    errorData: {},
-    backButton: {
-      active: backAction ? true : false,
-      action: backAction
-    },
-    buttons: [{
-      type: 'cancelar',
-      action: ''
-    }, {
-      type: 'confirmar',
-      action: confirmAction
-    }],
-    container: 'input-container',
-    buttonBox: 'button-box-right'
-  }
+function _displayInputMessage({title, content, backAction, confirmAction = '_closeDisplayMessage();', cancelAction, isCritical=false}) {
+  let properties = DEFAULT_PROPERTIES
+  properties.backButton.active = backAction ? true : false;
+  properties.backButton.action = backAction;
+  properties.isCritical = isCritical;
+  properties.buttons = [{
+    type: 'cancelar',
+    action: cancelAction
+  }, {
+    type: 'confirmar',
+    action: confirmAction
+  }];
+  properties.container = 'input-container';
+  properties.buttonBox = 'button-box-right';
+  _displayMessage(title, content, properties);
+}
+
+// Mensagem de Não Autorizado
+function _displayUnauthorizedMessage(content, redirectTo='viagem.html') {
+  const title = "Acesso Negado 🚫";
+  let properties = DEFAULT_PROPERTIES;
+  properties.isCritical = true;
+  properties.blur = true;
+  properties.buttons = [{ 
+    type: 'voltar',
+    action: redirectTo
+  }];
   _displayMessage(title, content, properties);
 }
 
@@ -185,7 +203,8 @@ function _closeDisplayMessage() {
       preloader.style.background = '';
     }
     MESSAGE_MODAL_OPEN = false;
-    _stopLoadingScreen();
+    if (typeof _stopLoadingScreen === 'function') _stopLoadingScreen();
+
   } else {
     console.warn('Não há um modal aberto para ser fechado.');
   }
@@ -260,10 +279,12 @@ function _getButton(button) {
       return _getTryAgainButton();
     case 'home':
       return _getHomeButton();
+    case 'voltar':
+      return _getBackButton(button.action);
     case 'fechar':
       return _getCloseButton();
     case 'cancelar':
-      return _getCancelButton();
+      return _getCloseButton('Cancelar', button.action);
     case 'confirmar':
       return _getConfirmButton(button.action);
     case 'apagar':
@@ -271,7 +292,7 @@ function _getButton(button) {
     case 'apagar-basico':
       return _getDeleteButtonBasic(button.action);
     default:
-      return _getOkButton();
+      return _getCloseButton('Entendi');
   }
 }
 
@@ -280,6 +301,23 @@ function _getHomeButton() {
   button.className = 'btn btn-purple btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', 'window.location.href = "index.html";')
+
+  const icon = document.createElement('i');
+  icon.id = 'transporte-nav';
+  icon.className = 'iconify';
+  icon.setAttribute('data-icon', 'bx:home');
+
+  button.appendChild(icon);
+  button.innerHTML += ' Home';
+
+  return button;
+}
+
+function _getBackButton(redirectTo='index.html') {
+  const button = document.createElement('button');
+  button.className = 'btn btn-secondary btn-format';
+  button.type = 'submit';
+  button.setAttribute('onclick', `window.location.href = "${redirectTo}";`)
 
   const icon = document.createElement('i');
   icon.id = 'transporte-nav';
@@ -309,22 +347,14 @@ function _getTryAgainButton() {
   return button;
 }
 
-function _getCloseButton(name = 'Fechar') {
+function _getCloseButton(name = 'Fechar', onclick) {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', '_closeDisplayMessage();')
+  button.setAttribute('onclick', onclick? onclick : '_closeDisplayMessage();')
 
   button.innerHTML = name;
   return button;
-}
-
-function _getOkButton() {
-  return _getCloseButton('Entendi');
-}
-
-function _getCancelButton() {
-  return _getCloseButton('Cancelar');
 }
 
 function _getConfirmButton(onclick = '_closeDisplayMessage();') {

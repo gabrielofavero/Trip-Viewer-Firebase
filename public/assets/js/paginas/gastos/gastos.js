@@ -7,10 +7,16 @@ const FIRESTORE_DATA_MOCK = {
 var CURRENT_GASTO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', function () {
-    // get data and apply it
+    _loadGastosData();
     _loadTabGlidersVisibility('tab-moedas', true);
     _loadGastosResumo();
 });
+
+function _loadGastosData() {
+    if (!FIRESTORE_DATA_MOCK.modules.gastos) {
+        _displayUnauthorizedMessage('O módulo de gastos não está habilitado para essa viagem.');
+    }
+}
 
 function _loadGastosResumo() {
     const budgetChart = document.getElementById("budgetChart");

@@ -36,7 +36,6 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/gastos/gastos.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" />
 
 </head>
 
@@ -104,6 +103,14 @@
     <h2>Gastos</h2>
   </div>
 
+  <!-- <div class="pin-wrapper">
+    <input type="text" data-role="pin" maxlength="1" class="pin-input">
+    <input type="text" data-role="pin" maxlength="1" class="pin-input">
+    <input type="text" data-role="pin" maxlength="1" class="pin-input">
+    <input type="text" data-role="pin" maxlength="1" class="pin-input">
+  </div>
+  <div class="pin"></div> -->
+
   <div id="gastos-container">
     <div class="tabs-container">
       <div class="tabs" id="tab-gastos">
@@ -132,7 +139,7 @@
   <div>
     <div id="resumo">
       <div class="gastos-container">
-        <div class="gastos-card gastos-recibo">
+        <div id="resumo-gastos-previos" class="gastos-card gastos-recibo">
           <h2 class="gastos-titulo">Gastos Prévios</h2>
           <table class="card-full-size">
             <thead>
@@ -158,104 +165,58 @@
                 <td class="tabela-texto-direita">$60</td>
               </tr>
             </tbody>
+            <tfoot>
+              <tr>
+                <th class="tabela-titulo-esquerda">Total</th>
+                <th class="tabela-titulo-direita">$3,260</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div id="resumo-gastos-na-viagem" class="gastos-card gastos-recibo">
+          <h2 class="gastos-titulo">Gastos Prévios</h2>
+          <table class="card-full-size">
+            <thead>
+              <tr>
+                <th class="tabela-titulo-esquerda">Tipo</th>
+                <th class="tabela-titulo-direita">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tabela-texto-esquerda">Transporte</td>
+                <td class="tabela-texto-direita">$1,500</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">Hospedagens</td>
+                <td class="tabela-texto-direita">$1,500</td>
+              <tr>
+                <td class="tabela-texto-esquerda">Entretenimento</td>
+                <td class="tabela-texto-direita">$200</td>
+              </tr>
+              <tr>
+                <td class="tabela-texto-esquerda">Outros</td>
+                <td class="tabela-texto-direita">$60</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th class="tabela-titulo-esquerda">Total</th>
+                <th class="tabela-titulo-direita">$3,260</th>
+              </tr>
+            </tfoot>
           </table>
         </div>
         <div class="gastos-card grafico-pizza">
-          <h2 class="gastos-titulo">Tipos de Gasto</h2>
+          <h2 class="gastos-titulo">Resumo dos Gastos</h2>
+          <div id="resumo-total" class="gastos-subtitulo">Total: R$ 100,00</div>
           <canvas id="budgetChart" width="300" height="300"></canvas>
         </div>
       </div>
     </div>
     <div id="gastos-previos" style="display: none">
-      <div class="gastos-container">
-        <div class="gastos-card gastos-recibo">
-          <h2 class="gastos-titulo">Gastos Prévios</h2>
-          <table class="card-full-size">
-            <thead>
-              <tr>
-                <th class="tabela-titulo-esquerda">Date</th>
-                <th class="tabela-titulo-esquerda">Description</th>
-                <th class="tabela-titulo-direita">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-01</td>
-                <td class="tabela-texto-esquerda">Rent Payment</td>
-                <td class="tabela-texto-direita">$1,500</td>
-              </tr>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-05</td>
-                <td class="tabela-texto-esquerda">Grocery Store</td>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-15</td>
-                <td class="tabela-texto-esquerda">Utility Bill</td>
-                <td class="tabela-texto-direita">$200</td>
-              </tr>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-25</td>
-                <td class="tabela-texto-esquerda">Dinner</td>
-                <td class="tabela-texto-direita">$60</td>
-              </tr>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-31</td>
-                <td class="tabela-texto-esquerda">Internet Bill</td>
-                <td class="tabela-texto-direita">$100</td>
-              </tr>
-              
-            </tbody>
-          </table>
-        </div>
-        <div class="gastos-card grafico-pizza">
-          <h2 class="gastos-titulo">Tipos de Gasto</h2>
-          <canvas id="budgetChart" width="300" height="300"></canvas>
-        </div>
-      </div>
     </div>
     <div id="gastos-na-viagem" style="display: none">
-      <div class="gastos-container">
-        <div class="gastos-card gastos-card gastos-recibo">
-          <h2 class="gastos-titulo">Resumo dos Gastos</h2>
-          <table class="card-full-size">
-            <thead>
-              <tr>
-                <th class="tabela-titulo-esquerda">Date</th>
-                <th class="tabela-titulo-esquerda">Description</th>
-                <th class="tabela-titulo-direita">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-01</td>
-                <td class="tabela-texto-esquerda">Rent Payment</td>
-                <td class="tabela-texto-direita">$1,500</td>
-              </tr>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-05</td>
-                <td class="tabela-texto-esquerda">Grocery Store</td>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-15</td>
-                <td class="tabela-texto-esquerda">Utility Bill</td>
-                <td class="tabela-texto-direita">$200</td>
-              </tr>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-25</td>
-                <td class="tabela-texto-esquerda">Dinner</td>
-                <td class="tabela-texto-direita">$60</td>
-              </tr>
-              <tr>
-                <td class="tabela-texto-esquerda">2021-08-31</td>
-                <td class="tabela-texto-esquerda">Internet Bill</td>
-                <td class="tabela-texto-direita">$100</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="gastos-card grafico-pizza">
-          <h2 class="gastos-titulo">Tipos de Gasto</h2>
-          <canvas id="budgetChart" width="300" height="300"></canvas>
-        </div>
-      </div>
     </div>
   </div>
   </div>
@@ -292,6 +253,7 @@
   <script src="assets/js/suporte/estilos/animacoes.js"></script>
   <script src="assets/js/suporte/paginas/dados.js"></script>
   <script src="assets/js/suporte/estilos/svgs.js"></script>
+  <script src="assets/js/suporte/estilos/visibilidade.js"></script>
   <script src="assets/js/suporte/paginas/mensagens.js"></script>
   <script src="assets/js/paginas/destinos/suporte/embed.js"></script>
   <script src="assets/js/paginas/destinos/categorias.js"></script>
@@ -302,6 +264,7 @@
   <script src="assets/js/suporte/estilos/stylesheets.js"></script>
   <script src="assets/js/suporte/paginas/dispositivos.js"></script>
   <script src="assets/js/suporte/paginas/datas.js"></script>
+  <script src="assets/js/paginas/gastos/suporte/pin.js"></script>
   <script src="assets/js/paginas/gastos/gastos.js"></script>
 
 </body>

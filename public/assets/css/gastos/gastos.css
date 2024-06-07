@@ -18,8 +18,9 @@ body {
   transition: all 0.3s;
 }
 
-strong {
-  color: #3A3838;
+a {
+  color: #3d85c6;
+  text-decoration: none;
 }
 
 h1,
@@ -92,19 +93,13 @@ h6 {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  position: relative;
-  bottom: 0;
-  background: #f7f8f9;
   color: #4F5051;
   font-size: 14px;
   text-align: center;
-  width: 100%;
-  padding: 0 0;
+  padding: 20px 0;
 }
 
-.atribuicoes-icon {
-  font-size: 10px;
-}
+#footer
 
 #footer h3 {
   font-size: 36px;
@@ -120,6 +115,40 @@ h6 {
   font-style: italic;
   padding: 0;
   margin: 0 0 40px 0;
+}
+
+#footer .social-links {
+  margin-bottom: 20px;
+  margin-top: -20px;
+}
+
+#footer .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #5859a7;
+  color: #fff;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+
+#footer .social-links a:hover {
+  background: #5859a7;
+  color: #fff;
+  text-decoration: none;
+}
+
+#footer .copyright {
+  margin: 0 0 5px 0;
+}
+
+#footer .credits {
+  font-size: 13px;
 }
 
 /*--------------------------------------------------------------
@@ -284,7 +313,7 @@ section {
 
 .gastos-card {
   border: 0.5px solid #f0f0f0;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
 }
 
 .card-full-size {
@@ -300,7 +329,19 @@ section {
 /* Media query for large screens */
 @media (min-width: 1024px) {
   .gastos-recibo {
-    grid-column: span 8;
+    grid-column: span 4;
+  }
+}
+
+.grafico-pizza {
+  padding: 1.5rem;
+  grid-column: span 12 / span 12;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .grafico-pizza {
+    grid-column: span 4 / span 4;
   }
 }
 
@@ -309,6 +350,11 @@ section {
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 500;
+}
+
+.gastos-subtitulo {
+  font-weight: bold;
+  color: #4B5563;
 }
 
 .tabela-titulo-esquerda {
@@ -331,18 +377,6 @@ section {
 
 .tabela-texto-direita {
   text-align: right;
-}
-
-.grafico-pizza {
-  padding: 1.5rem;
-  grid-column: span 12 / span 12;
-  border-radius: 0.5rem;
-}
-
-@media (min-width: 1024px) {
-  .grafico-pizza {
-    grid-column: span 4 / span 4;
-  }
 }
 
 /*--------------------------------------------------------------
@@ -429,7 +463,7 @@ section {
     height: auto;
     background: var(--background-mensagens);
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -482,4 +516,31 @@ section {
         width: 90%;
         height: auto;
     }
+}
+
+/*--------------------------------------------------------------
+# Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
+--------------------------------------------------------------*/
+.pin-wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:50vh;
+}
+input{
+    width: 44px;
+    height: 44px;
+    border: 1px solid #d7d7d7;
+    border-radius: 6px;
+    outline: none;
+    margin: 1px;
+    text-align:center;
+    margin:0 5px;
+    background:#eeeeee;
+    font-size:20px;
+}
+.pin{
+  color:#ffffff;
+  font-size:20px;
+  text-align:center;
 }
