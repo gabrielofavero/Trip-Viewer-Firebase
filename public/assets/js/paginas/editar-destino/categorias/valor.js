@@ -26,9 +26,9 @@ function _loadMoedaOptions() {
     const moeda = getID('moeda').value;
     VALOR_OPTIONS = '';
 
-    if (moeda != 'outra' && CONFIG.destinos.currency[moeda]) {
+    if (moeda != 'outra' && CONFIG.moedas.escala[moeda]) {
         for (const categoria of VALORES_KEYS) {
-            VALOR_OPTIONS += `<option value="${categoria}">${CONFIG.destinos.currency[moeda][categoria]}</option>`;
+            VALOR_OPTIONS += `<option value="${categoria}">${CONFIG.moedas.escala[moeda][categoria]}</option>`;
         }
         if (VALOR_OPTIONS) {
             VALOR_OPTIONS += '<option value="outro">Outro</option>';

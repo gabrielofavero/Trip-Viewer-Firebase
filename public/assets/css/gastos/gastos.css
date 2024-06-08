@@ -224,11 +224,11 @@ input[id="radio-resumo"]:checked~.glider {
   transform: translateX(0);
 }
 
-input[id="radio-gastos-previos"]:checked~.glider {
+input[id="radio-gastosPrevios"]:checked~.glider {
   transform: translateX(100%);
 }
 
-input[id="radio-gastos-na-viagem"]:checked~.glider {
+input[id="radio-gastosDurante"]:checked~.glider {
   transform: translateX(200%);
 }
 

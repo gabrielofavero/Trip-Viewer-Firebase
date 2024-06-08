@@ -107,7 +107,7 @@ function _buildDestinoExport(destino, code) {
 }
 
 function _getDestinoValores(destino) {
-  return CONFIG.destinos.currency[destino.moeda] || CONFIG.destinos.currency["R$"];
+  return CONFIG.moedas.escala[destino.moeda] || CONFIG.moedas.escala["BRL"];
 }
 
 function _loadAndOpenDestino(code) {
@@ -232,7 +232,7 @@ function _buildLineupDestinosObject() {
       },
       "lanches": emptyObj,
       "restaurantes": emptyObj,
-      "moeda": "R$",
+      "moeda": "BRL",
       "lineup": FIRESTORE_DATA.lineup.generico,
       "myMaps": ""
     }

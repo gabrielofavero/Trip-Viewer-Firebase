@@ -11,7 +11,7 @@ function _loadDadosBasicosNewTrip() {
   getID('inicio').value = TODAY;
   getID('fim').value = TOMORROW;
 
-  getID('moeda').value = 'R$';
+  getID('moeda').value = 'BRL';
   getID('quantidadePessoas').value = 1;
 }
 

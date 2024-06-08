@@ -290,8 +290,9 @@ async function _getConfig() {
   const cores = $.getJSON("assets/json/cores.json").then(data => config.cores = data);
   const destinos = $.getJSON("assets/json/destinos.json").then(data => config.destinos = data);
   const information = $.getJSON("assets/json/information.json").then(data => config.information = data);
+  const moedas = $.getJSON("assets/json/moedas.json").then(data => config.moedas = data);
   const transportes = $.getJSON("assets/json/transportes.json").then(data => config.transportes = data);
-  await Promise.all([callSyncOrder, cores, destinos, information, transportes]);
+  await Promise.all([callSyncOrder, cores, destinos, information, moedas, transportes]);
   return config;
 }
 
