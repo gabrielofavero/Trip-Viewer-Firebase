@@ -1,4 +1,4 @@
-function _aplicarGraficoPizza(id, labels, valores) {
+function _setDoughnutChart(id, labels, valores) {
     const div = document.getElementById(id);
     const dados = {
         labels: labels,

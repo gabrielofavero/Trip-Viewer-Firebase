@@ -110,3 +110,35 @@ function _sortMoedas(arr) {
         }
     });
 }
+
+function _canConvert(subtipo) {
+    const moedas = _filterMoedas(GASTOS[subtipo].map(gasto => gasto.moeda));
+    if (moedas.length <= 1) {
+        return true;
+    }
+    const keys = Object.keys(MOEDA_CONVERSAO);
+    for (const moeda of moedas) {
+        if ((!keys.includes(MOEDA_CONVERSAO + moeda) && !keys.includes(moeda + MOEDA_CONVERSAO)) || (!keys[MOEDA_CONVERSAO + moeda] && !keys[moeda + MOEDA_CONVERSAO])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function _convertMoeda(from, to, valor) {
+    if (MOEDA_CONVERSAO[from + to]) {
+        return valor * MOEDA_CONVERSAO[from + to];
+    } else if (MOEDA_CONVERSAO[to + from]) {
+        return valor / MOEDA_CONVERSAO[to + from];
+    } else {
+        _displayError('Erro ao converter moeda');
+    }
+}
+
+function _getMoedaSymbol(moeda) {
+    if (CONFIG.moedas.simbolos[moeda]) {
+        return CONFIG.moedas.simbolos[moeda];
+    } else {
+        return moeda;
+    }
+}
