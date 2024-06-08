@@ -60,11 +60,13 @@ function _reloadModalCalendar(programacao) {
 }
 
 function _displayInnerProgramacaoMessage(index, container = 'programacao-container') {
-    let properties = MENSAGEM_PROPRIEDADES;
-    properties.buttons = [];
-    properties.container = container;
+    const propriedades = MENSAGEM_PROPRIEDADES;
+    propriedades.titulo = INNER_PROGRAMACAO_ATUAL[index].titulo;
+    propriedades.conteudo = INNER_PROGRAMACAO_ATUAL[index].content;
+    propriedades.botoes = [];
+    propriedades.containers.principal = container;
 
-    _displayMessage(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
+    _displayFullMessage(propriedades);
 
     switch (INNER_PROGRAMACAO_ATUAL[index].tipo) {
         case 'hospedagens':

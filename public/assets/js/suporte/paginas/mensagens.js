@@ -170,12 +170,12 @@ function _getContainersInput() {
   }
 }
 
-function _getIconsBox(icones = {}) {
+function _getIconsBox(icones) {
   const iconContainer = document.createElement('div');
   iconContainer.className = 'icon-container';
   iconContainer.style.textAlign = 'right';
 
-  if (icones[0].tipo === 'voltar') {
+  if (icones && icones[0] && icones[0].tipo === 'voltar') {
     const backIcon = document.createElement('i');
     backIcon.id = 'back-icon';
     backIcon.className = 'bx bx-arrow-back';
