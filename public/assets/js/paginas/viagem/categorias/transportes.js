@@ -68,6 +68,7 @@ function _getEmpresaObj(j) {
 }
 
 function _getImagemHTML(j, empresa) {
+  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
   if (!empresa.isCustom) {
     return `<a href="${empresa.site}">
               <img class="flight-img" id="flight-img-claro-${j}" src="${empresa.imagens.claro}"
@@ -78,7 +79,7 @@ function _getImagemHTML(j, empresa) {
   } else if (empresa.titulo) {
     return `<div class="flight-title-text">${empresa.titulo}</div>`
   } else {
-    return `<div class="flight-title-text">Trajeto #${j}</div>`
+    return `<div class="flight-title-text">${transporte.pontos.partida} → ${transporte.pontos.chegada}</div>`
   }
 }
 
