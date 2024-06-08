@@ -1,4 +1,5 @@
 :root {
+  --roxo: #5859a7;
   --primary-color: #5859a7;
   --secondary-color: #e6eef9;
   --background-mensagens: #fff;
@@ -99,9 +100,7 @@ h6 {
   padding: 20px 0;
 }
 
-#footer
-
-#footer h3 {
+#footer #footer h3 {
   font-size: 36px;
   font-weight: 700;
   position: relative;
@@ -382,8 +381,10 @@ section {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-
-#preloader {
+#preloader,
+#preloader-viagens,
+#preloader-destinos,
+#preloader-listagens {
   position: fixed;
   top: 0;
   left: 0;
@@ -391,11 +392,53 @@ section {
   bottom: 0;
   z-index: 9999;
   overflow: hidden;
+}
+
+#preloader {
   background: #fff;
 }
 
-:root {
-  --roxo: #5859a7;
+#preloader:before,
+#preloader-viagens:before,
+#preloader-destinos:before,
+#preloader-listagens:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #5B509E;
+  border-top-color: #f7f8f9;
+  border-bottom-color: #f7f8f9;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: animate-preloader 1s linear infinite;
+  animation: animate-preloader 1s linear infinite;
+}
+
+#preloader:before {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
+
+@-webkit-keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /*--------------------------------------------------------------
@@ -453,94 +496,87 @@ section {
 --------------------------------------------------------------*/
 
 .message-container,
-.programacao-container,
-.destinos-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 450px;
-    height: auto;
-    background: var(--background-mensagens);
-    border-radius: 10px;
-    box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    overflow-wrap: break-word;
-}
-
-.message-container,
-.programacao-container {
-    text-align: center;
-}
-
-.programacao-container,
-.destinos-container {
-    padding: 20px;
-    width: 500px;
-}
-
-.message-text-container {
-    width: 100%;
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-.message-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.error-message {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #666;
+.input-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  overflow-wrap: break-word;
 }
 
 @media (max-height: 730px) {
-    .programacao-container,
-    .destinos-container {
-        max-height: 95%;
-        overflow: auto;
-        display: block;
-    }
+  .input-container {
+    display: block;
+    height: 95% !important;
+    overflow: auto;
+  }
+}
+
+.message-container {
+  text-align: center;
+}
+
+.message-text-container {
+  width: 100%;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.message-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  margin-top: 10px;
 }
 
 @media (max-width: 520px) {
-    .message-container,
-    .programacao-container,
-    .destinos-container {
-        width: 90%;
-        height: auto;
-    }
+
+  .message-container,
+  .input-container {
+    width: 90%;
+    height: auto;
+  }
 }
+
 
 /*--------------------------------------------------------------
 # Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
 --------------------------------------------------------------*/
-.pin-wrapper{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:50vh;
+.pin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
 }
-input{
-    width: 44px;
-    height: 44px;
-    border: 1px solid #d7d7d7;
-    border-radius: 6px;
-    outline: none;
-    margin: 1px;
-    text-align:center;
-    margin:0 5px;
-    background:#eeeeee;
-    font-size:20px;
+
+input {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  outline: none;
+  margin: 1px;
+  text-align: center;
+  margin: 0 5px;
+  background: #eeeeee;
+  font-size: 20px;
 }
-.pin{
-  color:#ffffff;
-  font-size:20px;
-  text-align:center;
+
+.pin {
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  display: none;
 }

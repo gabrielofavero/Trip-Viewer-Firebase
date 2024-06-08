@@ -46,12 +46,19 @@ function _openInnerProgramacao(j, k, turno) {
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
 
-    const titulo = getID(`programacao-title-${j}`).innerText;
-    const conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
-    const backAction = `_closeInnerProgramacaoItem(${j})`;
-    const confirmAction = turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`;
+    const propriedades = MENSAGEM_PROPRIEDADES
+    propriedades.titulo = getID(`programacao-title-${j}`).innerText;
+    propriedades.containers = _getContainersInput();
+    propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
+    propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacaoItem(${j})` }];
+    propriedades.botoes = [{
+        tipo: 'cancelar',
+      }, {
+        tipo: 'confirmar',
+        acao: turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`
+      }];
 
-    _displayInputMessage({titulo, conteudo, backAction, confirmAction});
+    _displayMensagemFull(propriedades);
 
     if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';

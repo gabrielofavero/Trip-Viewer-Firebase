@@ -18,10 +18,10 @@ async function generateHash(password) {
             return data.hash;
         } else {
             console.error('Não foi possível gerar o hash da senha: ' + data.msg);
-            _displayErrorMessage(data.msg);
+            _displayErro(data.msg);
         }
     } catch (error) {
         console.error('Erro ao gerar hash da senha: ' + error);
-        _displayErrorMessage(error);
+        _displayErro(error);
     }
 }

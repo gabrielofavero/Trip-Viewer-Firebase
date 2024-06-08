@@ -60,11 +60,11 @@ function _reloadModalCalendar(programacao) {
 }
 
 function _displayInnerProgramacaoMessage(index, container = 'programacao-container') {
-    let properties = DEFAULT_PROPERTIES;
+    let properties = MENSAGEM_PROPRIEDADES;
     properties.buttons = [];
     properties.container = container;
 
-    _displayMessage(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
+    _displayMensagem(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
 
     switch (INNER_PROGRAMACAO_ATUAL[index].tipo) {
         case 'hospedagens':

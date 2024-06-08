@@ -125,7 +125,7 @@ async function _getSingleData(type) {
         data.destinos[i].destinos = place
       }
     } else {
-      _displayErrorMessage(`Não foi possível carregar a página. Não há um código de ${type} válido na URL`);
+      _displayErro(`Não foi possível carregar a página. Não há um código de ${type} válido na URL`);
     }
   } catch (error) {
     console.error('Error fetching data from Firestore:', error.message);

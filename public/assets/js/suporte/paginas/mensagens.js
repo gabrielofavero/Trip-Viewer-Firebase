@@ -1,198 +1,149 @@
 var MESSAGE_MODAL_OPEN = false;
-const DEFAULT_PROPERTIES = {
-  isCritical: false,
-  blur: false,
-  errorData: {},
-  backButton: {
-    active: false,
-    action: ''
-  },
-  buttons: [{
-    type: 'ok',
-    action: ''
+const MENSAGEM_PROPRIEDADES = {
+  titulo: '',
+  conteudo: '',
+  critico: false,
+  blur: true,
+  erro: {},
+  icones: [], 
+  botoes: [{
+    tipo: 'ok',
+    acao: ''
   }],
-  container: 'message-container',
-  buttonBox: ''
+  containers: {
+    principal: 'message-container',
+    botoes: 'button-box'
+  }
 }
 
+
 // Mensagem Genérica
-function _displayMessage(title, content, properties = DEFAULT_PROPERTIES) {
+function _displayMensagem(titulo, conteudo) {
+  const properties = MENSAGEM_PROPRIEDADES;
+  if (titulo) properties.titulo = titulo;
+  if (conteudo) properties.conteudo = conteudo;
+  _displayMensagemFull(properties);
+}
+
+function _displayMensagemFull(propriedades = MENSAGEM_PROPRIEDADES) {
   const preloader = getID('preloader');
-  const isErrorMessage = properties.errorData?.isError === true;
+  const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
   if (typeof _stopLoadingTimer === 'function') {
     _stopLoadingTimer();
   }
 
-  if (preloader) {
-    MESSAGE_MODAL_OPEN = true;
-    _disableScroll();
-
-    const container = document.createElement('div');
-    container.className = properties.container;
-
-    const textDiv = document.createElement('div');
-    textDiv.className = 'message-text-container';
-
-    if (!properties.isCritical) {
-      const buttonsBox = _getButtonsBox(properties.backButton);
-      textDiv.appendChild(buttonsBox);
-    }
-
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'message-title';
-    titleDiv.id = 'message-title';
-    titleDiv.innerHTML = title;
-    textDiv.appendChild(titleDiv);
-
-    const descriptionDiv = document.createElement('div');
-    descriptionDiv.className = 'message-description';
-    descriptionDiv.innerHTML = content;
-    textDiv.appendChild(descriptionDiv);
-
-    if (isErrorMessage) {
-      const errorElement = _getErrorElement(properties.errorData, textDiv);
-      textDiv.appendChild(errorElement);
-    }
-
-    if (properties.buttons && properties.buttons.length > 0) {
-      const buttonBox = document.createElement('div');
-      buttonBox.className = properties.buttonBox || 'button-box';
-
-      buttonBox.style.marginTop = '25px';
-
-      for (const buttonType of properties.buttons) {
-        const button = _getButton(buttonType);
-        buttonBox.appendChild(button);
-      }
-
-      textDiv.appendChild(buttonBox);
-    }
-
-    container.appendChild(textDiv);
-    preloader.innerHTML = '';
-    preloader.style.background = 'rgba(0, 0, 0, 0.6)';
-    if (properties.blur) {
-      preloader.style.backdropFilter = 'blur(10px)';
-      preloader.style.webkitBackdropFilter = 'blur(10px)';
-    }
-
-    preloader.appendChild(container);
-
-    if (preloader.style.display != 'block') {
-      preloader.style.display = 'block';
-    }
-  } else {
+  if (!preloader) {
     console.warn('Não foi possível exibir a mensagem pois o preloader não foi encontrado');
+    return;
+  }
+
+  MESSAGE_MODAL_OPEN = true;
+  _disableScroll();
+
+  // Container
+  const container = document.createElement('div');
+  container.className = propriedades.containers.principal;
+
+  // Container de Texto
+  const textDiv = document.createElement('div');
+  textDiv.className = 'message-text-container';
+
+  // Criticidade
+  if (!propriedades.critico) {
+    const buttonsBox = _getIconsBox(propriedades.icones);
+    textDiv.appendChild(buttonsBox);
+  }
+
+  // Título
+  const titleDiv = document.createElement('div');
+  titleDiv.className = 'message-title';
+  titleDiv.id = 'message-title';
+  titleDiv.innerHTML = propriedades.titulo;
+  textDiv.appendChild(titleDiv);
+
+  // Descrição
+  const descriptionDiv = document.createElement('div');
+  descriptionDiv.className = 'message-description';
+  descriptionDiv.innerHTML = propriedades.conteudo;
+  textDiv.appendChild(descriptionDiv);
+
+  // Mensagem de Erro
+  if (isErrorMessage) {
+    const errorElement = _getErrorElement(propriedades.erro, textDiv);
+    textDiv.appendChild(errorElement);
+  }
+
+  // Botões
+  if (propriedades.botoes && propriedades.botoes.length > 0) {
+    const buttonBox = document.createElement('div');
+    buttonBox.className = propriedades.containers?.botoes || 'button-box';
+
+    buttonBox.style.marginTop = '25px';
+
+    for (const buttonType of propriedades.botoes) {
+      const button = _getButton(buttonType);
+      buttonBox.appendChild(button);
+    }
+
+    textDiv.appendChild(buttonBox);
+  }
+
+  // Adiciona ao Container
+  container.appendChild(textDiv);
+  preloader.innerHTML = '';
+  preloader.style.background = 'rgba(0, 0, 0, 0.6)';
+
+  // Blur
+  if (propriedades.blur) {
+    preloader.style.backdropFilter = 'blur(10px)';
+    preloader.style.webkitBackdropFilter = 'blur(10px)';
+  }
+
+  // Adiciona ao Preloader
+  preloader.appendChild(container);
+
+  // Exibe o Preloader
+  if (preloader.style.display != 'block') {
+    preloader.style.display = 'block';
   }
 }
+
 
 // Mensagem de Erro
-function _displayErrorMessage(error, customMessage = "", showLocation = true) {
-  const title = "Erro no Carregamento 🙁";
-  let isErrorInstance = error instanceof Error;
-  let content = 'Um erro inesperado impediu o carregamento da página. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.';
+function _displayErro(erro, tentarNovamente=false) {
+  const propriedades = MENSAGEM_PROPRIEDADES;
+  const isError = (erro && erro instanceof Error);
+  
+  propriedades.titulo = "Erro no Carregamento 🙁";
+  propriedades.critico = true;
+  propriedades.conteudo = !erro ? 'Um erro inesperado impediu o carregamento da página. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.':
+                          isError ? erro.message + '. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.' :
+                          erro;
+  propriedades.localizacao = isError;
 
-  if (isErrorInstance && customMessage) {
-    content = customMessage;
-  } else if (!isErrorInstance && error && !customMessage) {
-    content = `${error}. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.`;
-  } else if (!isErrorInstance && error && customMessage) {
-    error = new Error(error);
-    content = customMessage;
-    showLocation = false;
-    isErrorInstance = true;
-  }
-
-  let buttons = [{ type: 'tryAgain' }];
-
+  const botoes = tentarNovamente ? [{ tipo: 'tente-novamente' }] : [];
   if (!window.location.href.includes('index.html')) {
-    buttons.push({ type: 'home' });
+    botoes.push({ tipo: 'home' });
   }
-
-  const properties = {
-    isCritical: true,
-    backButton: {
-      active: false,
-      action: ''
-    },
-    errorData: {
-      isError: true,
-      error: isErrorInstance ? error : "",
-      showLocation: isErrorInstance ? showLocation : false
-    },
-    buttons: buttons,
-    container: 'message-container'
-  }
-
-  _displayMessage(title, content, properties);
+  propriedades.botoes = botoes;
+  _displayMensagemFull(propriedades);
 }
 
-// Mensagem de Input
-function _displayInputMessage({title, content, backAction, confirmAction = '_closeDisplayMessage();', cancelAction, isCritical=false}) {
-  let properties = DEFAULT_PROPERTIES
-  properties.backButton.active = backAction ? true : false;
-  properties.backButton.action = backAction;
-  properties.isCritical = isCritical;
-  properties.buttons = [{
-    type: 'cancelar',
-    action: cancelAction
-  }, {
-    type: 'confirmar',
-    action: confirmAction
-  }];
-  properties.container = 'input-container';
-  properties.buttonBox = 'button-box-right';
-  _displayMessage(title, content, properties);
-}
 
 // Mensagem de Não Autorizado
-function _displayUnauthorizedMessage(content, redirectTo='viagem.html') {
-  const title = "Acesso Negado 🚫";
-  let properties = DEFAULT_PROPERTIES;
-  properties.isCritical = true;
-  properties.blur = true;
-  properties.buttons = [{ 
-    type: 'voltar',
-    action: redirectTo
+function _displayAcessoNegado(conteudo, redirectTo='viagem.html') {
+  const propriedades = MENSAGEM_PROPRIEDADES;
+  propriedades.titulo = "Acesso Negado 🚫";
+  propriedades.conteudo = conteudo || "Você não tem permissão para acessar esta página.";
+  propriedades.critico = true;
+  propriedades.botoes = [{ 
+    tipo: 'voltar',
+    acao: redirectTo
   }];
-  _displayMessage(title, content, properties);
+  _displayMensagemFull(propriedades);
 }
 
-// Atribuições
-function _openAtribuicoes() {
-  const page = window.location.href.split('/').pop();
-  const title = '';
-  const buttons = [{ type: 'ok' }];
-
-  let content = '';
-  let atribuicoes = [];
-
-  const logotipo = `<strong>Logotipo: </strong> <a href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph" target="_blank">studiogstock</a> (Adaptado)`;
-  const imagemDeFundo = `<strong>Imagem de Fundo: </strong> <a href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph" target="_blank">jcomp</a> (Freepik)`;
-  const formularios = `<strong>Formulários: </strong> <a href="https://github.com/nielsVoogt/nice-forms.css" target="_blank">Niels Voogt</a> (Adaptado)`;
-  const calendario = `<strong>Calendário: </strong> <a href="https://www.cssscript.com/minimal-calendar-ui-generator/" target="_blank">niinpatel</a> (Adaptado)`
-  const accordion = `<strong>Accordion: </strong> <a href="https://github.com/nielsVoogt/nice-forms.css" target="_blank">Niels Voogt</a> (Adaptado)`
-
-  atribuicoes.push(logotipo);
-
-  if (page.includes('index')) {
-    atribuicoes.push(imagemDeFundo);
-  } else if (page.includes('editar-')) {
-    atribuicoes.push(imagemDeFundo);
-    atribuicoes.push(formularios);
-  } else if (page.includes('viagem')) {
-    atribuicoes.push(imagemDeFundo);
-    atribuicoes.push(calendario);
-  } else if (page.includes('destinos')) {
-    atribuicoes.push(imagemDeFundo);
-    atribuicoes.push(accordion);
-  }
-
-  content = atribuicoes.join('<br>');
-
-  _displayMessage(title, content, { buttons: buttons });
-}
 
 // Fechar Mensagem
 function _closeDisplayMessage() {
@@ -214,17 +165,25 @@ function _overrideErrorMessage() {
   _closeDisplayMessage();
 }
 
+
 // Funções de Suporte
-function _getButtonsBox(backButton = {}) {
+function _getContainersInput() {
+  return {
+    principal: 'input-container',
+    botoes: 'button-box-right'
+  }
+}
+
+function _getIconsBox(icones = {}) {
   const iconContainer = document.createElement('div');
   iconContainer.className = 'icon-container';
   iconContainer.style.textAlign = 'right';
 
-  if (backButton.active) {
+  if (icones[0].tipo === 'voltar') {
     const backIcon = document.createElement('i');
     backIcon.id = 'back-icon';
     backIcon.className = 'bx bx-arrow-back';
-    backIcon.setAttribute('onclick', backButton.action);
+    backIcon.setAttribute('onclick', icones.action);
     backIcon.style.visibility = 'hidden';
     backIcon.style.cursor = 'pointer';
 
@@ -243,10 +202,10 @@ function _getButtonsBox(backButton = {}) {
   return iconContainer;
 }
 
-function _getErrorElement(errorData) {
+function _getErrorElement(erro) {
   let location = "";
-  if (errorData?.showLocation) {
-    const stackTrace = errorData.error ? errorData.error.stack : (new Error()).stack;
+  if (erro?.showLocation) {
+    const stackTrace = erro.error ? erro.error.stack : (new Error()).stack;
     const stackSplit = stackTrace.split('\n');
     location = stackSplit[2] ? stackSplit[2] : stackSplit[stackSplit.length - 1];
     location = location.split("/")[location.split("/").length - 1]
@@ -255,10 +214,10 @@ function _getErrorElement(errorData) {
 
   let errorMessage = "";
 
-  if (location && errorData.error && errorData.error instanceof Error) {
-    errorMessage = `Erro "${errorData.error.message}" localizado em ${location}`;
-  } else if (errorData.error && errorData.error instanceof Error) {
-    errorMessage = `Erro "${errorData.error.message}"`;
+  if (location && erro.error && erro.error instanceof Error) {
+    errorMessage = `Erro "${erro.error.message}" localizado em ${location}`;
+  } else if (erro.error && erro.error instanceof Error) {
+    errorMessage = `Erro "${erro.error.message}"`;
   }
 
   const errorElement = document.createElement('p');
@@ -273,24 +232,24 @@ function _getErrorElement(errorData) {
 }
 
 // Botões
-function _getButton(button) {
-  switch (button.type) {
-    case 'tryAgain':
+function _getButton(botao) {
+  switch (botao.tipo) {
+    case 'tente-novamente':
       return _getTryAgainButton();
     case 'home':
       return _getHomeButton();
     case 'voltar':
-      return _getBackButton(button.action);
+      return _getBackButton(botao.acao);
     case 'fechar':
       return _getCloseButton();
     case 'cancelar':
-      return _getCloseButton('Cancelar', button.action);
+      return _getCloseButton('Cancelar', botao.acao);
     case 'confirmar':
-      return _getConfirmButton(button.action);
+      return _getConfirmButton(botao.acao);
     case 'apagar':
-      return _getDeleteButton(button.action);
+      return _getDeleteButton(botao.acao);
     case 'apagar-basico':
-      return _getDeleteButtonBasic(button.action);
+      return _getDeleteButtonBasic(botao.acao);
     default:
       return _getCloseButton('Entendi');
   }
@@ -364,7 +323,6 @@ function _getConfirmButton(onclick = '_closeDisplayMessage();') {
   button.setAttribute('onclick', onclick)
 
   button.innerHTML = 'Confirmar';
-
   return button;
 }
 

@@ -30,7 +30,7 @@ async function _registerIfUserNotPresent() {
 
     if (!user) {
         _signOut();
-        _displayErrorMessage('Não é possível fazer o registro sem um usuário autenticado.');
+        _displayErro('Não é possível fazer o registro sem um usuário autenticado.');
         return;
     }
 
@@ -42,7 +42,7 @@ async function _registerIfUserNotPresent() {
         _signOut();
         const title = 'Você chegou muito cedo! 😅';
         const content = 'Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀';
-        _displayMessage(title, content);
+        _displayMensagem(title, content);
         return;
     }
 
@@ -102,7 +102,7 @@ async function _getUser() {
 async function _canEdit(dono, editores) {
     const uid = await _getUID();
     if (DOCUMENT_ID && (!uid || (uid != dono && !editores.includes(uid)))) {
-      _displayErrorMessage('Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.');
-      return false;
+        _displayErroTenteNovamente('Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.');
+        return false;
     } else return true;
-  }
+}

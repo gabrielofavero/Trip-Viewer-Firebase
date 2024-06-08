@@ -103,22 +103,16 @@
     <h2>Gastos</h2>
   </div>
 
-  <!-- <div class="pin-wrapper">
-    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-  </div>
-  <div class="pin"></div> -->
+  <!--  -->
 
   <div id="gastos-container">
     <div class="tabs-container">
-      <div class="tabs" id="tab-gastos">
-        <input type="radio" id="radio-resumo" name="tabs-gastos" checked />
+      <div class="tabs" id="tab-gastos" style="display: none;">
+        <input type="radio" style="display: none;" id="radio-resumo" name="tabs-gastos" checked />
         <label class="tab" for="radio-resumo">Resumo</label>
-        <input type="radio" id="radio-gastos-previos" name="tabs-gastos" />
+        <input type="radio" style="display: none;" id="radio-gastos-previos" name="tabs-gastos" />
         <label class="tab" for="radio-gastos-previos">Gastos Prévios</label>
-        <input type="radio" id="radio-gastos-na-viagem" name="tabs-gastos" />
+        <input type="radio" style="display: none;" id="radio-gastos-na-viagem" name="tabs-gastos" />
         <label class="tab" for="radio-gastos-na-viagem">Gastos na Viagem</label>
         <span class="glider"></span>
       </div>
@@ -126,7 +120,7 @@
 
     <!-- https://pt.wikipedia.org/wiki/ISO_4217 -->
     <div class="tabs-container">
-      <div class="tabs" id="tab-moedas">
+      <div class="tabs" id="tab-moedas" style="display: none;">
         <input type="radio" id="radio-moeda-1" name="tabs-moedas" checked />
         <label class="tab-mini" for="radio-moeda-1">BRL</label>
         <input type="radio" id="radio-moeda-2" name="tabs-moedas" />
@@ -139,6 +133,11 @@
   <div>
     <div id="resumo">
       <div class="gastos-container">
+        <div class="gastos-card grafico-pizza">
+          <h2 class="gastos-titulo">Resumo dos Gastos</h2>
+          <div id="resumo-total" class="gastos-subtitulo">Total: R$ 100,00</div>
+          <canvas id="budgetChart" width="300" height="300"></canvas>
+        </div>
         <div id="resumo-gastos-previos" class="gastos-card gastos-recibo">
           <h2 class="gastos-titulo">Gastos Prévios</h2>
           <table class="card-full-size">
@@ -207,11 +206,6 @@
             </tfoot>
           </table>
         </div>
-        <div class="gastos-card grafico-pizza">
-          <h2 class="gastos-titulo">Resumo dos Gastos</h2>
-          <div id="resumo-total" class="gastos-subtitulo">Total: R$ 100,00</div>
-          <canvas id="budgetChart" width="300" height="300"></canvas>
-        </div>
       </div>
     </div>
     <div id="gastos-previos" style="display: none">
@@ -233,7 +227,10 @@
     </div>
   </footer><!-- End Footer -->
 
-  <div id="preloader" style="display: none"></div>
+  <!-- ======= Support: Preloader ======= -->
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 
@@ -255,6 +252,7 @@
   <script src="assets/js/suporte/estilos/svgs.js"></script>
   <script src="assets/js/suporte/estilos/visibilidade.js"></script>
   <script src="assets/js/suporte/paginas/mensagens.js"></script>
+  <script src="assets/js/suporte/paginas/carregamento.js"></script>
   <script src="assets/js/paginas/destinos/suporte/embed.js"></script>
   <script src="assets/js/paginas/destinos/categorias.js"></script>
   <script src="assets/js/paginas/destinos/destinos-box.js"></script>
@@ -266,6 +264,7 @@
   <script src="assets/js/suporte/paginas/datas.js"></script>
   <script src="assets/js/paginas/gastos/suporte/pin.js"></script>
   <script src="assets/js/paginas/gastos/gastos.js"></script>
+  <script src="assets/js/suporte/paginas/atribuicoes.js"></script>
 
 </body>
 
