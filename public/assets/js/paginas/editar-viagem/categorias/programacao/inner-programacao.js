@@ -58,7 +58,7 @@ function _openInnerProgramacao(j, k, turno) {
         acao: turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`
       }];
 
-    _displayMensagemFull(propriedades);
+    _exibirMensagemCompleta(propriedades);
 
     if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';

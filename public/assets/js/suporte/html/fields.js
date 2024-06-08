@@ -161,7 +161,7 @@ function _validateLink(id) {
     _closeAllSelects();
     div.value = '';
 
-    _displayMensagem('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>',
+    _exibirMensagem('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>',
         `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`);
 }
 
@@ -180,7 +180,7 @@ function _validateMapLink(id) {
     const mapsI = '<i class="iconify" data-icon="hugeicons:maps"></i>'
     const googleMapsI = '<i class="iconify" data-icon="simple-icons:googlemaps"></i>'
     const appleMapsI = '<i class="iconify" data-icon="ic:baseline-apple"></i>'
-    _displayMensagem('Link de Mapa Inválido ' + mapsI, `O link de mapa fornecido não é válido. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
+    _exibirMensagem('Link de Mapa Inválido ' + mapsI, `O link de mapa fornecido não é válido. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
                                                ${googleMapsI} <strong>Google Maps</strong><br>
                                                ${appleMapsI} <strong>Apple Maps</strong><br>`);
 }
@@ -194,7 +194,7 @@ function _validateInstagramLink(id) {
     div.value = '';
 
     const linkI = '<i class="iconify" data-icon="mdi:instagram"></i>';
-    _displayMensagem('Link do Instagram Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "https://www.instagram.com".`);
+    _exibirMensagem('Link do Instagram Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "https://www.instagram.com".`);
 }
 
 function _validateMediaLink(id) {
@@ -210,7 +210,7 @@ function _validateMediaLink(id) {
         const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
         const copyI = `<i class="iconify icon-button" style="margin-left: 5px" data-icon="ph:copy" onclick="_copyToClipboard('${link}')"></i>`;
         const copiedDiv = `<div id="copy-msg" class="hidden">Link copiado com sucesso</div>`;
-        _displayMensagem('Link de TikTok Inválido ' + tiktokI, `Você forneceu um link de TikTok Móvel (vm.tiktok.com), mas apenas links da versão web são suportados.<br><br>
+        _exibirMensagem('Link de TikTok Inválido ' + tiktokI, `Você forneceu um link de TikTok Móvel (vm.tiktok.com), mas apenas links da versão web são suportados.<br><br>
                                                                Copie o seu link e cole em uma nova aba de seu navegador para obter o link correto.<br><br>
                                                                <input type="text" disabled="" style="width: auto" placeholder="${link}" value=""> ${copyI}
                                                                ${copiedDiv}`);
@@ -219,7 +219,7 @@ function _validateMediaLink(id) {
         const linkI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>'
         const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
         const youtubeI = '<i class="iconify" data-icon="mdi:youtube"></i>'
-        _displayMensagem('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
+        _exibirMensagem('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
                                                    ${tiktokI} <strong>TikTok</strong> (Versão Web)<br>
                                                    ${youtubeI} <strong>Youtube</strong>`);
     }
@@ -237,7 +237,7 @@ function _validatePlaylistLink(id) {
 
     const linkI = '<i class="iconify" data-icon="ic:baseline-music-off"></i>';
     const spotifyI = '<i class="iconify" data-icon="mdi:spotify"></i>';
-    _displayMensagem('Playlist / Página do Artista Inválida ' + linkI, `A playlist ou Página do do Artista fornecida não é válida. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
+    _exibirMensagem('Playlist / Página do Artista Inválida ' + linkI, `A playlist ou Página do do Artista fornecida não é válida. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
                                                ${spotifyI} <strong>Spotify</strong>`);
 }
 
@@ -262,5 +262,5 @@ function _validateImageLink(id) {
     _closeAllSelects();
     div.value = '';
 
-    _displayMensagem(title, content);
+    _exibirMensagem(title, content);
 }

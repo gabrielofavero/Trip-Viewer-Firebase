@@ -64,7 +64,7 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
     properties.buttons = [];
     properties.container = container;
 
-    _displayMensagem(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
+    _exibirMensagem(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
 
     switch (INNER_PROGRAMACAO_ATUAL[index].tipo) {
         case 'hospedagens':

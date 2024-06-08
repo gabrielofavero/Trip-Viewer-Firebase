@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _displayErro(error);
+    _exibirErro(error);
     throw error;
   }
 });

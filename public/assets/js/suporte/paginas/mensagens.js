@@ -18,14 +18,14 @@ const MENSAGEM_PROPRIEDADES = {
 
 
 // Mensagem Genérica
-function _displayMensagem(titulo, conteudo) {
+function _exibirMensagem(titulo, conteudo) {
   const properties = MENSAGEM_PROPRIEDADES;
   if (titulo) properties.titulo = titulo;
   if (conteudo) properties.conteudo = conteudo;
-  _displayMensagemFull(properties);
+  _exibirMensagemCompleta(properties);
 }
 
-function _displayMensagemFull(propriedades = MENSAGEM_PROPRIEDADES) {
+function _exibirMensagemCompleta(propriedades = MENSAGEM_PROPRIEDADES) {
   const preloader = getID('preloader');
   const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
@@ -111,7 +111,7 @@ function _displayMensagemFull(propriedades = MENSAGEM_PROPRIEDADES) {
 
 
 // Mensagem de Erro
-function _displayErro(erro, tentarNovamente=false) {
+function _exibirErro(erro, tentarNovamente=false) {
   const propriedades = MENSAGEM_PROPRIEDADES;
   const isError = (erro && erro instanceof Error);
   
@@ -127,12 +127,12 @@ function _displayErro(erro, tentarNovamente=false) {
     botoes.push({ tipo: 'home' });
   }
   propriedades.botoes = botoes;
-  _displayMensagemFull(propriedades);
+  _exibirMensagemCompleta(propriedades);
 }
 
 
 // Mensagem de Não Autorizado
-function _displayAcessoNegado(conteudo, redirectTo='viagem.html') {
+function _exibirAcessoNegado(conteudo, redirectTo='viagem.html') {
   const propriedades = MENSAGEM_PROPRIEDADES;
   propriedades.titulo = "Acesso Negado 🚫";
   propriedades.conteudo = conteudo || "Você não tem permissão para acessar esta página.";
@@ -141,7 +141,7 @@ function _displayAcessoNegado(conteudo, redirectTo='viagem.html') {
     tipo: 'voltar',
     acao: redirectTo
   }];
-  _displayMensagemFull(propriedades);
+  _exibirMensagemCompleta(propriedades);
 }
 
 
