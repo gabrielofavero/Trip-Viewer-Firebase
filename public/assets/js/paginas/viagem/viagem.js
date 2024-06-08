@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', function () {
           _refreshCategorias();
 
         } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
-          _exibirErro('O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.', true);
+          _displayError('O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.', true);
           _stopLoadingScreen();
         } else {
-          _exibirErro(ERROR_FROM_GET_REQUEST);
+          _displayError(ERROR_FROM_GET_REQUEST);
           _stopLoadingScreen();
         }
 
@@ -66,12 +66,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       }).catch((error) => {
 
-        _exibirErro(error);
+        _displayError(error);
         throw error;
 
       });
   } catch (error) {
-    _exibirErro(error);
+    _displayError(error);
     throw error;
 
   }
@@ -90,7 +90,7 @@ async function _mainLoad() {
     // Loading Screen
     _stopLoadingScreen();
   } catch (error) {
-    _exibirErro(error);
+    _displayError(error);
     throw error;
   }
 }

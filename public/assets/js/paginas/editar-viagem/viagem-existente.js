@@ -11,7 +11,7 @@ async function _loadTripData() {
         _loadLineupData();
         _loadGaleriaData();
     } catch (error) {
-        _exibirErro(error);
+        _displayError(error);
         throw error;
     }
 }

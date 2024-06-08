@@ -8,7 +8,7 @@ async function _loadListData(FIRESTORE_DATA) {
     _loadDestinosData(FIRESTORE_DATA);
 
   } catch (error) {
-    _exibirErro(error);
+    _displayError(error);
     throw error;
   }
 }

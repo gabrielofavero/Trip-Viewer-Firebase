@@ -30,7 +30,7 @@ async function _registerIfUserNotPresent() {
 
     if (!user) {
         _signOut();
-        _exibirErro('Não é possível fazer o registro sem um usuário autenticado.');
+        _displayError('Não é possível fazer o registro sem um usuário autenticado.');
         return;
     }
 
@@ -42,7 +42,7 @@ async function _registerIfUserNotPresent() {
         _signOut();
         const title = 'Você chegou muito cedo! 😅';
         const content = 'Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀';
-        _exibirMensagem(title, content);
+        _displayMessage(title, content);
         return;
     }
 

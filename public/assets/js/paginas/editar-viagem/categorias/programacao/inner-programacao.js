@@ -58,7 +58,7 @@ function _openInnerProgramacao(j, k, turno) {
         acao: turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`
       }];
 
-    _exibirMensagemCompleta(propriedades);
+    _displayFullMessage(propriedades);
 
     if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';
@@ -399,20 +399,20 @@ function _addInnerProgramacao(j, k, turno) {
         }
 
         _loadInnerProgramacaoHTML(j);
-        _closeDisplayMessage();
+        _closeMessage();
     }
 }
 
 function _deleteInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
     if (isNew) {
-        _closeDisplayMessage();
+        _closeMessage();
         return;
     } else {
         const key = _jsDateToKey(DATAS[j - 1]);
         INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
         _loadInnerProgramacaoHTML(j);
-        _closeDisplayMessage();
+        _closeMessage();
     }
 }
 

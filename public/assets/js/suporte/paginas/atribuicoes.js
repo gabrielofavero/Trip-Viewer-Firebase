@@ -29,5 +29,5 @@ function _openAtribuicoes() {
   
     content = atribuicoes.join('<br>');
   
-    _exibirMensagem(title, content, { buttons: buttons });
+    _displayMessage(title, content, { buttons: buttons });
   }

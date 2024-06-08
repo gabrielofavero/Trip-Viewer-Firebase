@@ -10,7 +10,7 @@ function _loadDestinationsData() {
     _loadMapaData();
 
   } catch (error) {
-    _exibirErro(error);
+    _displayError(error);
     throw error;
   }
 }

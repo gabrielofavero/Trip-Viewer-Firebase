@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _exibirErro(error);
+    _displayError(error);
     if (window.location.href.includes('editar-template.html')) {
-      _closeDisplayMessage();
+      _closeMessage();
     }
     throw error;
   }

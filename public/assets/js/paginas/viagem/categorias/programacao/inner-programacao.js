@@ -64,7 +64,7 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
     properties.buttons = [];
     properties.container = container;
 
-    _exibirMensagem(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
+    _displayMessage(INNER_PROGRAMACAO_ATUAL[index].titulo, INNER_PROGRAMACAO_ATUAL[index].content, properties);
 
     switch (INNER_PROGRAMACAO_ATUAL[index].tipo) {
         case 'hospedagens':
@@ -174,7 +174,7 @@ function _getInnerProgramacaoHTML(item) {
                                 isLineup: false,
                                 innerProgramacao: true,
                                 notas: CONFIG.destinos.notas,
-                                valores: CONFIG.destinos.currency[destino.moeda],
+                                valores: CONFIG.moedas.escala[destino.moeda],
                                 moeda: destino.moeda
                             });
                             innerProgramacao.midia = categoria[j]?.midia;

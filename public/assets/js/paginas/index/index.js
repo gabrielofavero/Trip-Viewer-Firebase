@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _exibirErro(error);
+    _displayError(error);
     throw error;
   }
 });
@@ -140,7 +140,7 @@ async function _loadUserIndex() {
     });
   } catch (error) {
     _stopLoadingScreen();
-    _exibirErro(error);
+    _displayError(error);
     throw error;
   }
   _stopLoadingScreen();
