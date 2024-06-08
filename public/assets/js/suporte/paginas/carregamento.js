@@ -43,7 +43,7 @@ function _startLoadingTimer() {
         _stopLoadingTimer();
         localStorage.setItem('firstLoad', 'true');
         const error = new Error('Não foi possível carregar a página. Verifique sua conexão com a internet e tente novamente.');
-        _exibirErro(error, true);
+        _displayError(error, true);
       }
     }, 1000);
   }

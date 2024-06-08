@@ -5,7 +5,7 @@ const MENSAGEM_PROPRIEDADES = {
   critico: false,
   blur: true,
   erro: {},
-  icones: [], 
+  icones: [],
   botoes: [{
     tipo: 'ok',
     acao: ''
@@ -18,14 +18,14 @@ const MENSAGEM_PROPRIEDADES = {
 
 
 // Mensagem Genérica
-function _exibirMensagem(titulo, conteudo) {
+function _displayMessage(titulo, conteudo) {
   const properties = MENSAGEM_PROPRIEDADES;
   if (titulo) properties.titulo = titulo;
   if (conteudo) properties.conteudo = conteudo;
-  _exibirMensagemCompleta(properties);
+  _displayFullMessage(properties);
 }
 
-function _exibirMensagemCompleta(propriedades = MENSAGEM_PROPRIEDADES) {
+function _displayFullMessage(propriedades = MENSAGEM_PROPRIEDADES) {
   const preloader = getID('preloader');
   const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
@@ -111,15 +111,15 @@ function _exibirMensagemCompleta(propriedades = MENSAGEM_PROPRIEDADES) {
 
 
 // Mensagem de Erro
-function _exibirErro(erro, tentarNovamente=false) {
+function _displayError(erro, tentarNovamente = false) {
   const propriedades = MENSAGEM_PROPRIEDADES;
   const isError = (erro && erro instanceof Error);
-  
+
   propriedades.titulo = "Erro no Carregamento 🙁";
   propriedades.critico = true;
-  propriedades.conteudo = !erro ? 'Um erro inesperado impediu o carregamento da página. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.':
-                          isError ? erro.message + '. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.' :
-                          erro;
+  propriedades.conteudo = !erro ? 'Um erro inesperado impediu o carregamento da página. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.' :
+    isError ? erro.message + '. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.' :
+      erro;
   propriedades.localizacao = isError;
 
   const botoes = tentarNovamente ? [{ tipo: 'tente-novamente' }] : [];
@@ -127,26 +127,26 @@ function _exibirErro(erro, tentarNovamente=false) {
     botoes.push({ tipo: 'home' });
   }
   propriedades.botoes = botoes;
-  _exibirMensagemCompleta(propriedades);
+  _displayFullMessage(propriedades);
 }
 
 
 // Mensagem de Não Autorizado
-function _exibirAcessoNegado(conteudo, redirectTo='viagem.html') {
+function _displayForbidden(conteudo, redirectTo = 'viagem.html') {
   const propriedades = MENSAGEM_PROPRIEDADES;
   propriedades.titulo = "Acesso Negado 🚫";
   propriedades.conteudo = conteudo || "Você não tem permissão para acessar esta página.";
   propriedades.critico = true;
-  propriedades.botoes = [{ 
+  propriedades.botoes = [{
     tipo: 'voltar',
     acao: redirectTo
   }];
-  _exibirMensagemCompleta(propriedades);
+  _displayFullMessage(propriedades);
 }
 
 
 // Fechar Mensagem
-function _closeDisplayMessage() {
+function _closeMessage() {
   if (MESSAGE_MODAL_OPEN) {
     const preloader = getID('preloader');
     if (preloader) {
@@ -159,10 +159,6 @@ function _closeDisplayMessage() {
   } else {
     console.warn('Não há um modal aberto para ser fechado.');
   }
-}
-
-function _overrideErrorMessage() {
-  _closeDisplayMessage();
 }
 
 
@@ -194,7 +190,7 @@ function _getIconsBox(icones = {}) {
   cancelIcon.id = 'cancel-icon';
   cancelIcon.className = 'iconify';
   cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
-  cancelIcon.setAttribute('onclick', '_closeDisplayMessage()');
+  cancelIcon.setAttribute('onclick', '_closeMessage()');
   cancelIcon.style.cursor = 'pointer';
 
   iconContainer.appendChild(cancelIcon);
@@ -272,7 +268,7 @@ function _getHomeButton() {
   return button;
 }
 
-function _getBackButton(redirectTo='index.html') {
+function _getBackButton(redirectTo = 'index.html') {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
@@ -310,13 +306,13 @@ function _getCloseButton(name = 'Fechar', onclick) {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', onclick? onclick : '_closeDisplayMessage();')
+  button.setAttribute('onclick', onclick ? onclick : '_closeMessage();')
 
   button.innerHTML = name;
   return button;
 }
 
-function _getConfirmButton(onclick = '_closeDisplayMessage();') {
+function _getConfirmButton(onclick = '_closeMessage();') {
   const button = document.createElement('button');
   button.className = 'btn btn-purple btn-format';
   button.type = 'submit';
