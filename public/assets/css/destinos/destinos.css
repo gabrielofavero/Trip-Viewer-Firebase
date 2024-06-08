@@ -1,3 +1,7 @@
+:root {
+  --theme-color: #5859a7a;
+}
+
 @font-face {
   font-family: 'Chelos';
   src: url('../../fonts/Chelos\ Free.ttf') format('truetype');
@@ -88,7 +92,7 @@ section {
   display: block;
   width: 40px;
   height: 3px;
-  background: #5859a7;
+  background: var(--theme-color);
   bottom: 0;
   left: calc(50% - 20px);
 }
@@ -248,7 +252,7 @@ section {
 .nav-menu .active:focus,
 .nav-menu li:hover>a {
   color: #fff;
-  background: #5859a7;
+  background: var(--theme-color);
 }
 
 .nav-menu a:hover span,
@@ -301,7 +305,7 @@ section {
   margin-top: 10px;
   margin-left: 7px;
   font-family: Chelos;
-  color: #5859a7;
+  color: var(--theme-color);
 }
 
 .logo-link {
@@ -345,7 +349,7 @@ section {
 #footer .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: #5859a7;
+  background: var(--theme-color);
   color: #fff;
   line-height: 1;
   padding: 8px 0;
@@ -358,7 +362,7 @@ section {
 }
 
 #footer .social-links a:hover {
-  background: #5859a7;
+  background: var(--theme-color);
   color: #fff;
   text-decoration: none;
 }
@@ -432,7 +436,7 @@ section {
 }
 
 .new {
-  fill: #5859a7;
+  fill: var(--theme-color);
   margin-right: 10px;
   font-size: 20px;
 }
@@ -525,7 +529,7 @@ section {
 
 .color-icon {
   font-size: 20px;
-  color: #505197
+  color: var(--theme-color)
 }
 
 .destinos-descricao {

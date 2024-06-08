@@ -1,4 +1,6 @@
-
+:root {
+  --theme-color: #7f75b6;
+}
 body {
   color: #E2E2E2;
   background: #303030;
@@ -22,7 +24,7 @@ a:hover {
 }
 
 .section-title h2::after {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .accordion {
@@ -88,7 +90,7 @@ a:hover {
 .nav-menu .active:focus,
 .nav-menu li:hover>a {
   color: #303030;
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .nav-menu a:hover span,
@@ -110,7 +112,7 @@ a:hover {
 }
 
 #trip-viewer-text {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .mobile-nav-toggle i,
@@ -119,21 +121,20 @@ a:hover {
 }
 
 .mobile-nav-active .mobile-nav-toggle {
-  background-color: #7f75b6;
+  background-color: var(--theme-color);
 }
 
 #footer {
-  background: #404040;
   color: #F2F2F2;
 }
 
 #footer .social-links a {
-  background: #7f75b6;
+  background: var(--theme-color);
   color: #303030;
 }
 
 #footer .social-links a:hover {
-  background: #7f75b6;
+  background: var(--theme-color);
 }
 
 .accordion-item {
@@ -158,7 +159,7 @@ a:hover {
 }
 
 .new {
-  fill: #7f75b6;
+  fill: var(--theme-color);
 }
 
 .nota-texto {
@@ -174,7 +175,7 @@ a:hover {
 }
 
 .color-icon {
-  color: #7f75b6
+  color: var(--theme-color)
 }
 
 .data-lineup {

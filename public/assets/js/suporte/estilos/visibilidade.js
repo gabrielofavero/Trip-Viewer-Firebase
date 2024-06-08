@@ -194,6 +194,7 @@ function _applyCustomVisibilityRules() {
                break;
           case 'destinos':
                _loadLogoColors();
+               _applyAccordionArrowCustomColor();
                _applyCustomColors();
                break;
           default:

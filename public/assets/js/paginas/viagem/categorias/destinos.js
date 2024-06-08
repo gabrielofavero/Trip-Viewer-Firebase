@@ -107,7 +107,7 @@ function _buildDestinoExport(destino, code) {
 }
 
 function _getDestinoValores(destino) {
-  return CONFIG.moedas.escala[destino.moeda] || CONFIG.moedas.escala["BRL"];
+  return CONFIG.moedas.escala[destino.destinos.moeda] || CONFIG.moedas.escala["BRL"];
 }
 
 function _loadAndOpenDestino(code) {
