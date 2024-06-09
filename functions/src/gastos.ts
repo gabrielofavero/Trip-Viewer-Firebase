@@ -32,6 +32,7 @@ export const getGastos = onRequest(async (request, response) => {
                 return;
             }
         }
+        delete documentData?.pin;
         response.json(documentData);
     } catch (error) {
         console.error("Erro ao acessar o Firestore:", error);

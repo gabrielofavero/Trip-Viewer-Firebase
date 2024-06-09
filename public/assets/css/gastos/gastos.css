@@ -66,7 +66,7 @@ h6 {
   margin-top: 10px;
   margin-left: 7px;
   font-family: Chelos;
-  color: #5859a7;
+  color: var(--primary-color);
 }
 
 .logo-link {
@@ -93,14 +93,14 @@ h6 {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
-#footer {
+.footer {
   color: #4F5051;
   font-size: 14px;
   text-align: center;
   padding: 20px 0;
 }
 
-#footer #footer h3 {
+.footer .footer h3 {
   font-size: 36px;
   font-weight: 700;
   position: relative;
@@ -109,22 +109,22 @@ h6 {
   margin: 0 0 15px 0;
 }
 
-#footer p {
+.footer p {
   font-size: 15;
   font-style: italic;
   padding: 0;
   margin: 0 0 40px 0;
 }
 
-#footer .social-links {
+.footer .social-links {
   margin-bottom: 20px;
   margin-top: -20px;
 }
 
-#footer .social-links a {
+.footer .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: #5859a7;
+  background: var(--primary-color);
   color: #fff;
   line-height: 1;
   padding: 8px 0;
@@ -136,17 +136,17 @@ h6 {
   transition: 0.3s;
 }
 
-#footer .social-links a:hover {
-  background: #5859a7;
+.footer .social-links a:hover {
+  background: var(--primary-color);
   color: #fff;
   text-decoration: none;
 }
 
-#footer .copyright {
+.footer .copyright {
   margin: 0 0 5px 0;
 }
 
-#footer .credits {
+.footer .credits {
   font-size: 13px;
 }
 
@@ -293,7 +293,7 @@ section {
   display: block;
   width: 40px;
   height: 3px;
-  background: #5859a7;
+  background: var(--primary-color);
   bottom: 0;
   left: calc(50% - 20px);
 }
@@ -307,7 +307,15 @@ section {
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1.5rem;
   padding: 2rem;
+  padding-top: 0rem;
+}
+
+#conversao {
+  color: #4B5563;	
   padding-top: 1rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  text-align: right;
 }
 
 .gastos-card {
@@ -351,7 +359,8 @@ section {
   font-weight: 500;
 }
 
-.gastos-subtitulo {
+.gastos-subtitulo,
+.total {
   font-weight: bold;
   color: #4B5563;
 }

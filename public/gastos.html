@@ -107,6 +107,10 @@
 
   <div id="gastos-container">
     <div class="tabs-container">
+      <div class="tabs" id="tab-moedas" style="display: none;">
+      </div>
+    </div>
+    <div class="tabs-container">
       <div class="tabs" id="tab-gastos" style="display: none;">
         <input type="radio" style="display: none;" id="radio-resumo" name="tabs-gastos" checked />
         <label class="tab" for="radio-resumo">Resumo</label>
@@ -117,15 +121,10 @@
         <span class="glider"></span>
       </div>
     </div>
-
-    <!-- https://pt.wikipedia.org/wiki/ISO_4217 -->
-    <div class="tabs-container">
-      <div class="tabs" id="tab-moedas" style="display: none;">
-      </div>
-    </div>
   </div>
 
   <div>
+    <div id="conversao"></div>
     <div id="resumo">
       <div class="gastos-container">
         <div class="gastos-card grafico-pizza">
@@ -133,26 +132,16 @@
           <div id="resumo-total" class="gastos-subtitulo">Total: R$ 100,00</div>
           <canvas id="budgetChart" width="300" height="300"></canvas>
         </div>
+
         <div id="resumo-gastosPrevios" class="gastos-card gastos-recibo" style="display: none;">
-          <h2 class="gastos-titulo">Gastos Prévios</h2>
+          <h2 class="gastos-titulo" id="resumo-gastosPrevios-titulo">Gastos Prévios</h2>
           <table id="resumo-gastosPrevios-tabela" class="card-full-size">
-            <thead>
-              <tr>
-                <th class="tabela-titulo-esquerda">Tipo</th>
-                <th class="tabela-titulo-direita">Valor</th>
-              </tr>
-            </thead>
           </table>
         </div>
+
         <div id="resumo-gastosDurante" class="gastos-card gastos-recibo" style="display: none;">
-          <h2 class="gastos-titulo">Gastos na Viagem</h2>
+          <h2 class="gastos-titulo" id="resumo-gastosDurante-titulo">Gastos na Viagem</h2>
           <table id="resumo-gastosDurante-tabela" class="card-full-size">
-            <thead>
-              <tr>
-                <th class="tabela-titulo-esquerda">Tipo</th>
-                <th class="tabela-titulo-direita">Valor</th>
-              </tr>
-            </thead>
           </table>
         </div>
       </div>
@@ -166,7 +155,7 @@
 
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
+  <footer class="footer">
     <div class="container">
       <div class="credits">
         Desenvolvido por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
@@ -174,7 +163,7 @@
           Atribuições</span>
       </div>
     </div>
-  </footer><!-- End Footer -->
+  </footer>
 
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
@@ -214,7 +203,8 @@
   <script src="assets/js/paginas/gastos/suporte/pin.js"></script>
   <script src="assets/js/paginas/gastos/suporte/moeda.js"></script>
   <script src="assets/js/paginas/gastos/suporte/chart.js"></script>
-  <script src="assets/js/paginas/gastos/suporte/tabela.js"></script>
+  <script src="assets/js/paginas/gastos/categorias/resumo.js"></script>
+  <script src="assets/js/paginas/gastos/gastos-convertidos.js"></script>
   <script src="assets/js/paginas/gastos/gastos.js"></script>
   <script src="assets/js/suporte/paginas/atribuicoes.js"></script>
 

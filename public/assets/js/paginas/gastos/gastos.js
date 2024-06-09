@@ -30,30 +30,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     } else {
         _stopLoadingScreen();
         _requestPin();
+        _initializeValidatePin();
     }
 });
-
-function _requestPin() {
-    const propriedades = MENSAGEM_PROPRIEDADES;
-    propriedades.titulo = 'Digite o Pin de Acesso';
-    propriedades.conteudo = `<div class="pin-wrapper">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                              </div>
-                              <div id="pin-code" class="pin"></div>`;
-    propriedades.critico = true;
-    propriedades.containers = _getContainersInput();
-    propriedades.botoes = [{
-        tipo: 'cancelar',
-        acao: `window.location.href = "viagem.html?v=${GASTOS_ID}"`
-    }, {
-        tipo: 'confirmar',
-        acao: '_loadGastos()'
-    }];
-    _displayFullMessage(propriedades);
-}
 
 async function _loadGastos() {
     const documentID = GASTOS_ID;
@@ -63,9 +42,10 @@ async function _loadGastos() {
         if (GASTOS) {
             _startLoadingScreen();
             await _loadMoedas();
-            _setGastos();
-            // _closeMessage();
-            // _stopLoadingScreen();
+            _loadGastosConvertidos();
+            _applyGastos();
+            _closeMessage();
+            _stopLoadingScreen();
         }
     } catch (error) {
         const msg = error?.responseJSON?.error;
@@ -79,30 +59,22 @@ async function _loadGastos() {
     }
 }
 
-function _setGastos() {
+function _applyGastos() {
     if (GASTOS.gastosPrevios.length > 0 || GASTOS.gastosDurante.length > 0) {
-        getID('tab-gastos').style.display = 'block';
-        getID('radio-resumo').style.display = 'block';
-        _setResumo();
+        getID('tab-gastos').style.display = '';
+        getID('radio-resumo').style.display = '';
+        _loadResumo();
 
         if (GASTOS.gastosPrevios.length > 0) {
-            getID('radio-gastosPrevios').style.display = 'block';
+            getID('radio-gastosPrevios').style.display = '';
             _setGastosPrevios();
         }
 
         if (GASTOS.gastosDurante.length > 0) {
-            getID('radio-gastosDurante').style.display = 'block';
+            getID('radio-gastosDurante').style.display = '';
             _setGastosDurante();
         }
     }
-}
-
-function _setResumo() {
-    getID('resumo-gastosPrevios').style.display = 'block';
-    _loadTable('resumo', 'gastosPrevios')
-
-    getID('resumo-gastosDurante').style.display = 'block';
-    _loadTable('resumo', 'gastosDurante')
 }
 
 function _setGastosPrevios() {

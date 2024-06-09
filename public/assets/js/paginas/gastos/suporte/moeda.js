@@ -79,11 +79,11 @@ async function _fetchConversoes(url) {
 
 function _loadMoedasTab() {
     const moedasTab = getID('tab-moedas');
-    moedasTab.style.display = 'block';
+    moedasTab.style.display = '';
 
-    for (let j = 1; j <= MOEDAS.length; j++) {
+    for (let j = 1; j <= MOEDAS.resumo.length; j++) {
         moedasTab.innerHTML += `<input type="radio" id="radio-moeda-${j}" name="tabs-moedas" ${j === 1 ? 'checked' : ''} />`
-        moedasTab.innerHTML += `<label class="tab-mini" for="radio-moeda-${j}">${MOEDAS[j - 1]}</label>`
+        moedasTab.innerHTML += `<label class="tab-mini" for="radio-moeda-${j}">${MOEDAS.resumo[j - 1]}</label>`
     }
 
     moedasTab.innerHTML += '<span class="glider-mini"></span>';
@@ -93,7 +93,6 @@ function _loadMoedasTab() {
         _setCSSRule(`input[id="${childs[i]}"]:checked~.glider-mini`, 'transform', `translateX(${i * 100}%)`);
     }
 }
-
 
 function _filterMoedas(arr) {
     return arr.filter((moeda, index, self) => self.indexOf(moeda) === index && moeda)
@@ -111,24 +110,16 @@ function _sortMoedas(arr) {
     });
 }
 
-function _canConvert(subtipo) {
-    const moedas = _filterMoedas(GASTOS[subtipo].map(gasto => gasto.moeda));
-    if (moedas.length <= 1) {
-        return true;
-    }
-    const keys = Object.keys(MOEDA_CONVERSAO);
-    for (const moeda of moedas) {
-        if ((!keys.includes(MOEDA_CONVERSAO + moeda) && !keys.includes(moeda + MOEDA_CONVERSAO)) || (!keys[MOEDA_CONVERSAO + moeda] && !keys[moeda + MOEDA_CONVERSAO])) {
-            return false;
-        }
-    }
-    return true;
-}
-
 function _convertMoeda(from, to, valor) {
+    if (from === to) {
+        return valor;
+    }
+
     if (MOEDA_CONVERSAO[from + to]) {
         return valor * MOEDA_CONVERSAO[from + to];
-    } else if (MOEDA_CONVERSAO[to + from]) {
+    }
+
+    if (MOEDA_CONVERSAO[to + from]) {
         return valor / MOEDA_CONVERSAO[to + from];
     } else {
         _displayError('Erro ao converter moeda');
@@ -141,4 +132,30 @@ function _getMoedaSymbol(moeda) {
     } else {
         return moeda;
     }
+}
+
+function _canConvert(moedas) {
+    if (moedas.length == 1) {
+        return true;
+    }
+
+    const keys = Object.keys(MOEDA_CONVERSAO);
+    if (keys.length === 0) {
+        return false;
+    }
+
+    for (const moeda of moedas) {
+        if (!keys.some(key => key.includes(moeda))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function _formatMoeda(moedaFloat) {
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'decimal',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(moedaFloat);
 }

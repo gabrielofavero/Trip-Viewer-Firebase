@@ -319,6 +319,10 @@ a:hover {
   box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
 }
 
+.services .icon-box .icon svg path {
+  fill: #3b3b3b;;
+}
+
 .services .icon-box h4 a {
   color: #F2F2F2;
 }

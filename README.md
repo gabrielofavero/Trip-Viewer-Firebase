@@ -21,7 +21,7 @@
 
 - ⚔️ **E015:** Implementação: Gastos
   - *Template de Front-End*
-  - *API para obter cotações de turismo em tempo real https://docs.awesomeapi.com.br/api-de-moedas*
+  - *API para obter cotações de turismo em tempo real*
   - *Implementar campo de valor em Transporte e Hospedagem (Editar Viagem)*
   - *Implementar categoria de Gastos em Editar Viagem*
     - *Gastos Prévios e Gastos Durante a Viagem*

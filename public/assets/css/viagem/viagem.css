@@ -1991,9 +1991,7 @@ iframe {
 }
 
 @media (max-height: 730px) {
-
-  .programacao-container,
-  .destinos-container {
+  .programacao-container {
     max-height: 95%;
     overflow: auto;
     display: block;
@@ -2019,12 +2017,23 @@ iframe {
 }
 
 @media (max-width: 520px) {
-
   .message-container,
-  .programacao-container,
-  .destinos-container {
+  .programacao-container {
     width: 90%;
     height: auto;
+  }
+
+  .destinos-container {
+    height: 100%;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    overflow: auto;
+  }
+
+  .destinos-container {
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 }
 
