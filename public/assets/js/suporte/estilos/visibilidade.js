@@ -197,6 +197,10 @@ function _applyCustomVisibilityRules() {
                _applyAccordionArrowCustomColor();
                _applyCustomColors();
                break;
+          case 'gastos':
+               _loadLogoColors();
+               _applyCustomColors();
+               break;
           default:
                break;
      }
