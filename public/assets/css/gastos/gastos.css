@@ -306,8 +306,24 @@ section {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1.5rem;
-  padding: 2rem;
   padding-top: 0rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 1300px) {
+  .gastos-container {
+    padding-right: 10%;
+    padding-left: 10%;
+  }
+}
+
+@media (min-width: 1750px) {
+  .gastos-container {
+    padding-right: 20%;
+    padding-left: 20%;
+  }
 }
 
 #conversao {
