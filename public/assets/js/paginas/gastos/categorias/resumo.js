@@ -1,4 +1,5 @@
 function _loadResumo() {
+    _loadChartResumo();
     _loadTableResumo('gastosPrevios', 'Gastos Prévios')
     _loadTableResumo('gastosDurante', 'Gastos na Viagem')
 }
@@ -59,4 +60,11 @@ function _loadTableResumo(tipo, titulo) {
         tFoot.appendChild(tr);
         return tFoot;
     }
+}
+
+function _loadChartResumo() {
+    const labels = ['Gastos Prévios', 'Gastos na Viagem'];
+    const valores = [GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosPrevios.resumo.total, GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosDurante.resumo.total];
+    getID('resumo-total').innerText = `Total: ${_formatMoeda(valores[0] + valores[1])}`;
+    _setDoughnutChart('resumo-grafico', labels, valores)
 }
