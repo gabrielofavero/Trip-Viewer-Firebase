@@ -100,6 +100,18 @@ h6 {
   padding: 20px 0;
 }
 
+.atribuicoes {
+  cursor: pointer;
+}
+
+.atribuicoes:hover {
+  color: #666768;
+}
+
+.atribuicoes-icon {
+  font-size: 10px;
+}
+
 .footer .footer h3 {
   font-size: 36px;
   font-weight: 700;

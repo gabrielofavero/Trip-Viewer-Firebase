@@ -128,6 +128,10 @@ a:hover {
   color: #F2F2F2;
 }
 
+.atribuicoes:hover {
+  color: #d1d0d0;
+}
+
 #footer .social-links a {
   background: var(--theme-color);
   color: #303030;

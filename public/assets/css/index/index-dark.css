@@ -76,6 +76,10 @@ strong {
   color: #F2F2F2;
 }
 
+.atribuicoes:hover {
+  color: #d1d0d0;
+}
+
 #footer .social-links a {
   background: #7f75b6;
 }

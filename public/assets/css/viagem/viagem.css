@@ -1854,6 +1854,14 @@ section {
   padding: 10px 0;
 }
 
+.atribuicoes {
+  cursor: pointer;
+}
+
+.atribuicoes:hover {
+  color: #666768;
+}
+
 .atribuicoes-icon {
   font-size: 10px;
 }

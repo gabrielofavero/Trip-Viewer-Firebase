@@ -1296,6 +1296,18 @@ details summary::-webkit-details-marker {
   margin-bottom: 32px;
 }
 
+.atribuicoes {
+  cursor: pointer;
+}
+
+.atribuicoes:hover {
+  color: #666768;
+}
+
+.atribuicoes-icon {
+  font-size: 10px;
+}
+
 .pessoa-img {
   width: 36px;
   height: 36px;

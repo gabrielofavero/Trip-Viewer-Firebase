@@ -25,6 +25,10 @@ a {
   color: #F2F2F2;
 }
 
+.atribuicoes:hover {
+  color: #d1d0d0;
+}
+
 .tabs {
   background-color: #3b3b3b;
   box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);

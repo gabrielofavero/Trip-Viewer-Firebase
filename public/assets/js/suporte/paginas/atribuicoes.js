@@ -39,6 +39,11 @@ function _openAtribuicoes() {
         atribuicoes.push(ATRIBUICAO_COTACAO);
         break;
     }
+
+    const propriedades = MENSAGEM_PROPRIEDADES;
+    propriedades.titulo = 'Atribuições';
+    propriedades.conteudo = atribuicoes.join('<br>');
+    propriedades.botoes = [];
   
-    _displayMessage('Atribuições', atribuicoes.join('<br>'));
+    _displayFullMessage(propriedades);
   }
