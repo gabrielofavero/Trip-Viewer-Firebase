@@ -11,7 +11,7 @@ var FIM = {
   text: ''
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
     _main();
@@ -33,47 +33,38 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    Promise.all([_getConfig(), _getSingleData(TYPE)])
-      .then(([configData, firestoreData]) => {
+    await _loadConfig();
+    const firestoreData = await _getSingleData(TYPE);
 
-        if (!ERROR_FROM_GET_REQUEST) {
-          CONFIG = configData;
-          FIRESTORE_DATA = firestoreData;
-          console.log('Dados do Firestore Database carregados com sucesso');
+    if (!ERROR_FROM_GET_REQUEST) {
+      FIRESTORE_DATA = firestoreData;
+      console.log('Dados do Firestore Database carregados com sucesso');
 
-          _start();
-          _mainLoad();
-          _adjustPortfolioHeight();
-          _refreshCategorias();
+      _start();
+      _mainLoad();
+      _adjustPortfolioHeight();
+      _refreshCategorias();
 
-        } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
-          _displayError('O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.', true);
-          _stopLoadingScreen();
-        } else {
-          _displayError(ERROR_FROM_GET_REQUEST);
-          _stopLoadingScreen();
-        }
+    } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
+      _displayError('O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.', true);
+      _stopLoadingScreen();
+    } else {
+      _displayError(ERROR_FROM_GET_REQUEST);
+      _stopLoadingScreen();
+    }
 
-        $('body').css('overflow', 'auto');
+    $('body').css('overflow', 'auto');
 
-        if (!MESSAGE_MODAL_OPEN) {
-          setTimeout(() => {
-            _adjustCardsHeights();
-            _adjustPortfolioHeight();
-            _refreshCategorias();
-          }, 1000);
-        }
-
-      }).catch((error) => {
-
-        _displayError(error);
-        throw error;
-
-      });
+    if (!MESSAGE_MODAL_OPEN) {
+      setTimeout(() => {
+        _adjustCardsHeights();
+        _adjustPortfolioHeight();
+        _refreshCategorias();
+      }, 1000);
+    }
   } catch (error) {
     _displayError(error);
     throw error;
-
   }
 });
 
@@ -201,7 +192,6 @@ function _loadHeader() {
     const background = FIRESTORE_DATA.imagem.background;
     const claro = FIRESTORE_DATA.imagem.claro;
     const escuro = FIRESTORE_DATA.imagem.escuro;
-  
 
     if (_imageExists(background)) {
       var hero = getID('hero');
@@ -216,7 +206,7 @@ function _loadHeader() {
       } else {
         LOGO_ESCURO = LOGO_CLARO;
       }
-      
+
       getID("header2").src = _isOnDarkMode() ? LOGO_ESCURO : LOGO_CLARO;
       getID("header1").style.display = "none";
       getID("header2").style.display = "block";

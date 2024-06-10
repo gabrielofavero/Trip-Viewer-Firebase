@@ -7,12 +7,10 @@ var GASTOS_TOTAIS = {
     gastosDurante: {}
 };
 
-var CONFIG;
-
 document.addEventListener('DOMContentLoaded', async function () {
     const gastos = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : null;
     GASTOS_ID = gastos?.id;
-    CONFIG = await _getConfig();
+    await _loadConfig();
 
     if (!gastos || !GASTOS_ID) {
         const url = GASTOS_ID ? `viagem.html?v=${GASTOS_ID}` : 'index.html';

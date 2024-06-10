@@ -1,5 +1,3 @@
-// ======= Data JS =======
-
 var CALL_SYNC = [];
 var FIRESTORE_DATA;
 
@@ -284,7 +282,7 @@ function _getIfDoesNotExistCategoriaID(tipo, j) {
   return currentID ? currentID : _getCategoriaID(tipo, j);
 }
 
-async function _getConfig() {
+async function _loadConfig() {
   let config = {};
   const callSyncOrder = $.getJSON("assets/json/call-sync-order.json").then(data => config.callSyncOrder = data);
   const cores = $.getJSON("assets/json/cores.json").then(data => config.cores = data);
@@ -293,7 +291,7 @@ async function _getConfig() {
   const moedas = $.getJSON("assets/json/moedas.json").then(data => config.moedas = data);
   const transportes = $.getJSON("assets/json/transportes.json").then(data => config.transportes = data);
   await Promise.all([callSyncOrder, cores, destinos, information, moedas, transportes]);
-  return config;
+  CONFIG = config;
 }
 
 function _getCloudFunctionURL(functionName) {

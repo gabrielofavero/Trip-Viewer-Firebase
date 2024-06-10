@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
     _main();
-    CONFIG = await _getConfig();
+    await _loadConfig();
     const urlParams = new URLSearchParams(window.location.search);
     DOCUMENT_ID = urlParams.get('d');
 
@@ -219,16 +219,16 @@ function _emojisOnInputAction(i, categoria) {
 
 async function getDesktopLink(originalLink) {
   try {
-      const response = await fetch(originalLink, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3' } });
-      const html = await response.text();
-      const match = html.match(/"og:url" content="([^"]+)"/);
-      if (match && match[1]) {
-          return match[1];
-      } else {
-          return "Desktop link not found.";
-      }
+    const response = await fetch(originalLink, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3' } });
+    const html = await response.text();
+    const match = html.match(/"og:url" content="([^"]+)"/);
+    if (match && match[1]) {
+      return match[1];
+    } else {
+      return "Desktop link not found.";
+    }
   } catch (error) {
-      console.error('Error:', error);
-      return "An error occurred while fetching the desktop link.";
+    console.error('Error:', error);
+    return "An error occurred while fetching the desktop link.";
   }
 }
