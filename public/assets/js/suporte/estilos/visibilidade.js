@@ -61,15 +61,20 @@ function _loadToggle() {
 
 function _loadDarkMode() {
      localStorage.setItem("darkMode", true);
+;
+ }
+
+function _loadDarkMode() {
+     localStorage.setItem("darkMode", true);
      THEME_COLOR = ESCURO;
      THEME_COLOR_SECONDARY = _getDarkerColor(ESCURO);
 
      const name = _getHTMLpage();
      var link = document.createElement("link");
-     link.href = _getCssHref(name, true);
+     link.href = _getCssHref(name, true) + '?version=' + new Date().getTime(); // Adiciona um timestamp como parâmetro de consulta
      link.type = "text/css";
      link.rel = "stylesheet";
-     document.getElementsByTagName("head")[0].appendChild(link);
+     document.getElementsByTagName("head")[0].appendChild(link)
 
      _loadToggle();
      _ChangeBarColorIOS("#303030");

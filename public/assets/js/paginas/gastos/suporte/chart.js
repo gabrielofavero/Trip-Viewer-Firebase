@@ -1,5 +1,15 @@
-function _setDoughnutChart(id, labels, valores) {
-    const div = document.getElementById(id);
+var GASTOS_CHARTS = {};
+
+function _setDoughnutChart(tipo, id, labels, valores) {
+    const div = getID(id);
+
+    if (GASTOS_CHARTS[tipo]) {
+        GASTOS_CHARTS[tipo].data.labels = labels;
+        GASTOS_CHARTS[tipo].data.datasets[0].data = valores;
+        GASTOS_CHARTS[tipo].update();
+        return;
+    }
+
     const dados = {
         labels: labels,
         datasets: [
@@ -27,5 +37,5 @@ function _setDoughnutChart(id, labels, valores) {
             },
         },
     };
-    new Chart(div, config);
+    GASTOS_CHARTS[tipo] = new Chart(div, config);
 }

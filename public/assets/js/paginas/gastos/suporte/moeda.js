@@ -83,14 +83,23 @@ function _loadMoedasTab() {
 
     for (let j = 1; j <= MOEDAS.resumo.length; j++) {
         moedasTab.innerHTML += `<input type="radio" id="radio-moeda-${j}" name="tabs-moedas" ${j === 1 ? 'checked' : ''} />`
-        moedasTab.innerHTML += `<label class="tab-mini" for="radio-moeda-${j}">${MOEDAS.resumo[j - 1]}</label>`
+        moedasTab.innerHTML += `<label class="tab-mini" for="radio-moeda-${j}">${MOEDAS.resumo[j-1]}</label>`
     }
 
     moedasTab.innerHTML += '<span class="glider-mini"></span>';
 
     const childs = _getChildIDs('tab-moedas');
-    for (let i = 1; i < childs.length; i++) {
+    for (let i = 0; i < childs.length; i++) {
         _setCSSRule(`input[id="${childs[i]}"]:checked~.glider-mini`, 'transform', `translateX(${i * 100}%)`);
+
+        const radio = getID(`radio-moeda-${i+1}`);
+        radio.addEventListener('change', () => {
+            if (radio.checked) {
+                MOEDA_ATUAL = MOEDAS.resumo[i];
+                getID('conversao').innerText = GASTOS_CONVERTIDOS[MOEDA_ATUAL].conversao || _getEmptyChar();
+                _applyGastos();
+            }
+        });
     }
 }
 
@@ -152,10 +161,12 @@ function _canConvert(moedas) {
     return true;
 }
 
-function _formatMoeda(moedaFloat) {
-    return new Intl.NumberFormat('pt-BR', {
+function _formatMoeda(moedaFloat, includeSymbol=false) {
+    const result =  new Intl.NumberFormat('pt-BR', {
         style: 'decimal',
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     }).format(moedaFloat);
+
+    return includeSymbol ? `${_getMoedaSymbol(MOEDA_ATUAL)} ${result}` : result;
 }

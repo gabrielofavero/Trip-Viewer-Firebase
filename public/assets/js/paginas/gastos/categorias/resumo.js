@@ -54,7 +54,7 @@ function _loadTableResumo(tipo, titulo) {
 
         const td2 = document.createElement('td');
         td2.className = 'tabela-texto-direita total';
-        td2.innerText = _formatMoeda(total);
+        td2.innerText = _formatMoeda(total, true);
         tr.appendChild(td2);
 
         tFoot.appendChild(tr);
@@ -65,6 +65,9 @@ function _loadTableResumo(tipo, titulo) {
 function _loadChartResumo() {
     const labels = ['Gastos Prévios', 'Gastos na Viagem'];
     const valores = [GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosPrevios.resumo.total, GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosDurante.resumo.total];
-    getID('resumo-total').innerText = `Total: ${_formatMoeda(valores[0] + valores[1])}`;
-    _setDoughnutChart('resumo-grafico', labels, valores)
+    
+    getID('resumo-titulo').innerText = `Resumo dos Gastos (${MOEDA_ATUAL})`;
+    getID('resumo-total').innerText = `Total: ${_formatMoeda(valores[0] + valores[1], true)}`;
+    
+    _setDoughnutChart('resumo', 'resumo-grafico', labels, valores)
 }

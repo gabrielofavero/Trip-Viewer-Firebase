@@ -308,3 +308,7 @@ function _postCloudFunction(functionName, body) {
   const url = _getCloudFunctionURL(functionName);
   return $.post(url, body);
 }
+
+function _getEmptyChar() {
+  return '\u200B';
+}

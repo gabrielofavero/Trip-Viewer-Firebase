@@ -4,6 +4,7 @@ var GASTOS_CONVERTIDOS = {};
 function _loadGastosConvertidos() {
     _processGastosConvertidos('gastosDurante');
     _processGastosConvertidos('gastosPrevios');
+    getID('conversao').innerText = GASTOS_CONVERTIDOS[MOEDA_ATUAL].conversao || _getEmptyChar();
 }
 
 function _processGastosConvertidos(tipoGasto) {
@@ -89,5 +90,5 @@ function _getConversaoText(moeda) {
         return '';
     }
     const conversao = _convertMoeda(moeda, MOEDA_PADRAO, 1);
-    return `1 ${MOEDA_PADRAO} = ${conversao.toFixed(2)} ${moeda}`
+    return `1 ${moeda} = ${_formatMoeda(conversao)} ${MOEDA_PADRAO}`
 }

@@ -3,6 +3,7 @@
   --primary-color: #5859a7;
   --secondary-color: #e6eef9;
   --background-mensagens: #fff;
+  --subtitle: #4B5563;
 }
 
 @font-face {
@@ -339,15 +340,16 @@ section {
 }
 
 #conversao {
-  color: #4B5563;	
-  padding-top: 1rem;
+  color: var(--subtitle);	
   padding-right: 2rem;
   padding-left: 2rem;
   text-align: right;
+  font-size: 14px;
 }
 
 .gastos-card {
-  border: 0.5px solid #f0f0f0;
+  border: 1px solid #D9D9D9;
+  background-color: #fff;
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
 }
 
@@ -390,17 +392,17 @@ section {
 .gastos-subtitulo,
 .total {
   font-weight: bold;
-  color: #4B5563;
+  color: var(--subtitle);
 }
 
 .tabela-titulo-esquerda {
   text-align: left;
-  color: #4B5563;
+  color: var(--subtitle);
 }
 
 .tabela-titulo-direita {
   text-align: right;
-  color: #4B5563;
+  color: var(--subtitle);
 }
 
 .tabela-texto-esquerda,

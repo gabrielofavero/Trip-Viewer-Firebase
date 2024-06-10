@@ -35,12 +35,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 async function _loadGastos() {
+    _startLoadingScreen();
     const documentID = GASTOS_ID;
     const pin = getID('pin-code')?.innerText || '';
     try {
         GASTOS = await _postCloudFunction('getGastos', { documentID, pin });
         if (GASTOS) {
-            _startLoadingScreen();
             await _loadMoedas();
             _loadGastosConvertidos();
             _applyGastos();
@@ -48,6 +48,7 @@ async function _loadGastos() {
             _stopLoadingScreen();
         }
     } catch (error) {
+        _stopLoadingScreen();
         const msg = error?.responseJSON?.error;
         if (msg) {
             _displayError(msg, true);
