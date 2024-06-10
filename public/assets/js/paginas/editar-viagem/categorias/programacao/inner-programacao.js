@@ -46,7 +46,7 @@ function _openInnerProgramacao(j, k, turno) {
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
 
-    const propriedades = MENSAGEM_PROPRIEDADES
+    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
     propriedades.titulo = getID(`programacao-title-${j}`).innerText;
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);

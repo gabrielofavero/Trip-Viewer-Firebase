@@ -40,7 +40,7 @@ function _openAtribuicoes() {
         break;
     }
 
-    const propriedades = MENSAGEM_PROPRIEDADES;
+    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
     propriedades.titulo = 'Atribuições';
     propriedades.conteudo = atribuicoes.join('<br>');
     propriedades.botoes = [];

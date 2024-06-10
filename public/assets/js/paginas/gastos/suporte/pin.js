@@ -223,7 +223,7 @@ function _initializeValidatePin() {
 }
 
 function _requestPin() {
-    const propriedades = MENSAGEM_PROPRIEDADES;
+    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
     propriedades.titulo = 'Digite o Pin de Acesso';
     propriedades.conteudo = `<div class="pin-wrapper">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input">

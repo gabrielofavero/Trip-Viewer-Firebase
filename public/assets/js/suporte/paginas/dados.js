@@ -310,3 +310,7 @@ function _postCloudFunction(functionName, body) {
 function _getEmptyChar() {
   return '\u200B';
 }
+
+function _cloneObject(object) {
+  return JSON.parse(JSON.stringify(object));
+}

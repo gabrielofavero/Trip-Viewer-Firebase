@@ -19,13 +19,13 @@ const MENSAGEM_PROPRIEDADES = {
 
 // Mensagem Genérica
 function _displayMessage(titulo, conteudo) {
-  const properties = MENSAGEM_PROPRIEDADES;
+  const properties = _cloneObject(MENSAGEM_PROPRIEDADES);
   if (titulo) properties.titulo = titulo;
   if (conteudo) properties.conteudo = conteudo;
   _displayFullMessage(properties);
 }
 
-function _displayFullMessage(propriedades = MENSAGEM_PROPRIEDADES) {
+function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES)) {
   const preloader = getID('preloader');
   const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
@@ -112,7 +112,7 @@ function _displayFullMessage(propriedades = MENSAGEM_PROPRIEDADES) {
 
 // Mensagem de Erro
 function _displayError(erro, tentarNovamente = false) {
-  const propriedades = MENSAGEM_PROPRIEDADES;
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   const isError = (erro && erro instanceof Error);
 
   propriedades.titulo = "Erro no Carregamento 🙁";
@@ -133,7 +133,7 @@ function _displayError(erro, tentarNovamente = false) {
 
 // Mensagem de Não Autorizado
 function _displayForbidden(conteudo, redirectTo = 'viagem.html') {
-  const propriedades = MENSAGEM_PROPRIEDADES;
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   propriedades.titulo = "Acesso Negado 🚫";
   propriedades.conteudo = conteudo || "Você não tem permissão para acessar esta página.";
   propriedades.critico = true;

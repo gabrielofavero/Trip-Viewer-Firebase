@@ -60,7 +60,7 @@ function _reloadModalCalendar(programacao) {
 }
 
 function _displayInnerProgramacaoMessage(index, container = 'programacao-container') {
-    const propriedades = MENSAGEM_PROPRIEDADES;
+    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
     propriedades.titulo = INNER_PROGRAMACAO_ATUAL[index].titulo;
     propriedades.conteudo = INNER_PROGRAMACAO_ATUAL[index].content;
     propriedades.botoes = [];
