@@ -2018,22 +2018,10 @@ iframe {
 
 @media (max-width: 520px) {
   .message-container,
-  .programacao-container {
+  .programacao-container,
+  .destinos-container  {
     width: 90%;
     height: auto;
-  }
-
-  .destinos-container {
-    height: 100%;
-    width: 100%;
-    border: none;
-    border-radius: 0;
-    overflow: auto;
-  }
-
-  .destinos-container {
-    justify-content: flex-start;
-    align-items: flex-start;
   }
 }
 
@@ -2497,6 +2485,12 @@ iframe {
   font-weight: bold;
   position: relative;
   top: 1.5px;
+}
+
+@media (max-width: 380px) {
+  .nota-texto {
+    font-size: 16px;
+  }
 }
 
 .links-container {

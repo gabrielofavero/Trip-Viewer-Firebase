@@ -24,10 +24,10 @@ function _loadModalContentCalendar(programacao) {
 
     INNER_PROGRAMACAO_ATUAL = [];
 
-    _setModalCalendarInnerHTML(getID("programacao-itens-madrugada"), programacao.madrugada, 'madrugada');
-    _setModalCalendarInnerHTML(getID("programacao-itens-manha"), programacao.manha, 'manha');
-    _setModalCalendarInnerHTML(getID("programacao-itens-tarde"), programacao.tarde, 'tarde');
-    _setModalCalendarInnerHTML(getID("programacao-itens-noite"), programacao.noite, 'noite');
+    _setModalCalendarInnerHTML(getID("programacao-itens-madrugada"), programacao.madrugada);
+    _setModalCalendarInnerHTML(getID("programacao-itens-manha"), programacao.manha);
+    _setModalCalendarInnerHTML(getID("programacao-itens-tarde"), programacao.tarde);
+    _setModalCalendarInnerHTML(getID("programacao-itens-noite"), programacao.noite);
 
     _adaptModalCalendarInnerHTML();
 }
@@ -74,10 +74,26 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
             break;
         case 'destinos':
             if (INNER_PROGRAMACAO_ATUAL[index].midia) {
-                _loadEmbed(INNER_PROGRAMACAO_ATUAL[index].midia, false, 1);
-                _loadMedia('midia-1');
+                _loadInnerProgramacaoMidia(INNER_PROGRAMACAO_ATUAL[index].midia);
             }
     }
+}
+
+function _loadInnerProgramacaoMidia(midia) {
+    if (!midia) return;
+    let buttonText = '<i class="iconify" data-icon="lets-icons:video-fill"></i>Visualizar Vídeo'; //
+
+    if (midia.includes('youtube') || midia.includes('youtu.be')) {
+        buttonText = '<i class="iconify" data-icon="mdi:youtube"></i>Visualizar Vídeo';
+    } else if (midia.includes('tiktok')) {
+        buttonText = '<i class="iconify" data-icon="ic:baseline-tiktok"></i>Visualizar Vídeo';
+    } else if (midia.includes('spotify')) {
+        buttonText = '<i class="iconify" data-icon="mdi:spotify"></i>Visualizar Playlist';
+    }
+
+    getID('midia-1').innerHTML = `<div class="button-box">
+                                    <button class="btn btn-secondary btn-format" type="submit" onclick="window.open('${midia}', '_blank');">${buttonText}</button>
+                                  </div>`
 }
 
 // Getters
@@ -195,7 +211,7 @@ function _getInnerProgramacaoHTML(item) {
 }
 
 // Setters
-function _setModalCalendarInnerHTML(div, programacao, turno) {
+function _setModalCalendarInnerHTML(div, programacao) {
     div.innerHTML = "";
     for (let i = 0; i < programacao.length; i++) {
         if (programacao[i].programacao) {

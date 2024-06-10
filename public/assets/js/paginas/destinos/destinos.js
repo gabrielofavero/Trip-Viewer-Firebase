@@ -6,6 +6,7 @@ function _loadDestinosHTML() {
   _loadVisibilityPasseio();
 
   getID("closeButton").onclick = function () {
+    _unloadMedias();
     window.parent._closeLightbox();
   };
 
@@ -36,7 +37,7 @@ function _loadDestinosHTML() {
         moeda: DESTINO.moeda
       }
 
-      const innerHTML = `<div class="accordion-group">
+      const innerHTML = `<div class="accordion-group" id='destinos-box'>
                           <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
                               <h2 class="accordion-header" id="heading-destinos-${j}">
                                   <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button"

@@ -31,6 +31,12 @@ function _unloadMedia(id) {
     }
 }
 
+function _unloadMedias() {
+    for (const j of _getJs('destinos-box')) {
+        _unloadMedia(`midia-${j}`);
+    }
+}
+
 
 // Support Functions
 function _getLineupEmbed(link) {
