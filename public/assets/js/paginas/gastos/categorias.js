@@ -23,60 +23,42 @@ function _loadChartResumo() {
 
 // Gastos Prévios
 function _loadGastosPrevios() {
-    getID(`gastosPrevios-container`).innerHTML = '';
     _setDoughnutChartCategoria(`Gastos Prévios (${MOEDA_ATUAL})`, 'gastosPrevios');
     _setTableCategoria('gastosPrevios');
 }
 
 // Gastos na Viagem
 function _loadGastosDurante() {
-    getID(`gastosDurante-container`).innerHTML = '';
     _setDoughnutChartCategoria(`Gastos na Viagem (${MOEDA_ATUAL})`, 'gastosDurante');
     _setTableCategoria('gastosDurante');
 }
 
 
 function _setDoughnutChartCategoria(titulo, tipo) {
-    const container = getID(`${tipo}-container`);
+    const itens = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].itens;
     const total = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].resumo.total;
 
-    const div = document.createElement('div');
-    div.className = 'gastos-card grafico-pizza';
+    getID(`${tipo}-titulo`).innerText = `${titulo} (${MOEDA_ATUAL})`;
+    getID(`${tipo}-total`).innerText = `Total: ${_formatMoeda(total, true)}`;
 
-    const h2 = document.createElement('h2');
-    h2.className = 'gastos-titulo';
-    h2.innerText = titulo;
-    div.appendChild(h2);
-
-    const subtitulo = document.createElement('div');
-    subtitulo.className = 'gastos-subtitulo';
-    subtitulo.id = `${tipo}-total`;
-    subtitulo.innerText = `Total: ${_formatMoeda(total, true)}`;
-    div.appendChild(subtitulo);
-
-    const canvas = document.createElement('canvas');
-    canvas.id = `${tipo}-grafico`;
-    canvas.width = 300;
-    canvas.height = 300;
-    div.appendChild(canvas);
-
-    container.appendChild(div);
-
-    const itens = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].itens;
     const labels = itens.map(item => item.nome);
     const valores = itens.map(item => item.total);
+
     _setDoughnutChart(`${tipo}-grafico`, labels, valores);
 }
 
 function _setTableCategoria(tipo) {
-    const container = getID(`${tipo}-container`);
+    _unsetTableCategoria(tipo);
+
     const itens = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].itens;
+    const container = getID(`${tipo}-container`);
 
     for (let j = 1; j <= itens.length; j++) {
         const item = itens[j - 1];
         const id = `${tipo}-${j}`;
 
         const recibo = document.createElement('div');
+        recibo.id = `${id}-recibo`;
         recibo.className = 'gastos-card gastos-recibo';
 
         const h2 = document.createElement('h2');
@@ -92,5 +74,13 @@ function _setTableCategoria(tipo) {
         container.appendChild(recibo);
 
         _setTable(id, item.itens, item.total);
+    }
+}
+
+function _unsetTableCategoria(tipo) {
+    let j = 1;
+    while (getID(`${tipo}-${j}-recibo`)) {
+        getID(`${tipo}-${j}-recibo`).remove();
+        j++;
     }
 }
