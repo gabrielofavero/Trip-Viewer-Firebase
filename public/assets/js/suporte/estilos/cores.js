@@ -74,6 +74,11 @@ function _getColorHexFromOptions(i) {
     return CONFIG.cores.opcoes[_getColorIndexFromOptions(i)].hex;
 }
 
+function _getThemeColorBoxShadow(cor=THEME_COLOR_SECONDARY) {
+    const rgba = _hexToRgbText(cor, 0.15);
+    return `0 0 1px 0 ${rgba}, 0 6px 12px 0 ${rgba};`
+}
+
 
 // Setters
 function _changeFillColorSVGs(className, color) {
@@ -125,11 +130,24 @@ function _rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
 }
 
+function _rgbToText(r, g, b, a) {
+    if (a) {
+        return `rgba(${r}, ${g}, ${b}, ${a})`;
+    } else {
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+}
+
+function _hexToRgbText(hex, a) {
+    let [r, g, b] = _hexToRgb(hex);
+    return _rgbToText(r, g, b, a);
+}
+
 
 // Checkers
 function _isCustomColorsActive() {
     const html = _getHTMLpage();
-    if (html === 'destinos') {
+    if (html === 'destinos' || html === 'gastos') {
         return localStorage.getItem("customColors") === "true";
     } else {
         return CUSTOM_COLORS

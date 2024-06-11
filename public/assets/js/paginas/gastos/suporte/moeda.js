@@ -79,10 +79,12 @@ async function _fetchConversoes(url) {
 
 function _loadMoedasTab() {
     const moedasTab = getID('tab-moedas');
+    moedasTab.innerHTML = '';
     moedasTab.style.display = '';
 
     for (let j = 1; j <= MOEDAS.resumo.length; j++) {
-        moedasTab.innerHTML += `<input type="radio" id="radio-moeda-${j}" name="tabs-moedas" ${j === 1 ? 'checked' : ''} />`
+        const checked = MOEDAS.resumo[j-1] === MOEDA_ATUAL ? 'checked' : '';
+        moedasTab.innerHTML += `<input type="radio" id="radio-moeda-${j}" name="tabs-moedas" ${checked} />`
         moedasTab.innerHTML += `<label class="tab-mini" for="radio-moeda-${j}">${MOEDAS.resumo[j-1]}</label>`
     }
 

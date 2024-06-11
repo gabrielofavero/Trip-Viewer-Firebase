@@ -236,7 +236,7 @@ function _requestPin() {
     propriedades.containers = _getContainersInput();
     propriedades.botoes = [{
         tipo: 'cancelar',
-        acao: `window.location.href = "viagem.html?v=${GASTOS_ID}"`
+        acao: `window.location.href = "viagem.html?v=${GASTOS_EXPORT.id}"`
     }, {
         tipo: 'confirmar',
         acao: '_loadGastos()'

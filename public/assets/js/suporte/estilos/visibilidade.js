@@ -28,7 +28,7 @@ function _loadVisibility() {
      };
 }
 
-function _loadVisibilityPasseio() {
+function _loadVisibilityExternal() {
      const localColors = _getLocalColors();
      if (localColors) {
           CLARO = localColors.claro;
@@ -58,11 +58,6 @@ function _loadToggle() {
           element.classList.add("bx-moon");
      }
 }
-
-function _loadDarkMode() {
-     localStorage.setItem("darkMode", true);
-;
- }
 
 function _loadDarkMode() {
      localStorage.setItem("darkMode", true);
@@ -205,8 +200,7 @@ function _applyCustomVisibilityRules() {
           case 'gastos':
                _loadLogoColors();
                _applyCustomColors();
-               break;
-          default:
+               _loadMoedasTab();
                break;
      }
 }

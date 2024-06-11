@@ -10,14 +10,16 @@ function _setDoughnutChart(tipo, id, labels, valores) {
         return;
     }
 
+    const coresRGB = _getChartColorsRGB(labels.length);
+
     const dados = {
         labels: labels,
         datasets: [
             {
                 label: "Resumo",
                 data: valores,
-                backgroundColor: ["rgba(60, 191, 174, 0.5)", "rgba(239, 68, 68, 0.5)"],
-                borderColor: ["rgba(60, 191, 174, 1)", "rgba(239, 68, 68, 1)"],
+                backgroundColor: _getArrayRGBA(coresRGB, 0.5),
+                borderColor: _getArrayRGBA(coresRGB, 1),
                 borderWidth: 1,
             },
         ],
@@ -38,4 +40,27 @@ function _setDoughnutChart(tipo, id, labels, valores) {
         },
     };
     GASTOS_CHARTS[tipo] = new Chart(div, config);
+}
+
+function _getChartColorsRGB(size) {
+    const result = [];
+    const coresHex = CONFIG.cores.opcoes.map((cor) => cor.hex);
+    const coresRGB = coresHex.map((cor) => _hexToRgb(cor));
+    
+    for (let i = 0; i < size; i++) {
+        const index = i % coresRGB.length;
+        result.push(coresRGB[index]);
+    }
+
+    return result;
+}
+
+function _getArrayRGBA(coresRGB, a) {
+    const result = [];
+
+    for (const rgb of coresRGB) {
+        result.push(_rgbToText(rgb[0], rgb[1], rgb[2], a));
+    }
+
+    return result;
 }

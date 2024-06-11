@@ -3,7 +3,7 @@ var CONTENT = {};
 
 // Métodos Principais
 function _loadDestinosHTML() {
-  _loadVisibilityPasseio();
+  _loadVisibilityExternal();
 
   getID("closeButton").onclick = function () {
     _unloadMedias();

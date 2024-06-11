@@ -1,5 +1,5 @@
+var GASTOS_EXPORT;
 var GASTOS;
-var GASTOS_ID;
 var GASTOS_QUANTIDADE = 0;
 var GASTOS_TOTAIS = {
     resumo: {},
@@ -8,22 +8,22 @@ var GASTOS_TOTAIS = {
 };
 
 document.addEventListener('DOMContentLoaded', async function () {
-    const gastos = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : null;
-    GASTOS_ID = gastos?.id;
+    _loadVisibilityExternal();
+    GASTOS_EXPORT = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : null;
     await _loadConfig();
 
-    if (!gastos || !GASTOS_ID) {
-        const url = GASTOS_ID ? `viagem.html?v=${GASTOS_ID}` : 'index.html';
+    if (!GASTOS_EXPORT || !GASTOS_EXPORT?.id) {
+        const url = GASTOS_EXPORT.id ? `viagem.html?v=${GASTOS_EXPORT.id}` : 'index.html';
         _displayForbidden('Nenhum documento de gastos foi encontrado. Certifique-se de que você está acessando a página por meio do botão "Gastos" na página de Viagem', url);
         return;
     }
 
-    if (!gastos.ativo) {
-        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `viagem.html?v=${GASTOS_ID}`);
+    if (!GASTOS_EXPORT.ativo) {
+        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `viagem.html?v=${GASTOS_EXPORT.id}`);
         return;
     }
 
-    if (!gastos.pin) {
+    if (!GASTOS_EXPORT.pin) {
         _loadGastos();
     } else {
         _stopLoadingScreen();
@@ -33,16 +33,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 async function _loadGastos() {
-    _startLoadingScreen();
-    const documentID = GASTOS_ID;
+    const documentID = GASTOS_EXPORT.id;
     const pin = getID('pin-code')?.innerText || '';
+    _closeMessage();
+    _startLoadingScreen();
     try {
         GASTOS = await _postCloudFunction('getGastos', { documentID, pin });
         if (GASTOS) {
             await _loadMoedas();
             _loadGastosConvertidos();
             _applyGastos();
-            _closeMessage();
             _stopLoadingScreen();
         }
     } catch (error) {
