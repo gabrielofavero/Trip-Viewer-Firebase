@@ -6,6 +6,7 @@ var GASTOS_TOTAIS = {
     gastosPrevios: {},
     gastosDurante: {}
 };
+var GASTO_ATIVO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', async function () {
     _loadVisibilityExternal();
@@ -28,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     } else {
         _stopLoadingScreen();
         _requestPin();
-        _initializeValidatePin();
     }
 });
 
@@ -36,6 +36,7 @@ async function _loadGastos() {
     const documentID = GASTOS_EXPORT.id;
     const pin = getID('pin-code')?.innerText || '';
     _closeMessage();
+    _removePinListener();
     _startLoadingScreen();
     try {
         GASTOS = await _postCloudFunction('getGastos', { documentID, pin });
@@ -43,6 +44,7 @@ async function _loadGastos() {
             await _loadMoedas();
             _loadGastosConvertidos();
             _applyGastos();
+            _setTabListeners();
             _stopLoadingScreen();
         }
     } catch (error) {
@@ -52,7 +54,7 @@ async function _loadGastos() {
             _displayError(msg, true);
             throw new Error(msg);
         } else {
-            _displayError('Erro ao carregar os dados de gastos', true);
+            _displayError(error);
             throw error;
         }
     }
@@ -66,20 +68,35 @@ function _applyGastos() {
 
         if (GASTOS.gastosPrevios.length > 0) {
             getID('radio-gastosPrevios').style.display = '';
-            _setGastosPrevios();
+            _loadGastosPrevios();
         }
 
         if (GASTOS.gastosDurante.length > 0) {
             getID('radio-gastosDurante').style.display = '';
-            _setGastosDurante();
+            _loadGastosDurante();
         }
     }
 }
 
-function _setGastosPrevios() {
+function _setTabListeners() {
+    const radios = ['radio-resumo', 'radio-gastosPrevios', 'radio-gastosDurante'];
+    radios.forEach(radio => {
+        getID(radio).addEventListener('click', function () {
+            const gasto = radio.replace('radio-', '');
+            if (GASTO_ATIVO === gasto) return;
 
-}
+            const gastoAnterior = GASTO_ATIVO;
+            GASTO_ATIVO = gasto;
 
-function _setGastosDurante() {
+            const antigo = radios.indexOf(`radio-${gastoAnterior}`);
+            const novo = radios.indexOf(radio);
 
+            if (novo > antigo) {
+                _fade([gastoAnterior], [GASTO_ATIVO], 150);
+            } else {
+                _fade([gastoAnterior], [GASTO_ATIVO], 150);
+            }
+
+        });
+    });
 }

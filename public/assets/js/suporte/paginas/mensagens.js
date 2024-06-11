@@ -272,10 +272,10 @@ function _getBackButton(redirectTo = 'index.html') {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', `window.location.href = "${redirectTo}";`)
+  button.setAttribute('onclick', `window.location.href = "${redirectTo}";`);
+  button.id = 'message-back';
 
   const icon = document.createElement('i');
-  icon.id = 'transporte-nav';
   icon.className = 'iconify';
   icon.setAttribute('data-icon', 'bx:home');
 
@@ -289,10 +289,10 @@ function _getTryAgainButton() {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', 'window.location.reload(true);')
+  button.setAttribute('onclick', 'window.location.reload(true);');
+  button.id = 'message-try-again';
 
   const icon = document.createElement('i');
-  icon.id = 'transporte-nav';
   icon.className = 'iconify';
   icon.setAttribute('data-icon', 'pajamas:retry');
 
@@ -306,7 +306,8 @@ function _getCloseButton(name = 'Fechar', onclick) {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', onclick ? onclick : '_closeMessage();')
+  button.setAttribute('onclick', onclick ? onclick : '_closeMessage();');
+  button.id = 'message-close';
 
   button.innerHTML = name;
   return button;
@@ -317,6 +318,7 @@ function _getConfirmButton(onclick = '_closeMessage();') {
   button.className = 'btn btn-purple btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', onclick)
+  button.id = 'message-confirm';
 
   button.innerHTML = 'Confirmar';
   return button;
@@ -326,7 +328,8 @@ function _getDeleteButton(onclick, buttonClass = 'btn-secondary') {
   const button = document.createElement('button');
   button.className = `btn ${buttonClass} btn-format`;
   button.type = 'submit';
-  button.setAttribute('onclick', onclick)
+  button.setAttribute('onclick', onclick);
+  button.id = 'message-delete';
 
   const icon = document.createElement('i');
   icon.className = 'iconify';

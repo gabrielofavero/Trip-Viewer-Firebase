@@ -1,17 +1,18 @@
 var GASTOS_CHARTS = {};
 
-function _loadTable(titulo, id, itens, total) {    
+function _setTable(id, itens, total) {
     if (!itens || itens.length === 0) {
         return;
     }
-
-    getID(`${id}-titulo`).innerText = `${titulo} (${MOEDA_ATUAL})`;
 
     const tabela = getID(`${id}-tabela`);
     tabela.innerHTML = '';
     tabela.appendChild(tbody(itens));
     tabela.appendChild(tfoot(total));
-    getID(id).style.display = '';
+
+    if (getID(id)) {
+        getID(id).style.display = '';
+    }
 
     function tbody(itens) {
         const tbody = document.createElement('tbody');
@@ -58,16 +59,12 @@ function _loadTable(titulo, id, itens, total) {
     }
 }
 
-
-
-
-function _setDoughnutChart(tipo, id, labels, valores) {
+function _setDoughnutChart(id, labels, valores) {
     const div = getID(id);
 
-    if (GASTOS_CHARTS[tipo]) {
-        GASTOS_CHARTS[tipo].data.labels = labels;
-        GASTOS_CHARTS[tipo].data.datasets[0].data = valores;
-        GASTOS_CHARTS[tipo].update();
+    if (GASTOS_CHARTS[id]) {
+        GASTOS_CHARTS[id].data.datasets[0].data = valores;
+        GASTOS_CHARTS[id].update();
         return;
     }
 
@@ -94,20 +91,20 @@ function _setDoughnutChart(tipo, id, labels, valores) {
                     display: true,
                     position: "right",
                     labels: {
-                        color: "rgba(107, 114, 128, 1)",
+                        color: _isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)',
                     },
                 },
             },
         },
     };
-    GASTOS_CHARTS[tipo] = new Chart(div, config);
+    GASTOS_CHARTS[id] = new Chart(div, config);
 }
 
 function _getChartColorsRGB(size) {
     const result = [];
     const coresHex = CONFIG.cores.opcoes.map((cor) => cor.hex);
     const coresRGB = coresHex.map((cor) => _hexToRgb(cor));
-    
+
     for (let i = 0; i < size; i++) {
         const index = i % coresRGB.length;
         result.push(coresRGB[index]);
@@ -124,4 +121,12 @@ function _getArrayRGBA(coresRGB, a) {
     }
 
     return result;
+}
+
+function _changeChartsLabelsVisibility() {
+    const cor = _isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)';
+    for (const chart in GASTOS_CHARTS) {
+        GASTOS_CHARTS[chart].options.plugins.legend.labels.color = cor;
+        GASTOS_CHARTS[chart].update();
+    }
 }

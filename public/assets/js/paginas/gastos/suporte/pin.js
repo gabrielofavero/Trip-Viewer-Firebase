@@ -209,7 +209,7 @@ Two callback functions are provided - onSuccess and onFailure
   };
 })(jQuery);
 
-function _initializeValidatePin() {
+function _loadPin() {
   $(".pin-wrapper").validatePin({
     numericKeyboardOnMobile: true,
     blurOnSuccess: true,
@@ -242,4 +242,17 @@ function _requestPin() {
         acao: '_loadGastos()'
     }];
     _displayFullMessage(propriedades);
+    _loadPin();
+    
+    document.addEventListener('keydown', _pinListenerAction);
+}
+
+function _pinListenerAction(event) {
+  if (event.key === 'Enter') {
+    getID('message-confirm').click();
+  }
+}
+
+function _removePinListener() {
+  document.removeEventListener('keydown', _pinListenerAction);
 }

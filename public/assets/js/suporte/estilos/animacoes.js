@@ -2,7 +2,6 @@ function _animate(fadeIn, fadeOut, from = 0, to = 0, horizontal = true) {
     const forward = horizontal ? 'left' : 'down';
     const backwards = horizontal ? 'right' : 'up';
 
-
     if (fadeIn && fadeOut) {
         if (from == to) {
             _fade(fadeOut, fadeIn);
@@ -62,11 +61,11 @@ function _fadeIn(elementIds, mili = 250) {
     });
 }
 
-function _fade(fadeOutIds, fadeInIds) {
+function _fade(fadeOutIds, fadeInIds, duration=250) {
     _fadeOut(fadeOutIds);
     setTimeout(function () {
         _fadeIn(fadeInIds);
-    }, 250);
+    }, duration);
 }
 
 // Swipe

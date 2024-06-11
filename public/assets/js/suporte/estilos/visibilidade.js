@@ -203,6 +203,7 @@ function _applyCustomVisibilityRules() {
           case 'gastos':
                _loadLogoColors();
                _applyCustomColors();
+               _changeChartsLabelsVisibility();
                _loadMoedasTab();
                break;
      }
