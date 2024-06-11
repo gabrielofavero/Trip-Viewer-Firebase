@@ -62,6 +62,7 @@ function _loadToggle() {
 function _loadDarkMode() {
      localStorage.setItem("darkMode", true);
      THEME_COLOR = ESCURO;
+     THEME_COLOR_HOVER = _getDarkerColor(ESCURO, 10);
      THEME_COLOR_SECONDARY = _getDarkerColor(ESCURO);
 
      const name = _getHTMLpage();
@@ -84,6 +85,7 @@ function _loadDarkMode() {
 function _loadLightMode() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
+     THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
      THEME_COLOR_SECONDARY = _getLighterColor(CLARO);
 
      const name = _getHTMLpage();
@@ -106,6 +108,7 @@ function _loadLightMode() {
 function _loadLightModeLite() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
+     THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
      THEME_COLOR_SECONDARY = _getLighterColor(CLARO);
 
      _loadToggle();
@@ -208,6 +211,7 @@ function _applyCustomVisibilityRules() {
 
 function _applyCustomColors() {
      _setCSSVariable('theme-color', THEME_COLOR);
+     _setCSSVariable('theme-color-hover', THEME_COLOR_HOVER);
      _setCSSVariable('theme-color-secondary', THEME_COLOR_SECONDARY);
  }
 

@@ -4,6 +4,7 @@
 
 :root {
   --theme-color: #5859a7;
+  --theme-color-hover: #505197;
   --theme-color-secondary: #D5D6E9;
 }
 
@@ -2128,15 +2129,11 @@ iframe {
   color: #fff;
 }
 
-/* .btn-purple:hover {
-  background: #505197;
+.btn-purple:hover,
+.btn-purple:active {
+  background: var(--theme-color-hover);
   color: #fff;
 }
-
-.btn-purple:active {
-  background: #3d85c6;
-  color: #fff;
-} */
 
 #dDescription {
   margin-bottom: 40px;

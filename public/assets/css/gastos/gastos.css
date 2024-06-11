@@ -1,7 +1,7 @@
 :root {
   --theme-color: #5859a7;
+  --theme-color-hover: #505197;
   --theme-color-secondary: #e6eef9;
-  --theme-color-box-shadow: 0 0 1px 0 rgba(110, 123, 131, 0.15), 0 6px 12px 0 rgba(110, 123, 131, 0.15);
   --subtitle: #4B5563;
 }
 
@@ -191,7 +191,7 @@ h6 {
   display: flex;
   position: relative;
   background-color: #fff;
-  box-shadow: var(--theme-color-box-shadow);
+  box-shadow: 0 0 1px 0 rgba(110, 123, 131, 0.15), 0 6px 12px 0 rgba(110, 123, 131, 0.15);
   padding: 0.75rem;
   border-radius: 99px;
   transform: scale(0.7);
@@ -523,11 +523,11 @@ section {
   color: #fff;
 }
 
-/* .btn-purple:hover,
+.btn-purple:hover,
 .btn-purple:focus {
-  background: #505197;
   color: #fff;
-} */
+  background: var(--theme-color-hover);
+}
 
 /*--------------------------------------------------------------
 # Botões

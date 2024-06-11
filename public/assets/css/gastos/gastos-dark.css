@@ -1,7 +1,7 @@
 :root {
   --theme-color: #7f75b6;
-  --secondary-color: #D5D6E9;
-  --theme-color-box-shadow: 0 0 1px 0 rgba(166, 166, 166, 0.05), 0 6px 12px 0 rgba(166, 166, 166, 0.05);
+  --theme-color-hover: #7367b4;
+  --theme-color-secondary: #D5D6E9;
   --subtitle: #e3ecf8;
 }
 
@@ -32,7 +32,7 @@ a {
 
 .tabs {
   background-color: #3b3b3b;
-  box-shadow: var(--theme-color-box-shadow);
+  box-shadow: 0 0 1px 0 rgba(166, 166, 166, 0.05), 0 6px 12px 0 rgba(166, 166, 166, 0.05);
 }
 
 input[type="radio"]:checked+label>.notification {

@@ -1,5 +1,6 @@
 :root {
   --theme-color: #7f75b6;
+  --theme-color-hover: #7367b4;
   --theme-color-secondary: #D5D6E9;
 }
 
@@ -468,9 +469,10 @@ a:hover {
   background: var(--theme-color);
 }
 
-/* .btn-purple:hover {
-  background: #7367b4;
-} */
+.btn-purple:hover,
+.btn-purple:active {
+  background: var(--theme-color-hover);
+}
 
 .flight-box {
   border: 0.5px solid #414040;
