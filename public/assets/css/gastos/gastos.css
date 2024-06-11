@@ -1,5 +1,4 @@
 :root {
-  --roxo: #5859a7;
   --theme-color: #5859a7;
   --theme-color-secondary: #e6eef9;
   --theme-color-box-shadow: 0 0 1px 0 rgba(110, 123, 131, 0.15), 0 6px 12px 0 rgba(110, 123, 131, 0.15);
@@ -512,23 +511,23 @@ section {
 .btn-basic {
   border-width: 2px;
   border-style: solid;
-  border-color: var(--roxo);
-  color: var(--roxo);
+  border-color: var(--theme-color);
+  color: var(--theme-color);
   background: none;
 }
 
 .btn-purple,
 .btn-basic:hover,
 .btn-basic:focus {
-  background: var(--roxo);
+  background: var(--theme-color);
   color: #fff;
 }
 
-.btn-purple:hover,
+/* .btn-purple:hover,
 .btn-purple:focus {
   background: #505197;
   color: #fff;
-}
+} */
 
 /*--------------------------------------------------------------
 # Botões

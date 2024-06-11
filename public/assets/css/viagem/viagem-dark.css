@@ -468,9 +468,9 @@ a:hover {
   background: var(--theme-color);
 }
 
-.btn-purple:hover {
+/* .btn-purple:hover {
   background: #7367b4;
-}
+} */
 
 .flight-box {
   border: 0.5px solid #414040;
