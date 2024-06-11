@@ -324,26 +324,30 @@ section {
   padding-bottom: 2rem;
 }
 
+#conversao {
+  color: var(--subtitle);
+  padding-right: 2.0rem;
+  padding-left: 2.0rem;
+  text-align: right;
+  font-size: 14px;
+}
+
 @media (min-width: 1300px) {
-  .gastos-container {
+
+  .gastos-container,
+  #conversao {
     padding-right: 10%;
     padding-left: 10%;
   }
 }
 
 @media (min-width: 1750px) {
-  .gastos-container {
+
+  .gastos-container,
+  #conversao {
     padding-right: 20%;
     padding-left: 20%;
   }
-}
-
-#conversao {
-  color: var(--subtitle);	
-  padding-right: 2.2rem;
-  padding-left: 2.2rem;
-  text-align: right;
-  font-size: 14px;
 }
 
 .gastos-card {
@@ -369,14 +373,14 @@ section {
   }
 }
 
-.grafico-pizza {
+.grafico {
   padding: 1.5rem;
   grid-column: span 12 / span 12;
   border-radius: 0.5rem;
 }
 
 @media (min-width: 1024px) {
-  .grafico-pizza {
+  .grafico {
     grid-column: span 4 / span 4;
   }
 }

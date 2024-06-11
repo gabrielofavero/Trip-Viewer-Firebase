@@ -4,14 +4,12 @@ var GASTOS_CONVERTIDOS = {};
 function _loadGastosConvertidos() {
     _processGastosConvertidos('gastosDurante');
     _processGastosConvertidos('gastosPrevios');
-    getID('conversao').innerText = GASTOS_CONVERTIDOS[MOEDA_ATUAL].conversao || _getEmptyChar();
 }
 
 function _processGastosConvertidos(tipoGasto) {
     for (const moeda of MOEDAS.resumo) {
         if (!GASTOS_CONVERTIDOS[moeda]) {
-            const conversao = _getConversaoText(moeda);
-            GASTOS_CONVERTIDOS[moeda] = { conversao };
+            GASTOS_CONVERTIDOS[moeda] = {};
         }
         GASTOS_CONVERTIDOS[moeda][tipoGasto] = _calculateGastosConvertidos(tipoGasto, moeda);
     }
@@ -63,7 +61,7 @@ function _calculateGastosConvertidos(tipo, moeda) {
     for (const gasto of gastos) {
         let valor = gasto.valor;
         let include = true;
-        
+
         if (gasto.moeda != moeda) {
             if (_canConvert([gasto.moeda, moeda])) {
                 valor = _convertMoeda(gasto.moeda, moeda, gasto.valor);
@@ -71,7 +69,7 @@ function _calculateGastosConvertidos(tipo, moeda) {
                 include = false;
             }
         }
-        
+
         if (include) {
             resumo.total += valor;
             valor = parseFloat(valor.toFixed(2));
@@ -85,10 +83,16 @@ function _calculateGastosConvertidos(tipo, moeda) {
     return { resumo, itens };
 }
 
-function _getConversaoText(moeda) {
-    if (MOEDA_PADRAO === moeda || !_canConvert([MOEDA_PADRAO, moeda])) {
-        return '';
+function _getConversaoText() {
+    if (MOEDAS.resumo.length == 1) {
+        return _getEmptyChar();
     }
-    const conversao = _convertMoeda(moeda, MOEDA_PADRAO, 1);
-    return `1 ${moeda} = ${_formatMoeda(conversao)} ${MOEDA_PADRAO}`
+    const conversoes = [`1 ${MOEDA_PADRAO}`];
+    for (const moeda of MOEDAS.resumo) {
+        if (moeda == MOEDA_PADRAO) {
+            continue;
+        }
+        conversoes.push(`${_convertMoeda(moeda, MOEDA_PADRAO, 1).toFixed(2)} ${moeda}`)
+    }
+    return conversoes.join(' = ');
 }

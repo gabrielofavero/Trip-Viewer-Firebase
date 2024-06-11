@@ -1,5 +1,6 @@
 var GASTOS_CHARTS = {};
 
+// Tabelas
 function _setTable(id, itens, total) {
     if (!itens || itens.length === 0) {
         return;
@@ -59,7 +60,7 @@ function _setTable(id, itens, total) {
     }
 }
 
-function _setDoughnutChart(id, labels, valores) {
+function _setChart(tipo, id, labels, valores) {
     const div = getID(id);
 
     if (GASTOS_CHARTS[id]) {
@@ -67,14 +68,44 @@ function _setDoughnutChart(id, labels, valores) {
         GASTOS_CHARTS[id].update();
         return;
     }
-
     const coresRGB = _getChartColorsRGB(labels.length);
+    const dados = _getChartData(labels, valores, coresRGB)
+    const config = _getChartConfig(tipo, dados);
+    GASTOS_CHARTS[id] = new Chart(div, config);
+}
 
-    const dados = {
+
+// Gráficos
+function _getChartConfig(tipo, dados) {
+    let legenda = {
+        display: false,
+    };
+
+    if (tipo === 'doughnut' || tipo === 'pie') {
+        legenda.display = true;
+        legenda.position = "right";
+        legenda.labels = {
+            color: _isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)',
+        };
+    }
+
+    return {
+        type: tipo,
+        data: dados,
+        options: {
+            plugins: {
+                legend: legenda,
+            },
+        },
+    };
+}
+
+function _getChartData(labels, valores, coresRGB) {
+    return {
         labels: labels,
         datasets: [
             {
-                label: "Resumo",
+                label: "",
                 data: valores,
                 backgroundColor: _getArrayRGBA(coresRGB, 0.5),
                 borderColor: _getArrayRGBA(coresRGB, 1),
@@ -82,22 +113,6 @@ function _setDoughnutChart(id, labels, valores) {
             },
         ],
     };
-    const config = {
-        type: "doughnut",
-        data: dados,
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: "right",
-                    labels: {
-                        color: _isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)',
-                    },
-                },
-            },
-        },
-    };
-    GASTOS_CHARTS[id] = new Chart(div, config);
 }
 
 function _getChartColorsRGB(size) {

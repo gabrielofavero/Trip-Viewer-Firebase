@@ -44,6 +44,7 @@ async function _loadGastos() {
             await _loadMoedas();
             _loadGastosConvertidos();
             _applyGastos();
+            getID('conversao').innerText = _getConversaoText();
             _setTabListeners();
             _stopLoadingScreen();
         }

@@ -3,11 +3,11 @@ function _loadResumo() {
     _loadChartResumo();
 
     const gastosPrevios = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosPrevios'].resumo;
-    getID(`resumo-gastosPrevios-titulo`).innerText = `Gastos Prévios (${MOEDA_ATUAL})`;
+    getID(`resumo-gastosPrevios-titulo`).innerText = `Gastos Prévios`;
     _setTable('resumo-gastosPrevios', gastosPrevios.itens, gastosPrevios.total);
 
     const gastosDurante = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosDurante'].resumo;
-    getID(`resumo-gastosDurante-titulo`).innerText = `Gastos na Viagem (${MOEDA_ATUAL})`;
+    getID(`resumo-gastosDurante-titulo`).innerText = `Gastos na Viagem`;
     _setTable('resumo-gastosDurante', gastosDurante.itens, gastosDurante.total);
 }
 
@@ -15,36 +15,35 @@ function _loadChartResumo() {
     const labels = ['Gastos Prévios', 'Gastos na Viagem'];
     const valores = [GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosPrevios.resumo.total, GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosDurante.resumo.total];
 
-    getID('resumo-titulo').innerText = `Resumo dos Gastos (${MOEDA_ATUAL})`;
+    getID('resumo-titulo').innerText = `Resumo dos Gastos`;
     getID('resumo-total').innerText = `Total: ${_formatMoeda(valores[0] + valores[1], true)}`;
 
-    _setDoughnutChart('resumo-grafico', labels, valores)
+    _setChart('doughnut', 'resumo-grafico', labels, valores)
 }
 
 // Gastos Prévios
 function _loadGastosPrevios() {
-    _setDoughnutChartCategoria(`Gastos Prévios (${MOEDA_ATUAL})`, 'gastosPrevios');
+    _setDoughnutChartCategoria(`Gastos Prévios`, 'gastosPrevios');
     _setTableCategoria('gastosPrevios');
 }
 
 // Gastos na Viagem
 function _loadGastosDurante() {
-    _setDoughnutChartCategoria(`Gastos na Viagem (${MOEDA_ATUAL})`, 'gastosDurante');
+    _setDoughnutChartCategoria(`Gastos na Viagem`, 'gastosDurante');
     _setTableCategoria('gastosDurante');
 }
-
 
 function _setDoughnutChartCategoria(titulo, tipo) {
     const itens = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].itens;
     const total = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].resumo.total;
 
-    getID(`${tipo}-titulo`).innerText = `${titulo} (${MOEDA_ATUAL})`;
+    getID(`${tipo}-titulo`).innerText = `${titulo}`;
     getID(`${tipo}-total`).innerText = `Total: ${_formatMoeda(total, true)}`;
 
     const labels = itens.map(item => item.nome);
     const valores = itens.map(item => item.total);
 
-    _setDoughnutChart(`${tipo}-grafico`, labels, valores);
+    _setChart('doughnut', `${tipo}-grafico`, labels, valores);
 }
 
 function _setTableCategoria(tipo) {
@@ -63,7 +62,7 @@ function _setTableCategoria(tipo) {
 
         const h2 = document.createElement('h2');
         h2.className = 'gastos-titulo';
-        h2.innerText = `${item.nome} (${MOEDA_ATUAL})`;
+        h2.innerText = `${item.nome}`;
         recibo.appendChild(h2);
 
         const table = document.createElement('table');
