@@ -56,12 +56,12 @@ async function _loadGastos() {
         }
     } catch (error) {
         _stopLoadingScreen();
-        const msg = error?.responseJSON?.error;
+        const msg = error?.responseJSON?.error || error?.responseJSON?.message || error?.message || '';
         if (msg) {
             _displayError(msg, true);
             throw new Error(msg);
         } else {
-            _displayError(error);
+            _displayError(new Error ('Ocorreu um erro desconhecido ao tentar carregar os gastos. Tente novamente mais tarde'), true);
             throw error;
         }
     }
