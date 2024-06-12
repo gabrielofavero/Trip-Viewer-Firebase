@@ -1,11 +1,12 @@
 import { onRequest } from "firebase-functions/v2/https";
 import * as bcrypt from "bcrypt";
 import * as admin from "firebase-admin";
+import { handleCors } from "./cors";
 
 admin.initializeApp();
 
 export const getGastos = onRequest(async (request, response) => {
-    response.set("Access-Control-Allow-Origin", "*");
+    if (!handleCors(request, response)) return;
     const pin = request.body.pin as string;
     const documentID = request.body.documentID as string;
 
