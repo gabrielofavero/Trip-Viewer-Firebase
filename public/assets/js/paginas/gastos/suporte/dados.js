@@ -89,7 +89,7 @@ function _getChartConfig(tipo, dados) {
         };
     }
 
-    return {
+    let result = {
         type: tipo,
         data: dados,
         options: {
@@ -98,6 +98,24 @@ function _getChartConfig(tipo, dados) {
             },
         },
     };
+
+    if (tipo === 'bar') {
+        const scales = {
+            x: {
+                grid: {
+                    display: false,
+                },
+            },
+            y: {
+                grid: {
+                    display: false,
+                },
+            },
+        };
+        result.options.scales = scales;
+    }
+
+    return result;
 }
 
 function _getChartData(labels, valores, coresRGB) {
