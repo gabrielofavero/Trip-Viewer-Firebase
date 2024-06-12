@@ -5,7 +5,7 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 
 export const getGastos = onRequest(async (request, response) => {
-    debugger;
+    response.set("Access-Control-Allow-Origin", "*");
     const pin = request.body.pin as string;
     const documentID = request.body.documentID as string;
 

@@ -2,6 +2,7 @@ import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 
 export const convertTikTokLinks = onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
     const urls = request.body.urls as string[];
     if (!urls || !Array.isArray(urls)) {
         response.status(400).json({ error: "Um array de URLs encurtados não foi fornecido ou o formato está incorreto." });
