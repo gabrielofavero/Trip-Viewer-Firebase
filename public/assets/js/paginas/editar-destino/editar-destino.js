@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     _main();
     await _loadConfig();
-    const urlParams = new URLSearchParams(window.location.search);
-    DOCUMENT_ID = urlParams.get('d');
+    DOCUMENT_ID = _getURLParam('d')
 
     _loadVisibilityIndex();
     _loadHabilitados();

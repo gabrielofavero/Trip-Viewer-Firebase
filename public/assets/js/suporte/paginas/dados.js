@@ -314,3 +314,17 @@ function _getEmptyChar() {
 function _cloneObject(object) {
   return JSON.parse(JSON.stringify(object));
 }
+
+function _getURLParams() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const params = {};
+  for (const [key, value] of urlParams) {
+    params[key] = value;
+  }
+  return params;
+}
+
+function _getURLParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}

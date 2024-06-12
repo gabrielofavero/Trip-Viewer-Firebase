@@ -113,11 +113,7 @@ async function _delete(path) {
 async function _getSingleData(type) {
   let data;
   try {
-    const param = type[0];
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get(param);
-
-    data = await _get(`${type}/${id}`);
+    data = await _get(`${type}/${_getURLParam(type[0])}`);
 
     if (data) {
       for (let i = 0; i < data?.destinos?.length; i++) {

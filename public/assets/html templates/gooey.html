@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Viagem</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <style>
+        @property --a {
+            syntax: "<percentage>";
+            initial-value: 0%;
+            inherits: true;
+        }
+
+        .gooey button {
+            --a: 0%;
+            --hue: 170deg;
+            --x: 50;
+            --y: 50;
+            --button: hsl(var(--hue), 66%, 66%);
+            --edge: 20px;
+            --size: 2em;
+
+            background: transparent;
+            color: hsla(var(--hue), 80%, 30%, 0.7);
+            font-size: 1.8em;
+            position: relative;
+            padding: calc(var(--size)) calc(var(--size)*1.5);
+            animation: color 20s linear infinite both;
+            transition:
+                --a .5s ease-in-out,
+                scale var(--spring-duration) var(--spring-easing);
+            scale: 0.92;
+            isolation: isolate;
+            border: 0;
+
+            &:hover {
+                --a: 100%;
+                transition-duration: .5s, 1s;
+                box-shadow: none;
+                opacity: 1;
+                scale: 1;
+            }
+        }
+
+        .gooey button:before {
+            content: "";
+            position: absolute;
+            inset: 0em;
+            filter: blur(12px) url(#goo) drop-shadow(0 .25em .5em hsla(0deg, 0%, 0%, 0.2));
+            background-image:
+                linear-gradient(0deg, var(--button), var(--button)),
+                radial-gradient(40% 70% at calc(var(--x) * 1%) calc(var(--y) * 1%),
+                    hsla(var(--hue), 77%, 77%, var(--a)) 0%,
+                    transparent 90%);
+            background-clip: content-box, border-box;
+            padding: 24px;
+            z-index: -1;
+            border: inherit;
+            animation: color 20s linear infinite both;
+        }
+
+        @property --hue {
+            syntax: "<angle>";
+            initial-value: 170deg;
+            inherits: false;
+        }
+
+        @keyframes color {
+            from {
+                --hue: 170deg;
+            }
+
+            to {
+                --hue: 530deg;
+            }
+        }
+
+        :root {
+            --spring-easing: linear(0, 0.002, 0.01 0.9%, 0.038 1.8%, 0.156, 0.312 5.8%, 0.789 11.1%, 1.015 14.2%,
+                    1.096, 1.157, 1.199, 1.224 20.3%, 1.231, 1.231, 1.226, 1.214 24.6%,
+                    1.176 26.9%, 1.057 32.6%, 1.007 35.5%, 0.984, 0.968, 0.956, 0.949 42%,
+                    0.946 44.1%, 0.95 46.5%, 0.998 57.2%, 1.007, 1.011 63.3%, 1.012 68.3%,
+                    0.998 84%, 1);
+            --spring-duration: 1.66s;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <div class="gooey" id="gooey-container">
+            <button id="gooey" type="button">
+                Gastos
+            </button>
+
+            <svg width="0" height="0" style="position: absolute;">
+                <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+                    <feComponentTransfer>
+                        <feFuncA type="discrete" tableValues="0 1"></feFuncA>
+                    </feComponentTransfer>
+                    <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+                    <feComponentTransfer>
+                        <feFuncA type="table" tableValues="-5 11"></feFuncA>
+                    </feComponentTransfer>
+                </filter>
+            </svg>
+        </div>
+    </main>
+</body>
+
+<script>
+    function moveBg(e) {
+        const rect = e.target.getBoundingClientRect();
+        e.target.style.setProperty('--x', (e.clientX - rect.x) / rect.width * 100);
+        e.target.style.setProperty('--y', (e.clientY - rect.y) / rect.height * 100);
+    }
+    document.getElementById("gooey").addEventListener('pointermove', moveBg);
+
+</script>
+
+</html>

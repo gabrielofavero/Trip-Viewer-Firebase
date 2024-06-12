@@ -2026,9 +2026,10 @@ iframe {
 }
 
 @media (max-width: 520px) {
+
   .message-container,
   .programacao-container,
-  .destinos-container  {
+  .destinos-container {
     width: 90%;
     height: auto;
   }

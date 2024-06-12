@@ -17,8 +17,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     _main();
 
-    const urlParams = new URLSearchParams(window.location.search);
-    DOCUMENT_ID = urlParams.get('v');
+    DOCUMENT_ID = _getURLParam('v');
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
@@ -77,8 +76,7 @@ async function _loadTrip(stripped=false) {
   _startLoadingScreen();
 
   if (stripped) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('v');
+    const id = _getURLParam('v');
     FIRESTORE_DATA = await _get(`viagens/${id}`);
   } else {
     FIRESTORE_DATA = await _getSingleData('viagens');

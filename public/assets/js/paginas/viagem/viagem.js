@@ -15,12 +15,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
     _main();
-    const urlParams = new URLSearchParams(window.location.search);
-    TYPE = 'viagens';
-
-    if (urlParams.has('l')) {
-      TYPE = 'listagens';
-    }
+    const urlParams = _getURLParams();
+    TYPE = urlParams['l'] ? 'listagens' : 'viagens';
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 0) {
@@ -239,8 +235,6 @@ function _loadModules() {
     share.style.display = 'none';
   }
 
-  const cities = getID('cities');
-
   // Resumo
   if (FIRESTORE_DATA.modulos.resumo) {
     CALL_SYNC.push(_loadResumo);
@@ -251,11 +245,17 @@ function _loadModules() {
     if (cities) cities.style.display = "none";
   }
 
-  // Cities
-  if (cities && FIRESTORE_DATA.destinos.length <= 1) {
-    cities.innerHTML = "";
-    cities.style.display = "none";
+  // Gastos
+  if (FIRESTORE_DATA.modulos.gastos) {
+    getID('gastos-container').style.display = '';
+    let ativo = true;
+    let pin = FIRESTORE_DATA.gastosPin || false
+    localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
+    getID('gastos').addEventListener('click', () => {
+      _openLightbox(`gastos.html?g=${_getURLParam('v')}`);
+    });
   }
+
 
   // Transporte
   if (FIRESTORE_DATA.modulos.transportes) {

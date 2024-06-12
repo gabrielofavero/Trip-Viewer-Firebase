@@ -1,4 +1,3 @@
-var GASTOS_EXPORT;
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
 var GASTOS_TOTAIS = {
@@ -10,21 +9,28 @@ var GASTO_ATIVO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', async function () {
     _loadVisibilityExternal();
-    GASTOS_EXPORT = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : null;
-    await _loadConfig();
 
-    if (!GASTOS_EXPORT || !GASTOS_EXPORT?.id) {
-        const url = GASTOS_EXPORT.id ? `viagem.html?v=${GASTOS_EXPORT.id}` : 'index.html';
+    getID("closeButton").onclick = function () {
+        _unloadMedias();
+        window.parent._closeLightbox();
+    };
+
+    const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
+    await _loadConfig();
+    let documentID = _getURLParam('g');
+
+    if (!gastosExport || !documentID) {
+        const url = documentID ? `viagem.html?v=${documentID}` : 'index.html';
         _displayForbidden('Nenhum documento de gastos foi encontrado. Certifique-se de que você está acessando a página por meio do botão "Gastos" na página de Viagem', url);
         return;
     }
 
-    if (!GASTOS_EXPORT.ativo) {
-        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `viagem.html?v=${GASTOS_EXPORT.id}`);
+    if (!gastosExport?.ativo) {
+        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `viagem.html?v=${documentID}`);
         return;
     }
 
-    if (!GASTOS_EXPORT.pin) {
+    if (!gastosExport?.pin) {
         _loadGastos();
     } else {
         _stopLoadingScreen();
@@ -33,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 async function _loadGastos() {
-    const documentID = GASTOS_EXPORT.id;
+    const documentID = _getURLParam('g');
     const pin = getID('pin-code')?.innerText || '';
     _closeMessage();
     _removePinListener();
@@ -97,7 +103,6 @@ function _setTabListeners() {
             } else {
                 _fade([gastoAnterior], [GASTO_ATIVO], 150);
             }
-
         });
     });
 }

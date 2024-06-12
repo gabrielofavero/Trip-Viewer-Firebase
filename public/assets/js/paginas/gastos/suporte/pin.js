@@ -223,28 +223,28 @@ function _loadPin() {
 }
 
 function _requestPin() {
-    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-    propriedades.titulo = 'Digite o Pin de Acesso';
-    propriedades.conteudo = `<div class="pin-wrapper">
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = 'Digite o Pin de Acesso';
+  propriedades.conteudo = `<div class="pin-wrapper">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input">
                               </div>
                               <div id="pin-code" class="pin"></div>`;
-    propriedades.critico = true;
-    propriedades.containers = _getContainersInput();
-    propriedades.botoes = [{
-        tipo: 'cancelar',
-        acao: `window.location.href = "viagem.html?v=${GASTOS_EXPORT.id}"`
-    }, {
-        tipo: 'confirmar',
-        acao: '_loadGastos()'
-    }];
-    _displayFullMessage(propriedades);
-    _loadPin();
-    
-    document.addEventListener('keydown', _pinListenerAction);
+  propriedades.critico = true;
+  propriedades.containers = _getContainersInput();
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+    acao: `window.location.href = "viagem.html?v=${_getURLParam('g')}"`
+  }, {
+    tipo: 'confirmar',
+    acao: '_loadGastos()'
+  }];
+  _displayFullMessage(propriedades);
+  _loadPin();
+
+  document.addEventListener('keydown', _pinListenerAction);
 }
 
 function _pinListenerAction(event) {

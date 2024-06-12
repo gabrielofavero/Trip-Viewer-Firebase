@@ -10,8 +10,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     _main();
 
-    const urlParams = new URLSearchParams(window.location.search);
-    DOCUMENT_ID = urlParams.get('l');
+    DOCUMENT_ID = _getURLParam('l');
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
