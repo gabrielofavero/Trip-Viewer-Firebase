@@ -116,7 +116,7 @@ function _loadAndOpenDestino(code) {
 }
 
 function _getDestinationsHeaders(module) {
-  const headerBase = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', "lineup", 'mapa']
+  const headerBase = CONFIG.destinos.categorias.geral;
   const headerMap = new Map(headerBase.map((element, index) => [element, index]));
 
   let result = [];

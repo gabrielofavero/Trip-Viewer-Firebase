@@ -130,8 +130,10 @@ function _getInnerProgramacaoSelectsDestinos(j) {
             let innerResult = {};
 
             const currentDestinoData = DESTINOS[index].data;
-            let categorias = Object.keys(currentDestinoData).filter(key => DESTINOS_CATEGORIAS.includes(key) && currentDestinoData[key].length > 1);
-            categorias = categorias.sort((a, b) => DESTINOS_CATEGORIAS.indexOf(a) - DESTINOS_CATEGORIAS.indexOf(b));
+            const passeios = CONFIG.destinos.categorias.passeios;
+
+            let categorias = Object.keys(currentDestinoData).filter(key => passeios.includes(key) && currentDestinoData[key].length > 1);
+            categorias = categorias.sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
             const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
             innerResult.categoriaOptions = categoriaOptions;
 

@@ -29,6 +29,10 @@
             "color": "red"
         }
     ],
+    "categorias": {
+        "geral": ["restaurantes", "lanches", "saidas", "turismo", "lojas", "lineup", "mapa"],
+        "passeios": ["restaurantes", "lanches", "saidas", "turismo", "lojas"]
+    },
     "destinos": {
         "tourismAndShopping": {
             "description": "Pontos Turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros.",

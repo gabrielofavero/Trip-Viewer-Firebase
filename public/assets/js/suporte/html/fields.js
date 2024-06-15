@@ -203,17 +203,8 @@ function _validateMediaLink(id) {
 
     const validDomains = ['youtu.be/', 'youtube.com', 'tiktok.com'];
 
-    if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)) && !link.includes('vm.tiktok.com'))) return;
-
-    if (ishttp && link.includes("vm.tiktok")) {
-        div.value = '';
-        const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
-        const copyI = `<i class="iconify icon-button" style="margin-left: 5px" data-icon="ph:copy" onclick="_copyToClipboard('${link}')"></i>`;
-        const copiedDiv = `<div id="copy-msg" class="hidden">Link copiado com sucesso</div>`;
-        _displayMessage('Link de TikTok Inválido ' + tiktokI, `Você forneceu um link de TikTok Móvel (vm.tiktok.com), mas apenas links da versão web são suportados.<br><br>
-                                                               Copie o seu link e cole em uma nova aba de seu navegador para obter o link correto.<br><br>
-                                                               <input type="text" disabled="" style="width: auto" placeholder="${link}" value=""> ${copyI}
-                                                               ${copiedDiv}`);
+    if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)))) {
+        return;
     } else {
         div.value = '';
         const linkI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>'

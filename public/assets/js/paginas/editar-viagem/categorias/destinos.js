@@ -1,4 +1,3 @@
-const DESTINOS_CATEGORIAS = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas'];
 const DESTINOS_TITULOS = {
     restaurantes: 'Restaurantes',
     lanches: 'Lanches',

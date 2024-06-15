@@ -107,12 +107,39 @@ function _buildDestinoCategoryObject(tipo) {
     return result;
 }
 
+async function _updateTikTokLinks() {
+    let toUpdate = false;
+    const urls = {};
+    for (const categoria of CONFIG.destinos.categorias.passeios) {
+        const midias = FIRESTORE_DESTINOS_NEW_DATA[categoria].map(item => item.midia)
+        if (midias.length > 0 && midias.some(midia => midia.includes('https://vm.tiktok.com/'))) {
+            toUpdate = true;
+        }
+        urls[categoria] = midias;
+    }
+    if (toUpdate) {
+        try {
+            const response = await _postCloudFunction('convertTikTokLinks', { urls });
+            const data = response.urls;
+            for (const categoria of CONFIG.destinos.categorias.passeios) {
+                for (let i = 0; i < FIRESTORE_DESTINOS_NEW_DATA[categoria].length; i++) {
+                    FIRESTORE_DESTINOS_NEW_DATA[categoria][i].midia = data[categoria][i];
+                }
+            }
+        } catch (error) {
+            _displayError(error);
+            console.error(error);
+        }
+    }
+}
+
 async function _setDestino() {
     _startLoadingScreen(false);
     _validateRequiredFields();
 
     if (!_isModalOpen()) {
         await _buildDestinosObject();
+        await _updateTikTokLinks();
         let result;
 
         if (DOCUMENT_ID && FIRESTORE_DESTINOS_NEW_DATA) {

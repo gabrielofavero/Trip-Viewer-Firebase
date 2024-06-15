@@ -28,7 +28,6 @@
     - *Separar por categoria*
     - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
   - *Aplicar template em página de viagem*
-- 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
 
 ## To-Do
 
@@ -116,6 +115,7 @@
 - 🐞 **B045:** Correções de Dark Mode (Logo em viagem.html e imagem de fundo em index.html)
 - 📈 **M056:** Reorganização de arquivos + aquivos de configuração locais (remoção de chamada desnecessária ao Firestore)
 - 📈 **M057:** Melhoria no calendário de programação para incluir múltiplas cores
+- 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
 
 ### Maio 2024
 

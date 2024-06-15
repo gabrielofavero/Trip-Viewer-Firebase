@@ -399,7 +399,3 @@ async function _setViagem() {
         _openModal('modal');
     }
 }
-
-async function _getConvertedTiktokLinks(urls) {
-    return await _postCloudFunction('convertTikTokLinks', { urls });
-}

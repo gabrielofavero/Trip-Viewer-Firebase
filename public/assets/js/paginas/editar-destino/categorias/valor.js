@@ -1,11 +1,10 @@
-const DESTINOS_CATEGORIAS = ['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas'];
 const VALORES_KEYS = ['-', '$', '$$', '$$$', '$$$$', 'default'];
 var VALOR_OPTIONS = '';
 
 function _loadCurrencySelects() {
     _loadMoedaOptions();
 
-    for (const categoria of DESTINOS_CATEGORIAS) {
+    for (const categoria of CONFIG.destinos.categorias.passeios) {
         const childs = _getChildIDs(`${categoria}-box`);
         for (const child of childs) {
             const i = child.split('-').pop();
