@@ -61,7 +61,7 @@ async function _loadGastos() {
             _displayError(msg, true);
             throw new Error(msg);
         } else {
-            _displayError(new Error ('Ocorreu um erro desconhecido ao tentar carregar os gastos. Tente novamente mais tarde'), true);
+            _displayError('Ocorreu um erro desconhecido ao tentar carregar os gastos. Tente novamente mais tarde', true);
             throw error;
         }
     }

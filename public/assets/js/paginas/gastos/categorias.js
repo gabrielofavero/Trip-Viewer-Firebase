@@ -43,7 +43,7 @@ function _setDoughnutChartCategoria(titulo, tipo) {
     const labels = itens.map(item => item.nome);
     const valores = itens.map(item => item.total);
 
-    _setChart('bar', `${tipo}-grafico`, labels, valores);
+    _setChart('doughnut', `${tipo}-grafico`, labels, valores);
 }
 
 function _setTableCategoria(tipo) {
