@@ -1,4 +1,4 @@
-import { Request, Response} from "firebase-functions";
+import { Request, Response } from "firebase-functions";
 import { onRequest } from "firebase-functions/v2/https";
 import * as bcrypt from "bcrypt";
 import * as admin from "firebase-admin";
