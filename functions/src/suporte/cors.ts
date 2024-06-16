@@ -1,9 +1,15 @@
 import { Request, Response} from "firebase-functions";
 
 const ALLOWED_ORIGINS = ['https://trip-viewer-tcc.web.app', 'https://trip-viewer-tcc.firebaseapp.com'];
+const DEV_MODE = process.env.FUNCTIONS_EMULATOR === 'true';
 
 export function handleCors(request: Request, response: Response) {
-    const origin = request.headers.origin || '';
+    const origin = request.headers.origin;
+
+    if (!origin && !DEV_MODE) {
+        response.status(400).send('Missing origin header');
+        return false;
+    }
 
     if (origin && ALLOWED_ORIGINS.includes(origin)) {
         response.set('Access-Control-Allow-Origin', origin);

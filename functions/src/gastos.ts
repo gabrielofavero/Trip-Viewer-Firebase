@@ -1,7 +1,10 @@
+import { Request, Response} from "firebase-functions";
 import { onRequest } from "firebase-functions/v2/https";
 import * as bcrypt from "bcrypt";
 import * as admin from "firebase-admin";
-import { handleCors } from "./cors";
+import { handleCors } from "./suporte/cors";
+import { isSameOwner } from "./suporte/usuario";
+import { getDocument, setDocument } from "./suporte/dados";
 
 admin.initializeApp();
 
@@ -16,14 +19,7 @@ export const getGastos = onRequest(async (request, response) => {
     }
 
     try {
-        const documentRef = admin.firestore().doc(`gastos/${documentID}`);
-        const documentSnapshot = await documentRef.get();
-
-        if (!documentSnapshot.exists) {
-            response.status(404).json({ error: "Documento não encontrado" });
-            return;
-        }
-        const documentData = documentSnapshot.data();
+        const documentData = await getDocument(response, `gastos/${documentID}`);
         const storedPin = documentData?.pin;
 
         if (storedPin) {
@@ -40,3 +36,50 @@ export const getGastos = onRequest(async (request, response) => {
         response.status(500).json({ error: "Erro interno do servidor" });
     }
 });
+
+export const getGastosEdit = onRequest(async (request, response) => {
+    if (!handleCors(request, response)) return;
+    if (!await handleEditPermission(request, response)) return;
+
+    const data = await getDocument(response, `gastos/${request.body.documentID}`);
+    response.json(data);
+});
+
+export const setGastosEdit = onRequest(async (request, response) => {
+    if (!handleCors(request, response)) return;
+    if (!await handleEditPermission(request, response)) return;
+
+    const documentID = request.body.documentID as string;
+    const data = request.body.data;
+
+    await setDocument(response, `gastos/${documentID}`, data);
+    response.json({ success: true });
+});
+
+async function handleEditPermission(request: Request, response: Response) {
+    const path = request.path as string;
+    if (!path) {
+        response.status(400).json({ error: "O caminho da página não foi fornecido." });
+        return false;
+    }
+    if (!path.includes("editar-viagem")) {
+        response.status(400).json({ error: "O caminho da página não é válido." });
+        return false;
+    }
+
+    const documentID = request.body.documentID as string;
+    if (!documentID) {
+        response.status(400).json({ error: "O ID do documento não foi fornecido." });
+        return false;
+    }
+
+    const ownerViagem = await isSameOwner(request, response, `viagem/${documentID}`);
+    const ownerGastos = await isSameOwner(request, response, `gastos/${documentID}`);
+
+    if (!ownerViagem || !ownerGastos) {
+        response.status(403).json({ error: "Você não tem permissão para editar este documento." });
+        return false;
+    }
+
+    return true;
+}
