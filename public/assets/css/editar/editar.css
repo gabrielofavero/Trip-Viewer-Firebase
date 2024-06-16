@@ -1408,9 +1408,7 @@ details summary::-webkit-details-marker {
 }
 
 .item-box {
-  background: #FDFDFD;
   border-radius: 10px;
-  padding: 5px;
   margin-top: 25px;
 }
 
@@ -1789,8 +1787,8 @@ details summary::-webkit-details-marker {
   height: 48px !important;
 }
 
-.inner-programacao-botao,
-.inner-programacao-botao-input {
+.input-botao,
+.input-botao-input {
   background-color: #F9FAFB;
   color: #1f2937;
   width: 100%;
@@ -1804,18 +1802,18 @@ details summary::-webkit-details-marker {
   padding-left: 10px;
 }
 
-.inner-programacao-botao:first-child {
+.input-botao:first-child {
   margin-top: 4px;
 }
 
-.inner-programacao-botao-input {
+.input-botao-input {
   margin-top: 0px;
 }
 
-.inner-programacao-botao:hover,
-.inner-programacao-botao:focus,
-.inner-programacao-botao-input:hover,
-.inner-programacao-botao-input:focus {
+.input-botao:hover,
+.input-botao:focus,
+.input-botao-input:hover,
+.input-botao-input:focus {
   background-color: #f1f1f1;
 }
 

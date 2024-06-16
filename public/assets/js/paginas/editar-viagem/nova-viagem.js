@@ -31,6 +31,10 @@ function _addEditores() {
     `);
 }
 
+function _addGastos() {
+  
+}
+
 function _addTransporte() {
   const j = _getNextJ('transporte-box');
   const newDate = _getNextCategoriaDate('transporte', 'chegada');

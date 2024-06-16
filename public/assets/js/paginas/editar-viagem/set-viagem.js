@@ -51,6 +51,7 @@ function _buildModulosObject() {
     return {
         hospedagens: getID('habilitado-hospedagens').checked,
         destinos: getID('habilitado-destinos').checked,
+        gastos: getID('habilitado-gastos').checked,
         lineup: getID(`habilitado-lineup`).checked,
         programacao: getID('habilitado-programacao').checked,
         resumo: true,

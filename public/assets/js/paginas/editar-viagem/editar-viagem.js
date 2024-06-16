@@ -57,6 +57,7 @@ function _loadHabilitados() {
   _loadEditModule('cores');
   _loadEditModule('links');
   _loadEditModule('editores');
+  _loadEditModule('gastos');
   _loadEditModule('transporte');
   _loadEditModule('hospedagens');
   _loadEditModule('programacao');

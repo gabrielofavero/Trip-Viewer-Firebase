@@ -30,7 +30,7 @@ function _loadInnerProgramacaoHTML(j) {
                 } else if (dado.inicio) {
                     texto = `<span class="time">${dado.inicio}:</span> ${texto}`;
                 }
-                div.innerHTML += `<button id="inner-programacao-botao-${turno}-${j}-${k}" class="btn inner-programacao-botao" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
+                div.innerHTML += `<button id="input-botao-${turno}-${j}-${k}" class="btn input-botao" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
                                     ${texto}
                                   </button>`;
             }
@@ -190,7 +190,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
 
                     <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
                         <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
-                        <button id="inner-programacao-item-associado" class="btn inner-programacao-botao" onclick="_openInnerProgramacaoItem()">
+                        <button id="inner-programacao-item-associado" class="btn input-botao" onclick="_openInnerProgramacaoItem()">
                             Associar Item
                         </button>
                     </div>  

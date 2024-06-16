@@ -105,7 +105,7 @@
         <i onclick="window.location = 'index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
-  
+
     </div>
     <div class="demo-page">
       <div class="demo-page-navigation">
@@ -147,6 +147,16 @@
                 </svg>
                 Customização</a>
             </li>
+
+            <li>
+              <a href="#gastos">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M11.025 21v-2.15q-1.325-.3-2.287-1.15t-1.413-2.4l1.85-.75q.375 1.2 1.113 1.825t1.937.625q1.025 0 1.738-.462t.712-1.438q0-.875-.55-1.387t-2.55-1.163q-2.15-.675-2.95-1.612t-.8-2.288q0-1.625 1.05-2.525t2.15-1.025V3h2v2.1q1.25.2 2.063.913t1.187 1.737l-1.85.8q-.3-.8-.85-1.2t-1.5-.4q-1.1 0-1.675.488T9.825 8.65q0 .825.75 1.3t2.6 1q1.725.5 2.613 1.588t.887 2.512q0 1.775-1.05 2.7t-2.6 1.15V21z" />
+                </svg>
+                Gastos</a>
+            </li>
+
             <li>
               <a href="#meios-de-transporte">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -158,6 +168,7 @@
                 </svg>
                 Meios de Transporte</a>
             </li>
+
             <li>
               <a href="#hospedagens">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -523,6 +534,124 @@
         </section>
 
         <section>
+          <div class="href-target" id="gastos"></div>
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M11.025 21v-2.15q-1.325-.3-2.287-1.15t-1.413-2.4l1.85-.75q.375 1.2 1.113 1.825t1.937.625q1.025 0 1.738-.462t.712-1.438q0-.875-.55-1.387t-2.55-1.163q-2.15-.675-2.95-1.612t-.8-2.288q0-1.625 1.05-2.525t2.15-1.025V3h2v2.1q1.25.2 2.063.913t1.187 1.737l-1.85.8q-.3-.8-.85-1.2t-1.5-.4q-1.1 0-1.675.488T9.825 8.65q0 .825.75 1.3t2.6 1q1.725.5 2.613 1.588t.887 2.512q0 1.775-1.05 2.7t-2.6 1.15V21z" />
+            </svg>
+            Gastos
+          </h1>
+          <p>
+            Gerencie seus gastos antes e durante a viagem
+          </p>
+
+          <div class="nice-form-group">
+            <input id="habilitado-gastos" type="checkbox" class="switch" />
+            <label for="habilitado-gastos">
+              Habilitado
+            </label>
+          </div>
+
+          <div id="habilitado-gastos-content">
+            <fieldset class="nice-form-group">
+              <div class="nice-form-group">
+                <input type="radio" name="proteger-gastos" id="pin-disable" checked />
+                <label for="pin-disable">Tornar visualização dos gastos da viagem pública</label>
+              </div>
+              <div class="nice-form-group">
+                <input type="radio" name="proteger-gastos" id="pin-enable" />
+                <label for="pin-enable">Proteger visualização dos gastos com PIN de 4 dígitos</span></label>
+              </div>
+              <div class="nice-form-group" id="pin-container" style="display: none; margin-top: 16px">
+                <button class="btn input-botao">
+                  Definir PIN de Acesso
+                </button>
+              </div>
+            </fieldset>
+            <div class="item-box accordion gastos-box" id="gastos-box">
+              <div id="programacao-gastosPrevios" class="accordion-item accordion-programacao">
+                <h2 class="accordion-header" id="heading-programacao-gastosPrevios">
+                  <button id="programacao-title-gastosPrevios" class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse-programacao-gastosPrevios" aria-expanded="false"
+                    aria-controls="collapse-programacao-gastosPrevios">Gastos Prévios</button>
+                </h2>
+                <div id="collapse-programacao-gastosPrevios" class="accordion-collapse collapse"
+                  aria-labelledby="heading-programacao-gastosPrevios" data-bs-parent="#gastos-box" style="">
+                  <div class="accordion-body">
+
+                    <div class="button-box-right" id="gasto-adicionar-box-gastosPrevios"
+                      style="display: block; margin-top: 24px">
+                      <button id="programacao-adicionar-gastosPrevios" class="btn btn-purple"
+                        onclick="_addGastos('gastosPrevios')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                            <path
+                              d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                            </path>
+                            <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                            </path>
+                          </g>
+                        </svg>
+                        Adicionar Gasto
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div id="programacao-gastosDurante" class="accordion-item accordion-programacao">
+                <h2 class="accordion-header" id="heading-programacao-gastosDurante">
+                  <button id="programacao-title-gastosDurante" class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse-programacao-gastosDurante" aria-expanded="false"
+                    aria-controls="collapse-programacao-gastosDurante">Gastos Durante a Viagem</button>
+                </h2>
+                <div id="collapse-programacao-gastosDurante" class="accordion-collapse collapse"
+                  aria-labelledby="heading-programacao-gastosDurante" data-bs-parent="#gastos-box" style="">
+                  <div class="accordion-body">
+
+                    <div class="button-box-right" id="gasto-adicionar-box-gastosDurante"
+                      style="display: block; margin-top: 24px">
+                      <button id="programacao-adicionar-gastosDurante" class="btn btn-purple"
+                        onclick="_addGastos('gastosDurante')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                            <path
+                              d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                            </path>
+                            <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                            </path>
+                          </g>
+                        </svg>
+                        Adicionar Gasto
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="button-box-formatted" id="transporte-adicionar-box">
+            <button id="transporte-adicionar" class="btn btn-purple" onclick="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
+                  </path>
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
+                  </path>
+                </g>
+              </svg>
+              Adicionar Gasto
+            </button>
+          </div>
+
+        </section>
+
+        <section>
           <div class="href-target" id="meios-de-transporte"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -794,8 +923,8 @@
 
         <section id="footer">
           Desenvolvido por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
-          class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
-          Atribuições</span>
+            class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
+            Atribuições</span>
         </section>
       </main>
     </div>
@@ -926,6 +1055,7 @@
   <script src="assets/js/suporte/html/accordion.js"></script>
   <script src="assets/js/suporte/componentes/dynamic-select.js"></script>
   <script src="assets/js/paginas/editar-viagem/categorias/customizacao.js"></script>
+  <script src="assets/js/paginas/editar-viagem/categorias/gastos.js"></script>
   <script src="assets/js/paginas/editar-viagem/categorias/transporte.js"></script>
   <script src="assets/js/paginas/editar-viagem/categorias/hospedagem.js"></script>
   <script src="assets/js/paginas/editar-viagem/categorias/destinos.js"></script>

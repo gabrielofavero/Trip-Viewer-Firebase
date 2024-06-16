@@ -18,6 +18,8 @@ function _loadEventListeners() {
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
     getID('lineup-adicionar').addEventListener('click', () => _lineupAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
+    getID('pin-enable').addEventListener('click', () => _switchPinVisibility());
+    getID('pin-disable').addEventListener('click', () => _switchPinVisibility());
 
     // Visibilidade do Ida e Volta (Transporte)
     getID('condensar').addEventListener('change', () => _applyIdaVoltaVisibility());
