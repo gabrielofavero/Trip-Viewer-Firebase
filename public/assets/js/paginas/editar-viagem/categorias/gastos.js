@@ -8,7 +8,7 @@ function _switchPinVisibility() {
 
 function _requestPinEditarGastos(invalido=false){
     const confirmAction = '_reconfirmPin()';
-    const precontent = 'Para editar os gastos, insira um PIN de acesso.';
+    const precontent = 'Insira um PIN de acesso de 4 dígitos.';
     _requestPin({ confirmAction, precontent, invalido });
 }
 
@@ -36,4 +36,8 @@ function _invalidPin() {
     const precontent = 'PIN Incorreto. Tente novamente.';
     const invalido = true;
     _requestPin({ confirmAction, precontent, invalido });
+}
+
+function _setPinButtonText(newPin=true) {
+    getID('request-pin').innerText = newPin ? 'Definir PIN de Acesso' : 'Alterar PIN de Acesso';
 }

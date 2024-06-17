@@ -79,51 +79,53 @@ async function _setListagem() {
     }
 
     _validateRequiredFields();
+    if (_isModalOpen()) return;
 
-    if (!_isModalOpen()) {
-        const listagem = await _buildListObject();
-        let result;
+    _validateIfDocumentChanged();
+    if (_isModalOpen()) return;
 
-        if (DOCUMENT_ID && listagem) {
-            result = await _updateUserObjectDB(listagem.data, DOCUMENT_ID, "listagens");
-        } else if (listagem) {
-            result = await _newUserObjectDB(listagem.data, "listagens");
-            DOCUMENT_ID = result?.data?.id;
-        }
+    const listagem = await _buildListObject();
+    let result;
 
-        FIRESTORE_NEW_DATA = listagem.data;
-        let message = result.message;
-
-        if (result.success == true) {
-            WAS_SAVED = true;
-
-            try {
-                const body = {
-                    id: DOCUMENT_ID,
-                    type: "listagens",
-                    background: TO_UPLOAD.background ? await _uploadBackground('listagens') : '',
-                    logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight('listagens') : '',
-                    logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark('listagens') : '',
-                    custom: {}
-                }
-
-                await _updateImages(body);
-                await _deleteUnusedImages(FIRESTORE_DATA, await _get(`listagens/${DOCUMENT_ID}`));
-
-            } catch (error) {
-                IMAGE_UPLOAD_ERROR.status = true;
-                console.error(error);
-            }
-
-            if (IMAGE_UPLOAD_ERROR.status === true) {
-                const errorsHTML = _printObjectHTML(IMAGE_UPLOAD_ERROR.messages);
-                message += `, porém houve um erro ao tentar salvar as imagens: ${errorsHTML}`;
-            }
-        }
-
-        getID('modal-inner-text').innerHTML = message;
-
-        _stopLoadingScreen();
-        _openModal('modal');
+    if (DOCUMENT_ID && listagem) {
+        result = await _updateUserObjectDB(listagem.data, DOCUMENT_ID, "listagens");
+    } else if (listagem) {
+        result = await _newUserObjectDB(listagem.data, "listagens");
+        DOCUMENT_ID = result?.data?.id;
     }
+
+    FIRESTORE_NEW_DATA = listagem.data;
+    let message = result.message;
+
+    if (result.success == true) {
+        WAS_SAVED = true;
+
+        try {
+            const body = {
+                id: DOCUMENT_ID,
+                type: "listagens",
+                background: TO_UPLOAD.background ? await _uploadBackground('listagens') : '',
+                logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight('listagens') : '',
+                logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark('listagens') : '',
+                custom: {}
+            }
+
+            await _updateImages(body);
+            await _deleteUnusedImages(FIRESTORE_DATA, await _get(`listagens/${DOCUMENT_ID}`));
+
+        } catch (error) {
+            IMAGE_UPLOAD_ERROR.status = true;
+            console.error(error);
+        }
+
+        if (IMAGE_UPLOAD_ERROR.status === true) {
+            const errorsHTML = _printObjectHTML(IMAGE_UPLOAD_ERROR.messages);
+            message += `, porém houve um erro ao tentar salvar as imagens: ${errorsHTML}`;
+        }
+    }
+
+    getID('modal-inner-text').innerHTML = message;
+
+    _stopLoadingScreen();
+    _openModal('modal');
 }

@@ -4,6 +4,7 @@ async function _loadTripData() {
         _loadDadosBasicosViagemData();
         _loadCompartilhamentoData();
         _loadCustomizacaoData();
+        _loadGastosData();
         _loadTransportesData();
         _loadHospedagemData();
         _loadDestinosData();
@@ -129,6 +130,22 @@ function _loadCustomizacaoData() {
     if (vacina) {
         getID('link-vacina').value = vacina;
     }
+}
+
+function _loadGastosData() {
+    if (FIRESTORE_DATA.modulos.gastos === true) {
+        getID('habilitado-gastos').checked = true;
+        getID('habilitado-gastos-content').style.display = 'block';
+    }
+    if (FIRESTORE_DATA.gastosPin === true) {
+        getID('pin-enable').checked = true;
+        getID('pin-container').style.display = 'block';
+        _setPinButtonText(false);
+    }
+}
+
+function _loadGastosInnerData() {
+
 }
 
 function _loadTransportesData() {

@@ -135,24 +135,27 @@ async function _updateTikTokLinks() {
 
 async function _setDestino() {
     _startLoadingScreen(false);
+
     _validateRequiredFields();
+    if (_isModalOpen()) return;
 
-    if (!_isModalOpen()) {
-        await _buildDestinosObject();
-        await _updateTikTokLinks();
-        let result;
+    _validateIfDocumentChanged();
+    if (_isModalOpen()) return;
 
-        if (DOCUMENT_ID && FIRESTORE_DESTINOS_NEW_DATA) {
-            result = await _updateUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, DOCUMENT_ID, "destinos");
-        } else if (FIRESTORE_DESTINOS_NEW_DATA) {
-            result = await _newUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, "destinos");
-        }
+    await _buildDestinosObject();
+    await _updateTikTokLinks();
+    let result;
 
-        getID('modal-inner-text').innerHTML = result.message;
-
-        WAS_SAVED = result.success;
-
-        _stopLoadingScreen();
-        _openModal('modal');
+    if (DOCUMENT_ID && FIRESTORE_DESTINOS_NEW_DATA) {
+        result = await _updateUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, DOCUMENT_ID, "destinos");
+    } else if (FIRESTORE_DESTINOS_NEW_DATA) {
+        result = await _newUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, "destinos");
     }
+
+    getID('modal-inner-text').innerHTML = result.message;
+
+    WAS_SAVED = result.success;
+
+    _stopLoadingScreen();
+    _openModal('modal');
 }

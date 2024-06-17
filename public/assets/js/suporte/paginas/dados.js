@@ -328,3 +328,62 @@ function _getURLParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
+
+
+function _compareObjects(obj1, obj2, ignoredPaths=[]) {
+  let result = {
+    areEqual: true,
+    differences: []
+  };
+
+  function _compare(path, val1, val2) {
+    if (typeof val1 === 'object' && val1 !== null && typeof val2 === 'object' && val2 !== null) {
+      const keys = new Set([...Object.keys(val1), ...Object.keys(val2)]);
+      for (let key of keys) {
+        _compare(`${path ? path + '.' : ''}${key}`, val1[key], val2[key]);
+      }
+    } else if (val1 !== val2) {
+      result.areEqual = false;
+      result.differences.push({
+        path: path || '',
+        value1: val1,
+        value2: val2
+      });
+    }
+  }
+
+  _compare('', obj1, obj2);
+
+  if (ignoredPaths.length > 0) {
+    result.differences = result.differences.filter(diff => !ignoredPaths.includes(diff.path));
+    if (result.differences.length === 0) {
+      result.areEqual = true;
+    }
+  }
+
+  return result;
+}
+
+function _compareDocuments() {
+  switch (_getHTMLpage()) {
+    case 'editar-viagem':
+    case 'editar-listagem':
+      return _compareObjects(FIRESTORE_DATA, FIRESTORE_NEW_DATA, ['versao.ultimaAtualizacao']);
+    case 'editar-destino':
+      return _compareObjects(FIRESTORE_DESTINOS_DATA, FIRESTORE_DESTINOS_NEW_DATA, ['versao.ultimaAtualizacao', 'links'])
+    default:
+      console.warn('Página não suportada para comparação de documentos. Use a função nativa "_compareObjects()"');
+      return;
+  }
+}
+
+function _validateIfDocumentChanged() {
+  const comparison = _compareDocuments();
+  if (comparison?.areEqual === true) {
+    WAS_SAVED = false;
+    getID('modal-inner-text').innerHTML = comparison ? 'Não é possível salvar o documento. Não houve alterações.' :
+                                                       'Falha ao verificar se houve mudanças no documento. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.'
+    _openModal();
+    _stopLoadingScreen();
+}
+}

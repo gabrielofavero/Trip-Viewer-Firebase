@@ -7,8 +7,8 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 38          | 6         |
-| 🏆     | Feature  | F000    | 56    | 48          | 8         |
-| 📈     | Melhoria | M000    | 58    | 42          | 16        |
+| 🏆     | Feature  | F000    | 56    | 49          | 7         |
+| 📈     | Melhoria | M000    | 59    | 43          | 16        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -63,9 +63,6 @@
   - *Code smells*
   - *Refatorações*
   - *Sonarqube*
-- 🏆 **F056:** Verificação se houve mudanças nas páginas de editar
-  - *Se houve, exibir mensagem de confirmação de saída e permitir salvamento*
-  - *Se não houve, permite sair da página livremente e não salva de verdade (mensagem customizada)*
 
 ### Prioridade Baixa
 
@@ -116,6 +113,8 @@
 - 📈 **M056:** Reorganização de arquivos + aquivos de configuração locais (remoção de chamada desnecessária ao Firestore)
 - 📈 **M057:** Melhoria no calendário de programação para incluir múltiplas cores
 - 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
+- 📈 **M059:** Melhorias Backend: Funções de suporte (Cors, Usuários, get/set dados) e formatação
+- 🏆 **F056:** Verificação se houve mudanças nas páginas de editar
 
 ### Maio 2024
 
