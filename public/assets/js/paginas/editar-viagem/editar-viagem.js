@@ -1,5 +1,6 @@
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
+var FIRESTORE_GASTOS_DATA;
 
 var WAS_SAVED = false;
 var CAN_EDIT = false;
@@ -44,7 +45,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _displayError(error);
+    if (error?.responseJSON?.error) {
+      _displayError(error.responseJSON.error)
+    } else {
+      _displayError(error);
+    }
     if (window.location.href.includes('editar-template.html')) {
       _closeMessage();
     }

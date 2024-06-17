@@ -42,7 +42,9 @@ export const getGastosEdit = onRequest(async (request, response) => {
     if (!await handleEditPermission(request, response)) return;
 
     const data = await getDocument(response, `gastos/${request.body.documentID}`);
-    response.json(data);
+    if (!response.headersSent) {
+        response.json(data);
+    }
 });
 
 export const setGastosEdit = onRequest(async (request, response) => {
@@ -57,24 +59,18 @@ export const setGastosEdit = onRequest(async (request, response) => {
 });
 
 async function handleEditPermission(request: Request, response: Response) {
-    const path = request.path as string;
-    if (!path) {
-        response.status(400).json({ error: "O caminho da página não foi fornecido." });
-        return false;
-    }
-    if (!path.includes("editar-viagem")) {
-        response.status(400).json({ error: "O caminho da página não é válido." });
-        return false;
-    }
-
     const documentID = request.body.documentID as string;
     if (!documentID) {
-        response.status(400).json({ error: "O ID do documento não foi fornecido." });
+        if (!response.headersSent) {
+            response.status(400).json({ error: "O ID do documento não foi fornecido." });
+        }
         return false;
     }
 
-    const ownerViagem = await isSameOwner(request, response, `viagem/${documentID}`);
+    const ownerViagem = await isSameOwner(request, response, `viagens/${documentID}`);
     const ownerGastos = await isSameOwner(request, response, `gastos/${documentID}`);
+
+    if (response.headersSent) return false;
 
     if (!ownerViagem || !ownerGastos) {
         response.status(403).json({ error: "Você não tem permissão para editar este documento." });

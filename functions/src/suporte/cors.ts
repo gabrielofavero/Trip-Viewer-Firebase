@@ -11,7 +11,7 @@ export function handleCors(request: Request, response: Response) {
         return false;
     }
 
-    if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    if ((origin && ALLOWED_ORIGINS.includes(origin)) || DEV_MODE) {
         response.set('Access-Control-Allow-Origin', origin);
     } else {
         response.set('Access-Control-Allow-Origin', 'null');

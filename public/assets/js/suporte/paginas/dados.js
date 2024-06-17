@@ -294,19 +294,6 @@ async function _loadConfig() {
   CONFIG = config;
 }
 
-function _getCloudFunctionURL(functionName) {
-  if (window.location.hostname == "localhost") {
-    return `http://localhost:5001/trip-viewer-tcc/us-central1/${functionName}`;
-  } else {
-    return `https://us-central1-trip-viewer-tcc.cloudfunctions.net/${functionName}`;
-  }
-}
-
-function _postCloudFunction(functionName, body) {
-  const url = _getCloudFunctionURL(functionName);
-  return $.post(url, body);
-}
-
 function _getEmptyChar() {
   return '\u200B';
 }
@@ -330,7 +317,7 @@ function _getURLParam(param) {
 }
 
 
-function _compareObjects(obj1, obj2, ignoredPaths=[]) {
+function _compareObjects(obj1, obj2, ignoredPaths = []) {
   let result = {
     areEqual: true,
     differences: []
@@ -382,8 +369,8 @@ function _validateIfDocumentChanged() {
   if (comparison?.areEqual === true) {
     WAS_SAVED = false;
     getID('modal-inner-text').innerHTML = comparison ? 'Não foi possível salvar o documento. Não houve alterações.' :
-                                                       'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.'
+      'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.'
     _openModal();
     _stopLoadingScreen();
-}
+  }
 }

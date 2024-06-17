@@ -4,7 +4,7 @@ async function _loadTripData() {
         _loadDadosBasicosViagemData();
         _loadCompartilhamentoData();
         _loadCustomizacaoData();
-        _loadGastosData();
+        await _loadGastosData();
         _loadTransportesData();
         _loadHospedagemData();
         _loadDestinosData();
@@ -132,7 +132,7 @@ function _loadCustomizacaoData() {
     }
 }
 
-function _loadGastosData() {
+async function _loadGastosData() {
     if (FIRESTORE_DATA.modulos.gastos === true) {
         getID('habilitado-gastos').checked = true;
         getID('habilitado-gastos-content').style.display = 'block';
@@ -142,10 +142,8 @@ function _loadGastosData() {
         getID('pin-container').style.display = 'block';
         _setPinButtonText(false);
     }
-}
 
-function _loadGastosInnerData() {
-
+    FIRESTORE_GASTOS_DATA = await _postCloudFunction('getGastosEdit', { documentID: DOCUMENT_ID }, true);
 }
 
 function _loadTransportesData() {
