@@ -351,11 +351,12 @@ async function _setViagem() {
     _validateRequiredFields();
     if (_isModalOpen()) return;
 
+    const viagem = await _buildTripObject();
+    FIRESTORE_NEW_DATA = viagem.data;
+
     _validateIfDocumentChanged();
     if (_isModalOpen()) return;
 
-    const viagem = await _buildTripObject();
-    FIRESTORE_NEW_DATA = viagem.data;
     let result;
 
     if (DOCUMENT_ID && viagem) {

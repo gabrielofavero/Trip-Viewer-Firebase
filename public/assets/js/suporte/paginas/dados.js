@@ -381,8 +381,8 @@ function _validateIfDocumentChanged() {
   const comparison = _compareDocuments();
   if (comparison?.areEqual === true) {
     WAS_SAVED = false;
-    getID('modal-inner-text').innerHTML = comparison ? 'Não é possível salvar o documento. Não houve alterações.' :
-                                                       'Falha ao verificar se houve mudanças no documento. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.'
+    getID('modal-inner-text').innerHTML = comparison ? 'Não foi possível salvar o documento. Não houve alterações.' :
+                                                       'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.'
     _openModal();
     _stopLoadingScreen();
 }

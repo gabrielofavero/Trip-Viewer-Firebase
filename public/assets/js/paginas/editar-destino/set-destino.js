@@ -139,11 +139,13 @@ async function _setDestino() {
     _validateRequiredFields();
     if (_isModalOpen()) return;
 
+    await _buildDestinosObject();
+    await _updateTikTokLinks();
+
     _validateIfDocumentChanged();
     if (_isModalOpen()) return;
 
-    await _buildDestinosObject();
-    await _updateTikTokLinks();
+
     let result;
 
     if (DOCUMENT_ID && FIRESTORE_DESTINOS_NEW_DATA) {

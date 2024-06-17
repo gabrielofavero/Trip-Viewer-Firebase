@@ -81,10 +81,12 @@ async function _setListagem() {
     _validateRequiredFields();
     if (_isModalOpen()) return;
 
+    const listagem = await _buildListObject();
+    FIRESTORE_NEW_DATA = listagem.data;
+
     _validateIfDocumentChanged();
     if (_isModalOpen()) return;
 
-    const listagem = await _buildListObject();
     let result;
 
     if (DOCUMENT_ID && listagem) {
@@ -94,7 +96,6 @@ async function _setListagem() {
         DOCUMENT_ID = result?.data?.id;
     }
 
-    FIRESTORE_NEW_DATA = listagem.data;
     let message = result.message;
 
     if (result.success == true) {
