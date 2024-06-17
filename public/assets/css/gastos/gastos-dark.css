@@ -86,15 +86,12 @@ input[type="radio"]:checked+label>.notification {
   background: #303030;
 }
 
-input {
+.pin-input {
   border: 1px solid #414040;;
   background: #3b3b3b;
+  color: #E2E2E2;
 }
 
 .pin {
   color: #ffffff;
-}
-
-.pin-input {
-  color: #E2E2E2;
 }

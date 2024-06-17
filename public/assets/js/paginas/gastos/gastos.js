@@ -34,9 +34,16 @@ document.addEventListener('DOMContentLoaded', async function () {
         _loadGastos();
     } else {
         _stopLoadingScreen();
-        _requestPin();
+        _requestPinGastos();
     }
 });
+
+function _requestPinGastos(){
+    const cancelAction = `window.location.href = "viagem.html?v=${_getURLParam('g')}"`;
+    const confirmAction = '_loadGastos()';
+    const precontent = 'Para acessar os gastos, digite o PIN cadastrado para essa viagem';
+    _requestPin({ confirmAction, cancelAction, precontent });
+}
 
 async function _loadGastos() {
     const documentID = _getURLParam('g');

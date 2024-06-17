@@ -1840,3 +1840,39 @@ details summary::-webkit-details-marker {
   cursor: pointer;
   font-size: 25px;
 }
+
+/*--------------------------------------------------------------
+# Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
+--------------------------------------------------------------*/
+.pin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.pin-input,
+.pin-input-invalid {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  outline: none;
+  margin: 1px;
+  text-align: center;
+  margin: 0 5px;
+  background: #eeeeee;
+  font-size: 20px;
+  color: #272829;
+}
+
+.pin-input-invalid {
+  border-color: #ff0000;
+}
+
+.pin {
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  display: none;
+}

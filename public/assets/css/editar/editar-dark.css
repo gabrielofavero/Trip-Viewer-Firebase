@@ -242,3 +242,13 @@ details .toggle-code:hover {
 .input-botao-input:focus {
   background-color: #444444; 
 }
+
+.pin-input {
+  border: 1px solid #414040;;
+  background: #3b3b3b;
+  color: #E2E2E2;
+}
+
+.pin {
+  color: #ffffff;
+}
