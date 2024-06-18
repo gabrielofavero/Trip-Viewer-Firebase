@@ -7,8 +7,8 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 38          | 6         |
-| 🏆     | Feature  | F000    | 56    | 49          | 7         |
-| 📈     | Melhoria | M000    | 59    | 43          | 16        |
+| 🏆     | Feature  | F000    | 57    | 49          | 8         |
+| 📈     | Melhoria | M000    | 62    | 43          | 19        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -85,14 +85,17 @@
 - 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
   - Tanto destinos.html quanto editar-destinos.html
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
-- 📈 **M047:** Trocar mensagens em modal para mensagens em bottomsheet
-- 📈 **M054:** Melhorar funções relacionadas ao getJs para mais cenários
-- 🏆 **F055:** Implementar função de getKs
+- 📈 **M047:** Troca de mensagens em modal para mensagens em bottomsheet
+- 📈 **M054:** Melhoria de funções relacionadas ao getJs para mais cenários
+- 🏆 **F055:** Implementação de função de getKs
 - 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
-- 📈 **M055:** Fazer todas as mudanças de dark mode serem aplicadas via js
-  -*O modelo atual de css-dark causa problemas de cache*
-- 📈 **M058:** Modularizar arquivos de CSS para diminuir redundâncias
+- 📈 **M055:** Melhoria de todas as mudanças de dark mode serem aplicadas via js
+- 📈 **M058:** Modularização de arquivos de CSS para diminuir redundâncias
   -*Também será preciso alterar a função que calcula o dark mode*
+- 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
+- 📈 **M060:** Melhoria de métodos de set em editar
+- 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
+- 📈 **M062:** Inserção de carregamento de config dentro do main
 
 ## Done
 
