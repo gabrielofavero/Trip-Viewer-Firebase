@@ -9,20 +9,6 @@ var CONFIG;
 var DOCS_CHANGED;
 
 // ======= CONVERTERS =======
-function _formatTxt(text) {
-  // áBç -> abc
-  return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-}
-
-function _addDotSeparator(val) {
-  // 1000 -> 1.000
-  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");;
-}
-
-function _removeComma(val) {
-  return val.split(",")[0];
-}
-
 function _sortByArray(arrayToSort, referenceArray) {
   arrayToSort.sort((a, b) => {
     const indexA = referenceArray.indexOf(a.name);
@@ -69,14 +55,6 @@ function _getChildIDs(parentId) {
   }
 }
 
-function _returnEmptyIfNoValue(value) {
-  if (value) {
-    return value;
-  } else {
-    return "";
-  }
-}
-
 function _isObject(obj) {
   return obj === Object(obj);
 }
@@ -85,23 +63,7 @@ function _objectExistsAndHasKeys(obj) {
   return _isObject(obj) && obj && Object.keys(obj).length > 0;
 }
 
-function _firestoreReferencetoPath(ref) {
-  if (ref && ref._path && ref._path.segments) {
-    return ref._path.segments.join("/");
-  } else {
-    return "";
-  }
-}
-
-function _firestoreReferencetoID(ref) {
-  if (ref && ref._path && ref._path.segments) {
-    return ref._path.segments[1];
-  } else {
-    return "";
-  }
-}
-
-function _getIdFromOjbectDB(dbObject) {
+function _getIdFromObjectDB(dbObject) {
   try {
     const segments = dbObject.data._delegate._key.path.segments
     return segments[segments.length - 1];
@@ -183,31 +145,6 @@ function _removeChildWithValidation(tipo, i) {
   if (_getChildIDs(`${tipo}-box`).length === 0) {
     getID(`habilitado-${tipo}`).checked = false;
     _hideContent(tipo);
-  }
-}
-
-function _removeChildDestinosWithValidation(i) {
-  _removeChild(`com-destinos-${i}`);
-  if (_getChildIDs(`com-destinos`).length === 0) {
-    if (getID(`habilitado-destinos`)) {
-      getID(`habilitado-destinos`).checked = false;
-      _hideContent('destinos');
-    }
-  }
-}
-
-function _copyToClipboard(text) {
-  var textarea = document.createElement("textarea");
-  textarea.value = text;
-
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-
-  document.body.removeChild(textarea);
-
-  if (getID('copy-msg')) {
-    _toggleFadingVisibility()
   }
 }
 
@@ -305,7 +242,6 @@ function _getURLParam(param) {
   return urlParams.get(param);
 }
 
-
 function _compareObjects({ obj1, obj2, ignoredPaths = [], name = 'Objeto' }) {
   let result = {
     name: name,
@@ -385,7 +321,6 @@ function _validateIfDocumentChanged() {
     _stopLoadingScreen();
   }
 }
-
 
 async function _generateHash(password) {
   try {

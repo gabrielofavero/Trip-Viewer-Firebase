@@ -129,8 +129,8 @@ async function _buildListObject() {
     compartilhamento: await _buildCompartilhamentoObject(),
     cores: {
       ativo: getID('habilitado-cores').checked,
-      claro: _returnEmptyIfNoValue(getID('claro').value),
-      escuro: _returnEmptyIfNoValue(getID('escuro').value)
+      claro: getID('claro').value,
+      escuro: getID('escuro').value
     },
     descricao: getID(`descricao`).value,
     destinos: _buildDestinosArray(),

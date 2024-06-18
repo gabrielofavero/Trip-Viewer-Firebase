@@ -126,7 +126,7 @@ function _getValueEmpresa(j) {
 
     if (divSelect && divEmpresa) {
         if (divSelect.value == 'outra' || divSelect.value == 'selecione') {
-            return _returnEmptyIfNoValue(divEmpresa.value);
+            return divEmpresa.value;
         } else {
             return divSelect.value;
         }

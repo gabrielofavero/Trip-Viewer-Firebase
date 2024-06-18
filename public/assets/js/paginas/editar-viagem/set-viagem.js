@@ -69,8 +69,8 @@ function _buildModulosObject() {
 function _buildCoresObject() {
     return {
         ativo: getID('habilitado-cores').checked,
-        claro: _returnEmptyIfNoValue(getID('claro').value),
-        escuro: _returnEmptyIfNoValue(getID('escuro').value)
+        claro: getID('claro').value,
+        escuro: getID('escuro').value
     }
 }
 
@@ -91,7 +91,7 @@ async function _buildCompartilhamentoObject() {
         for (var i = 0; i < childIDs.length; i++) {
             const j = _getJ(childIDs[i]);
             const divEditor = getID(`editores-email-${j}`);
-            const valueEditor = divEditor ? _returnEmptyIfNoValue(divEditor.value) : "";
+            const valueEditor = divEditor ? divEditor.value || '' : "";
             editoresArray.push(valueEditor);
         }
     }
@@ -273,7 +273,7 @@ function _buildLineupObject() {
         result[selectValue].head.push(divHead && divHead.checked);
 
         const divNome = getID(`lineup-nome-${j}`);
-        const valueNome = divNome ? _returnEmptyIfNoValue(divNome.value) : "";
+        const valueNome = divNome ? divNome.value : "";
         result[selectValue].nome.push(valueNome);
 
         const valueGenero = _getDynamicSelectValue('lineup', 'genero', j);
@@ -283,14 +283,14 @@ function _buildLineupObject() {
         result[selectValue].palco.push(valuePalco);
 
         const divData = getID(`lineup-data-${j}`);
-        const valueData = divData ? _returnEmptyIfNoValue(divData.value) : "";
+        const valueData = divData ? divData.value : "";
         result[selectValue].data.push(valueData);
 
         const divInicio = getID(`lineup-horario-${j}`);
-        const valueInicio = divInicio ? _returnEmptyIfNoValue(divInicio.value) : "";
+        const valueInicio = divInicio ? divInicio.value : "";
 
         const divFim = getID(`lineup-horario-fim-${j}`);
-        const valueFim = divFim ? _returnEmptyIfNoValue(divFim.value) : "";
+        const valueFim = divFim ? divFim.value : "";
 
         if (valueInicio || valueFim) {
             result[selectValue].horario.push(`${valueInicio} - ${valueFim}`);
@@ -299,11 +299,11 @@ function _buildLineupObject() {
         }
 
         divMidia = getID(`lineup-midia-${j}`);
-        valueMidia = divMidia ? _returnEmptyIfNoValue(divMidia.value) : "";
+        valueMidia = divMidia ? divMidia.value : "";
         result[selectValue].midia.push(valueMidia);
 
         divNota = getID(`lineup-nota-${j}`);
-        valueNota = divNota ? _returnEmptyIfNoValue(divNota.value) : "";
+        valueNota = divNota ? divNota.value : "";
         result[selectValue].nota.push(valueNota);
     }
 

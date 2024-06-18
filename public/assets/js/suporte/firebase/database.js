@@ -264,7 +264,7 @@ async function _newUserObjectDB(object, type) {
     console.log(`Criação em ${type}:`);
     console.log(result);
     if (result.data) {
-      const id = _getIdFromOjbectDB(result);
+      const id = _getIdFromObjectDB(result);
       _addToUserArray(type, id);
       return result;
     }
