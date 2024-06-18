@@ -1360,6 +1360,7 @@ details summary::-webkit-details-marker {
 }
 
 @media (max-width: 520px) {
+
   .message-container,
   .input-container {
     width: 90%;
@@ -1535,6 +1536,11 @@ details summary::-webkit-details-marker {
 
 .mini-box {
   margin-top: 21.5px;
+}
+
+.input-full {
+  width: 100% !important;
+  ;
 }
 
 .flex-input-50-50 {
@@ -1837,7 +1843,8 @@ details summary::-webkit-details-marker {
   align-items: center;
 }
 
-#back-icon, #cancel-icon {
+#back-icon,
+#cancel-icon {
   cursor: pointer;
   font-size: 25px;
 }

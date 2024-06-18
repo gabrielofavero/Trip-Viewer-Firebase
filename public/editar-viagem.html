@@ -564,7 +564,8 @@
                 <label for="pin-enable">Proteger visualização dos gastos com PIN de 4 dígitos</span></label>
               </div>
               <div class="nice-form-group" id="pin-container" style="display: none; margin-top: 16px">
-                <button id="request-pin" class="btn input-botao" onclick="_requestPinEditarGastos()">Definir PIN de Acesso</button>
+                <button id="request-pin" class="btn input-botao" onclick="_requestPinEditarGastos()">Definir PIN de
+                  Acesso</button>
               </div>
             </fieldset>
             <div class="item-box accordion gastos-box" id="gastos-box">
@@ -581,7 +582,7 @@
                     <div class="button-box-right" id="gasto-adicionar-box-gastosPrevios"
                       style="display: block; margin-top: 24px">
                       <button id="programacao-adicionar-gastosPrevios" class="btn btn-purple"
-                        onclick="_addGastos('gastosPrevios')">
+                        onclick="_openInnerGasto('gastosPrevios')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path
@@ -612,7 +613,7 @@
                     <div class="button-box-right" id="gasto-adicionar-box-gastosDurante"
                       style="display: block; margin-top: 24px">
                       <button id="programacao-adicionar-gastosDurante" class="btn btn-purple"
-                        onclick="_addGastos('gastosDurante')">
+                        onclick="_openInnerGasto('gastosDurante')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path
@@ -630,21 +631,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="button-box-formatted" id="transporte-adicionar-box">
-            <button id="transporte-adicionar" class="btn btn-purple" onclick="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                  <path
-                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
-                  </path>
-                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7Z">
-                  </path>
-                </g>
-              </svg>
-              Adicionar Gasto
-            </button>
           </div>
 
         </section>

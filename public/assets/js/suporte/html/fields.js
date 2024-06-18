@@ -115,6 +115,22 @@ function _getInnerText(idSplit) {
     return innerText.trim();
 }
 
+function _notifyFieldIfAbsent(id) {
+    const field = getID(id);
+    if (!field.value) {
+        field.reportValidity();
+    }
+}
+
+function _getFieldValueOrNotify(id) {
+    const field = getID(id);
+    if (!field.value) {
+        field.reportValidity();
+        return null;
+    }
+    return field.value;
+}
+
 // Selects
 function _closeAllSelects(excludeElement) {
     var selectElements = document.getElementsByTagName('select');
