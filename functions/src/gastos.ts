@@ -1,10 +1,8 @@
-import { Request, Response } from "firebase-functions";
 import { onRequest } from "firebase-functions/v2/https";
 import * as bcrypt from "bcrypt";
 import * as admin from "firebase-admin";
 import { handleCors } from "./suporte/cors";
-import { isSameOwner } from "./suporte/usuario";
-import { getDocument, setDocument } from "./suporte/dados";
+import { getDocument } from "./suporte/dados";
 
 admin.initializeApp();
 
