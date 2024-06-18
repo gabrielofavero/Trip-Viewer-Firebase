@@ -241,7 +241,6 @@ function _loadModules() {
     getID("keypointsNav").innerHTML = "";
     getID("keypoints").innerHTML = "";
     getID("keypoints").style.display = "none";
-    if (cities) cities.style.display = "none";
   }
 
   // Gastos

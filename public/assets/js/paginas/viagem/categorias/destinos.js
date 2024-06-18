@@ -177,7 +177,7 @@ function _buildDestinosObject(lineupExclusive = false) {
   else {
     DESTINOS = FIRESTORE_DATA.destinos;
   }
-  if (FIRESTORE_DATA.modulos.lineup && FIRESTORE_DATA.lineup) {
+  if (FIRESTORE_DATA.modulos?.lineup && FIRESTORE_DATA.lineup) {
     const lineupKeys = Object.keys(FIRESTORE_DATA.lineup);
     for (let i = 0; i < DESTINOS.length; i++) {
       if (lineupKeys.includes(DESTINOS[i].destinosID) || lineupKeys.includes('generico')) {

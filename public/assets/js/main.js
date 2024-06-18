@@ -54,12 +54,12 @@ function _startFirebase() {
   firebase.auth().currentUser;
 }
 
-async function _main() {
+function _main() {
   "use strict";
   $('body').css('overflow', 'hidden');
 
   _startFirebase();
-  await _loadConfig();
+  _loadConfig();
 
   /**
    * Navbar links active state on scroll
@@ -215,5 +215,23 @@ async function _main() {
       once: true,
       mirror: false
     })
+  });
+}
+
+function _loadConfig() {
+  let config = {};
+  return Promise.all([
+      $.getJSON("assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
+      $.getJSON("assets/json/cores.json").then(data => config.cores = data),
+      $.getJSON("assets/json/destinos.json").then(data => config.destinos = data),
+      $.getJSON("assets/json/information.json").then(data => config.information = data),
+      $.getJSON("assets/json/moedas.json").then(data => config.moedas = data),
+      $.getJSON("assets/json/transportes.json").then(data => config.transportes = data),
+      $.getJSON("assets/json/set.json").then(data => config.set = data)
+  ]).then(() => {
+      CONFIG = config;
+  }).catch(error => {
+      console.error('Erro ao carregar a configuração:', error);
+      _displayError('Erro ao carregar a configuração');
   });
 }
