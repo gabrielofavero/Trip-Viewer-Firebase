@@ -374,3 +374,7 @@ function _validateIfDocumentChanged() {
     _stopLoadingScreen();
   }
 }
+
+function _getFilteredArray(arr) {
+  return arr.filter((item, index) => arr.indexOf(item) === index && item);
+}

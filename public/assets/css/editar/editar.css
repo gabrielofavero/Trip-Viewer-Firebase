@@ -1822,7 +1822,8 @@ details summary::-webkit-details-marker {
   margin-bottom: 10px;
 }
 
-.turno-box {
+.turno-box,
+.gastos-item {
   margin-top: 24px;
 }
 

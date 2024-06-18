@@ -144,6 +144,25 @@ async function _loadGastosData() {
     }
 
     FIRESTORE_GASTOS_DATA = await _postCloudFunction('getGastosEdit', { documentID: DOCUMENT_ID }, true);
+    _pushGasto('gastosPrevios');
+    _pushGasto('gastosDurante');
+
+    function _pushGasto(tipo) {
+        for (const gasto of FIRESTORE_GASTOS_DATA[tipo]) {
+            const tipos = INNER_GASTOS[tipo].map(gasto => gasto.tipo);
+            const index = tipos.indexOf(gasto.tipo);
+            if (index === -1) {
+                INNER_GASTOS[tipo].push({
+                    tipo: gasto.tipo,
+                    gastos: [gasto],
+                });
+            } else {
+                INNER_GASTOS[tipo][index].gastos.push(gasto);
+            }
+        }
+    }
+
+    _loadGastosHTML();
 }
 
 function _loadTransportesData() {
