@@ -9,7 +9,7 @@
 | 🐞     | Bug      | B000    | 45    | 38          | 6         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
 | 📈     | Melhoria | M000    | 62    | 45          | 17        |
-| ⚔️   | Épico   | E000    | 23    | 14          | 8         |
+| ⚔️   | Épico   | E000    | 23    | 15          | 7         |
 
 ### Status
 
@@ -18,16 +18,6 @@
 - ❗️: Crítico
 
 ## Doing
-
-- ⚔️ **E015:** Implementação: Gastos
-  - *Template de Front-End*
-  - *API para obter cotações de turismo em tempo real*
-  - *Implementar campo de valor em Transporte e Hospedagem (Editar Viagem)*
-  - *Implementar categoria de Gastos em Editar Viagem*
-    - *Gastos Prévios e Gastos Durante a Viagem*
-    - *Separar por categoria*
-    - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
-  - *Aplicar template em página de viagem*
 
 ## To-Do
 
@@ -118,6 +108,15 @@
 - 🏆 **F056:** Verificação se houve mudanças nas páginas de editar
 - 📈 **M062:** Inserção de carregamento de config dentro do main
 - 📈 **M060:** Melhoria de métodos de set em editar
+- ⚔️ **E015:** Implementação: Gastos
+  - *Template de Front-End*
+  - *API para obter cotações de turismo em tempo real*
+  - *Implementar campo de valor em Transporte e Hospedagem (Editar Viagem)*
+  - *Implementar categoria de Gastos em Editar Viagem*
+    - *Gastos Prévios e Gastos Durante a Viagem*
+    - *Separar por categoria*
+    - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
+  - *Aplicar template em página de viagem*
 
 ### Maio 2024
 

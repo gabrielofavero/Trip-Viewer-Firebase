@@ -5,6 +5,7 @@ var INNER_GASTOS = {
     gastosDurante: [],
 };
 
+// Pin
 function _switchPinVisibility() {
     if (getID('pin-disable').checked) {
         getID('pin-container').style.display = 'none';
@@ -56,6 +57,7 @@ function _validateSavedPIN() {
     }
 }
 
+// Gastos e Inner Gastos
 function _loadGastosHTML() {
     for (const categoria in INNER_GASTOS) {
         getID(categoria).innerHTML = '';
@@ -216,6 +218,12 @@ function _saveInnerGasto(categoria, tipo, index = -1) {
             INNER_GASTOS[categoria].push({ tipo: newGasto.tipo, gastos: [newGasto] });
         }
     }
+    _loadGastosHTML();
+    _closeMessage();
+}
+
+function _deleteInnerGasto(categoria, tipo, index) {
+    INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos.splice(index, 1);
     _loadGastosHTML();
     _closeMessage();
 }
