@@ -16,8 +16,7 @@ _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    _main();
-    await _loadConfig();
+    await _main();
     
     DOCUMENT_ID = _getURLParam('v');
     PERMISSOES = await _getPermissoes();

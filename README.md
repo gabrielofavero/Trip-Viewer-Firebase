@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 38          | 6         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
-| 📈     | Melhoria | M000    | 62    | 43          | 19        |
+| 📈     | Melhoria | M000    | 62    | 45          | 17        |
 | ⚔️   | Épico   | E000    | 23    | 14          | 8         |
 
 ### Status
@@ -93,9 +93,7 @@
 - 📈 **M058:** Modularização de arquivos de CSS para diminuir redundâncias
   -*Também será preciso alterar a função que calcula o dark mode*
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
-- 📈 **M060:** Melhoria de métodos de set em editar
 - 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
-- 📈 **M062:** Inserção de carregamento de config dentro do main
 
 ## Done
 
@@ -118,6 +116,8 @@
 - 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
 - 📈 **M059:** Melhorias Backend: Funções de suporte (Cors, Usuários, get/set dados) e formatação
 - 🏆 **F056:** Verificação se houve mudanças nas páginas de editar
+- 📈 **M062:** Inserção de carregamento de config dentro do main
+- 📈 **M060:** Melhoria de métodos de set em editar
 
 ### Maio 2024
 

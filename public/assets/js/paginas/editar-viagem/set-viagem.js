@@ -1,49 +1,55 @@
-var TO_UPLOAD = {
-    background: false,
-    logoLight: false,
-    logoDark: false,
-    hospedagens: false,
-    galeria: false
-};
-
-var UPLOAD_FILES = {
-    hospedagens: [],
-    galeria: []
-};
-
-var CLEAR_IMAGES = {
-    background: false,
-    claro: false,
-    escuro: false
-}
-
 var FIRESTORE_NEW_DATA = {};
+var FIRESTORE_GASTOS_NEW_DATA = {};
 
 async function _buildTripObject() {
-    return {
-        id: DOCUMENT_ID ? DOCUMENT_ID : "",
-        data: {
-            destinos: _buildDestinosArray(),
-            compartilhamento: await _buildCompartilhamentoObject(),
-            cores: _buildCoresObject(),
-            fim: getID(`fim`).value ? _formattedDateToFirestoreDate(getID(`fim`).value) : "",
-            gastosPin: getID('pin-enable').checked,
-            galeria: _buildGaleriaObject(),
-            hospedagens: _buildHospedagemObject(),
-            imagem: _buildImagemObject(),
-            inicio: getID(`inicio`).value ? _formattedDateToFirestoreDate(getID(`inicio`).value) : "",
-            lineup: _buildLineupObject(),
-            links: _buildLinksObject(),
-            modulos: _buildModulosObject(),
-            moeda: getID(`moeda`).value,
-            programacoes: _buildProgramacaoObject(),
-            quantidadePessoas: !isNaN(getID(`quantidadePessoas`).value) ? parseInt(getID(`quantidadePessoas`).value) : 1,
-            titulo: getID(`titulo`).value,
-            transportes: _buildTransporteObject(),
-            versao: {
-                ultimaAtualizacao: new Date().toISOString()
-            }
+    FIRESTORE_NEW_DATA = {
+        destinos: _buildDestinosArray(),
+        compartilhamento: await _buildCompartilhamentoObject(),
+        cores: _buildCoresObject(),
+        fim: getID(`fim`).value ? _formattedDateToFirestoreDate(getID(`fim`).value) : "",
+        gastosPin: getID('pin-enable').checked,
+        galeria: _buildGaleriaObject(),
+        hospedagens: _buildHospedagemObject(),
+        imagem: _buildImagemObject(),
+        inicio: getID(`inicio`).value ? _formattedDateToFirestoreDate(getID(`inicio`).value) : "",
+        lineup: _buildLineupObject(),
+        links: _buildLinksObject(),
+        modulos: _buildModulosObject(),
+        moeda: getID(`moeda`).value,
+        programacoes: _buildProgramacaoObject(),
+        quantidadePessoas: !isNaN(getID(`quantidadePessoas`).value) ? parseInt(getID(`quantidadePessoas`).value) : 1,
+        titulo: getID(`titulo`).value,
+        transportes: _buildTransporteObject(),
+        versao: {
+            ultimaAtualizacao: new Date().toISOString()
         }
+    }
+}
+
+async function _buildGastosObject() {
+    FIRESTORE_GASTOS_NEW_DATA = {
+        compartilhamento: await _buildCompartilhamentoObject(),
+        gastosDurante: _getGastos('gastosDurante'),
+        gastosPrevios: _getGastos('gastosPrevios'),
+        moeda: getID(`moeda`).value,
+        pin: _getPin(),
+        versao: {
+            ultimaAtualizacao: new Date().toISOString()
+        }
+    }
+
+    function _getGastos(categoria) {
+        const result = [];
+        for (const tipoObj of INNER_GASTOS[categoria]) {
+            result.concat(tipoObj.gastos);
+        }
+        return result;
+    }
+
+    function _getPin() {
+        if (getID('pin-enable').checked) {
+            return PIN_GASTOS ? PIN_GASTOS : FIRESTORE_GASTOS_DATA?.pin || "";
+        } else return "";
     }
 }
 
@@ -339,8 +345,6 @@ function _buildGaleriaObject() {
 }
 
 async function _setViagem() {
-    _startLoadingScreen(false);
-
     if (getID('habilitado-destinos').checked) {
         for (const child of _getChildIDs('com-destinos')) {
             const i = parseInt(child.split("-")[2]);
@@ -348,58 +352,19 @@ async function _setViagem() {
         }
     }
 
-    _validateRequiredFields();
-    if (_isModalOpen()) return;
-
-    const viagem = await _buildTripObject();
-    FIRESTORE_NEW_DATA = viagem.data;
-
-    _validateIfDocumentChanged();
-    if (_isModalOpen()) return;
-
-    let result;
-
-    if (DOCUMENT_ID && viagem) {
-        result = await _updateUserObjectDB(viagem.data, DOCUMENT_ID, "viagens");
-    } else if (viagem) {
-        result = await _newUserObjectDB(viagem.data, "viagens");
-        DOCUMENT_ID = result?.data?.id;
+    CUSTOM_UPLOADS = {
+        hospedagens: TO_UPLOAD.hospedagens ? await _uploadViagemItens(UPLOAD_FILES.hospedagens, 'hospedagens') : [],
+        galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(UPLOAD_FILES.galeria) : []
     }
 
-    let message = result.message;
+    _setDocumento('viagens');
+}
 
-    if (result.success == true) {
-        WAS_SAVED = true;
-
-        try {
-            const body = {
-                id: DOCUMENT_ID,
-                type: "viagens",
-                background: TO_UPLOAD.background ? await _uploadBackground('viagens') : '',
-                logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight('viagens') : '',
-                logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark('viagens') : '',
-                custom: {
-                    hospedagens: TO_UPLOAD.hospedagens ? await _uploadViagemItens(UPLOAD_FILES.hospedagens, 'hospedagens') : [],
-                    galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(UPLOAD_FILES.galeria) : []
-                }
-            }
-
-            await _updateImages(body);
-            await _deleteUnusedImages(FIRESTORE_DATA, await _get(`viagens/${DOCUMENT_ID}`));
-
-        } catch (error) {
-            IMAGE_UPLOAD_ERROR.status = true;
-            console.error(error);
-        }
-
-        if (IMAGE_UPLOAD_ERROR.status === true) {
-            const errorsHTML = _printObjectHTML(IMAGE_UPLOAD_ERROR.messages);
-            message += `, porém houve um erro ao tentar salvar as imagens: ${errorsHTML}`;
-        }
+async function _setGastos() {
+    await _buildGastosObject();
+    if (FIRESTORE_GASTOS_DATA) {
+        return await _update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+    } else {
+        return await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID);
     }
-
-    getID('modal-inner-text').innerHTML = message;
-
-    _stopLoadingScreen();
-    _openModal('modal');
 }

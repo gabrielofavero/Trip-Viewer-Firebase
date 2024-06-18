@@ -8,6 +8,7 @@ var GASTOS_TOTAIS = {
 var GASTO_ATIVO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', async function () {
+    await _main();
     _loadVisibilityExternal();
 
     getID("closeButton").onclick = function () {
@@ -16,7 +17,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
 
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
-    await _loadConfig();
     let documentID = _getURLParam('g');
 
     if (!gastosExport || !documentID) {

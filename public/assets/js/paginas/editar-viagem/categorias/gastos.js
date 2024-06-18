@@ -1,3 +1,5 @@
+var PIN_GASTOS = '';
+
 var INNER_GASTOS = {
     gastosPrevios: [],
     gastosDurante: [],
@@ -30,7 +32,8 @@ function _reconfirmPin() {
 
 function _validatePin(pin) {
     if (getID('pin-code').innerText === pin) {
-        alert('PIN correto!')
+        PIN_GASTOS = _generateHash(pin);
+        _closeMessage();
     } else {
         _invalidPin();
     }
@@ -45,6 +48,12 @@ function _invalidPin() {
 
 function _setPinButtonText(newPin = true) {
     getID('request-pin').innerText = newPin ? 'Definir PIN de Acesso' : 'Alterar PIN de Acesso';
+}
+
+function _validateSavedPIN() {
+    if (getID('pin-enable').checked && !PIN_GASTOS) {
+        return ['PIN de Acesso aos Gastos'];
+    }
 }
 
 function _loadGastosHTML() {
@@ -210,4 +219,3 @@ function _saveInnerGasto(categoria, tipo, index = -1) {
     _loadGastosHTML();
     _closeMessage();
 }
-

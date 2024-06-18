@@ -1,5 +1,5 @@
 // Required Fields
-function _validateRequiredFields() {
+function _validateRequiredFields(customChecks=[]) {
     var invalidFields = [];
 
     var inputs = document.querySelectorAll('input[required]');
@@ -12,6 +12,10 @@ function _validateRequiredFields() {
             invalidFields.push(field.id);
         }
     });
+
+    if (customChecks && customChecks instanceof Array && customChecks.length > 0) {
+        invalidFields.concat(customChecks);
+    }
 
     if (invalidFields.length > 0) {
         WAS_SAVED = false;

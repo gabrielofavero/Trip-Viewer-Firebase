@@ -6,6 +6,7 @@ var P_DATA;
 var HYPERLINK;
 
 var CONFIG;
+var DOCS_CHANGED;
 
 // ======= CONVERTERS =======
 function _formatTxt(text) {
@@ -290,7 +291,8 @@ async function _loadConfig() {
   const information = $.getJSON("assets/json/information.json").then(data => config.information = data);
   const moedas = $.getJSON("assets/json/moedas.json").then(data => config.moedas = data);
   const transportes = $.getJSON("assets/json/transportes.json").then(data => config.transportes = data);
-  await Promise.all([callSyncOrder, cores, destinos, information, moedas, transportes]);
+  const set = $.getJSON("assets/json/set.json").then(data => config.set = data);
+  await Promise.all([callSyncOrder, cores, destinos, information, moedas, transportes, set]);
   CONFIG = config;
 }
 
@@ -317,8 +319,9 @@ function _getURLParam(param) {
 }
 
 
-function _compareObjects(obj1, obj2, ignoredPaths = []) {
+function _compareObjects({ obj1, obj2, ignoredPaths = [], name = 'Objeto' }) {
   let result = {
+    name: name,
     areEqual: true,
     differences: []
   };
@@ -352,29 +355,95 @@ function _compareObjects(obj1, obj2, ignoredPaths = []) {
 }
 
 function _compareDocuments() {
+  const result = {
+    multiple: false,
+    data: [],
+  };
+
   switch (_getHTMLpage()) {
     case 'editar-viagem':
+      result.multiple = true;
+      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados da viagem' });
+      compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados dos gastos' });
+      break;
     case 'editar-listagem':
-      return _compareObjects(FIRESTORE_DATA, FIRESTORE_NEW_DATA, ['versao.ultimaAtualizacao']);
+      const ignoredPaths = _getIgnoredPathDestinos();
+      ignoredPaths.push('versao.ultimaAtualizacao');
+      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ignoredPaths, name: 'dados da listagem' });
+      break;
     case 'editar-destino':
-      return _compareObjects(FIRESTORE_DESTINOS_DATA, FIRESTORE_DESTINOS_NEW_DATA, ['versao.ultimaAtualizacao', 'links'])
+      compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
+      break;
     default:
       console.warn('Página não suportada para comparação de documentos. Use a função nativa "_compareObjects()"');
-      return;
+      return null;
   }
+
+  return result;
+
+  function compareAndPush({ obj1, obj2, ignoredPaths, name }) {
+    result.data.push(_compareObjects({ obj1, obj2, ignoredPaths, name }));
+  };
 }
 
 function _validateIfDocumentChanged() {
-  const comparison = _compareDocuments();
-  if (comparison?.areEqual === true) {
+  DOCS_CHANGED = _compareDocuments();
+  const invalid = !DOCS_CHANGED ? true : DOCS_CHANGED.multiple ? DOCS_CHANGED.data.every(item => item.areEqual) : DOCS_CHANGED.data[0].areEqual;
+
+  if (invalid) {
     WAS_SAVED = false;
-    getID('modal-inner-text').innerHTML = comparison ? 'Não foi possível salvar o documento. Não houve alterações.' :
-      'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.'
+    getID('modal-inner-text').innerHTML = DOCS_CHANGED ? `Não foi possível realizar o salvamento. Não houve alterações nos ${_getReadableArray(DOCS_CHANGED.data.map(item => item.name))}.` :
+      'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
     _openModal();
     _stopLoadingScreen();
   }
 }
 
-function _getFilteredArray(arr) {
-  return arr.filter((item, index) => arr.indexOf(item) === index && item);
+
+async function _generateHash(password) {
+  try {
+    const response = await fetch('https://www.toptal.com/developers/bcrypt/api/generate-hash.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `password=${password}&cost=10`
+    });
+
+    const data = await response.json();
+
+    if (data.ok) {
+      return data.hash;
+    } else {
+      console.error('Não foi possível gerar o hash da senha: ' + data.msg);
+      _displayError(data.msg);
+    }
+  } catch (error) {
+    console.error('Erro ao gerar hash da senha: ' + error);
+    _displayError(error);
+  }
+}
+
+function _getDataDocument(tipo) {
+  switch (tipo) {
+    case 'viagens':
+    case 'listagens':
+      return FIRESTORE_DATA;
+    case 'destinos':
+      return FIRESTORE_DESTINOS_DATA;
+    default:
+      return null;
+  }
+}
+
+function _getNewDataDocument(tipo) {
+  switch (tipo) {
+    case 'viagens':
+    case 'listagens':
+      return FIRESTORE_NEW_DATA;
+    case 'destinos':
+      return FIRESTORE_DESTINOS_NEW_DATA;
+    default:
+      return null;
+  }
 }

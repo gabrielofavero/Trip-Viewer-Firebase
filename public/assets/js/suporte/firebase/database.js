@@ -3,7 +3,7 @@ var DOCUMENT_ID;
 var ERROR_FROM_GET_REQUEST = "";
 
 // Constructors
-function _buildDatabaseObject(success, data, message = "") {
+function _buildDatabaseObject(success, message = "", data = {}) {
   return ({
     success: success,
     data: data,
@@ -30,7 +30,6 @@ async function _get(path) {
     ERROR_FROM_GET_REQUEST = error;
     return;
   }
-
 }
 
 async function _getStatus(path) {
@@ -79,11 +78,11 @@ async function _create(collection, data, docName = "") {
     } else {
       docRef = await firebase.firestore().collection(collection).doc(docName).set(data)
     }
-    return _buildDatabaseObject(true, docRef, `Documento criado com sucesso`)
+    return _buildDatabaseObject(true, `Documento criado com sucesso`, docRef)
 
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, {}, 'Erro ao criar o documento: ' + error.message)
+    return _buildDatabaseObject(false, 'Erro ao criar o documento: ' + error.message)
   }
 }
 
@@ -91,10 +90,10 @@ async function _update(path, newData) {
   const docRef = firebase.firestore().doc(path);
   try {
     const update = await docRef.update(newData);
-    return _buildDatabaseObject(true, update, 'Documento atualizado com sucesso');
+    return _buildDatabaseObject(true, 'Documento atualizado com sucesso', update);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, {}, 'Erro ao atualizar o documento: ' + error.message)
+    return _buildDatabaseObject(false, 'Erro ao atualizar o documento: ' + error.message)
   }
 }
 
@@ -102,10 +101,10 @@ async function _delete(path) {
   const docRef = firebase.firestore().doc(path);
   try {
     const deleteObj = await docRef.delete();
-    return _buildDatabaseObject(true, deleteObj, 'Documento atualizado com sucesso');
+    return _buildDatabaseObject(true, 'Documento atualizado com sucesso', deleteObj);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, {}, 'Erro ao deletar o documento: ' + error.message)
+    return _buildDatabaseObject(false, 'Erro ao deletar o documento: ' + error.message)
   }
 }
 
@@ -257,17 +256,6 @@ async function _addToUserArray(type, value) {
       console.log("Dados de usuário atualizados");
     }
   }
-}
-
-async function _updateUserObjectDB(object, id, type) {
-  if (await _getUID()) {
-    try {
-      return await _update(`${type}/${id}`, object)
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return error.message;
-    }
-  } else return "Usuário não logado"
 }
 
 async function _newUserObjectDB(object, type) {

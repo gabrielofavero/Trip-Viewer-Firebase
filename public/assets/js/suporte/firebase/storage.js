@@ -10,6 +10,7 @@ var IMAGE_UPLOAD_ERROR = {
   status: false,
   messages: {}
 }
+
 var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
 var PERMISSOES;
 

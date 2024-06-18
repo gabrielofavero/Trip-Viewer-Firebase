@@ -14,8 +14,7 @@ var REGIOES = [];
 document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
-    _main();
-    await _loadConfig();
+    await _main();
     DOCUMENT_ID = _getURLParam('d')
 
     _loadVisibilityIndex();
@@ -97,7 +96,7 @@ function _loadEventListeners() {
   });
 
   getID('salvar').addEventListener('click', () => {
-    _setDestino();
+    _setDocumento('destinos');
   });
 
   getID('re-editar').addEventListener('click', () => {

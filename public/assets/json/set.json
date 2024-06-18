@@ -1,0 +1,31 @@
+{
+    "viagens": {
+        "customChecks": "_validateSavedPIN()",
+        "before": ["_buildTripObject()"],
+        "after": [
+            {
+                "titulo": "Upload de Imagens",
+                "funcao": "_setImages('viagens')"
+            },
+            {
+                "titulo": "Gastos da Viagem",
+                "funcao": "_setGastos()"
+            }
+        ]
+    },
+    "destinos": {
+        "customChecks": "",
+        "before": ["_buildDestinosObject()", "_updateTikTokLinks()"],
+        "after": []
+    },
+    "listagens": {
+        "customChecks": "",
+        "before": ["_buildListObject()"],
+        "after": [
+            {
+                "titulo": "Upload de Imagens",
+                "funcao": "_setImages('listagens')"
+            }
+        ]
+    }
+}

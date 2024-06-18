@@ -54,12 +54,12 @@ function _startFirebase() {
   firebase.auth().currentUser;
 }
 
-function _main() {
+async function _main() {
   "use strict";
   $('body').css('overflow', 'hidden');
 
   _startFirebase();
-
+  await _loadConfig();
 
   /**
    * Navbar links active state on scroll

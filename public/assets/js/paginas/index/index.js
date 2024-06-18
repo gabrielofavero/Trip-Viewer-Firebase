@@ -8,9 +8,9 @@ var TENTATIVAS = {
 
 _startLoadingScreen();
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
   try {
-    _main();
+    await _main();
 
     _loadVisibilityIndex();
     _loadListenersIndex();

@@ -38,7 +38,9 @@ function _updateDestinosAtivosHTMLs() {
 }
 
 function _loadDestinosOrdenados() {
-    if (getID('habilitado-destinos').checked && getID('habilitado-programacao').checked && DESTINOS_ATIVOS.length > 0) {
+    const destinos = getID('habilitado-destinos');
+    const programacao = getID('habilitado-programacao');
+    if (destinos && destinos.checked && programacao && programacao.checked && DESTINOS_ATIVOS.length > 0) {
         const order = [];
         for (const fieldsetJ of _getJs('programacao-box')) {
             for (const child of _getChildIDs(`programacao-local-${fieldsetJ}`)) {

@@ -14,7 +14,7 @@ var FIM = {
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
-    _main();
+    await _main();
     const urlParams = _getURLParams();
     TYPE = urlParams['l'] ? 'listagens' : 'viagens';
 
@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
     });
 
-    await _loadConfig();
     const firestoreData = await _getSingleData(TYPE);
 
     if (!ERROR_FROM_GET_REQUEST) {
@@ -236,7 +235,7 @@ function _loadModules() {
   }
 
   // Resumo
-  if (FIRESTORE_DATA.modulos.resumo) {
+  if (FIRESTORE_DATA.modulos?.resumo === true) {
     CALL_SYNC.push(_loadResumo);
   } else {
     getID("keypointsNav").innerHTML = "";
@@ -246,7 +245,7 @@ function _loadModules() {
   }
 
   // Gastos
-  if (FIRESTORE_DATA.modulos.gastos) {
+  if (FIRESTORE_DATA.modulos?.gastos === true) {
     getID('gastos-container').style.display = '';
     let ativo = true;
     let pin = FIRESTORE_DATA.gastosPin || false
@@ -258,7 +257,7 @@ function _loadModules() {
 
 
   // Transporte
-  if (FIRESTORE_DATA.modulos.transportes) {
+  if (FIRESTORE_DATA.modulos?.transportes === true) {
     CALL_SYNC.push(_loadTransporte);
   } else {
     getID("transportationNav").innerHTML = "";
@@ -267,7 +266,7 @@ function _loadModules() {
   }
 
   // Hospedagem
-  if (FIRESTORE_DATA.modulos.hospedagens) {
+  if (FIRESTORE_DATA.modulos?.hospedagens === true) {
     CALL_SYNC.push(_loadHospedagens);
   } else {
     getID("stayNav").innerHTML = "";
@@ -276,7 +275,7 @@ function _loadModules() {
   }
 
   // Programação
-  if (FIRESTORE_DATA.modulos.programacao) {
+  if (FIRESTORE_DATA.modulos?.programacao === true) {
     CALL_SYNC.push(_loadProgramacao);
   } else {
     getID("scheduleCalendarNav").innerHTML = "";
@@ -285,13 +284,13 @@ function _loadModules() {
   }
 
   // Destinos
-  if (FIRESTORE_DATA.modulos.destinos) {
+  if (FIRESTORE_DATA.modulos?.destinos === true || TYPE == 'listagens') {
     _loadDestinationsSelect();
     _loadDestinationsHTML(DESTINOS[0]);
 
     CALL_SYNC.push(_loadDestinos);
 
-  } else if (FIRESTORE_DATA.modulos.lineup) {
+  } else if (FIRESTORE_DATA.modulos?.lineup === true) {
     _loadDestinationsSelect(true);
     _loadDestinationsHTML(DESTINOS[0]);
 
@@ -306,7 +305,7 @@ function _loadModules() {
   }
 
   // Gallery
-  if (FIRESTORE_DATA.modulos.galeria) {
+  if (FIRESTORE_DATA.modulos?.galeria === true) {
     CALL_SYNC.push(_loadGaleria);
   } else {
     getID("portfolioM").innerHTML = "";

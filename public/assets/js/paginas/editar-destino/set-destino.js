@@ -1,80 +1,31 @@
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 
 async function _buildDestinosObject() {
-    let result = {
-        lanches: {},
-        lojas: {},
-        restaurantes: {},
-        saidas: {},
-        turismo: {},
-        titulo: "",
-        moeda: "",
-        myMaps: "",
-        modulos: {},
-        compartilhamento: {},
-        versao: {}
+    FIRESTORE_DESTINOS_NEW_DATA = {
+        lanches: _buildDestinoCategoryObject("lanches"),
+        lojas: _buildDestinoCategoryObject("lojas"),
+        restaurantes: _buildDestinoCategoryObject("restaurantes"),
+        saidas: _buildDestinoCategoryObject("saidas"),
+        turismo: _buildDestinoCategoryObject("turismo"),
+        titulo: getID(`titulo`).value,
+        moeda: getID(`moeda`).value == "outra" ? getID(`outra-moeda`).value : getID(`moeda`).value,
+        myMaps: getID(`mapa-link`).value,
+        modulos: {
+            lanches: getID(`habilitado-lanches`).checked,
+            lojas: getID(`habilitado-lojas`).checked,
+            mapa: getID(`habilitado-mapa`).checked,
+            restaurantes: getID(`habilitado-restaurantes`).checked,
+            saidas: getID(`habilitado-saidas`).checked,
+            turismo: getID(`habilitado-turismo`).checked
+        },
+        compartilhamento: {
+            ativo: true,
+            dono: FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || await _getUID()
+        },
+        versao: {
+            ultimaAtualizacao: new Date().toISOString()
+        }
     }
-
-    result.titulo = getID(`titulo`).value;
-    result.myMaps = getID(`mapa-link`).value;
-    result.versao.ultimaAtualizacao = new Date().toISOString();
-    result.compartilhamento.dono = FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || await _getUID();
-
-    let moeda = getID(`moeda`).value;
-    if (moeda == "outra") moeda = getID(`outra-moeda`).value;
-    result.moeda = moeda;
-
-    result.modulos = _buildDestinoModulos();
-    result.restaurantes = _buildDestinoCategoryObject("restaurantes");
-    result.lanches = _buildDestinoCategoryObject("lanches");
-    result.saidas = _buildDestinoCategoryObject("saidas");
-    result.turismo = _buildDestinoCategoryObject("turismo");
-    result.lojas = _buildDestinoCategoryObject("lojas");
-
-    FIRESTORE_DESTINOS_NEW_DATA = result;
-}
-
-function _buildDestinoModulos() {
-    let result = {
-        lanches: false,
-        lojas: false,
-        mapa: false,
-        restaurantes: false,
-        saidas: false,
-        turismo: false
-    }
-
-    const divRestaurantes = getID(`habilitado-restaurantes`);
-    if (divRestaurantes) {
-        result.restaurantes = divRestaurantes.checked;
-    }
-
-    const divLanches = getID(`habilitado-lanches`);
-    if (divLanches) {
-        result.lanches = divLanches.checked;
-    }
-
-    const divSaidas = getID(`habilitado-saidas`);
-    if (divSaidas) {
-        result.saidas = divSaidas.checked;
-    }
-
-    const divTurismo = getID(`habilitado-turismo`);
-    if (divTurismo) {
-        result.turismo = divTurismo.checked;
-    }
-
-    const divLojas = getID(`habilitado-lojas`);
-    if (divLojas) {
-        result.lojas = divLojas.checked;
-    }
-
-    const divMapa = getID(`habilitado-mapa`);
-    if (divMapa) {
-        result.mapa = divMapa.checked;
-    }
-
-    return result;
 }
 
 function _buildDestinoCategoryObject(tipo) {
@@ -131,33 +82,4 @@ async function _updateTikTokLinks() {
             console.error(error);
         }
     }
-}
-
-async function _setDestino() {
-    _startLoadingScreen(false);
-
-    _validateRequiredFields();
-    if (_isModalOpen()) return;
-
-    await _buildDestinosObject();
-    await _updateTikTokLinks();
-
-    _validateIfDocumentChanged();
-    if (_isModalOpen()) return;
-
-
-    let result;
-
-    if (DOCUMENT_ID && FIRESTORE_DESTINOS_NEW_DATA) {
-        result = await _updateUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, DOCUMENT_ID, "destinos");
-    } else if (FIRESTORE_DESTINOS_NEW_DATA) {
-        result = await _newUserObjectDB(FIRESTORE_DESTINOS_NEW_DATA, "destinos");
-    }
-
-    getID('modal-inner-text').innerHTML = result.message;
-
-    WAS_SAVED = result.success;
-
-    _stopLoadingScreen();
-    _openModal('modal');
 }
