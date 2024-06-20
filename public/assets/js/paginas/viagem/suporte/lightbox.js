@@ -3,6 +3,7 @@ var SAVED_SCROLL_POSITION = 0;
 function _openLightbox(link) {
   _startLoadingScreen(false);
   SAVED_SCROLL_POSITION = window.pageYOffset || document.documentElement.scrollTop;
+  window.scrollTo(0, 0);
   var lightboxIframe = getID('lightbox-iframe');
   lightboxIframe.src = 'about:blank';
   lightboxIframe.onload = function () {
@@ -14,9 +15,11 @@ function _openLightbox(link) {
     _disableScroll();
   };
   lightboxIframe.src = link;
+  _refreshVisibility();
 }
 
 function _closeLightbox() {
+  _refreshVisibility();
   getID('lightbox').style.display = 'none';
   getID('night-mode').style.display = 'block';
   getID('menu').style.display = 'block';

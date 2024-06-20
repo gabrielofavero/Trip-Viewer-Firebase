@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 45    | 38          | 6         |
+| 🐞     | Bug      | B000    | 45    | 39          | 5         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
 | 📈     | Melhoria | M000    | 62    | 45          | 17        |
 | ⚔️   | Épico   | E000    | 23    | 15          | 7         |
@@ -56,10 +56,6 @@
 
 ### Prioridade Baixa
 
-- 🐞 **B025:** Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair
-  - *Colocar booleano no método de switch se é um lightbox*
-  - *Salva localmente*
-  - *Ao fechar lightbox, verifica a variável, aplica e a limpa*
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
@@ -67,7 +63,7 @@
 - 🐞 **B023:** Correção de gráfico de dias por cidade estático no viagens.html
 - 🏆 **F044:** Criação de animações em todo o site
 - 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
-- 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela
+- 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela em index.html
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
@@ -117,6 +113,7 @@
     - *Separar por categoria*
     - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
   - *Aplicar template em página de viagem*
+- 🐞 **B025:** Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair
 
 ### Maio 2024
 

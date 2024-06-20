@@ -177,6 +177,14 @@ function _switchVisibility() {
      }
 }
 
+function _refreshVisibility() {
+     if (_isOnDarkMode()) {
+          _loadDarkMode();
+     } else {
+          _loadLightMode();
+     }
+}
+
 function _autoVisibility() {
      let now = _getCurrentHour();
      if (now >= 18 || now < 6) {
@@ -214,7 +222,7 @@ function _applyCustomColors() {
      _setCSSVariable('theme-color', THEME_COLOR);
      _setCSSVariable('theme-color-hover', THEME_COLOR_HOVER);
      _setCSSVariable('theme-color-secondary', THEME_COLOR_SECONDARY);
- }
+}
 
 function _disableScroll() {
      document.body.style.overflow = "hidden";
