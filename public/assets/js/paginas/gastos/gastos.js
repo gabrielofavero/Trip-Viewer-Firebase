@@ -52,7 +52,7 @@ async function _loadGastos() {
     _removePinListener();
     _startLoadingScreen();
     try {
-        GASTOS = await _postCloudFunction('getGastos', { documentID, pin });
+        GASTOS = _cloudFunction('getGastos', { documentID, pin });
         if (GASTOS) {
             await _loadMoedas();
             _loadGastosConvertidos();
