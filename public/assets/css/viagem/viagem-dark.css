@@ -466,13 +466,11 @@ a:hover {
 }
 
 .btn-theme {
-  color: #303030;
   background: var(--theme-color);
 }
 
 .btn-theme:hover,
 .btn-theme:active {
-  color: #303030;
   background: var(--theme-color-hover);
 }
 
