@@ -1469,15 +1469,15 @@ details summary::-webkit-details-marker {
   background: none;
 }
 
-.btn-purple,
+.btn-theme,
 .btn-basic:hover,
 .btn-basic:focus {
   background: #5859a7;
   color: #fff;
 }
 
-.btn-purple:hover,
-.btn-purple:focus {
+.btn-theme:hover,
+.btn-theme:focus {
   background: #505197;
   color: #fff;
 }

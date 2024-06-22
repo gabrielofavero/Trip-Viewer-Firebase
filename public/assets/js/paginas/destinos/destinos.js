@@ -6,7 +6,7 @@ function _loadDestinosHTML() {
   _loadVisibilityExternal();
 
   const closeButton = getID("closeButton");
-  if (window.parent._closeLightBox) {
+  if (window.parent._closeLightbox) {
     closeButton.onclick = function () {
       _unloadMedias();
       window.parent._closeLightbox();
@@ -16,7 +16,7 @@ function _loadDestinosHTML() {
   }
 
   getID("logo-link").onclick = function () {
-    if (window.parent._closeLightBox) {
+    if (window.parent._closeLightbox) {
       window.parent._closeLightbox(true);
     } else {
       window.location.href = "index.html";

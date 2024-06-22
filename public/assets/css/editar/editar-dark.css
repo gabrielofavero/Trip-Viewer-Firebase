@@ -161,16 +161,17 @@ details .toggle-code:hover {
   color: #E2E2E2;
 }
 
-.btn-purple,
+.btn-theme,
 .btn-basic:hover, 
 .btn-basic:focus {
   background: #7f75b6;
-  color: #E2E2E2;
+  color: #fff;
 }
 
-.btn-purple:hover,
-.btn-purple:focus {
+.btn-theme:hover,
+.btn-theme:focus {
   background: #665e94;
+  color: #fff;
 }
 
 .demo-page, .demo-page-navigation, #dark-mode {

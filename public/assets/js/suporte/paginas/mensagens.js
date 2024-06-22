@@ -266,7 +266,7 @@ function _getButton(botao) {
 
 function _getHomeButton() {
   const button = document.createElement('button');
-  button.className = 'btn btn-purple btn-format';
+  button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', 'window.location.href = "index.html";')
 
@@ -328,7 +328,7 @@ function _getCloseButton(name = 'Fechar', onclick) {
 
 function _getConfirmButton(onclick = '_closeMessage();') {
   const button = document.createElement('button');
-  button.className = 'btn btn-purple btn-format';
+  button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', onclick)
   button.id = 'message-confirm';

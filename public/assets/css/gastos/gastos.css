@@ -524,17 +524,17 @@ section {
   background: none;
 }
 
-.btn-purple,
+.btn-theme,
 .btn-basic:hover,
 .btn-basic:focus {
   background: var(--theme-color);
   color: #fff;
 }
 
-.btn-purple:hover,
-.btn-purple:focus {
-  color: #fff;
+.btn-theme:hover,
+.btn-theme:focus {
   background: var(--theme-color-hover);
+  color: #fff;
 }
 
 /*--------------------------------------------------------------

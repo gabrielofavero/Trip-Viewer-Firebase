@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadVisibilityExternal();
 
     const closeButton = getID("closeButton");
-    if (window.parent._closeLightBox) {
+    if (window.parent._closeLightbox) {
         closeButton.onclick = function () {
             window.parent._closeLightbox();
         };
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     getID("logo-link").onclick = function () {
-        if (window.parent._closeLightBox) {
+        if (window.parent._closeLightbox) {
             window.parent._closeLightbox(true);
         } else {
             window.location.href = "index.html";
@@ -51,10 +51,20 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function _requestPinGastos() {
-    const cancelAction = `window.location.href = "viagem.html?v=${_getURLParam('g')}"`;
+    const cancelAction = `_exitGastos()`;
     const confirmAction = '_loadGastos()';
     const precontent = 'Para acessar os gastos, digite o PIN cadastrado para essa viagem';
     _requestPin({ confirmAction, cancelAction, precontent });
+}
+
+function _exitGastos() {
+    if (window.parent._closeLightbox) {
+        window.parent._closeLightbox();
+    } else if (_getURLParam('g')) {
+        window.location.href = `viagem.html?v=${_getURLParam('g')}`;
+    } else {
+        window.location.href = 'index.html';
+    }
 }
 
 async function _loadGastos() {
