@@ -11,9 +11,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     await _main();
     _loadVisibilityExternal();
 
-    getID("closeButton").onclick = function () {
-        _unloadMedias();
-        window.parent._closeLightbox();
+    const closeButton = getID("closeButton");
+    if (window.parent._closeLightBox) {
+        closeButton.onclick = function () {
+            window.parent._closeLightbox();
+        };
+    } else {
+        closeButton.style.display = "none";
+    }
+
+    getID("logo-link").onclick = function () {
+        if (window.parent._closeLightBox) {
+            window.parent._closeLightbox(true);
+        } else {
+            window.location.href = "index.html";
+        }
     };
 
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
@@ -38,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
-function _requestPinGastos(){
+function _requestPinGastos() {
     const cancelAction = `window.location.href = "viagem.html?v=${_getURLParam('g')}"`;
     const confirmAction = '_loadGastos()';
     const precontent = 'Para acessar os gastos, digite o PIN cadastrado para essa viagem';

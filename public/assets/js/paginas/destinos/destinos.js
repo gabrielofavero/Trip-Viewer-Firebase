@@ -5,13 +5,22 @@ var CONTENT = {};
 function _loadDestinosHTML() {
   _loadVisibilityExternal();
 
-  getID("closeButton").onclick = function () {
-    _unloadMedias();
-    window.parent._closeLightbox();
-  };
+  const closeButton = getID("closeButton");
+  if (window.parent._closeLightBox) {
+    closeButton.onclick = function () {
+      _unloadMedias();
+      window.parent._closeLightbox();
+    };
+  } else {
+    closeButton.style.display = "none";
+  }
 
   getID("logo-link").onclick = function () {
-    window.parent._closeLightbox();
+    if (window.parent._closeLightBox) {
+      window.parent._closeLightbox(true);
+    } else {
+      window.location.href = "index.html";
+    }
   };
 
   if (DESTINO && Object.keys(DESTINO).length > 0) {

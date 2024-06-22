@@ -18,17 +18,22 @@ function _openLightbox(link) {
   _refreshVisibility();
 }
 
-function _closeLightbox() {
+function _closeLightbox(redirectToHome = false) {
   _refreshVisibility();
   getID('lightbox').style.display = 'none';
   getID('night-mode').style.display = 'block';
   getID('menu').style.display = 'block';
   getID('navbar').style.display = 'block';
   _enableScroll();
-  window.scrollTo({
-    top: SAVED_SCROLL_POSITION,
-    behavior: 'instant'
-  });
+
+  if (redirectToHome) {
+    window.location.href = '/';
+  } else {
+    window.scrollTo({
+      top: SAVED_SCROLL_POSITION,
+      behavior: 'instant'
+    });
+  }
 }
 
 function _loadImageLightbox(className) {
