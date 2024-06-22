@@ -52,7 +52,7 @@ async function _loadGastos() {
     _removePinListener();
     _startLoadingScreen();
     try {
-        GASTOS = _cloudFunction('getGastos', { documentID, pin });
+        GASTOS = await _cloudFunction('getGastos', { documentID, pin });
         if (GASTOS) {
             await _loadMoedas();
             _loadGastosConvertidos();
@@ -63,14 +63,6 @@ async function _loadGastos() {
         }
     } catch (error) {
         _stopLoadingScreen();
-        const msg = error?.responseJSON?.error || error?.responseJSON?.message || error?.message || '';
-        if (msg) {
-            _displayError(msg, true);
-            throw new Error(msg);
-        } else {
-            _displayError('Ocorreu um erro desconhecido ao tentar carregar os gastos. Tente novamente mais tarde', true);
-            throw error;
-        }
     }
 }
 
