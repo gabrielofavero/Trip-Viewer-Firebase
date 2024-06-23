@@ -46,12 +46,12 @@ function _loadDestinosHTML() {
         moeda: DESTINO.moeda
       }
 
-      const innerHTML = `<div class="accordion-group" id='destinos-box'>
+      const innerHTML = `<div class="accordion-group" id='destinos-box-${j}'>
                           <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
                               <h2 class="accordion-header" id="heading-destinos-${j}">
                                   <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button"
                                       data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false"
-                                      aria-controls="collapse-destinos-${j}" onclick="_toggleMedia(${j})">
+                                      aria-controls="collapse-destinos-${j}" onclick="_processAccordion(${j})">
                                       <span class="title-text" id="destinos-titulo-text-${j}">${_getTitulo(item)}</span>
                                       <div class="icon-container new-box" style="display: ${item.novo ? 'block' : 'none'}">
                                           <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -166,13 +166,27 @@ function openLinkInNewTab(url) {
   win.focus();
 }
 
-function _toggleMedia(i) {
-  const button = getID(`destinos-titulo-${i}`);
-  const id = `midia-${i}`;
+function _processAccordion(j) {
+  _toggleMedia(j);
+  _unloadMedias(j);
+  _closeAccordions(j);
+}
+
+function _toggleMedia(j) {
+  const button = getID(`destinos-titulo-${j}`);
+  const midia = `midia-${j}`;
   if (button.classList.contains("collapsed")) {
-    _unloadMedia(id);
+    _unloadMedia(midia);
   } else {
-    _loadMedia(id);
+    _loadMedia(midia);
     _applyDestinosMediaHeight();
+  }
+}
+
+function _closeAccordions(exclude) {
+  for (const j of _getJs('content')) {
+    if (j !== exclude) {
+      $(`#collapse-destinos-${j}`).collapse("hide");
+    }
   }
 }
