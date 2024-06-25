@@ -194,11 +194,12 @@ function _getGastoTipoSelect(categoria) {
 }
 
 function _saveInnerGasto(categoria, tipo, index = -1) {
+    const valor = _getFieldValueOrNotify('gasto-valor');
     const newGasto = {
         nome: _getFieldValueOrNotify('gasto-nome'),
         tipo: getID('gasto-tipo-select').value === 'outro' ? _getFieldValueOrNotify('gasto-tipo-input') : getID('gasto-tipo-select').value,
         moeda: _getFieldValueOrNotify('gasto-moeda'),
-        valor: _getFieldValueOrNotify('gasto-valor'),
+        valor: valor ? parseFloat(parseFloat(valor).toFixed(2)) : null,
     }
 
     if (!newGasto.nome || !newGasto.tipo || !newGasto.moeda || !newGasto.valor) return;
@@ -208,7 +209,12 @@ function _saveInnerGasto(categoria, tipo, index = -1) {
             INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos[index] = newGasto;
         } else {
             INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos.splice(index, 1);
-            INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === newGasto.tipo).gastos.push(newGasto);
+            let tipoObj = INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === newGasto.tipo);
+            if (tipoObj) {
+                tipoObj.gastos.push(newGasto);
+            } else {
+                INNER_GASTOS[categoria].push({ tipo: newGasto.tipo, gastos: [newGasto] });
+            }
         }
     } else {
         const tipos = INNER_GASTOS[categoria].map(tipoObj => tipoObj.tipo);
@@ -218,8 +224,20 @@ function _saveInnerGasto(categoria, tipo, index = -1) {
             INNER_GASTOS[categoria].push({ tipo: newGasto.tipo, gastos: [newGasto] });
         }
     }
+    _updateInnerGastos();
     _loadGastosHTML();
     _closeMessage();
+}
+
+function _updateInnerGastos() {
+    for (const categoria in INNER_GASTOS) {
+        for (let i = 0; i < INNER_GASTOS[categoria].length; i++) {
+            const tipoObj = INNER_GASTOS[categoria][i];
+            if (tipoObj.gastos.length === 0) {
+                INNER_GASTOS[categoria].splice(i, 1);
+            }
+        }
+    }
 }
 
 function _deleteInnerGasto(categoria, tipo, index) {

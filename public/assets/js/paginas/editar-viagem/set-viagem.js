@@ -39,9 +39,9 @@ async function _buildGastosObject() {
     }
 
     function _getGastos(categoria) {
-        const result = [];
+        let result = [];
         for (const tipoObj of INNER_GASTOS[categoria]) {
-            result.concat(tipoObj.gastos);
+            result = [...result, ...tipoObj.gastos];
         }
         return result;
     }
