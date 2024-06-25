@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "trip-viewer-tcc"
-  }
+    "default": "trip-viewer-tcc",
+    "trip-viewer-prd": "trip-viewer-tcc"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
