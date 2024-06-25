@@ -72,7 +72,7 @@ async function _loadGastos() {
     const pin = getID('pin-code')?.innerText || '';
     _closeMessage();
     _removePinListener();
-    _startLoadingScreen();
+    _startLoadingScreen(false);
     try {
         GASTOS = await _cloudFunction('getGastos', { documentID, pin });
         if (GASTOS) {
@@ -84,25 +84,44 @@ async function _loadGastos() {
             _stopLoadingScreen();
         }
     } catch (error) {
+        console.error(error);
+        _displayError('Não foi possível carregar a página de gastos');
         _stopLoadingScreen();
     }
 }
 
 function _applyGastos() {
-    if (GASTOS.gastosPrevios.length > 0 || GASTOS.gastosDurante.length > 0) {
+    const hasGastosPrevios = GASTOS.gastosPrevios.length > 0;
+    const hasGastosDurante = GASTOS.gastosDurante.length > 0;
+
+    if (hasGastosPrevios && hasGastosDurante) {
         getID('tab-gastos').style.display = '';
         getID('radio-resumo').style.display = '';
         _loadResumo();
+    }
 
-        if (GASTOS.gastosPrevios.length > 0) {
-            getID('radio-gastosPrevios').style.display = '';
-            _loadGastosPrevios();
-        }
+    if (hasGastosPrevios) {
+        getID('radio-gastosPrevios').style.display = '';
+        _loadGastosPrevios();
+    }
 
-        if (GASTOS.gastosDurante.length > 0) {
-            getID('radio-gastosDurante').style.display = '';
-            _loadGastosDurante();
-        }
+    if (hasGastosDurante > 0) {
+        getID('radio-gastosDurante').style.display = '';
+        _loadGastosDurante();
+    }
+
+    if (hasGastosPrevios && !hasGastosDurante) {
+        getID('resumo').style.display = 'none';
+        getID('gastosPrevios').style.display = '';
+    }
+
+    if (!hasGastosPrevios && hasGastosDurante) {
+        getID('resumo').style.display = 'none';
+        getID('gastosDurante').style.display = '';
+    }
+
+    if (!hasGastosPrevios && !hasGastosDurante) {
+        _displayError('Não há gastos registrados para essa viagem');
     }
 }
 

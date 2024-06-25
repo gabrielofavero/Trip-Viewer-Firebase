@@ -10,13 +10,19 @@ var MOEDAS = {
 
 async function _loadMoedas() {
     MOEDA_PADRAO = GASTOS.moeda;
-    MOEDA_ATUAL = MOEDA_PADRAO;
 
     _loadMoedasObject();
 
-    if (MOEDAS.resumo.length > 1) {
-        await _loadMoedaConversao();
-        _loadMoedasTab();
+    switch (MOEDAS.resumo.length) {
+        case 0:
+            MOEDA_ATUAL = MOEDA_PADRAO;
+            getID('tab-moedas').style.display = 'none';
+            break
+        case 1:
+            MOEDA_ATUAL = MOEDAS.resumo[0];
+        default:
+            await _loadMoedaConversao();
+            _loadMoedasTab();
     }
 }
 
@@ -80,7 +86,7 @@ async function _fetchConversoes(url) {
 function _loadMoedasTab() {
     const moedasTab = getID('tab-moedas');
     moedasTab.innerHTML = '';
-    moedasTab.style.display = '';
+    moedasTab.style.display = MOEDAS.resumo.length > 1 ? '' : 'none';
 
     for (let j = 1; j <= MOEDAS.resumo.length; j++) {
         const checked = MOEDAS.resumo[j-1] === MOEDA_ATUAL ? 'checked' : '';

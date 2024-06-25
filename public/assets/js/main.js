@@ -54,7 +54,7 @@ function _startFirebase() {
   firebase.auth().currentUser;
 }
 
-async function _cloudFunction(func, params) {
+async function _cloudFunction(func, params, displayError=true) {
   const myFunction = firebase.functions().httpsCallable(func);
   console.log('Chamando Cloud Function:', func);
 
@@ -64,12 +64,9 @@ async function _cloudFunction(func, params) {
     return result.data;
   } catch (error) {
     console.error(error);
-    if (error.message) {
-      _displayError(error.message, true);
-    } else {
-      _displayError(error, true);
+    if (displayError) {
+      _displayError(error.message || error, true);
     }
-    throw error; // Rethrow the error to propagate it to the caller
   }
 }
 

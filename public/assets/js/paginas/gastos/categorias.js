@@ -2,6 +2,11 @@
 function _loadResumo() {
     _loadChartResumo();
 
+    if (GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosPrevios'].length === 0 || GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosDurante'].length === 0) {
+        getID('radio-resumo').style.display = 'none';
+        return;
+    }
+
     const gastosPrevios = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosPrevios'].resumo;
     getID(`resumo-gastosPrevios-titulo`).innerText = `Gastos Prévios`;
     _setTable('resumo-gastosPrevios', gastosPrevios.itens, gastosPrevios.total);
