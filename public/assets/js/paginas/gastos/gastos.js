@@ -11,9 +11,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     await _main();
     _loadVisibilityExternal();
 
-    getID("closeButton").onclick = function () {
-        _unloadMedias();
-        window.parent._closeLightbox();
+    const closeButton = getID("closeButton");
+    if (window.parent._closeLightbox) {
+        closeButton.onclick = function () {
+            window.parent._closeLightbox();
+        };
+    } else {
+        closeButton.style.display = "none";
+    }
+
+    getID("logo-link").onclick = function () {
+        if (window.parent._closeLightbox) {
+            window.parent._closeLightbox(true);
+        } else {
+            window.location.href = "index.html";
+        }
     };
 
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
@@ -38,11 +50,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
-function _requestPinGastos(){
-    const cancelAction = `window.location.href = "viagem.html?v=${_getURLParam('g')}"`;
+function _requestPinGastos() {
+    const cancelAction = `_exitGastos()`;
     const confirmAction = '_loadGastos()';
     const precontent = 'Para acessar os gastos, digite o PIN cadastrado para essa viagem';
     _requestPin({ confirmAction, cancelAction, precontent });
+}
+
+function _exitGastos() {
+    if (window.parent._closeLightbox) {
+        window.parent._closeLightbox();
+    } else if (_getURLParam('g')) {
+        window.location.href = `viagem.html?v=${_getURLParam('g')}`;
+    } else {
+        window.location.href = 'index.html';
+    }
 }
 
 async function _loadGastos() {
@@ -52,7 +74,7 @@ async function _loadGastos() {
     _removePinListener();
     _startLoadingScreen();
     try {
-        GASTOS = await _postCloudFunction('getGastos', { documentID, pin });
+        GASTOS = await _cloudFunction('getGastos', { documentID, pin });
         if (GASTOS) {
             await _loadMoedas();
             _loadGastosConvertidos();
@@ -63,14 +85,6 @@ async function _loadGastos() {
         }
     } catch (error) {
         _stopLoadingScreen();
-        const msg = error?.responseJSON?.error || error?.responseJSON?.message || error?.message || '';
-        if (msg) {
-            _displayError(msg, true);
-            throw new Error(msg);
-        } else {
-            _displayError('Ocorreu um erro desconhecido ao tentar carregar os gastos. Tente novamente mais tarde', true);
-            throw error;
-        }
     }
 }
 

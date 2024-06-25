@@ -98,7 +98,6 @@ function _loadMoedasTab() {
         radio.addEventListener('change', () => {
             if (radio.checked) {
                 MOEDA_ATUAL = MOEDAS.resumo[i];
-                getID('conversao').innerText = GASTOS_CONVERTIDOS[MOEDA_ATUAL].conversao || _getEmptyChar();
                 _applyGastos();
                 _setTabListeners();
             }

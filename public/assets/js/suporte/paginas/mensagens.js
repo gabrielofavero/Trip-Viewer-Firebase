@@ -113,14 +113,11 @@ function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES))
 // Mensagem de Erro
 function _displayError(erro, tentarNovamente = false) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-  const isError = (erro && erro instanceof Error);
 
   propriedades.titulo = "Erro no Carregamento 🙁";
   propriedades.critico = true;
-  propriedades.conteudo = !erro ? 'Um erro inesperado impediu o carregamento da página. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.' :
-    isError ? erro.message + '. <a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para mais informações.' :
-      erro;
-  propriedades.localizacao = isError;
+  propriedades.conteudo = _getErrorMessage(erro);
+  propriedades.localizacao = false; // Desabilitado. Não faz sentido mostrar ao usuário.
 
   const botoes = tentarNovamente ? [{ tipo: 'tente-novamente' }] : [];
   if (!window.location.href.includes('index.html')) {
@@ -130,6 +127,22 @@ function _displayError(erro, tentarNovamente = false) {
   _displayFullMessage(propriedades);
 }
 
+function _getErrorMessage(erro) {
+  const isError = (erro && erro instanceof Error);
+  const contact = '<a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.';
+  
+  if (!erro || isError && !erro.message) {
+    return `Um erro inesperado impediu o carregamento da página. ${contact}`;
+  } else if (isError) {
+    let msg = erro.message;
+    if (msg[msg.length - 1] === '.') {
+      msg = msg.substring(0, msg.length - 1);
+    }
+    return `${msg}. ${contact}`;
+  } else {
+    return erro;
+  }
+}
 
 // Mensagem de Não Autorizado
 function _displayForbidden(conteudo, redirectTo = 'viagem.html') {
@@ -253,7 +266,7 @@ function _getButton(botao) {
 
 function _getHomeButton() {
   const button = document.createElement('button');
-  button.className = 'btn btn-purple btn-format';
+  button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', 'window.location.href = "index.html";')
 
@@ -315,7 +328,7 @@ function _getCloseButton(name = 'Fechar', onclick) {
 
 function _getConfirmButton(onclick = '_closeMessage();') {
   const button = document.createElement('button');
-  button.className = 'btn btn-purple btn-format';
+  button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', onclick)
   button.id = 'message-confirm';

@@ -81,6 +81,17 @@ input[type="radio"]:checked+label>.notification {
   border-bottom-color: #303030;
 }
 
+.btn-theme,
+.btn-basic:hover,
+.btn-basic:focus {
+  background: var(--theme-color);
+}
+
+.btn-theme:hover,
+.btn-theme:focus {
+  background: var(--theme-color-hover);
+}
+
 .message-container,
 .input-container {
   background: #303030;

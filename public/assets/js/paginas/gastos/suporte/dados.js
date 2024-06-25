@@ -35,7 +35,7 @@ function _setTable(id, itens, total) {
 
         const td2 = document.createElement('td');
         td2.className = `tabela-texto-direita`;
-        td2.innerText = _formatMoeda(item.valor);
+        td2.innerText = _formatMoeda(item.valor, true);
         tr.appendChild(td2);
 
         return tr;

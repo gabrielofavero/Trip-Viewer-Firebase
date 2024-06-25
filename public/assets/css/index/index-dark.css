@@ -172,10 +172,12 @@ strong {
   background-color: #303030;
 }
 
-.btn-purple {
+.btn-theme {
+  color: #fff;
   background: #7f75b6;
 }
 
-.btn-purple:hover {
+.btn-theme:hover {
+  color: #fff;
   background: #7367b4;
 }

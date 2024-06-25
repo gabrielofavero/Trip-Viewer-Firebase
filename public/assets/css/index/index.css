@@ -869,17 +869,17 @@ section {
   margin-left: 20px;
 }
 
-.btn-purple {
+.btn-theme {
   background: #5859a7;
   color: #fff;
 }
 
-.btn-purple-mobile {
+.btn-theme-mobile {
   background: #5859a7;
   color: #fff;
 }
 
-.btn-purple:hover {
+.btn-theme:hover {
   background: #505197;
   color: #fff;
 }

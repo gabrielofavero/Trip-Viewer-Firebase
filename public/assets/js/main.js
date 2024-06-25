@@ -36,7 +36,7 @@ const getID = (id) => {
 }
 
 
-// Application Start Functions
+// Firebase
 function _startFirebase() {
   let app = firebase.app();
   let features = [
@@ -52,6 +52,25 @@ function _startFirebase() {
   ].filter(feature => typeof app[feature] === 'function');
   console.log(`Firebase SDK loaded with ${features.join(', ')}`);
   firebase.auth().currentUser;
+}
+
+async function _cloudFunction(func, params) {
+  const myFunction = firebase.functions().httpsCallable(func);
+  console.log('Chamando Cloud Function:', func);
+
+  try {
+    const result = await myFunction(params);
+    console.log(`Função ${func} executada com sucesso`);
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    if (error.message) {
+      _displayError(error.message, true);
+    } else {
+      _displayError(error, true);
+    }
+    throw error; // Rethrow the error to propagate it to the caller
+  }
 }
 
 function _main() {
@@ -221,17 +240,17 @@ function _main() {
 function _loadConfig() {
   let config = {};
   return Promise.all([
-      $.getJSON("assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
-      $.getJSON("assets/json/cores.json").then(data => config.cores = data),
-      $.getJSON("assets/json/destinos.json").then(data => config.destinos = data),
-      $.getJSON("assets/json/information.json").then(data => config.information = data),
-      $.getJSON("assets/json/moedas.json").then(data => config.moedas = data),
-      $.getJSON("assets/json/transportes.json").then(data => config.transportes = data),
-      $.getJSON("assets/json/set.json").then(data => config.set = data)
+    $.getJSON("assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
+    $.getJSON("assets/json/cores.json").then(data => config.cores = data),
+    $.getJSON("assets/json/destinos.json").then(data => config.destinos = data),
+    $.getJSON("assets/json/information.json").then(data => config.information = data),
+    $.getJSON("assets/json/moedas.json").then(data => config.moedas = data),
+    $.getJSON("assets/json/transportes.json").then(data => config.transportes = data),
+    $.getJSON("assets/json/set.json").then(data => config.set = data)
   ]).then(() => {
-      CONFIG = config;
+    CONFIG = config;
   }).catch(error => {
-      console.error('Erro ao carregar a configuração:', error);
-      _displayError('Erro ao carregar a configuração');
+    console.error('Erro ao carregar a configuração:', error);
+    _displayError('Erro ao carregar a configuração');
   });
 }

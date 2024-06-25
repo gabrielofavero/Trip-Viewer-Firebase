@@ -31,9 +31,11 @@ function _unloadMedia(id) {
     }
 }
 
-function _unloadMedias() {
-    for (const j of _getJs('destinos-box')) {
-        _unloadMedia(`midia-${j}`);
+function _unloadMedias(exclude) {
+    for (const j of _getJs('content')) {
+        if (j !== exclude) {
+            _unloadMedia(`midia-${j}`);
+        }
     }
 }
 

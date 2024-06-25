@@ -465,12 +465,12 @@ a:hover {
   background-color: #303030;
 }
 
-.btn-purple {
+.btn-theme {
   background: var(--theme-color);
 }
 
-.btn-purple:hover,
-.btn-purple:active {
+.btn-theme:hover,
+.btn-theme:active {
   background: var(--theme-color-hover);
 }
 
