@@ -21,6 +21,7 @@ async function _loadMoedas() {
         case 1:
             MOEDA_ATUAL = MOEDAS.resumo[0];
         default:
+            MOEDA_ATUAL = MOEDA_PADRAO;
             await _loadMoedaConversao();
             _loadMoedasTab();
     }
