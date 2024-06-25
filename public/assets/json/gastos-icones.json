@@ -1,0 +1,58 @@
+[
+    {
+        "keys": [],
+        "value": "mdi:dollar"
+    },
+    {
+        "keys": ["gastos prévios", "gastos na viagem", "resumo dos gastos", "resumo"],
+        "value": "mdi:graph-line"
+    },
+    {
+        "keys": ["hospedagem", "hospedagens"],
+        "value": "material-symbols:hotel-outline"
+    },
+    {
+        "keys": ["transporte", "transportes"],
+        "value": "mingcute:rocket-line"
+    },
+    {
+        "keys": ["voo", "voos"],
+        "value": "mingcute:airplane-line"
+    },
+    {
+        "keys": ["carro", "uber", "transporte privado"],
+        "value": "lucide:car"
+    },
+    {
+        "keys": ["ônibus", "transporte público"],
+        "value": "lucide:bus"
+    },
+    {
+        "keys": ["entretenimento", "show", "shows"],
+        "value": "tabler:microphone-2"
+    },
+    {
+        "keys": ["dia a dia", "dia-a-dia", "gastos diários"],
+        "value": "ph:sun-bold"
+    },
+    {
+        "keys": ["presente", "presentes"],
+        "value": "mdi:gift-outline"
+    },
+    {
+        "keys": ["pessoas", "pessoal"],
+        "value": "gravity-ui:person"
+    },
+    {
+        "keys": ["compras", "supermercado", "mercado"],
+        "value": "mdi:cart-outline"
+    },
+    {
+        "keys": ["comida", "alimentação", "lanches"],
+        "value": "uil:food"
+    },
+    {
+        "keys": ["saída", "saídas", "saída noturna", "saídas noturnas"],
+        "value": "bxs:drink"
+    }
+]
