@@ -97,14 +97,8 @@ strong {
 }
 
 .content-box {
-  background-color: #303030;
+  background-color: rgba(48, 48, 48, 0.80);
   color: #E2E2E2;
-}
-
-@media (max-width: 600px) {
-  .content-box {
-    background-color: rgba(48, 48, 48, 0.80);
-  }
 }
 
 .index-title {

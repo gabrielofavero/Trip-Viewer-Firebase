@@ -432,46 +432,28 @@ section {
 
 /* ---------- Box Principal ---------- */
 .content-box {
-  position: absolute;
-  top: 44%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 450px;
-  height: 550px;
-  background-color: #fff;
-  border-radius: 10px;
-  text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
   overflow-wrap: break-word;
   color: #272829;
-  overflow-y: auto;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.70);
+  height: 100vh;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
-  .content-box {
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.70);
-    height: 100vh;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 0;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  #index-logged-title {
-    margin-top: 0px;
-  }
+#index-logged-title {
+  margin-top: 0px;
 }
 
 /* ---------- Ícones Nav Bar ---------- */
