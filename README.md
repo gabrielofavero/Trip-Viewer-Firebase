@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 39          | 5         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
-| 📈     | Melhoria | M000    | 62    | 45          | 17        |
+| 📈     | Melhoria | M000    | 69    | 51          | 18        |
 | ⚔️   | Épico   | E000    | 23    | 15          | 7         |
 
 ### Status
@@ -22,6 +22,11 @@
 ## To-Do
 
 ### Prioridade Alta
+- ⚔️ **E013:** Migração do Projeto
+  - *Criação de ambientes dev e prd*
+  - *Depreciação do trip-viewer-tcc (redirecionamento para prd)*
+  - *Criação de domínio personalizado para prd*
+- 📈 **M069:** Melhoria de edição de viagens
 
 ### Prioridade Média
 
@@ -59,7 +64,6 @@
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
-- ⚔️ **E013:** Migração de projeto para outro domínio
 - 🐞 **B023:** Correção de gráfico de dias por cidade estático no viagens.html
 - 🏆 **F044:** Criação de animações em todo o site
 - 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
@@ -114,6 +118,15 @@
     - *Auto importar de Transporte e Hospedagem (listener caso altere em um dos lados)*
   - *Aplicar template em página de viagem*
 - 🐞 **B025:** Correção de, ao fazer o switch de visibilidade dentro de um lightbox, não ser mantido ao sair
+- 📈 **M063:** Melhoria de performace Firebase (atualização de versão do CLI)
+- 📈 **M064:** Ajuste no tratamento de mensagem de erros
+- 📈 **M065:** Gastos agora exibem moeda em todos os valores da tabela
+- 📈 **M067:** Melhorias páginas que usam lightbox (gastos.html e destinos.html)
+ - *Páginas, quando carregadas fora do lightbox, não irão exibir botão de voltar*
+ - *Redirecionamento condicional de páginas*
+- 📈 **M068:** Melhoria accordions e mídias em destinos.html
+ - *Página agora apenas exibe um accordion por vez*
+ - *Mídias agora não se cruzam (reprodução simultânea)*
 
 ### Maio 2024
 
