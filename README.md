@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 39          | 5         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
-| 📈     | Melhoria | M000    | 69    | 51          | 18        |
+| 📈     | Melhoria | M000    | 68    | 51          | 17        |
 | ⚔️   | Épico   | E000    | 25    | 15          | 10        |
 
 ### Status
@@ -28,7 +28,6 @@
   - *Criação de branch de develop*
   - *Depreciação do trip-viewer-tcc (redirecionamento para prd)*
   - *Criação de domínio personalizado para prd*
-- 📈 **M069:** Melhoria de edição de viagens
 
 ### Prioridade Média
 
