@@ -6,8 +6,12 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [],
-    "headers": []
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   },
   "emulators": {
     "hosting": {
