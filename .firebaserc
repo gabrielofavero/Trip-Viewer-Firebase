@@ -1,8 +1,8 @@
 {
   "projects": {
-    "prd": "trip-viewer-web-prd",
-    "dev": "trip-viewer-web-dev",
-    "legacy": "trip-viewer-tcc"
+    "prd": "trip-viewer-prd",
+    "dev": "trip-viewer-dev",
+    "tcc": "trip-viewer-tcc"
   },
   "targets": {},
   "etags": {},

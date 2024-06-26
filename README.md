@@ -9,7 +9,7 @@
 | 🐞     | Bug      | B000    | 45    | 39          | 5         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
 | 📈     | Melhoria | M000    | 69    | 51          | 18        |
-| ⚔️     | Épico    | E000    | 25    | 15          | 10         |
+| ⚔️   | Épico   | E000    | 25    | 15          | 10        |
 
 ### Status
 
@@ -22,8 +22,10 @@
 ## To-Do
 
 ### Prioridade Alta
+
 - ⚔️ **E013:** Migração do Projeto
   - *Criação de ambientes dev e prd*
+  - *Criação de branch de develop*
   - *Depreciação do trip-viewer-tcc (redirecionamento para prd)*
   - *Criação de domínio personalizado para prd*
 - 📈 **M069:** Melhoria de edição de viagens
@@ -124,11 +126,11 @@
 - 📈 **M064:** Ajuste no tratamento de mensagem de erros
 - 📈 **M065:** Gastos agora exibem moeda em todos os valores da tabela
 - 📈 **M067:** Melhorias páginas que usam lightbox (gastos.html e destinos.html)
- - *Páginas, quando carregadas fora do lightbox, não irão exibir botão de voltar*
- - *Redirecionamento condicional de páginas*
+- *Páginas, quando carregadas fora do lightbox, não irão exibir botão de voltar*
+- *Redirecionamento condicional de páginas*
 - 📈 **M068:** Melhoria accordions e mídias em destinos.html
- - *Página agora apenas exibe um accordion por vez*
- - *Mídias agora não se cruzam (reprodução simultânea)*
+- *Página agora apenas exibe um accordion por vez*
+- *Mídias agora não se cruzam (reprodução simultânea)*
 
 ### Maio 2024
 
