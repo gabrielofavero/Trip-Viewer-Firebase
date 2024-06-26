@@ -9,7 +9,7 @@
 | 🐞     | Bug      | B000    | 45    | 39          | 5         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
 | 📈     | Melhoria | M000    | 69    | 51          | 18        |
-| ⚔️   | Épico   | E000    | 23    | 15          | 7         |
+| ⚔️     | Épico    | E000    | 25    | 15          | 10         |
 
 ### Status
 
@@ -58,6 +58,8 @@
   - *Code smells*
   - *Refatorações*
   - *Sonarqube*
+- ⚔️ **E024:** Migração de projeto para React
+- ⚔️ **E025:** Implementação iOs e Android
 
 ### Prioridade Baixa
 
@@ -73,7 +75,7 @@
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
-  - Tanto destinos.html quanto editar-destinos.html
+  - *Tanto destinos.html quanto editar-destinos.html*
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M047:** Troca de mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhoria de funções relacionadas ao getJs para mais cenários
