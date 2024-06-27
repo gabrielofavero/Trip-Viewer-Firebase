@@ -9,7 +9,7 @@
 | 🐞     | Bug      | B000    | 45    | 39          | 5         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
 | 📈     | Melhoria | M000    | 68    | 51          | 17        |
-| ⚔️   | Épico   | E000    | 25    | 15          | 10        |
+| ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
 
@@ -31,7 +31,6 @@
 
 ### Prioridade Média
 
-- ⚔️ **E022:** Funções de migrações (Cloud Functions)
 - 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 - 📈 **M020:** Módulo de transporte mais automatizado
   - *Se user clicou em volta e não há dados, reverte tudo da ida*
@@ -130,6 +129,7 @@
 - 📈 **M068:** Melhoria accordions e mídias em destinos.html
 - *Página agora apenas exibe um accordion por vez*
 - *Mídias agora não se cruzam (reprodução simultânea)*
+- ⚔️ **E022:** Funções de migrações (Cloud Functions)
 
 ### Maio 2024
 
