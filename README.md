@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 45    | 39          | 5         |
 | 🏆     | Feature  | F000    | 57    | 49          | 8         |
-| 📈     | Melhoria | M000    | 68    | 51          | 17        |
+| 📈     | Melhoria | M000    | 69    | 52          | 17        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -86,6 +86,7 @@
   -*Também será preciso alterar a função que calcula o dark mode*
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
+- 📈 **M069:** Timer de carregamento desabilitado por padrão
 
 ## Done
 

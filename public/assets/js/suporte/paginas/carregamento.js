@@ -3,7 +3,7 @@ var LOADING_SECONDS = 0;
 
 // Loading Screen
 
-function _startLoadingScreen(useTimer = true) {
+function _startLoadingScreen(useTimer = false) {
   if (useTimer) {
     _startLoadingTimer();
   }
