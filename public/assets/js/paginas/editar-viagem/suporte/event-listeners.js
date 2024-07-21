@@ -2,7 +2,6 @@
 function _loadEventListeners() {
     // Inputs
     getID('inicio').addEventListener('change', () => _inicioListenerAction());
-    getID('fim').addEventListener('change', () => _fimListenerAction());
     getID('logo-tamanho').addEventListener('input', (event) => _formatAltura(event.target.value));
 
     // Botões
@@ -47,14 +46,9 @@ function _loadEventListeners() {
 function _inicioListenerAction() {
     const inicio = getID('inicio').value;
     if (inicio) {
-        getID('fim').value = _getNextInputDay(inicio);
-        _reloadProgramacao();
-    }
-}
-
-function _fimListenerAction() {
-    const fim = getID('fim').value;
-    if (fim) {        
+        if (NEW_TRIP) {
+            getID('fim').value = _getNextInputDay(inicio);
+        }
         _reloadProgramacao();
     }
 }

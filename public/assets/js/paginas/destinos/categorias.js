@@ -43,7 +43,7 @@ function _getNotaText(item, notas) {
 // Links
 function _getLinkOnClick(item, tipo) {
     if (item[tipo]) {
-        return ` onclick="openLinkInNewTab('${item[tipo]}')"`
+        return ` onclick="_openLinkInNewTab('${item[tipo]}')"`
     } else return "";
 }
 

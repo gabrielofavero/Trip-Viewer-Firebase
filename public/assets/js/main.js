@@ -252,3 +252,8 @@ function _loadConfig() {
     _displayError('Erro ao carregar a configuração');
   });
 }
+
+function _openLinkInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
