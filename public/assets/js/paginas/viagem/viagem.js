@@ -218,13 +218,15 @@ function _loadModules() {
   if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share) {
     share.addEventListener('click', () => {
       const titulo = FIRESTORE_DATA.titulo || document.title;
-      let tipo = TYPE == 'listagens' ? 'listagem' : 'viagem';
-      let complemento = TYPE == 'listagens' ? '' : `, com início em ${INICIO.text} e fim em ${FIM.text}`;
+      const tipo = TYPE == 'listagens' ? 'listagem' : 'viagem';
+      const complemento = TYPE == 'listagens' ? '' : `, com início em ${INICIO.text} e fim em ${FIM.text}`;
+      const link = window.location.href.includes('trip-viewer-prd.firebaseapp.com') ? 
+        'https://trip-viewer.com' + window.location.pathname + window.location.search: window.location.href;
 
       navigator.share({
         title: FIRESTORE_DATA.titulo || document.title,
         text: `Venha visualizar minha ${tipo} "${titulo}" criada no TripViewer${complemento}`,
-        url: window.location.href,
+        url: link,
       })
 
         .then(() => console.log('Link compartilhado com sucesso!'))

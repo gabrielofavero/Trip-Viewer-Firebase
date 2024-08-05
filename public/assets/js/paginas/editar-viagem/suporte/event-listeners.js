@@ -45,18 +45,31 @@ function _loadEventListeners() {
 
 // Actions
 function _inicioListenerAction() {
-    const inicio = getID('inicio').value;
-    if (inicio) {
-        getID('fim').value = _getNextInputDay(inicio);
-        _reloadProgramacao();
+    const inicioDiv = getID('inicio');
+    const fimDiv = getID('fim');
+
+    const inicio = inicioDiv.value;
+    const fim = fimDiv.value;
+
+    if (NEW_TRIP || !fim || _inputDateToJsDate(fim).getTime() < _inputDateToJsDate(inicio).getTime()) {
+        fimDiv.value = _getNextInputDay(inicio);
     }
+
+    _reloadProgramacao();
 }
 
 function _fimListenerAction() {
-    const fim = getID('fim').value;
-    if (fim) {        
-        _reloadProgramacao();
+    const inicioDiv = getID('inicio');
+    const fimDiv = getID('fim');
+
+    const inicio = inicioDiv.value;
+    const fim = fimDiv.value;
+
+    if (!inicio || _inputDateToJsDate(fim).getTime() < _inputDateToJsDate(inicio).getTime()) {
+        inicioDiv.value = _getPreviousInputDay(fim);
     }
+
+    _reloadProgramacao();
 }
 
 function _visualizarListenerAction() {

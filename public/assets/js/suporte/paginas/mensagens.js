@@ -192,7 +192,7 @@ function _getIconsBox(icones) {
     const backIcon = document.createElement('i');
     backIcon.id = 'back-icon';
     backIcon.className = 'bx bx-arrow-back';
-    backIcon.setAttribute('onclick', icones.action);
+    backIcon.setAttribute('onclick', icones[0].acao);
     backIcon.style.visibility = 'hidden';
     backIcon.style.cursor = 'pointer';
 

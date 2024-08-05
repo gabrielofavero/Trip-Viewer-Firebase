@@ -4,6 +4,7 @@ var FIRESTORE_GASTOS_DATA;
 
 var WAS_SAVED = false;
 var CAN_EDIT = false;
+var NEW_TRIP = false;
 
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (DOCUMENT_ID) {
       await _loadTrip(true);
     } else {
+      NEW_TRIP = true;
       CAN_EDIT = true;
       DESTINOS = await _getUserList('destinos', true);
       _loadNewTrip();

@@ -161,11 +161,6 @@ function _orderInnerHTMLs(innerContents) {
 
 
 // Actions
-function openLinkInNewTab(url) {
-  var win = window.open(url, '_blank');
-  win.focus();
-}
-
 function _processAccordion(j) {
   _toggleMedia(j);
   _unloadMedias(j);

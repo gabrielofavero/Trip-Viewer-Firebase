@@ -41,7 +41,7 @@ async function _setDocumento(tipo) {
     if (DOCUMENT_ID && newData) {
         result = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
     } else if (newData) {
-        result = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
+        result = await _create(tipo, newData);
         DOCUMENT_ID = result?.data?.id;
     }
 

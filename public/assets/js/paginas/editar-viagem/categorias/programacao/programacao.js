@@ -134,10 +134,6 @@ function _reloadProgramacao() {
     _updateDestinosAtivosCheckboxHTML('programacao');
 }
 
-function _reloadProgramacaoData(data) {
-
-}
-
 // Listeners
 function _loadProgramacaoListeners(j) {
     // Checkbox Local
