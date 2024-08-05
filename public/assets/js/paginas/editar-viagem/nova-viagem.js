@@ -381,6 +381,8 @@ function _loadProgramacao() {
     getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     _loadProgramacaoListeners(j);
   }
+  
+  getID('habilitado-programacao').addEventListener('change', () => _reloadProgramacao());
 }
 
 function _addLineup() {

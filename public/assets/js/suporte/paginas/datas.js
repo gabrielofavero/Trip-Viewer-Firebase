@@ -96,10 +96,18 @@ function _getTomorrowFormatted(format = 'yyyy-mm-dd') {
     return _jsDateToDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), format);
 }
 
-function _getNextInputDay(inputDate) {
+function _getAdjustedInputDate(inputDate, days) {
     const currentDate = _inputDateToJsDate(inputDate);
-    const nextDay = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
-    return _jsDateToInputDate(nextDay);
+    const adjustedDate = new Date(currentDate.getTime() + days * 24 * 60 * 60 * 1000);
+    return _jsDateToInputDate(adjustedDate);
+}
+
+function _getNextInputDay(inputDate) {
+    return _getAdjustedInputDate(inputDate, 1);
+}
+
+function _getPreviousInputDay(inputDate) {
+    return _getAdjustedInputDate(inputDate, -1);
 }
 
 function _getArrayOfDates(formattedStart, formattedEnd) {
