@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 45    | 39          | 5         |
-| 🏆     | Feature  | F000    | 57    | 49          | 8         |
-| 📈     | Melhoria | M000    | 69    | 52          | 17        |
+| 🐞     | Bug      | B000    | 46    | 40          | 5         |
+| 🏆     | Feature  | F000    | 62    | 49          | 12         |
+| 📈     | Melhoria | M000    | 73    | 52          | 21        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -22,15 +22,17 @@
 ## To-Do
 
 ### Prioridade Alta
-
-- ⚔️ **E013:** Migração do Projeto
-  - *Criação de ambientes dev e prd*
-  - *Criação de branch de develop*
-  - *Depreciação do trip-viewer-tcc (redirecionamento para prd)*
-  - *Criação de domínio personalizado para prd*
+- 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
+- 🏆 **F058:** Inserir item de viagens anteriores em index.html
+- 📈 **M071:** Incluir código de reserva em Hospedagens
+- 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
+- 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
 
 ### Prioridade Média
-
+- 🏆 **F062:** Renomear todas as páginas html para nomes em inglês
+- 🏆 **F059:** Inserir fake player de vídeo + Modelo instagram reels
+- 🏆 **F060:** Permitir visualizar destinos diretamente (sem listas)
+  - *Adicionar imagem e descrição*
 - 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 - 📈 **M020:** Módulo de transporte mais automatizado
   - *Se user clicou em volta e não há dados, reverte tudo da ida*
@@ -87,8 +89,15 @@
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
+- 🏆 **F061:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 
 ## Done
+
+### Julho 2024
+- 🐞 **B046:** Pacote de hot fixes 07/2024
+  - *Login por pop-up no domínio novo (temporário)*
+  - *Correção de erros na exibição de destinos*
+  - *Correção de erros na criação de novas viagens*
 
 ### Junho 2024
 
@@ -131,6 +140,11 @@
 - *Página agora apenas exibe um accordion por vez*
 - *Mídias agora não se cruzam (reprodução simultânea)*
 - ⚔️ **E022:** Funções de migrações (Cloud Functions)
+- ⚔️ **E013:** Migração do Projeto
+  - *Criação de ambientes dev e prd*
+  - *Criação de branch de develop*
+  - *Depreciação do trip-viewer-tcc (redirecionamento para prd)*
+  - *Criação de domínio personalizado para prd*
 
 ### Maio 2024
 
