@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 47    | 40          | 7         |
+| 🐞     | Bug      | B000    | 48    | 40          | 8         |
 | 🏆     | Feature  | F000    | 62    | 50          | 12         |
 | 📈     | Melhoria | M000    | 74    | 53          | 21        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
@@ -18,6 +18,7 @@
 - ❗️: Crítico
 
 ## Doing
+- 🐞 **B048:** Programação não está carregando corretamente no dark mode
 
 ## To-Do
 
