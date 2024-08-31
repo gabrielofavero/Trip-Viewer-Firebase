@@ -7,8 +7,8 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 47    | 40          | 7         |
-| 🏆     | Feature  | F000    | 62    | 49          | 12         |
-| 📈     | Melhoria | M000    | 74    | 52          | 22        |
+| 🏆     | Feature  | F000    | 62    | 50          | 12         |
+| 📈     | Melhoria | M000    | 74    | 53          | 21        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -22,8 +22,6 @@
 ## To-Do
 
 ### Prioridade Alta
-- 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
-- 🏆 **F058:** Inserir item de viagens anteriores em index.html
 - 📈 **M071:** Incluir código de reserva em Hospedagens
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
@@ -94,7 +92,12 @@
 
 ## Done
 
+### Agosto 2024
+- 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
+- 🏆 **F058:** Inserir item de viagens anteriores em index.html
+
 ### Julho 2024
+
 - 🐞 **B046:** Pacote de hot fixes 07/2024
   - *Login por pop-up no domínio novo (temporário)*
   - *Correção de erros na exibição de destinos*
