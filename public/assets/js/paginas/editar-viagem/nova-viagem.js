@@ -299,7 +299,7 @@ function _loadProgramacao() {
   const inicio = getID('inicio').value;
   const fim = getID('fim').value;
 
-  DATAS = _getArrayOfDates(inicio, fim);
+  DATAS = _getArrayOfDates(_formattedDateToDate(inicio), _formattedDateToDate(fim));
 
   const programacaoBox = getID('programacao-box');
   programacaoBox.innerHTML = '';

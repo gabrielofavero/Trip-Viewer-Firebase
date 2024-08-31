@@ -46,7 +46,8 @@ h6 {
 # Preloader
 --------------------------------------------------------------*/
 #preloader,
-#preloader-viagens,
+#preloader-proximasViagens,
+#preloader-viagensAnteriores,
 #preloader-destinos,
 #preloader-listagens {
   position: fixed;
@@ -63,7 +64,8 @@ h6 {
 }
 
 #preloader:before,
-#preloader-viagens:before,
+#preloader-proximasViagens:before,
+#preloader-viagensAnteriores:before,
 #preloader-destinos:before,
 #preloader-listagens:before {
   content: "";
@@ -511,7 +513,7 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 350px;
+  height: 500px;
   width: 300px;
   background: #f7f8f9;
   overflow-y: auto;
@@ -663,7 +665,8 @@ section {
   color: red;
 }
 
-#sem-viagens,
+#sem-proximasViagens,
+#sem-viagensAnteriores,
 #sem-destinos,
 #sem-listagens {
   display: flex;
@@ -703,7 +706,7 @@ section {
   top: 0;
 }
 
-#new-viagem,
+#nova-viagem,
 #new-destino,
 #new-listagem {
   margin-top: 20px;

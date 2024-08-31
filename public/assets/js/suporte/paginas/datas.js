@@ -110,10 +110,7 @@ function _getPreviousInputDay(inputDate) {
     return _getAdjustedInputDate(inputDate, -1);
 }
 
-function _getArrayOfDates(formattedStart, formattedEnd) {
-    const start = _formattedDateToDate(formattedStart);
-    const end = _formattedDateToDate(formattedEnd);
-
+function _getArrayOfDates(start, end) {
     const dates = [];
     let currentDate = start;
     while (currentDate <= end) {

@@ -6,6 +6,12 @@ var TENTATIVAS = {
   listagens: 0
 }
 
+var VIAGENS = {
+  coletado: false,
+  proximasViagens: [],
+  viagensAnteriores: []
+}
+
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -29,11 +35,15 @@ function _loadListenersIndex() {
     _signInGoogle();
   });
 
-  getID('myTrips').addEventListener('click', function () {
-    _openIndexPage('viagens', 0, 1);
+  getID('proximasViagens').addEventListener('click', function () {
+    _openIndexPage('proximasViagens', 0, 1);
   });
 
-  getID('myDestinations').addEventListener('click', function () {
+  getID('viagensAnteriores').addEventListener('click', function () {
+    _openIndexPage('viagensAnteriores', 0, 1);
+  });
+
+  getID('destinosCadastrados').addEventListener('click', function () {
     _openIndexPage('destinos', 0, 1);
   });
 
@@ -43,7 +53,11 @@ function _loadListenersIndex() {
     _openIndexPage('settings', 0, 1);
   });
 
-  getID('new-viagem').addEventListener('click', function () {
+  getID('nova-viagem-1').addEventListener('click', function () {
+    _viagensNovo();
+  });
+
+  getID('nova-viagem-2').addEventListener('click', function () {
     _viagensNovo();
   });
 
@@ -69,7 +83,7 @@ function _loadListenersIndex() {
     }
   });
 
-  getID('myDestinationsLists').addEventListener('click', function () {
+  getID('listasDeDestinos').addEventListener('click', function () {
     _openIndexPage('listagens', 0, 1);
   });
 
@@ -150,20 +164,32 @@ async function _loadUserDataList(tipo) {
   const promise = _getUserList(tipo);
   let responseReceived = false;
 
-  const preloader = getID(`preloader-${tipo}`);
-  const demoraCarregamento = getID(`demora-carregamento-${tipo}`);
-  const semDados = getID(`sem-${tipo}`);
-
   function onResponseReceived(response) {
-      preloader.style.display = 'none';
-      demoraCarregamento.style.display = 'none';
+    const tipos = _getTipos(tipo);
+    for (const innerTipo of tipos) {
+      innerTipo.preloader.style.display = 'none';
       if (response.length === 0) {
-          semDados.style.display = 'block';
+        innerTipo.semDados.style.display = 'block';
       } else {
-          semDados.style.display = 'none';
-          USER_DATA[tipo] = response;
-          _loadUserDataHTML(USER_DATA[tipo], tipo);
+        innerTipo.semDados.style.display = 'none';
+        USER_DATA[tipo] = response;
+        _loadUserDataHTML(USER_DATA[tipo], innerTipo.titulo);
       }
+    }
+  }
+
+  function _getTipos(tipo) {
+    const result = [];
+    const tipos = tipo == 'viagens' ? ['proximasViagens', 'viagensAnteriores'] : [tipo];
+    for (const innerTipo of tipos) {
+      result.push({
+          titulo: innerTipo,
+          preloader: getID(`preloader-${innerTipo}`),
+          demoraCarregamento: getID(`demora-carregamento-${innerTipo}`),
+          semDados: getID(`sem-${innerTipo}`)
+      });
+    }
+    return result;
   }
 
   function onTimeout() {
@@ -219,58 +245,91 @@ function _manualListLoad(type) {
   }
 }
 
-function _loadUserDataHTML(data, type) {
-  const div = getID(`dados-${type}`);
-  let text = '';
+function _loadUserDataHTML(dados, tipo) {
+  const div = getID(`dados-${tipo}`);
+  let conteudo = '';
 
-  if (type === 'viagens') {
-    data.sort((a, b) => {
-      return _convertFromFirestoreDate(b.inicio) - _convertFromFirestoreDate(a.inicio);
-    });
-  } else if (data[0].ultimaAtualizacao) {
-    data.sort((a, b) => {
+  if ((tipo == 'proximasViagens' || tipo == 'viagensAnteriores')) {
+    if (!VIAGENS.coletado) {
+      _coletarViagens(dados);
+    } 
+    dados = VIAGENS[tipo];
+  } else if (dados[0].ultimaAtualizacao) {
+    dados.sort((a, b) => {
       return new Date(b.ultimaAtualizacao).getTime() - new Date(a.ultimaAtualizacao).getTime();
     });
   }
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < dados.length; i++) {
     let secondaryDiv = '';
     let visualizarDiv = '';
 
-    switch (type) {
-      case 'viagens':
-        const inicioDate = _convertFromFirestoreDate(data[i].inicio);
-        const fimDate = _convertFromFirestoreDate(data[i].fim);
+    switch (tipo) {
+      case 'proximasViagens':
+      case 'viagensAnteriores':
+        const inicioDate = _convertFromFirestoreDate(dados[i].inicio);
+        const fimDate = _convertFromFirestoreDate(dados[i].fim);
         const inicio = _jsDateToDate(inicioDate);
         const fim = _jsDateToDate(fimDate);
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
         break;
       case 'destinos':
       case 'listagens':
-        secondaryDiv = `<div class="user-data-item-date">${data[i].ultimaAtualizacaoText}</div>`;
+        secondaryDiv = `<div class="user-data-item-date">${dados[i].ultimaAtualizacaoText}</div>`;
         break;
       default:
         break;
     }
 
-    if (typeof window[`_${type}Visualizar`] === 'function') {
-      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${type}Visualizar('${data[i].code}')" data-icon="fluent:eye-16-regular"></i>`
+    if (typeof window[`_${tipo}Visualizar`] === 'function') {
+      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${tipo}Visualizar('${dados[i].code}')" data-icon="fluent:eye-16-regular"></i>`
     }
 
-    text += `
+    conteudo += `
     <div class="user-data-item">
       <div class="user-data-item-text">
-        <div class="user-data-item-title">${data[i].titulo}</div>
+        <div class="user-data-item-title">${dados[i].titulo}</div>
         ${secondaryDiv}
       </div>
       <div class="trip-data-icons">
-        <i class="iconify user-data-icon" onclick="_${type}Editar('${data[i].code}')" data-icon="tabler:edit"></i>
+        <i class="iconify user-data-icon" onclick="_${tipo}Editar('${dados[i].code}')" data-icon="tabler:edit"></i>
         ${visualizarDiv}
       </div>
     </div>`
   }
 
-  div.innerHTML = text;
+  div.innerHTML = conteudo;
+
+  function _coletarViagens(dados) {
+    const proximasViagens = [];
+    const viagensAnteriores = [];
+    const hoje = new Date();
+
+    for (let i = 0; i < dados.length; i++) {
+      const viagem = dados[i];
+      const fim = _convertFromFirestoreDate(viagem.fim);
+
+      if (hoje > fim) {
+        viagensAnteriores.push(viagem);
+      } else {
+        proximasViagens.push(viagem);
+      }
+    }
+    proximasViagens.sort((a, b) => _sortByToday(a, b));
+    viagensAnteriores.sort((a, b) => _sortByToday(a, b));
+
+    VIAGENS.coletado = true;
+    VIAGENS.proximasViagens = proximasViagens;
+    VIAGENS.viagensAnteriores = viagensAnteriores;
+
+    function _sortByToday(a, b) {
+      const fimA = _convertFromFirestoreDate(a.fim);
+      const fimB = _convertFromFirestoreDate(b.fim);
+      const diferencaA = Math.abs(hoje - fimA);
+      const diferencaB = Math.abs(hoje - fimB);
+      return diferencaA - diferencaB;
+    }
+  }
 }
 
 function _viagensEditar(code) {
