@@ -1793,8 +1793,7 @@ details summary::-webkit-details-marker {
   height: 48px !important;
 }
 
-.input-botao,
-.input-botao-input {
+.input-botao {
   background-color: #F9FAFB;
   color: #1f2937;
   width: 100%;
@@ -1812,14 +1811,8 @@ details summary::-webkit-details-marker {
   margin-top: 4px;
 }
 
-.input-botao-input {
-  margin-top: 0px;
-}
-
 .input-botao:hover,
-.input-botao:focus,
-.input-botao-input:hover,
-.input-botao-input:focus {
+.input-botao:focus {
   background-color: #f1f1f1;
 }
 

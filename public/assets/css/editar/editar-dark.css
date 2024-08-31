@@ -132,6 +132,11 @@ details .toggle-code:hover {
   color: #d1d0d0;
 }
 
+.message-container,
+.input-container {
+  background: #303030;
+}
+
 #footer .social-links a {
   background: #7f75b6;
 }
@@ -230,17 +235,14 @@ details .toggle-code:hover {
   fill: #7f75b6;
 }
 
-.input-botao
-.input-botao-input {
+.input-botao {
   background-color: #404040;
   border: 1px solid #383838;
   color: #E2E2E2;
 }
 
 .input-botao:hover,
-.input-botao:focus,
-.input-botao-input:hover,
-.input-botao-input:focus {
+.input-botao:focus {
   background-color: #444444; 
 }
 

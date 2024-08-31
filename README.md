@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 48    | 40          | 8         |
+| 🐞     | Bug      | B000    | 48    | 41          | 7         |
 | 🏆     | Feature  | F000    | 62    | 50          | 12         |
 | 📈     | Melhoria | M000    | 74    | 53          | 21        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
@@ -18,7 +18,6 @@
 - ❗️: Crítico
 
 ## Doing
-- 🐞 **B048:** Programação não está carregando corretamente no dark mode
 
 ## To-Do
 
@@ -96,6 +95,7 @@
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
 - 🏆 **F058:** Inserir item de viagens anteriores em index.html
+- 🐞 **B048:** Programação não está carregando corretamente no dark mode
 
 ### Julho 2024
 
