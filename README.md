@@ -27,11 +27,11 @@
 - 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
+- 🏆 **F059:** Inserir fake player de vídeo + Modelo instagram reels
+- 🏆 **F060:** Permitir visualizar destinos diretamente (sem listas)
 
 ### Prioridade Média
 - 🏆 **F062:** Renomear todas as páginas html para nomes em inglês
-- 🏆 **F059:** Inserir fake player de vídeo + Modelo instagram reels
-- 🏆 **F060:** Permitir visualizar destinos diretamente (sem listas)
   - *Adicionar imagem e descrição*
 - 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 - 📈 **M020:** Módulo de transporte mais automatizado
