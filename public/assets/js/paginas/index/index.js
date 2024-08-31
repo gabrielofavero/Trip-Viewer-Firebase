@@ -263,10 +263,12 @@ function _loadUserDataHTML(dados, tipo) {
   for (let i = 0; i < dados.length; i++) {
     let secondaryDiv = '';
     let visualizarDiv = '';
+    let innertipo = tipo;
 
     switch (tipo) {
       case 'proximasViagens':
       case 'viagensAnteriores':
+        innertipo = 'viagens';
         const inicioDate = _convertFromFirestoreDate(dados[i].inicio);
         const fimDate = _convertFromFirestoreDate(dados[i].fim);
         const inicio = _jsDateToDate(inicioDate);
@@ -281,8 +283,8 @@ function _loadUserDataHTML(dados, tipo) {
         break;
     }
 
-    if (typeof window[`_${tipo}Visualizar`] === 'function') {
-      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${tipo}Visualizar('${dados[i].code}')" data-icon="fluent:eye-16-regular"></i>`
+    if (typeof window[`_${innertipo}Visualizar`] === 'function') {
+      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${innertipo}Visualizar('${dados[i].code}')" data-icon="fluent:eye-16-regular"></i>`
     }
 
     conteudo += `
@@ -292,7 +294,7 @@ function _loadUserDataHTML(dados, tipo) {
         ${secondaryDiv}
       </div>
       <div class="trip-data-icons">
-        <i class="iconify user-data-icon" onclick="_${tipo}Editar('${dados[i].code}')" data-icon="tabler:edit"></i>
+        <i class="iconify user-data-icon" onclick="_${innertipo}Editar('${dados[i].code}')" data-icon="tabler:edit"></i>
         ${visualizarDiv}
       </div>
     </div>`
