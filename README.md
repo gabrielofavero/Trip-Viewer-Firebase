@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 46    | 40          | 5         |
+| 🐞     | Bug      | B000    | 47    | 40          | 7         |
 | 🏆     | Feature  | F000    | 62    | 49          | 12         |
-| 📈     | Melhoria | M000    | 73    | 52          | 21        |
+| 📈     | Melhoria | M000    | 74    | 52          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -27,6 +27,8 @@
 - 📈 **M071:** Incluir código de reserva em Hospedagens
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
+- 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
+- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 
 ### Prioridade Média
 - 🏆 **F062:** Renomear todas as páginas html para nomes em inglês
@@ -72,7 +74,6 @@
 - 🏆 **F044:** Criação de animações em todo o site
 - 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela em index.html
-- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
