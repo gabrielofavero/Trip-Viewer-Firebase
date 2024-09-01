@@ -7,7 +7,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 49    | 42          | 7         |
-| 🏆     | Feature  | F000    | 62    | 50          | 12         |
+| 🏆     | Feature  | F000    | 61    | 50          | 11         |
 | 📈     | Melhoria | M000    | 75    | 55          | 20        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
@@ -25,12 +25,11 @@
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
-- 🏆 **F059:** Inserir fake player de vídeo + Modelo instagram reels
-- 🏆 **F060:** Permitir visualizar destinos diretamente (sem listas)
+- 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
 - 📈 **M075:** Tamanho de logotipo automático em viagens.html
 
 ### Prioridade Média
-- 🏆 **F062:** Renomear todas as páginas html para nomes em inglês
+- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
   - *Adicionar imagem e descrição*
 - 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 - 📈 **M020:** Módulo de transporte mais automatizado
@@ -87,7 +86,7 @@
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
-- 🏆 **F061:** Permitir alternar entre categorias de destinos dentro de uma das páginas
+- 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 
 ## Done
 
