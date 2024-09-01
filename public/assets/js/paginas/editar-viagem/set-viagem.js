@@ -188,6 +188,7 @@ function _buildHospedagemObject() {
             endereco: getID(`hospedagens-endereco-${j}`).value,
             id: _getIfDoesNotExistCategoriaID('hospedagens', j),
             imagem: _getHospedagemImage('hospedagens', j),
+            reserva: getID(`reserva-hospedagens-${j}`).value,
             link: getID(`reserva-hospedagens-link-${j}`).value,
             nome: getID(`hospedagens-nome-${j}`).value,
         });

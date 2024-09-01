@@ -2393,7 +2393,7 @@ iframe {
   align-items: center;
 }
 
-.hotel-address {
+.hotel-address{
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 16px;
@@ -2407,11 +2407,13 @@ iframe {
   color: var(--theme-color)
 }
 
-
-
-.hotel-description,
+.hotel-reservation,
 .programacao-data-box {
   margin-top: 10px;
+}
+
+.hotel-description {
+  margin-bottom: 10px;
 }
 
 .external-link {

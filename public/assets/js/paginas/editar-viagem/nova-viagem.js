@@ -222,6 +222,11 @@ function _addHospedagens() {
             <label>Descrição <span class="opcional"> (Opcional)</span></label>
             <input id="hospedagens-descricao-${j}" type="text" placeholder="Quarto Duplo, camas King" />
           </div>
+
+          <div class="nice-form-group">
+            <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
+            <input id="reserva-hospedagens-${j}" type="text" placeholder="ABC123" />
+          </div>
     
           <div class="nice-form-group">
             <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>

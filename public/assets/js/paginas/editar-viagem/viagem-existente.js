@@ -251,6 +251,7 @@ function _loadHospedagemData() {
         getID(`hospedagens-title-${j}`).innerText = hospedagem.nome || getID(`hospedagens-title-${j}`).innerText;
         getID(`hospedagens-endereco-${j}`).value = hospedagem.endereco;
         getID(`hospedagens-descricao-${j}`).value = hospedagem.descricao;
+        getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
         getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
         getID(`link-hospedagens-${j}`).value = hospedagem.imagem instanceof Object ? hospedagem.imagem.link : hospedagem.imagem
 
