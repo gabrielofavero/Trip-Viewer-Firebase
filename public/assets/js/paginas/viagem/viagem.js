@@ -289,6 +289,10 @@ function _loadModules() {
     _loadDestinationsSelect();
     _loadDestinationsHTML(DESTINOS[0]);
 
+    if (DESTINOS.length === 1) {
+      getID('dTitle').innerHTML = DESTINOS[0].destinos.titulo;
+    };
+
     CALL_SYNC.push(_loadDestinos);
 
   } else if (FIRESTORE_DATA.modulos?.lineup === true) {

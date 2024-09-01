@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 48    | 41          | 7         |
 | 🏆     | Feature  | F000    | 62    | 50          | 12         |
-| 📈     | Melhoria | M000    | 75    | 54          | 21        |
+| 📈     | Melhoria | M000    | 75    | 55          | 20        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -23,7 +23,6 @@
 
 ### Prioridade Alta
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
-- 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 🏆 **F059:** Inserir fake player de vídeo + Modelo instagram reels
@@ -94,6 +93,7 @@
 
 ### Setembro 2024
 - 📈 **M071:** Incluir código de reserva em Hospedagens
+- 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
