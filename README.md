@@ -7,7 +7,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 49    | 42          | 7         |
-| 🏆     | Feature  | F000    | 61    | 50          | 11         |
+| 🏆     | Feature  | F000    | 61    | 51          | 10         |
 | 📈     | Melhoria | M000    | 75    | 55          | 20        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
@@ -25,13 +25,12 @@
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
-- 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
 - 📈 **M075:** Tamanho de logotipo automático em viagens.html
+- 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 
 ### Prioridade Média
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
   - *Adicionar imagem e descrição*
-- 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 - 📈 **M020:** Módulo de transporte mais automatizado
   - *Se user clicou em volta e não há dados, reverte tudo da ida*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
@@ -93,7 +92,8 @@
 ### Setembro 2024
 - 📈 **M071:** Incluir código de reserva em Hospedagens
 - 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
-- 🐞 **B047:** Programação em viagens.html não mostra horário inicial se o final está ausente
+- 🐞 **B047:** Programação em viagem.html não mostra horário inicial se o final está ausente
+- 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro

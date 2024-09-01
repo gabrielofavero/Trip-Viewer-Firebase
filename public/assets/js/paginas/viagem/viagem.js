@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _startLoadingTimer();
     await _main();
     const urlParams = _getURLParams();
-    TYPE = urlParams['l'] ? 'listagens' : 'viagens';
+    TYPE = urlParams['l'] ? 'listagens' : urlParams['d'] ? "destinos" : 'viagens';
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 0) {
@@ -116,6 +116,11 @@ function _loadHeader() {
     getID("subtitulo").innerHTML = FIRESTORE_DATA.subtitulo;
   }
 
+  if (TYPE == 'destinos' && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
+    const ultimaAtualizacao = new Date(FIRESTORE_DATA.versao.ultimaAtualizacao);
+    getID("subtitulo").innerHTML = `Atualizado em ${_jsDateToDate(ultimaAtualizacao, "dd/mm/yyyy")}`;
+  }
+
   if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
     let datas = [new Date(FIRESTORE_DATA.versao.ultimaAtualizacao)];
 
@@ -137,7 +142,7 @@ function _loadHeader() {
     getID("dDescription").style.display = "block";
   }
 
-  if (FIRESTORE_DATA.links.ativo) {
+  if (FIRESTORE_DATA.links?.ativo) {
 
     if (FIRESTORE_DATA.links.attachments) {
       getID("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
@@ -182,7 +187,7 @@ function _loadHeader() {
     }
   }
 
-  if (FIRESTORE_DATA.imagem.ativo) {
+  if (FIRESTORE_DATA.imagem?.ativo) {
 
     const background = FIRESTORE_DATA.imagem.background;
     const claro = FIRESTORE_DATA.imagem.claro;
@@ -214,106 +219,174 @@ function _loadHeader() {
 }
 
 function _loadModules() {
-  const share = getID('share');
-  if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share) {
-    share.addEventListener('click', () => {
-      const titulo = FIRESTORE_DATA.titulo || document.title;
-      const tipo = TYPE == 'listagens' ? 'listagem' : 'viagem';
-      const complemento = TYPE == 'listagens' ? '' : `, com início em ${INICIO.text} e fim em ${FIM.text}`;
-      const link = window.location.href.includes('trip-viewer-prd.firebaseapp.com') ? 
-        'https://trip-viewer.com' + window.location.pathname + window.location.search: window.location.href;
+  _loadCompartilhamentoModule();
+  _loadResumoModule();
+  _loadGastosModule();
+  _loadTransportesModule();
+  _loadHospedagensModule();
+  _loadProgramacaoModule();
+  _loadDestinosModule();
+  _loadGaleriaModule();
 
-      navigator.share({
-        title: FIRESTORE_DATA.titulo || document.title,
-        text: `Venha visualizar minha ${tipo} "${titulo}" criada no TripViewer${complemento}`,
-        url: link,
-      })
+  function _loadCompartilhamentoModule() {
+    const share = getID('share');
+    if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share) {
+      share.addEventListener('click', () => {
+        const link = window.location.href.includes('trip-viewer-prd.firebaseapp.com') ?
+          'https://trip-viewer.com' + window.location.pathname + window.location.search : window.location.href;
 
-        .then(() => console.log('Link compartilhado com sucesso!'))
-        .catch((error) => console.error('Erro ao compartilhar link:', error));
-    });
-  } else {
-    share.style.display = 'none';
+        navigator.share({
+          title: FIRESTORE_DATA.titulo || document.title,
+          text: _getCompartilhamentoText(),
+          url: link,
+        })
+
+          .then(() => console.log('Link compartilhado com sucesso!'))
+          .catch((error) => console.error('Erro ao compartilhar link:', error));
+      });
+    } else {
+      share.style.display = 'none';
+    }
+
+    function _getCompartilhamentoText() {
+      switch (TYPE) {
+        case 'listagens':
+          return `Venha visualizar minha lista "${FIRESTORE_DATA.titulo}" criada no TripViewer`
+        case 'destinos':
+          return `Venha visualizar o destino "${FIRESTORE_DATA.titulo}" criado no TripViewer`
+        case 'viagem':
+          return `Venha visualizar minha viagem "${FIRESTORE_DATA.titulo}" criada no TripViewer, com início em ${INICIO.text} e fim em ${FIM.text}`
+        default:
+          return `Venha visualizar minhas informações de viagem criadas no TripViewer`
+      }
+    }
   }
 
-  // Resumo
-  if (FIRESTORE_DATA.modulos?.resumo === true) {
-    CALL_SYNC.push(_loadResumo);
-  } else {
-    getID("keypointsNav").innerHTML = "";
-    getID("keypoints").innerHTML = "";
-    getID("keypoints").style.display = "none";
+  function _loadResumoModule() {
+    if (FIRESTORE_DATA.modulos?.resumo === true) {
+      CALL_SYNC.push(_loadResumo);
+    } else {
+      getID("keypointsNav").innerHTML = "";
+      getID("keypoints").innerHTML = "";
+      getID("keypoints").style.display = "none";
+    }
   }
 
-  // Gastos
-  if (FIRESTORE_DATA.modulos?.gastos === true) {
-    getID('gastos-container').style.display = '';
-    let ativo = true;
-    let pin = FIRESTORE_DATA.gastosPin || false
-    localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
-    getID('gastos').addEventListener('click', () => {
-      _openLightbox(`gastos.html?g=${_getURLParam('v')}`);
-    });
+  function _loadGastosModule() {
+    if (FIRESTORE_DATA.modulos?.gastos === true) {
+      getID('gastos-container').style.display = '';
+      let ativo = true;
+      let pin = FIRESTORE_DATA.gastosPin || false
+      localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
+      getID('gastos').addEventListener('click', () => {
+        _openLightbox(`gastos.html?g=${_getURLParam('v')}`);
+      });
+    }
   }
 
-
-  // Transporte
-  if (FIRESTORE_DATA.modulos?.transportes === true) {
-    CALL_SYNC.push(_loadTransporte);
-  } else {
-    getID("transportationNav").innerHTML = "";
-    getID("transportation").innerHTML = "";
-    getID("transportation").style.display = "none";
+  function _loadTransportesModule() {
+    if (FIRESTORE_DATA.modulos?.transportes === true) {
+      CALL_SYNC.push(_loadTransporte);
+    } else {
+      getID("transportationNav").innerHTML = "";
+      getID("transportation").innerHTML = "";
+      getID("transportation").style.display = "none";
+    }
   }
 
-  // Hospedagem
-  if (FIRESTORE_DATA.modulos?.hospedagens === true) {
-    CALL_SYNC.push(_loadHospedagens);
-  } else {
-    getID("stayNav").innerHTML = "";
-    getID("stay").innerHTML = "";
-    getID("stay").style.display = "none";
+  function _loadHospedagensModule() {
+    if (FIRESTORE_DATA.modulos?.hospedagens === true) {
+      CALL_SYNC.push(_loadHospedagens);
+    } else {
+      getID("stayNav").innerHTML = "";
+      getID("stay").innerHTML = "";
+      getID("stay").style.display = "none";
+    }
   }
 
-  // Programação
-  if (FIRESTORE_DATA.modulos?.programacao === true) {
-    CALL_SYNC.push(_loadProgramacao);
-  } else {
-    getID("scheduleCalendarNav").innerHTML = "";
-    getID("scheduleCalendar").innerHTML = "";
-    getID("scheduleCalendar").style.display = "none";
+  function _loadProgramacaoModule() {
+    if (FIRESTORE_DATA.modulos?.programacao === true) {
+      CALL_SYNC.push(_loadProgramacao);
+    } else {
+      getID("scheduleCalendarNav").innerHTML = "";
+      getID("scheduleCalendar").innerHTML = "";
+      getID("scheduleCalendar").style.display = "none";
+    }
   }
 
-  // Destinos
-  if (FIRESTORE_DATA.modulos?.destinos === true || TYPE == 'listagens') {
-    _loadDestinationsSelect();
-    _loadDestinationsHTML(DESTINOS[0]);
+  function _loadDestinosModule() {
+    switch (TYPE) {
+      case 'viagens':
+        if (FIRESTORE_DATA.modulos?.destinos === true) {
+          _loadDestinosDefault();
+        } else if (FIRESTORE_DATA.modulos?.lineup === true) {
+          _loadDestinosLineup();
+        } else {
+          _disableDestinos();
+        }
+        break;
+      case 'listagens':
+        _loadDestinosDefault();
+        break;
+      case 'destinos':
+        _loadDestinosExclusive()
+        break;
+    }
 
-    if (DESTINOS.length === 1) {
-      getID('dTitle').innerHTML = DESTINOS[0].destinos.titulo;
+    function _loadDestinosDefault() {
+      _loadDestinationsSelect();
+      _loadDestinationsHTML(DESTINOS[0]);
+
+      if (DESTINOS.length === 1) {
+        _setUniqueDestinoText();
+      };
+
+      CALL_SYNC.push(_loadDestinos);
     };
 
-    CALL_SYNC.push(_loadDestinos);
+    function _loadDestinosLineup() {
+      _loadDestinationsSelect(true);
+      _loadDestinationsHTML(DESTINOS[0]);
 
-  } else if (FIRESTORE_DATA.modulos?.lineup === true) {
-    _loadDestinationsSelect(true);
-    _loadDestinationsHTML(DESTINOS[0]);
+      CALL_SYNC.push(_loadDestinos);
 
-    CALL_SYNC.push(_loadDestinos);
+      getID('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
+      getID('dTitle').innerHTML = "Lineup";
+    };
 
-    getID('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
-    getID('dTitle').innerHTML = "Lineup";
+    function _loadDestinosExclusive() {
+      DESTINOS = [{
+        destinosID: _getURLParam('d'),
+        destinos: FIRESTORE_DATA
+      }];
 
-  } else {
-    getID('destinos').style.display = "none";
-    getID("destinosNav").innerHTML = "";
+      getID("destinos-select").style.display = "none";
+
+      _setUniqueDestinoText();
+      _loadDestinationsHTML(DESTINOS[0]);
+
+      CALL_SYNC.push(_loadDestinos);
+    };
+
+    function _disableDestinos() {
+      getID('destinos').style.display = "none";
+      getID("destinosNav").innerHTML = "";
+    }
+
+    function _setUniqueDestinoText() {
+      const titulo = DESTINOS[0].destinos.titulo;
+      getID('dTitle').innerHTML = titulo;
+      getID('destinosNavText').innerHTML = titulo;
+    }
   }
 
-  // Gallery
-  if (FIRESTORE_DATA.modulos?.galeria === true) {
-    CALL_SYNC.push(_loadGaleria);
-  } else {
-    getID("portfolioM").innerHTML = "";
-    getID("portfolio").style.display = "none";
+  function _loadGaleriaModule() {
+    if (FIRESTORE_DATA.modulos?.galeria === true) {
+      CALL_SYNC.push(_loadGaleria);
+    } else {
+      getID("portfolioM").innerHTML = "";
+      getID("portfolio").style.display = "none";
+    }
   }
+
 }

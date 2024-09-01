@@ -354,6 +354,10 @@ function _destinosEditar(code) {
   window.location.href = `editar-destino.html?d=${code}`;
 }
 
+function _destinosVisualizar(code) {
+  window.location.href = `viagem.html?d=${code}`;
+}
+
 function _listagensEditar(code) {
   window.location.href = `editar-listagem.html?l=${code}`;
 }
