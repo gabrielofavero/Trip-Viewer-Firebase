@@ -138,7 +138,7 @@ function _getHorarioHTML(inicio, fim) {
     if (inicio && fim) {
         return `<span class='programacao-item'>${inicio} - ${fim}: </span>`;
     } else if (inicio) {
-        horario = `<span class='programacao-item'>${inicio}: </span>`;
+        return `<span class='programacao-item'>${inicio}: </span>`;
     }
     return '';
 }

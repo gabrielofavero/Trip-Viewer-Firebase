@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 48    | 41          | 7         |
+| 🐞     | Bug      | B000    | 49    | 42          | 7         |
 | 🏆     | Feature  | F000    | 62    | 50          | 12         |
 | 📈     | Melhoria | M000    | 75    | 55          | 20        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
@@ -94,6 +94,7 @@
 ### Setembro 2024
 - 📈 **M071:** Incluir código de reserva em Hospedagens
 - 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
+- 🐞 **B047:** Programação em viagens.html não mostra horário inicial se o final está ausente
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
