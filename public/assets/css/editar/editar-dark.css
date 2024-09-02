@@ -162,13 +162,29 @@ details .toggle-code:hover {
 }
 
 .btn-basic {
-  border-color: #E2E2E2;
-  color: #E2E2E2;
+  border-color: #d4d1e7;
+  color: #d4d1e7;
 }
 
-.btn-theme,
+.btn-basic-secondary {
+  border-color: #ced1d4;
+  color: #ced1d4;
+}
+
 .btn-basic:hover, 
 .btn-basic:focus {
+  background: #ced1d4;
+  color: #404040;
+}
+
+.btn-theme {
+  background: #7f75b6;
+  color: #fff;
+}
+
+.btn-basic:hover, 
+.btn-basic:focus {
+  border-color: #7f75b6;
   background: #7f75b6;
   color: #fff;
 }

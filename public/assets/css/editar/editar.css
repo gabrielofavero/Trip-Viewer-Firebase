@@ -1469,6 +1469,21 @@ details summary::-webkit-details-marker {
   background: none;
 }
 
+.btn-basic-secondary {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #6C757D;
+  color: #6C757D;
+  background: none;
+}
+
+.btn-basic-secondary:hover,
+.btn-basic-secondary:focus {
+  border-color: #6C757D;
+  color: #fff;
+  background: #6C757D;
+}
+
 .btn-theme,
 .btn-basic:hover,
 .btn-basic:focus {
