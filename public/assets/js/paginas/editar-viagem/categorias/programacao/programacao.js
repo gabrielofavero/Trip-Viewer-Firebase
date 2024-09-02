@@ -34,6 +34,7 @@ function _applyLoadedProgramacaoData(j, dados) {
 
     _updateProgramacaoTitle(j);
     _loadInnerProgramacaoHTML(j);
+    _initializeSortableForGroup('programacao')
 }
 
 function _updateProgramacaoTitle(j) {

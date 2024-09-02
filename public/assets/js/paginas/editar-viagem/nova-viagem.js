@@ -341,24 +341,24 @@ function _loadProgramacao() {
             <input class="nice-form-group" id="programacao-inner-title-${j}" maxlength="25" type="text" placeholder="São Paulo" style="display: none;">
           </div>
 
-          <div class='turno-box' id='programacao-madrugada-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-madrugada-${j}'>
             <label>Madrugada</label>
-            <div class="inner-programacao" id="inner-programacao-madrugada-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-madrugada-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-manha-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-manha-${j}'>
             <label>Manhã</label>
-            <div class="inner-programacao" id="inner-programacao-manha-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-manha-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-tarde-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-tarde-${j}'>
             <label>Tarde</label>
-            <div class="inner-programacao" id="inner-programacao-tarde-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-tarde-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-noite-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-noite-${j}'>
             <label>Noite</label>
-            <div class="inner-programacao" id="inner-programacao-noite-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-noite-${j}"></div>
           </div>
 
           <div class="button-box-right" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">

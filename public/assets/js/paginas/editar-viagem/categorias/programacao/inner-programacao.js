@@ -30,9 +30,12 @@ function _loadInnerProgramacaoHTML(j) {
                 } else if (dado.inicio) {
                     texto = `<span class="time">${dado.inicio}:</span> ${texto}`;
                 }
-                div.innerHTML += `<button id="input-botao-${turno}-${j}-${k}" class="btn input-botao" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
-                                    ${texto}
-                                  </button>`;
+                div.innerHTML += `<div class="input-botao-container">
+                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
+                                        ${texto}
+                                    </button>
+                                    <i class="iconify drag-icon" data-icon="mdi:drag"></i>
+                                </div>`;
             }
 
             getID(`programacao-${turno}-${j}`).style.display = div.innerHTML ? 'block' : 'none';
