@@ -323,7 +323,7 @@ function _loadProgramacao() {
         </button>
       </h2>
       <div id="collapse-programacao-${j}" class="accordion-collapse collapse"
-        aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
+        aria-labelledby="heading-programacao-${j}">
         <div class="accordion-body">
 
           <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
