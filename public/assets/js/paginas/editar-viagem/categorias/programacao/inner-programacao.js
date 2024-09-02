@@ -46,13 +46,13 @@ function _openInnerProgramacao(j, k, turno) {
     propriedades.titulo = getID(`programacao-title-${j}`).innerText;
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
-    propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacaoItem(${j})` }];
+    propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacao(${j})` }];
     propriedades.botoes = [{
         tipo: 'cancelar',
-      }, {
+    }, {
         tipo: 'confirmar',
         acao: turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`
-      }];
+    }];
 
     _displayFullMessage(propriedades);
 
@@ -192,6 +192,13 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     </div>  
                     
                     <div class="button-box-right" style="margin-top: 8px; margin-bottom: 8px; display: ${isNew ? 'none' : 'block'}">
+                        <button onclick="_openInnerProgramacaoTroca()" class="btn btn-basic-secondary btn-format">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
+                                    <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
+                                </g>
+                            </svg>
+                        </button>
                         <button onclick="_deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
@@ -266,6 +273,24 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     </div>
 
                 </div>
+                <div id="inner-programacao-item-trocar" class="inner-programacao" style="display: none;">
+                    <div class="nice-form-group" id="inner-programacao-item-trocar-data"">
+                        <label>Data</label>
+                        <select class="editar-select" id="inner-programacao-select-troca-data">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    <div class="nice-form-group" id="inner-programacao-item-trocar-data"">
+                        <label>Turno</label>
+                        <select class="editar-select" id="inner-programacao-select-troca-turno">
+                            <option value="madrugada">Madrugada</option>
+                            <option value="manha">Manhã</option>
+                            <option value="tarde">Tarde</option>
+                            <option value="noite">Noite</option>
+                        </select>
+                    </div>
+                
+                </div>
             </div>`;
 }
 
@@ -326,27 +351,44 @@ function _openInnerProgramacaoItem() {
     if (getID('inner-programacao').value) {
         getID('message-title').innerText = getID('inner-programacao').value;
     }
-    
+
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
 }
 
-function _closeInnerProgramacaoItem(j) {
-    const itemAssociado = getID('inner-programacao-item-associado');
-    if (getID('inner-programacao-item-transporte-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
-    } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
-    } else if (getID('inner-programacao-item-destinos-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
-    } else {
-        itemAssociado.innerText = 'Associar Item';
+function _openInnerProgramacaoTroca(j) {
+    const height = getID('inner-programacao-tela-principal').offsetHeight;
+    const itemTrocar = getID('inner-programacao-item-trocar');
+    itemTrocar.style.minHeight = `${height}px`;
+
+    getID('message-title').innerText = "Trocar Programação";
+    _animate(['inner-programacao-item-trocar'], ['inner-programacao-tela-principal'])
+    getID('back-icon').style.visibility = 'visible';
+}
+
+function _closeInnerProgramacao(j) {
+    if (getID('inner-programacao-item-selecionar').style.display === 'block') {
+        const itemAssociado = getID('inner-programacao-item-associado');
+        if (getID('inner-programacao-item-transporte-radio').checked) {
+            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+        } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
+            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+        } else if (getID('inner-programacao-item-destinos-radio').checked) {
+            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+        } else {
+            itemAssociado.innerText = 'Associar Item';
+        }
+
+        getID('message-title').innerText = getID(`programacao-title-${j}`).innerText;
+
+        getID('back-icon').style.visibility = 'hidden';
+        _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
+
+    } else if (getID('inner-programacao-item-trocar').style.display === 'block') {
+        getID('message-title').innerText = getID(`programacao-title-${j}`).innerText;
+        getID('back-icon').style.visibility = 'hidden';
+        _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
     }
-
-    getID('message-title').innerText = getID(`programacao-title-${j}`).innerText;
-
-    getID('back-icon').style.visibility = 'hidden';
-    _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 }
 
 // Salvar / Deletar dados do Modal
