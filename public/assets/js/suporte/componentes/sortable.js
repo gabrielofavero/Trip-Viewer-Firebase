@@ -1,6 +1,9 @@
-function _initializeSortableForGroup(groupName, handleSelector = '.drag-icon') {
+function _initializeSortableForGroup(groupName, properties) {
     function _initializeSortable(groupName) {
         const containers = document.querySelectorAll(`.draggable-area[data-group="${groupName}"]`);
+        const handleSelector = properties?.handleSelector || '.drag-icon';
+        const onStartFunc = properties?.onStart;
+        const onEndFunc = properties?.onEnd;
 
         containers.forEach(container => {
             if (!container.sortableInstance) {
@@ -8,8 +11,15 @@ function _initializeSortableForGroup(groupName, handleSelector = '.drag-icon') {
                     handle: handleSelector,
                     group: groupName,
                     animation: 150,
+                    onStart: function(evt) {
+                        if (onStartFunc) {
+                            onStartFunc(evt);
+                        }
+                    },
                     onEnd: function(evt) {
-                        console.log(`Moved item from index ${evt.oldIndex} to ${evt.newIndex} in group ${groupName}`);
+                        if (onEndFunc) {
+                            onEndFunc(evt);
+                        }
                     }
                 });
             }
