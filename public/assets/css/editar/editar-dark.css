@@ -235,14 +235,17 @@ details .toggle-code:hover {
   fill: #7f75b6;
 }
 
-.input-botao {
+.input-botao,
+.input-botao-draggable {
   background-color: #404040;
   border: 1px solid #383838;
   color: #E2E2E2;
 }
 
 .input-botao:hover,
-.input-botao:focus {
+.input-botao:focus,
+.input-botao-draggable:hover,
+.input-botao-draggable:focus {
   background-color: #444444; 
 }
 
