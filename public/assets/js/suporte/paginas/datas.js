@@ -18,6 +18,10 @@ function _dayToDayOfWeekText(day) {
     return ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][day];
 }
 
+function _dateToDayOfTheWeek(date) {
+    return _dayToDayOfWeekText(date.getDay());
+}
+
 function _getDateNoTime(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }

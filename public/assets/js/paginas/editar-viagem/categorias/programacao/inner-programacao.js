@@ -43,7 +43,7 @@ function _openInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
 
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-    propriedades.titulo = getID(`programacao-title-${j}`).innerText;
+    propriedades.titulo = _getInnerProgramacaoTitle(j);
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
     propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacao(${j})` }];
@@ -349,7 +349,7 @@ function _openInnerProgramacaoItem() {
     itemSelecionar.style.minHeight = `${height}px`;
 
     if (getID('inner-programacao').value) {
-        getID('message-title').innerText = getID('inner-programacao').value;
+        getID('message-title').innerText = 'Associar Item';
     }
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
@@ -379,16 +379,21 @@ function _closeInnerProgramacao(j) {
             itemAssociado.innerText = 'Associar Item';
         }
 
-        getID('message-title').innerText = getID(`programacao-title-${j}`).innerText;
+        getID('message-title').innerText = _getInnerProgramacaoTitle(j);
 
         getID('back-icon').style.visibility = 'hidden';
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 
     } else if (getID('inner-programacao-item-trocar').style.display === 'block') {
-        getID('message-title').innerText = getID(`programacao-title-${j}`).innerText;
+        getID('message-title').innerText = _getInnerProgramacaoTitle(j);
         getID('back-icon').style.visibility = 'hidden';
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
     }
+}
+
+function _getInnerProgramacaoTitle(j) {
+    const data = DATAS[j - 1];
+    return `${_dateToDayOfTheWeek(data)}, ${_jsDateToDate(data)}`;
 }
 
 // Salvar / Deletar dados do Modal
