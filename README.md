@@ -18,6 +18,7 @@
 - ❗️: Crítico
 
 ## Doing
+- 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 
 ## To-Do
 
@@ -26,7 +27,6 @@
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M075:** Tamanho de logotipo automático em viagens.html
-- 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
 
 ### Prioridade Média
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
