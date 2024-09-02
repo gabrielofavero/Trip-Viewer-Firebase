@@ -48,8 +48,14 @@ function _loadListenersIndex() {
   });
 
   getID('profile-icon').addEventListener('click', function () {
-    back.classList.remove('bx-arrow-back');
-    back.classList.add('bx-up-arrow-alt');
+    if (getID('settings-account-container').style.display === 'none') {
+      back.classList.remove('bx-arrow-back');
+      back.classList.add('bx-up-arrow-alt');
+      _openIndexPage('settings', 0, 1, false);
+    }
+  });
+
+  getID('ajustesDaConta').addEventListener('click', function () {
     _openIndexPage('settings', 0, 1);
   });
 
@@ -71,8 +77,7 @@ function _loadListenersIndex() {
 
   getID('back').addEventListener('click', function () {
     const back = select('#back');
-    const settings = select('#settings-box');
-    if (settings.style.display !== 'none') {
+    if (back.classList.contains('bx-up-arrow-alt')) {
       _openIndexPage('logged', 1, 0, false);
       setTimeout(() => {
         back.classList.remove('bx-up-arrow-alt');
@@ -93,36 +98,6 @@ function _loadListenersIndex() {
     _closeModal();
     _signOut();
     _stopLoadingScreen();
-  });
-
-  getID('trip-view-continue').addEventListener('click', async function () {
-    getID('trip-view-invalid').style.display = 'none';
-    getID('trip-view-private').style.display = 'none';
-    getID('trip-view-reminder').style.display = 'none';
-    getID('trip-view-error').style.display = 'none';
-
-    let viagem = getID('trip-view-input').value;
-    if (viagem) {
-      const viagemValue = viagem.trim();
-      const status = await _getStatus(`viagens/${viagemValue}`);
-
-      switch (status) {
-        case 'Found':
-          window.location.href = `viagem.html?v=${viagemValue}`;
-          break;
-        case 'Forbidden':
-          getID('trip-view-private').style.display = 'block';
-          break;
-        case 'Not Found':
-          getID('trip-view-invalid').style.display = 'block';
-          break;
-        default:
-          getID('trip-view-error').style.display = 'block';
-          break;
-      }
-    } else {
-      getID('trip-view-reminder').style.display = 'block';
-    }
   });
 }
 
@@ -183,52 +158,52 @@ async function _loadUserDataList(tipo) {
     const tipos = tipo == 'viagens' ? ['proximasViagens', 'viagensAnteriores'] : [tipo];
     for (const innerTipo of tipos) {
       result.push({
-          titulo: innerTipo,
-          preloader: getID(`preloader-${innerTipo}`),
-          demoraCarregamento: getID(`demora-carregamento-${innerTipo}`),
-          semDados: getID(`sem-${innerTipo}`)
+        titulo: innerTipo,
+        preloader: getID(`preloader-${innerTipo}`),
+        demoraCarregamento: getID(`demora-carregamento-${innerTipo}`),
+        semDados: getID(`sem-${innerTipo}`)
       });
     }
     return result;
   }
 
   function onTimeout() {
-      preloader.style.display = 'none';
-      demoraCarregamento.style.display = 'block';
+    preloader.style.display = 'none';
+    demoraCarregamento.style.display = 'block';
   }
 
   async function checkResponse() {
-      try {
-          const response = await Promise.race([promise, new Promise((_, reject) => setTimeout(reject, 0))]);
-          if (response !== undefined) {
-              responseReceived = true;
-              clearInterval(intervalId);
-              onResponseReceived(response);
-          }
-      } catch (e) { }
+    try {
+      const response = await Promise.race([promise, new Promise((_, reject) => setTimeout(reject, 0))]);
+      if (response !== undefined) {
+        responseReceived = true;
+        clearInterval(intervalId);
+        onResponseReceived(response);
+      }
+    } catch (e) { }
   }
 
   const intervalId = setInterval(checkResponse, 1000);
 
   setTimeout(() => {
-      if (!responseReceived) {
-          onTimeout();
-      }
+    if (!responseReceived) {
+      onTimeout();
+    }
   }, 8000); // 8 segundos
 
   while (!responseReceived) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
   while (true) {
-      try {
-          const response = await promise;
-          if (response !== undefined) {
-              onResponseReceived(response);
-              break;
-          }
-      } catch (e) { }
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const response = await promise;
+      if (response !== undefined) {
+        onResponseReceived(response);
+        break;
+      }
+    } catch (e) { }
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
 }
 
@@ -252,7 +227,7 @@ function _loadUserDataHTML(dados, tipo) {
   if ((tipo == 'proximasViagens' || tipo == 'viagensAnteriores')) {
     if (!VIAGENS.coletado) {
       _coletarViagens(dados);
-    } 
+    }
     dados = VIAGENS[tipo];
   } else if (dados[0].ultimaAtualizacao) {
     dados.sort((a, b) => {

@@ -104,7 +104,6 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
       fadeIn = ['settings-box'];
       fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'tripViewer', 'proximasViagens-box', 'viagensAnteriores-box', 'destinos-box', 'listagens-box', 'logged-menu'];
       fadeInNoDirection = ['back'];
-      horizontal = false;
       break;
     case 'proximasViagens':
       fadeIn = ['proximasViagens-box'];

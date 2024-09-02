@@ -32,28 +32,6 @@ async function _get(path) {
   }
 }
 
-async function _getStatus(path) {
-  try {
-    const docRef = firebase.firestore().doc(path);
-    const snapshot = await docRef.get();
-
-    if (snapshot.exists) {
-      return 'Found';
-    } else {
-      return 'Not Found';
-    }
-
-  } catch (e) {
-    const message = e.message;
-    if (message.includes('Missing or insufficient permissions')) {
-      return 'Forbidden';
-    } else {
-      console.error(message);
-      return 'Unknown';
-    }
-  }
-}
-
 async function _hasReadPermission(path) {
   try {
     const docRef = firebase.firestore().doc(path);

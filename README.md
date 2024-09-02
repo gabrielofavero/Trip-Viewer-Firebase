@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 49    | 45          | 4         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 77    | 55          | 22        |
+| 📈     | Melhoria | M000    | 77    | 56          | 21        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -18,8 +18,7 @@
 - ❗️: Crítico
 
 ## Doing
-- 📈 **M074:** Botão de troca de programação (editar-viagem.html)
-- 📈 **M075:** Botão de troca de destino (editar-destino.html)
+- 📈 **M074:** Botão de troca de programação (editar-viagem.html) e destino (editar-destino.html)
 
 ## To-Do
 
@@ -98,6 +97,10 @@
 - 🐞 **B047:** Programação em viagem.html não mostra horário inicial se o final está ausente
 - 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
 - 📈 **M023:** Arrastamento de Accordions (Programação)
+- 📈 **M075:** Ajustes index.html
+  - *Remover "Visualizar Viagem"*
+  - *Adicionar "Ajustes de Conta" + Diferentes animações para cada rota*
+  - *Ajustar largura dos textos de menu para deixar ícones na mesma posição*
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
