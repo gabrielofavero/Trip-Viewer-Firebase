@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 49    | 42          | 7         |
 | 🏆     | Feature  | F000    | 61    | 51          | 10         |
-| 📈     | Melhoria | M000    | 75    | 55          | 20        |
+| 📈     | Melhoria | M000    | 77    | 55          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -27,6 +27,8 @@
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M075:** Tamanho de logotipo automático em viagens.html
+- 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
+- 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 
 ### Prioridade Média
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
