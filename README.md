@@ -6,8 +6,8 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 49    | 42          | 7         |
-| 🏆     | Feature  | F000    | 61    | 51          | 10         |
+| 🐞     | Bug      | B000    | 49    | 45          | 4         |
+| 🏆     | Feature  | F000    | 61    | 53          | 8         |
 | 📈     | Melhoria | M000    | 77    | 55          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
@@ -18,7 +18,8 @@
 - ❗️: Crítico
 
 ## Doing
-- 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
+- 📈 **M074:** Botão de troca de programação (editar-viagem.html)
+- 📈 **M075:** Botão de troca de destino (editar-destino.html)
 
 ## To-Do
 
@@ -26,7 +27,7 @@
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
-- 📈 **M075:** Tamanho de logotipo automático em viagens.html
+- 📈 **M066:** Tamanho de logotipo automático em viagens.html
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 
@@ -96,6 +97,7 @@
 - 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
 - 🐞 **B047:** Programação em viagem.html não mostra horário inicial se o final está ausente
 - 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
+- 📈 **M023:** Arrastamento de Accordions (Programação)
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
