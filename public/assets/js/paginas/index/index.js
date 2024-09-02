@@ -48,7 +48,7 @@ function _loadListenersIndex() {
   });
 
   getID('profile-icon').addEventListener('click', function () {
-    if (getID('settings-account-container').style.display === 'none') {
+    if (getID('settings-box').style.display === 'none') {
       back.classList.remove('bx-arrow-back');
       back.classList.add('bx-up-arrow-alt');
       _openIndexPage('settings', 0, 1, false);
