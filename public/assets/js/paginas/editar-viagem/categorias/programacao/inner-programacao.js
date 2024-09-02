@@ -6,16 +6,9 @@ function _loadInnerProgramacaoHTML(j) {
     if (Object.keys(INNER_PROGRAMACAO).length == 0 || !INNER_PROGRAMACAO[key]) return;
 
     getID(`inner-programacao-madrugada-${j}`).innerHTML = '';
-    getID(`programacao-madrugada-${j}`).style.display = 'none';
-
     getID(`inner-programacao-manha-${j}`).innerHTML = '';
-    getID(`programacao-manha-${j}`).style.display = 'none';
-
     getID(`inner-programacao-tarde-${j}`).innerHTML = '';
-    getID(`programacao-tarde-${j}`).style.display = 'none';
-
     getID(`inner-programacao-noite-${j}`).innerHTML = '';
-    getID(`programacao-noite-${j}`).style.display = 'none';
 
     for (turno in INNER_PROGRAMACAO[key]) {
         const turnoDados = INNER_PROGRAMACAO[key][turno];
