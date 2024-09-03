@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 49    | 45          | 4         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 78    | 56          | 22        |
+| 📈     | Melhoria | M000    | 79    | 56          | 23        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -30,6 +30,7 @@
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 - 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
+- 📈 **M079:** Login por redirecionamento
 
 ### Prioridade Média
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
