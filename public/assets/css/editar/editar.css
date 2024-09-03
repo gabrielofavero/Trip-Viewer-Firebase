@@ -1838,6 +1838,7 @@ details summary::-webkit-details-marker {
 .input-botao:hover,
 .input-botao:focus {
   background-color: #f1f1f1;
+  color: var(--nf-label-color)
 }
 
 .drag-icon {

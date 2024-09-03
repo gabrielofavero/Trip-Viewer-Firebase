@@ -263,6 +263,7 @@ details .toggle-code:hover {
 .input-botao-draggable:hover,
 .input-botao-draggable:focus {
   background-color: #444444; 
+  color: var(--nf-label-color)
 }
 
 .pin-input {
