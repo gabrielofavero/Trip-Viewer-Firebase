@@ -11,9 +11,9 @@ function _loadTitleReplacementCheckbox() {
     if (TITLE_REPLACEMENT.replacement && TITLE_REPLACEMENT.replacement !== TITLE_REPLACEMENT.current) {
         container.style.display = 'block';
         if (TITLE_REPLACEMENT.current) {
-            getID('title-replacement-current').innerText = `Substituir o título atual "${TITLE_REPLACEMENT.current}" por "${TITLE_REPLACEMENT.replacement}"`;
+            getID('title-replacement-label').innerText = `Substituir o título atual "${TITLE_REPLACEMENT.current}" por "${TITLE_REPLACEMENT.replacement}"`;
         } else {
-            getID('title-replacement-current').innerText = `Substituir o título da programação para "${TITLE_REPLACEMENT.replacement}"`;
+            getID('title-replacement-label').innerText = `Substituir o título da programação para "${TITLE_REPLACEMENT.replacement}"`;
         }
         
     } else {
@@ -24,17 +24,22 @@ function _loadTitleReplacementCheckbox() {
 function _getTitleReplacement() {
     const radio = document.getElementsByName('inner-programacao-item-radio');
     const selected = Array.from(radio).find(r => r.checked);
+    let select;
 
     switch (selected?.id) {
-        case 'inner-programacao-item-nenhum-radio':
-            return '';
         case 'inner-programacao-item-transporte-radio':
-            return getID('inner-programacao-select-transporte').value;
+            select = getID('inner-programacao-select-transporte');
+            break;
         case 'inner-programacao-item-hospedagens-radio':
-            return getID('inner-programacao-select-hospedagens').value;
+            select = getID('inner-programacao-select-hospedagens');
+            break
         case 'inner-programacao-item-destinos-radio':
-            return getID('inner-programacao-select-passeio').value
+            select = getID('inner-programacao-select-passeio');
     }
+
+    if (select && select.value) {
+        return _getSelectCurrentLabel(select);
+    } else return '';
 }
 
 function _replaceTitleIfEnabled() {

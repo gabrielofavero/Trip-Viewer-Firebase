@@ -79,10 +79,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                                 <label id="inner-programacao-item-destinos-radio-label" for="inner-programacao-item-destinos-radio">Destino</label>
                             </div>
                         </fieldset>
-                        <div id="title-replacement-container" style="display: none">
-                            <input type="checkbox" id="title-replacement-checkbox" name="title-replacement" />
-                            <label for="title-replacement" id="title-replacement-label" ></label>
-                        </div>
+
                     </div>
 
                     <div class="nice-form-group" id="inner-programacao-item-transporte" style="display: none;">
@@ -125,7 +122,13 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                         </div>            
                     </div>
 
+                    <div class="nice-form-group" id="title-replacement-container" style="display: none">
+                        <input type="checkbox" id="title-replacement-checkbox">
+                        <label for="title-replacement" id="title-replacement-label"></label>
+                    </div>
+
                 </div>
+
                 <div id="inner-programacao-item-trocar" class="inner-programacao" style="display: none;">
                     <div class="nice-form-group" id="inner-programacao-item-trocar-data"">
                         <label>Data</label>
@@ -142,7 +145,6 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                             <option value="noite">Noite</option>
                         </select>
                     </div>
-                
                 </div>
             </div>`;
 }

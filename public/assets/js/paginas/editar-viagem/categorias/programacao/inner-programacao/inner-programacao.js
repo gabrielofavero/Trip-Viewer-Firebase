@@ -209,6 +209,7 @@ function _openInnerProgramacaoItem() {
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
+    _loadTitleReplacementCheckbox();
 }
 
 function _openInnerProgramacaoTroca(j) {
@@ -329,33 +330,36 @@ function _loadInnerProgramacaoListeners(selects) {
         itemTransporte.style.display = 'block';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
+        _loadTitleReplacementCheckbox();
     });
 
     getID(`inner-programacao-item-hospedagens-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'block';
         itemDestinos.style.display = 'none';
+        _loadTitleReplacementCheckbox();
     });
 
     getID(`inner-programacao-item-destinos-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'block';
+        _loadTitleReplacementCheckbox();
     });
 
     getID(`inner-programacao-item-nenhum-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
+        _loadTitleReplacementCheckbox();
     });
 
-    getID(`inner-programacao-select-local`).addEventListener('change', () => {
-        _innerProgramacaoSelectLocalAction(selects);
-    });
+    getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction(selects));
+    getID(`inner-programacao-select-categoria`).addEventListener('change', () => _innerProgramacaoSelectCategoriaAction(selects));
 
-    getID(`inner-programacao-select-categoria`).addEventListener('change', () => {
-        _innerProgramacaoSelectCategoriaAction(selects);
-    });
+    getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTitleReplacementCheckbox());
+    getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTitleReplacementCheckbox());
+    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTitleReplacementCheckbox());
 
     _innerProgramacaoSelectLocalAction(selects);
 }

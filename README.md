@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 49    | 45          | 4         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 79    | 57          | 22        |
+| 📈     | Melhoria | M000    | 79    | 58          | 21        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -18,7 +18,6 @@
 - ❗️: Crítico
 
 ## Doing
-- 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
 - 📈 **M074:** Botão de troca de programação (editar-viagem.html) e destino (editar-destino.html)
 
 ## To-Do
@@ -103,6 +102,7 @@
   - *Adicionar "Ajustes de Conta" + Diferentes animações para cada rota*
   - *Ajustar largura dos textos de menu para deixar ícones na mesma posição*
 - 📈 **M079:** Login por redirecionamento
+- 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
