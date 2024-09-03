@@ -18,6 +18,8 @@
 - ❗️: Crítico
 
 ## Doing
+- 📈 **M079:** Login por redirecionamento
+- 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
 - 📈 **M074:** Botão de troca de programação (editar-viagem.html) e destino (editar-destino.html)
 
 ## To-Do
@@ -29,8 +31,6 @@
 - 📈 **M066:** Tamanho de logotipo automático em viagens.html
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
-- 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
-- 📈 **M079:** Login por redirecionamento
 
 ### Prioridade Média
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
