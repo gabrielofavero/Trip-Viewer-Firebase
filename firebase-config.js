@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 
 const configPRD = {
   apiKey: "AIzaSyBZJeSANyiJi6ijzDadJOJXSLqzSgf9xfk",
-  authDomain: "trip-viewer.com",
+  authDomain: window?.location?.hostname === 'trip-viewer-prd.firebaseapp.com' ? 'trip-viewer-prd.firebaseapp.com' : "trip-viewer.com",
   projectId: "trip-viewer-prd",
   storageBucket: "trip-viewer-prd.appspot.com",
   messagingSenderId: "1065119817152",
