@@ -4,7 +4,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group">
                         <label>Programação</label>
-                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." maxlength="50" />
+                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." maxlength="50" autocomplete="off" />
                     </div>
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">

@@ -1,6 +1,5 @@
 var INNER_PROGRAMACAO = {};
-var LAST_TURNO = '';
-var NEW_DATA_J = '';
+var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
 function _loadInnerProgramacaoHTML(j) {
@@ -41,7 +40,6 @@ function _loadInnerProgramacaoHTML(j) {
 
 // Carregamento Interno (Modal)
 function _openInnerProgramacao(j, k, turno) {
-    NEW_DATA_J = '';
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
 
@@ -64,7 +62,7 @@ function _openInnerProgramacao(j, k, turno) {
         getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
     }
 
-    _loadInnerProgramacaoListeners(selects);
+    _loadInnerProgramacaoListeners(selects, j);
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
     _loadInnerProgramacaoEventListeners();
 }
@@ -170,7 +168,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
     if (turno) {
         getID('inner-programacao-select-turno').value = turno;
         getID('inner-programacao-select-troca-turno').value = turno;
-        LAST_TURNO = turno;
+        LAST_OPENED_TURNO[j] = turno;
     }
 
     const key = _jsDateToKey(DATAS[j - 1]);
@@ -213,7 +211,9 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
                 getID(`inner-programacao-item-nenhum-radio`).checked = true;
         }
     } else if (isNew) {
-        getID('inner-programacao-select-turno').value = LAST_TURNO;
+        const selectTurno = getID('inner-programacao-select-turno');
+        selectTurno.value = _getNewTurno(j);
+        LAST_OPENED_TURNO[j] = selectTurno.value;
     }
 }
 
@@ -263,8 +263,6 @@ function _closeInnerProgramacao(j) {
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 
     } else if (getID('inner-programacao-item-trocar').style.display === 'block') {
-        _showNewData();
-        
         getID('message-title').innerText = _getInnerProgramacaoTitle(j);
         getID('back-icon').style.visibility = 'hidden';
 
@@ -273,19 +271,26 @@ function _closeInnerProgramacao(j) {
 }
 
 function _getInnerProgramacaoTitle(j) {
-    return _jsDateToMiniTitle(DATAS[j - 1]);
+    const newJ = _getMostRecentJ(j);
+    return _jsDateToMiniTitle(DATAS[newJ - 1]);
 }
 
-// Salvar / Deletar dados do Modal
+// Salvar Inner Programação
 function _addInnerProgramacao(j, k, turno) {
-    const key = _jsDateToKey(DATAS[j - 1]);
     const programacao = getID(`inner-programacao`);
-    const isNew = (!k && !turno);
-
+    
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
         _replaceTitleIfEnabled();
+        
+        const innerProgramacao = _buildInnerProgramacao(programacao);
+        _setInnerProgramacao(innerProgramacao, j, k, turno);
+
+        _closeMessage();
+    }
+
+    function _buildInnerProgramacao(programacao) {
         let item = {
             tipo: '',
             id: '',
@@ -306,29 +311,39 @@ function _addInnerProgramacao(j, k, turno) {
             item.categoria = getID(`inner-programacao-select-categoria`).value;
         }
 
-        const result = {
+        return {
             programacao: programacao.value,
             inicio: getID(`inner-programacao-inicio`).value,
             fim: getID(`inner-programacao-fim`).value,
             item: item
         };
+    }
 
-        const inputTurno = getID(`inner-programacao-select-turno`).value;
+    function _setInnerProgramacao(innerProgramacao, j, k, turno) {
+        const key = _jsDateToKey(DATAS[j - 1]);
+        const isNew = (!k && !turno);
+        const newTurno = getID(`inner-programacao-select-turno`).value;
 
-        if (isNew) {
-            INNER_PROGRAMACAO[key][inputTurno].push(result);
-        } else if (turno == inputTurno) {
-            INNER_PROGRAMACAO[key][turno][k - 1] = result;
-        } else {
-            INNER_PROGRAMACAO[key][inputTurno].push(result);
-            INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
+        if (isNew) { // Nova Inner Programação (Apenas Adição)
+            INNER_PROGRAMACAO[key][newTurno].push(innerProgramacao);
+            LAST_OPENED_TURNO[j] = newTurno;
+        } else { // Inner Programacao Existente (Substituição)
+            const newJ = _getMostRecentJ(j);
+            if (turno == newTurno && newJ == j) { // Substituição Simples
+                INNER_PROGRAMACAO[key][turno][k - 1] = innerProgramacao;
+            } else { // Substituição Composta
+                const newKey = _jsDateToKey(DATAS[newJ - 1]);
+                INNER_PROGRAMACAO[newKey][newTurno].push(innerProgramacao);
+                INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
+                LAST_OPENED_TURNO[newJ] = newTurno;
+                _loadInnerProgramacaoHTML(newJ);
+            }
         }
-
         _loadInnerProgramacaoHTML(j);
-        _closeMessage();
     }
 }
 
+// Deletar Inner Programação
 function _deleteInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
     if (isNew) {
@@ -451,26 +466,39 @@ function _pairTurnos(callerID) {
     if (turno1 !== turno2) {
         if (callerID === id1) {
             getID(id2).value = turno1;
-            LAST_TURNO = turno1;
         } else if (callerID === id2) {
             getID(id1).value = turno2;
-            LAST_TURNO = turno2;
         }
     }
 }
 
-function _showNewData(j) {
-    const keys = DATAS.map(data => _jsDateToKey(data));
-
-    const atual = keys[j-1];
-    const nova = getID('inner-programacao-select-troca-data').value;
-
-    if (atual != nova) {
-        const turno = getID('inner-programacao-select-troca-turno').value;
-        if (keys.includes(nova) && INNER_PROGRAMACAO[nova] && INNER_PROGRAMACAO[nova][turno]) {
-            NEW_DATA_J = keys.indexOf(nova) + 1;
+function _getMostRecentJ(j) {
+    const nova = getID('inner-programacao-select-troca-data')?.value;
+    
+    if (nova) {
+        const keys = DATAS.map(data => _jsDateToKey(data));
+        const atual = keys[j-1];
+        if (atual != nova) {
+            const turno = getID('inner-programacao-select-troca-turno').value;
+            if (keys.includes(nova) && INNER_PROGRAMACAO[nova] && INNER_PROGRAMACAO[nova][turno]) {
+                return keys.indexOf(nova) + 1;
+            }
         }
     }
 
-    NEW_DATA_J = '';
+    return j;
+}
+
+function _getNewTurno(j) {
+    if (LAST_OPENED_TURNO[j]) {
+        return LAST_OPENED_TURNO[j];
+    } else {
+        for (const turno of ['madrugada', 'manha', 'tarde', 'noite']) {
+            const element = getID(`inner-programacao-${turno}-${j}`);
+            if (element && !element.innerText) {
+                return turno;
+            }
+        }
+    }
+    return 'noite';
 }
