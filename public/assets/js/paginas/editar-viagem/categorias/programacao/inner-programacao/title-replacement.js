@@ -47,10 +47,6 @@ function _replaceTitleIfEnabled() {
     if (checkbox.checked && TITLE_REPLACEMENT.replacement) {
         getID('inner-programacao').value = TITLE_REPLACEMENT.replacement;
     }
-    _resetTitleReplacement();
-}
-
-function _resetTitleReplacement() {
     TITLE_REPLACEMENT.current = '';
     TITLE_REPLACEMENT.replacement = '';
     getID('title-replacement-checkbox').checked = false;

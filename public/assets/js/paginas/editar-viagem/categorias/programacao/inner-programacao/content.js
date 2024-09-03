@@ -23,7 +23,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     </div>
                     </div>
 
-                    <div class="nice-form-group" style="display: ${isNew ? 'none' : 'block'}">
+                    <div class="nice-form-group" style="display: ${isNew ? 'block' : 'none'}">
                         <label>Turno</label>
                         <select class="editar-select" id="inner-programacao-select-turno">
                             <option value="madrugada">Madrugada</option>
@@ -35,7 +35,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     
                     <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
                         <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao" onclick="_openInnerProgramacaoItem()">
+                        <button id="inner-programacao-item-associado" class="btn input-botao" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;">
                             Associar Item
                         </button>
                     </div> 
@@ -130,13 +130,13 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 </div>
 
                 <div id="inner-programacao-item-trocar" class="inner-programacao" style="display: none;">
-                    <div class="nice-form-group" id="inner-programacao-item-trocar-data"">
+                    <div class="nice-form-group">
                         <label>Data</label>
                         <select class="editar-select" id="inner-programacao-select-troca-data">
-                            <option value="">Selecione</option>
+                            ${selects.datas}
                         </select>
                     </div>
-                    <div class="nice-form-group" id="inner-programacao-item-trocar-data"">
+                    <div class="nice-form-group">
                         <label>Turno</label>
                         <select class="editar-select" id="inner-programacao-select-troca-turno">
                             <option value="madrugada">Madrugada</option>

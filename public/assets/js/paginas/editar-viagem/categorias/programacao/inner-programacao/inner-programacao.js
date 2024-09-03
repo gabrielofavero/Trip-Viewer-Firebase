@@ -1,4 +1,6 @@
 var INNER_PROGRAMACAO = {};
+var LAST_TURNO = '';
+var NEW_DATA_J = '';
 
 // Carregamento Principal
 function _loadInnerProgramacaoHTML(j) {
@@ -39,6 +41,7 @@ function _loadInnerProgramacaoHTML(j) {
 
 // Carregamento Interno (Modal)
 function _openInnerProgramacao(j, k, turno) {
+    NEW_DATA_J = '';
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
 
@@ -72,6 +75,7 @@ function _getInnerProgramacaoSelects(j) {
         transporte: _getInnerProgramacaoSelect('transporte'),
         hospedagens: _getInnerProgramacaoSelect('hospedagens'),
         destinos: _getInnerProgramacaoSelectsDestinos(j),
+        datas: _getInnerProgramacaoDatas(j)
     }
 }
 
@@ -149,10 +153,24 @@ function _getInnerProgramacaoSelectsDestinos(j) {
     return result;
 }
 
+function _getInnerProgramacaoDatas(j) {
+    const values = DATAS.map(data => _jsDateToKey(data));
+    const labels = DATAS.map(data => _jsDateToMiniTitle(data));
+    let result = '';
+
+    for (let i = 0; i < values.length; i++) {
+        result += `<option value="${values[i]}" ${i + 1 === j ? 'selected' : ''}>${labels[i]}</option>`;
+    }
+
+    return result;
+}
+
 // Carrega dados atuais no Modal
 function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
     if (turno) {
-        getID(`inner-programacao-select-turno`).value = turno;
+        getID('inner-programacao-select-turno').value = turno;
+        getID('inner-programacao-select-troca-turno').value = turno;
+        LAST_TURNO = turno;
     }
 
     const key = _jsDateToKey(DATAS[j - 1]);
@@ -194,6 +212,8 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
             default:
                 getID(`inner-programacao-item-nenhum-radio`).checked = true;
         }
+    } else if (isNew) {
+        getID('inner-programacao-select-turno').value = LAST_TURNO;
     }
 }
 
@@ -243,15 +263,17 @@ function _closeInnerProgramacao(j) {
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 
     } else if (getID('inner-programacao-item-trocar').style.display === 'block') {
+        _showNewData();
+        
         getID('message-title').innerText = _getInnerProgramacaoTitle(j);
         getID('back-icon').style.visibility = 'hidden';
+
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
     }
 }
 
 function _getInnerProgramacaoTitle(j) {
-    const data = DATAS[j - 1];
-    return `${_dateToDayOfTheWeek(data)}, ${_jsDateToDate(data)}`;
+    return _jsDateToMiniTitle(DATAS[j - 1]);
 }
 
 // Salvar / Deletar dados do Modal
@@ -361,6 +383,9 @@ function _loadInnerProgramacaoListeners(selects) {
     getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTitleReplacementCheckbox());
     getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTitleReplacementCheckbox());
 
+    getID('inner-programacao-select-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-turno'));
+    getID('inner-programacao-select-troca-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-troca-turno'));
+
     _innerProgramacaoSelectLocalAction(selects);
 }
 
@@ -414,4 +439,38 @@ function _loadInnerProgramacaoEventListeners() {
             getID(`inner-programacao-fim`).reportValidity();
         }
     });
+}
+
+function _pairTurnos(callerID) {
+    const id1 = 'inner-programacao-select-turno';
+    const id2 = 'inner-programacao-select-troca-turno';
+
+    const turno1 = getID(id1).value;
+    const turno2 = getID(id2).value;
+
+    if (turno1 !== turno2) {
+        if (callerID === id1) {
+            getID(id2).value = turno1;
+            LAST_TURNO = turno1;
+        } else if (callerID === id2) {
+            getID(id1).value = turno2;
+            LAST_TURNO = turno2;
+        }
+    }
+}
+
+function _showNewData(j) {
+    const keys = DATAS.map(data => _jsDateToKey(data));
+
+    const atual = keys[j-1];
+    const nova = getID('inner-programacao-select-troca-data').value;
+
+    if (atual != nova) {
+        const turno = getID('inner-programacao-select-troca-turno').value;
+        if (keys.includes(nova) && INNER_PROGRAMACAO[nova] && INNER_PROGRAMACAO[nova][turno]) {
+            NEW_DATA_J = keys.indexOf(nova) + 1;
+        }
+    }
+
+    NEW_DATA_J = '';
 }

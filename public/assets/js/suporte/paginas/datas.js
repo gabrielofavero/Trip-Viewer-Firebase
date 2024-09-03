@@ -200,6 +200,10 @@ function _jsDateToDayOfTheWeekAndDateTitle(jsDate, showYear = false) {
     return `${diaDaSemana}, ${dia} de ${_monthToText(mes)}${ano}`;
 }
 
+function _jsDateToMiniTitle(jsDate) {
+    return `${_dateToDayOfTheWeek(jsDate)}, ${_jsDateToDate(jsDate)}`
+}
+
 function _firestoreDateToKey(firestoreDate) {
     const jsDate = _convertFromFirestoreDate(firestoreDate);
     return _jsDateToKey(jsDate);
