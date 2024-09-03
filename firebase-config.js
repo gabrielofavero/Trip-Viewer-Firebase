@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 
 const configPRD = {
   apiKey: "AIzaSyBZJeSANyiJi6ijzDadJOJXSLqzSgf9xfk",
@@ -63,12 +62,4 @@ export function startFirebase() {
   ].filter(feature => typeof app[feature] === 'function');
 
   console.log(`Firebase SDK loaded with ${features.join(', ')}`);
-
-  // Exemplo de uso: verificando se o usuário está autenticado
-  const user = getAuth(app).currentUser;
-  if (user) {
-    console.log('Usuário autenticado:', user);
-  } else {
-    console.log('Nenhum usuário autenticado.');
-  }
 }
