@@ -223,7 +223,9 @@ details .toggle-code:hover {
   color: #E2E2E2;
 }
 
-.accordion-button:focus, .purple:focus {
+.accordion-button:focus,
+.purple:focus,
+.btn:focus {
   box-shadow: 0 0 0 0.3rem rgba(127, 117, 182, 0.25);
 }
 
