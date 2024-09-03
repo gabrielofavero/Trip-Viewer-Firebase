@@ -1,13 +1,5 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getFunctions } from "firebase/functions";
-import { getMessaging } from "firebase/messaging";
-import { getStorage } from "firebase/storage";
-import { getAnalytics } from "firebase/analytics";
-import { getRemoteConfig } from "firebase/remote-config";
-import { getPerformance } from "firebase/performance";
 
 const configPRD = {
   apiKey: "AIzaSyBZJeSANyiJi6ijzDadJOJXSLqzSgf9xfk",
@@ -41,7 +33,6 @@ const configTCC = {
 
 // Initialize Firebase
 const app = initializeApp(_getConfig());
-const analytics = getAnalytics(app);
 
 function _getConfig() {
   const projectId = process.env.GCP_PROJECT || process.env.GCLOUD_PROJECT || '';
