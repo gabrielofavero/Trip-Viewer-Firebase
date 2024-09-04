@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 49    | 45          | 4         |
+| 🐞     | Bug      | B000    | 50    | 45          | 5         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
 | 📈     | Melhoria | M000    | 80    | 58          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
@@ -28,11 +28,13 @@
 - 📈 **M066:** Tamanho de logotipo automático em viagens.html
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
+- 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 
 ### Prioridade Média
+
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
   - *Adicionar imagem e descrição*
 - 📈 **M020:** Módulo de transporte mais automatizado
