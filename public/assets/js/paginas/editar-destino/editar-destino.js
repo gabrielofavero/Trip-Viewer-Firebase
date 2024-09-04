@@ -137,12 +137,12 @@ function _loadEventListeners() {
   });
 }
 
-function _addRemoveDestinoListener(categoria, j) {
+function _addListenerToRemoveDestino(categoria, j) {
   const dynamicSelects = [{
     type: 'regiao',
     selectID: `${categoria}-regiao-select-${j}`,
   }]
-  _addRemoveChildListenerDS(categoria, j, 'regiao', dynamicSelects);
+  _addRemoveChildListenerDS(categoria, j, dynamicSelects);
 }
 
 async function _loadDestinos() {
