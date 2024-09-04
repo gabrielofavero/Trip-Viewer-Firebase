@@ -65,30 +65,35 @@ function _loadEventListeners() {
     _closeAccordions('restaurantes');
     _addRestaurantes();
     _openLastAccordion('restaurantes');
+    _buildDS('regiao');
   });
 
   getID('lanches-adicionar').addEventListener('click', () => {
     _closeAccordions('lanches');
     _addLanches();
     _openLastAccordion('lanches');
+    _buildDS('regiao');
   });
 
   getID('saidas-adicionar').addEventListener('click', () => {
     _closeAccordions('saidas');
     _addSaidas();
     _openLastAccordion('saidas');
+    _buildDS('regiao');
   });
 
   getID('turismo-adicionar').addEventListener('click', () => {
     _closeAccordions('turismo');
     _addTurismo();
     _openLastAccordion('turismo');
+    _buildDS('regiao');
   });
 
   getID('lojas-adicionar').addEventListener('click', () => {
     _closeAccordions('lojas');
     _addLojas();
     _openLastAccordion('lojas');
+    _buildDS('regiao');
   });
 
   getID('salvar').addEventListener('click', () => {
@@ -133,7 +138,11 @@ function _loadEventListeners() {
 }
 
 function _addRemoveDestinoListener(categoria, j) {
-  _addRemoveChildListenerDS(categoria, j, 'regiao', `${categoria}-regiao-select-${j}`, );
+  const dynamicSelects = [{
+    type: 'regiao',
+    selectID: `${categoria}-regiao-select-${j}`,
+  }]
+  _addRemoveChildListenerDS(categoria, j, 'regiao', dynamicSelects);
 }
 
 async function _loadDestinos() {

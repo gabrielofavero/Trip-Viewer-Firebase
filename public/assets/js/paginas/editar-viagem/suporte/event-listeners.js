@@ -87,3 +87,22 @@ async function _apagarListenerAction() {
         window.location.href = `index.html`;
     }
 }
+
+function _addRemoveGaleriaListener(j) {
+    const dynamicSelects = [{
+        type: 'galeria-categoria',
+        selectID: `galeria-categoria-select-${j}`,
+    }]
+    _addRemoveChildListenerDS('galeria', j, dynamicSelects);
+}
+
+function _addRemoveLineupListener(j) {
+    const dynamicSelects = [{
+        type: 'lineup-genero',
+        selectID: `lineup-genero-select-${j}`,
+    }, {
+        type: 'lineup-palco',
+        selectID: `lineup-palco-select-${j}`,
+    }]
+    _addRemoveChildListenerDS('lineup', j, dynamicSelects);
+}

@@ -14,12 +14,15 @@ _startLoadingScreen();
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     await _main();
-    
+
     DOCUMENT_ID = _getURLParam('v');
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
     _loadHabilitados();
+    _newDynamicSelect('galeria-categoria');
+    _newDynamicSelect('lineup-genero');
+    _newDynamicSelect('lineup-palco');
 
     if (DOCUMENT_ID) {
       await _loadTrip(true);
@@ -74,7 +77,7 @@ function _loadUploadSelectors() {
   _loadUploadSelector('logo');
 }
 
-async function _loadTrip(stripped=false) {
+async function _loadTrip(stripped = false) {
   getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();

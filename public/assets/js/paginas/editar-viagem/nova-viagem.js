@@ -489,7 +489,9 @@ function _addLineup() {
     `);
 
   _loadLineupListeners(j);
-  _addRemoveChildListener('lineup', j);
+  _addRemoveLineupListener(j);
+  _addSelectorDS('lineup-genero', `lineup-genero-select-${j}`, `lineup-genero-${j}`);
+  _addSelectorDS('lineup-palco', `lineup-palco-select-${j}`, `lineup-palco-${j}`);
 }
 
 function _addGaleria() {
@@ -562,5 +564,6 @@ function _addGaleria() {
 
   _loadImageSelector(`galeria-${j}`);
   _loadGaleriaListeners(j);
-  _addRemoveChildListener('galeria', j);
+  _addRemoveGaleriaListener(j);
+  _addSelectorDS('galeria-categoria', `galeria-categoria-select-${j}`, `galeria-categoria-${j}`);
 }

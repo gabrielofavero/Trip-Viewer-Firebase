@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 52    | 46          | 6         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 81    | 59          | 22        |
+| 📈     | Melhoria | M000    | 81    | 61          | 20        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -19,14 +19,12 @@
 
 ## Doing
 
-- 📈 **M081:** Reimplementação do Dynamic Select para facilitar manutenção
-- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
+- 📈 **M066:** Tamanho de logotipo automático em viagens.html
 
 ## To-Do
 
 ### Prioridade Alta
 
-- 📈 **M066:** Tamanho de logotipo automático em viagens.html
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
@@ -112,6 +110,8 @@
 - 📈 **M074:** Botão de troca de programação (editar-viagem.html)
 - 🐞 **B051:** Correção de destino desabilitado não auto apagar template vazio
 - 📈 **M080:** Botão de troca de destino (editar-destino.html)
+- 📈 **M081:** Reimplementação do Dynamic Select para facilitar manutenção
+- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro

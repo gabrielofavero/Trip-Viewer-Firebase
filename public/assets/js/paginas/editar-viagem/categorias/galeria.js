@@ -22,4 +22,5 @@ function _galeriaAdicionarListenerAction() {
     _closeAccordions('galeria');
     _addGaleria();
     _openLastAccordion('galeria');
+    _buildDS('galeria-categoria');
 }

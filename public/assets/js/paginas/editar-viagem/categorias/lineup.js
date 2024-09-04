@@ -25,4 +25,6 @@ function _lineupAdicionarListenerAction() {
     _closeAccordions('lineup');
     _addLineup();
     _openLastAccordion('lineup');
+    _buildDS('lineup-genero');
+    _buildDS('lineup-palco');
 }

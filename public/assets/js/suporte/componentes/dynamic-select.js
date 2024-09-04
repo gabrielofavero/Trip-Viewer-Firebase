@@ -16,12 +16,6 @@ function _addSelectorDS(type, selectID, inputID) {
     _addEventListenersDS(type, selectID, inputID);
 }
 
-function _removeSelectorDS(type, selectID) {
-    const value = DYNAMIC_SELECT[type].selectors[selectID].value;
-    _removeValueDS(type, value);
-    delete DYNAMIC_SELECT[type].selectors[selectID];
-}
-
 function _removeValueDS(type, value) {
     if (value) {
         DYNAMIC_SELECT[type].values[value]--;
@@ -107,10 +101,24 @@ function _addEventListenersDS(type, selectID, inputID) {
     });
 }
 
-function _addRemoveChildListenerDS(categoria, j, type, selectID) {
+function _addRemoveChildListenerDS(categoria, j, dynamicSelects=[]) {
     getID(`remove-${categoria}-${j}`).addEventListener('click', function () {
-        _removeSelectorDS(type, selectID);
+        
+        for (const dynamicSelect of dynamicSelects) {
+            _removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
+        }
+        
         _removeChildWithValidation(categoria, j);
-        _buildDS(type);
+
+        for (const dynamicSelect of dynamicSelects) {
+            _buildDS(dynamicSelect.type);
+        }
+        
     });
+
+    function _removeSelectorDS(type, selectID) {
+        const value = DYNAMIC_SELECT[type].selectors[selectID].value;
+        _removeValueDS(type, value);
+        delete DYNAMIC_SELECT[type].selectors[selectID];
+    }
 }
