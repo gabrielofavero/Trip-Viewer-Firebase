@@ -44,8 +44,8 @@ function _buildDestinoCategoryObject(tipo) {
         item.descricao = getID(`${tipo}-descricao-${j}`).value;
         item.website = getID(`${tipo}-website-${j}`).value;
         item.instagram = getID(`${tipo}-instagram-${j}`).value;
+        item.regiao = getID(`${tipo}-regiao-select-${j}`).value;
         item.mapa = getID(`${tipo}-mapa-${j}`).value;
-        item.regiao = _getDynamicSelectValue(tipo, 'regiao', j);
         item.midia = getID(`${tipo}-midia-${j}`).value;
         item.nota = getID(`${tipo}-nota-${j}`).value;
 

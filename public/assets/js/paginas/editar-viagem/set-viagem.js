@@ -277,12 +277,6 @@ function _buildLineupObject() {
         const valueNome = divNome ? divNome.value : "";
         result[selectValue].nome.push(valueNome);
 
-        const valueGenero = _getDynamicSelectValue('lineup', 'genero', j);
-        result[selectValue].genero.push(valueGenero);
-
-        const valuePalco = _getDynamicSelectValue('lineup', 'palco', j);
-        result[selectValue].palco.push(valuePalco);
-
         const divData = getID(`lineup-data-${j}`);
         const valueData = divData ? divData.value : "";
         result[selectValue].data.push(valueData);
@@ -325,9 +319,6 @@ function _buildGaleriaObject() {
 
         const descricao = getID(`galeria-descricao-${j}`).value || "";
         result.descricoes.push(descricao);
-
-        const categoria = _getDynamicSelectValue('galeria', 'categoria', j);
-        result.categorias.push(categoria);
 
         const titulo = getID(`galeria-titulo-${j}`).value || "";
         result.titulos.push(titulo);

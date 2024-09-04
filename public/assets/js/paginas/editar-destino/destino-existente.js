@@ -59,10 +59,9 @@ function _loadDestinoExistente(categoria) {
         midia: FIRESTORE_DESTINOS_DATA[categoria][i].midia,
         nota: FIRESTORE_DESTINOS_DATA[categoria][i].nota
       }
-      
+
       _addDestinoHTML(categoria, j, destino);
     }
-    _regiaoSelectAction(categoria);
   }
 }
 
@@ -109,6 +108,7 @@ function _addDestinoHTML(categoria, j, destino) {
   getID(`${categoria}-instagram-${j}`).value = destino.instagram || '';
   getID(`${categoria}-regiao-${j}`).value = destino.regiao || '';
 
+  _updateValueDS('regiao', destino.regiao, `${categoria}-regiao-select-${j}`);
   _loadMoedaValorAndVisibility(destino.valor || '', categoria, j);
 
   getID(`${categoria}-midia-${j}`).value = destino.midia || '';

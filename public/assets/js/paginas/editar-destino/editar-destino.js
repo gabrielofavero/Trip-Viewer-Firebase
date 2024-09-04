@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     _loadVisibilityIndex();
     _loadHabilitados();
+    _newDynamicSelect('regiao');
 
     if (DOCUMENT_ID) {
       await _loadDestinos()
@@ -63,35 +64,30 @@ function _loadEventListeners() {
   getID('restaurantes-adicionar').addEventListener('click', () => {
     _closeAccordions('restaurantes');
     _addRestaurantes();
-    _loadNewRegiaoSelect('restaurantes');
     _openLastAccordion('restaurantes');
   });
 
   getID('lanches-adicionar').addEventListener('click', () => {
     _closeAccordions('lanches');
     _addLanches();
-    _loadNewRegiaoSelect('lanches');
     _openLastAccordion('lanches');
   });
 
   getID('saidas-adicionar').addEventListener('click', () => {
     _closeAccordions('saidas');
     _addSaidas();
-    _loadNewRegiaoSelect('saidas');
     _openLastAccordion('saidas');
   });
 
   getID('turismo-adicionar').addEventListener('click', () => {
     _closeAccordions('turismo');
     _addTurismo();
-    _loadNewRegiaoSelect('turismo');
     _openLastAccordion('turismo');
   });
 
   getID('lojas-adicionar').addEventListener('click', () => {
     _closeAccordions('lojas');
     _addLojas();
-    _loadNewRegiaoSelect('lojas');
     _openLastAccordion('lojas');
   });
 
@@ -136,6 +132,10 @@ function _loadEventListeners() {
   });
 }
 
+function _addRemoveDestinoListener(categoria, j) {
+  _addRemoveChildListenerDS(categoria, j, 'regiao', `${categoria}-regiao-select-${j}`, );
+}
+
 async function _loadDestinos() {
   blockLoadingEnd = true;
   getID('delete-text').style.display = 'block';
@@ -164,7 +164,6 @@ function _addDestinosListeners(categoria, j) {
   getID(`${categoria}-valor-${j}`).addEventListener('change', () => _valorListenerAction(j, categoria));
 
   // Região
-  _loadRegiaoListeners(j, categoria);
 
   // Links
   getID(`${categoria}-website-${j}`).addEventListener('change', () => _validateLink(`${categoria}-website-${j}`));

@@ -118,7 +118,8 @@ function _addRestaurantes() {
     `);
 
   _addDestinosListeners('restaurantes', j);
-  _addRemoveChildListener('restaurantes', j);
+  _addRemoveDestinoListener('restaurantes', j);
+  _addSelectorDS('regiao', `restaurantes-regiao-select-${j}`, `restaurantes-regiao-${j}`);
 }
 
 function _addLanches() {
@@ -240,7 +241,8 @@ function _addLanches() {
     `);
 
   _addDestinosListeners('lanches', j);
-  _addRemoveChildListener('lanches', j);
+  _addRemoveDestinoListener('lanches', j);
+  _addSelectorDS('regiao', `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
 }
 
 function _addSaidas() {
@@ -361,7 +363,8 @@ function _addSaidas() {
     `);
 
   _addDestinosListeners('saidas', j);
-  _addRemoveChildListener('saidas', j);
+  _addRemoveDestinoListener('saidas', j);
+  _addSelectorDS('regiao', `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
 }
 
 function _addTurismo() {
@@ -482,7 +485,8 @@ function _addTurismo() {
     `);
 
   _addDestinosListeners('turismo', j);
-  _addRemoveChildListener('turismo', j);
+  _addRemoveDestinoListener('turismo', j);
+  _addSelectorDS('regiao', `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
 }
 
 function _addLojas() {
@@ -605,5 +609,6 @@ function _addLojas() {
     `);
 
   _addDestinosListeners('lojas', j);
-  _addRemoveChildListener('lojas', j);
+  _addRemoveDestinoListener('lojas', j);
+  _addSelectorDS('regiao', `lojas-regiao-select-${j}`, `lojas-regiao-${j}`);
 }

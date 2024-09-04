@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 51    | 46          | 5         |
+| 🐞     | Bug      | B000    | 52    | 46          | 6         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 80    | 59          | 21        |
+| 📈     | Melhoria | M000    | 81    | 59          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -19,6 +19,7 @@
 
 ## Doing
 
+- 📈 **M081:** Reimplementação do Dynamic Select para facilitar manutenção
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 
 ## To-Do
@@ -31,6 +32,7 @@
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
+- 🐞 **B052:** Não é possível desabilitar gastos em editar-viagem.html
 
 ### Prioridade Média
 

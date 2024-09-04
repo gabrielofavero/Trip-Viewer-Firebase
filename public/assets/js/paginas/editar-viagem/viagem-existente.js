@@ -372,8 +372,6 @@ function _loadLineupData() {
                 }
             }
             _updateDestinosAtivosSelectHTML('lineup');
-            _lineupGeneroSelectAction();
-            _lineupPalcoSelectAction();
         }
     }
 }
@@ -414,7 +412,5 @@ function _loadGaleriaData() {
                 getID(`link-galeria-${i}`).value = imagem;
             }
         }
-
-        _galeriaSelectAction();
     }
 }

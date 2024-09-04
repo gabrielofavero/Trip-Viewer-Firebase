@@ -9,10 +9,6 @@ var NEW_TRIP = false;
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
-var GALERIA_CATEGORIAS = [];
-var LINEUP_GENEROS = [];
-var LINEUP_PALCOS = [];
-
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
