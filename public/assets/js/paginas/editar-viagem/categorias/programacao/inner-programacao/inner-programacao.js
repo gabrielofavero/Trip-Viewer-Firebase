@@ -1,3 +1,4 @@
+const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
 var LAST_OPENED_TURNO = {};
 
@@ -493,7 +494,7 @@ function _getNewTurno(j) {
     if (LAST_OPENED_TURNO[j]) {
         return LAST_OPENED_TURNO[j];
     } else {
-        for (const turno of ['madrugada', 'manha', 'tarde', 'noite']) {
+        for (const turno of TURNOS) {
             const element = getID(`inner-programacao-${turno}-${j}`);
             if (element && !element.innerText) {
                 return turno;
@@ -501,4 +502,20 @@ function _getNewTurno(j) {
         }
     }
     return 'noite';
+}
+
+function _afterDragInnerProgramacao(evt) {
+    const turnoInicial = evt.from.id.split('-')[2];
+    const turnoFinal = evt.to.id.split('-')[2];
+
+    const j = evt.item.children[0].id.split('-')[3];
+    const key = _jsDateToKey(DATAS[j - 1]);
+
+    // Remover elemento da posição inicial
+    const element = INNER_PROGRAMACAO[key][turnoInicial].splice(evt.oldIndex, 1)[0];
+
+    // Adicionar elemento na posição final
+    INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element);
+
+    _loadInnerProgramacaoHTML(j);
 }

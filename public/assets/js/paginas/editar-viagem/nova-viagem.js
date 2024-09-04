@@ -323,7 +323,7 @@ function _loadProgramacao() {
         </button>
       </h2>
       <div id="collapse-programacao-${j}" class="accordion-collapse collapse"
-        aria-labelledby="heading-programacao-${j}">
+        aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
         <div class="accordion-body">
 
           <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
@@ -343,22 +343,22 @@ function _loadProgramacao() {
 
           <div class='turno-box' id='programacao-madrugada-${j}'>
             <label>Madrugada</label>
-            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-madrugada-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-madrugada-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-manha-${j}'>
             <label>Manhã</label>
-            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-manha-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-manha-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-tarde-${j}'>
             <label>Tarde</label>
-            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-tarde-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-tarde-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-noite-${j}'>
             <label>Noite</label>
-            <div class="inner-programacao draggable-area" data-group="programacao" id="inner-programacao-noite-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-noite-${j}"></div>
           </div>
 
           <div class="button-box-right" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">

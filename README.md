@@ -92,6 +92,7 @@
 ## Done
 
 ### Setembro 2024
+
 - 📈 **M071:** Incluir código de reserva em Hospedagens
 - 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
 - 🐞 **B047:** Programação em viagem.html não mostra horário inicial se o final está ausente
