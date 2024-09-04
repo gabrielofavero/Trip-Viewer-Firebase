@@ -151,31 +151,31 @@ async function _loadDestinos() {
 }
 
 // Listeners
-function _addDestinosListeners(categoria, i) {
+function _addDestinosListeners(categoria, j) {
   // Título Interativo
-  getID(`${categoria}-nome-${i}`).addEventListener('change', () => _updateDestinosTitle(i, categoria));
-  getID(`${categoria}-emoji-${i}`).addEventListener('change', () => _updateDestinosTitle(i, categoria));
-  getID(`${categoria}-novo-${i}`).addEventListener('click', () => _updateDestinosTitle(i, categoria));
+  getID(`${categoria}-nome-${j}`).addEventListener('change', () => _updateDestinosTitle(j, categoria));
+  getID(`${categoria}-emoji-${j}`).addEventListener('change', () => _updateDestinosTitle(j, categoria));
+  getID(`${categoria}-novo-${j}`).addEventListener('click', () => _updateDestinosTitle(j, categoria));
 
   // Validação de Emoji
-  getID(`${categoria}-emoji-${i}`).addEventListener('input', () => _emojisOnInputAction(i, categoria));
+  getID(`${categoria}-emoji-${j}`).addEventListener('input', () => _emojisOnInputAction(j, categoria));
 
   // Valor
-  getID(`${categoria}-valor-${i}`).addEventListener('change', () => _valorListenerAction(i, categoria));
+  getID(`${categoria}-valor-${j}`).addEventListener('change', () => _valorListenerAction(j, categoria));
 
   // Região
-  _loadRegiaoListeners(i, categoria);
+  _loadRegiaoListeners(j, categoria);
 
   // Links
-  getID(`${categoria}-website-${i}`).addEventListener('change', () => _validateLink(`${categoria}-website-${i}`));
-  getID(`${categoria}-mapa-${i}`).addEventListener('change', () => _validateMapLink(`${categoria}-mapa-${i}`));
-  getID(`${categoria}-instagram-${i}`).addEventListener('change', () => _validateInstagramLink(`${categoria}-instagram-${i}`));
-  getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${i}`));
+  getID(`${categoria}-website-${j}`).addEventListener('change', () => _validateLink(`${categoria}-website-${j}`));
+  getID(`${categoria}-mapa-${j}`).addEventListener('change', () => _validateMapLink(`${categoria}-mapa-${j}`));
+  getID(`${categoria}-instagram-${j}`).addEventListener('change', () => _validateInstagramLink(`${categoria}-instagram-${j}`));
+  getID(`${categoria}-midia-${j}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${j}`));
 }
 
-function _valorListenerAction(i, categoria) {
-  const valor = getID(`${categoria}-valor-${i}`);
-  const outroValor = getID(`${categoria}-outro-valor-${i}`);
+function _valorListenerAction(j, categoria) {
+  const valor = getID(`${categoria}-valor-${j}`);
+  const outroValor = getID(`${categoria}-outro-valor-${j}`);
 
   if (valor.value == 'outro') {
     outroValor.style.display = 'block';
@@ -186,11 +186,11 @@ function _valorListenerAction(i, categoria) {
   }
 }
 
-function _updateDestinosTitle(i, categoria) {
-  const titleDiv = getID(`${categoria}-title-text-${i}`);
-  const emojiDiv = getID(`${categoria}-emoji-${i}`);
+function _updateDestinosTitle(j, categoria) {
+  const titleDiv = getID(`${categoria}-title-text-${j}`);
+  const emojiDiv = getID(`${categoria}-emoji-${j}`);
 
-  const nome = getID(`${categoria}-nome-${i}`).value;
+  const nome = getID(`${categoria}-nome-${j}`).value;
   const emoji = emojiDiv.value ? emojiDiv.value.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
 
   if (emoji && nome) {
@@ -199,11 +199,11 @@ function _updateDestinosTitle(i, categoria) {
     titleDiv.innerText = nome;
   }
 
-  getID(`${categoria}-title-icon-${i}`).style.display = getID(`${categoria}-novo-${i}`).checked ? 'block' : 'none';
+  getID(`${categoria}-title-icon-${j}`).style.display = getID(`${categoria}-novo-${j}`).checked ? 'block' : 'none';
 }
 
-function _emojisOnInputAction(i, categoria) {
-  const emojiDiv = getID(`${categoria}-emoji-${i}`);
+function _emojisOnInputAction(j, categoria) {
+  const emojiDiv = getID(`${categoria}-emoji-${j}`);
   const emojiUntreated = emojiDiv.value;
   const emojiTreated = emojiUntreated ? emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
 
