@@ -6,7 +6,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 50    | 45          | 5         |
+| 🐞     | Bug      | B000    | 51    | 46          | 5         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
 | 📈     | Melhoria | M000    | 80    | 58          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
@@ -109,6 +109,7 @@
 - 📈 **M079:** Login por redirecionamento
 - 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
 - 📈 **M074:** Botão de troca de programação (editar-viagem.html)
+- 🐞 **B051:** Correção de destino desabilitado não auto apagar template vazio
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro

@@ -286,20 +286,21 @@ function _loadEditModule(type, loadListener = true) {
      }
 }
 
-function _loadListener(type) {
-     const habilitado = getID(`habilitado-${type}`);
+function _loadListener(categoria) {
+     const habilitado = getID(`habilitado-${categoria}`);
      habilitado.addEventListener('change', function () {
           if (habilitado.checked) {
-               _showContent(type);
-               const box = getID(`${type}-box`);
-               const habilitadoContent = getID(`habilitado-${type}-content`);
+               _showContent(categoria);
+               const box = getID(`${categoria}-box`);
+               const habilitadoContent = getID(`habilitado-${categoria}-content`);
 
                if ((box && !box.innerText) || (habilitadoContent && !habilitadoContent.innerText)) {
-                    _add(_firstCharToUpperCase(type).trim())
+                    _add(_firstCharToUpperCase(categoria).trim())
                }
 
           } else {
-               _hideContent(type);
+               _removeOnlyChildIfEmpty(categoria);
+               _hideContent(categoria);
           }
      });
 }
@@ -333,9 +334,9 @@ function _hideContent(type) {
      }
 }
 
-function _addRemoveChildListener(type, i) {
-     getID(`remove-${type}-${i}`).addEventListener('click', function () {
-          _removeChildWithValidation(type, i);
+function _addRemoveChildListener(categoria, j) {
+     getID(`remove-${categoria}-${j}`).addEventListener('click', function () {
+          _removeChildWithValidation(categoria, j);
      });
 }
 
