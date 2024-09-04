@@ -25,7 +25,6 @@
 
 ### Prioridade Alta
 
-- 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
@@ -112,6 +111,7 @@
 - 📈 **M080:** Botão de troca de destino (editar-destino.html)
 - 📈 **M081:** Reimplementação do Dynamic Select para facilitar manutenção
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
+- 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
