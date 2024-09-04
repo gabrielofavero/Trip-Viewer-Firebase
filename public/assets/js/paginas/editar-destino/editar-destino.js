@@ -230,3 +230,59 @@ async function getDesktopLink(originalLink) {
     return "An error occurred while fetching the desktop link.";
   }
 }
+
+function _OpenMoveDestinoModal(j, categoria) {
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = getID(`${categoria}-nome-${j}`).value || 'Mover Destino';
+  propriedades.containers = _getContainersInput();
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+  }, {
+    tipo: 'confirmar',
+    acao: `_moveDestino(${j}, '${categoria}')`,
+  }];
+
+  propriedades.conteudo = `
+  <div class="nice-form-group"">
+    <label>Mover para:</label>
+      <select class="editar-select" id="move-select">
+        <option value="restaurantes">Restaurantes</option>
+        <option value="lanches">Lanches</option>
+        <option value="saidas">Saídas</option>
+        <option value="turismo">Turismo</option>
+        <option value="lojas">Lojas</option>
+      </select>
+  </div>`
+
+  _displayFullMessage(propriedades);
+  getID('move-select').value = categoria;
+}
+
+function _moveDestino(j, categoria) {
+  const newCategoria = getID('move-select').value;
+
+  if (categoria != newCategoria) {
+    _addDestino(categoria);
+
+    const destino = {
+      novo: getID(`${categoria}-novo-${j}`).checked,
+      nome: getID(`${categoria}-nome-${j}`).value,
+      emoji: getID(`${categoria}-emoji-${j}`).value,
+      descricao: getID(`${categoria}-descricao-${j}`).value,
+      website: getID(`${categoria}-website-${j}`).value,
+      mapa: getID(`${categoria}-mapa-${j}`).value,
+      instagram: getID(`${categoria}-instagram-${j}`).value,
+      regiao: getID(`${categoria}-regiao-select-${j}`).value,
+      valor: getID(`${categoria}-valor-${j}`).value,
+      midia: getID(`${categoria}-midia-${j}`).value,
+      nota: getID(`${categoria}-nota-${j}`).value,
+    }
+
+    const newJ = _getLastJ(`${newCategoria}-box`) + 1;
+    _addDestino(newCategoria);
+    _addDestinoHTML(newCategoria, newJ, destino);
+    _removeChildWithValidation(categoria, j);
+  }
+
+  _closeMessage();
+}

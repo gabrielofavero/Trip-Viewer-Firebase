@@ -96,8 +96,15 @@ function _addRestaurantes() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-restaurantes-${j}" class="btn btn-secondary">
+        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+          <button onclick="_OpenMoveDestinoModal(${j}, 'restaurantes')" class="btn btn-basic-secondary btn-format">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
+                      <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
+                  </g>
+              </svg>
+          </button>
+          <button id="remove-restaurantes-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -211,13 +218,20 @@ function _addLanches() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-lanches-${j}" class="btn btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-          </svg>
+        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+          <button onclick="_OpenMoveDestinoModal(${j}, 'lanches')" class="btn btn-basic-secondary btn-format">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
+                      <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
+                  </g>
+              </svg>
+          </button>
+          <button id="remove-lanches-${j}" class="btn btn-basic btn-format">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" fill-rule="evenodd"
+                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                  clip-rule="evenodd"></path>
+            </svg>
           </button>
         </div>
   
@@ -325,13 +339,20 @@ function _addSaidas() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-saidas-${j}" class="btn btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-          </svg>
+        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+          <button onclick="_OpenMoveDestinoModal(${j}, 'saidas')" class="btn btn-basic-secondary btn-format">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
+                      <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
+                  </g>
+              </svg>
+          </button>
+          <button id="remove-saidas-${j}" class="btn btn-basic btn-format">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" fill-rule="evenodd"
+                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                  clip-rule="evenodd"></path>
+            </svg>
           </button>
         </div>
   
@@ -439,13 +460,20 @@ function _addTurismo() {
           </div>
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-turismo-${j}" class="btn btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-          </svg>
+        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+          <button onclick="_OpenMoveDestinoModal(${j}, 'turismo')" class="btn btn-basic-secondary btn-format">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
+                      <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
+                  </g>
+              </svg>
+          </button>
+          <button id="remove-turismo-${j}" class="btn btn-basic btn-format">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" fill-rule="evenodd"
+                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                  clip-rule="evenodd"></path>
+            </svg>
           </button>
         </div>
   
@@ -555,13 +583,20 @@ function _addLojas() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-lojas-${j}" class="btn btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-          </svg>
+        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+          <button onclick="_OpenMoveDestinoModal(${j}, 'lojas')" class="btn btn-basic-secondary btn-format">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
+                      <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
+                  </g>
+              </svg>
+          </button>
+          <button id="remove-lojas-${j}" class="btn btn-basic btn-format">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" fill-rule="evenodd"
+                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                  clip-rule="evenodd"></path>
+            </svg>
           </button>
         </div>
   
@@ -571,8 +606,4 @@ function _addLojas() {
 
   _addDestinosListeners('lojas', j);
   _addRemoveChildListener('lojas', j);
-}
-
-function _newDestinoID(tipo) {
-  
 }

@@ -8,7 +8,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 51    | 46          | 5         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 80    | 58          | 22        |
+| 📈     | Melhoria | M000    | 80    | 59          | 21        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -19,14 +19,13 @@
 
 ## Doing
 
-- 📈 **M080:** Botão de troca de destino (editar-destino.html)
+- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 
 ## To-Do
 
 ### Prioridade Alta
 
 - 📈 **M066:** Tamanho de logotipo automático em viagens.html
-- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
@@ -110,6 +109,7 @@
 - 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
 - 📈 **M074:** Botão de troca de programação (editar-viagem.html)
 - 🐞 **B051:** Correção de destino desabilitado não auto apagar template vazio
+- 📈 **M080:** Botão de troca de destino (editar-destino.html)
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
