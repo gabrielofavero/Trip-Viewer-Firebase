@@ -51,7 +51,8 @@ async function _setDocumento(tipo) {
         DOCUMENT_ID = result?.data?.id;
         const userList = await _getUserList(tipo);
         userList.push(DOCUMENT_ID);
-        await _update(`usuarios/${USER_ID}`, { [tipo]: userList });
+        const userID = await _getUID();
+        await _update(`usuarios/${userID}`, { [tipo]: userList });
     }
 
     responses.push(result);
