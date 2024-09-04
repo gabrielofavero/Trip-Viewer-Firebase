@@ -168,8 +168,10 @@ async function _loadUserDataList(tipo) {
   }
 
   function onTimeout() {
-    preloader.style.display = 'none';
-    demoraCarregamento.style.display = 'block';
+    for (const innerTipo of _getTipos(tipo)) {
+      innerTipo.preloader.style.display = 'none';
+      innerTipo.demoraCarregamento.style.display = 'block';
+    }
   }
 
   async function checkResponse() {
