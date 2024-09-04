@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 53    | 46          | 5         |
+| 🐞     | Bug      | B000    | 54    | 46          | 6         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 81    | 61          | 20        |
+| 📈     | Melhoria | M000    | 81    | 63          | 19        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -19,7 +19,7 @@
 
 ## Doing
 
-- 📈 **M066:** Tamanho de logotipo automático em viagens.html
+- 🐞 **B054:** Erros nas funções de get e set de dados do banco
 
 ## To-Do
 
@@ -112,6 +112,7 @@
 - 📈 **M081:** Reimplementação do Dynamic Select para facilitar manutenção
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
+- 📈 **M066:** Tamanho de logotipo automático em viagens.html
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro

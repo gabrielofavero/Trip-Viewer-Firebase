@@ -106,7 +106,6 @@ async function _buildCompartilhamentoObject() {
 function _buildImagemObject() {
     let result = {
         ativo: getID('habilitado-imagens').checked,
-        altura: `${getID('logo-tamanho').value * 25}px`,
         background: getID('link-background').value || "",
         claro: getID('link-logo-light').value || "",
         escuro: getID('link-logo-dark').value || "",

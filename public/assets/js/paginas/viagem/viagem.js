@@ -210,10 +210,6 @@ function _loadHeader() {
       getID("header2").src = _isOnDarkMode() ? LOGO_ESCURO : LOGO_CLARO;
       getID("header1").style.display = "none";
       getID("header2").style.display = "block";
-
-      if (FIRESTORE_DATA.imagem.altura) {
-        getID("header2").style.height = FIRESTORE_DATA.imagem.altura;
-      }
     }
   }
 }

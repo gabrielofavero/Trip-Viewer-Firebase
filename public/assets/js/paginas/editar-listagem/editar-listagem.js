@@ -79,10 +79,6 @@ function _loadEventListeners() {
     _addEditores();
   });
 
-  getID('logo-tamanho').addEventListener('input', (event) => {
-    _formatAltura(event.target.value);
-  });
-
   getID('salvar').addEventListener('click', () => {
     _setListagem();
   });

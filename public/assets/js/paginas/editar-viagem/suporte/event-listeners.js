@@ -3,7 +3,6 @@ function _loadEventListeners() {
     // Inputs
     getID('inicio').addEventListener('change', () => _inicioListenerAction());
     getID('fim').addEventListener('change', () => _fimListenerAction());
-    getID('logo-tamanho').addEventListener('input', (event) => _formatAltura(event.target.value));
 
     // Botões
     getID('editores-adicionar').addEventListener('click', () => _addEditores());

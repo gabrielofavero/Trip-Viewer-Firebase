@@ -45,7 +45,6 @@ function _loadCustomizacaoData() {
     const background = FIRESTORE_DATA.imagem.background;
     const logoClaro = FIRESTORE_DATA.imagem.claro;
     const logoEscuro = FIRESTORE_DATA.imagem.escuro;
-    const altura = FIRESTORE_DATA.imagem.altura;
 
     if (FIRESTORE_DATA.imagem.ativo === true) {
         getID('habilitado-imagens').checked = true;
@@ -55,14 +54,6 @@ function _loadCustomizacaoData() {
     _loadCustomizacaoImageData(background, 'link-background');
     _loadCustomizacaoImageData(logoClaro, 'link-logo-light');
     _loadCustomizacaoImageData(logoEscuro, 'link-logo-dark');
-
-    if (altura) {
-        const alturaValue = altura.replace('px', '');
-        if (alturaValue > 25 && alturaValue < 500) {
-            getID('logo-tamanho').value = alturaValue / 25;
-            getID('logo-tamanho-tooltip').innerText = `(${altura})`;
-        }
-    }
 
     if (_imageDataIncludes(background, FIREBASE_IMAGE_ORIGIN)) {
         FIREBASE_IMAGES.background = true;
