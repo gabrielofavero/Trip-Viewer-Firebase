@@ -23,10 +23,11 @@
 ## To-Do
 
 ### Prioridade Alta
-- 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
-- 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
-- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
+
 - 📈 **M066:** Tamanho de logotipo automático em viagens.html
+- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
+- 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
+- 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 
