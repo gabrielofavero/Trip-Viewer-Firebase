@@ -96,7 +96,7 @@ function _addRestaurantes() {
   
         </div>
   
-        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+        <div class="button-box-right-formatted">
           <button onclick="_OpenMoveDestinoModal(${j}, 'restaurantes')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
@@ -219,7 +219,7 @@ function _addLanches() {
   
         </div>
   
-        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+        <div class="button-box-right-formatted">
           <button onclick="_OpenMoveDestinoModal(${j}, 'lanches')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
@@ -341,7 +341,7 @@ function _addSaidas() {
   
         </div>
   
-        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+        <div class="button-box-right-formatted">
           <button onclick="_OpenMoveDestinoModal(${j}, 'saidas')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
@@ -463,7 +463,7 @@ function _addTurismo() {
           </div>
         </div>
   
-        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+        <div class="button-box-right-formatted">
           <button onclick="_OpenMoveDestinoModal(${j}, 'turismo')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
@@ -587,7 +587,7 @@ function _addLojas() {
   
         </div>
   
-        <div class="button-box-right" style="margin: 22px; margin-top: 0px">
+        <div class="button-box-right-formatted">
           <button onclick="_OpenMoveDestinoModal(${j}, 'lojas')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>

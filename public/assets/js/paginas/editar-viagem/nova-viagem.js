@@ -141,8 +141,8 @@ function _addTransporte() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-transporte-${j}" class="btn btn-secondary">
+        <div class="button-box-right-formatted">
+          <button id="remove-transporte-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -259,8 +259,8 @@ function _addHospedagens() {
             
           </div>
     
-          <div class="deletar-box">
-            <button id="remove-hospedagens-${j}" class="btn btn-secondary">
+          <div class="button-box-right-formatted">
+            <button id="remove-hospedagens-${j}" class="btn btn-basic btn-format">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -361,7 +361,7 @@ function _loadProgramacao() {
             <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-noite-${j}"></div>
           </div>
 
-          <div class="button-box-right" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
+          <div class="button-box-right-formatted" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
             <button id="programacao-adicionar-${j}" class="btn btn-theme" onclick="_openInnerProgramacao(${j})">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
@@ -474,8 +474,8 @@ function _addLineup() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-lineup-${j}" class="btn btn-secondary">
+        <div class="button-box-right-formatted">
+          <button id="remove-lineup-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -546,8 +546,8 @@ function _addGaleria() {
     
           </div>
   
-        <div class="deletar-box">
-          <button id="remove-galeria-${j}" class="btn btn-secondary">
+        <div class="button-box-right-formatted">
+          <button id="remove-galeria-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"

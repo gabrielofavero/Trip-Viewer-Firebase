@@ -1676,8 +1676,14 @@ details summary::-webkit-details-marker {
 }
 
 .button-box,
-.button-box-right {
+.button-box-right,
+.button-box-right-formatted {
   text-align: right;
+}
+
+.button-box-right-formatted {
+  margin: 22px;
+  margin-top: 0px;
 }
 
 .btn-format {
