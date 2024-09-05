@@ -87,10 +87,6 @@ function _loadEventListeners() {
     _reEdit('listagens', WAS_SAVED);
   });
 
-  getID('cancelar').addEventListener('click', () => {
-    _closeModal();
-  });
-
   getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });

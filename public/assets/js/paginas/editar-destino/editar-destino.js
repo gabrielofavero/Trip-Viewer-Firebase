@@ -105,7 +105,7 @@ function _loadEventListeners() {
   });
 
   getID('cancelar').addEventListener('click', () => {
-    _closeModal();
+    window.location.href = `index.html`;
   });
 
   getID('home').addEventListener('click', () => {
