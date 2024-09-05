@@ -53,11 +53,11 @@ async function _cloudFunction(func, params, displayError=true) {
   }
 }
 
-function _main() {
+async function _main() {
   "use strict";
   $('body').css('overflow', 'hidden');
 
-  _loadConfig();
+  await _loadConfig();
 
   /**
    * Navbar links active state on scroll
@@ -216,23 +216,23 @@ function _main() {
   });
 }
 
-function _loadConfig() {
+async function _loadConfig() {
   let config = {};
-  return Promise.all([
-    $.getJSON("assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
-    $.getJSON("assets/json/cores.json").then(data => config.cores = data),
-    $.getJSON("assets/json/destinos.json").then(data => config.destinos = data),
-    $.getJSON("assets/json/information.json").then(data => config.information = data),
-    $.getJSON("assets/json/moedas.json").then(data => config.moedas = data),
-    $.getJSON("assets/json/transportes.json").then(data => config.transportes = data),
-    $.getJSON("assets/json/set.json").then(data => config.set = data),
-    $.getJSON("assets/json/set.json").then(data => config.gastosIcones = data)
-  ]).then(() => {
+  try {
+    config.callSyncOrder = await $.getJSON("assets/json/call-sync-order.json");
+    config.cores = await $.getJSON("assets/json/cores.json");
+    config.destinos = await $.getJSON("assets/json/destinos.json");
+    config.information = await $.getJSON("assets/json/information.json");
+    config.moedas = await $.getJSON("assets/json/moedas.json");
+    config.transportes = await $.getJSON("assets/json/transportes.json");
+    config.set = await $.getJSON("assets/json/set.json");
+    config.gastosIcones = await $.getJSON("assets/json/set.json");
+
     CONFIG = config;
-  }).catch(error => {
+  } catch (error) {
     console.error('Erro ao carregar a configuração:', error);
     _displayError('Erro ao carregar a configuração');
-  });
+  }
 }
 
 function _openLinkInNewTab(url) {
