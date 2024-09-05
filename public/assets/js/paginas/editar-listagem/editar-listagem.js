@@ -91,14 +91,6 @@ function _loadEventListeners() {
     _closeModal();
   });
 
-  getID('apagar').addEventListener('click', async () => {
-    if (DOCUMENT_ID) {
-      await _deleteUserObjectDB(DOCUMENT_ID, "listagens");
-      await _deleteUserObjectStorage();
-      window.location.href = `index.html`;
-    }
-  });
-
   getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
@@ -156,4 +148,29 @@ async function _setListagem() {
     _setRequired(`select-destinos-${i}`)
   }
   await _setDocumento('listagens');
+}
+
+function _deleteListagem() {
+  let listagem = getID('titulo').value;
+  listagem = listagem ? ` "${listagem}"` : '';
+
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = 'Apagar Listagem';
+  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da listagem${listagem}? A ação não poderá ser desfeita.`;
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+  }, {
+    tipo: 'confirmar',
+    acao: '_deleteListagemAction()'
+  }];
+
+  _displayFullMessage(propriedades);
+}
+
+async function _deleteListagemAction() {
+  if (DOCUMENT_ID) {
+    await _deleteUserObjectDB(DOCUMENT_ID, "listagens");
+    await _deleteUserObjectStorage();
+    window.location.href = `index.html`;
+  }
 }

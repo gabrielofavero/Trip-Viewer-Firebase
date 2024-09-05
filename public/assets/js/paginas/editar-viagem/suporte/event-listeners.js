@@ -10,7 +10,6 @@ function _loadEventListeners() {
     getID('re-editar').addEventListener('click', () => _reEdit('viagens', WAS_SAVED));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
     getID('home').addEventListener('click', () => window.location.href = `index.html`);
-    getID('apagar').addEventListener('click', async () => _apagarListenerAction());
     getID('home').addEventListener('click', () => window.location.href = `index.html`);
     getID('cancelar').addEventListener('click', () => window.location.href = `index.html`);
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
@@ -75,14 +74,6 @@ function _visualizarListenerAction() {
     if (DOCUMENT_ID) {
         window.location.href = `viagem.html?v=${DOCUMENT_ID}`;
     } else {
-        window.location.href = `index.html`;
-    }
-}
-
-async function _apagarListenerAction() {
-    if (DOCUMENT_ID) {
-        await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
-        await _deleteUserObjectStorage();
         window.location.href = `index.html`;
     }
 }

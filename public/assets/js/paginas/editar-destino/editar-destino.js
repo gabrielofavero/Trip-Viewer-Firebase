@@ -112,17 +112,6 @@ function _loadEventListeners() {
     window.location.href = `index.html`;
   });
 
-  getID('apagar').addEventListener('click', async () => {
-    if (DOCUMENT_ID) {
-      await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
-      window.location.href = `index.html`;
-    }
-  });
-
-  getID('home').addEventListener('click', () => {
-    window.location.href = `index.html`;
-  });
-
   getID('moeda').addEventListener('change', () => {
     if (getID('moeda').value == "outra") {
       getID('outra-moeda').style.display = 'block';
@@ -293,4 +282,28 @@ function _moveDestino(j, categoria) {
   }
 
   _closeMessage();
+}
+
+function _deleteDestino() {
+  let destino = getID('titulo').value;
+  destino = destino ? ` "${destino}"` : '';
+
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = 'Apagar Destino';
+  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão do destino${destino}? A ação não poderá ser desfeita.`;
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+  }, {
+    tipo: 'confirmar',
+    acao: '_deleteDestinoAction()'
+  }];
+
+  _displayFullMessage(propriedades);
+}
+
+async function _deleteDestinoAction() {
+  if (DOCUMENT_ID) {
+    await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
+    window.location.href = `index.html`;
+  }
 }

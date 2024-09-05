@@ -109,3 +109,28 @@ async function _uploadViagemItens(uploadItens, item) {
   }
   return result;
 }
+
+function _deleteViagem() {
+  let viagem = getID('titulo').value;
+  viagem = viagem ? ` "${viagem}"` : '';
+
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = 'Apagar Viagem';
+  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da viagem${viagem}? A ação não poderá ser desfeita.`;
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+  }, {
+    tipo: 'confirmar',
+    acao: '_deleteViagemAction()'
+  }];
+
+  _displayFullMessage(propriedades);
+}
+
+async function _deleteViagemAction() {
+  if (DOCUMENT_ID) {
+    await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
+    await _deleteUserObjectStorage();
+    window.location.href = `index.html`;
+}
+}

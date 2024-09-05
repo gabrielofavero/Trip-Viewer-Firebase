@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 53    | 49          | 3         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 82    | 63          | 19        |
+| 📈     | Melhoria | M000    | 82    | 64          | 17        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -15,15 +15,21 @@
 
 ## Doing
 
+- 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
+- 📈 **M082:** Pack de melhorias e fixes 09/24 (pré deploy em prod)
+  - *Visualizar Destino ao salvar (editar-destino.html)*
+  - *Ajuste de responsividade em hospedagens (viagem.html)*
+  - *Valor não aparece em novo destino (editar-destino.html)*
+  - *Cancelar não volta para a home (editar-destino.html)*
+  - *Listagem existente não carrega (editar-listagem.html)*
+  - *Primeiro set não functiona por "Usuário Não Autenticado" (editar-destino.html)*
+
 ## To-Do
 
 ### Prioridade Alta
 
-- 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
-- 📈 **M082:** Pack de pequenas melhorias 09/24 (pré deploy em prod)
-  - *Visualizar Destino ao salvar*
 
 ### Prioridade Média
 
@@ -81,7 +87,6 @@
 - 📈 **M058:** Modularização de arquivos de CSS para diminuir redundâncias
   -*Também será preciso alterar a função que calcula o dark mode*
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
-- 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 
@@ -370,3 +375,4 @@
 - 🏆 **F046:** Firebase Firestore Rules no Front-End
   - *Risco de segurança expor ao user as regras*
 - 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
+- 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens

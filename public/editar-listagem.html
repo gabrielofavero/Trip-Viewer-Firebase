@@ -212,7 +212,7 @@
           </div>
 
           <div id="delete-text" style="display: none;">
-            <a href="#" onclick="_openModal('delete-modal')">Apagar Listagem</a>
+            <a href="#" onclick="_deleteListagem()">Apagar Listagem</a>
           </div>
 
         </section>
@@ -522,42 +522,6 @@
         </button>
       </div>
 
-    </div>
-  </div>
-
-  <div id="delete-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-      <div class="delete-modal-text">
-        <div id="cancel-icon" style="text-align: right;">
-          <a onclick="_closeModal('delete-modal')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-              <path fill="currentColor"
-                d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
-              </path>
-            </svg>
-          </a>
-        </div>
-        <div class="modal-title" id="delete-title">Apagar Listagem</div>
-        <p>Tem certeza que deseja realizar a exclusão da listagem? A ação não poderá ser desfeita.</p>
-      </div>
-      <div class="button-box">
-        <button id="delete-cancelar" class="btn btn-secondary btn-margin" type="button"
-          onclick="_closeModal('delete-modal')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="currentColor"
-              d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
-            </path>
-          </svg>
-          Cancelar
-          <button id="apagar" class="btn btn-theme btn-margin" type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-              <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-            </svg>
-            Apagar
-          </button>
-      </div>
     </div>
   </div>
 
