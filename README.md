@@ -17,6 +17,7 @@
 
 - 📈 **M082:** Pack de melhorias e fixes 09/24 (pré deploy em prod)
   - *Visualizar Destino ao salvar (editar-destino.html)*
+  - *Dados da viagem descrentralizados (viagem.html)*
   - *Ajuste de responsividade em hospedagens (viagem.html)*
   - *Valor não aparece em novo destino (editar-destino.html)*
   - *Cancelar não volta para a home (editar-destino.html)*
