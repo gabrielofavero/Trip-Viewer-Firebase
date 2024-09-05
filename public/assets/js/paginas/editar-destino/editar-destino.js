@@ -112,6 +112,14 @@ function _loadEventListeners() {
     window.location.href = `index.html`;
   });
 
+  getID('visualizar').addEventListener('click', () => {
+    if (DOCUMENT_ID) {
+      window.location.href = `viagem.html?d=${DOCUMENT_ID}`;
+    } else {
+      window.location.href = `index.html`;
+    }
+  });
+
   getID('moeda').addEventListener('change', () => {
     if (getID('moeda').value == "outra") {
       getID('outra-moeda').style.display = 'block';

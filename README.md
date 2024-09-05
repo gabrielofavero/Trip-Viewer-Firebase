@@ -15,7 +15,6 @@
 
 ## Doing
 
-- 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
 - 📈 **M082:** Pack de melhorias e fixes 09/24 (pré deploy em prod)
   - *Visualizar Destino ao salvar (editar-destino.html)*
   - *Ajuste de responsividade em hospedagens (viagem.html)*
@@ -115,6 +114,7 @@
 - 🐞 **B053:** Erros nas funções de get e set de dados do banco
 - 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
 - 🐞 **B052:** Não é possível desabilitar gastos em editar-viagem.html
+- 📈 **M061:** Substituição de modal de deleção de página de editar por mensagem nativa
 
 ### Agosto 2024
 

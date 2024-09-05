@@ -70,10 +70,6 @@ function _expandContentBox() {
   contentBox.style.transition = 'height 0.5s ease';
 }
 
-function _closeDeleteModal() {
-  _closeModal('delete-modal');
-}
-
 function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
   const contentBox = select('.content-box');
   let fadeIn = [];
