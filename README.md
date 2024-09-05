@@ -23,7 +23,7 @@
   - *Cancelar não volta para a home (editar-destino.html)*
   - *Tratamento em viagens e editar-viagem para ignorar destino não existente*
   - *Listagem existente não carrega (editar-listagem.html)*
-  - *Primeiro set não functiona por "Usuário Não Autenticado" (editar-destino.html)*
+  - *Primeiro set não funciona por "Usuário Não Autenticado" (editar-destino.html)*
 
 ## To-Do
 

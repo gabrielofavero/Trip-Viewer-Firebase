@@ -20,9 +20,9 @@ var CLEAR_IMAGES = {
 var CUSTOM_UPLOADS = {};
 
 async function _setDocumento(tipo) {
-    const user = firebase.auth().currentUser;
+    const userID = await _getUID();
 
-    if (!user) {
+    if (!userID) {
         throw new Error('Usuário não autenticado');
     }
 
@@ -52,8 +52,6 @@ async function _setDocumento(tipo) {
         if (DOCUMENT_ID) {
             const userListIDs = await _getUserListIDs(tipo);
             userListIDs.push(DOCUMENT_ID);
-            
-            const userID = await _getUID();
             await _update(`usuarios/${userID}`, { [tipo]: userListIDs });
         }
     }
