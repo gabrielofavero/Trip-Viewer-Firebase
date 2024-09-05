@@ -2417,13 +2417,7 @@ iframe {
   cursor: pointer;
 }
 
-@media (max-width: 800px) {
-  .hotel-box {
-    width: 80%;
-  }
-}
-
-@media (max-width: 700px) {
+@media (max-width: 770px) {
   .hotel-box {
     flex-direction: column;
     width: 90%;
