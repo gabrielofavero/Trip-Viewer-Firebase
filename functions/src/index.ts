@@ -5,3 +5,5 @@ import * as admin from "./admin";
 export const convertTikTokLinks = tiktok.convertTikTokLinks;
 export const getGastos = gastos.getGastos;
 export const scheduledFirestoreExport = admin.scheduledFirestoreExport;
+// export const firestoreImport = admin.firestoreImport;
+// export const migrateUserUID = admin.migrateUserUID;

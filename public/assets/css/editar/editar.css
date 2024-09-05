@@ -1469,6 +1469,21 @@ details summary::-webkit-details-marker {
   background: none;
 }
 
+.btn-basic-secondary {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #6C757D;
+  color: #6C757D;
+  background: none;
+}
+
+.btn-basic-secondary:hover,
+.btn-basic-secondary:focus {
+  border-color: #6C757D;
+  color: #fff;
+  background: #6C757D;
+}
+
 .btn-theme,
 .btn-basic:hover,
 .btn-basic:focus {
@@ -1518,7 +1533,8 @@ details summary::-webkit-details-marker {
 }
 
 .accordion-button:focus,
-.purple:focus {
+.purple:focus,
+.btn:focus {
   box-shadow: 0 0 0 0.3rem rgba(88, 89, 167, 0.25);
 }
 
@@ -1568,23 +1584,6 @@ details summary::-webkit-details-marker {
 
 .accordion-button::after {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
-}
-
-.deletar-box {
-  margin: 22px;
-  margin-top: 0px;
-  text-align: right;
-}
-
-.deletar-box-destinos {
-  margin-top: 10px;
-  text-align: right;
-}
-
-.deletar-box-programacao {
-  margin: 4px;
-  margin-top: 24px;
-  text-align: right;
 }
 
 .modal {
@@ -1677,8 +1676,14 @@ details summary::-webkit-details-marker {
 }
 
 .button-box,
-.button-box-right {
+.button-box-right,
+.button-box-right-formatted {
   text-align: right;
+}
+
+.button-box-right-formatted {
+  margin: 22px;
+  margin-top: 0px;
 }
 
 .btn-format {
@@ -1793,14 +1798,18 @@ details summary::-webkit-details-marker {
   height: 48px !important;
 }
 
-.input-botao,
-.input-botao-input {
+.input-botao-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-botao {
   background-color: #F9FAFB;
   color: #1f2937;
   width: 100%;
   border: 1px solid #c0c4c9;
   border-radius: 0.25rem;
-  margin-top: 8px;
+  margin-top: 1.25rem;
   text-align: left;
   height: auto;
   font-size: 14px;
@@ -1808,19 +1817,54 @@ details summary::-webkit-details-marker {
   padding-left: 10px;
 }
 
+.draggable {
+  width: 92%;
+}
+
 .input-botao:first-child {
   margin-top: 4px;
 }
 
-.input-botao-input {
-  margin-top: 0px;
+.input-botao:hover,
+.input-botao:focus {
+  background-color: #f1f1f1;
+  color: var(--nf-label-color)
 }
 
-.input-botao:hover,
-.input-botao:focus,
-.input-botao-input:hover,
-.input-botao-input:focus {
-  background-color: #f1f1f1;
+.drag-icon {
+  cursor: move;
+  width: 8%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 749px) {
+  .draggable {
+    width: 95%;
+  }
+  .drag-icon {
+    width: 5%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .draggable {
+    width: 90%;
+  }
+  .drag-icon {
+    width: 10%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .draggable {
+    width: 87%;
+  }
+  .drag-icon {
+    width: 13%;
+  }
 }
 
 .destinos-checkboxes {

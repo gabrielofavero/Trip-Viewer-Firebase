@@ -140,12 +140,56 @@ function _removeChild(tipo) {
   div.parentNode.removeChild(div);
 }
 
-function _removeChildWithValidation(tipo, i) {
-  _removeChild(`${tipo}-${i}`);
-  if (_getChildIDs(`${tipo}-box`).length === 0) {
-    getID(`habilitado-${tipo}`).checked = false;
-    _hideContent(tipo);
+function _removeChildWithValidation(categoria, j) {
+  _removeChild(`${categoria}-${j}`);
+  _hideParentIfNoChildren(categoria);
+}
+
+function _hideParentIfNoChildren(categoria) {
+  if (_getChildIDs(`${categoria}-box`).length === 0) {
+    getID(`habilitado-${categoria}`).checked = false;
+    _hideContent(categoria);
   }
+}
+
+function _removeEmptyChild(categoria) {
+  let itens = [];
+
+  switch (categoria) {
+    case 'restaurantes':
+    case 'lanches':
+    case 'saidas':
+    case 'turismo':
+    case 'lojas':
+    case 'lineup':
+      itens = [`${categoria}-nome`];
+      break;
+    case 'transporte':
+      itens = ['ponto-partida', 'ponto-chegada'];
+      break;
+    case 'hospedagens':
+      itens = [`${categoria}-nome`, `${categoria}-endereco`];
+      break;
+    case 'galeria':
+      itens = [`${categoria}-titulo`, `link-${categoria}`];
+      break;
+  }
+
+  if (itens.length > 0) {
+    const j = _getFirstJ(`${categoria}-box`);
+    if (j && !_hasUserData(itens, j)) {
+      _removeChild(`${categoria}-${j}`);
+    }
+  }
+}
+
+function _hasUserData(itens, j) {
+  for (const item of itens) {
+    if (getID(`${item}-${j}`).value) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function _getIDs(divID) {
@@ -171,6 +215,11 @@ function _getJs(parentID) {
     result.push(parseInt(jSplit[jSplit.length - 1]));
   }
   return result;
+}
+
+function _getFirstJ(parentID) {
+  const js = _getJs(parentID);
+  return js[0];
 }
 
 function _getLastJ(parentID) {

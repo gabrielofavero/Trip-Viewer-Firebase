@@ -33,51 +33,40 @@ function _loadDadosBasicosDestinosData() {
   _loadMoedaOptions();
 }
 
-function _loadDestinoExistente(tipo) {
-  const habilitado = (FIRESTORE_DESTINOS_DATA.modulos[tipo] === true);
-  getID(`habilitado-${tipo}`).checked = habilitado;
-  getID(`habilitado-${tipo}-content`).style.display = habilitado ? 'block' : 'none';
-  getID(`${tipo}-adicionar-box`).style.display = habilitado ? 'block' : 'none';
+function _loadDestinoExistente(categoria) {
+  const habilitado = (FIRESTORE_DESTINOS_DATA.modulos[categoria] === true);
+  getID(`habilitado-${categoria}`).checked = habilitado;
+  getID(`habilitado-${categoria}-content`).style.display = habilitado ? 'block' : 'none';
+  getID(`${categoria}-adicionar-box`).style.display = habilitado ? 'block' : 'none';
 
-  const size = FIRESTORE_DESTINOS_DATA[tipo].length;
+  const size = FIRESTORE_DESTINOS_DATA[categoria].length;
   if (size > 0) {
     for (let j = 1; j <= size; j++) {
-      const i = j - 1;
-      
-      _addDestino(tipo);
+      _addDestino(categoria);
 
-      const id = FIRESTORE_DESTINOS_DATA[tipo][i].id;
-      if (id) {
-        getID(`${tipo}-id-${j}`).value = id;
+      const i = j - 1;
+      const destino = {
+        id: FIRESTORE_DESTINOS_DATA[categoria][i].id,
+        novo: FIRESTORE_DESTINOS_DATA[categoria][i].novo,
+        nome: FIRESTORE_DESTINOS_DATA[categoria][i].nome,
+        emoji: FIRESTORE_DESTINOS_DATA[categoria][i].emoji,
+        descricao: FIRESTORE_DESTINOS_DATA[categoria][i].descricao,
+        website: FIRESTORE_DESTINOS_DATA[categoria][i].website,
+        mapa: FIRESTORE_DESTINOS_DATA[categoria][i].mapa,
+        instagram: FIRESTORE_DESTINOS_DATA[categoria][i].instagram,
+        regiao: FIRESTORE_DESTINOS_DATA[categoria][i].regiao,
+        valor: FIRESTORE_DESTINOS_DATA[categoria][i].valor,
+        midia: FIRESTORE_DESTINOS_DATA[categoria][i].midia,
+        nota: FIRESTORE_DESTINOS_DATA[categoria][i].nota
       }
 
-      const novo = FIRESTORE_DESTINOS_DATA[tipo][i].novo || false;
-      getID(`${tipo}-novo-${j}`).checked = novo;
-      getID(`${tipo}-title-icon-${j}`).style.display = novo ? 'block' : 'none';
-
-      const nome = FIRESTORE_DESTINOS_DATA[tipo][i].nome || '';
-      getID(`${tipo}-nome-${j}`).value = nome;
-      getID(`${tipo}-title-text-${j}`).innerText = nome;
-
-      const emoji = FIRESTORE_DESTINOS_DATA[tipo][i].emoji;
-      getID(`${tipo}-emoji-${j}`).value = emoji;
-      getID(`${tipo}-title-text-${j}`).innerText += ` ${emoji}`;
-
-      getID(`${tipo}-descricao-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].descricao || '';
-      getID(`${tipo}-website-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].website || '';
-      getID(`${tipo}-mapa-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].mapa || '';
-      getID(`${tipo}-instagram-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].instagram || '';
-      getID(`${tipo}-regiao-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].regiao || '';
-      _loadMoedaValorAndVisibility(FIRESTORE_DESTINOS_DATA[tipo][i].valor || '', tipo, j);
-      getID(`${tipo}-midia-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].midia || '';
-      getID(`${tipo}-nota-${j}`).value = FIRESTORE_DESTINOS_DATA[tipo][i].nota || '';
+      _addDestinoHTML(categoria, j, destino);
     }
-    _regiaoSelectAction(tipo);
   }
 }
 
-function _addDestino(tipo) {
-  switch (tipo) {
+function _addDestino(categoria) {
+  switch (categoria) {
     case 'restaurantes':
       _addRestaurantes();
       break;
@@ -93,6 +82,37 @@ function _addDestino(tipo) {
     case 'lojas':
       _addLojas();
   }
+}
+
+function _addDestinoHTML(categoria, j, destino) {
+  const id = destino.id;
+  if (id) {
+    getID(`${categoria}-id-${j}`).value = id;
+  }
+
+  const novo = destino.novo || false;
+  getID(`${categoria}-novo-${j}`).checked = novo;
+  getID(`${categoria}-title-icon-${j}`).style.display = novo ? 'block' : 'none';
+
+  const nome = destino.nome || '';
+  getID(`${categoria}-nome-${j}`).value = nome;
+  getID(`${categoria}-title-text-${j}`).innerText = nome;
+
+  const emoji = destino.emoji;
+  getID(`${categoria}-emoji-${j}`).value = emoji;
+  getID(`${categoria}-title-text-${j}`).innerText += ` ${emoji}`;
+
+  getID(`${categoria}-descricao-${j}`).value = destino.descricao || '';
+  getID(`${categoria}-website-${j}`).value = destino.website || '';
+  getID(`${categoria}-mapa-${j}`).value = destino.mapa || '';
+  getID(`${categoria}-instagram-${j}`).value = destino.instagram || '';
+  getID(`${categoria}-regiao-${j}`).value = destino.regiao || '';
+
+  _updateValueDS('regiao', destino.regiao, `${categoria}-regiao-select-${j}`);
+  _loadMoedaValorAndVisibility(destino.valor || '', categoria, j);
+
+  getID(`${categoria}-midia-${j}`).value = destino.midia || '';
+  getID(`${categoria}-nota-${j}`).value = destino.nota || '';
 }
 
 function _loadMapaData() {

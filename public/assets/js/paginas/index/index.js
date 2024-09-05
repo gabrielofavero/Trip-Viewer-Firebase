@@ -6,11 +6,17 @@ var TENTATIVAS = {
   listagens: 0
 }
 
+var VIAGENS = {
+  coletado: false,
+  proximasViagens: [],
+  viagensAnteriores: []
+}
+
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    await _main();
+    _main();
 
     _loadVisibilityIndex();
     _loadListenersIndex();
@@ -29,21 +35,35 @@ function _loadListenersIndex() {
     _signInGoogle();
   });
 
-  getID('myTrips').addEventListener('click', function () {
-    _openIndexPage('viagens', 0, 1);
+  getID('proximasViagens').addEventListener('click', function () {
+    _openIndexPage('proximasViagens', 0, 1);
   });
 
-  getID('myDestinations').addEventListener('click', function () {
+  getID('viagensAnteriores').addEventListener('click', function () {
+    _openIndexPage('viagensAnteriores', 0, 1);
+  });
+
+  getID('destinosCadastrados').addEventListener('click', function () {
     _openIndexPage('destinos', 0, 1);
   });
 
   getID('profile-icon').addEventListener('click', function () {
-    back.classList.remove('bx-arrow-back');
-    back.classList.add('bx-up-arrow-alt');
+    if (getID('settings-box').style.display === 'none') {
+      back.classList.remove('bx-arrow-back');
+      back.classList.add('bx-up-arrow-alt');
+      _openIndexPage('settings', 0, 1, false);
+    }
+  });
+
+  getID('ajustesDaConta').addEventListener('click', function () {
     _openIndexPage('settings', 0, 1);
   });
 
-  getID('new-viagem').addEventListener('click', function () {
+  getID('nova-viagem-1').addEventListener('click', function () {
+    _viagensNovo();
+  });
+
+  getID('nova-viagem-2').addEventListener('click', function () {
     _viagensNovo();
   });
 
@@ -57,8 +77,7 @@ function _loadListenersIndex() {
 
   getID('back').addEventListener('click', function () {
     const back = select('#back');
-    const settings = select('#settings-box');
-    if (settings.style.display !== 'none') {
+    if (back.classList.contains('bx-up-arrow-alt')) {
       _openIndexPage('logged', 1, 0, false);
       setTimeout(() => {
         back.classList.remove('bx-up-arrow-alt');
@@ -69,7 +88,7 @@ function _loadListenersIndex() {
     }
   });
 
-  getID('myDestinationsLists').addEventListener('click', function () {
+  getID('listasDeDestinos').addEventListener('click', function () {
     _openIndexPage('listagens', 0, 1);
   });
 
@@ -79,36 +98,6 @@ function _loadListenersIndex() {
     _closeModal();
     _signOut();
     _stopLoadingScreen();
-  });
-
-  getID('trip-view-continue').addEventListener('click', async function () {
-    getID('trip-view-invalid').style.display = 'none';
-    getID('trip-view-private').style.display = 'none';
-    getID('trip-view-reminder').style.display = 'none';
-    getID('trip-view-error').style.display = 'none';
-
-    let viagem = getID('trip-view-input').value;
-    if (viagem) {
-      const viagemValue = viagem.trim();
-      const status = await _getStatus(`viagens/${viagemValue}`);
-
-      switch (status) {
-        case 'Found':
-          window.location.href = `viagem.html?v=${viagemValue}`;
-          break;
-        case 'Forbidden':
-          getID('trip-view-private').style.display = 'block';
-          break;
-        case 'Not Found':
-          getID('trip-view-invalid').style.display = 'block';
-          break;
-        default:
-          getID('trip-view-error').style.display = 'block';
-          break;
-      }
-    } else {
-      getID('trip-view-reminder').style.display = 'block';
-    }
   });
 }
 
@@ -150,59 +139,73 @@ async function _loadUserDataList(tipo) {
   const promise = _getUserList(tipo);
   let responseReceived = false;
 
-  const preloader = getID(`preloader-${tipo}`);
-  const demoraCarregamento = getID(`demora-carregamento-${tipo}`);
-  const semDados = getID(`sem-${tipo}`);
-
   function onResponseReceived(response) {
-      preloader.style.display = 'none';
-      demoraCarregamento.style.display = 'none';
+    const tipos = _getTipos(tipo);
+    for (const innerTipo of tipos) {
+      innerTipo.preloader.style.display = 'none';
       if (response.length === 0) {
-          semDados.style.display = 'block';
+        innerTipo.semDados.style.display = 'block';
       } else {
-          semDados.style.display = 'none';
-          USER_DATA[tipo] = response;
-          _loadUserDataHTML(USER_DATA[tipo], tipo);
+        innerTipo.semDados.style.display = 'none';
+        USER_DATA[tipo] = response;
+        _loadUserDataHTML(USER_DATA[tipo], innerTipo.titulo);
       }
+    }
+  }
+
+  function _getTipos(tipo) {
+    const result = [];
+    const tipos = tipo == 'viagens' ? ['proximasViagens', 'viagensAnteriores'] : [tipo];
+    for (const innerTipo of tipos) {
+      result.push({
+        titulo: innerTipo,
+        preloader: getID(`preloader-${innerTipo}`),
+        demoraCarregamento: getID(`demora-carregamento-${innerTipo}`),
+        semDados: getID(`sem-${innerTipo}`)
+      });
+    }
+    return result;
   }
 
   function onTimeout() {
-      preloader.style.display = 'none';
-      demoraCarregamento.style.display = 'block';
+    for (const innerTipo of _getTipos(tipo)) {
+      innerTipo.preloader.style.display = 'none';
+      innerTipo.demoraCarregamento.style.display = 'block';
+    }
   }
 
   async function checkResponse() {
-      try {
-          const response = await Promise.race([promise, new Promise((_, reject) => setTimeout(reject, 0))]);
-          if (response !== undefined) {
-              responseReceived = true;
-              clearInterval(intervalId);
-              onResponseReceived(response);
-          }
-      } catch (e) { }
+    try {
+      const response = await Promise.race([promise, new Promise((_, reject) => setTimeout(reject, 0))]);
+      if (response !== undefined) {
+        responseReceived = true;
+        clearInterval(intervalId);
+        onResponseReceived(response);
+      }
+    } catch (e) { }
   }
 
   const intervalId = setInterval(checkResponse, 1000);
 
   setTimeout(() => {
-      if (!responseReceived) {
-          onTimeout();
-      }
+    if (!responseReceived) {
+      onTimeout();
+    }
   }, 8000); // 8 segundos
 
   while (!responseReceived) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
   while (true) {
-      try {
-          const response = await promise;
-          if (response !== undefined) {
-              onResponseReceived(response);
-              break;
-          }
-      } catch (e) { }
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const response = await promise;
+      if (response !== undefined) {
+        onResponseReceived(response);
+        break;
+      }
+    } catch (e) { }
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
 }
 
@@ -219,58 +222,93 @@ function _manualListLoad(type) {
   }
 }
 
-function _loadUserDataHTML(data, type) {
-  const div = getID(`dados-${type}`);
-  let text = '';
+function _loadUserDataHTML(dados, tipo) {
+  const div = getID(`dados-${tipo}`);
+  let conteudo = '';
 
-  if (type === 'viagens') {
-    data.sort((a, b) => {
-      return _convertFromFirestoreDate(b.inicio) - _convertFromFirestoreDate(a.inicio);
-    });
-  } else if (data[0].ultimaAtualizacao) {
-    data.sort((a, b) => {
+  if ((tipo == 'proximasViagens' || tipo == 'viagensAnteriores')) {
+    if (!VIAGENS.coletado) {
+      _coletarViagens(dados);
+    }
+    dados = VIAGENS[tipo];
+  } else if (dados[0].ultimaAtualizacao) {
+    dados.sort((a, b) => {
       return new Date(b.ultimaAtualizacao).getTime() - new Date(a.ultimaAtualizacao).getTime();
     });
   }
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < dados.length; i++) {
     let secondaryDiv = '';
     let visualizarDiv = '';
+    let innertipo = tipo;
 
-    switch (type) {
-      case 'viagens':
-        const inicioDate = _convertFromFirestoreDate(data[i].inicio);
-        const fimDate = _convertFromFirestoreDate(data[i].fim);
+    switch (tipo) {
+      case 'proximasViagens':
+      case 'viagensAnteriores':
+        innertipo = 'viagens';
+        const inicioDate = _convertFromFirestoreDate(dados[i].inicio);
+        const fimDate = _convertFromFirestoreDate(dados[i].fim);
         const inicio = _jsDateToDate(inicioDate);
         const fim = _jsDateToDate(fimDate);
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
         break;
       case 'destinos':
       case 'listagens':
-        secondaryDiv = `<div class="user-data-item-date">${data[i].ultimaAtualizacaoText}</div>`;
+        secondaryDiv = `<div class="user-data-item-date">${dados[i].ultimaAtualizacaoText}</div>`;
         break;
       default:
         break;
     }
 
-    if (typeof window[`_${type}Visualizar`] === 'function') {
-      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${type}Visualizar('${data[i].code}')" data-icon="fluent:eye-16-regular"></i>`
+    if (typeof window[`_${innertipo}Visualizar`] === 'function') {
+      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${innertipo}Visualizar('${dados[i].code}')" data-icon="fluent:eye-16-regular"></i>`
     }
 
-    text += `
+    conteudo += `
     <div class="user-data-item">
       <div class="user-data-item-text">
-        <div class="user-data-item-title">${data[i].titulo}</div>
+        <div class="user-data-item-title">${dados[i].titulo}</div>
         ${secondaryDiv}
       </div>
       <div class="trip-data-icons">
-        <i class="iconify user-data-icon" onclick="_${type}Editar('${data[i].code}')" data-icon="tabler:edit"></i>
+        <i class="iconify user-data-icon" onclick="_${innertipo}Editar('${dados[i].code}')" data-icon="tabler:edit"></i>
         ${visualizarDiv}
       </div>
     </div>`
   }
 
-  div.innerHTML = text;
+  div.innerHTML = conteudo;
+
+  function _coletarViagens(dados) {
+    const proximasViagens = [];
+    const viagensAnteriores = [];
+    const hoje = new Date();
+
+    for (let i = 0; i < dados.length; i++) {
+      const viagem = dados[i];
+      const fim = _convertFromFirestoreDate(viagem.fim);
+
+      if (hoje > fim) {
+        viagensAnteriores.push(viagem);
+      } else {
+        proximasViagens.push(viagem);
+      }
+    }
+    proximasViagens.sort((a, b) => _sortByToday(a, b));
+    viagensAnteriores.sort((a, b) => _sortByToday(a, b));
+
+    VIAGENS.coletado = true;
+    VIAGENS.proximasViagens = proximasViagens;
+    VIAGENS.viagensAnteriores = viagensAnteriores;
+
+    function _sortByToday(a, b) {
+      const fimA = _convertFromFirestoreDate(a.fim);
+      const fimB = _convertFromFirestoreDate(b.fim);
+      const diferencaA = Math.abs(hoje - fimA);
+      const diferencaB = Math.abs(hoje - fimB);
+      return diferencaA - diferencaB;
+    }
+  }
 }
 
 function _viagensEditar(code) {
@@ -291,6 +329,10 @@ function _destinosNovo() {
 
 function _destinosEditar(code) {
   window.location.href = `editar-destino.html?d=${code}`;
+}
+
+function _destinosVisualizar(code) {
+  window.location.href = `viagem.html?d=${code}`;
 }
 
 function _listagensEditar(code) {

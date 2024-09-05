@@ -19,6 +19,7 @@ function _getHospedagensHTML(i) {
     cafe: original.cafe,
     checkIn: _getHospedagensData(original.datas.checkin),
     checkOut: _getHospedagensData(original.datas.checkout),
+    reserva: original.reserva,
     descricao: original.descricao,
     endereco: original.endereco,
     imagem: _getImageLink(original.imagem),
@@ -70,6 +71,10 @@ function _getHotelBoxHTML(hospedagem, identifier, innerProgramacao=false) {
                 </div>
               </div>
               <div class="hotel-text">
+              <div class="hotel-reservation" style="display: ${hospedagem.reserva ? 'block' : 'none'}">
+                <i class="bx bxs-file color-icon"></i> 
+                Reserva #${hospedagem.reserva}
+              </div>
                 <div class="hotel-description" style="display: ${hospedagem.descricao ? 'block' : 'none'}">
                   <i class="bx bxs-hotel color-icon"></i> 
                   ${hospedagem.descricao}

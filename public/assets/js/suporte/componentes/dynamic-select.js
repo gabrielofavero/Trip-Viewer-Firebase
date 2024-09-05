@@ -1,88 +1,124 @@
+var DYNAMIC_SELECT = {};
 
-// Funções Principais
-function _loadDynamicSelect(tipo, subtipo, copy, categorias, init = false, updateLast=false) {
-  const differentSizes = copy.length !== categorias.length;
-  const differentValues = !copy.every((value, index) => value === categorias[index]);
-
-  if (differentSizes || differentValues || updateLast) {
-    const childs = _getChildIDs(`${tipo}-box`);
-    const selectOptions = [];
-  
-    for (const categoria of categorias) {
-      selectOptions.push(`<option value="${categoria}">${categoria}</option>`);
+function _newDynamicSelect(type) {
+    DYNAMIC_SELECT[type] = {
+        selectors: {},
+        values: {},
+        selectInnerHTML: '',
     }
-  
-    for (let i = updateLast ? childs.length : 1; i <= childs.length; i++) {
-      const select = getID(`${tipo}-${subtipo}-select-${i}`);
-      const input = getID(`${tipo}-${subtipo}-${i}`);
-  
-      const selectValue = select.value;
-      const inputValue = input.value;
-  
-      select.innerHTML = `<option value="selecione">Selecione</option>
-                          ${selectOptions}
-                          <option value="outra">Outra</option>`;
-  
-      select.value = inputValue || selectValue || 'selecione';
-  
-      input.value = "";
-      _loadDynamicSelectVisibility(select, input, init);
+}
+
+function _addSelectorDS(type, selectID, inputID) {
+    DYNAMIC_SELECT[type].selectors[selectID] = {
+        inputID: inputID,
+        value: '',
     }
-  }
+    _addEventListenersDS(type, selectID, inputID);
 }
 
-function _getUpdatedDynamicSelectArray(tipo, subtipo) {
-  let categorias = [];
-  const childs = _getChildIDs(`${tipo}-box`);
-
-  for (let i = 1; i <= childs.length; i++) {
-    _pushIfValidCategoria(getID(`${tipo}-${subtipo}-select-${i}`), categorias);
-    _pushIfValidCategoria(getID(`${tipo}-${subtipo}-${i}`), categorias);
-  }
-
-  // Filtro para remover duplicatas
-  return categorias.filter((item, index) => categorias.indexOf(item) === index).sort();
-}
-
-// Função de set
-function _getDynamicSelectValue(tipo, subtipo, i) {
-  const select = getID(`${tipo}-${subtipo}-select-${i}`);
-  if (select && select.value && select.value !== 'selecione' && select.value !== 'outra') {
-    return select.options[select.selectedIndex].text;
-  } else return '';
-}
-
-// Funções de suporte (internas)
-function _pushIfValidCategoria(div, categorias) {
-  if (div.value && div.value !== 'selecione' && div.value !== 'outra') {
-    if (!categorias.find(item => item === div.value)) {
-      categorias.push(div.value);
+function _removeValueDS(type, value) {
+    if (value) {
+        DYNAMIC_SELECT[type].values[value]--;
+        if (DYNAMIC_SELECT[type].values[value] === 0) {
+            delete DYNAMIC_SELECT[type].values[value];
+        }
     }
-  }
 }
 
-function _loadDynamicSelectVisibility(select, input, init) {
-  if (init && select.innerHTML === '') {
-    select.style.display = 'none';
-    input.style.display = 'block';
+function _updateValueDS(type, value, selectID) {
+    const lastValue = DYNAMIC_SELECT[type].selectors[selectID].value;
+    _removeValueDS(type, lastValue);
+    DYNAMIC_SELECT[type].selectors[selectID].value = '';
 
-  } else if (init) {
-    select.style.display = 'block';
-    input.style.display = 'none';
+    if (value) {
+        DYNAMIC_SELECT[type].selectors[selectID].value = value;
 
-  } else if (select.value === 'outra') {
-    select.style.display = 'block';
-    input.style.display = 'block';
+        _addValueDS(type, value);
+        _buildDS(type);
 
-  } else if (select.value === 'selecione') {
-    select.style.display = 'block';
-    input.style.display = 'none';
+        getID(DYNAMIC_SELECT[type].selectors[selectID].inputID).value = '';
+        getID(selectID).value = value;
+    }
 
-  } else {
-    select.style.display = 'block';
-    input.style.display = 'none';
-  }
+    // Função Privada
+    function _addValueDS(type, value) {
+        if (!DYNAMIC_SELECT[type].values[value]) {
+            DYNAMIC_SELECT[type].values[value] = 1
+        } else {
+            DYNAMIC_SELECT[type].values[value]++;
+        }
+    }
 }
 
+function _buildDS(type) {
+    _buildSelectDS(type);
+    _applySelectDS(type);
 
+    function _buildSelectDS(type) {
+        let selectInnerHTML = `<option value="">Selecione</option>`;
 
+        for (const value in DYNAMIC_SELECT[type].values) {
+            selectInnerHTML += `<option value="${value}">${value}</option>`;
+        }
+
+        selectInnerHTML += `<option value="outra">Outra</option>`;
+        DYNAMIC_SELECT[type].selectInnerHTML = selectInnerHTML;
+    }
+
+    function _applySelectDS(type) {
+        for (const selectID in DYNAMIC_SELECT[type].selectors) {
+            const select = getID(selectID);
+            const input = getID(DYNAMIC_SELECT[type].selectors[selectID].inputID);
+
+            const value = select.value || DYNAMIC_SELECT[type].selectors[selectID].value;
+
+            select.innerHTML = DYNAMIC_SELECT[type].selectInnerHTML;
+            if (DYNAMIC_SELECT[type].values[value]) {
+                select.value = value;
+            }
+            select.style.display = 'block';
+            input.style.display = select.value === 'outra' ? 'block' : 'none';
+        }
+    }
+}
+
+function _addEventListenersDS(type, selectID, inputID) {
+    const select = getID(selectID);
+    const input = getID(inputID);
+
+    select.addEventListener('change', () => {
+        const value = select.value;
+        if (value === 'outra') {
+            input.style.display = 'block';
+        } else {
+            input.style.display = 'none';
+            _updateValueDS(type, value, selectID);
+        }
+    });
+
+    input.addEventListener('change', () => {
+        _updateValueDS(type, input.value, selectID);
+    });
+}
+
+function _addRemoveChildListenerDS(categoria, j, dynamicSelects=[]) {
+    getID(`remove-${categoria}-${j}`).addEventListener('click', function () {
+        
+        for (const dynamicSelect of dynamicSelects) {
+            _removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
+        }
+        
+        _removeChildWithValidation(categoria, j);
+
+        for (const dynamicSelect of dynamicSelects) {
+            _buildDS(dynamicSelect.type);
+        }
+        
+    });
+
+    function _removeSelectorDS(type, selectID) {
+        const value = DYNAMIC_SELECT[type].selectors[selectID].value;
+        _removeValueDS(type, value);
+        delete DYNAMIC_SELECT[type].selectors[selectID];
+    }
+}

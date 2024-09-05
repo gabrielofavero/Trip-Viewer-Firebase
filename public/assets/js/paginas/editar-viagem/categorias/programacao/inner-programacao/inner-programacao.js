@@ -1,4 +1,6 @@
+const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
+var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
 function _loadInnerProgramacaoHTML(j) {
@@ -6,16 +8,9 @@ function _loadInnerProgramacaoHTML(j) {
     if (Object.keys(INNER_PROGRAMACAO).length == 0 || !INNER_PROGRAMACAO[key]) return;
 
     getID(`inner-programacao-madrugada-${j}`).innerHTML = '';
-    getID(`programacao-madrugada-${j}`).style.display = 'none';
-
     getID(`inner-programacao-manha-${j}`).innerHTML = '';
-    getID(`programacao-manha-${j}`).style.display = 'none';
-
     getID(`inner-programacao-tarde-${j}`).innerHTML = '';
-    getID(`programacao-tarde-${j}`).style.display = 'none';
-
     getID(`inner-programacao-noite-${j}`).innerHTML = '';
-    getID(`programacao-noite-${j}`).style.display = 'none';
 
     for (turno in INNER_PROGRAMACAO[key]) {
         const turnoDados = INNER_PROGRAMACAO[key][turno];
@@ -30,9 +25,12 @@ function _loadInnerProgramacaoHTML(j) {
                 } else if (dado.inicio) {
                     texto = `<span class="time">${dado.inicio}:</span> ${texto}`;
                 }
-                div.innerHTML += `<button id="input-botao-${turno}-${j}-${k}" class="btn input-botao" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
-                                    ${texto}
-                                  </button>`;
+                div.innerHTML += `<div class="input-botao-container">
+                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
+                                        ${texto}
+                                    </button>
+                                    <i class="iconify drag-icon" data-icon="mdi:drag"></i>
+                                </div>`;
             }
 
             getID(`programacao-${turno}-${j}`).style.display = div.innerHTML ? 'block' : 'none';
@@ -47,16 +45,16 @@ function _openInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
 
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-    propriedades.titulo = getID(`programacao-title-${j}`).innerText;
+    propriedades.titulo = _getInnerProgramacaoTitle(j);
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
-    propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacaoItem(${j})` }];
+    propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacao(${j})` }];
     propriedades.botoes = [{
         tipo: 'cancelar',
-      }, {
+    }, {
         tipo: 'confirmar',
         acao: turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`
-      }];
+    }];
 
     _displayFullMessage(propriedades);
 
@@ -65,7 +63,7 @@ function _openInnerProgramacao(j, k, turno) {
         getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
     }
 
-    _loadInnerProgramacaoListeners(selects);
+    _loadInnerProgramacaoListeners(selects, j);
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
     _loadInnerProgramacaoEventListeners();
 }
@@ -76,6 +74,7 @@ function _getInnerProgramacaoSelects(j) {
         transporte: _getInnerProgramacaoSelect('transporte'),
         hospedagens: _getInnerProgramacaoSelect('hospedagens'),
         destinos: _getInnerProgramacaoSelectsDestinos(j),
+        datas: _getInnerProgramacaoDatas(j)
     }
 }
 
@@ -153,130 +152,24 @@ function _getInnerProgramacaoSelectsDestinos(j) {
     return result;
 }
 
-// Conteúdo do Modal (HTML)
-function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
-    return `<div class="inner-programacao" id="inner-programacao-box">
-                <div id="inner-programacao-tela-principal">
-                    <div class="nice-form-group">
-                        <label>Atividade</label>
-                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." maxlength="50" />
-                    </div>
-                    <div class="side-by-side-box-fixed">
-                        <div class="nice-form-group side-by-side-fixed">
-                        <label>
-                            Início<br>
-                            <span class="opcional">(Opcional)</span>
-                        </label>
-                        <input class="flex-input-50-50" id="inner-programacao-inicio" type="time">
-                    </div>
-                    <div class="nice-form-group side-by-side-fixed">
-                        <label>
-                            Fim<br>
-                            <span class="opcional">(Opcional)</span>
-                        </label>
-                        <input class="flex-input-50-50" id="inner-programacao-fim" type="time">
-                    </div>
-                    </div>
+function _getInnerProgramacaoDatas(j) {
+    const values = DATAS.map(data => _jsDateToKey(data));
+    const labels = DATAS.map(data => _jsDateToMiniTitle(data));
+    let result = '';
 
-                    <div class="nice-form-group">
-                    <label>Turno</label>
-                    <select class="editar-select" id="inner-programacao-select-turno">
-                        <option value="madrugada">Madrugada</option>
-                        <option value="manha">Manhã</option>
-                        <option value="tarde">Tarde</option>
-                        <option value="noite">Noite</option>
-                    </select>
-                    </div>
+    for (let i = 0; i < values.length; i++) {
+        result += `<option value="${values[i]}" ${i + 1 === j ? 'selected' : ''}>${labels[i]}</option>`;
+    }
 
-                    <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
-                        <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao" onclick="_openInnerProgramacaoItem()">
-                            Associar Item
-                        </button>
-                    </div>  
-                    
-                    <div class="button-box-right" style="margin-top: 8px; margin-bottom: 8px; display: ${isNew ? 'none' : 'block'}">
-                        <button onclick="_deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div id="inner-programacao-item-selecionar" class="inner-programacao" style="display: none;">
-                    <div class="nice-form-group" id="inner-programacao-item-selecionar-radio">
-                        <label>Tipo</label>
-                        <fieldset class="nice-form-group">
-                            <div class="nice-form-group" id="inner-programacao-nenhum-radio-container">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-nenhum-radio">
-                                <label for="inner-programacao-item-nenhum-radio">Nenhum</label>
-                            </div>
-
-                            <div class="nice-form-group" id="inner-programacao-transporte-radio-container" style="display: ${selects.transporte.ativo ? 'block' : 'none'};">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-transporte-radio">
-                                <label for="inner-programacao-item-transporte-radio">Transporte</label>
-                            </div>
-                
-                            <div class="nice-form-group" id="inner-programacao-hospedagens-radio-container" style="display: ${selects.hospedagens.ativo ? 'block' : 'none'};">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-hospedagens-radio">
-                                <label for="inner-programacao-item-hospedagens-radio">Hospedagem</label>
-                            </div>
-                
-                            <div class="nice-form-group" id="inner-programacao-destinos-radio-container" style="display: ${selects.destinos.ativo ? 'block' : 'none'};">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-destinos-radio">
-                                <label id="inner-programacao-item-destinos-radio-label" for="inner-programacao-item-destinos-radio">Destino</label>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="nice-form-group" id="inner-programacao-item-transporte" style="display: none;">
-                        <label>Transporte</label>
-                        <select class="editar-select" id="inner-programacao-select-transporte">
-                            <option value="">Selecione</option>
-                            ${selects.transporte.options}
-                        </select>
-                    </div>
-
-                <div class="nice-form-group" id="inner-programacao-item-hospedagens" style="display: none;">
-                    <label>Hospedagem</label>
-                    <select class="editar-select" id="inner-programacao-select-hospedagens">
-                        <option value="">Selecione</option>
-                        ${selects.hospedagens.options}
-                    </select>
-                </div>
-
-                    <div id="inner-programacao-item-destinos" style="display: none;">
-                        <div class="nice-form-group" id="inner-programacao-item-destinos-local">
-                            <label>Local</label>
-                            <select class="editar-select" id="inner-programacao-select-local">
-                                ${selects.destinos.localOptions}
-                                <option value="">Selecione</option>
-                            </select>
-                        </div>
-
-                        <div class="nice-form-group">
-                            <label>Categoria</label>
-                            <select class="editar-select" id="inner-programacao-select-categoria">
-                                <option value="">Selecione</option>
-                            </select>
-                        </div>
-
-                        <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px;">
-                            <label>Passeio</label>
-                            <select class="editar-select" id="inner-programacao-select-passeio">
-                                <option value="">Selecione uma Categoria</option>
-                            </select>
-                        </div>            
-                    </div>
-
-                </div>
-            </div>`;
+    return result;
 }
 
 // Carrega dados atuais no Modal
 function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
     if (turno) {
-        getID(`inner-programacao-select-turno`).value = turno;
+        getID('inner-programacao-select-turno').value = turno;
+        getID('inner-programacao-select-troca-turno').value = turno;
+        LAST_OPENED_TURNO[j] = turno;
     }
 
     const key = _jsDateToKey(DATAS[j - 1]);
@@ -318,6 +211,10 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
             default:
                 getID(`inner-programacao-item-nenhum-radio`).checked = true;
         }
+    } else if (isNew) {
+        const selectTurno = getID('inner-programacao-select-turno');
+        selectTurno.value = _getNewTurno(j);
+        LAST_OPENED_TURNO[j] = selectTurno.value;
     }
 }
 
@@ -328,40 +225,73 @@ function _openInnerProgramacaoItem() {
     itemSelecionar.style.minHeight = `${height}px`;
 
     if (getID('inner-programacao').value) {
-        getID('message-title').innerText = getID('inner-programacao').value;
+        getID('message-title').innerText = 'Associar Item';
     }
-    
+
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
+    getID('back-icon').style.visibility = 'visible';
+    _loadTitleReplacementCheckbox();
+}
+
+function _openInnerProgramacaoTroca(j) {
+    const height = getID('inner-programacao-tela-principal').offsetHeight;
+    const itemTrocar = getID('inner-programacao-item-trocar');
+    itemTrocar.style.minHeight = `${height}px`;
+
+    getID('message-title').innerText = "Trocar Programação";
+    _animate(['inner-programacao-item-trocar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
 }
 
-function _closeInnerProgramacaoItem(j) {
-    const itemAssociado = getID('inner-programacao-item-associado');
-    if (getID('inner-programacao-item-transporte-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
-    } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
-    } else if (getID('inner-programacao-item-destinos-radio').checked) {
-        itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
-    } else {
-        itemAssociado.innerText = 'Associar Item';
+function _closeInnerProgramacao(j) {
+    if (getID('inner-programacao-item-selecionar').style.display === 'block') {
+        const itemAssociado = getID('inner-programacao-item-associado');
+        if (getID('inner-programacao-item-transporte-radio').checked) {
+            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+        } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
+            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+        } else if (getID('inner-programacao-item-destinos-radio').checked) {
+            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+        } else {
+            itemAssociado.innerText = 'Associar Item';
+        }
+
+        getID('message-title').innerText = _getInnerProgramacaoTitle(j);
+        getID('back-icon').style.visibility = 'hidden';
+
+        _replaceTitleIfEnabled();
+
+        _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
+
+    } else if (getID('inner-programacao-item-trocar').style.display === 'block') {
+        getID('message-title').innerText = _getInnerProgramacaoTitle(j);
+        getID('back-icon').style.visibility = 'hidden';
+
+        _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
     }
-
-    getID('message-title').innerText = getID(`programacao-title-${j}`).innerText;
-
-    getID('back-icon').style.visibility = 'hidden';
-    _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 }
 
-// Salvar / Deletar dados do Modal
-function _addInnerProgramacao(j, k, turno) {
-    const key = _jsDateToKey(DATAS[j - 1]);
-    const programacao = getID(`inner-programacao`);
-    const isNew = (!k && !turno);
+function _getInnerProgramacaoTitle(j) {
+    const newJ = _getMostRecentJ(j);
+    return _jsDateToMiniTitle(DATAS[newJ - 1]);
+}
 
+// Salvar Inner Programação
+function _addInnerProgramacao(j, k, turno) {
+    const programacao = getID(`inner-programacao`);
+    
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
+        _replaceTitleIfEnabled();
+        
+        const innerProgramacao = _buildInnerProgramacao(programacao);
+        _setInnerProgramacao(innerProgramacao, j, k, turno);
+
+        _closeMessage();
+    }
+
+    function _buildInnerProgramacao(programacao) {
         let item = {
             tipo: '',
             id: '',
@@ -382,29 +312,39 @@ function _addInnerProgramacao(j, k, turno) {
             item.categoria = getID(`inner-programacao-select-categoria`).value;
         }
 
-        const result = {
+        return {
             programacao: programacao.value,
             inicio: getID(`inner-programacao-inicio`).value,
             fim: getID(`inner-programacao-fim`).value,
             item: item
         };
+    }
 
-        const inputTurno = getID(`inner-programacao-select-turno`).value;
+    function _setInnerProgramacao(innerProgramacao, j, k, turno) {
+        const key = _jsDateToKey(DATAS[j - 1]);
+        const isNew = (!k && !turno);
+        const newTurno = getID(`inner-programacao-select-turno`).value;
 
-        if (isNew) {
-            INNER_PROGRAMACAO[key][inputTurno].push(result);
-        } else if (turno == inputTurno) {
-            INNER_PROGRAMACAO[key][turno][k - 1] = result;
-        } else {
-            INNER_PROGRAMACAO[key][inputTurno].push(result);
-            INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
+        if (isNew) { // Nova Inner Programação (Apenas Adição)
+            INNER_PROGRAMACAO[key][newTurno].push(innerProgramacao);
+            LAST_OPENED_TURNO[j] = newTurno;
+        } else { // Inner Programacao Existente (Substituição)
+            const newJ = _getMostRecentJ(j);
+            if (turno == newTurno && newJ == j) { // Substituição Simples
+                INNER_PROGRAMACAO[key][turno][k - 1] = innerProgramacao;
+            } else { // Substituição Composta
+                const newKey = _jsDateToKey(DATAS[newJ - 1]);
+                INNER_PROGRAMACAO[newKey][newTurno].push(innerProgramacao);
+                INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
+                LAST_OPENED_TURNO[newJ] = newTurno;
+                _loadInnerProgramacaoHTML(newJ);
+            }
         }
-
         _loadInnerProgramacaoHTML(j);
-        _closeMessage();
     }
 }
 
+// Deletar Inner Programação
 function _deleteInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
     if (isNew) {
@@ -428,33 +368,39 @@ function _loadInnerProgramacaoListeners(selects) {
         itemTransporte.style.display = 'block';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
+        _loadTitleReplacementCheckbox();
     });
 
     getID(`inner-programacao-item-hospedagens-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'block';
         itemDestinos.style.display = 'none';
+        _loadTitleReplacementCheckbox();
     });
 
     getID(`inner-programacao-item-destinos-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'block';
+        _loadTitleReplacementCheckbox();
     });
 
     getID(`inner-programacao-item-nenhum-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
+        _loadTitleReplacementCheckbox();
     });
 
-    getID(`inner-programacao-select-local`).addEventListener('change', () => {
-        _innerProgramacaoSelectLocalAction(selects);
-    });
+    getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction(selects));
+    getID(`inner-programacao-select-categoria`).addEventListener('change', () => _innerProgramacaoSelectCategoriaAction(selects));
 
-    getID(`inner-programacao-select-categoria`).addEventListener('change', () => {
-        _innerProgramacaoSelectCategoriaAction(selects);
-    });
+    getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTitleReplacementCheckbox());
+    getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTitleReplacementCheckbox());
+    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTitleReplacementCheckbox());
+
+    getID('inner-programacao-select-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-turno'));
+    getID('inner-programacao-select-troca-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-troca-turno'));
 
     _innerProgramacaoSelectLocalAction(selects);
 }
@@ -509,4 +455,67 @@ function _loadInnerProgramacaoEventListeners() {
             getID(`inner-programacao-fim`).reportValidity();
         }
     });
+}
+
+function _pairTurnos(callerID) {
+    const id1 = 'inner-programacao-select-turno';
+    const id2 = 'inner-programacao-select-troca-turno';
+
+    const turno1 = getID(id1).value;
+    const turno2 = getID(id2).value;
+
+    if (turno1 !== turno2) {
+        if (callerID === id1) {
+            getID(id2).value = turno1;
+        } else if (callerID === id2) {
+            getID(id1).value = turno2;
+        }
+    }
+}
+
+function _getMostRecentJ(j) {
+    const nova = getID('inner-programacao-select-troca-data')?.value;
+    
+    if (nova) {
+        const keys = DATAS.map(data => _jsDateToKey(data));
+        const atual = keys[j-1];
+        if (atual != nova) {
+            const turno = getID('inner-programacao-select-troca-turno').value;
+            if (keys.includes(nova) && INNER_PROGRAMACAO[nova] && INNER_PROGRAMACAO[nova][turno]) {
+                return keys.indexOf(nova) + 1;
+            }
+        }
+    }
+
+    return j;
+}
+
+function _getNewTurno(j) {
+    if (LAST_OPENED_TURNO[j]) {
+        return LAST_OPENED_TURNO[j];
+    } else {
+        for (const turno of TURNOS) {
+            const element = getID(`inner-programacao-${turno}-${j}`);
+            if (element && !element.innerText) {
+                return turno;
+            }
+        }
+    }
+    return 'noite';
+}
+
+function _afterDragInnerProgramacao(evt) {
+    const turnoInicial = evt.from.id.split('-')[2];
+    const turnoFinal = evt.to.id.split('-')[2];
+
+    const j = evt.item.children[0].id.split('-')[3];
+    const key = _jsDateToKey(DATAS[j - 1]);
+
+    // Remover elemento da posição inicial
+    const element = INNER_PROGRAMACAO[key][turnoInicial].splice(evt.oldIndex, 1)[0];
+
+    // Adicionar elemento na posição final
+    INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element);
+
+    _loadInnerProgramacaoHTML(j);
 }

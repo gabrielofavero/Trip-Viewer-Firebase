@@ -14,11 +14,3 @@ function _imageDataIncludes(value, includes) {
     }
     return false;
 }
-
-function _formatAltura(value) {
-    if (value == 0) {
-        value = 1;
-        getID('logo-tamanho').value = value;
-    }
-    getID('logo-tamanho-tooltip').innerText = `(${value * 25}px)`
-}

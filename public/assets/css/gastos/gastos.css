@@ -428,7 +428,8 @@ section {
 # Preloader
 --------------------------------------------------------------*/
 #preloader,
-#preloader-viagens,
+#preloader-proximasViagens,
+#preloader-viagensAnteriores,
 #preloader-destinos,
 #preloader-listagens {
   position: fixed;
@@ -445,7 +446,8 @@ section {
 }
 
 #preloader:before,
-#preloader-viagens:before,
+#preloader-proximasViagens:before,
+#preloader-viagensAnteriores:before,
 #preloader-destinos:before,
 #preloader-listagens:before {
   content: "";

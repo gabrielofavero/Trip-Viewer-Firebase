@@ -132,6 +132,11 @@ details .toggle-code:hover {
   color: #d1d0d0;
 }
 
+.message-container,
+.input-container {
+  background: #303030;
+}
+
 #footer .social-links a {
   background: #7f75b6;
 }
@@ -157,13 +162,29 @@ details .toggle-code:hover {
 }
 
 .btn-basic {
-  border-color: #E2E2E2;
-  color: #E2E2E2;
+  border-color: #d4d1e7;
+  color: #d4d1e7;
 }
 
-.btn-theme,
+.btn-basic-secondary {
+  border-color: #ced1d4;
+  color: #ced1d4;
+}
+
 .btn-basic:hover, 
 .btn-basic:focus {
+  background: #ced1d4;
+  color: #404040;
+}
+
+.btn-theme {
+  background: #7f75b6;
+  color: #fff;
+}
+
+.btn-basic:hover, 
+.btn-basic:focus {
+  border-color: #7f75b6;
   background: #7f75b6;
   color: #fff;
 }
@@ -202,7 +223,9 @@ details .toggle-code:hover {
   color: #E2E2E2;
 }
 
-.accordion-button:focus, .purple:focus {
+.accordion-button:focus,
+.purple:focus,
+.btn:focus {
   box-shadow: 0 0 0 0.3rem rgba(127, 117, 182, 0.25);
 }
 
@@ -230,8 +253,8 @@ details .toggle-code:hover {
   fill: #7f75b6;
 }
 
-.input-botao
-.input-botao-input {
+.input-botao,
+.input-botao-draggable {
   background-color: #404040;
   border: 1px solid #383838;
   color: #E2E2E2;
@@ -239,9 +262,10 @@ details .toggle-code:hover {
 
 .input-botao:hover,
 .input-botao:focus,
-.input-botao-input:hover,
-.input-botao-input:focus {
+.input-botao-draggable:hover,
+.input-botao-draggable:focus {
   background-color: #444444; 
+  color: var(--nf-label-color)
 }
 
 .pin-input {

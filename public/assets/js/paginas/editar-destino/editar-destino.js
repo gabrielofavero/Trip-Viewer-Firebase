@@ -14,11 +14,12 @@ var REGIOES = [];
 document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
-    await _main();
+    _main();
     DOCUMENT_ID = _getURLParam('d')
 
     _loadVisibilityIndex();
     _loadHabilitados();
+    _newDynamicSelect('regiao');
 
     if (DOCUMENT_ID) {
       await _loadDestinos()
@@ -63,36 +64,36 @@ function _loadEventListeners() {
   getID('restaurantes-adicionar').addEventListener('click', () => {
     _closeAccordions('restaurantes');
     _addRestaurantes();
-    _loadNewRegiaoSelect('restaurantes');
     _openLastAccordion('restaurantes');
+    _buildDS('regiao');
   });
 
   getID('lanches-adicionar').addEventListener('click', () => {
     _closeAccordions('lanches');
     _addLanches();
-    _loadNewRegiaoSelect('lanches');
     _openLastAccordion('lanches');
+    _buildDS('regiao');
   });
 
   getID('saidas-adicionar').addEventListener('click', () => {
     _closeAccordions('saidas');
     _addSaidas();
-    _loadNewRegiaoSelect('saidas');
     _openLastAccordion('saidas');
+    _buildDS('regiao');
   });
 
   getID('turismo-adicionar').addEventListener('click', () => {
     _closeAccordions('turismo');
     _addTurismo();
-    _loadNewRegiaoSelect('turismo');
     _openLastAccordion('turismo');
+    _buildDS('regiao');
   });
 
   getID('lojas-adicionar').addEventListener('click', () => {
     _closeAccordions('lojas');
     _addLojas();
-    _loadNewRegiaoSelect('lojas');
     _openLastAccordion('lojas');
+    _buildDS('regiao');
   });
 
   getID('salvar').addEventListener('click', () => {
@@ -104,22 +105,19 @@ function _loadEventListeners() {
   });
 
   getID('cancelar').addEventListener('click', () => {
-    _closeModal();
+    window.location.href = `index.html`;
   });
 
   getID('home').addEventListener('click', () => {
     window.location.href = `index.html`;
   });
 
-  getID('apagar').addEventListener('click', async () => {
+  getID('visualizar').addEventListener('click', () => {
     if (DOCUMENT_ID) {
-      await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
+      window.location.href = `viagem.html?d=${DOCUMENT_ID}`;
+    } else {
       window.location.href = `index.html`;
     }
-  });
-
-  getID('home').addEventListener('click', () => {
-    window.location.href = `index.html`;
   });
 
   getID('moeda').addEventListener('change', () => {
@@ -134,6 +132,14 @@ function _loadEventListeners() {
   getID('outra-moeda').addEventListener('change', () => {
     _loadCurrencySelects();
   });
+}
+
+function _addListenerToRemoveDestino(categoria, j) {
+  const dynamicSelects = [{
+    type: 'regiao',
+    selectID: `${categoria}-regiao-select-${j}`,
+  }]
+  _addRemoveChildListenerDS(categoria, j, dynamicSelects);
 }
 
 async function _loadDestinos() {
@@ -151,31 +157,30 @@ async function _loadDestinos() {
 }
 
 // Listeners
-function _addDestinosListeners(categoria, i) {
+function _addDestinosListeners(categoria, j) {
   // Título Interativo
-  getID(`${categoria}-nome-${i}`).addEventListener('change', () => _updateDestinosTitle(i, categoria));
-  getID(`${categoria}-emoji-${i}`).addEventListener('change', () => _updateDestinosTitle(i, categoria));
-  getID(`${categoria}-novo-${i}`).addEventListener('click', () => _updateDestinosTitle(i, categoria));
+  getID(`${categoria}-nome-${j}`).addEventListener('change', () => _updateDestinosTitle(j, categoria));
+  getID(`${categoria}-emoji-${j}`).addEventListener('change', () => _updateDestinosTitle(j, categoria));
+  getID(`${categoria}-novo-${j}`).addEventListener('click', () => _updateDestinosTitle(j, categoria));
 
   // Validação de Emoji
-  getID(`${categoria}-emoji-${i}`).addEventListener('input', () => _emojisOnInputAction(i, categoria));
+  getID(`${categoria}-emoji-${j}`).addEventListener('input', () => _emojisOnInputAction(j, categoria));
 
   // Valor
-  getID(`${categoria}-valor-${i}`).addEventListener('change', () => _valorListenerAction(i, categoria));
+  getID(`${categoria}-valor-${j}`).addEventListener('change', () => _valorListenerAction(j, categoria));
 
   // Região
-  _loadRegiaoListeners(i, categoria);
 
   // Links
-  getID(`${categoria}-website-${i}`).addEventListener('change', () => _validateLink(`${categoria}-website-${i}`));
-  getID(`${categoria}-mapa-${i}`).addEventListener('change', () => _validateMapLink(`${categoria}-mapa-${i}`));
-  getID(`${categoria}-instagram-${i}`).addEventListener('change', () => _validateInstagramLink(`${categoria}-instagram-${i}`));
-  getID(`${categoria}-midia-${i}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${i}`));
+  getID(`${categoria}-website-${j}`).addEventListener('change', () => _validateLink(`${categoria}-website-${j}`));
+  getID(`${categoria}-mapa-${j}`).addEventListener('change', () => _validateMapLink(`${categoria}-mapa-${j}`));
+  getID(`${categoria}-instagram-${j}`).addEventListener('change', () => _validateInstagramLink(`${categoria}-instagram-${j}`));
+  getID(`${categoria}-midia-${j}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${j}`));
 }
 
-function _valorListenerAction(i, categoria) {
-  const valor = getID(`${categoria}-valor-${i}`);
-  const outroValor = getID(`${categoria}-outro-valor-${i}`);
+function _valorListenerAction(j, categoria) {
+  const valor = getID(`${categoria}-valor-${j}`);
+  const outroValor = getID(`${categoria}-outro-valor-${j}`);
 
   if (valor.value == 'outro') {
     outroValor.style.display = 'block';
@@ -186,11 +191,11 @@ function _valorListenerAction(i, categoria) {
   }
 }
 
-function _updateDestinosTitle(i, categoria) {
-  const titleDiv = getID(`${categoria}-title-text-${i}`);
-  const emojiDiv = getID(`${categoria}-emoji-${i}`);
+function _updateDestinosTitle(j, categoria) {
+  const titleDiv = getID(`${categoria}-title-text-${j}`);
+  const emojiDiv = getID(`${categoria}-emoji-${j}`);
 
-  const nome = getID(`${categoria}-nome-${i}`).value;
+  const nome = getID(`${categoria}-nome-${j}`).value;
   const emoji = emojiDiv.value ? emojiDiv.value.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
 
   if (emoji && nome) {
@@ -199,11 +204,11 @@ function _updateDestinosTitle(i, categoria) {
     titleDiv.innerText = nome;
   }
 
-  getID(`${categoria}-title-icon-${i}`).style.display = getID(`${categoria}-novo-${i}`).checked ? 'block' : 'none';
+  getID(`${categoria}-title-icon-${j}`).style.display = getID(`${categoria}-novo-${j}`).checked ? 'block' : 'none';
 }
 
-function _emojisOnInputAction(i, categoria) {
-  const emojiDiv = getID(`${categoria}-emoji-${i}`);
+function _emojisOnInputAction(j, categoria) {
+  const emojiDiv = getID(`${categoria}-emoji-${j}`);
   const emojiUntreated = emojiDiv.value;
   const emojiTreated = emojiUntreated ? emojiUntreated.replace(/[a-zA-Z0-9\s!-\/:-@\[-`{-~]/g, '') : "";
 
@@ -228,5 +233,85 @@ async function getDesktopLink(originalLink) {
   } catch (error) {
     console.error('Error:', error);
     return "An error occurred while fetching the desktop link.";
+  }
+}
+
+function _OpenMoveDestinoModal(j, categoria) {
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = getID(`${categoria}-nome-${j}`).value || 'Mover Destino';
+  propriedades.containers = _getContainersInput();
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+  }, {
+    tipo: 'confirmar',
+    acao: `_moveDestino(${j}, '${categoria}')`,
+  }];
+
+  propriedades.conteudo = `
+  <div class="nice-form-group"">
+    <label>Mover para:</label>
+      <select class="editar-select" id="move-select">
+        <option value="restaurantes">Restaurantes</option>
+        <option value="lanches">Lanches</option>
+        <option value="saidas">Saídas</option>
+        <option value="turismo">Turismo</option>
+        <option value="lojas">Lojas</option>
+      </select>
+  </div>`
+
+  _displayFullMessage(propriedades);
+  getID('move-select').value = categoria;
+}
+
+function _moveDestino(j, categoria) {
+  const newCategoria = getID('move-select').value;
+
+  if (categoria != newCategoria) {
+    _addDestino(categoria);
+
+    const destino = {
+      novo: getID(`${categoria}-novo-${j}`).checked,
+      nome: getID(`${categoria}-nome-${j}`).value,
+      emoji: getID(`${categoria}-emoji-${j}`).value,
+      descricao: getID(`${categoria}-descricao-${j}`).value,
+      website: getID(`${categoria}-website-${j}`).value,
+      mapa: getID(`${categoria}-mapa-${j}`).value,
+      instagram: getID(`${categoria}-instagram-${j}`).value,
+      regiao: getID(`${categoria}-regiao-select-${j}`).value,
+      valor: getID(`${categoria}-valor-${j}`).value,
+      midia: getID(`${categoria}-midia-${j}`).value,
+      nota: getID(`${categoria}-nota-${j}`).value,
+    }
+
+    const newJ = _getLastJ(`${newCategoria}-box`) + 1;
+    _addDestino(newCategoria);
+    _addDestinoHTML(newCategoria, newJ, destino);
+    _removeChildWithValidation(categoria, j);
+  }
+
+  _closeMessage();
+}
+
+function _deleteDestino() {
+  let destino = getID('titulo').value;
+  destino = destino ? ` "${destino}"` : '';
+
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = 'Apagar Destino';
+  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão do destino${destino}? A ação não poderá ser desfeita.`;
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+  }, {
+    tipo: 'confirmar',
+    acao: '_deleteDestinoAction()'
+  }];
+
+  _displayFullMessage(propriedades);
+}
+
+async function _deleteDestinoAction() {
+  if (DOCUMENT_ID) {
+    await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
+    window.location.href = `index.html`;
   }
 }

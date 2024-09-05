@@ -37,23 +37,6 @@ const getID = (id) => {
 
 
 // Firebase
-function _startFirebase() {
-  let app = firebase.app();
-  let features = [
-    'auth',
-    'database',
-    'firestore',
-    'functions',
-    'messaging',
-    'storage',
-    'analytics',
-    'remoteConfig',
-    'performance',
-  ].filter(feature => typeof app[feature] === 'function');
-  console.log(`Firebase SDK loaded with ${features.join(', ')}`);
-  firebase.auth().currentUser;
-}
-
 async function _cloudFunction(func, params, displayError=true) {
   const myFunction = firebase.functions().httpsCallable(func);
   console.log('Chamando Cloud Function:', func);
@@ -74,7 +57,6 @@ function _main() {
   "use strict";
   $('body').css('overflow', 'hidden');
 
-  _startFirebase();
   _loadConfig();
 
   /**

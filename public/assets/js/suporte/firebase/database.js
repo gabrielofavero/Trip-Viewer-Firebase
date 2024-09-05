@@ -13,7 +13,7 @@ function _buildDatabaseObject(success, message = "", data = {}) {
 }
 
 // Generic Methods
-async function _get(path) {
+async function _get(path, treatError = true) {
   try {
     const docRef = firebase.firestore().doc(path);
     const snapshot = await docRef.get();
@@ -26,31 +26,11 @@ async function _get(path) {
       return;
     }
   } catch (error) {
-    console.error(error.message);
-    ERROR_FROM_GET_REQUEST = error;
-    return;
-  }
-}
-
-async function _getStatus(path) {
-  try {
-    const docRef = firebase.firestore().doc(path);
-    const snapshot = await docRef.get();
-
-    if (snapshot.exists) {
-      return 'Found';
-    } else {
-      return 'Not Found';
-    }
-
-  } catch (e) {
-    const message = e.message;
-    if (message.includes('Missing or insufficient permissions')) {
-      return 'Forbidden';
-    } else {
-      console.error(message);
-      return 'Unknown';
-    }
+    if (treatError) {
+      console.error(error.message);
+      ERROR_FROM_GET_REQUEST = error;
+      return;
+    } else throw error;
   }
 }
 
@@ -116,8 +96,14 @@ async function _getSingleData(type) {
 
     if (data) {
       for (let i = 0; i < data?.destinos?.length; i++) {
-        const place = await _get(`destinos/${data.destinos[i].destinosID}`);
-        data.destinos[i].destinos = place
+        let place;
+        try {
+          place = await _get(`destinos/${data.destinos[i].destinosID}`, false);
+          data.destinos[i].destinos = place
+        } catch (e) {
+          console.warn(`Não foi possível carregar o destino ${data.destinos[i].destinosID}: ${e.message}`);
+          data.destinos.splice(i, 1);
+        }
       }
     } else {
       _displayError(`Não foi possível carregar a página. Não há um código de ${type} válido na URL`);
@@ -314,6 +300,11 @@ async function _getUserList(type, includeData = false) {
   } else {
     throw new Error(`Não foi possível carregar a lista de ${type} pois o usuário não está logado`);
   }
+}
+
+async function _getUserListIDs(type) {
+  const userList = await _getUserList(type);
+  return userList.map(item => item.code);
 }
 
 async function _getPermissoes() {

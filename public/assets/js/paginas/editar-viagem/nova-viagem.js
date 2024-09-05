@@ -141,8 +141,8 @@ function _addTransporte() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-transporte-${j}" class="btn btn-secondary">
+        <div class="button-box-right-formatted">
+          <button id="remove-transporte-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -222,6 +222,11 @@ function _addHospedagens() {
             <label>Descrição <span class="opcional"> (Opcional)</span></label>
             <input id="hospedagens-descricao-${j}" type="text" placeholder="Quarto Duplo, camas King" />
           </div>
+
+          <div class="nice-form-group">
+            <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
+            <input id="reserva-hospedagens-${j}" type="text" placeholder="ABC123" />
+          </div>
     
           <div class="nice-form-group">
             <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
@@ -254,8 +259,8 @@ function _addHospedagens() {
             
           </div>
     
-          <div class="deletar-box">
-            <button id="remove-hospedagens-${j}" class="btn btn-secondary">
+          <div class="button-box-right-formatted">
+            <button id="remove-hospedagens-${j}" class="btn btn-basic btn-format">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" fill-rule="evenodd"
                   d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -299,7 +304,7 @@ function _loadProgramacao() {
   const inicio = getID('inicio').value;
   const fim = getID('fim').value;
 
-  DATAS = _getArrayOfDates(inicio, fim);
+  DATAS = _getArrayOfDates(_formattedDateToDate(inicio), _formattedDateToDate(fim));
 
   const programacaoBox = getID('programacao-box');
   programacaoBox.innerHTML = '';
@@ -336,27 +341,27 @@ function _loadProgramacao() {
             <input class="nice-form-group" id="programacao-inner-title-${j}" maxlength="25" type="text" placeholder="São Paulo" style="display: none;">
           </div>
 
-          <div class='turno-box' id='programacao-madrugada-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-madrugada-${j}'>
             <label>Madrugada</label>
-            <div class="inner-programacao" id="inner-programacao-madrugada-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-madrugada-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-manha-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-manha-${j}'>
             <label>Manhã</label>
-            <div class="inner-programacao" id="inner-programacao-manha-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-manha-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-tarde-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-tarde-${j}'>
             <label>Tarde</label>
-            <div class="inner-programacao" id="inner-programacao-tarde-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-tarde-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-noite-${j}' style="display: none;">
+          <div class='turno-box' id='programacao-noite-${j}'>
             <label>Noite</label>
-            <div class="inner-programacao" id="inner-programacao-noite-${j}"></div>
+            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-noite-${j}"></div>
           </div>
 
-          <div class="button-box-right" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
+          <div class="button-box-right-formatted" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
             <button id="programacao-adicionar-${j}" class="btn btn-theme" onclick="_openInnerProgramacao(${j})">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
@@ -469,8 +474,8 @@ function _addLineup() {
   
         </div>
   
-        <div class="deletar-box">
-          <button id="remove-lineup-${j}" class="btn btn-secondary">
+        <div class="button-box-right-formatted">
+          <button id="remove-lineup-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -484,7 +489,9 @@ function _addLineup() {
     `);
 
   _loadLineupListeners(j);
-  _addRemoveChildListener('lineup', j);
+  _addRemoveLineupListener(j);
+  _addSelectorDS('lineup-genero', `lineup-genero-select-${j}`, `lineup-genero-${j}`);
+  _addSelectorDS('lineup-palco', `lineup-palco-select-${j}`, `lineup-palco-${j}`);
 }
 
 function _addGaleria() {
@@ -541,8 +548,8 @@ function _addGaleria() {
     
           </div>
   
-        <div class="deletar-box">
-          <button id="remove-galeria-${j}" class="btn btn-secondary">
+        <div class="button-box-right-formatted">
+          <button id="remove-galeria-${j}" class="btn btn-basic btn-format">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" fill-rule="evenodd"
                 d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
@@ -557,5 +564,6 @@ function _addGaleria() {
 
   _loadImageSelector(`galeria-${j}`);
   _loadGaleriaListeners(j);
-  _addRemoveChildListener('galeria', j);
+  _addRemoveGaleriaListener(j);
+  _addSelectorDS('galeria-categoria', `galeria-categoria-select-${j}`, `galeria-categoria-${j}`);
 }

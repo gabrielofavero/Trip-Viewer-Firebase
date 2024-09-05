@@ -11,7 +11,8 @@ strong {
 }
 
 #preloader:before,
-#preloader-viagens:before,
+#preloader-proximasViagens:before,
+#preloader-viagensAnteriores:before,
 #preloader-destinos:before,
 #preloader-listagens:before {
   border: 6px solid #7F75B9;

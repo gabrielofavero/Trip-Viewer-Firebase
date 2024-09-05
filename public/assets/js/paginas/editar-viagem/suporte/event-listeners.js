@@ -3,7 +3,6 @@ function _loadEventListeners() {
     // Inputs
     getID('inicio').addEventListener('change', () => _inicioListenerAction());
     getID('fim').addEventListener('change', () => _fimListenerAction());
-    getID('logo-tamanho').addEventListener('input', (event) => _formatAltura(event.target.value));
 
     // Botões
     getID('editores-adicionar').addEventListener('click', () => _addEditores());
@@ -11,7 +10,6 @@ function _loadEventListeners() {
     getID('re-editar').addEventListener('click', () => _reEdit('viagens', WAS_SAVED));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
     getID('home').addEventListener('click', () => window.location.href = `index.html`);
-    getID('apagar').addEventListener('click', async () => _apagarListenerAction());
     getID('home').addEventListener('click', () => window.location.href = `index.html`);
     getID('cancelar').addEventListener('click', () => window.location.href = `index.html`);
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
@@ -80,10 +78,21 @@ function _visualizarListenerAction() {
     }
 }
 
-async function _apagarListenerAction() {
-    if (DOCUMENT_ID) {
-        await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
-        await _deleteUserObjectStorage();
-        window.location.href = `index.html`;
-    }
+function _addRemoveGaleriaListener(j) {
+    const dynamicSelects = [{
+        type: 'galeria-categoria',
+        selectID: `galeria-categoria-select-${j}`,
+    }]
+    _addRemoveChildListenerDS('galeria', j, dynamicSelects);
+}
+
+function _addRemoveLineupListener(j) {
+    const dynamicSelects = [{
+        type: 'lineup-genero',
+        selectID: `lineup-genero-select-${j}`,
+    }, {
+        type: 'lineup-palco',
+        selectID: `lineup-palco-select-${j}`,
+    }]
+    _addRemoveChildListenerDS('lineup', j, dynamicSelects);
 }

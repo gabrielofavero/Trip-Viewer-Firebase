@@ -9,11 +9,11 @@ async function _signInGoogle() {
     try {
         await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         var provider = new firebase.auth.GoogleAuthProvider();
-        if (window.location.href.includes('.firebaseapp.com')) {
-            await firebase.auth().signInWithRedirect(provider);
-        } else {
+        if (window.location.hostname == 'localhost') {
             await firebase.auth().signInWithPopup(provider);
-        }     
+        } else {
+            await firebase.auth().signInWithRedirect(provider);
+        }
     } catch (error) {
         console.error(error.message);
         throw error;

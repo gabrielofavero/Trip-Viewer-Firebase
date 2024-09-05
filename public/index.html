@@ -123,52 +123,60 @@
       </div>
 
       <div class="logged-menu" id="logged-menu" style="display: none" style="display: none">
-        <div class="logged-menu-item" id="myTrips"><i class="iconify index-buttons logged-menu-buttons"
+        <div class="logged-menu-item" id="proximasViagens"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="material-symbols-light:trip"></i>
-          <div class="logged-menu-text"> Minhas Viagens</div>
+          <div class="logged-menu-text"> Próximas viagens</div>
         </div>
-        <div class="logged-menu-item" id="myDestinations"><i class="iconify index-buttons logged-menu-buttons"
+          <div class="logged-menu-item" id="viagensAnteriores"><i class="iconify index-buttons logged-menu-buttons"
+            data-icon="wpf:past"></i>
+          <div class="logged-menu-text"> Viagens anteriores</div>
+        </div>
+        <div class="logged-menu-item" id="destinosCadastrados"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="bx:trip"></i>
-          <div class="logged-menu-text"> Meus Destinos</div>
+          <div class="logged-menu-text"> Destinos cadastrados</div>
         </div>
-        <div class="logged-menu-item" id="myDestinationsLists"><i class="iconify index-buttons logged-menu-buttons"
+        <div class="logged-menu-item" id="listasDeDestinos"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="fluent:list-28-filled"></i>
-          <div class="logged-menu-text"> Minhas Listas</div>
+          <div class="logged-menu-text"> Listas de destinos</div>
         </div>
+        <div class="logged-menu-item" id="ajustesDaConta"><i class="iconify index-buttons logged-menu-buttons"
+          data-icon="material-symbols:settings"></i>
+        <div class="logged-menu-text"> Ajustes da conta</div>
+      </div>
       </div>
 
-      <div class="trip-view-box" id="tripViewer" style="display: none">
-        <div id="trip-view-title">Visualizar Viagem</div>
-        <input id="trip-view-input" type="text" placeholder="Código da Viagem">
-        <br>
-        <div id="trip-view-reminder" class="trip-view-text"> <i class='red'>*</i> Insira o código da viagem para
-          continuar <br> (Exemplo:
-          g4nx5cyNKW2geSnQVXX8)</div>
-        <div id="trip-view-invalid" class="trip-view-text"> <i class='red'>*</i> Código Inválido. Insira o código da
-          viagem para continuar <br> (Exemplo:
-          g4nx5cyNKW2geSnQVXX8)</div>
-        <div id="trip-view-private" class="trip-view-text"> <i class='red'>*</i> A viagem selecionada está definida como
-          privada</div>
-        <div id="trip-view-error" class="trip-view-text"> <i class='red'>*</i> Erro ao tentar localizar viagem. Contate
-          o administrador do sistema</div>
-        <button id="trip-view-continue" class="btn btn-theme" type="button">Prosseguir</button>
-      </div>
-
-      <div class="userList-box" id="viagens-box" style="display: none">
-        <h4>Minhas Viagens</h4>
+      <div class="userList-box" id="proximasViagens-box" style="display: none">
+        <h4>Próximas Viagens</h4>
         <div class="content-list">
-          <div id="preloader-viagens"></div>
-          <div class="demora-carregamento" id="demora-carregamento-viagens" style="display:none">
+          <div id="preloader-proximasViagens"></div>
+          <div class="demora-carregamento" id="demora-carregamento-proximasViagens" style="display:none">
             O carregamento está demorando mais que o esperado<br>
-            <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button"
+            <button id="carregar-novamente-proximasViagens" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('viagens')">
               <i class="iconify add" data-icon="pepicons-pop:reload"></i>Tentar Novamente</button>
           </div>
-          <div id="sem-viagens" style="display:none">Sem Viagens Cadastradas 😔</div>
-          <div id="dados-viagens"></div>
+          <div id="sem-proximasViagens" style="display:none">Sem Próximas Viagens Cadastradas 😔</div>
+          <div id="dados-proximasViagens"></div>
         </div>
-        <button id="new-viagem" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i>Nova Viagem</button>
+        <button id="nova-viagem-1" class="btn btn-theme" type="button"><i class="iconify add"
+          data-icon="gridicons:add-outline"></i>Nova Viagem</button>
+      </div>
+
+      <div class="userList-box" id="viagensAnteriores-box" style="display: none">
+        <h4>Viagens Anteriores</h4>
+        <div class="content-list">
+          <div id="preloader-viagensAnteriores"></div>
+          <div class="demora-carregamento" id="demora-carregamento-viagensAnteriores" style="display:none">
+            O carregamento está demorando mais que o esperado<br>
+            <button id="carregar-novamente-viagensAnteriores" class="btn btn-theme carregar-novamente" type="button"
+              onclick="_manualListLoad('viagens')">
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i>Tentar Novamente</button>
+          </div>
+          <div id="sem-viagensAnteriores" style="display:none">Sem Próximas Viagens Cadastradas 😔</div>
+          <div id="dados-viagensAnteriores"></div>
+        </div>
+        <button id="nova-viagem-2" class="btn btn-theme" type="button"><i class="iconify add"
+          data-icon="gridicons:add-outline"></i>Nova Viagem</button>
       </div>
 
       <div class="userList-box" id="destinos-box" style="display: none">
@@ -303,6 +311,7 @@
   </footer><!-- End Footer -->
 
   <!-- Firebase -->
+  <script src="../index.js" type=text/JSX"></script>
   <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
   <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
   <script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>

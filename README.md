@@ -2,20 +2,16 @@
 
 # Tarefas
 
-### Legenda
-
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 45    | 39          | 5         |
-| 🏆     | Feature  | F000    | 57    | 49          | 8         |
-| 📈     | Melhoria | M000    | 69    | 52          | 17        |
-| ⚔️   | Épico   | E000    | 25    | 16          | 9        |
-
-### Status
+| 🐞     | Bug      | B000    | 53    | 49          | 3         |
+| 🏆     | Feature  | F000    | 61    | 53          | 8         |
+| 📈     | Melhoria | M000    | 82    | 64          | 17        |
+| ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
-- ❗️: Crítico
+- ❗️: Crítico (deploy em produção)
 
 ## Doing
 
@@ -23,15 +19,13 @@
 
 ### Prioridade Alta
 
-- ⚔️ **E013:** Migração do Projeto
-  - *Criação de ambientes dev e prd*
-  - *Criação de branch de develop*
-  - *Depreciação do trip-viewer-tcc (redirecionamento para prd)*
-  - *Criação de domínio personalizado para prd*
+- 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
+- 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 
 ### Prioridade Média
 
-- 📈 **M023:** Arrastamento de Accordions (Páginas de Editar)
+- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
+  - *Adicionar imagem e descrição*
 - 📈 **M020:** Módulo de transporte mais automatizado
   - *Se user clicou em volta e não há dados, reverte tudo da ida*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
@@ -70,7 +64,6 @@
 - 🏆 **F044:** Criação de animações em todo o site
 - 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela em index.html
-- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
@@ -85,10 +78,57 @@
 - 📈 **M058:** Modularização de arquivos de CSS para diminuir redundâncias
   -*Também será preciso alterar a função que calcula o dark mode*
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
-- 📈 **M061:** Substituição de modal de página de editar por mensagem nativa
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
+- 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 
 ## Done
+
+### Setembro 2024
+
+- 📈 **M071:** Incluir código de reserva em Hospedagens
+- 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
+- 🐞 **B047:** Programação em viagem.html não mostra horário inicial se o final está ausente
+- 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
+- 📈 **M023:** Arrastamento de Accordions (Programação)
+- 📈 **M075:** Ajustes index.html
+  - *Remover "Visualizar Viagem"*
+  - *Adicionar "Ajustes de Conta" + Diferentes animações para cada rota*
+  - *Ajustar largura dos textos de menu para deixar ícones na mesma posição*
+- 📈 **M079:** Login por redirecionamento
+- 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
+- 📈 **M074:** Botão de troca de programação (editar-viagem.html)
+- 🐞 **B051:** Correção de destino desabilitado não auto apagar template vazio
+- 📈 **M080:** Botão de troca de destino (editar-destino.html)
+- 📈 **M081:** Reimplementação do Dynamic Select para facilitar manutenção
+- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
+- 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
+- 📈 **M066:** Tamanho de logotipo automático em viagens.html
+- 🐞 **B053:** Erros nas funções de get e set de dados do banco
+- 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
+- 🐞 **B052:** Não é possível desabilitar gastos em editar-viagem.html
+- 📈 **M061:** Substituição de modal de deleção de página de editar por mensagem nativa
+- 📈 **M082:** Pack de melhorias e fixes 09/24 (pré deploy em prod)
+  - *Visualizar Destino ao salvar (editar-destino.html)*
+  - *Dados da viagem descrentralizados (viagem.html)*
+  - *Ajuste de responsividade em hospedagens (viagem.html)*
+  - *Valor não aparece em novo destino (editar-destino.html)*
+  - *Cancelar não volta para a home (editar-destino.html)*
+  - *Tratamento em viagens e editar-viagem para ignorar destino não existente*
+  - *Listagem existente não carrega (editar-listagem.html)*
+  - *Primeiro set não funciona por "Usuário Não Autenticado" (editar-destino.html)*
+
+### Agosto 2024
+
+- 📈 **M070:** Aumentar tamanho das listas em index.html + reordenar para viagens mais próximas primeiro
+- 🏆 **F058:** Inserir item de viagens anteriores em index.html
+- 🐞 **B048:** Programação não está carregando corretamente no dark mode
+
+### Julho 2024
+
+- 🐞 **B046:** Pacote de hot fixes 07/2024
+  - *Login por pop-up no domínio novo (temporário)*
+  - *Correção de erros na exibição de destinos*
+  - *Correção de erros na criação de novas viagens*
 
 ### Junho 2024
 
@@ -131,6 +171,11 @@
 - *Página agora apenas exibe um accordion por vez*
 - *Mídias agora não se cruzam (reprodução simultânea)*
 - ⚔️ **E022:** Funções de migrações (Cloud Functions)
+- ⚔️ **E013:** Migração do Projeto
+  - *Criação de ambientes dev e prd*
+  - *Criação de branch de develop*
+  - *Depreciação do trip-viewer-tcc (redirecionamento para prd)*
+  - *Criação de domínio personalizado para prd*
 
 ### Maio 2024
 
@@ -331,3 +376,4 @@
 - 🏆 **F046:** Firebase Firestore Rules no Front-End
   - *Risco de segurança expor ao user as regras*
 - 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
+- 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens

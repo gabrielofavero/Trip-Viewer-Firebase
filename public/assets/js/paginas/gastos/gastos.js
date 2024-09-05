@@ -8,7 +8,7 @@ var GASTOS_TOTAIS = {
 var GASTO_ATIVO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', async function () {
-    await _main();
+    _main();
     _loadVisibilityExternal();
 
     const closeButton = getID("closeButton");

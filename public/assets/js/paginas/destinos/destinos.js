@@ -149,15 +149,22 @@ function _applyContent() {
 
 function _orderInnerHTMLs(innerContents) {
   innerContents.sort((a, b) => {
-    // Ordena por nota em ordem decrescente
+    // Verifica se uma das notas é '?', para priorizar as outras notas
+    if (a.nota === '?') return 1;
+    if (b.nota === '?') return -1;
+    
+    // Ordena por nota em ordem decrescente (5, 4, 3, 2, 1)
     if (b.nota !== a.nota) {
       return b.nota - a.nota;
     }
+    
     // Se as notas são iguais, ordena por título em ordem crescente
     return a.titulo.localeCompare(b.titulo);
   });
+  
   return innerContents.map(item => item.innerHTML);
 }
+
 
 
 // Actions

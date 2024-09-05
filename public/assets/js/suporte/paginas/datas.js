@@ -18,6 +18,10 @@ function _dayToDayOfWeekText(day) {
     return ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][day];
 }
 
+function _dateToDayOfTheWeek(date) {
+    return _dayToDayOfWeekText(date.getDay());
+}
+
 function _getDateNoTime(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
@@ -110,10 +114,7 @@ function _getPreviousInputDay(inputDate) {
     return _getAdjustedInputDate(inputDate, -1);
 }
 
-function _getArrayOfDates(formattedStart, formattedEnd) {
-    const start = _formattedDateToDate(formattedStart);
-    const end = _formattedDateToDate(formattedEnd);
-
+function _getArrayOfDates(start, end) {
     const dates = [];
     let currentDate = start;
     while (currentDate <= end) {
@@ -197,6 +198,10 @@ function _jsDateToDayOfTheWeekAndDateTitle(jsDate, showYear = false) {
     const ano = showYear ? ` de ${jsDate.getFullYear()}` : '';
     const diaDaSemana = _dayToDayOfWeekText(jsDate.getDay());
     return `${diaDaSemana}, ${dia} de ${_monthToText(mes)}${ano}`;
+}
+
+function _jsDateToMiniTitle(jsDate) {
+    return `${_dateToDayOfTheWeek(jsDate)}, ${_jsDateToDate(jsDate)}`
 }
 
 function _firestoreDateToKey(firestoreDate) {

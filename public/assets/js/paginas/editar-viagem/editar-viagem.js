@@ -9,21 +9,20 @@ var NEW_TRIP = false;
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
-var GALERIA_CATEGORIAS = [];
-var LINEUP_GENEROS = [];
-var LINEUP_PALCOS = [];
-
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    await _main();
-    
+    _main();
+
     DOCUMENT_ID = _getURLParam('v');
     PERMISSOES = await _getPermissoes();
 
     _loadVisibilityIndex();
     _loadHabilitados();
+    _newDynamicSelect('galeria-categoria');
+    _newDynamicSelect('lineup-genero');
+    _newDynamicSelect('lineup-palco');
 
     if (DOCUMENT_ID) {
       await _loadTrip(true);
@@ -78,7 +77,7 @@ function _loadUploadSelectors() {
   _loadUploadSelector('logo');
 }
 
-async function _loadTrip(stripped=false) {
+async function _loadTrip(stripped = false) {
   getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
   _startLoadingScreen();
@@ -109,4 +108,29 @@ async function _uploadViagemItens(uploadItens, item) {
     }
   }
   return result;
+}
+
+function _deleteViagem() {
+  let viagem = getID('titulo').value;
+  viagem = viagem ? ` "${viagem}"` : '';
+
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = 'Apagar Viagem';
+  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da viagem${viagem}? A ação não poderá ser desfeita.`;
+  propriedades.botoes = [{
+    tipo: 'cancelar',
+  }, {
+    tipo: 'confirmar',
+    acao: '_deleteViagemAction()'
+  }];
+
+  _displayFullMessage(propriedades);
+}
+
+async function _deleteViagemAction() {
+  if (DOCUMENT_ID) {
+    await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
+    await _deleteUserObjectStorage();
+    window.location.href = `index.html`;
+}
 }

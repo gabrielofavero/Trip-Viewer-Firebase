@@ -70,10 +70,6 @@ function _expandContentBox() {
   contentBox.style.transition = 'height 0.5s ease';
 }
 
-function _closeDeleteModal() {
-  _closeModal('delete-modal');
-}
-
 function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
   const contentBox = select('.content-box');
   let fadeIn = [];
@@ -85,7 +81,7 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
   switch (id) {
     case 'logged':
       fadeIn = ['index-logged-title', 'logged-menu', 'tripViewer'];
-      fadeOut = ['index-unlogged-title', 'login-box', 'viagens-box', 'destinos-box', 'settings-box', 'listagens-box'];
+      fadeOut = ['index-unlogged-title', 'login-box', 'proximasViagens-box', 'viagensAnteriores-box', 'destinos-box', 'settings-box', 'listagens-box'];
 
       if (from === 0 && to === 0) {
         fadeIn.push('profile-icon');
@@ -98,27 +94,31 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
       break;
     case 'unlogged':
       fadeIn = ['index-unlogged-title', 'login-box', 'tripViewer'];
-      fadeOut = ['index-logged-title', 'logged-menu', 'profile-icon', 'viagens-box', 'destinos-box', 'settings-box', 'listagens-box', 'back'];
+      fadeOut = ['index-logged-title', 'logged-menu', 'profile-icon', 'proximasViagens-box', 'viagensAnteriores-box', 'destinos-box', 'settings-box', 'listagens-box', 'back'];
       break;
     case 'settings':
       fadeIn = ['settings-box'];
-      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'tripViewer', 'viagens-box', 'destinos-box', 'listagens-box', 'logged-menu'];
+      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'tripViewer', 'proximasViagens-box', 'viagensAnteriores-box', 'destinos-box', 'listagens-box', 'logged-menu'];
       fadeInNoDirection = ['back'];
-      horizontal = false;
       break;
-    case 'viagens':
-      fadeIn = ['viagens-box'];
-      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'destinos-box', 'settings-box', 'listagens-box'];
+    case 'proximasViagens':
+      fadeIn = ['proximasViagens-box'];
+      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'destinos-box', 'settings-box', 'listagens-box', 'viagensAnteriores-box'];
+      fadeInNoDirection = ['back'];
+      break;
+    case 'viagensAnteriores':
+      fadeIn = ['viagensAnteriores-box'];
+      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'destinos-box', 'settings-box', 'listagens-box', 'proximasViagens-box'];
       fadeInNoDirection = ['back'];
       break;
     case 'destinos':
       fadeIn = ['destinos-box'];
-      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'viagens-box', 'settings-box', 'listagens-box'];
+      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'proximasViagens-box', 'viagensAnteriores-box', 'settings-box', 'listagens-box'];
       fadeInNoDirection = ['back'];
       break;
     case 'listagens':
       fadeIn = ['listagens-box'];
-      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'viagens-box', 'settings-box', 'destinos-box'];
+      fadeOut = ['index-unlogged-title', 'index-logged-title', 'login-box', 'logged-menu', 'tripViewer', 'proximasViagens-box', 'viagensAnteriores-box', 'settings-box', 'destinos-box'];
       fadeInNoDirection = ['back'];
   }
 

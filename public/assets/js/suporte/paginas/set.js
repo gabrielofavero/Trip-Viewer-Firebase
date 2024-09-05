@@ -20,6 +20,12 @@ var CLEAR_IMAGES = {
 var CUSTOM_UPLOADS = {};
 
 async function _setDocumento(tipo) {
+    const userID = await _getUID();
+
+    if (!userID) {
+        throw new Error('Usuário não autenticado');
+    }
+
     let result;
     let responses = [];
 
@@ -43,6 +49,11 @@ async function _setDocumento(tipo) {
     } else if (newData) {
         result = await _create(tipo, newData);
         DOCUMENT_ID = result?.data?.id;
+        if (DOCUMENT_ID) {
+            const userListIDs = await _getUserListIDs(tipo);
+            userListIDs.push(DOCUMENT_ID);
+            await _update(`usuarios/${userID}`, { [tipo]: userListIDs });
+        }
     }
 
     responses.push(result);

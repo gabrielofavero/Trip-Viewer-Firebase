@@ -33,9 +33,9 @@ function _loadCompartilhamentoData() {
 
     if (editores && editores.length > 0) {
         getID('habilitado-editores').checked = true;
-        for (let i = 1; i <= editores.length; i++) {
+        for (let j = 1; j <= editores.length; j++) {
             _addEditores();
-            getID(`editores-email-${i}`).value = editores[i - 1];
+            getID(`editores-email-${j}`).value = editores[j - 1];
         }
     }
 }
@@ -45,7 +45,6 @@ function _loadCustomizacaoData() {
     const background = FIRESTORE_DATA.imagem.background;
     const logoClaro = FIRESTORE_DATA.imagem.claro;
     const logoEscuro = FIRESTORE_DATA.imagem.escuro;
-    const altura = FIRESTORE_DATA.imagem.altura;
 
     if (FIRESTORE_DATA.imagem.ativo === true) {
         getID('habilitado-imagens').checked = true;
@@ -55,14 +54,6 @@ function _loadCustomizacaoData() {
     _loadCustomizacaoImageData(background, 'link-background');
     _loadCustomizacaoImageData(logoClaro, 'link-logo-light');
     _loadCustomizacaoImageData(logoEscuro, 'link-logo-dark');
-
-    if (altura) {
-        const alturaValue = altura.replace('px', '');
-        if (alturaValue > 25 && alturaValue < 500) {
-            getID('logo-tamanho').value = alturaValue / 25;
-            getID('logo-tamanho-tooltip').innerText = `(${altura})`;
-        }
-    }
 
     if (_imageDataIncludes(background, FIREBASE_IMAGE_ORIGIN)) {
         FIREBASE_IMAGES.background = true;
@@ -251,6 +242,7 @@ function _loadHospedagemData() {
         getID(`hospedagens-title-${j}`).innerText = hospedagem.nome || getID(`hospedagens-title-${j}`).innerText;
         getID(`hospedagens-endereco-${j}`).value = hospedagem.endereco;
         getID(`hospedagens-descricao-${j}`).value = hospedagem.descricao;
+        getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
         getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
         getID(`link-hospedagens-${j}`).value = hospedagem.imagem instanceof Object ? hospedagem.imagem.link : hospedagem.imagem
 
@@ -260,7 +252,7 @@ function _loadHospedagemData() {
 }
 
 function _loadDestinosData() {
-    if (FIRESTORE_DATA.modulos.destinos === true) {
+    if (_getHTMLpage() === 'editar-listagem' || FIRESTORE_DATA.modulos.destinos === true) {
         if (getID('habilitado-destinos')) {
             getID('habilitado-destinos').checked = true;
         }
@@ -314,65 +306,65 @@ function _loadLineupData() {
 
         const keys = Object.keys(FIRESTORE_DATA.lineup);
         if (keys.length > 0) {
-            let i = 1;
+            let j = 1;
             for (const key of keys) {
                 const size = FIRESTORE_DATA.lineup[key].nome.length;
-                for (let j = 0; j < size; j++, i++) {
+                for (let i = 0; i < size; i++, j++) {
                     _addLineup();
 
                     const nome = FIRESTORE_DATA.lineup[key].nome;
-                    if (nome && nome[j]) {
-                        getID(`lineup-nome-${i}`).value = nome[j];
-                        getID(`lineup-title-${i}`).innerText = nome[j];
+                    if (nome && nome[i]) {
+                        getID(`lineup-nome-${j}`).value = nome[i];
+                        getID(`lineup-title-${j}`).innerText = nome[i];
                     }
 
                     const headliner = FIRESTORE_DATA.lineup[key].head;
-                    if (headliner && headliner[j]) {
-                        getID(`lineup-headliner-${i}`).checked = headliner[j];
-                        getID(`lineup-title-${i}`).innerText += ' ⭐';
+                    if (headliner && headliner[i]) {
+                        getID(`lineup-headliner-${j}`).checked = headliner[i];
+                        getID(`lineup-title-${j}`).innerText += ' ⭐';
                     }
 
-                    getID(`lineup-local-${i}`).value = key;
+                    getID(`lineup-local-${j}`).value = key;
 
                     const genero = FIRESTORE_DATA.lineup[key].genero;
-                    if (genero && genero[j]) {
-                        getID(`lineup-genero-${i}`).value = genero[j];
+                    if (genero && genero[i]) {
+                        getID(`lineup-genero-${j}`).value = genero[i];
+                        _updateValueDS('lineup-genero', genero[i], `lineup-genero-select-${j}`);
                     }
 
                     const palco = FIRESTORE_DATA.lineup[key].palco;
-                    if (palco && palco[j]) {
-                        getID(`lineup-palco-${i}`).value = palco[j];
+                    if (palco && palco[i]) {
+                        getID(`lineup-palco-${j}`).value = palco[i];
+                        _updateValueDS('lineup-palco', palco[i], `lineup-palco-select-${j}`);
                     }
 
                     const data = FIRESTORE_DATA.lineup[key].data;
-                    if (data && data[j]) {
-                        getID(`lineup-data-${i}`).value = data[j];
+                    if (data && data[i]) {
+                        getID(`lineup-data-${j}`).value = data[i];
                     }
 
                     const inicio = FIRESTORE_DATA.lineup[key].inicio;
-                    if (inicio && inicio[j]) {
-                        getID(`lineup-inicio-${i}`).value = inicio[j];
+                    if (inicio && inicio[i]) {
+                        getID(`lineup-inicio-${j}`).value = inicio[i];
                     }
 
                     const fim = FIRESTORE_DATA.lineup[key].fim;
-                    if (fim && fim[j]) {
-                        getID(`lineup-fim-${i}`).value = fim[j];
+                    if (fim && fim[i]) {
+                        getID(`lineup-fim-${j}`).value = fim[i];
                     }
 
                     const midia = FIRESTORE_DATA.lineup[key].midia;
-                    if (midia && midia[j]) {
-                        getID(`lineup-midia-${i}`).value = midia[j];
+                    if (midia && midia[i]) {
+                        getID(`lineup-midia-${j}`).value = midia[i];
                     }
 
                     const nota = FIRESTORE_DATA.lineup[key].nota;
-                    if (nota && nota[j]) {
-                        getID(`lineup-nota-${i}`).value = nota[j];
+                    if (nota && nota[i]) {
+                        getID(`lineup-nota-${j}`).value = nota[i];
                     }
                 }
             }
             _updateDestinosAtivosSelectHTML('lineup');
-            _lineupGeneroSelectAction();
-            _lineupPalcoSelectAction();
         }
     }
 }
@@ -386,34 +378,33 @@ function _loadGaleriaData() {
 
     const galeriaSize = FIRESTORE_DATA.galeria?.imagens.length;
     if (galeriaSize > 0) {
-        for (let i = 1; i <= galeriaSize; i++) {
-            const j = i - 1;
+        for (let j = 1; j <= galeriaSize; j++) {
+            const i = j - 1;
             _addGaleria();
 
-            const titulo = FIRESTORE_DATA.galeria.titulos[j];
+            const titulo = FIRESTORE_DATA.galeria.titulos[i];
             if (titulo) {
-                getID(`galeria-titulo-${i}`).value = titulo;
-                getID(`galeria-title-${i}`).innerText = titulo;
+                getID(`galeria-titulo-${j}`).value = titulo;
+                getID(`galeria-title-${j}`).innerText = titulo;
             }
 
-            const categoria = FIRESTORE_DATA.galeria.categorias[j];
+            const categoria = FIRESTORE_DATA.galeria.categorias[i];
             if (categoria) {
-                getID(`galeria-categoria-${i}`).value = categoria;
+                getID(`galeria-categoria-${j}`).value = categoria;
+                _updateValueDS('galeria-categoria', categoria, `galeria-categoria-select-${j}`);
             }
 
-            const descricao = FIRESTORE_DATA.galeria.descricoes[j];
+            const descricao = FIRESTORE_DATA.galeria.descricoes[i];
             if (descricao) {
-                getID(`galeria-descricao-${i}`).value = descricao;
+                getID(`galeria-descricao-${j}`).value = descricao;
             }
 
-            const imagem = FIRESTORE_DATA.galeria.imagens[j];
+            const imagem = FIRESTORE_DATA.galeria.imagens[i];
             if (_isInternalImage(imagem)) {
-                getID(`link-galeria-${i}`).value = imagem.link;
+                getID(`link-galeria-${j}`).value = imagem.link;
             } else if (_isExternalImage(imagem)) {
-                getID(`link-galeria-${i}`).value = imagem;
+                getID(`link-galeria-${j}`).value = imagem;
             }
         }
-
-        _galeriaSelectAction();
     }
 }
