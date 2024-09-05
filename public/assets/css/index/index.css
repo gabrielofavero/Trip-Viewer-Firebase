@@ -441,9 +441,9 @@ section {
   color: #272829;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.70);
-  height: 100vh;
+  height: 90vh;
   position: fixed;
-  top: 50%;
+  top: 51%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 0;
@@ -537,6 +537,18 @@ section {
 }
 
 @media (max-height: 570px) {
+  .content-list {
+    height: 300px;
+  }
+}
+
+@media (max-height: 520px) {
+  .content-list {
+    height: 250px;
+  }
+}
+
+@media (max-height: 500px) {
   .content-list {
     height: 200px;
   }
