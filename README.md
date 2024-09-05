@@ -19,6 +19,7 @@
   - *Visualizar Destino ao salvar (editar-destino.html)*
   - *Dados da viagem descrentralizados (viagem.html)*
   - *Ajuste de responsividade em hospedagens (viagem.html)*
+  - *_loadConfig de _main não está carregando síncronamente*
   - *Valor não aparece em novo destino (editar-destino.html)*
   - *Cancelar não volta para a home (editar-destino.html)*
   - *Listagem existente não carrega (editar-listagem.html)*

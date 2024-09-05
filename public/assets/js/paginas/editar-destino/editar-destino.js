@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       await _loadDestinos()
     } else {
       CAN_EDIT = true;
+      _loadCurrencySelects();
     }
 
     if (!CAN_EDIT) return;
