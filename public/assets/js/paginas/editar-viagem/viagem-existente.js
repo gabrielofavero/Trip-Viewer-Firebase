@@ -252,7 +252,7 @@ function _loadHospedagemData() {
 }
 
 function _loadDestinosData() {
-    if (FIRESTORE_DATA.modulos.destinos === true) {
+    if (_getHTMLpage() === 'editar-listagem' || FIRESTORE_DATA.modulos.destinos === true) {
         if (getID('habilitado-destinos')) {
             getID('habilitado-destinos').checked = true;
         }

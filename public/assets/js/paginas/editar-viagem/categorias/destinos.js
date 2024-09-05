@@ -33,8 +33,11 @@ function _loadDestinosAtivos() {
 
 function _updateDestinosAtivosHTMLs() {
     _loadDestinosAtivos();
-    _updateDestinosAtivosCheckboxHTML('programacao');
-    _updateDestinosAtivosSelectHTML('lineup');
+
+    if (_getHTMLpage() === 'editar-viagem') {
+        _updateDestinosAtivosCheckboxHTML('programacao');
+        _updateDestinosAtivosSelectHTML('lineup');
+    }
 }
 
 function _loadDestinosOrdenados() {

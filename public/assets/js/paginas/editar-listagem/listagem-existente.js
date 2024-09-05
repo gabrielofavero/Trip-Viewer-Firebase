@@ -5,7 +5,7 @@ async function _loadListData(FIRESTORE_DATA) {
     _loadDadosBasicosListagemData(FIRESTORE_DATA);
     _loadCompartilhamentoData(FIRESTORE_DATA);
     _loadCustomizacaoData(FIRESTORE_DATA);
-    _loadDestinosData(FIRESTORE_DATA);
+    _loadDestinosData();
 
   } catch (error) {
     _displayError(error);
