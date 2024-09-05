@@ -6,9 +6,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 54    | 46          | 6         |
+| 🐞     | Bug      | B000    | 53    | 47          | 5         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 81    | 63          | 19        |
+| 📈     | Melhoria | M000    | 82    | 63          | 19        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9        |
 
 ### Status
@@ -19,8 +19,6 @@
 
 ## Doing
 
-- 🐞 **B054:** Erros nas funções de get e set de dados do banco
-
 ## To-Do
 
 ### Prioridade Alta
@@ -30,6 +28,7 @@
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 - 🐞 **B052:** Não é possível desabilitar gastos em editar-viagem.html
+- 📈 **M082:** Pack de pequenas melhorias 09/24 (pré deploy em prod)
 
 ### Prioridade Média
 
@@ -113,6 +112,7 @@
 - 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M066:** Tamanho de logotipo automático em viagens.html
+- 🐞 **B053:** Erros nas funções de get e set de dados do banco
 
 ### Agosto 2024
 - 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
