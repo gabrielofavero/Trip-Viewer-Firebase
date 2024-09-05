@@ -119,7 +119,7 @@
 
 ### Agosto 2024
 
-- 📈 **M070:** Aumentar tamanho das lista em index.html + reordenar para viagens mais próximas primeiro
+- 📈 **M070:** Aumentar tamanho das listas em index.html + reordenar para viagens mais próximas primeiro
 - 🏆 **F058:** Inserir item de viagens anteriores em index.html
 - 🐞 **B048:** Programação não está carregando corretamente no dark mode
 
