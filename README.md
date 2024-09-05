@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 53    | 48          | 4         |
+| 🐞     | Bug      | B000    | 53    | 49          | 3         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
 | 📈     | Melhoria | M000    | 82    | 63          | 19        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
@@ -22,7 +22,6 @@
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
 - 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
 - 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
-- 🐞 **B052:** Não é possível desabilitar gastos em editar-viagem.html
 - 📈 **M082:** Pack de pequenas melhorias 09/24 (pré deploy em prod)
   - *Visualizar Destino ao salvar*
 
@@ -110,6 +109,7 @@
 - 📈 **M066:** Tamanho de logotipo automático em viagens.html
 - 🐞 **B053:** Erros nas funções de get e set de dados do banco
 - 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
+- 🐞 **B052:** Não é possível desabilitar gastos em editar-viagem.html
 
 ### Agosto 2024
 

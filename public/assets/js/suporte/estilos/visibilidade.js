@@ -271,19 +271,17 @@ function _isModalOpen(modalID = 'modal') {
 }
 
 // ======= Páginas de Editar =======
-function _loadEditModule(type, loadListener = true) {
-     const habilitado = getID(`habilitado-${type}`);
+function _loadEditModule(categoria) {
+     const habilitado = getID(`habilitado-${categoria}`);
      if (habilitado.checked) {
-          _showContent(type);
-          if (!getID(`habilitado-${type}-content`).innerText) {
-               _add(_firstCharToUpperCase(type).trim())
+          _showContent(categoria);
+          if (!getID(`habilitado-${categoria}-content`).innerText) {
+               _add(_firstCharToUpperCase(categoria).trim())
           }
      } else {
-          _hideContent(type);
+          _hideContent(categoria);
      }
-     if (loadListener) {
-          _loadListener(type);
-     }
+     _loadListener(categoria);
 }
 
 function _loadListener(categoria) {
@@ -299,7 +297,7 @@ function _loadListener(categoria) {
                }
 
           } else {
-               _removeOnlyChildIfEmpty(categoria);
+               _removeEmptyChild(categoria);
                _hideContent(categoria);
           }
      });

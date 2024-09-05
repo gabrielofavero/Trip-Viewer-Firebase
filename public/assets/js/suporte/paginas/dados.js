@@ -152,7 +152,7 @@ function _hideParentIfNoChildren(categoria) {
   }
 }
 
-function _removeOnlyChildIfEmpty(categoria) {
+function _removeEmptyChild(categoria) {
   let itens = [];
 
   switch (categoria) {
@@ -161,18 +161,31 @@ function _removeOnlyChildIfEmpty(categoria) {
     case 'saidas':
     case 'turismo':
     case 'lojas':
-      itens = ['nome', 'emoji', 'descricao', 'mapa', 'website', 'instagram', 'regiao', 'midia'];
+    case 'lineup':
+      itens = [`${categoria}-nome`];
+      break;
+    case 'transporte':
+      itens = ['ponto-partida', 'ponto-chegada'];
+      break;
+    case 'hospedagens':
+      itens = [`${categoria}-nome`, `${categoria}-endereco`];
+      break;
+    case 'galeria':
+      itens = [`${categoria}-titulo`, `link-${categoria}`];
       break;
   }
 
-  if (!_hasUserData(categoria, 1, itens)) {
-    _removeChild(`${categoria}-${1}`);
+  if (itens.length > 0) {
+    const j = _getFirstJ(`${categoria}-box`);
+    if (j && !_hasUserData(itens, j)) {
+      _removeChild(`${categoria}-${j}`);
+    }
   }
 }
 
-function _hasUserData(categoria, j, itens=[]) {
+function _hasUserData(itens, j) {
   for (const item of itens) {
-    if (getID(`${categoria}-${item}-${j}`).value) {
+    if (getID(`${item}-${j}`).value) {
       return true;
     }
   }
@@ -202,6 +215,11 @@ function _getJs(parentID) {
     result.push(parseInt(jSplit[jSplit.length - 1]));
   }
   return result;
+}
+
+function _getFirstJ(parentID) {
+  const js = _getJs(parentID);
+  return js[0];
 }
 
 function _getLastJ(parentID) {
