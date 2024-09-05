@@ -16,7 +16,7 @@ _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    await _main();
+    _main();
 
     _loadVisibilityIndex();
     _loadListenersIndex();

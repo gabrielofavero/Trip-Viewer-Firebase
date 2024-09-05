@@ -14,7 +14,7 @@ var REGIOES = [];
 document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
-    await _main();
+    _main();
     DOCUMENT_ID = _getURLParam('d')
 
     _loadVisibilityIndex();
@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       await _loadDestinos()
     } else {
       CAN_EDIT = true;
-      _loadCurrencySelects();
     }
 
     if (!CAN_EDIT) return;

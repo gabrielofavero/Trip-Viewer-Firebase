@@ -14,7 +14,7 @@ var FIM = {
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
-    await _main();
+    _main();
     const urlParams = _getURLParams();
     TYPE = urlParams['l'] ? 'listagens' : urlParams['d'] ? "destinos" : 'viagens';
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       _refreshCategorias();
 
     } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
-      _displayError('O documento não está definido como público. Realize o login com uma conta autorizada para visualizar.', true);
+      _displayError('O documento não pôde ser carregado. É possível que ele tenha sido excluído ou que você não possua permissão para acessá-lo.', true);
       _stopLoadingScreen();
     } else {
       _displayError(ERROR_FROM_GET_REQUEST);
@@ -313,7 +313,7 @@ function _loadModules() {
   function _loadDestinosModule() {
     switch (TYPE) {
       case 'viagens':
-        if (FIRESTORE_DATA.modulos?.destinos === true) {
+        if (FIRESTORE_DATA.modulos?.destinos === true && FIRESTORE_DATA.destinos?.length > 0) {
           _loadDestinosDefault();
         } else if (FIRESTORE_DATA.modulos?.lineup === true) {
           _loadDestinosLineup();

@@ -9,7 +9,7 @@ _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    await _main();
+    _main();
 
     DOCUMENT_ID = _getURLParam('l');
     PERMISSOES = await _getPermissoes();

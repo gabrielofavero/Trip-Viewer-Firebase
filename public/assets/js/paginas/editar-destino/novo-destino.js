@@ -1,5 +1,9 @@
 // Adicionar
 function _addRestaurantes() {
+  if (!VALOR_OPTIONS) {
+    _loadCurrencySelects();
+  }
+
   const j = _getNextJ('restaurantes-box');
 
   $('#restaurantes-box').append(`
@@ -123,6 +127,9 @@ function _addRestaurantes() {
 }
 
 function _addLanches() {
+  if (!VALOR_OPTIONS) {
+    _loadCurrencySelects();
+  }
   const j = _getNextJ('lanches-box');
 
   $('#lanches-box').append(`
@@ -246,6 +253,9 @@ function _addLanches() {
 }
 
 function _addSaidas() {
+  if (!VALOR_OPTIONS) {
+    _loadCurrencySelects();
+  }
   const j = _getNextJ('saidas-box');
 
   $('#saidas-box').append(`
@@ -368,6 +378,9 @@ function _addSaidas() {
 }
 
 function _addTurismo() {
+  if (!VALOR_OPTIONS) {
+    _loadCurrencySelects();
+  }
   const j = _getNextJ('turismo-box');
 
   $('#turismo-box').append(`
@@ -490,6 +503,9 @@ function _addTurismo() {
 }
 
 function _addLojas() {
+  if (!VALOR_OPTIONS) {
+    _loadCurrencySelects();
+  }
   const j = _getNextJ('lojas-box');
 
   $('#lojas-box').append(`
