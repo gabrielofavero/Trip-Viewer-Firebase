@@ -9,7 +9,7 @@ async function _loadTripData() {
         _loadHospedagemData();
         _loadDestinosData();
         _loadProgramacaoData();
-        _loadLineupData();
+        // _loadLineupData();
         _loadGaleriaData();
     } catch (error) {
         _displayError(error);

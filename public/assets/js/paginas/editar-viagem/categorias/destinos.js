@@ -36,7 +36,7 @@ function _updateDestinosAtivosHTMLs() {
 
     if (_getHTMLpage() === 'editar-viagem') {
         _updateDestinosAtivosCheckboxHTML('programacao');
-        _updateDestinosAtivosSelectHTML('lineup');
+        // _updateDestinosAtivosSelectHTML('lineup');
     }
 }
 

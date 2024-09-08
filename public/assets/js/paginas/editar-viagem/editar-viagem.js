@@ -68,7 +68,7 @@ function _loadHabilitados() {
   _loadEditModule('hospedagens');
   _loadEditModule('programacao');
   _loadEditModule('destinos');
-  _loadEditModule('lineup');
+  // _loadEditModule('lineup');
   _loadEditModule('galeria');
 }
 
