@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 54    | 49          | 4         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 83    | 66          | 16        |
+| 📈     | Melhoria | M000    | 84    | 67          | 15        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -118,6 +118,7 @@
   - *Tratamento em viagens e editar-viagem para ignorar destino não existente*
   - *Listagem existente não carrega (editar-listagem.html)*
   - *Primeiro set não funciona por "Usuário Não Autenticado" (editar-destino.html)*
+- 📈 **M084:** Melhor exibição de checkboxes de destinos (editar-viagem.html e editar-listagem.html)
 
 ### Agosto 2024
 
