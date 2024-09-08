@@ -16,7 +16,7 @@
 ## Doing
 
 - 📈 **M083:** Indicação visual de horário e dia do lineup (destinos.html)
-- 🐞 **B054:** Correção na exibição de lineup (viagem.html)
+- 🐞 **B054:** Correção na exibição de lineup (viagem.html e editar-viagem.html)
 
 ## To-Do
 

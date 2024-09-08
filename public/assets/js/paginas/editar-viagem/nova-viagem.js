@@ -466,9 +466,9 @@ function _addLineup() {
               <option value="?">Prioridade não definida</option>
               <option value="5">5 - Altíssima prioridade</option>
               <option value="4">4 - Alta prioridade</option>
-              <option value="3">3 - Artista Razoável</option>
-              <option value="2">2 - Baixa Prioridade</option>
-              <option value="1">1 - Não Recomendado</option>
+              <option value="3">3 - Prioridade normal</option>
+              <option value="2">2 - Baixa prioridade</option>
+              <option value="1">1 - Sem prioridade</option>
             </select>
           </div>
   
