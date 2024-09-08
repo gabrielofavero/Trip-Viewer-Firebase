@@ -120,7 +120,7 @@ function _updateDestinosAtivosCheckboxHTML(tipo, j) {
         const childs = _getChildIDs(id);
         const div = getID(id);
 
-        div.style.display = visibility;
+        getID(`${tipo}-local-box-${j}`).style.display = visibility;
         const originalValues = [];
 
         for (const child of childs) {
