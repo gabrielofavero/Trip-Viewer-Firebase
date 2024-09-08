@@ -209,6 +209,11 @@ function _firestoreDateToKey(firestoreDate) {
     return _jsDateToKey(jsDate);
 }
 
+function _firestoreDateToInputDate(firestoreDate) {
+    const jsDate = _convertFromFirestoreDate(firestoreDate);
+    return _jsDateToInputDate(jsDate);
+}
+
 function _jsDateToKey(jsDate) {
     const inputDate = _jsDateToDate(jsDate, 'yyyy-mm-dd');
     return _inputDateToKey(inputDate);

@@ -264,7 +264,7 @@ function _getCategoriaID(tipo, j) {
   return newID;
 }
 
-function _getIfDoesNotExistCategoriaID(tipo, j) {
+function _getOrCreateCategoriaID(tipo, j) {
   const currentID = getID(`${tipo}-id-${j}`).value;
   return currentID ? currentID : _getCategoriaID(tipo, j);
 }

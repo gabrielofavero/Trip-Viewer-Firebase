@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 54    | 49          | 4         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 83    | 64          | 18        |
+| 📈     | Melhoria | M000    | 83    | 66          | 16        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -15,15 +15,14 @@
 
 ## Doing
 
-- 📈 **M083:** Indicação visual de horário e dia do lineup (destinos.html)
+- 📈 **M083:** Melhorias Lineup
+  - *Indicação visual de horário e dia do lineup (destinos.html)*
+  - *Data usando select de acordo com o período da viagem (editar-viagem.html)*
 - 🐞 **B054:** Correção na exibição de lineup (viagem.html e editar-viagem.html)
 
 ## To-Do
 
 ### Prioridade Alta
-
-- 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
-- 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
 
 ### Prioridade Média
 
@@ -380,3 +379,5 @@
   - *Risco de segurança expor ao user as regras*
 - 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
+- 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
+- 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)

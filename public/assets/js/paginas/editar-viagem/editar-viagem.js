@@ -132,5 +132,17 @@ async function _deleteViagemAction() {
     await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
     await _deleteUserObjectStorage();
     window.location.href = `index.html`;
+  }
 }
+
+function _getDataSelectOptions(j) {
+  const values = DATAS.map(data => _jsDateToKey(data));
+  const labels = DATAS.map(data => _jsDateToMiniTitle(data));
+  let result = j ? '' : '<option value="" selected>Selecione uma Data</option>';
+
+  for (let i = 0; i < values.length; i++) {
+    result += `<option value="${values[i]}" ${j && i + 1 === j ? 'selected' : ''}>${labels[i]}</option>`;
+  }
+
+  return result;
 }
