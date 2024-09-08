@@ -15,14 +15,17 @@
 
 ## Doing
 
+## To-Do
+
+### Prioridade Alta
+
 - ⚔️ **E021:** Implementação: Lineup em viagens.html
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
   - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
-
-## To-Do
-
-### Prioridade Alta
+  - *Lineup e Horários separados por Tab semelhante a de gastos.html*
+  - *Select com os dias de festival, mas com geral em default*
+  - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável* 
 
 ### Prioridade Média
 
