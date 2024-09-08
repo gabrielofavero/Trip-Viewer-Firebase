@@ -246,14 +246,15 @@ function _buildLineupObject() {
     let result = [];
 
     for (const j of _getJs('lineup-box')) {
+        const data = getID(`lineup-data-${j}`).value;
         result.push({
             id: _getOrCreateCategoriaID('lineup', j),
             headliner: getID(`lineup-headliner-${j}`).checked,
             nome: getID(`lineup-nome-${j}`).value,
-            local: getID(`lineup-genero-select-${j}`).value,
+            local: getID(`lineup-local-${j}`).value,
             genero: getID(`lineup-genero-select-${j}`).value,
             palco: getID(`lineup-palco-select-${j}`).value,
-            data: _formattedDateToDate(getID(`lineup-data-${j}`).value),
+            data: data ? _keyToFirestoreDate(data) : "",
             inicio: getID(`lineup-inicio-${j}`).value,
             fim: getID(`lineup-fim-${j}`).value,
             midia: getID(`lineup-midia-${j}`).value,

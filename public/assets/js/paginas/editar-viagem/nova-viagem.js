@@ -455,12 +455,12 @@ function _addLineup() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Início <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-inicio-${j}" type="time" value="" />
+              <input id="lineup-inicio-${j}" class="flex-input" type="time" value="" />
             </div>
   
             <div class="nice-form-group side-by-side">
               <label>Fim <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-fim-${j}" type="time" value="" />
+              <input id="lineup-fim-${j}" class="flex-input" type="time" value="" />
             </div>
           </div>
   

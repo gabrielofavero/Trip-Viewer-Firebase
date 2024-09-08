@@ -275,12 +275,14 @@ function _loadLineupData() {
         _addLineup();
         const lineup = FIRESTORE_DATA.lineup[j - 1];
 
+        getID(`lineup-title-${j}`).innerText = `${lineup.nome}${lineup.headliner ? ' ⭐' : ''}`;  
         getID(`lineup-id-${j}`).value = lineup.id;
         getID(`lineup-headliner-${j}`).checked = lineup.headliner;
         getID(`lineup-nome-${j}`).value = lineup.nome;        
+        getID(`lineup-local-${j}`).value = lineup.local;  
         getID(`lineup-genero-${j}`).innerText = lineup.genero;
         getID(`lineup-palco-${j}`).innerText = lineup.palco;
-        getID(`lineup-data-${j}`).value = _firestoreDateToInputDate(lineup.data);
+        getID(`lineup-data-${j}`).value = _firestoneDateToKey(lineup.data);
         getID(`lineup-inicio-${j}`).value = lineup.inicio;
         getID(`lineup-fim-${j}`).value = lineup.fim;
         getID(`lineup-midia-${j}`).value = lineup.midia;

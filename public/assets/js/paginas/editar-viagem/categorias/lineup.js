@@ -8,8 +8,8 @@ function _loadLineupListeners(j) {
     const headliner = getID(`lineup-headliner-${j}`);
     const midia = getID(`lineup-midia-${j}`);
     
-    nome.addEventListener('click', () => _setTitulo(j, nome, title, headliner));
-    headliner.addEventListener('click', () => _setTitulo(j, nome, title, headliner));
+    nome.addEventListener('change', () => _setTitulo(j, nome, title, headliner));
+    headliner.addEventListener('change', () => _setTitulo(j, nome, title, headliner));
     midia.addEventListener('change', () => _validatePlaylistLink(`lineup-midia-${j}`));
 
     function _setTitulo(j, nome, title, headliner) {
