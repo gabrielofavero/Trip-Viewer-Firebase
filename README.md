@@ -4,9 +4,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 54    | 49          | 4         |
+| 🐞     | Bug      | B000    | 54    | 50          | 3         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 84    | 67          | 15        |
+| 📈     | Melhoria | M000    | 84    | 68          | 14        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -14,11 +14,6 @@
 - ❗️: Crítico (deploy em produção)
 
 ## Doing
-
-- 📈 **M083:** Melhorias Lineup
-  - *Indicação visual de horário e dia do lineup (destinos.html)*
-  - *Data usando select de acordo com o período da viagem (editar-viagem.html)*
-- 🐞 **B054:** Correção na exibição de lineup (viagem.html e editar-viagem.html)
 
 ## To-Do
 
@@ -119,6 +114,8 @@
   - *Listagem existente não carrega (editar-listagem.html)*
   - *Primeiro set não funciona por "Usuário Não Autenticado" (editar-destino.html)*
 - 📈 **M084:** Melhor exibição de checkboxes de destinos (editar-viagem.html e editar-listagem.html)
+- 📈 **M083:** Data usando select de acordo com o período da viagem (editar-viagem.html)
+- 🐞 **B054:** Correção na exibição de lineup (editar-viagem.html)
 
 ### Agosto 2024
 
