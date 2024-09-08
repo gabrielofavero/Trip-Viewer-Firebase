@@ -24,8 +24,8 @@ function _loadDestinos() {
   });
 }
 
-function _loadDestinationsSelect(lineupExclusive = false) {
-  _buildDestinosObject(lineupExclusive);
+function _loadDestinationsSelect() {
+  DESTINOS = FIRESTORE_DATA.destinos;
   const select = getID("destinos-select");
 
   if (DESTINOS.length > 1) {
@@ -150,96 +150,6 @@ function _getLinkType() {
   }
 }
 
-function _mergeSetlistObjects(obj1, obj2) {
-  let result = {
-    descricao: [],
-    head: [],
-    horario: [],
-    midia: [],
-    nome: [],
-    nota: [],
-    palco: [],
-    site: [],
-  };
-
-  // Iterate over the keys of the result object
-  Object.keys(result).forEach(key => {
-    result[key] = [...obj1[key], ...obj2[key]];
-  });
-
-  return result;
-}
-
-function _buildDestinosObject(lineupExclusive = false) {
-  if (lineupExclusive) {
-    _buildLineupDestinosObject();
-  }
-  else {
-    DESTINOS = FIRESTORE_DATA.destinos;
-  }
-  if (FIRESTORE_DATA.modulos?.lineup && FIRESTORE_DATA.lineup) {
-    const lineupKeys = Object.keys(FIRESTORE_DATA.lineup);
-    for (let i = 0; i < DESTINOS.length; i++) {
-      if (lineupKeys.includes(DESTINOS[i].destinosID) || lineupKeys.includes('generico')) {
-        DESTINOS[i].destinos.modulos.lineup = true;
-        const genericoLineup = FIRESTORE_DATA.lineup.generico;
-        const destinoLineup = FIRESTORE_DATA.lineup[DESTINOS[i].destinosID];
-
-        if (destinoLineup && genericoLineup) {
-          const mergedSetlist = _mergeSetlistObjects(genericoLineup, destinoLineup);
-          DESTINOS[i].destinos.lineup = mergedSetlist;
-        } else {
-          DESTINOS[i].destinos.lineup = destinoLineup || genericoLineup;
-        }
-      }
-    }
-  }
-}
-
-function _buildLineupDestinosObject() {
-  const emptyObj = {
-    "valor": [],
-    "midia": [],
-    "nome": [],
-    "regiao": [],
-    "novo": [],
-    "emoji": [],
-    "nota": [],
-    "descricao": []
-  }
-
-  DESTINOS = [{
-    destinosID: "lineup",
-    destinos: {
-      "compartilhamento": {
-        "dono": FIRESTORE_DATA.compartilhamento.dono,
-      },
-      "saidas": emptyObj,
-      "lojas": emptyObj,
-      "modulos": {
-        "lineup": true,
-        "lanches": false,
-        "mapa": false,
-        "lojas": false,
-        "saidas": false,
-        "turismo": false,
-        "restaurantes": false
-      },
-      "turismo": emptyObj,
-      "titulo": "Lineup",
-      "versao": {
-        "ultimaAtualizacao": new Date().toISOString(),
-      },
-      "lanches": emptyObj,
-      "restaurantes": emptyObj,
-      "moeda": "BRL",
-      "lineup": FIRESTORE_DATA.lineup.generico,
-      "myMaps": ""
-    }
-  }
-  ];
-}
-
 function _adjustDestinationsHTML() {
   let heights = [];
   let maxHeight = 0;
@@ -255,26 +165,4 @@ function _adjustDestinationsHTML() {
   for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
     getID(`b${i}d`).style.height = `${maxHeight}px`;
   }
-}
-
-function _getDestinosOrdem() {
-  const ordem = [];
-
-  // if (FIRESTORE_DATA.modulos.programacao && FIRESTORE_DATA.programacoes && FIRESTORE_DATA.programacoes.length > 0) {
-  //   const destinosObjects = FIRESTORE_DATA.programacoes.map(programacao => programacao.destinosIDs).flat(1);
-  //   const filteredDestinos = [];
-
-  //   // To-Do
-
-  //   idsProgramacao = idsProgramacao.filter((id, index) => id !== "" && idsProgramacao.indexOf(id) === index);
-  //   const idsDestinos = DESTINOS.map(destino => destino.destinosID);
-  //   for (const programacao of idsProgramacao) {
-  //     const index = idsDestinos.indexOf(programacao);
-  //     if (index !== -1 && !ordem.includes(DESTINOS[index].destinos.titulo)) {
-  //       ordem.push(DESTINOS[index].destinos.titulo);
-  //     }
-  //   }
-  // }
-
-  return ordem;
 }

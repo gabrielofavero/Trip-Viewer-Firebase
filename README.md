@@ -15,6 +15,11 @@
 
 ## Doing
 
+- ⚔️ **E021:** Implementação: Lineup em viagens.html
+  - *Ao invés de estar em Destinos, é uma nova categoria*
+  - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
+  - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
+
 ## To-Do
 
 ### Prioridade Alta
@@ -34,10 +39,6 @@
   - *Ordernar por data de atualização em Destinos e Listagens*
 - ⚔️ **E014:** Implementação: Lista de desejos
   - *Procurar template na web e aplicar (colocar fonte nos créditos)*
-- ⚔️ **E021:** Implementação: Lineup em viagens.html
-  - *Ao invés de estar em Destinos, é uma nova categoria*
-  - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
-  - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
 - ⚔️🚦 **E016:** Novo Front-End: Destinos.html
   - *Aguardando Guilherme desenvolver nova versão do template*
 - ⚔️🚦**E017:** Novo Front-End: Viagens.html

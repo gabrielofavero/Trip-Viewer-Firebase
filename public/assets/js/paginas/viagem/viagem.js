@@ -315,8 +315,6 @@ function _loadModules() {
       case 'viagens':
         if (FIRESTORE_DATA.modulos?.destinos === true && FIRESTORE_DATA.destinos?.length > 0) {
           _loadDestinosDefault();
-        } else if (FIRESTORE_DATA.modulos?.lineup === true) {
-          _loadDestinosLineup();
         } else {
           _disableDestinos();
         }
@@ -338,16 +336,6 @@ function _loadModules() {
       };
 
       CALL_SYNC.push(_loadDestinos);
-    };
-
-    function _loadDestinosLineup() {
-      _loadDestinationsSelect(true);
-      _loadDestinationsHTML(DESTINOS[0]);
-
-      CALL_SYNC.push(_loadDestinos);
-
-      getID('destinosNav').innerHTML = '<li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-music"></i> <span>Lineup</span></a></li>'
-      getID('dTitle').innerHTML = "Lineup";
     };
 
     function _loadDestinosExclusive() {
