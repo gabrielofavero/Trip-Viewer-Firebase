@@ -1,10 +1,11 @@
 var DYNAMIC_SELECT = {};
 
-function _newDynamicSelect(type) {
+function _newDynamicSelect(type, outroFeminino=true) {
     DYNAMIC_SELECT[type] = {
         selectors: {},
         values: {},
         selectInnerHTML: '',
+        outroFeminino: outroFeminino,
     }
 }
 
@@ -61,7 +62,7 @@ function _buildDS(type) {
             selectInnerHTML += `<option value="${value}">${value}</option>`;
         }
 
-        selectInnerHTML += `<option value="outra">Outra</option>`;
+        selectInnerHTML += `<option value="outra">${DYNAMIC_SELECT[type].outroFeminino ? 'Outra' : 'Outro'}</option>`;
         DYNAMIC_SELECT[type].selectInnerHTML = selectInnerHTML;
     }
 

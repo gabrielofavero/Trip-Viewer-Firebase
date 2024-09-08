@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadVisibilityIndex();
     _loadHabilitados();
     _newDynamicSelect('galeria-categoria');
-    _newDynamicSelect('lineup-genero');
-    _newDynamicSelect('lineup-palco');
+    _newDynamicSelect('lineup-genero', false);
+    _newDynamicSelect('lineup-palco', false);
 
     if (DOCUMENT_ID) {
       await _loadTrip(true);

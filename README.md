@@ -4,9 +4,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 53    | 49          | 3         |
+| 🐞     | Bug      | B000    | 54    | 49          | 4         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 82    | 64          | 17        |
+| 📈     | Melhoria | M000    | 83    | 64          | 18        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -14,6 +14,9 @@
 - ❗️: Crítico (deploy em produção)
 
 ## Doing
+
+- 📈 **M083:** Indicação visual de horário e dia do lineup (destinos.html)
+- 🐞 **B054:** Correção na exibição de lineup (viagem.html)
 
 ## To-Do
 
