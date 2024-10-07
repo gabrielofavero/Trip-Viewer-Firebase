@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 54    | 50          | 3         |
+| 🐞     | Bug      | B000    | 55    | 52          | 3         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
 | 📈     | Melhoria | M000    | 84    | 68          | 14        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
@@ -83,6 +83,11 @@
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 
 ## Done
+
+### Outubro 2024
+- 🐞 **B055:** Hotfixes
+  - *Erro ao salvar viagem (módulo lineup sendo chamado mesmo após ser descontinuado)*
+  - *Erro títulos e ícones em Gastos não aparecerem*
 
 ### Setembro 2024
 
