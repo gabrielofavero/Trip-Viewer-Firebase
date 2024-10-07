@@ -79,7 +79,7 @@ function _loadCustomizacaoData() {
     }
 
     // Links Personalizados
-    getID('habilitado-imagens').checked = FIRESTORE_DATA.links.ativo;
+    getID('habilitado-links').checked = FIRESTORE_DATA.links.ativo;
     getID('link-attachments').value = FIRESTORE_DATA.links.attachments;
     getID('link-drive').value = FIRESTORE_DATA.links.drive;
     getID('link-maps').value = FIRESTORE_DATA.links.maps;
