@@ -93,6 +93,7 @@
   - *Erro ao salvar viagem (módulo lineup sendo chamado mesmo após ser descontinuado)*
   - *Erro títulos e ícones em Gastos não aparecerem*
   - *Erro no carregamento do sortable.min.js*
+  - *Switchs de Customização não carregando corretamente*
 
 ### Setembro 2024
 
