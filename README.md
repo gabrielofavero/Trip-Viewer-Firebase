@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 55    | 52          | 3         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 84    | 68          | 14        |
+| 📈     | Melhoria | M000    | 85    | 70          | 15        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -19,6 +19,10 @@
 
 ### Prioridade Alta
 
+- 📈 **M0085:** Renomear todas as páginas html para nomes em inglês
+  - *Forçar Refresh (Home ou tentar novamente)*
+  - *Tentar novamente habilitado primeiro load, desabilitado posterior*
+  - *Mensagem em inglês no final e com destaque diferente*
 - ⚔️ **E021:** Implementação: Lineup em viagens.html
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
