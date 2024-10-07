@@ -19,7 +19,7 @@
 
 ### Prioridade Alta
 
-- 📈 **M0085:** Renomear todas as páginas html para nomes em inglês
+- 📈 **M0085:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
   - *Mensagem em inglês no final e com destaque diferente*
