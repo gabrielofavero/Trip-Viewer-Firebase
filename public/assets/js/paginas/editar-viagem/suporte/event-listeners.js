@@ -14,7 +14,7 @@ function _loadEventListeners() {
     getID('cancelar').addEventListener('click', () => window.location.href = `index.html`);
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
-    getID('lineup-adicionar').addEventListener('click', () => _lineupAdicionarListenerAction());
+    // getID('lineup-adicionar').addEventListener('click', () => _lineupAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
     getID('pin-enable').addEventListener('click', () => _switchPinVisibility());
     getID('pin-disable').addEventListener('click', () => _switchPinVisibility());

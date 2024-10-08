@@ -352,12 +352,10 @@ function _toggleFadingVisibility(id = 'copy-msg') {
 }
 
 function _searchDestinosListenerAction() {
-     const childs = _getChildIDs('destinos-checkboxes');
      const search = getID('destinos-search').value.toLowerCase();
 
-     for (const child of childs) {
-          const j = _getJ(child);
-          const label = getID(`check-label-${j}`).innerText.toLowerCase();
+     for (const j of _getJs('destinos-checkboxes')) {
+          const label = getID(`check-destinos-label-${j}`).innerText.toLowerCase();
           getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
      }
 }

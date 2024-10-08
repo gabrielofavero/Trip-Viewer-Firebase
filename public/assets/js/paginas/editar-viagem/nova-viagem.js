@@ -294,6 +294,7 @@ function _loadDestinos() {
     fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].code, destinos[i].titulo);
   }
 
+  getID('habilitado-destinos').addEventListener('change', () => _updateDestinosAtivosHTMLs());
   for (const child of _getChildIDs('destinos-checkboxes')) {
     const j = _getJ(child);
     getID(`check-destinos-${j}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
@@ -391,6 +392,11 @@ function _loadProgramacao() {
 }
 
 function _addLineup() {
+
+  if (!LINEUP_DATA_SELECT_OPTIONS) {
+    _loadLineupDataSelectOptions();
+  }
+
   const j = _getNextJ('lineup-box');
   $('#lineup-box').append(`
     <div id="lineup-${j}" class="accordion-item accordion-lineup" >
@@ -403,6 +409,11 @@ function _addLineup() {
       <div id="collapse-lineup-${j}" class="accordion-collapse collapse" aria-labelledby="heading-lineup-${j}"
         data-bs-parent="#lineup-box">
         <div class="accordion-body">
+
+        <div class="nice-form-group" style="display: none">
+          <label>Identificador</label>
+          <input id="lineup-id-${j}" type="text" disabled />
+        </div>
   
           <div class="nice-form-group">
             <input type="checkbox" id="lineup-headliner-${j}" class="switch" />
@@ -436,19 +447,21 @@ function _addLineup() {
           </div>
   
           <div class="nice-form-group side-by-side">
-            <label>Data <span class="opcional"> (Opcional)</span></label>
-            <input class="flex-input" id="lineup-data-${j}" type="date" value="">
+            <label>Data <span class="opcional"> (Opcional)</span></label>\
+            <select class="editar-select" id="lineup-data-${j}">
+              ${LINEUP_DATA_SELECT_OPTIONS}
+            </select>
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Início <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-inicio-${j}" type="time" value="" />
+              <input id="lineup-inicio-${j}" class="flex-input" type="time" value="" />
             </div>
   
             <div class="nice-form-group side-by-side">
               <label>Fim <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-fim-${j}" type="time" value="" />
+              <input id="lineup-fim-${j}" class="flex-input" type="time" value="" />
             </div>
           </div>
   
@@ -466,9 +479,9 @@ function _addLineup() {
               <option value="?">Prioridade não definida</option>
               <option value="5">5 - Altíssima prioridade</option>
               <option value="4">4 - Alta prioridade</option>
-              <option value="3">3 - Artista Razoável</option>
-              <option value="2">2 - Baixa Prioridade</option>
-              <option value="1">1 - Não Recomendado</option>
+              <option value="3">3 - Prioridade normal</option>
+              <option value="2">2 - Baixa prioridade</option>
+              <option value="1">1 - Sem prioridade</option>
             </select>
           </div>
   

@@ -74,7 +74,7 @@ function _getInnerProgramacaoSelects(j) {
         transporte: _getInnerProgramacaoSelect('transporte'),
         hospedagens: _getInnerProgramacaoSelect('hospedagens'),
         destinos: _getInnerProgramacaoSelectsDestinos(j),
-        datas: _getInnerProgramacaoDatas(j)
+        datas: _getDataSelectOptions(j)
     }
 }
 
@@ -152,17 +152,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
     return result;
 }
 
-function _getInnerProgramacaoDatas(j) {
-    const values = DATAS.map(data => _jsDateToKey(data));
-    const labels = DATAS.map(data => _jsDateToMiniTitle(data));
-    let result = '';
 
-    for (let i = 0; i < values.length; i++) {
-        result += `<option value="${values[i]}" ${i + 1 === j ? 'selected' : ''}>${labels[i]}</option>`;
-    }
-
-    return result;
-}
 
 // Carrega dados atuais no Modal
 function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {

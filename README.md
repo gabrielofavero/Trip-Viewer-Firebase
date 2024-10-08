@@ -4,9 +4,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 53    | 49          | 3         |
+| 🐞     | Bug      | B000    | 55    | 52          | 3         |
 | 🏆     | Feature  | F000    | 61    | 53          | 8         |
-| 📈     | Melhoria | M000    | 82    | 64          | 17        |
+| 📈     | Melhoria | M000    | 85    | 70          | 15        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -19,8 +19,17 @@
 
 ### Prioridade Alta
 
-- 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
-- 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)
+- 📈 **M0085:** Melhoria no pop-up de erro
+  - *Forçar Refresh (Home ou tentar novamente)*
+  - *Tentar novamente habilitado primeiro load, desabilitado posterior*
+  - *Mensagem em inglês no final e com destaque diferente*
+- ⚔️ **E021:** Implementação: Lineup em viagens.html
+  - *Ao invés de estar em Destinos, é uma nova categoria*
+  - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
+  - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
+  - *Lineup e Horários separados por Tab semelhante a de gastos.html*
+  - *Select com os dias de festival, mas com geral em default*
+  - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável* 
 
 ### Prioridade Média
 
@@ -37,10 +46,6 @@
   - *Ordernar por data de atualização em Destinos e Listagens*
 - ⚔️ **E014:** Implementação: Lista de desejos
   - *Procurar template na web e aplicar (colocar fonte nos créditos)*
-- ⚔️ **E021:** Implementação: Lineup em viagens.html
-  - *Ao invés de estar em Destinos, é uma nova categoria*
-  - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
-  - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
 - ⚔️🚦 **E016:** Novo Front-End: Destinos.html
   - *Aguardando Guilherme desenvolver nova versão do template*
 - ⚔️🚦**E017:** Novo Front-End: Viagens.html
@@ -83,6 +88,13 @@
 
 ## Done
 
+### Outubro 2024
+- 🐞 **B055:** Hotfixes
+  - *Erro ao salvar viagem (módulo lineup sendo chamado mesmo após ser descontinuado)*
+  - *Erro títulos e ícones em Gastos não aparecerem*
+  - *Erro no carregamento do sortable.min.js*
+  - *Switchs de Customização não carregando corretamente*
+
 ### Setembro 2024
 
 - 📈 **M071:** Incluir código de reserva em Hospedagens
@@ -116,6 +128,9 @@
   - *Tratamento em viagens e editar-viagem para ignorar destino não existente*
   - *Listagem existente não carrega (editar-listagem.html)*
   - *Primeiro set não funciona por "Usuário Não Autenticado" (editar-destino.html)*
+- 📈 **M084:** Melhor exibição de checkboxes de destinos (editar-viagem.html e editar-listagem.html)
+- 📈 **M083:** Data usando select de acordo com o período da viagem (editar-viagem.html)
+- 🐞 **B054:** Correção na exibição de lineup (editar-viagem.html)
 
 ### Agosto 2024
 
@@ -377,3 +392,5 @@
   - *Risco de segurança expor ao user as regras*
 - 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
 - 📈 **M072:** Melhorar ajuste de datas automáticas em editar viagens
+- 📈 **M076:** Automatizar restore de dados de PRD para DEV (semanalmente) + Função Manual
+- 📈 **M077:** Backups de PRD semanais + Exclusão do mais antigo (Apenas 3 semanas)

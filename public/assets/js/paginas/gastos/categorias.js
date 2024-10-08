@@ -8,11 +8,11 @@ function _loadResumo() {
     }
 
     const gastosPrevios = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosPrevios'].resumo;
-    getID(`resumo-gastosPrevios-titulo`).innerText = _getIconTitle(`Gastos Prévios`);
+    getID(`resumo-gastosPrevios-titulo`).innerHTML = _getTitleWithIcon(`Gastos Prévios`);
     _setTable('resumo-gastosPrevios', gastosPrevios.itens, gastosPrevios.total);
 
     const gastosDurante = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosDurante'].resumo;
-    getID(`resumo-gastosDurante-titulo`).innerText = _getIconTitle(`Gastos na Viagem`);
+    getID(`resumo-gastosDurante-titulo`).innerHTML = _getTitleWithIcon(`Gastos na Viagem`);
     _setTable('resumo-gastosDurante', gastosDurante.itens, gastosDurante.total);
 }
 
@@ -20,7 +20,7 @@ function _loadChartResumo() {
     const labels = ['Gastos Prévios', 'Gastos na Viagem'];
     const valores = [GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosPrevios.resumo.total, GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosDurante.resumo.total];
 
-    getID('resumo-titulo').innerText = _getIconTitle(`Resumo dos Gastos`);
+    getID('resumo-titulo').innerHTML = _getTitleWithIcon(`Resumo dos Gastos`);
     getID('resumo-total').innerText = `Total: ${_formatMoeda(valores[0] + valores[1], true)}`;
 
     _setChart('doughnut', 'resumo-grafico', labels, valores)
@@ -42,7 +42,7 @@ function _setDoughnutChartCategoria(titulo, tipo) {
     const itens = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].itens;
     const total = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].resumo.total;
 
-    getID(`${tipo}-titulo`).innerText = _getIconTitle(titulo);
+    getID(`${tipo}-titulo`).innerHTML = _getTitleWithIcon(titulo);
     getID(`${tipo}-total`).innerText = `Total: ${_formatMoeda(total, true)}`;
 
     const labels = itens.map(item => item.nome);
@@ -67,7 +67,7 @@ function _setTableCategoria(tipo) {
 
         const h2 = document.createElement('h2');
         h2.className = 'gastos-titulo';
-        h2.innerText = _getIconTitle(item.nome);
+        h2.innerHTML = _getTitleWithIcon(item.nome);
         recibo.appendChild(h2);
 
         const table = document.createElement('table');
@@ -89,7 +89,7 @@ function _unsetTableCategoria(tipo) {
     }
 }
 
-function _getIconTitle(title) {
+function _getTitleWithIcon(title) {
     let icon = '';
     if (CONFIG?.gastosIcones && CONFIG.gastosIcones[0] && title) {
         const search = title.toLowerCase();
@@ -101,12 +101,10 @@ function _getIconTitle(title) {
             }
         }
     }
-    return icon;
-}
 
-function _applyIconTitle(id) {
-    const element = getID(id);
-    const title = element?.innerText;
-    let icon = _getIconTitle(title);
-    element.innerHTML = `${icon} ${title}`;
+    if (icon) {
+        return `<i class="iconify" data-icon="${icon}"></i> ${title}`;
+    }
+
+    return title;
 }

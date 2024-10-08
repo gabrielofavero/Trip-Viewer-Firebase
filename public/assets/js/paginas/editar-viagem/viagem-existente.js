@@ -9,7 +9,7 @@ async function _loadTripData() {
         _loadHospedagemData();
         _loadDestinosData();
         _loadProgramacaoData();
-        _loadLineupData();
+        // _loadLineupData();
         _loadGaleriaData();
     } catch (error) {
         _displayError(error);
@@ -71,56 +71,22 @@ function _loadCustomizacaoData() {
     const claro = getID('claro');
     const escuro = getID('escuro');
 
-    const claroFB = FIRESTORE_DATA.cores.claro;
-    const escuroFB = FIRESTORE_DATA.cores.escuro
-
     if (FIRESTORE_DATA.cores.ativo === true) {
         getID('habilitado-cores').checked = true;
-        claro.value = claroFB;
-        escuro.value = escuroFB;
+        claro.value = FIRESTORE_DATA.cores.claro;
+        escuro.value = FIRESTORE_DATA.cores.escuro;
         getID('habilitado-cores-content').style.display = 'block';
     }
 
     // Links Personalizados
-    const attachments = FIRESTORE_DATA.links.attachments;
-    const drive = FIRESTORE_DATA.links.drive;
-    const maps = FIRESTORE_DATA.links.maps;
-    const pdf = FIRESTORE_DATA.links.pdf;
-    const ppt = FIRESTORE_DATA.links.ppt;
-    const sheet = FIRESTORE_DATA.links.sheet;
-    const vacina = FIRESTORE_DATA.links.vacina;
-
-    if (FIRESTORE_DATA.links.ativo === true) {
-        getID('habilitado-imagens').checked = true;
-    }
-
-    if (attachments) {
-        getID('link-attachments').value = attachments;
-    }
-
-    if (drive) {
-        getID('link-drive').value = drive;
-    }
-
-    if (maps) {
-        getID('link-maps').value = maps;
-    }
-
-    if (pdf) {
-        getID('link-pdf').value = pdf;
-    }
-
-    if (ppt) {
-        getID('link-ppt').value = ppt;
-    }
-
-    if (sheet) {
-        getID('link-sheet').value = sheet;
-    }
-
-    if (vacina) {
-        getID('link-vacina').value = vacina;
-    }
+    getID('habilitado-links').checked = FIRESTORE_DATA.links.ativo;
+    getID('link-attachments').value = FIRESTORE_DATA.links.attachments;
+    getID('link-drive').value = FIRESTORE_DATA.links.drive;
+    getID('link-maps').value = FIRESTORE_DATA.links.maps;
+    getID('link-pdf').value = FIRESTORE_DATA.links.pdf;
+    getID('link-ppt').value = FIRESTORE_DATA.links.ppt;
+    getID('link-sheet').value = FIRESTORE_DATA.links.sheet;
+    getID('link-vacina').value = FIRESTORE_DATA.links.vacina;
 }
 
 async function _loadGastosData() {
@@ -303,69 +269,27 @@ function _loadLineupData() {
         getID('habilitado-lineup').checked = true;
         getID('habilitado-lineup-content').style.display = 'block';
         getID('lineup-adicionar-box').style.display = 'block';
+    }
 
-        const keys = Object.keys(FIRESTORE_DATA.lineup);
-        if (keys.length > 0) {
-            let j = 1;
-            for (const key of keys) {
-                const size = FIRESTORE_DATA.lineup[key].nome.length;
-                for (let i = 0; i < size; i++, j++) {
-                    _addLineup();
+    for (let j = 1; j <= FIRESTORE_DATA.lineup.length; j++) {
+        _addLineup();
+        const lineup = FIRESTORE_DATA.lineup[j - 1];
 
-                    const nome = FIRESTORE_DATA.lineup[key].nome;
-                    if (nome && nome[i]) {
-                        getID(`lineup-nome-${j}`).value = nome[i];
-                        getID(`lineup-title-${j}`).innerText = nome[i];
-                    }
+        getID(`lineup-title-${j}`).innerText = `${lineup.nome}${lineup.headliner ? ' ⭐' : ''}`;  
+        getID(`lineup-id-${j}`).value = lineup.id;
+        getID(`lineup-headliner-${j}`).checked = lineup.headliner;
+        getID(`lineup-nome-${j}`).value = lineup.nome;        
+        getID(`lineup-local-${j}`).value = lineup.local;  
+        getID(`lineup-genero-${j}`).innerText = lineup.genero;
+        getID(`lineup-palco-${j}`).innerText = lineup.palco;
+        getID(`lineup-data-${j}`).value = _firestoneDateToKey(lineup.data);
+        getID(`lineup-inicio-${j}`).value = lineup.inicio;
+        getID(`lineup-fim-${j}`).value = lineup.fim;
+        getID(`lineup-midia-${j}`).value = lineup.midia;
+        getID(`lineup-nota-${j}`).value = lineup.nota;
 
-                    const headliner = FIRESTORE_DATA.lineup[key].head;
-                    if (headliner && headliner[i]) {
-                        getID(`lineup-headliner-${j}`).checked = headliner[i];
-                        getID(`lineup-title-${j}`).innerText += ' ⭐';
-                    }
-
-                    getID(`lineup-local-${j}`).value = key;
-
-                    const genero = FIRESTORE_DATA.lineup[key].genero;
-                    if (genero && genero[i]) {
-                        getID(`lineup-genero-${j}`).value = genero[i];
-                        _updateValueDS('lineup-genero', genero[i], `lineup-genero-select-${j}`);
-                    }
-
-                    const palco = FIRESTORE_DATA.lineup[key].palco;
-                    if (palco && palco[i]) {
-                        getID(`lineup-palco-${j}`).value = palco[i];
-                        _updateValueDS('lineup-palco', palco[i], `lineup-palco-select-${j}`);
-                    }
-
-                    const data = FIRESTORE_DATA.lineup[key].data;
-                    if (data && data[i]) {
-                        getID(`lineup-data-${j}`).value = data[i];
-                    }
-
-                    const inicio = FIRESTORE_DATA.lineup[key].inicio;
-                    if (inicio && inicio[i]) {
-                        getID(`lineup-inicio-${j}`).value = inicio[i];
-                    }
-
-                    const fim = FIRESTORE_DATA.lineup[key].fim;
-                    if (fim && fim[i]) {
-                        getID(`lineup-fim-${j}`).value = fim[i];
-                    }
-
-                    const midia = FIRESTORE_DATA.lineup[key].midia;
-                    if (midia && midia[i]) {
-                        getID(`lineup-midia-${j}`).value = midia[i];
-                    }
-
-                    const nota = FIRESTORE_DATA.lineup[key].nota;
-                    if (nota && nota[i]) {
-                        getID(`lineup-nota-${j}`).value = nota[i];
-                    }
-                }
-            }
-            _updateDestinosAtivosSelectHTML('lineup');
-        }
+        _updateValueDS('lineup-genero', lineup.genero, `lineup-genero-select-${j}`);
+        _updateValueDS('lineup-palco', lineup.palco, `lineup-palco-select-${j}`);
     }
 }
 

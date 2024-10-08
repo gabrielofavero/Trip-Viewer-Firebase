@@ -39,6 +39,11 @@ function _firestoneDateToInputDate(timestamp) {
     return _jsDateToInputDate(date);
 }
 
+function _firestoneDateToKey(timestamp) {
+    const inputDate = _firestoneDateToInputDate(timestamp);
+    return _inputDateToKey(inputDate);
+}
+
 function _convertToFirestoreDate(date) {
     const seconds = Math.floor(date.getTime() / 1000);
     const nanoseconds = (date.getTime() % 1000) * 1000000;
@@ -209,6 +214,11 @@ function _firestoreDateToKey(firestoreDate) {
     return _jsDateToKey(jsDate);
 }
 
+function _firestoreDateToInputDate(firestoreDate) {
+    const jsDate = _convertFromFirestoreDate(firestoreDate);
+    return _jsDateToInputDate(jsDate);
+}
+
 function _jsDateToKey(jsDate) {
     const inputDate = _jsDateToDate(jsDate, 'yyyy-mm-dd');
     return _inputDateToKey(inputDate);
@@ -216,6 +226,15 @@ function _jsDateToKey(jsDate) {
 
 function _inputDateToKey(inputDate) {
     return inputDate.split("-").join("");
+}
+
+function _keyToInputDate(key) {
+    return `${key.substr(0, 4)}-${key.substr(4, 2)}-${key.substr(6, 2)}`;
+}
+
+function _keyToFirestoreDate(key) {
+    const inputDate = _keyToInputDate(key);
+    return _formattedDateToFirestoreDate(inputDate);
 }
 
 function _inputDateToJsDate(inputDate) {

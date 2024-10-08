@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadVisibilityIndex();
     _loadHabilitados();
     _newDynamicSelect('galeria-categoria');
-    _newDynamicSelect('lineup-genero');
-    _newDynamicSelect('lineup-palco');
+    _newDynamicSelect('lineup-genero', false);
+    _newDynamicSelect('lineup-palco', false);
 
     if (DOCUMENT_ID) {
       await _loadTrip(true);
@@ -68,7 +68,7 @@ function _loadHabilitados() {
   _loadEditModule('hospedagens');
   _loadEditModule('programacao');
   _loadEditModule('destinos');
-  _loadEditModule('lineup');
+  // _loadEditModule('lineup');
   _loadEditModule('galeria');
 }
 
@@ -132,5 +132,17 @@ async function _deleteViagemAction() {
     await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
     await _deleteUserObjectStorage();
     window.location.href = `index.html`;
+  }
 }
+
+function _getDataSelectOptions(j) {
+  const values = DATAS.map(data => _jsDateToKey(data));
+  const labels = DATAS.map(data => _jsDateToMiniTitle(data));
+  let result = j ? '' : '<option value="" selected>Selecione uma Data</option>';
+
+  for (let i = 0; i < values.length; i++) {
+    result += `<option value="${values[i]}" ${j && i + 1 === j ? 'selected' : ''}>${labels[i]}</option>`;
+  }
+
+  return result;
 }

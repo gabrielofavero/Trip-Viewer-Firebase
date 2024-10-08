@@ -12,7 +12,6 @@ async function _buildTripObject() {
         hospedagens: _buildHospedagemObject(),
         imagem: _buildImagemObject(),
         inicio: getID(`inicio`).value ? _formattedDateToFirestoreDate(getID(`inicio`).value) : "",
-        lineup: _buildLineupObject(),
         links: _buildLinksObject(),
         modulos: _buildModulosObject(),
         moeda: getID(`moeda`).value,
@@ -58,7 +57,6 @@ function _buildModulosObject() {
         hospedagens: getID('habilitado-hospedagens').checked,
         destinos: getID('habilitado-destinos').checked,
         gastos: getID('habilitado-gastos').checked,
-        lineup: getID(`habilitado-lineup`).checked,
         programacao: getID('habilitado-programacao').checked,
         resumo: true,
         transportes: getID('habilitado-transporte').checked,
@@ -159,7 +157,7 @@ function _buildTransporteObject() {
             },
             duracao: getID(`transporte-duracao-${j}`).value,
             empresa: _getValueEmpresa(j),
-            id: _getIfDoesNotExistCategoriaID('transporte', j),
+            id: _getOrCreateCategoriaID('transporte', j),
             idaVolta: getID(`ida-${j}`).checked ? 'ida' : getID(`volta-${j}`).checked ? 'volta' : 'durante',
             link: getID(`transporte-link-${j}`).value,
             pontos: {
@@ -185,7 +183,7 @@ function _buildHospedagemObject() {
             },
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
-            id: _getIfDoesNotExistCategoriaID('hospedagens', j),
+            id: _getOrCreateCategoriaID('hospedagens', j),
             imagem: _getHospedagemImage('hospedagens', j),
             reserva: getID(`reserva-hospedagens-${j}`).value,
             link: getID(`reserva-hospedagens-link-${j}`).value,
@@ -243,62 +241,23 @@ function _buildDestinosArray() {
 }
 
 function _buildLineupObject() {
-    const childIDs = _getChildIDs("lineup-box");
+    let result = [];
 
-    let result = {};
-
-    for (const child of childIDs) {
-        const i = child.split("-")[1];
-        const selectValue = getID(`lineup-local-${i}`).value || 'generico';
-        if (!result[selectValue]) {
-            result[selectValue] = {
-                data: [],
-                genero: [],
-                head: [],
-                horario: [],
-                midia: [],
-                nome: [],
-                nota: [],
-                palco: [],
-                site: [],
-            };
-        }
-    }
-
-    for (let i = 0; i < childIDs.length; i++) {
-        const j = _getJ(childIDs[i]);
-        const selectValue = getID(`lineup-local-${j}`).value || 'generico';
-
-        const divHead = getID(`lineup-headliner-${j}`);
-        result[selectValue].head.push(divHead && divHead.checked);
-
-        const divNome = getID(`lineup-nome-${j}`);
-        const valueNome = divNome ? divNome.value : "";
-        result[selectValue].nome.push(valueNome);
-
-        const divData = getID(`lineup-data-${j}`);
-        const valueData = divData ? divData.value : "";
-        result[selectValue].data.push(valueData);
-
-        const divInicio = getID(`lineup-horario-${j}`);
-        const valueInicio = divInicio ? divInicio.value : "";
-
-        const divFim = getID(`lineup-horario-fim-${j}`);
-        const valueFim = divFim ? divFim.value : "";
-
-        if (valueInicio || valueFim) {
-            result[selectValue].horario.push(`${valueInicio} - ${valueFim}`);
-        } else {
-            result[selectValue].horario.push("");
-        }
-
-        divMidia = getID(`lineup-midia-${j}`);
-        valueMidia = divMidia ? divMidia.value : "";
-        result[selectValue].midia.push(valueMidia);
-
-        divNota = getID(`lineup-nota-${j}`);
-        valueNota = divNota ? divNota.value : "";
-        result[selectValue].nota.push(valueNota);
+    for (const j of _getJs('lineup-box')) {
+        const data = getID(`lineup-data-${j}`).value;
+        result.push({
+            id: _getOrCreateCategoriaID('lineup', j),
+            headliner: getID(`lineup-headliner-${j}`).checked,
+            nome: getID(`lineup-nome-${j}`).value,
+            local: getID(`lineup-local-${j}`).value,
+            genero: getID(`lineup-genero-select-${j}`).value,
+            palco: getID(`lineup-palco-select-${j}`).value,
+            data: data ? _keyToFirestoreDate(data) : "",
+            inicio: getID(`lineup-inicio-${j}`).value,
+            fim: getID(`lineup-fim-${j}`).value,
+            midia: getID(`lineup-midia-${j}`).value,
+            nota: getID(`lineup-nota-${j}`).value,
+        })
     }
 
     return result;
