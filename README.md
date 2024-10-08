@@ -19,10 +19,13 @@
 
 ### Prioridade Alta
 
-- 📈 **M0085:** Melhoria no pop-up de erro
+- 📈 **M0086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
   - *Mensagem em inglês no final e com destaque diferente*
+- 📈 **M0085:** Melhoria Programação
+  - *Automação horários de início e fim*
+  - *Melhor exibição de item associado*
 - ⚔️ **E021:** Implementação: Lineup em viagens.html
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
