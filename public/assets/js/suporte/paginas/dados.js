@@ -217,6 +217,17 @@ function _getJs(parentID) {
   return result;
 }
 
+function _findJFromID(id, tipo) {
+  const js = _getJs(`${tipo}-box`);
+  for (const j of js) {
+    const result = getID(`${tipo}-id-${j}`).value;
+    if (result === id) {
+      return j;
+    }
+  }
+  return 0;
+}
+
 function _getFirstJ(parentID) {
   const js = _getJs(parentID);
   return js[0];

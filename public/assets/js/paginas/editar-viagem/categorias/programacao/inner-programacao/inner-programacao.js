@@ -230,7 +230,7 @@ function _openInnerProgramacaoItem() {
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
-    _loadTitleReplacementCheckbox();
+    _loadTextReplacementCheckboxes();
 }
 
 function _openInnerProgramacaoTroca(j) {
@@ -259,7 +259,7 @@ function _closeInnerProgramacao(j) {
         getID('message-title').innerText = _getInnerProgramacaoTitle(j);
         getID('back-icon').style.visibility = 'hidden';
 
-        _replaceTitleIfEnabled();
+        _replaceTextIfEnabled();
 
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 
@@ -279,12 +279,12 @@ function _getInnerProgramacaoTitle(j) {
 // Salvar Inner Programação
 function _addInnerProgramacao(j, k, turno) {
     const programacao = getID(`inner-programacao`);
+
+    _replaceTextIfEnabled();
     
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
-        _replaceTitleIfEnabled();
-        
         const innerProgramacao = _buildInnerProgramacao(programacao);
         _setInnerProgramacao(innerProgramacao, j, k, turno);
 
@@ -368,36 +368,36 @@ function _loadInnerProgramacaoListeners(selects) {
         itemTransporte.style.display = 'block';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
-        _loadTitleReplacementCheckbox();
+        _loadTextReplacementCheckboxes();
     });
 
     getID(`inner-programacao-item-hospedagens-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'block';
         itemDestinos.style.display = 'none';
-        _loadTitleReplacementCheckbox();
+        _loadTextReplacementCheckboxes();
     });
 
     getID(`inner-programacao-item-destinos-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'block';
-        _loadTitleReplacementCheckbox();
+        _loadTextReplacementCheckboxes();
     });
 
     getID(`inner-programacao-item-nenhum-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
-        _loadTitleReplacementCheckbox();
+        _loadTextReplacementCheckboxes();
     });
 
     getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction(selects));
     getID(`inner-programacao-select-categoria`).addEventListener('change', () => _innerProgramacaoSelectCategoriaAction(selects));
 
-    getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTitleReplacementCheckbox());
-    getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTitleReplacementCheckbox());
-    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTitleReplacementCheckbox());
+    getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTextReplacementCheckboxes());
+    getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTextReplacementCheckboxes());
+    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTextReplacementCheckboxes());
 
     getID('inner-programacao-select-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-turno'));
     getID('inner-programacao-select-troca-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-troca-turno'));

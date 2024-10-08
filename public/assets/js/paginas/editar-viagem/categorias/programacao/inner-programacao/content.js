@@ -2,10 +2,16 @@
 function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
     return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">
+                    <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
+                        <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
+                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;"></button>
+                    </div>
+
                     <div class="nice-form-group">
                         <label>Programação</label>
                         <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." maxlength="50" autocomplete="off" />
                     </div>
+
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">
                         <label>
@@ -14,6 +20,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                         </label>
                         <input class="flex-input-50-50" id="inner-programacao-inicio" type="time">
                     </div>
+
                     <div class="nice-form-group side-by-side-fixed">
                         <label>
                             Fim<br>
@@ -32,13 +39,6 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                             <option value="noite">Noite</option>
                         </select>
                     </div>
-                    
-                    <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
-                        <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;">
-                            Associar Item
-                        </button>
-                    </div> 
                     
                     <div class="button-box-right" style="margin-top: 8px; margin-bottom: 8px; display: ${isNew ? 'none' : 'block'}">
                         <button onclick="_openInnerProgramacaoTroca()" class="btn btn-basic-secondary btn-format">
@@ -125,6 +125,11 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     <div class="nice-form-group" id="title-replacement-container" style="display: none">
                         <input type="checkbox" id="title-replacement-checkbox">
                         <label for="title-replacement" id="title-replacement-label"></label>
+                    </div>
+
+                    <div class="nice-form-group" id="time-replacement-container" style="display: none">
+                        <input type="checkbox" id="time-replacement-checkbox">
+                        <label for="time-replacement" id="time-replacement-label"></label>
                     </div>
 
                 </div>

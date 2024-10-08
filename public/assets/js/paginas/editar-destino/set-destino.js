@@ -58,7 +58,7 @@ function _buildDestinoCategoryObject(tipo) {
     return result;
 }
 
-function _updateTikTokLinks() {
+async function _updateTikTokLinks() {
     let toUpdate = false;
     const urls = {};
     for (const categoria of CONFIG.destinos.categorias.passeios) {
@@ -70,7 +70,7 @@ function _updateTikTokLinks() {
     }
     if (toUpdate) {
         try {
-            const response = _cloudFunction('convertTikTokLinks', { urls });
+            const response = await _cloudFunction('convertTikTokLinks', { urls });
             const data = response.urls;
             for (const categoria of CONFIG.destinos.categorias.passeios) {
                 for (let i = 0; i < FIRESTORE_DESTINOS_NEW_DATA[categoria].length; i++) {

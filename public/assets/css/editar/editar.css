@@ -1815,6 +1815,7 @@ details summary::-webkit-details-marker {
   font-size: 14px;
   padding: 12px;
   padding-left: 10px;
+  min-height: 44px;
 }
 
 .draggable {
@@ -1927,4 +1928,8 @@ details summary::-webkit-details-marker {
   font-size: 20px;
   text-align: center;
   display: none;
+}
+
+.placeholder-text {
+  color: var(--nf-input-placeholder-color);
 }
