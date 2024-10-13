@@ -7,6 +7,8 @@ function _loadDestinationsData() {
     _loadDestinoExistente('saidas');
     _loadDestinoExistente('turismo');
     _loadDestinoExistente('lojas');
+    _buildDS('regiao');
+    
     _loadMapaData();
 
   } catch (error) {

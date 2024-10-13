@@ -291,6 +291,9 @@ function _loadLineupData() {
         _updateValueDS('lineup-genero', lineup.genero, `lineup-genero-select-${j}`);
         _updateValueDS('lineup-palco', lineup.palco, `lineup-palco-select-${j}`);
     }
+
+    _buildDS('lineup-genero');
+    _buildDS('lineup-palco');
 }
 
 function _loadGaleriaData() {
@@ -316,6 +319,7 @@ function _loadGaleriaData() {
             if (categoria) {
                 getID(`galeria-categoria-${j}`).value = categoria;
                 _updateValueDS('galeria-categoria', categoria, `galeria-categoria-select-${j}`);
+                _buildDS('galeria-categoria');
             }
 
             const descricao = FIRESTORE_DATA.galeria.descricoes[i];

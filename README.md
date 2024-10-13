@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 57    | 52          | 5         |
+| 🐞     | Bug      | B000    | 57    | 53          | 4         |
 | 🏆     | Feature  | F000    | 63    | 53          | 10         |
 | 📈     | Melhoria | M000    | 85    | 70          | 15        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
@@ -21,7 +21,6 @@
 
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
 - 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
-- 🐞 **B056:** Dynamic Select causando erros ao transferir destinos de lugar (editar-destino.html)
 - 📈 **M085:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
@@ -94,6 +93,10 @@
 ## Done
 
 ### Outubro 2024
+- 🐞 **B056:** Erros Dynamic Select:
+  - *Erro ao tentar transferir destino*;
+  - *Erro de ordenação (não está crescente)*
+  - *Muitos refreshs causando demora no carregamento inicial*
 - 🐞 **B055:** Hotfixes
   - *Erro ao salvar viagem (módulo lineup sendo chamado mesmo após ser descontinuado)*
   - *Erro títulos e ícones em Gastos não aparecerem*
