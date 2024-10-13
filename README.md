@@ -4,8 +4,8 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 55    | 52          | 3         |
-| 🏆     | Feature  | F000    | 61    | 53          | 8         |
+| 🐞     | Bug      | B000    | 57    | 52          | 5         |
+| 🏆     | Feature  | F000    | 63    | 53          | 10         |
 | 📈     | Melhoria | M000    | 85    | 70          | 15        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
@@ -19,10 +19,14 @@
 
 ### Prioridade Alta
 
-- 📈 **M0085:** Melhoria no pop-up de erro
+- 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
+- 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
+- 🐞 **B056:** Dynamic Select causando erros ao transferir destinos de lugar (editar-destino.html)
+- 📈 **M085:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
   - *Mensagem em inglês no final e com destaque diferente*
+  - *Assegurar que sempre mostrará uma notifação ao usuário*
 - ⚔️ **E021:** Implementação: Lineup em viagens.html
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
@@ -33,6 +37,7 @@
 
 ### Prioridade Média
 
+- 🐞 **B057:** Calendário com bordas brancas temporariamente quando é feito o switch para modo noturno (viagem.html)
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
   - *Adicionar imagem e descrição*
 - 📈 **M020:** Módulo de transporte mais automatizado
