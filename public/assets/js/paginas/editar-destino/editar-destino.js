@@ -287,6 +287,11 @@ function _moveDestino(j, categoria) {
     _addDestino(newCategoria);
     _addDestinoHTML(newCategoria, newJ, destino);
     _removeChildWithValidation(categoria, j);
+
+    _removeSelectorDS('regiao', `${categoria}-regiao-select-${j}`);
+    _updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
+    _buildDS('regiao');
+
   }
 
   _closeMessage();

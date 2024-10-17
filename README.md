@@ -4,8 +4,8 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 55    | 52          | 3         |
-| 🏆     | Feature  | F000    | 61    | 53          | 8         |
+| 🐞     | Bug      | B000    | 57    | 53          | 4         |
+| 🏆     | Feature  | F000    | 63    | 53          | 10         |
 | 📈     | Melhoria | M000    | 85    | 70          | 15        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
@@ -19,13 +19,15 @@
 
 ### Prioridade Alta
 
-- 📈 **M0086:** Melhoria no pop-up de erro
+- 🐞 **B057:** Carregamento demorado em index.html não mostrando elementos corretamente
+- 🏆 **F064:** Desabilitar zoom quando em webview
+- 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
+- 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
+- 📈 **M085:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
   - *Mensagem em inglês no final e com destaque diferente*
-- 📈 **M0085:** Melhoria Programação
-  - *Automação horários de início e fim*
-  - *Melhor exibição de item associado*
+  - *Assegurar que sempre mostrará uma notifação ao usuário*
 - ⚔️ **E021:** Implementação: Lineup em viagens.html
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
@@ -36,6 +38,8 @@
 
 ### Prioridade Média
 
+- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
+- 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
   - *Adicionar imagem e descrição*
 - 📈 **M020:** Módulo de transporte mais automatizado
@@ -65,6 +69,7 @@
 
 ### Prioridade Baixa
 
+- 🐞 **B057:** Calendário com bordas brancas temporariamente quando é feito o switch para modo noturno (viagem.html)
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
@@ -92,6 +97,10 @@
 ## Done
 
 ### Outubro 2024
+- 🐞 **B056:** Erros Dynamic Select:
+  - *Erro ao tentar transferir destino*;
+  - *Erro de ordenação (não está crescente)*
+  - *Muitos refreshs causando demora no carregamento inicial*
 - 🐞 **B055:** Hotfixes
   - *Erro ao salvar viagem (módulo lineup sendo chamado mesmo após ser descontinuado)*
   - *Erro títulos e ícones em Gastos não aparecerem*

@@ -35,7 +35,6 @@ function _updateValueDS(type, value, selectID) {
         DYNAMIC_SELECT[type].selectors[selectID].value = value;
 
         _addValueDS(type, value);
-        _buildDS(type);
 
         getID(DYNAMIC_SELECT[type].selectors[selectID].inputID).value = '';
         getID(selectID).value = value;
@@ -57,8 +56,9 @@ function _buildDS(type) {
 
     function _buildSelectDS(type) {
         let selectInnerHTML = `<option value="">Selecione</option>`;
+        const values = Object.keys(DYNAMIC_SELECT[type].values).sort();
 
-        for (const value in DYNAMIC_SELECT[type].values) {
+        for (const value of values) {
             selectInnerHTML += `<option value="${value}">${value}</option>`;
         }
 
@@ -116,10 +116,29 @@ function _addRemoveChildListenerDS(categoria, j, dynamicSelects=[]) {
         }
         
     });
+}
 
-    function _removeSelectorDS(type, selectID) {
-        const value = DYNAMIC_SELECT[type].selectors[selectID].value;
-        _removeValueDS(type, value);
-        delete DYNAMIC_SELECT[type].selectors[selectID];
+function _removeSelectorDS(type, selectID) {
+    const value = DYNAMIC_SELECT[type].selectors[selectID].value;
+    _removeValueDS(type, value);
+    delete DYNAMIC_SELECT[type].selectors[selectID];
+}
+
+function _getSelectorsByValueDS(type, value) {
+    const selectors = {};
+    for (const selectID in DYNAMIC_SELECT[type].selectors) {
+        const selector = DYNAMIC_SELECT[type].selectors[selectID];
+        if (selector.value === value) {
+            selectors[selectID] = selector;
+        }
     }
+    return selectors;
+}
+
+function _replaceSelectorsValueDS(type, oldValue, newValue) {
+    const selectors = _getSelectorsByValueDS(type, oldValue);
+    for (const selectID in selectors) {
+        _updateValueDS(type, newValue, selectID);
+    }
+    _buildDS(type);
 }
