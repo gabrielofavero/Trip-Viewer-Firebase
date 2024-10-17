@@ -4,9 +4,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 57    | 53          | 4         |
-| 🏆     | Feature  | F000    | 63    | 53          | 10         |
-| 📈     | Melhoria | M000    | 85    | 70          | 15        |
+| 🐞     | Bug      | B000    | 59    | 53          | 6         |
+| 🏆     | Feature  | F000    | 65    | 53          | 12         |
+| 📈     | Melhoria | M000    | 86    | 70          | 16        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -38,6 +38,9 @@
 
 ### Prioridade Média
 
+- 📈 **M086:** Melhor exibição de destinos (editar-viagem.html)
+  - *Itens selecionados mostrados primeiro (apenas no load inicial)*
+  - *Melhor exibição de várias regiões (carrosel talvez)*
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
