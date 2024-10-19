@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 59    | 53          | 6         |
-| 🏆     | Feature  | F000    | 65    | 53          | 12         |
+| 🏆     | Feature  | F000    | 65    | 54          | 11         |
 | 📈     | Melhoria | M000    | 86    | 70          | 16        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
@@ -20,7 +20,6 @@
 ### Prioridade Alta
 
 - 🐞 **B057:** Carregamento demorado em index.html não mostrando elementos corretamente
-- 🏆 **F064:** Desabilitar zoom quando em webview
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
 - 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
 - 📈 **M085:** Melhoria no pop-up de erro
@@ -109,6 +108,7 @@
   - *Erro títulos e ícones em Gastos não aparecerem*
   - *Erro no carregamento do sortable.min.js*
   - *Switchs de Customização não carregando corretamente*
+- 🏆 **F064:** Desabilitar zoom quando em webview
 
 ### Setembro 2024
 
