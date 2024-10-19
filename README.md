@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 59    | 53          | 6         |
 | 🏆     | Feature  | F000    | 65    | 54          | 11         |
-| 📈     | Melhoria | M000    | 86    | 70          | 16        |
+| 📈     | Melhoria | M000    | 87    | 70          | 16        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -15,6 +15,10 @@
 
 ## Doing
 
+- 📈 **M0085:** Melhoria Programação
+  - *Automação horários de início e fim*
+  - *Melhor exibição de item associado*
+
 ## To-Do
 
 ### Prioridade Alta
@@ -22,7 +26,7 @@
 - 🐞 **B057:** Carregamento demorado em index.html não mostrando elementos corretamente
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
 - 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
-- 📈 **M085:** Melhoria no pop-up de erro
+- 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
   - *Mensagem em inglês no final e com destaque diferente*
@@ -37,7 +41,7 @@
 
 ### Prioridade Média
 
-- 📈 **M086:** Melhor exibição de destinos (editar-viagem.html)
+- 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
   - *Itens selecionados mostrados primeiro (apenas no load inicial)*
   - *Melhor exibição de várias regiões (carrosel talvez)*
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
