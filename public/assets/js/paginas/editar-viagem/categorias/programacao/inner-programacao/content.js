@@ -4,7 +4,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
                         <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;"></button>
+                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;">Associar Item</button>
                     </div>
 
                     <div class="nice-form-group">

@@ -14,14 +14,11 @@ const TIME_REPLACEMENT = {
     },
 }
 
+var TEXT_REPLACEMENT_APPLIED = false;
+
 function _loadTextReplacementCheckboxes() {
     _loadTitleReplacementCheckbox();
     _loadTimeReplacementCheckbox();
-}
-
-function _replaceTextIfEnabled() {
-    _replaceTextIfEnabled();
-    _replaceTimeIfEnabled();
 }
 
 function _loadTitleReplacementCheckbox() {

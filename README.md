@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 59    | 53          | 6         |
 | 🏆     | Feature  | F000    | 65    | 54          | 11         |
-| 📈     | Melhoria | M000    | 87    | 70          | 16        |
+| 📈     | Melhoria | M000    | 87    | 71          | 16        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -14,10 +14,6 @@
 - ❗️: Crítico (deploy em produção)
 
 ## Doing
-
-- 📈 **M0085:** Melhoria Programação
-  - *Automação horários de início e fim*
-  - *Melhor exibição de item associado*
 
 ## To-Do
 
@@ -113,6 +109,9 @@
   - *Erro no carregamento do sortable.min.js*
   - *Switchs de Customização não carregando corretamente*
 - 🏆 **F064:** Desabilitar zoom quando em webview
+- 📈 **M0085:** Melhoria Programação
+  - *Automação horários de início e fim*
+  - *Melhor exibição de item associado*
 
 ### Setembro 2024
 

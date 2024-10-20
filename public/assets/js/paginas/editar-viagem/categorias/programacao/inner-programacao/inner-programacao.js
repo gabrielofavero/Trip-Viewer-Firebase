@@ -221,6 +221,7 @@ function _openInnerProgramacaoItem() {
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
     _loadTextReplacementCheckboxes();
+    TEXT_REPLACEMENT_APPLIED = false;
 }
 
 function _openInnerProgramacaoTroca(j) {
@@ -250,6 +251,8 @@ function _closeInnerProgramacao(j) {
         getID('back-icon').style.visibility = 'hidden';
 
         _replaceTextIfEnabled();
+        _replaceTimeIfEnabled();
+        TEXT_REPLACEMENT_APPLIED = true;
 
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 
@@ -270,7 +273,11 @@ function _getInnerProgramacaoTitle(j) {
 function _addInnerProgramacao(j, k, turno) {
     const programacao = getID(`inner-programacao`);
 
-    _replaceTextIfEnabled();
+    if (!TEXT_REPLACEMENT_APPLIED) {
+        _replaceTextIfEnabled();
+        _replaceTimeIfEnabled();
+    }
+    
     
     if (!programacao.value) {
         programacao.reportValidity();
