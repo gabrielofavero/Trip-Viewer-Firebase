@@ -143,6 +143,7 @@ async function _loadUserDataList(tipo) {
     const tipos = _getTipos(tipo);
     for (const innerTipo of tipos) {
       innerTipo.preloader.style.display = 'none';
+      innerTipo.demoraCarregamento.style.display = 'none';
       if (response.length === 0) {
         innerTipo.semDados.style.display = 'block';
       } else {

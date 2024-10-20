@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 59    | 53          | 6         |
+| 🐞     | Bug      | B000    | 59    | 54          | 5         |
 | 🏆     | Feature  | F000    | 65    | 54          | 11         |
 | 📈     | Melhoria | M000    | 87    | 71          | 16        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
@@ -19,8 +19,10 @@
 
 ### Prioridade Alta
 
-- 🐞 **B057:** Carregamento demorado em index.html não mostrando elementos corretamente
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
+  - *Mudança no get e no set (editar-destino.html)*
+  - *Mudança no get (viagem.html e destino.html)*
+  - *Mudança no dynamic select (editar-destino.html)*
 - 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
@@ -112,6 +114,7 @@
 - 📈 **M0085:** Melhoria Programação
   - *Automação horários de início e fim*
   - *Melhor exibição de item associado*
+- 🐞 **B057:** Carregamento demorado em index.html não mostrando elementos corretamente
 
 ### Setembro 2024
 
