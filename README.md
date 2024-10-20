@@ -21,8 +21,10 @@
 
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
+  - *Criação de estrutura no front (editar-destino.html)*
   - *Mudança no get (viagem.html e destino.html)*
   - *Mudança no dynamic select (editar-destino.html)*
+  - *Script de migração*
 - 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
