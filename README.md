@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 59    | 54          | 5         |
 | 🏆     | Feature  | F000    | 65    | 54          | 11         |
-| 📈     | Melhoria | M000    | 87    | 71          | 16        |
+| 📈     | Melhoria | M000    | 89    | 71          | 18        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -100,6 +100,8 @@
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
+- 📈 **M088:** Recurso de copia e cola para códigos de reserva
+- 📈 **M089:** Substituir valores de cores por variáveis de ambiente nos CSS
 
 ## Done
 

@@ -6,6 +6,8 @@
   --theme-color: #5859a7;
   --theme-color-hover: #505197;
   --theme-color-secondary: #D5D6E9;
+  --background-color: #fff;
+  --table-border: #D9D9D9;
 }
 
 @font-face {
@@ -17,7 +19,7 @@ body {
   font-family: "Open Sans", sans-serif;
   background-size: cover;
   color: #272829;
-  background-color: #fff;
+  background-color: var(--background-color);
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   padding-top: env(safe-area-inset-top);
@@ -65,7 +67,7 @@ h6 {
 
 .back-to-top i {
   font-size: 28px;
-  color: #fff;
+  color: var(--background-color);;
   line-height: 0;
 }
 
@@ -90,7 +92,7 @@ h6 {
   bottom: 0;
   z-index: 9999;
   overflow: hidden;
-  background: #fff;
+  background: var(--background-color);;
 }
 
 #preloader:before {
@@ -99,8 +101,8 @@ h6 {
   top: calc(50% - 30px);
   left: calc(50% - 30px);
   border: 6px solid var(--theme-color);
-  border-top-color: #fff;
-  border-bottom-color: #fff;
+  border-top-color: var(--background-color);
+  border-bottom-color: var(--background-color);
   border-right-color: var(--theme-color);
   border-left-color: var(--theme-color);
   border-radius: 50%;
@@ -171,7 +173,7 @@ h6 {
 @media (max-width: 992px) {
   #header {
     width: 300px;
-    background: #fff;
+    background: var(--background-color);
     border-right: 1px solid #e6e9ec;
     left: -300px;
   }
@@ -182,10 +184,6 @@ h6 {
     margin-left: auto;
     margin-right: auto;
   }
-
-  /* #main {
-    margin-left: 100px;
-  } */
 }
 
 @media (max-width: 450px) {
@@ -735,7 +733,7 @@ section {
 #calendar {
   color: #4F5051;
   background-color: #fff;
-  border: 0.5px solid #D9D9D9 !important;
+  border: 0.5px solid var(--table-border);
   margin-bottom: 0px;
 }
 
@@ -757,7 +755,6 @@ section {
 }
 
 #calendarMonthSelector {
-  border: 0.5px solid #D9D9D9;
   border-top: none;
   padding: 8px;
 }
@@ -801,7 +798,7 @@ section {
   transition: all ease-in-out 0.3s;
   background-color: #fff;
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
-  border: 1px solid #D9D9D9;
+  border: 1px solid var(--table-border);
   border-radius: 5px;
   padding: 30px;
 }

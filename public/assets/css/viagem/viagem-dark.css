@@ -2,11 +2,13 @@
   --theme-color: #7f75b6;
   --theme-color-hover: #7367b4;
   --theme-color-secondary: #D5D6E9;
+  --background-color: #303030;
+  --table-border: #414040;
 }
 
 body {
   color: #E2E2E2;
-  background-color: #303030;
+  background-color: var(--background-color);
 }
 
 strong {
@@ -26,7 +28,7 @@ a:hover {
 }
 
 .back-to-top i {
-  color: #303030;
+  color: var(--background-color);;
 }
 
 .back-to-top:hover {
@@ -34,18 +36,18 @@ a:hover {
 }
 
 #preloader {
-  background: #303030;
+  background: var(--background-color);
 }
 
 #preloader:before {
   border: 6px solid #7F75B9;
-  border-top-color: #303030;
-  border-bottom-color: #303030;
+  border-top-color: var(--background-color);
+  border-bottom-color: var(--background-color);
 }
 
 @media (max-width: 992px) {
   #header {
-    background: #303030;
+    background: var(--background-color);
     border-right: 1px solid #404040;
   }
 }
@@ -188,7 +190,7 @@ a:hover {
 #calendar {
   color: #E2E2E2;
   background-color: #303030;
-  border: 0.5px solid #414040 !important;
+  border: 0.5px solid var(--table-border);
 }
 
 #calendarTitle {
@@ -212,7 +214,7 @@ a:hover {
 
 #programacao-box {
   background-color: #3b3b3b;
-  border: 0.5px solid #414040;
+  border: 0.5px solid var(--table-border);
 }
 
 #programacao-titulo,
