@@ -735,12 +735,13 @@ section {
 #calendar {
   color: #4F5051;
   background-color: #fff;
-  border: 0.5px solid #D9D9D9;
+  border: 0.5px solid #D9D9D9 !important;
   margin-bottom: 0px;
 }
 
 #calendarTitle {
   background: var(--theme-color);
+  border-bottom: 0.5px solid var(--theme-color);
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -753,7 +754,6 @@ section {
   color: #4F5051;
   font-size: 12px;
   font-weight: bold;
-  border: 0.5px solid #D9D9D9;
 }
 
 #calendarMonthSelector {
@@ -774,7 +774,6 @@ section {
   float: left;
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 0.5px solid #D9D9D9;
 }
 
 @media (min-width: 768px) {

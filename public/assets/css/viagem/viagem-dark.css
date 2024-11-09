@@ -193,26 +193,21 @@ a:hover {
 
 #calendarTitle {
   background: var(--theme-color);
+  border-bottom: 0.5px solid var(--theme-color);
   color: #303030;
 }
 
 #tabHeader {
   background-color: #3b3b3b;
   color: white;
-  border: 0.5px solid #414040;
 }
 
 #calendarMonthSelector {
-  border: 0.5px solid #414040;
   border-top: none;
 }
 
 .linHeader {
   background: #414040;
-}
-
-.linItem {
-  border: 0.5px solid #414040;
 }
 
 #programacao-box {
