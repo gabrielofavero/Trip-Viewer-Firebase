@@ -17,6 +17,8 @@
 
 ## To-Do
 
+- 🐞 **B057:** Correções de dark mode (viagens.html)
+
 ### Prioridade Alta
 
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
@@ -75,7 +77,6 @@
 
 ### Prioridade Baixa
 
-- 🐞 **B057:** Calendário com bordas brancas temporariamente quando é feito o switch para modo noturno (viagem.html)
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet

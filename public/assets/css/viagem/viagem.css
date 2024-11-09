@@ -2638,3 +2638,7 @@ iframe {
 .active-calendar-red {
   background-color: #FFE6DF !important;
 }
+
+#gastos {
+  color: #fff
+}
