@@ -4,9 +4,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 59    | 54          | 5         |
-| 🏆     | Feature  | F000    | 65    | 54          | 11         |
-| 📈     | Melhoria | M000    | 89    | 71          | 18        |
+| 🐞     | Bug      | B000    | 60    | 54          | 6         |
+| 🏆     | Feature  | F000    | 67    | 54          | 13         |
+| 📈     | Melhoria | M000    | 93    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
 - 🚦: Bloqueado
@@ -21,6 +21,8 @@
 
 ### Prioridade Alta
 
+- 🏆 **F066:** Trocar Login Google por login User-Password
+- 🐞 **B060:** Correção Fuso
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
   - *Criação de estrutura no front (editar-destino.html)*
@@ -74,6 +76,10 @@
   - *Sonarqube*
 - ⚔️ **E024:** Migração de projeto para React
 - ⚔️ **E025:** Implementação iOs e Android
+- 📈 **M090:** Carregamento logo dentro do pre loader
+- 📈 **M091:** Alinhar select de cidade com box de destino
+- 📈 **M092:** Titulo em dark mode com maior destaque
+- 📈 **M093:** Caixa na capa de conferir programação do dia
 
 ### Prioridade Baixa
 
@@ -102,6 +108,7 @@
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 - 📈 **M088:** Recurso de copia e cola para códigos de reserva
 - 📈 **M089:** Substituir valores de cores por variáveis de ambiente nos CSS
+- 🏆 **F067:** Integração OneDrive
 
 ## Done
 
