@@ -23,7 +23,7 @@ async function _signInWithEmailAndPassword() {
         return user; // Optionally return the user for further use
     } catch (error) {
         console.error('Error signing in:', error.message);
-        throw error;
+        _displayError(error);
     }
 }
 
