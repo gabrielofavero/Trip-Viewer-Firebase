@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       _start();
       _mainLoad();
+      _loadViagemVisibility();
       _adjustPortfolioHeight();
       _refreshCategorias();
 

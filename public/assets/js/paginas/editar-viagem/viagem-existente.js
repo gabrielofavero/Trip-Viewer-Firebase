@@ -9,7 +9,6 @@ async function _loadTripData() {
         _loadHospedagemData();
         _loadDestinosData();
         _loadProgramacaoData();
-        // _loadLineupData();
         _loadGaleriaData();
     } catch (error) {
         _displayError(error);
@@ -76,6 +75,15 @@ function _loadCustomizacaoData() {
         claro.value = FIRESTORE_DATA.cores.claro;
         escuro.value = FIRESTORE_DATA.cores.escuro;
         getID('habilitado-cores-content').style.display = 'block';
+    }
+
+    // Visibilidade
+    const visibilidade = FIRESTORE_DATA.visibilidade;
+    if (visibilidade) {
+        _visibilityListenerAction(visibilidade);
+        getID('dark-and-light').checked = visibilidade.claro && visibilidade.escuro;
+        getID('light-exclusive').checked = visibilidade.claro && !visibilidade.escuro;
+        getID('dark-exclusive').checked = !visibilidade.claro && visibilidade.escuro;
     }
 
     // Links Personalizados

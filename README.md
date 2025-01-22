@@ -4,8 +4,8 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 60    | 54          | 6         |
-| 🏆     | Feature  | F000    | 68    | 55          | 13         |
+| 🐞     | Bug      | B000    | 61    | 54          | 7         |
+| 🏆     | Feature  | F000    | 67    | 56          | 11         |
 | 📈     | Melhoria | M000    | 93    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
@@ -14,12 +14,11 @@
 - ❗️: Crítico (deploy em produção)
 
 ## Doing
+- 🐞 **B061:** Ajustar persistência de dark mode
+- 🐞 **B057:** Correções de dark mode
 
 ## To-Do
-
 ### Prioridade Alta
-
-- 🐞 **B057:** Correções de dark mode (viagens.html)
 - 🐞 **B060:** Correção Fuso
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
@@ -27,7 +26,6 @@
   - *Mudança no get (viagem.html e destino.html)*
   - *Mudança no dynamic select (editar-destino.html)*
   - *Script de migração*
-- 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
@@ -112,6 +110,7 @@
 
 ### Janeiro 2025
 - 🏆 **F066:** Trocar Login Google por login User-Password
+- 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
 
 ### Outubro 2024
 - 🐞 **B056:** Erros Dynamic Select:

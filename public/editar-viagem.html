@@ -463,13 +463,31 @@
           </div>
 
           <div class="transparent-background-color" id="habilitado-cores-content">
+            
+            <fieldset class="nice-form-group">
+              <div class="nice-form-group">
+                <input type="radio" id="dark-and-light" name="display-mode" checked />
+                <label for="dark-and-light">Exibir viagem em Modo Escuro e Modo Claro</label>
+              </div>
+            
+              <div class="nice-form-group">
+                <input type="radio" id="light-exclusive" name="display-mode" />
+                <label for="light-exclusive">Exibir viagem apenas em Modo Claro</label>
+              </div>
+            
+              <div class="nice-form-group">
+                <input type="radio" id="dark-exclusive" name="display-mode" />
+                <label for="dark-exclusive">Exibir viagem apenas em Modo Escuro</label>
+              </div>
+            </fieldset>            
+
             <div class="side-by-side-color-box" id="cores">
-              <div class="nice-form-group side-by-side-fixed">
+              <div class="nice-form-group side-by-side-fixed" id="tema-claro">
                 <label>Tema: Claro</label>
                 <input id="claro" type="color" value="#5859a7" />
               </div>
 
-              <div class="nice-form-group side-by-side-fixed">
+              <div class="nice-form-group side-by-side-fixed" id="tema-escuro">
                 <label>Tema: Escuro</label>
                 <input id="escuro" type="color" value="#7f75b6" />
               </div>

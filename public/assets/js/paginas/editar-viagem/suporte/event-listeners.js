@@ -14,7 +14,6 @@ function _loadEventListeners() {
     getID('cancelar').addEventListener('click', () => window.location.href = `index.html`);
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
-    // getID('lineup-adicionar').addEventListener('click', () => _lineupAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
     getID('pin-enable').addEventListener('click', () => _switchPinVisibility());
     getID('pin-disable').addEventListener('click', () => _switchPinVisibility());
@@ -39,6 +38,11 @@ function _loadEventListeners() {
 
     // Barra de pesquisa em destinos
     getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
+
+    // Radios
+    getID('dark-and-light').addEventListener('change', () => _visibilityListenerAction());
+    getID('light-exclusive').addEventListener('change', () => _visibilityListenerAction());
+    getID('dark-exclusive').addEventListener('change', () => _visibilityListenerAction());
 }
 
 // Actions
@@ -95,4 +99,13 @@ function _addRemoveLineupListener(j) {
         selectID: `lineup-palco-select-${j}`,
     }]
     _addRemoveChildListenerDS('lineup', j, dynamicSelects);
+}
+
+function _visibilityListenerAction(visibilidade) {
+    if (!visibilidade) {
+        visibilidade = _buildVisibilidadeObject();
+    }
+
+    getID('tema-claro').style.display = visibilidade.claro ? 'block' : 'none';
+    getID('tema-escuro').style.display = visibilidade.escuro ? 'block' : 'none';
 }
