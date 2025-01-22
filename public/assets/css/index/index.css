@@ -486,19 +486,23 @@ section {
 }
 
 .login-item {
-  padding: 6px;
+  padding: 10px;
   height: 40px;
-  width: 200px;
+  width: 220px;
   color: #4F5051;
   border: 0.5px solid #D9D9D9;
   border-radius: 2px;
   background: #f7f8f9;
   border-radius: 5px;
+  margin-bottom: 0.6em;
 }
 
-.login-item:hover,
+#login-button {
+  margin-top: 1em;
+}
+
 .login-item:focus {
-  background: #f0f1f2;
+  outline: #f0f1f2;
 }
 
 /* ---------- Minhas Viagens ---------- */

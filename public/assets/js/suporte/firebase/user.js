@@ -5,17 +5,24 @@ function _unloadPageUserFunctions() {
     };
 }
 
-async function _signInGoogle() {
+async function _signInWithEmailAndPassword() {
+    const email = getID('login-email').value;
+    const password = getID('login-password').value;
+
     try {
+        // Set persistence to LOCAL
         await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-        var provider = new firebase.auth.GoogleAuthProvider();
-        if (window.location.hostname == 'localhost') {
-            await firebase.auth().signInWithPopup(provider);
-        } else {
-            await firebase.auth().signInWithRedirect(provider);
-        }
+        
+        // Sign in with email and password
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+        
+        // Get the signed-in user
+        const user = userCredential.user;
+        console.log('User signed in:', user);
+
+        return user; // Optionally return the user for further use
     } catch (error) {
-        console.error(error.message);
+        console.error('Error signing in:', error.message);
         throw error;
     }
 }

@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function _loadListenersIndex() {
-  getID('google-login-button').addEventListener('click', function () {
-    _signInGoogle();
+  getID('login-button').addEventListener('click', function () {
+    _signInWithEmailAndPassword();
   });
 
   getID('proximasViagens').addEventListener('click', function () {
@@ -108,8 +108,10 @@ async function _loadUserIndex() {
         _registerIfUserNotPresent();
         _openIndexPage('logged');
 
-        const displayName = user.displayName;
-        const photoURL = 'url(' + user.photoURL + ')';
+        const userData = await _get(`usuarios/${user.uid}`);
+
+        const displayName = userData.nome;
+        const photoURL = 'url(' + userData.foto + ')';
 
         getID('title-name').innerHTML = displayName.split(' ')[0];
 
@@ -119,9 +121,9 @@ async function _loadUserIndex() {
         getID('profile-icon').style.backgroundImage = photoURL;
         getID('profile-icon').style.backgroundSize = 'cover';
 
-        _loadUserDataList('viagens');
-        _loadUserDataList('listagens');
-        _loadUserDataList('destinos');
+        _loadUserDataList('viagens', userData);
+        _loadUserDataList('listagens', userData);
+        _loadUserDataList('destinos', userData);
 
       } else {
         _openIndexPage('unlogged');
@@ -135,8 +137,8 @@ async function _loadUserIndex() {
   _stopLoadingScreen();
 }
 
-async function _loadUserDataList(tipo) {
-  const promise = _getUserList(tipo);
+async function _loadUserDataList(tipo, userData) {
+  const promise = _getUserList(tipo, false, userData);
   let responseReceived = false;
 
   function onResponseReceived(response) {

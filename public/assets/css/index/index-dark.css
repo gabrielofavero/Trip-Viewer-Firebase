@@ -112,8 +112,8 @@ strong {
   background: #404040;
 }
 
-.login-item:hover, .login-item:focus {
-  background: rgb(68, 68, 68);
+.login-item:focus {
+  outline: rgb(68, 68, 68);
 }
 
 .content-list {

@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 60    | 54          | 6         |
-| 🏆     | Feature  | F000    | 67    | 54          | 13         |
+| 🏆     | Feature  | F000    | 68    | 55          | 13         |
 | 📈     | Melhoria | M000    | 93    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 25    | 16          | 9         |
 
@@ -17,11 +17,9 @@
 
 ## To-Do
 
-- 🐞 **B057:** Correções de dark mode (viagens.html)
-
 ### Prioridade Alta
 
-- 🏆 **F066:** Trocar Login Google por login User-Password
+- 🐞 **B057:** Correções de dark mode (viagens.html)
 - 🐞 **B060:** Correção Fuso
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
@@ -111,6 +109,9 @@
 - 🏆 **F067:** Integração OneDrive
 
 ## Done
+
+### Janeiro 2025
+- 🏆 **F066:** Trocar Login Google por login User-Password
 
 ### Outubro 2024
 - 🐞 **B056:** Erros Dynamic Select:
