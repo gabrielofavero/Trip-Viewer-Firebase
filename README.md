@@ -4,10 +4,10 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 61    | 54          | 7         |
-| 🏆     | Feature  | F000    | 67    | 56          | 11         |
-| 📈     | Melhoria | M000    | 93    | 71          | 22        |
-| ⚔️   | Épico   | E000    | 25    | 16          | 9         |
+| 🐞     | Bug      | B000    | 62    | 54          | 8         |
+| 🏆     | Feature  | F000    | 70    | 56          | 14         |
+| 📈     | Melhoria | M000    | 94    | 71          | 23        |
+| ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -75,7 +75,13 @@
 - 📈 **M090:** Carregamento logo dentro do pre loader
 - 📈 **M091:** Alinhar select de cidade com box de destino
 - 📈 **M092:** Titulo em dark mode com maior destaque
-- 📈 **M093:** Caixa na capa de conferir programação do dia
+- 📈 **M093:** Melhorar detecção automática de datas
+- 🏆 **F068:** Barra superior de "Viagem Atual" e "Programação do Dia"
+- 🏆 **F069:** Criação de opções de re-ordenação de destinos
+- 🐞 **B062:** Correção de detecção de viagem em progresso na home
+- 🏆 **F070:** Componente de adicionar ao calendário
+- 📈 **M094:** Fixar scrolls (destinos checkboxes em editar, viagens e destinos em home)
+- ⚔️ **E026:** Importar dados do google maps
 
 ### Prioridade Baixa
 
