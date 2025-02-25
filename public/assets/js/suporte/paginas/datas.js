@@ -26,12 +26,21 @@ function _getDateNoTime(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
-function _convertFromFirestoreDate(timestamp) {
+function _convertFromFirestoreDate(timestamp, adaptTimezone=true) {
+    let date;
     if (timestamp.seconds) {
-        return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+        date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
     } else {
-        return new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
+        date = new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
     }
+    const documentOffset = FIRESTORE_DATA?.timezoneOffset || 180;
+    const userOffset = new Date().getTimezoneOffset()
+
+    if (adaptTimezone) {
+        date.setMinutes(date.getMinutes() + (userOffset - documentOffset));
+    }
+    
+    return date;
 }
 
 function _firestoneDateToInputDate(timestamp) {

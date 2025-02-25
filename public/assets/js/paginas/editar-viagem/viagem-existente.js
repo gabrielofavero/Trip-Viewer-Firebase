@@ -23,6 +23,8 @@ function _loadDadosBasicosViagemData() {
     getID('inicio').value = _formatFirestoreDate(FIRESTORE_DATA.inicio, 'yyyy-mm-dd');
     getID('fim').value = _formatFirestoreDate(FIRESTORE_DATA.fim, 'yyyy-mm-dd');
 
+    getID('offset').value = FIRESTORE_DATA.timezoneOffset || new Date().getTimezoneOffset();
+
     getID('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
 }
 

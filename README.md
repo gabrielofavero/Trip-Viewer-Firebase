@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 63    | 57          | 6         |
+| 🐞     | Bug      | B000    | 63    | 58          | 5         |
 | 🏆     | Feature  | F000    | 70    | 56          | 14         |
 | 📈     | Melhoria | M000    | 94    | 71          | 23        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
@@ -17,7 +17,6 @@
 
 ## To-Do
 ### Prioridade Alta
-- 🐞 **B060:** Correção Fuso
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
   - *Criação de estrutura no front (editar-destino.html)*
@@ -116,6 +115,7 @@
 - 🐞 **B061:** Ajustar persistência de dark mode
 - 🐞 **B057:** Correções de dark mode
 - 🐞 **B063:** Correções botão compartilhar
+- 🐞 **B060:** Correção Fuso
 
 ### Janeiro 2025
 - 🏆 **F066:** Trocar Login Google por login User-Password
