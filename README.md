@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 62    | 55          | 7         |
+| 🐞     | Bug      | B000    | 62    | 56          | 6         |
 | 🏆     | Feature  | F000    | 70    | 56          | 14         |
 | 📈     | Melhoria | M000    | 94    | 71          | 23        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
@@ -14,7 +14,6 @@
 - ❗️: Crítico (deploy em produção)
 
 ## Doing
-- 🐞 **B057:** Correções de dark mode
 
 ## To-Do
 ### Prioridade Alta
@@ -115,6 +114,7 @@
 
 ### Fevereiro 2025
 - 🐞 **B061:** Ajustar persistência de dark mode
+- 🐞 **B057:** Correções de dark mode
 
 ### Janeiro 2025
 - 🏆 **F066:** Trocar Login Google por login User-Password

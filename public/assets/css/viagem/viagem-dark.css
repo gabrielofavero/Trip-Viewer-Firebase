@@ -311,6 +311,10 @@ a:hover {
   background-color: var(--theme-color);
 }
 
+.swiper-pagination-bullet-active {
+  background-color: var(--theme-color);
+}
+
 .services .icon-box {
   color: #E2E2E2;
   background: #303030;
