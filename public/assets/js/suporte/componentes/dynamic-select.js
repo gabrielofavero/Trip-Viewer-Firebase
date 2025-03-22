@@ -94,11 +94,13 @@ function _addEventListenersDS(type, selectID, inputID) {
         } else {
             input.style.display = 'none';
             _updateValueDS(type, value, selectID);
+            _buildDS(type);
         }
     });
 
     input.addEventListener('change', () => {
         _updateValueDS(type, input.value, selectID);
+        _buildDS(type);
     });
 }
 
@@ -122,23 +124,4 @@ function _removeSelectorDS(type, selectID) {
     const value = DYNAMIC_SELECT[type].selectors[selectID].value;
     _removeValueDS(type, value);
     delete DYNAMIC_SELECT[type].selectors[selectID];
-}
-
-function _getSelectorsByValueDS(type, value) {
-    const selectors = {};
-    for (const selectID in DYNAMIC_SELECT[type].selectors) {
-        const selector = DYNAMIC_SELECT[type].selectors[selectID];
-        if (selector.value === value) {
-            selectors[selectID] = selector;
-        }
-    }
-    return selectors;
-}
-
-function _replaceSelectorsValueDS(type, oldValue, newValue) {
-    const selectors = _getSelectorsByValueDS(type, oldValue);
-    for (const selectID in selectors) {
-        _updateValueDS(type, newValue, selectID);
-    }
-    _buildDS(type);
 }
