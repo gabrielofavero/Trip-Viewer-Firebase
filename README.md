@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 63    | 58          | 5         |
+| 🐞     | Bug      | B000    | 64    | 59          | 5         |
 | 🏆     | Feature  | F000    | 70    | 56          | 14         |
 | 📈     | Melhoria | M000    | 94    | 71          | 23        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
@@ -110,6 +110,9 @@
 - 🏆 **F067:** Integração OneDrive
 
 ## Done
+
+### Março 2025
+- 🐞 **B064:** Correção destino extra ao mover destino
 
 ### Fevereiro 2025
 - 🐞 **B061:** Ajustar persistência de dark mode
