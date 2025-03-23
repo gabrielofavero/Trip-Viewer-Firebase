@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 65    | 60          | 5         |
+| 🐞     | Bug      | B000    | 66    | 61          | 5         |
 | 🏆     | Feature  | F000    | 70    | 56          | 14         |
 | 📈     | Melhoria | M000    | 94    | 71          | 23        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
@@ -112,6 +112,7 @@
 ## Done
 
 ### Março 2025
+- 🐞 **B066:** Correção de ocultação de itens de lineup
 - 🐞 **B065:** Correção no update do Dynamic Select
 - 🐞 **B064:** Correção destino extra ao mover destino
 
