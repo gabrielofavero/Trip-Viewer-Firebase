@@ -315,37 +315,37 @@ function _loadUserDataHTML(dados, tipo) {
 }
 
 function _viagensEditar(code) {
-  window.location.href = `editar-viagem.html?v=${code}`;
+  window.open(`editar-viagem.html?v=${code}`, '_blank');
 }
 
 function _viagensVisualizar(code) {
-  window.location.href = `viagem.html?v=${code}`;
+  window.open(`viagem.html?v=${code}`, '_blank'); 
 }
 
 function _viagensNovo() {
-  window.location.href = `editar-viagem.html`;
+  window.open(`editar-viagem.html`, '_blank');
 }
 
 function _destinosNovo() {
-  window.location.href = `editar-destino.html`;
+  window.open(`editar-destino.html`, '_blank');
 }
 
 function _destinosEditar(code) {
-  window.location.href = `editar-destino.html?d=${code}`;
+  window.open(`editar-destino.html?d=${code}`, '_blank');
 }
 
 function _destinosVisualizar(code) {
-  window.location.href = `viagem.html?d=${code}`;
+  window.open(`viagem.html?d=${code}`, '_blank');
 }
 
 function _listagensEditar(code) {
-  window.location.href = `editar-listagem.html?l=${code}`;
+  window.open(`editar-listagem.html?l=${code}`, '_blank');
 }
 
 function _listagensVisualizar(code) {
-  window.location.href = `viagem.html?l=${code}`;
+  window.open(`viagem.html?l=${code}`, '_blank');
 }
 
 function _listagensNovo() {
-  window.location.href = `editar-listagem.html`;
+  window.open(`editar-listagem.html`, '_blank');
 }

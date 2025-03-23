@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 66    | 61          | 5         |
 | 🏆     | Feature  | F000    | 70    | 56          | 14         |
-| 📈     | Melhoria | M000    | 94    | 70          | 22        |
+| 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
 - 🚦: Bloqueado
@@ -110,6 +110,7 @@
 ## Done
 
 ### Março 2025
+- 📈 **M095:** Itens em index.html abrem em nova aba
 - 📈 **M020:** Módulo de transporte mais automatizado
 - 🐞 **B066:** Correção de ocultação de itens de lineup
 - 🐞 **B065:** Correção no update do Dynamic Select
