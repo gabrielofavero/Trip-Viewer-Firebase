@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 66    | 61          | 5         |
+| 🐞     | Bug      | B000    | 67    | 61          | 6         |
 | 🏆     | Feature  | F000    | 72    | 56          | 16         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
@@ -17,12 +17,30 @@
 
 ## To-Do
 ### Prioridade Alta
+- 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
+- 🐞 **B062:** Correção embed tiktok
+- 🏆 **F068:** Barra superior de "Viagem Atual" e "Programação do Dia"
+- 🏆 **F071:** Gastos Multi Pessoas
+- 🏆 **F072:** Passagens Multi pessoas
+- 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
+  - *Itens selecionados mostrados primeiro (apenas no load inicial)*
+  - *Melhor exibição de várias regiões (carrosel talvez)*
+- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
+- 🐞 **B067:** Correções em carregamento de gastos e edição
+- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
+  - *Adicionar imagem e descrição*
+  - *Sem .html*
+  - *Redirecionador para antigo viagens.html*
+- 📈 **M088:** Recurso de copia e cola para códigos de reserva
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
   - *Criação de estrutura no front (editar-destino.html)*
   - *Mudança no get (viagem.html e destino.html)*
   - *Mudança no dynamic select (editar-destino.html)*
-  - *Script de migração*
+  - *Script de migração* 
+
+### Prioridade Média
+
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
@@ -34,19 +52,7 @@
   - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
   - *Lineup e Horários separados por Tab semelhante a de gastos.html*
   - *Select com os dias de festival, mas com geral em default*
-  - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável* 
-
-### Prioridade Média
-
-- 🏆 **F071:** Gastos Multi Pessoas
-- 🏆 **F072:** Passagens Multi pessoas
-- 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
-  - *Itens selecionados mostrados primeiro (apenas no load inicial)*
-  - *Melhor exibição de várias regiões (carrosel talvez)*
-- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
-- 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
-- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
-  - *Adicionar imagem e descrição*
+  - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
   - *Na tela de edição e viagens*
   - *Ordenação por nota e por nome (↑↓)*
@@ -67,21 +73,18 @@
   - *Code smells*
   - *Refatorações*
   - *Sonarqube*
-- ⚔️ **E024:** Migração de projeto para React
-- ⚔️ **E025:** Implementação iOs e Android
-- 📈 **M090:** Carregamento logo dentro do pre loader
 - 📈 **M091:** Alinhar select de cidade com box de destino
 - 📈 **M092:** Titulo em dark mode com maior destaque
 - 📈 **M093:** Melhorar detecção automática de datas
-- 🏆 **F068:** Barra superior de "Viagem Atual" e "Programação do Dia"
 - 🏆 **F069:** Criação de opções de re-ordenação de destinos
-- 🐞 **B062:** Correção de detecção de viagem em progresso na home
 - 🏆 **F070:** Componente de adicionar ao calendário
 - 📈 **M094:** Fixar scrolls (destinos checkboxes em editar, viagens e destinos em home)
 - ⚔️ **E026:** Importar dados do google maps
 
 ### Prioridade Baixa
-
+- ⚔️ **E024:** Migração de projeto para React OU Angular
+- ⚔️ **E025:** Implementação iOs e Android
+- 📈 **M090:** Carregamento logo dentro do pre loader
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
@@ -105,7 +108,6 @@
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
-- 📈 **M088:** Recurso de copia e cola para códigos de reserva
 - 📈 **M089:** Substituir valores de cores por variáveis de ambiente nos CSS
 - 🏆 **F067:** Integração OneDrive
 
