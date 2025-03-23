@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed</title>
+</head>
+
+<body>
+    <div id="teste"></div>
+
+    <script>
+        fetch('https://www.tiktok.com/oembed?url=https://www.tiktok.com/@lucasfresno/video/7436835524419030328')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let container = document.getElementById('teste');
+                container.innerHTML = data.html;
+
+                // Executar o script do embed manualmente
+                let scripts = container.getElementsByTagName('script');
+                for (let i = 0; i < scripts.length; i++) {
+                    let newScript = document.createElement('script');
+                    newScript.src = scripts[i].src;
+                    document.body.appendChild(newScript);
+                }
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+
+</html>

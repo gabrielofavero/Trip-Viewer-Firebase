@@ -68,7 +68,7 @@ function _getEmbed(link) {
         return {
             tipo: tipo,
             conteudo: conteudo
-        }
+        };
     } else return "";
 }
 
@@ -97,7 +97,13 @@ function _getIframe(url, iframeClass = "") {
     } else return "";
 }
 
-function _getVideoEmbedTikTok(link, version=3) {
+function _getIframeTiktok(url, version) {
+    if (url) {
+        return `<iframe class="tiktok-embed-v${version}" src="${url}" scrolling="no" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    } else return "";
+}
+
+function _getVideoEmbedTikTok(link, version=2) {
     let videoID = "";
     if (!link.includes("vm.")) {
         try {
@@ -110,6 +116,6 @@ function _getVideoEmbedTikTok(link, version=3) {
     }
     if (videoID) {
         let url = `https://www.tiktok.com/embed/v${version}/${videoID}`;
-        return _getIframe(url, `tiktok-embed-v${version}`);
+        return _getIframeTiktok(url, version);
     } else return "";
 }

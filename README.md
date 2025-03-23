@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 67    | 61          | 6         |
+| 🐞     | Bug      | B000    | 67    | 62          | 5         |
 | 🏆     | Feature  | F000    | 72    | 56          | 16         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
@@ -13,12 +13,9 @@
 - ❔: Sem solução aparente
 - ❗️: Crítico (deploy em produção)
 
-## Doing
-
-## To-Do
+## Backlog
 ### Prioridade Alta
 - 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
-- 🐞 **B062:** Correção embed tiktok
 - 🏆 **F068:** Barra superior de "Viagem Atual" e "Programação do Dia"
 - 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
@@ -40,7 +37,6 @@
   - *Script de migração* 
 
 ### Prioridade Média
-
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
@@ -114,6 +110,7 @@
 ## Done
 
 ### Março 2025
+- 🐞 **B062:** Correção embed tiktok
 - 📈 **M095:** Itens em index.html abrem em nova aba
 - 📈 **M020:** Módulo de transporte mais automatizado
 - 🐞 **B066:** Correção de ocultação de itens de lineup
