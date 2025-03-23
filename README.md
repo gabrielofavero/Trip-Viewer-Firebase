@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 66    | 61          | 5         |
-| 🏆     | Feature  | F000    | 70    | 56          | 14         |
+| 🏆     | Feature  | F000    | 72    | 56          | 16         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
@@ -38,6 +38,8 @@
 
 ### Prioridade Média
 
+- 🏆 **F071:** Gastos Multi Pessoas
+- 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
   - *Itens selecionados mostrados primeiro (apenas no load inicial)*
   - *Melhor exibição de várias regiões (carrosel talvez)*
