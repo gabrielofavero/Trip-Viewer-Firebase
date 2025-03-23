@@ -255,26 +255,6 @@ function _jsDateToInputDate(jsDate) {
     return _jsDateToDate(jsDate, 'yyyy-mm-dd');
 }
 
-function _getNextCategoriaDate(tipo, lastEndStructure) {
-    const js = _getJs(`${tipo}-box`);
-    if (js.length === 0) {
-        return getID('inicio').value;
-    } else {
-        const lastJ = _getLastJ(`${tipo}-box`);
-        const dateInput = getID(`${lastEndStructure}-${lastJ}`).value;
-        const date = _inputDateToJsDate(dateInput);
-
-        const fimInput = getID('fim').value;
-        const fim = _inputDateToJsDate(fimInput);
-
-        if (date.getTime() < fim.getTime()) {
-            return _getNextInputDay(dateInput);
-        } else {
-            return fimInput;
-        }
-    }
-}
-
 function _getNextCategoriaInicioFim(tipo, lastEndStructure) {
     let inicio = getID('inicio').value;
     let fim = getID('fim').value;

@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 66    | 61          | 5         |
 | 🏆     | Feature  | F000    | 70    | 56          | 14         |
-| 📈     | Melhoria | M000    | 94    | 71          | 23        |
+| 📈     | Melhoria | M000    | 94    | 70          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
 - 🚦: Bloqueado
@@ -45,8 +45,6 @@
 - 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
   - *Adicionar imagem e descrição*
-- 📈 **M020:** Módulo de transporte mais automatizado
-  - *Se user clicou em volta e não há dados, reverte tudo da ida*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
   - *Na tela de edição e viagens*
   - *Ordenação por nota e por nome (↑↓)*
@@ -112,6 +110,7 @@
 ## Done
 
 ### Março 2025
+- 📈 **M020:** Módulo de transporte mais automatizado
 - 🐞 **B066:** Correção de ocultação de itens de lineup
 - 🐞 **B065:** Correção no update do Dynamic Select
 - 🐞 **B064:** Correção destino extra ao mover destino

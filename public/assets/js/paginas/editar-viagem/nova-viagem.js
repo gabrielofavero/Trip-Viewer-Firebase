@@ -34,9 +34,6 @@ function _addEditores() {
 
 function _addTransporte() {
   const j = _getNextJ('transporte-box');
-  const newDate = _getNextCategoriaDate('transporte', 'chegada');
-  const checkedIda = j === 1 ? 'checked' : '';
-  const checkedVolta = checkedIda === 'checked' ? '' : 'checked';
 
   $('#transporte-box').append(`
       <div id="transporte-${j}" class="accordion-item accordion-transporte" >
@@ -56,7 +53,7 @@ function _addTransporte() {
 
           <fieldset class="nice-form-group" id="idaVolta-box-${j}">
             <div class="nice-form-group" style="margin-top: -15px">
-              <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${checkedIda} />
+              <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${j === 1 ? 'checked' : ''} />
               <label for="ida-${j}">Ida</label>
             </div>
   
@@ -66,7 +63,7 @@ function _addTransporte() {
             </div>
   
             <div class="nice-form-group">
-              <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${checkedVolta} />
+              <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${j != 1 ? 'checked' : ''} />
               <label for="volta-${j}">Volta</label>
             </div>
           </fieldset>
@@ -84,7 +81,7 @@ function _addTransporte() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Partida</label>
-              <input required class="flex-input" id="partida-${j}" type="date" value="${newDate}" />
+              <input required class="flex-input" id="partida-${j}" type="date" />
             </div>
             <div class="nice-form-group side-by-side">
               <input required class="flex-input mini-box" id="partida-horario-${j}" type="time" value="00:00" />
@@ -94,7 +91,7 @@ function _addTransporte() {
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label>Chegada</label>
-              <input required class="flex-input" id="chegada-${j}" type="date" value="${newDate}" />
+              <input required class="flex-input" id="chegada-${j}" type="date" />
             </div>
             <div class="nice-form-group side-by-side">
               <input required class="flex-input mini-box" id="chegada-horario-${j}" type="time" value="00:30" />
@@ -157,6 +154,11 @@ function _addTransporte() {
       `);
 
   getID(`transporte-id-${j}`).value = _getCategoriaID('transporte', j);
+  getID(`ponto-partida-${j}`).value = j == 1 ? "" : getID(`ponto-chegada-${j-1}`).value;
+  getID(`ponto-chegada-${j}`).value = j == 2 ? getID(`ponto-partida-${j-1}`).value : "";
+  getID(`partida-${j}`).value = j == 1 ? getID('inicio').value : j == 2 ? getID('fim').value : getID(`chegada-${j-1}`).value;
+  getID(`chegada-${j}`).value = getID(`partida-${j}`).value;
+
   _loadTransporteListeners(j);
   _addRemoveChildListener('transporte', j);
   _loadTransporteVisibility(j);
