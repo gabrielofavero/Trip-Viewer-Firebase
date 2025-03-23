@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 67    | 62          | 5         |
+| 🐞     | Bug      | B000    | 67    | 63          | 4         |
 | 🏆     | Feature  | F000    | 73    | 57          | 16         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
@@ -15,8 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
-- 🏆 **F068:** Barra superior de "Viagem Atual"
 - 🏆 **F073:** "Programação do Dia" na capa da viagem
 - 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
@@ -111,6 +109,8 @@
 ## Done
 
 ### Março 2025
+- 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
+- 🏆 **F068:** Barra superior de "Viagem Atual"
 - 🐞 **B062:** Correção embed tiktok
 - 📈 **M095:** Itens em index.html abrem em nova aba
 - 📈 **M020:** Módulo de transporte mais automatizado

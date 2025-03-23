@@ -288,6 +288,7 @@ function _loadUserDataHTML(dados, tipo) {
     const proximasViagens = [];
     const viagensAnteriores = [];
     const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
 
     for (let i = 0; i < dados.length; i++) {
       const viagem = dados[i];
