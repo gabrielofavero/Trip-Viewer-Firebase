@@ -1,3 +1,9 @@
+const notificationBar = {
+  changed: false,
+  claro: '',
+  escuro: ''
+}
+
 function _loadVisibilityIndex() {
   _loadUserVisibility();
   _loadLogoColors();
@@ -5,6 +11,10 @@ function _loadVisibilityIndex() {
   getID("night-mode").onclick = function () {
     _switchVisibility();
     _setManualVisibility();
+    
+    if (notificationBar.changed) {
+      _applyNotificationBarColor();
+    }
   };
 }
 

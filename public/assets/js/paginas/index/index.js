@@ -8,6 +8,7 @@ var TENTATIVAS = {
 
 var VIAGENS = {
   coletado: false,
+  viagensEmAndamento: [],
   proximasViagens: [],
   viagensAnteriores: []
 }
@@ -232,6 +233,7 @@ function _loadUserDataHTML(dados, tipo) {
   if ((tipo == 'proximasViagens' || tipo == 'viagensAnteriores')) {
     if (!VIAGENS.coletado) {
       _coletarViagens(dados);
+      _loadNotificationBar();
     }
     dados = VIAGENS[tipo];
   } else if (dados[0].ultimaAtualizacao) {
@@ -295,6 +297,9 @@ function _loadUserDataHTML(dados, tipo) {
         viagensAnteriores.push(viagem);
       } else {
         proximasViagens.push(viagem);
+        if (hoje >= _convertFromFirestoreDate(viagem.inicio)) {
+          VIAGENS.viagensEmAndamento.push(viagem);
+        }
       }
     }
     proximasViagens.sort((a, b) => _sortByToday(a, b));
@@ -348,4 +353,36 @@ function _listagensVisualizar(code) {
 
 function _listagensNovo() {
   window.open(`editar-listagem.html`, '_blank');
+}
+
+function _loadNotificationBar() {
+  if (VIAGENS.coletado && VIAGENS.viagensEmAndamento.length > 0) {
+    getID('notification-bar').style.display = 'flex';
+    if (VIAGENS.viagensEmAndamento.length == 1) {
+      getID('notification-text').innerHTML = `Viagem em Andamento:<br>${VIAGENS.viagensEmAndamento[0].titulo}`;
+      if (VIAGENS.viagensEmAndamento[0].cores.ativo) {
+        notificationBar.changed = true;
+        notificationBar.claro = VIAGENS.viagensEmAndamento[0].cores.claro;
+        notificationBar.escuro = VIAGENS.viagensEmAndamento[0].cores.escuro;
+        _applyNotificationBarColor();
+      }
+    } else {
+      getID('notification-text').innerHTML = `Múltiplas viagens em andamento<br> Confira em "Próximas Viagens"`;
+      getID('notification-link').style.display = 'none';	
+    }
+  }
+}
+
+function closeNotification() {
+  document.querySelector('.notification-bar').style.display = 'none';
+}
+
+function goToCurrentTrip() {
+  if (VIAGENS.viagensEmAndamento.length == 1) {
+    _viagensVisualizar(VIAGENS.viagensEmAndamento[0].code);
+  }
+}
+
+function _applyNotificationBarColor() {
+  getID('notification-bar').style.backgroundColor = _isOnDarkMode() ? notificationBar.escuro : notificationBar.claro;
 }

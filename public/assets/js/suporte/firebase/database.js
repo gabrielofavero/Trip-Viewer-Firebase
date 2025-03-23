@@ -270,6 +270,10 @@ async function _getUserList(type, includeData = false, userData) {
           singleResult.subtitulo = data.subtitulo;
         }
 
+        if (data.cores) {
+          singleResult.cores = data.cores;
+        }
+
         if (includeData) {
           singleResult.data = data;
         }
