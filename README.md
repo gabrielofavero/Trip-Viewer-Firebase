@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 63          | 4         |
-| 🏆     | Feature  | F000    | 73    | 57          | 16         |
+| 🏆     | Feature  | F000    | 73    | 58          | 15         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
@@ -90,8 +90,6 @@
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
-- 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
-  - *Tanto destinos.html quanto editar-destinos.html*
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M047:** Troca de mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhoria de funções relacionadas ao getJs para mais cenários
@@ -109,6 +107,7 @@
 ## Done
 
 ### Março 2025
+- 🏆 **F051:** Implementação embed de Instagram Reels em destinos
 - 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
 - 🏆 **F068:** Barra superior de "Viagem Atual"
 - 🐞 **B062:** Correção embed tiktok

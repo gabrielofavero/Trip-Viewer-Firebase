@@ -85,9 +85,13 @@ function _loadDestinosHTML() {
     }
 
     _applyContent();
-
     _applyDestinosMediaHeight();
-    window.addEventListener("resize", _applyDestinosMediaHeight);
+    _adjustInstagramMedia();
+    
+    window.addEventListener("resize", () => {
+      _applyDestinosMediaHeight();
+      _adjustInstagramMedia();
+    });
 
   } else {
     console.error("O Código não foi localizado na base de dados");

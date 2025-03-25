@@ -83,7 +83,7 @@ function _addRestaurantes() {
             <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="restaurantes-midia-${j}" type="url"
               placeholder="https://www.youtube.com/watch?v=GAirUeYBvQI" value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -209,7 +209,7 @@ function _addLanches() {
             <input id="lanches-midia-${j}" type="url"
               placeholder="https://www.tiktok.com/@viajeparacomer/video/7172239210282274053?q=bottanikafe&t=1700768671502"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -334,7 +334,7 @@ function _addSaidas() {
             <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="saidas-midia-${j}" type="url" placeholder="https://www.youtube.com/watch?v=M1qd2Y2T4ZA"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -460,7 +460,7 @@ function _addTurismo() {
             <input id="turismo-midia-${j}" type="url"
               placeholder="https://www.tiktok.com/@pompsie/video/7214164412616166699?q=las%20vegas%20sign&t=1700778158244"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -586,7 +586,7 @@ function _addLojas() {
             <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="lojas-midia-${j}" type="url" placeholder="https://www.youtube.com/watch?v=2LVCuEXZ3bk"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
