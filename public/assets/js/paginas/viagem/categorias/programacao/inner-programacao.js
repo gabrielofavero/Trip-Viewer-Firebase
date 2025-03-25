@@ -44,6 +44,10 @@ function _openModalCalendar(programacao) {
 
 function _closeModalCalendar() {
     PROGRAMACAO_ABERTA = false;
+    PROGRAMACAO_ATUAL.dia = 0;
+    PROGRAMACAO_ATUAL.mes = 0;
+    PROGRAMACAO_ATUAL.ano = 0;
+
     getID("programacao-box").classList.toggle('show')
     setTimeout(() => {
         $("#programacao-box").hide()
@@ -97,19 +101,14 @@ function _loadInnerProgramacaoMidia(midia) {
 }
 
 // Getters
-function _getScheduleCalendarByDate(dataString) {
+function _loadCalendarItem(dataString) {
     if (dataString) {
         const day = parseInt(dataString.split("/")[0]);
         const month = parseInt(dataString.split("/")[1]);
         const year = parseInt(dataString.split("/")[2]);
 
-        if (day == PROGRAMACAO_ATUAL.dia && month == PROGRAMACAO_ATUAL.mes && year == PROGRAMACAO_ATUAL.ano) {
-            PROGRAMACAO_ATUAL.dia = 0;
-            PROGRAMACAO_ATUAL.mes = 0;
-            PROGRAMACAO_ATUAL.ano = 0;
-            if (day != 0) {
-                _closeModalCalendar();
-            }
+        if (day != 0 && day == PROGRAMACAO_ATUAL.dia && month == PROGRAMACAO_ATUAL.mes && year == PROGRAMACAO_ATUAL.ano) {
+            _closeModalCalendar();
         } else {
             PROGRAMACAO_ATUAL.dia = day;
             PROGRAMACAO_ATUAL.mes = month;
@@ -129,6 +128,7 @@ function _getScheduleCalendarByDate(dataString) {
                 }
             }
         }
+
     } else {
         logger(WARN, "Sem dados para a data selecionada.")
     }

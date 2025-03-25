@@ -71,7 +71,7 @@ function _showCalendar(month, year) {
 
                 if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
                     cell.classList.add("calendarTrip");
-                    cell.setAttribute("onclick", "_getScheduleCalendarByDate('" + day + "/" + (month + 1) + "/" + year + "')");
+                    cell.setAttribute("onclick", "_loadCalendarItem('" + day + "/" + (month + 1) + "/" + year + "')");
 
                     const key = `${year}${month + 1}${day}`;
                     const destinos = PROGRAMACAO_DESTINOS[key];

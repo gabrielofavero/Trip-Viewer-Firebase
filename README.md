@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 63          | 4         |
-| 🏆     | Feature  | F000    | 73    | 58          | 15         |
+| 🏆     | Feature  | F000    | 73    | 59          | 14         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F073:** "Programação do Dia" na capa da viagem
 - 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
@@ -107,6 +106,7 @@
 ## Done
 
 ### Março 2025
+- 🏆 **F073:** "Programação do Dia" na capa da viagem
 - 🏆 **F051:** Implementação embed de Instagram Reels em destinos
 - 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
 - 🏆 **F068:** Barra superior de "Viagem Atual"

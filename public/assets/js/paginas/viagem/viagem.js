@@ -144,7 +144,8 @@ function _loadHeader() {
   }
 
   if (FIRESTORE_DATA.links?.ativo) {
-
+    getID("social-links").style.display = "block";
+    
     if (FIRESTORE_DATA.links.attachments) {
       getID("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
     } else {

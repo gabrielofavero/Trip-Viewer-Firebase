@@ -164,6 +164,27 @@ h6 {
   max-width: 50%;
 }
 
+#programacao-hoje {
+  width: fit-content;
+  font-size: 18px;
+  padding: 12px;
+  background-color: rgba(78, 79, 80, 0.05);
+  margin: 1em auto;
+  text-align: center;
+  border: 3px solid rgba(78, 79, 80, 0.05);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 8px;
+  color: #4F5051;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#programacao-hoje:hover {
+  background-color: rgba(78, 79, 80, 0.03);
+}
+
+
 @media (max-width: 1300px) {
   #header2 {
     max-width: 60%;
@@ -438,7 +459,7 @@ h6 {
   }
 
   #hero h1 {
-    font-size: 32px;
+    font-size: 38px;
     line-height: 36px;
   }
 
