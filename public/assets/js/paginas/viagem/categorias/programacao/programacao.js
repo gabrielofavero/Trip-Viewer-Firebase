@@ -133,7 +133,7 @@ function _getPillClasses(colorIndex) {
 
 // Programação de Hoje
 function _loadProgramacaoHojeButton() {
-    const hoje = new Date(2024, 10, 14);
+    const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
 
     if (hoje >= INICIO.date && hoje <= FIM.date) {
