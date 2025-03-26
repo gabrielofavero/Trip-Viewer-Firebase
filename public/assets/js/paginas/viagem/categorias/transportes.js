@@ -151,7 +151,11 @@ function _buildTransporteSwiper(swiperData) {
                         <div class="swiper-wrapper" id="transporte-${key}-wrapper">
                           ${data || swiperData[key].join("")}
                         </div>
-                        <div class="swiper-pagination transporte-${key}-pagination"></div>
+                        <div class="swiper-controls">
+                          <div class="swiper-button-prev transporte-${key}-prev"></div>
+                          <div class="swiper-pagination transporte-${key}-pagination"></div>
+                          <div class="swiper-button-next transporte-${key}-next"></div>
+                        </div>
                       </div>`;
 
                       ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);

@@ -67,7 +67,7 @@ h6 {
 
 .back-to-top i {
   font-size: 28px;
-  color: var(--background-color);;
+  color: var(--background-color);
   line-height: 0;
 }
 
@@ -92,7 +92,7 @@ h6 {
   bottom: 0;
   z-index: 9999;
   overflow: hidden;
-  background: var(--background-color);;
+  background: var(--background-color);
 }
 
 #preloader:before {
@@ -191,6 +191,52 @@ h6 {
   color: #6fa8dc;
 }
 
+.swiper-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  min-width: max-content;
+  gap: 150;
+}
+
+.swiper-pagination {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: static !important;
+  /* Keeps pagination inside flex container */
+  width: auto !important;
+  /* Let it adapt dynamically */
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  position: static !important;
+  width: 30px;
+  height: 30px;
+  background-color: var(--theme-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  /* Prevents resizing */
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 16px;
+}
+
 #programacao-hoje:hover {
   background-color: rgba(78, 79, 80, 0.03);
 }
@@ -216,6 +262,12 @@ h6 {
     margin-left: auto;
     margin-right: auto;
   }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
+  }
+
 }
 
 @media (max-width: 450px) {
@@ -2420,7 +2472,7 @@ iframe {
   align-items: center;
 }
 
-.hotel-address{
+.hotel-address {
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 16px;
@@ -2560,7 +2612,8 @@ iframe {
 }
 
 .tiktok-embed-v2 {
-  clip-path: inset(6px 0px 0px 0px); /* cut first 6px from top (white bar) */
+  clip-path: inset(6px 0px 0px 0px);
+  /* cut first 6px from top (white bar) */
   width: 323.4px;
   height: 574.92px;
   overflow: hidden !important;
