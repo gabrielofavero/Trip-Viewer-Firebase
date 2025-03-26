@@ -201,7 +201,7 @@ h6 {
   transform: translateX(-50%);
   z-index: 10;
   min-width: max-content;
-  gap: 150;
+  gap: 200px;
 }
 
 .swiper-pagination {
@@ -220,12 +220,11 @@ h6 {
   position: static !important;
   width: 30px;
   height: 30px;
-  background-color: var(--theme-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #4F5051;
   font-size: 18px;
   cursor: pointer;
   flex-shrink: 0;
