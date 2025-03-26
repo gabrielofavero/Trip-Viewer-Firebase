@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 63          | 4         |
-| 🏆     | Feature  | F000    | 73    | 59          | 14         |
+| 🏆     | Feature  | F000    | 75    | 60          | 15         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
@@ -15,6 +15,8 @@
 
 ## Backlog
 ### Prioridade Alta
+- 🏆 **F075:** Criar notificação de toast
+- 🏆 **F076:** Swiper com setas em modo desktop
 - 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
@@ -26,7 +28,7 @@
   - *Adicionar imagem e descrição*
   - *Sem .html*
   - *Redirecionador para antigo viagens.html*
-- 📈 **M088:** Recurso de copia e cola para códigos de reserva
+- 📈 **M088:** Melhorar recurso de copia e cola com toast
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
   - *Criação de estrutura no front (editar-destino.html)*
@@ -106,6 +108,7 @@
 ## Done
 
 ### Março 2025
+- 🏆 **F074:** Recurso de copia e cola para códigos de reserva
 - 🏆 **F073:** "Programação do Dia" na capa da viagem
 - 🏆 **F051:** Implementação embed de Instagram Reels em destinos
 - 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)

@@ -180,6 +180,17 @@ h6 {
   cursor: pointer;
 }
 
+.copy-icon {
+  color: #3d85c6;
+  margin-left: 8px;
+  height: 20px;
+  width: 20px;
+}
+
+.copy-icon:hover {
+  color: #6fa8dc;
+}
+
 #programacao-hoje:hover {
   background-color: rgba(78, 79, 80, 0.03);
 }

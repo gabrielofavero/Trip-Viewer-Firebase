@@ -51,6 +51,14 @@ a:hover {
   color: #E2E2E2;
 }
 
+.copy-icon {
+  color: #92caff;
+}
+
+.copy-icon:hover {
+  color: #acd7ff;
+}
+
 #programacao-hoje:hover {
   background-color: rgba(255, 255, 255, 0.07);
 }

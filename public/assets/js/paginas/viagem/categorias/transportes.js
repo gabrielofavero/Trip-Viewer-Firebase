@@ -94,9 +94,9 @@ function _getReservaHTML(j, empresa) {
 
   if (!reserva) return ""
   reserva = reserva[0] === "#" ? reserva.slice(1) : reserva;
-
-  if (link) return `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>`;
-  else return `<div class="flight-code">#${reserva}</div>`
+  const flightCode = link ? `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>` : `<div class="flight-code">#${reserva}</div>`;
+  const copyIcon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="_copyToClipboard('${reserva}')"></i>`;
+  return `${flightCode} ${copyIcon}`;
 }
 
 function _getPartidaChegadaHTML(j, tipo) {
@@ -190,4 +190,9 @@ function _loadIconeGeralTransporte() {
   if (unique.length == 1) {
     getID('transporte-nav').setAttribute('data-icon', unique[0]);
   }
+}
+
+function _copyToClipboard(text) {
+  navigator.clipboard.writeText(text);
+  alert('Código copiado para a área de transferência!');
 }
