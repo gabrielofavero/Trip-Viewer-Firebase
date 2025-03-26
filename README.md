@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 63          | 4         |
 | 🏆     | Feature  | F000    | 76    | 62          | 14         |
-| 📈     | Melhoria | M000    | 95    | 71          | 22        |
+| 📈     | Melhoria | M000    | 95    | 72          | 23        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
 - 🚦: Bloqueado
@@ -26,7 +26,6 @@
   - *Adicionar imagem e descrição*
   - *Sem .html*
   - *Redirecionador para antigo viagens.html*
-- 📈 **M088:** Melhorar recurso de copia e cola com toast
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
   - *Criação de estrutura no front (editar-destino.html)*
@@ -106,6 +105,7 @@
 ## Done
 
 ### Março 2025
+- 📈 **M088:** Melhorar recurso de copia e cola com toast
 - 🏆 **F075:** Criar notificação de toast
 - 🏆 **F076:** Swiper com setas em modo desktop
 - 🏆 **F074:** Recurso de copia e cola para códigos de reserva

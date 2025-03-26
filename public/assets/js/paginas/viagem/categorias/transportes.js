@@ -198,5 +198,5 @@ function _loadIconeGeralTransporte() {
 
 function _copyToClipboard(text) {
   navigator.clipboard.writeText(text);
-  alert('Código copiado para a área de transferência!');
+  _openToast("Texto copiado para a área de transferência");
 }
