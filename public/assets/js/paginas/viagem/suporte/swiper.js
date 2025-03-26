@@ -12,6 +12,10 @@ function _initSwiper(id) {
             el: `.${id}-pagination`,
             type: 'bullets',
             clickable: true
+        },
+        navigation: {
+            nextEl: `.${id}-next`,
+            prevEl: `.${id}-prev`
         }
     });
 }

@@ -5,6 +5,7 @@ function _loadProgramacao() {
     _loadProgramacaoDestinos();
     _loadCalendar();
     _loadProgramacaoPills();
+    _loadProgramacaoHojeButton();
 }
 
 function _loadProgramacaoDestinos() {
@@ -28,7 +29,7 @@ function _getUniqueDestinosFromProgramacao() {
 }
 
 // Pills
-function _loadProgramacaoPills(multipleColors=true) {
+function _loadProgramacaoPills(multipleColors = true) {
     const destinos = _getUniqueDestinosFromProgramacao();
     if (destinos.length > 1) {
         const pillBox = getID('pill-box');
@@ -57,7 +58,7 @@ function _loadProgramacaoPills(multipleColors=true) {
 }
 
 
-function _loadPill(destinoID, action, colorIndex=-1) {
+function _loadPill(destinoID, action, colorIndex = -1) {
     const lastAction = PILLS_ACTIONS[destinoID];
     if (!lastAction) {
         if (action === 'click' || action === 'mouseenter') {
@@ -83,7 +84,7 @@ function _loadPill(destinoID, action, colorIndex=-1) {
     }
 }
 
-function _activatePill(destinoID, colorIndex=-1) {
+function _activatePill(destinoID, colorIndex = -1) {
     const pillClasses = _getPillClasses(colorIndex);
     getID(`pill-${destinoID}`).classList.add('active-pill');
     getID(`pill-circle-${destinoID}`).classList.add(pillClasses.activeCircle);
@@ -92,7 +93,7 @@ function _activatePill(destinoID, colorIndex=-1) {
     }
 }
 
-function _deactivatePill(destinoID, colorIndex=-1) {
+function _deactivatePill(destinoID, colorIndex = -1) {
     const pillClasses = _getPillClasses(colorIndex);
     getID(`pill-${destinoID}`).classList.remove('active-pill');
     getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.pillCircle);
@@ -128,4 +129,26 @@ function _getPillClasses(colorIndex) {
         activeCalendar = `active-calendar-${colorName}`;
     }
     return { pillCircle, activeCircle, activeCalendar }
+}
+
+// Programação de Hoje
+function _loadProgramacaoHojeButton() {
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    if (hoje >= INICIO.date && hoje <= FIM.date) {
+        getID('programacao-hoje').style.display = '';
+        getID('programacao-hoje').addEventListener('click', function () {
+            const hojeText = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+
+            if (!PROGRAMACAO_ABERTA || (PROGRAMACAO_ABERTA && hojeText != PROGRAMACAO_ATUAL.dia + "/" + PROGRAMACAO_ATUAL.mes + "/" + PROGRAMACAO_ATUAL.ano)) {
+                _loadCalendarItem(hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear());
+            }
+
+            if (PROGRAMACAO_ABERTA && hojeText === PROGRAMACAO_ATUAL.dia + "/" + PROGRAMACAO_ATUAL.mes + "/" + PROGRAMACAO_ATUAL.ano) {
+                getID("tabela").scrollIntoView({ behavior: "smooth" })
+            }
+        });
+    }
+
 }

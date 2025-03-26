@@ -155,7 +155,7 @@
       <img id="header2">
       <h2 id="subtitulo"></h2>
       <h2 id="countdown"></h2>
-      <div class="social-links">
+      <div class="social-links" id="social-links" style="display: none">
         <a id="attachmentsLink" href="" target="_blank" class="documents"><i class="iconify"
             data-icon="heroicons:paper-clip-20-solid" style="display:none"></i></a>
         <a id="driveLink" href="" target="_blank" class="documents"><i class="iconify"
@@ -171,6 +171,7 @@
         <a id="vaccineLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="tabler:vaccine"
             style="display:none"></i></a>
       </div>
+      <button id="programacao-hoje" style="display: none">Programação de Hoje</button>
     </div>
   </section>
 
@@ -413,6 +414,13 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
 
+  <div id="toast" style="display: none">
+    <span id="toast-text"></span>
+    <span class="toast-close" onclick="_closeToast()">
+      <i class="iconify" data-icon="material-symbols:close"></i>
+    </span>
+  </div>
+
   <!-- Firebase -->
   <script src="../index.js" type=text/JSX"></script>
   <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
@@ -435,6 +443,7 @@
   <script src="https://apis.google.com/js/api.js"></script>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/suporte/estilos/animacoes.js"></script>
   <script src="assets/js/suporte/paginas/mensagens.js"></script>
   <script src="assets/js/suporte/paginas/carregamento.js"></script>
   <script src="assets/js/suporte/firebase/user.js"></script>

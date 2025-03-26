@@ -2,11 +2,13 @@
   --theme-color: #7f75b6;
   --theme-color-hover: #7367b4;
   --theme-color-secondary: #D5D6E9;
+  --background-color: #303030;
+  --table-border: #414040;
 }
 
 body {
   color: #E2E2E2;
-  background-color: #303030;
+  background-color: var(--background-color);
 }
 
 strong {
@@ -26,7 +28,7 @@ a:hover {
 }
 
 .back-to-top i {
-  color: #303030;
+  color: var(--background-color);;
 }
 
 .back-to-top:hover {
@@ -34,18 +36,41 @@ a:hover {
 }
 
 #preloader {
-  background: #303030;
+  background: var(--background-color);
 }
 
 #preloader:before {
   border: 6px solid #7F75B9;
-  border-top-color: #303030;
-  border-bottom-color: #303030;
+  border-top-color: var(--background-color);
+  border-bottom-color: var(--background-color);
+}
+
+#programacao-hoje {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 3px solid rgba(255, 255, 255, 0.05);
+  color: #E2E2E2;
+}
+
+.copy-icon {
+  color: #92caff;
+}
+
+.copy-icon:hover {
+  color: #acd7ff;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #E2E2E2;
+}
+
+#programacao-hoje:hover {
+  background-color: rgba(255, 255, 255, 0.07);
 }
 
 @media (max-width: 992px) {
   #header {
-    background: #303030;
+    background: var(--background-color);
     border-right: 1px solid #404040;
   }
 }
@@ -188,22 +213,21 @@ a:hover {
 #calendar {
   color: #E2E2E2;
   background-color: #303030;
-  border: 0.5px solid #414040;
+  border: 0.5px solid var(--table-border);
 }
 
 #calendarTitle {
   background: var(--theme-color);
+  border-bottom: 0.5px solid var(--theme-color);
   color: #303030;
 }
 
 #tabHeader {
   background-color: #3b3b3b;
   color: white;
-  border: 0.5px solid #414040;
 }
 
 #calendarMonthSelector {
-  border: 0.5px solid #414040;
   border-top: none;
 }
 
@@ -211,13 +235,9 @@ a:hover {
   background: #414040;
 }
 
-.linItem {
-  border: 0.5px solid #414040;
-}
-
 #programacao-box {
   background-color: #3b3b3b;
-  border: 0.5px solid #414040;
+  border: 0.5px solid var(--table-border);
 }
 
 #programacao-titulo,
@@ -311,6 +331,10 @@ a:hover {
 }
 
 .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: var(--theme-color);
+}
+
+.swiper-pagination-bullet-active {
   background-color: var(--theme-color);
 }
 
@@ -422,6 +446,13 @@ a:hover {
 
 #footer .social-links a:hover {
   background: var(--theme-color);
+}
+
+.message-container,
+.programacao-container,
+.destinos-container {
+  background: #303030;
+  box-shadow: 0 2px 6px rgba(166, 166, 166, 0.05);
 }
 
 .message-container {
@@ -558,4 +589,12 @@ a:hover {
 
 .active-calendar-red {
   background-color: #4f3e39 !important;
+}
+
+#gastos {
+  color: #303030
+}
+
+#toast {
+  color: #303030;
 }

@@ -21,7 +21,9 @@ async function _buildTripObject() {
         transportes: _buildTransporteObject(),
         versao: {
             ultimaAtualizacao: new Date().toISOString()
-        }
+        },
+        visibilidade: _buildVisibilidadeObject(),
+        timezoneOffset: getID('offset').value
     }
 }
 
@@ -292,6 +294,13 @@ function _buildGaleriaObject() {
     }
 
     return result;
+}
+
+function _buildVisibilidadeObject() {
+    return {
+        claro: getID('dark-and-light').checked || getID('light-exclusive').checked,
+        escuro: getID('dark-and-light').checked || getID('dark-exclusive').checked
+    }
 }
 
 async function _setViagem() {

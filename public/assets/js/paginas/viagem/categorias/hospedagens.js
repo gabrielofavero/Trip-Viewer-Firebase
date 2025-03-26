@@ -108,7 +108,11 @@ function _buildHospedagensSwiper(swiperData) {
                                           <div class="swiper-wrapper" id="hospedagens-wrapper">
                                             ${swiperData.join("")}
                                           </div>
-                                          <div class="swiper-pagination hospedagens-pagination"></div>
+                                          <div class="swiper-controls">
+                                            <div class="swiper-button-prev hospedagens-prev"></div>
+                                            <div class="swiper-pagination hospedagens-pagination"></div>
+                                            <div class="swiper-button-next hospedagens-next"></div>
+                                          </div>
                                         </div>`;
   ADJUST_HEIGHT_CARDS.push('hospedagens')
   _initSwiper('hospedagens');

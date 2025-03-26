@@ -156,27 +156,6 @@ async function _getSystemData() {
 }
 
 // Visibilidade
-async function _updateVisibility(visibility) {
-  const uid = await _getUID();
-  if (uid) {
-    if (!visibility || !["dinamico", "claro", "escuro"].includes(visibility)) {
-      console.error("Visibilidade inválida");
-    } else {
-      const result = await _update(`usuarios/${uid}`, { visibilidade: visibility })
-      console.log(result);
-    }
-  } else {
-    console.error("Usuário não logado");
-  }
-}
-
-async function _getVisibility() {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    return userData.visibilidade;
-  }
-}
 
 // Usuário
 async function _deleteUserObjectDB(id, type) {
@@ -257,10 +236,14 @@ async function _newUserObjectDB(object, type) {
   } else return "Usuário não logado"
 }
 
-async function _getUserList(type, includeData = false) {
+async function _getUserList(type, includeData = false, userData) {
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+
+    if (!userData) {
+      userData = await _get(`usuarios/${uid}`);
+    }
+    
     var result = [];
 
     if (userData) {
@@ -285,6 +268,10 @@ async function _getUserList(type, includeData = false) {
 
         if (data.subtitulo) {
           singleResult.subtitulo = data.subtitulo;
+        }
+
+        if (data.cores) {
+          singleResult.cores = data.cores;
         }
 
         if (includeData) {

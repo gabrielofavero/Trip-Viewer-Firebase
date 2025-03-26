@@ -43,3 +43,18 @@ function _adjustSingleCardsHeights(tipo, second = false) {
         _adjustSingleCardsHeights('hospedagens', true);
     }
 }
+
+function _loadViagemVisibility() {
+    if (FIRESTORE_DATA.visibilidade) {
+        const nightMode = getID('night-mode');
+
+        if (!FIRESTORE_DATA.visibilidade.claro) {
+            nightMode.style.display = 'none';
+            _loadDarkMode();
+
+        } else if (!FIRESTORE_DATA.visibilidade.escuro) {
+            nightMode.style.display = 'none';
+            _loadLightMode();
+        }
+    }
+}

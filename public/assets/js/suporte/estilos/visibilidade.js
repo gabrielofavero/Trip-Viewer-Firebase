@@ -21,11 +21,16 @@ function _loadVisibility() {
      }
 
      _saveLocalColors();
-     _applyUserVisibility();
+     _loadUserVisibility();
 
      getID("night-mode").onclick = function () {
+          _setManualVisibility();
           _switchVisibility();
      };
+}
+
+function _setManualVisibility() {
+     sessionStorage.setItem("forceDarkMode", _isOnDarkMode())
 }
 
 function _loadVisibilityExternal() {
@@ -152,21 +157,17 @@ function _getCssHref(name, dark = false) {
 }
 
 // ======= SETTERS =======
-function _applyUserVisibility() {
-     switch (localStorage.getItem("visibilidade")) {
-          case "escuro":
+function _loadUserVisibility() {
+     switch (sessionStorage.getItem("forceDarkMode")) {
+          case "true":
                _loadDarkMode();
                break;
-          case "claro":
+          case "false":
                _loadLightMode();
                break;
           default:
                _autoVisibility();
      }
-}
-
-function _setLightModeVariable() {
-     localStorage.setItem("darkMode", false);
 }
 
 function _switchVisibility() {

@@ -581,9 +581,23 @@ section {
   align-items: center;
 }
 
+.instagram-embed {
+  width: 90%;
+  clip-path: inset(57px 18px 166px 71px);
+  margin-top: -50px;
+  margin-bottom: -150px;
+  margin-left: -53px;
+}
+
+.instagram-media {
+  width: 465px !important;
+}
+
 .tiktok-embed-v2 {
-  width: 100%;
-  height: 775px;
+  clip-path: inset(6px 0px 0px 0px); /* cut first 6px from top (white bar) */
+  width: 323.4px;
+  height: 574.92px;
+  overflow: hidden !important;
 }
 
 .tiktok-embed-v3 {

@@ -1,3 +1,7 @@
+:root {
+  --notification-color: #7f75b6;
+}
+
 body {
   color: #E2E2E2;
 }
@@ -28,6 +32,11 @@ strong {
 .top-bar {
   background-color: #303030;
   border-bottom: 0.5px solid #383838;
+}
+
+.notification-bar {
+  /* color: #303030; */
+  background-color: var(--notification-color);
 }
 
 #trip-viewer-text {
@@ -112,8 +121,8 @@ strong {
   background: #404040;
 }
 
-.login-item:hover, .login-item:focus {
-  background: rgb(68, 68, 68);
+.login-item:focus {
+  outline: rgb(68, 68, 68);
 }
 
 .content-list {

@@ -8,6 +8,7 @@ var TENTATIVAS = {
 
 var VIAGENS = {
   coletado: false,
+  viagensEmAndamento: [],
   proximasViagens: [],
   viagensAnteriores: []
 }
@@ -31,8 +32,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function _loadListenersIndex() {
-  getID('google-login-button').addEventListener('click', function () {
-    _signInGoogle();
+  getID('login-button').addEventListener('click', function () {
+    _signInWithEmailAndPassword();
   });
 
   getID('proximasViagens').addEventListener('click', function () {
@@ -108,8 +109,10 @@ async function _loadUserIndex() {
         _registerIfUserNotPresent();
         _openIndexPage('logged');
 
-        const displayName = user.displayName;
-        const photoURL = 'url(' + user.photoURL + ')';
+        const userData = await _get(`usuarios/${user.uid}`);
+
+        const displayName = userData.nome;
+        const photoURL = 'url(' + userData.foto + ')';
 
         getID('title-name').innerHTML = displayName.split(' ')[0];
 
@@ -119,9 +122,9 @@ async function _loadUserIndex() {
         getID('profile-icon').style.backgroundImage = photoURL;
         getID('profile-icon').style.backgroundSize = 'cover';
 
-        _loadUserDataList('viagens');
-        _loadUserDataList('listagens');
-        _loadUserDataList('destinos');
+        _loadUserDataList('viagens', userData);
+        _loadUserDataList('listagens', userData);
+        _loadUserDataList('destinos', userData);
 
       } else {
         _openIndexPage('unlogged');
@@ -135,8 +138,8 @@ async function _loadUserIndex() {
   _stopLoadingScreen();
 }
 
-async function _loadUserDataList(tipo) {
-  const promise = _getUserList(tipo);
+async function _loadUserDataList(tipo, userData) {
+  const promise = _getUserList(tipo, false, userData);
   let responseReceived = false;
 
   function onResponseReceived(response) {
@@ -230,6 +233,7 @@ function _loadUserDataHTML(dados, tipo) {
   if ((tipo == 'proximasViagens' || tipo == 'viagensAnteriores')) {
     if (!VIAGENS.coletado) {
       _coletarViagens(dados);
+      _loadNotificationBar();
     }
     dados = VIAGENS[tipo];
   } else if (dados[0].ultimaAtualizacao) {
@@ -284,6 +288,7 @@ function _loadUserDataHTML(dados, tipo) {
     const proximasViagens = [];
     const viagensAnteriores = [];
     const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
 
     for (let i = 0; i < dados.length; i++) {
       const viagem = dados[i];
@@ -293,6 +298,9 @@ function _loadUserDataHTML(dados, tipo) {
         viagensAnteriores.push(viagem);
       } else {
         proximasViagens.push(viagem);
+        if (hoje >= _convertFromFirestoreDate(viagem.inicio)) {
+          VIAGENS.viagensEmAndamento.push(viagem);
+        }
       }
     }
     proximasViagens.sort((a, b) => _sortByToday(a, b));
@@ -313,37 +321,69 @@ function _loadUserDataHTML(dados, tipo) {
 }
 
 function _viagensEditar(code) {
-  window.location.href = `editar-viagem.html?v=${code}`;
+  window.open(`editar-viagem.html?v=${code}`, '_blank');
 }
 
 function _viagensVisualizar(code) {
-  window.location.href = `viagem.html?v=${code}`;
+  window.open(`viagem.html?v=${code}`, '_blank'); 
 }
 
 function _viagensNovo() {
-  window.location.href = `editar-viagem.html`;
+  window.open(`editar-viagem.html`, '_blank');
 }
 
 function _destinosNovo() {
-  window.location.href = `editar-destino.html`;
+  window.open(`editar-destino.html`, '_blank');
 }
 
 function _destinosEditar(code) {
-  window.location.href = `editar-destino.html?d=${code}`;
+  window.open(`editar-destino.html?d=${code}`, '_blank');
 }
 
 function _destinosVisualizar(code) {
-  window.location.href = `viagem.html?d=${code}`;
+  window.open(`viagem.html?d=${code}`, '_blank');
 }
 
 function _listagensEditar(code) {
-  window.location.href = `editar-listagem.html?l=${code}`;
+  window.open(`editar-listagem.html?l=${code}`, '_blank');
 }
 
 function _listagensVisualizar(code) {
-  window.location.href = `viagem.html?l=${code}`;
+  window.open(`viagem.html?l=${code}`, '_blank');
 }
 
 function _listagensNovo() {
-  window.location.href = `editar-listagem.html`;
+  window.open(`editar-listagem.html`, '_blank');
+}
+
+function _loadNotificationBar() {
+  if (VIAGENS.coletado && VIAGENS.viagensEmAndamento.length > 0) {
+    getID('notification-bar').style.display = 'flex';
+    if (VIAGENS.viagensEmAndamento.length == 1) {
+      getID('notification-text').innerHTML = `Viagem em Andamento:<br>${VIAGENS.viagensEmAndamento[0].titulo}`;
+      if (VIAGENS.viagensEmAndamento[0].cores.ativo) {
+        notificationBar.changed = true;
+        notificationBar.claro = VIAGENS.viagensEmAndamento[0].cores.claro;
+        notificationBar.escuro = VIAGENS.viagensEmAndamento[0].cores.escuro;
+        _applyNotificationBarColor();
+      }
+    } else {
+      getID('notification-text').innerHTML = `Múltiplas viagens em andamento<br> Confira em "Próximas Viagens"`;
+      getID('notification-link').style.display = 'none';	
+    }
+  }
+}
+
+function closeNotification() {
+  document.querySelector('.notification-bar').style.display = 'none';
+}
+
+function goToCurrentTrip() {
+  if (VIAGENS.viagensEmAndamento.length == 1) {
+    _viagensVisualizar(VIAGENS.viagensEmAndamento[0].code);
+  }
+}
+
+function _applyNotificationBarColor() {
+  getID('notification-bar').style.backgroundColor = _isOnDarkMode() ? notificationBar.escuro : notificationBar.claro;
 }

@@ -105,6 +105,11 @@
       <i id="profile-icon" class="icon-buttons" style="display: none;"></i>
     </div>
   </div>
+  <div class="notification-bar" id="notification-bar">
+    <span class="notification-text" id="notification-text"></span>
+    <span class="notification-link" id="notification-link" onclick="goToCurrentTrip()"><i class="iconify external-link" data-icon="tabler:external-link"></i></span>
+    <span class="notification-close" onclick="closeNotification()"><i class="iconify" data-icon="material-symbols:close"></i></span>
+  </div>
 
   <!-- ======= Hero ======= -->
   <section id="hero">
@@ -118,8 +123,13 @@
       </div>
 
       <div class="login-box" id="login-box" style="display: none">
-        <button class="login-item" id="google-login-button"><i class="iconify" data-icon="devicon:google"></i> Login com
-          o Google</button>
+        <div class="login-input">
+          <input type="email" id="login-email" class="login-item" placeholder="E-mail" required>
+        </div>
+        <div class="login-input">
+          <input type="password" id="login-password" class="login-item" placeholder="Senha" required>
+        </div>
+        <button id="login-button" class="btn btn-theme" type="button">Entrar</button>
       </div>
 
       <div class="logged-menu" id="logged-menu" style="display: none" style="display: none">
@@ -224,27 +234,6 @@
 
           <div id="delete-account-container">
             <a id="settings-delete-account" href="#" onclick="_openModal()">Apagar Conta</a>
-          </div>
-
-          <div class="settings-account-item">
-            <fieldset class="nice-form-group">
-              <div class="index-title">Tema</div>
-
-              <div class="nice-form-group">
-                <input type="radio" name="visibilidade" id="visibilidade-dinamico">
-                <label for="visibilidade-dinamico">Dinâmico</label>
-              </div>
-
-              <div class="nice-form-group">
-                <input type="radio" name="visibilidade" id="visibilidade-claro">
-                <label for="visibilidade-claro">Modo Claro</label>
-              </div>
-
-              <div class="nice-form-group">
-                <input type="radio" name="visibilidade" id="visibilidade-escuro">
-                <label for="visibilidade-escuro">Modo Escuro</label>
-              </div>
-            </fieldset>
           </div>
         </div>
 

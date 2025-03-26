@@ -94,9 +94,9 @@ function _getReservaHTML(j, empresa) {
 
   if (!reserva) return ""
   reserva = reserva[0] === "#" ? reserva.slice(1) : reserva;
-
-  if (link) return `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>`;
-  else return `<div class="flight-code">#${reserva}</div>`
+  const flightCode = link ? `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>` : `<div class="flight-code">#${reserva}</div>`;
+  const copyIcon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="_copyToClipboard('${reserva}')"></i>`;
+  return `${flightCode} ${copyIcon}`;
 }
 
 function _getPartidaChegadaHTML(j, tipo) {
@@ -151,7 +151,11 @@ function _buildTransporteSwiper(swiperData) {
                         <div class="swiper-wrapper" id="transporte-${key}-wrapper">
                           ${data || swiperData[key].join("")}
                         </div>
-                        <div class="swiper-pagination transporte-${key}-pagination"></div>
+                        <div class="swiper-controls">
+                          <div class="swiper-button-prev transporte-${key}-prev"></div>
+                          <div class="swiper-pagination transporte-${key}-pagination"></div>
+                          <div class="swiper-button-next transporte-${key}-next"></div>
+                        </div>
                       </div>`;
 
                       ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
@@ -190,4 +194,9 @@ function _loadIconeGeralTransporte() {
   if (unique.length == 1) {
     getID('transporte-nav').setAttribute('data-icon', unique[0]);
   }
+}
+
+function _copyToClipboard(text) {
+  navigator.clipboard.writeText(text);
+  _openToast("Texto copiado para a área de transferência");
 }

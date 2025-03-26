@@ -221,7 +221,7 @@ function _validateMediaLink(id) {
     const div = getID(id);
     const link = div.value;
 
-    const validDomains = ['youtu.be/', 'youtube.com', 'tiktok.com'];
+    const validDomains = ['youtu.be/', 'youtube.com', 'tiktok.com', 'instagram.com/reel/', 'instagram.com/reels/', 'instagram.com/p/'];
 
     if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)))) {
         return;
@@ -230,9 +230,11 @@ function _validateMediaLink(id) {
         const linkI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>'
         const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
         const youtubeI = '<i class="iconify" data-icon="mdi:youtube"></i>'
+        const instagramI = '<i class="iconify" data-icon="mdi:instagram"></i>'
         _displayMessage('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                                   ${tiktokI} <strong>TikTok</strong> (Versão Web)<br>
-                                                   ${youtubeI} <strong>Youtube</strong>`);
+                                                   ${tiktokI} <strong>TikTok</strong><br>
+                                                   ${youtubeI} <strong>Youtube</strong><br>
+                                                   ${instagramI} <strong>Instagram Reels</strong>`);
     }
 }
 

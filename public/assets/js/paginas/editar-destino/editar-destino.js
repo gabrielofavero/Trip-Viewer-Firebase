@@ -236,9 +236,10 @@ async function getDesktopLink(originalLink) {
   }
 }
 
-function _OpenMoveDestinoModal(j, categoria) {
+function _openMoveDestinoModal(j, categoria) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-  propriedades.titulo = getID(`${categoria}-nome-${j}`).value || 'Mover Destino';
+
+  propriedades.titulo = getID(`${categoria}-nome-${j}`).value || `Mover - ${_firstCharToUpperCase(categoria)}`;
   propriedades.containers = _getContainersInput();
   propriedades.botoes = [{
     tipo: 'cancelar',
@@ -247,27 +248,37 @@ function _OpenMoveDestinoModal(j, categoria) {
     acao: `_moveDestino(${j}, '${categoria}')`,
   }];
 
+  const options = {
+    restaurantes: "Restaurantes",
+    lanches: "Lanches",
+    saidas: "Saídas",
+    turismo: "Turismo",
+    lojas: "Lojas"
+  }
+
+  let optionsString = "";
+
+  for (const option in options) {
+    if (option != categoria) {
+      optionsString += `<option value="${option}">${options[option]}</option>`;
+    }
+  }
+
   propriedades.conteudo = `
   <div class="nice-form-group"">
     <label>Mover para:</label>
       <select class="editar-select" id="move-select">
-        <option value="restaurantes">Restaurantes</option>
-        <option value="lanches">Lanches</option>
-        <option value="saidas">Saídas</option>
-        <option value="turismo">Turismo</option>
-        <option value="lojas">Lojas</option>
+        ${optionsString}
       </select>
   </div>`
 
   _displayFullMessage(propriedades);
-  getID('move-select').value = categoria;
 }
 
 function _moveDestino(j, categoria) {
   const newCategoria = getID('move-select').value;
 
   if (categoria != newCategoria) {
-    _addDestino(categoria);
 
     const destino = {
       novo: getID(`${categoria}-novo-${j}`).checked,

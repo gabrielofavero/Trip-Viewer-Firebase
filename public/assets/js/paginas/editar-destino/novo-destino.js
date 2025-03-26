@@ -83,7 +83,7 @@ function _addRestaurantes() {
             <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="restaurantes-midia-${j}" type="url"
               placeholder="https://www.youtube.com/watch?v=GAirUeYBvQI" value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -101,7 +101,7 @@ function _addRestaurantes() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_OpenMoveDestinoModal(${j}, 'restaurantes')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, 'restaurantes')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -209,7 +209,7 @@ function _addLanches() {
             <input id="lanches-midia-${j}" type="url"
               placeholder="https://www.tiktok.com/@viajeparacomer/video/7172239210282274053?q=bottanikafe&t=1700768671502"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -227,7 +227,7 @@ function _addLanches() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_OpenMoveDestinoModal(${j}, 'lanches')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, 'lanches')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -334,7 +334,7 @@ function _addSaidas() {
             <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="saidas-midia-${j}" type="url" placeholder="https://www.youtube.com/watch?v=M1qd2Y2T4ZA"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -352,7 +352,7 @@ function _addSaidas() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_OpenMoveDestinoModal(${j}, 'saidas')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, 'saidas')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -460,7 +460,7 @@ function _addTurismo() {
             <input id="turismo-midia-${j}" type="url"
               placeholder="https://www.tiktok.com/@pompsie/video/7214164412616166699?q=las%20vegas%20sign&t=1700778158244"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -477,7 +477,7 @@ function _addTurismo() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_OpenMoveDestinoModal(${j}, 'turismo')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, 'turismo')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -586,7 +586,7 @@ function _addLojas() {
             <label>Vídeo <span class="opcional"> (Opcional)</span></label>
             <input id="lojas-midia-${j}" type="url" placeholder="https://www.youtube.com/watch?v=2LVCuEXZ3bk"
               value="" class="icon-right" />
-            <div class="legenda">TikTok (Web) ou YouTube</div>
+            <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
@@ -604,7 +604,7 @@ function _addLojas() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_OpenMoveDestinoModal(${j}, 'lojas')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, 'lojas')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>

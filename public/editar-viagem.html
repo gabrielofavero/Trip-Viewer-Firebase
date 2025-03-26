@@ -202,7 +202,7 @@
                 Programação</a>
             </li>
 
-            <li>
+            <li style="display: none">
               <a href="#lineup">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                   <path fill="currentColor"
@@ -300,6 +300,37 @@
               <label>Fim</label>
               <input class="flex-input" id="fim" type="date" value="2023-01-22" />
             </div>
+          </div>
+
+          <div class="nice-form-group">
+            <label>Fuso Horário</label>
+            <select id="offset">
+              <option value="720">(UTC-12:00) International Date Line West</option>
+              <option value="660">(UTC-11:00) Coordinated Universal Time-11</option>
+              <option value="600">(UTC-10:00) Hawaii</option>
+              <option value="540">(UTC-09:00) Alaska</option>
+              <option value="480">(UTC-08:00) Pacific Time (US & Canada)</option>
+              <option value="420">(UTC-07:00) Mountain Time (US & Canada)</option>
+              <option value="360">(UTC-06:00) Central Time (US & Canada)</option>
+              <option value="300">(UTC-05:00) Eastern Time (US & Canada)</option>
+              <option value="240">(UTC-04:00) Atlantic Time (Canada)</option>
+              <option value="180">(UTC-03:00) Brasilia</option>
+              <option value="120">(UTC-02:00) Mid-Atlantic</option>
+              <option value="60">(UTC-01:00) Azores</option>
+              <option value="0">(UTC+00:00) Greenwich Mean Time</option>
+              <option value="-60">(UTC+01:00) Central European Time</option>
+              <option value="-120">(UTC+02:00) Eastern European Time</option>
+              <option value="-180">(UTC+03:00) Moscow Standard Time</option>
+              <option value="-240">(UTC+04:00) Gulf Standard Time</option>
+              <option value="-300">(UTC+05:00) Pakistan Standard Time</option>
+              <option value="-360">(UTC+06:00) Bangladesh Standard Time</option>
+              <option value="-420">(UTC+07:00) Indochina Time</option>
+              <option value="-480">(UTC+08:00) China Standard Time</option>
+              <option value="-540">(UTC+09:00) Japan Standard Time</option>
+              <option value="-600">(UTC+10:00) Australian Eastern Standard Time</option>
+              <option value="-660">(UTC+11:00) Solomon Islands Time</option>
+              <option value="-720">(UTC+12:00) New Zealand Standard Time</option>
+            </select>
           </div>
 
           <div class="nice-form-group">
@@ -463,13 +494,31 @@
           </div>
 
           <div class="transparent-background-color" id="habilitado-cores-content">
+            
+            <fieldset class="nice-form-group">
+              <div class="nice-form-group">
+                <input type="radio" id="dark-and-light" name="display-mode" checked />
+                <label for="dark-and-light">Exibir viagem em Modo Escuro e Modo Claro</label>
+              </div>
+            
+              <div class="nice-form-group">
+                <input type="radio" id="light-exclusive" name="display-mode" />
+                <label for="light-exclusive">Exibir viagem apenas em Modo Claro</label>
+              </div>
+            
+              <div class="nice-form-group">
+                <input type="radio" id="dark-exclusive" name="display-mode" />
+                <label for="dark-exclusive">Exibir viagem apenas em Modo Escuro</label>
+              </div>
+            </fieldset>            
+
             <div class="side-by-side-color-box" id="cores">
-              <div class="nice-form-group side-by-side-fixed">
+              <div class="nice-form-group side-by-side-fixed" id="tema-claro">
                 <label>Tema: Claro</label>
                 <input id="claro" type="color" value="#5859a7" />
               </div>
 
-              <div class="nice-form-group side-by-side-fixed">
+              <div class="nice-form-group side-by-side-fixed" id="tema-escuro">
                 <label>Tema: Escuro</label>
                 <input id="escuro" type="color" value="#7f75b6" />
               </div>

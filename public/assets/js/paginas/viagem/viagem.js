@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       _start();
       _mainLoad();
+      _loadViagemVisibility();
       _adjustPortfolioHeight();
       _refreshCategorias();
 
@@ -143,7 +144,8 @@ function _loadHeader() {
   }
 
   if (FIRESTORE_DATA.links?.ativo) {
-
+    getID("social-links").style.display = "block";
+    
     if (FIRESTORE_DATA.links.attachments) {
       getID("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
     } else {
@@ -226,22 +228,23 @@ function _loadModules() {
 
   function _loadCompartilhamentoModule() {
     const share = getID('share');
-    if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share) {
+    if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share && window.location.hostname != 'localhost') {
       share.addEventListener('click', () => {
-        const link = window.location.href.includes('trip-viewer-prd.firebaseapp.com') ?
-          'https://trip-viewer.com' + window.location.pathname + window.location.search : window.location.href;
-
-        navigator.share({
-          title: FIRESTORE_DATA.titulo || document.title,
-          text: _getCompartilhamentoText(),
-          url: link,
-        })
-
-          .then(() => console.log('Link compartilhado com sucesso!'))
-          .catch((error) => console.error('Erro ao compartilhar link:', error));
+        _compartilhar();
       });
     } else {
       share.style.display = 'none';
+    }
+
+    function _compartilhar() {
+      const link = window.location.href.includes('trip-viewer-prd.firebaseapp.com') ?
+        'https://trip-viewer.com' + window.location.pathname + window.location.search : window.location.href;
+
+      navigator.share({
+        title: FIRESTORE_DATA.titulo || document.title,
+        text: _getCompartilhamentoText(),
+        url: link,
+      })
     }
 
     function _getCompartilhamentoText() {
@@ -251,6 +254,7 @@ function _loadModules() {
         case 'destinos':
           return `Venha visualizar o destino "${FIRESTORE_DATA.titulo}" criado no TripViewer`
         case 'viagem':
+        case 'viagens':
           return `Venha visualizar minha viagem "${FIRESTORE_DATA.titulo}" criada no TripViewer, com início em ${INICIO.text} e fim em ${FIM.text}`
         default:
           return `Venha visualizar minhas informações de viagem criadas no TripViewer`

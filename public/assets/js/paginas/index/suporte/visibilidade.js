@@ -1,67 +1,21 @@
+const notificationBar = {
+  changed: false,
+  claro: '',
+  escuro: ''
+}
+
 function _loadVisibilityIndex() {
-  const html = _getHTMLpage();
-
-  if (html == 'index') {
-    _loadUserVisibility();
-  }
-
-  _applyUserVisibility();
+  _loadUserVisibility();
   _loadLogoColors();
 
   getID("night-mode").onclick = function () {
     _switchVisibility();
+    _setManualVisibility();
+    
+    if (notificationBar.changed) {
+      _applyNotificationBarColor();
+    }
   };
-
-  if (html == 'index') {
-    getID("visibilidade-dinamico").addEventListener("click", function () {
-      if (getID("visibilidade-dinamico").checked) {
-        _autoVisibility();
-        localStorage.setItem("visibilidade", "dinamico");
-        _updateVisibility("dinamico");
-      };
-    });
-
-    getID("visibilidade-claro").addEventListener("click", function () {
-      if (getID("visibilidade-claro").checked) {
-        _loadLightMode();
-        localStorage.setItem("visibilidade", "claro");
-        _updateVisibility("claro");
-      }
-    });
-
-    getID("visibilidade-escuro").addEventListener("click", function () {
-      if (getID("visibilidade-escuro").checked) {
-        _loadDarkMode();
-        localStorage.setItem("visibilidade", "escuro");
-        _updateVisibility("escuro");
-      }
-    });
-  }
-}
-
-async function _loadUserVisibility() {
-  const visibility = await _getVisibility();
-  let localVisibility = localStorage.getItem("visibilidade");
-  if (visibility && visibility !== localVisibility && ['dinamico', 'claro', 'escuro'].includes(visibility)) {
-    localStorage.setItem("visibilidade", visibility);
-    _applyUserVisibility();
-  }
-
-  localVisibility = localStorage.getItem("visibilidade");
-  switch (localVisibility) {
-    case 'dinamico':
-      getID("visibilidade-dinamico").checked = true;
-      break;
-    case 'claro':
-      getID("visibilidade-claro").checked = true;
-      break;
-    case 'escuro':
-      getID("visibilidade-escuro").checked = true;
-      break;
-    default:
-      getID("visibilidade-dinamico").checked = true;
-      break;
-  }
 }
 
 function _expandContentBox() {

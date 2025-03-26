@@ -4,28 +4,38 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 59    | 54          | 5         |
-| 🏆     | Feature  | F000    | 65    | 54          | 11         |
-| 📈     | Melhoria | M000    | 87    | 71          | 16        |
-| ⚔️   | Épico   | E000    | 25    | 16          | 9         |
+| 🐞     | Bug      | B000    | 67    | 63          | 4         |
+| 🏆     | Feature  | F000    | 76    | 62          | 14         |
+| 📈     | Melhoria | M000    | 97    | 72          | 25        |
+| ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
 - ❗️: Crítico (deploy em produção)
 
-## Doing
-
-## To-Do
-
+## Backlog
 ### Prioridade Alta
-
+- 📈 **M096:** Ajustes mobile e webview
+- 📈 **M097:** Automações programação (editar-viagem.html)
+- 🏆 **F071:** Gastos Multi Pessoas
+- 🏆 **F072:** Passagens Multi pessoas
+- 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
+  - *Itens selecionados mostrados primeiro (apenas no load inicial)*
+  - *Melhor exibição de várias regiões (carrosel talvez)*
+- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
+- 🐞 **B067:** Correções em carregamento de gastos e edição
+- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
+  - *Adicionar imagem e descrição*
+  - *Sem .html*
+  - *Redirecionador para antigo viagens.html*
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
   - *Mudança no get e no set (editar-destino.html)*
   - *Criação de estrutura no front (editar-destino.html)*
   - *Mudança no get (viagem.html e destino.html)*
   - *Mudança no dynamic select (editar-destino.html)*
-  - *Script de migração*
-- 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
+  - *Script de migração* 
+
+### Prioridade Média
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
@@ -37,19 +47,7 @@
   - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
   - *Lineup e Horários separados por Tab semelhante a de gastos.html*
   - *Select com os dias de festival, mas com geral em default*
-  - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável* 
-
-### Prioridade Média
-
-- 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
-  - *Itens selecionados mostrados primeiro (apenas no load inicial)*
-  - *Melhor exibição de várias regiões (carrosel talvez)*
-- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
-- 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
-- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
-  - *Adicionar imagem e descrição*
-- 📈 **M020:** Módulo de transporte mais automatizado
-  - *Se user clicou em volta e não há dados, reverte tudo da ida*
+  - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
   - *Na tela de edição e viagens*
   - *Ordenação por nota e por nome (↑↓)*
@@ -70,12 +68,18 @@
   - *Code smells*
   - *Refatorações*
   - *Sonarqube*
-- ⚔️ **E024:** Migração de projeto para React
-- ⚔️ **E025:** Implementação iOs e Android
+- 📈 **M091:** Alinhar select de cidade com box de destino
+- 📈 **M092:** Titulo em dark mode com maior destaque
+- 📈 **M093:** Melhorar detecção automática de datas
+- 🏆 **F069:** Criação de opções de re-ordenação de destinos
+- 🏆 **F070:** Componente de adicionar ao calendário
+- 📈 **M094:** Fixar scrolls (destinos checkboxes em editar, viagens e destinos em home)
+- ⚔️ **E026:** Importar dados do google maps
 
 ### Prioridade Baixa
-
-- 🐞 **B057:** Calendário com bordas brancas temporariamente quando é feito o switch para modo noturno (viagem.html)
+- ⚔️ **E024:** Migração de projeto para React OU Angular
+- ⚔️ **E025:** Implementação iOs e Android
+- 📈 **M090:** Carregamento logo dentro do pre loader
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
@@ -86,8 +90,6 @@
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
-- 🏆 **F051:** Implementação embed de Deezer, Instagram (post/reels) e Apple Music em destinos
-  - *Tanto destinos.html quanto editar-destinos.html*
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M047:** Troca de mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhoria de funções relacionadas ao getJs para mais cenários
@@ -99,8 +101,36 @@
 - 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
+- 📈 **M089:** Substituir valores de cores por variáveis de ambiente nos CSS
+- 🏆 **F067:** Integração OneDrive
 
 ## Done
+
+### Março 2025
+- 📈 **M088:** Melhorar recurso de copia e cola com toast
+- 🏆 **F075:** Criar notificação de toast
+- 🏆 **F076:** Swiper com setas em modo desktop
+- 🏆 **F074:** Recurso de copia e cola para códigos de reserva
+- 🏆 **F073:** "Programação do Dia" na capa da viagem
+- 🏆 **F051:** Implementação embed de Instagram Reels em destinos
+- 🐞 **B058:** Viagem atual aparecendo como anterior (index.html)
+- 🏆 **F068:** Barra superior de "Viagem Atual"
+- 🐞 **B062:** Correção embed tiktok
+- 📈 **M095:** Itens em index.html abrem em nova aba
+- 📈 **M020:** Módulo de transporte mais automatizado
+- 🐞 **B066:** Correção de ocultação de itens de lineup
+- 🐞 **B065:** Correção no update do Dynamic Select
+- 🐞 **B064:** Correção destino extra ao mover destino
+
+### Fevereiro 2025
+- 🐞 **B061:** Ajustar persistência de dark mode
+- 🐞 **B057:** Correções de dark mode
+- 🐞 **B063:** Correções botão compartilhar
+- 🐞 **B060:** Correção Fuso
+
+### Janeiro 2025
+- 🏆 **F066:** Trocar Login Google por login User-Password
+- 🏆 **F062:** Permitir personalizar viagem para que apenas exiba em modo escuro ou modo diurno
 
 ### Outubro 2024
 - 🐞 **B056:** Erros Dynamic Select:
