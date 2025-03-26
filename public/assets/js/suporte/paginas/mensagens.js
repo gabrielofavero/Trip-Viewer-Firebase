@@ -130,7 +130,7 @@ function _displayError(erro, tentarNovamente = false) {
 function _getErrorMessage(erro) {
   const isError = (erro && erro instanceof Error);
   const contact = '<a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.';
-  
+
   if (!erro || isError && !erro.message) {
     return `Um erro inesperado impediu o carregamento da página. ${contact}`;
   } else if (isError) {
@@ -356,4 +356,18 @@ function _getDeleteButton(onclick, buttonClass = 'btn-secondary') {
 
 function _getDeleteButtonBasic(onclick) {
   return _getDeleteButton(onclick, 'btn-basic');
+}
+
+function _openToast(text) {
+  getID('toast-text').innerText = text;
+  _fadeIn(['toast']);
+  setTimeout(() => {
+    _closeToast();
+  }, 3000);
+}
+
+function _closeToast() {
+  if (getID('toast').style.display != 'none') {
+    _fadeOut(['toast']);
+  }
 }

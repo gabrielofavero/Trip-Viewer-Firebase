@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 63          | 4         |
-| 🏆     | Feature  | F000    | 76    | 61          | 15         |
+| 🏆     | Feature  | F000    | 76    | 62          | 14         |
 | 📈     | Melhoria | M000    | 95    | 71          | 22        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F075:** Criar notificação de toast
 - 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
@@ -107,6 +106,7 @@
 ## Done
 
 ### Março 2025
+- 🏆 **F075:** Criar notificação de toast
 - 🏆 **F076:** Swiper com setas em modo desktop
 - 🏆 **F074:** Recurso de copia e cola para códigos de reserva
 - 🏆 **F073:** "Programação do Dia" na capa da viagem
