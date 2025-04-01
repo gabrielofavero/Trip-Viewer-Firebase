@@ -11,6 +11,9 @@ function _getHTMLpage() {
     if (result === "") {
         result = "index";
     }
+    if (result === "view") {
+        result = "viagem";
+    }
     return result;
 }
 

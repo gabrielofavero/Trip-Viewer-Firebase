@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     let documentID = _getURLParam('g');
 
     if (!gastosExport || !documentID) {
-        const url = documentID ? `viagem.html?v=${documentID}` : 'index.html';
+        const url = documentID ? `view.html?v=${documentID}` : 'index.html';
         _displayForbidden('Nenhum documento de gastos foi encontrado. Certifique-se de que você está acessando a página por meio do botão "Gastos" na página de Viagem', url);
         return;
     }
 
     if (!gastosExport?.ativo) {
-        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `viagem.html?v=${documentID}`);
+        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `view.html?v=${documentID}`);
         return;
     }
 
@@ -61,7 +61,7 @@ function _exitGastos() {
     if (window.parent._closeLightbox) {
         window.parent._closeLightbox();
     } else if (_getURLParam('g')) {
-        window.location.href = `viagem.html?v=${_getURLParam('g')}`;
+        window.location.href = `view.html?v=${_getURLParam('g')}`;
     } else {
         window.location.href = 'index.html';
     }

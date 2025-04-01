@@ -325,7 +325,7 @@ function _viagensEditar(code) {
 }
 
 function _viagensVisualizar(code) {
-  window.open(`viagem.html?v=${code}`, '_blank'); 
+  window.open(`view.html?v=${code}`, '_blank'); 
 }
 
 function _viagensNovo() {
@@ -341,7 +341,7 @@ function _destinosEditar(code) {
 }
 
 function _destinosVisualizar(code) {
-  window.open(`viagem.html?d=${code}`, '_blank');
+  window.open(`view.html?d=${code}`, '_blank');
 }
 
 function _listagensEditar(code) {
@@ -349,7 +349,7 @@ function _listagensEditar(code) {
 }
 
 function _listagensVisualizar(code) {
-  window.open(`viagem.html?l=${code}`, '_blank');
+  window.open(`view.html?l=${code}`, '_blank');
 }
 
 function _listagensNovo() {

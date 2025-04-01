@@ -145,7 +145,7 @@ function _getErrorMessage(erro) {
 }
 
 // Mensagem de Não Autorizado
-function _displayForbidden(conteudo, redirectTo = 'viagem.html') {
+function _displayForbidden(conteudo, redirectTo = 'view.html') {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   propriedades.titulo = "Acesso Negado 🚫";
   propriedades.conteudo = conteudo || "Você não tem permissão para acessar esta página.";
