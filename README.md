@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 63          | 4         |
 | 🏆     | Feature  | F000    | 77    | 63          | 14         |
-| 📈     | Melhoria | M000    | 95    | 72          | 23        |
+| 📈     | Melhoria | M000    | 97    | 72          | 25        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
 - 🚦: Bloqueado
@@ -15,6 +15,8 @@
 
 ## Backlog
 ### Prioridade Alta
+- 📈 **M096:** Ajustes mobile e webview
+- 📈 **M097:** Automações programação (editar-viagem.html)
 - 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Melhor exibição de destinos (trip.html)
