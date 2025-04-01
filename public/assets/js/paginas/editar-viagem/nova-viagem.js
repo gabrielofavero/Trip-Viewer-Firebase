@@ -297,7 +297,7 @@ function _loadDestinos() {
     fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].code, destinos[i].titulo);
   }
 
-  getID('habilitado-destinos').addEventListener('change', () => _updateDestinosAtivosHTMLs());
+  getID('habilitado-destinos')?.addEventListener('change', () => _updateDestinosAtivosHTMLs());
   for (const child of _getChildIDs('destinos-checkboxes')) {
     const j = _getJ(child);
     getID(`check-destinos-${j}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())

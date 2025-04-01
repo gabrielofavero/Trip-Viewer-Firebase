@@ -1,5 +1,6 @@
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
+var INPUT_DETECTED = false;
 
 WAS_SAVED = false;
 var CAN_EDIT = false;
@@ -114,7 +115,7 @@ function _loadEventListeners() {
 
   getID('visualizar').addEventListener('click', () => {
     if (DOCUMENT_ID) {
-      window.location.href = `viagem.html?d=${DOCUMENT_ID}`;
+      window.open(`viagem.html?d=${DOCUMENT_ID}`, '_blank');
     } else {
       window.location.href = `index.html`;
     }
@@ -131,6 +132,19 @@ function _loadEventListeners() {
 
   getID('outra-moeda').addEventListener('change', () => {
     _loadCurrencySelects();
+  });
+
+  document.addEventListener("input", (event) => {
+    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
+      INPUT_DETECTED = true;
+    }
+  });
+
+  window.addEventListener("beforeunload", (event) => {
+    if (INPUT_DETECTED) {
+      event.preventDefault();
+      event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
+    }
   });
 }
 

@@ -1,3 +1,5 @@
+var INPUT_DETECTED = false;
+
 // Loader
 function _loadEventListeners() {
     // Inputs
@@ -43,6 +45,19 @@ function _loadEventListeners() {
     getID('dark-and-light').addEventListener('change', () => _visibilityListenerAction());
     getID('light-exclusive').addEventListener('change', () => _visibilityListenerAction());
     getID('dark-exclusive').addEventListener('change', () => _visibilityListenerAction());
+
+    document.addEventListener("input", (event) => {
+        if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
+          INPUT_DETECTED = true;
+        }
+      });
+    
+      window.addEventListener("beforeunload", (event) => {
+        if (INPUT_DETECTED) {
+          event.preventDefault();
+          event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
+        }
+      });
 }
 
 // Actions
@@ -76,7 +91,7 @@ function _fimListenerAction() {
 
 function _visualizarListenerAction() {
     if (DOCUMENT_ID) {
-        window.location.href = `viagem.html?v=${DOCUMENT_ID}`;
+        window.open(`viagem.html?v=${DOCUMENT_ID}`, '_blank');
     } else {
         window.location.href = `index.html`;
     }

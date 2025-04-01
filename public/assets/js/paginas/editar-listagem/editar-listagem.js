@@ -5,6 +5,8 @@ var FIRESTORE_NEW_DATA = {};
 var WAS_SAVED = false;
 var CAN_EDIT = false;
 
+var INPUT_DETECTED = false;
+
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -69,7 +71,7 @@ function _loadEventListeners() {
 
   getID('visualizar').addEventListener('click', () => {
     if (DOCUMENT_ID) {
-      window.location.href = `viagem.html?l=${DOCUMENT_ID}`;
+      window.open(`viagem.html?l=${DOCUMENT_ID}`, '_blank');
     } else {
       window.location.href = `index.html`;
     }
@@ -92,6 +94,19 @@ function _loadEventListeners() {
   });
 
   getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
+
+  document.addEventListener("input", (event) => {
+    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
+      INPUT_DETECTED = true;
+    }
+  });
+
+  window.addEventListener("beforeunload", (event) => {
+    if (INPUT_DETECTED) {
+      event.preventDefault();
+      event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
+    }
+  });
 }
 
 async function _carregarListagem() {

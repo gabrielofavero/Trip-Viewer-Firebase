@@ -7,6 +7,8 @@ async function _loadListData(FIRESTORE_DATA) {
     _loadCustomizacaoData(FIRESTORE_DATA);
     _loadDestinosData();
 
+    document.title = `Editar ${FIRESTORE_DATA.titulo}`;
+
   } catch (error) {
     _displayError(error);
     throw error;

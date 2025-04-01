@@ -10,6 +10,8 @@ async function _loadTripData() {
         _loadDestinosData();
         _loadProgramacaoData();
         _loadGaleriaData();
+
+        document.title = `Editar ${FIRESTORE_DATA.titulo}`;
     } catch (error) {
         _displayError(error);
         throw error;
