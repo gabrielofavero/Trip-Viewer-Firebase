@@ -93,13 +93,13 @@ function _reEdit(type, WAS_SAVED = true) {
 
     if (type == 'viagens') {
         param = 'v';
-        url = 'edit/trip.html';
+        url = 'trip.html';
     } else if (type == 'destinos') {
         param = 'd';
-        url = 'edit/destination.html';
+        url = 'destination.html';
     } else if (type == 'listagens') {
         param = 'l';
-        url = 'edit/listing.html';
+        url = 'listing.html';
     }
 
     if (param && DOCUMENT_ID && WAS_SAVED) {

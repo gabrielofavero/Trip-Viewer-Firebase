@@ -102,7 +102,7 @@ function _loadEventListeners() {
   });
 
   window.addEventListener("beforeunload", (event) => {
-    if (INPUT_DETECTED) {
+    if (INPUT_DETECTED && !WAS_SAVED) {
       event.preventDefault();
       event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
     }
