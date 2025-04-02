@@ -62,18 +62,18 @@ function _loadUploadSelectors() {
 
 function _loadEventListeners() {
   getID('cancelar').addEventListener('click', () => {
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   });
 
   getID('home').addEventListener('click', () => {
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   });
 
   getID('visualizar').addEventListener('click', () => {
     if (DOCUMENT_ID) {
       window.open(`view.html?l=${DOCUMENT_ID}`, '_blank');
     } else {
-      window.location.href = `index.html`;
+      window.location.href = '../index.html';
     }
   });
 
@@ -90,7 +90,7 @@ function _loadEventListeners() {
   });
 
   getID('home').addEventListener('click', () => {
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   });
 
   getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
@@ -182,6 +182,6 @@ async function _deleteListagemAction() {
   if (DOCUMENT_ID) {
     await _deleteUserObjectDB(DOCUMENT_ID, "listagens");
     await _deleteUserObjectStorage();
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   }
 }

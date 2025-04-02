@@ -106,18 +106,18 @@ function _loadEventListeners() {
   });
 
   getID('cancelar').addEventListener('click', () => {
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   });
 
   getID('home').addEventListener('click', () => {
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   });
 
   getID('visualizar').addEventListener('click', () => {
     if (DOCUMENT_ID) {
       window.open(`view.html?d=${DOCUMENT_ID}`, '_blank');
     } else {
-      window.location.href = `index.html`;
+      window.location.href = '../index.html';
     }
   });
 
@@ -342,6 +342,6 @@ function _deleteDestino() {
 async function _deleteDestinoAction() {
   if (DOCUMENT_ID) {
     await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   }
 }

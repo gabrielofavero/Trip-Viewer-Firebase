@@ -11,9 +11,9 @@ function _loadEventListeners() {
     getID('salvar').addEventListener('click', () => _setViagem());
     getID('re-editar').addEventListener('click', () => _reEdit('viagens', WAS_SAVED));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
-    getID('home').addEventListener('click', () => window.location.href = `index.html`);
-    getID('home').addEventListener('click', () => window.location.href = `index.html`);
-    getID('cancelar').addEventListener('click', () => window.location.href = `index.html`);
+    getID('home').addEventListener('click', () => window.location.href = '../index.html');
+    getID('home').addEventListener('click', () => window.location.href = '../index.html');
+    getID('cancelar').addEventListener('click', () => window.location.href = '../index.html');
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
@@ -93,7 +93,7 @@ function _visualizarListenerAction() {
     if (DOCUMENT_ID) {
         window.open(`view.html?v=${DOCUMENT_ID}`, '_blank');
     } else {
-        window.location.href = `index.html`;
+        window.location.href = '../index.html';
     }
 }
 
