@@ -112,7 +112,7 @@ function _getDestinoValores(destino) {
 
 function _loadAndOpenDestino(code) {
   window.localStorage.setItem('DESTINO', JSON.stringify(DESTINO_EXPORT[code]));
-  _openLightbox('destinos.html')
+  _openLightbox('destination.html')
 }
 
 function _getDestinationsHeaders(module) {

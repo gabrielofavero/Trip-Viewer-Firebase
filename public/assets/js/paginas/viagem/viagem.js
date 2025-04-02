@@ -279,7 +279,7 @@ function _loadModules() {
       let pin = FIRESTORE_DATA.gastosPin || false
       localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
       getID('gastos').addEventListener('click', () => {
-        _openLightbox(`gastos.html?g=${_getURLParam('v')}`);
+        _openLightbox(`expenses.html?g=${_getURLParam('v')}`);
       });
     }
   }

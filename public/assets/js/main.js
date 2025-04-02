@@ -219,14 +219,14 @@ function _main() {
 function _loadConfig() {
   let config = {};
   return Promise.all([
-    $.getJSON("assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
-    $.getJSON("assets/json/cores.json").then(data => config.cores = data),
-    $.getJSON("assets/json/destinos.json").then(data => config.destinos = data),
-    $.getJSON("assets/json/information.json").then(data => config.information = data),
-    $.getJSON("assets/json/moedas.json").then(data => config.moedas = data),
-    $.getJSON("assets/json/transportes.json").then(data => config.transportes = data),
-    $.getJSON("assets/json/set.json").then(data => config.set = data),
-    $.getJSON("assets/json/gastos-icones.json").then(data => config.gastosIcones = data)
+    $.getJSON("/assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
+    $.getJSON("/assets/json/cores.json").then(data => config.cores = data),
+    $.getJSON("/assets/json/destinos.json").then(data => config.destinos = data),
+    $.getJSON("/assets/json/information.json").then(data => config.information = data),
+    $.getJSON("/assets/json/moedas.json").then(data => config.moedas = data),
+    $.getJSON("/assets/json/transportes.json").then(data => config.transportes = data),
+    $.getJSON("/assets/json/set.json").then(data => config.set = data),
+    $.getJSON("/assets/json/gastos-icones.json").then(data => config.gastosIcones = data)
   ]).then(() => {
     CONFIG = config;
   }).catch(error => {

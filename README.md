@@ -5,8 +5,8 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 63          | 4         |
-| 🏆     | Feature  | F000    | 77    | 63          | 14         |
-| 📈     | Melhoria | M000    | 97    | 72          | 25        |
+| 🏆     | Feature  | F000    | 78    | 64          | 15         |
+| 📈     | Melhoria | M000    | 98    | 72          | 28        |
 | ⚔️   | Épico   | E000    | 26    | 16          | 10         |
 
 - 🚦: Bloqueado
@@ -16,7 +16,7 @@
 ## Backlog
 ### Prioridade Alta
 - 📈 **M096:** Ajustes mobile e webview
-- 📈 **M097:** Automações programação (editar-viagem.html)
+- 📈 **M097:** Automações programação (edit/trip.html)
 - 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Melhor exibição de destinos (trip.html)
@@ -24,10 +24,6 @@
   - *Melhor exibição de várias regiões (carrosel talvez)*
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - 🐞 **B067:** Correções em carregamento de gastos e edição
-- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
-  - *Adicionar imagem e descrição*
-  - *Sem .html*
-  - *Redirecionador para antigo viagens.html*
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (edit/trip.html)
   - *Mudança no get e no set (edit/trip.html)*
   - *Criação de estrutura no front (edit/trip.html)*
@@ -45,7 +41,7 @@
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
   - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
-  - *Lineup e Horários separados por Tab semelhante a de gastos.html*
+  - *Lineup e Horários separados por Tab semelhante a de expenses.html*
   - *Select com os dias de festival, mas com geral em default*
   - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
@@ -77,6 +73,8 @@
 - ⚔️ **E026:** Importar dados do google maps
 
 ### Prioridade Baixa
+- 🏆 **F078:** Criar sistema de linguagens + EN-US
+- 📈 **M098:** Trocar funções / estruturas de pastas js para EN-US
 - ⚔️ **E024:** Migração de projeto para React OU Angular
 - ⚔️ **E025:** Implementação iOs e Android
 - 📈 **M090:** Carregamento logo dentro do pre loader
@@ -107,6 +105,7 @@
 ## Done
 
 ### Abril 2025
+- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
 - 🏆 **F077:** Confirmação de saída da página em caso de mudanças
 
 ### Março 2025
@@ -235,7 +234,7 @@
 - 📈 **M063:** Melhoria de performace Firebase (atualização de versão do CLI)
 - 📈 **M064:** Ajuste no tratamento de mensagem de erros
 - 📈 **M065:** Gastos agora exibem moeda em todos os valores da tabela
-- 📈 **M067:** Melhorias páginas que usam lightbox (gastos.html e destination.html)
+- 📈 **M067:** Melhorias páginas que usam lightbox (expenses.html e destination.html)
 - *Páginas, quando carregadas fora do lightbox, não irão exibir botão de voltar*
 - *Redirecionamento condicional de páginas*
 - 📈 **M068:** Melhoria accordions e mídias em destination.html

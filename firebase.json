@@ -4,21 +4,46 @@
     "cleanUrls": true,
     "redirects": [
       {
-        "source": "/viagem{,\\.html}",
-        "destination": "/view.html{path}",
+        "source": "/viagem*",
+        "destination": "/view",
         "type": 301
+      },
+      {
+        "source": "/destinos*",
+        "destination": "/destination",
+        "type": 301
+      },
+      {
+        "source": "/gastos*",
+        "destination": "/expenses",
+        "type": 301
+      },
+      {
+        "source": "/editar-viagem*",
+        "destination": "/edit/trip",
+        "type": 301
+      },
+      {
+        "source": "/editar-destino*",
+        "destination": "/edit/destination",
+        "type": 301
+      },
+      {
+        "source": "/editar-listagem*",
+        "destination": "/edit/listing",
+        "type": 301
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ],
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "errorHandlers": [
-      {
-        "code": 404,
-        "destination": "/index.html"
-      }
     ]
   },
   "emulators": {

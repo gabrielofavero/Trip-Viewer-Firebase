@@ -1,20 +1,25 @@
 // ======= Device JS =======
 
 function _getHTMLpage() {
-    let result = window.location.pathname.replace(".html", "").replace("/", "");
-    let split = result.split("/");
-    if (split.length > 1) {
-        result = split[1];
-    } else {
-        result = split[0];
+    let result = window.location.pathname.replace(".html", "");
+    switch (result) {
+        case "/":
+            return "index";
+        case "/view":
+            return "viagem";
+        case "/destination":
+            return "destinos";
+        case "/expenses":
+            return "gastos";
+        case "/edit/listing":
+            return "editar-listagem";
+        case "/edit/destination":
+            return "editar-destino";
+        case "/edit/trip":
+            return "editar-viagem";
+        default:
+            return result;
     }
-    if (result === "") {
-        result = "index";
-    }
-    if (result === "view") {
-        result = "viagem";
-    }
-    return result;
 }
 
 // ======= CHECKERS =======
