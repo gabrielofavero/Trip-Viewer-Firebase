@@ -2872,3 +2872,9 @@ input[type="radio"] {
     transform: scale(0.6);
   }
 }
+
+@media (max-width: 1199px) and (min-width: 993px) {
+  #menu {
+      display: none;
+  }
+}

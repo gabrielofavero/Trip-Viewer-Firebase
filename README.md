@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 67    | 65          | 2         |
+| 🐞     | Bug      | B000    | 67    | 67          | 0         |
 | 🏆     | Feature  | F000    | 79    | 66          | 11         |
 | 📈     | Melhoria | M000    | 98    | 76          | 22        |
 | ⚔️   | Épico   | E000    | 28    | 17          | 11         |
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🐞 **B023:** Ajuste de dark-mode
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
 - 📈 **M096:** Ajustes mobile e webview
@@ -79,7 +78,6 @@
 - ⚔️ **E024:** Migração de projeto para React OU Angular
 - ⚔️ **E025:** Implementação iOs e Android
 - 📈 **M090:** Carregamento logo dentro do pre loader
-- 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em view.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
 - 🏆 **F044:** Criação de animações em todo o site
@@ -102,6 +100,8 @@
 ## Done
 
 ### Abril 2025
+- 🐞 **B024:** Botão de menu aparecendo entre largura 1199px e 993px em view.html
+- 🐞 **B023:** Ajuste de dark-mode
 - 🏆 **F079:** Sistema de abas para transportes
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
