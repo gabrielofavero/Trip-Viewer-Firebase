@@ -1,4 +1,7 @@
-var PIN_GASTOS = '';
+var PIN_GASTOS = {
+    current: '',
+    new: '',
+};
 
 var INNER_GASTOS = {
     gastosPrevios: [],
@@ -6,10 +9,12 @@ var INNER_GASTOS = {
 };
 
 // Pin
-function _switchPinVisibility() {
+function _switchPin() {
     if (getID('pin-disable').checked) {
+        PIN_GASTOS.new = '';
         getID('pin-container').style.display = 'none';
     } else {
+        PIN_GASTOS.new = PIN_GASTOS.current;
         getID('pin-container').style.display = 'block';
     }
 }
@@ -33,7 +38,7 @@ function _reconfirmPin() {
 
 function _validatePin(pin) {
     if (getID('pin-code').innerText === pin) {
-        PIN_GASTOS = _generateHash(pin);
+        PIN_GASTOS.new = pin;
         _closeMessage();
     } else {
         _invalidPin();
@@ -52,7 +57,7 @@ function _setPinButtonText(newPin = true) {
 }
 
 function _validateSavedPIN() {
-    if (getID('pin-enable').checked && !PIN_GASTOS) {
+    if (getID('pin-enable').checked && !PIN_GASTOS.new) {
         return ['PIN de Acesso aos Gastos'];
     }
 }
@@ -103,15 +108,23 @@ function _openInnerGasto(categoria, tipo = '', index = -1) {
     if (tipo && index >= 0) {
         const gasto = INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos[index];
         getID('gasto-nome').value = gasto.nome;
-        getID('gasto-tipo-select').value = gasto.tipo;
         getID('gasto-moeda').value = gasto.moeda;
         getID('gasto-valor').value = gasto.valor;
+
+        const values = Array.from(getID('gasto-tipo-select').options).map(option => option.value);
+        if (values.includes(gasto.tipo)) {
+            getID('gasto-tipo-select').value = gasto.tipo;
+        } else {
+            getID('gasto-tipo-select').value = 'custom';
+            getID('gasto-tipo-input').value = gasto.tipo;
+            getID('gasto-tipo-input').style.display = 'block';
+        }
     } else {
         getID('gasto-deletar').style.display = 'none';
     }
 
     getID('gasto-tipo-select').addEventListener('change', (e) => {
-        getID('gasto-tipo-input').style.display = e.target.value === 'outro' ? 'block' : 'none';
+        getID('gasto-tipo-input').style.display = e.target.value === 'custom' ? 'block' : 'none';
     });
 
     getID('gasto-valor').addEventListener('input', (e) => {
@@ -127,7 +140,6 @@ function _openInnerGasto(categoria, tipo = '', index = -1) {
 }
 
 function _getInnerGastoContent(categoria, tipo, index) {
-    const gastoTipoSelect = _getGastoTipoSelect(categoria);
     return `<div id='inner-gasto-box'>
                 <div class="nice-form-group">
                     <label>Nome</label>
@@ -135,8 +147,17 @@ function _getInnerGastoContent(categoria, tipo, index) {
                 </div>
                 <div class="nice-form-group">
                     <label>Tipo</label>
-                    ${gastoTipoSelect.innerHTML}
-                    <input required id="gasto-tipo-input" type="text" placeholder="Transporte" style="margin-top: 8px; display: ${gastoTipoSelect.inputVisibility};"/>
+                    <select id="gasto-tipo-select" clas="editar-select"">
+                        <option>Voos</option>
+                        <option>Hospedagens</option>
+                        <option>Entretenimento</option>
+                        <option>Dia a Dia</option>
+                        <option>Pessoas</option>
+                        <option>Carro</option>
+                        <option>Outros</option>
+                        <option value="custom">Personalizado</option>
+                    </select>
+                    <input required id="gasto-tipo-input" type="text" placeholder="Transporte" style="margin-top: 8px; display: none"/>
                 </div>
                 <div class="nice-form-group">
                     <label>Moeda</label>
@@ -181,23 +202,11 @@ function _getInnerGastoContent(categoria, tipo, index) {
             </div>`
 }
 
-function _getGastoTipoSelect(categoria) {
-    const tipos = INNER_GASTOS[categoria].map(tipo => tipo.tipo);
-    const innerHTL = `<select id="gasto-tipo-select" clas="editar-select" style="display: ${tipos.length > 0 ? 'block' : 'none'}">
-                        ${tipos.map(tipo => `<option value="${tipo}">${tipo}</option>`).join('')}
-                        <option value="outro">Outro</option>
-                    </select>`;
-    return {
-        innerHTML: innerHTL,
-        inputVisibility: tipos.length > 0 ? 'none' : 'block'
-    }
-}
-
 function _saveInnerGasto(categoria, tipo, index = -1) {
     const valor = _getFieldValueOrNotify('gasto-valor');
     const newGasto = {
         nome: _getFieldValueOrNotify('gasto-nome'),
-        tipo: getID('gasto-tipo-select').value === 'outro' ? _getFieldValueOrNotify('gasto-tipo-input') : getID('gasto-tipo-select').value,
+        tipo: getID('gasto-tipo-select').value === 'custom' ? _getFieldValueOrNotify('gasto-tipo-input') : getID('gasto-tipo-select').value,
         moeda: _getFieldValueOrNotify('gasto-moeda'),
         valor: valor ? parseFloat(parseFloat(valor).toFixed(2)) : null,
     }

@@ -1,7 +1,7 @@
 {
     "viagens": {
         "customChecks": "_validateSavedPIN()",
-        "before": ["_buildTripObject()"],
+        "before": ["_buildTripObject()", "_buildGastosObject()", "_buildGastosProtectedObject();"],
         "after": [
             {
                 "titulo": "Upload de Imagens",

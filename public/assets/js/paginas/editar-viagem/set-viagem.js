@@ -1,5 +1,6 @@
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
+var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
 
 async function _buildTripObject() {
     FIRESTORE_NEW_DATA = {
@@ -33,7 +34,6 @@ async function _buildGastosObject() {
         gastosDurante: _getGastos('gastosDurante'),
         gastosPrevios: _getGastos('gastosPrevios'),
         moeda: getID(`moeda`).value,
-        pin: _getPin(),
         versao: {
             ultimaAtualizacao: new Date().toISOString()
         }
@@ -46,11 +46,12 @@ async function _buildGastosObject() {
         }
         return result;
     }
+}
 
-    function _getPin() {
-        if (getID('pin-enable').checked) {
-            return PIN_GASTOS ? PIN_GASTOS : FIRESTORE_GASTOS_DATA?.pin || "";
-        } else return "";
+function _buildGastosProtectedObject() {
+    FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {
+        compartilhamento: FIRESTORE_GASTOS_NEW_DATA.compartilhamento,
+        pin: PIN_GASTOS.new
     }
 }
 
@@ -320,10 +321,48 @@ async function _setViagem() {
 }
 
 async function _setGastos() {
-    await _buildGastosObject();
-    if (FIRESTORE_GASTOS_DATA) {
-        return await _update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+    const responses = [];
+    // Without PIN
+    if (getID('pin-disable').checked) {
+        if (PIN_GASTOS.current) {
+            // 1. Existing Document (With PIN) -> Without PIN
+            responses.push(await _delete(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
+            responses.push(await _override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else if (FIRESTORE_GASTOS_DATA) {
+            // 2. Existing Document (Without PIN) -> Without PIN
+            responses.push(await _update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else {
+            //3. New Document (Without PIN)
+            responses.push(await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        }
+    }
+
+    // With PIN
+    else if (getID('pin-enable').checked) {
+        if (!PIN_GASTOS.current) {
+            // 4. Existing Document (Without PIN) -> With PIN
+            responses.push(await _delete(`gastos/${DOCUMENT_ID}`));
+            responses.push(await _create('gastos', FIRESTORE_GASTOS_PROTECTED_NEW_DATA, DOCUMENT_ID));
+            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        } else if (PIN_GASTOS.current != PIN_GASTOS.new && PIN_GASTOS.new) {
+            // 5. Existing Document (With PIN) -> With PIN (Different)
+            responses.push(await _delete(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
+            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        } else if (FIRESTORE_GASTOS_DATA && PIN_GASTOS.current) {
+            // 6. Existing Document (With PIN) -> With PIN (Same)
+            responses.push(await _update(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else if (PIN_GASTOS.current) {
+            // 7. New Document (With PIN)
+            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.current}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        }
+    }
+
+    if (responses.length == 0) {
+        WAS_SAVED = false;
+        getID('modal-inner-text').innerHTML = 'Erro desconhecido ao salvar os gastos. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
+        _openModal();
+        _stopLoadingScreen();
     } else {
-        return await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID);
+        return _combineDatabaseResponses(responses);
     }
 }

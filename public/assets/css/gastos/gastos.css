@@ -613,11 +613,11 @@ section {
   margin: 0 5px;
   background: #eeeeee;
   font-size: 20px;
-  color: #272829;
 }
 
 .pin-input-invalid {
-  border-color: #ff0000;
+  background: #eee0e0;
+  border-color: #DBBBBB;
 }
 
 .pin {

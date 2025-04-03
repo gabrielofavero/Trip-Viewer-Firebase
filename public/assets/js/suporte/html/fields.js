@@ -13,78 +13,91 @@ function _validateRequiredFields(customChecks=[]) {
         }
     });
 
-    if (customChecks && customChecks instanceof Array && customChecks.length > 0) {
-        invalidFields.concat(customChecks);
-    }
-
     if (invalidFields.length > 0) {
         WAS_SAVED = false;
-        getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields);
+        getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields, customChecks);
         _openModal();
         _stopLoadingScreen();
     }
 }
 
-function _getInvalidFieldsText(invalidFields) {
+function _getInvalidFieldsText(invalidFields, customChecks) {
     const dadosBasicos = ['titulo', 'moeda'];
 
-    let text = 'Os seguintes campos obrigatórios não foram preenchidos:<br><br>'
+    let intro = 'Os seguintes campos obrigatórios não foram preenchidos:<br>'
     let title = '';
+    let normalText = '';
+    let customText = '';
 
-    if (dadosBasicos.includes(invalidFields[0])) {
-        title = 'Dados Básicos'
-        text += `<strong>${title}:</strong><br><ul>`
-    }
-
-    for (const id of invalidFields) {
-        const label = getID(id + '-label');
-        const idSplit = id.split('-');
-
-        let innerTitle = title;
-        let innerText = "";
-
-        if (label && label.innerText) {
-            const lastChar = id[id.length - 1];
-
-            innerTitle = _firstCharToUpperCase(idSplit[0]);
-            innerText = label.innerText;
-
-            if (!isNaN(lastChar)) {
-                let position = idSplit[idSplit.length - 1];
-                const typeTitle = getID(`${innerTitle}-title-${position}`);
-                if (typeTitle && typeTitle.innerText) {
-                    innerTitle = typeTitle.innerText;
+    if (invalidFields.length > 0) {
+        if (dadosBasicos.includes(invalidFields[0])) {
+            title = 'Dados Básicos'
+            normalText += `<strong>${title}:</strong><br><ul>`
+        }
+    
+        for (const id of invalidFields) {
+            const label = getID(id + '-label');
+            const idSplit = id.split('-');
+    
+            let innerTitle = title;
+            let innerText = "";
+    
+            if (label && label.innerText) {
+                const lastChar = id[id.length - 1];
+    
+                innerTitle = _firstCharToUpperCase(idSplit[0]);
+                innerText = label.innerText;
+    
+                if (!isNaN(lastChar)) {
+                    let position = idSplit[idSplit.length - 1];
+                    const typeTitle = getID(`${innerTitle}-title-${position}`);
+                    if (typeTitle && typeTitle.innerText) {
+                        innerTitle = typeTitle.innerText;
+                    }
                 }
+            } else {
+                innerTitle = _firstCharToUpperCase(idSplit[0])
+                innerText = _getInnerText(idSplit);
             }
-        } else {
-            innerTitle = _firstCharToUpperCase(idSplit[0])
-            innerText = _getInnerText(idSplit);
-        }
-
-        if (title == innerTitle || dadosBasicos.includes(id)) {
-            text += `
-            <li>
-                ${innerText || innerTitle}
-            </li>`
-        } else {
-
-            if (innerTitle == 'Select') {
-                innerTitle = innerText.replace(/[0-9]/g, '').trim();
-            }
-
-            title = innerTitle
-            text += `
-            </ul><br>
-            <strong>${title}:</strong><br>
-            <ul>
+    
+            if (title == innerTitle || dadosBasicos.includes(id)) {
+                normalText += `
                 <li>
-                    ${innerText}
+                    ${innerText || innerTitle}
                 </li>`
+            } else {
+    
+                if (innerTitle == 'Select') {
+                    innerTitle = innerText.replace(/[0-9]/g, '').trim();
+                }
+    
+                title = innerTitle
+                normalText += `
+                </ul><br>
+                <strong>${title}:</strong><br>
+                <ul>
+                    <li>
+                        ${innerText}
+                    </li>`
+            }
         }
 
-
+        normalText += '</ul>';
     }
-    return text + '</ul>';
+
+    if (customChecks.length > 0) {
+        customText = '<strong>Outros:</strong><br><ul>'
+        for (const check of customChecks) {
+            customText += `
+            <li>
+                ${check}
+            </li>`
+        }
+        customText += '</ul>';
+    }
+
+    const result = [intro, normalText, customText].join('<br>');
+    return result;
 }
 
 function _reEdit(type, WAS_SAVED = true) {

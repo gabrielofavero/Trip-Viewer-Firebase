@@ -273,11 +273,12 @@ function _loadModules() {
   }
 
   function _loadGastosModule() {
-    if (FIRESTORE_DATA.modulos?.gastos === true) {
+    const ativo = FIRESTORE_DATA.modulos?.gastos === true;
+    const pin = FIRESTORE_DATA.gastosPin || false;
+    localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
+
+    if (ativo) {
       getID('gastos-container').style.display = '';
-      let ativo = true;
-      let pin = FIRESTORE_DATA.gastosPin || false
-      localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
       getID('gastos').addEventListener('click', () => {
         _openLightbox(`expenses.html?g=${_getURLParam('v')}`);
       });

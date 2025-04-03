@@ -266,6 +266,11 @@ details .toggle-code:hover {
   color: #E2E2E2;
 }
 
+.pin-input-invalid {
+  background: #463838;
+  border-color: #403434;
+}
+
 .pin {
   color: #ffffff;
 }

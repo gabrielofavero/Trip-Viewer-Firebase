@@ -37,22 +37,6 @@ const getID = (id) => {
 
 
 // Firebase
-async function _cloudFunction(func, params, displayError=true) {
-  const myFunction = firebase.functions().httpsCallable(func);
-  console.log('Chamando Cloud Function:', func);
-
-  try {
-    const result = await myFunction(params);
-    console.log(`Função ${func} executada com sucesso`);
-    return result.data;
-  } catch (error) {
-    console.error(error);
-    if (displayError) {
-      _displayError(error.message || error, true);
-    }
-  }
-}
-
 function _main() {
   "use strict";
   $('body').css('overflow', 'hidden');

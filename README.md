@@ -4,10 +4,10 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 67    | 63          | 4         |
-| 🏆     | Feature  | F000    | 78    | 64          | 15         |
-| 📈     | Melhoria | M000    | 98    | 72          | 28        |
-| ⚔️   | Épico   | E000    | 26    | 16          | 10         |
+| 🐞     | Bug      | B000    | 67    | 65          | 2         |
+| 🏆     | Feature  | F000    | 78    | 65          | 13         |
+| 📈     | Melhoria | M000    | 98    | 76          | 22        |
+| ⚔️   | Épico   | E000    | 27    | 18          | 9         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -23,7 +23,6 @@
   - *Itens selecionados mostrados primeiro (apenas no load inicial)*
   - *Melhor exibição de várias regiões (carrosel talvez)*
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
-- 🐞 **B067:** Correções em carregamento de gastos e edição
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (edit/trip.html)
   - *Mudança no get e no set (edit/trip.html)*
   - *Criação de estrutura no front (edit/trip.html)*
@@ -66,7 +65,6 @@
   - *Sonarqube*
 - 📈 **M091:** Alinhar select de cidade com box de destino
 - 📈 **M092:** Titulo em dark mode com maior destaque
-- 📈 **M093:** Melhorar detecção automática de datas
 - 🏆 **F069:** Criação de opções de re-ordenação de destinos
 - 🏆 **F070:** Componente de adicionar ao calendário
 - 📈 **M094:** Fixar scrolls (destinos checkboxes em editar, viagens e destinos em home)
@@ -81,13 +79,11 @@
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em view.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
-- 🐞 **B023:** Correção de gráfico de dias por cidade estático no viagens.html
+- 🐞 **B023:** 
 - 🏆 **F044:** Criação de animações em todo o site
-- 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela em index.html
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em view.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
-- 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M047:** Troca de mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhoria de funções relacionadas ao getJs para mais cenários
@@ -96,7 +92,6 @@
 - 📈 **M055:** Melhoria de todas as mudanças de dark mode serem aplicadas via js
 - 📈 **M058:** Modularização de arquivos de CSS para diminuir redundâncias
   -*Também será preciso alterar a função que calcula o dark mode*
-- 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 - 📈 **M089:** Substituir valores de cores por variáveis de ambiente nos CSS
@@ -105,10 +100,15 @@
 ## Done
 
 ### Abril 2025
+- 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
+- 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
+- 🐞 **B067:** Correções em carregamento de gastos e edição
+- ⚔️ **E017:** Soluções plano Free Firebase (otimizar/remover cloud functions e afins)
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
 - 🏆 **F077:** Confirmação de saída da página em caso de mudanças
 
 ### Março 2025
+- 📈 **M093:** Melhorar detecção automática de datas
 - 📈 **M088:** Melhorar recurso de copia e cola com toast
 - 🏆 **F075:** Criar notificação de toast
 - 🏆 **F076:** Swiper com setas em modo desktop
@@ -151,11 +151,11 @@
 - 🐞 **B057:** Carregamento demorado em index.html não mostrando elementos corretamente
 
 ### Setembro 2024
-
 - 📈 **M071:** Incluir código de reserva em Hospedagens
 - 📈 **M073:** Se apenas um destino, renomear view.html de "destinos" para nome do destino
 - 🐞 **B047:** Programação em view.html não mostra horário inicial se o final está ausente
 - 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
+- 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M023:** Arrastamento de Accordions (Programação)
 - 📈 **M075:** Ajustes index.html
   - *Remover "Visualizar Viagem"*

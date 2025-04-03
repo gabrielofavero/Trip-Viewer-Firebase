@@ -346,8 +346,9 @@ function _compareDocuments() {
   switch (_getHTMLpage()) {
     case 'editar-viagem':
       result.multiple = true;
-      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados da viagem' });
+      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
       compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados dos gastos' });
+      compareAndPush({ obj1: {pin: PIN_GASTOS.current}, obj2: {pin: PIN_GASTOS.new}, ignoredPaths: [], name: 'dados dos gastos (pin)' });
       break;
     case 'editar-listagem':
       const ignoredPaths = _getIgnoredPathDestinos();
@@ -379,30 +380,6 @@ function _validateIfDocumentChanged() {
       'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
     _openModal();
     _stopLoadingScreen();
-  }
-}
-
-async function _generateHash(password) {
-  try {
-    const response = await fetch('https://www.toptal.com/developers/bcrypt/api/generate-hash.json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `password=${password}&cost=10`
-    });
-
-    const data = await response.json();
-
-    if (data.ok) {
-      return data.hash;
-    } else {
-      console.error('Não foi possível gerar o hash da senha: ' + data.msg);
-      _displayError(data.msg);
-    }
-  } catch (error) {
-    console.error('Erro ao gerar hash da senha: ' + error);
-    _displayError(error);
   }
 }
 

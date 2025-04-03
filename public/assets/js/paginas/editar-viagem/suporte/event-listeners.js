@@ -17,8 +17,8 @@ function _loadEventListeners() {
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
-    getID('pin-enable').addEventListener('click', () => _switchPinVisibility());
-    getID('pin-disable').addEventListener('click', () => _switchPinVisibility());
+    getID('pin-enable').addEventListener('click', () => _switchPin());
+    getID('pin-disable').addEventListener('click', () => _switchPin());
 
     // Visibilidade do Ida e Volta (Transporte)
     getID('condensar').addEventListener('change', () => _applyIdaVoltaVisibility());
@@ -91,7 +91,7 @@ function _fimListenerAction() {
 
 function _visualizarListenerAction() {
     if (DOCUMENT_ID) {
-        window.open(`view.html?v=${DOCUMENT_ID}`, '_blank');
+        window.open(`../view.html?v=${DOCUMENT_ID}`, '_blank');
     } else {
         window.location.href = '../index.html';
     }

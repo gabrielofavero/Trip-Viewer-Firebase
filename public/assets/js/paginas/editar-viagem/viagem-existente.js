@@ -110,9 +110,13 @@ async function _loadGastosData() {
         getID('pin-enable').checked = true;
         getID('pin-container').style.display = 'block';
         _setPinButtonText(false);
+        const protectedGastos = await _get(`gastos/${DOCUMENT_ID}`);
+        PIN_GASTOS.current = protectedGastos.pin;
+        PIN_GASTOS.new = protectedGastos.pin;
+        FIRESTORE_GASTOS_DATA = await _get(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`);
+    } else {
+        FIRESTORE_GASTOS_DATA = await _get(`gastos/${DOCUMENT_ID}`);
     }
-
-    FIRESTORE_GASTOS_DATA = await _get(`gastos/${DOCUMENT_ID}`);
     
     if (ERROR_FROM_GET_REQUEST) {
         _displayError(ERROR_FROM_GET_REQUEST);
