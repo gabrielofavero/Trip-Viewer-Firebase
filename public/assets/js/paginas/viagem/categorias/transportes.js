@@ -216,6 +216,10 @@ function _loadAbasTransportes() {
   ida.style.marginTop = marginTop;
   durante.style.marginTop = marginTop;
   volta.style.marginTop = marginTop;
+
+  ida.style.marginBottom = 0;
+  durante.style.marginBottom = 0;
+  volta.style.marginBottom = 0;
   
   _setTransporteAbasListeners();
 }
@@ -232,7 +236,6 @@ function _setTransporteAbasListeners() {
 
           const anterior = `transporte-${transporteAnterior}`;
           const atual = `transporte-${TRANSPORTE_ATIVO}`;
-
 
           _fade([anterior], [atual]);
       });

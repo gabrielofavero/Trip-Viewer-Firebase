@@ -1,5 +1,4 @@
 var ADJUST_HEIGHT_CARDS = [];
-var MAX_CARD_HEIGHT = 0;
 
 function _loadAdjustCardsHeightsListener() {
     window.addEventListener('resize', _adjustCardsHeights);
@@ -17,17 +16,17 @@ function _adjustSingleCardsHeights(tipo, second = false) {
     let innerID = (tipo === 'hospedagens' && !second) ? 'nome' : 'box';
 
     const sliders = _getChildIDs(`${tipo}-wrapper`);
+    let maxHeight = 0;
 
     for (const slider of sliders) {
         const j = _getJ(slider);
         const box = getID(`${tipo}-${innerID}-${j}`);
 
         if (box) {
-            const height = box.offsetHeight;
-            MAX_CARD_HEIGHT = Math.max(MAX_CARD_HEIGHT, height);
             box.style.height = 'auto';
-            if (height > MAX_CARD_HEIGHT) {
-                MAX_CARD_HEIGHT = height;
+            const height = box.offsetHeight;
+            if (height > maxHeight) {
+                maxHeight = height;
             }
         }
     }
@@ -36,7 +35,7 @@ function _adjustSingleCardsHeights(tipo, second = false) {
         const j = _getJ(slider);
         const div = getID(`${tipo}-${innerID}-${j}`);
         if (div) {
-            div.style.height = `${MAX_CARD_HEIGHT}px`;
+            div.style.height = `${maxHeight}px`;
         }
     }
 
