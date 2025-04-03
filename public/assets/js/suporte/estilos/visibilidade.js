@@ -150,7 +150,7 @@ function _getCssHref(name, dark = false) {
      const editar = ["editar-viagem", "editar-destino", "editar-listagem"];
 
      if (editar.includes(name)) {
-          return `assets/css/editar/editar${darkMode}.css`
+          return `../assets/css/editar/editar${darkMode}.css`
      } else {
           return `assets/css/${name}/${name}${darkMode}.css`
      }
