@@ -146,6 +146,7 @@ function _buildTransporteSwiper(swiperData) {
   for (const key of keys) {
     const cnt = getID(`transporte-${key}-content`)
     if (swiperData[key].length > 0 || data) {
+      getID(`transporte-${key}`).style.display = 'block'
       cnt.innerHTML = `<div id="transporte-${key}-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                         <div class="swiper-wrapper" id="transporte-${key}-wrapper">
                           ${data || swiperData[key].join("")}
@@ -232,55 +233,9 @@ function _setTransporteAbasListeners() {
           const anterior = `transporte-${transporteAnterior}`;
           const atual = `transporte-${TRANSPORTE_ATIVO}`;
 
-          _fadeOut([anterior]); 
 
-          setTimeout(() => {
-            _teste123(atual);
-          }, 200);
-
+          _fade([anterior], [atual]);
       });
   });
-}
-
-function _teste123(tipo) {
-  const elemento = getID(tipo);
-  elemento.style.display = 'block';
-  elemento.style.opacity = 0;
-
-  // Animação de fade-in
-  let opacidade = 0;
-  const fadeIn = setInterval(() => {
-      if (opacidade >= 1) {
-          clearInterval(fadeIn);
-      } else {
-          opacidade += 0.1;
-          elemento.style.opacity = opacidade;
-      }
-  }, 50); // Tempo entre os frames do fade-in
-
-  let innerID = 'box';
-  const sliders = _getChildIDs(`${tipo}-wrapper`);
-  let maxHeight = 0;
-
-  for (const slider of sliders) {
-      const j = _getJ(slider);
-      const box = getID(`${tipo}-${innerID}-${j}`);
-
-      if (box) {
-          box.style.height = 'auto';
-          const height = box.offsetHeight;
-          if (height > maxHeight) {
-              maxHeight = height;
-          }
-      }
-  }
-
-  for (const slider of sliders) {
-      const j = _getJ(slider);
-      const div = getID(`${tipo}-${innerID}-${j}`);
-      if (div) {
-          div.style.height = `${maxHeight}px`;
-      }
-  }
 }
 
