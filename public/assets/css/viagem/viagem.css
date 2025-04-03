@@ -2774,3 +2774,101 @@ iframe {
     min-width: 80%;
   }
 }
+
+/*--------------------------------------------------------------
+# Tabs
+--------------------------------------------------------------*/
+
+.tabs-container {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-items {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.tabs {
+  display: flex;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 1px 0 rgba(110, 123, 131, 0.15), 0 6px 12px 0 rgba(110, 123, 131, 0.15);
+  padding: 0.75rem;
+  border-radius: 99px;
+  transform: scale(0.7);
+}
+
+.tabs * {
+  z-index: 2;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.tab,
+.tab-mini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+  width: 200px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+
+.tab-mini {
+  width: 100px;
+}
+
+.tabs-container input[type="radio"]:checked+label {
+  font-weight: bold;
+}
+
+.tabs-container input[type="radio"]:checked+label>.notification {
+  background-color: var(--theme-color);
+  color: #fff;
+}
+
+.tabs-container input[id="radio-ida"]:checked~.glider {
+  transform: translateX(0);
+}
+
+.tabs-container input[id="radio-durante"]:checked~.glider {
+  transform: translateX(100%);
+}
+
+.tabs-container input[id="radio-volta"]:checked~.glider {
+  transform: translateX(200%);
+}
+
+.glider,
+.glider-mini {
+  position: absolute;
+  display: flex;
+  height: 54px;
+  width: 200px;
+  background-color: var(--theme-color-secondary);
+  z-index: 1;
+  border-radius: 99px;
+  transition: 0.25s ease-out;
+}
+
+.glider-mini {
+  width: 100px;
+}
+
+@media (max-width: 700px) {
+  .tabs {
+    transform: scale(0.6);
+  }
+}

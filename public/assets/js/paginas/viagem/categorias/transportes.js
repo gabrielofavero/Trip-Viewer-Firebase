@@ -1,4 +1,5 @@
 var TRANSPORTE_ICONES = [];
+var TRANSPORTE_ATIVO = 'ida'
 
 function _loadTransporte() {
   getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo();
@@ -136,17 +137,15 @@ function _buildTransporteSwiper(swiperData) {
   if (FIRESTORE_DATA.transportes.visualizacaoSimplificada == true) {
     keys = ['ida'];
     data = swiperData['ida'].join("") + swiperData['durante'].join("") + swiperData['volta'].join("");
-    getID('transporte-ida-titulo').style.display = "none";
   }
   else {
     keys = Object.keys(swiperData)
+    _loadAbasTransportes();
   }
 
   for (const key of keys) {
-    const div = getID(`transporte-${key}`);
     const cnt = getID(`transporte-${key}-content`)
     if (swiperData[key].length > 0 || data) {
-      div.style.display = "block";
       cnt.innerHTML = `<div id="transporte-${key}-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                         <div class="swiper-wrapper" id="transporte-${key}-wrapper">
                           ${data || swiperData[key].join("")}
@@ -158,8 +157,8 @@ function _buildTransporteSwiper(swiperData) {
                         </div>
                       </div>`;
 
-                      ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
-                      _initSwiper(`transporte-${key}`)
+      ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
+      _initSwiper(`transporte-${key}`);
     }
   }
 }
@@ -200,3 +199,88 @@ function _copyToClipboard(text) {
   navigator.clipboard.writeText(text);
   _openToast("Texto copiado para a área de transferência");
 }
+
+function _loadAbasTransportes() {
+  const marginTop = '2em'
+
+  const ida = getID('transporte-ida');
+  const durante = getID('transporte-durante');
+  const volta = getID('transporte-volta');
+
+  getID('tabs-container-transportes').style.display = '';
+  ida.style.display = 'block';
+  durante.style.display = 'none';
+  volta.style.display = 'none';
+
+  ida.style.marginTop = marginTop;
+  durante.style.marginTop = marginTop;
+  volta.style.marginTop = marginTop;
+  
+  _setTransporteAbasListeners();
+}
+
+function _setTransporteAbasListeners() {
+  const radios = ['radio-ida', 'radio-durante', 'radio-volta'];
+  radios.forEach(radio => {
+      getID(radio).addEventListener('click', function () {
+          const transporte = radio.replace('radio-', '');
+          if (TRANSPORTE_ATIVO === transporte) return;
+
+          const transporteAnterior = TRANSPORTE_ATIVO;
+          TRANSPORTE_ATIVO = transporte;
+
+          const anterior = `transporte-${transporteAnterior}`;
+          const atual = `transporte-${TRANSPORTE_ATIVO}`;
+
+          _fadeOut([anterior]); 
+
+          setTimeout(() => {
+            _teste123(atual);
+          }, 200);
+
+      });
+  });
+}
+
+function _teste123(tipo) {
+  const elemento = getID(tipo);
+  elemento.style.display = 'block';
+  elemento.style.opacity = 0;
+
+  // Animação de fade-in
+  let opacidade = 0;
+  const fadeIn = setInterval(() => {
+      if (opacidade >= 1) {
+          clearInterval(fadeIn);
+      } else {
+          opacidade += 0.1;
+          elemento.style.opacity = opacidade;
+      }
+  }, 50); // Tempo entre os frames do fade-in
+
+  let innerID = 'box';
+  const sliders = _getChildIDs(`${tipo}-wrapper`);
+  let maxHeight = 0;
+
+  for (const slider of sliders) {
+      const j = _getJ(slider);
+      const box = getID(`${tipo}-${innerID}-${j}`);
+
+      if (box) {
+          box.style.height = 'auto';
+          const height = box.offsetHeight;
+          if (height > maxHeight) {
+              maxHeight = height;
+          }
+      }
+  }
+
+  for (const slider of sliders) {
+      const j = _getJ(slider);
+      const div = getID(`${tipo}-${innerID}-${j}`);
+      if (div) {
+          div.style.height = `${maxHeight}px`;
+      }
+  }
+}
+

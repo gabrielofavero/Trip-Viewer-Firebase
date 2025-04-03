@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 67    | 65          | 2         |
-| 🏆     | Feature  | F000    | 78    | 65          | 13         |
+| 🏆     | Feature  | F000    | 79    | 65          | 12         |
 | 📈     | Melhoria | M000    | 98    | 76          | 22        |
 | ⚔️   | Épico   | E000    | 27    | 18          | 9         |
 
@@ -15,6 +15,8 @@
 
 ## Backlog
 ### Prioridade Alta
+- 🐞 **B023:** Ajuste de dark-mode
+- 🏆 **F079:** Sistema de abas para transportes
 - 📈 **M096:** Ajustes mobile e webview
 - 📈 **M097:** Automações programação (edit/trip.html)
 - 🏆 **F071:** Gastos Multi Pessoas
@@ -79,7 +81,6 @@
 - 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em view.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
-- 🐞 **B023:** 
 - 🏆 **F044:** Criação de animações em todo o site
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela em index.html
 - 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em view.html

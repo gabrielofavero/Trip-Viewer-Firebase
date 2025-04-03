@@ -120,7 +120,7 @@ function _reEdit(type, WAS_SAVED = true) {
     } else if (!WAS_SAVED) {
         _closeModal();
     } else {
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     }
 }
 

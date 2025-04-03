@@ -113,7 +113,7 @@ async function _getUser() {
 async function _canEdit(dono, editores) {
     const uid = await _getUID();
     if (DOCUMENT_ID && (!uid || (uid != dono && !editores.includes(uid)))) {
-        _displayErroTenteNovamente('Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.');
+        _displayError('Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.');
         return false;
     } else return true;
 }

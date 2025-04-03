@@ -234,18 +234,27 @@
           <div id="transporte-subtitulo"></div>
         </div>
 
-        <div class='transporte-box' id="transporte-ida" style="display: none;">
-          <div id="transporte-ida-titulo" class="transporte-categoria">Ida</div>
+        <div class="tabs-container" id="tabs-container-transportes" style="display: none">
+          <div class="tabs" id="tab-transporte">
+            <input type="radio" id="radio-ida" name="tabs-transporte" checked>
+            <label class="tab" for="radio-ida">Ida</label>
+            <input type="radio" id="radio-durante" name="tabs-transporte">
+            <label class="tab" for="radio-durante">Durante</label>
+            <input type="radio" id="radio-volta" name="tabs-transporte">
+            <label class="tab" for="radio-volta">Volta</label>
+            <span class="glider"></span>
+          </div>
+        </div>
+
+        <div class='transporte-box' id="transporte-ida">
           <div id="transporte-ida-content"></div>
         </div>
 
         <div class='transporte-box' id="transporte-durante" style="display: none;">
-          <div id="transporte-durante-titulo" class="transporte-categoria">Durante a Viagem</div>
           <div id="transporte-durante-content"></div>
         </div>
 
         <div class='transporte-box' id="transporte-volta" style="display: none;">
-          <div id="transporte-volta-titulo" class="transporte-categoria">Volta</div>
           <div id="transporte-volta-content"></div>
         </div>
 
@@ -321,8 +330,6 @@
                   <span id="programacao-data"></span>
                 </div>
               </div>
-
-
 
               <div id="sem-programacao">Nada programado por aqui! ☹️</div>
 

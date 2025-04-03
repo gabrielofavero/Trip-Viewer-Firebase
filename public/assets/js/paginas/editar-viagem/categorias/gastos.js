@@ -8,6 +8,8 @@ var INNER_GASTOS = {
     gastosDurante: [],
 };
 
+var LAST_INNER_GASTO_TIPO = '';
+
 // Pin
 function _switchPin() {
     if (getID('pin-disable').checked) {
@@ -110,17 +112,13 @@ function _openInnerGasto(categoria, tipo = '', index = -1) {
         getID('gasto-nome').value = gasto.nome;
         getID('gasto-moeda').value = gasto.moeda;
         getID('gasto-valor').value = gasto.valor;
-
-        const values = Array.from(getID('gasto-tipo-select').options).map(option => option.value);
-        if (values.includes(gasto.tipo)) {
-            getID('gasto-tipo-select').value = gasto.tipo;
-        } else {
-            getID('gasto-tipo-select').value = 'custom';
-            getID('gasto-tipo-input').value = gasto.tipo;
-            getID('gasto-tipo-input').style.display = 'block';
-        }
+        _applyGastoInnerTipo(gasto.tipo);
     } else {
         getID('gasto-deletar').style.display = 'none';
+        getID('gasto-moeda').value = getID('moeda').value
+        if (LAST_INNER_GASTO_TIPO) {
+            _applyGastoInnerTipo(LAST_INNER_GASTO_TIPO);
+        }
     }
 
     getID('gasto-tipo-select').addEventListener('change', (e) => {
@@ -137,6 +135,17 @@ function _openInnerGasto(categoria, tipo = '', index = -1) {
             }
         }
     });
+}
+
+function _applyGastoInnerTipo(tipo) {
+    const values = Array.from(getID('gasto-tipo-select').options).map(option => option.value);
+    if (values.includes(tipo)) {
+        getID('gasto-tipo-select').value = tipo;
+    } else {
+        getID('gasto-tipo-select').value = 'custom';
+        getID('gasto-tipo-input').value = tipo;
+        getID('gasto-tipo-input').style.display = 'block';
+    }
 }
 
 function _getInnerGastoContent(categoria, tipo, index) {
@@ -212,6 +221,8 @@ function _saveInnerGasto(categoria, tipo, index = -1) {
     }
 
     if (!newGasto.nome || !newGasto.tipo || !newGasto.moeda || !newGasto.valor) return;
+
+    LAST_INNER_GASTO_TIPO = newGasto.tipo;
 
     if (tipo && index >= 0) {
         if (tipo == newGasto.tipo) {

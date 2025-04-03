@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
+admin.initializeApp();
+
 export const migrateGastos = functions.https.onRequest(async (req, res) => {
     try {
         const gastosCollection = admin.firestore().collection('gastos');

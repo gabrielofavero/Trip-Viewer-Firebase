@@ -265,10 +265,11 @@ function _getButton(botao) {
 }
 
 function _getHomeButton() {
+  const homeButton = ['editar-viagem', 'editar-destino', 'editar-listagem'].includes(_getHTMLpage()) ? '../index.html' : 'index.html'
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', 'window.location.href = "index.html";')
+  button.setAttribute('onclick', `window.location.href = "${homeButton}";`)
 
   const icon = document.createElement('i');
   icon.id = 'transporte-nav';
