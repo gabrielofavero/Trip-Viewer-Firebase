@@ -7,7 +7,7 @@
 | 🐞     | Bug      | B000    | 67    | 65          | 2         |
 | 🏆     | Feature  | F000    | 79    | 65          | 12         |
 | 📈     | Melhoria | M000    | 98    | 76          | 22        |
-| ⚔️   | Épico   | E000    | 27    | 18          | 9         |
+| ⚔️   | Épico   | E000    | 28    | 16          | 9         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -17,6 +17,8 @@
 ### Prioridade Alta
 - 🐞 **B023:** Ajuste de dark-mode
 - 🏆 **F079:** Sistema de abas para transportes
+- ⚔️ **E028:** Places API Text Search
+- ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
 - 📈 **M096:** Ajustes mobile e webview
 - 📈 **M097:** Automações programação (edit/trip.html)
 - 🏆 **F071:** Gastos Multi Pessoas
@@ -104,7 +106,6 @@
 - 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
 - 🐞 **B067:** Correções em carregamento de gastos e edição
-- ⚔️ **E017:** Soluções plano Free Firebase (otimizar/remover cloud functions e afins)
 - 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
 - 🏆 **F077:** Confirmação de saída da página em caso de mudanças
 
