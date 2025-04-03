@@ -1,7 +1,9 @@
 var TRANSPORTE_ICONES = [];
 var TRANSPORTE_ATIVO = 'ida'
+var TRANSPORTES_ATIVOS = [];
 
 function _loadTransporte() {
+  TRANSPORTES_ATIVOS = [...new Set(FIRESTORE_DATA.transportes.dados.map(item => item.idaVolta))];
   getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo();
   const swiperData = {
     ida: [],
@@ -16,6 +18,14 @@ function _loadTransporte() {
   }
 
   _buildTransporteSwiper(swiperData);
+
+  if (FIRESTORE_DATA.transportes.visualizacaoSimplificada === false) {
+    const container = getID('transporte-box-container');
+    container.style.height = `245px`
+    getID('transporte-ida').style.visibility = ''
+  }
+
+  _observeFlightBoxes();
 }
 
 function _getTransporteHTML(j, idaVolta) {
@@ -26,9 +36,9 @@ function _getTransporteHTML(j, idaVolta) {
             </div>`
 }
 
-function _getFlightBoxHTML(j, identifier, innerProgramacao=false) {
+function _getFlightBoxHTML(j, identifier, innerProgramacao = false) {
   const empresa = _getEmpresaObj(j);
-  return `<div class="flight-box${innerProgramacao? " inner-programacao-item" : ''}" id="transporte-${identifier}-box-${j}">
+  return `<div class="flight-box${innerProgramacao ? " inner-programacao-item" : ''}" id="transporte-${identifier}-box-${j}">
             <div class="flight-diagram">
               <div class="flight-title">
                 ${_getImagemHTML(j, empresa)}
@@ -52,7 +62,7 @@ function _getFlightBoxHTML(j, identifier, innerProgramacao=false) {
 }
 
 function _getEmpresaObj(j) {
-  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
+  const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
   const tipo = transporte.transporte;
   const titulo = transporte.empresa;
 
@@ -69,7 +79,7 @@ function _getEmpresaObj(j) {
 }
 
 function _getImagemHTML(j, empresa) {
-  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
+  const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
   if (!empresa.isCustom) {
     return `<a href="${empresa.site}">
               <img class="flight-img" id="flight-img-claro-${j}" src="${empresa.imagens.claro}"
@@ -85,7 +95,7 @@ function _getImagemHTML(j, empresa) {
 }
 
 function _getReservaHTML(j, empresa) {
-  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
+  const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
   let reserva = transporte.reserva;
   let link = empresa.site || "";
 
@@ -101,7 +111,7 @@ function _getReservaHTML(j, empresa) {
 }
 
 function _getPartidaChegadaHTML(j, tipo) {
-  const transporte = FIRESTORE_DATA.transportes.dados[j-1];
+  const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
   const data = _convertFromFirestoreDate(transporte.datas[tipo]);
   const local = transporte.pontos[tipo];
 
@@ -113,53 +123,56 @@ function _getPartidaChegadaHTML(j, tipo) {
 }
 
 function _getTransporteIcon(j) {
-  const tipo = FIRESTORE_DATA.transportes.dados[j-1].transporte;
+  const tipo = FIRESTORE_DATA.transportes.dados[j - 1].transporte;
   const icone = CONFIG.transportes.icones[tipo] || CONFIG.transportes.icones.outro;
   TRANSPORTE_ICONES.push(icone);
   return icone;
 }
 
 function _getDuracaoHTML(j) {
-  const duracao = FIRESTORE_DATA.transportes.dados[j-1].duracao;
+  const duracao = FIRESTORE_DATA.transportes.dados[j - 1].duracao;
   if (!duracao) return ""
   else return `<div class="flight-duration">${_jsTimeToVisualTime(duracao)}</div>`;
 }
 
 function _adjustFlightLine(j) {
-  const duracao = FIRESTORE_DATA.transportes.dados[j-1].duracao;
+  const duracao = FIRESTORE_DATA.transportes.dados[j - 1].duracao;
   if (!duracao) return "style='transform: translateY(-33.75%);'";
   else return "";
 }
 
 function _buildTransporteSwiper(swiperData) {
-  let keys, data;
+  const visualizacaoSimplificada = FIRESTORE_DATA.transportes.visualizacaoSimplificada;
+  const keys = visualizacaoSimplificada ? ['ida'] : Object.keys(swiperData);
 
-  if (FIRESTORE_DATA.transportes.visualizacaoSimplificada == true) {
-    keys = ['ida'];
-    data = swiperData['ida'].join("") + swiperData['durante'].join("") + swiperData['volta'].join("");
-  }
-  else {
-    keys = Object.keys(swiperData)
+  if (!visualizacaoSimplificada) {
     _loadAbasTransportes();
   }
 
   for (const key of keys) {
     const cnt = getID(`transporte-${key}-content`)
-    if (swiperData[key].length > 0 || data) {
+    if (swiperData[key].length > 0 || visualizacaoSimplificada) {
+      const data = visualizacaoSimplificada ? [...(swiperData['ida'] || []), ...(swiperData['durante'] || []), ...(swiperData['volta'] || [])] : swiperData[key];
+      const swiperButtonStyle = data.length > 1 ? '' : `style="display: none"`
+
       getID(`transporte-${key}`).style.display = 'block'
       cnt.innerHTML = `<div id="transporte-${key}-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                         <div class="swiper-wrapper" id="transporte-${key}-wrapper">
-                          ${data || swiperData[key].join("")}
+                          ${data.join("")}
                         </div>
                         <div class="swiper-controls">
-                          <div class="swiper-button-prev transporte-${key}-prev"></div>
+                          <div class="swiper-button-prev transporte-${key}-prev" ${swiperButtonStyle}></div>
                           <div class="swiper-pagination transporte-${key}-pagination"></div>
-                          <div class="swiper-button-next transporte-${key}-next"></div>
+                          <div class="swiper-button-next transporte-${key}-next" ${swiperButtonStyle}></div>
                         </div>
                       </div>`;
 
       ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
       _initSwiper(`transporte-${key}`);
+      if (FIRESTORE_DATA.transportes.visualizacaoSimplificada == false) {
+        getID(`transporte-${key}`).style.visibility = 'hidden';
+      }
+
     }
   }
 }
@@ -202,43 +215,81 @@ function _copyToClipboard(text) {
 }
 
 function _loadAbasTransportes() {
-  const marginTop = '2em'
-
-  const ida = getID('transporte-ida');
-  const durante = getID('transporte-durante');
-  const volta = getID('transporte-volta');
+  _loadAbasTransportesHTML();
 
   getID('tabs-container-transportes').style.display = '';
-  ida.style.display = 'block';
-  durante.style.display = 'none';
-  volta.style.display = 'none';
 
-  ida.style.marginTop = marginTop;
-  durante.style.marginTop = marginTop;
-  volta.style.marginTop = marginTop;
+  for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
+    const div = getID(`transporte-${TRANSPORTES_ATIVOS[i]}`);
+    div.style.display = i === 0 ? 'block' : 'none';
+    div.style.marginTop = '2em';
+  }
 
-  ida.style.marginBottom = 0;
-  durante.style.marginBottom = 0;
-  volta.style.marginBottom = 0;
-  
   _setTransporteAbasListeners();
 }
 
+function _loadAbasTransportesHTML() {
+  const tab = getID('tab-transporte');
+  const itemMap = {
+    ida: "Ida",
+    durante: "Durante",
+    volta: "Volta"
+  }
+
+  for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
+    const item = TRANSPORTES_ATIVOS[i];
+    const checked = i === 0 ? 'checked' : '';
+    tab.innerHTML += `<input type="radio" id="radio-${item}" name="tabs-transporte" ${checked}>`
+    tab.innerHTML += `<label class="tab" for="radio-${item}">${itemMap[item]}</label>`
+  }
+
+  tab.innerHTML += '<span class="glider"></span>';
+
+  const childs = _getChildIDs('tab-transporte');
+  for (let i = 0; i < childs.length; i++) {
+    _setCSSRule(`.tabs-container input[id="${childs[i]}"]:checked~.glider`, 'transform', `translateX(${i * 100}%)`);
+  }
+}
+
 function _setTransporteAbasListeners() {
-  const radios = ['radio-ida', 'radio-durante', 'radio-volta'];
-  radios.forEach(radio => {
-      getID(radio).addEventListener('click', function () {
-          const transporte = radio.replace('radio-', '');
-          if (TRANSPORTE_ATIVO === transporte) return;
+  TRANSPORTES_ATIVOS.forEach(transporte => {
+    const radio = `radio-${transporte}`;
+    getID(radio).addEventListener('click', function () {
+      const transporte = radio.replace('radio-', '');
+      if (TRANSPORTE_ATIVO === transporte) return;
 
-          const transporteAnterior = TRANSPORTE_ATIVO;
-          TRANSPORTE_ATIVO = transporte;
+      const transporteAnterior = TRANSPORTE_ATIVO;
+      TRANSPORTE_ATIVO = transporte;
 
-          const anterior = `transporte-${transporteAnterior}`;
-          const atual = `transporte-${TRANSPORTE_ATIVO}`;
+      const anterior = `transporte-${transporteAnterior}`;
+      const atual = `transporte-${TRANSPORTE_ATIVO}`;
 
-          _fade([anterior], [atual]);
-      });
+      getID(atual).style.visibility = '';
+      getID(anterior).style.visibility = '';
+
+      _fade([anterior], [atual]);
+    });
   });
 }
 
+function _observeFlightBoxes() {
+  const flightBoxes = document.querySelectorAll('.flight-box');
+  if (flightBoxes.length === 0) return;
+
+  let timeoutId;
+  const observer = new MutationObserver(() => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => {
+      flightBoxes.forEach(box => {
+        if (box.offsetHeight < 5) {
+          _adjustCardsHeights('transporte');
+        }
+      });
+    }, 200);
+  });
+
+  flightBoxes.forEach(box => {
+    observer.observe(box, { attributes: true, childList: true, subtree: true });
+  });
+};

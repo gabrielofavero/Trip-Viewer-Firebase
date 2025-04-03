@@ -1,12 +1,15 @@
 var ADJUST_HEIGHT_CARDS = [];
 
-function _loadAdjustCardsHeightsListener() {
-    window.addEventListener('resize', _adjustCardsHeights);
+function _loadHotelBoxListener() {
+    window.addEventListener('resize', function () {
+        _adjustCardsHeights('hospedagens')
+    });
 }
 
-function _adjustCardsHeights() {
-    if (ADJUST_HEIGHT_CARDS.length > 0) {
-        for (const card of ADJUST_HEIGHT_CARDS) {
+function _adjustCardsHeights(type) {
+    const cards = type ? ADJUST_HEIGHT_CARDS.filter(card => card.includes(type)) : ADJUST_HEIGHT_CARDS;
+    if (cards.length > 0) {
+        for (const card of cards) {
             _adjustSingleCardsHeights(card);
         }
     }

@@ -91,7 +91,7 @@ function _start() {
   // Visibilidade
   _loadVisibility();
   _loadToggle();
-  _loadAdjustCardsHeightsListener();
+  _loadHotelBoxListener();
 
   // Cabeçalho
   _loadHeader();

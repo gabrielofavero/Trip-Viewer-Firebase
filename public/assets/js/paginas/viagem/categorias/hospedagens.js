@@ -104,14 +104,15 @@ function _getHospedagensData(dataFirestore) {
 }
 
 function _buildHospedagensSwiper(swiperData) {
+  const swiperButtonStyle = swiperData.length > 1 ? '' : `style="display: none"`
   getID(`hospedagens-box`).innerHTML = `<div id="hospedagens-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                                           <div class="swiper-wrapper" id="hospedagens-wrapper">
                                             ${swiperData.join("")}
                                           </div>
                                           <div class="swiper-controls">
-                                            <div class="swiper-button-prev hospedagens-prev"></div>
+                                            <div class="swiper-button-prev hospedagens-prev" ${swiperButtonStyle}></div>
                                             <div class="swiper-pagination hospedagens-pagination"></div>
-                                            <div class="swiper-button-next hospedagens-next"></div>
+                                            <div class="swiper-button-next hospedagens-next" ${swiperButtonStyle}></div>
                                           </div>
                                         </div>`;
   ADJUST_HEIGHT_CARDS.push('hospedagens')
