@@ -1,8 +1,12 @@
 var ADJUST_HEIGHT_CARDS = [];
 
-function _loadHotelBoxListener() {
+function _adjustCardsHeightsListener() {
     window.addEventListener('resize', function () {
-        _adjustCardsHeights('hospedagens')
+        _adjustCardsHeights();
+        
+        if (FIRESTORE_DATA.transportes.visualizacaoSimplificada === false) {
+            _adjustTransporteBoxContainerHeight();
+        }
     });
 }
 

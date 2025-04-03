@@ -20,8 +20,7 @@ function _loadTransporte() {
   _buildTransporteSwiper(swiperData);
 
   if (FIRESTORE_DATA.transportes.visualizacaoSimplificada === false) {
-    const container = getID('transporte-box-container');
-    container.style.height = `245px`
+    _adjustTransporteBoxContainerHeight();
     getID('transporte-ida').style.visibility = ''
   }
 
@@ -293,3 +292,11 @@ function _observeFlightBoxes() {
     observer.observe(box, { attributes: true, childList: true, subtree: true });
   });
 };
+
+function _adjustTransporteBoxContainerHeight() {
+  const elements = document.querySelectorAll('.flight-box');
+  const heights = Array.from(elements, el => el.offsetHeight)
+  heights.push(250);
+  const container = getID('transporte-box-container');
+  container.style.height = `${Math.max(...heights)}px`
+}
