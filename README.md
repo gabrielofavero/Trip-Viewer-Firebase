@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 70    | 70          | 0         |
-| 🏆     | Feature  | F000    | 79    | 66          | 11         |
+| 🏆     | Feature  | F000    | 80    | 66          | 14         |
 | 📈     | Melhoria | M000    | 98    | 76          | 22        |
 | ⚔️   | Épico   | E000    | 28    | 17          | 11         |
 
@@ -15,6 +15,8 @@
 
 ## Backlog
 ### Prioridade Alta
+- 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
+- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
 - 📈 **M096:** Ajustes mobile e webview
@@ -24,7 +26,6 @@
 - 📈 **M087:** Melhor exibição de destinos (trip.html)
   - *Itens selecionados mostrados primeiro (apenas no load inicial)*
   - *Melhor exibição de várias regiões (carrosel talvez)*
-- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (edit/trip.html)
   - *Mudança no get e no set (edit/trip.html)*
   - *Criação de estrutura no front (edit/trip.html)*
