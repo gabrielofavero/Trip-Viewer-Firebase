@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 70    | 70          | 0         |
+| 🐞     | Bug      | B000    | 71    | 71          | 0         |
 | 🏆     | Feature  | F000    | 80    | 66          | 14         |
 | 📈     | Melhoria | M000    | 98    | 76          | 22        |
 | ⚔️   | Épico   | E000    | 28    | 17          | 11         |
@@ -101,7 +101,8 @@
 ## Done
 
 ### Abril 2025
-- 🐞 **B070:** Bullets de calendário de programação não exibe corretamente.
+- 🐞 **B071:** Bullets de calendário de programação não exibe corretamente
+- 🐞 **B070:** Bullets de calendário de programação não exibe corretamente
 - 🐞 **B069:** Destino não exibe ícone de site se não possuir link do maps
 - 🐞 **B068:** Salvamento de viagens não detecta mudanças quando apenas programação é editada
 - 🐞 **B024:** Botão de menu aparecendo entre largura 1199px e 993px em view.html

@@ -112,6 +112,11 @@ function _replaceTimeIfEnabled() {
     if (getID('time-replacement-checkbox').checked) {
         getID('inner-programacao-inicio').value = TIME_REPLACEMENT.replacement.inicio;
         getID('inner-programacao-fim').value = TIME_REPLACEMENT.replacement.fim;
+
+        if (TIME_REPLACEMENT.replacement.inicio) {
+            const inicioHora = parseInt(TIME_REPLACEMENT.replacement.inicio.split(':')[0]);
+            getID('inner-programacao-select-turno').value = _getTurno(inicioHora);
+        }
     }
     TIME_REPLACEMENT.current.inicio = '';
     TIME_REPLACEMENT.current.fim = '';
