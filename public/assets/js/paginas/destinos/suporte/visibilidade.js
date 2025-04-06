@@ -36,12 +36,12 @@ function _applyAccordionArrowCustomColor() {
 
 
 function _getDestinosTituloVisibility(item) {
-    if (item.nota || item.mapa || item.site || item.instagram) return "flex";
+    if (item.nota || item.mapa || item.website || item.instagram) return "flex";
     else return "none";
 }
 
 function _getLinksContainerVisibility(item, isLineup) {
-    if (!isLineup && (item.mapa || item.site || item.instagram)) return "flex";
+    if (!isLineup && (item.mapa || item.website || item.instagram)) return "flex";
     else return "none";
 }
 
