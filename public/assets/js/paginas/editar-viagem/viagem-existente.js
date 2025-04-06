@@ -278,6 +278,7 @@ function _loadProgramacaoData() {
     }
     _loadDestinosOrdenados();
     _updateDestinosAtivosCheckboxHTML('programacao');
+    FIRESTORE_PROGRAMACAO_DATA = _cloneObject(FIRESTORE_DATA.programacoes);
 }
 
 function _loadLineupData() {

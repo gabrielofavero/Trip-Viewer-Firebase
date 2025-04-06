@@ -346,17 +346,18 @@ function _compareDocuments() {
   switch (_getHTMLpage()) {
     case 'editar-viagem':
       result.multiple = true;
-      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
-      compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados dos gastos' });
-      compareAndPush({ obj1: {pin: PIN_GASTOS.current}, obj2: {pin: PIN_GASTOS.new}, ignoredPaths: [], name: 'dados dos gastos (pin)' });
+      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
+      _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacao, ignoredPaths: [], name: 'programação' });
+      _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
+      _compareAndPush({ obj1: {pin: PIN_GASTOS.current}, obj2: {pin: PIN_GASTOS.new}, ignoredPaths: [], name: 'senha de acesso aos gastos' });
       break;
     case 'editar-listagem':
       const ignoredPaths = _getIgnoredPathDestinos();
       ignoredPaths.push('versao.ultimaAtualizacao');
-      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ignoredPaths, name: 'dados da listagem' });
+      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ignoredPaths, name: 'dados da listagem' });
       break;
     case 'editar-destino':
-      compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
+      _compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
       break;
     default:
       console.warn('Página não suportada para comparação de documentos. Use a função nativa "_compareObjects()"');
@@ -365,7 +366,7 @@ function _compareDocuments() {
 
   return result;
 
-  function compareAndPush({ obj1, obj2, ignoredPaths, name }) {
+  function _compareAndPush({ obj1, obj2, ignoredPaths, name }) {
     result.data.push(_compareObjects({ obj1, obj2, ignoredPaths, name }));
   };
 }

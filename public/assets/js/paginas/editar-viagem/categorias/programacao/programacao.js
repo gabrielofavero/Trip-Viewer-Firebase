@@ -1,3 +1,5 @@
+var FIRESTORE_PROGRAMACAO_DATA = {};
+
 function _applyLoadedProgramacaoData(j, dados) {
     const jsDate = _convertFromFirestoreDate(dados.data);
 
