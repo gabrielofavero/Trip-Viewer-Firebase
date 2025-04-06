@@ -73,7 +73,9 @@ function _showCalendar(month, year) {
                     cell.classList.add("calendarTrip");
                     cell.setAttribute("onclick", "_loadCalendarItem('" + day + "/" + (month + 1) + "/" + year + "')");
 
-                    const key = `${year}${month + 1}${day}`;
+                    const formattedMonth = String(month + 1).padStart(2, '0');
+                    const formattedDay = String(day).padStart(2, '0');
+                    const key = `${year}${formattedMonth}${formattedDay}`;
                     const destinos = PROGRAMACAO_DESTINOS[key];
                     if (destinos && destinos.length > 0) {
                         for (const destino of destinos){

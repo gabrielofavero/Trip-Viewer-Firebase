@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 70    | 69          | 1         |
+| 🐞     | Bug      | B000    | 70    | 70          | 0         |
 | 🏆     | Feature  | F000    | 79    | 66          | 11         |
 | 📈     | Melhoria | M000    | 98    | 76          | 22        |
 | ⚔️   | Épico   | E000    | 28    | 17          | 11         |
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🐞 **B070:** Bullets de calendário de programação não exibe corretamente.
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
 - 📈 **M096:** Ajustes mobile e webview
@@ -101,6 +100,7 @@
 ## Done
 
 ### Abril 2025
+- 🐞 **B070:** Bullets de calendário de programação não exibe corretamente.
 - 🐞 **B069:** Destino não exibe ícone de site se não possuir link do maps
 - 🐞 **B068:** Salvamento de viagens não detecta mudanças quando apenas programação é editada
 - 🐞 **B024:** Botão de menu aparecendo entre largura 1199px e 993px em view.html
