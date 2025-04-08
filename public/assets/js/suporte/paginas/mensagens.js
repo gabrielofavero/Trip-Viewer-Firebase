@@ -360,7 +360,7 @@ function _getDeleteButtonBasic(onclick) {
 }
 
 function _openToast(text) {
-  getID('toast-text').innerText = text;
+  getID('toast-text').innerHTML = text;
   _fadeIn(['toast']);
   setTimeout(() => {
     _closeToast();
