@@ -1,7 +1,7 @@
 import * as admin from "./admin";
-import * as migration from "./migration";
+//import * as migration from "./migration";
 
 export const scheduledFirestoreExport = admin.scheduledFirestoreExport;
-export const migrateGastos = migration.migrateGastos;
+//export const migrateHospedagemImagem = migration.migrateHospedagemImagem;
 //export const firestoreImport = admin.firestoreImport;
 //export const migrateUserUID = admin.migrateUserUID;
