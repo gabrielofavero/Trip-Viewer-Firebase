@@ -194,8 +194,7 @@ function _validateLink(id) {
     _closeAllSelects();
     div.value = '';
 
-    _displayMessage('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>',
-        `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`);
+    _openToast('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>: Certifique-se de que ele comece com "http://" ou "https://".');
 }
 
 function _validateMapLink(id) {
