@@ -105,32 +105,12 @@ async function _buildCompartilhamentoObject() {
 }
 
 function _buildImagemObject() {
-    let result = {
+    return {
         ativo: getID('habilitado-imagens').checked,
         background: getID('link-background').value || "",
         claro: getID('link-logo-light').value || "",
         escuro: getID('link-logo-dark').value || "",
     }
-
-    if (getID('upload-background').value) {
-        TO_UPLOAD.background = true;
-    } else if (result.background && FIREBASE_IMAGES.background && !result.background.includes(FIREBASE_IMAGE_ORIGIN)) {
-        CLEAR_IMAGES.background = true;
-    }
-
-    if (getID('upload-logo-light').value) {
-        TO_UPLOAD.logoLight = true;
-    } else if (result.claro && FIREBASE_IMAGES.claro && !result.claro.includes(FIREBASE_IMAGE_ORIGIN)) {
-        CLEAR_IMAGES.claro = true;
-    }
-
-    if (getID('upload-logo-dark').value) {
-        TO_UPLOAD.logoDark = true;
-    } else if (result.escuro && FIREBASE_IMAGES.escuro && !result.escuro.includes(FIREBASE_IMAGE_ORIGIN)) {
-        CLEAR_IMAGES.escuro = true;
-    }
-
-    return result;
 }
 
 function _buildLinksObject() {
@@ -187,7 +167,7 @@ function _buildHospedagemObject() {
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
             id: _getOrCreateCategoriaID('hospedagens', j),
-            imagem: _getHospedagemImage('hospedagens', j),
+            imagens: _getHospedagemImages(j),
             reserva: getID(`reserva-hospedagens-${j}`).value,
             link: getID(`reserva-hospedagens-link-${j}`).value,
             nome: getID(`hospedagens-nome-${j}`).value,
@@ -285,12 +265,13 @@ function _buildGaleriaObject() {
         result.titulos.push(titulo);
 
         if (getID(`enable-upload-galeria-${j}`).checked) {
-            TO_UPLOAD.galeria = true;
-            result.imagens.push({});
-            UPLOAD_FILES.galeria.push(j)
+            result.imagens.push('');
+            CUSTOM_UPLOADS.galeria.push({
+                file: getID(`upload-galeria-${j}`)?.files[0],
+                position: j
+            });
         } else {
-            result.imagens.push(_getImageObject(getID(`link-galeria-${j}`).value, 'galeria'));
-            UPLOAD_FILES.galeria.push({});
+            result.imagens.push(getID(`link-galeria-${j}`).value);
         }
     }
 
@@ -310,11 +291,6 @@ async function _setViagem() {
             const i = parseInt(child.split("-")[2]);
             _setRequired(`select-destinos-${i}`)
         }
-    }
-
-    CUSTOM_UPLOADS = {
-        hospedagens: TO_UPLOAD.hospedagens ? await _uploadViagemItens(UPLOAD_FILES.hospedagens, 'hospedagens') : [],
-        galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(UPLOAD_FILES.galeria) : []
     }
 
     _setDocumento('viagens');
@@ -357,12 +333,40 @@ async function _setGastos() {
         }
     }
 
-    if (responses.length == 0) {
-        WAS_SAVED = false;
-        getID('modal-inner-text').innerHTML = 'Erro desconhecido ao salvar os gastos. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
-        _openModal();
-        _stopLoadingScreen();
-    } else {
-        return _combineDatabaseResponses(responses);
+    if (responses.length > 0) {
+        const masterResponse = _combineDatabaseResponses(responses);
+        _addSetResponse('Salvamento de Gastos', masterResponse.success);
     }
+}
+
+function _verifyImageUploads(type) {
+    if (DOCUMENT_ID && !IMAGE_UPLOAD_STATUS.hasErrors) {
+        const path = `${type}/${DOCUMENT_ID}`;
+
+        const documentLinks = [];
+
+        if (FIRESTORE_NEW_DATA.imagem.background) {
+            documentLinks.push(FIRESTORE_NEW_DATA.imagem.background);
+        }
+
+        if (FIRESTORE_NEW_DATA.imagem.claro) {
+            documentLinks.push(FIRESTORE_NEW_DATA.imagem.claro);
+        }
+
+        if (FIRESTORE_NEW_DATA.imagem.escuro) {
+            documentLinks.push(FIRESTORE_NEW_DATA.imagem.escuro);
+        }
+
+        if (type == 'viagens') {
+            const hospedagemLinks = FIRESTORE_NEW_DATA.hospedagens.map(hospedagem => {
+                return hospedagem.imagens.map(imagem => imagem.link);
+            }).flat();
+            documentLinks.push(...hospedagemLinks);
+            documentLinks.push(...FIRESTORE_NEW_DATA.galeria.imagens)
+        }
+
+        _deleteUnusedImages(path, documentLinks);
+    }
+
+    _addSetResponse('Verificação de Imagens', !IMAGE_UPLOAD_STATUS.hasErrors);
 }

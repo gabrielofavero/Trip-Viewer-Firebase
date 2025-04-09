@@ -238,29 +238,11 @@ function _addHospedagens() {
           </div>
 
           <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
-            <label>Imagem <span class="opcional"> (Opcional)</span></label>
-            <input id="upload-hospedagens-${j}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-            <p id="upload-hospedagens-${j}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
+            <label>Imagens <span class="opcional"> (Opcional)</span></label>
+            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">Adicionar Imagens</button>
           </div>
-
-          <div class="nice-form-group">
-            <input id="link-hospedagens-${j}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
-              class="icon-right">
-          </div>
-
-          <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-hospedagens-${j}">
-            <div class="nice-form-group">
-              <input type="radio" name="type-hospedagens-${j}" id="enable-link-hospedagens-${j}" checked>
-              <label for="enable-link-hospedagens-${j}">Fornecer link</label>
-            </div>
-
-            <div class="nice-form-group">
-              <input type="radio" name="type-hospedagens-${j}" id="enable-upload-hospedagens-${j}">
-              <label for="enable-upload-hospedagens-${j}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
-            </div>
-          </fieldset>
             
-          </div>
+        </div>
     
           <div class="button-box-right-formatted">
             <button id="remove-hospedagens-${j}" class="btn btn-basic btn-format">
@@ -277,9 +259,9 @@ function _addHospedagens() {
       `);
 
   getID(`hospedagens-id-${j}`).value = _getCategoriaID('hospedagens', j);
-  _loadImageSelector(`hospedagens-${j}`);
-  _addRemoveChildListener('hospedagens', j);
+  _addRemoveChildListener('hospedagens', j, `_removeHospedagemImagens(${j})`);
   _loadHospedagemListeners(j);
+  HOSPEDAGEM_IMAGENS[j] = [];
 }
 
 function _loadDestinos() {

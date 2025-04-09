@@ -1,31 +1,33 @@
 {
     "viagens": {
         "customChecks": "_validateSavedPIN()",
-        "before": ["_buildTripObject()", "_buildGastosObject()", "_buildGastosProtectedObject();"],
+        "before": [
+            "_buildTripObject()",
+            "_buildGastosObject()",
+            "_buildGastosProtectedObject()",
+            "_uploadAndSetImages('viagens')"
+        ],
         "after": [
-            {
-                "titulo": "Upload de Imagens",
-                "funcao": "_setImages('viagens')"
-            },
-            {
-                "titulo": "Gastos da Viagem",
-                "funcao": "_setGastos()"
-            }
+            "_verifyImageUploads('viagens')",
+            "_setGastos()"
         ]
     },
     "destinos": {
         "customChecks": "",
-        "before": ["_buildDestinosObject()", "_updateTikTokLinks()"],
+        "before": [
+            "_buildDestinosObject()",
+            "_updateTikTokLinks()"
+        ],
         "after": []
     },
     "listagens": {
         "customChecks": "",
-        "before": ["_buildListObject()"],
+        "before": [
+            "_buildListObject()",
+            "_uploadAndSetImages('listagens')"
+        ],
         "after": [
-            {
-                "titulo": "Upload de Imagens",
-                "funcao": "_setImages('listagens')"
-            }
+            "_verifyImageUploads('listagens')"
         ]
     }
 }

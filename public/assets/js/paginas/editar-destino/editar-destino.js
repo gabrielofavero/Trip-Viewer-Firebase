@@ -2,7 +2,7 @@ var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
 var INPUT_DETECTED = false;
 
-WAS_SAVED = false;
+SUCCESSFUL_SAVE = false;
 var CAN_EDIT = false;
 
 const TODAY = _getTodayFormatted();
@@ -102,7 +102,7 @@ function _loadEventListeners() {
   });
 
   getID('re-editar').addEventListener('click', () => {
-    _reEdit('destinos', WAS_SAVED);
+    _reEdit('destinos', SUCCESSFUL_SAVE);
   });
 
   getID('cancelar').addEventListener('click', () => {
@@ -141,7 +141,7 @@ function _loadEventListeners() {
   });
 
   window.addEventListener("beforeunload", (event) => {
-    if (INPUT_DETECTED && !WAS_SAVED) {
+    if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
       event.preventDefault();
       event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
     }

@@ -333,9 +333,12 @@ function _hideContent(type) {
      }
 }
 
-function _addRemoveChildListener(categoria, j) {
+function _addRemoveChildListener(categoria, j, customFunction = null) {
      getID(`remove-${categoria}-${j}`).addEventListener('click', function () {
           _removeChildWithValidation(categoria, j);
+          if (customFunction) {
+               eval(customFunction);
+          }
      });
 }
 

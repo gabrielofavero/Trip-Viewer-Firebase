@@ -58,18 +58,6 @@ function _loadCustomizacaoData() {
     _loadCustomizacaoImageData(logoClaro, 'link-logo-light');
     _loadCustomizacaoImageData(logoEscuro, 'link-logo-dark');
 
-    if (_imageDataIncludes(background, FIREBASE_IMAGE_ORIGIN)) {
-        FIREBASE_IMAGES.background = true;
-    }
-
-    if (_imageDataIncludes(logoClaro, FIREBASE_IMAGE_ORIGIN)) {
-        FIREBASE_IMAGES.claro = true;
-    }
-
-    if (_imageDataIncludes(logoEscuro, FIREBASE_IMAGE_ORIGIN)) {
-        FIREBASE_IMAGES.escuro = true;
-    }
-
     // Cores
     const claro = getID('claro');
     const escuro = getID('escuro');
@@ -226,7 +214,11 @@ function _loadHospedagemData() {
         getID(`hospedagens-descricao-${j}`).value = hospedagem.descricao;
         getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
         getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
-        getID(`link-hospedagens-${j}`).value = hospedagem.imagem instanceof Object ? hospedagem.imagem.link : hospedagem.imagem
+
+        HOSPEDAGEM_IMAGENS[j] = hospedagem.imagens || [];
+        if (HOSPEDAGEM_IMAGENS[j].length > 0) {
+            getID(`imagens-hospedagem-button-${j}`).innerText = 'Editar Imagens';
+        }
 
         _loadCheckIn(hospedagem, j);
         _loadCheckOut(hospedagem, j);
@@ -344,12 +336,7 @@ function _loadGaleriaData() {
                 getID(`galeria-descricao-${j}`).value = descricao;
             }
 
-            const imagem = FIRESTORE_DATA.galeria.imagens[i];
-            if (_isInternalImage(imagem)) {
-                getID(`link-galeria-${j}`).value = imagem.link;
-            } else if (_isExternalImage(imagem)) {
-                getID(`link-galeria-${j}`).value = imagem;
-            }
+            getID(`link-galeria-${j}`).value = FIRESTORE_DATA.galeria.imagens[i];
         }
     }
 }

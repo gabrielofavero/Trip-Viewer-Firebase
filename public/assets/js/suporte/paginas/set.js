@@ -1,23 +1,8 @@
-var TO_UPLOAD = {
-    background: false,
-    logoLight: false,
-    logoDark: false,
-    hospedagens: false,
-    galeria: false
-};
-
-var UPLOAD_FILES = {
+var CUSTOM_UPLOADS = {
     hospedagens: [],
     galeria: []
 };
-
-var CLEAR_IMAGES = {
-    background: false,
-    claro: false,
-    escuro: false
-}
-
-var CUSTOM_UPLOADS = {};
+var SET_RESPONSES = [];
 
 async function _setDocumento(tipo) {
     const userID = await _getUID();
@@ -26,93 +11,109 @@ async function _setDocumento(tipo) {
         throw new Error('Usuário não autenticado');
     }
 
-    let result;
-    let responses = [];
-
+    let mainResponse, userSavingResponse;
     _startLoadingScreen(false);
 
     const customChecks = await eval(CONFIG.set[tipo].customChecks);
     _validateRequiredFields(customChecks);
     if (_isModalOpen()) return;
 
-    for (const item of CONFIG.set[tipo].before) {
-        await eval(item);
+    for (const beforeItem of CONFIG.set[tipo].before) {
+        await eval(beforeItem);
     }
-    
+
     _validateIfDocumentChanged();
     if (_isModalOpen()) return;
 
     const newData = _getNewDataDocument(tipo);
 
     if (DOCUMENT_ID && newData) {
-        result = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
+        mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
     } else if (newData) {
-        result = await _create(tipo, newData);
-        DOCUMENT_ID = result?.data?.id;
+        mainResponse = await _create(tipo, newData);
+        DOCUMENT_ID = mainResponse?.data?.id;
         if (DOCUMENT_ID) {
             const userListIDs = await _getUserListIDs(tipo);
             userListIDs.push(DOCUMENT_ID);
-            await _update(`usuarios/${userID}`, { [tipo]: userListIDs });
+            userSavingResponse = await _update(`usuarios/${userID}`, { [tipo]: userListIDs });
         }
     }
 
-    responses.push(result);
-    if (result.success === true) {
-        for (const extra of CONFIG.set[tipo].after) {
-            responses.push(await eval(extra.funcao));
+    _addSetResponse('Salvamento Principal', mainResponse.success);
+    if (userSavingResponse) {
+        _addSetResponse('Salvamento do Usuário', userSavingResponse.success);
+    }
+
+    if (mainResponse.success === true) {
+        for (const afterItem of CONFIG.set[tipo].after) {
+            await eval(afterItem);
         }
     }
 
-    getID('modal-inner-text').innerHTML = _buildSetMessage(tipo, responses);
+    getID('modal-inner-text').innerHTML = _buildSetMessage(tipo);
     _stopLoadingScreen();
     _openModal('modal');
 }
 
-async function _setImages(tipo) {
+async function _uploadAndSetImages(tipo) {
     try {
-        const body = {
-            id: DOCUMENT_ID,
-            type: tipo,
-            background: TO_UPLOAD.background ? await _uploadBackground(tipo) : '',
-            logoLight: TO_UPLOAD.logoLight ? await _uploadLogoLight(tipo) : '',
-            logoDark: TO_UPLOAD.logoDark ? await _uploadLogoDark(tipo) : '',
-            custom: CUSTOM_UPLOADS
+        if (getID('upload-background').value) {
+            const background = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-background')?.files[0]);
+            if (background.link) {
+                FIRESTORE_NEW_DATA.imagem.background = background.link;
+            }
         }
 
-        await _updateImages(body);
-        await _deleteUnusedImages(_getDataDocument(tipo), await _get(`${tipo}/${DOCUMENT_ID}`));
+        if (getID('upload-logo-light').value) {
+            const logoLight = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-light')?.files[0]);
+            if (logoLight.link) {
+                FIRESTORE_NEW_DATA.imagem.logoLight = logoLight.link;
+            }
+        }
 
-        return _buildDatabaseObject(true, 'Imagens salvas com sucesso');
+        if (getID('upload-logo-dark').value) {
+            const logoDark = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-dark')?.files[0]);
+            if (logoDark.link) {
+                FIRESTORE_NEW_DATA.imagem.logoDark = logoDark.link;
+            }
+        }
+
+        if (tipo == 'viagens') {
+            await _uploadAndSetHospedagemImages();
+            await _uploadAndSetGaleriaImages();
+        }
 
     } catch (error) {
         console.error(error);
-        IMAGE_UPLOAD_ERROR.status = true;
-        return _buildDatabaseObject(false, error, error.message);
+        IMAGE_UPLOAD_STATUS.hasErrors = true;
     }
+
+    _addSetResponse('Upload de Imagens', !IMAGE_UPLOAD_STATUS.hasErrors);
 }
 
-function _buildSetMessage(tipo, extraResponses) {
-    const success = extraResponses.every(response => response.success === true);
+function _buildSetMessage(tipo) {
+    const allPassed = SET_RESPONSES.every(response => response.sucesso === true);
+    const allFailed = SET_RESPONSES.every(response => response.sucesso === false);
 
-    if (success) {
-        WAS_SAVED = true;
+    if (allPassed) {
+        SUCCESSFUL_SAVE = true;
         return `Documento de ${tipo} atualizado com sucesso`;
-    } else if (extraResponses[0].success === true) {
+    } else if (allFailed) {
         return `Não foi possível atualizar o documento de ${tipo} por completo. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.
-                <br><br>${_getErrorsHTML()}`;
+                <br><br>${_getSetResponsesHTML()}`;
     } else {
         return `Não foi possível atualizar o documento de ${tipo}. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.`;
     }
 
-    function _getErrorsHTML() {
-        let text = `<strong>Dados Gerais:</strong> ${_textBoolean(extraResponses[0].success)}`;
-        for (let i = 1; i < extraResponses.length; i++) {
-            text += `<br><strong>${CONFIG.set[tipo].after[i].titulo}:</strong> ${_textBoolean(extraResponses[i].success)}`;
+    function _getSetResponsesHTML() {
+        const setResponses = [];
+        for (const response of SET_RESPONSES) {
+            setResponses.push(`<strong>${response.titulo}:</strong><br>${response.sucesso ? 'Salvo com sucesso' : 'Falha no salvamento'}<br>`);
         }
-        return text;
+        return setResponses.join('<br>');
     }
+}
 
-    function _textBoolean(bool) {
-        return bool ? 'Salvo com sucesso' : 'Falha no salvamento';
-    }
+function _addSetResponse(titulo, sucesso) {
+    SET_RESPONSES.push({ titulo, sucesso });
 }

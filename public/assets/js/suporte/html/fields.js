@@ -14,7 +14,7 @@ function _validateRequiredFields(customChecks=[]) {
     });
 
     if (invalidFields.length > 0) {
-        WAS_SAVED = false;
+        SUCCESSFUL_SAVE = false;
         getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields, customChecks);
         _openModal();
         _stopLoadingScreen();
@@ -100,7 +100,7 @@ function _getInvalidFieldsText(invalidFields, customChecks) {
     return result;
 }
 
-function _reEdit(type, WAS_SAVED = true) {
+function _reEdit(type, SUCCESSFUL_SAVE = true) {
     let param;
     let url;
 
@@ -115,9 +115,9 @@ function _reEdit(type, WAS_SAVED = true) {
         url = 'listing.html';
     }
 
-    if (param && DOCUMENT_ID && WAS_SAVED) {
+    if (param && DOCUMENT_ID && SUCCESSFUL_SAVE) {
         window.location.href = `${url}?${param}=${DOCUMENT_ID}`;
-    } else if (!WAS_SAVED) {
+    } else if (!SUCCESSFUL_SAVE) {
         _closeModal();
     } else {
         window.location.href = '../index.html';

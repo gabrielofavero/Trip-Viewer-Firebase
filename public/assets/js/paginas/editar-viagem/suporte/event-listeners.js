@@ -9,7 +9,7 @@ function _loadEventListeners() {
     // Botões
     getID('editores-adicionar').addEventListener('click', () => _addEditores());
     getID('salvar').addEventListener('click', () => _setViagem());
-    getID('re-editar').addEventListener('click', () => _reEdit('viagens', WAS_SAVED));
+    getID('re-editar').addEventListener('click', () => _reEdit('viagens', SUCCESSFUL_SAVE));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
     getID('home').addEventListener('click', () => window.location.href = '../index.html');
     getID('home').addEventListener('click', () => window.location.href = '../index.html');
@@ -53,7 +53,7 @@ function _loadEventListeners() {
       });
     
       window.addEventListener("beforeunload", (event) => {
-        if (INPUT_DETECTED && !WAS_SAVED) {
+        if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
           event.preventDefault();
           event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
         }

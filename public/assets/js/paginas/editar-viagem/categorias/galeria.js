@@ -1,7 +1,3 @@
-async function _uploadGaleria(uploadItens) {
-    return await _uploadViagemItens(uploadItens, 'galeria');
-}
-
 function _deleteGaleria(i) {
     const id = `galeria-${i}`;
     _removeImageSelectorListeners(id);
@@ -23,4 +19,19 @@ function _galeriaAdicionarListenerAction() {
     _addGaleria();
     _openLastAccordion('galeria');
     _buildDS('galeria-categoria');
+}
+
+async function _uploadAndSetGaleriaImages() {
+    if (IMAGE_UPLOAD_STATUS.hasErrors || CUSTOM_UPLOADS.galeria.length === 0) {
+        return;
+    }
+    const galeriaFiles = CUSTOM_UPLOADS.galeria.map(file => file.file)
+    const galeriaResult = await _uploadImages('viagens', galeriaFiles);
+    
+    if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
+        for (let i = 0; i < galeriaResult.length; i++) {
+            const position = CUSTOM_UPLOADS.galeria[i].position - 1;
+            FIRESTORE_NEW_DATA.galeria.imagens[position] = galeriaResult[i].link;
+        }
+    }
 }

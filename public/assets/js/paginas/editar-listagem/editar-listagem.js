@@ -2,7 +2,7 @@ var blockLoadingEnd = false;
 var FIRESTORE_DATA;
 var FIRESTORE_NEW_DATA = {};
 
-var WAS_SAVED = false;
+var SUCCESSFUL_SAVE = false;
 var CAN_EDIT = false;
 
 var INPUT_DETECTED = false;
@@ -86,7 +86,7 @@ function _loadEventListeners() {
   });
 
   getID('re-editar').addEventListener('click', () => {
-    _reEdit('listagens', WAS_SAVED);
+    _reEdit('listagens', SUCCESSFUL_SAVE);
   });
 
   getID('home').addEventListener('click', () => {
@@ -102,7 +102,7 @@ function _loadEventListeners() {
   });
 
   window.addEventListener("beforeunload", (event) => {
-    if (INPUT_DETECTED && !WAS_SAVED) {
+    if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
       event.preventDefault();
       event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
     }

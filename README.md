@@ -5,9 +5,9 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 71    | 71          | 0         |
-| 🏆     | Feature  | F000    | 80    | 66          | 14         |
-| 📈     | Melhoria | M000    | 99    | 78          | 22        |
-| ⚔️   | Épico   | E000    | 28    | 17          | 11         |
+| 🏆     | Feature  | F000    | 80    | 67          | 13         |
+| 📈     | Melhoria | M000    | 101    | 78          | 23        |
+| ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
@@ -72,6 +71,8 @@
 - 🏆 **F070:** Componente de adicionar ao calendário
 - 📈 **M094:** Fixar scrolls (destinos checkboxes em editar, viagens e destinos em home)
 - ⚔️ **E026:** Importar dados do google maps
+- 📈 **M100:** Limite de tamanho de storage para o documento (10MB)
+- 📈 **M101:** Colocar Swiper dentro de box de imagem de hospedagem quando hospedagem tiver mais de uma imagem
 
 ### Prioridade Baixa
 - 🏆 **F078:** Criar sistema de linguagens + EN-US
@@ -88,7 +89,7 @@
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M047:** Troca de mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhoria de funções relacionadas ao getJs para mais cenários
-- 🏆 **F055:** Implementação de função de getKs
+- 🏆 **F055:** Implementação de função de getKs + Renomeio das funções para tornar mais claro
 - 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
 - 📈 **M055:** Melhoria de todas as mudanças de dark mode serem aplicadas via js
 - 📈 **M058:** Modularização de arquivos de CSS para diminuir redundâncias
@@ -101,6 +102,11 @@
 ## Done
 
 ### Abril 2025
+- 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
+  - Ajuste no view
+- ⚔️ **E029:** Refatoração dos métodos de storage
+ - Testar hospedagem
+ - Testar Galeria
 - 📈 **M099:** Implementação Toast em link inválido de páginas de editar
 - 🐞 **B071:** Turno não atualiza automaticamente quando o horário da programação é importado
 - 🐞 **B070:** Bullets de calendário de programação não exibe corretamente

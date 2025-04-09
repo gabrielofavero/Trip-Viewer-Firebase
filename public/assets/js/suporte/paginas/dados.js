@@ -347,7 +347,7 @@ function _compareDocuments() {
     case 'editar-viagem':
       result.multiple = true;
       _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
-      _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacao, ignoredPaths: [], name: 'programação' });
+      _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
       _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
       _compareAndPush({ obj1: {pin: PIN_GASTOS.current}, obj2: {pin: PIN_GASTOS.new}, ignoredPaths: [], name: 'senha de acesso aos gastos' });
       break;
@@ -376,8 +376,8 @@ function _validateIfDocumentChanged() {
   const invalid = !DOCS_CHANGED ? true : DOCS_CHANGED.multiple ? DOCS_CHANGED.data.every(item => item.areEqual) : DOCS_CHANGED.data[0].areEqual;
 
   if (invalid) {
-    WAS_SAVED = false;
-    getID('modal-inner-text').innerHTML = DOCS_CHANGED ? `Não foi possível realizar o salvamento. Não houve alterações nos ${_getReadableArray(DOCS_CHANGED.data.map(item => item.name))}.` :
+    SUCCESSFUL_SAVE = false;
+    getID('modal-inner-text').innerHTML = DOCS_CHANGED ? `Não foi possível realizar o salvamento. Não houve alterações nos dados.` :
       'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
     _openModal();
     _stopLoadingScreen();
