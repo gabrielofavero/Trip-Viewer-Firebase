@@ -265,6 +265,10 @@ details .toggle-code:hover {
   color: var(--nf-label-color)
 }
 
+.destinos-checkboxes::-webkit-scrollbar-track {
+  background-color: #404040;
+}
+
 .pin-input {
   border: 1px solid #414040;;
   background: #3b3b3b;

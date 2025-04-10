@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 71    | 71          | 0         |
 | 🏆     | Feature  | F000    | 80    | 67          | 13         |
-| 📈     | Melhoria | M000    | 102    | 78          | 24        |
+| 📈     | Melhoria | M000    | 102    | 79          | 23        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
 - 🚦: Bloqueado
@@ -69,7 +69,6 @@
 - 📈 **M092:** Titulo em dark mode com maior destaque
 - 🏆 **F069:** Criação de opções de re-ordenação de destinos
 - 🏆 **F070:** Componente de adicionar ao calendário
-- 📈 **M094:** Fixar scrolls (destinos checkboxes em editar, viagens e destinos em home)
 - ⚔️ **E026:** Importar dados do google maps
 - 📈 **M100:** Limite de tamanho de storage para o documento (10MB)
 - 📈 **M101:** Colocar Swiper dentro de box de imagem de hospedagem quando hospedagem tiver mais de uma imagem
@@ -103,6 +102,7 @@
 ## Done
 
 ### Abril 2025
+- 📈 **M094:** Fixar scrolls (destinos checkboxes em editar)
 - 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
   - Ajuste no view
 - ⚔️ **E029:** Refatoração dos métodos de storage
