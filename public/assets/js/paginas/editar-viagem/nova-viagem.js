@@ -281,8 +281,7 @@ function _loadDestinos() {
 
   getID('habilitado-destinos')?.addEventListener('change', () => _updateDestinosAtivosHTMLs());
   for (const child of _getChildIDs('destinos-checkboxes')) {
-    const j = _getJ(child);
-    getID(`check-destinos-${j}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
+    getID(`check-destinos-${_getJ(child)}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
   }
 }
 

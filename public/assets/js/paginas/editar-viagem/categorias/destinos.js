@@ -9,7 +9,7 @@ var DESTINOS_ATIVOS = [];
 var DESTINOS_ORDENADOS = [];
 
 // Destinos Ativos
-function _loadDestinosAtivos() {
+function _loadDestinosAtivos(firstBoot = true) {
     DESTINOS_ATIVOS = [];
     const habilidadoDestinos = getID('habilitado-destinos');
     if (habilidadoDestinos && !habilidadoDestinos.checked) return;
@@ -29,10 +29,15 @@ function _loadDestinosAtivos() {
     }
 
     DESTINOS_ATIVOS = result;
+    if (firstBoot) {
+        _reorganizeDestinosCheckbox();
+        const offsetHeight = getID('destinos-checkboxes').offsetHeight;
+        getID('destinos-checkboxes').style.height = `${offsetHeight}px`;
+    }
 }
 
 function _updateDestinosAtivosHTMLs() {
-    _loadDestinosAtivos();
+    _loadDestinosAtivos(false);
 
     if (_getHTMLpage() === 'editar-viagem') {
         _updateDestinosAtivosCheckboxHTML('programacao');
@@ -211,6 +216,38 @@ function _getDestinosFromCheckbox(tipo, j) {
         }
     }
     return result;
+}
+
+function _reorganizeDestinosCheckbox() {
+    const fieldset = document.getElementById('destinos-checkboxes');
+    const checkboxes = Array.from(fieldset.querySelectorAll('.nice-form-group'));
+
+    const ativos = [];
+    const inativos = [];
+
+    checkboxes.forEach(group => {
+        const input = group.querySelector('input[type="checkbox"]');
+        const label = group.querySelector('label');
+        const labelText = label.textContent.trim();
+
+        const data = {
+            element: group,
+            label: labelText.toLowerCase()
+        };
+
+        if (input.checked) {
+            ativos.push(data);
+        } else {
+            inativos.push(data);
+        }
+    });
+
+    ativos.sort((a, b) => a.label.localeCompare(b.label));
+    inativos.sort((a, b) => a.label.localeCompare(b.label));
+
+    [...ativos, ...inativos].forEach(item => {
+        fieldset.appendChild(item.element);
+    });
 }
 
 // Outros (Genérico)
