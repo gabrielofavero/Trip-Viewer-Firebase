@@ -167,9 +167,8 @@ function _getInnerProgramacaoHTML(item) {
             if (FIRESTORE_DATA.modulos.hospedagens === true && item.id) {
                 index = FIRESTORE_DATA.hospedagens.map(hospedagem => hospedagem.id).indexOf(item.id);
                 if (index >= 0) {
-                    const hospedagem = FIRESTORE_DATA.hospedagens[index];
-                    innerProgramacao.titulo = hospedagem.nome;
-                    innerProgramacao.content = _getHotelBoxHTML(hospedagem, 'inner-programacao', true);
+                    innerProgramacao.titulo = "";
+                    innerProgramacao.content = _getHospedagensHTML(index, true);
                 }
             }
             break;

@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 71    | 71          | 0         |
 | 🏆     | Feature  | F000    | 80    | 67          | 13         |
-| 📈     | Melhoria | M000    | 101    | 78          | 23        |
+| 📈     | Melhoria | M000    | 102    | 78          | 24        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
 - 🚦: Bloqueado
@@ -73,6 +73,7 @@
 - ⚔️ **E026:** Importar dados do google maps
 - 📈 **M100:** Limite de tamanho de storage para o documento (10MB)
 - 📈 **M101:** Colocar Swiper dentro de box de imagem de hospedagem quando hospedagem tiver mais de uma imagem
+- 📈 **M102:** Ao invés de abrir pop-up de hospedagem/transporte, arrastar página para posição e auto clicar em item
 
 ### Prioridade Baixa
 - 🏆 **F078:** Criar sistema de linguagens + EN-US

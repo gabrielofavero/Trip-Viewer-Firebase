@@ -16,8 +16,7 @@ function _loadHospedagens() {
   
 }
 
-function _getHospedagensHTML(i) {
-  const j = i + 1;
+function _getHospedagensHTML(i, innerProgramacao=false) {
   const original = FIRESTORE_DATA.hospedagens[i];
   const hospedagem = {
     cafe: original.cafe,
@@ -31,6 +30,11 @@ function _getHospedagensHTML(i) {
     nome: original.nome
   }
 
+  if (innerProgramacao) {
+    return _getHotelBoxHTML(hospedagem, 'inner-programacao', true);
+  }
+
+  const j = i + 1;
   return `<div class="swiper-slide" id="hospedagens-slide-${j}">
             <div class="testimonial-item">
               ${_getHotelBoxHTML(hospedagem, j)}
@@ -40,8 +44,8 @@ function _getHospedagensHTML(i) {
 
 function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
   const imagens = hospedagem.imagens;
-  const checkIn = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkin) : hospedagem.checkIn;
-  const checkOut = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkout) : hospedagem.checkOut
+  const checkIn = hospedagem.checkIn;
+  const checkOut = hospedagem.checkOut
   const galeriaId = innerProgramacao ? 'programacao-galeria' : `hospedagens-galeria-${j}`;
   let galeriaItems = '';
 
@@ -50,7 +54,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
     galeriaItems += `<a href="${imagem.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${imagem.descricao}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ''}</a>`;
   }
 
-  return `<div class="hotel-box${innerProgramacao? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${j}">
+  return `<div class="hotel-box${innerProgramacao? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${j}${innerProgramacao ? '-inner' : ''}">
             <div class="portfolio-wrap" style="display: ${imagens.length > 0 ? 'block' : 'none'};">
               <div class="hotel-img" style="background-image: url('${imagens[0].link}');">
                 <div class="portfolio-info">
