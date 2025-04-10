@@ -3,6 +3,7 @@ var CUSTOM_UPLOADS = {
     galeria: []
 };
 var SET_RESPONSES = [];
+var UPLOAD_AFTER_SET = false;
 
 async function _setDocumento(tipo) {
     const userID = await _getUID();
@@ -55,7 +56,16 @@ async function _setDocumento(tipo) {
     _openModal('modal');
 }
 
-async function _uploadAndSetImages(tipo) {
+async function _uploadAndSetImages(tipo, isBeforeSet) {
+    if (!DOCUMENT_ID && isBeforeSet) {
+        UPLOAD_AFTER_SET = true;
+        return;
+    } else if (!DOCUMENT_ID && !isBeforeSet) {
+        _addSetResponse('Upload de Imagens', false);
+        return;
+    } else if ((!UPLOAD_AFTER_SET && !isBeforeSet) || (UPLOAD_AFTER_SET && isBeforeSet)) {
+        return;
+    }
     try {
         if (getID('upload-background').value) {
             const background = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-background')?.files[0]);
@@ -67,14 +77,14 @@ async function _uploadAndSetImages(tipo) {
         if (getID('upload-logo-light').value) {
             const logoLight = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-light')?.files[0]);
             if (logoLight.link) {
-                FIRESTORE_NEW_DATA.imagem.logoLight = logoLight.link;
+                FIRESTORE_NEW_DATA.imagem.claro = logoLight.link;
             }
         }
 
         if (getID('upload-logo-dark').value) {
             const logoDark = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-dark')?.files[0]);
             if (logoDark.link) {
-                FIRESTORE_NEW_DATA.imagem.logoDark = logoDark.link;
+                FIRESTORE_NEW_DATA.imagem.escuro = logoDark.link;
             }
         }
 
@@ -89,6 +99,16 @@ async function _uploadAndSetImages(tipo) {
     }
 
     _addSetResponse('Upload de Imagens', !IMAGE_UPLOAD_STATUS.hasErrors);
+
+    if (UPLOAD_AFTER_SET) {
+        const newData = _getNewDataDocument(tipo);
+        if (DOCUMENT_ID && newData) {
+            mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
+            _addSetResponse('Inserção de Imagens no documento', true);
+        } else {
+            _addSetResponse('Inserção de Imagens no documento', false);
+        }
+    }
 }
 
 function _buildSetMessage(tipo) {

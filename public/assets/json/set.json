@@ -5,9 +5,10 @@
             "_buildTripObject()",
             "_buildGastosObject()",
             "_buildGastosProtectedObject()",
-            "_uploadAndSetImages('viagens')"
+            "_uploadAndSetImages('viagens', true)"
         ],
         "after": [
+            "_uploadAndSetImages('viagens', false)",
             "_verifyImageUploads('viagens')",
             "_setGastos()"
         ]
@@ -24,9 +25,10 @@
         "customChecks": "",
         "before": [
             "_buildListObject()",
-            "_uploadAndSetImages('listagens')"
+            "_uploadAndSetImages('listagens', true)"
         ],
         "after": [
+            "_uploadAndSetImages('listagens', false)",
             "_verifyImageUploads('listagens')"
         ]
     }

@@ -104,7 +104,6 @@
 ### Abril 2025
 - 📈 **M094:** Fixar scrolls (destinos checkboxes em editar)
 - 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
-  - Ajuste no view
 - ⚔️ **E029:** Refatoração dos métodos de storage
  - Testar hospedagem
  - Testar Galeria
