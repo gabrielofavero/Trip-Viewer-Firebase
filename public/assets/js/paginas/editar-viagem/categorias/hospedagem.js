@@ -87,7 +87,7 @@ function _getImagemHospedagemContent(size = 5) {
     let inner = '';
     for (let k = 1; k <= size; k++) {
         botoes += `
-        <div class="input-botao-container">
+        <div class="input-botao-container" id="input-botao-container-${k}">
             <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" onclick="_openInnerImagemHospedagem(${k})" style="margin-top:1em">Adicionar Imagem</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
         </div>`;
@@ -142,8 +142,9 @@ function _openInnerImagemHospedagem(k) {
 }
 
 function _closeInnerImagemHospedagem() {
-    for (const id of _getChildIDs('inner-hospedagens-imagem')) {
-        const k = _getJ(id);
+    for (const orderId of _getChildIDs('inner-hospedagens-imagem')) {
+        const k = _getJ(orderId);
+        const id = `hospedagens-imagem-${k}`;
         if (getID(id).style.display == 'block') {
             let titulo = 'Adicionar Imagem';
 
@@ -166,7 +167,7 @@ function _hasInnerImagemHospedagem(k) {
 
 function _saveImagensHospedagem(j) {
     const result = [];
-    for (const id of _getChildIDs('inner-hospedagens-imagem')) {
+    for (const id of _getChildIDs('imagem-hospedagens-botoes')) {
         const k = _getJ(id);
         if (_hasInnerImagemHospedagem(k)) {
             result.push({
