@@ -93,6 +93,8 @@ function _loadInnerProgramacaoMidia(midia) {
         buttonText = '<i class="iconify" data-icon="ic:baseline-tiktok"></i>Visualizar Vídeo';
     } else if (midia.includes('spotify')) {
         buttonText = '<i class="iconify" data-icon="mdi:spotify"></i>Visualizar Playlist';
+    } else if (midia.includes('instagram')) {
+        buttonText = '<i class="iconify" data-icon="mdi:instagram"></i> Visualizar Vídeo';
     }
 
     getID('midia-1').innerHTML = `<div class="button-box">
