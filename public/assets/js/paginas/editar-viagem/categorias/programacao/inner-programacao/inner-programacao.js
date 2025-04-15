@@ -526,5 +526,8 @@ function _afterDragInnerProgramacao(evt) {
     // Adicionar elemento na posição final
     INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element);
 
+    // Atualizar último turno aberto
+    LAST_OPENED_TURNO[j] = turnoFinal;
+
     _loadInnerProgramacaoHTML(j);
 }

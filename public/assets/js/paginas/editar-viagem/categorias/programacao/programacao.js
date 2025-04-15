@@ -69,6 +69,7 @@ function _updateProgramacaoTitle(j) {
 function _getProgramacaoTitleSelectOptions(j = null) {
     const semTitulo = '<option value="">Sem Título</option>'
     let destino = '';
+    let idaVoltaDestino = '';
 
     if (j) {
         let labels = [];
@@ -91,6 +92,13 @@ function _getProgramacaoTitleSelectOptions(j = null) {
                 const text = _getReadableArray(labels);
                 destino += `<option value="${text}">${text}</option>`;
             }
+            const idaArray = ["Ida", ...labels];
+            const idaText = _getReadableArray(idaArray);
+            idaVoltaDestino += `<option value="${idaText}">${idaText}</option>`;
+
+            const voltaArray = [...labels, "Volta"];
+            const voltaText = _getReadableArray(voltaArray);
+            idaVoltaDestino += `<option value="${voltaText}">${voltaText}</option>`;
         }
     }
 
@@ -99,6 +107,7 @@ function _getProgramacaoTitleSelectOptions(j = null) {
             <option value="Ida">Ida</option>
             <option value="Volta">Volta</option>
             <option value="Deslocamento">Deslocamento</option>
+            ${idaVoltaDestino}
             ${destino ? semTitulo : ''}
             <option value="outro">Outro</option>`;
 }
