@@ -6,7 +6,7 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 71    | 71          | 0         |
 | 🏆     | Feature  | F000    | 80    | 67          | 13         |
-| 📈     | Melhoria | M000    | 102    | 79          | 23        |
+| 📈     | Melhoria | M000    | 103    | 80          | 23        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
 - 🚦: Bloqueado
@@ -102,6 +102,7 @@
 ## Done
 
 ### Abril 2025
+- 📈 **M103:** Melhoria mensagem de salvamento de páginas de editar
 - 📈 **M094:** Fixar scrolls (destinos checkboxes em editar)
 - 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
 - ⚔️ **E029:** Refatoração dos métodos de storage
