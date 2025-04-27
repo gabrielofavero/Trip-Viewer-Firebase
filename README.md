@@ -102,11 +102,8 @@
 ## Done
 
 ### Abril 2025
-<<<<<<< HEAD
 - 🐞 **B072:** Galeria não respeita dark mode
-=======
 - 📈 **M103:** Melhoria mensagem de salvamento de páginas de editar
->>>>>>> 69848df713f3cb60d3ff5ebe2d01a82e9d1febd5
 - 📈 **M094:** Fixar scrolls (destinos checkboxes em editar)
 - 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
 - ⚔️ **E029:** Refatoração dos métodos de storage
