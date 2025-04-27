@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 72    | 72          | 0         |
-| 🏆     | Feature  | F000    | 80    | 67          | 13         |
+| 🏆     | Feature  | F000    | 81    | 67          | 14         |
 | 📈     | Melhoria | M000    | 103    | 80          | 23        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
@@ -29,6 +29,7 @@
   - *Mudança no get (view.html e destino.html)*
   - *Mudança no dynamic select (edit/trip.html)*
   - *Script de migração* 
+- 🏆 **F081:** Embed de mapa quando não houver vídeo no destino
 
 ### Prioridade Média
 - 🏆 **F071:** Gastos Multi Pessoas
