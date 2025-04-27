@@ -21,9 +21,8 @@
 - 📈 **M096:** Ajustes mobile e webview
 - 📈 **M097:** Automações programação (edit/trip.html)
 - 🏆 **F072:** Passagens Multi pessoas
-- 📈 **M087:** Melhor exibição de destinos (trip.html)
-  - *Itens selecionados mostrados primeiro (apenas no load inicial)*
-  - *Melhor exibição de várias regiões (carrosel talvez)*
+- 📈 **M087:** Load de destinos carrega tudo imediatamente
+- 🏆 **F069:** Tab para seleção de destinos dentro da página
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (edit/trip.html)
   - *Mudança no get e no set (edit/trip.html)*
   - *Criação de estrutura no front (edit/trip.html)*
@@ -67,7 +66,6 @@
   - *Sonarqube*
 - 📈 **M091:** Alinhar select de cidade com box de destino
 - 📈 **M092:** Titulo em dark mode com maior destaque
-- 🏆 **F069:** Criação de opções de re-ordenação de destinos
 - 🏆 **F070:** Componente de adicionar ao calendário
 - ⚔️ **E026:** Importar dados do google maps
 - 📈 **M100:** Limite de tamanho de storage para o documento (10MB)
