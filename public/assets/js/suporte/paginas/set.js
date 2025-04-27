@@ -115,14 +115,19 @@ function _buildSetMessage(tipo) {
     const allPassed = SET_RESPONSES.every(response => response.sucesso === true);
     const allFailed = SET_RESPONSES.every(response => response.sucesso === false);
 
+    const doc = _getNewDataDocument(tipo);
+    const titulo = doc?.titulo ? `"${doc.titulo}"` : '';
+    const altTitulo1 = `Documento de ${tipo}`;
+    const altTitulo2 = `o documento de ${tipo}`;
+
     if (allPassed) {
         SUCCESSFUL_SAVE = true;
-        return `Documento de ${tipo} atualizado com sucesso`;
+        return `${titulo || altTitulo1} atualizado com sucesso`;
     } else if (allFailed) {
-        return `Não foi possível atualizar o documento de ${tipo} por completo. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.
+        return `Não foi possível atualizar ${titulo || altTitulo2} por completo. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.
                 <br><br>${_getSetResponsesHTML()}`;
     } else {
-        return `Não foi possível atualizar o documento de ${tipo}. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.`;
+        return `Não foi possível atualizar ${titulo || altTitulo2}. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.`;
     }
 
     function _getSetResponsesHTML() {
