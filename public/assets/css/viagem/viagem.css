@@ -7,6 +7,7 @@
   --theme-color-hover: #505197;
   --theme-color-secondary: #D5D6E9;
   --background-color: #fff;
+  --font-color: #272829;
   --table-border: #D9D9D9;
 }
 
@@ -18,7 +19,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   background-size: cover;
-  color: #272829;
+  color: var(--font-color);
   background-color: var(--background-color);
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
@@ -1028,7 +1029,7 @@ section {
   font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
-  color: #272829;
+  color: var(--font-color);
   margin-bottom: 5px;
   transition: all 0.3s ease-in-out;
 }
@@ -1236,7 +1237,7 @@ section {
   text-align: center;
   padding: 70px 20px 80px 20px;
   transition: all ease-in-out 0.3s;
-  color: #272829;
+  color: var(--font-color);
   background: #fff;
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
 }
@@ -1407,7 +1408,7 @@ section {
 }
 
 #destinosBox a {
-  color: #272829;
+  color: var(--font-color);
 }
 
 /*--------------------------------------------------------------
@@ -2137,7 +2138,7 @@ iframe {
 
 .calendarTrip {
   background-color: #F6F6F6 !important;
-  color: #272829;
+  color: var(--font-color);
   font-weight: bold;
   transition: background-color 0.3s ease;
 }
@@ -2881,4 +2882,12 @@ input[type="radio"] {
   #menu {
       display: none;
   }
+}
+
+.gslide-description {
+  background: var(--background-color) !important;
+}
+
+.gslide-title {
+  color: var(--font-color) !important;
 }

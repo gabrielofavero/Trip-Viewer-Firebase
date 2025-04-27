@@ -4,7 +4,7 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 71    | 71          | 0         |
+| 🐞     | Bug      | B000    | 72    | 72          | 0         |
 | 🏆     | Feature  | F000    | 80    | 67          | 13         |
 | 📈     | Melhoria | M000    | 102    | 79          | 23        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
@@ -20,7 +20,6 @@
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
 - 📈 **M096:** Ajustes mobile e webview
 - 📈 **M097:** Automações programação (edit/trip.html)
-- 🏆 **F071:** Gastos Multi Pessoas
 - 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Melhor exibição de destinos (trip.html)
   - *Itens selecionados mostrados primeiro (apenas no load inicial)*
@@ -33,6 +32,7 @@
   - *Script de migração* 
 
 ### Prioridade Média
+- 🏆 **F071:** Gastos Multi Pessoas
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
@@ -102,6 +102,7 @@
 ## Done
 
 ### Abril 2025
+- 🐞 **B072:** Galeria não respeita dark mode
 - 📈 **M094:** Fixar scrolls (destinos checkboxes em editar)
 - 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
 - ⚔️ **E029:** Refatoração dos métodos de storage
