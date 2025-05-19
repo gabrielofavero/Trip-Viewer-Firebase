@@ -1,7 +1,7 @@
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
 function _applyLoadedProgramacaoData(j, dados) {
-    const jsDate = _convertFromFirestoreDate(dados.data);
+    const jsDate = _convertFromDateObject(dados.data);
 
     const destinosIDsObject = dados.destinosIDs;
     let destinosIDs = [];
@@ -130,7 +130,7 @@ function _getProgramacaoTitle(dataFormatada, titulo = '') {
 function _reloadProgramacao() {
     if (!getID('habilitado-programacao').checked) return;
     const originalData = _buildProgramacaoObject();
-    const originalDataInputs = originalData.map(data => _firestoreDateToKey(data.data));
+    const originalDataInputs = originalData.map(data => _dateObjectToKey(data.data));
 
     _loadProgramacao();
     let j = 1;

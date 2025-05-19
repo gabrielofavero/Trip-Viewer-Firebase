@@ -4,9 +4,9 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 72    | 72          | 0         |
+| 🐞     | Bug      | B000    | 75    | 73          | 2         |
 | 🏆     | Feature  | F000    | 81    | 67          | 14         |
-| 📈     | Melhoria | M000    | 103    | 80          | 23        |
+| 📈     | Melhoria | M000    | 104    | 80          | 24        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
 - 🚦: Bloqueado
@@ -15,6 +15,9 @@
 
 ## Backlog
 ### Prioridade Alta
+- 📈 **M104:** Todos os liks externos devem abrir via window.open
+- 🐞 **B075:** Implementação do timezone causa problemas
+- 🐞 **B074:** x do menu fica invisível no light mode
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
@@ -99,6 +102,9 @@
 - 🏆 **F067:** Integração OneDrive
 
 ## Done
+
+### Maio 2025
+- 🐞 **B073:** Implementação do timezone causa problemas de conversão
 
 ### Abril 2025
 - 🐞 **B072:** Galeria não respeita dark mode

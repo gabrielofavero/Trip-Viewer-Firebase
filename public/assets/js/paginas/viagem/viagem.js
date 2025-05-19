@@ -101,10 +101,10 @@ function _start() {
 }
 
 function _loadInicioFim() {
-  INICIO.date = _convertFromFirestoreDate(FIRESTORE_DATA.inicio);
+  INICIO.date = _convertFromDateObject(FIRESTORE_DATA.inicio);
   INICIO.text = `${INICIO.date.getDate()}/${INICIO.date.getMonth() + 1}`;
 
-  FIM.date = _convertFromFirestoreDate(FIRESTORE_DATA.fim);
+  FIM.date = _convertFromDateObject(FIRESTORE_DATA.fim);
   FIM.text = `${FIM.date.getDate()}/${FIM.date.getMonth() + 1}`;
 }
 

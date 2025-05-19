@@ -23,8 +23,7 @@ async function _buildTripObject() {
         versao: {
             ultimaAtualizacao: new Date().toISOString()
         },
-        visibilidade: _buildVisibilidadeObject(),
-        timezoneOffset: getID('offset').value
+        visibilidade: _buildVisibilidadeObject()
     }
 }
 

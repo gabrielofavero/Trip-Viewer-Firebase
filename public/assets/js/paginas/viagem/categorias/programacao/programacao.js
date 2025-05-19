@@ -10,7 +10,7 @@ function _loadProgramacao() {
 
 function _loadProgramacaoDestinos() {
     for (const programacao of FIRESTORE_DATA.programacoes) {
-        const key = _firestoreDateToKey(programacao.data);
+        const key = _dateObjectToKey(programacao.data);
         PROGRAMACAO_DESTINOS[key] = programacao.destinosIDs;
     }
 }

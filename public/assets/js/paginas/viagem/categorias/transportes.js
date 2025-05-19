@@ -111,7 +111,7 @@ function _getReservaHTML(j, empresa) {
 
 function _getPartidaChegadaHTML(j, tipo) {
   const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
-  const data = _convertFromFirestoreDate(transporte.datas[tipo]);
+  const data = _convertFromDateObject(transporte.datas[tipo]);
   const local = transporte.pontos[tipo];
 
   let result = `<div class="flight-date">${_jsDateToDate(data, 'dd/mm')}</div>

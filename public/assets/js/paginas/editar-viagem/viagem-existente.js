@@ -22,10 +22,11 @@ function _loadDadosBasicosViagemData() {
     getID('titulo').value = FIRESTORE_DATA.titulo;
     getID('moeda').value = FIRESTORE_DATA.moeda;
 
-    getID('inicio').value = _formatFirestoreDate(FIRESTORE_DATA.inicio, 'yyyy-mm-dd');
-    getID('fim').value = _formatFirestoreDate(FIRESTORE_DATA.fim, 'yyyy-mm-dd');
+    const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
+    const fim = _convertFromDateObject(FIRESTORE_DATA.fim);
 
-    getID('offset').value = FIRESTORE_DATA.timezoneOffset || new Date().getTimezoneOffset();
+    getID('inicio').value = _jsDateToDate(inicio, 'yyyy-mm-dd');
+    getID('fim').value = _jsDateToDate(fim, 'yyyy-mm-dd');
 
     getID('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
 }
@@ -157,8 +158,8 @@ function _loadTransportesData() {
                 getID(`volta-${j}`).checked = true;
         }
 
-        const partida = _convertFromFirestoreDate(transporte.datas.partida);
-        const chegada = _convertFromFirestoreDate(transporte.datas.chegada);
+        const partida = _convertFromDateObject(transporte.datas.partida);
+        const chegada = _convertFromDateObject(transporte.datas.chegada);
 
         if (partida) {
             getID(`partida-${j}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
@@ -291,7 +292,7 @@ function _loadLineupData() {
         getID(`lineup-local-${j}`).value = lineup.local;  
         getID(`lineup-genero-${j}`).innerText = lineup.genero;
         getID(`lineup-palco-${j}`).innerText = lineup.palco;
-        getID(`lineup-data-${j}`).value = _firestoneDateToKey(lineup.data);
+        //getID(`lineup-data-${j}`).value = _firestoneDateToKey(lineup.data);
         getID(`lineup-inicio-${j}`).value = lineup.inicio;
         getID(`lineup-fim-${j}`).value = lineup.fim;
         getID(`lineup-midia-${j}`).value = lineup.midia;

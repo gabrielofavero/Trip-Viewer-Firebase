@@ -23,7 +23,7 @@ function _loadCheckOut(hospedagem, j) {
 }
 
 function _loadHospeagemCheck(chave, checkTipo, hospedagem, j) {
-    const data = _convertFromFirestoreDate(hospedagem.datas[chave]);
+    const data = _convertFromDateObject(hospedagem.datas[chave]);
     if (data) {
         getID(`check-${checkTipo}-${j}`).value = _jsDateToDate(data, 'yyyy-mm-dd');
         getID(`check-${checkTipo}-horario-${j}`).value = _jsDateToTime(data);

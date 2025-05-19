@@ -251,8 +251,8 @@ function _loadUserDataHTML(dados, tipo) {
       case 'proximasViagens':
       case 'viagensAnteriores':
         innertipo = 'viagens';
-        const inicioDate = _convertFromFirestoreDate(dados[i].inicio);
-        const fimDate = _convertFromFirestoreDate(dados[i].fim);
+        const inicioDate = _convertFromDateObject(dados[i].inicio);
+        const fimDate = _convertFromDateObject(dados[i].fim);
         const inicio = _jsDateToDate(inicioDate);
         const fim = _jsDateToDate(fimDate);
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
@@ -292,13 +292,13 @@ function _loadUserDataHTML(dados, tipo) {
 
     for (let i = 0; i < dados.length; i++) {
       const viagem = dados[i];
-      const fim = _convertFromFirestoreDate(viagem.fim);
+      const fim = _convertFromDateObject(viagem.fim);
 
       if (hoje > fim) {
         viagensAnteriores.push(viagem);
       } else {
         proximasViagens.push(viagem);
-        if (hoje >= _convertFromFirestoreDate(viagem.inicio)) {
+        if (hoje >= _convertFromDateObject(viagem.inicio)) {
           VIAGENS.viagensEmAndamento.push(viagem);
         }
       }
@@ -311,8 +311,8 @@ function _loadUserDataHTML(dados, tipo) {
     VIAGENS.viagensAnteriores = viagensAnteriores;
 
     function _sortByToday(a, b) {
-      const fimA = _convertFromFirestoreDate(a.fim);
-      const fimB = _convertFromFirestoreDate(b.fim);
+      const fimA = _convertFromDateObject(a.fim);
+      const fimB = _convertFromDateObject(b.fim);
       const diferencaA = Math.abs(hoje - fimA);
       const diferencaB = Math.abs(hoje - fimB);
       return diferencaA - diferencaB;
