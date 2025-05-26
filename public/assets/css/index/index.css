@@ -21,6 +21,7 @@ body {
   color: #3A3838;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  padding-top: env(safe-area-inset-top);
 }
 
 strong {

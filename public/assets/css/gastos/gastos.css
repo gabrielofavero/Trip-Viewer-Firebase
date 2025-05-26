@@ -17,6 +17,7 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   transition: all 0.3s;
+  padding-top: env(safe-area-inset-top);
 }
 
 a {
