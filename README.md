@@ -5,9 +5,9 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
-| 🏆     | Feature  | F000    | 87    | 69          | 18         |
+| 🏆     | Feature  | F000    | 93    | 69          | 24         |
 | 📈     | Melhoria | M000    | 104    | 80          | 24        |
-| ⚔️   | Épico   | E000    | 29    | 18          | 11         |
+| ⚔️   | Épico   | E000    | 32    | 18          | 14         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -15,26 +15,27 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F084:** Histórico de documentos
-  - *Fazer 5-10 cópias do do documento (analisar tamanho dos arquivos)*
-  - *Checar compatibilidade a partir do data mais recente*
-  - *Manter se incompatível, mas impedir substituição*
-  - *Colocar opção de forçar*
-- 🏆 **F085:** PDF Export
-  - *Exportar dados da viagem em PDF*
-  - *PDF deve seguir design semelhante ao site, porém em forma resumida*
-- 🏆 **F086:** Account Import/Export
-  - *Utiliza sistema de arquivo em JSON*
-  - *Limpar dados atuais antes de importar*
-  - *Mergear com dados atuais (ignorar documentos com o mesmo título)*
-  - *Mergear com dados atuais (não ignorar documentos com o mesmo título)*
-
-### Prioridade Média
+- ⚔️ **E030:** Account Import/Export
+  - 🏆 **F086:** *Export All + Import all (Apenas Funções)*
+  - 🏆 **F088:** *Export Selected (Apenas Funções)*
+  - 🏆 **F089:** *Import Selected (Apenas Funções)*
+  - 🏆 **F090:** *Account Import/Export: Interface*
+- ⚔️ **E031:** Histórico de documentos
+  - 🏆 **F084:** Armazenar cópias no próprio documento
+  - 🏆 **F091:** Função de restauração + checagem de compatibilidade
+  - 🏆 **F092:** Histórico de documentos: Interface
+- ⚔️ **E032:** Export local de viagens
+  - 🏆 **F085:** Criar página de viagem / destino para impressão
+  - 🏆 **F093:** Exportação automática via PDF + Interface
 - 🏆 **F087:** Load único de destinos
   - *Todos os destinos carregados*
   - *Switch via função*
   - *Switch via tab*
   - *Lighbox se preserva (sem reload)*
+- ⚔️🚦 **E018:** Novo Front-End: Index.html
+  - *Aguardando template do Guilherme*
+
+### Prioridade Média
 - 📈 **M104:** Todos os liks externos devem abrir via window.open
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - ⚔️ **E028:** Places API Text Search
@@ -76,8 +77,6 @@
 - ⚔️🚦 **E016:** Novo Front-End: Destinos.html
   - *Aguardando Guilherme desenvolver nova versão do template*
 - ⚔️🚦**E017:** Novo Front-End: Viagens.html
-  - *Aguardando template do Guilherme*
-- ⚔️🚦 **E018:** Novo Front-End: Index.html
   - *Aguardando template do Guilherme*
 - ⚔️ **E019:** Melhorias JavaScript
   - *Código duplicado*
