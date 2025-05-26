@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
-| 🏆     | Feature  | F000    | 87    | 68          | 19         |
+| 🏆     | Feature  | F000    | 87    | 69          | 18         |
 | 📈     | Melhoria | M000    | 104    | 80          | 24        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F083:** Cache Busting
 - 🏆 **F084:** Histórico de documentos
   - *Fazer 5-10 cópias do do documento (analisar tamanho dos arquivos)*
   - *Checar compatibilidade a partir do data mais recente*
@@ -121,6 +120,7 @@
 ## Done
 
 ### Maio 2025
+- 🏆 **F083:** Cache Busting
 - 🏆 **F082:** Versionamento
 - ❗️🐞 **B075:** Implementação do timezone causa problemas
   - *Salvamento de datas (ainda está salvando em data firestore)*

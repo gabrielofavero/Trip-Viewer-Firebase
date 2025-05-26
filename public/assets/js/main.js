@@ -6,6 +6,11 @@
     - Modified by: Gabriel Fávero
 */
 
+const APP = {
+  projectId: null,
+  version: null,
+}
+
 // Easy Selectors
 const select = (el, all = false) => {
   el = el.trim();
@@ -210,7 +215,8 @@ function _loadConfig() {
     $.getJSON("/assets/json/moedas.json").then(data => config.moedas = data),
     $.getJSON("/assets/json/transportes.json").then(data => config.transportes = data),
     $.getJSON("/assets/json/set.json").then(data => config.set = data),
-    $.getJSON("/assets/json/gastos-icones.json").then(data => config.gastosIcones = data)
+    $.getJSON("/assets/json/gastos-icones.json").then(data => config.gastosIcones = data),
+    $.getJSON("/assets/json/version.json").then(data => config.versoes = data)
   ]).then(() => {
     CONFIG = config;
   }).catch(error => {
@@ -223,3 +229,19 @@ function _openLinkInNewTab(url) {
   var win = window.open(url, '_blank');
   win.focus();
 }
+window.addEventListener('load', () => {
+  // App Initialization
+  APP.projectId = firebase.app().options.projectId;
+  APP.version = window.location.hostname === "localhost" ? new Date().getTime() : CONFIG.versoes[APP.projectId];
+
+  // Cache Busting
+  if (APP.version) {
+    const tags = document.querySelectorAll('script[src], link[rel="stylesheet"]');
+    tags.forEach(tag => {
+      const attr = tag.tagName === 'LINK' ? 'href' : 'src';
+      const url = new URL(tag.getAttribute(attr), window.location.origin);
+      url.searchParams.set('v', APP.version);
+      tag.setAttribute(attr, url.toString());
+    });
+  }
+});
