@@ -4,8 +4,8 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 75    | 74          | 1         |
-| 🏆     | Feature  | F000    | 81    | 67          | 14         |
+| 🐞     | Bug      | B000    | 75    | 75          | 0         |
+| 🏆     | Feature  | F000    | 87    | 67          | 20         |
 | 📈     | Melhoria | M000    | 104    | 80          | 24        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
@@ -15,8 +15,29 @@
 
 ## Backlog
 ### Prioridade Alta
+- 🏆 **F082:** Versionamento
+- 🏆 **F083:** Cache reset
+- 🏆 **F084:** Histórico de documentos
+  - *Fazer 5-10 cópias do do documento (analisar tamanho dos arquivos)*
+  - *Checar compatibilidade a partir do data mais recente*
+  - *Manter se incompatível, mas impedir substituição*
+  - *Colocar opção de forçar*
+- 🏆 **F085:** PDF Export
+  - *Exportar dados da viagem em PDF*
+  - *PDF deve seguir design semelhante ao site, porém em forma resumida*
+- 🏆 **F086:** Account Import/Export
+  - *Utiliza sistema de arquivo em JSON*
+  - *Limpar dados atuais antes de importar*
+  - *Mergear com dados atuais (ignorar documentos com o mesmo título)*
+  - *Mergear com dados atuais (não ignorar documentos com o mesmo título)*
+
+### Prioridade Média
+- 🏆 **F087:** Load único de destinos
+  - *Todos os destinos carregados*
+  - *Switch via função*
+  - *Switch via tab*
+  - *Lighbox se preserva (sem reload)*
 - 📈 **M104:** Todos os liks externos devem abrir via window.open
-- 🐞 **B075:** Implementação do timezone causa problemas
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
@@ -32,8 +53,6 @@
   - *Mudança no dynamic select (edit/trip.html)*
   - *Script de migração* 
 - 🏆 **F081:** Embed de mapa quando não houver vídeo no destino
-
-### Prioridade Média
 - 🏆 **F071:** Gastos Multi Pessoas
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
@@ -103,6 +122,9 @@
 ## Done
 
 ### Maio 2025
+- ❗️🐞 **B075:** Implementação do timezone causa problemas
+  - *Salvamento de datas (ainda está salvando em data firestore)*
+  - *Countdown*
 - 🐞 **B074:** x do menu fica invisível no light mode
 - 🐞 **B073:** Implementação do timezone causa problemas de conversão
 

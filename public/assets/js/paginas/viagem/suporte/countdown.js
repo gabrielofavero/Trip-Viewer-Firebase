@@ -7,7 +7,7 @@ COUNTDOWN = setInterval(function () {
   if (FIRESTORE_DATA && FIRESTORE_DATA.inicio) {
     const now = new Date().getTime();
     const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
-    var distance = _convertFromDateObject(FIRESTORE_DATA.inicio) - now;
+    var distance = inicio - now;
 
     if (now > inicio || distance < 0) {
       clearInterval(COUNTDOWN);

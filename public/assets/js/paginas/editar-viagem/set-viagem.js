@@ -7,12 +7,12 @@ async function _buildTripObject() {
         destinos: _buildDestinosArray(),
         compartilhamento: await _buildCompartilhamentoObject(),
         cores: _buildCoresObject(),
-        fim: getID(`fim`).value ? _formattedDateToFirestoreDate(getID(`fim`).value) : "",
+        fim: getID(`fim`).value ? _formattedDateToDateObject(getID(`fim`).value) : "",
         gastosPin: getID('pin-enable').checked,
         galeria: _buildGaleriaObject(),
         hospedagens: _buildHospedagemObject(),
         imagem: _buildImagemObject(),
-        inicio: getID(`inicio`).value ? _formattedDateToFirestoreDate(getID(`inicio`).value) : "",
+        inicio: getID(`inicio`).value ? _formattedDateToDateObject(getID(`inicio`).value) : "",
         links: _buildLinksObject(),
         modulos: _buildModulosObject(),
         moeda: getID(`moeda`).value,
@@ -134,8 +134,8 @@ function _buildTransporteObject() {
         const j = _getJ(child);
         result.dados.push({
             datas: {
-                chegada: _formattedDateToFirestoreDate(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
-                partida: _formattedDateToFirestoreDate(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
+                chegada: _formattedDateToDateObject(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
+                partida: _formattedDateToDateObject(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
             },
             duracao: getID(`transporte-duracao-${j}`).value,
             empresa: _getValueEmpresa(j),
@@ -160,8 +160,8 @@ function _buildHospedagemObject() {
         result.push({
             cafe: getID(`hospedagens-cafe-${j}`).checked,
             datas: {
-                checkin: _formattedDateToFirestoreDate(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
-                checkout: _formattedDateToFirestoreDate(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
+                checkin: _formattedDateToDateObject(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
+                checkout: _formattedDateToDateObject(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
             },
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
@@ -180,7 +180,7 @@ function _buildProgramacaoObject() {
 
     for (let j = 1; j <= DATAS.length; j++) {
         const innerResult = {
-            data: _convertToFirestoreDate(DATAS[j - 1]),
+            data: _convertToDateObject(DATAS[j - 1]),
             destinosIDs: [],
             titulo: '',
             madrugada: [],
@@ -234,7 +234,7 @@ function _buildLineupObject() {
             local: getID(`lineup-local-${j}`).value,
             genero: getID(`lineup-genero-select-${j}`).value,
             palco: getID(`lineup-palco-select-${j}`).value,
-            data: data ? _keyToFirestoreDate(data) : "",
+            data: data ? _keyToDateObject(data) : "",
             inicio: getID(`lineup-inicio-${j}`).value,
             fim: getID(`lineup-fim-${j}`).value,
             midia: getID(`lineup-midia-${j}`).value,
