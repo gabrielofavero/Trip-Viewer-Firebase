@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
 
-  <title>TripViewer</title>
+  <title>Editar Viagem</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -18,14 +18,14 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="../favicon.ico">
   <meta name="msapplication-TileColor" content="#e4ebdb">
-  <meta name="msapplication-config" content="browserconfig.xml">
+  <meta name="msapplication-config" content="../browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
 
   <!-- Google Fonts -->
@@ -34,15 +34,15 @@
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/editar/editar.css" rel="stylesheet">
+  <link href="../assets/css/editar/editar.css" rel="stylesheet">
 
 </head>
 
@@ -50,7 +50,7 @@
   <!-- ======= Hero ======= -->
   <section id="hero">
     <div class="top-bar" id="top-bar">
-      <a href="index.html" class="logo-link">
+      <a href="../index.html" class="logo-link">
         <div class="logo-box">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
             <g style="isolation: isolate;">
@@ -102,7 +102,7 @@
         </div>
       </a>
       <div class="icons-box" id="icons-box">
-        <i onclick="window.location = 'index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
+        <i onclick="window.location = '../index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
 
@@ -300,37 +300,6 @@
               <label>Fim</label>
               <input class="flex-input" id="fim" type="date" value="2023-01-22" />
             </div>
-          </div>
-
-          <div class="nice-form-group">
-            <label>Fuso Horário</label>
-            <select id="offset">
-              <option value="720">(UTC-12:00) International Date Line West</option>
-              <option value="660">(UTC-11:00) Coordinated Universal Time-11</option>
-              <option value="600">(UTC-10:00) Hawaii</option>
-              <option value="540">(UTC-09:00) Alaska</option>
-              <option value="480">(UTC-08:00) Pacific Time (US & Canada)</option>
-              <option value="420">(UTC-07:00) Mountain Time (US & Canada)</option>
-              <option value="360">(UTC-06:00) Central Time (US & Canada)</option>
-              <option value="300">(UTC-05:00) Eastern Time (US & Canada)</option>
-              <option value="240">(UTC-04:00) Atlantic Time (Canada)</option>
-              <option value="180">(UTC-03:00) Brasilia</option>
-              <option value="120">(UTC-02:00) Mid-Atlantic</option>
-              <option value="60">(UTC-01:00) Azores</option>
-              <option value="0">(UTC+00:00) Greenwich Mean Time</option>
-              <option value="-60">(UTC+01:00) Central European Time</option>
-              <option value="-120">(UTC+02:00) Eastern European Time</option>
-              <option value="-180">(UTC+03:00) Moscow Standard Time</option>
-              <option value="-240">(UTC+04:00) Gulf Standard Time</option>
-              <option value="-300">(UTC+05:00) Pakistan Standard Time</option>
-              <option value="-360">(UTC+06:00) Bangladesh Standard Time</option>
-              <option value="-420">(UTC+07:00) Indochina Time</option>
-              <option value="-480">(UTC+08:00) China Standard Time</option>
-              <option value="-540">(UTC+09:00) Japan Standard Time</option>
-              <option value="-600">(UTC+10:00) Australian Eastern Standard Time</option>
-              <option value="-660">(UTC+11:00) Solomon Islands Time</option>
-              <option value="-720">(UTC+12:00) New Zealand Standard Time</option>
-            </select>
           </div>
 
           <div class="nice-form-group">
@@ -803,9 +772,9 @@
             </div>
             <div id="com-destinos" style="display: none">
               <div class="nice-form-group">
-                <input type="search" id="destinos-search" placeholder="Pesquisar destino cadastrado" value="">
+                <input type="search" id="destinos-search" placeholder="Pesquisar destino" value="">
               </div>
-              <fieldset class="nice-form-group destinos-checkboxes" id="destinos-checkboxes"></fieldset>
+              <fieldset class="nice-form-group destinos-checkboxes" id="destinos-checkboxes" style="min-height: 150px"></fieldset>
             </div>
             <div id="todos-destinos-utilizados" class="message-text"> <i class='red'>*</i> Não é possível adicionar
               novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados</div>
@@ -995,9 +964,15 @@
 
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
+  <div id="toast" style="display: none">
+    <span id="toast-text"></span>
+    <span class="toast-close" onclick="_closeToast()">
+      <i class="iconify" data-icon="material-symbols:close"></i>
+    </span>
+  </div>
 
   <!-- Firebase -->
-  <script src="../index.js" type=text/JSX"></script>
+  <script src="../../index.js" type=text/JSX"></script>
   <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
   <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
   <script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>
@@ -1006,56 +981,56 @@
   <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/typed.js/typed.min.js"></script>
+  <script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="assets/vendor/sortable/sortable.min.js"></script>
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/sortable/sortable.min.js"></script>
 
   <script src="https://apis.google.com/js/api.js"></script>
 
   <!-- App JS Files -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/suporte/estilos/animacoes.js"></script>
-  <script src="assets/js/suporte/paginas/dados.js"></script>
-  <script src="assets/js/suporte/firebase/database.js"></script>
-  <script src="assets/js/suporte/firebase/user.js"></script>
-  <script src="assets/js/suporte/paginas/datas.js"></script>
-  <script src="assets/js/suporte/firebase/storage.js"></script>
-  <script src="assets/js/suporte/estilos/cores.js"></script>
-  <script src="assets/js/suporte/estilos/visibilidade.js"></script>
-  <script src="assets/js/paginas/index/suporte/visibilidade.js"></script>
-  <script src="assets/js/suporte/paginas/dispositivos.js"></script>
-  <script src="assets/js/suporte/paginas/mensagens.js"></script>
-  <script src="assets/js/suporte/paginas/carregamento.js"></script>
-  <script src="assets/js/suporte/html/fields.js"></script>
-  <script src="assets/js/suporte/html/accordion.js"></script>
-  <script src="assets/js/suporte/componentes/sortable.js"></script>
-  <script src="assets/js/suporte/componentes/dynamic-select.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/customizacao.js"></script>
-  <script src="assets/js/suporte/paginas/pin.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/gastos.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/transporte.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/hospedagem.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/destinos.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/programacao/programacao.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/content.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/text-replacement.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/inner-programacao.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/lineup.js"></script>
-  <script src="assets/js/paginas/editar-viagem/categorias/galeria.js"></script>
-  <script src="assets/js/paginas/editar-viagem/nova-viagem.js"></script>
-  <script src="assets/js/paginas/editar-viagem/viagem-existente.js"></script>
-  <script src="assets/js/suporte/paginas/set.js"></script>
-  <script src="assets/js/paginas/editar-viagem/set-viagem.js"></script>
-  <script src="assets/js/paginas/editar-viagem/suporte/event-listeners.js"></script>
-  <script src="assets/js/paginas/editar-viagem/editar-viagem.js"></script>
-  <script src="assets/js/suporte/paginas/atribuicoes.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/suporte/estilos/animacoes.js"></script>
+  <script src="../assets/js/suporte/paginas/dados.js"></script>
+  <script src="../assets/js/suporte/firebase/database.js"></script>
+  <script src="../assets/js/suporte/firebase/user.js"></script>
+  <script src="../assets/js/suporte/paginas/datas.js"></script>
+  <script src="../assets/js/suporte/firebase/storage.js"></script>
+  <script src="../assets/js/suporte/estilos/cores.js"></script>
+  <script src="../assets/js/suporte/estilos/visibilidade.js"></script>
+  <script src="../assets/js/paginas/index/suporte/visibilidade.js"></script>
+  <script src="../assets/js/suporte/paginas/dispositivos.js"></script>
+  <script src="../assets/js/suporte/paginas/mensagens.js"></script>
+  <script src="../assets/js/suporte/paginas/carregamento.js"></script>
+  <script src="../assets/js/suporte/html/fields.js"></script>
+  <script src="../assets/js/suporte/html/accordion.js"></script>
+  <script src="../assets/js/suporte/componentes/sortable.js"></script>
+  <script src="../assets/js/suporte/componentes/dynamic-select.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/customizacao.js"></script>
+  <script src="../assets/js/suporte/paginas/pin.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/gastos.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/transporte.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/hospedagem.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/destinos.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/programacao/programacao.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/content.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/inner-programacao.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/text-replacement.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/lineup.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/galeria.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/nova-viagem.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/viagem-existente.js"></script>
+  <script src="../assets/js/suporte/paginas/set.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/set-viagem.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/suporte/event-listeners.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/editar-viagem.js"></script>
+  <script src="../assets/js/suporte/paginas/atribuicoes.js"></script>
 
 </body>
 

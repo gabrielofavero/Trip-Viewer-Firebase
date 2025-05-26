@@ -251,8 +251,8 @@ function _loadUserDataHTML(dados, tipo) {
       case 'proximasViagens':
       case 'viagensAnteriores':
         innertipo = 'viagens';
-        const inicioDate = _convertFromFirestoreDate(dados[i].inicio);
-        const fimDate = _convertFromFirestoreDate(dados[i].fim);
+        const inicioDate = _convertFromDateObject(dados[i].inicio);
+        const fimDate = _convertFromDateObject(dados[i].fim);
         const inicio = _jsDateToDate(inicioDate);
         const fim = _jsDateToDate(fimDate);
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
@@ -292,13 +292,13 @@ function _loadUserDataHTML(dados, tipo) {
 
     for (let i = 0; i < dados.length; i++) {
       const viagem = dados[i];
-      const fim = _convertFromFirestoreDate(viagem.fim);
+      const fim = _convertFromDateObject(viagem.fim);
 
       if (hoje > fim) {
         viagensAnteriores.push(viagem);
       } else {
         proximasViagens.push(viagem);
-        if (hoje >= _convertFromFirestoreDate(viagem.inicio)) {
+        if (hoje >= _convertFromDateObject(viagem.inicio)) {
           VIAGENS.viagensEmAndamento.push(viagem);
         }
       }
@@ -311,8 +311,8 @@ function _loadUserDataHTML(dados, tipo) {
     VIAGENS.viagensAnteriores = viagensAnteriores;
 
     function _sortByToday(a, b) {
-      const fimA = _convertFromFirestoreDate(a.fim);
-      const fimB = _convertFromFirestoreDate(b.fim);
+      const fimA = _convertFromDateObject(a.fim);
+      const fimB = _convertFromDateObject(b.fim);
       const diferencaA = Math.abs(hoje - fimA);
       const diferencaB = Math.abs(hoje - fimB);
       return diferencaA - diferencaB;
@@ -321,39 +321,39 @@ function _loadUserDataHTML(dados, tipo) {
 }
 
 function _viagensEditar(code) {
-  window.open(`editar-viagem.html?v=${code}`, '_blank');
+  window.open(`edit/trip.html?v=${code}`, '_blank');
 }
 
 function _viagensVisualizar(code) {
-  window.open(`viagem.html?v=${code}`, '_blank'); 
+  window.open(`view.html?v=${code}`, '_blank'); 
 }
 
 function _viagensNovo() {
-  window.open(`editar-viagem.html`, '_blank');
+  window.open(`edit/trip.html`, '_blank');
 }
 
 function _destinosNovo() {
-  window.open(`editar-destino.html`, '_blank');
+  window.open(`edit/destination.html`, '_blank');
 }
 
 function _destinosEditar(code) {
-  window.open(`editar-destino.html?d=${code}`, '_blank');
+  window.open(`edit/destination.html?d=${code}`, '_blank');
 }
 
 function _destinosVisualizar(code) {
-  window.open(`viagem.html?d=${code}`, '_blank');
+  window.open(`view.html?d=${code}`, '_blank');
 }
 
 function _listagensEditar(code) {
-  window.open(`editar-listagem.html?l=${code}`, '_blank');
+  window.open(`edit/listing.html?l=${code}`, '_blank');
 }
 
 function _listagensVisualizar(code) {
-  window.open(`viagem.html?l=${code}`, '_blank');
+  window.open(`view.html?l=${code}`, '_blank');
 }
 
 function _listagensNovo() {
-  window.open(`editar-listagem.html`, '_blank');
+  window.open(`edit/listing.html`, '_blank');
 }
 
 function _loadNotificationBar() {

@@ -9,11 +9,14 @@ function _loadHospedagens() {
   if (swiperData.length === 0) return;
 
   _buildHospedagensSwiper(swiperData);
-  _loadImageLightbox('hospedagens-galeria');
+
+  for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
+    _loadImageLightbox(`hospedagens-galeria-${j}`);
+  }
+  
 }
 
-function _getHospedagensHTML(i) {
-  const j = i + 1;
+function _getHospedagensHTML(i, innerProgramacao=false) {
   const original = FIRESTORE_DATA.hospedagens[i];
   const hospedagem = {
     cafe: original.cafe,
@@ -22,11 +25,16 @@ function _getHospedagensHTML(i) {
     reserva: original.reserva,
     descricao: original.descricao,
     endereco: original.endereco,
-    imagem: _getImageLink(original.imagem),
+    imagens: original.imagens,
     link: original.link,
     nome: original.nome
   }
 
+  if (innerProgramacao) {
+    return _getHotelBoxHTML(hospedagem, 'inner-programacao', true);
+  }
+
+  const j = i + 1;
   return `<div class="swiper-slide" id="hospedagens-slide-${j}">
             <div class="testimonial-item">
               ${_getHotelBoxHTML(hospedagem, j)}
@@ -34,17 +42,24 @@ function _getHospedagensHTML(i) {
           </div>`
 }
 
-function _getHotelBoxHTML(hospedagem, identifier, innerProgramacao=false) {
-  const imagem = innerProgramacao ? _getImageLink(hospedagem.imagem) : hospedagem.imagem;
-  const checkIn = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkin) : hospedagem.checkIn;
-  const checkOut = innerProgramacao ? _getHospedagensData(hospedagem.datas.checkout) : hospedagem.checkOut
-  const galeria = innerProgramacao ? 'programacao-galeria' : 'hospedagens-galeria';
-  return `<div class="hotel-box${innerProgramacao? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${identifier}">
-            <div class="portfolio-wrap" style="display: ${imagem ? 'block' : 'none'};">
-              <div class="hotel-img" style="background-image: url('${imagem}');">
+function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
+  const imagens = hospedagem.imagens;
+  const checkIn = hospedagem.checkIn;
+  const checkOut = hospedagem.checkOut
+  const galeriaId = innerProgramacao ? 'programacao-galeria' : `hospedagens-galeria-${j}`;
+  let galeriaItems = '';
+
+  for (let i = 0; i < imagens.length; i++) {
+    const imagem = imagens[i];
+    galeriaItems += `<a href="${imagem.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${imagem.descricao}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ''}</a>`;
+  }
+
+  return `<div class="hotel-box${innerProgramacao? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${j}${innerProgramacao ? '-inner' : ''}">
+            <div class="portfolio-wrap" style="display: ${imagens.length > 0 ? 'block' : 'none'};">
+              <div class="hotel-img" style="background-image: url('${imagens[0].link}');">
                 <div class="portfolio-info">
                   <div class="portfolio-links">
-                    <a href="${imagem}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeria}" title="${_getHospedagemImagemTitle(hospedagem)}"><i class="bx bx-zoom-in"></i></a>
+                    ${galeriaItems}
                   </div>
                 </div>
                 <div class="hotel-img-text-container">
@@ -57,7 +72,7 @@ function _getHotelBoxHTML(hospedagem, identifier, innerProgramacao=false) {
             <div class="hotel-content">
               <div class="hotel-title">
                 <div class="left-title">
-                  <div class="hotel-name" id="hospedagens-nome-${identifier}">
+                  <div class="hotel-name" id="hospedagens-nome-${j}">
                     ${hospedagem.nome}
                     <div>
                       <i style="display: ${hospedagem.link ? 'block' : 'none'}" class="iconify external-link" 
@@ -92,26 +107,21 @@ function _getHotelBoxHTML(hospedagem, identifier, innerProgramacao=false) {
             </div>`
 }
 
-function _getHospedagemImagemTitle(hospedagem) {
-  if (hospedagem.hospedagem && hospedagem.descricao) {
-    return `${hospedagem.hospedagem} - ${hospedagem.descricao}`;
-  } else return hospedagem.hospedagem || "";
-}
-
 function _getHospedagensData(dataFirestore) {
-  const date = _convertFromFirestoreDate(dataFirestore);
+  const date = _convertFromDateObject(dataFirestore);
   return `${_jsDateToDate(date)}, ${_jsDateToTime(date)}`;
 }
 
 function _buildHospedagensSwiper(swiperData) {
+  const swiperButtonStyle = swiperData.length > 1 ? '' : `style="display: none"`
   getID(`hospedagens-box`).innerHTML = `<div id="hospedagens-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                                           <div class="swiper-wrapper" id="hospedagens-wrapper">
                                             ${swiperData.join("")}
                                           </div>
                                           <div class="swiper-controls">
-                                            <div class="swiper-button-prev hospedagens-prev"></div>
+                                            <div class="swiper-button-prev hospedagens-prev" ${swiperButtonStyle}></div>
                                             <div class="swiper-pagination hospedagens-pagination"></div>
-                                            <div class="swiper-button-next hospedagens-next"></div>
+                                            <div class="swiper-button-next hospedagens-next" ${swiperButtonStyle}></div>
                                           </div>
                                         </div>`;
   ADJUST_HEIGHT_CARDS.push('hospedagens')

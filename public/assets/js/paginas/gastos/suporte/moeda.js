@@ -15,13 +15,13 @@ async function _loadMoedas() {
 
     switch (MOEDAS.resumo.length) {
         case 0:
-            MOEDA_ATUAL = MOEDA_PADRAO;
+            MOEDA_ATUAL = MOEDAS.resumo.includes(MOEDA_PADRAO) ? MOEDA_PADRAO : MOEDAS.resumo[0];
             getID('tab-moedas').style.display = 'none';
             break
         case 1:
             MOEDA_ATUAL = MOEDAS.resumo[0];
         default:
-            MOEDA_ATUAL = MOEDA_PADRAO;
+            MOEDA_ATUAL = MOEDAS.resumo.includes(MOEDA_PADRAO) ? MOEDA_PADRAO : MOEDAS.resumo[0];
             await _loadMoedaConversao();
             _loadMoedasTab();
     }

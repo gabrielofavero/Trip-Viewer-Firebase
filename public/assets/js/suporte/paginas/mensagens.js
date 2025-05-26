@@ -145,7 +145,7 @@ function _getErrorMessage(erro) {
 }
 
 // Mensagem de Não Autorizado
-function _displayForbidden(conteudo, redirectTo = 'viagem.html') {
+function _displayForbidden(conteudo, redirectTo = 'view.html') {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   propriedades.titulo = "Acesso Negado 🚫";
   propriedades.conteudo = conteudo || "Você não tem permissão para acessar esta página.";
@@ -265,10 +265,11 @@ function _getButton(botao) {
 }
 
 function _getHomeButton() {
+  const homeButton = ['editar-viagem', 'editar-destino', 'editar-listagem'].includes(_getHTMLpage()) ? '../index.html' : 'index.html'
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', 'window.location.href = "index.html";')
+  button.setAttribute('onclick', `window.location.href = "${homeButton}";`)
 
   const icon = document.createElement('i');
   icon.id = 'transporte-nav';
@@ -359,7 +360,7 @@ function _getDeleteButtonBasic(onclick) {
 }
 
 function _openToast(text) {
-  getID('toast-text').innerText = text;
+  getID('toast-text').innerHTML = text;
   _fadeIn(['toast']);
   setTimeout(() => {
     _closeToast();

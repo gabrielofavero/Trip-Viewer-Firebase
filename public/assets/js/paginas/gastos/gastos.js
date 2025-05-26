@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     let documentID = _getURLParam('g');
 
     if (!gastosExport || !documentID) {
-        const url = documentID ? `viagem.html?v=${documentID}` : 'index.html';
+        const url = documentID ? `view.html?v=${documentID}` : 'index.html';
         _displayForbidden('Nenhum documento de gastos foi encontrado. Certifique-se de que você está acessando a página por meio do botão "Gastos" na página de Viagem', url);
         return;
     }
 
     if (!gastosExport?.ativo) {
-        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `viagem.html?v=${documentID}`);
+        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `view.html?v=${documentID}`);
         return;
     }
 
@@ -57,11 +57,19 @@ function _requestPinGastos() {
     _requestPin({ confirmAction, cancelAction, precontent });
 }
 
+function _requestPinGastosInvalido() {
+    const cancelAction = `_exitGastos()`;
+    const confirmAction = '_loadGastos()';
+    const precontent = 'PIN Incorreto. Digite o PIN cadastrado para essa viagem.';
+    const invalido = true;
+    _requestPin({ confirmAction, cancelAction, precontent, invalido });
+}
+
 function _exitGastos() {
     if (window.parent._closeLightbox) {
         window.parent._closeLightbox();
     } else if (_getURLParam('g')) {
-        window.location.href = `viagem.html?v=${_getURLParam('g')}`;
+        window.location.href = `view.html?v=${_getURLParam('g')}`;
     } else {
         window.location.href = 'index.html';
     }
@@ -74,7 +82,12 @@ async function _loadGastos() {
     _removePinListener();
     _startLoadingScreen(false);
     try {
-        GASTOS = await _cloudFunction('getGastos', { documentID, pin });
+        if (pin) {
+            GASTOS = await _get(`gastos/protected/${pin}/${documentID}`, false);
+        } else {
+            GASTOS = await _get(`gastos/${documentID}`, false);
+        }
+
         if (GASTOS) {
             await _loadMoedas();
             _loadGastosConvertidos();
@@ -84,8 +97,13 @@ async function _loadGastos() {
             _stopLoadingScreen();
         }
     } catch (error) {
-        console.error(error);
-        _displayError('Não foi possível carregar a página de gastos');
+        if (error?.message == 'Missing or insufficient permissions.') {
+            console.warn(error.message);
+            _requestPinGastosInvalido()
+        } else {
+            console.error(error);
+            _displayError('Não foi possível carregar a página de gastos');
+        }
         _stopLoadingScreen();
     }
 }

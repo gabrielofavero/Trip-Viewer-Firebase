@@ -1,3 +1,5 @@
+var INPUT_DETECTED = false;
+
 // Loader
 function _loadEventListeners() {
     // Inputs
@@ -7,16 +9,16 @@ function _loadEventListeners() {
     // Botões
     getID('editores-adicionar').addEventListener('click', () => _addEditores());
     getID('salvar').addEventListener('click', () => _setViagem());
-    getID('re-editar').addEventListener('click', () => _reEdit('viagens', WAS_SAVED));
+    getID('re-editar').addEventListener('click', () => _reEdit('viagens', SUCCESSFUL_SAVE));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
-    getID('home').addEventListener('click', () => window.location.href = `index.html`);
-    getID('home').addEventListener('click', () => window.location.href = `index.html`);
-    getID('cancelar').addEventListener('click', () => window.location.href = `index.html`);
+    getID('home').addEventListener('click', () => window.location.href = '../index.html');
+    getID('home').addEventListener('click', () => window.location.href = '../index.html');
+    getID('cancelar').addEventListener('click', () => window.location.href = '../index.html');
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
-    getID('pin-enable').addEventListener('click', () => _switchPinVisibility());
-    getID('pin-disable').addEventListener('click', () => _switchPinVisibility());
+    getID('pin-enable').addEventListener('click', () => _switchPin());
+    getID('pin-disable').addEventListener('click', () => _switchPin());
 
     // Visibilidade do Ida e Volta (Transporte)
     getID('condensar').addEventListener('change', () => _applyIdaVoltaVisibility());
@@ -43,6 +45,19 @@ function _loadEventListeners() {
     getID('dark-and-light').addEventListener('change', () => _visibilityListenerAction());
     getID('light-exclusive').addEventListener('change', () => _visibilityListenerAction());
     getID('dark-exclusive').addEventListener('change', () => _visibilityListenerAction());
+
+    document.addEventListener("input", (event) => {
+        if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
+          INPUT_DETECTED = true;
+        }
+      });
+    
+      window.addEventListener("beforeunload", (event) => {
+        if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
+          event.preventDefault();
+          event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
+        }
+      });
 }
 
 // Actions
@@ -76,9 +91,9 @@ function _fimListenerAction() {
 
 function _visualizarListenerAction() {
     if (DOCUMENT_ID) {
-        window.location.href = `viagem.html?v=${DOCUMENT_ID}`;
+        window.open(`../view.html?v=${DOCUMENT_ID}`, '_blank');
     } else {
-        window.location.href = `index.html`;
+        window.location.href = '../index.html';
     }
 }
 

@@ -4,10 +4,10 @@
 
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
-| 🐞     | Bug      | B000    | 67    | 63          | 4         |
-| 🏆     | Feature  | F000    | 76    | 62          | 14         |
-| 📈     | Melhoria | M000    | 97    | 72          | 25        |
-| ⚔️   | Épico   | E000    | 26    | 16          | 10         |
+| 🐞     | Bug      | B000    | 75    | 75          | 0         |
+| 🏆     | Feature  | F000    | 87    | 69          | 18         |
+| 📈     | Melhoria | M000    | 104    | 80          | 24        |
+| ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -15,27 +15,43 @@
 
 ## Backlog
 ### Prioridade Alta
-- 📈 **M096:** Ajustes mobile e webview
-- 📈 **M097:** Automações programação (editar-viagem.html)
-- 🏆 **F071:** Gastos Multi Pessoas
-- 🏆 **F072:** Passagens Multi pessoas
-- 📈 **M087:** Melhor exibição de destinos (editar-viagem.html)
-  - *Itens selecionados mostrados primeiro (apenas no load inicial)*
-  - *Melhor exibição de várias regiões (carrosel talvez)*
-- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
-- 🐞 **B067:** Correções em carregamento de gastos e edição
-- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
-  - *Adicionar imagem e descrição*
-  - *Sem .html*
-  - *Redirecionador para antigo viagens.html*
-- 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (editar-destino.html)
-  - *Mudança no get e no set (editar-destino.html)*
-  - *Criação de estrutura no front (editar-destino.html)*
-  - *Mudança no get (viagem.html e destino.html)*
-  - *Mudança no dynamic select (editar-destino.html)*
-  - *Script de migração* 
+- 🏆 **F084:** Histórico de documentos
+  - *Fazer 5-10 cópias do do documento (analisar tamanho dos arquivos)*
+  - *Checar compatibilidade a partir do data mais recente*
+  - *Manter se incompatível, mas impedir substituição*
+  - *Colocar opção de forçar*
+- 🏆 **F085:** PDF Export
+  - *Exportar dados da viagem em PDF*
+  - *PDF deve seguir design semelhante ao site, porém em forma resumida*
+- 🏆 **F086:** Account Import/Export
+  - *Utiliza sistema de arquivo em JSON*
+  - *Limpar dados atuais antes de importar*
+  - *Mergear com dados atuais (ignorar documentos com o mesmo título)*
+  - *Mergear com dados atuais (não ignorar documentos com o mesmo título)*
 
 ### Prioridade Média
+- 🏆 **F087:** Load único de destinos
+  - *Todos os destinos carregados*
+  - *Switch via função*
+  - *Switch via tab*
+  - *Lighbox se preserva (sem reload)*
+- 📈 **M104:** Todos os liks externos devem abrir via window.open
+- 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
+- ⚔️ **E028:** Places API Text Search
+- ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
+- 📈 **M096:** Ajustes mobile e webview
+- 📈 **M097:** Automações programação (edit/trip.html)
+- 🏆 **F072:** Passagens Multi pessoas
+- 📈 **M087:** Load de destinos carrega tudo imediatamente
+- 🏆 **F069:** Tab para seleção de destinos dentro da página
+- 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (edit/trip.html)
+  - *Mudança no get e no set (edit/trip.html)*
+  - *Criação de estrutura no front (edit/trip.html)*
+  - *Mudança no get (view.html e destino.html)*
+  - *Mudança no dynamic select (edit/trip.html)*
+  - *Script de migração* 
+- 🏆 **F081:** Embed de mapa quando não houver vídeo no destino
+- 🏆 **F071:** Gastos Multi Pessoas
 - 📈 **M086:** Melhoria no pop-up de erro
   - *Forçar Refresh (Home ou tentar novamente)*
   - *Tentar novamente habilitado primeiro load, desabilitado posterior*
@@ -45,7 +61,7 @@
   - *Ao invés de estar em Destinos, é uma nova categoria*
   - *Exibe lista de artistas como um lineup de festival (Exemplo: Site RiR)*
   - *Quadro de Horários interativo (Exemplo: App Lollapalooza)*
-  - *Lineup e Horários separados por Tab semelhante a de gastos.html*
+  - *Lineup e Horários separados por Tab semelhante a de expenses.html*
   - *Select com os dias de festival, mas com geral em default*
   - *Edição de forma semelhante ao de programação, com a diferença que a data é customizável*
 - 🏆 **F046:** Criação de opções de re-ordenação de destinos
@@ -70,35 +86,32 @@
   - *Sonarqube*
 - 📈 **M091:** Alinhar select de cidade com box de destino
 - 📈 **M092:** Titulo em dark mode com maior destaque
-- 📈 **M093:** Melhorar detecção automática de datas
-- 🏆 **F069:** Criação de opções de re-ordenação de destinos
 - 🏆 **F070:** Componente de adicionar ao calendário
-- 📈 **M094:** Fixar scrolls (destinos checkboxes em editar, viagens e destinos em home)
 - ⚔️ **E026:** Importar dados do google maps
+- 📈 **M100:** Limite de tamanho de storage para o documento (10MB)
+- 📈 **M101:** Colocar Swiper dentro de box de imagem de hospedagem quando hospedagem tiver mais de uma imagem
+- 📈 **M102:** Ao invés de abrir pop-up de hospedagem/transporte, arrastar página para posição e auto clicar em item
 
 ### Prioridade Baixa
+- 🏆 **F078:** Criar sistema de linguagens + EN-US
+- 📈 **M098:** Trocar funções / estruturas de pastas js para EN-US
 - ⚔️ **E024:** Migração de projeto para React OU Angular
 - ⚔️ **E025:** Implementação iOs e Android
 - 📈 **M090:** Carregamento logo dentro do pre loader
-- 🐞 **B024:** Correção de deseleção incorreta no botão de ID "transportation" em viagem.html
 - 🏆 **F043:** Criação de Keypoints personalizáveis
 - 📈 **M018:** Melhoria de centralização do elemento demo-box nas telas de edição quando em modo tablet
-- 🐞 **B023:** Correção de gráfico de dias por cidade estático no viagens.html
 - 🏆 **F044:** Criação de animações em todo o site
-- 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
 - 📈 **M034:** Alteração de botão de Voltar (←) para o canto esquerdo da tela em index.html
-- 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em viagem.html
+- 📈 **M037:** Melhoria de aumento de espaçamento nas boxes de destinos em view.html
 - 📈 **M041:** Melhoria na validação de campos ausentes em páginas de editar para exibir o título do item (quando houver)
-- 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
 - 📈 **M045:** Exibição de nota dentro do accordion de editar-destinos e ordenação por Nota + título
 - 📈 **M047:** Troca de mensagens em modal para mensagens em bottomsheet
 - 📈 **M054:** Melhoria de funções relacionadas ao getJs para mais cenários
-- 🏆 **F055:** Implementação de função de getKs
+- 🏆 **F055:** Implementação de função de getKs + Renomeio das funções para tornar mais claro
 - 📈 **M046:** Limpeza de propriedades não utilizadas nos CSS da aplicação
 - 📈 **M055:** Melhoria de todas as mudanças de dark mode serem aplicadas via js
 - 📈 **M058:** Modularização de arquivos de CSS para diminuir redundâncias
   -*Também será preciso alterar a função que calcula o dark mode*
-- 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M069:** Timer de carregamento desabilitado por padrão
 - 🏆 **F060:** Permitir alternar entre categorias de destinos dentro de uma das páginas
 - 📈 **M089:** Substituir valores de cores por variáveis de ambiente nos CSS
@@ -106,7 +119,39 @@
 
 ## Done
 
+### Maio 2025
+- 🏆 **F083:** Cache Busting
+- 🏆 **F082:** Versionamento
+- ❗️🐞 **B075:** Implementação do timezone causa problemas
+  - *Salvamento de datas (ainda está salvando em data firestore)*
+  - *Countdown*
+- 🐞 **B074:** x do menu fica invisível no light mode
+- 🐞 **B073:** Implementação do timezone causa problemas de conversão
+
+### Abril 2025
+- 🐞 **B072:** Galeria não respeita dark mode
+- 📈 **M103:** Melhoria mensagem de salvamento de páginas de editar
+- 📈 **M094:** Fixar scrolls (destinos checkboxes em editar)
+- 🏆 **F080:** Múltiplas imagens para a mesma hospedagem
+- ⚔️ **E029:** Refatoração dos métodos de storage
+ - Testar hospedagem
+ - Testar Galeria
+- 📈 **M099:** Implementação Toast em link inválido de páginas de editar
+- 🐞 **B071:** Turno não atualiza automaticamente quando o horário da programação é importado
+- 🐞 **B070:** Bullets de calendário de programação não exibe corretamente
+- 🐞 **B069:** Destino não exibe ícone de site se não possuir link do maps
+- 🐞 **B068:** Salvamento de viagens não detecta mudanças quando apenas programação é editada
+- 🐞 **B024:** Botão de menu aparecendo entre largura 1199px e 993px em view.html
+- 🐞 **B023:** Ajuste de dark-mode
+- 🏆 **F079:** Sistema de abas para transportes
+- 📈 **M042:** Melhoria no salvamento de páginas de editar para não fazer chamada no firebase se não houverem mudanças
+- 🐞 **B022:** Correção de erro em que nem todos os hrefs irem para as categorias (telas de editar)
+- 🐞 **B067:** Correções em carregamento de gastos e edição
+- 🏆 **F061:** Renomear todas as páginas html para nomes em inglês
+- 🏆 **F077:** Confirmação de saída da página em caso de mudanças
+
 ### Março 2025
+- 📈 **M093:** Melhorar detecção automática de datas
 - 📈 **M088:** Melhorar recurso de copia e cola com toast
 - 🏆 **F075:** Criar notificação de toast
 - 🏆 **F076:** Swiper com setas em modo desktop
@@ -149,11 +194,11 @@
 - 🐞 **B057:** Carregamento demorado em index.html não mostrando elementos corretamente
 
 ### Setembro 2024
-
 - 📈 **M071:** Incluir código de reserva em Hospedagens
-- 📈 **M073:** Se apenas um destino, renomear viagem.html de "destinos" para nome do destino
-- 🐞 **B047:** Programação em viagem.html não mostra horário inicial se o final está ausente
+- 📈 **M073:** Se apenas um destino, renomear view.html de "destinos" para nome do destino
+- 🐞 **B047:** Programação em view.html não mostra horário inicial se o final está ausente
 - 🏆 **F059:** Permitir visualizar destinos diretamente (sem listas)
+- 🏆 **F057:** Visualização de destino isolado em pagina de viagem (renomear pagina de viagem para visualizar)
 - 📈 **M023:** Arrastamento de Accordions (Programação)
 - 📈 **M075:** Ajustes index.html
   - *Remover "Visualizar Viagem"*
@@ -161,29 +206,29 @@
   - *Ajustar largura dos textos de menu para deixar ícones na mesma posição*
 - 📈 **M079:** Login por redirecionamento
 - 📈 **M078:** Checkbox de "Trocar nome da atividade para ***" dentro de "Associar Item"
-- 📈 **M074:** Botão de troca de programação (editar-viagem.html)
+- 📈 **M074:** Botão de troca de programação (trip.html)
 - 🐞 **B051:** Correção de destino desabilitado não auto apagar template vazio
-- 📈 **M080:** Botão de troca de destino (editar-destino.html)
+- 📈 **M080:** Botão de troca de destino (edit/trip.html)
 - 📈 **M081:** Reimplementação do Dynamic Select para facilitar manutenção
-- 📈 **M035:** Dynamic Select de Região em editar-destinos.html ser geral, ao invés de separado por categoria
+- 📈 **M035:** Dynamic Select de Região em editar-destination.html ser geral, ao invés de separado por categoria
 - 🐞 **B047:** Ao excluir item em página de editar, o listener do "Outro" de região para de funcionar
 - 📈 **M066:** Tamanho de logotipo automático em viagens.html
 - 🐞 **B053:** Erros nas funções de get e set de dados do banco
-- 🐞 **B050:** Lista de destinos em "destinos.html" não ordena corretamente após um item "?"
-- 🐞 **B052:** Não é possível desabilitar gastos em editar-viagem.html
+- 🐞 **B050:** Lista de destinos em "destination.html" não ordena corretamente após um item "?"
+- 🐞 **B052:** Não é possível desabilitar gastos em trip.html
 - 📈 **M061:** Substituição de modal de deleção de página de editar por mensagem nativa
 - 📈 **M082:** Pack de melhorias e fixes 09/24 (pré deploy em prod)
-  - *Visualizar Destino ao salvar (editar-destino.html)*
-  - *Dados da viagem descrentralizados (viagem.html)*
-  - *Ajuste de responsividade em hospedagens (viagem.html)*
-  - *Valor não aparece em novo destino (editar-destino.html)*
-  - *Cancelar não volta para a home (editar-destino.html)*
-  - *Tratamento em viagens e editar-viagem para ignorar destino não existente*
-  - *Listagem existente não carrega (editar-listagem.html)*
-  - *Primeiro set não funciona por "Usuário Não Autenticado" (editar-destino.html)*
-- 📈 **M084:** Melhor exibição de checkboxes de destinos (editar-viagem.html e editar-listagem.html)
-- 📈 **M083:** Data usando select de acordo com o período da viagem (editar-viagem.html)
-- 🐞 **B054:** Correção na exibição de lineup (editar-viagem.html)
+  - *Visualizar Destino ao salvar (edit/trip.html)*
+  - *Dados da viagem descrentralizados (view.html)*
+  - *Ajuste de responsividade em hospedagens (view.html)*
+  - *Valor não aparece em novo destino (edit/trip.html)*
+  - *Cancelar não volta para a home (edit/trip.html)*
+  - *Tratamento em viagens e trip para ignorar destino não existente*
+  - *Listagem existente não carrega (edit/list.html)*
+  - *Primeiro set não funciona por "Usuário Não Autenticado" (edit/trip.html)*
+- 📈 **M084:** Melhor exibição de checkboxes de destinos (trip.html e edit/list.html)
+- 📈 **M083:** Data usando select de acordo com o período da viagem (trip.html)
+- 🐞 **B054:** Correção na exibição de lineup (trip.html)
 
 ### Agosto 2024
 
@@ -199,8 +244,7 @@
   - *Correção de erros na criação de novas viagens*
 
 ### Junho 2024
-
-- 🐞 **B042:** Correção de listeners em editar-viagem (inicio, fim, reloadProgramacao) não estarem funcionando
+- 🐞 **B042:** Correção de listeners em trip (inicio, fim, reloadProgramacao) não estarem funcionando
 - 📈 **M019:** Módulo de programação mais personalizável
   - *Inclusão de Horário*
   - *Automação Título*
@@ -209,9 +253,9 @@
   - *Possibilidade de abrir um item associado a programação em viagens.html (destino, hospedagem ou transporte)*
 - 📈 **M048:** Melhoria de indicador visual para várias cidades no calendário de programações
 - 🐞 **B043:** Correção de hero incorreto no dark mode + margens desproporcionais em viagens.html
-- 📈 **M022:** Melhoria de calendário em viagem.html para não ter bordas duplicadas
+- 📈 **M022:** Melhoria de calendário em view.html para não ter bordas duplicadas
 - 🐞 **B044:** Correções de Tela de Editar (transporte simplificado, viagem sem programação e listener de fim)
-- 🐞 **B045:** Correções de Dark Mode (Logo em viagem.html e imagem de fundo em index.html)
+- 🐞 **B045:** Correções de Dark Mode (Logo em view.html e imagem de fundo em index.html)
 - 📈 **M056:** Reorganização de arquivos + aquivos de configuração locais (remoção de chamada desnecessária ao Firestore)
 - 📈 **M057:** Melhoria no calendário de programação para incluir múltiplas cores
 - 🏆 **F050:** Criação de chamada de API / Cloud Function para transformar link TikTok mobile em link desktop
@@ -232,10 +276,10 @@
 - 📈 **M063:** Melhoria de performace Firebase (atualização de versão do CLI)
 - 📈 **M064:** Ajuste no tratamento de mensagem de erros
 - 📈 **M065:** Gastos agora exibem moeda em todos os valores da tabela
-- 📈 **M067:** Melhorias páginas que usam lightbox (gastos.html e destinos.html)
+- 📈 **M067:** Melhorias páginas que usam lightbox (expenses.html e destination.html)
 - *Páginas, quando carregadas fora do lightbox, não irão exibir botão de voltar*
 - *Redirecionamento condicional de páginas*
-- 📈 **M068:** Melhoria accordions e mídias em destinos.html
+- 📈 **M068:** Melhoria accordions e mídias em destination.html
 - *Página agora apenas exibe um accordion por vez*
 - *Mídias agora não se cruzam (reprodução simultânea)*
 - ⚔️ **E022:** Funções de migrações (Cloud Functions)
@@ -246,13 +290,12 @@
   - *Criação de domínio personalizado para prd*
 
 ### Maio 2024
-
 - 📈 **M028:** Melhoria na função de compartilhar para exibir texto adaptado (viagem/listagem)
 - 🐞 **B029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
-- 🏆 **F048:** Dynamic Select de "Valor" em editar-destinos.html
-- 📈 **M029:** Otimizar destinos.html para receber do localStorage apenas os dados necessários
+- 🏆 **F048:** Dynamic Select de "Valor" em editar-destination.html
+- 📈 **M029:** Otimizar destination.html para receber do localStorage apenas os dados necessários
 - 🐞 **B030:** Correção de erros em novas viagens de editar-viagens.html
-- 🏆 **F049:** Dynamic Select de "Região" em editar-destinos.html
+- 🏆 **F049:** Dynamic Select de "Região" em editar-destination.html
 - 📈 **M029:** Melhoria de, se o usuário apaga todos os itens de uma categoria, ela é automaticamente desabilitada
 - ⚔️ **E020:** Criação de box de visualização de Hospedagens em viagens.html
 - 📈 **M032:** Quando um novo item da categoria é adicionado, os accordions da categoria são fechados
@@ -264,23 +307,23 @@
 - 🏆 **F053:** Implementação no Firestore e Firestore Rules para habilitar/desabilitar cadastro de usuários
 - 📈 **M039:** Melhoria no sistema de abrir-fechar cadastro de usuários para implementar mensagem customizada
 - 🏆 **F045:** Criação de mensagem customizada para erro no upload de imagens
-- 📈 **M030:** Em vez de campo de duração em editar-viagem.html, ter campo de fuso horário e calcular duração automaticamente
-- 🐞 **B036:** Correção automações no módulo de transportes em editar-viagem.html não estarem carregando no primeiro load
+- 📈 **M030:** Em vez de campo de duração em trip.html, ter campo de fuso horário e calcular duração automaticamente
+- 🐞 **B036:** Correção automações no módulo de transportes em trip.html não estarem carregando no primeiro load
 - 📈 **M033:** Inclusão de botões em modais de mensagem
   - *Informação fecha e erro vai para a home*
-- 📈 **M040:** Validação de input de Link e Embed em editar-destinos.html
+- 📈 **M040:** Validação de input de Link e Embed em editar-destination.html
 - 📈 **M017:** Validação de inputs nas páginas de editar
   - *Emojis, Links Genéricos, Links de Imagens, Links de Playlists e Links de Vídeos*
-- 📈 **M031:** Melhoria de opção de zoom no card de hospedagem em viagem.html
-- 📈 **M026:** Novo ícone de "Novo" em destinos.html
+- 📈 **M031:** Melhoria de opção de zoom no card de hospedagem em view.html
+- 📈 **M026:** Novo ícone de "Novo" em destination.html
 - 📈 **M044:** Melhoria de espaçamentos em páginas de editar
 - ⚔️ **E023:** Destinos v1.1
-- 📈 **M043:** Melhoria visual em destinos.html e destinos.js
+- 📈 **M043:** Melhoria visual em destination.html e destinos.js
 - 🐞 **B039:** Correção de função de aplicar cores customizadas em classes não funcionar mais de uma vez para algumas propriedades
 - 🐞 **B040:** Remoção de função de arrastamento de accordion
   - *Não funcionava como o esperado no Desktop e não funcionava no Mobile*
   - *Reimplementar posteriormente*
-- 🐞 **B035:** Correção de programação em editar-viagem.html não mostrar título completo no carregamento
+- 🐞 **B035:** Correção de programação em trip.html não mostrar título completo no carregamento
 - 📈 **M050:** Melhoria no módulo de destinos (editar)
   - *Troca de selects por check-boxes*
   - *Função de busca*
@@ -300,7 +343,6 @@
 - 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 
 ### Abril 2024
-
 - 🐞 **B021:** Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
 - 📈 **M013:** Bloqueio upload / Melhoria de segurança
   - *Criação de sistema de permissões no banco e storage rules*
@@ -308,7 +350,7 @@
   - *Sistema inteligente de uploads, com exclusão de imagens não utilizadas*
   - *Sistema de inserção de imagens customizadas de acordo com a página (hospedagens e galeria para o caso de editar-viagens)*
   - *Ajustes na página de viagem para receber a nova estrutura de imagem*
-- 📈 **M014:** Melhorias editar-viagem
+- 📈 **M014:** Melhorias trip
   - *Selects dinâmicos para que user possa escolher entre os dados já cadastrados (Galeria e Lineup)*
   - *Automações para facilitar preenchimento de dados e visualização*
 - 📈 **M015:** Melhoria em Destinos do viagens.html
@@ -320,7 +362,7 @@
 - 🏆 **F041:** Criação botão de compartilhar para viagens.html
 - 📈 **M016:** Refatoramento: utilizar método getID e otimizar arquivos de editar
 - 🏆 **F042:** Criar moeda customizável para Destinos
-- 📈 **M025:** Novo ícone de "Novo" editar-destinos.html
+- 📈 **M025:** Novo ícone de "Novo" editar-destination.html
 - 🐞❗️**B028:** Correção de caregamento de listagens
 - 🐞 **B026:** Correção de loading em viagens não estar pegando a cor customizada
   - Aplicado, mas a cor só é exibida em loadings após o inicial
@@ -328,15 +370,14 @@
 - 📈 **M027:** Melhoria de responsividade das barras de viagem do index.html
 
 ### Março 2024
-
 - 🐞 **B018:** Correção de bug de login no safari (provavelmente relacionado com animação no index)
 - 🏆 **F038:** Criação de opção de arrastar accordions (Desktop)
 - 🐞 **B017:** Correção de ":" quando título não é preenchido
 - 🐞 **B016:** Corrreção de problema no carregamento de lineup
-- 📈 **M011:** Melhoria de performance em destinos.html
+- 📈 **M011:** Melhoria de performance em destination.html
   - *Restringir carregamento de embeds para apenas quando o accordeon é aberto*
-- 🐞 **B015:** Correção de ícone do TripViewer em destinos.html estar indo para a home e dentro do lightbox
-- 📈 **M012:** Melhor organização de JavaScript relacionados a destinos.html
+- 🐞 **B015:** Correção de ícone do TripViewer em destination.html estar indo para a home e dentro do lightbox
+- 📈 **M012:** Melhor organização de JavaScript relacionados a destination.html
 - 🐞 **B014:** Correção de erros de CSS causados por unificação de CSSs de edição
 - 🏆 **F039:** Criação de botões triplos no modal quando salvar
   - *Reeditar (sem fundo)*
@@ -346,18 +387,17 @@
 - 🐞 **B013:** Correção de embeds de destino.html estarem fora de ordem
 
 ### Fevereiro 2024
-
 - 📈 **M006:** Mini melhoria de front mobile
 - 🏆 **F032:** Criação de forma de deletar passeios / viagens
 - 🏆 **F033:** Criação de Módulo de Galeria
-- 🐞 **B012:** Correção de dados se perdendo no load do editar-viagem quando o user não deixa o dado ativo
-- 🐞 **B011:** Ajuste posição do night mode em editar-viagem e editar-passeio
+- 🐞 **B012:** Correção de dados se perdendo no load do trip quando o user não deixa o dado ativo
+- 🐞 **B011:** Ajuste posição do night mode em trip e editar-passeio
 - 🏆 **F034:** Criação de seta de voltar em editar-viagens e editar-passeios
 - 🐞 **B010:** Correção de Título de modal desformatado
 - 📈 **M007:** Melhoria de Transparência aumentada em background mobile
 - 📈 **M008:** Melhoria de botão de Reeditar não retornar a home caso tenha dado erro no salvamento
 - ⚔️ **E010:** Testagem Geral e bug fixes
-- 📈 **M009:** Condensação de CSSs de editar-viagem e editar-passeio em CSSs únicos (editar.css e editar-dark.css)
+- 📈 **M009:** Condensação de CSSs de trip e editar-passeio em CSSs únicos (editar.css e editar-dark.css)
 - 📈 **M010:** Validação de Inputs em Adicionar Passeio (Remover os que já foram preenchidos)
 - ⚔️ **E011:** Mudança de nome de "Passeios" para "Destinos"
 - 🐞 **B009:** Correção de Link de transporte não deveria ser obrigatório
@@ -368,7 +408,6 @@
 - 🏆 **F037:** Criação de animações no index.html
 
 ### Janeiro 2024
-
 - ⚔️ **E009:** Migração do Projeto para Plano Spark
 - 🏆 **F027:** Criação de Limitação do tamanho de upload + forma no backend para deixar mais seguro
 - 🐞 **B006:** Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios
@@ -383,12 +422,11 @@
   - *Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo*
 
 ### Dezembro 2023
-
-- 🐞 **B004:** Correção de posição do select de transporte de editar-viagem
+- 🐞 **B004:** Correção de posição do select de transporte de trip
 - 🏆 **F021:** Criação de funções de front-end para edição de viagens e passeios
 - 🏆 **F022:** Criação de sistema de imagens
-- 🏆 **F023:** Criação de compartilhamento de viagens via botão no viagem.html
-- 🏆 **F024:** Criação de get de imagens em viagem.html
+- 🏆 **F023:** Criação de compartilhamento de viagens via botão no view.html
+- 🏆 **F024:** Criação de get de imagens em view.html
 - 🏆 **F025:** Criação de bloqueios de edição de viagens e passeios
 - 🏆 **F026:** Implementação de Night Mode interativo do user
 - 📈 **M003:** Melhoria de Linkar e validar funções de back-end para edição de viagens e passeios
@@ -396,13 +434,12 @@
 - ⚔️ **E008:** Reimplementação da segurança da aplicação
 
 ### Novembro 2023
-
 - 📈 **M002:** Automação de cores tema definidas pelo usuário
 - 🐞 **B003:** Correção de bugs do modo escuro
 - 🏆 **F013:** Criação de Página de Login
 - 🏆 **F014:** Criação de Página de Usuário logado
 - 🏆 **F015:** Criação de sistema de compartilhamento de viagens via link
-  - *URL do viagem.html e botão no index.html*
+  - *URL do view.html e botão no index.html*
 - 🏆 **F016:** Criação de funcionalidade "Minhas Viagens"
 - 🏆 **F017:** Criação de página de edição/criação de viagens
 - 🏆 **F018:** Criação de página de edição/criação de passeios
@@ -410,7 +447,6 @@
 - 🏆 **F020:** Criação de funções de front-end para o index.html
 
 ### Outubro 2023
-
 - 🏆 **F003:** Migração de 'Transporte' ao Firestore
 - 🏆 **F004:** Criação de artes de transporte / hospedagem
 - 🏆 **F005:** Migração de Jsons de configuração ao Firestore
@@ -426,12 +462,10 @@
 - 🏆 **F012:** Inserção de autenticação no back-end e front-end
 
 ### Setembro 2023
-
 - 🏆 **F001:** Migração de 'Passeios' ao Firestore
 - 🏆 **F002:** Migração de 'Programação' ao Firestore
 
 ### Anteriormente
-
 - ⚔️ **E001:** Criação de Git do projeto
 - ⚔️ **E002:** Criação de projeto no Firebase
 - ⚔️ **E003:** Criação de banco de dados Firestore
@@ -440,7 +474,6 @@
 - ⚔️ **E006:** Criação de funções de leitura principais no back-end (get.ts)
 
 ### Descartados
-
 - 🏆 **F046:** Firebase Firestore Rules no Front-End
   - *Risco de segurança expor ao user as regras*
 - 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox

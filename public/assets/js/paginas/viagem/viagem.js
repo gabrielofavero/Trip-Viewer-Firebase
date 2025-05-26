@@ -91,7 +91,7 @@ function _start() {
   // Visibilidade
   _loadVisibility();
   _loadToggle();
-  _loadAdjustCardsHeightsListener();
+  _adjustCardsHeightsListener();
 
   // Cabeçalho
   _loadHeader();
@@ -101,10 +101,10 @@ function _start() {
 }
 
 function _loadInicioFim() {
-  INICIO.date = _convertFromFirestoreDate(FIRESTORE_DATA.inicio);
+  INICIO.date = _convertFromDateObject(FIRESTORE_DATA.inicio);
   INICIO.text = `${INICIO.date.getDate()}/${INICIO.date.getMonth() + 1}`;
 
-  FIM.date = _convertFromFirestoreDate(FIRESTORE_DATA.fim);
+  FIM.date = _convertFromDateObject(FIRESTORE_DATA.fim);
   FIM.text = `${FIM.date.getDate()}/${FIM.date.getMonth() + 1}`;
 }
 
@@ -195,16 +195,16 @@ function _loadHeader() {
     const claro = FIRESTORE_DATA.imagem.claro;
     const escuro = FIRESTORE_DATA.imagem.escuro;
 
-    if (_imageExists(background)) {
+    if (background) {
       var hero = getID('hero');
-      hero.style.background = 'url("' + _getImageLink(background) + '") top center no-repeat';
+      hero.style.background = 'url("' + background + '") top center no-repeat';
       hero.style.backgroundSize = 'cover';
     }
 
-    if (_imageExists(claro)) {
-      LOGO_CLARO = _getImageLink(claro);
-      if (_imageExists(escuro)) {
-        LOGO_ESCURO = _getImageLink(escuro);
+    if (claro) {
+      LOGO_CLARO = claro;
+      if (escuro) {
+        LOGO_ESCURO = escuro;
       } else {
         LOGO_ESCURO = LOGO_CLARO;
       }
@@ -273,13 +273,14 @@ function _loadModules() {
   }
 
   function _loadGastosModule() {
-    if (FIRESTORE_DATA.modulos?.gastos === true) {
+    const ativo = FIRESTORE_DATA.modulos?.gastos === true;
+    const pin = FIRESTORE_DATA.gastosPin || false;
+    localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
+
+    if (ativo) {
       getID('gastos-container').style.display = '';
-      let ativo = true;
-      let pin = FIRESTORE_DATA.gastosPin || false
-      localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
       getID('gastos').addEventListener('click', () => {
-        _openLightbox(`gastos.html?g=${_getURLParam('v')}`);
+        _openLightbox(`expenses.html?g=${_getURLParam('v')}`);
       });
     }
   }

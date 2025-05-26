@@ -9,7 +9,7 @@ var INNER_PROGRAMACAO_ATUAL = [];
 // ======= LOADERS =======
 function _loadModalContentCalendar(programacao) {
     let titulo = programacao.titulo;
-    const data = _dateToTitle(_convertFromFirestoreDate(programacao.data));
+    const data = _dateToTitle(_convertFromDateObject(programacao.data));
 
     if (FIRESTORE_DATA.modulos.destinos && DESTINOS && DESTINOS.length > 0) {
         const destinosIDs = DESTINOS.map(destino => destino.destinosID);
@@ -93,6 +93,8 @@ function _loadInnerProgramacaoMidia(midia) {
         buttonText = '<i class="iconify" data-icon="ic:baseline-tiktok"></i>Visualizar Vídeo';
     } else if (midia.includes('spotify')) {
         buttonText = '<i class="iconify" data-icon="mdi:spotify"></i>Visualizar Playlist';
+    } else if (midia.includes('instagram')) {
+        buttonText = '<i class="iconify" data-icon="mdi:instagram"></i> Visualizar Vídeo';
     }
 
     getID('midia-1').innerHTML = `<div class="button-box">
@@ -115,7 +117,7 @@ function _loadCalendarItem(dataString) {
             PROGRAMACAO_ATUAL.ano = year;
             if (day != 0) {
                 for (let i = 0; i < FIRESTORE_DATA.programacoes.length; i++) {
-                    var currentDate = _convertFromFirestoreDate(FIRESTORE_DATA.programacoes[i].data);
+                    var currentDate = _convertFromDateObject(FIRESTORE_DATA.programacoes[i].data);
                     if (currentDate.getDate() == day && currentDate.getMonth() == month - 1 && currentDate.getFullYear() == year) {
                         if (!PROGRAMACAO_ABERTA) {
                             PROGRAMACAO_ABERTA = true;
@@ -167,9 +169,8 @@ function _getInnerProgramacaoHTML(item) {
             if (FIRESTORE_DATA.modulos.hospedagens === true && item.id) {
                 index = FIRESTORE_DATA.hospedagens.map(hospedagem => hospedagem.id).indexOf(item.id);
                 if (index >= 0) {
-                    const hospedagem = FIRESTORE_DATA.hospedagens[index];
-                    innerProgramacao.titulo = hospedagem.nome;
-                    innerProgramacao.content = _getHotelBoxHTML(hospedagem, 'inner-programacao', true);
+                    innerProgramacao.titulo = "";
+                    innerProgramacao.content = _getHospedagensHTML(index, true);
                 }
             }
             break;

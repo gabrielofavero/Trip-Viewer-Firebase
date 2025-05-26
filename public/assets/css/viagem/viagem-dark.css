@@ -3,11 +3,12 @@
   --theme-color-hover: #7367b4;
   --theme-color-secondary: #D5D6E9;
   --background-color: #303030;
+  --font-color: #E2E2E2;
   --table-border: #414040;
 }
 
 body {
-  color: #E2E2E2;
+  color: var(--font-color);
   background-color: var(--background-color);
 }
 
@@ -48,7 +49,7 @@ a:hover {
 #programacao-hoje {
   background-color: rgba(255, 255, 255, 0.05);
   border: 3px solid rgba(255, 255, 255, 0.05);
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 .copy-icon {
@@ -61,7 +62,7 @@ a:hover {
 
 .swiper-button-prev,
 .swiper-button-next {
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 #programacao-hoje:hover {
@@ -184,7 +185,7 @@ a:hover {
 
 .facts .count-box span,
 .about .count-box span {
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 .transpStayBox {
@@ -211,7 +212,7 @@ a:hover {
 }
 
 #calendar {
-  color: #E2E2E2;
+  color: var(--font-color);
   background-color: #303030;
   border: 0.5px solid var(--table-border);
 }
@@ -264,7 +265,7 @@ a:hover {
 }
 
 .resume .resume-item h4 {
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 .resume .resume-item h5 {
@@ -339,7 +340,7 @@ a:hover {
 }
 
 .services .icon-box {
-  color: #E2E2E2;
+  color: var(--font-color);
   background: #303030;
   box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
 }
@@ -357,7 +358,7 @@ a:hover {
 }
 
 .testimonials .testimonial-item h3 {
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 .testimonials .testimonial-item h4 {
@@ -507,7 +508,7 @@ a:hover {
 
 .flight-box {
   border: 0.5px solid #414040;
-  color: #E2E2E2;
+  color: var(--font-color);
   background-color: #3b3b3b;
 }
 
@@ -519,8 +520,9 @@ a:hover {
   color: var(--theme-color);
 }
 
-.hotel-box {
-  color: #E2E2E2;
+.hotel-box,
+.hotel-box-inner {
+  color: var(--font-color);
   border: 0.5px solid #414040;
   background-color: #3b3b3b;
 }
@@ -597,4 +599,9 @@ a:hover {
 
 #toast {
   color: #303030;
+}
+
+.tabs {
+  background-color: #3b3b3b;
+  box-shadow: 0 0 1px 0 rgba(166, 166, 166, 0.05), 0 6px 12px 0 rgba(166, 166, 166, 0.05);
 }

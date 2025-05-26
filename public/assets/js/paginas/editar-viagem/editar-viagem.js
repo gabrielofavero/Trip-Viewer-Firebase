@@ -2,7 +2,7 @@ var blockLoadingEnd = false;
 var FIRESTORE_DATA;
 var FIRESTORE_GASTOS_DATA;
 
-var WAS_SAVED = false;
+var SUCCESSFUL_SAVE = false;
 var CAN_EDIT = false;
 var NEW_TRIP = false;
 
@@ -95,19 +95,6 @@ async function _loadTrip(stripped = false) {
     await _loadTripData();
     _stopLoadingScreen();
   }
-}
-
-async function _uploadViagemItens(uploadItens, item) {
-  let result = FIRESTORE_NEW_DATA[item].imagens;
-  for (let i = 0; i < uploadItens.length; i++) {
-    if (!isNaN(uploadItens[i])) {
-      const upload = await _uploadImage(`viagens/${DOCUMENT_ID}/${item}`, `upload-${item}-${uploadItens[i]}`);
-      if (upload.link != null) {
-        result[i] = upload;
-      }
-    }
-  }
-  return result;
 }
 
 function _deleteViagem() {

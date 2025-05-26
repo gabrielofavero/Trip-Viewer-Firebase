@@ -1,3 +1,8 @@
+:root {
+  --theme-color: #7f75b6;
+  --theme-color-hover: #7367b4;
+}
+
 body {
   color: #E2E2E2;
 }
@@ -22,7 +27,7 @@ strong {
 }
 
 #trip-viewer-text {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 #hero {
@@ -40,7 +45,7 @@ strong {
 }
 
 #hero p span {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 #hero .social-links a {
@@ -48,14 +53,14 @@ strong {
 }
 
 #hero .social-links a:hover {
-  color: #7f75b6;
+  color: var(--theme-color);
 }
 
 .nice-form-group {
   --nf-input-color: #E2E2E2;
   --nf-input-placeholder-color: #a3a3a3;
   --nf-input-border-color: #383838;
-  --nf-input-focus-border-color: #7f75b6;
+  --nf-input-focus-border-color: var(--theme-color);
   --nf-input-background-color: #404040;
   --nf-label-color: #E2E2E2;
   --nf-slider-track-background: #303030;
@@ -83,7 +88,7 @@ strong {
 }
 
 .to-reset {
-  background: #7f75b6
+  background: var(--theme-color)
 }
 
 .to-reset:hover {
@@ -103,7 +108,7 @@ section strong {
 }
 
 section p a {
-  color: #7f75b6
+  color: var(--theme-color)
 }
 
 section code {
@@ -115,7 +120,7 @@ details {
 }
 
 details .toggle-code {
-  background: #7f75b6;
+  background: var(--theme-color);
   color: #E2E2E2;
 }
 
@@ -135,14 +140,6 @@ details .toggle-code:hover {
 .message-container,
 .input-container {
   background: #303030;
-}
-
-#footer .social-links a {
-  background: #7f75b6;
-}
-
-#footer .social-links a:hover {
-  background: #7f75b6;
 }
 
 .message-container {
@@ -178,20 +175,20 @@ details .toggle-code:hover {
 }
 
 .btn-theme {
-  background: #7f75b6;
+  background: var(--theme-color);
   color: #fff;
 }
 
 .btn-basic:hover, 
 .btn-basic:focus {
-  border-color: #7f75b6;
-  background: #7f75b6;
+  border-color: var(--theme-color);
+  background: var(--theme-color);
   color: #fff;
 }
 
 .btn-theme:hover,
 .btn-theme:focus {
-  background: #665e94;
+  background: var(--theme-color-hover);
   color: #fff;
 }
 
@@ -250,7 +247,7 @@ details .toggle-code:hover {
 }
 
 .new {
-  fill: #7f75b6;
+  fill: var(--theme-color);
 }
 
 .input-botao,
@@ -268,12 +265,25 @@ details .toggle-code:hover {
   color: var(--nf-label-color)
 }
 
+.destinos-checkboxes::-webkit-scrollbar-track {
+  background-color: #404040;
+}
+
 .pin-input {
   border: 1px solid #414040;;
   background: #3b3b3b;
   color: #E2E2E2;
 }
 
+.pin-input-invalid {
+  background: #463838;
+  border-color: #403434;
+}
+
 .pin {
   color: #ffffff;
+}
+
+#toast {
+  color: #303030;
 }

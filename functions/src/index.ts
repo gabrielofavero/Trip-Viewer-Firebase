@@ -1,9 +1,6 @@
-import * as tiktok from "./tiktok";
-import * as gastos from "./gastos";
 import * as admin from "./admin";
+//import * as migration from "./migration";
 
-export const convertTikTokLinks = tiktok.convertTikTokLinks;
-export const getGastos = gastos.getGastos;
 export const scheduledFirestoreExport = admin.scheduledFirestoreExport;
-// export const firestoreImport = admin.firestoreImport;
-// export const migrateUserUID = admin.migrateUserUID;
+//export const firestoreImport = admin.firestoreImport;
+//export const migrateUserUID = admin.migrateUserUID;

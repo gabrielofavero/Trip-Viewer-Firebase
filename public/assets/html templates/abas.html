@@ -5,41 +5,33 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
 
     <title>Viagem</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <style>
-        :root {
+        .custom-tabs-container {
             --primary-color: #185ee0;
             --secondary-color: #e6eef9;
-        }
-
-        *,
-        *:after,
-        *:before {
-            box-sizing: border-box;
-        }
-
-        body {
             font-family: "Inter", sans-serif;
             background-color: rgba(230, 238, 249, 0.5);
-        }
-
-        .container {
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100vh;
+            /* Mantém o conteúdo centralizado */
         }
 
-        .tabs {
+        .custom-tabs-container *,
+        .custom-tabs-container *:after,
+        .custom-tabs-container *:before {
+            box-sizing: border-box;
+        }
+
+        .custom-tabs-container .tabs {
             display: flex;
             position: relative;
             background-color: #fff;
@@ -48,15 +40,15 @@
             border-radius: 99px;
         }
 
-        .tabs * {
+        .custom-tabs-container .tabs * {
             z-index: 2;
         }
 
-        input[type="radio"] {
+        .custom-tabs-container input[type="radio"] {
             display: none;
         }
 
-        .tab {
+        .custom-tabs-container .tab {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,7 +61,7 @@
             transition: color 0.15s ease-in;
         }
 
-        .notification {
+        .custom-tabs-container .notification {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -81,28 +73,28 @@
             transition: 0.15s ease-in;
         }
 
-        input[type="radio"]:checked+label {
+        .custom-tabs-container input[type="radio"]:checked+label {
             color: var(--primary-color);
         }
 
-        input[type="radio"]:checked+label>.notification {
+        .custom-tabs-container input[type="radio"]:checked+label>.notification {
             background-color: var(--primary-color);
             color: #fff;
         }
 
-        input[id="radio-1"]:checked~.glider {
+        .custom-tabs-container input[id="radio-1"]:checked~.glider {
             transform: translateX(0);
         }
 
-        input[id="radio-2"]:checked~.glider {
+        .custom-tabs-container input[id="radio-2"]:checked~.glider {
             transform: translateX(100%);
         }
 
-        input[id="radio-3"]:checked~.glider {
+        .custom-tabs-container input[id="radio-3"]:checked~.glider {
             transform: translateX(200%);
         }
 
-        .glider {
+        .custom-tabs-container .glider {
             position: absolute;
             display: flex;
             height: 54px;
@@ -114,7 +106,7 @@
         }
 
         @media (max-width: 700px) {
-            .tabs {
+            .custom-tabs-container .tabs {
                 transform: scale(0.6);
             }
         }
@@ -124,7 +116,7 @@
 
 <body>
     <main">
-        <div class="container">
+        <div class="custom-tabs-container">
             <div class="tabs">
                 <input type="radio" id="radio-1" name="tabs" checked />
                 <label class="tab" for="radio-1">Upcoming<span class="notification">2</span></label>

@@ -1,7 +1,8 @@
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
+var INPUT_DETECTED = false;
 
-WAS_SAVED = false;
+SUCCESSFUL_SAVE = false;
 var CAN_EDIT = false;
 
 const TODAY = _getTodayFormatted();
@@ -101,22 +102,22 @@ function _loadEventListeners() {
   });
 
   getID('re-editar').addEventListener('click', () => {
-    _reEdit('destinos', WAS_SAVED);
+    _reEdit('destinos', SUCCESSFUL_SAVE);
   });
 
   getID('cancelar').addEventListener('click', () => {
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   });
 
   getID('home').addEventListener('click', () => {
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   });
 
   getID('visualizar').addEventListener('click', () => {
     if (DOCUMENT_ID) {
-      window.location.href = `viagem.html?d=${DOCUMENT_ID}`;
+      window.open(`../view.html?d=${DOCUMENT_ID}`, '_blank');
     } else {
-      window.location.href = `index.html`;
+      window.location.href = '../index.html';
     }
   });
 
@@ -131,6 +132,19 @@ function _loadEventListeners() {
 
   getID('outra-moeda').addEventListener('change', () => {
     _loadCurrencySelects();
+  });
+
+  document.addEventListener("input", (event) => {
+    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
+      INPUT_DETECTED = true;
+    }
+  });
+
+  window.addEventListener("beforeunload", (event) => {
+    if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
+      event.preventDefault();
+      event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
+    }
   });
 }
 
@@ -328,6 +342,6 @@ function _deleteDestino() {
 async function _deleteDestinoAction() {
   if (DOCUMENT_ID) {
     await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
-    window.location.href = `index.html`;
+    window.location.href = '../index.html';
   }
 }

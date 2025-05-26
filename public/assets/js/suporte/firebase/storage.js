@@ -1,28 +1,19 @@
-const FIREBASE_IMAGE_ORIGIN = 'https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/';
-
-var FIREBASE_IMAGES = {
-  background: false,
-  claro: false,
-  escuro: false
-}
-
-var IMAGE_UPLOAD_ERROR = {
-  status: false,
+var IMAGE_UPLOAD_STATUS = {
+  hasErrors: false,
   messages: {}
 }
 
 var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
 var PERMISSOES;
 
-async function _uploadImage(path, divID) {
+async function _uploadImage(path, file) {
   let result = {
     nome: null,
     link: null,
     caminho: null,
   };
 
-  const file = getID(divID)?.files[0];
-  if (file && IMAGE_UPLOAD_ERROR.status === false) {
+  if (file && IMAGE_UPLOAD_STATUS.hasErrors === false) {
     try {
       const storageRef = await firebase.storage().ref();
       const imageRef = storageRef.child(`${path}/${file.name}`);
@@ -37,85 +28,37 @@ async function _uploadImage(path, divID) {
       console.log(`Imagem '${result.nome}' carregada com sucesso: ${result.link}`);
 
     } catch (error) {
-      IMAGE_UPLOAD_ERROR.status = true;
+      IMAGE_UPLOAD_STATUS.hasErrors = true;
       console.error('Erro ao fazer upload da imagem:', error.message || error);
 
       const key = _codifyText(_getLastDir(path));
-      IMAGE_UPLOAD_ERROR.messages[key] = _getStorageErrorMessage(error);
+      IMAGE_UPLOAD_STATUS.messages[key] = _getStorageErrorMessage(error);
     }
   }
 
   return result;
 }
 
-async function _updateImages(body) {
-  if (await _getUID() && IMAGE_UPLOAD_ERROR.status === false) {
-    let uploadObject = {};
-
-    if (body.background) {
-      uploadObject['imagem.background'] = body.background;
+async function _uploadImages(type, files) {
+  const results = [];
+  for (const file of files) {
+    const upload = await _uploadImage(`${type}/${DOCUMENT_ID}`, file);
+    if (upload.link) {
+      results.push(upload);
     }
+  }  
+  return results;
+}
 
-    if (body.logoLight) {
-      uploadObject['imagem.claro'] = body.logoLight;
-    }
-
-    if (body.logoDark) {
-      uploadObject['imagem.escuro'] = body.logoDark;
-    }
-
-    if (_objectExistsAndHasKeys(body.custom)) {
-      for (const key in body.custom) {
-        if (TO_UPLOAD[key]) {
-          uploadObject[`${key}.imagens`] = body.custom[key];
-        }
-      }
-    }
-
-    if (_objectExistsAndHasKeys(uploadObject)) {
-      await _update(`${body.type}/${body.id}`, uploadObject);
-      IMAGE_UPDATE_MADE = true;
-    } else {
+async function _deleteUnusedImages(path, documentLinks) {
+  const storageLinks = await _getAllImageUrls(path);
+  for (const link of storageLinks) {
+    if (!documentLinks.includes(link)) {
+      _deleteImageByLink(link); // No need to await this, as we don't need to wait for the deletion to finish
     }
   }
 }
 
-async function _deleteUnusedImages(beforeDB, afterDB) {
-  _validateSingleValueAndDeleteImage(beforeDB?.imagem?.background, afterDB?.imagem?.background);
-  _validateSingleValueAndDeleteImage(beforeDB?.imagem?.claro, afterDB?.imagem?.claro);
-  _validateSingleValueAndDeleteImage(beforeDB?.imagem?.escuro, afterDB?.imagem?.escuro);
-
-  _validateMultiValueAndDeleteImage(beforeDB?.hospedagens?.imagens, afterDB?.hospedagens?.imagens);
-  _validateMultiValueAndDeleteImage(beforeDB?.galeria?.imagens, afterDB?.galeria?.imagens);
-}
-
-async function _validateSingleValueAndDeleteImage(before, after) {
-  const exists = (!!before && !!after);
-  const isInternalReplacement = (_isExternalImage(before) && _isInternalImage(after));
-  const areBothInternal = (_isInternalImage(before) && _isInternalImage(after));
-
-  if (exists && (isInternalReplacement || (areBothInternal && before.nome !== after.nome))) {
-    _deleteImage(before.caminho);
-  }
-}
-
-async function _validateMultiValueAndDeleteImage(beforeArr, afterArr) {
-  if (beforeArr && afterArr) {
-    const beforeInternals = beforeArr.filter(obj => _isInternalImage(obj));
-    const afterInternals = afterArr.filter(obj => _isInternalImage(obj));
-
-    const beforeNomes = beforeInternals.map(obj => obj.nome);
-    const afterNomes = afterInternals.map(obj => obj.nome);
-
-    const beforeCaminhos = beforeInternals.map(obj => obj.caminho);
-
-    for (let i = 0; i < beforeNomes.length; i++) {
-      if (!afterNomes.includes(beforeNomes[i])) {
-        _deleteImage(beforeCaminhos[i]);
-      }
-    }
-  }
-}
 
 async function _deleteImage(path) {
   try {
@@ -127,6 +70,34 @@ async function _deleteImage(path) {
     console.log(`Imagem ${path} apagada com sucesso.`);
   } catch (error) {
     console.error(`Erro ao apagar imagem ${path}: ${error.message}`);
+  }
+}
+
+async function _deleteImageByLink(link) {
+  const path = _getImagePathFromLink(link);
+  if (!path) {
+    console.error("Caminho não encontrado na URL.");
+    return;
+  }
+
+  try {
+    const fileRef = firebase.storage().ref().child(path);
+    await fileRef.delete();
+    console.log(`Imagem apagada com sucesso: ${path}`);
+  } catch (error) {
+    console.error(`Erro ao apagar imagem ${path}: ${error.message}`);
+  }
+}
+
+function _getImagePathFromLink(link) {
+  try {
+    const match = link.match(/\/o\/(.*?)\?/);
+    if (!match || !match[1]) return null;
+
+    return decodeURIComponent(match[1]);
+  } catch (e) {
+    console.error("Erro ao extrair o caminho da URL:", e);
+    return null;
   }
 }
 
@@ -158,38 +129,6 @@ async function _deleteUserObjectStorage() {
     }
   }
 
-}
-
-async function _deleteImageFolderContents(folderPath) {
-  try {
-    const storageRef = firebase.storage().ref();
-    const folderRef = storageRef.child(folderPath);
-
-    // List all items (files) in the folder
-    const items = await folderRef.listAll();
-
-    // Iterate over each item and delete it
-    await Promise.all(
-      items.items.map(async (item) => {
-        await _deleteFile(item.fullPath);
-      })
-    );
-
-  } catch (error) {
-    console.error(`Erro ao deletar imagens em ${folderPath}: ${error.message}`);
-  }
-}
-
-async function _uploadBackground(type) {
-  return await _uploadImage(`${type}/${DOCUMENT_ID}/background`, 'upload-background');
-}
-
-async function _uploadLogoLight(type) {
-  return await _uploadImage(`${type}/${DOCUMENT_ID}/logo-light`, 'upload-logo-light');
-}
-
-async function _uploadLogoDark(type) {
-  return await _uploadImage(`${type}/${DOCUMENT_ID}/logo-dark`, 'upload-logo-dark');
 }
 
 function _checkFileSize(fileInput, type) {
@@ -349,44 +288,6 @@ function _loadLogoSelector() {
   }
 }
 
-function _isExternalImage(value) {
-  if (value && (typeof value === 'string' || value instanceof String) && value.startsWith('http')) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function _isInternalImage(value) {
-  if (value && typeof value === 'object' && value.nome && value.link && value.caminho) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function _getImageObject(valueImagem, type) {
-  const values = FIRESTORE_DATA[type].imagens || FIRESTORE_DATA[type].imagem || [];
-  for (const value of values) {
-    if (_objectExistsAndHasKeys(value) && value.link === valueImagem) {
-      return value;
-    }
-  }
-  return valueImagem;
-}
-
-function _getImageLink(object) {
-  if (_objectExistsAndHasKeys(object)) {
-    return object.link;
-  } else {
-    return object;
-  }
-}
-
-function _imageExists(object) {
-  return (_isInternalImage(object) || _isExternalImage(object));
-}
-
 function _getLastDir(path) {
   if (path && typeof path === 'string') {
     const splitPath = path.split('/');
@@ -404,3 +305,22 @@ function _getStorageErrorMessage(error) {
     return `Erro "${error.code}" ao fazer upload de arquivos. Contate o administrador do sistema`;
   }
 }
+
+async function _getAllImageUrls(path) {
+  const storageRef = firebase.storage().ref(path);
+
+  try {
+    const listResult = await storageRef.listAll();
+    const downloadURLs = await Promise.all(
+      listResult.items
+        .filter(item => item.name.match(/\.(jpg|jpeg|png|gif)$/i)) // optional image-only filter
+        .map(itemRef => itemRef.getDownloadURL())
+    );
+
+    return downloadURLs; // Array of image URLs
+  } catch (error) {
+    console.error("Erro ao listar imagens:", error.message || error);
+    return [];
+  }
+}
+

@@ -435,7 +435,7 @@ function _loadInnerProgramacaoEventListeners() {
     getID('inner-programacao-inicio').addEventListener('change', function (event) {
         const inicioValue = event.target.value;
         const inicioHora = parseInt(inicioValue.split(':')[0]);
-        getID('inner-programacao-select-turno').value = inicioHora < 6 ? 'madrugada' : inicioHora < 12 ? 'manha' : inicioHora < 18 ? 'tarde' : 'noite';
+        getID('inner-programacao-select-turno').value = _getTurno(inicioHora);
     });
 
     getID(`inner-programacao-fim`).addEventListener('change', function (event) {
@@ -452,6 +452,18 @@ function _loadInnerProgramacaoEventListeners() {
             getID(`inner-programacao-fim`).reportValidity();
         }
     });
+}
+
+function _getTurno(inicioHora) {
+    if (inicioHora < 6) {
+        return 'madrugada';
+    } else if (inicioHora < 12) {
+        return 'manha';
+    } else if (inicioHora < 18) {
+        return 'tarde';
+    } else {
+        return 'noite';
+    }
 }
 
 function _pairTurnos(callerID) {
@@ -513,6 +525,9 @@ function _afterDragInnerProgramacao(evt) {
 
     // Adicionar elemento na posição final
     INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element);
+
+    // Atualizar último turno aberto
+    LAST_OPENED_TURNO[j] = turnoFinal;
 
     _loadInnerProgramacaoHTML(j);
 }

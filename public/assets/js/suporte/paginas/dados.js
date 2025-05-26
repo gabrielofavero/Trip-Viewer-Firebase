@@ -346,16 +346,18 @@ function _compareDocuments() {
   switch (_getHTMLpage()) {
     case 'editar-viagem':
       result.multiple = true;
-      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados da viagem' });
-      compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados dos gastos' });
+      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
+      _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
+      _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
+      _compareAndPush({ obj1: {pin: PIN_GASTOS.current}, obj2: {pin: PIN_GASTOS.new}, ignoredPaths: [], name: 'senha de acesso aos gastos' });
       break;
     case 'editar-listagem':
       const ignoredPaths = _getIgnoredPathDestinos();
       ignoredPaths.push('versao.ultimaAtualizacao');
-      compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ignoredPaths, name: 'dados da listagem' });
+      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ignoredPaths, name: 'dados da listagem' });
       break;
     case 'editar-destino':
-      compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
+      _compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
       break;
     default:
       console.warn('Página não suportada para comparação de documentos. Use a função nativa "_compareObjects()"');
@@ -364,7 +366,7 @@ function _compareDocuments() {
 
   return result;
 
-  function compareAndPush({ obj1, obj2, ignoredPaths, name }) {
+  function _compareAndPush({ obj1, obj2, ignoredPaths, name }) {
     result.data.push(_compareObjects({ obj1, obj2, ignoredPaths, name }));
   };
 }
@@ -374,35 +376,11 @@ function _validateIfDocumentChanged() {
   const invalid = !DOCS_CHANGED ? true : DOCS_CHANGED.multiple ? DOCS_CHANGED.data.every(item => item.areEqual) : DOCS_CHANGED.data[0].areEqual;
 
   if (invalid) {
-    WAS_SAVED = false;
-    getID('modal-inner-text').innerHTML = DOCS_CHANGED ? `Não foi possível realizar o salvamento. Não houve alterações nos ${_getReadableArray(DOCS_CHANGED.data.map(item => item.name))}.` :
+    SUCCESSFUL_SAVE = false;
+    getID('modal-inner-text').innerHTML = DOCS_CHANGED ? `Não foi possível realizar o salvamento. Não houve alterações nos dados.` :
       'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
     _openModal();
     _stopLoadingScreen();
-  }
-}
-
-async function _generateHash(password) {
-  try {
-    const response = await fetch('https://www.toptal.com/developers/bcrypt/api/generate-hash.json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `password=${password}&cost=10`
-    });
-
-    const data = await response.json();
-
-    if (data.ok) {
-      return data.hash;
-    } else {
-      console.error('Não foi possível gerar o hash da senha: ' + data.msg);
-      _displayError(data.msg);
-    }
-  } catch (error) {
-    console.error('Erro ao gerar hash da senha: ' + error);
-    _displayError(error);
   }
 }
 

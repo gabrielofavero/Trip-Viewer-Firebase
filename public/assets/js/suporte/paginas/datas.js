@@ -26,40 +26,27 @@ function _getDateNoTime(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
-function _convertFromFirestoreDate(timestamp, adaptTimezone=true) {
-    let date;
-    if (timestamp.seconds) {
-        date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
-    } else {
-        date = new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
-    }
-    const documentOffset = FIRESTORE_DATA?.timezoneOffset || 180;
-    const userOffset = new Date().getTimezoneOffset()
-
-    if (adaptTimezone) {
-        date.setMinutes(date.getMinutes() + (userOffset - documentOffset));
-    }
+function _convertFromDateObject(dateObject) {
+    const date = new Date();
+    date.setFullYear(dateObject.year);
+    date.setMonth(dateObject.month - 1);
+    date.setDate(dateObject.day);
+    date.setHours(dateObject.hour);
+    date.setMinutes(dateObject.minute);
+    date.setSeconds(dateObject.second || 0)
     
     return date;
 }
 
-function _firestoneDateToInputDate(timestamp) {
-    const date = _convertFromFirestoreDate(timestamp);
-    return _jsDateToInputDate(date);
-}
-
-function _firestoneDateToKey(timestamp) {
-    const inputDate = _firestoneDateToInputDate(timestamp);
-    return _inputDateToKey(inputDate);
-}
-
-function _convertToFirestoreDate(date) {
-    const seconds = Math.floor(date.getTime() / 1000);
-    const nanoseconds = (date.getTime() % 1000) * 1000000;
+function _convertToDateObject(date) {
     return {
-        _seconds: seconds,
-        _nanoseconds: nanoseconds,
-    };
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+        hour: date.getHours(),
+        minute: date.getMinutes(),
+        second: date.getSeconds()
+    }
 }
 
 function _jsDateToDate(date, format = "dd/mm/yyyy") {
@@ -148,14 +135,9 @@ function _formattedDateToDate(formattedDate, time) {
     }
 }
 
-function _formattedDateToFirestoreDate(formattedDate, time) {
+function _formattedDateToDateObject(formattedDate, time) {
     const date = _formattedDateToDate(formattedDate, time);
-    return _convertToFirestoreDate(date);
-}
-
-function _formatFirestoreDate(date, format) {
-    const jsDate = _convertFromFirestoreDate(date);
-    return _jsDateToDate(jsDate, format);
+    return _convertToDateObject(date);
 }
 
 function _jsDateToTime(date) {
@@ -218,13 +200,13 @@ function _jsDateToMiniTitle(jsDate) {
     return `${_dateToDayOfTheWeek(jsDate)}, ${_jsDateToDate(jsDate)}`
 }
 
-function _firestoreDateToKey(firestoreDate) {
-    const jsDate = _convertFromFirestoreDate(firestoreDate);
+function _dateObjectToKey(dateObject) {
+    const jsDate = _convertFromDateObject(dateObject);
     return _jsDateToKey(jsDate);
 }
 
-function _firestoreDateToInputDate(firestoreDate) {
-    const jsDate = _convertFromFirestoreDate(firestoreDate);
+function _dateObjectToInputDate(dateObject) {
+    const jsDate = _convertFromDateObject(dateObject);
     return _jsDateToInputDate(jsDate);
 }
 
@@ -241,9 +223,9 @@ function _keyToInputDate(key) {
     return `${key.substr(0, 4)}-${key.substr(4, 2)}-${key.substr(6, 2)}`;
 }
 
-function _keyToFirestoreDate(key) {
+function _keyToDateObject(key) {
     const inputDate = _keyToInputDate(key);
-    return _formattedDateToFirestoreDate(inputDate);
+    return _formattedDateToDateObject(inputDate);
 }
 
 function _inputDateToJsDate(inputDate) {

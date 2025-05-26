@@ -1,17 +1,18 @@
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
+var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
 
 async function _buildTripObject() {
     FIRESTORE_NEW_DATA = {
         destinos: _buildDestinosArray(),
         compartilhamento: await _buildCompartilhamentoObject(),
         cores: _buildCoresObject(),
-        fim: getID(`fim`).value ? _formattedDateToFirestoreDate(getID(`fim`).value) : "",
+        fim: getID(`fim`).value ? _formattedDateToDateObject(getID(`fim`).value) : "",
         gastosPin: getID('pin-enable').checked,
         galeria: _buildGaleriaObject(),
         hospedagens: _buildHospedagemObject(),
         imagem: _buildImagemObject(),
-        inicio: getID(`inicio`).value ? _formattedDateToFirestoreDate(getID(`inicio`).value) : "",
+        inicio: getID(`inicio`).value ? _formattedDateToDateObject(getID(`inicio`).value) : "",
         links: _buildLinksObject(),
         modulos: _buildModulosObject(),
         moeda: getID(`moeda`).value,
@@ -22,8 +23,7 @@ async function _buildTripObject() {
         versao: {
             ultimaAtualizacao: new Date().toISOString()
         },
-        visibilidade: _buildVisibilidadeObject(),
-        timezoneOffset: getID('offset').value
+        visibilidade: _buildVisibilidadeObject()
     }
 }
 
@@ -33,7 +33,6 @@ async function _buildGastosObject() {
         gastosDurante: _getGastos('gastosDurante'),
         gastosPrevios: _getGastos('gastosPrevios'),
         moeda: getID(`moeda`).value,
-        pin: _getPin(),
         versao: {
             ultimaAtualizacao: new Date().toISOString()
         }
@@ -46,11 +45,12 @@ async function _buildGastosObject() {
         }
         return result;
     }
+}
 
-    function _getPin() {
-        if (getID('pin-enable').checked) {
-            return PIN_GASTOS ? PIN_GASTOS : FIRESTORE_GASTOS_DATA?.pin || "";
-        } else return "";
+function _buildGastosProtectedObject() {
+    FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {
+        compartilhamento: FIRESTORE_GASTOS_NEW_DATA.compartilhamento,
+        pin: PIN_GASTOS.new
     }
 }
 
@@ -104,32 +104,12 @@ async function _buildCompartilhamentoObject() {
 }
 
 function _buildImagemObject() {
-    let result = {
+    return {
         ativo: getID('habilitado-imagens').checked,
         background: getID('link-background').value || "",
         claro: getID('link-logo-light').value || "",
         escuro: getID('link-logo-dark').value || "",
     }
-
-    if (getID('upload-background').value) {
-        TO_UPLOAD.background = true;
-    } else if (result.background && FIREBASE_IMAGES.background && !result.background.includes(FIREBASE_IMAGE_ORIGIN)) {
-        CLEAR_IMAGES.background = true;
-    }
-
-    if (getID('upload-logo-light').value) {
-        TO_UPLOAD.logoLight = true;
-    } else if (result.claro && FIREBASE_IMAGES.claro && !result.claro.includes(FIREBASE_IMAGE_ORIGIN)) {
-        CLEAR_IMAGES.claro = true;
-    }
-
-    if (getID('upload-logo-dark').value) {
-        TO_UPLOAD.logoDark = true;
-    } else if (result.escuro && FIREBASE_IMAGES.escuro && !result.escuro.includes(FIREBASE_IMAGE_ORIGIN)) {
-        CLEAR_IMAGES.escuro = true;
-    }
-
-    return result;
 }
 
 function _buildLinksObject() {
@@ -154,8 +134,8 @@ function _buildTransporteObject() {
         const j = _getJ(child);
         result.dados.push({
             datas: {
-                chegada: _formattedDateToFirestoreDate(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
-                partida: _formattedDateToFirestoreDate(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
+                chegada: _formattedDateToDateObject(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
+                partida: _formattedDateToDateObject(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
             },
             duracao: getID(`transporte-duracao-${j}`).value,
             empresa: _getValueEmpresa(j),
@@ -180,13 +160,13 @@ function _buildHospedagemObject() {
         result.push({
             cafe: getID(`hospedagens-cafe-${j}`).checked,
             datas: {
-                checkin: _formattedDateToFirestoreDate(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
-                checkout: _formattedDateToFirestoreDate(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
+                checkin: _formattedDateToDateObject(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
+                checkout: _formattedDateToDateObject(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
             },
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
             id: _getOrCreateCategoriaID('hospedagens', j),
-            imagem: _getHospedagemImage('hospedagens', j),
+            imagens: _getHospedagemImages(j),
             reserva: getID(`reserva-hospedagens-${j}`).value,
             link: getID(`reserva-hospedagens-link-${j}`).value,
             nome: getID(`hospedagens-nome-${j}`).value,
@@ -200,7 +180,7 @@ function _buildProgramacaoObject() {
 
     for (let j = 1; j <= DATAS.length; j++) {
         const innerResult = {
-            data: _convertToFirestoreDate(DATAS[j - 1]),
+            data: _convertToDateObject(DATAS[j - 1]),
             destinosIDs: [],
             titulo: '',
             madrugada: [],
@@ -254,7 +234,7 @@ function _buildLineupObject() {
             local: getID(`lineup-local-${j}`).value,
             genero: getID(`lineup-genero-select-${j}`).value,
             palco: getID(`lineup-palco-select-${j}`).value,
-            data: data ? _keyToFirestoreDate(data) : "",
+            data: data ? _keyToDateObject(data) : "",
             inicio: getID(`lineup-inicio-${j}`).value,
             fim: getID(`lineup-fim-${j}`).value,
             midia: getID(`lineup-midia-${j}`).value,
@@ -284,12 +264,13 @@ function _buildGaleriaObject() {
         result.titulos.push(titulo);
 
         if (getID(`enable-upload-galeria-${j}`).checked) {
-            TO_UPLOAD.galeria = true;
-            result.imagens.push({});
-            UPLOAD_FILES.galeria.push(j)
+            result.imagens.push('');
+            CUSTOM_UPLOADS.galeria.push({
+                file: getID(`upload-galeria-${j}`)?.files[0],
+                position: j
+            });
         } else {
-            result.imagens.push(_getImageObject(getID(`link-galeria-${j}`).value, 'galeria'));
-            UPLOAD_FILES.galeria.push({});
+            result.imagens.push(getID(`link-galeria-${j}`).value);
         }
     }
 
@@ -311,19 +292,80 @@ async function _setViagem() {
         }
     }
 
-    CUSTOM_UPLOADS = {
-        hospedagens: TO_UPLOAD.hospedagens ? await _uploadViagemItens(UPLOAD_FILES.hospedagens, 'hospedagens') : [],
-        galeria: TO_UPLOAD.galeria > 0 ? await _uploadGaleria(UPLOAD_FILES.galeria) : []
-    }
-
     _setDocumento('viagens');
 }
 
 async function _setGastos() {
-    await _buildGastosObject();
-    if (FIRESTORE_GASTOS_DATA) {
-        return await _update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-    } else {
-        return await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID);
+    const responses = [];
+    // Without PIN
+    if (getID('pin-disable').checked) {
+        if (PIN_GASTOS.current) {
+            // 1. Existing Document (With PIN) -> Without PIN
+            responses.push(await _delete(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
+            responses.push(await _override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else if (FIRESTORE_GASTOS_DATA) {
+            // 2. Existing Document (Without PIN) -> Without PIN
+            responses.push(await _update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else {
+            //3. New Document (Without PIN)
+            responses.push(await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        }
     }
+
+    // With PIN
+    else if (getID('pin-enable').checked) {
+        if (!PIN_GASTOS.current) {
+            // 4. Existing Document (Without PIN) -> With PIN
+            responses.push(await _delete(`gastos/${DOCUMENT_ID}`));
+            responses.push(await _create('gastos', FIRESTORE_GASTOS_PROTECTED_NEW_DATA, DOCUMENT_ID));
+            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        } else if (PIN_GASTOS.current != PIN_GASTOS.new && PIN_GASTOS.new) {
+            // 5. Existing Document (With PIN) -> With PIN (Different)
+            responses.push(await _delete(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
+            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        } else if (FIRESTORE_GASTOS_DATA && PIN_GASTOS.current) {
+            // 6. Existing Document (With PIN) -> With PIN (Same)
+            responses.push(await _update(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else if (PIN_GASTOS.current) {
+            // 7. New Document (With PIN)
+            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.current}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        }
+    }
+
+    if (responses.length > 0) {
+        const masterResponse = _combineDatabaseResponses(responses);
+        _addSetResponse('Salvamento de Gastos', masterResponse.success);
+    }
+}
+
+function _verifyImageUploads(type) {
+    if (DOCUMENT_ID && !IMAGE_UPLOAD_STATUS.hasErrors) {
+        const path = `${type}/${DOCUMENT_ID}`;
+
+        const documentLinks = [];
+
+        if (FIRESTORE_NEW_DATA.imagem.background) {
+            documentLinks.push(FIRESTORE_NEW_DATA.imagem.background);
+        }
+
+        if (FIRESTORE_NEW_DATA.imagem.claro) {
+            documentLinks.push(FIRESTORE_NEW_DATA.imagem.claro);
+        }
+
+        if (FIRESTORE_NEW_DATA.imagem.escuro) {
+            documentLinks.push(FIRESTORE_NEW_DATA.imagem.escuro);
+        }
+
+        if (type == 'viagens') {
+            const hospedagemLinks = FIRESTORE_NEW_DATA.hospedagens.map(hospedagem => {
+                return hospedagem.imagens.map(imagem => imagem.link);
+            }).flat();
+            documentLinks.push(...hospedagemLinks);
+            documentLinks.push(...FIRESTORE_NEW_DATA.galeria.imagens)
+        }
+
+        _deleteUnusedImages(path, documentLinks);
+    }
+
+    _addSetResponse('Verificação de Imagens', !IMAGE_UPLOAD_STATUS.hasErrors);
 }

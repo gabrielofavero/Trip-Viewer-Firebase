@@ -66,6 +66,26 @@ async function _create(collection, data, docName = "") {
   }
 }
 
+async function _deepCreate(path, data, docId = "") {
+  try {
+    let docRef;
+
+    if (!docId) {
+      // Auto-generate document ID
+      docRef = await firebase.firestore().collection(path).add(data);
+    } else {
+      // Specify custom document ID (supports deeper paths)
+      docRef = firebase.firestore().doc(`${path}/${docId}`);
+      await docRef.set(data);
+    }
+
+    return _buildDatabaseObject(true, `Documento criado com sucesso`, docRef);
+  } catch (error) {
+    console.error(error.message);
+    return _buildDatabaseObject(false, 'Erro ao criar o documento: ' + error.message);
+  }
+}
+
 async function _update(path, newData) {
   const docRef = firebase.firestore().doc(path);
   try {
@@ -74,6 +94,17 @@ async function _update(path, newData) {
   } catch (error) {
     console.error(error.message);
     return _buildDatabaseObject(false, 'Erro ao atualizar o documento: ' + error.message)
+  }
+}
+
+async function _override(path, newData) {
+  const docRef = firebase.firestore().doc(path);
+  try {
+    await docRef.set(newData, { merge: false });
+    return _buildDatabaseObject(true, 'Documento substituído com sucesso');
+  } catch (error) {
+    console.error(error.message);
+    return _buildDatabaseObject(false, 'Erro ao substituir o documento: ' + error.message);
   }
 }
 
@@ -243,7 +274,7 @@ async function _getUserList(type, includeData = false, userData) {
     if (!userData) {
       userData = await _get(`usuarios/${uid}`);
     }
-    
+
     var result = [];
 
     if (userData) {
@@ -300,5 +331,20 @@ async function _getPermissoes() {
   if (uid) {
     const userData = await _get(`usuarios/${uid}`);
     return userData?.permissoes;
+  }
+}
+
+function _combineDatabaseResponses(responses) {
+  if (responses.length === 1) {
+    return responses[0];
+  }
+  
+  const success = !responses.some(response => response.success === false);
+  let message = success ? "Operações concluídas com sucesso" : "Uma ou mais operações falharam. Não foi possível atualizar seu documento por completo";
+
+  return {
+    message: message,
+    success: success,
+    data: responses
   }
 }

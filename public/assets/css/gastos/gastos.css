@@ -17,6 +17,7 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   transition: all 0.3s;
+  padding-top: env(safe-area-inset-top);
 }
 
 a {
@@ -613,11 +614,11 @@ section {
   margin: 0 5px;
   background: #eeeeee;
   font-size: 20px;
-  color: #272829;
 }
 
 .pin-input-invalid {
-  border-color: #ff0000;
+  background: #eee0e0;
+  border-color: #DBBBBB;
 }
 
 .pin {

@@ -1,12 +1,19 @@
 var ADJUST_HEIGHT_CARDS = [];
 
-function _loadAdjustCardsHeightsListener() {
-    window.addEventListener('resize', _adjustCardsHeights);
+function _adjustCardsHeightsListener() {
+    window.addEventListener('resize', function () {
+        _adjustCardsHeights();
+        
+        if (FIRESTORE_DATA.transportes.visualizacaoSimplificada === false) {
+            _adjustTransporteBoxContainerHeight();
+        }
+    });
 }
 
-function _adjustCardsHeights() {
-    if (ADJUST_HEIGHT_CARDS.length > 0) {
-        for (const card of ADJUST_HEIGHT_CARDS) {
+function _adjustCardsHeights(type) {
+    const cards = type ? ADJUST_HEIGHT_CARDS.filter(card => card.includes(type)) : ADJUST_HEIGHT_CARDS;
+    if (cards.length > 0) {
+        for (const card of cards) {
             _adjustSingleCardsHeights(card);
         }
     }

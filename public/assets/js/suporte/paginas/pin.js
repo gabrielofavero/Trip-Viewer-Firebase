@@ -224,12 +224,13 @@ function _loadPin() {
 
 function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent='', invalido=false}) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const classComplement = invalido ? '-invalid' : '';
   propriedades.titulo = 'PIN de Acesso';
   propriedades.conteudo = `${precontent}<div class="pin-wrapper">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input${invalido ? '-invalid' : ''}">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input${invalido ? '-invalid' : ''}">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input${invalido ? '-invalid' : ''}">
-                                <input type="text" data-role="pin" maxlength="1" class="pin-input${invalido ? '-invalid' : ''}">
+                                <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
+                                <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
+                                <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
+                                <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                               </div>
                               <div id="pin-code" class="pin"></div>`;
   propriedades.critico = true;
