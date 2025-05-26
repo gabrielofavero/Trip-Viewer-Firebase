@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
-| 🏆     | Feature  | F000    | 87    | 67          | 20         |
+| 🏆     | Feature  | F000    | 87    | 68          | 19         |
 | 📈     | Melhoria | M000    | 104    | 80          | 24        |
 | ⚔️   | Épico   | E000    | 29    | 18          | 11         |
 
@@ -15,8 +15,7 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F082:** Versionamento
-- 🏆 **F083:** Cache reset
+- 🏆 **F083:** Cache Busting
 - 🏆 **F084:** Histórico de documentos
   - *Fazer 5-10 cópias do do documento (analisar tamanho dos arquivos)*
   - *Checar compatibilidade a partir do data mais recente*
@@ -122,6 +121,7 @@
 ## Done
 
 ### Maio 2025
+- 🏆 **F082:** Versionamento
 - ❗️🐞 **B075:** Implementação do timezone causa problemas
   - *Salvamento de datas (ainda está salvando em data firestore)*
   - *Countdown*
@@ -244,7 +244,6 @@
   - *Correção de erros na criação de novas viagens*
 
 ### Junho 2024
-
 - 🐞 **B042:** Correção de listeners em trip (inicio, fim, reloadProgramacao) não estarem funcionando
 - 📈 **M019:** Módulo de programação mais personalizável
   - *Inclusão de Horário*
@@ -291,7 +290,6 @@
   - *Criação de domínio personalizado para prd*
 
 ### Maio 2024
-
 - 📈 **M028:** Melhoria na função de compartilhar para exibir texto adaptado (viagem/listagem)
 - 🐞 **B029:** Correção de listas no index.html exibirem "Sem dados" mesmo quando carregamento não acabou
 - 🏆 **F048:** Dynamic Select de "Valor" em editar-destination.html
@@ -345,7 +343,6 @@
 - 📈 **M036:** Melhoria no CSS de destinos para que tabela não desformate em zooms menores que 100%
 
 ### Abril 2024
-
 - 🐞 **B021:** Erro de viagens públicas aparecendo como privadas (Rules do Firestore)
 - 📈 **M013:** Bloqueio upload / Melhoria de segurança
   - *Criação de sistema de permissões no banco e storage rules*
@@ -373,7 +370,6 @@
 - 📈 **M027:** Melhoria de responsividade das barras de viagem do index.html
 
 ### Março 2024
-
 - 🐞 **B018:** Correção de bug de login no safari (provavelmente relacionado com animação no index)
 - 🏆 **F038:** Criação de opção de arrastar accordions (Desktop)
 - 🐞 **B017:** Correção de ":" quando título não é preenchido
@@ -391,7 +387,6 @@
 - 🐞 **B013:** Correção de embeds de destino.html estarem fora de ordem
 
 ### Fevereiro 2024
-
 - 📈 **M006:** Mini melhoria de front mobile
 - 🏆 **F032:** Criação de forma de deletar passeios / viagens
 - 🏆 **F033:** Criação de Módulo de Galeria
@@ -413,7 +408,6 @@
 - 🏆 **F037:** Criação de animações no index.html
 
 ### Janeiro 2024
-
 - ⚔️ **E009:** Migração do Projeto para Plano Spark
 - 🏆 **F027:** Criação de Limitação do tamanho de upload + forma no backend para deixar mais seguro
 - 🐞 **B006:** Correção de Loading no index finalizando antes de carregar a lista de viagens/passeios
@@ -428,7 +422,6 @@
   - *Apenas o texto tripviewer é clicável em algumas páginas. Falta o logo*
 
 ### Dezembro 2023
-
 - 🐞 **B004:** Correção de posição do select de transporte de trip
 - 🏆 **F021:** Criação de funções de front-end para edição de viagens e passeios
 - 🏆 **F022:** Criação de sistema de imagens
@@ -441,7 +434,6 @@
 - ⚔️ **E008:** Reimplementação da segurança da aplicação
 
 ### Novembro 2023
-
 - 📈 **M002:** Automação de cores tema definidas pelo usuário
 - 🐞 **B003:** Correção de bugs do modo escuro
 - 🏆 **F013:** Criação de Página de Login
@@ -455,7 +447,6 @@
 - 🏆 **F020:** Criação de funções de front-end para o index.html
 
 ### Outubro 2023
-
 - 🏆 **F003:** Migração de 'Transporte' ao Firestore
 - 🏆 **F004:** Criação de artes de transporte / hospedagem
 - 🏆 **F005:** Migração de Jsons de configuração ao Firestore
@@ -471,12 +462,10 @@
 - 🏆 **F012:** Inserção de autenticação no back-end e front-end
 
 ### Setembro 2023
-
 - 🏆 **F001:** Migração de 'Passeios' ao Firestore
 - 🏆 **F002:** Migração de 'Programação' ao Firestore
 
 ### Anteriormente
-
 - ⚔️ **E001:** Criação de Git do projeto
 - ⚔️ **E002:** Criação de projeto no Firebase
 - ⚔️ **E003:** Criação de banco de dados Firestore
@@ -485,7 +474,6 @@
 - ⚔️ **E006:** Criação de funções de leitura principais no back-end (get.ts)
 
 ### Descartados
-
 - 🏆 **F046:** Firebase Firestore Rules no Front-End
   - *Risco de segurança expor ao user as regras*
 - 🐞❔ **B031:** Correção de imagem de galeria de twitter abrir com proporções erradas no GLightbox
