@@ -1,6 +1,7 @@
 var DOCUMENT_ID;
-
 var ERROR_FROM_GET_REQUEST = "";
+
+const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
 
 // Constructors
 function _buildDatabaseObject(success, message = "", data = {}) {
@@ -209,29 +210,46 @@ async function _deleteUserObjectDB(id, type) {
 async function _deleteAccount() {
   const uid = await _getUID();
   if (uid) {
+    await _deleteAccountDocuments();
+    await _delete(`usuarios/${uid}`);
+    await firebase.auth().currentUser.delete();
+  }
+}
+
+async function _deleteAccountDocuments() {
+  const uid = await _getUID();
+  if (uid) {
     const userData = await _get(`usuarios/${uid}`);
     const promises = [];
 
-    for (const viagemID of userData.viagens) {
-      const viagem = await _get(`viagens/${viagemID}`);
-      const dono = viagem.compartilhamento.dono;
-      if (uid == dono) {
-        promises.push(_deleteUserObjectDB(viagemID, "viagens"));
-      }
-    }
-
-    for (const destinoID of userData.destinos) {
-      const destino = await _get(`destinos/${destinoID}`);
-      const dono = destino.compartilhamento.dono;
-      if (uid == dono) {
-        promises.push(_deleteUserObjectDB(destinoID, "destinos"));
+    for (const doc of DATABASE_TRIP_DOCUMENTS) {
+      if (userData[doc]) {
+        for (const docID of userData[doc]) {
+          promises.push(_delete(`${doc}/${docID}`));
+        }
       }
     }
 
     await Promise.all(promises);
-    await _delete(`usuarios/${uid}`);
-    await firebase.auth().currentUser.delete();
   }
+}
+
+async function _createAccountDocuments(data) {
+  const uid = await _getUID();
+  if (!uid) return;
+
+  const promises = [];
+
+  for (const tripDocument of DATABASE_TRIP_DOCUMENTS) {
+    if (data[tripDocument]) {
+      for (const userData of data[tripDocument]) {
+        const docID = userData.code || "";
+        promises.push(_create(tripDocument, data.data, docID));
+      }
+    }
+  }
+
+  await Promise.all(promises);
 }
 
 async function _addToUserArray(type, value) {

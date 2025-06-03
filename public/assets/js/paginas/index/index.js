@@ -139,7 +139,7 @@ async function _loadUserIndex() {
 }
 
 async function _loadUserDataList(tipo, userData) {
-  const promise = _getUserList(tipo, false, userData);
+  const promise = _getUserList(tipo, true, userData);
   let responseReceived = false;
 
   function onResponseReceived(response) {

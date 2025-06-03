@@ -118,6 +118,8 @@
 
 ## Done
 
+### Junho 2025
+
 ### Maio 2025
 - 🏆 **F083:** Cache Busting
 - 🏆 **F082:** Versionamento

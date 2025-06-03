@@ -349,7 +349,7 @@ function _compareDocuments() {
       _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
       _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
       _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
-      _compareAndPush({ obj1: {pin: PIN_GASTOS.current}, obj2: {pin: PIN_GASTOS.new}, ignoredPaths: [], name: 'senha de acesso aos gastos' });
+      _compareAndPush({ obj1: { pin: PIN_GASTOS.current }, obj2: { pin: PIN_GASTOS.new }, ignoredPaths: [], name: 'senha de acesso aos gastos' });
       break;
     case 'editar-listagem':
       const ignoredPaths = _getIgnoredPathDestinos();
@@ -406,4 +406,35 @@ function _getNewDataDocument(tipo) {
     default:
       return null;
   }
+}
+
+function _getLocalJSON() {
+  return new Promise((resolve, reject) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+
+    input.onchange = event => {
+      const file = event.target.files[0];
+      if (!file) {
+        reject('No file selected');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const json = JSON.parse(e.target.result);
+          resolve(json);
+        } catch (err) {
+          reject('Invalid JSON file');
+        }
+      };
+      reader.onerror = () => reject('Failed to read file');
+
+      reader.readAsText(file);
+    };
+
+    input.click();
+  });
 }
