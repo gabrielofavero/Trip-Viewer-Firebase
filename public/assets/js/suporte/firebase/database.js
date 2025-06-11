@@ -222,14 +222,16 @@ async function _deleteAccountDocuments() {
     const userData = await _get(`usuarios/${uid}`);
     const promises = [];
 
-    for (const doc of DATABASE_TRIP_DOCUMENTS) {
-      if (userData[doc]) {
-        for (const docID of userData[doc]) {
-          promises.push(_delete(`${doc}/${docID}`));
+    for (const type of DATABASE_TRIP_DOCUMENTS) {
+      if (userData[type]) {
+        for (const docID of userData[type]) {
+          promises.push(_delete(`${type}/${docID}`));
         }
+        userData[type] = [];
       }
     }
 
+    promises.push(_update(`usuarios/${uid}`, userData));
     await Promise.all(promises);
   }
 }
@@ -239,16 +241,18 @@ async function _createAccountDocuments(data) {
   if (!uid) return;
 
   const promises = [];
+  const userData = await _get(`usuarios/${uid}`);
 
-  for (const tripDocument of DATABASE_TRIP_DOCUMENTS) {
-    if (data[tripDocument]) {
-      for (const userData of data[tripDocument]) {
-        const docID = userData.code || "";
-        promises.push(_create(tripDocument, data.data, docID));
+  for (const type of DATABASE_TRIP_DOCUMENTS) {
+    if (data[type]) {
+      for (const document of data[type]) {
+        promises.push(_create(type, document.data, document.code));
+        userData[type].push(document.code);
       }
     }
   }
 
+  promises.push(_update(`usuarios/${uid}`, userData));
   await Promise.all(promises);
 }
 

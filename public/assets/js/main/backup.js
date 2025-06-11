@@ -2,7 +2,7 @@ TRIP_DOCUMENT_BACKUP_LIMIT = 5;
 
 // Account Data Export and Import Functions
 async function _exportAllUserData() {
-    const jsonStr = JSON.stringify(USER_DATA, null, 2); // Pretty print with indentation
+    const jsonStr = JSON.stringify(USER_DATA, null, 2);
     const blob = new Blob([jsonStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
@@ -20,7 +20,7 @@ async function _exportAllUserData() {
 }
 
 async function _importAllUserData() {
-    const backup = _getLocalJSON();
+    const backup = await _getLocalJSON();
 
     if (!backup) {
         console.error("No file provided for restoration.");
