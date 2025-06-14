@@ -206,7 +206,7 @@ function _main() {
 }
 
 function _loadConfig() {
-  let config = {};
+  const config = {};
   return Promise.all([
     $.getJSON("/assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
     $.getJSON("/assets/json/cores.json").then(data => config.cores = data),
@@ -216,9 +216,11 @@ function _loadConfig() {
     $.getJSON("/assets/json/transportes.json").then(data => config.transportes = data),
     $.getJSON("/assets/json/set.json").then(data => config.set = data),
     $.getJSON("/assets/json/gastos-icones.json").then(data => config.gastosIcones = data),
-    $.getJSON("/assets/json/version.json").then(data => config.versoes = data)
+    $.getJSON("/assets/json/version.json").then(data => config.versoes = data),
+    $.getJSON(`/assets/json/languages/${_getLanguagePackName()}.json`).then(data => config.language = data),
   ]).then(() => {
     CONFIG = config;
+    _translatePage();
   }).catch(error => {
     console.error('Erro ao carregar a configuração:', error);
     _displayError('Erro ao carregar a configuração');
@@ -245,3 +247,74 @@ window.addEventListener('load', () => {
     });
   }
 });
+
+function _getUserLanguage() {
+  let language = localStorage.getItem("userLanguage");
+  if (!language) {
+    language = navigator.language || navigator.userLanguage;
+    language = language.split("-")[0];
+    localStorage.setItem("userLanguage", language);
+  }
+  return language;
+}
+
+function _getLanguagePackName() {
+  let language = _getUserLanguage();
+  if (["pt"].includes(language)) {
+    return language;
+  } else return "pt"
+}
+
+function _updateUserLanguage(language) {
+  localStorage.setItem("userLanguage", language);
+  window.location.reload();
+}
+
+function translate(key, replacements = {}, supressError = false) {
+  if (!CONFIG.language) return "";
+
+  const keys = key.split(".");
+  let result = CONFIG.language;
+
+  for (const k of keys) {
+    if (result && k in result) {
+      result = result[k];
+
+      if (Object.keys(replacements).length > 0) {
+        for (const [placeholder, value] of Object.entries(replacements)) {
+          result = result.replace(new RegExp(`{{${placeholder}}}`, 'g'), value);
+        }
+      }
+
+    } else {
+      if (!supressError) {
+        console.error(`Translation key "${key}" not found in language pack.`);
+      }
+      return "";
+    }
+  }
+
+  return result;
+}
+
+function _translatePage() {
+  const elements = document.querySelectorAll("[data-translate]");
+  for (const element of elements) {
+    const key = element.getAttribute("data-translate");
+    if (key) {
+      const translation = translate(key);
+      if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
+        element.placeholder = translation;
+      } else {
+        element.textContent = translation;
+      }
+    }
+  }
+
+  const pathName = window.location.pathname;
+  const pageTitle = pathName === "/" ? translate("pages.index.page_title", {}, true) : translate(`pages${pathName.replace(/\//g, ".")}.page_title`, {}, true);
+
+  if (pageTitle) {
+    document.title = pageTitle;
+  }
+}
