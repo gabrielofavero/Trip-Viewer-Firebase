@@ -7,7 +7,7 @@
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
 | 🏆     | Feature  | F000    | 93    | 69          | 24         |
 | 📈     | Melhoria | M000    | 104    | 80          | 24        |
-| ⚔️   | Épico   | E000    | 32    | 18          | 14         |
+| ⚔️   | Épico   | E000    | 33    | 18          | 15         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -15,6 +15,7 @@
 
 ## Backlog
 ### Prioridade Alta
+- ⚔️ **E033:** Idiomas
 - ⚔️ **E030:** Account Import/Export
   - 🏆 **F086:** *Export All + Import all (Apenas Funções)*
   - 🏆 **F088:** *Export Selected (Apenas Funções)*
