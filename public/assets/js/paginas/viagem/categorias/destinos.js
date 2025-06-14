@@ -62,17 +62,18 @@ function _loadDestinationsHTML(destino) {
   let linktype = _getLinkType();
 
   for (let i = 0; i < headers.length; i++) {
-    const code = headers[i];
-    _buildDestinoExport(destino, code)
+    const type = headers[i];
+    const translatedType = CONFIG.destinos.translation[type] || type;
+    _buildDestinoExport(destino, type)
 
     const j = i + 1;
     const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
-    const title = CONFIG.destinos.destinos[headers[i]]["title"];
-    const href = code === "mapa" ? destino.destinos.myMaps : "#";
-    const lt = code === "mapa" ? linktype : "";
-    const onclick = code === "mapa" ? "" : `onclick="_loadAndOpenDestino('${code}')"`;
-    const icon = CONFIG.destinos.destinos[headers[i]]["icon"];
-    const description = CONFIG.destinos.destinos[headers[i]]["description"];
+    const title = translate(`destinations.types.${translatedType}.title`);
+    const description = translate(`destinations.types.${translatedType}.description`);
+    const href = type === "mapa" ? destino.destinos.myMaps : "#";
+    const lt = type === "mapa" ? linktype : "";
+    const onclick = type === "mapa" ? "" : `onclick="_loadAndOpenDestino('${type}')"`;
+    const icon = CONFIG.destinos.icons[type];
 
     text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
@@ -95,14 +96,16 @@ function _loadDestinationsHTML(destino) {
   _adjustDestinationsHTML();
 }
 
-function _buildDestinoExport(destino, code) {
-  DESTINO_EXPORT[code] = {
-    data: destino.destinos[code],
+function _buildDestinoExport(destino, type) {
+  const translatedType = CONFIG.destinos.translation[type] || type;
+  DESTINO_EXPORT[type] = {
+    data: destino.destinos[type],
     moeda: destino.destinos.moeda,
     valores: _getDestinoValores(destino),
-    notas: CONFIG.destinos.notas,
-    categoria: code,
-    descricao: CONFIG.destinos.destinos[code],
+    notas: CONFIG.language.destinations.scores,
+    categoria: type,
+    titulo: translate(`destinations.types.${translatedType}.title`),
+    descricao: translate(`destinations.types.${translatedType}.description`)
   }
 }
 

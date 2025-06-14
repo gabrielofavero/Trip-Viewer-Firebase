@@ -114,7 +114,7 @@ function _getPartidaChegadaHTML(j, tipo) {
   const data = _convertFromDateObject(transporte.datas[tipo]);
   const local = transporte.pontos[tipo];
 
-  let result = `<div class="flight-date">${_jsDateToDate(data, 'dd/mm')}</div>
+  let result = `<div class="flight-date">${_getDateString(data, 'dd/mm')}</div>
                 <div class="flight-time">${_jsDateToTime(data)}</div>`;
 
   if (local) result += `<div class="flight-location">${local}</div>`;
@@ -210,7 +210,7 @@ function _loadIconeGeralTransporte() {
 
 function _copyToClipboard(text) {
   navigator.clipboard.writeText(text);
-  _openToast("Texto copiado para a área de transferência");
+  _openToast(translate('messages.text_copied'));
 }
 
 function _loadAbasTransportes() {

@@ -118,7 +118,7 @@ function _displayTikTokError(unableToConvert) {
     const titulo = 'Erro ao converter links do TikTok <i class="iconify" data-icon="mdi:instagram"></i>';
     let conteudo = `Os seguintes links deverão ser removidos ou trocados pela versão desktop:<br><br>`;
     for (const categoria in unableToConvert) {
-        const categoriaTitle = CONFIG.destinos.destinos[categoria]?.titulo || _firstCharToUpperCase(categoria);
+        const categoriaTitle = _firstCharToUpperCase(categoria);
         conteudo += `<strong>${categoriaTitle}:</strong><br>`;
         for (const index of unableToConvert[categoria]) {
             const item = FIRESTORE_DESTINOS_NEW_DATA[categoria][index]?.nome || `Item ${index + 1}`;

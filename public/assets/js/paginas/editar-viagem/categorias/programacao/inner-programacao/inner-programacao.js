@@ -266,7 +266,7 @@ function _closeInnerProgramacao(j) {
 
 function _getInnerProgramacaoTitle(j) {
     const newJ = _getMostRecentJ(j);
-    return _jsDateToMiniTitle(DATAS[newJ - 1]);
+    return _getDateTitle(DATAS[newJ - 1], 'mini');
 }
 
 // Salvar Inner Programação

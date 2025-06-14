@@ -9,7 +9,7 @@ var INNER_PROGRAMACAO_ATUAL = [];
 // ======= LOADERS =======
 function _loadModalContentCalendar(programacao) {
     let titulo = programacao.titulo;
-    const data = _dateToTitle(_convertFromDateObject(programacao.data));
+    const data = _getDateTitle(_convertFromDateObject(programacao.data));
 
     if (FIRESTORE_DATA.modulos.destinos && DESTINOS && DESTINOS.length > 0) {
         const destinosIDs = DESTINOS.map(destino => destino.destinosID);
@@ -19,7 +19,7 @@ function _loadModalContentCalendar(programacao) {
         }
     }
 
-    getID("programacao-titulo").innerText = titulo || "Programação";
+    getID("programacao-titulo").innerText = titulo || translate('itinerary.title');
     getID("programacao-data").innerText = data;
 
     INNER_PROGRAMACAO_ATUAL = [];
@@ -85,16 +85,19 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
 
 function _loadInnerProgramacaoMidia(midia) {
     if (!midia) return;
-    let buttonText = '<i class="iconify" data-icon="lets-icons:video-fill"></i>Visualizar Vídeo'; //
+    const video = translate('itinerary.media_button.video');
+    const playlist = translate('itinerary.media_button.playlist');
+
+    let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
 
     if (midia.includes('youtube') || midia.includes('youtu.be')) {
-        buttonText = '<i class="iconify" data-icon="mdi:youtube"></i>Visualizar Vídeo';
+        buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
     } else if (midia.includes('tiktok')) {
-        buttonText = '<i class="iconify" data-icon="ic:baseline-tiktok"></i>Visualizar Vídeo';
+        buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
     } else if (midia.includes('spotify')) {
-        buttonText = '<i class="iconify" data-icon="mdi:spotify"></i>Visualizar Playlist';
+        buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
     } else if (midia.includes('instagram')) {
-        buttonText = '<i class="iconify" data-icon="mdi:instagram"></i> Visualizar Vídeo';
+        buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
     }
 
     getID('midia-1').innerHTML = `<div class="button-box">
@@ -132,7 +135,7 @@ function _loadCalendarItem(dataString) {
         }
 
     } else {
-        logger(WARN, "Sem dados para a data selecionada.")
+        console.warn("No data string provided to load calendar item.");
     }
 }
 

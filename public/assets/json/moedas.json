@@ -32,81 +32,61 @@
     "escala": {
         "HUF": {
             "$": "HUF100 - HUF2,500",
-            "default": "Valor Desconhecido",
-            "-": "Gratuito",
             "$$$": "HUF5,001 - HUF9,999",
             "$$": "HUF2,501 - HUF5,000",
-            "$$$$": "Mais de HUF10,000"
+            "$$$$": "HUF10,000"
         },
         "ILS": {
             "$": "₪10 - ₪250",
-            "default": "Valor Desconhecido",
             "$$$": "₪501 - ₪999",
-            "-": "Gratuito",
             "$$": "₪251 - ₪500",
-            "$$$$": "Mais de ₪1000"
+            "$$$$": "₪1000"
         },
         "TWD": {
             "$": "NT$100 - NT$2,500",
-            "$$$$": "Mais de NT$10,000",
-            "-": "Gratuito",
+            "$$$$": "NT$10,000",
             "$$$": "NT$5,001 - NT$9,999",
-            "default": "Valor Desconhecido",
             "$$": "NT$2,501 - NT$5,000"
         },
         "NOK": {
-            "$$$$": "Mais de NOK1000",
+            "$$$$": "NOK1000",
             "$": "NOK10 - NOK250",
-            "default": "Valor Desconhecido",
-            "-": "Gratuito",
             "$$$": "NOK501 - NOK999",
             "$$": "NOK251 - NOK500"
         },
         "USD": {
-            "-": "Gratuito",
             "$$$": "$51 - $99",
             "$$": "$26 - $50",
-            "$$$$": "Mais de $100!",
-            "default": "Valor Desconhecido",
+            "$$$$": "$100!",
             "$": "$1 - $25"
         },
         "THB": {
             "$$$": "฿5,001 - ฿9,999",
             "$": "฿100 - ฿2,500",
             "$$": "฿2,501 - ฿5,000",
-            "default": "Valor Desconhecido",
-            "-": "Gratuito",
-            "$$$$": "Mais de ฿10,000"
+            "$$$$": "฿10,000"
         },
         "NZD": {
-            "-": "Gratuito",
             "$$$": "NZ$51 - NZ$99",
             "$$": "NZ$26 - NZ$50",
-            "$$$$": "Mais de NZ$100!",
-            "default": "Valor Desconhecido",
+            "$$$$": "NZ$100!",
             "$": "NZ$1 - NZ$25"
         },
         "AUD": {
-            "-": "Gratuito",
             "$$": "A$26 - A$50",
             "$$$": "A$51 - A$99",
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de A$100!",
+            "$$$$": "A$100!",
             "$": "A$1 - A$25"
         },
         "MXN": {
-            "-": "Gratuito",
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de MX$10,000",
+            "$$$$": "MX$10,000",
             "$$": "MX$2,501 - MX$5,000",
             "$$$": "MX$5,001 - MX$9,999",
             "$": "MX$100 - MX$2,500"
         },
         "BRL": {
-            "-": "Gratuito",
             "$$$": "R$51 - R$99",
-            "$$$$": "Mais de R$100!",
-            "default": "Valor Desconhecido",
+            "$$$$": "R$100!",
             "$$": "R$26 - R$50",
             "$": "R$1 - R$25"
         },
@@ -114,144 +94,108 @@
             "$$$": "₩50,001 - ₩99,999",
             "$$": "₩25,001 - ₩50,000",
             "$": "₩1,000 - ₩25,000",
-            "$$$$": "Mais de ₩100,000",
-            "default": "Valor Desconhecido",
-            "-": "Gratuito"
+            "$$$$": "₩100,000"
         },
         "RUB": {
             "$$$": "₽12,001 - ₽24,000",
-            "-": "Gratuito",
-            "$$$$": "Mais de ₽25,000",
-            "default": "Valor Desconhecido",
+            "$$$$": "₽25,000",
             "$$": "₽6,001 - ₽12,000",
             "$": "₽1,000 - ₽6,000"
         },
         "GBP": {
-            "$$$$": "Mais de £100!",
+            "$$$$": "£100!",
             "$": "£1 - £25",
             "$$": "£26 - £50",
-            "default": "Valor Desconhecido",
-            "$$$": "£51 - £99",
-            "-": "Gratuito"
+            "$$$": "£51 - £99"
         },
         "INR": {
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de ₹10,000",
+            "$$$$": "₹10,000",
             "$$": "₹2,501 - ₹5,000",
             "$": "₹100 - ₹2,500",
-            "$$$": "₹5,001 - ₹9,999",
-            "-": "Gratuito"
+            "$$$": "₹5,001 - ₹9,999"
         },
         "ZAR": {
-            "default": "Valor Desconhecido",
             "$": "ZAR100 - ZAR2,500",
             "$$": "ZAR2,501 - ZAR5,000",
             "$$$": "ZAR5,001 - ZAR9,999",
-            "-": "Gratuito",
-            "$$$$": "Mais de ZAR10,000"
+            "$$$$": "ZAR10,000"
         },
         "JPY": {
             "$$$": "¥5,001 - ¥9,999",
-            "default": "Valor Desconhecido",
             "$": "¥100 - ¥2,500",
             "$$": "¥2,501 - ¥5,000",
-            "$$$$": "Mais de ¥10,000",
-            "-": "Gratuito"
+            "$$$$": "¥10,000"
         },
         "DKK": {
             "$$$": "DKK501 - DKK999",
-            "-": "Gratuito",
             "$$": "DKK251 - DKK500",
             "$": "DKK10 - DKK250",
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de DKK1000"
+            "$$$$": "DKK1000"
         },
         "EUR": {
-            "$$$$": "Mais de €100!",
+            "$$$$": "€100!",
             "$": "€1 - €25",
             "$$$": "€51 - €99",
-            "$$": "€26 - €50",
-            "-": "Gratuito",
-            "default": "Valor Desconhecido"
+            "$$": "€26 - €50"
         },
         "CNY": {
             "$$": "¥2,501 - ¥5,000",
-            "-": "Gratuito",
             "$$$": "¥5,001 - ¥9,999",
             "$": "¥100 - ¥2,500",
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de ¥10,000"
+            "$$$$": "¥10,000"
         },
         "NGN": {
             "$$": "₦2,501 - ₦5,000",
-            "default": "Valor Desconhecido",
             "$": "₦100 - ₦2,500",
-            "$$$$": "Mais de ₦10,000",
-            "$$$": "₦5,001 - ₦9,999",
-            "-": "Gratuito"
+            "$$$$": "₦10,000",
+            "$$$": "₦5,001 - ₦9,999"
         },
         "ARS": {
             "$$$": "ARS5,001 - ARS9,999",
             "$": "ARS100 - ARS2,500",
-            "-": "Gratuito",
             "$$": "ARS2,501 - ARS5,000",
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de ARS10,000"
+            "$$$$": "ARS10,000"
         },
         "PLN": {
-            "$$$$": "Mais de PLN1000",
+            "$$$$": "PLN1000",
             "$": "PLN10 - PLN250",
-            "-": "Gratuito",
             "$$": "PLN251 - PLN500",
-            "$$$": "PLN501 - PLN999",
-            "default": "Valor Desconhecido"
+            "$$$": "PLN501 - PLN999"
         },
         "CAD": {
             "$$$": "C$51 - C$99",
             "$": "C$1 - C$25",
             "$$": "C$26 - C$50",
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de C$100!",
-            "-": "Gratuito"
+            "$$$$": "C$100!"
         },
         "HKD": {
-            "-": "Gratuito",
             "$$": "HK$251 - HK$500",
             "$$$": "HK$501 - HK$999",
-            "default": "Valor Desconhecido",
             "$": "HK$10 - HK$250",
-            "$$$$": "Mais de HK$1000"
+            "$$$$": "HK$1000"
         },
         "SEK": {
-            "-": "Gratuito",
             "$$": "SEK251 - SEK500",
             "$": "SEK10 - SEK250",
-            "default": "Valor Desconhecido",
-            "$$$$": "Mais de SEK1000",
+            "$$$$": "SEK1000",
             "$$$": "SEK501 - SEK999"
         },
         "CHF": {
             "$$": "CHF26 - CHF50",
-            "-": "Gratuito",
-            "$$$$": "Mais de CHF100!",
+            "$$$$": "CHF100!",
             "$": "CHF1 - CHF25",
-            "$$$": "CHF51 - CHF99",
-            "default": "Valor Desconhecido"
+            "$$$": "CHF51 - CHF99"
         },
         "SGD": {
-            "-": "Gratuito",
             "$$$": "SGD51 - SGD99",
             "$": "SGD1 - SGD25",
-            "default": "Valor Desconhecido",
             "$$": "SGD26 - SGD50",
-            "$$$$": "Mais de SGD100!"
+            "$$$$": "SGD100!"
         },
         "TRY": {
             "$$$": "TRY501 - TRY999",
-            "$$$$": "Mais de TRY1000",
-            "default": "Valor Desconhecido",
+            "$$$$": "TRY1000",
             "$$": "TRY251 - TRY500",
-            "-": "Gratuito",
             "$": "TRY10 - TRY250"
         }
     }

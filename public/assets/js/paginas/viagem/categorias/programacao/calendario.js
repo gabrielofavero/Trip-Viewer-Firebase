@@ -1,39 +1,39 @@
 // ======= Calendar JS =======
-// Autor Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
+// Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
 
-const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-var start;
-var end;
-var startMonth;
-var startYear;
-var endMonth;
-var endYear;
-var calendarTitle;
+CALENDAR = {
+    start: null,
+    end: null,
+    startMonth: null,
+    startYear: null,
+    endMonth: null,
+    endYear: null,
+    calendarTitle: null,
+}
 
 function _loadCalendar() {
-    start = _convertFromDateObject(FIRESTORE_DATA.inicio);
-    end = _convertFromDateObject(FIRESTORE_DATA.fim);
+    CALENDAR.start = _convertFromDateObject(FIRESTORE_DATA.inicio);
+    CALENDAR.end = _convertFromDateObject(FIRESTORE_DATA.fim);
 
-    startMonth = start.getMonth();
-    startYear = start.getFullYear();
-    endMonth = end.getMonth();
-    endYear = end.getFullYear();
+    CALENDAR.startMonth = CALENDAR.start.getMonth();
+    CALENDAR.startYear = CALENDAR.start.getFullYear();
+    CALENDAR.endMonth = CALENDAR.end.getMonth();
+    CALENDAR.endYear = CALENDAR.end.getFullYear();
 
-    calendarTitle = getID("calendarTitle");
-    _showCalendar(startMonth, startYear);
+    CALENDAR.calendarTitle = getID("calendarTitle");
+    _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
 }
 
 function _calendarNext() {
-    startYear = (startMonth === 11) ? startYear + 1 : startYear;
-    startMonth = (startMonth + 1) % 12;
-    _showCalendar(startMonth, startYear);
+    CALENDAR.startYear = (CALENDAR.startMonth === 11) ? CALENDAR.startYear + 1 : CALENDAR.startYear;
+    CALENDAR.startMonth = (CALENDAR.startMonth + 1) % 12;
+    _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
 }
 
 function _calendarPrevious() {
-    startYear = (startMonth === 0) ? startYear - 1 : startYear;
-    startMonth = (startMonth === 0) ? 11 : startMonth - 1;
-    _showCalendar(startMonth, startYear);
+    CALENDAR.startYear = (CALENDAR.startMonth === 0) ? CALENDAR.startYear - 1 : CALENDAR.startYear;
+    CALENDAR.startMonth = (CALENDAR.startMonth === 0) ? 11 : CALENDAR.startMonth - 1;
+    _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
 }
 
 function _showCalendar(month, year) {
@@ -43,7 +43,7 @@ function _showCalendar(month, year) {
     let tbl = getID("calendar-body");
 
     tbl.innerHTML = "";
-    calendarTitle.innerHTML = months[month] + " de " + year;
+    CALENDAR.calendarTitle.innerHTML = [][month] + " de " + year;
 
     let day = 1;
     for (let i = 0; i < 6; i++) {
@@ -66,8 +66,8 @@ function _showCalendar(month, year) {
                 let cellText = document.createTextNode(day);
 
                 const currentNoTime = _getDateNoTime(currentDate);
-                const startNoTime = _getDateNoTime(start);
-                const endNoTime = _getDateNoTime(end);
+                const startNoTime = _getDateNoTime(CALENDAR.start);
+                const endNoTime = _getDateNoTime(CALENDAR.end);
 
                 if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
                     cell.classList.add("calendarTrip");
@@ -78,7 +78,7 @@ function _showCalendar(month, year) {
                     const key = `${year}${formattedMonth}${formattedDay}`;
                     const destinos = PROGRAMACAO_DESTINOS[key];
                     if (destinos && destinos.length > 0) {
-                        for (const destino of destinos){
+                        for (const destino of destinos) {
                             cell.classList.add(`pill-${destino.destinosID}`);
                         }
                     }
@@ -112,5 +112,5 @@ function _hideMonthSelector() {
 }
 
 function _isCalendarMultiMonth() {
-    return startMonth != endMonth || startYear != endYear;
+    return CALENDAR.startMonth != CALENDAR.endMonth || CALENDAR.startYear != CALENDAR.endYear;
 }

@@ -64,7 +64,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
                 </div>
                 <div class="hotel-img-text-container">
                   <div class="hotel-img-text" style="display: ${hospedagem.cafe ? 'block' : 'none'};">
-                    <i class="bx bx-coffee-togo"></i> Café da Manhã
+                    <i class="bx bx-coffee-togo"></i> ${translate('accommodation.breakfast')}
                   </div>
                 </div>
               </div>
@@ -96,10 +96,10 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
                 </div>
                   <div class="hotel-description">
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>Check-in:</strong> <span>${checkIn}</span> 
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate('accommodation.checkin')}:</strong> <span>${checkIn}</span> 
                     </div>
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>Check-out:</strong> <span>${checkOut}</span>
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate('accommodation.checkin')}:</strong> <span>${checkOut}</span>
                     </div>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
 
 function _getHospedagensData(dataFirestore) {
   const date = _convertFromDateObject(dataFirestore);
-  return `${_jsDateToDate(date)}, ${_jsDateToTime(date)}`;
+  return `${_getDateString(date)}, ${_jsDateToTime(date)}`;
 }
 
 function _buildHospedagensSwiper(swiperData) {

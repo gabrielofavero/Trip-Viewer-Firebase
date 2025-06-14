@@ -256,7 +256,7 @@ h6 {
   font-family: "Poppins", sans-serif;
 }
 
-#hero p span {
+.typed {
   color: #5859a7;
   letter-spacing: 1px;
 }

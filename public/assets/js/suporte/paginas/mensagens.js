@@ -114,6 +114,12 @@ function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES))
 function _displayError(erro, tentarNovamente = false) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 
+
+
+
+
+  
+
   propriedades.titulo = "Erro no Carregamento 🙁";
   propriedades.critico = true;
   propriedades.conteudo = _getErrorMessage(erro);

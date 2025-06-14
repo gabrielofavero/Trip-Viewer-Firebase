@@ -295,7 +295,7 @@ function _loadProgramacao() {
 
   for (let j = 1; j <= DATAS.length; j++) {
     const data = DATAS[j - 1];
-    let dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
+    let dataFormatada = _getDateTitle(data, 'weekday_day_month');
 
     programacaoBox.innerHTML += `
       <div id="programacao-${j}" class="accordion-item accordion-programacao" >

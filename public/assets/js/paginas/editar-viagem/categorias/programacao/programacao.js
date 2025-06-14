@@ -62,7 +62,7 @@ function _updateProgramacaoTitle(j) {
     }
 
     const data = DATAS[j - 1]
-    const dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
+    const dataFormatada = _getDateTitle(data, 'weekday_day_month');
     div.innerText = _getProgramacaoTitle(dataFormatada, value);
 }
 

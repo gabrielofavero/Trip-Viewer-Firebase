@@ -124,7 +124,7 @@ async function _deleteViagemAction() {
 
 function _getDataSelectOptions(j) {
   const values = DATAS.map(data => _jsDateToKey(data));
-  const labels = DATAS.map(data => _jsDateToMiniTitle(data));
+  const labels = DATAS.map(data => _getDateTitle(data, 'mini'));
   let result = j ? '' : '<option value="" selected>Selecione uma Data</option>';
 
   for (let i = 0; i < values.length; i++) {

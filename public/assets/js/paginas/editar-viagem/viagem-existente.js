@@ -25,8 +25,8 @@ function _loadDadosBasicosViagemData() {
     const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
     const fim = _convertFromDateObject(FIRESTORE_DATA.fim);
 
-    getID('inicio').value = _jsDateToDate(inicio, 'yyyy-mm-dd');
-    getID('fim').value = _jsDateToDate(fim, 'yyyy-mm-dd');
+    getID('inicio').value = _getDateString(inicio, 'yyyy-mm-dd');
+    getID('fim').value = _getDateString(fim, 'yyyy-mm-dd');
 
     getID('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
 }
@@ -162,12 +162,12 @@ function _loadTransportesData() {
         const chegada = _convertFromDateObject(transporte.datas.chegada);
 
         if (partida) {
-            getID(`partida-${j}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
+            getID(`partida-${j}`).value = _getDateString(partida, 'yyyy-mm-dd');
             getID(`partida-horario-${j}`).value = _jsDateToTime(partida);
         }
 
         if (chegada) {
-            getID(`chegada-${j}`).value = _jsDateToDate(chegada, 'yyyy-mm-dd');
+            getID(`chegada-${j}`).value = _getDateString(chegada, 'yyyy-mm-dd');
             getID(`chegada-horario-${j}`).value = _jsDateToTime(chegada);
         }
 

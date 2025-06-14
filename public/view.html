@@ -116,31 +116,34 @@
 
         <div id="keypointsNav">
           <li><a href="#keypoints" class="nav-link scrollto"><i class="bx bx-dots-horizontal-rounded"></i>
-              <span>Resumo</span></a></li>
+              <span data-translate="pages.view.highlights.title"></span></a></li>
         </div>
 
         <div id="transportationNav">
           <li><a href="#transportation" class="nav-link scrollto"><i id="transporte-nav" class="iconify"
                 data-icon="mingcute:rocket-fill"></i>
-              <span>Transporte</span></a></li>
+              <span data-translate="transportation.title"></span></a></li>
         </div>
 
         <div id="stayNav">
-          <li><a href="#stay" class="nav-link scrollto"><i class="bx bxs-hotel"></i> <span>Hospedagens</span></a>
+          <li><a href="#stay" class="nav-link scrollto"><i class="bx bxs-hotel"></i>
+            <span data-translate="accommodation.title"></span></a>
           </li>
         </div>
 
         <div id="scheduleCalendarNav">
           <li><a href="#scheduleCalendar" class="nav-link scrollto"><i class="bx bx-calendar"></i>
-              <span>Programação</span></a></li>
+              <span data-translate="itinerary.title"></span></a></li>
         </div>
 
         <div id="destinosNav">
-          <li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-map"></i> <span id="destinosNavText">Destinos</span></a></li>
+          <li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-map"></i>
+            <span id="destinosNavText" data-translate="destinations.title"></span></a></li>
         </div>
 
         <div id="portfolioM">
-          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-photo-album"></i> <span>Galeria</span></a>
+          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-photo-album"></i>
+            <span data-translate="gallery.title"></span></a>
           </li>
         </div>
 
@@ -171,7 +174,7 @@
         <a id="vaccineLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="tabler:vaccine"
             style="display:none"></i></a>
       </div>
-      <button id="programacao-hoje" style="display: none">Programação de Hoje</button>
+      <button id="programacao-hoje" style="display: none"><span data-translate="itinerary.todays_itinerary"></span></button>
     </div>
   </section>
 
@@ -181,7 +184,7 @@
     <section id="keypoints" class="facts">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
-          <h2>Resumo</h2>
+          <h2 data-translate="pages.view.highlights.title"></h2>
         </div>
         <div class="col-lg-4" id="googleMaps"></div>
 
@@ -220,7 +223,7 @@
         </div>
 
         <div id="gastos-container" class="button-box" style="margin-top: 25px; display: none;">
-          <button id="gastos" class="btn btn-theme btn-format">Gastos da Viagem</button>
+          <button id="gastos" class="btn btn-theme btn-format"><span data-translate="pages.view.highlights.expenses"></span></button>
         </div>
 
     </section>
@@ -230,7 +233,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2 id="transporte-titulo">Transporte</h2>
+          <h2 id="transporte-titulo" data-translate="transportation.title"></h2>
           <div id="transporte-subtitulo"></div>
         </div>
 
@@ -261,7 +264,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Hospedagens</h2>
+          <h2 data-translate="accommodation.title"></h2>
           <div id="sobre"></div>
         </div>
 
@@ -275,8 +278,8 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Programação</h2>
-          <div id="progDescription">Selecione uma data para ver a programação</div>
+          <h2 data-translate="itinerary.title"></h2>
+          <div id="progDescription" data-translate="itinerary.subtitle"></div>
           <div id="pTotal"></div>
           <div id="pAjuste"></div>
           <div class="backup" id="dadosBackup"></div>
@@ -288,13 +291,13 @@
             <table class="table table-bordered table-responsive-sm" id="calendar">
               <thead id="tabHeader">
                 <tr>
-                  <th>Dom</th>
-                  <th>Seg</th>
-                  <th>Ter</th>
-                  <th>Qua</th>
-                  <th>Qui</th>
-                  <th>Sex</th>
-                  <th>Sáb</th>
+                  <th data-translate="dates.weekdays.mini.sunday"></th>
+                  <th data-translate="dates.weekdays.mini.monday"></th>
+                  <th data-translate="dates.weekdays.mini.tuesday"></th>
+                  <th data-translate="dates.weekdays.mini.wednesday"></th>
+                  <th data-translate="dates.weekdays.mini.thursday"></th>
+                  <th data-translate="dates.weekdays.mini.friday"></th>
+                  <th data-translate="dates.weekdays.mini.saturday"></th>
                 </tr>
               </thead>
 
@@ -326,21 +329,21 @@
                 </div>
               </div>
 
-              <div id="sem-programacao">Nada programado por aqui! ☹️</div>
+              <div id="sem-programacao" data-translate="itinerary.no_itinerary"></div>
 
-              <div class="programacao-item" id="programacao-madrugada">Madrugada:</div>
+              <div class="programacao-item" id="programacao-madrugada" data-translate="itinerary.early_hours"></div>
               <div id="programacao-itens-madrugada">
               </div>
 
-              <div class="programacao-item" id="programacao-manha">Manhã:</div>
+              <div class="programacao-item" id="programacao-manha" data-translate="itinerary.morning"></div>
               <div id="programacao-itens-manha">
               </div>
 
-              <div class="programacao-item" id="programacao-tarde">Tarde:</div>
+              <div class="programacao-item" id="programacao-tarde" data-translate="itinerary.afternoon"></div>
               <div id="programacao-itens-tarde">
               </div>
 
-              <div class="programacao-item" id="programacao-noite">Noite:</div>
+              <div class="programacao-item" id="programacao-noite" data-translate="itinerary.evening"></div>
               <div id="programacao-itens-noite">
               </div>
             </div>
@@ -356,7 +359,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title" id="destinosTitleContainer">
-          <h2 id="dTitle">Destinos</h2>
+          <h2 id="dTitle" data-translate="destinations.title"></h2>
           <div id="dUpdate"></div>
         </div>
 
@@ -375,13 +378,13 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Galeria</h2>
+          <h2 data-translate="gallery.title"></h2>
         </div>
 
         <div class="row">
           <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
             <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">Todos</li>
+              <li data-filter="*" class="filter-active" data-translate="inputs.all"></li>
             </ul>
           </div>
         </div>
@@ -404,9 +407,9 @@
   <footer id="footer">
     <div class="container">
       <div class="credits">
-        Desenvolvido por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
+        <span data-translate="footer.developer"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
           class="atribuicoes" onclick="_openAtribuicoes()"><i class="bx bx-info-circle"></i>
-          Atribuições</span>
+          <span data-translate="footer.attributions"></span></span>
       </div>
     </div>
   </footer>
