@@ -1,0 +1,446 @@
+{
+    "pages": {
+        "index": {
+            "intro": "Isso é ",
+            "login": {
+                "email": "E-mail",
+                "password": "Senha",
+                "sign_in": "Entrar"
+            },
+            "greeting": "Olá",
+            "trips": {
+                "next": "Próximas viagens",
+                "previous": "Viagens anteriores",
+                "new": "Nova Viagem",
+                "current_single": "Viagem em Andamento",
+                "current_multi_1": "Múltiplas viagens em andamento",
+                "current_multi_2": "Confira em \"Próximas Viagens\""
+            },
+            "destinations": {
+                "mine": "Meus Destinos",
+                "list": "Listas de destinos",
+                "new": "Novo destino",
+                "new_list": "Nova lista de destinos"
+            },
+            "account": {
+                "title": "Ajustes da conta",
+                "delete": {
+                    "title": "Excluir conta",
+                    "message": "Tem certeza que deseja realizar a exclusão? A ação não poderá ser desfeita e todos os dados associados também serão excluídos"
+                },
+                "sign_out": "Sair da Conta"
+            }
+        },
+        "edit": {
+            "trip": {
+                "page_title": "Editar Viagem",
+                "basic_information": {
+                    "title": "Dados Básicos",
+                    "subtitle": "Adicione aqui as principais informações da sua viagem.",
+                    "fields": {
+                        "title": {
+                            "placeholder": "Digite o título da viagem"
+                        },
+                        "currency": "Moeda",
+                        "from": "Início",
+                        "to": "Fim",
+                        "people": "Quantidade de Pessoas"
+                    }
+                },
+                "customization": {
+                    "title": "Customização",
+                    "subtitle": "Dê uma cara única para a sua viagem.",
+                    "images": {
+                        "title": "Imagens Personalizadas",
+                        "subtitle": "Adicione um papel de parede e um logotipo",
+                        "fields": {
+                            "wallpaper": "Papel de Parede",
+                            "logo_light": "Logotipo: Tema Claro",
+                            "logo_dark": "Logotipo: Tema Escuro"
+                        }
+                    },
+                    "colors": {
+                        "title": "Cores Personalizadas",
+                        "subtitle": "Escolha o tema e as cores da sua viagem",
+                        "fields": {
+                            "themes": {
+                                "light_and_dark": "Exibir viagem em tema Claro e Escuro",
+                                "light": "Exibir viagem apenas no tema Claro",
+                                "dark": "Exibir viagem apenas no tema Escuro"
+                            },
+                            "light": "Tema Claro",
+                            "dark": "Tema Escuro"
+                        }
+                    },
+                    "links": {
+                        "title": "Links Personalizados",
+                        "subtitle": "Adicione links úteis para a sua viagem",
+                        "fields": {
+                            "attachment": "Anexo Genérico",
+                            "google_drive": "Google Drive",
+                            "map": "Mapa",
+                            "pdf": "PDF",
+                            "presentation": "Apresentação (PowerPoint)",
+                            "sheet": "Planilha (Excel / Google Sheets)",
+                            "vaccination": "Comprovante de Vacinação"
+                        }
+                    }
+                },
+                "expenses": {
+                    "title": "Gastos",
+                    "subtitle": "Gerencie seus gastos antes e durante a viagem",
+                    "fields": {
+                        "pin": {
+                            "public": "Tornar a visualização dos gastos pública",
+                            "private": "Proteger a visualização dos gastos com um PIN",
+                            "new_pin": "Definir PIN de acesso",
+                            "change_pin": "Alterar PIN de acesso"
+                        },
+                        "pre_trip": "Gastos prévios",
+                        "during_trip": "Gastos durante a viagem",
+                        "types": {
+                            "transportation": "Transporte",
+                            "flights": "Voos",
+                            "car": "Carro",
+                            "accommodations": "Hospedagens",
+                            "entrertainment": "Entretenimento",
+                            "daily_expenses": "Gastos por dia",
+                            "personal_budget": "Gastos pessoais",
+                            "other_expenses": "Outros Gastos"
+                        }
+                    }
+                }
+            },
+            "destination": {
+                "page_title": "Editar Destino"
+            },
+            "listing": {
+                "page_title": "Editar Lista de Destinos"
+            }
+        },
+        "view": {
+            "home": "Home",
+            "highlights": {
+                "title": "Destaques",
+                "departure": "Ida",
+                "return": "Volta",
+                "days": "Dias",
+                "people": "Pessoas",
+                "expenses": "Gastos da viagem"
+            },
+            "share": {
+                "trip": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
+                "destination": "Venha visualizar o destino {{name}} criado no TripViewer",
+                "listing": "Venha visualizar minha lista {{name}} criada no TripViewer",
+                "default": "Venha visualizar minhas informações de viagem criadas no TripViewer"
+            }
+        }
+    },
+    "transportation": {
+        "title": "Transporte",
+        "subtitle": "Cadastre os principais deslocamentos de ida, durante e volta",
+        "single_reservation": "Reserva",
+        "multi_reservation": "Reservas {{reservations}}",
+        "departure": "Ida",
+        "during": "Durante",
+        "return": "Volta",
+        "fields": {
+            "simple_view": "Visualização simplificada",
+            "categorized_view": "Visualização por categorias",
+            "departure_location": {
+                "title": "Local de partida",
+                "placeholder": "Belo Horizonte"
+            },
+            "arrival_location": {
+                "title": "Local de chegada",
+                "placeholder": "Las Vegas"
+            },
+            "departure": "Partida",
+            "arrival": "Chegada",
+            "transportation": {
+                "title": "Meio de transporte",
+                "options": {
+                    "flight": "Voo",
+                    "car": "Carro",
+                    "bus": "Ônibus",
+                    "train": "Trem",
+                    "helicopter": "Helicóptero",
+                    "ship": "Navio",
+                    "taxi": "Táxi",
+                    "motocycle": "Moto",
+                    "bicycle": "Bicicleta",
+                    "bullet_train": "Trem-bala",
+                    "subway": "Metrô",
+                    "other": "Outro"
+                },
+                "duration": "Duração",
+                "company": "Empresa"
+            }
+        }
+    },
+    "accommodation": {
+        "title": "Hospedagens",
+        "subtitle": "Cadastre onde você ficará hospedado durante a viagem",
+        "checkin": "Check-in",
+        "checkout": "Check-out",
+        "breakfast": "Café da manhã",
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Hotel, Pousada, Airbnb, etc."
+            },
+            "address": {
+                "title": "Endereço",
+                "placeholder": "Rua Exemplo, 123"
+            },
+            "description": {
+                "placeholder": "Quarto duplo, vista para o mar"
+            }
+        }
+    },
+    "itinerary": {
+        "title": "Programação",
+        "subtitle": "Inclua aqui a sua programação diária",
+        "todays_itinerary": "Programação de hoje",
+        "no_itinerary": "Nada programado por aqui! ☹️",
+        "instructions": "Selecione uma data para ver a programação",
+        "morning": "Manhã",
+        "afternoon": "Tarde",
+        "evening": "Noite",
+        "early_hours": "Madrugada",
+        "fields": {
+            "selector": {
+                "associated_item": "Item associado",
+                "start": "Início",
+                "end": "Fim",
+                "time_of_day": "Período do dia"
+            }
+        },
+        "media_button": {
+            "video": "Visualizar Vídeo",
+            "playlist": "Visualizar Playlist"
+        }
+    },
+    "destinations": {
+        "title": "Destinos",
+        "subtitle": "O que fazer durante a viagem? Onde comer? Onde visitar?",
+        "types": {
+            "restaurants": {
+                "title": "Restaurantes",
+                "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite."
+            },
+            "snacks": {
+                "title": "Lanches",
+                "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve."
+            },
+            "nightlife": {
+                "title": "Saídas",
+                "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento."
+            },
+            "tourism": {
+                "title": "Turismo",
+                "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais."
+            },
+            "shopping": {
+                "title": "Lojas",
+                "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral."
+            },
+            "map": {
+                "title": "Mapa",
+                "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas."
+            },
+            "lineup": {
+                "title": "Lineup",
+                "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista."
+            },
+            "tourismAndShopping": {
+                "title": "Turismo e Lojas",
+                "description": "Pontos turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros."
+            },
+            "food": {
+                "title": "Alimentação",
+                "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros."
+            }
+        },
+        "scores": {
+            "1": "Sem prioridade",
+            "2": "Baixa prioridade",
+            "3": "Prioridade normal",
+            "4": "Alta prioridade",
+            "5": "Altíssima prioridade",
+            "default": "Prioridade não definida"
+        },
+        "price": {
+            "default": "Valor Desconhecido",
+            "above": "Mais de {{value}}",
+            "free": "Gratuito"
+        }
+    },
+    "gallery": {
+        "title": "Galeria",
+        "subtitle": "Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros"
+    },
+    "reservation": {
+        "reservation_code": "Código de reserva",
+        "reservation_link": "Link da reserva"
+    },
+    "currency": {
+        "BRL": "Real (R$)",
+        "USD": "Dólar Americano ($)",
+        "EUR": "Euro (€)",
+        "GBP": "Libra Esterlina (£)",
+        "JPY": "Iene / Yuan (¥)",
+        "INR": "Rúpia Indiana (₹)",
+        "RUB": "Rublo Russo (₽)",
+        "CAD": "Dólar Canadense (C$)",
+        "AUD": "Dólar Australiano (A$)",
+        "CHF": "Franco Suíço (CHF)",
+        "SEK": "Coroa Sueca (SEK)",
+        "NOK": "Coroa Norueguesa (NOK)",
+        "DKK": "Coroa Dinamarquesa (DKK)",
+        "NZD": "Dólar Neozelandês (NZ$)",
+        "MXN": "Peso Mexicano (MX$)",
+        "ZAR": "Rand Sul-Africano (ZAR)",
+        "KRW": "Won Sul-Coreano (₩)",
+        "SGD": "Dólar de Singapura (SGD)",
+        "HKD": "Dólar de Hong Kong (HK$)",
+        "ILS": "Novo Shekel Israelense (₪)",
+        "PLN": "Złoty Polonês (PLN)",
+        "HUF": "Forint Húngaro (HUF)",
+        "TWD": "Dólar de Taiwan (NT$)",
+        "THB": "Baht Tailandês (฿)"
+    },
+    "dates": {
+        "titles": {
+            "day_month": "{{day}} de {{month}}",
+            "weekday_day_month": "{{weekday}}, {{day}} de {{month}}"
+        },
+        "months": {
+            "january": "Janeiro",
+            "february": "Fevereiro",
+            "march": "Março",
+            "april": "Abril",
+            "may": "Maio",
+            "june": "Junho",
+            "july": "Julho",
+            "august": "Agosto",
+            "september": "Setembro",
+            "october": "Outubro",
+            "november": "Novembro",
+            "december": "Dezembro"
+        },
+        "weekdays": {
+            "default": {
+                "monday": "Segunda",
+                "tuesday": "Terça",
+                "wednesday": "Quarta",
+                "thursday": "Quinta",
+                "friday": "Sexta",
+                "saturday": "Sábado",
+                "sunday": "Domingo"
+            },
+            "mini": {
+                "monday": "Seg",
+                "tuesday": "Ter",
+                "wednesday": "Qua",
+                "thursday": "Qui",
+                "friday": "Sex",
+                "saturday": "Sáb",
+                "sunday": "Dom"
+            }
+        },
+        "countdown": {
+            "years": "a",
+            "months": "m",
+            "days": "d",
+            "hours": "h",
+            "minutes": "m",
+            "seconds": "s"
+        }
+    },
+    "inputs": {
+        "optional": "Opcional",
+        "cancel": "Cancelar",
+        "save": "Salvar",
+        "enabled": "Habilitado",
+        "disabled": "Desabilitado",
+        "add": "Adicionar",
+        "search": "Pesquisar",
+        "title": "Título",
+        "no_title": "Sem título",
+        "description": "Descrição",
+        "type": "Tipo",
+        "try_again": "Tentar novamente",
+        "all": "Todos",
+        "image": {
+            "title": "Imagem",
+            "placeholder": "https://exemplo.com/imagem.jpg",
+            "link": "Fornecer link da imagem",
+            "upload": "Carregar imagem",
+            "upload_limit": "Até {{limit}}MB",
+            "image_selector": {
+                "title": "Imagens",
+                "add": "Adicionar Imagens",
+                "edit": "Editar Imagens",
+                "subtitle": "Você pode adicionar até 5 imagens",
+                "description": "Descrição"
+            }
+        },
+        "select": {
+            "select": "Selecione",
+            "other": "Outro(a)"
+        }
+    },
+    "footer": {
+        "developer": "Desenvolvido por",
+        "attributions": "Atribuições"
+    },
+    "messages": {
+        "long_load": "O carregamento está demorando mais que o esperado",
+        "last_updated_on": "Última atualização em",
+        "text_copied": "Texto copiado para a área de transferência",
+        "unauthenticated": "Não autenticado",
+        "no_data": "Sem dados cadastrados 😔",
+        "errors": {
+            "load_title": "Erro no Carregamento 🙁",
+            "unknown": "Um erro inesperado impediu o carregamento da página",
+            "contact_admin": "Entre em contato com o administrador do sistema",
+            "to_report": "para reportar o problema",
+            "unauthenticated": "Não foi possível carregar o documento pois o usuário não está logado",
+            "unknown_directory": "Pasta Desconhecida",
+            "no_upload_permission": "Você não possui permissão para fazer upload de arquivos",
+            "upload_error": "Erro ao fazer upload de arquivos"
+        },
+        "registration": {
+            "too_early": {
+                "title": "Você chegou muito cedo! 😅",
+                "message": "Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀'"
+            }
+        },
+        "documents": {
+            "get": {
+                "error": "Não foi possível carregar o documento. Não há um código válido na URL"
+            },
+            "create": {
+                "success": "Documento criado com sucesso",
+                "error": "Erro ao criar o documento"
+            },
+            "update": {
+                "success": "Documento atualizado com sucesso",
+                "error": "Erro ao atualizar o documento"
+            },
+            "replace": {
+                "success": "Documento substituído com sucesso",
+                "error": "Erro ao substituir o documento"
+            },
+            "delete": {
+                "success": "Documento excluído com sucesso",
+                "error": "Erro ao excluir o documento"
+            }
+        },
+        "operations": {
+            "success": "Operações concluídas com sucesso",
+            "error": "Uma ou mais operações falharam"
+        }
+    }
+}
