@@ -1,150 +1,93 @@
 {
-    "pages": {
-        "index": {
-            "intro": "Isso é ",
-            "login": {
-                "email": "E-mail",
-                "password": "Senha",
-                "sign_in": "Entrar"
-            },
-            "greeting": "Olá",
-            "trips": {
-                "next": "Próximas viagens",
-                "previous": "Viagens anteriores",
-                "new": "Nova Viagem",
-                "current_single": "Viagem em Andamento",
-                "current_multi_1": "Múltiplas viagens em andamento",
-                "current_multi_2": "Confira em \"Próximas Viagens\""
-            },
-            "destinations": {
-                "mine": "Meus Destinos",
-                "list": "Listas de destinos",
-                "new": "Novo destino",
-                "new_list": "Nova lista de destinos"
-            },
-            "account": {
-                "title": "Ajustes da conta",
-                "delete": {
-                    "title": "Excluir conta",
-                    "message": "Tem certeza que deseja realizar a exclusão? A ação não poderá ser desfeita e todos os dados associados também serão excluídos"
-                },
-                "sign_out": "Sair da Conta"
-            }
-        },
-        "edit": {
-            "trip": {
-                "page_title": "Editar Viagem",
-                "basic_information": {
-                    "title": "Dados Básicos",
-                    "subtitle": "Adicione aqui as principais informações da sua viagem.",
-                    "fields": {
-                        "title": {
-                            "placeholder": "Digite o título da viagem"
-                        },
-                        "currency": "Moeda",
-                        "from": "Início",
-                        "to": "Fim",
-                        "people": "Quantidade de Pessoas"
-                    }
-                },
-                "customization": {
-                    "title": "Customização",
-                    "subtitle": "Dê uma cara única para a sua viagem.",
-                    "images": {
-                        "title": "Imagens Personalizadas",
-                        "subtitle": "Adicione um papel de parede e um logotipo",
-                        "fields": {
-                            "wallpaper": "Papel de Parede",
-                            "logo_light": "Logotipo: Tema Claro",
-                            "logo_dark": "Logotipo: Tema Escuro"
-                        }
-                    },
-                    "colors": {
-                        "title": "Cores Personalizadas",
-                        "subtitle": "Escolha o tema e as cores da sua viagem",
-                        "fields": {
-                            "themes": {
-                                "light_and_dark": "Exibir viagem em tema Claro e Escuro",
-                                "light": "Exibir viagem apenas no tema Claro",
-                                "dark": "Exibir viagem apenas no tema Escuro"
-                            },
-                            "light": "Tema Claro",
-                            "dark": "Tema Escuro"
-                        }
-                    },
-                    "links": {
-                        "title": "Links Personalizados",
-                        "subtitle": "Adicione links úteis para a sua viagem",
-                        "fields": {
-                            "attachment": "Anexo Genérico",
-                            "google_drive": "Google Drive",
-                            "map": "Mapa",
-                            "pdf": "PDF",
-                            "presentation": "Apresentação (PowerPoint)",
-                            "sheet": "Planilha (Excel / Google Sheets)",
-                            "vaccination": "Comprovante de Vacinação"
-                        }
-                    }
-                },
-                "expenses": {
-                    "title": "Gastos",
-                    "subtitle": "Gerencie seus gastos antes e durante a viagem",
-                    "fields": {
-                        "pin": {
-                            "public": "Tornar a visualização dos gastos pública",
-                            "private": "Proteger a visualização dos gastos com um PIN",
-                            "new_pin": "Definir PIN de acesso",
-                            "change_pin": "Alterar PIN de acesso"
-                        },
-                        "pre_trip": "Gastos prévios",
-                        "during_trip": "Gastos durante a viagem",
-                        "types": {
-                            "transportation": "Transporte",
-                            "flights": "Voos",
-                            "car": "Carro",
-                            "accommodations": "Hospedagens",
-                            "entrertainment": "Entretenimento",
-                            "daily_expenses": "Gastos por dia",
-                            "personal_budget": "Gastos pessoais",
-                            "other_expenses": "Outros Gastos"
-                        }
-                    }
-                }
-            },
-            "destination": {
-                "page_title": "Editar Destino"
-            },
-            "listing": {
-                "page_title": "Editar Lista de Destinos"
-            }
-        },
-        "view": {
-            "home": "Home",
-            "highlights": {
-                "title": "Destaques",
-                "departure": "Ida",
-                "return": "Volta",
-                "days": "Dias",
-                "people": "Pessoas",
-                "expenses": "Gastos da viagem"
-            },
-            "share": {
-                "trip": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
-                "destination": "Venha visualizar o destino {{name}} criado no TripViewer",
-                "listing": "Venha visualizar minha lista {{name}} criada no TripViewer",
-                "default": "Venha visualizar minhas informações de viagem criadas no TripViewer"
-            }
+    "auth": {
+        "sign_in": "Entrar",
+        "sign_out": "Sair da Conta",
+        "email": "E-mail",
+        "password": "Senha",
+        "account_settings": "Ajustes da conta",
+        "delete_account": {
+            "title": "Excluir conta",
+            "message": "Tem certeza que deseja realizar a exclusão? A ação não poderá ser desfeita e todos os dados associados também serão excluídos"
         }
     },
-    "transportation": {
-        "title": "Transporte",
-        "subtitle": "Cadastre os principais deslocamentos de ida, durante e volta",
-        "single_reservation": "Reserva",
-        "multi_reservation": "Reservas {{reservations}}",
-        "departure": "Ida",
-        "during": "Durante",
-        "return": "Volta",
-        "fields": {
+    "trip": {
+        "next": "Próximas viagens",
+        "previous": "Viagens anteriores",
+        "new": "Nova Viagem",
+        "current_single": "Viagem em Andamento",
+        "current_multi_1": "Múltiplas viagens em andamento",
+        "current_multi_2": "Confira em \"Próximas Viagens\"",
+        "edit": "Editar Viagem",
+        "share": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
+        "basic_information": {
+            "title": "Dados Básicos",
+            "subtitle": "Adicione aqui as principais informações da sua viagem.",
+            "title_placeholder": "Digite o título da viagem"
+        },
+        "customization": {
+            "title": "Customização",
+            "subtitle": "Dê uma cara única para a sua viagem.",
+            "images": {
+                "title": "Imagens Personalizadas",
+                "subtitle": "Adicione um papel de parede e um logotipo",
+                "wallpaper": "Papel de Parede",
+                "logo_light": "Logotipo: Tema Claro",
+                "logo_dark": "Logotipo: Tema Escuro"
+            },
+            "colors": {
+                "title": "Cores Personalizadas",
+                "subtitle": "Escolha o tema e as cores da sua viagem",
+                "themes": {
+                    "light_and_dark": "Exibir viagem em tema Claro e Escuro",
+                    "light": "Exibir viagem apenas no tema Claro",
+                    "dark": "Exibir viagem apenas no tema Escuro"
+                }
+            },
+            "links": {
+                "title": "Links Personalizados",
+                "subtitle": "Adicione links úteis para a sua viagem",
+                "attachment": "Anexo Genérico",
+                "google_drive": "Google Drive",
+                "map": "Mapa",
+                "pdf": "PDF",
+                "presentation": "Apresentação (PowerPoint)",
+                "sheet": "Planilha (Excel / Google Sheets)",
+                "vaccination": "Comprovante de Vacinação"
+            }
+        },
+        "expenses": {
+            "title": "Gastos",
+            "full_title": "Gastos da viagem",
+            "subtitle": "Gerencie seus gastos antes e durante a viagem",
+            "pin": {
+                "public": "Tornar a visualização dos gastos pública",
+                "private": "Proteger a visualização dos gastos com um PIN",
+                "new_pin": "Definir PIN de acesso",
+                "change_pin": "Alterar PIN de acesso"
+            },
+            "pre_trip": "Gastos prévios",
+            "during_trip": "Gastos durante a viagem",
+            "types": {
+                "transportation": "Transporte",
+                "flights": "Voos",
+                "car": "Carro",
+                "accommodations": "Hospedagens",
+                "entrertainment": "Entretenimento",
+                "daily_expenses": "Gastos por dia",
+                "personal_budget": "Gastos pessoais",
+                "other_expenses": "Outros Gastos"
+            }
+        },
+        "transportation": {
+            "title": "Transporte",
+            "subtitle": "Cadastre os principais deslocamentos de ida, durante e volta",
+            "single_reservation": "Reserva",
+            "multi_reservation": "Reservas {{reservations}}",
+            "departure": "Partida",
+            "arrival": "Chegada",
+            "during": "Durante",
+            "from": "Ida",
+            "to": "Volta",
             "simple_view": "Visualização simplificada",
             "categorized_view": "Visualização por categorias",
             "departure_location": {
@@ -155,9 +98,7 @@
                 "title": "Local de chegada",
                 "placeholder": "Las Vegas"
             },
-            "departure": "Partida",
-            "arrival": "Chegada",
-            "transportation": {
+            "types": {
                 "title": "Meio de transporte",
                 "options": {
                     "flight": "Voo",
@@ -172,19 +113,15 @@
                     "bullet_train": "Trem-bala",
                     "subway": "Metrô",
                     "other": "Outro"
-                },
-                "duration": "Duração",
-                "company": "Empresa"
+                }
             }
-        }
-    },
-    "accommodation": {
-        "title": "Hospedagens",
-        "subtitle": "Cadastre onde você ficará hospedado durante a viagem",
-        "checkin": "Check-in",
-        "checkout": "Check-out",
-        "breakfast": "Café da manhã",
-        "fields": {
+        },
+        "accommodation": {
+            "title": "Hospedagens",
+            "subtitle": "Cadastre onde você ficará hospedado durante a viagem",
+            "checkin": "Check-in",
+            "checkout": "Check-out",
+            "breakfast": "Café da manhã",
             "name": {
                 "title": "Nome",
                 "placeholder": "Hotel, Pousada, Airbnb, etc."
@@ -196,34 +133,34 @@
             "description": {
                 "placeholder": "Quarto duplo, vista para o mar"
             }
-        }
-    },
-    "itinerary": {
-        "title": "Programação",
-        "subtitle": "Inclua aqui a sua programação diária",
-        "todays_itinerary": "Programação de hoje",
-        "no_itinerary": "Nada programado por aqui! ☹️",
-        "instructions": "Selecione uma data para ver a programação",
-        "morning": "Manhã",
-        "afternoon": "Tarde",
-        "evening": "Noite",
-        "early_hours": "Madrugada",
-        "fields": {
-            "selector": {
-                "associated_item": "Item associado",
-                "start": "Início",
-                "end": "Fim",
-                "time_of_day": "Período do dia"
+        },
+        "itinerary": {
+            "title": "Programação",
+            "subtitle": "Inclua aqui a sua programação diária",
+            "todays_itinerary": "Programação de hoje",
+            "no_itinerary": "Nada programado por aqui! ☹️",
+            "instructions": "Selecione uma data para ver a programação",
+            "media_button": {
+                "video": "Visualizar Vídeo",
+                "playlist": "Visualizar Playlist"
             }
         },
-        "media_button": {
-            "video": "Visualizar Vídeo",
-            "playlist": "Visualizar Playlist"
+        "gallery": {
+            "title": "Galeria",
+            "subtitle": "Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros"
         }
     },
-    "destinations": {
+    "destination": {
         "title": "Destinos",
         "subtitle": "O que fazer durante a viagem? Onde comer? Onde visitar?",
+        "mine": "Meus Destinos",
+        "list": "Listas de destinos",
+        "new": "Novo destino",
+        "new_list": "Nova lista de destinos",
+        "edit": "Editar Destino",
+        "edit_list": "Editar Lista de Destinos",
+        "share": "Venha visualizar o destino {{name}} criado no TripViewer",
+        "share_list": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
         "types": {
             "restaurants": {
                 "title": "Restaurantes",
@@ -272,17 +209,9 @@
         },
         "price": {
             "default": "Valor Desconhecido",
-            "above": "Mais de {{value}}",
+            "max": "Mais de {{value}}",
             "free": "Gratuito"
         }
-    },
-    "gallery": {
-        "title": "Galeria",
-        "subtitle": "Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros"
-    },
-    "reservation": {
-        "reservation_code": "Código de reserva",
-        "reservation_link": "Link da reserva"
     },
     "currency": {
         "BRL": "Real (R$)",
@@ -310,10 +239,17 @@
         "TWD": "Dólar de Taiwan (NT$)",
         "THB": "Baht Tailandês (฿)"
     },
-    "dates": {
-        "titles": {
+    "datetime": {
+        "title": {
             "day_month": "{{day}} de {{month}}",
             "weekday_day_month": "{{weekday}}, {{day}} de {{month}}"
+        },
+        "time_of_day": {
+            "time_of_day": "Período do dia",
+            "morning": "Manhã",
+            "afternoon": "Tarde",
+            "evening": "Noite",
+            "early_hours": "Madrugada"
         },
         "months": {
             "january": "Janeiro",
@@ -359,19 +295,6 @@
         }
     },
     "inputs": {
-        "optional": "Opcional",
-        "cancel": "Cancelar",
-        "save": "Salvar",
-        "enabled": "Habilitado",
-        "disabled": "Desabilitado",
-        "add": "Adicionar",
-        "search": "Pesquisar",
-        "title": "Título",
-        "no_title": "Sem título",
-        "description": "Descrição",
-        "type": "Tipo",
-        "try_again": "Tentar novamente",
-        "all": "Todos",
         "image": {
             "title": "Imagem",
             "placeholder": "https://exemplo.com/imagem.jpg",
@@ -385,22 +308,13 @@
                 "subtitle": "Você pode adicionar até 5 imagens",
                 "description": "Descrição"
             }
-        },
-        "select": {
-            "select": "Selecione",
-            "other": "Outro(a)"
         }
-    },
-    "footer": {
-        "developer": "Desenvolvido por",
-        "attributions": "Atribuições"
     },
     "messages": {
         "long_load": "O carregamento está demorando mais que o esperado",
-        "last_updated_on": "Última atualização em",
         "text_copied": "Texto copiado para a área de transferência",
-        "unauthenticated": "Não autenticado",
         "no_data": "Sem dados cadastrados 😔",
+        "share": "Venha visualizar meus dados criados no TripViewer",
         "errors": {
             "load_title": "Erro no Carregamento 🙁",
             "unknown": "Um erro inesperado impediu o carregamento da página",
@@ -411,11 +325,9 @@
             "no_upload_permission": "Você não possui permissão para fazer upload de arquivos",
             "upload_error": "Erro ao fazer upload de arquivos"
         },
-        "registration": {
-            "too_early": {
-                "title": "Você chegou muito cedo! 😅",
-                "message": "Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀'"
-            }
+        "too_early": {
+            "title": "Você chegou muito cedo! 😅",
+            "message": "Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀'"
         },
         "documents": {
             "get": {
@@ -442,5 +354,45 @@
             "success": "Operações concluídas com sucesso",
             "error": "Uma ou mais operações falharam"
         }
+    },
+    "labels": {
+        "intro": "Isso é ",
+        "greeting": "Olá",
+        "from": "Início",
+        "to": "Fim",
+        "currency": "Moeda",
+        "people_quantity": "Quantidade de Pessoas",
+        "light_mode": "Tema Claro",
+        "dark_mode": "Tema Escuro",
+        "duration": "Duração",
+        "company": "Empresa",
+        "start": "Início",
+        "end": "Fim",
+        "associated_item": "Item associado",
+        "reservation_code": "Código de reserva",
+        "reservation_link": "Link da reserva",
+        "select": "Selecione",
+        "other": "Outro(a)",
+        "optional": "Opcional",
+        "cancel": "Cancelar",
+        "save": "Salvar",
+        "enabled": "Habilitado",
+        "disabled": "Desabilitado",
+        "add": "Adicionar",
+        "search": "Pesquisar",
+        "title": "Título",
+        "no_title": "Sem título",
+        "description": "Descrição",
+        "types": "Tipo",
+        "try_again": "Tentar novamente",
+        "all": "Todos",
+        "developed_by": "Desenvolvido por",
+        "attributions": "Atribuições",
+        "last_updated_on": "Última atualização em",
+        "unauthenticated": "Não autenticado",
+        "home": "Home",
+        "days": "Dias",
+        "people": "Pessoas",
+        "highlights": "Destaques"
     }
 }

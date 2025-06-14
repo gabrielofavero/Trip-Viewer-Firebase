@@ -19,7 +19,7 @@ function _loadModalContentCalendar(programacao) {
         }
     }
 
-    getID("programacao-titulo").innerText = titulo || translate('itinerary.title');
+    getID("programacao-titulo").innerText = titulo || translate('trip.itinerary.title');
     getID("programacao-data").innerText = data;
 
     INNER_PROGRAMACAO_ATUAL = [];

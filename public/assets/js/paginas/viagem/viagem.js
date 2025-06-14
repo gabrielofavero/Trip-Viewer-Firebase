@@ -119,7 +119,7 @@ function _loadHeader() {
 
   if (TYPE == 'destinos' && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
     const ultimaAtualizacao = new Date(FIRESTORE_DATA.versao.ultimaAtualizacao);
-    getID("subtitulo").innerHTML = `${translate(messages.last_updated_on)} ${_getDateString(ultimaAtualizacao, _getDateRegionalFormat())}`;
+    getID("subtitulo").innerHTML = `${translate(labels.last_updated_on)} ${_getDateString(ultimaAtualizacao, _getDateRegionalFormat())}`;
   }
 
   if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
@@ -135,7 +135,7 @@ function _loadHeader() {
     const mostRecentDate = datas.reduce((a, b) => a > b ? a : b);
     const mostRecentDateString = _getDateString(mostRecentDate, _getDateRegionalFormat());
 
-    getID("dUpdate").innerHTML = `${translate(messages.last_updated_on)} ${mostRecentDateString}`;
+    getID("dUpdate").innerHTML = `${translate(labels.last_updated_on)} ${mostRecentDateString}`;
   }
 
   if (FIRESTORE_DATA.descricao) {

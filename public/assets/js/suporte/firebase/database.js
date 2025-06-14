@@ -316,7 +316,7 @@ async function _getUserList(type, includeData = false, userData) {
           const date = new Date(data.versao.ultimaAtualizacao);
           const dateString = _getDateString(date, "dd/mm/yyyy");
           singleResult.ultimaAtualizacao = data.versao.ultimaAtualizacao;
-          singleResult.ultimaAtualizacaoText = `${translate('messages.last_updated_on')} ${dateString}`;
+          singleResult.ultimaAtualizacaoText = `${translate('labels.last_updated_on')} ${dateString}`;
         }
 
         if (data.subtitulo) {

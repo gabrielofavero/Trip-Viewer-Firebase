@@ -118,113 +118,113 @@
     <div class="content-box">
       <div id="index-unlogged-title" class="index-title" style="display: none">
         <p>
-          <span data-translate="pages.index.intro"></span>
+          <span data-translate="labels.intro"></span>
           <span class="typed" data-typed-items="Las Vegas, New York, São Paulo, TripViewer"></span>
         </p>
       </div>
       <div id="index-logged-title" class="index-title" style="display: none">
-        <p><span data-translate="pages.index.greeting"></span>, <span class="typed" id="title-name"></span></p>
+        <p><span data-translate="labels.greeting"></span>, <span class="typed" id="title-name"></span></p>
       </div>
 
       <div class="login-box" id="login-box" style="display: none">
         <div class="login-input">
-          <input type="email" id="login-email" class="login-item" data-translate="pages.index.login.email" required>
+          <input type="email" id="login-email" class="login-item" data-translate="auth.email" required>
         </div>
         <div class="login-input">
-          <input type="password" id="login-password" class="login-item" data-translate="pages.index.login.password" required>
+          <input type="password" id="login-password" class="login-item" data-translate="auth.password" required>
         </div>
-        <button id="login-button" class="btn btn-theme" type="button" data-translate="pages.index.login.sign_in"></button>
+        <button id="login-button" class="btn btn-theme" type="button" data-translate="auth.sign_in"></button>
       </div>
 
       <div class="logged-menu" id="logged-menu" style="display: none" style="display: none">
         <div class="logged-menu-item" id="proximasViagens"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="material-symbols-light:trip"></i>
-          <div class="logged-menu-text" data-translate="pages.index.trips.next"></div>
+          <div class="logged-menu-text" data-translate="trip.next"></div>
         </div>
           <div class="logged-menu-item" id="viagensAnteriores"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="wpf:past"></i>
-          <div class="logged-menu-text" data-translate="pages.index.trips.previous"></div>
+          <div class="logged-menu-text" data-translate="trip.previous"></div>
         </div>
         <div class="logged-menu-item" id="destinosCadastrados"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="bx:trip"></i>
-          <div class="logged-menu-text" data-translate="pages.index.destinations.mine"></div>
+          <div class="logged-menu-text" data-translate="destination.mine"></div>
         </div>
         <div class="logged-menu-item" id="listasDeDestinos"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="fluent:list-28-filled"></i>
-          <div class="logged-menu-text" data-translate="pages.index.destinations.list"></div>
+          <div class="logged-menu-text" data-translate="destination.list"></div>
         </div>
         <div class="logged-menu-item" id="ajustesDaConta"><i class="iconify index-buttons logged-menu-buttons"
           data-icon="material-symbols:settings"></i>
-        <div class="logged-menu-text" data-translate="pages.index.account.title"></div>
+        <div class="logged-menu-text" data-translate="auth.account_settings"></div>
       </div>
       </div>
 
       <div class="userList-box" id="proximasViagens-box" style="display: none">
-        <h4 data-translate="pages.index.trips.next"></h4>
+        <h4 data-translate="trip.next"></h4>
         <div class="content-list">
           <div id="preloader-proximasViagens"></div>
           <div class="demora-carregamento" id="demora-carregamento-proximasViagens" style="display:none" data-translate="">
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-proximasViagens" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('viagens')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="inputs.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-proximasViagens" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-proximasViagens"></div>
         </div>
         <button id="nova-viagem-1" class="btn btn-theme" type="button"><i class="iconify add"
-          data-icon="gridicons:add-outline"></i><span data-translate="pages.index.trips.new"></span></button>
+          data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
       </div>
 
       <div class="userList-box" id="viagensAnteriores-box" style="display: none">
-        <h4 data-translate="pages.index.trips.previous"></h4>
+        <h4 data-translate="trip.previous"></h4>
         <div class="content-list">
           <div id="preloader-viagensAnteriores"></div>
           <div class="demora-carregamento" id="demora-carregamento-viagensAnteriores" style="display:none">
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-viagensAnteriores" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('viagens')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="inputs.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-viagensAnteriores" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-viagensAnteriores"></div>
         </div>
         <button id="nova-viagem-2" class="btn btn-theme" type="button"><i class="iconify add"
-          data-icon="gridicons:add-outline"></i><span data-translate="pages.index.trips.new"></span></button>
+          data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
       </div>
 
       <div class="userList-box" id="destinos-box" style="display: none">
-        <h4 data-translate="pages.index.destinations.mine"></h4>
+        <h4 data-translate="destination.mine"></h4>
         <div class="content-list">
           <div id="preloader-destinos"></div>
           <div class="demora-carregamento" id="demora-carregamento-destinos" style="display:none">
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('destinos')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="inputs.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-destinos" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-destinos"></div>
         </div>
         <button id="new-destino" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="pages.index.destinations.new"></button>
+            data-icon="gridicons:add-outline"></i><span data-translate="destination.new"></button>
       </div>
 
       <div class="userList-box" id="listagens-box" style="display: none">
-        <h4 data-translate="pages.index.destinations.list"></h4>
+        <h4 data-translate="destination.list"></h4>
         <div class="content-list">
           <div id="preloader-listagens"></div>
           <div class="demora-carregamento" id="demora-carregamento-listagens" style="display:none">
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('listagens')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="inputs.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-listagens" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-listagens"></div>
         </div>
         <button id="new-listagem" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline" data-translate=""></i><span data-translate="pages.index.destinations.new_list"></span></button>
+            data-icon="gridicons:add-outline" data-translate=""></i><span data-translate="destination.new_list"></span></button>
       </div>
 
       <div class="settings-box" id="settings-box" style="display: none">
@@ -237,7 +237,7 @@
           </div>
 
           <div id="delete-account-container">
-            <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="pages.index.account.delete.title"></a>
+            <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="auth.delete_account.title"></a>
           </div>
         </div>
 
@@ -247,7 +247,7 @@
               d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z">
             </path>
           </svg>
-          <span data-translate="pages.index.account.sign_out"></span>
+          <span data-translate="auth.sign_in"></span>
         </button>
       </div>
 
@@ -267,8 +267,8 @@
               </svg>
             </a>
           </div>
-          <h4 id="modal-text-title" data-translate="pages.index.account.delete.title"></h4>
-          <p data-translate="pages.index.account.delete.message"></p>
+          <h4 id="modal-text-title" data-translate="auth.delete_account.title"></h4>
+          <p data-translate="auth.delete_account.message"></p>
         </div>
         <div class="button-box">
           <button id="cancelar" class="btn btn-secondary" type="button" onclick="_closeModal()" data-translate="">
@@ -295,9 +295,9 @@
   <footer id="footer">
     <div class="container">
       <div class="credits">
-        <span data-translate="footer.developer"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
+        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
           class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
-          <span data-translate="footer.attributions"></span></span>
+          <span data-translate="labels.attributions"></span></span>
       </div>
     </div>
   </footer><!-- End Footer -->

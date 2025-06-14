@@ -6,6 +6,8 @@
     - Modified by: Gabriel Fávero
 */
 
+const MISSING_TRANSLATIONS = new Set();
+
 const APP = {
   projectId: null,
   version: null,
@@ -289,6 +291,7 @@ function translate(key, replacements = {}, supressError = false) {
     } else {
       if (!supressError) {
         console.error(`Translation key "${key}" not found in language pack.`);
+        MISSING_TRANSLATIONS.add(key);
       }
       return "";
     }
