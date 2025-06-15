@@ -1,0 +1,398 @@
+{
+    "auth": {
+        "sign_in": "Sign In",
+        "sign_out": "Sign Out",
+        "email": "E-mail",
+        "password": "Password",
+        "account_settings": "Account settings",
+        "delete_account": {
+            "title": "Delete account",
+            "message": "Are you sure you want to delete your account? This action cannot be undone and all associated data will also be deleted as well"
+        }
+    },
+    "trip": {
+        "next": "Next trips",
+        "previous": "Previous trips",
+        "new": "New trip",
+        "current_single_1": "Current trip",
+        "current_multi_1": "Multiple trips happening now",
+        "current_multi_2": "Check \"Next trips\"",
+        "edit": "Edit trip",
+        "share": "Check out my trip {{name}} created on TripViewer, starting on {{start}} and ending on {{end}}",
+        "basic_information": {
+            "title": "Basic Information",
+            "subtitle": "Add the main details of your trip here",
+            "title_placeholder": "Enter the trip title"
+        },
+        "customization": {
+            "title": "Customization",
+            "subtitle": "Give your trip a personal touch",
+            "images": {
+                "title": "Custom images",
+                "subtitle": "Add a wallpaper and a logo",
+                "wallpaper": "Wallpaper",
+                "logo_light": "Logo: Light mode",
+                "logo_dark": "Logo: Dark mode"
+            },
+            "colors": {
+                "title": "Custom colors",
+                "subtitle": "Choose your trip's theme and colors",
+                "themes": {
+                    "light_and_dark": "Show trip in Light and Dark mode",
+                    "light": "Show trip only in Light mode",
+                    "dark": "Show trip only in Dark mode"
+                }
+            },
+            "links": {
+                "title": "Custom links",
+                "subtitle": "Add useful links to your trip",
+                "attachment": "Generic attachment",
+                "google_drive": "Google Drive",
+                "map": "Map",
+                "pdf": "PDF",
+                "presentation": "Presentation (PowerPoint)",
+                "sheet": "Spreadsheet (Excel / Google Sheets)",
+                "vaccination": "Vaccination certificate"
+            }
+        },
+        "expenses": {
+            "title": "Expenses",
+            "full_title": "Trip expenses",
+            "subtitle": "Manage your expenses before and during the trip",
+            "pin": {
+                "public": "Make your expenses visible to others",
+                "private": "Secure your expenses with a PIN",
+                "new_pin": "Set access PIN",
+                "change_pin": "Change access PIN"
+            },
+            "pre_trip": "Pre-trip expenses",
+            "during_trip": "On-trip expenses",
+            "type": {
+                "transportation": "Transportation",
+                "flights": "Flights",
+                "car": "Car",
+                "accommodations": "Accommodations",
+                "entrertainment": "Entertainment",
+                "daily_expenses": "Daily expenses",
+                "personal_budget": "Personal expenses",
+                "other_expenses": "Other expenses"
+            }
+        },
+        "transportation": {
+            "title": "Transportation",
+            "subtitle": "Add your main travel legs: departure, during the trip, and return",
+            "single_reservation": "Reservation",
+            "multi_reservation": "Reservations {{reservationsList}} and {{lastReservation}}",
+            "departure": "Departure",
+            "arrival": "Arrival",
+            "during": "While traveling",
+            "from": "Departure",
+            "to": "Return",
+            "simple_view": "Simplified view",
+            "categorized_view": "Categorized view",
+            "departure_location": {
+                "title": "Departure location",
+                "placeholder": "New York City"
+            },
+            "arrival_location": {
+                "title": "Arrival location",
+                "placeholder": "Las Vegas"
+            },
+            "type": {
+                "title": "Type of transport",
+                "options": {
+                    "flight": "Flight",
+                    "car": "Car",
+                    "bus": "Bus",
+                    "train": "Train",
+                    "helicopter": "Helicopter",
+                    "ship": "Ship",
+                    "cruise": "Cruise Ship",
+                    "taxi": "Taxi",
+                    "motocycle": "Motorcycle",
+                    "bicycle": "Bicycle",
+                    "bullet_train": "Bullet Train",
+                    "subway": "Subway",
+                    "other": "Other"
+                }
+            }
+        },
+        "accommodation": {
+            "title": "Accommodations",
+            "subtitle": "Add where you'll be staying during your trip",
+            "checkin": "Check-in",
+            "checkout": "Check-out",
+            "breakfast": "Breakfast",
+            "name": {
+                "title": "Name",
+                "placeholder": "Hotel, Inn, Airbnb, etc."
+            },
+            "address": {
+                "title": "Address",
+                "placeholder": "Example Street, 123"
+            },
+            "description": {
+                "placeholder": "Double room, sea view"
+            }
+        },
+        "itinerary": {
+            "title": "Itinerary",
+            "subtitle": "Add your day-to-day schedule here",
+            "todays_itinerary": "Today's Itinerary",
+            "no_itinerary": "Nothing planned here! ☹️",
+            "instructions": "Select a date to view the itinerary",
+            "media_button": {
+                "video": "Watch Video",
+                "playlist": "View Playlist"
+            }
+        },
+        "gallery": {
+            "title": "Gallery",
+            "subtitle": "Upload relevant photos for your trip, such as maps, confirmations, event times, and more"
+        }
+    },
+    "destination": {
+        "title": "Destinations",
+        "subtitle": "What to do during your trip? Where to eat? What to visit?",
+        "mine": "My destinations",
+        "list": "Destination lists",
+        "new": "New destination",
+        "new_list": "New destination list",
+        "edit": "Edit destination",
+        "edit_list": "Edit destination List",
+        "share": "Check out the destination {{name}} I created on TripViewer",
+        "share_list": "Check out the destination list {{name}} I created on TripViewer",
+        "type": {
+            "restaurants": {
+                "title": "Restaurants",
+                "description": "Places that serve full meals — perfect for lunch and dinner. Some may only open at night."
+            },
+            "snacks": {
+                "title": "Snacks",
+                "description": "Quick-bite places — great for a snack, or light meal."
+            },
+            "nightlife": {
+                "title": "Nightlife",
+                "description": "Bars, pubs, karaoke spots, clubs, or anything focused on drinks and entertainment."
+            },
+            "tourism": {
+                "title": "Tourism",
+                "description": "Tourist attractions including neighborhoods, monuments, museums, squares, viewpoints, exhibitions, and more."
+            },
+            "shopping": {
+                "title": "Shopping",
+                "description": "Malls, supermarkets, outlets, clothing stores, electronics shops — everything shopping-related."
+            },
+            "map": {
+                "title": "Map",
+                "description": "Interactive Google Map with highlights of the city: Restaurants, Snacks, Nightlife, Tourism, and Shopping."
+            },
+            "lineup": {
+                "title": "Lineup",
+                "description": "Event lineup — may include times, stages, artists, notes, and links to artists' Spotify profiles."
+            },
+            "tourismAndShopping": {
+                "title": "Tourism & Shopping",
+                "description": "A mix of tourist spots and shops: neighborhoods, monuments, museums, malls, and more."
+            },
+            "food": {
+                "title": "Food & Drinks",
+                "description": "All kinds of places to eat and drink: restaurants, fast food, cafés, bars, pubs, and more."
+            }
+        },
+        "scores": {
+            "1": "No priority",
+            "2": "Low priority",
+            "3": "Normal priority",
+            "4": "High priority",
+            "5": "Top priority",
+            "default": "Priority not set"
+        },
+        "price": {
+            "default": "Unknown price",
+            "max": "More than {{value}}",
+            "free": "Free"
+        }
+    },
+    "currency": {
+        "BRL": "Brazilian Real (R$)",
+        "USD": "US Dollar ($)",
+        "EUR": "Euro (€)",
+        "GBP": "British Pound (£)",
+        "JPY": "Japanese Yen / Chinese Yuan (¥)",
+        "INR": "Indian Rupee (₹)",
+        "RUB": "Russian Ruble (₽)",
+        "CAD": "Canadian Dollar (C$)",
+        "AUD": "Australian Dollar (A$)",
+        "CHF": "Swiss Franc (CHF)",
+        "SEK": "Swedish Krona (SEK)",
+        "NOK": "Norwegian Krone (NOK)",
+        "DKK": "Danish Krone (DKK)",
+        "NZD": "New Zealand Dollar (NZ$)",
+        "MXN": "Mexican Peso (MX$)",
+        "ZAR": "South African Rand (ZAR)",
+        "KRW": "South Korean Won (₩)",
+        "SGD": "Singapore Dollar (SGD)",
+        "HKD": "Hong Kong Dollar (HK$)",
+        "ILS": "Israeli New Shekel (₪)",
+        "PLN": "Polish Złoty (PLN)",
+        "HUF": "Hungarian Forint (HUF)",
+        "TWD": "Taiwan Dollar (NT$)",
+        "THB": "Thai Baht (฿)"
+    },
+    "datetime": {
+        "title": {
+            "day_month": "{{month}} {{day}}",
+            "weekday_day_month": "{{weekday}}, {{month}} {{day}}",
+            "month_year": "{{month}} {{year}}"
+        },
+        "time_of_day": {
+            "time_of_day": "Time of day",
+            "morning": "Morning",
+            "afternoon": "Afternoon",
+            "evening": "Evening",
+            "early_hours": "Early hours"
+        },
+        "months": {
+            "january": "January",
+            "february": "February",
+            "march": "March",
+            "april": "April",
+            "may": "May",
+            "june": "June",
+            "july": "July",
+            "august": "August",
+            "september": "September",
+            "october": "October",
+            "november": "November",
+            "december": "December"
+        },
+        "weekdays": {
+            "default": {
+                "monday": "Monday",
+                "tuesday": "Tuesday",
+                "wednesday": "Wednesday",
+                "thursday": "Thursday",
+                "friday": "Friday",
+                "saturday": "Saturday",
+                "sunday": "Sunday"
+            },
+            "mini": {
+                "monday": "Mon",
+                "tuesday": "Tue",
+                "wednesday": "Wed",
+                "thursday": "Thu",
+                "friday": "Fri",
+                "saturday": "Sat",
+                "sunday": "Sun"
+            }
+        },
+        "countdown": {
+            "years": "y",
+            "months": "m",
+            "days": "d",
+            "hours": "h",
+            "minutes": "m",
+            "seconds": "s"
+        }
+    },
+    "inputs": {
+        "image": {
+            "title": "Image",
+            "placeholder": "https://example.com/image.jpg",
+            "link": "Provide image link",
+            "upload": "Upload image",
+            "upload_limit": "Up to {{limit}}MB",
+            "image_selector": {
+                "title": "Images",
+                "add": "Add Images",
+                "edit": "Edit Images",
+                "subtitle": "You can add up to 5 images",
+                "description": "Description"
+            }
+        }
+    },
+    "messages": {
+        "long_load": "Loading is taking longer than expected",
+        "text_copied": "Text copied to clipboard",
+        "no_data": "No data found 😔",
+        "share": "Check out what I’ve created on TripViewer",
+        "errors": {
+            "load_title": "Loading Error 🙁",
+            "unknown": "An unexpected error prevented the page from loading",
+            "contact_admin": "Please contact the system administrator",
+            "to_report": "to report the issue",
+            "unauthenticated": "Couldn’t load the document because the user is not logged in",
+            "unknown_directory": "Unknown folder",
+            "no_upload_permission": "You don't have permission to upload files",
+            "upload_error": "Error uploading file(s)"
+        },
+        "too_early": {
+            "title": "You're a bit early! 😅",
+            "message": "Hi there! TripViewer isn't accepting new sign-ups just yet. We're working hard to launch our first public version. Stay tuned! 🚀"
+        },
+        "documents": {
+            "get": {
+                "error": "Couldn't load the document. There's no valid code in the URL."
+            },
+            "create": {
+                "success": "Document created successfully",
+                "error": "Failed to create document"
+            },
+            "update": {
+                "success": "Document updated successfully",
+                "error": "Failed to update document"
+            },
+            "replace": {
+                "success": "Document replaced successfully",
+                "error": "Failed to replace document"
+            },
+            "delete": {
+                "success": "Document deleted successfully",
+                "error": "Failed to delete document"
+            }
+        },
+        "operations": {
+            "success": "Operations completed successfully",
+            "error": "One or more operations failed"
+        }
+    },
+    "labels": {
+        "intro": "This is",
+        "greeting": "Hello",
+        "currency": "Currency",
+        "people_quantity": "Number of people",
+        "light_mode": "Light Mode",
+        "dark_mode": "Dark Mode",
+        "duration": "Duration",
+        "company": "Company",
+        "start": "Start",
+        "end": "End",
+        "associated_item": "Linked item",
+        "reservation_code": "Reservation code",
+        "reservation_link": "Reservation link",
+        "select": "Select",
+        "other": "Other",
+        "optional": "Optional",
+        "cancel": "Cancel",
+        "save": "Save",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "add": "Add",
+        "search": "Search",
+        "title": "Title",
+        "no_title": "Untitled",
+        "description": "Description",
+        "type": "Type",
+        "try_again": "Try Again",
+        "all": "All",
+        "developed_by": "Developed by",
+        "attributions": "Attributions",
+        "last_updated_on": "Last updated on",
+        "unauthenticated": "Not authenticated",
+        "home": "Home",
+        "days": "Days",
+        "people": "People",
+        "highlights": "Highlights"
+    }
+}
