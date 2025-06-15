@@ -165,11 +165,11 @@
         "type": {
             "restaurants": {
                 "title": "Restaurants",
-                "description": "Places that serve full meals — perfect for lunch and dinner. Some may only open at night."
+                "description": "Places that serve full meals. Perfect for lunch and dinner. Some may only open at night."
             },
             "snacks": {
                 "title": "Snacks",
-                "description": "Quick-bite places — great for a snack, or light meal."
+                "description": "Quick-bite spots. Great for a snack, or light meal. Includes cafés, bakeries, and fast food places."
             },
             "nightlife": {
                 "title": "Nightlife",
@@ -181,7 +181,7 @@
             },
             "shopping": {
                 "title": "Shopping",
-                "description": "Malls, supermarkets, outlets, clothing stores, electronics shops — everything shopping-related."
+                "description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related."
             },
             "map": {
                 "title": "Map",
@@ -241,7 +241,7 @@
         "THB": "Thai Baht (฿)"
     },
     "datetime": {
-        "title": {
+        "titles": {
             "day_month": "{{month}} {{day}}",
             "weekday_day_month": "{{weekday}}, {{month}} {{day}}",
             "month_year": "{{month}} {{year}}"
@@ -316,13 +316,13 @@
         "long_load": "Loading is taking longer than expected",
         "text_copied": "Text copied to clipboard",
         "no_data": "No data found 😔",
-        "share": "Check out what I’ve created on TripViewer",
+        "share": "Check out what I've created on TripViewer",
         "errors": {
             "load_title": "Loading Error 🙁",
             "unknown": "An unexpected error prevented the page from loading",
             "contact_admin": "Please contact the system administrator",
             "to_report": "to report the issue",
-            "unauthenticated": "Couldn’t load the document because the user is not logged in",
+            "unauthenticated": "Couldn't load the document because the user is not logged in",
             "unknown_directory": "Unknown folder",
             "no_upload_permission": "You don't have permission to upload files",
             "upload_error": "Error uploading file(s)"

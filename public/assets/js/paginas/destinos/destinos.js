@@ -24,13 +24,10 @@ function _loadDestinosHTML() {
   };
 
   if (DESTINO && Object.keys(DESTINO).length > 0) {
-    document.title = DESTINO.descricao.title;
-    getID("titulo-destinos").innerHTML = "<h2>" + document.title + "</h2>";
-    if (DESTINO.descricao.subtitle) {
-      getID("subtitulo-destinos").innerHTML = "<h5>" + DESTINO.descricao.subtitle + "</h5>";
-    }
+    document.title = DESTINO.titulo;
+    getID("titulo-destinos").innerHTML = "<h2>" + DESTINO.titulo + "</h2>";
 
-    const isLineup = DESTINO.descricao.title == "Lineup";
+    const isLineup = false;
 
     for (let j = 1; j <= DESTINO.data.length; j++) {
       const item = DESTINO.data[j - 1];

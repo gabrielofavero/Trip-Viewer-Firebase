@@ -43,7 +43,7 @@ function _showCalendar(month, year) {
     let tbl = getID("calendar-body");
 
     tbl.innerHTML = "";
-    CALENDAR.calendarTitle.innerHTML = [][month] + " de " + year;
+    CALENDAR.calendarTitle.innerHTML = translate('datetime.titles.month_year', {month: _getMonth(month), year});
 
     let day = 1;
     for (let i = 0; i < 6; i++) {

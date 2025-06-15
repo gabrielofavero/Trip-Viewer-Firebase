@@ -272,8 +272,8 @@ function _updateUserLanguage(language) {
   window.location.reload();
 }
 
-function translate(key, replacements = {}, supressError = false) {
-  if (!CONFIG.language) return "";
+function translate(key, replacements = {}) {
+  if (!CONFIG?.language) return "";
 
   const keys = key.split(".");
   let result = CONFIG.language;
@@ -282,10 +282,8 @@ function translate(key, replacements = {}, supressError = false) {
     if (result && k in result) {
       result = result[k];
     } else {
-      if (!supressError) {
-        console.error(`Translation key "${key}" not found in language pack.`);
-        MISSING_TRANSLATIONS.add(key);
-      }
+      console.error(`Translation key "${key}" not found in language pack.`);
+      MISSING_TRANSLATIONS.add(key);
       return "";
     }
   }
@@ -317,12 +315,5 @@ function _translatePage() {
         element.textContent = translation;
       }
     }
-  }
-
-  const pathName = window.location.pathname;
-  const pageTitle = pathName === "/" ? translate("pages.index.page_title", {}, true) : translate(`pages${pathName.replace(/\//g, ".")}.page_title`, {}, true);
-
-  if (pageTitle) {
-    document.title = pageTitle;
   }
 }

@@ -2298,14 +2298,20 @@ iframe {
 
 .flight-date,
 .flight-time,
+.flight-time-en,
 .flight-location {
   font-size: 14px;
   margin: -2px;
 }
 
-.flight-time {
+.flight-time,
+.flight-time-en {
   font-size: 36px;
   font-weight: bold;
+}
+
+.flight-time-en {
+  font-size: 30px;
 }
 
 .iconify {
@@ -2338,9 +2344,9 @@ iframe {
   }
 }
 
-@media (max-width: 450px) {
-  .flight-text {
-    padding: 10px;
+@media (max-width: 455px) {
+  .flight-time-en {
+    font-size: 25px;
   }
 }
 

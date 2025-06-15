@@ -29,18 +29,18 @@ function _getDateTitle(date, format = "day_month") {
         replacements.weekday = _getWeekday(date.getDay());
     }
 
-    return translate(`dates.titles.${format}`, replacements);
+    return translate(`datetime.titles.${format}`, replacements);
 }
 
 function _getWeekday(day) {
     const weekdays = [
-        translate('dates.days.default.sunday'),
-        translate('dates.days.default.monday'),
-        translate('dates.days.default.tuesday'),
-        translate('dates.days.default.wednesday'),
-        translate('dates.days.default.thursday'),
-        translate('dates.days.default.friday'),
-        translate('dates.days.default.saturday')
+        translate('datetime.weekdays.default.sunday'),
+        translate('datetime.weekdays.default.monday'),
+        translate('datetime.weekdays.default.tuesday'),
+        translate('datetime.weekdays.default.wednesday'),
+        translate('datetime.weekdays.default.thursday'),
+        translate('datetime.weekdays.default.friday'),
+        translate('datetime.weekdays.default.saturday')
     ]
     return weekdays[day];
 }
@@ -163,19 +163,25 @@ function _formattedDateToDateObject(formattedDate, time) {
     return _convertToDateObject(date);
 }
 
-function _jsDateToTime(date) {
+function _getTimeString(date) {
     let hours = date.getHours();
     let minutes = date.getMinutes();
+    let period = "";
 
-    if (hours < 10) {
-        hours = `0${hours}`;
+    if (_getLanguagePackName() == "en") {
+        if (hours > 12) {
+            hours -= 12;
+            period = "PM";
+        } else if (hours == 0) {
+            hours = 12;
+            period = "AM";
+        } else {
+            period = "AM";
+        }
     }
-
-    if (minutes < 10) {
-        minutes = `0${minutes}`;
-    }
-
-    return `${hours}:${minutes}`;
+    hours = hours.toString().padStart(2, '0');
+    minutes = minutes.toString().padStart(2, '0');
+    return `${hours}:${minutes} ${period}`.trim();
 }
 
 function _removeSlashesFromDate(date) {
@@ -208,18 +214,18 @@ function _getTimeBetweenDates(startDate, endDate) {
 
 function _getMonth(month) {
     const months = [
-        translate('dates.months.january'),
-        translate('dates.months.february'),
-        translate('dates.months.march'),
-        translate('dates.months.april'),
-        translate('dates.months.may'),
-        translate('dates.months.june'),
-        translate('dates.months.july'),
-        translate('dates.months.august'),
-        translate('dates.months.september'),
-        translate('dates.months.october'),
-        translate('dates.months.november'),
-        translate('dates.months.december')
+        translate('datetime.months.january'),
+        translate('datetime.months.february'),
+        translate('datetime.months.march'),
+        translate('datetime.months.april'),
+        translate('datetime.months.may'),
+        translate('datetime.months.june'),
+        translate('datetime.months.july'),
+        translate('datetime.months.august'),
+        translate('datetime.months.september'),
+        translate('datetime.months.october'),
+        translate('datetime.months.november'),
+        translate('datetime.months.december')
     ];
     return months[month];
 }

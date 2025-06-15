@@ -21,12 +21,12 @@
         "share": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
         "basic_information": {
             "title": "Dados Básicos",
-            "subtitle": "Adicione aqui as principais informações da sua viagem.",
+            "subtitle": "Adicione aqui as principais informações da sua viagem",
             "title_placeholder": "Digite o título da viagem"
         },
         "customization": {
             "title": "Customização",
-            "subtitle": "Dê uma cara única para a sua viagem.",
+            "subtitle": "Dê uma cara única para a sua viagem",
             "images": {
                 "title": "Imagens Personalizadas",
                 "subtitle": "Adicione um papel de parede e um logotipo",
@@ -67,7 +67,7 @@
             },
             "pre_trip": "Gastos prévios",
             "during_trip": "Gastos durante a viagem",
-            "types": {
+            "type": {
                 "transportation": "Transporte",
                 "flights": "Voos",
                 "car": "Carro",
@@ -82,7 +82,7 @@
             "title": "Transporte",
             "subtitle": "Cadastre os principais deslocamentos de ida, durante e volta",
             "single_reservation": "Reserva",
-            "multi_reservation": "Reservas {{reservations}}",
+            "multi_reservation": "Reservas {{reservationsList}} e {{lastReservation}}",
             "departure": "Partida",
             "arrival": "Chegada",
             "during": "Durante",
@@ -98,7 +98,7 @@
                 "title": "Local de chegada",
                 "placeholder": "Las Vegas"
             },
-            "types": {
+            "type": {
                 "title": "Meio de transporte",
                 "options": {
                     "flight": "Voo",
@@ -107,6 +107,7 @@
                     "train": "Trem",
                     "helicopter": "Helicóptero",
                     "ship": "Navio",
+                    "cruise": "Cruzeiro",
                     "taxi": "Táxi",
                     "motocycle": "Moto",
                     "bicycle": "Bicicleta",
@@ -124,7 +125,7 @@
             "breakfast": "Café da manhã",
             "name": {
                 "title": "Nome",
-                "placeholder": "Hotel, Pousada, Airbnb, etc."
+                "placeholder": "Hotel, Pousada, Airbnb, etc"
             },
             "address": {
                 "title": "Endereço",
@@ -161,42 +162,42 @@
         "edit_list": "Editar Lista de Destinos",
         "share": "Venha visualizar o destino {{name}} criado no TripViewer",
         "share_list": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
-        "types": {
+        "type": {
             "restaurants": {
                 "title": "Restaurantes",
-                "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite."
+                "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite"
             },
             "snacks": {
                 "title": "Lanches",
-                "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve."
+                "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve"
             },
             "nightlife": {
                 "title": "Saídas",
-                "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento."
+                "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento"
             },
             "tourism": {
                 "title": "Turismo",
-                "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais."
+                "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais"
             },
             "shopping": {
                 "title": "Lojas",
-                "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral."
+                "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral"
             },
             "map": {
                 "title": "Mapa",
-                "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas."
+                "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas"
             },
             "lineup": {
                 "title": "Lineup",
-                "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista."
+                "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista"
             },
             "tourismAndShopping": {
                 "title": "Turismo e Lojas",
-                "description": "Pontos turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros."
+                "description": "Pontos turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros"
             },
             "food": {
                 "title": "Alimentação",
-                "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros."
+                "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros"
             }
         },
         "scores": {
@@ -240,9 +241,10 @@
         "THB": "Baht Tailandês (฿)"
     },
     "datetime": {
-        "title": {
+        "titles": {
             "day_month": "{{day}} de {{month}}",
-            "weekday_day_month": "{{weekday}}, {{day}} de {{month}}"
+            "weekday_day_month": "{{weekday}}, {{day}} de {{month}}",
+            "month_year": "{{month}} de {{year}}"
         },
         "time_of_day": {
             "time_of_day": "Período do dia",
@@ -358,8 +360,6 @@
     "labels": {
         "intro": "Isso é ",
         "greeting": "Olá",
-        "from": "Início",
-        "to": "Fim",
         "currency": "Moeda",
         "people_quantity": "Quantidade de Pessoas",
         "light_mode": "Tema Claro",
@@ -383,7 +383,7 @@
         "title": "Título",
         "no_title": "Sem título",
         "description": "Descrição",
-        "types": "Tipo",
+        "type": "Tipo",
         "try_again": "Tentar novamente",
         "all": "Todos",
         "developed_by": "Desenvolvido por",

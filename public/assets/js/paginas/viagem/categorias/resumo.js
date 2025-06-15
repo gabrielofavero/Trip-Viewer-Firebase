@@ -5,20 +5,20 @@ function _loadResumo() {
   // Dado 1
   getID("dado1").innerHTML = `<i class="bx bxs-plane-take-off"></i>
                                                 <span>${INICIO.text}</span>
-                                                <p>${translate('pages.view.highlights.departure')}</p>`;
+                                                <p>${translate('trip.transportation.from')}</p>`;
 
   // Dado 2
   getID("dado2").innerHTML = `<i class="bx bxs-plane-land"></i>
                                                 <span>${FIM.text}</span>
-                                                <p>${translate('pages.view.highlights.return')}</p>`;
+                                                <p>${translate('trip.transportation.to')}</p>`;
 
   // Dado 3
   getID("dado3").innerHTML = `<i class="bx bxs-sun"></i>
                                                 <span>${dias}</span>
-                                                <p>${translate('pages.view.highlights.days')}</p>`;
+                                                <p>${translate('labels.days')}</p>`;
 
   // Dado 4
   getID("dado4").innerHTML = `<i class="bx bx-male"></i>
                                                 <span>${pessoas}</span>
-                                                <p>${translate('pages.view.highlights.people')}</p>`
+                                                <p>${translate('labels.people')}</p>`
 }

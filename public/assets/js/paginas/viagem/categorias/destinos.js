@@ -68,8 +68,8 @@ function _loadDestinationsHTML(destino) {
 
     const j = i + 1;
     const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
-    const title = translate(`destinations.types.${translatedType}.title`);
-    const description = translate(`destinations.types.${translatedType}.description`);
+    const title = translate(`destination.type.${translatedType}.title`);
+    const description = translate(`destination.type.${translatedType}.description`);
     const href = type === "mapa" ? destino.destinos.myMaps : "#";
     const lt = type === "mapa" ? linktype : "";
     const onclick = type === "mapa" ? "" : `onclick="_loadAndOpenDestino('${type}')"`;
@@ -102,15 +102,19 @@ function _buildDestinoExport(destino, type) {
     data: destino.destinos[type],
     moeda: destino.destinos.moeda,
     valores: _getDestinoValores(destino),
-    notas: CONFIG.language.destinations.scores,
+    notas: CONFIG.language.destination.scores,
     categoria: type,
-    titulo: translate(`destinations.types.${translatedType}.title`),
-    descricao: translate(`destinations.types.${translatedType}.description`)
+    titulo: translate(`destination.type.${translatedType}.title`)
   }
 }
 
 function _getDestinoValores(destino) {
-  return CONFIG.moedas.escala[destino.destinos.moeda] || CONFIG.moedas.escala["BRL"];
+  const moeda = _cloneObject(CONFIG.moedas.escala[destino.destinos.moeda]);
+  const max = translate('destination.price.max', { value: moeda["$$$$"] });
+  moeda["-"] = translate('destination.price.free');
+  moeda["default"] = translate('destination.price.default');
+  moeda["$$$$"] = max;
+  return moeda;
 }
 
 function _loadAndOpenDestino(code) {

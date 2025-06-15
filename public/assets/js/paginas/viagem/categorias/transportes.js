@@ -113,9 +113,10 @@ function _getPartidaChegadaHTML(j, tipo) {
   const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
   const data = _convertFromDateObject(transporte.datas[tipo]);
   const local = transporte.pontos[tipo];
+  const flightTimeSuffix = _getLanguagePackName() == 'en' ? '-en' : '';
 
   let result = `<div class="flight-date">${_getDateString(data, 'dd/mm')}</div>
-                <div class="flight-time">${_jsDateToTime(data)}</div>`;
+                <div class="flight-time${flightTimeSuffix}">${_getTimeString(data)}</div>`;
 
   if (local) result += `<div class="flight-location">${local}</div>`;
   return result;
@@ -182,8 +183,20 @@ function _loadTransporteSubtitulo() {
   const filtered = unique.filter(reserva => reserva);
   const size = filtered.length;
 
-  if (size == 0) return "";
-  else return size == 1 ? `Reserva ${filtered[0]}` : `Reservas ${_getReadableArray(filtered)}`;
+  switch (size) {
+    case 0:
+      return "";
+    case 1:
+      return `${translate('trip.transportation.single_reservation')} ${filtered[0]}`
+    default:
+      const last = filtered.pop();
+      const remaining = filtered.join(', ');
+      const replacements = {
+        reservationsList: remaining,
+        lastReservation: last
+      }
+      return translate('trip.transportation.multi_reservation', replacements)
+  }
 }
 
 function _loadTransporteImagens() {
@@ -230,16 +243,17 @@ function _loadAbasTransportes() {
 function _loadAbasTransportesHTML() {
   const tab = getID('tab-transporte');
   const itemMap = {
-    ida: "Ida",
-    durante: "Durante",
-    volta: "Volta"
+    ida: "from",
+    durante: "during",
+    volta: "to"
   }
 
   for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
     const item = TRANSPORTES_ATIVOS[i];
     const checked = i === 0 ? 'checked' : '';
+    const translation = translate(`trip.transportation.${itemMap[item]}`)
     tab.innerHTML += `<input type="radio" id="radio-${item}" name="tabs-transporte" ${checked}>`
-    tab.innerHTML += `<label class="tab" for="radio-${item}">${itemMap[item]}</label>`
+    tab.innerHTML += `<label class="tab" for="radio-${item}">${translation}</label>`
   }
 
   tab.innerHTML += '<span class="glider"></span>';

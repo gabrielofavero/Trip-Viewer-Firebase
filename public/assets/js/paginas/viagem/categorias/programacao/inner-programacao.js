@@ -195,8 +195,8 @@ function _getInnerProgramacaoHTML(item) {
                                 item: categoria[j],
                                 isLineup: false,
                                 innerProgramacao: true,
-                                notas: CONFIG.destinos.notas,
-                                valores: CONFIG.moedas.escala[destino.moeda],
+                                notas: CONFIG.language.destination.scores,
+                                valores: _getDestinoValores(DESTINOS[i]),
                                 moeda: destino.moeda
                             });
                             innerProgramacao.midia = categoria[j]?.midia;
