@@ -262,9 +262,9 @@ function _getUserLanguage() {
 
 function _getLanguagePackName() {
   let language = _getUserLanguage();
-  if (["pt"].includes(language)) {
+  if (["pt", 'en'].includes(language)) {
     return language;
-  } else return "pt"
+  } else return "en"
 }
 
 function _updateUserLanguage(language) {
@@ -281,19 +281,24 @@ function translate(key, replacements = {}, supressError = false) {
   for (const k of keys) {
     if (result && k in result) {
       result = result[k];
-
-      if (Object.keys(replacements).length > 0) {
-        for (const [placeholder, value] of Object.entries(replacements)) {
-          result = result.replace(new RegExp(`{{${placeholder}}}`, 'g'), value);
-        }
-      }
-
     } else {
       if (!supressError) {
         console.error(`Translation key "${key}" not found in language pack.`);
         MISSING_TRANSLATIONS.add(key);
       }
       return "";
+    }
+  }
+  
+  const type = typeof result;
+  if (type != "string") {
+    console.error(`Invalid translation value for key "${key}": expected a string, got ${type}.`);
+    return "";
+  }
+
+  if (Object.keys(replacements).length > 0) {
+    for (const [placeholder, value] of Object.entries(replacements)) {
+      result = result.replace(new RegExp(`{{${placeholder}}}`, 'g'), value);
     }
   }
 
