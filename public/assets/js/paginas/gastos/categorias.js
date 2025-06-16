@@ -17,7 +17,7 @@ function _loadResumo() {
 }
 
 function _loadChartResumo() {
-    const labels = ['Gastos Prévios', 'Gastos na Viagem'];
+    const labels = [translate('trip.expenses.pre_trip'), translate('trip.expenses.during_trip')];
     const valores = [GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosPrevios.resumo.total, GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosDurante.resumo.total];
 
     getID('resumo-titulo').innerHTML = _getTitleWithIcon(`Resumo dos Gastos`);
@@ -28,13 +28,13 @@ function _loadChartResumo() {
 
 // Gastos Prévios
 function _loadGastosPrevios() {
-    _setDoughnutChartCategoria(`Gastos Prévios`, 'gastosPrevios');
+    _setDoughnutChartCategoria(translate('trip.expenses.pre_trip'), 'gastosPrevios');
     _setTableCategoria('gastosPrevios');
 }
 
 // Gastos na Viagem
 function _loadGastosDurante() {
-    _setDoughnutChartCategoria(`Gastos na Viagem`, 'gastosDurante');
+    _setDoughnutChartCategoria(translate('trip.expenses.during_trip'), 'gastosDurante');
     _setTableCategoria('gastosDurante');
 }
 
@@ -90,6 +90,7 @@ function _unsetTableCategoria(tipo) {
 }
 
 function _getTitleWithIcon(title) {
+    // to-do
     let icon = '';
     if (CONFIG?.gastosIcones && CONFIG.gastosIcones[0] && title) {
         const search = title.toLowerCase();

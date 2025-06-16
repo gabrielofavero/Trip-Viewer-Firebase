@@ -61,11 +61,12 @@
             "subtitle": "Gerencie seus gastos antes e durante a viagem",
             "pin": {
                 "title": "PIN de Acesso",
-                "instructions": "Para acessar os gastos, digite o PIN cadastrado para essa viagem",
+                "request": "Para acessar os gastos, digite o PIN cadastrado para essa viagem",
                 "public": "Tornar a visualização dos gastos pública",
                 "private": "Proteger a visualização dos gastos com um PIN",
-                "new_pin": "Definir PIN de acesso",
-                "change_pin": "Alterar PIN de acesso"
+                "new": "Definir PIN de acesso",
+                "change": "Alterar PIN de acesso",
+                "invalid": "PIN inválido. Tente novamente"
             },
             "pre_trip": "Gastos prévios",
             "during_trip": "Gastos durante a viagem",
@@ -217,30 +218,33 @@
         }
     },
     "currency": {
-        "BRL": "Real (R$)",
-        "USD": "Dólar Americano ($)",
-        "EUR": "Euro (€)",
-        "GBP": "Libra Esterlina (£)",
-        "JPY": "Iene / Yuan (¥)",
-        "INR": "Rúpia Indiana (₹)",
-        "RUB": "Rublo Russo (₽)",
-        "CAD": "Dólar Canadense (C$)",
-        "AUD": "Dólar Australiano (A$)",
-        "CHF": "Franco Suíço (CHF)",
-        "SEK": "Coroa Sueca (SEK)",
-        "NOK": "Coroa Norueguesa (NOK)",
-        "DKK": "Coroa Dinamarquesa (DKK)",
-        "NZD": "Dólar Neozelandês (NZ$)",
-        "MXN": "Peso Mexicano (MX$)",
-        "ZAR": "Rand Sul-Africano (ZAR)",
-        "KRW": "Won Sul-Coreano (₩)",
-        "SGD": "Dólar de Singapura (SGD)",
-        "HKD": "Dólar de Hong Kong (HK$)",
-        "ILS": "Novo Shekel Israelense (₪)",
-        "PLN": "Złoty Polonês (PLN)",
-        "HUF": "Forint Húngaro (HUF)",
-        "TWD": "Dólar de Taiwan (NT$)",
-        "THB": "Baht Tailandês (฿)"
+        "title": "Moeda",
+        "type": {
+            "BRL": "Real (R$)",
+            "USD": "Dólar Americano ($)",
+            "EUR": "Euro (€)",
+            "GBP": "Libra Esterlina (£)",
+            "JPY": "Iene / Yuan (¥)",
+            "INR": "Rúpia Indiana (₹)",
+            "RUB": "Rublo Russo (₽)",
+            "CAD": "Dólar Canadense (C$)",
+            "AUD": "Dólar Australiano (A$)",
+            "CHF": "Franco Suíço (CHF)",
+            "SEK": "Coroa Sueca (SEK)",
+            "NOK": "Coroa Norueguesa (NOK)",
+            "DKK": "Coroa Dinamarquesa (DKK)",
+            "NZD": "Dólar Neozelandês (NZ$)",
+            "MXN": "Peso Mexicano (MX$)",
+            "ZAR": "Rand Sul-Africano (ZAR)",
+            "KRW": "Won Sul-Coreano (₩)",
+            "SGD": "Dólar de Singapura (SGD)",
+            "HKD": "Dólar de Hong Kong (HK$)",
+            "ILS": "Novo Shekel Israelense (₪)",
+            "PLN": "Złoty Polonês (PLN)",
+            "HUF": "Forint Húngaro (HUF)",
+            "TWD": "Dólar de Taiwan (NT$)",
+            "THB": "Baht Tailandês (฿)"
+        }
     },
     "datetime": {
         "titles": {
@@ -328,7 +332,8 @@
             "unknown_directory": "Pasta Desconhecida",
             "no_upload_permission": "Você não possui permissão para fazer upload de arquivos",
             "upload_error": "Erro ao fazer upload de arquivos",
-            "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo"
+            "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
+            "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}"
         },
         "too_early": {
             "title": "Você chegou muito cedo! 😅",
@@ -363,7 +368,6 @@
     "labels": {
         "intro": "Isso é ",
         "greeting": "Olá",
-        "currency": "Moeda",
         "people_quantity": "Quantidade de Pessoas",
         "light_mode": "Tema Claro",
         "dark_mode": "Tema Escuro",

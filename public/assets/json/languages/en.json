@@ -61,11 +61,12 @@
             "subtitle": "Manage your expenses before and during the trip",
             "pin": {
                 "title": "Access PIN",
-                "instructions": "To access the expenses, enter the PIN set for this trip",
+                "request": "To access the expenses, enter the PIN set for this trip",
                 "public": "Make your expenses visible to others",
                 "private": "Secure your expenses with a PIN",
-                "new_pin": "Set access PIN",
-                "change_pin": "Change access PIN"
+                "new": "Set access PIN",
+                "change": "Change access PIN",
+                "invalid": "Invalid PIN. Please try again"
             },
             "pre_trip": "Pre-trip expenses",
             "during_trip": "On-trip expenses",
@@ -217,30 +218,33 @@
         }
     },
     "currency": {
-        "BRL": "Brazilian Real (R$)",
-        "USD": "US Dollar ($)",
-        "EUR": "Euro (€)",
-        "GBP": "British Pound (£)",
-        "JPY": "Japanese Yen / Chinese Yuan (¥)",
-        "INR": "Indian Rupee (₹)",
-        "RUB": "Russian Ruble (₽)",
-        "CAD": "Canadian Dollar (C$)",
-        "AUD": "Australian Dollar (A$)",
-        "CHF": "Swiss Franc (CHF)",
-        "SEK": "Swedish Krona (SEK)",
-        "NOK": "Norwegian Krone (NOK)",
-        "DKK": "Danish Krone (DKK)",
-        "NZD": "New Zealand Dollar (NZ$)",
-        "MXN": "Mexican Peso (MX$)",
-        "ZAR": "South African Rand (ZAR)",
-        "KRW": "South Korean Won (₩)",
-        "SGD": "Singapore Dollar (SGD)",
-        "HKD": "Hong Kong Dollar (HK$)",
-        "ILS": "Israeli New Shekel (₪)",
-        "PLN": "Polish Złoty (PLN)",
-        "HUF": "Hungarian Forint (HUF)",
-        "TWD": "Taiwan Dollar (NT$)",
-        "THB": "Thai Baht (฿)"
+        "title": "Currency",
+        "type": {
+            "BRL": "Brazilian Real (R$)",
+            "USD": "US Dollar ($)",
+            "EUR": "Euro (€)",
+            "GBP": "British Pound (£)",
+            "JPY": "Japanese Yen / Chinese Yuan (¥)",
+            "INR": "Indian Rupee (₹)",
+            "RUB": "Russian Ruble (₽)",
+            "CAD": "Canadian Dollar (C$)",
+            "AUD": "Australian Dollar (A$)",
+            "CHF": "Swiss Franc (CHF)",
+            "SEK": "Swedish Krona (SEK)",
+            "NOK": "Norwegian Krone (NOK)",
+            "DKK": "Danish Krone (DKK)",
+            "NZD": "New Zealand Dollar (NZ$)",
+            "MXN": "Mexican Peso (MX$)",
+            "ZAR": "South African Rand (ZAR)",
+            "KRW": "South Korean Won (₩)",
+            "SGD": "Singapore Dollar (SGD)",
+            "HKD": "Hong Kong Dollar (HK$)",
+            "ILS": "Israeli New Shekel (₪)",
+            "PLN": "Polish Złoty (PLN)",
+            "HUF": "Hungarian Forint (HUF)",
+            "TWD": "Taiwan Dollar (NT$)",
+            "THB": "Thai Baht (฿)"
+        }
     },
     "datetime": {
         "titles": {
@@ -328,7 +332,8 @@
             "unknown_directory": "Unknown folder",
             "no_upload_permission": "You don't have permission to upload files",
             "upload_error": "Error uploading file(s)",
-            "module_not_active": "Cannot load the page. The module {{module}} is not active"
+            "module_not_active": "Cannot load the page. The module {{module}} is not active",
+            "no_data_on_module": "No data found for the module {{module}}"
         },
         "too_early": {
             "title": "You're a bit early! 😅",
@@ -363,7 +368,6 @@
     "labels": {
         "intro": "This is",
         "greeting": "Hello",
-        "currency": "Currency",
         "people_quantity": "Number of people",
         "light_mode": "Light Mode",
         "dark_mode": "Dark Mode",

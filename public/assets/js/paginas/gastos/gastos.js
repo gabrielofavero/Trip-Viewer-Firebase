@@ -53,14 +53,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 function _requestPinGastos() {
     const cancelAction = `_exitGastos()`;
     const confirmAction = '_loadGastos()';
-    const precontent = 'Para acessar os gastos, digite o PIN cadastrado para essa viagem';
+    const precontent = translate('trip.expenses.pin.request');
     _requestPin({ confirmAction, cancelAction, precontent });
 }
 
 function _requestPinGastosInvalido() {
     const cancelAction = `_exitGastos()`;
     const confirmAction = '_loadGastos()';
-    const precontent = 'PIN Incorreto. Digite o PIN cadastrado para essa viagem.';
+    const precontent = translate('trip.expenses.pin.invalid');
     const invalido = true;
     _requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
@@ -102,7 +102,7 @@ async function _loadGastos() {
             _requestPinGastosInvalido()
         } else {
             console.error(error);
-            _displayError('Não foi possível carregar a página de gastos');
+            _displayError(translate('messages.errors.unknown'));
         }
         _stopLoadingScreen();
     }
@@ -139,7 +139,7 @@ function _applyGastos() {
     }
 
     if (!hasGastosPrevios && !hasGastosDurante) {
-        _displayError('Não há gastos registrados para essa viagem');
+        _displayError(translate('messages.errors.no_data_on_module', {module: translate('trip.expenses.title')}));
     }
 }
 
