@@ -60,6 +60,8 @@
             "full_title": "Gastos da viagem",
             "subtitle": "Gerencie seus gastos antes e durante a viagem",
             "pin": {
+                "title": "PIN de Acesso",
+                "instructions": "Para acessar os gastos, digite o PIN cadastrado para essa viagem",
                 "public": "Tornar a visualização dos gastos pública",
                 "private": "Proteger a visualização dos gastos com um PIN",
                 "new_pin": "Definir PIN de acesso",
@@ -325,7 +327,8 @@
             "unauthenticated": "Não foi possível carregar o documento pois o usuário não está logado",
             "unknown_directory": "Pasta Desconhecida",
             "no_upload_permission": "Você não possui permissão para fazer upload de arquivos",
-            "upload_error": "Erro ao fazer upload de arquivos"
+            "upload_error": "Erro ao fazer upload de arquivos",
+            "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo"
         },
         "too_early": {
             "title": "Você chegou muito cedo! 😅",
@@ -393,6 +396,7 @@
         "home": "Home",
         "days": "Dias",
         "people": "Pessoas",
-        "highlights": "Destaques"
+        "highlights": "Destaques",
+        "overview": "Resumo"
     }
 }

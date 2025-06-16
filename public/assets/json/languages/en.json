@@ -60,6 +60,8 @@
             "full_title": "Trip expenses",
             "subtitle": "Manage your expenses before and during the trip",
             "pin": {
+                "title": "Access PIN",
+                "instructions": "To access the expenses, enter the PIN set for this trip",
                 "public": "Make your expenses visible to others",
                 "private": "Secure your expenses with a PIN",
                 "new_pin": "Set access PIN",
@@ -325,7 +327,8 @@
             "unauthenticated": "Couldn't load the document because the user is not logged in",
             "unknown_directory": "Unknown folder",
             "no_upload_permission": "You don't have permission to upload files",
-            "upload_error": "Error uploading file(s)"
+            "upload_error": "Error uploading file(s)",
+            "module_not_active": "Cannot load the page. The module {{module}} is not active"
         },
         "too_early": {
             "title": "You're a bit early! 😅",
@@ -393,6 +396,7 @@
         "home": "Home",
         "days": "Days",
         "people": "People",
-        "highlights": "Highlights"
+        "highlights": "Highlights",
+        "overview": "Overview"
     }
 }

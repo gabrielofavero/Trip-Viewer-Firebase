@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
-        _displayForbidden('Nenhum documento de gastos foi encontrado. Certifique-se de que você está acessando a página por meio do botão "Gastos" na página de Viagem', url);
+        _displayForbidden(translate('messages.documents.get.error'), url);
         return;
     }
 
     if (!gastosExport?.ativo) {
-        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `view.html?v=${documentID}`);
+        _displayForbidden(translate('messages.errors.module_not_active', {module: translate('trip.expenses.title')}), `view.html?v=${documentID}`);
         return;
     }
 
