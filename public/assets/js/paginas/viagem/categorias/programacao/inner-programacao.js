@@ -85,8 +85,8 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
 
 function _loadInnerProgramacaoMidia(midia) {
     if (!midia) return;
-    const video = translate('itinerary.media_button.video');
-    const playlist = translate('itinerary.media_button.playlist');
+    const video = translate('trip.itinerary.media_button.video');
+    const playlist = translate('trip.itinerary.media_button.playlist');
 
     let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
 
