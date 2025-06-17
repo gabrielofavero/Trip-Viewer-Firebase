@@ -217,7 +217,7 @@ function _loadConfig() {
     $.getJSON("/assets/json/moedas.json").then(data => config.moedas = data),
     $.getJSON("/assets/json/transportes.json").then(data => config.transportes = data),
     $.getJSON("/assets/json/set.json").then(data => config.set = data),
-    $.getJSON("/assets/json/gastos-icones.json").then(data => config.gastosIcones = data),
+    $.getJSON("/assets/json/icons.json").then(data => config.icons = data),
     $.getJSON("/assets/json/version.json").then(data => config.versoes = data),
     $.getJSON(`/assets/json/languages/${_getLanguagePackName()}.json`).then(data => config.language = data),
   ]).then(() => {
@@ -272,25 +272,13 @@ function _updateUserLanguage(language) {
   window.location.reload();
 }
 
-function translate(key, replacements = {}) {
+function translate(key, replacements = {}, strict = true) {
   if (!CONFIG?.language) return "";
+  let result = _searchObject(CONFIG.language, key, strict);
 
-  const keys = key.split(".");
-  let result = CONFIG.language;
-
-  for (const k of keys) {
-    if (result && k in result) {
-      result = result[k];
-    } else {
-      console.error(`Translation key "${key}" not found in language pack.`);
-      MISSING_TRANSLATIONS.add(key);
-      return "";
-    }
-  }
-  
-  const type = typeof result;
-  if (type != "string") {
-    console.error(`Invalid translation value for key "${key}": expected a string, got ${type}.`);
+  if (!searchResult && strict) {
+    console.error(`Translation key "${key}" not found in language pack.`);
+    MISSING_TRANSLATIONS.add(key);
     return "";
   }
 
@@ -298,6 +286,27 @@ function translate(key, replacements = {}) {
     for (const [placeholder, value] of Object.entries(replacements)) {
       result = result.replace(new RegExp(`{{${placeholder}}}`, 'g'), value);
     }
+  }
+
+  return result;
+}
+
+function _searchObject(obj, key, strict = true) {
+  const keys = key.split(".");
+  let result = obj;
+
+  for (const k of keys) {
+    if (result && k in result) {
+      result = result[k];
+    } else {
+      return strict ? null : key;
+    }
+  }
+
+  const type = typeof result;
+  if (type != "string") {
+    console.error(`Invalid search value for key "${key}": expected a string, got ${type}.`);
+    return "";
   }
 
   return result;

@@ -6,8 +6,8 @@
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
 | 🏆     | Feature  | F000    | 93    | 69          | 24         |
-| 📈     | Melhoria | M000    | 104    | 80          | 24        |
-| ⚔️   | Épico   | E000    | 33    | 18          | 15         |
+| 📈     | Melhoria | M000    | 106    | 80          | 26        |
+| ⚔️   | Épico   | E000    | 34    | 18          | 16         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -37,6 +37,11 @@
   - *Aguardando template do Guilherme*
 
 ### Prioridade Média
+- 📈 **M105:** Remover CONFIG e reduzir uso de variáveis globais
+- 📈 **M106:** Usar require em arquivos js
+- ⚔️ **E034:** Refatorações códigos Frontend
+  - *Usar require*
+  - *Converter para ts*
 - 📈 **M104:** Todos os liks externos devem abrir via window.open
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - ⚔️ **E028:** Places API Text Search
@@ -79,11 +84,7 @@
   - *Aguardando Guilherme desenvolver nova versão do template*
 - ⚔️🚦**E017:** Novo Front-End: Viagens.html
   - *Aguardando template do Guilherme*
-- ⚔️ **E019:** Melhorias JavaScript
-  - *Código duplicado*
-  - *Code smells*
-  - *Refatorações*
-  - *Sonarqube*
+- ⚔️ **E019:** Implementar Sonarqube
 - 📈 **M091:** Alinhar select de cidade com box de destino
 - 📈 **M092:** Titulo em dark mode com maior destaque
 - 🏆 **F070:** Componente de adicionar ao calendário

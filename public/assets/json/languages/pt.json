@@ -70,16 +70,10 @@
             },
             "pre_trip": "Gastos prévios",
             "during_trip": "Gastos durante a viagem",
-            "type": {
-                "transportation": "Transporte",
-                "flights": "Voos",
-                "car": "Carro",
-                "accommodations": "Hospedagens",
-                "entrertainment": "Entretenimento",
-                "daily_expenses": "Gastos por dia",
-                "personal_budget": "Gastos pessoais",
-                "other_expenses": "Outros Gastos"
-            }
+            "overview": "Resumo dos gastos",
+            "personal": "Gastos pessoais",
+            "other": "Outros gastos",
+            "daily": "Gastos por dia"
         },
         "transportation": {
             "title": "Transporte",
@@ -103,21 +97,21 @@
             },
             "type": {
                 "title": "Meio de transporte",
-                "options": {
-                    "flight": "Voo",
-                    "car": "Carro",
-                    "bus": "Ônibus",
-                    "train": "Trem",
-                    "helicopter": "Helicóptero",
-                    "ship": "Navio",
-                    "cruise": "Cruzeiro",
-                    "taxi": "Táxi",
-                    "motocycle": "Moto",
-                    "bicycle": "Bicicleta",
-                    "bullet_train": "Trem-bala",
-                    "subway": "Metrô",
-                    "other": "Outro"
-                }
+                "flight": "Voo",
+                "flights": "Voos",
+                "car": "Carro",
+                "rideshare": "Transporte por aplicativo",
+                "bus": "Ônibus",
+                "train": "Trem",
+                "helicopter": "Helicóptero",
+                "ship": "Navio",
+                "cruise": "Cruzeiro",
+                "taxi": "Táxi",
+                "motocycle": "Moto",
+                "bicycle": "Bicicleta",
+                "bullet_train": "Trem-bala",
+                "subway": "Metrô",
+                "other": "Outro"
             }
         },
         "accommodation": {
@@ -183,7 +177,7 @@
                 "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais"
             },
             "shopping": {
-                "title": "Lojas",
+                "title": "Compras",
                 "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral"
             },
             "map": {
@@ -401,6 +395,8 @@
         "days": "Dias",
         "people": "Pessoas",
         "highlights": "Destaques",
-        "overview": "Resumo"
+        "overview": "Resumo",
+        "entrertainment": "Entretenimento",
+        "gifts": "Presentes"
     }
 }

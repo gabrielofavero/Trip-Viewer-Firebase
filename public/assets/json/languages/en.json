@@ -70,16 +70,10 @@
             },
             "pre_trip": "Pre-trip expenses",
             "during_trip": "On-trip expenses",
-            "type": {
-                "transportation": "Transportation",
-                "flights": "Flights",
-                "car": "Car",
-                "accommodations": "Accommodations",
-                "entrertainment": "Entertainment",
-                "daily_expenses": "Daily expenses",
-                "personal_budget": "Personal expenses",
-                "other_expenses": "Other expenses"
-            }
+            "overview": "Expenses overview",
+            "personal": "Personal expenses",
+            "other": "Other expenses",
+            "daily": "Daily expenses"
         },
         "transportation": {
             "title": "Transportation",
@@ -103,21 +97,21 @@
             },
             "type": {
                 "title": "Type of transport",
-                "options": {
-                    "flight": "Flight",
-                    "car": "Car",
-                    "bus": "Bus",
-                    "train": "Train",
-                    "helicopter": "Helicopter",
-                    "ship": "Ship",
-                    "cruise": "Cruise Ship",
-                    "taxi": "Taxi",
-                    "motocycle": "Motorcycle",
-                    "bicycle": "Bicycle",
-                    "bullet_train": "Bullet Train",
-                    "subway": "Subway",
-                    "other": "Other"
-                }
+                "flight": "Flight",
+                "flights": "Flights",
+                "car": "Car",
+                "rideshare": "Rideshare",
+                "bus": "Bus",
+                "train": "Train",
+                "helicopter": "Helicopter",
+                "ship": "Ship",
+                "cruise": "Cruise Ship",
+                "taxi": "Taxi",
+                "motocycle": "Motorcycle",
+                "bicycle": "Bicycle",
+                "bullet_train": "Bullet Train",
+                "subway": "Subway",
+                "other": "Other"
             }
         },
         "accommodation": {
@@ -401,6 +395,8 @@
         "days": "Days",
         "people": "People",
         "highlights": "Highlights",
-        "overview": "Overview"
+        "overview": "Overview",
+        "entrertainment": "Entertainment",
+        "gifts": "Gifts"
     }
 }

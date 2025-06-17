@@ -89,23 +89,13 @@ function _unsetTableCategoria(tipo) {
     }
 }
 
-function _getTitleWithIcon(title) {
-    // to-do
-    let icon = '';
-    if (CONFIG?.gastosIcones && CONFIG.gastosIcones[0] && title) {
-        const search = title.toLowerCase();
-        icon = CONFIG.gastosIcones[0].value;
-        for (const item of CONFIG.gastosIcones) {
-            if (item.keys.includes(search)) {
-                icon = item.value;
-                break;
-            }
-        }
+function _getTitleWithIcon(titlePath, forceIcon = true) {
+    const title = translate(titlePath, {}, false);
+    const icon = CONFIG.icons[titlePath];
+    
+    if (!icon && !forceIcon) {
+        return title;
     }
 
-    if (icon) {
-        return `<i class="iconify" data-icon="${icon}"></i> ${title}`;
-    }
-
-    return title;
+    return `<i class="iconify" data-icon="${icon || CONFIG.icons["trip.expenses.title"]}"></i> ${title}`;
 }
