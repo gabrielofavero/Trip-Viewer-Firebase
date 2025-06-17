@@ -8,11 +8,11 @@ function _loadResumo() {
     }
 
     const gastosPrevios = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosPrevios'].resumo;
-    getID(`resumo-gastosPrevios-titulo`).innerHTML = _getTitleWithIcon(`Gastos Prévios`);
+    getID(`resumo-gastosPrevios-titulo`).innerHTML = _getTitleWithIcon("trip.expenses.pre_trip");
     _setTable('resumo-gastosPrevios', gastosPrevios.itens, gastosPrevios.total);
 
     const gastosDurante = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosDurante'].resumo;
-    getID(`resumo-gastosDurante-titulo`).innerHTML = _getTitleWithIcon(`Gastos na Viagem`);
+    getID(`resumo-gastosDurante-titulo`).innerHTML = _getTitleWithIcon("trip.expenses.during_trip");
     _setTable('resumo-gastosDurante', gastosDurante.itens, gastosDurante.total);
 }
 
@@ -20,7 +20,7 @@ function _loadChartResumo() {
     const labels = [translate('trip.expenses.pre_trip'), translate('trip.expenses.during_trip')];
     const valores = [GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosPrevios.resumo.total, GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosDurante.resumo.total];
 
-    getID('resumo-titulo').innerHTML = _getTitleWithIcon(`Resumo dos Gastos`);
+    getID('resumo-titulo').innerHTML = _getTitleWithIcon("trip.expenses.overview");
     getID('resumo-total').innerText = `Total: ${_formatMoeda(valores[0] + valores[1], true)}`;
 
     _setChart('doughnut', 'resumo-grafico', labels, valores)
