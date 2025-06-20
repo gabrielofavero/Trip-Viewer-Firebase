@@ -138,7 +138,7 @@ async function _getSingleData(type) {
         }
       }
     } else {
-      _displayError(translate('messages.documents.get.error'));
+      _displayError(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`);
     }
   } catch (error) {
     console.error('Error fetching data from Firestore:', error.message);

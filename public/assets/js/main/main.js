@@ -276,10 +276,12 @@ function translate(key, replacements = {}, strict = true) {
   if (!CONFIG?.language) return "";
   let result = _searchObject(CONFIG.language, key, strict);
 
-  if (!searchResult && strict) {
-    console.error(`Translation key "${key}" not found in language pack.`);
-    MISSING_TRANSLATIONS.add(key);
-    return "";
+  if (result == key) {
+    if (strict) {
+      console.warn(`Translation key "${key}" not found in language pack. Using key as fallback.`);
+      MISSING_TRANSLATIONS.add(key);
+    }
+    return key;
   }
 
   if (Object.keys(replacements).length > 0) {

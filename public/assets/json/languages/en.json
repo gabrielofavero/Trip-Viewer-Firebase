@@ -30,7 +30,6 @@
             "images": {
                 "title": "Custom images",
                 "subtitle": "Add a wallpaper and a logo",
-                "wallpaper": "Wallpaper",
                 "logo_light": "Logo: Light mode",
                 "logo_dark": "Logo: Dark mode"
             },
@@ -73,7 +72,8 @@
             "overview": "Expenses overview",
             "personal": "Personal expenses",
             "other": "Other expenses",
-            "daily": "Daily expenses"
+            "daily": "Daily expenses",
+            "exchange_rate_api": "Exchange rate (API)"
         },
         "transportation": {
             "title": "Transportation",
@@ -303,6 +303,7 @@
             "link": "Provide image link",
             "upload": "Upload image",
             "upload_limit": "Up to {{limit}}MB",
+            "background": "Background image",
             "image_selector": {
                 "title": "Images",
                 "add": "Add Images",
@@ -327,15 +328,21 @@
             "no_upload_permission": "You don't have permission to upload files",
             "upload_error": "Error uploading file(s)",
             "module_not_active": "Cannot load the page. The module {{module}} is not active",
-            "no_data_on_module": "No data found for the module {{module}}"
+            "no_data_on_module": "No data found for the module {{module}}",
+            "loading_timeout": "The request took too long to respond. Please try again later"
         },
         "too_early": {
             "title": "You're a bit early! 😅",
             "message": "Hi there! TripViewer isn't accepting new sign-ups just yet. We're working hard to launch our first public version. Stay tuned! 🚀"
         },
+        "access_denied": {
+            "title": "Access Denied 🚫",
+            "message": "You don't have permission to access this page. Please check your credentials or contact the system administrator"
+        },
         "documents": {
             "get": {
-                "error": "Couldn't load the document. There's no valid code in the URL."
+                "error": "Couldn't load the document",
+                "no_code": "There's no valid code in the URL."
             },
             "create": {
                 "success": "Document created successfully",
@@ -352,6 +359,15 @@
             "delete": {
                 "success": "Document deleted successfully",
                 "error": "Failed to delete document"
+            },
+            "save": {
+                "success": "Document saved successfully",
+                "error": "Cannot proceed with saving action",
+                "no_new_data": "No new data was detected in the document",
+                "unknown": "An error occurred while checking the document for changes",
+                "main": "Main saving action",
+                "user": "User saving action",
+                "incomplete": "The document was partially saved. Some changes may not have been applied."
             }
         },
         "operations": {
@@ -377,6 +393,9 @@
         "optional": "Optional",
         "cancel": "Cancel",
         "save": "Save",
+        "delete": "Delete",
+        "understood": "Understood",
+        "confirm": "Confirm",
         "enabled": "Enabled",
         "disabled": "Disabled",
         "add": "Add",
@@ -388,7 +407,7 @@
         "try_again": "Try Again",
         "all": "All",
         "developed_by": "Developed by",
-        "attributions": "Attributions",
+        "credits": "Credits",
         "last_updated_on": "Last updated on",
         "unauthenticated": "Not authenticated",
         "home": "Home",
@@ -397,6 +416,13 @@
         "highlights": "Highlights",
         "overview": "Overview",
         "entrertainment": "Entertainment",
-        "gifts": "Gifts"
+        "gifts": "Gifts",
+        "forms": "Forms",
+        "calendar": "Calendar",
+        "accordion": "Accordion",
+        "dashboard": "Dashboard",
+        "tabs": "Tabs",
+        "wallpaper": "Wallpaper",
+        "logo": "Logo"
     }
 }

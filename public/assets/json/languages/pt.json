@@ -30,7 +30,6 @@
             "images": {
                 "title": "Imagens Personalizadas",
                 "subtitle": "Adicione um papel de parede e um logotipo",
-                "wallpaper": "Papel de Parede",
                 "logo_light": "Logotipo: Tema Claro",
                 "logo_dark": "Logotipo: Tema Escuro"
             },
@@ -69,11 +68,12 @@
                 "invalid": "PIN inválido. Tente novamente"
             },
             "pre_trip": "Gastos prévios",
-            "during_trip": "Gastos durante a viagem",
+            "during_trip": "Durante a viagem",
             "overview": "Resumo dos gastos",
             "personal": "Gastos pessoais",
             "other": "Outros gastos",
-            "daily": "Gastos por dia"
+            "daily": "Gastos por dia",
+            "exchange_rate_api": "Taxa de Câmbio (API)"
         },
         "transportation": {
             "title": "Transporte",
@@ -301,8 +301,9 @@
             "title": "Imagem",
             "placeholder": "https://exemplo.com/imagem.jpg",
             "link": "Fornecer link da imagem",
-            "upload": "Carregar imagem",
+            "upload": "Upload de imagem",
             "upload_limit": "Até {{limit}}MB",
+            "background": "Imagem de fundo",
             "image_selector": {
                 "title": "Imagens",
                 "add": "Adicionar Imagens",
@@ -327,15 +328,21 @@
             "no_upload_permission": "Você não possui permissão para fazer upload de arquivos",
             "upload_error": "Erro ao fazer upload de arquivos",
             "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
-            "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}"
+            "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
+            "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde"
         },
         "too_early": {
             "title": "Você chegou muito cedo! 😅",
             "message": "Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀'"
         },
+        "access_denied": {
+            "title": "Acesso Negado 🚫",
+            "message": "Você não tem permissão para acessar esta página. Por favor, verifique suas credenciais ou entre em contato com o administrador do sistema"
+        },
         "documents": {
             "get": {
-                "error": "Não foi possível carregar o documento. Não há um código válido na URL"
+                "error": "Não foi possível carregar o documento",
+                "no_code": "Não há um código válido na URL"
             },
             "create": {
                 "success": "Documento criado com sucesso",
@@ -352,6 +359,15 @@
             "delete": {
                 "success": "Documento excluído com sucesso",
                 "error": "Erro ao excluir o documento"
+            },
+            "save": {
+                "success": "Documento salvo com sucesso",
+                "error": "Não foi possível salvar o documento",
+                "no_new_data": "Não há novos dados para salvar",
+                "unknown": "Ocorreu um erro ao verificar mudanças no documento",
+                "main": "Salvamento principal",
+                "user": "Salvamento de dados do usuário",
+                "incomplete": "Não foi possível salvar o documento por completo"
             }
         },
         "operations": {
@@ -377,6 +393,9 @@
         "optional": "Opcional",
         "cancel": "Cancelar",
         "save": "Salvar",
+        "delete": "Excluir",
+        "understood": "Entendi",
+        "confirm": "Confirmar",
         "enabled": "Habilitado",
         "disabled": "Desabilitado",
         "add": "Adicionar",
@@ -388,7 +407,7 @@
         "try_again": "Tentar novamente",
         "all": "Todos",
         "developed_by": "Desenvolvido por",
-        "attributions": "Atribuições",
+        "credits": "Atribuições",
         "last_updated_on": "Última atualização em",
         "unauthenticated": "Não autenticado",
         "home": "Home",
@@ -397,6 +416,13 @@
         "highlights": "Destaques",
         "overview": "Resumo",
         "entrertainment": "Entretenimento",
-        "gifts": "Presentes"
+        "gifts": "Presentes",
+        "forms": "Formulários",
+        "calendar": "Calendário",
+        "accordion": "Accordion",
+        "dashboard": "Dashboard",
+        "tabs": "Abas",
+        "wallpaper": "Papel de Parede",
+        "logo": "Logotipo"
     }
 }

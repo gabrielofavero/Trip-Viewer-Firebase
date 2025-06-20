@@ -34,7 +34,7 @@ function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES))
   }
 
   if (!preloader) {
-    console.warn('Não foi possível exibir a mensagem pois o preloader não foi encontrado');
+    console.warn('Canot show message. Preloader not found');
     return;
   }
 
@@ -114,13 +114,7 @@ function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES))
 function _displayError(erro, tentarNovamente = false) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 
-
-
-
-
-  
-
-  propriedades.titulo = "Erro no Carregamento 🙁";
+  propriedades.titulo = tranlstate('messages.error.load');
   propriedades.critico = true;
   propriedades.conteudo = _getErrorMessage(erro);
   propriedades.localizacao = false; // Desabilitado. Não faz sentido mostrar ao usuário.
@@ -135,10 +129,10 @@ function _displayError(erro, tentarNovamente = false) {
 
 function _getErrorMessage(erro) {
   const isError = (erro && erro instanceof Error);
-  const contact = '<a href=\"mailto:gabriel.o.favero@live.com\">Entre em contato com o administrador</a> para reportar o problema.';
+  const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
 
   if (!erro || isError && !erro.message) {
-    return `Um erro inesperado impediu o carregamento da página. ${contact}`;
+    return `${translate('messages.errors.unknown')}. ${contact}`;
   } else if (isError) {
     let msg = erro.message;
     if (msg[msg.length - 1] === '.') {
@@ -153,8 +147,8 @@ function _getErrorMessage(erro) {
 // Mensagem de Não Autorizado
 function _displayForbidden(conteudo, redirectTo = 'view.html') {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-  propriedades.titulo = "Acesso Negado 🚫";
-  propriedades.conteudo = conteudo || "Você não tem permissão para acessar esta página.";
+  propriedades.titulo = translate('messages.access_denied.title');
+  propriedades.conteudo = conteudo || translate('messages.access_denied.message');
   propriedades.critico = true;
   propriedades.botoes = [{
     tipo: 'voltar',
@@ -176,7 +170,7 @@ function _closeMessage() {
     if (typeof _stopLoadingScreen === 'function') _stopLoadingScreen();
 
   } else {
-    console.warn('Não há um modal aberto para ser fechado.');
+    console.warn('Cannot close an unopened message modal.');
   }
 }
 
@@ -258,7 +252,7 @@ function _getButton(botao) {
     case 'fechar':
       return _getCloseButton();
     case 'cancelar':
-      return _getCloseButton('Cancelar', botao.acao);
+      return _getCloseButton(translate('labels.cancel'), botao.acao);
     case 'confirmar':
       return _getConfirmButton(botao.acao);
     case 'apagar':
@@ -266,7 +260,7 @@ function _getButton(botao) {
     case 'apagar-basico':
       return _getDeleteButtonBasic(botao.acao);
     default:
-      return _getCloseButton('Entendi');
+      return _getCloseButton(translate('labels.understood'));
   }
 }
 
@@ -283,7 +277,7 @@ function _getHomeButton() {
   icon.setAttribute('data-icon', 'bx:home');
 
   button.appendChild(icon);
-  button.innerHTML += ' Home';
+  button.innerHTML += ` ${translate('labels.home')}`;
 
   return button;
 }
@@ -300,7 +294,7 @@ function _getBackButton(redirectTo = 'index.html') {
   icon.setAttribute('data-icon', 'bx:home');
 
   button.appendChild(icon);
-  button.innerHTML += ' Home';
+  button.innerHTML += ` ${translate('labels.home')}`;
 
   return button;
 }
@@ -317,12 +311,13 @@ function _getTryAgainButton() {
   icon.setAttribute('data-icon', 'pajamas:retry');
 
   button.appendChild(icon);
-  button.innerHTML += ' Tentar Novamente';
+  button.innerHTML += ` ${translate('labels.try_again')}`;
 
   return button;
 }
 
-function _getCloseButton(name = 'Fechar', onclick) {
+function _getCloseButton(name, onclick) {
+  name = name ? name : translate('labels.close');
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
@@ -340,7 +335,7 @@ function _getConfirmButton(onclick = '_closeMessage();') {
   button.setAttribute('onclick', onclick)
   button.id = 'message-confirm';
 
-  button.innerHTML = 'Confirmar';
+  button.innerHTML = translate('labels.confirm');
   return button;
 }
 
@@ -356,7 +351,7 @@ function _getDeleteButton(onclick, buttonClass = 'btn-secondary') {
   icon.setAttribute('data-icon', 'mingcute:delete-2-fill');
 
   button.appendChild(icon);
-  button.innerHTML += ' Apagar';
+  button.innerHTML += ` ${translate('labels.delete')}`;
 
   return button;
 }

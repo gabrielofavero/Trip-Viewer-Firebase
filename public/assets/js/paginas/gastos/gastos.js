@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
-        _displayForbidden(translate('messages.documents.get.error'), url);
+        _displayForbidden(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}` , url);
         return;
     }
 

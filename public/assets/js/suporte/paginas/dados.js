@@ -69,7 +69,7 @@ function _getIdFromObjectDB(dbObject) {
     return segments[segments.length - 1];
 
   } catch (e) {
-    console.error('Falha ao obter ID de DB: ' + e.message)
+    console.error('Cannot get ID from DB: ' + e.message)
     return;
   }
 }
@@ -360,7 +360,7 @@ function _compareDocuments() {
       _compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
       break;
     default:
-      console.warn('Página não suportada para comparação de documentos. Use a função nativa "_compareObjects()"');
+      console.warn('Page not supported. Use "_compareObjects()"');
       return null;
   }
 
@@ -373,12 +373,18 @@ function _compareDocuments() {
 
 function _validateIfDocumentChanged() {
   DOCS_CHANGED = _compareDocuments();
-  const invalid = !DOCS_CHANGED ? true : DOCS_CHANGED.multiple ? DOCS_CHANGED.data.every(item => item.areEqual) : DOCS_CHANGED.data[0].areEqual;
 
-  if (invalid) {
+  if (!DOCS_CHANGED) {
+    getID('modal-inner-text').innerHTML = `${translate('messages.documents.save.error')}. ${translate('messages.documents.save.no_new_data')}`;
     SUCCESSFUL_SAVE = false;
-    getID('modal-inner-text').innerHTML = DOCS_CHANGED ? `Não foi possível realizar o salvamento. Não houve alterações nos dados.` :
-      'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
+  }
+
+  if ((DOCS_CHANGED.multiple && DOCS_CHANGED.data.every(item => item.areEqual)) || DOCS_CHANGED.data[0].areEqual) {
+    getID('modal-inner-text').innerHTML = `${translate('messages.documents.save.error')}. ${translate('messages.documents.save.unknown')}`
+    SUCCESSFUL_SAVE = false;
+  }
+
+  if (!SUCCESSFUL_SAVE) {
     _openModal();
     _stopLoadingScreen();
   }

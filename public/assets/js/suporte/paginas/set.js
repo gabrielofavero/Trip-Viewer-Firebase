@@ -40,9 +40,9 @@ async function _setDocumento(tipo) {
         }
     }
 
-    _addSetResponse('Salvamento Principal', mainResponse.success);
+    _addSetResponse(translate('messages.documents.save.main'), mainResponse.success);
     if (userSavingResponse) {
-        _addSetResponse('Salvamento do Usuário', userSavingResponse.success);
+        _addSetResponse(translate('messages.documents.save.user'), userSavingResponse.success);
     }
 
     if (mainResponse.success === true) {
@@ -51,7 +51,7 @@ async function _setDocumento(tipo) {
         }
     }
 
-    getID('modal-inner-text').innerHTML = _buildSetMessage(tipo);
+    getID('modal-inner-text').innerHTML = _buildSetMessage();
     _stopLoadingScreen();
     _openModal('modal');
 }
@@ -61,7 +61,7 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
         UPLOAD_AFTER_SET = true;
         return;
     } else if (!DOCUMENT_ID && !isBeforeSet) {
-        _addSetResponse('Upload de Imagens', false);
+        _addSetResponse(translate('inputs.image.upload'), false);
         return;
     } else if ((!UPLOAD_AFTER_SET && !isBeforeSet) || (UPLOAD_AFTER_SET && isBeforeSet)) {
         return;
@@ -104,30 +104,25 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
         const newData = _getNewDataDocument(tipo);
         if (DOCUMENT_ID && newData) {
             mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
-            _addSetResponse('Inserção de Imagens no documento', true);
+            _addSetResponse(translate('inputs.image.image_selector.add'), true);
         } else {
-            _addSetResponse('Inserção de Imagens no documento', false);
+            _addSetResponse(translate('inputs.image.image_selector.add'), false);
         }
     }
 }
 
-function _buildSetMessage(tipo) {
+function _buildSetMessage() {
     const allPassed = SET_RESPONSES.every(response => response.sucesso === true);
     const allFailed = SET_RESPONSES.every(response => response.sucesso === false);
 
-    const doc = _getNewDataDocument(tipo);
-    const titulo = doc?.titulo ? `"${doc.titulo}"` : '';
-    const altTitulo1 = `Documento de ${tipo}`;
-    const altTitulo2 = `o documento de ${tipo}`;
-
     if (allPassed) {
         SUCCESSFUL_SAVE = true;
-        return `${titulo || altTitulo1} atualizado com sucesso`;
+        return translate('messages.documents.save.success');
     } else if (allFailed) {
-        return `Não foi possível atualizar ${titulo || altTitulo2} por completo. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.
+        return `${translate('messages.documents.save.incomplete')}. <a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}
                 <br><br>${_getSetResponsesHTML()}`;
     } else {
-        return `Não foi possível atualizar ${titulo || altTitulo2}. Tente novamente ou <a href=\"mailto:gabriel.o.favero@live.com\">entre em contato com o administrador</a> para reportar o problema.`;
+        return `Não foi possível atualizar ${titulo || altTitulo2}.  <a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
     }
 
     function _getSetResponsesHTML() {
