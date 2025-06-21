@@ -13,16 +13,33 @@
     "trip": {
         "next": "Próximas viagens",
         "previous": "Viagens anteriores",
-        "new": "Nova Viagem",
+        "new": "Nova viagem",
         "current_single": "Viagem em Andamento",
         "current_multi_1": "Múltiplas viagens em andamento",
-        "current_multi_2": "Confira em \"Próximas Viagens\"",
-        "edit": "Editar Viagem",
+        "current_multi_2": "Confira em \"Próximas viagens\"",
+        "edit": "Editar viagem",
         "share": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
+        "delete": {
+            "title": "Excluir viagem",
+            "message": "Tem certeza que deseja excluir a viagem {{name}}? A ação não poderá ser desfeita"
+        },
         "basic_information": {
-            "title": "Dados Básicos",
+            "title": "Dados básicos",
             "subtitle": "Adicione aqui as principais informações da sua viagem",
             "title_placeholder": "Digite o título da viagem"
+        },
+        "visibility": {
+            "title": "Visibilidade",
+            "subtitle": "Determine quem pode ver e editar sua viagem",
+            "public": {
+                "title": "Viagem pública",
+                "subtitle": "Todos com o link de acesso podem visualizar sua viagem"
+            },
+            "editors": {
+                "title": "Permitir editores",
+                "subtitle": "Permitir que outros usuários possam editar sua viagem",
+                "add": "Adicionar editor"
+            }
         },
         "customization": {
             "title": "Customização",
@@ -58,11 +75,11 @@
             "title": "Gastos",
             "full_title": "Gastos da viagem",
             "subtitle": "Gerencie seus gastos antes e durante a viagem",
+            "public": "Tornar a visualização dos gastos pública",
+            "private": "Proteger a visualização dos gastos com um PIN",
             "pin": {
                 "title": "PIN de Acesso",
                 "request": "Para acessar os gastos, digite o PIN cadastrado para essa viagem",
-                "public": "Tornar a visualização dos gastos pública",
-                "private": "Proteger a visualização dos gastos com um PIN",
                 "new": "Definir PIN de acesso",
                 "change": "Alterar PIN de acesso",
                 "invalid": "PIN inválido. Tente novamente"
@@ -86,7 +103,7 @@
             "from": "Ida",
             "to": "Volta",
             "simple_view": "Visualização simplificada",
-            "categorized_view": "Visualização por categorias",
+            "leg_view": "Agrupar por trajeto",
             "departure_location": {
                 "title": "Local de partida",
                 "placeholder": "Belo Horizonte"
@@ -159,6 +176,8 @@
         "edit_list": "Editar Lista de Destinos",
         "share": "Venha visualizar o destino {{name}} criado no TripViewer",
         "share_list": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
+        "all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
+        "nothing": "Sem destinos cadastrados",
         "type": {
             "restaurants": {
                 "title": "Restaurantes",
@@ -302,7 +321,7 @@
             "placeholder": "https://exemplo.com/imagem.jpg",
             "link": "Fornecer link da imagem",
             "upload": "Upload de imagem",
-            "upload_limit": "Até {{limit}}MB",
+            "upload_limit": "Até 1.5MB",
             "background": "Imagem de fundo",
             "image_selector": {
                 "title": "Imagens",
@@ -415,6 +434,7 @@
         "people": "Pessoas",
         "highlights": "Destaques",
         "overview": "Resumo",
+        "view": "Ver",
         "entrertainment": "Entretenimento",
         "gifts": "Presentes",
         "forms": "Formulários",
@@ -423,6 +443,7 @@
         "dashboard": "Dashboard",
         "tabs": "Abas",
         "wallpaper": "Papel de Parede",
-        "logo": "Logotipo"
+        "logo": "Logotipo",
+        "edit": "Editar"
     }
 }

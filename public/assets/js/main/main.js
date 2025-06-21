@@ -276,7 +276,7 @@ function translate(key, replacements = {}, strict = true) {
   if (!CONFIG?.language) return "";
   let result = _searchObject(CONFIG.language, key, strict);
 
-  if (result == key) {
+  if (result == null) {
     if (strict) {
       console.warn(`Translation key "${key}" not found in language pack. Using key as fallback.`);
       MISSING_TRANSLATIONS.add(key);

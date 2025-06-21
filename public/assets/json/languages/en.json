@@ -19,10 +19,27 @@
         "current_multi_2": "Check \"Next trips\"",
         "edit": "Edit trip",
         "share": "Check out my trip {{name}} created on TripViewer, starting on {{start}} and ending on {{end}}",
+        "delete": {
+            "title": "Delete trip",
+            "message": "Are you sure you want to delete the trip {{name}}? This action cannot be undone"
+        },
         "basic_information": {
             "title": "Basic Information",
             "subtitle": "Add the main details of your trip here",
             "title_placeholder": "Enter the trip title"
+        },
+        "visibility": {
+            "title": "Visibility",
+            "subtitle": "Determine who can view and edit your trip",
+            "public": {
+                "title": "Public trip",
+                "subtitle": "Anyone with the link can view your trip"
+            },
+            "editors": {
+                "title": "Allow editors",
+                "subtitle": "Allow other users to edit your trip",
+                "add": "Add editor"
+            }
         },
         "customization": {
             "title": "Customization",
@@ -58,11 +75,11 @@
             "title": "Expenses",
             "full_title": "Trip expenses",
             "subtitle": "Manage your expenses before and during the trip",
+            "public": "Make your expenses visible to others",
+            "private": "Secure your expenses with a PIN",
             "pin": {
                 "title": "Access PIN",
                 "request": "To access the expenses, enter the PIN set for this trip",
-                "public": "Make your expenses visible to others",
-                "private": "Secure your expenses with a PIN",
                 "new": "Set access PIN",
                 "change": "Change access PIN",
                 "invalid": "Invalid PIN. Please try again"
@@ -86,7 +103,7 @@
             "from": "Departure",
             "to": "Return",
             "simple_view": "Simplified view",
-            "categorized_view": "Categorized view",
+            "leg_view": "Group by leg",
             "departure_location": {
                 "title": "Departure location",
                 "placeholder": "New York City"
@@ -159,6 +176,8 @@
         "edit_list": "Edit destination List",
         "share": "Check out the destination {{name}} I created on TripViewer",
         "share_list": "Check out the destination list {{name}} I created on TripViewer",
+        "all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
+        "nothing": "No destinations registred",
         "type": {
             "restaurants": {
                 "title": "Restaurants",
@@ -302,7 +321,7 @@
             "placeholder": "https://example.com/image.jpg",
             "link": "Provide image link",
             "upload": "Upload image",
-            "upload_limit": "Up to {{limit}}MB",
+            "upload_limit": "Up to 1,5MB",
             "background": "Background image",
             "image_selector": {
                 "title": "Images",
@@ -415,6 +434,7 @@
         "people": "People",
         "highlights": "Highlights",
         "overview": "Overview",
+        "view": "View",
         "entrertainment": "Entertainment",
         "gifts": "Gifts",
         "forms": "Forms",
@@ -423,6 +443,7 @@
         "dashboard": "Dashboard",
         "tabs": "Tabs",
         "wallpaper": "Wallpaper",
-        "logo": "Logo"
+        "logo": "Logo",
+        "edit": "Edit"
     }
 }
