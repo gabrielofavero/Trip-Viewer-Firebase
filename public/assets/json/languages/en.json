@@ -28,47 +28,14 @@
             "title_placeholder": "Enter the trip title"
         },
         "visibility": {
-            "title": "Visibility",
             "subtitle": "Determine who can view and edit your trip",
-            "public": {
-                "title": "Public trip",
-                "subtitle": "Anyone with the link can view your trip"
-            },
-            "editors": {
-                "title": "Allow editors",
-                "subtitle": "Allow other users to edit your trip",
-                "add": "Add editor"
-            }
+            "public": "Anyone with the link can view your trip",
+            "editors": "Allow other users to edit your trip"
         },
         "customization": {
-            "title": "Customization",
             "subtitle": "Give your trip a personal touch",
-            "images": {
-                "title": "Custom images",
-                "subtitle": "Add a wallpaper and a logo",
-                "logo_light": "Logo: Light mode",
-                "logo_dark": "Logo: Dark mode"
-            },
-            "colors": {
-                "title": "Custom colors",
-                "subtitle": "Choose your trip's theme and colors",
-                "themes": {
-                    "light_and_dark": "Show trip in Light and Dark mode",
-                    "light": "Show trip only in Light mode",
-                    "dark": "Show trip only in Dark mode"
-                }
-            },
-            "links": {
-                "title": "Custom links",
-                "subtitle": "Add useful links to your trip",
-                "attachment": "Generic attachment",
-                "google_drive": "Google Drive",
-                "map": "Map",
-                "pdf": "PDF",
-                "presentation": "Presentation (PowerPoint)",
-                "sheet": "Spreadsheet (Excel / Google Sheets)",
-                "vaccination": "Vaccination certificate"
-            }
+            "colors": "Choose your trip's theme and colors",
+            "links": "Add useful links to your trip"
         },
         "expenses": {
             "title": "Expenses",
@@ -168,15 +135,12 @@
         "title": "Destinations",
         "subtitle": "What to do during your trip? Where to eat? What to visit?",
         "mine": "My destinations",
-        "list": "Destination lists",
         "new": "New destination",
-        "new_list": "New destination list",
         "edit": "Edit destination",
-        "edit_list": "Edit destination List",
         "share": "Check out the destination {{name}} I created on TripViewer",
-        "share_list": "Check out the destination list {{name}} I created on TripViewer",
         "all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
         "nothing": "No destinations registred",
+        "basic_information": "Add the main information about your destination here",
         "delete": {
             "title": "Delete destination",
             "message": "Are you sure you want to delete the destination {{name}}? This action cannot be undone"
@@ -231,6 +195,30 @@
             "default": "Unknown price",
             "max": "More than {{value}}",
             "free": "Free"
+        }
+    },
+    "listing": {
+        "title": "Destination lists",
+        "new": "New destination list",
+        "edit": "Edit destination List",
+        "share": "Check out the destination list {{name}} I created on TripViewer",
+        "basic_information": "Add the main information about your destination list here",
+        "last_update": {
+            "title": "Show last update date",
+            "description": "Shows the date when the listing or any destination was last updated"
+        },
+        "title_placeholder": "Best International Destinations",
+        "subtitle_placeholder": "Made by me :)",
+        "description_placeholder": "List of things to do in the best international destinations I've visited recently",
+        "visibility": {
+            "subtitle": "Determine who can view and edit your destination list",
+            "public": "Anyone with the link can view your destination list",
+            "editors": "Allow other users to edit your destination list"
+        }, 
+        "customization": {
+            "subtitle": "Give your destination list a personal touch",
+            "colors": "Choose your destination list's theme and colors",
+            "links": "Add useful links to your destination list"
         }
     },
     "currency": {
@@ -424,6 +412,7 @@
         "add": "Add",
         "search": "Search",
         "title": "Title",
+        "subtitle": "Subtitle",
         "no_title": "Untitled",
         "description": "Description",
         "type": "Type",
@@ -449,6 +438,39 @@
         "wallpaper": "Wallpaper",
         "logo": "Logo",
         "edit": "Edit",
-        "basic_information": "Basic Information"
+        "basic_information": "Basic Information",
+        "visibility": "Visibility",
+        "public": "Public",
+        "customization": {
+            "title": "Customization",
+            "images": {
+                "title": "Custom images",
+                "subtitle": "Add a wallpaper and a logo",
+                "logo_light": "Logo: Light mode",
+                "logo_dark": "Logo: Dark mode"
+            },
+            "colors": {
+                "title": "Custom colors",
+                "themes": {
+                    "light_and_dark": "Show in Light and Dark mode",
+                    "light": "Show only in Light mode",
+                    "dark": "Show only in Dark mode"
+                }
+            },
+            "links": {
+                "title": "Custom links",
+                "attachment": "Generic attachment",
+                "google_drive": "Google Drive",
+                "map": "Map",
+                "pdf": "PDF",
+                "presentation": "Presentation (PowerPoint)",
+                "sheet": "Spreadsheet (Excel / Google Sheets)",
+                "vaccination": "Vaccination certificate"
+            }
+        },
+        "editors": {
+            "allow": "Allow editors",
+            "add": "Add editor"
+        }
     }
 }

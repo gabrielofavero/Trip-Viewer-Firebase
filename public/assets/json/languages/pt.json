@@ -28,47 +28,14 @@
             "title_placeholder": "Digite o título da viagem"
         },
         "visibility": {
-            "title": "Visibilidade",
             "subtitle": "Determine quem pode ver e editar sua viagem",
-            "public": {
-                "title": "Viagem pública",
-                "subtitle": "Todos com o link de acesso podem visualizar sua viagem"
-            },
-            "editors": {
-                "title": "Permitir editores",
-                "subtitle": "Permitir que outros usuários possam editar sua viagem",
-                "add": "Adicionar editor"
-            }
+            "public": "Todos com o link de acesso podem visualizar sua viagem",
+            "editors": "Permitir que outros usuários possam editar sua viagem"
         },
         "customization": {
-            "title": "Customização",
             "subtitle": "Dê uma cara única para a sua viagem",
-            "images": {
-                "title": "Imagens Personalizadas",
-                "subtitle": "Adicione um papel de parede e um logotipo",
-                "logo_light": "Logotipo: Tema Claro",
-                "logo_dark": "Logotipo: Tema Escuro"
-            },
-            "colors": {
-                "title": "Cores Personalizadas",
-                "subtitle": "Escolha o tema e as cores da sua viagem",
-                "themes": {
-                    "light_and_dark": "Exibir viagem em tema Claro e Escuro",
-                    "light": "Exibir viagem apenas no tema Claro",
-                    "dark": "Exibir viagem apenas no tema Escuro"
-                }
-            },
-            "links": {
-                "title": "Links Personalizados",
-                "subtitle": "Adicione links úteis para a sua viagem",
-                "attachment": "Anexo Genérico",
-                "google_drive": "Google Drive",
-                "map": "Mapa",
-                "pdf": "PDF",
-                "presentation": "Apresentação (PowerPoint)",
-                "sheet": "Planilha (Excel / Google Sheets)",
-                "vaccination": "Comprovante de Vacinação"
-            }
+            "colors": "Escolha o tema e as cores da sua viagem",
+            "links": "Adicione links úteis para a sua viagem"
         },
         "expenses": {
             "title": "Gastos",
@@ -168,15 +135,12 @@
         "title": "Destinos",
         "subtitle": "O que fazer durante a viagem? Onde comer? Onde visitar?",
         "mine": "Meus Destinos",
-        "list": "Listas de destinos",
         "new": "Novo destino",
-        "new_list": "Nova lista de destinos",
         "edit": "Editar Destino",
-        "edit_list": "Editar Lista de Destinos",
         "share": "Venha visualizar o destino {{name}} criado no TripViewer",
-        "share_list": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
         "all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
         "nothing": "Sem destinos cadastrados",
+        "basic_information": "Adicione aqui as principais informações do seu destino",
         "delete": {
             "title": "Excluir destino",
             "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
@@ -231,6 +195,30 @@
             "default": "Valor Desconhecido",
             "max": "Mais de {{value}}",
             "free": "Gratuito"
+        }
+    },
+    "listing": {
+        "title": "Listas de destinos",
+        "new": "Nova lista de destinos",
+        "edit": "Editar lista de destinos",
+        "share": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
+        "basic_information": "Adicione aqui as principais informações da sua lista de destinos",
+        "last_update": {
+            "title": "Exibir data da última atualização",
+            "description": "Exibe a data de quando a listagem ou algum destino for atualizado"
+        },
+        "title_placeholder": "Melhores Destinos Internacionais",
+        "subtitle_placeholder": "Feito por mim :)",
+        "description_placeholder": "Lista de coisas para fazer dos melhores destinos internacionais que visitei recentemente",
+        "visibility": {
+            "subtitle": "Determine quem pode ver e editar sua lista de destinos",
+            "public": "Todos com o link de acesso podem visualizar sua lista de destinos",
+            "editors": "Permitir que outros usuários possam editar sua lista de destinos"
+        },
+        "customization": {
+            "subtitle": "Dê uma cara única para a sua lista de destinos",
+            "colors": "Escolha o tema e as cores da sua lista de destinos",
+            "links": "Adicione links úteis para a sua lista de destinos"
         }
     },
     "currency": {
@@ -424,6 +412,7 @@
         "add": "Adicionar",
         "search": "Pesquisar",
         "title": "Título",
+        "subtitle": "Subtítulo",
         "no_title": "Sem título",
         "description": "Descrição",
         "type": "Tipo",
@@ -449,6 +438,39 @@
         "wallpaper": "Papel de Parede",
         "logo": "Logotipo",
         "edit": "Editar",
-        "basic_information": "Dados básicos"
+        "basic_information": "Dados básicos",
+        "visibility": "Visibilidade",
+        "public": "Público",
+        "customization": {
+            "title": "Personalização",
+            "images": {
+                "title": "Imagens Personalizadas",
+                "subtitle": "Adicione um papel de parede e um logotipo",
+                "logo_light": "Logotipo: Tema Claro",
+                "logo_dark": "Logotipo: Tema Escuro"
+            },
+            "colors": {
+                "title": "Cores Personalizadas",
+                "themes": {
+                    "light_and_dark": "Exibir em tema Claro e Escuro",
+                    "light": "Exibir apenas no tema Claro",
+                    "dark": "Exibir apenas no tema Escuro"
+                }
+            },
+            "links": {
+                "title": "Links Personalizados",
+                "attachment": "Anexo Genérico",
+                "google_drive": "Google Drive",
+                "map": "Mapa",
+                "pdf": "PDF",
+                "presentation": "Apresentação (PowerPoint)",
+                "sheet": "Planilha (Excel / Google Sheets)",
+                "vaccination": "Comprovante de Vacinação"
+            }
+        },
+        "editors": {
+            "allow": "Permitir editores",
+            "add": "Adicionar editor"
+        }
     }
 }
