@@ -14,8 +14,8 @@
         "labels.gifts": "mdi:gift-outline",
         "trip.expenses.personal": "gravity-ui:person",
         "labels.people": "gravity-ui:person",
-        "trip.destination.type.shopping.title": "mdi:cart-outline",
-        "trip.destination.type.food.title": "uil:food",
-        "trip.destination.type.nightlife.title": "bxs:drink"
+        "trip.destination.shopping.title": "mdi:cart-outline",
+        "trip.destination.food.title": "uil:food",
+        "trip.destination.nightlife.title": "bxs:drink"
     }
 ]

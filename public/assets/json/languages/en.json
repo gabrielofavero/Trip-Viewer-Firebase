@@ -24,8 +24,7 @@
             "message": "Are you sure you want to delete the trip {{name}}? This action cannot be undone"
         },
         "basic_information": {
-            "title": "Basic Information",
-            "subtitle": "Add the main details of your trip here",
+            "subtitle": "Add the main information about your trip here",
             "title_placeholder": "Enter the trip title"
         },
         "visibility": {
@@ -178,43 +177,47 @@
         "share_list": "Check out the destination list {{name}} I created on TripViewer",
         "all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
         "nothing": "No destinations registred",
-        "type": {
-            "restaurants": {
-                "title": "Restaurants",
-                "description": "Places that serve full meals. Perfect for lunch and dinner. Some may only open at night."
-            },
-            "snacks": {
-                "title": "Snacks",
-                "description": "Quick-bite spots. Great for a snack, or light meal. Includes cafés, bakeries, and fast food places."
-            },
-            "nightlife": {
-                "title": "Nightlife",
-                "description": "Bars, pubs, karaoke spots, clubs, or anything focused on drinks and entertainment."
-            },
-            "tourism": {
-                "title": "Tourism",
-                "description": "Tourist attractions including neighborhoods, monuments, museums, squares, viewpoints, exhibitions, and more."
-            },
-            "shopping": {
-                "title": "Shopping",
-                "description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related."
-            },
-            "map": {
-                "title": "Map",
-                "description": "Interactive Google Map with highlights of the city: Restaurants, Snacks, Nightlife, Tourism, and Shopping."
-            },
-            "lineup": {
-                "title": "Lineup",
-                "description": "Event lineup — may include times, stages, artists, notes, and links to artists' Spotify profiles."
-            },
-            "tourismAndShopping": {
-                "title": "Tourism & Shopping",
-                "description": "A mix of tourist spots and shops: neighborhoods, monuments, museums, malls, and more."
-            },
-            "food": {
-                "title": "Food & Drinks",
-                "description": "All kinds of places to eat and drink: restaurants, fast food, cafés, bars, pubs, and more."
-            }
+        "delete": {
+            "title": "Delete destination",
+            "message": "Are you sure you want to delete the destination {{name}}? This action cannot be undone"
+        },
+        "restaurants": {
+            "title": "Restaurants",
+            "description": "Places that serve full meals. Perfect for lunch and dinner. Some may only open at night."
+        },
+        "snacks": {
+            "title": "Snacks",
+            "description": "Quick-bite spots. Great for a snack, or light meal. Includes cafés, bakeries, and fast food places."
+        },
+        "nightlife": {
+            "title": "Nightlife",
+            "description": "Bars, pubs, karaoke spots, clubs, or anything focused on drinks and entertainment."
+        },
+        "tourism": {
+            "title": "Tourism",
+            "description": "Tourist attractions including neighborhoods, monuments, museums, squares, viewpoints, exhibitions, and more."
+        },
+        "shopping": {
+            "title": "Shopping",
+            "description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related."
+        },
+        "map": {
+            "title": "Map",
+            "description": "Interactive Google Map with highlights of the city: Restaurants, Snacks, Nightlife, Tourism, and Shopping",
+            "instructions": "Create a map for free at",
+            "my_maps": "My Maps"
+        },
+        "lineup": {
+            "title": "Lineup",
+            "description": "Event lineup — may include times, stages, artists, notes, and links to artists' Spotify profiles."
+        },
+        "tourismAndShopping": {
+            "title": "Tourism & Shopping",
+            "description": "A mix of tourist spots and shops: neighborhoods, monuments, museums, malls, and more."
+        },
+        "food": {
+            "title": "Food & Drinks",
+            "description": "All kinds of places to eat and drink: restaurants, fast food, cafés, bars, pubs, and more."
         },
         "scores": {
             "1": "No priority",
@@ -256,7 +259,8 @@
             "PLN": "Polish Złoty (PLN)",
             "HUF": "Hungarian Forint (HUF)",
             "TWD": "Taiwan Dollar (NT$)",
-            "THB": "Thai Baht (฿)"
+            "THB": "Thai Baht (฿)",
+            "other": "Other currency"
         }
     },
     "datetime": {
@@ -444,6 +448,7 @@
         "tabs": "Tabs",
         "wallpaper": "Wallpaper",
         "logo": "Logo",
-        "edit": "Edit"
+        "edit": "Edit",
+        "basic_information": "Basic Information"
     }
 }

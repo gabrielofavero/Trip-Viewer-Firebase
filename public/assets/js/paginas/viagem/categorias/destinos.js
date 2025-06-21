@@ -68,8 +68,8 @@ function _loadDestinationsHTML(destino) {
 
     const j = i + 1;
     const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
-    const title = translate(`destination.type.${translatedType}.title`);
-    const description = translate(`destination.type.${translatedType}.description`);
+    const title = translate(`destination.${translatedType}.title`);
+    const description = translate(`destination.${translatedType}.description`);
     const href = type === "mapa" ? destino.destinos.myMaps : "#";
     const lt = type === "mapa" ? linktype : "";
     const onclick = type === "mapa" ? "" : `onclick="_loadAndOpenDestino('${type}')"`;
@@ -104,7 +104,7 @@ function _buildDestinoExport(destino, type) {
     valores: _getDestinoValores(destino),
     notas: CONFIG.language.destination.scores,
     categoria: type,
-    titulo: translate(`destination.type.${translatedType}.title`)
+    titulo: translate(`destination.${translatedType}.title`)
   }
 }
 

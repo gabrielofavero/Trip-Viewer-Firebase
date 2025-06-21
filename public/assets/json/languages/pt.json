@@ -24,7 +24,6 @@
             "message": "Tem certeza que deseja excluir a viagem {{name}}? A ação não poderá ser desfeita"
         },
         "basic_information": {
-            "title": "Dados básicos",
             "subtitle": "Adicione aqui as principais informações da sua viagem",
             "title_placeholder": "Digite o título da viagem"
         },
@@ -178,43 +177,47 @@
         "share_list": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
         "all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
         "nothing": "Sem destinos cadastrados",
-        "type": {
-            "restaurants": {
-                "title": "Restaurantes",
-                "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite"
-            },
-            "snacks": {
-                "title": "Lanches",
-                "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve"
-            },
-            "nightlife": {
-                "title": "Saídas",
-                "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento"
-            },
-            "tourism": {
-                "title": "Turismo",
-                "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais"
-            },
-            "shopping": {
-                "title": "Compras",
-                "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral"
-            },
-            "map": {
-                "title": "Mapa",
-                "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas"
-            },
-            "lineup": {
-                "title": "Lineup",
-                "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista"
-            },
-            "tourismAndShopping": {
-                "title": "Turismo e Lojas",
-                "description": "Pontos turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros"
-            },
-            "food": {
-                "title": "Alimentação",
-                "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros"
-            }
+        "delete": {
+            "title": "Excluir destino",
+            "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
+        },
+        "restaurants": {
+            "title": "Restaurantes",
+            "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite"
+        },
+        "snacks": {
+            "title": "Lanches",
+            "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve"
+        },
+        "nightlife": {
+            "title": "Saídas",
+            "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento"
+        },
+        "tourism": {
+            "title": "Turismo",
+            "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais"
+        },
+        "shopping": {
+            "title": "Compras",
+            "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral"
+        },
+        "map": {
+            "title": "Mapa",
+            "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas",
+            "instructions": "Cadastre um mapa gratuitamente no",
+            "my_maps": "My Maps"
+        },
+        "lineup": {
+            "title": "Lineup",
+            "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista"
+        },
+        "tourismAndShopping": {
+            "title": "Turismo e Lojas",
+            "description": "Pontos turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros"
+        },
+        "food": {
+            "title": "Alimentação",
+            "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros"
         },
         "scores": {
             "1": "Sem prioridade",
@@ -256,7 +259,8 @@
             "PLN": "Złoty Polonês (PLN)",
             "HUF": "Forint Húngaro (HUF)",
             "TWD": "Dólar de Taiwan (NT$)",
-            "THB": "Baht Tailandês (฿)"
+            "THB": "Baht Tailandês (฿)",
+            "other": "Outra moeda"
         }
     },
     "datetime": {
@@ -444,6 +448,7 @@
         "tabs": "Abas",
         "wallpaper": "Papel de Parede",
         "logo": "Logotipo",
-        "edit": "Editar"
+        "edit": "Editar",
+        "basic_information": "Dados básicos"
     }
 }

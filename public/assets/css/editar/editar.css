@@ -188,11 +188,6 @@ a:hover {
   font-family: "Poppins", sans-serif;
 }
 
-#hero p span {
-  color: var(--theme-color);
-  letter-spacing: 1px;
-}
-
 #hero .social-links a {
   font-size: 24px;
   display: inline-block;

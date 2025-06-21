@@ -44,10 +44,6 @@ strong {
   color: #E2E2E2;
 }
 
-#hero p span {
-  color: var(--theme-color);
-}
-
 #hero .social-links a {
   color: #F2F2F2;
 }
