@@ -237,8 +237,8 @@ function _addHospedagens() {
           </div>
 
           <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
-            <label>${translate('inputs.image.image_selector.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate('inputs.image.image_selector.add')}</button>
+            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate('labels.image.add')}</button>
           </div>
             
         </div>
@@ -381,7 +381,7 @@ function _addGaleria() {
       <h2 class="accordion-header" id="heading-galeria-${j}">
         <button id="galeria-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-galeria-${j}" aria-expanded="false" aria-controls="collapse-hospedagens-${j}">
-          ${translate('inputs.image.title')} ${j}
+          ${translate('labels.image.title')} ${j}
         </button>
       </h2>
       <div id="collapse-galeria-${j}" class="accordion-collapse collapse"
@@ -404,25 +404,25 @@ function _addGaleria() {
           </div>
     
           <div class="nice-form-group customization-box" id="galeria-${j}-box">
-            <label>${translate('inputs.image.title')}</label>
+            <label>${translate('labels.image.title')}</label>
             <input id="upload-galeria-${j}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-            <div id="upload-galeria-${j}-size-message" class="message-text"> <i class='red'>*</i> ${translate('inputs.image.upload_limit')}</div>
+            <div id="upload-galeria-${j}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</div>
           </div>
     
           <div class="nice-form-group">
-            <input id="link-galeria-${j}" class="imagem-input" type="url" placeholder="${translate('inputs.image.placeholder')}" value=""
+            <input id="link-galeria-${j}" class="imagem-input" type="url" placeholder="${translate('labels.image.placeholder')}" value=""
               class="icon-right">
           </div>
     
           <fieldset class="nice-form-group imagem-checkbox">
             <div class="nice-form-group enable-link">
               <input type="radio" name="type-galeria-${j}" id="enable-link-galeria-${j}" checked>
-              <label for="enable-link-galeria-${j}">${translate('inputs.image.link')}</label>
+              <label for="enable-link-galeria-${j}">${translate('labels.image.link')}</label>
             </div>
     
             <div class="nice-form-group">
               <input type="radio" name="type-galeria-${j}" id="enable-upload-galeria-${j}">
-              <label for="enable-upload-galeria-${j}">${translate('inputs.image.upload')} <span class="opcional"> (${translate('inputs.image.upload_limit')})</span></label>
+              <label for="enable-upload-galeria-${j}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
             </div>
           </fieldset>
     

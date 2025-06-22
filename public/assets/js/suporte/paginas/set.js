@@ -61,7 +61,7 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
         UPLOAD_AFTER_SET = true;
         return;
     } else if (!DOCUMENT_ID && !isBeforeSet) {
-        _addSetResponse(translate('inputs.image.upload'), false);
+        _addSetResponse(translate('labels.image.upload'), false);
         return;
     } else if ((!UPLOAD_AFTER_SET && !isBeforeSet) || (UPLOAD_AFTER_SET && isBeforeSet)) {
         return;
@@ -98,15 +98,15 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
         IMAGE_UPLOAD_STATUS.hasErrors = true;
     }
 
-    _addSetResponse(translate('inputs.image.upload'), !IMAGE_UPLOAD_STATUS.hasErrors);
+    _addSetResponse(translate('labels.image.upload'), !IMAGE_UPLOAD_STATUS.hasErrors);
 
     if (UPLOAD_AFTER_SET) {
         const newData = _getNewDataDocument(tipo);
         if (DOCUMENT_ID && newData) {
             mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
-            _addSetResponse(translate('inputs.image.image_selector.add'), true);
+            _addSetResponse(translate('labels.image.add'), true);
         } else {
-            _addSetResponse(translate('inputs.image.image_selector.add'), false);
+            _addSetResponse(translate('labels.image.add'), false);
         }
     }
 }

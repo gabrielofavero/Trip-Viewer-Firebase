@@ -95,7 +95,7 @@ function _getImagemHospedagemContent(size = 5) {
         inner += `
         <div id="hospedagens-imagem-${k}" style="display: none">
             <div class="nice-form-group">
-                <label>${translate('inputs.image.image_selector.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
                 <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
             </div>
 

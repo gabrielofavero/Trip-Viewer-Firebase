@@ -367,5 +367,5 @@ function _verifyImageUploads(type) {
         _deleteUnusedImages(path, documentLinks);
     }
 
-    _addSetResponse(translate('inputs.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);
+    _addSetResponse(translate('labels.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);
 }

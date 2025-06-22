@@ -309,24 +309,6 @@
         },
         "select_date": "Selecione uma data"
     },
-    "inputs": {
-        "image": {
-            "title": "Imagem",
-            "placeholder": "https://exemplo.com/imagem.jpg",
-            "link": "Fornecer link da imagem",
-            "upload": "Upload de imagem",
-            "upload_limit": "Até 1.5MB",
-            "background": "Imagem de fundo",
-            "check": "Verificação de imagem",
-            "image_selector": {
-                "title": "Imagens",
-                "add": "Adicionar Imagens",
-                "edit": "Editar Imagens",
-                "subtitle": "Você pode adicionar até 5 imagens",
-                "description": "Descrição da imagem"
-            }
-        }
-    },
     "messages": {
         "long_load": "O carregamento está demorando mais que o esperado",
         "text_copied": "Texto copiado para a área de transferência",
@@ -485,6 +467,20 @@
         "replace": "Substituir",
         "and": "e",
         "custom": "Personalizado(a)",
-        "cost": "Valor"
+        "cost": "Valor",
+        "image": {
+            "title": "Imagem",
+            "title_plural": "Imagens",
+            "placeholder": "https://exemplo.com/imagem.jpg",
+            "link": "Fornecer link da imagem",
+            "upload": "Upload de imagem",
+            "upload_limit": "Até 1.5MB",
+            "background": "Imagem de fundo",
+            "check": "Verificação de imagem",
+            "add": "Adicionar Imagens",
+            "edit": "Editar Imagens",
+            "quantity_limit": "Você pode adicionar até 5 imagens",
+            "description": "Descrição da imagem"
+        }
     }
 }

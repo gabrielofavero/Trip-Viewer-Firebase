@@ -215,7 +215,7 @@
             "subtitle": "Determine who can view and edit your destination list",
             "public": "Anyone with the link can view your destination list",
             "editors": "Allow other users to edit your destination list"
-        }, 
+        },
         "customization": {
             "subtitle": "Give your destination list a personal touch",
             "colors": "Choose your destination list's theme and colors",
@@ -308,24 +308,6 @@
             "seconds": "s"
         },
         "select_date": "Select a date"
-    },
-    "inputs": {
-        "image": {
-            "title": "Image",
-            "placeholder": "https://example.com/image.jpg",
-            "link": "Provide image link",
-            "upload": "Upload image",
-            "upload_limit": "Up to 1,5MB",
-            "background": "Background image",
-            "check": "Image verification",
-            "image_selector": {
-                "title": "Images",
-                "add": "Add Images",
-                "edit": "Edit Images",
-                "subtitle": "You can add up to 5 images",
-                "description": "Description"
-            }
-        }
     },
     "messages": {
         "long_load": "Loading is taking longer than expected",
@@ -485,6 +467,20 @@
         "replace": "Replace",
         "and": "and",
         "custom": "Custom",
-        "cost": "Cost"
+        "cost": "Cost",
+        "image": {
+            "title": "Image",
+            "title_plural": "Images",
+            "placeholder": "https://example.com/image.jpg",
+            "link": "Provide image link",
+            "upload": "Upload image",
+            "upload_limit": "Up to 1,5MB",
+            "background": "Background image",
+            "check": "Image verification",
+            "add": "Add Images",
+            "edit": "Edit Images",
+            "quantity_limit": "You can add up to 5 images",
+            "description": "Description"
+        }
     }
 }
