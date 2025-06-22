@@ -95,12 +95,12 @@ function _getImagemHospedagemContent(size = 5) {
         inner += `
         <div id="hospedagens-imagem-${k}" style="display: none">
             <div class="nice-form-group">
-                <label>Descrição da Imagem <span class="opcional"> (Opcional)</span></label>
-                <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="Suíte de casal" />
+                <label>${translate('inputs.image.image_selector.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
             </div>
 
             <div class="nice-form-group customization-box" id="hospedagens-box-${k}">
-                <label>Imagens <span class="opcional"> (Opcional)</span></label>
+                <label>Imagens <span class="opcional"> (${translate('labels.optional')})</span></label>
                 <input id="upload-hospedagens-${k}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
                 <p id="upload-hospedagens-${k}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
             </div>

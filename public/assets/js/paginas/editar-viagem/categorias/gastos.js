@@ -23,7 +23,7 @@ function _switchPin() {
 
 function _requestPinEditarGastos(invalido = false) {
     const confirmAction = '_reconfirmPin()';
-    const precontent = 'Insira um PIN de acesso de 4 dígitos.';
+    const precontent = translate('trip.expenses.pin.insert');
     _requestPin({ confirmAction, precontent, invalido });
 }
 
@@ -33,7 +33,7 @@ function _reconfirmPin() {
         _requestPinEditarGastos(true)
     } else {
         const confirmAction = `_validatePin('${atual}')`;
-        const precontent = 'Digite novamento o PIN de acesso.';
+        const precontent = translate('trip.expenses.pin.again');
         _requestPin({ confirmAction, precontent });
     }
 }
@@ -49,18 +49,18 @@ function _validatePin(pin) {
 
 function _invalidPin() {
     const confirmAction = '_reconfirmPin()';
-    const precontent = 'PIN Incorreto. Tente novamente.';
+    const precontent = translate('trip.expenses.pin.invalid');
     const invalido = true;
     _requestPin({ confirmAction, precontent, invalido });
 }
 
 function _setPinButtonText(newPin = true) {
-    getID('request-pin').innerText = newPin ? 'Definir PIN de Acesso' : 'Alterar PIN de Acesso';
+    getID('request-pin').innerText = newPin ? translate('trip.expenses.pin.new') : translate('trip.expenses.pin.change');
 }
 
 function _validateSavedPIN() {
     if (getID('pin-enable').checked && !PIN_GASTOS.new) {
-        return ['PIN de Acesso aos Gastos'];
+        return [translate('trip.expenses.pin.title')];
     }
 }
 
@@ -95,7 +95,7 @@ function _loadGastosHTML() {
 
 function _openInnerGasto(categoria, tipo = '', index = -1) {
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-    propriedades.titulo = tipo ? 'Editar Gasto' : 'Adicionar Gasto';
+    propriedades.titulo = tipo ? translate('labels.edit') : translate('labels.add');
     propriedades.conteudo = _getInnerGastoContent(categoria, tipo, index);
     propriedades.icones = [{ tipo: 'voltar', acao: '' }];
     propriedades.containers = _getContainersInput();
@@ -151,54 +151,54 @@ function _applyGastoInnerTipo(tipo) {
 function _getInnerGastoContent(categoria, tipo, index) {
     return `<div id='inner-gasto-box'>
                 <div class="nice-form-group">
-                    <label>Nome</label>
-                    <input required id="gasto-nome" type="text" placeholder="Passagens de Avião" />
+                    <label>${translate('labels.name')}</label>
+                    <input required id="gasto-nome" type="text" placeholder="${translate('trip.transportation.type.flight')}" />
                 </div>
                 <div class="nice-form-group">
-                    <label>Tipo</label>
+                    <label>${translate('labels.type')}</label>
                     <select id="gasto-tipo-select" clas="editar-select"">
-                        <option>Voos</option>
-                        <option>Hospedagens</option>
-                        <option>Entretenimento</option>
-                        <option>Dia a Dia</option>
-                        <option>Pessoas</option>
-                        <option>Carro</option>
-                        <option>Outros</option>
-                        <option value="custom">Personalizado</option>
+                        <option value="trip.transportation.type.flights">${translate('trip.transportation.type.flights')}</option>
+                        <option value="trip.accomodation.title">${translate('trip.accomodation.title')}</option>
+                        <option value="labels.entretainment">${translate('labels.entretainment')}</option>
+                        <option value="trip.expenses.daily">${translate('trip.expenses.daily')}</option>
+                        <option value="labels.people">${translate('labels.people')}</option>
+                        <option value="trip.transportation.type.car">${translate('trip.transportation.type.car')}</option>
+                        <option value="labels.other">${translate('labels.other')}</option>
+                        <option value="custom">${translate('labels.custom')}</option>
                     </select>
-                    <input required id="gasto-tipo-input" type="text" placeholder="Transporte" style="margin-top: 8px; display: none"/>
+                    <input required id="gasto-tipo-input" type="text" placeholder="${translate('trip.transportation.title')}" style="margin-top: 8px; display: none"/>
                 </div>
                 <div class="nice-form-group">
                     <label>Moeda</label>
                         <select id="gasto-moeda" class="editar-select" name="currency">
-                        <option value="BRL">Real (R$)</option>
-                        <option value="USD">Dólar Americano ($)</option>
-                        <option value="EUR">Euro (€)</option>
-                        <option value="GBP">Libra Esterlina (£)</option>
-                        <option value="JPY">Iene / Yuan (¥)</option>
-                        <option value="INR">Rúpia Indiana (₹)</option>
-                        <option value="RUB">Rublo Russo (₽)</option>
-                        <option value="CAD">Dólar Canadense (C$)</option>
-                        <option value="AUD">Dólar Australiano (A$)</option>
-                        <option value="CHF">Franco Suíço (CHF)</option>
-                        <option value="SEK">Coroa Sueca (SEK)</option>
-                        <option value="NOK">Coroa Norueguesa (NOK)</option>
-                        <option value="DKK">Coroa Dinamarquesa (DKK)</option>
-                        <option value="NZD">Dólar Neozelandês (NZ$)</option>
-                        <option value="MXN">Peso Mexicano (MX$)</option>
-                        <option value="ZAR">Rand Sul-Africano (ZAR)</option>
-                        <option value="KRW">Won Sul-Coreano (₩)</option>
-                        <option value="SGD">Dólar de Singapura (SGD)</option>
-                        <option value="HKD">Dólar de Hong Kong (HK$)</option>
-                        <option value="ILS">Novo Shekel Israelense (₪)</option>
-                        <option value="PLN">Złoty Polonês (PLN)</option>
-                        <option value="HUF">Forint Húngaro (HUF)</option>
-                        <option value="TWD">Dólar de Taiwan (NT$)</option>
-                        <option value="THB">Baht Tailandês (฿)</option>
+                        <option value="BRL">${translate('currency.type.BRL')}</option>
+                        <option value="USD">${translate('currency.type.USD')}</option>
+                        <option value="EUR">${translate('currency.type.EUR')}</option>
+                        <option value="GBP">${translate('currency.type.GBP')}</option>
+                        <option value="JPY">${translate('currency.type.JPY')}</option>
+                        <option value="INR">${translate('currency.type.INR')}</option>
+                        <option value="RUB">${translate('currency.type.RUB')}</option>
+                        <option value="CAD">${translate('currency.type.CAD')}</option>
+                        <option value="AUD">${translate('currency.type.AUD')}</option>
+                        <option value="CHF">${translate('currency.type.CHF')}</option>
+                        <option value="SEK">${translate('currency.type.SEK')}</option>
+                        <option value="NOK">${translate('currency.type.NOK')}</option>
+                        <option value="DKK">${translate('currency.type.DKK')}</option>
+                        <option value="NZD">${translate('currency.type.NZD')}</option>
+                        <option value="MXN">${translate('currency.type.MXN')}</option>
+                        <option value="ZAR">${translate('currency.type.ZAR')}</option>
+                        <option value="KRW">${translate('currency.type.KRW')}</option>
+                        <option value="SGD">${translate('currency.type.SGD')}</option>
+                        <option value="HKD">${translate('currency.type.HKD')}</option>
+                        <option value="ILS">${translate('currency.type.ILS')}</option>
+                        <option value="PLN">${translate('currency.type.PLN')}</option>
+                        <option value="HUF">${translate('currency.type.HUF')}</option>
+                        <option value="TWD">${translate('currency.type.TWD')}</option>
+                        <option value="THB">${translate('currency.type.THB')}</option>
                     </select>
                 </div>
                 <div class="nice-form-group">
-                    <label>Valor</label>
+                    <label>${translate('labels.cost')}</label>
                     <input required class="input-full" id="gasto-valor" type="number" placeholder="0.00" step="0.01">
                 </div>
                 <div class="button-box-right" id="gasto-deletar" style="margin-top: 8px; margin-bottom: 8px;">

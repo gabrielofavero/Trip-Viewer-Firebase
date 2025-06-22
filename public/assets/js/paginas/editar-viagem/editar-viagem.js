@@ -101,8 +101,8 @@ function _deleteViagem() {
   viagem = viagem ? ` "${viagem}"` : '';
 
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-  propriedades.titulo = 'Apagar Viagem';
-  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da viagem${viagem}? A ação não poderá ser desfeita.`;
+  propriedades.titulo = translate('trip.delete.title');
+  propriedades.conteudo = translate('trip.delete.message', { name: viagem });
   propriedades.botoes = [{
     tipo: 'cancelar',
   }, {
@@ -124,7 +124,7 @@ async function _deleteViagemAction() {
 function _getDataSelectOptions(j) {
   const values = DATAS.map(data => _jsDateToKey(data));
   const labels = DATAS.map(data => _getDateTitle(data, 'mini'));
-  let result = j ? '' : '<option value="" selected>Selecione uma Data</option>';
+  let result = j ? '' : `<option value="" selected>${translate('datetime.select_date')}</option>`;
 
   for (let i = 0; i < values.length; i++) {
     result += `<option value="${values[i]}" ${j && i + 1 === j ? 'selected' : ''}>${labels[i]}</option>`;

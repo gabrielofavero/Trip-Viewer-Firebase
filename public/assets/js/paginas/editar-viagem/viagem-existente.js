@@ -11,7 +11,7 @@ async function _loadTripData() {
         _loadProgramacaoData();
         _loadGaleriaData();
 
-        document.title = `Editar ${FIRESTORE_DATA.titulo}`;
+        document.title = `${translate('labels.edit')} ${FIRESTORE_DATA.titulo}`;
     } catch (error) {
         _displayError(error);
         throw error;
@@ -272,38 +272,6 @@ function _loadProgramacaoData() {
     _loadDestinosOrdenados();
     _updateDestinosAtivosCheckboxHTML('programacao');
     FIRESTORE_PROGRAMACAO_DATA = _cloneObject(FIRESTORE_DATA.programacoes);
-}
-
-function _loadLineupData() {
-    if (FIRESTORE_DATA.modulos.lineup === true) {
-        getID('habilitado-lineup').checked = true;
-        getID('habilitado-lineup-content').style.display = 'block';
-        getID('lineup-adicionar-box').style.display = 'block';
-    }
-
-    for (let j = 1; j <= FIRESTORE_DATA.lineup.length; j++) {
-        _addLineup();
-        const lineup = FIRESTORE_DATA.lineup[j - 1];
-
-        getID(`lineup-title-${j}`).innerText = `${lineup.nome}${lineup.headliner ? ' ⭐' : ''}`;  
-        getID(`lineup-id-${j}`).value = lineup.id;
-        getID(`lineup-headliner-${j}`).checked = lineup.headliner;
-        getID(`lineup-nome-${j}`).value = lineup.nome;        
-        getID(`lineup-local-${j}`).value = lineup.local;  
-        getID(`lineup-genero-${j}`).innerText = lineup.genero;
-        getID(`lineup-palco-${j}`).innerText = lineup.palco;
-        //getID(`lineup-data-${j}`).value = _firestoneDateToKey(lineup.data);
-        getID(`lineup-inicio-${j}`).value = lineup.inicio;
-        getID(`lineup-fim-${j}`).value = lineup.fim;
-        getID(`lineup-midia-${j}`).value = lineup.midia;
-        getID(`lineup-nota-${j}`).value = lineup.nota;
-
-        _updateValueDS('lineup-genero', lineup.genero, `lineup-genero-select-${j}`);
-        _updateValueDS('lineup-palco', lineup.palco, `lineup-palco-select-${j}`);
-    }
-
-    _buildDS('lineup-genero');
-    _buildDS('lineup-palco');
 }
 
 function _loadGaleriaData() {

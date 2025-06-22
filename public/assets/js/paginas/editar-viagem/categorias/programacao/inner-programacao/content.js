@@ -3,40 +3,40 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
     return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
-                        <label style="margin-bottom: 0px;">Item Associado <span class="opcional">(Opcional)</span></label>
+                        <label style="margin-bottom: 0px;">${translate('trip.itinerary.associated_item')} <span class="opcional">(${translate('labels.optional')})</span></label>
                         <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;">Associar Item</button>
                     </div>
 
                     <div class="nice-form-group">
-                        <label>Programação</label>
-                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="Ir para..." maxlength="50" autocomplete="off" />
+                        <label>${translate('trip.itinerary.title')}</label>
+                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="${translate('trip.itinerary.placeholder')}" maxlength="50" autocomplete="off" />
                     </div>
 
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">
                         <label>
-                            Início<br>
-                            <span class="opcional">(Opcional)</span>
+                            ${translate('labels.start')}<br>
+                            <span class="opcional">(${translate('labels.optional')})</span>
                         </label>
                         <input class="flex-input-50-50" id="inner-programacao-inicio" type="time">
                     </div>
 
                     <div class="nice-form-group side-by-side-fixed">
                         <label>
-                            Fim<br>
-                            <span class="opcional">(Opcional)</span>
+                            ${translate('labels.start')}<br>
+                            <span class="opcional">(${translate('labels.optional')})</span>
                         </label>
                         <input class="flex-input-50-50" id="inner-programacao-fim" type="time">
                     </div>
                     </div>
 
                     <div class="nice-form-group" style="display: ${isNew ? 'block' : 'none'}">
-                        <label>Turno</label>
+                        <label>${translate('datetime.time_of_day.title')}</label>
                         <select class="editar-select" id="inner-programacao-select-turno">
-                            <option value="madrugada">Madrugada</option>
-                            <option value="manha">Manhã</option>
-                            <option value="tarde">Tarde</option>
-                            <option value="noite">Noite</option>
+                            <option value="madrugada">${translate('datetime.time_of_day.early_hours')}</option>
+                            <option value="manha">${translate('datetime.time_of_day.morning')}</option>
+                            <option value="tarde">${translate('datetime.time_of_day.afternoon')}</option>
+                            <option value="noite">${translate('datetime.time_of_day.evening')}</option>
                         </select>
                     </div>
                     
@@ -61,29 +61,29 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                         <fieldset class="nice-form-group">
                             <div class="nice-form-group" id="inner-programacao-nenhum-radio-container">
                                 <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-nenhum-radio">
-                                <label for="inner-programacao-item-nenhum-radio">Nenhum</label>
+                                <label for="inner-programacao-item-nenhum-radio">${translate('labels.none')}</label>
                             </div>
 
                             <div class="nice-form-group" id="inner-programacao-transporte-radio-container" style="display: ${selects.transporte.ativo ? 'block' : 'none'};">
                                 <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-transporte-radio">
-                                <label for="inner-programacao-item-transporte-radio">Transporte</label>
+                                <label for="inner-programacao-item-transporte-radio">${translate('trip.transportation.title')}</label>
                             </div>
                 
                             <div class="nice-form-group" id="inner-programacao-hospedagens-radio-container" style="display: ${selects.hospedagens.ativo ? 'block' : 'none'};">
                                 <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-hospedagens-radio">
-                                <label for="inner-programacao-item-hospedagens-radio">Hospedagem</label>
+                                <label for="inner-programacao-item-hospedagens-radio">${translate('trip.accommodation.title')}</label>
                             </div>
                 
                             <div class="nice-form-group" id="inner-programacao-destinos-radio-container" style="display: ${selects.destinos.ativo ? 'block' : 'none'};">
                                 <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-destinos-radio">
-                                <label id="inner-programacao-item-destinos-radio-label" for="inner-programacao-item-destinos-radio">Destino</label>
+                                <label id="inner-programacao-item-destinos-radio-label" for="inner-programacao-item-destinos-radio">${translate('destination.title')}</label>
                             </div>
                         </fieldset>
 
                     </div>
 
                     <div class="nice-form-group" id="inner-programacao-item-transporte" style="display: none;">
-                        <label>Transporte</label>
+                        <label>${translate('trip.transportation.title')}</label>
                         <select class="editar-select" id="inner-programacao-select-transporte">
                             <option value="">Selecione</option>
                             ${selects.transporte.options}
@@ -91,7 +91,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     </div>
 
                 <div class="nice-form-group" id="inner-programacao-item-hospedagens" style="display: none;">
-                    <label>Hospedagem</label>
+                    <label>${translate('trip.accommodation.title')}</label>
                     <select class="editar-select" id="inner-programacao-select-hospedagens">
                         <option value="">Selecione</option>
                         ${selects.hospedagens.options}
@@ -100,7 +100,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
 
                     <div id="inner-programacao-item-destinos" style="display: none;">
                         <div class="nice-form-group" id="inner-programacao-item-destinos-local">
-                            <label>Local</label>
+                            <label>${translate('destination.title')}</label>
                             <select class="editar-select" id="inner-programacao-select-local">
                                 ${selects.destinos.localOptions}
                                 <option value="">Selecione</option>
@@ -108,14 +108,14 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                         </div>
 
                         <div class="nice-form-group">
-                            <label>Categoria</label>
+                            <label>${translate('labels.type')}</label>
                             <select class="editar-select" id="inner-programacao-select-categoria">
                                 <option value="">Selecione</option>
                             </select>
                         </div>
 
                         <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px;">
-                            <label>Passeio</label>
+                            <label>${translate('trip.itinerary.title')}</label>
                             <select class="editar-select" id="inner-programacao-select-passeio">
                                 <option value="">Selecione uma Categoria</option>
                             </select>
@@ -136,18 +136,18 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
 
                 <div id="inner-programacao-item-trocar" class="inner-programacao" style="display: none;">
                     <div class="nice-form-group">
-                        <label>Data</label>
+                        <label>${translate('labels.date')}</label>
                         <select class="editar-select" id="inner-programacao-select-troca-data">
                             ${selects.datas}
                         </select>
                     </div>
                     <div class="nice-form-group">
-                        <label>Turno</label>
+                        <label>${translate('datetime.time_of_day.title')}</label>
                         <select class="editar-select" id="inner-programacao-select-troca-turno">
-                            <option value="madrugada">Madrugada</option>
-                            <option value="manha">Manhã</option>
-                            <option value="tarde">Tarde</option>
-                            <option value="noite">Noite</option>
+                            <option value="madrugada">${translate('datetime.time_of_day.early_hours')}</option>
+                            <option value="manha">${translate('datetime.time_of_day.morning')}</option>
+                            <option value="tarde">${translate('datetime.time_of_day.afternoon')}</option>
+                            <option value="noite">${translate('datetime.time_of_day.evening')}</option>
                         </select>
                     </div>
                 </div>

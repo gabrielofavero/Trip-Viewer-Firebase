@@ -132,7 +132,7 @@ function _replaceLast(text, search, replacement) {
 }
 
 function _getReadableArray(array) {
-  return _replaceLast(array.join(", "), ",", " e");
+  return _replaceLast(array.join(", "), ",", ` ${translate('labels.and')}`);
 }
 
 function _removeChild(tipo) {

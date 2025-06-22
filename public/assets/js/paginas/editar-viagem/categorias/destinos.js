@@ -1,10 +1,3 @@
-const DESTINOS_TITULOS = {
-    restaurantes: 'Restaurantes',
-    lanches: 'Lanches',
-    saidas: 'Saídas',
-    turismo: 'Pontos Turísticos',
-    lojas: 'Lojas'
-};
 var DESTINOS_ATIVOS = [];
 var DESTINOS_ORDENADOS = [];
 
@@ -104,7 +97,7 @@ function _updateDestinosAtivosSelectHTML(tipo, j) {
 }
 
 function _getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
-    let result = '<option value="">Destino Não Especificado</option>';
+    let result = `<option value="">${translate('destination.undefined')}</option>`;
     for (const destino of destinosAtivos) {
         result += `<option value="${destino.destinosID}">${destino.titulo}</option>`;
     }
@@ -187,7 +180,7 @@ function _addValuesForDestinosAtivosCheckbox(tipo, j, values) {
 
 function _getDestinosItemCheckbox(j, destinosID, titulo, tipo = 'destinos', k) {
     if (!j) {
-        console.error('Erro ao tentar criar um item de checkbox de destinos. O valor de j não foi fornecido.')
+        console.error('Error in _getDestinosItemCheckbox: j is undefined or null.');
     }
     const ids = k ? `${j}-${k}` : j;
     return `<div class="nice-form-group" id="checkbox-${ids}">

@@ -118,6 +118,15 @@ function _getInnerProgramacaoSelectsDestinos(j) {
     let localOptions = '';
     let ativo = false;
 
+    const titulos = {
+        restaurantes: translate('destination.restaurants.title'),
+        lanches: translate('destination.snacks.title'),
+        saidas: translate('destination.nightlife.title'),
+        turismo: translate('destination.tourism.title'),
+        lojas: translate('destination.shopping.title')
+    };
+    
+
     for (const destino of destinoFromCheckbox) {
         const currentID = destino.destinosID;
         if (!idsAtivos.includes(currentID)) continue;
@@ -133,7 +142,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
 
             let categorias = Object.keys(currentDestinoData).filter(key => passeios.includes(key) && currentDestinoData[key].length > 1);
             categorias = categorias.sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
-            const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${DESTINOS_TITULOS[categoria]}</option>`).join('');
+            const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${titulos[categoria]}</option>`).join('');
             innerResult.categoriaOptions = categoriaOptions;
 
             let passeioOptions = {};

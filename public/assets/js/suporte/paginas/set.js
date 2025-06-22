@@ -98,7 +98,7 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
         IMAGE_UPLOAD_STATUS.hasErrors = true;
     }
 
-    _addSetResponse('Upload de Imagens', !IMAGE_UPLOAD_STATUS.hasErrors);
+    _addSetResponse(translate('inputs.image.upload'), !IMAGE_UPLOAD_STATUS.hasErrors);
 
     if (UPLOAD_AFTER_SET) {
         const newData = _getNewDataDocument(tipo);

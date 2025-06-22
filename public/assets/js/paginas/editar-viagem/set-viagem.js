@@ -334,7 +334,7 @@ async function _setGastos() {
 
     if (responses.length > 0) {
         const masterResponse = _combineDatabaseResponses(responses);
-        _addSetResponse('Salvamento de Gastos', masterResponse.success);
+        _addSetResponse(translate('trip.expenses.title'), masterResponse.success);
     }
 }
 
@@ -367,5 +367,5 @@ function _verifyImageUploads(type) {
         _deleteUnusedImages(path, documentLinks);
     }
 
-    _addSetResponse('Verificação de Imagens', !IMAGE_UPLOAD_STATUS.hasErrors);
+    _addSetResponse(translate('inputs.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);
 }

@@ -48,7 +48,9 @@
                 "request": "To access the expenses, enter the PIN set for this trip",
                 "new": "Set access PIN",
                 "change": "Change access PIN",
-                "invalid": "Invalid PIN. Please try again"
+                "invalid": "Invalid PIN. Please try again",
+                "insert": "Enter a 4-digit access PIN",
+                "again": "Enter the access PIN again"
             },
             "pre_trip": "Pre-trip expenses",
             "during_trip": "On-trip expenses",
@@ -66,8 +68,7 @@
             "departure": "Departure",
             "arrival": "Arrival",
             "during": "While traveling",
-            "from": "Departure",
-            "to": "Return",
+            "return": "Return",
             "simple_view": "Simplified view",
             "leg_view": "Group by leg",
             "departure_location": {
@@ -86,6 +87,7 @@
                 "rideshare": "Rideshare",
                 "bus": "Bus",
                 "train": "Train",
+                "cable_car": "Cable Car",
                 "helicopter": "Helicopter",
                 "ship": "Ship",
                 "cruise": "Cruise Ship",
@@ -99,36 +101,34 @@
         },
         "accommodation": {
             "title": "Accommodations",
+            "accommodation": "Accommodation",
             "subtitle": "Add where you'll be staying during your trip",
             "checkin": "Check-in",
             "checkout": "Check-out",
             "breakfast": "Breakfast",
-            "name": {
-                "title": "Name",
-                "placeholder": "Hotel, Inn, Airbnb, etc."
-            },
-            "address": {
-                "title": "Address",
-                "placeholder": "Example Street, 123"
-            },
-            "description": {
-                "placeholder": "Double room, sea view"
-            }
+            "name_placeholder": "Hotel, Inn, Airbnb, etc.",
+            "address_placeholder": "Example Street, 123",
+            "description_placeholder": "Double room, sea view"
         },
         "itinerary": {
             "title": "Itinerary",
             "subtitle": "Add your day-to-day schedule here",
+            "placeholder": "Go to...",
             "todays_itinerary": "Today's Itinerary",
             "no_itinerary": "Nothing planned here! ☹️",
             "instructions": "Select a date to view the itinerary",
+            "associated_item": "Associated item",
             "media_button": {
                 "video": "Watch Video",
                 "playlist": "View Playlist"
-            }
+            },
+            "replace_title": "Replace the title \"{{old}}\" with \"{{new}}\"",
+            "set_title": "Set the title of the itinerary to \"{{title}}\""
         },
         "gallery": {
             "title": "Gallery",
-            "subtitle": "Upload relevant photos for your trip, such as maps, confirmations, event times, and more"
+            "subtitle": "Upload relevant photos for your trip, such as maps, confirmations, event times, and more",
+            "description_placeholder": "Official event map"
         }
     },
     "destination": {
@@ -141,6 +141,7 @@
         "all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
         "nothing": "No destinations registred",
         "basic_information": "Add the main information about your destination here",
+        "undefined": "Undefined destination",
         "delete": {
             "title": "Delete destination",
             "message": "Are you sure you want to delete the destination {{name}}? This action cannot be undone"
@@ -305,7 +306,8 @@
             "hours": "h",
             "minutes": "m",
             "seconds": "s"
-        }
+        },
+        "select_date": "Select a date"
     },
     "inputs": {
         "image": {
@@ -315,6 +317,7 @@
             "upload": "Upload image",
             "upload_limit": "Up to 1,5MB",
             "background": "Background image",
+            "check": "Image verification",
             "image_selector": {
                 "title": "Images",
                 "add": "Add Images",
@@ -469,8 +472,19 @@
             }
         },
         "editors": {
+            "editor": "Editor",
             "allow": "Allow editors",
             "add": "Add editor"
-        }
+        },
+        "id": "ID",
+        "name": "Name",
+        "address": "Address",
+        "none": "None",
+        "date": "Date",
+        "set": "Set",
+        "replace": "Replace",
+        "and": "and",
+        "custom": "Custom",
+        "cost": "Cost"
     }
 }

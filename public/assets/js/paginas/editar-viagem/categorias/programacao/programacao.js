@@ -67,7 +67,7 @@ function _updateProgramacaoTitle(j) {
 }
 
 function _getProgramacaoTitleSelectOptions(j = null) {
-    const semTitulo = '<option value="">Sem Título</option>'
+    const semTitulo = `<option value="">${translate('labels.no_title')}</option>`
     let destino = '';
     let idaVoltaDestino = '';
 
@@ -92,11 +92,11 @@ function _getProgramacaoTitleSelectOptions(j = null) {
                 const text = _getReadableArray(labels);
                 destino += `<option value="${text}">${text}</option>`;
             }
-            const idaArray = ["Ida", ...labels];
+            const idaArray = [translate('trip.transportation.departure'), ...labels];
             const idaText = _getReadableArray(idaArray);
             idaVoltaDestino += `<option value="${idaText}">${idaText}</option>`;
 
-            const voltaArray = [...labels, "Volta"];
+            const voltaArray = [...labels, translate('trip.transportation.return')];
             const voltaText = _getReadableArray(voltaArray);
             idaVoltaDestino += `<option value="${voltaText}">${voltaText}</option>`;
         }
@@ -104,12 +104,12 @@ function _getProgramacaoTitleSelectOptions(j = null) {
 
     return `${destino}
             ${destino ? '' : semTitulo}
-            <option value="Ida">Ida</option>
-            <option value="Volta">Volta</option>
-            <option value="Deslocamento">Deslocamento</option>
+            <option value="Ida">${translate('trip.transportation.departure')}</option>
+            <option value="Volta">${translate('trip.transportation.return')}</option>
+            <option value="Deslocamento">${translate('trip.transportation.during')}</option>
             ${idaVoltaDestino}
             ${destino ? semTitulo : ''}
-            <option value="outro">Outro</option>`;
+            <option value="outro">${translate('labels.other')}</option>`;
 }
 
 function _updateProgramacaoTitleSelect(j) {

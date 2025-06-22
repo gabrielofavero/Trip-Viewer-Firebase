@@ -29,9 +29,13 @@ function _loadTitleReplacementCheckbox() {
     if (TITLE_REPLACEMENT.replacement && TITLE_REPLACEMENT.replacement !== TITLE_REPLACEMENT.current) {
         container.style.display = 'block';
         if (TITLE_REPLACEMENT.current) {
-            getID('title-replacement-label').innerText = `Substituir o título atual "${TITLE_REPLACEMENT.current}" por "${TITLE_REPLACEMENT.replacement}"`;
+            const replacements = {
+                old: TITLE_REPLACEMENT.current,
+                new: TITLE_REPLACEMENT.replacement
+            }
+            getID('title-replacement-label').innerText = translate('trip.itinerary.replace_title', replacements);
         } else {
-            getID('title-replacement-label').innerText = `Definir o título da programação como "${TITLE_REPLACEMENT.replacement}"`;
+            getID('title-replacement-label').innerText = translate('trip.itinerary.set_title', {title: TITLE_REPLACEMENT.replacement});
             getID('title-replacement-checkbox').checked = true;
         }
         
@@ -89,17 +93,17 @@ function _loadTimeReplacementCheckbox() {
             let action;
 
             if (TIME_REPLACEMENT.current.inicio != TIME_REPLACEMENT.replacement.inicio && TIME_REPLACEMENT.current.fim != TIME_REPLACEMENT.replacement.fim) {
-                action = !TIME_REPLACEMENT.current.inicio && !TIME_REPLACEMENT.current.fim ? 'Definir' : 'Substituir';
+                action = !TIME_REPLACEMENT.current.inicio && !TIME_REPLACEMENT.current.fim ? translate('labels.set') : translate('labels.replace');
                 getID('time-replacement-label').innerText = `${action} horário de início e fim para "${TIME_REPLACEMENT.replacement.inicio}" e "${TIME_REPLACEMENT.replacement.fim}"`;
             } else if (TIME_REPLACEMENT.current.inicio != TIME_REPLACEMENT.replacement.inicio) {
-                action = !TIME_REPLACEMENT.current.inicio ? 'Definir' : 'Substituir';
+                action = !TIME_REPLACEMENT.current.inicio ? translate('labels.set') : translate('labels.replace');
                 getID('time-replacement-label').innerText = `${action} horário de início para "${TIME_REPLACEMENT.replacement.inicio}"`;
             } else {
-                action = !TIME_REPLACEMENT.current.fim ? 'Definir' : 'Substituir';
+                action = !TIME_REPLACEMENT.current.fim ? translate('labels.set') : translate('labels.replace');
                 getID('time-replacement-label').innerText = `${action} horário de fim para "${TIME_REPLACEMENT.replacement.fim}"`;
             }
 
-            if (action === 'Definir') {
+            if (action === translate('labels.set')) {
                 getID('time-replacement-checkbox').checked = true;
             }
         }

@@ -5,12 +5,12 @@ function _loadResumo() {
   // Dado 1
   getID("dado1").innerHTML = `<i class="bx bxs-plane-take-off"></i>
                                                 <span>${INICIO.text}</span>
-                                                <p>${translate('trip.transportation.from')}</p>`;
+                                                <p>${translate('trip.transportation.departure')}</p>`;
 
   // Dado 2
   getID("dado2").innerHTML = `<i class="bx bxs-plane-land"></i>
                                                 <span>${FIM.text}</span>
-                                                <p>${translate('trip.transportation.to')}</p>`;
+                                                <p>${translate('trip.transportation.return')}</p>`;
 
   // Dado 3
   getID("dado3").innerHTML = `<i class="bx bxs-sun"></i>

@@ -10,7 +10,7 @@ function _loadDestinationsData() {
     _buildDS('regiao');
     
     _loadMapaData();
-    document.title = `Editar ${FIRESTORE_DESTINOS_DATA.titulo}`;
+    document.title = `${translate('labels.edit')} ${FIRESTORE_DESTINOS_DATA.titulo}`;
 
   } catch (error) {
     _displayError(error);

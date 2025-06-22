@@ -36,7 +36,7 @@ function _addRestaurantes() {
           </div>
   
           <div class="nice-form-group">
-            <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
+            <label>Emoji(s) <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="restaurantes-emoji-${j}" type="text" placeholder="🥩" />
           </div>
   
@@ -47,32 +47,32 @@ function _addRestaurantes() {
           </div>
 
           <div class="nice-form-group">
-            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <label>Mapa <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="restaurantes-mapa-${j}" type="url" placeholder="https://maps.app.goo.gl/s2PqbWArH5rJWCLF8" value=""
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <label>Site Oficial <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="restaurantes-website-${j}" type="url"
               placeholder="https://www.salumeriacentral.com/" value="" class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <label>Instagram <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="restaurantes-instagram-${j}" type="url" placeholder="https://www.instagram.com/salumeria.central/" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>Região <span class="opcional"> (Opcional)</span></label>
+            <label>Região <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="restaurantes-regiao-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="restaurantes-regiao-${j}" type="text" placeholder="Sapucaí" />
           </div>
   
           <div class="nice-form-group">
-            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <label>Valor <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="restaurantes-valor-${j}">
             ${VALOR_OPTIONS}
           </select>
@@ -80,14 +80,14 @@ function _addRestaurantes() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
+            <label>Vídeo <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="restaurantes-midia-${j}" type="url"
               placeholder="https://www.youtube.com/watch?v=GAirUeYBvQI" value="" class="icon-right" />
             <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Prioridade <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(${translate('labels.optional')})</span></label>
             <select class="editar-select" id="restaurantes-nota-${j}">
               <option value="?">Prioridade não definida</option>
               <option value="5">5 - Altíssima prioridade</option>
@@ -161,7 +161,7 @@ function _addLanches() {
           </div>
   
           <div class="nice-form-group">
-            <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
+            <label>Emoji(s) <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lanches-emoji-${j}" type="text" placeholder="🥢" />
           </div>
   
@@ -172,32 +172,32 @@ function _addLanches() {
           </div>
 
           <div class="nice-form-group">
-            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <label>Mapa <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lanches-mapa-${j}" type="url" placeholder="https://maps.app.goo.gl/Yd4rDKAKG8vfPV2c7" value=""
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
 
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <label>Site Oficial <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lanches-website-${j}" type="url" placeholder="https://www.botanikafe.com/"" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <label>Instagram <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lanches-instagram-${j}" type="url" placeholder="https://www.instagram.com/botanikafe/" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>Região <span class="opcional"> (Opcional)</span></label>
+            <label>Região <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="lanches-regiao-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="lanches-regiao-${j}" type="text" placeholder="Jardim Paulista" />
           </div>
   
           <div class="nice-form-group">
-            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <label>Valor <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="lanches-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
@@ -205,7 +205,7 @@ function _addLanches() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
+            <label>Vídeo <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lanches-midia-${j}" type="url"
               placeholder="https://www.tiktok.com/@viajeparacomer/video/7172239210282274053?q=bottanikafe&t=1700768671502"
               value="" class="icon-right" />
@@ -213,7 +213,7 @@ function _addLanches() {
           </div>
   
           <div class="nice-form-group">
-          <label>Prioridade <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(${translate('labels.optional')})</span></label>
             <select class="editar-select" id="lanches-nota-${j}">
               <option value="?">Prioridade não definida</option>
               <option value="5">5 - Altíssima prioridade</option>
@@ -287,7 +287,7 @@ function _addSaidas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
+            <label>Emoji(s) <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="saidas-emoji-${j}" type="text" placeholder="🍺" />
           </div>
   
@@ -298,32 +298,32 @@ function _addSaidas() {
           </div>
 
           <div class="nice-form-group">
-            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <label>Mapa <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="saidas-mapa-${j}" type="url" placeholder="https://maps.app.goo.gl/dVU9471auDGxgNBD6" value=""
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <label>Site Oficial <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="saidas-website-${j}" type="url" placeholder="https://www.omalleysbar.net/" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <label>Instagram <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="saidas-instagram-${j}" type="url" placeholder="https://www.instagram.com/omalleysbar/" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>Região <span class="opcional"> (Opcional)</span></label>
+            <label>Região <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="saidas-regiao-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="saidas-regiao-${j}" type="text" placeholder="Jardim Paulista" />
           </div>
   
           <div class="nice-form-group">
-            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <label>Valor <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="saidas-valor-${j}">
             ${VALOR_OPTIONS}
           </select>
@@ -331,14 +331,14 @@ function _addSaidas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
+            <label>Vídeo <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="saidas-midia-${j}" type="url" placeholder="https://www.youtube.com/watch?v=M1qd2Y2T4ZA"
               value="" class="icon-right" />
             <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Prioridade <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(${translate('labels.optional')})</span></label>
             <select class="editar-select" id="saidas-nota-${j}">
               <option value="?">Prioridade não definida</option>
               <option value="5">5 - Altíssima prioridade</option>
@@ -412,7 +412,7 @@ function _addTurismo() {
           </div>
   
           <div class="nice-form-group">
-            <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
+            <label>Emoji(s) <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="turismo-emoji-${j}" type="text" placeholder="🎰" />
           </div>
   
@@ -423,32 +423,32 @@ function _addTurismo() {
           </div>
 
           <div class="nice-form-group">
-            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <label>Mapa <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="turismo-mapa-${j}" type="url" placeholder="https://maps.app.goo.gl/on4sJh1d2RNhvPXf6" value=""
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <label>Site Oficial <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="turismo-website-${j}" type="url" placeholder="https://www.visitlasvegas.com/listing/welcome-to-fabulous-las-vegas-sign/35219/"
               value="" class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <label>Instagram <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="turismo-instagram-${j}" type="url" placeholder="https://www.instagram.com/lasvegassign/" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>Região <span class="opcional"> (Opcional)</span></label>
+            <label>Região <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="turismo-regiao-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="turismo-regiao-${j}" type="text" placeholder="Centro da Cidade" />
           </div>
   
           <div class="nice-form-group">
-            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <label>Valor <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="turismo-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
@@ -456,7 +456,7 @@ function _addTurismo() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
+            <label>Vídeo <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="turismo-midia-${j}" type="url"
               placeholder="https://www.tiktok.com/@pompsie/video/7214164412616166699?q=las%20vegas%20sign&t=1700778158244"
               value="" class="icon-right" />
@@ -464,7 +464,7 @@ function _addTurismo() {
           </div>
   
           <div class="nice-form-group">
-          <label>Prioridade <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(${translate('labels.optional')})</span></label>
             <select class="editar-select" id="turismo-nota-${j}">
               <option value="?">Prioridade não definida</option>
               <option value="5">5 - Altíssima prioridade</option>
@@ -538,7 +538,7 @@ function _addLojas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Emoji(s) <span class="opcional"> (Opcional)</span></label>
+            <label>Emoji(s) <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lojas-emoji-${j}" type="text" placeholder="🛍️" />
           </div>
   
@@ -549,33 +549,33 @@ function _addLojas() {
           </div>
 
           <div class="nice-form-group">
-            <label>Mapa <span class="opcional"> (Opcional)</span></label>
+            <label>Mapa <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lojas-mapa-${j}" type="url" placeholder="https://maps.app.goo.gl/G7hHLwVMgGVHvmkS7" value=""
               class="icon-right" />
             <div class="legenda">Google Maps ou Apple Maps</div>
           </div>
   
           <div class="nice-form-group">
-            <label>Site Oficial <span class="opcional"> (Opcional)</span></label>
+            <label>Site Oficial <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lojas-website-${j}" type="url"
               placeholder="https://www.premiumoutlets.com/outlet/las-vegas-north" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group">
-            <label>Instagram <span class="opcional"> (Opcional)</span></label>
+            <label>Instagram <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lojas-instagram-${j}" type="url" placeholder="https://www.instagram.com/explore/locations/234523919/las-vegas-premium-outlets/" value=""
               class="icon-right" />
           </div>
   
           <div class="nice-form-group">
-            <label>Região <span class="opcional"> (Opcional)</span></label>
+            <label>Região <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="lojas-regiao-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="lojas-regiao-${j}" type="text" placeholder="Las Vegas Strip (Norte)" />
           </div>
   
           <div class="nice-form-group">
-            <label>Valor <span class="opcional"> (Opcional)</span></label>
+            <label>Valor <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="lojas-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
@@ -583,14 +583,14 @@ function _addLojas() {
           </div>
   
           <div class="nice-form-group">
-            <label>Vídeo <span class="opcional"> (Opcional)</span></label>
+            <label>Vídeo <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lojas-midia-${j}" type="url" placeholder="https://www.youtube.com/watch?v=2LVCuEXZ3bk"
               value="" class="icon-right" />
             <div class="legenda">YouTube, TikTok ou Instagram Reels</div>
           </div>
   
           <div class="nice-form-group">
-          <label>Prioridade <span class="opcional">(Opcional)</span></label>
+          <label>Prioridade <span class="opcional">(${translate('labels.optional')})</span></label>
             <select class="editar-select" id="lojas-nota-${j}">
               <option value="?">Prioridade não definida</option>
               <option value="5">5 - Altíssima prioridade</option>

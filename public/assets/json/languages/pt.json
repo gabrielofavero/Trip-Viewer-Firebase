@@ -48,7 +48,9 @@
                 "request": "Para acessar os gastos, digite o PIN cadastrado para essa viagem",
                 "new": "Definir PIN de acesso",
                 "change": "Alterar PIN de acesso",
-                "invalid": "PIN inválido. Tente novamente"
+                "invalid": "PIN inválido. Tente novamente",
+                "insert": "Insira um PIN de acesso de 4 dígitos",
+                "again": "Digite novamento o PIN de acesso"
             },
             "pre_trip": "Gastos prévios",
             "during_trip": "Durante a viagem",
@@ -66,8 +68,7 @@
             "departure": "Partida",
             "arrival": "Chegada",
             "during": "Durante",
-            "from": "Ida",
-            "to": "Volta",
+            "return": "Retorno",
             "simple_view": "Visualização simplificada",
             "leg_view": "Agrupar por trajeto",
             "departure_location": {
@@ -86,6 +87,7 @@
                 "rideshare": "Transporte por aplicativo",
                 "bus": "Ônibus",
                 "train": "Trem",
+                "cable_car": "Teleférico",
                 "helicopter": "Helicóptero",
                 "ship": "Navio",
                 "cruise": "Cruzeiro",
@@ -99,36 +101,34 @@
         },
         "accommodation": {
             "title": "Hospedagens",
+            "accommodation": "Hospedagem",
             "subtitle": "Cadastre onde você ficará hospedado durante a viagem",
             "checkin": "Check-in",
             "checkout": "Check-out",
             "breakfast": "Café da manhã",
-            "name": {
-                "title": "Nome",
-                "placeholder": "Hotel, Pousada, Airbnb, etc"
-            },
-            "address": {
-                "title": "Endereço",
-                "placeholder": "Rua Exemplo, 123"
-            },
-            "description": {
-                "placeholder": "Quarto duplo, vista para o mar"
-            }
+            "name_placeholder": "Hotel, Pousada, Airbnb, etc",
+            "address_placeholder": "Rua Exemplo, 123",
+            "description_placeholder": "Quarto duplo, vista para o mar"
         },
         "itinerary": {
             "title": "Programação",
             "subtitle": "Inclua aqui a sua programação diária",
+            "placeholder": "Ir para...",
             "todays_itinerary": "Programação de hoje",
             "no_itinerary": "Nada programado por aqui! ☹️",
             "instructions": "Selecione uma data para ver a programação",
+            "associated_item": "Item associado",
             "media_button": {
                 "video": "Visualizar Vídeo",
                 "playlist": "Visualizar Playlist"
-            }
+            },
+            "replace_title": "Substituir o título \"{{old}}\" por \"{{new}}\"",
+            "set_title": "Definir o título da programação como \"{{title}}\""
         },
         "gallery": {
             "title": "Galeria",
-            "subtitle": "Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros"
+            "subtitle": "Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros",
+            "description_placeholder": "Mapa oficial do evento"
         }
     },
     "destination": {
@@ -141,6 +141,7 @@
         "all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
         "nothing": "Sem destinos cadastrados",
         "basic_information": "Adicione aqui as principais informações do seu destino",
+        "undefined": "Destino não definido",
         "delete": {
             "title": "Excluir destino",
             "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
@@ -258,7 +259,7 @@
             "month_year": "{{month}} de {{year}}"
         },
         "time_of_day": {
-            "time_of_day": "Período do dia",
+            "title": "Período do dia",
             "morning": "Manhã",
             "afternoon": "Tarde",
             "evening": "Noite",
@@ -305,7 +306,8 @@
             "hours": "h",
             "minutes": "m",
             "seconds": "s"
-        }
+        },
+        "select_date": "Selecione uma data"
     },
     "inputs": {
         "image": {
@@ -315,12 +317,13 @@
             "upload": "Upload de imagem",
             "upload_limit": "Até 1.5MB",
             "background": "Imagem de fundo",
+            "check": "Verificação de imagem",
             "image_selector": {
                 "title": "Imagens",
                 "add": "Adicionar Imagens",
                 "edit": "Editar Imagens",
                 "subtitle": "Você pode adicionar até 5 imagens",
-                "description": "Descrição"
+                "description": "Descrição da imagem"
             }
         }
     },
@@ -469,8 +472,19 @@
             }
         },
         "editors": {
+            "editor": "Editor",
             "allow": "Permitir editores",
             "add": "Adicionar editor"
-        }
+        },
+        "id": "Identificador",
+        "name": "Nome",
+        "address": "Endereço",
+        "none": "Nenhum",
+        "date": "Data",
+        "set": "Definir",
+        "replace": "Substituir",
+        "and": "e",
+        "custom": "Personalizado(a)",
+        "cost": "Valor"
     }
 }
