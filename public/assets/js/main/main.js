@@ -49,6 +49,7 @@ function _main() {
   $('body').css('overflow', 'hidden');
 
   _loadConfig();
+  _loadLangSelectorSelect();
 
   /**
    * Navbar links active state on scroll
@@ -268,8 +269,12 @@ function _getLanguagePackName() {
 }
 
 function _updateUserLanguage(language) {
+  const previousLang = localStorage.getItem("userLanguage");
   localStorage.setItem("userLanguage", language);
-  window.location.reload();
+
+  if (previousLang !== language) {
+    window.location.reload();
+  }
 }
 
 function translate(key, replacements = {}, strict = true) {
@@ -327,4 +332,33 @@ function _translatePage() {
       }
     }
   }
+}
+
+function _loadLangSelectorSelect() {
+  const langButton = document.querySelector('.lang-button');
+    const langOptions = document.querySelector('.lang-options');
+    _setLanguage(_getLanguagePackName());
+
+    langButton.addEventListener('click', () => {
+      langOptions.style.display = langOptions.style.display === 'block' ? 'none' : 'block';
+    });
+
+    langOptions.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') {
+        const lang = e.target.dataset.lang;
+        _setLanguage(lang);
+        langOptions.style.display = 'none';
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.lang-selector')) {
+        langOptions.style.display = 'none';
+      }
+    });
+
+    function _setLanguage(lang) {
+      langButton.textContent = lang.toUpperCase();
+      _updateUserLanguage(lang);
+    }
 }
