@@ -3,8 +3,8 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
     return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
-                        <label style="margin-bottom: 0px;">${translate('trip.itinerary.associated_item')} <span class="opcional">(${translate('labels.optional')})</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;">Associar Item</button>
+                        <label style="margin-bottom: 0px;">${translate('trip.itinerary.linked_item')} <span class="opcional">(${translate('labels.optional')})</span></label>
+                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;">${translate('trip.itinerary.link_item')}</button>
                     </div>
 
                     <div class="nice-form-group">
@@ -57,7 +57,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 </div>
                 <div id="inner-programacao-item-selecionar" class="inner-programacao" style="display: none;">
                     <div class="nice-form-group" id="inner-programacao-item-selecionar-radio">
-                        <label>Tipo</label>
+                        <label>${translate('labels.type')}</label>
                         <fieldset class="nice-form-group">
                             <div class="nice-form-group" id="inner-programacao-nenhum-radio-container">
                                 <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-nenhum-radio">
@@ -85,7 +85,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     <div class="nice-form-group" id="inner-programacao-item-transporte" style="display: none;">
                         <label>${translate('trip.transportation.title')}</label>
                         <select class="editar-select" id="inner-programacao-select-transporte">
-                            <option value="">Selecione</option>
+                            <option value="">${translate('labels.select')}</option>
                             ${selects.transporte.options}
                         </select>
                     </div>
@@ -93,7 +93,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 <div class="nice-form-group" id="inner-programacao-item-hospedagens" style="display: none;">
                     <label>${translate('trip.accommodation.title')}</label>
                     <select class="editar-select" id="inner-programacao-select-hospedagens">
-                        <option value="">Selecione</option>
+                        <option value="">${translate('labels.select')}</option>
                         ${selects.hospedagens.options}
                     </select>
                 </div>
@@ -103,21 +103,21 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                             <label>${translate('destination.title')}</label>
                             <select class="editar-select" id="inner-programacao-select-local">
                                 ${selects.destinos.localOptions}
-                                <option value="">Selecione</option>
+                                <option value="">${translate('labels.select')}</option>
                             </select>
                         </div>
 
                         <div class="nice-form-group">
                             <label>${translate('labels.type')}</label>
                             <select class="editar-select" id="inner-programacao-select-categoria">
-                                <option value="">Selecione</option>
+                                <option value="">${translate('labels.select')}</option>
                             </select>
                         </div>
 
                         <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px;">
                             <label>${translate('trip.itinerary.title')}</label>
                             <select class="editar-select" id="inner-programacao-select-passeio">
-                                <option value="">Selecione uma Categoria</option>
+                                <option value="">${translate('labels.select')}</option>
                             </select>
                         </div>            
                     </div>

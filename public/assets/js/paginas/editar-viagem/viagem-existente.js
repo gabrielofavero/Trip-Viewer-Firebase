@@ -218,7 +218,7 @@ function _loadHospedagemData() {
 
         HOSPEDAGEM_IMAGENS[j] = hospedagem.imagens || [];
         if (HOSPEDAGEM_IMAGENS[j].length > 0) {
-            getID(`imagens-hospedagem-button-${j}`).innerText = 'Editar Imagens';
+            getID(`imagens-hospedagem-button-${j}`).innerText = translate('labels.image.edit');
         }
 
         _loadCheckIn(hospedagem, j);

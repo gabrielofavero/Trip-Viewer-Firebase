@@ -222,7 +222,7 @@ function _addHospedagens() {
   
           <div class="nice-form-group">
             <label>${translate('labels.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="hospedagens-descricao-${j}" type="text" placeholder="Quarto Duplo, camas King" />
+            <input id="hospedagens-descricao-${j}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
           </div>
 
           <div class="nice-form-group">
@@ -238,7 +238,7 @@ function _addHospedagens() {
 
           <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
             <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate('labels.image.add')}</button>
+            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate('labels.image.add_title')}</button>
           </div>
             
         </div>

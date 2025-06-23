@@ -224,7 +224,7 @@ function _openInnerProgramacaoItem() {
     itemSelecionar.style.minHeight = `${height}px`;
 
     if (getID('inner-programacao').value) {
-        getID('message-title').innerText = 'Associar Item';
+        getID('message-title').innerText = translate('trip.itinerary.link_item');
     }
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
@@ -253,7 +253,7 @@ function _closeInnerProgramacao(j) {
         } else if (getID('inner-programacao-item-destinos-radio').checked) {
             itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
         } else {
-            itemAssociado.innerText = 'Associar Item';
+            itemAssociado.innerText = translate('trip.itinerary.link_item');
         }
 
         getID('message-title').innerText = _getInnerProgramacaoTitle(j);
@@ -417,10 +417,10 @@ function _innerProgramacaoSelectLocalAction(selects) {
     const selectPasseio = getID('inner-programacao-select-passeio');
 
     if (selectLocal.value && selects.destinos.locais[selectLocal.value]) {
-        selectCategoria.innerHTML = '<option value="">Selecione</option>' + selects.destinos.locais[selectLocal.value].categoriaOptions;
+        selectCategoria.innerHTML = `<option value="">${translate('labels.select')}</option>` + selects.destinos.locais[selectLocal.value].categoriaOptions;
     } else {
-        selectCategoria.innerHTML = '<option value="">Selecione um Local</option>';
-        selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
+        selectCategoria.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
+        selectPasseio.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
     }
 
     selectCategoria.addEventListener('change', () => {
@@ -434,9 +434,9 @@ function _innerProgramacaoSelectCategoriaAction(selects) {
     const selectPasseio = getID('inner-programacao-select-passeio');
 
     if (selectLocal.value && selectCategoria.value && selects.destinos.locais[selectLocal.value].passeioOptions[selectCategoria.value]) {
-        selectPasseio.innerHTML = '<option value="">Selecione</option>' + selects.destinos.locais[selectLocal.value].passeioOptions[selectCategoria.value];
+        selectPasseio.innerHTML = `<option value="">${translate('labels.select')}</option>` + selects.destinos.locais[selectLocal.value].passeioOptions[selectCategoria.value];
     } else {
-        selectPasseio.innerHTML = '<option value="">Selecione uma Categoria</option>';
+        selectPasseio.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
     }
 }
 

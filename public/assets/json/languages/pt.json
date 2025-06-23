@@ -117,7 +117,8 @@
             "todays_itinerary": "Programação de hoje",
             "no_itinerary": "Nada programado por aqui! ☹️",
             "instructions": "Selecione uma data para ver a programação",
-            "associated_item": "Item associado",
+            "linked_item": "Item vinculado",
+            "link_item": "Vincular item à programação",
             "media_button": {
                 "video": "Visualizar Vídeo",
                 "playlist": "Visualizar Playlist"
@@ -381,7 +382,6 @@
         "company": "Empresa",
         "start": "Início",
         "end": "Fim",
-        "associated_item": "Item associado",
         "reservation_code": "Código de reserva",
         "reservation_link": "Link da reserva",
         "select": "Selecione",
@@ -477,10 +477,12 @@
             "upload_limit": "Até 1.5MB",
             "background": "Imagem de fundo",
             "check": "Verificação de imagem",
-            "add": "Adicionar Imagens",
-            "edit": "Editar Imagens",
+            "add_title": "Adicionar imagens",
+            "add": "Adicionar imagem",
+            "edit": "Editar imagens",
             "quantity_limit": "Você pode adicionar até 5 imagens",
             "description": "Descrição da imagem"
-        }
+        },
+        "no_data": "Sem dados"
     }
 }

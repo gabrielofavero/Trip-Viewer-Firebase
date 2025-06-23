@@ -117,7 +117,8 @@
             "todays_itinerary": "Today's Itinerary",
             "no_itinerary": "Nothing planned here! ☹️",
             "instructions": "Select a date to view the itinerary",
-            "associated_item": "Associated item",
+            "linked_item": "Linked item",
+            "link_item": "Link an item to the itinerary",
             "media_button": {
                 "video": "Watch Video",
                 "playlist": "View Playlist"
@@ -259,7 +260,7 @@
             "month_year": "{{month}} {{year}}"
         },
         "time_of_day": {
-            "time_of_day": "Time of day",
+            "title": "Time of day",
             "morning": "Morning",
             "afternoon": "Afternoon",
             "evening": "Evening",
@@ -381,7 +382,6 @@
         "company": "Company",
         "start": "Start",
         "end": "End",
-        "associated_item": "Linked item",
         "reservation_code": "Reservation code",
         "reservation_link": "Reservation link",
         "select": "Select",
@@ -477,10 +477,12 @@
             "upload_limit": "Up to 1,5MB",
             "background": "Background image",
             "check": "Image verification",
-            "add": "Add Images",
-            "edit": "Edit Images",
+            "add_title": "Add images",
+            "add": "Add Image",
+            "edit": "Edit images",
             "quantity_limit": "You can add up to 5 images",
             "description": "Description"
-        }
+        },
+        "no_data": "No data"
     }
 }
