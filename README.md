@@ -7,7 +7,7 @@
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
 | 🏆     | Feature  | F000    | 93    | 69          | 24         |
 | 📈     | Melhoria | M000    | 106    | 80          | 26        |
-| ⚔️   | Épico   | E000    | 34    | 18          | 16         |
+| ⚔️   | Épico   | E000    | 34    | 19          | 15         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### Prioridade Alta
-- ⚔️ **E033:** Idiomas
 - ⚔️ **E030:** Account Import/Export
   - 🏆 **F086:** *Export All + Import all (Apenas Funções)*
   - 🏆 **F088:** *Export Selected (Apenas Funções)*
@@ -121,6 +120,7 @@
 ## Done
 
 ### Junho 2025
+- ⚔️ **E033:** Idiomas
 
 ### Maio 2025
 - 🏆 **F083:** Cache Busting
