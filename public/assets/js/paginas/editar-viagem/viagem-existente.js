@@ -141,21 +141,19 @@ function _loadTransportesData() {
         getID('habilitado-transporte-content').style.display = 'block';
         getID('transporte-adicionar-box').style.display = 'block';
     }
-    getID('separar').checked = !FIRESTORE_DATA.transportes.visualizacaoSimplificada;
+    getID(FIRESTORE_DATA.transportes.visualizacao || 'simple-view').checked = true;
 
     for (let j = 1; j <= FIRESTORE_DATA.transportes.dados.length; j++) {
         _addTransporte();
         const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
 
-        switch (transporte.idaVolta) {
-            case 'ida':
-                getID(`ida-${j}`).checked = true;
-                break;
-            case 'durante':
-                getID(`durante-${j}`).checked = true;
-                break;
-            case 'volta':
-                getID(`volta-${j}`).checked = true;
+        getID(`${transporte.idaVolta}-${j}`).checked = true;
+
+        const pessoa = transporte.pessoa;
+        if (pessoa) {
+            getID(`transporte-pessoa-${j}`).value = categoria;
+            _updateValueDS('transporte-pessoa', categoria, `transporte-pessoa-select-${j}`);
+            _buildDS('transporte-pessoa');
         }
 
         const partida = _convertFromDateObject(transporte.datas.partida);
@@ -193,7 +191,7 @@ function _loadTransportesData() {
 
         _updateTransporteTitle(j);
     }
-    _applyIdaVoltaVisibility();
+    _applyTransportationTypeVisualization();
 }
 
 function _loadHospedagemData() {

@@ -97,6 +97,13 @@ function _removeRequired(id) {
   }
 }
 
+function _removeRequired(id) {
+  const div = getID(id);
+  if (div) {
+    div.removeAttribute('required');
+  }
+}
+
 function _getOptionsFromSelect(id) {
   const selectElement = getID(id);
   let optionValues = [];

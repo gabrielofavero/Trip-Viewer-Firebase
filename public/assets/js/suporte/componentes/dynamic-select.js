@@ -8,12 +8,12 @@ function _newDynamicSelect(type) {
     }
 }
 
-function _addSelectorDS(type, selectID, inputID) {
+function _addSelectorDS(type, selectID, inputID, customFunction = "") {
     DYNAMIC_SELECT[type].selectors[selectID] = {
         inputID: inputID,
         value: '',
     }
-    _addEventListenersDS(type, selectID, inputID);
+    _addEventListenersDS(type, selectID, inputID, customFunction);
 }
 
 function _removeValueDS(type, value) {
@@ -82,7 +82,7 @@ function _buildDS(type) {
     }
 }
 
-function _addEventListenersDS(type, selectID, inputID) {
+function _addEventListenersDS(type, selectID, inputID, customFunction = "") {
     const select = getID(selectID);
     const input = getID(inputID);
 
@@ -100,6 +100,9 @@ function _addEventListenersDS(type, selectID, inputID) {
     input.addEventListener('change', () => {
         _updateValueDS(type, input.value, selectID);
         _buildDS(type);
+        if (customFunction) {
+            eval(customFunction);
+        }
     });
 }
 

@@ -128,7 +128,7 @@ function _buildLinksObject() {
 function _buildTransporteObject() {
     const result = {
         dados: [],
-        visualizacaoSimplificada: getID('condensar').checked
+        visualizacao: getID('people-view').checked ? 'people-view' : getID('leg-view').checked ? 'leg-view' : 'simple-view'
     }
     for (const child of _getChildIDs('transporte-box')) {
         const j = _getJ(child);
@@ -148,6 +148,7 @@ function _buildTransporteObject() {
             },
             reserva: getID(`reserva-transporte-${j}`).value,
             transporte: getID(`transporte-tipo-${j}`).value,
+            pessoa: getID(`transporte-pessoa-select-${j}`).value,
         });
     }
     return result;

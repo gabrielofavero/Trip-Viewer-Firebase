@@ -71,6 +71,7 @@
             "return": "Retorno",
             "simple_view": "Visualização simplificada",
             "leg_view": "Agrupar por trajeto",
+            "people_view": "Agrupar por pessoas",
             "departure_location": {
                 "title": "Local de partida",
                 "placeholder": "Belo Horizonte"
@@ -482,6 +483,7 @@
         "home": "Home",
         "days": "Dias",
         "people": "Pessoas",
+        "person": "Pessoa",
         "highlights": "Destaques",
         "overview": "Resumo",
         "view": "Ver",
