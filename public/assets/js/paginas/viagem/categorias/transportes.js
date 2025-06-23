@@ -243,9 +243,9 @@ function _loadAbasTransportes() {
 function _loadAbasTransportesHTML() {
   const tab = getID('tab-transporte');
   const itemMap = {
-    ida: "from",
+    ida: "departure",
     durante: "during",
-    volta: "to"
+    volta: "return"
   }
 
   for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
