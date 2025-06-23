@@ -144,6 +144,7 @@
         "basic_information": "Add the main information about your destination here",
         "undefined": "Undefined destination",
         "recent": "Recently added",
+        "location_placeholder": "Chicago",
         "delete": {
             "title": "Delete destination",
             "message": "Are you sure you want to delete the destination {{name}}? This action cannot be undone"
@@ -214,7 +215,7 @@
         },
         "shopping": {
             "title": "Shopping",
-            "title_singular": "Store",
+            "title_singular": "Shopping",
             "description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related.",
             "placeholders": {
                 "name": "Amoeba Music",

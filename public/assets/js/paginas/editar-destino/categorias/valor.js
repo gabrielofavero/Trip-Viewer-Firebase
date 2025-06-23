@@ -27,10 +27,29 @@ function _loadMoedaOptions() {
 
     if (moeda != 'outra' && CONFIG.moedas.escala[moeda]) {
         for (const categoria of VALORES_KEYS) {
-            VALOR_OPTIONS += `<option value="${categoria}">${CONFIG.moedas.escala[moeda][categoria]}</option>`;
+            const label = _getLabel(categoria);
+            VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
         }
         if (VALOR_OPTIONS) {
             VALOR_OPTIONS += `<option value="outro">${translate('labels.other')}</option>`;
+        }
+    }
+
+    function _getLabel(categoria) {
+        switch (categoria) {
+            case "default":
+                return translate(`destination.price.default`);
+            case "-":
+            case "free":
+                return translate(`destination.price.free`);
+            case "$":
+            case "$$":
+            case "$$$":
+                return CONFIG.moedas.escala[moeda][categoria];
+            case "$$$$":
+                return translate(`destination.price.max`, { value: CONFIG.moedas.escala[moeda][categoria] });
+            default:
+                return translate('labels.other');
         }
     }
 }

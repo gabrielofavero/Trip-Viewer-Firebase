@@ -144,6 +144,7 @@
         "basic_information": "Adicione aqui as principais informações do seu destino",
         "undefined": "Destino não definido",
         "recent": "Adicionado recentemente",
+        "location_placeholder": "São Paulo",
         "delete": {
             "title": "Excluir destino",
             "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
