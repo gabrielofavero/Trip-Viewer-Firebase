@@ -30,7 +30,7 @@ function _loadMoedaOptions() {
             VALOR_OPTIONS += `<option value="${categoria}">${CONFIG.moedas.escala[moeda][categoria]}</option>`;
         }
         if (VALOR_OPTIONS) {
-            VALOR_OPTIONS += '<option value="outro">Outro</option>';
+            VALOR_OPTIONS += `<option value="outro">${translate('labels.other')}</option>`;
         }
     }
 }

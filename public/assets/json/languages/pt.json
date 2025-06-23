@@ -143,29 +143,89 @@
         "nothing": "Sem destinos cadastrados",
         "basic_information": "Adicione aqui as principais informações do seu destino",
         "undefined": "Destino não definido",
+        "recent": "Adicionado recentemente",
         "delete": {
             "title": "Excluir destino",
             "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
         },
+        "tooltips": {
+            "map": "Google Maps ou Apple Maps",
+            "video": "YouTube, TikTok ou Instagram Reels"
+        },
         "restaurants": {
             "title": "Restaurantes",
-            "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite"
+            "title_singular": "Restaurante",
+            "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite",
+            "placeholders": {
+                "name": "Notorious FISH",
+                "emoji": "🐟",
+                "description": "Restaurante casual especializado em frutos do mar, com ambientação descontraída e petiscos bem executados",
+                "map": "https://maps.app.goo.gl/vLJwpUeydANE9X1a7",
+                "website": "https://www.notoriousfish.com.br/",
+                "instagram": "https://www.instagram.com/notoriousfishbr",
+                "region": "Pinheiros",
+                "video": "https://www.tiktok.com/@isinharemelli/video/7330453337508171014"
+            }
         },
         "snacks": {
             "title": "Lanches",
-            "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve"
+            "title_singular": "Lanche",
+            "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve",
+            "placeholders": {
+                "name": "Café 18 do Forte",
+                "emoji": "☕🧇",
+                "description": "Opção de Brunch em Copacabana. É necessário entrar no forte (cobrado à parte) para chegar ao café",
+                "map": "https://maps.app.goo.gl/1jF1wezx8i9zzK8XA",
+                "website": "https://www.getinapp.com.br/rio-de-janeiro/cafe-18-do-forte",
+                "instagram": "https://www.instagram.com/cafe18doforte/",
+                "region": "Copacabana",
+                "video": "https://www.tiktok.com/@gianeporai/video/7232025643012099333"
+            }
         },
         "nightlife": {
             "title": "Saídas",
-            "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento"
+            "title_singular": "Saída",
+            "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento",
+            "placeholders": {
+                "name": "A Forja",
+                "emoji": "🍺",
+                "description": "Restaurante com temática medieval. Focada em carnes com cortes diferentes e bebidas. Pratos bastante diferentes",
+                "map": "https://maps.app.goo.gl/giE94tgaB8GdCsxV8",
+                "website": "https://aforjataverna.com.br/",
+                "instagram": "https://www.instagram.com/forjataverna/",
+                "region": "Savassi",
+                "video": "https://www.instagram.com/reel/Cv213wEpi27/?igsh=dmQzejRtYWducHg4"
+            }
         },
         "tourism": {
             "title": "Turismo",
-            "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais"
+            "title_singular": "Ponto Turístico",
+            "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais",
+            "placeholders": {
+                "name": "Mini Mundo",
+                "emoji": "🌍",
+                "description": "Parque único ao ar livre com réplicas em miniatura de edifícios internacionais, além de um café",
+                "map": "https://maps.app.goo.gl/wmAXicvZSfT9rhE2A",
+                "website": "https://minimundo.com.br/",
+                "instagram": "https://www.instagram.com/minimundogramado/",
+                "region": "Planalto",
+                "video": "https://www.youtube.com/watch?v=xnhzzH4iGUE"
+            }
         },
         "shopping": {
             "title": "Compras",
-            "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral"
+            "title_singular": "Loja",
+            "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral",
+            "placeholders": {
+                "name": "Cápsula",
+                "emoji": "👕",
+                "description": "Loja de Roupas descoladas e com pontos de fotos. Loja original na Liberdade, mas possui nova unidade no Jardins",
+                "map": "https://maps.app.goo.gl/ECMVvWSt3JikCe5y8",
+                "website": "https://www.capsulashop.com.br/",
+                "instagram": "https://www.instagram.com/capsulashop/",
+                "region": "Jardins, Liberdade",
+                "video": "https://www.tiktok.com/@crializ_/video/7115772586067348742?q=C%C3%A1psula%20liberdade&t=1710608771260"
+            }
         },
         "map": {
             "title": "Mapa",
@@ -179,10 +239,12 @@
         },
         "tourismAndShopping": {
             "title": "Turismo e Lojas",
+            "title_singular": "Turismo / Loja",
             "description": "Pontos turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros"
         },
         "food": {
             "title": "Alimentação",
+            "title_singular": "Alimentação",
             "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros"
         },
         "scores": {
@@ -196,7 +258,15 @@
         "price": {
             "default": "Valor Desconhecido",
             "max": "Mais de {{value}}",
-            "free": "Gratuito"
+            "free": "Gratuito",
+            "placeholder": "R$26 - R$50"
+        },
+        "errors": {
+            "tiktok": {
+                "not_found": "Não foi possível encontrar o link do TikTok",
+                "conversion": "Erro ao converter TikTok",
+                "conversion_message": "Os seguintes links deverão ser removidos ou trocados pela versão desktop:"
+            }
         }
     },
     "listing": {
@@ -315,6 +385,7 @@
         "text_copied": "Texto copiado para a área de transferência",
         "no_data": "Sem dados cadastrados 😔",
         "share": "Venha visualizar meus dados criados no TripViewer",
+        "exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
         "errors": {
             "load_title": "Erro no Carregamento 🙁",
             "unknown": "Um erro inesperado impediu o carregamento da página",
@@ -483,6 +554,14 @@
             "quantity_limit": "Você pode adicionar até 5 imagens",
             "description": "Descrição da imagem"
         },
-        "no_data": "Sem dados"
+        "no_data": "Sem dados",
+        "emoji": "Emoji(s)",
+        "social": {
+            "website": "Site",
+            "instagram": "Instagram"
+        },
+        "region": "Região",
+        "priority": "Prioridade",
+        "video": "Vídeo"
     }
 }

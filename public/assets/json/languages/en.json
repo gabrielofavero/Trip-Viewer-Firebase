@@ -143,29 +143,89 @@
         "nothing": "No destinations registred",
         "basic_information": "Add the main information about your destination here",
         "undefined": "Undefined destination",
+        "recent": "Recently added",
         "delete": {
             "title": "Delete destination",
             "message": "Are you sure you want to delete the destination {{name}}? This action cannot be undone"
         },
+        "tooltips": {
+            "map": "Google Maps or Apple Maps",
+            "video": "YouTube, TikTok or Instagram Reels"
+        },
         "restaurants": {
             "title": "Restaurants",
-            "description": "Places that serve full meals. Perfect for lunch and dinner. Some may only open at night."
+            "title_singular": "Restaurant",
+            "description": "Places that serve full meals. Perfect for lunch and dinner. Some may only open at night.",
+            "placeholders": {
+                "name": "Liberty Public Market",
+                "emoji": "🍽️",
+                "description": "A vibrant food hall with a variety of restaurants and vendors offering diverse cuisines",
+                "map": "https://maps.app.goo.gl/J4vLoJiyU7j6bkrs7",
+                "website": "https://libertypublicmarketsd.com/",
+                "instagram": "https://www.instagram.com/libertypublicmarket/",
+                "region": "Liberty Station",
+                "video": "https://www.tiktok.com/@jasminescocina/video/7334031192431398186"
+            }
         },
         "snacks": {
             "title": "Snacks",
-            "description": "Quick-bite spots. Great for a snack, or light meal. Includes cafés, bakeries, and fast food places."
+            "title_singular": "Snack",
+            "description": "Quick-bite spots. Great for a snack, or light meal. Includes cafés, bakeries, and fast food places.",
+            "placeholders": {
+                "name": "Mr. Beef",
+                "emoji": "🥪",
+                "description": "A popular sandwich shop known for its delicious Italian beef sandwiches and other deli-style offerings",
+                "map": "https://maps.app.goo.gl/xarQ4ASKDoeCRL2S9",
+                "website": "https://www.theoriginalmrbeef.com/",
+                "instagram": "https://www.instagram.com/mr.beefchicago/",
+                "region": "Downtown",
+                "video": "https://www.tiktok.com/@manthagregs/video/7351469042747706666"
+            }
         },
         "nightlife": {
             "title": "Nightlife",
-            "description": "Bars, pubs, karaoke spots, clubs, or anything focused on drinks and entertainment."
+            "title_singular": "Nightlife",
+            "description": "Bars, pubs, karaoke spots, clubs, or anything focused on drinks and entertainment.",
+            "placeholders": {
+                "name": "Rudy's Bar & Grill",
+                "emoji": "🍺🌭",
+                "description": "A classic dive bar known for its cheap drinks, hot dogs, and lively atmosphere. A great spot for a casual night out",
+                "map": "https://maps.app.goo.gl/EaaBp6QHF2ijZaKN6",
+                "website": "https://rudysbarnyc.com/",
+                "instagram": "https://www.instagram.com/rudysbar",
+                "region": "Hell's Kitchen",
+                "video": "https://www.tiktok.com/@kamilinhasalazar/video/7230944733118434566"
+            }
         },
         "tourism": {
             "title": "Tourism",
-            "description": "Tourist attractions including neighborhoods, monuments, museums, squares, viewpoints, exhibitions, and more."
+            "title_singular": "Tourist attraction",
+            "description": "Tourist attractions including neighborhoods, monuments, museums, squares, viewpoints, exhibitions, and more.",
+            "placeholders": {
+                "name": "The Sphere",
+                "emoji": "🔮",
+                "description": "A large spherical structure with a stunning light display. It serves as a venue for concerts and events",
+                "map": "https://maps.app.goo.gl/8JxQFp6acr2F2AuP6",
+                "website": "https://www.thespherevegas.com/",
+                "instagram": "https://www.instagram.com/SphereVegas",
+                "region": "Las Vegas Strip",
+                "video": "https://www.tiktok.com/@vegasstarfish/video/7292913838108773675"
+            }
         },
         "shopping": {
             "title": "Shopping",
-            "description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related."
+            "title_singular": "Store",
+            "description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related.",
+            "placeholders": {
+                "name": "Amoeba Music",
+                "emoji": "💿",
+                "description": "Music store with a wide selection of vinyl records, CDs, and more",
+                "map": "https://goo.gl/maps/vR2rcyEFXKn3EftHA",
+                "website": "https://www.amoebamusic.com/",
+                "instagram": "https://www.instagram.com/amoebahollywood/",
+                "region": "Hollywood",
+                "video": "https://www.tiktok.com/@andaba_porahi/video/7191480149827734789?q=Amoeba%20Music%20los%20angeles&t=1685251352892"
+            }
         },
         "map": {
             "title": "Map",
@@ -179,10 +239,12 @@
         },
         "tourismAndShopping": {
             "title": "Tourism & Shopping",
+            "title_singular": "Tourism / Shopping",
             "description": "A mix of tourist spots and shops: neighborhoods, monuments, museums, malls, and more."
         },
         "food": {
             "title": "Food & Drinks",
+            "title_singular": "Food / Drink",
             "description": "All kinds of places to eat and drink: restaurants, fast food, cafés, bars, pubs, and more."
         },
         "scores": {
@@ -196,7 +258,15 @@
         "price": {
             "default": "Unknown price",
             "max": "More than {{value}}",
-            "free": "Free"
+            "free": "Free",
+            "placeholder": "$26 - $50"
+        },
+        "errors": {
+            "tiktok": {
+                "not_found": "TikTok link not found",
+                "conversion": "Conversion error: Tiktok",
+                "conversion_message": "The following links should be removed or replaced with the desktop version:"
+            }
         }
     },
     "listing": {
@@ -315,6 +385,7 @@
         "text_copied": "Text copied to clipboard",
         "no_data": "No data found 😔",
         "share": "Check out what I've created on TripViewer",
+        "exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
         "errors": {
             "load_title": "Loading Error 🙁",
             "unknown": "An unexpected error prevented the page from loading",
@@ -483,6 +554,14 @@
             "quantity_limit": "You can add up to 5 images",
             "description": "Description"
         },
-        "no_data": "No data"
+        "no_data": "No data",
+        "emoji": "Emoji(s)",
+        "social": {
+            "website": "Website",
+            "instagram": "Instagram"
+        },
+        "region": "Region",
+        "priority": "Priority",
+        "video": "Video"
     }
 }
