@@ -23,7 +23,7 @@ function _getNotaIcon(item) {
     }
 }
 
-function _getNotaClass (item) {
+function _getNotaClass(item) {
     switch (item.nota) {
         case "5":
         case "4":
@@ -61,14 +61,19 @@ function _getPalcoRegiaoValue(item, isLineup) {
 // Valor
 function _getValorValue(item, isLineup, valores, moeda) {
     if (isLineup) return "";
-    else return _convertValor(item.valor, valores, moeda);
-}
-
-function _convertValor(valor, valores, moeda) {
-    if (valor && valores && valores[valor]) return valores[valor];
-    if (valor) return _convertCustomValor(valor, moeda);
-    if (valores) return valores["default"];
-    return "Valor Desconhecido";
+    switch (item.valor) {
+        case "-":
+        case "$":
+        case "$$":
+        case "$$$":
+        case "$$$$":
+            return valores[item.valor]
+        default:
+            if (item.valor) {
+                return _convertCustomValor(item.valor, moeda);
+            }
+            return translate('destination.price.default');
+    }
 }
 
 function _convertCustomValor(valor, moeda) {

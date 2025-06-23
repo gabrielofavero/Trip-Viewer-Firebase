@@ -25,11 +25,11 @@ async function _uploadImage(path, file) {
       result.link = downloadURL;
       result.caminho = snapshot.ref.fullPath;
 
-      console.log(`Imagem '${result.nome}' carregada com sucesso: ${result.link}`);
+      console.log(`Image '${result.nome}' uploaded successfully: ${result.link}`);
 
     } catch (error) {
       IMAGE_UPLOAD_STATUS.hasErrors = true;
-      console.error('Erro ao fazer upload da imagem:', error.message || error);
+      console.error('Error while uploading image:', error.message || error);
 
       const key = _codifyText(_getLastDir(path));
       IMAGE_UPLOAD_STATUS.messages[key] = _getStorageErrorMessage(error);
@@ -67,25 +67,25 @@ async function _deleteImage(path) {
     const fileRef = storageRef.child(path);
     await fileRef.delete();
 
-    console.log(`Imagem ${path} apagada com sucesso.`);
+    console.log(`Image ${path} deleted successfully`);
   } catch (error) {
-    console.error(`Erro ao apagar imagem ${path}: ${error.message}`);
+    console.error(`Error while deleting image ${path}: ${error.message}`);
   }
 }
 
 async function _deleteImageByLink(link) {
   const path = _getImagePathFromLink(link);
   if (!path) {
-    console.error("Caminho não encontrado na URL.");
+    console.error("URL path could not be extracted from the link:", link);
     return;
   }
 
   try {
     const fileRef = firebase.storage().ref().child(path);
     await fileRef.delete();
-    console.log(`Imagem apagada com sucesso: ${path}`);
+    console.log(`Image ${path} deleted successfully`);
   } catch (error) {
-    console.error(`Erro ao apagar imagem ${path}: ${error.message}`);
+    console.error(`Error while deleting image ${path}: ${error.message}`);
   }
 }
 
@@ -93,10 +93,9 @@ function _getImagePathFromLink(link) {
   try {
     const match = link.match(/\/o\/(.*?)\?/);
     if (!match || !match[1]) return null;
-
     return decodeURIComponent(match[1]);
   } catch (e) {
-    console.error("Erro ao extrair o caminho da URL:", e);
+    console.error("URL path could not be extracted from the link:", e);
     return null;
   }
 }
@@ -295,14 +294,14 @@ function _getLastDir(path) {
       return splitPath[splitPath.length - 1];
     }
   }
-  return 'Pasta Desconhecida';
+  return translate('messages.errors.unknown_directory');
 }
 
 function _getStorageErrorMessage(error) {
   if (error.code == 'storage/unauthorized') {
-    return 'Você não possui permissão para fazer upload de arquivos.';
+    return translate('messages.errors.no_upload_permission');
   } else {
-    return `Erro "${error.code}" ao fazer upload de arquivos. Contate o administrador do sistema`;
+    return `${translate('messages.errors.upload_error')}: '${error.code}'. ${translate('messages.error.contact_admin')}`;
   }
 }
 
@@ -319,7 +318,7 @@ async function _getAllImageUrls(path) {
 
     return downloadURLs; // Array of image URLs
   } catch (error) {
-    console.error("Erro ao listar imagens:", error.message || error);
+    console.error("Error while listing images:", error.message || error);
     return [];
   }
 }

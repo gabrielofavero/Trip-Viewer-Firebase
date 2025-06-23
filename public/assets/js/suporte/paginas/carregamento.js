@@ -42,7 +42,7 @@ function _startLoadingTimer() {
       } else if (LOADING_SECONDS >= 10 && firstLoad == 'false') {
         _stopLoadingTimer();
         localStorage.setItem('firstLoad', 'true');
-        const error = new Error('Não foi possível carregar a página. Verifique sua conexão com a internet e tente novamente');
+        const error = new Error(translate('messages.errors.loading_timeout'));
         _displayError(error, true);
       }
     }, 1000);

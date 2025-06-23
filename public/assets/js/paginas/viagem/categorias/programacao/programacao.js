@@ -139,10 +139,10 @@ function _loadProgramacaoHojeButton() {
     if (hoje >= INICIO.date && hoje <= FIM.date) {
         getID('programacao-hoje').style.display = '';
         getID('programacao-hoje').addEventListener('click', function () {
-            const hojeText = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+            const hojeText = _getDateString(hoje, 'dd/mm/yyyy')
 
             if (!PROGRAMACAO_ABERTA || (PROGRAMACAO_ABERTA && hojeText != PROGRAMACAO_ATUAL.dia + "/" + PROGRAMACAO_ATUAL.mes + "/" + PROGRAMACAO_ATUAL.ano)) {
-                _loadCalendarItem(hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear());
+                _loadCalendarItem(_getDateString(hoje, 'dd/mm/yyyy'));
             }
 
             if (PROGRAMACAO_ABERTA && hojeText === PROGRAMACAO_ATUAL.dia + "/" + PROGRAMACAO_ATUAL.mes + "/" + PROGRAMACAO_ATUAL.ano) {

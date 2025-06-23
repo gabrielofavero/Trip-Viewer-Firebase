@@ -73,14 +73,14 @@ async function _fetchConversoes(url) {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            console.error('Erro de rede ao tentar obter dados de conversão: ' + response.statusText);
-            console.warn('Falha ao carregar conversão de moedas. Usando valores padrão.');
+            console.error(`Network issue while trying to fetch currency information: ${response.statusText}`);
+            console.warn(`Using default currency ${MOEDA_PADRAO}`);
         }
         const data = await response.json();
         return data;
     } catch (error) {
         console.error(error);
-        console.warn('Falha ao carregar conversão de moedas. Usando valores padrão.');
+        console.warn(`Using default currency ${MOEDA_PADRAO}`);
     }
 }
 
@@ -140,7 +140,8 @@ function _convertMoeda(from, to, valor) {
     if (MOEDA_CONVERSAO[to + from]) {
         return valor / MOEDA_CONVERSAO[to + from];
     } else {
-        _displayError('Erro ao converter moeda');
+        console.error(`Conversion error: from ${valor} ${from} to ? ${to}`)
+        _displayError(translate('messages.errors.unknown'));
     }
 }
 

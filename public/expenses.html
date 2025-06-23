@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
 
-  <title>Gastos</title>
+  <title>TripViewer</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -93,6 +93,13 @@
       </div>
     </a>
     <div class="icons-box" id="icons-box">
+      <div class="lang-selector">
+        <button class="lang-button">EN</button>
+        <div class="lang-options">
+          <button data-lang="en">EN</button>
+          <button data-lang="pt">PT</button>
+        </div>
+      </div>
       <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
       <i id="night-mode" class="bx bx-moon icon-buttons"></i>
     </div>
@@ -114,11 +121,11 @@
     <div class="tabs-container">
       <div class="tabs" id="tab-gastos" style="display: none;">
         <input type="radio" style="display: none;" id="radio-resumo" name="tabs-gastos" checked />
-        <label class="tab" for="radio-resumo">Resumo</label>
+        <label class="tab" for="radio-resumo" data-translate="labels.overview"></label>
         <input type="radio" style="display: none;" id="radio-gastosPrevios" name="tabs-gastos" />
-        <label class="tab" for="radio-gastosPrevios">Gastos Prévios</label>
+        <label class="tab" for="radio-gastosPrevios" data-translate="trip.expenses.pre_trip"></label>
         <input type="radio" style="display: none;" id="radio-gastosDurante" name="tabs-gastos" />
-        <label class="tab" for="radio-gastosDurante">Gastos na Viagem</label>
+        <label class="tab" for="radio-gastosDurante" data-translate="trip.expenses.during_trip"></label>
         <span class="glider"></span>
       </div>
     </div>
@@ -129,19 +136,19 @@
     <div id="resumo">
       <div id="resumo-container" class="gastos-container">
         <div class="gastos-card grafico">
-          <h2 id="resumo-titulo" class="gastos-titulo">Resumo dos Gastos</h2>
+          <h2 id="resumo-titulo" class="gastos-titulo" data-translate="labels.overview"></h2>
           <div id="resumo-total" class="gastos-subtitulo"></div>
           <canvas id="resumo-grafico" width="300" height="300"></canvas>
         </div>
 
         <div id="resumo-gastosPrevios" class="gastos-card gastos-recibo" style="display: none;">
-          <h2 class="gastos-titulo" id="resumo-gastosPrevios-titulo">Gastos Prévios</h2>
+          <h2 class="gastos-titulo" id="resumo-gastosPrevios-titulo" data-translate="trip.expenses.pre_trip"></h2>
           <table id="resumo-gastosPrevios-tabela" class="card-full-size">
           </table>
         </div>
 
         <div id="resumo-gastosDurante" class="gastos-card gastos-recibo" style="display: none;">
-          <h2 class="gastos-titulo" id="resumo-gastosDurante-titulo">Gastos na Viagem</h2>
+          <h2 class="gastos-titulo" id="resumo-gastosDurante-titulo" data-translate="trip.expenses.during_trip"></h2>
           <table id="resumo-gastosDurante-tabela" class="card-full-size">
           </table>
         </div>
@@ -150,7 +157,7 @@
     <div id="gastosPrevios" style="display: none">
       <div id="gastosPrevios-container" class="gastos-container">
         <div class="gastos-card grafico">
-          <h2 id="gastosPrevios-titulo" class="gastos-titulo">Gastos Prévios</h2>
+          <h2 id="gastosPrevios-titulo" class="gastos-titulo" data-translate="trip.expenses.pre_trip"></h2>
           <div id="gastosPrevios-total" class="gastos-subtitulo"></div>
           <canvas id="gastosPrevios-grafico" style="margin-top: 16px;" width="300" height="150"></canvas>
         </div>
@@ -159,7 +166,7 @@
     <div id="gastosDurante" style="display: none">
       <div id="gastosDurante-container" class="gastos-container">
         <div class="gastos-card grafico">
-          <h2 id="gastosDurante-titulo" class="gastos-titulo">Gastos na Viagem</h2>
+          <h2 id="gastosDurante-titulo" class="gastos-titulo" data-translate="trip.expenses.during_trip"></h2>
           <div id="gastosDurante-total" class="gastos-subtitulo"></div>
           <canvas id="gastosDurante-grafico" style="margin-top: 16px;" width="150" height="75"></canvas>
         </div>
@@ -173,9 +180,9 @@
   <footer class="footer">
     <div class="container">
       <div class="credits">
-        Desenvolvido por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
+        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
           class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
-          Atribuições</span>
+          <span data-translate="labels.credits"></span></span>
       </div>
     </div>
   </footer>
@@ -203,7 +210,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 
   <!-- App JS Files -->
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main/main.js"></script>
   <script src="assets/js/suporte/firebase/database.js"></script>
   <script src="assets/js/suporte/estilos/animacoes.js"></script>
   <script src="assets/js/suporte/paginas/dados.js"></script>

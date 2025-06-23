@@ -25,8 +25,8 @@ function _loadCheckOut(hospedagem, j) {
 function _loadHospeagemCheck(chave, checkTipo, hospedagem, j) {
     const data = _convertFromDateObject(hospedagem.datas[chave]);
     if (data) {
-        getID(`check-${checkTipo}-${j}`).value = _jsDateToDate(data, 'yyyy-mm-dd');
-        getID(`check-${checkTipo}-horario-${j}`).value = _jsDateToTime(data);
+        getID(`check-${checkTipo}-${j}`).value = _getDateString(data, 'yyyy-mm-dd');
+        getID(`check-${checkTipo}-horario-${j}`).value = _getTimeString(data);
     }
 }
 
@@ -54,7 +54,7 @@ function _openImagensHospedagem(j) {
     const size = 5;
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 
-    propriedades.titulo = "Adicionar Imagens";
+    propriedades.titulo = translate('labels.image.add_title');
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getImagemHospedagemContent(size);
     propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerImagemHospedagem()` }];
@@ -88,37 +88,37 @@ function _getImagemHospedagemContent(size = 5) {
     for (let k = 1; k <= size; k++) {
         botoes += `
         <div class="input-botao-container" id="input-botao-container-${k}">
-            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" onclick="_openInnerImagemHospedagem(${k})" style="margin-top:1em">Adicionar Imagem</button>
+            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" onclick="_openInnerImagemHospedagem(${k})" style="margin-top:1em">${translate('labels.image.add')}</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
         </div>`;
 
         inner += `
         <div id="hospedagens-imagem-${k}" style="display: none">
             <div class="nice-form-group">
-                <label>Descrição da Imagem <span class="opcional"> (Opcional)</span></label>
-                <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="Suíte de casal" />
+                <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
             </div>
 
             <div class="nice-form-group customization-box" id="hospedagens-box-${k}">
-                <label>Imagens <span class="opcional"> (Opcional)</span></label>
+                <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
                 <input id="upload-hospedagens-${k}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-                <p id="upload-hospedagens-${k}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</p>
+                <p id="upload-hospedagens-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</p>
             </div>
 
             <div class="nice-form-group">
-                <input id="link-hospedagens-${k}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
+                <input id="link-hospedagens-${k}" class="imagem-input" type="url" placeholder="${translate('labels.image.placeholder')}" value=""
                 class="icon-right">
             </div>
 
             <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-hospedagens-${k}">
                 <div class="nice-form-group">
                 <input type="radio" name="type-hospedagens-${k}" id="enable-link-hospedagens-${k}" checked>
-                <label for="enable-link-hospedagens-${k}">Fornecer link</label>
+                <label for="enable-link-hospedagens-${k}">${translate('labels.image.link')}</label>
                 </div>
 
                 <div class="nice-form-group">
                 <input type="radio" name="type-hospedagens-${k}" id="enable-upload-hospedagens-${k}">
-                <label for="enable-upload-hospedagens-${k}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
+                <label for="enable-upload-hospedagens-${k}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
                 </div>
             </fieldset>
         </div>
@@ -126,7 +126,7 @@ function _getImagemHospedagemContent(size = 5) {
     }
 
     return `
-    <p style="font-size: 0.8em; margin-top: -20px">Você pode adicionar até 5 imagens</p>
+    <p style="font-size: 0.8em; margin-top: -20px">${translate('labels.image.quantity_limit')}</p>
     <div class="draggable-area" data-group="imagem-hospedagens" id="imagem-hospedagens-botoes">
         ${botoes}
     </div>
@@ -146,7 +146,7 @@ function _closeInnerImagemHospedagem() {
         const k = _getJ(orderId);
         const id = `hospedagens-imagem-${k}`;
         if (getID(id).style.display == 'block') {
-            let titulo = 'Adicionar Imagem';
+            let titulo = translate('labels.image.add');
 
             if (_hasInnerImagemHospedagem(k)) {
                 titulo = getID(`hospedagens-imagem-descricao-${k}`).value || `Imagem ${k}`;

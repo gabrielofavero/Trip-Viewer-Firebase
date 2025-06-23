@@ -69,7 +69,7 @@ function _getIdFromObjectDB(dbObject) {
     return segments[segments.length - 1];
 
   } catch (e) {
-    console.error('Falha ao obter ID de DB: ' + e.message)
+    console.error('Cannot get ID from DB: ' + e.message)
     return;
   }
 }
@@ -132,7 +132,7 @@ function _replaceLast(text, search, replacement) {
 }
 
 function _getReadableArray(array) {
-  return _replaceLast(array.join(", "), ",", " e");
+  return _replaceLast(array.join(", "), ",", ` ${translate('labels.and')}`);
 }
 
 function _removeChild(tipo) {
@@ -349,7 +349,7 @@ function _compareDocuments() {
       _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
       _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
       _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
-      _compareAndPush({ obj1: {pin: PIN_GASTOS.current}, obj2: {pin: PIN_GASTOS.new}, ignoredPaths: [], name: 'senha de acesso aos gastos' });
+      _compareAndPush({ obj1: { pin: PIN_GASTOS.current }, obj2: { pin: PIN_GASTOS.new }, ignoredPaths: [], name: 'senha de acesso aos gastos' });
       break;
     case 'editar-listagem':
       const ignoredPaths = _getIgnoredPathDestinos();
@@ -360,7 +360,7 @@ function _compareDocuments() {
       _compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
       break;
     default:
-      console.warn('Página não suportada para comparação de documentos. Use a função nativa "_compareObjects()"');
+      console.warn('Page not supported. Use "_compareObjects()"');
       return null;
   }
 
@@ -373,12 +373,18 @@ function _compareDocuments() {
 
 function _validateIfDocumentChanged() {
   DOCS_CHANGED = _compareDocuments();
-  const invalid = !DOCS_CHANGED ? true : DOCS_CHANGED.multiple ? DOCS_CHANGED.data.every(item => item.areEqual) : DOCS_CHANGED.data[0].areEqual;
 
-  if (invalid) {
+  if (!DOCS_CHANGED) {
+    getID('modal-inner-text').innerHTML = `${translate('messages.documents.save.error')}. ${translate('messages.documents.save.no_new_data')}`;
     SUCCESSFUL_SAVE = false;
-    getID('modal-inner-text').innerHTML = DOCS_CHANGED ? `Não foi possível realizar o salvamento. Não houve alterações nos dados.` :
-      'Falha ao verificar se houve mudanças no documento. Página não cadastrada. <a href="mailto.o.favero@live.com">Entre em contato com o administrador</a> para mais informações.'
+  }
+
+  if ((DOCS_CHANGED.multiple && DOCS_CHANGED.data.every(item => item.areEqual)) || DOCS_CHANGED.data[0].areEqual) {
+    getID('modal-inner-text').innerHTML = `${translate('messages.documents.save.error')}. ${translate('messages.documents.save.unknown')}`
+    SUCCESSFUL_SAVE = false;
+  }
+
+  if (!SUCCESSFUL_SAVE) {
     _openModal();
     _stopLoadingScreen();
   }
@@ -406,4 +412,35 @@ function _getNewDataDocument(tipo) {
     default:
       return null;
   }
+}
+
+function _getLocalJSON() {
+  return new Promise((resolve, reject) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+
+    input.onchange = event => {
+      const file = event.target.files[0];
+      if (!file) {
+        reject('No file selected');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const json = JSON.parse(e.target.result);
+          resolve(json);
+        } catch (err) {
+          reject('Invalid JSON file');
+        }
+      };
+      reader.onerror = () => reject('Failed to read file');
+
+      reader.readAsText(file);
+    };
+
+    input.click();
+  });
 }

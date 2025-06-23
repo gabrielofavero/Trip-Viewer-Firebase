@@ -10,9 +10,9 @@ function _updateTransporteTitle(i) {
 }
 
 function _getTransporteTipo(i) {
-    const ida = getID(`ida-${i}`).checked ? 'Ida' : '';
-    const durante = getID(`durante-${i}`).checked ? 'Durante' : '';
-    const volta = getID(`volta-${i}`).checked ? 'Volta' : '';
+    const ida = getID(`ida-${i}`).checked ? translate('trip.transportation.departure') : '';
+    const durante = getID(`durante-${i}`).checked ? translate('trip.transportation.during') : '';
+    const volta = getID(`volta-${i}`).checked ? translate('trip.transportation.return') : '';
 
     return ida || durante || volta;
 }
@@ -53,7 +53,7 @@ function _loadTransporteVisibility(i) {
         <option value="movida">Movida</option>
         <option value="uber">Uber</option>
         <option value="unidas">Unidas</option>
-        <option value="">Nenhuma</option>
+        <option value="">${translate('labels.none')}</option>
         `
             selectValid = true;
             break;
@@ -69,9 +69,9 @@ function _loadTransporteVisibility(i) {
     }
 
     select.innerHTML = `
-    <option value="selecione">Selecione</option>
+    <option value="selecione">${translate('labels.select')}</option>
     ${selectOptions}
-    <option value="outra">Outra</option>
+    <option value="outra">${translate('labels.other')}</option>
     `;
 
     if (value && select.innerHTML.includes(value)) {

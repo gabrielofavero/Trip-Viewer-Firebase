@@ -143,7 +143,7 @@ function _loadEventListeners() {
   window.addEventListener("beforeunload", (event) => {
     if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
       event.preventDefault();
-      event.returnValue = "Tem certeza que deseja sair? As alterações não salvas serão perdidas.";
+      event.returnValue = translate('messages.exit_confirmation');
     }
   });
 }
@@ -234,22 +234,6 @@ function _emojisOnInputAction(j, categoria) {
   }
 }
 
-async function getDesktopLink(originalLink) {
-  try {
-    const response = await fetch(originalLink, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3' } });
-    const html = await response.text();
-    const match = html.match(/"og:url" content="([^"]+)"/);
-    if (match && match[1]) {
-      return match[1];
-    } else {
-      return "Desktop link not found.";
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    return "An error occurred while fetching the desktop link.";
-  }
-}
-
 function _openMoveDestinoModal(j, categoria) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 
@@ -323,12 +307,11 @@ function _moveDestino(j, categoria) {
 }
 
 function _deleteDestino() {
-  let destino = getID('titulo').value;
-  destino = destino ? ` "${destino}"` : '';
+  const name = getID('titulo').value;
 
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-  propriedades.titulo = 'Apagar Destino';
-  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão do destino${destino}? A ação não poderá ser desfeita.`;
+  propriedades.titulo = translate('destination.delete.title');
+  propriedades.conteudo = translate('destination.delete.message', { name });
   propriedades.botoes = [{
     tipo: 'cancelar',
   }, {

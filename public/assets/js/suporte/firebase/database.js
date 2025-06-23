@@ -1,6 +1,7 @@
 var DOCUMENT_ID;
-
 var ERROR_FROM_GET_REQUEST = "";
+
+const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
 
 // Constructors
 function _buildDatabaseObject(success, message = "", data = {}) {
@@ -21,7 +22,7 @@ async function _get(path, treatError = true) {
     if (snapshot.exists) {
       return snapshot.data();
     } else {
-      const message = `O documento buscado não existe: ${path}`;
+      const message = `Document not found: ${path}`;
       console.warn(message);
       return;
     }
@@ -40,7 +41,7 @@ async function _hasReadPermission(path) {
     const snapshot = await docRef.get();
 
     if (!snapshot.exists) {
-      console.warn(`O documento '${path}' não existe restrições de leitura, mas não pode existe`);
+      console.warn(`Document has reading permissions, but it was not found: ${path}`);
     }
 
     return true;
@@ -58,11 +59,11 @@ async function _create(collection, data, docName = "") {
     } else {
       docRef = await firebase.firestore().collection(collection).doc(docName).set(data)
     }
-    return _buildDatabaseObject(true, `Documento criado com sucesso`, docRef)
+    return _buildDatabaseObject(true, translate('messages.documents.create.success'), docRef)
 
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, 'Erro ao criar o documento: ' + error.message)
+    return _buildDatabaseObject(false, `${translate('messages.documents.create.error')}: ${error.message}`)
   }
 }
 
@@ -79,10 +80,10 @@ async function _deepCreate(path, data, docId = "") {
       await docRef.set(data);
     }
 
-    return _buildDatabaseObject(true, `Documento criado com sucesso`, docRef);
+    return _buildDatabaseObject(true, translate('messages.documents.create.success'), docRef);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, 'Erro ao criar o documento: ' + error.message);
+    return _buildDatabaseObject(false, `${translate('messages.documents.create.error')}: ${error.message}`);
   }
 }
 
@@ -90,10 +91,10 @@ async function _update(path, newData) {
   const docRef = firebase.firestore().doc(path);
   try {
     const update = await docRef.update(newData);
-    return _buildDatabaseObject(true, 'Documento atualizado com sucesso', update);
+    return _buildDatabaseObject(true, translate('messages.documents.update.success'), update);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, 'Erro ao atualizar o documento: ' + error.message)
+    return _buildDatabaseObject(false, `${translate('messages.documents.update.error')}: ${error.message}`)
   }
 }
 
@@ -101,10 +102,10 @@ async function _override(path, newData) {
   const docRef = firebase.firestore().doc(path);
   try {
     await docRef.set(newData, { merge: false });
-    return _buildDatabaseObject(true, 'Documento substituído com sucesso');
+    return _buildDatabaseObject(true, translate('messages.documents.replace.success'));
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, 'Erro ao substituir o documento: ' + error.message);
+    return _buildDatabaseObject(false, `${translate('messages.documents.replace.error')}: ${error.message}`);
   }
 }
 
@@ -112,10 +113,10 @@ async function _delete(path) {
   const docRef = firebase.firestore().doc(path);
   try {
     const deleteObj = await docRef.delete();
-    return _buildDatabaseObject(true, 'Documento atualizado com sucesso', deleteObj);
+    return _buildDatabaseObject(true, translate('messages.documents.delete.success'), deleteObj);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, 'Erro ao deletar o documento: ' + error.message)
+    return _buildDatabaseObject(false, `${translate('messages.documents.delete.error')}: ${error.message}`)
   }
 }
 
@@ -132,12 +133,12 @@ async function _getSingleData(type) {
           place = await _get(`destinos/${data.destinos[i].destinosID}`, false);
           data.destinos[i].destinos = place
         } catch (e) {
-          console.warn(`Não foi possível carregar o destino ${data.destinos[i].destinosID}: ${e.message}`);
+          console.warn(`Unable to get destination ${data.destinos[i].destinosID}: ${e.message}`);
           data.destinos.splice(i, 1);
         }
       }
     } else {
-      _displayError(`Não foi possível carregar a página. Não há um código de ${type} válido na URL`);
+      _displayError(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`);
     }
   } catch (error) {
     console.error('Error fetching data from Firestore:', error.message);
@@ -209,29 +210,50 @@ async function _deleteUserObjectDB(id, type) {
 async function _deleteAccount() {
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    const promises = [];
-
-    for (const viagemID of userData.viagens) {
-      const viagem = await _get(`viagens/${viagemID}`);
-      const dono = viagem.compartilhamento.dono;
-      if (uid == dono) {
-        promises.push(_deleteUserObjectDB(viagemID, "viagens"));
-      }
-    }
-
-    for (const destinoID of userData.destinos) {
-      const destino = await _get(`destinos/${destinoID}`);
-      const dono = destino.compartilhamento.dono;
-      if (uid == dono) {
-        promises.push(_deleteUserObjectDB(destinoID, "destinos"));
-      }
-    }
-
-    await Promise.all(promises);
+    await _deleteAccountDocuments();
     await _delete(`usuarios/${uid}`);
     await firebase.auth().currentUser.delete();
   }
+}
+
+async function _deleteAccountDocuments() {
+  const uid = await _getUID();
+  if (uid) {
+    const userData = await _get(`usuarios/${uid}`);
+    const promises = [];
+
+    for (const type of DATABASE_TRIP_DOCUMENTS) {
+      if (userData[type]) {
+        for (const docID of userData[type]) {
+          promises.push(_delete(`${type}/${docID}`));
+        }
+        userData[type] = [];
+      }
+    }
+
+    promises.push(_update(`usuarios/${uid}`, userData));
+    await Promise.all(promises);
+  }
+}
+
+async function _createAccountDocuments(data) {
+  const uid = await _getUID();
+  if (!uid) return;
+
+  const promises = [];
+  const userData = await _get(`usuarios/${uid}`);
+
+  for (const type of DATABASE_TRIP_DOCUMENTS) {
+    if (data[type]) {
+      for (const document of data[type]) {
+        promises.push(_create(type, document.data, document.code));
+        userData[type].push(document.code);
+      }
+    }
+  }
+
+  promises.push(_update(`usuarios/${uid}`, userData));
+  await Promise.all(promises);
 }
 
 async function _addToUserArray(type, value) {
@@ -249,7 +271,7 @@ async function _addToUserArray(type, value) {
           [type]: list
         });
       }
-      console.log("Dados de usuário atualizados");
+      console.log("User data updated successfully");
     }
   }
 }
@@ -257,14 +279,14 @@ async function _addToUserArray(type, value) {
 async function _newUserObjectDB(object, type) {
   if (await _getUID()) {
     const result = await _create(type, object)
-    console.log(`Criação em ${type}:`);
+    console.log(`Document created in ${type}:`);
     console.log(result);
     if (result.data) {
       const id = _getIdFromObjectDB(result);
       _addToUserArray(type, id);
       return result;
     }
-  } else return "Usuário não logado"
+  } else return translate('messages.unauthenticated');
 }
 
 async function _getUserList(type, includeData = false, userData) {
@@ -292,9 +314,9 @@ async function _getUserList(type, includeData = false, userData) {
 
         if (data.versao?.ultimaAtualizacao) {
           const date = new Date(data.versao.ultimaAtualizacao);
-          const dateString = _jsDateToDate(date, "dd/mm/yyyy");
+          const dateString = _getDateString(date, "dd/mm/yyyy");
           singleResult.ultimaAtualizacao = data.versao.ultimaAtualizacao;
-          singleResult.ultimaAtualizacaoText = `Atualizado em ${dateString}`;
+          singleResult.ultimaAtualizacaoText = `${translate('labels.last_updated_on')} ${dateString}`;
         }
 
         if (data.subtitulo) {
@@ -316,7 +338,7 @@ async function _getUserList(type, includeData = false, userData) {
     return result;
 
   } else {
-    throw new Error(`Não foi possível carregar a lista de ${type} pois o usuário não está logado`);
+    throw new Error(translate('messages.errors.unauthenticated'));
   }
 }
 
@@ -338,9 +360,9 @@ function _combineDatabaseResponses(responses) {
   if (responses.length === 1) {
     return responses[0];
   }
-  
+
   const success = !responses.some(response => response.success === false);
-  let message = success ? "Operações concluídas com sucesso" : "Uma ou mais operações falharam. Não foi possível atualizar seu documento por completo";
+  let message = success ? translate('messages.operations.success') : `${translate('messages.operations.error')}. ${translate('messages.documents.update.error')}`;
 
   return {
     message: message,

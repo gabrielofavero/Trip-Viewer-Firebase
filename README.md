@@ -5,9 +5,9 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
-| 🏆     | Feature  | F000    | 87    | 69          | 18         |
-| 📈     | Melhoria | M000    | 104    | 80          | 24        |
-| ⚔️   | Épico   | E000    | 29    | 18          | 11         |
+| 🏆     | Feature  | F000    | 93    | 69          | 24         |
+| 📈     | Melhoria | M000    | 106    | 80          | 26        |
+| ⚔️   | Épico   | E000    | 34    | 19          | 15         |
 
 - 🚦: Bloqueado
 - ❔: Sem solução aparente
@@ -15,26 +15,32 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F084:** Histórico de documentos
-  - *Fazer 5-10 cópias do do documento (analisar tamanho dos arquivos)*
-  - *Checar compatibilidade a partir do data mais recente*
-  - *Manter se incompatível, mas impedir substituição*
-  - *Colocar opção de forçar*
-- 🏆 **F085:** PDF Export
-  - *Exportar dados da viagem em PDF*
-  - *PDF deve seguir design semelhante ao site, porém em forma resumida*
-- 🏆 **F086:** Account Import/Export
-  - *Utiliza sistema de arquivo em JSON*
-  - *Limpar dados atuais antes de importar*
-  - *Mergear com dados atuais (ignorar documentos com o mesmo título)*
-  - *Mergear com dados atuais (não ignorar documentos com o mesmo título)*
-
-### Prioridade Média
+- 🏆 **F078:** 
+- ⚔️ **E030:** Account Import/Export
+  - 🏆 **F088:** *Export Selected (Apenas Funções)*
+  - 🏆 **F089:** *Import Selected (Apenas Funções)*
+  - 🏆 **F090:** *Account Import/Export: Interface*
+- ⚔️ **E031:** Histórico de documentos
+  - 🏆 **F084:** Armazenar cópias no próprio documento
+  - 🏆 **F091:** Função de restauração + checagem de compatibilidade
+  - 🏆 **F092:** Histórico de documentos: Interface
+- ⚔️ **E032:** Export local de viagens
+  - 🏆 **F085:** Criar página de viagem / destino para impressão
+  - 🏆 **F093:** Exportação automática via PDF + Interface
 - 🏆 **F087:** Load único de destinos
   - *Todos os destinos carregados*
   - *Switch via função*
   - *Switch via tab*
   - *Lighbox se preserva (sem reload)*
+- ⚔️🚦 **E018:** Novo Front-End: Index.html
+  - *Aguardando template do Guilherme*
+
+### Prioridade Média
+- 📈 **M105:** Remover CONFIG e reduzir uso de variáveis globais
+- 📈 **M106:** Usar require em arquivos js
+- ⚔️ **E034:** Refatorações códigos Frontend
+  - *Usar require*
+  - *Converter para ts*
 - 📈 **M104:** Todos os liks externos devem abrir via window.open
 - 🏆 **F065:** Mostrar se hospedagem foi paga com antecedência ou não
 - ⚔️ **E028:** Places API Text Search
@@ -77,13 +83,7 @@
   - *Aguardando Guilherme desenvolver nova versão do template*
 - ⚔️🚦**E017:** Novo Front-End: Viagens.html
   - *Aguardando template do Guilherme*
-- ⚔️🚦 **E018:** Novo Front-End: Index.html
-  - *Aguardando template do Guilherme*
-- ⚔️ **E019:** Melhorias JavaScript
-  - *Código duplicado*
-  - *Code smells*
-  - *Refatorações*
-  - *Sonarqube*
+- ⚔️ **E019:** Implementar Sonarqube
 - 📈 **M091:** Alinhar select de cidade com box de destino
 - 📈 **M092:** Titulo em dark mode com maior destaque
 - 🏆 **F070:** Componente de adicionar ao calendário
@@ -93,7 +93,6 @@
 - 📈 **M102:** Ao invés de abrir pop-up de hospedagem/transporte, arrastar página para posição e auto clicar em item
 
 ### Prioridade Baixa
-- 🏆 **F078:** Criar sistema de linguagens + EN-US
 - 📈 **M098:** Trocar funções / estruturas de pastas js para EN-US
 - ⚔️ **E024:** Migração de projeto para React OU Angular
 - ⚔️ **E025:** Implementação iOs e Android
@@ -118,6 +117,10 @@
 - 🏆 **F067:** Integração OneDrive
 
 ## Done
+
+### Junho 2025
+- 🏆 **F086:** [⚔️E030] Export All + Import all (Apenas Funções)
+- ⚔️ **E033:** Criar sistema de linguagens + EN-US
 
 ### Maio 2025
 - 🏆 **F083:** Cache Busting

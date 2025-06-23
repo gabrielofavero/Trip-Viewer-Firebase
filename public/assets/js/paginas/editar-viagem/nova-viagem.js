@@ -19,11 +19,11 @@ function _addEditores() {
   const j = _getNextJ('habilitado-editores-content');
   $('#habilitado-editores-content').append(`
     <div class="nice-form-group" id="editores-${j}">
-      <label>Editor ${j}</label>
+      <label>${translate('labels.editors.editor')} ${j}</label>
       <input
         id="editores-email-${j}"
         type="email"
-        placeholder="Email cadastrado no TripViewer"
+        placeholder="${translate('auth.email')}"
         value=""
         class="icon-left"
       />
@@ -39,47 +39,47 @@ function _addTransporte() {
       <h2 class="accordion-header" id="heading-transporte-${j}">
         <button id="transporte-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-transporte-${j}" aria-expanded="false" aria-controls="collapse-transporte-${j}">
-          Trajeto ${j}
+          ${translate('trip.transportation.title')} ${j}
         </button>
       </h2>
       <div id="collapse-transporte-${j}" class="accordion-collapse collapse"
         aria-labelledby="heading-transporte-${j}" data-bs-parent="#transporte-box">
           <div class="accordion-body">
             <div class="nice-form-group" style="display: none">
-            <label>Identificador</label>
+            <label>${translate('labels.id')}</label>
             <input id="transporte-id-${j}" type="text" disabled />
           </div>
 
           <fieldset class="nice-form-group" id="idaVolta-box-${j}">
             <div class="nice-form-group" style="margin-top: -15px">
               <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${j === 1 ? 'checked' : ''} />
-              <label for="ida-${j}">Ida</label>
+              <label for="ida-${j}">${translate('trip.transportation.departure')}</label>
             </div>
   
             <div class="nice-form-group">
               <input type="radio" name="idaVolta-${j}" id="durante-${j}"/>
-              <label for="durante-${j}">Durante a Viagem</label>
+              <label for="durante-${j}">${translate('trip.transportation.during')}</label>
             </div>
   
             <div class="nice-form-group">
               <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${j != 1 ? 'checked' : ''} />
-              <label for="volta-${j}">Volta</label>
+              <label for="volta-${j}">${translate('trip.transportation.return')}</label>
             </div>
           </fieldset>
 
           <div class="nice-form-group">
-            <label>Ponto de Partida <span class="opcional"> (Opcional)</span></label>
+            <label>Ponto de Partida <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="ponto-partida-${j}" type="text" placeholder="Belo Horizonte" />
           </div>
 
           <div class="nice-form-group">
-            <label>Ponto de Chegada <span class="opcional"> (Opcional)</span></label>
+            <label>Ponto de Chegada <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="ponto-chegada-${j}" type="text" placeholder="Las Vegas" />
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
-              <label>Partida</label>
+              <label>${translate('trip.transportation.departure')}</label>
               <input required class="flex-input" id="partida-${j}" type="date" />
             </div>
             <div class="nice-form-group side-by-side">
@@ -89,7 +89,7 @@ function _addTransporte() {
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
-              <label>Chegada</label>
+              <label>${translate('trip.transportation.arrival')}</label>
               <input required class="flex-input" id="chegada-${j}" type="date" />
             </div>
             <div class="nice-form-group side-by-side">
@@ -100,38 +100,38 @@ function _addTransporte() {
           <div class="nice-form-group">
             <label>Meio de Transporte</label>
             <select class="editar-select" required id="transporte-tipo-${j}">
-              <option value="voo">Avião</option>
-              <option value="carro">Carro</option>
-              <option value="onibus">Ônibus</option>
-              <option value="bondinho">Bondinho</option>
-              <option value="helicoptero">Helicóptero</option>
-              <option value="locomotiva">Locomotiva</option>
-              <option value="metro">Metrô</option>
-              <option value="moto">Moto</option>
-              <option value="navio">Navio</option>
-              <option value="trem-bala">Trem Bala</option>
-              <option value="outro">Outro</option>
+              <option value="voo">${translate('trip.transportation.type.flight')}</option>
+              <option value="carro">${translate('trip.transportation.type.car')}</option>
+              <option value="onibus">${translate('trip.transportation.type.bus')}</option>
+              <option value="bondinho">${translate('trip.transportation.type.cable_car')}</option>
+              <option value="helicoptero">${translate('trip.transportation.type.helicopter')}</option>
+              <option value="locomotiva">${translate('trip.transportation.type.train')}</option>
+              <option value="metro">${translate('trip.transportation.type.subway')}</option>
+              <option value="moto">${translate('trip.transportation.type.motocycle')}</option>
+              <option value="navio">${translate('trip.transportation.type.ship')}</option>
+              <option value="trem-bala">${translate('trip.transportation.type.bullet_train')}</option>
+              <option value="outro">${translate('labels.other')}</option>
             </select>
           </div>
 
           <div class="nice-form-group">
-            <label>Duração <span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.other')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input class="flex-input" id="transporte-duracao-${j}" type="time" />
           </div>
 
           <div class="nice-form-group" id="empresa-select-form-group-${j}">
-            <label>Nome da Empresa <span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.company')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select class="editar-select" id="empresa-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="empresa-${j}" type="text" placeholder="Empresa de Transporte" />
+            <input class="nice-form-group" id="empresa-${j}" type="text" placeholder="${translate('labels.company')}" />
           </div>
 
           <div class="nice-form-group">
-            <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="reserva-transporte-${j}" type="text" placeholder="ABC123" />
           </div>
 
           <div class="nice-form-group">
-            <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="transporte-link-${j}" type="url" placeholder="https://www.google.com/" value=""
               class="icon-right" />
           </div>
@@ -172,37 +172,37 @@ function _addHospedagens() {
       <h2 class="accordion-header" id="heading-hospedagens-${j}">
         <button id="hospedagens-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-hospedagens-${j}" aria-expanded="false" aria-controls="collapse-hospedagens-${j}">
-          Hospedagem ${j}
+          ${translate('trip.accommodation.accommodation')} ${j}
         </button>
       </h2>
       <div id="collapse-hospedagens-${j}" class="accordion-collapse collapse"
         aria-labelledby="heading-hospedagens-${j}" data-bs-parent="#hospedagens-box">
           <div class="accordion-body">
             <div class="nice-form-group" style="display: none">
-            <label>Identificador</label>
+            <label>${translate('labels.id')}</label>
             <input id="hospedagens-id-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group">
             <input id="hospedagens-cafe-${j}" type="checkbox" class="switch">
             <label for="hospedagens-cafe-${j}">
-              Café da Manhã Incluso
+              ${translate('trip.accommodation.breakfast')}
             </label>
           </div>
 
           <div class="nice-form-group">
-            <label>Nome da Hospedagem</label>
-            <input required id="hospedagens-nome-${j}" type="text" placeholder="Casa da Fernanda" />
+            <label>${translate('labels.name')}</label>
+            <input required id="hospedagens-nome-${j}" type="text" placeholder="${translate('trip.accommodation.name_placeholder')}" />
           </div>
   
           <div class="nice-form-group">
-            <label>Endereço</label>
-            <input required id="hospedagens-endereco-${j}" type="text" placeholder="Rua ABC, número 0" />
+            <label>${translate('labels.address')}</label>
+            <input required id="hospedagens-endereco-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
           </div>
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
-              <label>Check-In</label>
+              <label>${translate('trip.accommodation.checkin')}</label>
               <input class="flex-input" id="check-in-${j}" type="date" value="${inicioFim.inicio}" />
             </div>
             <div class="nice-form-group side-by-side">
@@ -212,7 +212,7 @@ function _addHospedagens() {
   
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
-              <label>Check-Out</label>
+              <label>${translate('trip.accommodation.checkout')}</label>
               <input class="flex-input" id="check-out-${j}" type="date" value="${inicioFim.fim}" />
             </div>
             <div class="nice-form-group side-by-side">
@@ -221,24 +221,24 @@ function _addHospedagens() {
           </div>
   
           <div class="nice-form-group">
-            <label>Descrição <span class="opcional"> (Opcional)</span></label>
-            <input id="hospedagens-descricao-${j}" type="text" placeholder="Quarto Duplo, camas King" />
+            <label>${translate('labels.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="hospedagens-descricao-${j}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
           </div>
 
           <div class="nice-form-group">
-            <label>Código da Reserva <span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="reserva-hospedagens-${j}" type="text" placeholder="ABC123" />
           </div>
     
           <div class="nice-form-group">
-            <label>Link da Reserva <span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="reserva-hospedagens-link-${j}" type="url" placeholder="https://www.google.com/" value=""
               class="icon-right" />
           </div>
 
           <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
-            <label>Imagens <span class="opcional"> (Opcional)</span></label>
-            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">Adicionar Imagens</button>
+            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate('labels.image.add_title')}</button>
           </div>
             
         </div>
@@ -295,7 +295,7 @@ function _loadProgramacao() {
 
   for (let j = 1; j <= DATAS.length; j++) {
     const data = DATAS[j - 1];
-    let dataFormatada = _jsDateToDayOfTheWeekAndDateTitle(data);
+    let dataFormatada = _getDateTitle(data, 'weekday_day_month');
 
     programacaoBox.innerHTML += `
       <div id="programacao-${j}" class="accordion-item accordion-programacao" >
@@ -311,14 +311,14 @@ function _loadProgramacao() {
         <div class="accordion-body">
 
           <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
-            <label>Local<span class="opcional"> (Opcional)</span></label>
+            <label>${translate('destination.title')}<span class="opcional"> (${translate('labels.optional')})</span></label>
             <fieldset class="nice-form-group destinos-checkboxes" id="programacao-local-${j}">
               ${_getDestinosAtivosCheckboxOptions('programacao', j)}
             </fieldset>
           </div>
 
           <div class="nice-form-group">
-            <label>Título<span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.title')}<span class="opcional"> (${translate('labels.optional')})</span></label>
               <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
                 ${_getProgramacaoTitleSelectOptions()}
               </select>  
@@ -326,22 +326,22 @@ function _loadProgramacao() {
           </div>
 
           <div class='turno-box' id='programacao-madrugada-${j}'>
-            <label>Madrugada</label>
+            <label>${translate('datetime.time_of_day.early_hours')}</label>
             <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-madrugada-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-manha-${j}'>
-            <label>Manhã</label>
+            <label>${translate('datetime.time_of_day.morning')}</label>
             <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-manha-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-tarde-${j}'>
-            <label>Tarde</label>
+            <label>${translate('datetime.time_of_day.afternoon')}</label>
             <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-tarde-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-noite-${j}'>
-            <label>Noite</label>
+            <label>${translate('datetime.time_of_day.evening')}</label>
             <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-noite-${j}"></div>
           </div>
 
@@ -355,7 +355,7 @@ function _loadProgramacao() {
                   </path>
                 </g>
               </svg>
-              Adicionar Programação
+              ${translate('labels.add')}
             </button>
           </div>
 
@@ -374,122 +374,6 @@ function _loadProgramacao() {
   getID('habilitado-programacao').addEventListener('change', () => _reloadProgramacao());
 }
 
-function _addLineup() {
-
-  if (!LINEUP_DATA_SELECT_OPTIONS) {
-    _loadLineupDataSelectOptions();
-  }
-
-  const j = _getNextJ('lineup-box');
-  $('#lineup-box').append(`
-    <div id="lineup-${j}" class="accordion-item accordion-lineup" >
-      <h2 class="accordion-header" id="heading-lineup-${j}">
-        <button id="lineup-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-lineup-${j}" aria-expanded="true" aria-controls="collapse-lineup-${j}">
-          Banda / Artista ${j}
-        </button>
-      </h2>
-      <div id="collapse-lineup-${j}" class="accordion-collapse collapse" aria-labelledby="heading-lineup-${j}"
-        data-bs-parent="#lineup-box">
-        <div class="accordion-body">
-
-        <div class="nice-form-group" style="display: none">
-          <label>Identificador</label>
-          <input id="lineup-id-${j}" type="text" disabled />
-        </div>
-  
-          <div class="nice-form-group">
-            <input type="checkbox" id="lineup-headliner-${j}" class="switch" />
-            <label for="lineup-headliner-${j}">
-              Headliner
-            </label>
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Nome</label>
-            <input required id="lineup-nome-${j}" type="text" placeholder="Games We Play" />
-          </div>
-  
-          <div class="nice-form-group" id="lineup-local-box-${j}">
-            <label>Local</label>
-            <select class="editar-select" id="lineup-local-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
-              ${_getDestinosAtivosSelectOptions()}
-            </select>
-          </div>
-
-          <div class="nice-form-group" id="lineup-genero-select-form-group-${j}">
-            <label>Gênero <span class="opcional"> (Opcional)</span></label>
-            <select id="lineup-genero-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="lineup-genero-${j}" type="text" placeholder="Pop Punk" />
-          </div>
-
-          <div class="nice-form-group" id="lineup-palco-select-form-group-${j}">
-            <label>Palco <span class="opcional"> (Opcional)</span></label>
-            <select id="lineup-palco-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="lineup-palco-${j}" type="text" placeholder="Stripe Stage" />
-          </div>
-  
-          <div class="nice-form-group side-by-side">
-            <label>Data <span class="opcional"> (Opcional)</span></label>\
-            <select class="editar-select" id="lineup-data-${j}">
-              ${LINEUP_DATA_SELECT_OPTIONS}
-            </select>
-          </div>
-  
-          <div class="side-by-side-box">
-            <div class="nice-form-group side-by-side">
-              <label>Início <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-inicio-${j}" class="flex-input" type="time" value="" />
-            </div>
-  
-            <div class="nice-form-group side-by-side">
-              <label>Fim <span class="opcional"> (Opcional)</span></label>
-              <input id="lineup-fim-${j}" class="flex-input" type="time" value="" />
-            </div>
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Playlist ou Página do Artista <span class="opcional"> (Opcional)</span></label>
-            <input id="lineup-midia-${j}" type="url"
-              placeholder="https://open.spotify.com/playlist/16mG20ZrC9QttUB6Sozqep?si=da0794cde4914a17"
-              value="" class="icon-right" />
-            <div class="legenda">Apenas links Spotify</div>
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Prioridade <span class="opcional">(Opcional)</span></label>
-            <select class="editar-select" id="lineup-nota-${j}">
-              <option value="?">Prioridade não definida</option>
-              <option value="5">5 - Altíssima prioridade</option>
-              <option value="4">4 - Alta prioridade</option>
-              <option value="3">3 - Prioridade normal</option>
-              <option value="2">2 - Baixa prioridade</option>
-              <option value="1">1 - Sem prioridade</option>
-            </select>
-          </div>
-  
-        </div>
-  
-        <div class="button-box-right-formatted">
-          <button id="remove-lineup-${j}" class="btn btn-basic btn-format">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd"
-                d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                clip-rule="evenodd"></path>
-          </svg>
-          </button>
-        </div>
-  
-      </div>
-    </div>
-    `);
-
-  _loadLineupListeners(j);
-  _addRemoveLineupListener(j);
-  _addSelectorDS('lineup-genero', `lineup-genero-select-${j}`, `lineup-genero-${j}`);
-  _addSelectorDS('lineup-palco', `lineup-palco-select-${j}`, `lineup-palco-${j}`);
-}
-
 function _addGaleria() {
   const j = _getNextJ('galeria-box');
   $('#galeria-box').append(`
@@ -497,48 +381,48 @@ function _addGaleria() {
       <h2 class="accordion-header" id="heading-galeria-${j}">
         <button id="galeria-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-galeria-${j}" aria-expanded="false" aria-controls="collapse-hospedagens-${j}">
-          Imagem ${j}
+          ${translate('labels.image.title')} ${j}
         </button>
       </h2>
       <div id="collapse-galeria-${j}" class="accordion-collapse collapse"
         aria-labelledby="heading-galeria-${j}" data-bs-parent="#galeria-box">
         <div class="accordion-body">
           <div class="nice-form-group">
-            <label>Título</label>
-            <input required id="galeria-titulo-${j}" type="text" placeholder="Lineup por dia" />
+            <label>${translate('labels.title')}</label>
+            <input required id="galeria-titulo-${j}" type="text" placeholder="${translate('destination.lineup.title')}" />
           </div>
 
           <div class="nice-form-group" id="galeria-select-form-group-${j}">
-            <label>Categoria <span class="opcional"> (Opcional)</span></label>
+            <label>${translate('labels.type')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <select id="galeria-categoria-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="galeria-categoria-${j}" type="text" placeholder="Mapa" />
+            <input class="nice-form-group" id="galeria-categoria-${j}" type="text" placeholder="${translate('destination.map.title')}" />
           </div>
     
           <div class="nice-form-group">
-            <label>Descrição <span class="opcional"> (Opcional)</span></label>
-            <input id="galeria-descricao-${j}" type="text" placeholder="Mapa oficial do evento" />
+            <label>${translate('labels.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="galeria-descricao-${j}" type="text" placeholder="${translate('trip.gallery.description_placeholder')}" />
           </div>
     
           <div class="nice-form-group customization-box" id="galeria-${j}-box">
-            <label>Imagem</label>
+            <label>${translate('labels.image.title')}</label>
             <input id="upload-galeria-${j}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
-            <div id="upload-galeria-${j}-size-message" class="message-text"> <i class='red'>*</i> Insira uma imagem de até 1.5MB</div>
+            <div id="upload-galeria-${j}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</div>
           </div>
     
           <div class="nice-form-group">
-            <input id="link-galeria-${j}" class="imagem-input" type="url" placeholder="https://link.com/imagem.jpg" value=""
+            <input id="link-galeria-${j}" class="imagem-input" type="url" placeholder="${translate('labels.image.placeholder')}" value=""
               class="icon-right">
           </div>
     
           <fieldset class="nice-form-group imagem-checkbox">
             <div class="nice-form-group enable-link">
               <input type="radio" name="type-galeria-${j}" id="enable-link-galeria-${j}" checked>
-              <label for="enable-link-galeria-${j}">Fornecer link</label>
+              <label for="enable-link-galeria-${j}">${translate('labels.image.link')}</label>
             </div>
     
             <div class="nice-form-group">
               <input type="radio" name="type-galeria-${j}" id="enable-upload-galeria-${j}">
-              <label for="enable-upload-galeria-${j}">Carregar imagem <span class="opcional"> (Até 1.5MB)</span></label>
+              <label for="enable-upload-galeria-${j}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
             </div>
           </fieldset>
     
