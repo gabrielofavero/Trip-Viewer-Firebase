@@ -8,19 +8,19 @@ function _loadResumo() {
     }
 
     const gastosPrevios = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosPrevios'].resumo;
-    getID(`resumo-gastosPrevios-titulo`).innerHTML = _getTitleWithIcon(`Gastos Prévios`);
+    getID(`resumo-gastosPrevios-titulo`).innerHTML = _getTitleWithIcon("trip.expenses.pre_trip");
     _setTable('resumo-gastosPrevios', gastosPrevios.itens, gastosPrevios.total);
 
     const gastosDurante = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosDurante'].resumo;
-    getID(`resumo-gastosDurante-titulo`).innerHTML = _getTitleWithIcon(`Gastos na Viagem`);
+    getID(`resumo-gastosDurante-titulo`).innerHTML = _getTitleWithIcon("trip.expenses.during_trip");
     _setTable('resumo-gastosDurante', gastosDurante.itens, gastosDurante.total);
 }
 
 function _loadChartResumo() {
-    const labels = ['Gastos Prévios', 'Gastos na Viagem'];
+    const labels = [translate('trip.expenses.pre_trip'), translate('trip.expenses.during_trip')];
     const valores = [GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosPrevios.resumo.total, GASTOS_CONVERTIDOS[MOEDA_ATUAL].gastosDurante.resumo.total];
 
-    getID('resumo-titulo').innerHTML = _getTitleWithIcon(`Resumo dos Gastos`);
+    getID('resumo-titulo').innerHTML = _getTitleWithIcon("trip.expenses.overview");
     getID('resumo-total').innerText = `Total: ${_formatMoeda(valores[0] + valores[1], true)}`;
 
     _setChart('doughnut', 'resumo-grafico', labels, valores)
@@ -28,13 +28,13 @@ function _loadChartResumo() {
 
 // Gastos Prévios
 function _loadGastosPrevios() {
-    _setDoughnutChartCategoria(`Gastos Prévios`, 'gastosPrevios');
+    _setDoughnutChartCategoria(translate('trip.expenses.pre_trip'), 'gastosPrevios');
     _setTableCategoria('gastosPrevios');
 }
 
 // Gastos na Viagem
 function _loadGastosDurante() {
-    _setDoughnutChartCategoria(`Gastos na Viagem`, 'gastosDurante');
+    _setDoughnutChartCategoria(translate('trip.expenses.during_trip'), 'gastosDurante');
     _setTableCategoria('gastosDurante');
 }
 
@@ -89,22 +89,13 @@ function _unsetTableCategoria(tipo) {
     }
 }
 
-function _getTitleWithIcon(title) {
-    let icon = '';
-    if (CONFIG?.gastosIcones && CONFIG.gastosIcones[0] && title) {
-        const search = title.toLowerCase();
-        icon = CONFIG.gastosIcones[0].value;
-        for (const item of CONFIG.gastosIcones) {
-            if (item.keys.includes(search)) {
-                icon = item.value;
-                break;
-            }
-        }
+function _getTitleWithIcon(titlePath, forceIcon = true) {
+    const title = translate(titlePath, {}, false);
+    const icon = CONFIG.icons[titlePath];
+    
+    if (!icon && !forceIcon) {
+        return title;
     }
 
-    if (icon) {
-        return `<i class="iconify" data-icon="${icon}"></i> ${title}`;
-    }
-
-    return title;
+    return `<i class="iconify" data-icon="${icon || CONFIG.icons["trip.expenses.title"]}"></i> ${title}`;
 }

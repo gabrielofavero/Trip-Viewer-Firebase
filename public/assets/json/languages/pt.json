@@ -1,0 +1,568 @@
+{
+    "auth": {
+        "sign_in": "Entrar",
+        "sign_out": "Sair da Conta",
+        "email": "E-mail",
+        "password": "Senha",
+        "account_settings": "Ajustes da conta",
+        "delete_account": {
+            "title": "Excluir conta",
+            "message": "Tem certeza que deseja realizar a exclusão? A ação não poderá ser desfeita e todos os dados associados também serão excluídos"
+        }
+    },
+    "trip": {
+        "next": "Próximas viagens",
+        "previous": "Viagens anteriores",
+        "new": "Nova viagem",
+        "current_single": "Viagem em Andamento",
+        "current_multi_1": "Múltiplas viagens em andamento",
+        "current_multi_2": "Confira em \"Próximas viagens\"",
+        "edit": "Editar viagem",
+        "share": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
+        "delete": {
+            "title": "Excluir viagem",
+            "message": "Tem certeza que deseja excluir a viagem {{name}}? A ação não poderá ser desfeita"
+        },
+        "basic_information": {
+            "subtitle": "Adicione aqui as principais informações da sua viagem",
+            "title_placeholder": "Digite o título da viagem"
+        },
+        "visibility": {
+            "subtitle": "Determine quem pode ver e editar sua viagem",
+            "public": "Todos com o link de acesso podem visualizar sua viagem",
+            "editors": "Permitir que outros usuários possam editar sua viagem"
+        },
+        "customization": {
+            "subtitle": "Dê uma cara única para a sua viagem",
+            "colors": "Escolha o tema e as cores da sua viagem",
+            "links": "Adicione links úteis para a sua viagem"
+        },
+        "expenses": {
+            "title": "Gastos",
+            "full_title": "Gastos da viagem",
+            "subtitle": "Gerencie seus gastos antes e durante a viagem",
+            "public": "Tornar a visualização dos gastos pública",
+            "private": "Proteger a visualização dos gastos com um PIN",
+            "pin": {
+                "title": "PIN de Acesso",
+                "request": "Para acessar os gastos, digite o PIN cadastrado para essa viagem",
+                "new": "Definir PIN de acesso",
+                "change": "Alterar PIN de acesso",
+                "invalid": "PIN inválido. Tente novamente",
+                "insert": "Insira um PIN de acesso de 4 dígitos",
+                "again": "Digite novamento o PIN de acesso"
+            },
+            "pre_trip": "Gastos prévios",
+            "during_trip": "Durante a viagem",
+            "overview": "Resumo dos gastos",
+            "personal": "Gastos pessoais",
+            "other": "Outros gastos",
+            "daily": "Gastos por dia",
+            "exchange_rate_api": "Taxa de Câmbio (API)"
+        },
+        "transportation": {
+            "title": "Transporte",
+            "subtitle": "Cadastre os principais deslocamentos de ida, durante e volta",
+            "single_reservation": "Reserva",
+            "multi_reservation": "Reservas {{reservationsList}} e {{lastReservation}}",
+            "departure": "Partida",
+            "arrival": "Chegada",
+            "during": "Durante",
+            "return": "Retorno",
+            "simple_view": "Visualização simplificada",
+            "leg_view": "Agrupar por trajeto",
+            "departure_location": {
+                "title": "Local de partida",
+                "placeholder": "Belo Horizonte"
+            },
+            "arrival_location": {
+                "title": "Local de chegada",
+                "placeholder": "Las Vegas"
+            },
+            "type": {
+                "title": "Meio de transporte",
+                "flight": "Voo",
+                "flights": "Voos",
+                "car": "Carro",
+                "rideshare": "Transporte por aplicativo",
+                "bus": "Ônibus",
+                "train": "Trem",
+                "cable_car": "Teleférico",
+                "helicopter": "Helicóptero",
+                "ship": "Navio",
+                "cruise": "Cruzeiro",
+                "taxi": "Táxi",
+                "motocycle": "Moto",
+                "bicycle": "Bicicleta",
+                "bullet_train": "Trem-bala",
+                "subway": "Metrô",
+                "other": "Outro"
+            }
+        },
+        "accommodation": {
+            "title": "Hospedagens",
+            "accommodation": "Hospedagem",
+            "subtitle": "Cadastre onde você ficará hospedado durante a viagem",
+            "checkin": "Check-in",
+            "checkout": "Check-out",
+            "breakfast": "Café da manhã",
+            "name_placeholder": "Hotel, Pousada, Airbnb, etc",
+            "address_placeholder": "Rua Exemplo, 123",
+            "description_placeholder": "Quarto duplo, vista para o mar"
+        },
+        "itinerary": {
+            "title": "Programação",
+            "subtitle": "Inclua aqui a sua programação diária",
+            "placeholder": "Ir para...",
+            "todays_itinerary": "Programação de hoje",
+            "no_itinerary": "Nada programado por aqui! ☹️",
+            "instructions": "Selecione uma data para ver a programação",
+            "linked_item": "Item vinculado",
+            "link_item": "Vincular item à programação",
+            "media_button": {
+                "video": "Visualizar Vídeo",
+                "playlist": "Visualizar Playlist"
+            },
+            "replace_title": "Substituir o título \"{{old}}\" por \"{{new}}\"",
+            "set_title": "Definir o título da programação como \"{{title}}\""
+        },
+        "gallery": {
+            "title": "Galeria",
+            "subtitle": "Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros",
+            "description_placeholder": "Mapa oficial do evento"
+        }
+    },
+    "destination": {
+        "title": "Destinos",
+        "subtitle": "O que fazer durante a viagem? Onde comer? Onde visitar?",
+        "mine": "Meus Destinos",
+        "new": "Novo destino",
+        "edit": "Editar Destino",
+        "share": "Venha visualizar o destino {{name}} criado no TripViewer",
+        "all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
+        "nothing": "Sem destinos cadastrados",
+        "basic_information": "Adicione aqui as principais informações do seu destino",
+        "undefined": "Destino não definido",
+        "recent": "Adicionado recentemente",
+        "location_placeholder": "São Paulo",
+        "delete": {
+            "title": "Excluir destino",
+            "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
+        },
+        "tooltips": {
+            "map": "Google Maps ou Apple Maps",
+            "video": "YouTube, TikTok ou Instagram Reels"
+        },
+        "restaurants": {
+            "title": "Restaurantes",
+            "title_singular": "Restaurante",
+            "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite",
+            "placeholders": {
+                "name": "Notorious FISH",
+                "emoji": "🐟",
+                "description": "Restaurante casual especializado em frutos do mar, com ambientação descontraída e petiscos bem executados",
+                "map": "https://maps.app.goo.gl/vLJwpUeydANE9X1a7",
+                "website": "https://www.notoriousfish.com.br/",
+                "instagram": "https://www.instagram.com/notoriousfishbr",
+                "region": "Pinheiros",
+                "video": "https://www.tiktok.com/@isinharemelli/video/7330453337508171014"
+            }
+        },
+        "snacks": {
+            "title": "Lanches",
+            "title_singular": "Lanche",
+            "description": "Estabelecimentos que servem lanches rápidos, ideais para um lanche ou uma refeição leve",
+            "placeholders": {
+                "name": "Café 18 do Forte",
+                "emoji": "☕🧇",
+                "description": "Opção de Brunch em Copacabana. É necessário entrar no forte (cobrado à parte) para chegar ao café",
+                "map": "https://maps.app.goo.gl/1jF1wezx8i9zzK8XA",
+                "website": "https://www.getinapp.com.br/rio-de-janeiro/cafe-18-do-forte",
+                "instagram": "https://www.instagram.com/cafe18doforte/",
+                "region": "Copacabana",
+                "video": "https://www.tiktok.com/@gianeporai/video/7232025643012099333"
+            }
+        },
+        "nightlife": {
+            "title": "Saídas",
+            "title_singular": "Saída",
+            "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento",
+            "placeholders": {
+                "name": "A Forja",
+                "emoji": "🍺",
+                "description": "Restaurante com temática medieval. Focada em carnes com cortes diferentes e bebidas. Pratos bastante diferentes",
+                "map": "https://maps.app.goo.gl/giE94tgaB8GdCsxV8",
+                "website": "https://aforjataverna.com.br/",
+                "instagram": "https://www.instagram.com/forjataverna/",
+                "region": "Savassi",
+                "video": "https://www.instagram.com/reel/Cv213wEpi27/?igsh=dmQzejRtYWducHg4"
+            }
+        },
+        "tourism": {
+            "title": "Turismo",
+            "title_singular": "Ponto Turístico",
+            "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais",
+            "placeholders": {
+                "name": "Mini Mundo",
+                "emoji": "🌍",
+                "description": "Parque único ao ar livre com réplicas em miniatura de edifícios internacionais, além de um café",
+                "map": "https://maps.app.goo.gl/wmAXicvZSfT9rhE2A",
+                "website": "https://minimundo.com.br/",
+                "instagram": "https://www.instagram.com/minimundogramado/",
+                "region": "Planalto",
+                "video": "https://www.youtube.com/watch?v=xnhzzH4iGUE"
+            }
+        },
+        "shopping": {
+            "title": "Compras",
+            "title_singular": "Loja",
+            "description": "Shoppings, supermercados, outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral",
+            "placeholders": {
+                "name": "Cápsula",
+                "emoji": "👕",
+                "description": "Loja de Roupas descoladas e com pontos de fotos. Loja original na Liberdade, mas possui nova unidade no Jardins",
+                "map": "https://maps.app.goo.gl/ECMVvWSt3JikCe5y8",
+                "website": "https://www.capsulashop.com.br/",
+                "instagram": "https://www.instagram.com/capsulashop/",
+                "region": "Jardins, Liberdade",
+                "video": "https://www.tiktok.com/@crializ_/video/7115772586067348742?q=C%C3%A1psula%20liberdade&t=1710608771260"
+            }
+        },
+        "map": {
+            "title": "Mapa",
+            "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas",
+            "instructions": "Cadastre um mapa gratuitamente no",
+            "my_maps": "My Maps"
+        },
+        "lineup": {
+            "title": "Lineup",
+            "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista"
+        },
+        "tourismAndShopping": {
+            "title": "Turismo e Lojas",
+            "title_singular": "Turismo / Loja",
+            "description": "Pontos turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros"
+        },
+        "food": {
+            "title": "Alimentação",
+            "title_singular": "Alimentação",
+            "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros"
+        },
+        "scores": {
+            "1": "Sem prioridade",
+            "2": "Baixa prioridade",
+            "3": "Prioridade normal",
+            "4": "Alta prioridade",
+            "5": "Altíssima prioridade",
+            "default": "Prioridade não definida"
+        },
+        "price": {
+            "default": "Valor Desconhecido",
+            "max": "Mais de {{value}}",
+            "free": "Gratuito",
+            "placeholder": "R$26 - R$50"
+        },
+        "errors": {
+            "tiktok": {
+                "not_found": "Não foi possível encontrar o link do TikTok",
+                "conversion": "Erro ao converter TikTok",
+                "conversion_message": "Os seguintes links deverão ser removidos ou trocados pela versão desktop:"
+            }
+        }
+    },
+    "listing": {
+        "title": "Listas de destinos",
+        "new": "Nova lista de destinos",
+        "edit": "Editar lista de destinos",
+        "share": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
+        "basic_information": "Adicione aqui as principais informações da sua lista de destinos",
+        "last_update": {
+            "title": "Exibir data da última atualização",
+            "description": "Exibe a data de quando a listagem ou algum destino for atualizado"
+        },
+        "title_placeholder": "Melhores Destinos Internacionais",
+        "subtitle_placeholder": "Feito por mim :)",
+        "description_placeholder": "Lista de coisas para fazer dos melhores destinos internacionais que visitei recentemente",
+        "visibility": {
+            "subtitle": "Determine quem pode ver e editar sua lista de destinos",
+            "public": "Todos com o link de acesso podem visualizar sua lista de destinos",
+            "editors": "Permitir que outros usuários possam editar sua lista de destinos"
+        },
+        "customization": {
+            "subtitle": "Dê uma cara única para a sua lista de destinos",
+            "colors": "Escolha o tema e as cores da sua lista de destinos",
+            "links": "Adicione links úteis para a sua lista de destinos"
+        }
+    },
+    "currency": {
+        "title": "Moeda",
+        "type": {
+            "BRL": "Real (R$)",
+            "USD": "Dólar Americano ($)",
+            "EUR": "Euro (€)",
+            "GBP": "Libra Esterlina (£)",
+            "JPY": "Iene / Yuan (¥)",
+            "INR": "Rúpia Indiana (₹)",
+            "RUB": "Rublo Russo (₽)",
+            "CAD": "Dólar Canadense (C$)",
+            "AUD": "Dólar Australiano (A$)",
+            "CHF": "Franco Suíço (CHF)",
+            "SEK": "Coroa Sueca (SEK)",
+            "NOK": "Coroa Norueguesa (NOK)",
+            "DKK": "Coroa Dinamarquesa (DKK)",
+            "NZD": "Dólar Neozelandês (NZ$)",
+            "MXN": "Peso Mexicano (MX$)",
+            "ZAR": "Rand Sul-Africano (ZAR)",
+            "KRW": "Won Sul-Coreano (₩)",
+            "SGD": "Dólar de Singapura (SGD)",
+            "HKD": "Dólar de Hong Kong (HK$)",
+            "ILS": "Novo Shekel Israelense (₪)",
+            "PLN": "Złoty Polonês (PLN)",
+            "HUF": "Forint Húngaro (HUF)",
+            "TWD": "Dólar de Taiwan (NT$)",
+            "THB": "Baht Tailandês (฿)",
+            "other": "Outra moeda"
+        }
+    },
+    "datetime": {
+        "titles": {
+            "day_month": "{{day}} de {{month}}",
+            "weekday_day_month": "{{weekday}}, {{day}} de {{month}}",
+            "month_year": "{{month}} de {{year}}"
+        },
+        "time_of_day": {
+            "title": "Período do dia",
+            "morning": "Manhã",
+            "afternoon": "Tarde",
+            "evening": "Noite",
+            "early_hours": "Madrugada"
+        },
+        "months": {
+            "january": "Janeiro",
+            "february": "Fevereiro",
+            "march": "Março",
+            "april": "Abril",
+            "may": "Maio",
+            "june": "Junho",
+            "july": "Julho",
+            "august": "Agosto",
+            "september": "Setembro",
+            "october": "Outubro",
+            "november": "Novembro",
+            "december": "Dezembro"
+        },
+        "weekdays": {
+            "default": {
+                "monday": "Segunda",
+                "tuesday": "Terça",
+                "wednesday": "Quarta",
+                "thursday": "Quinta",
+                "friday": "Sexta",
+                "saturday": "Sábado",
+                "sunday": "Domingo"
+            },
+            "mini": {
+                "monday": "Seg",
+                "tuesday": "Ter",
+                "wednesday": "Qua",
+                "thursday": "Qui",
+                "friday": "Sex",
+                "saturday": "Sáb",
+                "sunday": "Dom"
+            }
+        },
+        "countdown": {
+            "years": "a",
+            "months": "m",
+            "days": "d",
+            "hours": "h",
+            "minutes": "m",
+            "seconds": "s"
+        },
+        "select_date": "Selecione uma data"
+    },
+    "messages": {
+        "long_load": "O carregamento está demorando mais que o esperado",
+        "text_copied": "Texto copiado para a área de transferência",
+        "no_data": "Sem dados cadastrados 😔",
+        "share": "Venha visualizar meus dados criados no TripViewer",
+        "exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
+        "errors": {
+            "load_title": "Erro no Carregamento 🙁",
+            "unknown": "Um erro inesperado impediu o carregamento da página",
+            "contact_admin": "Entre em contato com o administrador do sistema",
+            "to_report": "para reportar o problema",
+            "unauthenticated": "Não foi possível carregar o documento pois o usuário não está logado",
+            "unknown_directory": "Pasta Desconhecida",
+            "no_upload_permission": "Você não possui permissão para fazer upload de arquivos",
+            "upload_error": "Erro ao fazer upload de arquivos",
+            "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
+            "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
+            "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde"
+        },
+        "too_early": {
+            "title": "Você chegou muito cedo! 😅",
+            "message": "Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀'"
+        },
+        "access_denied": {
+            "title": "Acesso Negado 🚫",
+            "message": "Você não tem permissão para acessar esta página. Por favor, verifique suas credenciais ou entre em contato com o administrador do sistema"
+        },
+        "documents": {
+            "get": {
+                "error": "Não foi possível carregar o documento",
+                "no_code": "Não há um código válido na URL"
+            },
+            "create": {
+                "success": "Documento criado com sucesso",
+                "error": "Erro ao criar o documento"
+            },
+            "update": {
+                "success": "Documento atualizado com sucesso",
+                "error": "Erro ao atualizar o documento"
+            },
+            "replace": {
+                "success": "Documento substituído com sucesso",
+                "error": "Erro ao substituir o documento"
+            },
+            "delete": {
+                "success": "Documento excluído com sucesso",
+                "error": "Erro ao excluir o documento"
+            },
+            "save": {
+                "success": "Documento salvo com sucesso",
+                "error": "Não foi possível salvar o documento",
+                "no_new_data": "Não há novos dados para salvar",
+                "unknown": "Ocorreu um erro ao verificar mudanças no documento",
+                "main": "Salvamento principal",
+                "user": "Salvamento de dados do usuário",
+                "incomplete": "Não foi possível salvar o documento por completo"
+            }
+        },
+        "operations": {
+            "success": "Operações concluídas com sucesso",
+            "error": "Uma ou mais operações falharam"
+        }
+    },
+    "labels": {
+        "intro": "Isso é ",
+        "greeting": "Olá",
+        "people_quantity": "Quantidade de Pessoas",
+        "light_mode": "Tema Claro",
+        "dark_mode": "Tema Escuro",
+        "duration": "Duração",
+        "company": "Empresa",
+        "start": "Início",
+        "end": "Fim",
+        "reservation_code": "Código de reserva",
+        "reservation_link": "Link da reserva",
+        "select": "Selecione",
+        "other": "Outro(a)",
+        "optional": "Opcional",
+        "cancel": "Cancelar",
+        "save": "Salvar",
+        "delete": "Excluir",
+        "understood": "Entendi",
+        "confirm": "Confirmar",
+        "enabled": "Habilitado",
+        "disabled": "Desabilitado",
+        "add": "Adicionar",
+        "search": "Pesquisar",
+        "title": "Título",
+        "subtitle": "Subtítulo",
+        "no_title": "Sem título",
+        "description": "Descrição",
+        "type": "Tipo",
+        "try_again": "Tentar novamente",
+        "all": "Todos",
+        "developed_by": "Desenvolvido por",
+        "credits": "Atribuições",
+        "last_updated_on": "Última atualização em",
+        "unauthenticated": "Não autenticado",
+        "home": "Home",
+        "days": "Dias",
+        "people": "Pessoas",
+        "highlights": "Destaques",
+        "overview": "Resumo",
+        "view": "Ver",
+        "entrertainment": "Entretenimento",
+        "gifts": "Presentes",
+        "forms": "Formulários",
+        "calendar": "Calendário",
+        "accordion": "Accordion",
+        "dashboard": "Dashboard",
+        "tabs": "Abas",
+        "wallpaper": "Papel de Parede",
+        "logo": "Logotipo",
+        "edit": "Editar",
+        "basic_information": "Dados básicos",
+        "visibility": "Visibilidade",
+        "public": "Público",
+        "customization": {
+            "title": "Personalização",
+            "images": {
+                "title": "Imagens Personalizadas",
+                "subtitle": "Adicione um papel de parede e um logotipo",
+                "logo_light": "Logotipo: Tema Claro",
+                "logo_dark": "Logotipo: Tema Escuro"
+            },
+            "colors": {
+                "title": "Cores Personalizadas",
+                "themes": {
+                    "light_and_dark": "Exibir em tema Claro e Escuro",
+                    "light": "Exibir apenas no tema Claro",
+                    "dark": "Exibir apenas no tema Escuro"
+                }
+            },
+            "links": {
+                "title": "Links Personalizados",
+                "attachment": "Anexo Genérico",
+                "google_drive": "Google Drive",
+                "map": "Mapa",
+                "pdf": "PDF",
+                "presentation": "Apresentação (PowerPoint)",
+                "sheet": "Planilha (Excel / Google Sheets)",
+                "vaccination": "Comprovante de Vacinação"
+            }
+        },
+        "editors": {
+            "editor": "Editor",
+            "allow": "Permitir editores",
+            "add": "Adicionar editor"
+        },
+        "id": "Identificador",
+        "name": "Nome",
+        "address": "Endereço",
+        "none": "Nenhum",
+        "date": "Data",
+        "set": "Definir",
+        "replace": "Substituir",
+        "and": "e",
+        "custom": "Personalizado(a)",
+        "cost": "Valor",
+        "image": {
+            "title": "Imagem",
+            "title_plural": "Imagens",
+            "placeholder": "https://exemplo.com/imagem.jpg",
+            "link": "Fornecer link da imagem",
+            "upload": "Upload de imagem",
+            "upload_limit": "Até 1.5MB",
+            "background": "Imagem de fundo",
+            "check": "Verificação de imagem",
+            "add_title": "Adicionar imagens",
+            "add": "Adicionar imagem",
+            "edit": "Editar imagens",
+            "quantity_limit": "Você pode adicionar até 5 imagens",
+            "description": "Descrição da imagem"
+        },
+        "no_data": "Sem dados",
+        "emoji": "Emoji(s)",
+        "social": {
+            "website": "Site",
+            "instagram": "Instagram"
+        },
+        "region": "Região",
+        "priority": "Prioridade",
+        "video": "Vídeo"
+    }
+}

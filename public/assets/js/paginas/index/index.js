@@ -253,8 +253,8 @@ function _loadUserDataHTML(dados, tipo) {
         innertipo = 'viagens';
         const inicioDate = _convertFromDateObject(dados[i].inicio);
         const fimDate = _convertFromDateObject(dados[i].fim);
-        const inicio = _jsDateToDate(inicioDate);
-        const fim = _jsDateToDate(fimDate);
+        const inicio = _getDateString(inicioDate);
+        const fim = _getDateString(fimDate);
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
         break;
       case 'destinos':
@@ -360,7 +360,7 @@ function _loadNotificationBar() {
   if (VIAGENS.coletado && VIAGENS.viagensEmAndamento.length > 0) {
     getID('notification-bar').style.display = 'flex';
     if (VIAGENS.viagensEmAndamento.length == 1) {
-      getID('notification-text').innerHTML = `Viagem em Andamento:<br>${VIAGENS.viagensEmAndamento[0].titulo}`;
+      getID('notification-text').innerHTML = `${translate('pages.index.trips.current_single')}:<br>${VIAGENS.viagensEmAndamento[0].titulo}`;
       if (VIAGENS.viagensEmAndamento[0].cores.ativo) {
         notificationBar.changed = true;
         notificationBar.claro = VIAGENS.viagensEmAndamento[0].cores.claro;
@@ -368,7 +368,7 @@ function _loadNotificationBar() {
         _applyNotificationBarColor();
       }
     } else {
-      getID('notification-text').innerHTML = `Múltiplas viagens em andamento<br> Confira em "Próximas Viagens"`;
+      getID('notification-text').innerHTML = `${translate('pages.index.trips.current_multi_1')}<br> ${translate('pages.index.trips.current_multi_2')}"`;
       getID('notification-link').style.display = 'none';	
     }
   }

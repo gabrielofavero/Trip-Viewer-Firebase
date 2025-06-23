@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!ERROR_FROM_GET_REQUEST) {
       FIRESTORE_DATA = firestoreData;
-      console.log('Dados do Firestore Database carregados com sucesso');
+      console.log('Firestore Database data loaded successfully');
 
       _start();
       _mainLoad();
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       _refreshCategorias();
 
     } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
-      _displayError('O documento não pôde ser carregado. É possível que ele tenha sido excluído ou que você não possua permissão para acessá-lo.', true);
+      _displayError("Cannot load document. It is possible that it does not exist or that you don't have enough permissions", true);
       _stopLoadingScreen();
     } else {
       _displayError(ERROR_FROM_GET_REQUEST);
@@ -119,7 +119,7 @@ function _loadHeader() {
 
   if (TYPE == 'destinos' && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
     const ultimaAtualizacao = new Date(FIRESTORE_DATA.versao.ultimaAtualizacao);
-    getID("subtitulo").innerHTML = `Atualizado em ${_jsDateToDate(ultimaAtualizacao, "dd/mm/yyyy")}`;
+    getID("subtitulo").innerHTML = `${translate(labels.last_updated_on)} ${_getDateString(ultimaAtualizacao, _getDateRegionalFormat())}`;
   }
 
   if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
@@ -133,9 +133,9 @@ function _loadHeader() {
     }
 
     const mostRecentDate = datas.reduce((a, b) => a > b ? a : b);
-    const mostRecentDateString = _jsDateToDate(mostRecentDate, "dd/mm/yyyy");
+    const mostRecentDateString = _getDateString(mostRecentDate, _getDateRegionalFormat());
 
-    getID("dUpdate").innerHTML = `Atualizado em ${mostRecentDateString}`;
+    getID("dUpdate").innerHTML = `${translate(labels.last_updated_on)} ${mostRecentDateString}`;
   }
 
   if (FIRESTORE_DATA.descricao) {
@@ -250,14 +250,14 @@ function _loadModules() {
     function _getCompartilhamentoText() {
       switch (TYPE) {
         case 'listagens':
-          return `Venha visualizar minha lista "${FIRESTORE_DATA.titulo}" criada no TripViewer`
+          return translate('pages.view.share.listing', {name : FIRESTORE_DATA.titulo});
         case 'destinos':
-          return `Venha visualizar o destino "${FIRESTORE_DATA.titulo}" criado no TripViewer`
+          return translate('pages.view.share.destination', {name : FIRESTORE_DATA.titulo});
         case 'viagem':
         case 'viagens':
-          return `Venha visualizar minha viagem "${FIRESTORE_DATA.titulo}" criada no TripViewer, com início em ${INICIO.text} e fim em ${FIM.text}`
+          return translate('pages.view.share.trip', {name : FIRESTORE_DATA.titulo, start: INICIO.text, end: FIM.text});
         default:
-          return `Venha visualizar minhas informações de viagem criadas no TripViewer`
+          return translate('pages.view.share.default');
       }
     }
   }

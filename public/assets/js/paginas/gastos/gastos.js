@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
-        _displayForbidden('Nenhum documento de gastos foi encontrado. Certifique-se de que você está acessando a página por meio do botão "Gastos" na página de Viagem', url);
+        _displayForbidden(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}` , url);
         return;
     }
 
     if (!gastosExport?.ativo) {
-        _displayForbidden('O módulo de gastos não está ativo para essa viagem', `view.html?v=${documentID}`);
+        _displayForbidden(translate('messages.errors.module_not_active', {module: translate('trip.expenses.title')}), `view.html?v=${documentID}`);
         return;
     }
 
@@ -53,14 +53,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 function _requestPinGastos() {
     const cancelAction = `_exitGastos()`;
     const confirmAction = '_loadGastos()';
-    const precontent = 'Para acessar os gastos, digite o PIN cadastrado para essa viagem';
+    const precontent = translate('trip.expenses.pin.request');
     _requestPin({ confirmAction, cancelAction, precontent });
 }
 
 function _requestPinGastosInvalido() {
     const cancelAction = `_exitGastos()`;
     const confirmAction = '_loadGastos()';
-    const precontent = 'PIN Incorreto. Digite o PIN cadastrado para essa viagem.';
+    const precontent = translate('trip.expenses.pin.invalid');
     const invalido = true;
     _requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
@@ -102,7 +102,7 @@ async function _loadGastos() {
             _requestPinGastosInvalido()
         } else {
             console.error(error);
-            _displayError('Não foi possível carregar a página de gastos');
+            _displayError(translate('messages.errors.unknown'));
         }
         _stopLoadingScreen();
     }
@@ -139,7 +139,7 @@ function _applyGastos() {
     }
 
     if (!hasGastosPrevios && !hasGastosDurante) {
-        _displayError('Não há gastos registrados para essa viagem');
+        _displayError(translate('messages.errors.no_data_on_module', {module: translate('trip.expenses.title')}));
     }
 }
 

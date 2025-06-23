@@ -30,71 +30,43 @@
         }
     ],
     "categorias": {
-        "geral": ["restaurantes", "lanches", "saidas", "turismo", "lojas", "lineup", "mapa"],
-        "passeios": ["restaurantes", "lanches", "saidas", "turismo", "lojas"]
+        "geral": [
+            "restaurantes",
+            "lanches",
+            "saidas",
+            "turismo",
+            "lojas",
+            "lineup",
+            "mapa"
+        ],
+        "passeios": [
+            "restaurantes",
+            "lanches",
+            "saidas",
+            "turismo",
+            "lojas"
+        ]
     },
-    "destinos": {
-        "tourismAndShopping": {
-            "description": "Pontos Turísticos diversos e lojas. Bairros, monumentos, museus, praças, shoppings, entre outros.",
-            "subtitle": "",
-            "icon": "bx bx-dish",
-            "title": "Turismo e Lojas"
-        },
-        "comida": {
-            "icon": "bx bx-dish",
-            "subtitle": "",
-            "description": "Lugares diversos para alimentação ou bebidas: Restaurantes, fast-foods, cafeterias, bares, pubs, entre outros.",
-            "title": "Alimentação"
-        },
-        "lineup": {
-            "icon": "bx bx-music",
-            "title": "Lineup",
-            "subtitle": "",
-            "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista."
-        },
-        "lanches": {
-            "icon": "bx bx-cookie",
-            "description": "Fast food, refeições leves ou estabelecimentos especializados em café da manhã e brunch.",
-            "subtitle": "",
-            "title": "Lanches"
-        },
-        "lojas": {
-            "subtitle": "",
-            "title": "Lojas",
-            "icon": "bx bx-shopping-bag",
-            "description": "Shoppings, Supermercados, Outlets, lojas de roupas, calçados, eletrônicos, entre outros. Compras no geral"
-        },
-        "mapa": {
-            "description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas.",
-            "subtitle": "",
-            "title": "Mapa",
-            "icon": "bx bx-map-alt"
-        },
-        "turismo": {
-            "icon": "bx bx-globe",
-            "description": "Diversos pontos turísticos, incluindo bairros, monumentos, museus, praças, mirantes, exposições e muito mais.",
-            "title": "Turismo",
-            "subtitle": ""
-        },
-        "saidas": {
-            "description": "Bares, Pubs, Karaokês, Baladas ou qualquer outra programação com foco em bebidas ou entretenimento.",
-            "icon": "bx bxs-drink",
-            "title": "Saídas",
-            "subtitle": ""
-        },
-        "restaurantes": {
-            "subtitle": "",
-            "icon": "bx bx-dish",
-            "title": "Restaurantes",
-            "description": "Lugares que oferecem refeições completas, perfeitos para almoços e jantares. Alguns podem funcionar exclusivamente à noite."
-        }
+    "icons": {
+        "tourismAndShopping": "bx bx-dish",
+        "comida": "bx bx-dish",
+        "lineup": "bx bx-music",
+        "lanches": "bx bx-cookie",
+        "lojas": "bx bx-shopping-bag",
+        "mapa": "bx bx-map-alt",
+        "turismo": "bx bx-globe",
+        "saidas": "bx bxs-drink",
+        "restaurantes": "bx bx-dish"
     },
-    "notas": {
-        "1": "Sem prioridade",
-        "2": "Baixa prioridade",
-        "3": "Prioridade normal",
-        "4": "Alta prioridade",
-        "5": "Altíssima prioridade",
-        "default": "Prioridade não definida"
+    "translation": {
+        "restaurantes": "restaurants",
+        "lanches": "snacks",
+        "saidas": "nightlife",
+        "turismo": "tourism",
+        "lojas": "shopping",
+        "mapa": "map",
+        "lineup": "lineup",
+        "tourismAndShopping": "tourismAndShopping",
+        "comida": "food"
     }
 }

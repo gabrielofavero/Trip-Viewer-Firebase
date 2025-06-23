@@ -41,7 +41,7 @@ async function _registerIfUserNotPresent() {
 
     if (!user) {
         _signOut();
-        _displayError('Não é possível fazer o registro sem um usuário autenticado.');
+        _displayError(translate('messages.error.unauthenticated'));
         return;
     }
 

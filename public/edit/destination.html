@@ -3,9 +3,10 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
 
-  <title>Editar Destino</title>
+  <title>TripViewer</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -102,6 +103,13 @@
         </div>
       </a>
       <div class="icons-box" id="icons-box">
+        <div class="lang-selector">
+          <button class="lang-button">EN</button>
+          <div class="lang-options">
+            <button data-lang="en">EN</button>
+            <button data-lang="pt">PT</button>
+          </div>
+        </div>
         <i onclick="window.location = '../index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
@@ -118,7 +126,7 @@
                   <path
                     d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
                 </svg>
-                Dados Básicos</a>
+                <span data-translate="labels.basic_information"></span></a>
             </li>
             <li>
               <a href="#restaurantes">
@@ -127,7 +135,7 @@
                     d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2h18v-2zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zm-3 3h20v2H2z">
                   </path>
                 </svg>
-                Restaurantes</a>
+                <span data-translate="destination.restaurants.title"></span></a>
             </li>
             <li>
               <a href="#lanches">
@@ -141,7 +149,7 @@
                   <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
                   <circle cx="10.5" cy="16.5" r="1.5" fill="currentColor"></circle>
                 </svg>
-                Lanches</a>
+                <span data-translate="destination.snacks.title"></span></a>
             </li>
             <li>
               <a href="#saidas">
@@ -150,7 +158,7 @@
                     d="M20.832 4.555A1 1 0 0 0 20 3H4a1 1 0 0 0-.832 1.554L11 16.303V20H8v2h8v-2h-3v-3.697l7.832-11.748zm-2.7.445l-2 3H7.868l-2-3h12.264z">
                   </path>
                 </svg>
-                Saídas</a>
+                <span data-translate="destination.nightlife.title"></span></a>
             </li>
             <li>
               <a href="#turismo">
@@ -159,7 +167,7 @@
                     d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a14.67 14.67 0 0 0-1.792-6.243A8.013 8.013 0 0 1 19.931 11zM12.53 4.027c1.035 1.364 2.427 3.78 2.627 6.973H9.03c.139-2.596.994-5.028 2.451-6.974c.172-.01.344-.026.519-.026c.179 0 .354.016.53.027zm-3.842.7C7.704 6.618 7.136 8.762 7.03 11H4.069a8.013 8.013 0 0 1 4.619-6.273zM4.069 13h2.974c.136 2.379.665 4.478 1.556 6.23A8.01 8.01 0 0 1 4.069 13zm7.381 6.973C10.049 18.275 9.222 15.896 9.041 13h6.113c-.208 2.773-1.117 5.196-2.603 6.972c-.182.012-.364.028-.551.028c-.186 0-.367-.016-.55-.027zm4.011-.772c.955-1.794 1.538-3.901 1.691-6.201h2.778a8.005 8.005 0 0 1-4.469 6.201z">
                   </path>
                 </svg>
-                Turismo</a>
+                <span data-translate="destination.tourism.title"></span></a>
             </li>
 
             <li>
@@ -169,7 +177,7 @@
                     d="M5 22h14c1.103 0 2-.897 2-2V9a1 1 0 0 0-1-1h-3V7c0-2.757-2.243-5-5-5S7 4.243 7 7v1H4a1 1 0 0 0-1 1v11c0 1.103.897 2 2 2zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v1H9V7zm-4 3h2v2h2v-2h6v2h2v-2h2l.002 10H5V10z">
                   </path>
                 </svg>
-                Lojas</a>
+                <span data-translate="destination.shopping.title"></span></a>
             </li>
 
             <li>
@@ -179,7 +187,7 @@
                     d="m21.447 6.105l-6-3a1 1 0 0 0-.895 0L9 5.882L3.447 3.105A1 1 0 0 0 2 4v13c0 .379.214.725.553.895l6 3a1 1 0 0 0 .895 0L15 18.118l5.553 2.776a.992.992 0 0 0 .972-.043c.295-.183.475-.504.475-.851V7c0-.379-.214-.725-.553-.895zM10 7.618l4-2v10.764l-4 2V7.618zm-6-2l4 2v10.764l-4-2V5.618zm16 12.764l-4-2V5.618l4 2v10.764z">
                   </path>
                 </svg>
-                Mapa</a>
+                <span data-translate="destination.map.title"></span></a>
             </li>
 
             <li>
@@ -189,7 +197,7 @@
                     d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
                   </path>
                 </svg>
-                Salvar ou Cancelar</a>
+                <span data-translate="labels.save"></span></a>
             </li>
 
           </ul>
@@ -206,52 +214,51 @@
               <path
                 d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
             </svg>
-            Dados Básicos
+            <span data-translate="labels.basic_information"></span>
           </h1>
 
+          <p data-translate="destination.basic_information"></p>
+
           <div class="nice-form-group">
-            <label id="titulo-label">Nome da Cidade / Região</label>
-            <input required id="titulo" type="text" placeholder="São Paulo" />
+            <label id="titulo-label" data-translate="labels.title"></label>
+            <input required id="titulo" type="text" data-translate="destination.location_placeholder" />
           </div>
 
           <div class="nice-form-group">
-            <label id="moeda-label">Moeda</label>
+            <label data-translate="currency.title"></label>
             <select id="moeda" name="currency">
-              <option value="BRL">Real (R$)</option>
-              <option value="USD">Dólar Americano ($)</option>
-              <option value="THB">Baht Tailandês (฿)</option>
-              <option value="DKK">Coroa Dinamarquesa (DKK)</option>
-              <option value="NOK">Coroa Norueguesa (NOK)</option>
-              <option value="SEK">Coroa Sueca (SEK)</option>
-              <option value="AUD">Dólar Australiano (A$)</option>
-              <option value="CAD">Dólar Canadense (C$)</option>
-              <option value="HKD">Dólar de Hong Kong (HK$)</option>
-              <option value="SGD">Dólar de Singapura (SGD)</option>
-              <option value="TWD">Dólar de Taiwan (NT$)</option>
-              <option value="NZD">Dólar Neozelandês (NZ$)</option>
-              <option value="EUR">Euro (€)</option>
-              <option value="HUF">Forint Húngaro (HUF)</option>
-              <option value="CHF">Franco Suíço (CHF)</option>
-              <option value="JPY">Iene / Yuan (¥)</option>
-              <option value="GBP">Libra Esterlina (£)</option>
-              <option value="NGN">Naira Nigeriana (₦)</option>
-              <option value="ILS">Novo Shekel Israelense (₪)</option>
-              <option value="ARS">Peso Argentino (ARS)</option>
-              <option value="MXN">Peso Mexicano (MX$)</option>
-              <option value="ZAR">Rand Sul-Africano (ZAR)</option>
-              <option value="INR">Rúpia Indiana (₹)</option>
-              <option value="RUB">Rublo Russo (₽)</option>
-              <option value="KRW">Won Sul-Coreano (₩)</option>
-              <option value="CNY">Yuan Chinês (CNY)</option>
-              <option value="PLN">Złoty Polonês (PLN)</option>
-              <option value="outra">Outra Moeda</option>
+              <option value="BRL" data-translate="currency.type.BRL"></option>
+              <option value="USD" data-translate="currency.type.USD"></option>
+              <option value="EUR" data-translate="currency.type.EUR"></option>
+              <option value="GBP" data-translate="currency.type.GBP"></option>
+              <option value="JPY" data-translate="currency.type.JPY"></option>
+              <option value="INR" data-translate="currency.type.INR"></option>
+              <option value="RUB" data-translate="currency.type.RUB"></option>
+              <option value="CAD" data-translate="currency.type.CAD"></option>
+              <option value="AUD" data-translate="currency.type.AUD"></option>
+              <option value="CHF" data-translate="currency.type.CHF"></option>
+              <option value="SEK" data-translate="currency.type.SEK"></option>
+              <option value="NOK" data-translate="currency.type.NOK"></option>
+              <option value="DKK" data-translate="currency.type.DKK"></option>
+              <option value="NZD" data-translate="currency.type.NZD"></option>
+              <option value="MXN" data-translate="currency.type.MXN"></option>
+              <option value="ZAR" data-translate="currency.type.ZAR"></option>
+              <option value="KRW" data-translate="currency.type.KRW"></option>
+              <option value="SGD" data-translate="currency.type.SGD"></option>
+              <option value="HKD" data-translate="currency.type.HKD"></option>
+              <option value="ILS" data-translate="currency.type.ILS"></option>
+              <option value="PLN" data-translate="currency.type.PLN"></option>
+              <option value="HUF" data-translate="currency.type.HUF"></option>
+              <option value="TWD" data-translate="currency.type.TWD"></option>
+              <option value="THB" data-translate="currency.type.THB"></option>
+              <option value="outra" data-translate="currency.type.other"></option>
             </select>
             <input style="display:none" class="nice-form-group" id="outra-moeda" type="text"
-              placeholder="Representação da moeda (R$)" />
+              data-translate="currency.title" />
           </div>
 
           <div id="delete-text" style="display: none;">
-            <a href="#" onclick="_deleteDestino()">Apagar Destino</a>
+            <a href="#" onclick="_deleteDestino()" data-translate="destination.delete.title"></a>
           </div>
 
         </section>
@@ -264,17 +271,14 @@
                 d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2h18v-2zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zm-3 3h20v2H2z">
               </path>
             </svg>
-            Restaurantes
+            <span data-translate="destination.restaurants.title"></span>
           </h1>
-          <p>
-            Lugares com refeições completas, para almoçar e/ou jantar.
-          </p>
+          <p data-translate="destination.restaurants.description"></p>
 
           <div class="nice-form-group">
             <input id="habilitado-restaurantes" type="checkbox" class="switch" />
-            <label id="habilitado-restaurantes-label" for="habilitado-restaurantes">
-              Habilitado
-            </label>
+            <label id="habilitado-restaurantes-label" for="habilitado-restaurantes"
+              data-translate="labels.enabled"></label>
           </div>
 
           <div id="habilitado-restaurantes-content">
@@ -292,7 +296,7 @@
                   </path>
                 </g>
               </svg>
-              Adicionar Restaurante
+              <span data-translate="labels.add"></span>
             </button>
           </div>
         </section>
@@ -310,17 +314,13 @@
               <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
               <circle cx="10.5" cy="16.5" r="1.5" fill="currentColor"></circle>
             </svg>
-            Lanches
+            <span data-translate="destination.snacks.title"></span>
           </h1>
-          <p>
-            Lugares com refeições leves para café da manhã, brunch e/ou mini refeições.
-          </p>
+          <p data-translate="destination.snacks.description"></p>
 
           <div class="nice-form-group">
             <input id="habilitado-lanches" type="checkbox" class="switch" />
-            <label id="habilitado-lanches-label" for="habilitado-lanches">
-              Habilitado
-            </label>
+            <label id="habilitado-lanches-label" for="habilitado-lanches" data-translate="labels.enabled"></label>
           </div>
 
           <div id="habilitado-lanches-content">
@@ -338,7 +338,7 @@
                   </path>
                 </g>
               </svg>
-              Adicionar Lanche
+              <span data-translate="labels.add"></span>
             </button>
           </div>
         </section>
@@ -351,17 +351,13 @@
                 d="M20.832 4.555A1 1 0 0 0 20 3H4a1 1 0 0 0-.832 1.554L11 16.303V20H8v2h8v-2h-3v-3.697l7.832-11.748zm-2.7.445l-2 3H7.868l-2-3h12.264z">
               </path>
             </svg>
-            Saídas
+            <span data-translate="destination.nightlife.title"></span>
           </h1>
-          <p>
-            Bares, Pubs, Baladas ou qualquer outra programação noturna com foco em bebidas e/ou entretenimento.
-          </p>
+          <p data-translate="destination.nightlife.description"></p>
 
           <div class="nice-form-group">
             <input id="habilitado-saidas" type="checkbox" class="switch" />
-            <label for="habilitado-saidas-label">
-              Habilitado
-            </label>
+            <label for="habilitado-saidas-label" data-translate="labels.enabled"></label>
           </div>
 
           <div id="habilitado-saidas-content">
@@ -379,7 +375,7 @@
                   </path>
                 </g>
               </svg>
-              Adicionar Saída
+              <span data-translate="labels.add"></span>
             </button>
           </div>
         </section>
@@ -392,17 +388,13 @@
                 d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a14.67 14.67 0 0 0-1.792-6.243A8.013 8.013 0 0 1 19.931 11zM12.53 4.027c1.035 1.364 2.427 3.78 2.627 6.973H9.03c.139-2.596.994-5.028 2.451-6.974c.172-.01.344-.026.519-.026c.179 0 .354.016.53.027zm-3.842.7C7.704 6.618 7.136 8.762 7.03 11H4.069a8.013 8.013 0 0 1 4.619-6.273zM4.069 13h2.974c.136 2.379.665 4.478 1.556 6.23A8.01 8.01 0 0 1 4.069 13zm7.381 6.973C10.049 18.275 9.222 15.896 9.041 13h6.113c-.208 2.773-1.117 5.196-2.603 6.972c-.182.012-.364.028-.551.028c-.186 0-.367-.016-.55-.027zm4.011-.772c.955-1.794 1.538-3.901 1.691-6.201h2.778a8.005 8.005 0 0 1-4.469 6.201z">
               </path>
             </svg>
-            Turismo
+            <span data-translate="destination.tourism.title"></span>
           </h1>
-          <p>
-            Pontos Turísticos diversos. Bairros, monumentos, museus, exposições, entre outros.
-          </p>
+          <p data-translate="destination.tourism.description"></p>
 
           <div class="nice-form-group">
             <input type="checkbox" id="habilitado-turismo" class="switch" />
-            <label id="habilitado-turismo-label" for="habilitado-turismo">
-              Habilitado
-            </label>
+            <label id="habilitado-turismo-label" for="habilitado-turismo" data-translate="labels.enabled"></label>
           </div>
 
           <div id="habilitado-turismo-content">
@@ -420,7 +412,7 @@
                   </path>
                 </g>
               </svg>
-              Adicionar Turismo
+              <span data-translate="labels.add"></span>
             </button>
           </div>
         </section>
@@ -433,17 +425,13 @@
                 d="M5 22h14c1.103 0 2-.897 2-2V9a1 1 0 0 0-1-1h-3V7c0-2.757-2.243-5-5-5S7 4.243 7 7v1H4a1 1 0 0 0-1 1v11c0 1.103.897 2 2 2zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v1H9V7zm-4 3h2v2h2v-2h6v2h2v-2h2l.002 10H5V10z">
               </path>
             </svg>
-            Lojas
+            <span data-translate="destination.shopping.title"></span>
           </h1>
-          <p>
-            Locais para compras. Shoppings, Supermercados, Outlets, entre outros.
-          </p>
+          <p data-translate="destination.shopping.description"></p>
 
           <div class="nice-form-group">
             <input type="checkbox" id="habilitado-lojas" class="switch" />
-            <label id="habilitado-lojas-label" for="habilitado-lojas">
-              Habilitado
-            </label>
+            <label id="habilitado-lojas-label" for="habilitado-lojas" data-translate="labels.enabled"></label>
           </div>
 
           <div id="habilitado-lojas-content">
@@ -461,7 +449,7 @@
                   </path>
                 </g>
               </svg>
-              Adicionar Loja
+              <span data-translate="labels.add"></span>
             </button>
           </div>
         </section>
@@ -474,18 +462,18 @@
                 d="m21.447 6.105l-6-3a1 1 0 0 0-.895 0L9 5.882L3.447 3.105A1 1 0 0 0 2 4v13c0 .379.214.725.553.895l6 3a1 1 0 0 0 .895 0L15 18.118l5.553 2.776a.992.992 0 0 0 .972-.043c.295-.183.475-.504.475-.851V7c0-.379-.214-.725-.553-.895zM10 7.618l4-2v10.764l-4 2V7.618zm-6-2l4 2v10.764l-4-2V5.618zm16 12.764l-4-2V5.618l4 2v10.764z">
               </path>
             </svg>
-            Mapa
+            <span data-translate="destination.map.title"></span>
           </h1>
           <p>
-            Adicione aqui um mapa personalizado para a viagem. Cadastre um mapa gratuitamente no <a
-              href="https://www.google.com/maps/d/u/0/?hl=pt-BR" target="_blank">My Maps</a>.
+            <span data-translate="destination.map.description"></span>. <span
+              data-translate="destination.map.instructions"></span> <a
+              href="https://www.google.com/maps/d/u/0/?hl=pt-BR" target="_blank"
+              data-translate="destination.map.my_maps"></a>.
           </p>
 
           <div class="nice-form-group">
             <input type="checkbox" id="habilitado-mapa" class="switch" />
-            <label id="habilitado-mapa-label" for="habilitado-mapa">
-              Habilitado
-            </label>
+            <label id="habilitado-mapa-label" for="habilitado-mapa" data-translate="labels.enabled"></label>
           </div>
 
           <div id="habilitado-mapa-content">
@@ -508,21 +496,21 @@
                   d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
                 </path>
               </svg>
-              Cancelar
+              <span data-translate="labels.cancel"></span>
               <button id="salvar" class="btn btn-theme" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                   <path fill="currentColor"
                     d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z">
                   </path>
                 </svg>
-                Salvar
+                <span data-translate="labels.save"></span>
               </button>
           </div>
         </section>
         <section id="footer">
-          Desenvolvido por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
-          class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
-          Atribuições</span>
+          href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
+            onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
+            <span data-translate="labels.credits"></span></span>
         </section>
       </main>
     </div>

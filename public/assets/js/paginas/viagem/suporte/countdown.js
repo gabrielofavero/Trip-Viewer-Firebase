@@ -34,26 +34,26 @@ COUNTDOWN = setInterval(function () {
       var countdownText = "";
 
       if (years > 0) {
-        countdownText += years + "a ";
+        countdownText += years + `${translate('datetime.countdown.years')} `;
       }
 
       if (months > 0) {
-        countdownText += months + "m ";
+        countdownText += months + `${translate('datetime.countdown.months')} `;
       }
 
       if (days > 0) {
-        countdownText += days + "d ";
+        countdownText += days + `${translate('datetime.countdown.days')} `;
       }
 
       if (hours > 0) {
-        countdownText += hours + "h ";
+        countdownText += hours + `${translate('datetime.countdown.hours')} `;
       }
 
       if (minutes > 0) {
-        countdownText += minutes + "m ";
+        countdownText += minutes + `${translate('datetime.countdown.minutes')} `;
       }
 
-      countdownText += seconds + "s ";
+      countdownText += seconds + `${translate('datetime.countdown.seconds')}`;
 
       getID("countdown").innerHTML = countdownText;
 

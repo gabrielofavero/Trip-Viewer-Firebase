@@ -11,7 +11,7 @@ async function _loadTripData() {
         _loadProgramacaoData();
         _loadGaleriaData();
 
-        document.title = `Editar ${FIRESTORE_DATA.titulo}`;
+        document.title = `${translate('labels.edit')} ${FIRESTORE_DATA.titulo}`;
     } catch (error) {
         _displayError(error);
         throw error;
@@ -25,8 +25,8 @@ function _loadDadosBasicosViagemData() {
     const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
     const fim = _convertFromDateObject(FIRESTORE_DATA.fim);
 
-    getID('inicio').value = _jsDateToDate(inicio, 'yyyy-mm-dd');
-    getID('fim').value = _jsDateToDate(fim, 'yyyy-mm-dd');
+    getID('inicio').value = _getDateString(inicio, 'yyyy-mm-dd');
+    getID('fim').value = _getDateString(fim, 'yyyy-mm-dd');
 
     getID('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
 }
@@ -162,13 +162,13 @@ function _loadTransportesData() {
         const chegada = _convertFromDateObject(transporte.datas.chegada);
 
         if (partida) {
-            getID(`partida-${j}`).value = _jsDateToDate(partida, 'yyyy-mm-dd');
-            getID(`partida-horario-${j}`).value = _jsDateToTime(partida);
+            getID(`partida-${j}`).value = _getDateString(partida, 'yyyy-mm-dd');
+            getID(`partida-horario-${j}`).value = _getTimeString(partida);
         }
 
         if (chegada) {
-            getID(`chegada-${j}`).value = _jsDateToDate(chegada, 'yyyy-mm-dd');
-            getID(`chegada-horario-${j}`).value = _jsDateToTime(chegada);
+            getID(`chegada-${j}`).value = _getDateString(chegada, 'yyyy-mm-dd');
+            getID(`chegada-horario-${j}`).value = _getTimeString(chegada);
         }
 
         const empresa = transporte.empresa;
@@ -218,7 +218,7 @@ function _loadHospedagemData() {
 
         HOSPEDAGEM_IMAGENS[j] = hospedagem.imagens || [];
         if (HOSPEDAGEM_IMAGENS[j].length > 0) {
-            getID(`imagens-hospedagem-button-${j}`).innerText = 'Editar Imagens';
+            getID(`imagens-hospedagem-button-${j}`).innerText = translate('labels.image.edit');
         }
 
         _loadCheckIn(hospedagem, j);
@@ -272,38 +272,6 @@ function _loadProgramacaoData() {
     _loadDestinosOrdenados();
     _updateDestinosAtivosCheckboxHTML('programacao');
     FIRESTORE_PROGRAMACAO_DATA = _cloneObject(FIRESTORE_DATA.programacoes);
-}
-
-function _loadLineupData() {
-    if (FIRESTORE_DATA.modulos.lineup === true) {
-        getID('habilitado-lineup').checked = true;
-        getID('habilitado-lineup-content').style.display = 'block';
-        getID('lineup-adicionar-box').style.display = 'block';
-    }
-
-    for (let j = 1; j <= FIRESTORE_DATA.lineup.length; j++) {
-        _addLineup();
-        const lineup = FIRESTORE_DATA.lineup[j - 1];
-
-        getID(`lineup-title-${j}`).innerText = `${lineup.nome}${lineup.headliner ? ' ⭐' : ''}`;  
-        getID(`lineup-id-${j}`).value = lineup.id;
-        getID(`lineup-headliner-${j}`).checked = lineup.headliner;
-        getID(`lineup-nome-${j}`).value = lineup.nome;        
-        getID(`lineup-local-${j}`).value = lineup.local;  
-        getID(`lineup-genero-${j}`).innerText = lineup.genero;
-        getID(`lineup-palco-${j}`).innerText = lineup.palco;
-        //getID(`lineup-data-${j}`).value = _firestoneDateToKey(lineup.data);
-        getID(`lineup-inicio-${j}`).value = lineup.inicio;
-        getID(`lineup-fim-${j}`).value = lineup.fim;
-        getID(`lineup-midia-${j}`).value = lineup.midia;
-        getID(`lineup-nota-${j}`).value = lineup.nota;
-
-        _updateValueDS('lineup-genero', lineup.genero, `lineup-genero-select-${j}`);
-        _updateValueDS('lineup-palco', lineup.palco, `lineup-palco-select-${j}`);
-    }
-
-    _buildDS('lineup-genero');
-    _buildDS('lineup-palco');
 }
 
 function _loadGaleriaData() {

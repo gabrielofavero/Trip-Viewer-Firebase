@@ -2298,14 +2298,20 @@ iframe {
 
 .flight-date,
 .flight-time,
+.flight-time-en,
 .flight-location {
   font-size: 14px;
   margin: -2px;
 }
 
-.flight-time {
+.flight-time,
+.flight-time-en {
   font-size: 36px;
   font-weight: bold;
+}
+
+.flight-time-en {
+  font-size: 30px;
 }
 
 .iconify {
@@ -2338,9 +2344,9 @@ iframe {
   }
 }
 
-@media (max-width: 450px) {
-  .flight-text {
-    padding: 10px;
+@media (max-width: 455px) {
+  .flight-time-en {
+    font-size: 25px;
   }
 }
 
@@ -2891,4 +2897,48 @@ input[type="radio"] {
 
 .gslide-title {
   color: var(--font-color) !important;
+}
+
+/* Language Selector */
+
+.lang-selector {
+  position: relative;
+}
+
+.lang-button {
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #3A3838;
+}
+
+.lang-options {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(166, 166, 166, 0.05);
+  display: none;
+  min-width: 100%;
+}
+
+.lang-options button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #3A3838;
+}
+
+.lang-options button:hover {
+  background: #eee;
 }

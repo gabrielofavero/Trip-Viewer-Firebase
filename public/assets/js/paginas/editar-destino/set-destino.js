@@ -84,7 +84,7 @@ async function _updateTikTokLinks() {
                             if (innerData.author_unique_id && innerData.embed_product_id) {
                                 newURL = `https://www.tiktok.com/@${innerData.author_unique_id}/video/${innerData.embed_product_id}`;
                             } else {
-                                throw new Error('Não foi possível encontrar o link do TikTok')
+                                throw new Error(translate('destination.errors.tiktok.not_found'))
                             }
                         } catch (error) {
                             unableToConvert[key] = unableToConvert[key] || [];
@@ -115,10 +115,10 @@ async function _updateTikTokLinks() {
 }
 
 function _displayTikTokError(unableToConvert) {
-    const titulo = 'Erro ao converter links do TikTok <i class="iconify" data-icon="mdi:instagram"></i>';
-    let conteudo = `Os seguintes links deverão ser removidos ou trocados pela versão desktop:<br><br>`;
+    const titulo = `${translate('destination.errors.tiktok.conversion')} <i class="iconify" data-icon="mdi:instagram"></i>`;
+    let conteudo = `${translate('destination.errors.tiktok.conversion_message')}<br><br>`;
     for (const categoria in unableToConvert) {
-        const categoriaTitle = CONFIG.destinos.destinos[categoria]?.titulo || _firstCharToUpperCase(categoria);
+        const categoriaTitle = _firstCharToUpperCase(categoria);
         conteudo += `<strong>${categoriaTitle}:</strong><br>`;
         for (const index of unableToConvert[categoria]) {
             const item = FIRESTORE_DESTINOS_NEW_DATA[categoria][index]?.nome || `Item ${index + 1}`;
