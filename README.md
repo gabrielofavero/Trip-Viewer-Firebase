@@ -15,8 +15,8 @@
 
 ## Backlog
 ### Prioridade Alta
+- 🏆 **F078:** 
 - ⚔️ **E030:** Account Import/Export
-  - 🏆 **F086:** *Export All + Import all (Apenas Funções)*
   - 🏆 **F088:** *Export Selected (Apenas Funções)*
   - 🏆 **F089:** *Import Selected (Apenas Funções)*
   - 🏆 **F090:** *Account Import/Export: Interface*
@@ -93,7 +93,6 @@
 - 📈 **M102:** Ao invés de abrir pop-up de hospedagem/transporte, arrastar página para posição e auto clicar em item
 
 ### Prioridade Baixa
-- 🏆 **F078:** Criar sistema de linguagens + EN-US
 - 📈 **M098:** Trocar funções / estruturas de pastas js para EN-US
 - ⚔️ **E024:** Migração de projeto para React OU Angular
 - ⚔️ **E025:** Implementação iOs e Android
@@ -120,7 +119,8 @@
 ## Done
 
 ### Junho 2025
-- ⚔️ **E033:** Idiomas
+- 🏆 **F086:** [⚔️E030] Export All + Import all (Apenas Funções)
+- ⚔️ **E033:** Criar sistema de linguagens + EN-US
 
 ### Maio 2025
 - 🏆 **F083:** Cache Busting
