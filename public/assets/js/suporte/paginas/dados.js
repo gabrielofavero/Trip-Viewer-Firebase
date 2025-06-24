@@ -380,18 +380,14 @@ function _compareDocuments() {
 
 function _validateIfDocumentChanged() {
   DOCS_CHANGED = _compareDocuments();
+  const noNewData = !DOCS_CHANGED;
+  const unknownError = ((DOCS_CHANGED.multiple && DOCS_CHANGED.data.every(item => item.areEqual)) || DOCS_CHANGED.data[0].areEqual)
 
-  if (!DOCS_CHANGED) {
-    getID('modal-inner-text').innerHTML = `${translate('messages.documents.save.error')}. ${translate('messages.documents.save.no_new_data')}`;
+  if (noNewData || unknownError) {
+    const errorMsgPath = `messages.documents.save.${noNewData ? 'no_new_data' : 'unknown'}`;
+    getID('modal-inner-text').innerText = `${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`;
+
     SUCCESSFUL_SAVE = false;
-  }
-
-  if ((DOCS_CHANGED.multiple && DOCS_CHANGED.data.every(item => item.areEqual)) || DOCS_CHANGED.data[0].areEqual) {
-    getID('modal-inner-text').innerHTML = `${translate('messages.documents.save.error')}. ${translate('messages.documents.save.unknown')}`
-    SUCCESSFUL_SAVE = false;
-  }
-
-  if (!SUCCESSFUL_SAVE) {
     _openModal();
     _stopLoadingScreen();
   }

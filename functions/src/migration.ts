@@ -172,7 +172,7 @@ export const migrateTransporteVisualizacao = functions.https.onRequest(async (re
             const data = doc.data();
             const transportes = data.transportes;
 
-            const visualizacaoSimplificada = transportes.visualizacaoSimplificada || true;
+            const visualizacaoSimplificada = transportes.visualizacaoSimplificada !== undefined ? transportes.visualizacaoSimplificada : true;
 
             delete transportes.visualizacaoSimplificada;
             transportes.visualizacao = visualizacaoSimplificada ? 'simple-view' : 'leg-view';

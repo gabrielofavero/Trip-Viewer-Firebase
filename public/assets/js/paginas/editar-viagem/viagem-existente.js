@@ -117,6 +117,10 @@ async function _loadGastosData() {
         _pushGasto('gastosDurante');
     
         function _pushGasto(tipo) {
+            if (!FIRESTORE_GASTOS_DATA[tipo]) {
+                FIRESTORE_GASTOS_DATA[tipo] = [];
+            }
+
             for (const gasto of FIRESTORE_GASTOS_DATA[tipo]) {
                 const tipos = INNER_GASTOS[tipo].map(gasto => gasto.tipo);
                 const index = tipos.indexOf(gasto.tipo);
