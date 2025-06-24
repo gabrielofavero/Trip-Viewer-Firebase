@@ -1,36 +1,46 @@
 var TRANSPORTE_ICONES = [];
-var TRANSPORTE_ATIVO = 'ida'
+var TRANSPORTE_ATIVO;
 var TRANSPORTES_ATIVOS = [];
+var TRANSPORTES_ATIVOS_TITULOS = [];
 
 function _loadTransporte() {
-  TRANSPORTES_ATIVOS = [...new Set(FIRESTORE_DATA.transportes.dados.map(item => item.idaVolta))];
+  const swiperData = _getSwiperData();
   getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo();
-  const swiperData = {
-    ida: [],
-    durante: [],
-    volta: [],
-  }
-
-  for (let i = 0; i < FIRESTORE_DATA.transportes.dados.length; i++) {
-    const idaVolta = FIRESTORE_DATA.transportes.dados[i].idaVolta;
-    const htmlContent = _getTransporteHTML(i + 1, idaVolta);
-    swiperData[idaVolta].push(htmlContent);
-  }
 
   _buildTransporteSwiper(swiperData);
-
-  if (FIRESTORE_DATA.transportes.visualizacao != 'simple-view') {
-    _adjustTransporteBoxContainerHeight();
-    getID('transporte-ida').style.visibility = ''
-  }
+  _resetSwiperVisibility();
 
   _observeFlightBoxes();
 }
 
-function _getTransporteHTML(j, idaVolta) {
+function _getSwiperData() {
+  const swiperData = {};
+
+  const visualizacao = FIRESTORE_DATA.transportes.visualizacao || 'simple-view';
+  const key = visualizacao === 'people-view' ? 'pessoa' : 'idaVolta';
+  const complement = key === 'pessoa' ? 'custom-' : '';
+
+  TRANSPORTES_ATIVOS = [...new Set(FIRESTORE_DATA.transportes.dados.map(item => `${complement}${_codifyText(item[key])}`))];
+  TRANSPORTES_ATIVOS_TITULOS = [...new Set(FIRESTORE_DATA.transportes.dados.map(item => item[key]))];
+  TRANSPORTE_ATIVO = visualizacao === 'people-view' ? TRANSPORTES_ATIVOS[0] : 'ida';
+
+  for (const transporteAtivo of TRANSPORTES_ATIVOS) {
+    swiperData[transporteAtivo] = [];
+  }
+
+  for (let i = 0; i < FIRESTORE_DATA.transportes.dados.length; i++) {
+    const identifier = `${complement}${_codifyText(FIRESTORE_DATA.transportes.dados[i][key])}`;
+    const htmlContent = _getTransporteHTML(i + 1, identifier);
+    swiperData[identifier].push(htmlContent);
+  }
+
+  return swiperData;
+}
+
+function _getTransporteHTML(j, identifier) {
   return `<div class="swiper-slide" id="transporte-slide-${j}">
             <div class="testimonial-item">
-                ${_getFlightBoxHTML(j, idaVolta)}
+                ${_getFlightBoxHTML(j, identifier)}
               </div>
             </div>`
 }
@@ -142,21 +152,22 @@ function _adjustFlightLine(j) {
 }
 
 function _buildTransporteSwiper(swiperData) {
-  const visualizacao = FIRESTORE_DATA.transportes.visualizacao == 'simple-view';
-  const keys = visualizacao ? ['ida'] : Object.keys(swiperData);
+  const visualizacao = FIRESTORE_DATA.transportes.visualizacao;
+  const keys = [];
 
-  if (!visualizacao) {
-    _loadAbasTransportes();
-  }
+  _loadSwiperPreActions(visualizacao, keys);
 
   for (const key of keys) {
-    const cnt = getID(`transporte-${key}-content`)
-    if (swiperData[key].length > 0 || visualizacao) {
-      const data = visualizacao ? [...(swiperData['ida'] || []), ...(swiperData['durante'] || []), ...(swiperData['volta'] || [])] : swiperData[key];
+    const content = getID(`transporte-${key}-content`)
+    if (swiperData[key].length > 0 || visualizacao === 'simple-view') {
+      const data = visualizacao === 'simple-view' ? [...(swiperData['ida'] || []), ...(swiperData['durante'] || []), ...(swiperData['volta'] || [])] : swiperData[key];
       const swiperButtonStyle = data.length > 1 ? '' : `style="display: none"`
 
-      getID(`transporte-${key}`).style.display = 'block'
-      cnt.innerHTML = `<div id="transporte-${key}-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+      if (visualizacao != 'people-view') {
+        getID(`transporte-${key}`).style.display = 'block';
+      }
+
+      content.innerHTML = `<div id="transporte-${key}-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                         <div class="swiper-wrapper" id="transporte-${key}-wrapper">
                           ${data.join("")}
                         </div>
@@ -169,11 +180,30 @@ function _buildTransporteSwiper(swiperData) {
 
       ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
       _initSwiper(`transporte-${key}`);
-      if (FIRESTORE_DATA.transportes.visualizacao != 'simple-view') {
+      
+      if (FIRESTORE_DATA.transportes.visualizacao == 'leg-view') {
         getID(`transporte-${key}`).style.visibility = 'hidden';
       }
 
     }
+  }
+
+  function _loadSwiperPreActions(visualizacao, keys) {
+    switch (visualizacao) {
+      case 'simple-view':
+        keys.push('ida');
+        break;
+      case 'leg-view':
+        keys.push('ida', 'durante', 'volta');
+        _loadAbasTransportes();
+        break;
+      case 'people-view':
+        keys.push(...TRANSPORTES_ATIVOS);
+        _loadSelectTransportes();
+        _loadCustomTransportesDivs();
+        break;
+    }
+    return keys;
   }
 }
 
@@ -224,6 +254,29 @@ function _loadIconeGeralTransporte() {
 function _copyToClipboard(text) {
   navigator.clipboard.writeText(text);
   _openToast(translate('messages.text_copied'));
+}
+
+function _loadSelectTransportes() {
+  const select = getID('transporte-select');
+  select.innerHTML = '';
+  select.style.display = TRANSPORTES_ATIVOS.length > 1 ? '' : 'none';
+
+  for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
+    select.innerHTML += `<option value="${TRANSPORTES_ATIVOS[i]}">${TRANSPORTES_ATIVOS_TITULOS[i]}</option>`;
+  }
+}
+
+function _loadCustomTransportesDivs() {
+  const container = getID('transporte-custom-container');
+  container.innerHTML = '';
+
+  for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
+    const transporte = TRANSPORTES_ATIVOS[i];
+    const display = i === 0 ? 'block' : 'none';
+    container.innerHTML += `<div class='transporte-box' id="transporte-${transporte}" style="display: ${display}">
+                              <div id="transporte-${transporte}-content"></div>
+                            </div>`;
+  }
 }
 
 function _loadAbasTransportes() {
@@ -313,4 +366,25 @@ function _adjustTransporteBoxContainerHeight() {
   heights.push(250);
   const container = getID('transporte-box-container');
   container.style.height = `${Math.max(...heights)}px`
+}
+
+function _resetSwiperVisibility() {
+  const visualizacao = FIRESTORE_DATA.transportes.visualizacao || 'simple-view';
+
+  switch (visualizacao) {
+    case 'leg-view':
+      _adjustTransporteBoxContainerHeight();
+      getID('transporte-ida').style.visibility = '';
+      break;
+    case 'people-view':
+      getID('transporte-subtitulo').style.display = 'none';
+      _adjustTransporteBoxContainerHeight();
+      getID('transporte-select').addEventListener('change', _customTransporteSelectAction);
+  }
+}
+
+function _customTransporteSelectAction() {
+  const current = getID('transporte-select').value;
+  _fade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${current}`])
+  TRANSPORTE_ATIVO = current;
 }
