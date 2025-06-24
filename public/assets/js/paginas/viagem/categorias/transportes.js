@@ -19,7 +19,7 @@ function _loadTransporte() {
 
   _buildTransporteSwiper(swiperData);
 
-  if (FIRESTORE_DATA.transportes.visualizacaoSimplificada === false) {
+  if (FIRESTORE_DATA.transportes.visualizacao != 'simple-view') {
     _adjustTransporteBoxContainerHeight();
     getID('transporte-ida').style.visibility = ''
   }
@@ -142,17 +142,17 @@ function _adjustFlightLine(j) {
 }
 
 function _buildTransporteSwiper(swiperData) {
-  const visualizacaoSimplificada = FIRESTORE_DATA.transportes.visualizacaoSimplificada;
-  const keys = visualizacaoSimplificada ? ['ida'] : Object.keys(swiperData);
+  const visualizacao = FIRESTORE_DATA.transportes.visualizacao == 'simple-view';
+  const keys = visualizacao ? ['ida'] : Object.keys(swiperData);
 
-  if (!visualizacaoSimplificada) {
+  if (!visualizacao) {
     _loadAbasTransportes();
   }
 
   for (const key of keys) {
     const cnt = getID(`transporte-${key}-content`)
-    if (swiperData[key].length > 0 || visualizacaoSimplificada) {
-      const data = visualizacaoSimplificada ? [...(swiperData['ida'] || []), ...(swiperData['durante'] || []), ...(swiperData['volta'] || [])] : swiperData[key];
+    if (swiperData[key].length > 0 || visualizacao) {
+      const data = visualizacao ? [...(swiperData['ida'] || []), ...(swiperData['durante'] || []), ...(swiperData['volta'] || [])] : swiperData[key];
       const swiperButtonStyle = data.length > 1 ? '' : `style="display: none"`
 
       getID(`transporte-${key}`).style.display = 'block'
@@ -169,7 +169,7 @@ function _buildTransporteSwiper(swiperData) {
 
       ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
       _initSwiper(`transporte-${key}`);
-      if (FIRESTORE_DATA.transportes.visualizacaoSimplificada == false) {
+      if (FIRESTORE_DATA.transportes.visualizacao != 'simple-view') {
         getID(`transporte-${key}`).style.visibility = 'hidden';
       }
 
