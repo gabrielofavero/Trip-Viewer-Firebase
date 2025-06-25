@@ -114,7 +114,7 @@ function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES))
 function _displayError(erro, tentarNovamente = false) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 
-  propriedades.titulo = translate('messages.error.load');
+  propriedades.titulo = translate('messages.errors.load_title');
   propriedades.critico = true;
   propriedades.conteudo = _getErrorMessage(erro);
   propriedades.localizacao = false; // Desabilitado. Não faz sentido mostrar ao usuário.

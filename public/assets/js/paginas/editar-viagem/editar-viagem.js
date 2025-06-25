@@ -21,8 +21,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadVisibilityIndex();
     _loadHabilitados();
     _newDynamicSelect('galeria-categoria');
-    _newDynamicSelect('lineup-genero', false);
-    _newDynamicSelect('lineup-palco', false);
+    _newDynamicSelect('transporte-pessoa');
 
     if (DOCUMENT_ID) {
       await _loadTrip(true);

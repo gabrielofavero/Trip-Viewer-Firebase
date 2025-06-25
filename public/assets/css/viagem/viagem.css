@@ -1689,12 +1689,11 @@ section {
   margin: auto;
 }
 
-#subject,
-#destinos-select {
+.select {
   transition: all ease-in-out 0.3s;
   background: #fff;
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
-  width: 50%;
+  width: 600px;
   height: 50px;
   font-size: 20px;
   font-weight: bold;
@@ -1805,22 +1804,12 @@ section {
     margin-top: 28px;
     margin-left: 31%;
   }
-
-  #subject,
-  #destinos-select {
-    width: 70%;
-  }
 }
 
 
 @media (max-width: 770px) {
   #circulo-mini {
     margin-left: 28%;
-  }
-
-  #subject,
-  #destinos-select {
-    width: 90%;
   }
 }
 
@@ -2012,9 +2001,7 @@ section {
 }
 
 @media only screen and (max-device-width: 480px) {
-
-  #subject,
-  #destinos-select {
+  .select {
     text-align-last: center;
     text-align: center;
   }
@@ -2339,7 +2326,8 @@ iframe {
 }
 
 @media (max-width: 767px) {
-  .flight-box {
+  .flight-box,
+  .select {
     width: 100%;
   }
 }
@@ -2404,6 +2392,7 @@ iframe {
 .hotel-box,
 .flight-box,
 .programacao-box,
+.select,
 #calendar {
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
 }

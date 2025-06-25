@@ -1,12 +1,23 @@
 function _updateTransporteTitle(i) {
-    const condensar = getID('condensar').checked;
     const partida = getID(`ponto-partida-${i}`).value;
     const chegada = getID(`ponto-chegada-${i}`).value;
 
-    if (partida && chegada) {
-        const texto = condensar ? `${partida} → ${chegada}` : `${_getTransporteTipo(i)}: ${partida} → ${chegada}`;
-        getID(`transporte-title-${i}`).innerText = texto;
-    };
+    if (!partida || !chegada) {
+        return;
+    }
+    
+    let texto = `${partida} → ${chegada}`;
+
+    if (getID('leg-view').checked) {
+        texto = `${_getTransporteTipo(i)}: ${texto}`;
+    } else {
+        const pessoa = _getPessoa(i);
+        if (getID('people-view').checked && pessoa) {
+        texto = `${pessoa}: ${texto}`;
+        }
+    }
+
+    getID(`transporte-title-${i}`).innerText = texto;
 }
 
 function _getTransporteTipo(i) {
@@ -15,6 +26,17 @@ function _getTransporteTipo(i) {
     const volta = getID(`volta-${i}`).checked ? translate('trip.transportation.return') : '';
 
     return ida || durante || volta;
+}
+
+function _getPessoa(i) {
+    const select = getID(`transporte-pessoa-select-${i}`).value;
+    const input = getID(`transporte-pessoa-${i}`).value;
+
+    if (select === 'outra' || select === 'selecione') {
+        return input;
+    }
+
+    return select;
 }
 
 function _loadTransporteVisibility(i) {
@@ -87,20 +109,27 @@ function _loadTransporteVisibility(i) {
     }
 }
 
-function _applyIdaVoltaVisibility(i) {
-    const visibility = getID('condensar').checked == true ? 'none' : 'block';
-
-    if (!i) {
-        for (const child of _getChildIDs('transporte-box')) {
-            const j = _getJ(child);
-            _updateTransporteTitle(j);
-            getID(`idaVolta-box-${j}`).style.display = visibility;
-        }
-    } else {
-        _updateTransporteTitle(i);
-        getID(`idaVolta-box-${i}`).style.display = visibility;
+function _applyTransportationTypeVisualization(i) {
+    if (i) {
+        _apply(i);
+        return;
     }
 
+    for (const child of _getChildIDs('transporte-box')) {
+        _apply(_getJ(child))
+    }
+
+    function _apply(j) {
+        _updateTransporteTitle(j);
+        getID(`idaVolta-box-${j}`).style.display = getID('leg-view').checked ? 'block' : 'none';
+        getID(`people-box-${j}`).style.display = getID('people-view').checked ? 'block' : 'none';
+
+        if (getID('people-view').checked) {
+            _setRequired(`transporte-pessoa-select-${j}`);
+        } else {
+            _removeRequired(`transporte-pessoa-select-${j}`);
+        }
+    }
 }
 
 function _loadAutoDuration(i) {
@@ -162,4 +191,5 @@ function _transporteAdicionarListenerAction() {
     _closeAccordions('transporte');
     _addTransporte();
     _openLastAccordion('transporte');
+    _buildDS('transporte-pessoa');
 }

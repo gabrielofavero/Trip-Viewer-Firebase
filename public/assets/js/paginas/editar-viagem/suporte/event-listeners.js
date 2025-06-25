@@ -21,8 +21,9 @@ function _loadEventListeners() {
     getID('pin-disable').addEventListener('click', () => _switchPin());
 
     // Visibilidade do Ida e Volta (Transporte)
-    getID('condensar').addEventListener('change', () => _applyIdaVoltaVisibility());
-    getID('separar').addEventListener('change', () => _applyIdaVoltaVisibility());
+    getID('simple-view').addEventListener('change', () => _applyTransportationTypeVisualization());
+    getID('leg-view').addEventListener('change', () => _applyTransportationTypeVisualization());
+    getID('people-view').addEventListener('change', () => _applyTransportationTypeVisualization());
 
     // Validação de Imagens no módulo de Customização
     getID('link-background').addEventListener('change', () => _validateImageLink('link-background'));
@@ -97,23 +98,21 @@ function _visualizarListenerAction() {
     }
 }
 
+function _addRemoveTransporteListener(j) {
+    const dynamicSelects = [{
+        type: 'transporte-pessoa',
+        selectID: `transporte-pessoa-select-${j}`,
+    }]
+    _addRemoveChildListenerDS('transporte', j, dynamicSelects);
+}
+
+
 function _addRemoveGaleriaListener(j) {
     const dynamicSelects = [{
         type: 'galeria-categoria',
         selectID: `galeria-categoria-select-${j}`,
     }]
     _addRemoveChildListenerDS('galeria', j, dynamicSelects);
-}
-
-function _addRemoveLineupListener(j) {
-    const dynamicSelects = [{
-        type: 'lineup-genero',
-        selectID: `lineup-genero-select-${j}`,
-    }, {
-        type: 'lineup-palco',
-        selectID: `lineup-palco-select-${j}`,
-    }]
-    _addRemoveChildListenerDS('lineup', j, dynamicSelects);
 }
 
 function _visibilityListenerAction(visibilidade) {
