@@ -67,6 +67,12 @@ function _addTransporte() {
             </div>
           </fieldset>
 
+          <div class="nice-form-group" id="people-box-${j}">
+            <label>${translate('labels.person')}</label>
+            <select ${getID('people-view').checked ? 'required' : ""} class="editar-select" id="transporte-pessoa-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="transporte-pessoa-${j}" type="text" placeholder="${translate('labels.person')}" />
+          </div>
+
           <div class="nice-form-group">
             <label>Ponto de Partida <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="ponto-partida-${j}" type="text" placeholder="Belo Horizonte" />
@@ -159,9 +165,10 @@ function _addTransporte() {
   getID(`chegada-${j}`).value = getID(`partida-${j}`).value;
 
   _loadTransporteListeners(j);
-  _addRemoveChildListener('transporte', j);
   _loadTransporteVisibility(j);
-  _applyIdaVoltaVisibility(j);
+  _applyTransportationTypeVisualization(j);
+  _addRemoveTransporteListener(j);
+  _addSelectorDS('transporte-pessoa', `transporte-pessoa-select-${j}`, `transporte-pessoa-${j}`, `_updateTransporteTitle(${j})`);
 }
 
 function _addHospedagens() {

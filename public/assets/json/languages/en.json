@@ -71,6 +71,7 @@
             "return": "Return",
             "simple_view": "Simplified view",
             "leg_view": "Group by leg",
+            "people_view": "Group by people",
             "departure_location": {
                 "title": "Departure location",
                 "placeholder": "New York City"
@@ -482,6 +483,7 @@
         "home": "Home",
         "days": "Days",
         "people": "People",
+        "person": "Person",
         "highlights": "Highlights",
         "overview": "Overview",
         "view": "View",

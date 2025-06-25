@@ -15,7 +15,8 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F078:** 
+- 🏆 **F072:** Passagens Multi pessoas
+- 🏆 **F078:** Poder reordenar transporte em edit/trip.html
 - ⚔️ **E030:** Account Import/Export
   - 🏆 **F088:** *Export Selected (Apenas Funções)*
   - 🏆 **F089:** *Import Selected (Apenas Funções)*
@@ -47,7 +48,6 @@
 - ⚔️ **E017:** Otimização de uso de operações firebase (leituras, cloud functions)
 - 📈 **M096:** Ajustes mobile e webview
 - 📈 **M097:** Automações programação (edit/trip.html)
-- 🏆 **F072:** Passagens Multi pessoas
 - 📈 **M087:** Load de destinos carrega tudo imediatamente
 - 🏆 **F069:** Tab para seleção de destinos dentro da página
 - 🏆 **F063:** Permitir adicionar múltiplas regiões em um destino (edit/trip.html)
