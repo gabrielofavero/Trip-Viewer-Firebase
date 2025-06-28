@@ -289,3 +289,12 @@ function _validateImageLink(id) {
 
     _displayMessage(title, content);
 }
+
+function _getSelectOptionsHTML(object, selectedKey) {
+    let result = '';
+    for (const key in object) {
+        const selected = (key == selectedKey) ? 'selected' : '';
+        result += `<option value="${key}" ${selected}>${object[key]}</option>`;
+    }
+    return result;
+}

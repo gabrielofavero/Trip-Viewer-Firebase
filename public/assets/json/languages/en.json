@@ -161,7 +161,10 @@
             "placeholders": {
                 "name": "Liberty Public Market",
                 "emoji": "🍽️",
-                "description": "A vibrant food hall with a variety of restaurants and vendors offering diverse cuisines",
+                "description": {
+                    "en": "A vibrant food hall with a variety of restaurants and vendors offering diverse cuisines",
+                    "pt": "Um vibrante mercado de comida com uma variedade de restaurantes e vendedores oferecendo diversas cozinhas"
+                },
                 "map": "https://maps.app.goo.gl/J4vLoJiyU7j6bkrs7",
                 "website": "https://libertypublicmarketsd.com/",
                 "instagram": "https://www.instagram.com/libertypublicmarket/",
@@ -176,7 +179,10 @@
             "placeholders": {
                 "name": "Mr. Beef",
                 "emoji": "🥪",
-                "description": "A popular sandwich shop known for its delicious Italian beef sandwiches and other deli-style offerings",
+                "description": {
+                    "en": "A popular sandwich shop known for its delicious Italian beef sandwiches and other deli-style offerings",
+                    "pt": "Uma famosa lanchonete conhecida por seus deliciosos sanduíches de carne italiana e outras opções de estilo deli"
+                },
                 "map": "https://maps.app.goo.gl/xarQ4ASKDoeCRL2S9",
                 "website": "https://www.theoriginalmrbeef.com/",
                 "instagram": "https://www.instagram.com/mr.beefchicago/",
@@ -191,7 +197,10 @@
             "placeholders": {
                 "name": "Rudy's Bar & Grill",
                 "emoji": "🍺🌭",
-                "description": "A classic dive bar known for its cheap drinks, hot dogs, and lively atmosphere. A great spot for a casual night out",
+                "description": {
+                    "en": "A classic dive bar known for its cheap drinks, hot dogs, and lively atmosphere. A great spot for a casual night out",
+                    "pt": "Um clássico bar de mergulho conhecido por suas bebidas baratas, cachorros-quentes e atmosfera animada. Um ótimo lugar para uma noite casual"
+                },
                 "map": "https://maps.app.goo.gl/EaaBp6QHF2ijZaKN6",
                 "website": "https://rudysbarnyc.com/",
                 "instagram": "https://www.instagram.com/rudysbar",
@@ -206,7 +215,10 @@
             "placeholders": {
                 "name": "The Sphere",
                 "emoji": "🔮",
-                "description": "A large spherical structure with a stunning light display. It serves as a venue for concerts and events",
+                "description": {
+                    "en": "A large spherical structure with a stunning light display. It serves as a venue for concerts and events",
+                    "pt": "Uma grande estrutura esférica com uma impressionante exibição de luzes. Serve como local para concertos e eventos"
+                },
                 "map": "https://maps.app.goo.gl/8JxQFp6acr2F2AuP6",
                 "website": "https://www.thespherevegas.com/",
                 "instagram": "https://www.instagram.com/SphereVegas",
@@ -221,7 +233,10 @@
             "placeholders": {
                 "name": "Amoeba Music",
                 "emoji": "💿",
-                "description": "Music store with a wide selection of vinyl records, CDs, and more",
+                "description": {
+                    "en": "A famous music store with a wide selection of vinyl records, CDs, and more. A must-visit for music lovers",
+                    "pt": "Uma famosa loja de música com uma ampla seleção de discos de vinil, CDs e mais. Uma visita obrigatória para os amantes da música"
+                },
                 "map": "https://goo.gl/maps/vR2rcyEFXKn3EftHA",
                 "website": "https://www.amoebamusic.com/",
                 "instagram": "https://www.instagram.com/amoebahollywood/",
@@ -472,7 +487,11 @@
         "title": "Title",
         "subtitle": "Subtitle",
         "no_title": "Untitled",
-        "description": "Description",
+        "description": {
+            "title": "Description",
+            "edit": "Edit description",
+            "add": "Add description"
+        },
         "type": "Type",
         "try_again": "Try Again",
         "all": "All",
@@ -565,6 +584,11 @@
         },
         "region": "Region",
         "priority": "Priority",
-        "video": "Video"
+        "video": "Video",
+        "language": {
+            "title": "Language",
+            "pt": "Portuguese",
+            "en": "English"
+        }
     }
 }

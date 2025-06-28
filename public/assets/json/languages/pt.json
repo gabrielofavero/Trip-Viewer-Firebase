@@ -161,7 +161,10 @@
             "placeholders": {
                 "name": "Notorious FISH",
                 "emoji": "🐟",
-                "description": "Restaurante casual especializado em frutos do mar, com ambientação descontraída e petiscos bem executados",
+                "description": {
+                    "en": "Casual seafood restaurant with a relaxed atmosphere and well-executed snacks",
+                    "pt": "Restaurante casual especializado em frutos do mar, com ambientação descontraída e petiscos bem executados"
+                },
                 "map": "https://maps.app.goo.gl/vLJwpUeydANE9X1a7",
                 "website": "https://www.notoriousfish.com.br/",
                 "instagram": "https://www.instagram.com/notoriousfishbr",
@@ -176,7 +179,10 @@
             "placeholders": {
                 "name": "Café 18 do Forte",
                 "emoji": "☕🧇",
-                "description": "Opção de Brunch em Copacabana. É necessário entrar no forte (cobrado à parte) para chegar ao café",
+                "description": {
+                    "en": "Brunch option in Copacabana. It is necessary to enter the fort (separate fee) to reach the café",
+                    "pt": "Opção de Brunch em Copacabana. É necessário entrar no forte (cobrado à parte) para chegar ao café"
+                },
                 "map": "https://maps.app.goo.gl/1jF1wezx8i9zzK8XA",
                 "website": "https://www.getinapp.com.br/rio-de-janeiro/cafe-18-do-forte",
                 "instagram": "https://www.instagram.com/cafe18doforte/",
@@ -191,7 +197,10 @@
             "placeholders": {
                 "name": "A Forja",
                 "emoji": "🍺",
-                "description": "Restaurante com temática medieval. Focada em carnes com cortes diferentes e bebidas. Pratos bastante diferentes",
+                "description": {
+                    "en": "Medieval-themed restaurant focused on different cuts of meat and drinks. Unique dishes",
+                    "pt": "Restaurante com temática medieval focado em cortes diferentes de carnes e bebidas. Pratos únicos"
+                },
                 "map": "https://maps.app.goo.gl/giE94tgaB8GdCsxV8",
                 "website": "https://aforjataverna.com.br/",
                 "instagram": "https://www.instagram.com/forjataverna/",
@@ -206,7 +215,10 @@
             "placeholders": {
                 "name": "Mini Mundo",
                 "emoji": "🌍",
-                "description": "Parque único ao ar livre com réplicas em miniatura de edifícios internacionais, além de um café",
+                "description": {
+                    "en": "Unique outdoor park with miniature replicas of international buildings, plus a café",
+                    "pt": "Parque ao ar livre com réplicas em miniatura de edifícios internacionais, além de um café"
+                },
                 "map": "https://maps.app.goo.gl/wmAXicvZSfT9rhE2A",
                 "website": "https://minimundo.com.br/",
                 "instagram": "https://www.instagram.com/minimundogramado/",
@@ -221,7 +233,10 @@
             "placeholders": {
                 "name": "Cápsula",
                 "emoji": "👕",
-                "description": "Loja de Roupas descoladas e com pontos de fotos. Loja original na Liberdade, mas possui nova unidade no Jardins",
+                "description": {
+                    "en": "Trendy clothing store with photo spots. Original store in Liberdade, but has a new unit in Jardins",
+                    "pt": "Loja de roupas descoladas e com pontos de fotos. Loja original na Liberdade, mas possui nova unidade no Jardins"
+                },
                 "map": "https://maps.app.goo.gl/ECMVvWSt3JikCe5y8",
                 "website": "https://www.capsulashop.com.br/",
                 "instagram": "https://www.instagram.com/capsulashop/",
@@ -472,7 +487,11 @@
         "title": "Título",
         "subtitle": "Subtítulo",
         "no_title": "Sem título",
-        "description": "Descrição",
+        "description": {
+            "title": "Descrição",
+            "edit": "Editar descrição",
+            "add": "Adicionar descrição"
+        },
         "type": "Tipo",
         "try_again": "Tentar novamente",
         "all": "Todos",
@@ -563,8 +582,13 @@
             "website": "Site",
             "instagram": "Instagram"
         },
-        "region": "Região",
+    "region": "Região",
         "priority": "Prioridade",
-        "video": "Vídeo"
+        "video": "Vídeo",
+        "language": {
+            "title": "Idioma",
+            "pt": "Português",
+            "en": "Inglês"
+        }
     }
 }
