@@ -5,7 +5,7 @@
 | Ícone | Título  | Código | Total | Finalizados | Pendentes |
 | ------ | -------- | ------- | ----- | ----------- | --------- |
 | 🐞     | Bug      | B000    | 75    | 75          | 0         |
-| 🏆     | Feature  | F000    | 93    | 69          | 24         |
+| 🏆     | Feature  | F000    | 94    | 70          | 24         |
 | 📈     | Melhoria | M000    | 106    | 80          | 26        |
 | ⚔️   | Épico   | E000    | 34    | 19          | 15         |
 
@@ -15,8 +15,8 @@
 
 ## Backlog
 ### Prioridade Alta
-- 🏆 **F072:** Passagens Multi pessoas
-- 🏆 **F078:** Poder reordenar transporte em edit/trip.html
+- 🏆 **F094:** Descrição multi idiomas (destinos)
+- 🏆 **F078:** Poder reordenar transporte / agrupamento de tipos em edit/trip.html em edit/trip.html
 - ⚔️ **E030:** Account Import/Export
   - 🏆 **F088:** *Export Selected (Apenas Funções)*
   - 🏆 **F089:** *Import Selected (Apenas Funções)*
@@ -119,6 +119,7 @@
 ## Done
 
 ### Junho 2025
+- 🏆 **F072:** Passagens Multi pessoas
 - 🏆 **F086:** [⚔️E030] Export All + Import all (Apenas Funções)
 - ⚔️ **E033:** Criar sistema de linguagens + EN-US
 

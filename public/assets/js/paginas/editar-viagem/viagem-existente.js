@@ -155,8 +155,8 @@ function _loadTransportesData() {
 
         const pessoa = transporte.pessoa;
         if (pessoa) {
-            getID(`transporte-pessoa-${j}`).value = categoria;
-            _updateValueDS('transporte-pessoa', categoria, `transporte-pessoa-select-${j}`);
+            getID(`transporte-pessoa-${j}`).value = pessoa;
+            _updateValueDS('transporte-pessoa', pessoa, `transporte-pessoa-select-${j}`);
             _buildDS('transporte-pessoa');
         }
 
