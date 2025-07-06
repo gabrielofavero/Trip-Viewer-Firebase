@@ -4,6 +4,7 @@ function _addRestaurantes() {
     _loadCurrencySelects();
   }
 
+  const categoria = 'restaurantes';
   const j = _getNextJ('restaurantes-box');
 
   $('#restaurantes-box').append(`
@@ -39,11 +40,10 @@ function _addRestaurantes() {
             <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="restaurantes-emoji-${j}" type="text" placeholder="${translate('destination.restaurants.placeholders.emoji')}" />
           </div>
-  
-          <div class="nice-form-group">
-            <label>${translate('labels.description')}</label>
-            <textarea id="restaurantes-descricao-${j}" rows="3"
-              placeholder="${translate('destination.restaurants.placeholders.description')}"></textarea>
+
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="restaurantes-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -101,7 +101,7 @@ function _addRestaurantes() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, 'restaurantes')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -121,8 +121,8 @@ function _addRestaurantes() {
     </div>
     `);
 
-  _addDestinosListeners('restaurantes', j);
-  _addListenerToRemoveDestino('restaurantes', j);
+  _addDestinosListeners(categoria, j);
+  _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `restaurantes-regiao-select-${j}`, `restaurantes-regiao-${j}`);
 }
 
@@ -130,6 +130,8 @@ function _addLanches() {
   if (!VALOR_OPTIONS) {
     _loadCurrencySelects();
   }
+
+  const categoria = 'lanches';
   const j = _getNextJ('lanches-box');
 
   $('#lanches-box').append(`
@@ -165,10 +167,9 @@ function _addLanches() {
             <input id="lanches-emoji-${j}" type="text" placeholder="${translate('destination.snacks.placeholders.emoji')}" />
           </div>
   
-          <div class="nice-form-group">
-            <label>${translate('labels.description')}</label>
-            <textarea id="lanches-descricao-${j}" rows="3"
-              placeholder="${translate('destination.snacks.placeholders.description')}"></textarea>
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="lanches-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -227,7 +228,7 @@ function _addLanches() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, 'lanches')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -247,8 +248,8 @@ function _addLanches() {
     </div>
     `);
 
-  _addDestinosListeners('lanches', j);
-  _addListenerToRemoveDestino('lanches', j);
+  _addDestinosListeners(categoria, j);
+  _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
 }
 
@@ -256,6 +257,8 @@ function _addSaidas() {
   if (!VALOR_OPTIONS) {
     _loadCurrencySelects();
   }
+
+  const categoria = 'saidas';
   const j = _getNextJ('saidas-box');
 
   $('#saidas-box').append(`
@@ -291,10 +294,9 @@ function _addSaidas() {
             <input id="saidas-emoji-${j}" type="text" placeholder="${translate('destination.nightlife.placeholders.emoji')}" />
           </div>
   
-          <div class="nice-form-group">
-            <label>${translate('labels.description')}</label>
-            <textarea id="saidas-descricao-${j}" rows="3"
-              placeholder="${translate('destination.nightlife.placeholders.description')}"></textarea>
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="saidas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -352,7 +354,7 @@ function _addSaidas() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, 'saidas')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, ${categoria})" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -372,8 +374,8 @@ function _addSaidas() {
     </div>
     `);
 
-  _addDestinosListeners('saidas', j);
-  _addListenerToRemoveDestino('saidas', j);
+  _addDestinosListeners(categoria, j);
+  _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
 }
 
@@ -381,6 +383,8 @@ function _addTurismo() {
   if (!VALOR_OPTIONS) {
     _loadCurrencySelects();
   }
+
+  const categoria = 'turismo';
   const j = _getNextJ('turismo-box');
 
   $('#turismo-box').append(`
@@ -416,10 +420,9 @@ function _addTurismo() {
             <input id="turismo-emoji-${j}" type="text" placeholder="${translate('destination.tourism.placeholders.emoji')}" />
           </div>
   
-          <div class="nice-form-group">
-            <label>${translate('labels.description')}</label>
-            <textarea id="turismo-descricao-${j}" rows="3"
-              placeholder="${translate('destination.tourism.placeholders.description')}"></textarea>
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="turismo-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -477,7 +480,7 @@ function _addTurismo() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, 'turismo')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, ${categoria})" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -497,8 +500,8 @@ function _addTurismo() {
     </div>
     `);
 
-  _addDestinosListeners('turismo', j);
-  _addListenerToRemoveDestino('turismo', j);
+  _addDestinosListeners(categoria, j);
+  _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
 }
 
@@ -506,6 +509,8 @@ function _addLojas() {
   if (!VALOR_OPTIONS) {
     _loadCurrencySelects();
   }
+
+  const categoria = 'lojas';
   const j = _getNextJ('lojas-box');
 
   $('#lojas-box').append(`
@@ -542,10 +547,9 @@ function _addLojas() {
             <input id="lojas-emoji-${j}" type="text" placeholder="${translate('destination.shopping.placeholders.emoji')}" />
           </div>
   
-          <div class="nice-form-group">
-            <label>${translate('labels.description')}</label>
-            <textarea id="lojas-descricao-${j}" rows="3"
-              placeholder="${translate('destination.shopping.placeholders.description')}"></textarea>
+          <div class="nice-form-group customization-box">
+            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <button id="lojas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -604,7 +608,7 @@ function _addLojas() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, 'lojas')" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -624,7 +628,7 @@ function _addLojas() {
     </div>
     `);
 
-  _addDestinosListeners('lojas', j);
-  _addListenerToRemoveDestino('lojas', j);
+  _addDestinosListeners(categoria, j);
+  _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `lojas-regiao-select-${j}`, `lojas-regiao-${j}`);
 }

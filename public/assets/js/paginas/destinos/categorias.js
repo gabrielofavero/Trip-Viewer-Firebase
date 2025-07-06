@@ -85,5 +85,6 @@ function _convertCustomValor(valor, moeda) {
 // Descrição
 function _getDescricaoValue(item, isLineup) {
     if (isLineup) return "";
-    else return item.descricao || "";
+    const lang = _getUserLanguage();
+    return item.descricao[lang] || "";
 }
