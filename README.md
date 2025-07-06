@@ -5,8 +5,8 @@
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 75    | 75        | 0       |
-| 🏆   | Feature      | F000  | 94    | 70        | 24      |
-| 📈   | Improvement  | M000  | 106   | 80        | 26      |
+| 🏆   | Feature      | F000  | 97    | 70        | 27      |
+| 📈   | Improvement  | M000  | 107   | 80        | 27      |
 | ⚔️   | Epic         | E000  | 34    | 19        | 15      |
 
 - 🚦: Blocked
@@ -15,8 +15,9 @@
 
 ## Backlog
 ### High Priority
+
 - 🏆 **F094:** Multi-language description (destinations)
-- 🏆 **F078:** Ability to reorder transport / group types in edit/trip.html
+- 🏆 **F078:** Ability to reorder transportation / group types in edit/trip.html
 - ⚔️ **E030:** Account Import/Export
   - 🏆 **F088:** *Export Selected (Functions Only)*
   - 🏆 **F089:** *Import Selected (Functions Only)*
@@ -37,6 +38,8 @@
   - *Waiting for Guilherme's template*
 
 ### Medium Priority
+
+- 📈 **M107:** Edit "Confirm" at inner-itinerary suggestion to return to previous instead of closing pop-up
 - 📈 **M105:** Remove CONFIG and reduce use of global variables
 - 📈 **M106:** Use require in js files
 - ⚔️ **E034:** Frontend code refactoring
@@ -47,7 +50,7 @@
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
 - 📈 **M096:** Mobile and webview adjustments
-- 📈 **M097:** Programming automations (edit/trip.html)
+- 📈 **M097:** Itinerary automations (edit/trip.html)
 - 📈 **M087:** Destination load loads everything immediately
 - 🏆 **F069:** Tab for selecting destinations within the page
 - 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
@@ -69,7 +72,7 @@
   - *Interactive schedule board (Example: Lollapalooza App)*
   - *Lineup and Schedules separated by Tab similar to expenses.html*
   - *Select with festival days, but default is general*
-  - *Editing similar to programming, but date is customizable*
+  - *Editing similar to itinerary, but date is customizable*
 - 🏆 **F046:** Create reordering options for destinations
   - *On edit and trip pages*
   - *Order by rating and by name (↑↓)*
@@ -90,9 +93,13 @@
 - ⚔️ **E026:** Import data from Google Maps
 - 📈 **M100:** Storage size limit for document (10MB)
 - 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
-- 📈 **M102:** Instead of opening accommodation/transport pop-up, scroll page to position and auto-click item
+- 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
 
 ### Low Priority
+
+- 🏆 **F095:** Include traveler names in edit/trip.html (General / Itinerary)
+- 🏆 **F096:** Include traveler names in view.html (Itinerary)
+- 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
 - 📈 **M098:** Change js functions/folder structures to EN-US
 - ⚔️ **E024:** Migrate project to React OR Angular
 - ⚔️ **E025:** iOS and Android implementation
@@ -142,9 +149,9 @@
  - Test Gallery
 - 📈 **M099:** Implement Toast on invalid link in edit pages
 - 🐞 **B071:** Shift does not auto-update when schedule time is imported
-- 🐞 **B070:** Programming calendar bullets not displaying correctly
+- 🐞 **B070:** Itinerary calendar bullets not displaying correctly
 - 🐞 **B069:** Destination does not show site icon if no maps link
-- 🐞 **B068:** Trip save does not detect changes when only programming is edited
+- 🐞 **B068:** Trip save does not detect changes when only itinerary is edited
 - 🐞 **B024:** Menu button appears between 1199px and 993px width in view.html
 - 🐞 **B023:** Dark-mode adjustment
 - 🏆 **F079:** Tab system for transports
@@ -166,7 +173,7 @@
 - 🏆 **F068:** "Current Trip" top bar
 - 🐞 **B062:** Fix tiktok embed
 - 📈 **M095:** Items in index.html open in new tab
-- 📈 **M020:** More automated transport module
+- 📈 **M020:** More automated transportation module
 - 🐞 **B066:** Fix hiding lineup items
 - 🐞 **B065:** Fix update of Dynamic Select
 - 🐞 **B064:** Extra destination when moving destination
@@ -192,7 +199,7 @@
   - *Error loading sortable.min.js*
   - *Customization switches not loading correctly*
 - 🏆 **F064:** Disable zoom in webview
-- 📈 **M0085:** Programming improvement
+- 📈 **M0085:** Itinerary improvement
   - *Automate start and end times*
   - *Better display of associated item*
 - 🐞 **B057:** Slow load in index.html not showing elements correctly
@@ -200,17 +207,17 @@
 ### September 2024
 - 📈 **M071:** Include reservation code in Accommodations
 - 📈 **M073:** If only one destination, rename view.html from "destinations" to destination name
-- 🐞 **B047:** Programming in view.html does not show start time if end is missing
+- 🐞 **B047:** Itinerary in view.html does not show start time if end is missing
 - 🏆 **F059:** Allow direct viewing of destinations (without listings)
 - 🏆 **F057:** Isolated destination view in trip page (rename trip page to view)
-- 📈 **M023:** Drag Accordions (Programming)
+- 📈 **M023:** Drag Accordions (Itinerary)
 - 📈 **M075:** Adjustments index.html
   - *Remove "View Trip"*
   - *Add "Account Settings" + Different animations for each route*
   - *Adjust menu text width to align icons*
 - 📈 **M079:** Login by redirect
 - 📈 **M078:** Checkbox "Change activity name to ***" in "Associate Item"
-- 📈 **M074:** Programming switch button (trip.html)
+- 📈 **M074:** Itinerary switch button (trip.html)
 - 🐞 **B051:** Fix disabled destination not auto-deleting empty template
 - 📈 **M080:** Destination switch button (edit/trip.html)
 - 📈 **M081:** Reimplement Dynamic Select for easier maintenance
@@ -238,7 +245,7 @@
 
 - 📈 **M070:** Increase list size in index.html + reorder for nearest trips first
 - 🏆 **F058:** Add previous trips item in index.html
-- 🐞 **B048:** Programming not loading correctly in dark mode
+- 🐞 **B048:** Itinerary not loading correctly in dark mode
 
 ### July 2024
 
@@ -249,19 +256,19 @@
 
 ### June 2024
 - 🐞 **B042:** Fix listeners in trip (start, end, reloadProgramacao) not working
-- 📈 **M019:** More customizable programming module
+- 📈 **M019:** More customizable itinerary module
   - *Include Time*
   - *Automate Title*
   - *Dynamic item quantity*
-  - *New design for daily programming in view.html*
-  - *Open associated programming item in view.html (destination, accommodation or transport)*
-- 📈 **M048:** Better indicator for multiple cities in programming calendar
+  - *New design for daily itinerary in view.html*
+  - *Open associated itinerary item in view.html (destination, accommodation or transportation)*
+- 📈 **M048:** Better indicator for multiple cities in itinerary calendar
 - 🐞 **B043:** Incorrect hero in dark mode + disproportionate margins in view.html
 - 📈 **M022:** Improve calendar in view.html to avoid duplicate borders
-- 🐞 **B044:** Edit screen fixes (simplified transport, trip without programming and end listener)
+- 🐞 **B044:** Edit screen fixes (simplified transportation, trip without itinerary and end listener)
 - 🐞 **B045:** Dark Mode fixes (Logo in view.html and background image in index.html)
 - 📈 **M056:** File reorganization + local config files (remove unnecessary Firestore call)
-- 📈 **M057:** Improve programming calendar to include multiple colors
+- 📈 **M057:** Improve itinerary calendar to include multiple colors
 - 🏆 **F050:** Create API / Cloud Function to convert TikTok mobile link to desktop link
 - 📈 **M059:** Backend improvements: Support functions (Cors, Users, get/set data) and formatting
 - 🏆 **F056:** Check for changes on edit pages
@@ -270,11 +277,11 @@
 - ⚔️ **E015:** Implementation: Expenses
   - *Front-End Template*
   - *API for real-time tourism exchange rates*
-  - *Add value field in Transport and Accommodation (Edit Trip)*
+  - *Add value field in transportation and Accommodation (Edit Trip)*
   - *Add Expenses category in Edit Trip*
     - *Pre-trip and During-trip Expenses*
     - *Separate by category*
-    - *Auto import from Transport and Accommodation (listener if changed on either side)*
+    - *Auto import from transportation and Accommodation (listener if changed on either side)*
   - *Apply template in trip page*
 - 🐞 **B025:** Fix switching visibility in lightbox not persisting after exit
 - 📈 **M063:** Firebase performance improvement (CLI version update)
@@ -312,7 +319,7 @@
 - 📈 **M039:** Improve open/close user registration system to implement custom message
 - 🏆 **F045:** Create custom error message for image upload
 - 📈 **M030:** Instead of duration field in trip.html, have timezone field and calculate duration automatically
-- 🐞 **B036:** Fix transport module automations in trip.html not loading on first load
+- 🐞 **B036:** Fix transportation module automations in trip.html not loading on first load
 - 📈 **M033:** Add buttons in message modals
   - *Info closes and error goes to home*
 - 📈 **M040:** Validate Link and Embed input in edit-destination.html
@@ -327,7 +334,7 @@
 - 🐞 **B040:** Remove accordion drag function
   - *Did not work as expected on Desktop and not on Mobile*
   - *Reimplement later*
-- 🐞 **B035:** Fix programming in trip.html not showing full title on load
+- 🐞 **B035:** Fix itinerary in trip.html not showing full title on load
 - 📈 **M050:** Improve destinations module (edit)
   - *Switch selects to checkboxes*
   - *Search function*
@@ -340,10 +347,10 @@
 - 🐞 **B037:** Visual fixes in edit pages
   - Scroll bar not clickable
   - Save button not accessible on mobile (browser)
-- 🐞 **B041:** Fix trip save returning NaN in programming date
+- 🐞 **B041:** Fix trip save returning NaN in itinerary date
   - *Full title only appears when user edits input (listener)*
-- 📈 **M053:** Allow more than one location for same programming day
-- 🏆 **F054:** Implement ID system for transport and accommodation, to be used as reference in programming
+- 📈 **M053:** Allow more than one location for same itinerary day
+- 🏆 **F054:** Implement ID system for transportation and accommodation, to be used as reference in itinerary
 - 📈 **M036:** Improve destination CSS so table does not break at zooms below 100%
 
 ### April 2024
@@ -362,7 +369,7 @@
   - *If only destinations for one city and one category, hide title*
 - 🐞 **B020:** Fix loading sometimes loading forever
 - 🐞 **B019:** Fix delete button size in edit-x.html
-- ⚔️ **E012:** Create transport view box in view.html
+- ⚔️ **E012:** Create transportation view box in view.html
 - 🏆 **F041:** Create share button for view.html
 - 📈 **M016:** Refactor: use getID method and optimize edit files
 - 🏆 **F042:** Create customizable currency for Destinations
@@ -404,8 +411,8 @@
 - 📈 **M009:** Condense trip and edit-destination CSS into single CSS (editar.css and editar-dark.css)
 - 📈 **M010:** Input validation in Add Destination (Remove already filled)
 - ⚔️ **E011:** Rename "Passeios" to "Destinations"
-- 🐞 **B009:** Transport link should not be required
-- 🐞 **B008:** Transport image not loading correctly (Example: Lolla 2024)
+- 🐞 **B009:** transportation link should not be required
+- 🐞 **B008:** transportation image not loading correctly (Example: Lolla 2024)
 - 🏆 **F035:** Create Destination List function
 - 🏆 **F036:** Migrate Lineup to Trips (Remove from Destinations)
 - 🐞 **B007:** Image title also changes in accordion
@@ -426,7 +433,7 @@
   - *Only tripviewer text is clickable on some pages. Missing logo*
 
 ### December 2023
-- 🐞 **B004:** Fix transport select position in trip
+- 🐞 **B004:** Fix transportation select position in trip
 - 🏆 **F021:** Create front-end functions for editing trips and destinations
 - 🏆 **F022:** Create image system
 - 🏆 **F023:** Share trips via button in view.html
@@ -451,8 +458,8 @@
 - 🏆 **F020:** Front-end functions for index.html
 
 ### October 2023
-- 🏆 **F003:** Migrate 'Transport' to Firestore
-- 🏆 **F004:** Create transport/accommodation artwork
+- 🏆 **F003:** Migrate 'transportation' to Firestore
+- 🏆 **F004:** Create transportation/accommodation artwork
 - 🏆 **F005:** Migrate config JSONs to Firestore
 - 🏆 **F006:** Migrate 'Accommodation' to Firestore
 - 📈 **M001:** Remove discontinued methods
@@ -467,7 +474,7 @@
 
 ### September 2023
 - 🏆 **F001:** Migrate 'Destinations' to Firestore
-- 🏆 **F002:** Migrate 'Programming' to Firestore
+- 🏆 **F002:** Migrate 'Itinerary' to Firestore
 
 ### Previously
 - ⚔️ **E001:** Create project Git
