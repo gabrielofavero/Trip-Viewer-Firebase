@@ -53,7 +53,7 @@ function _openInnerProgramacao(j, k, turno) {
         tipo: 'cancelar',
     }, {
         tipo: 'confirmar',
-        acao: turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`
+        acao: `_innerProgramacaoConfirmAction(${j}, ${k}, '${turno}')`
     }];
 
     _displayFullMessage(propriedades);
@@ -161,8 +161,6 @@ function _getInnerProgramacaoSelectsDestinos(j) {
     return result;
 }
 
-
-
 // Carrega dados atuais no Modal
 function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
     if (turno) {
@@ -218,7 +216,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
 }
 
 // Navegação do Modal
-function _openInnerProgramacaoItem() {
+function _openInnerProgramacaoItem(j) {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemSelecionar = getID('inner-programacao-item-selecionar');
     itemSelecionar.style.minHeight = `${height}px`;
@@ -229,7 +227,7 @@ function _openInnerProgramacaoItem() {
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
-    _loadTextReplacementCheckboxes();
+    _loadTextReplacementCheckboxes(j);
     TEXT_REPLACEMENT_APPLIED = false;
 }
 
@@ -276,6 +274,18 @@ function _closeInnerProgramacao(j) {
 function _getInnerProgramacaoTitle(j) {
     const newJ = _getMostRecentJ(j);
     return _getDateTitle(DATAS[newJ - 1], 'mini');
+}
+
+function _innerProgramacaoConfirmAction(j, k, turno) {
+    if (getID('inner-programacao-item-selecionar').style.display === 'block') {
+        _closeInnerProgramacao(j);
+        return;
+    }
+    if (turno && turno != 'undefined') {
+        _addInnerProgramacao(j, k, turno);
+    } else {
+        _addInnerProgramacao(j);
+    }
 }
 
 // Salvar Inner Programação
@@ -365,7 +375,7 @@ function _deleteInnerProgramacao(j, k, turno) {
 }
 
 // Listeners
-function _loadInnerProgramacaoListeners(selects) {
+function _loadInnerProgramacaoListeners(selects, j) {
     const itemTransporte = getID(`inner-programacao-item-transporte`);
     const itemHospedagens = getID(`inner-programacao-item-hospedagens`);
     const itemDestinos = getID(`inner-programacao-item-destinos`);
@@ -374,28 +384,28 @@ function _loadInnerProgramacaoListeners(selects) {
         itemTransporte.style.display = 'block';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-item-hospedagens-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'block';
         itemDestinos.style.display = 'none';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-item-destinos-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'block';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-item-nenhum-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction(selects));

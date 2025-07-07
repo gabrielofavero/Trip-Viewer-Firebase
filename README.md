@@ -99,7 +99,6 @@
 
 - 🏆 **F095:** Include traveler names in edit/trip.html (General / Itinerary)
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
-- 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
 - 📈 **M098:** Change js functions/folder structures to EN-US
 - ⚔️ **E024:** Migrate project to React OR Angular
 - ⚔️ **E025:** iOS and Android implementation
@@ -124,6 +123,9 @@
 - 🏆 **F067:** OneDrive integration
 
 ## Done
+
+### July 2025
+- 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
 
 ### June 2025
 - 🏆 **F072:** Multi-person tickets
