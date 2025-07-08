@@ -45,35 +45,25 @@ function _loadTitleReplacementCheckbox(j) {
 }
 
 function _getTitleReplacement(j) {
-    const radio = document.getElementsByName('inner-programacao-item-radio');
-    const selected = Array.from(radio).find(r => r.checked);
+    const selected = Array.from(document.getElementsByName('inner-programacao-item-radio'))
+        .find(r => r.checked);
 
-    if (!selected || !selected.id) {
-        return '';
-    }
+    if (!selected?.id) return '';
 
-    const index = {
+    const idToSelectMap = {
         'inner-programacao-item-transporte-radio': 'inner-programacao-select-transporte',
         'inner-programacao-item-hospedagens-radio': 'inner-programacao-select-hospedagens',
         'inner-programacao-item-destinos-radio': 'inner-programacao-select-passeio'
-    }
+    };
 
-    const select = getID(index[selected.id]);
+    const select = getID(idToSelectMap[selected.id]);
+    const labelValue = select?.value && _getSelectCurrentLabel(select);
 
-    if (!select || !select.value) {
-        return '';
-    }
-    const labelValue = _getSelectCurrentLabel(select);
+    if (!labelValue) return '';
 
-    if (!labelValue) {
-        return '';
-    }
-
-    if (selected.id.includes('hospedagens')) {
-        return _processAccomodationReplacement(labelValue, j);
-    }
-
-    return labelValue;
+    return selected.id.includes('hospedagens')
+        ? _processAccomodationReplacement(labelValue, j)
+        : labelValue;
 }
 
 function _replaceTextIfEnabled() {
