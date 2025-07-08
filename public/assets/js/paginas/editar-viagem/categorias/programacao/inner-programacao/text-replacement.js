@@ -16,15 +16,15 @@ const TIME_REPLACEMENT = {
 
 var TEXT_REPLACEMENT_APPLIED = false;
 
-function _loadTextReplacementCheckboxes() {
-    _loadTitleReplacementCheckbox();
+function _loadTextReplacementCheckboxes(j) {
+    _loadTitleReplacementCheckbox(j);
     _loadTimeReplacementCheckbox();
 }
 
-function _loadTitleReplacementCheckbox() {
+function _loadTitleReplacementCheckbox(j) {
     const container = getID('title-replacement-container');
     TITLE_REPLACEMENT.current = getID('inner-programacao').value;
-    TITLE_REPLACEMENT.replacement = _getTitleReplacement();
+    TITLE_REPLACEMENT.replacement = _getTitleReplacement(j);
 
     if (TITLE_REPLACEMENT.replacement && TITLE_REPLACEMENT.replacement !== TITLE_REPLACEMENT.current) {
         container.style.display = 'block';
@@ -35,34 +35,35 @@ function _loadTitleReplacementCheckbox() {
             }
             getID('title-replacement-label').innerText = translate('trip.itinerary.replace_title', replacements);
         } else {
-            getID('title-replacement-label').innerText = translate('trip.itinerary.set_title', {title: TITLE_REPLACEMENT.replacement});
+            getID('title-replacement-label').innerText = translate('trip.itinerary.set_title', { title: TITLE_REPLACEMENT.replacement });
             getID('title-replacement-checkbox').checked = true;
         }
-        
+
     } else {
         container.style.display = 'none';
     }
 }
 
-function _getTitleReplacement() {
-    const radio = document.getElementsByName('inner-programacao-item-radio');
-    const selected = Array.from(radio).find(r => r.checked);
-    let select;
+function _getTitleReplacement(j) {
+    const selected = Array.from(document.getElementsByName('inner-programacao-item-radio'))
+        .find(r => r.checked);
 
-    switch (selected?.id) {
-        case 'inner-programacao-item-transporte-radio':
-            select = getID('inner-programacao-select-transporte');
-            break;
-        case 'inner-programacao-item-hospedagens-radio':
-            select = getID('inner-programacao-select-hospedagens');
-            break
-        case 'inner-programacao-item-destinos-radio':
-            select = getID('inner-programacao-select-passeio');
-    }
+    if (!selected?.id) return '';
 
-    if (select && select.value) {
-        return _getSelectCurrentLabel(select);
-    } else return '';
+    const idToSelectMap = {
+        'inner-programacao-item-transporte-radio': 'inner-programacao-select-transporte',
+        'inner-programacao-item-hospedagens-radio': 'inner-programacao-select-hospedagens',
+        'inner-programacao-item-destinos-radio': 'inner-programacao-select-passeio'
+    };
+
+    const select = getID(idToSelectMap[selected.id]);
+    const labelValue = select?.value && _getSelectCurrentLabel(select);
+
+    if (!labelValue) return '';
+
+    return selected.id.includes('hospedagens')
+        ? _processAccomodationReplacement(labelValue, j)
+        : labelValue;
 }
 
 function _replaceTextIfEnabled() {
@@ -86,7 +87,7 @@ function _loadTimeReplacementCheckbox() {
 
         TIME_REPLACEMENT.replacement.inicio = getID(`partida-horario-${j}`).value;
         TIME_REPLACEMENT.replacement.fim = getID(`chegada-horario-${j}`).value;
-        
+
         if (TIME_REPLACEMENT.current.inicio != TIME_REPLACEMENT.replacement.inicio || TIME_REPLACEMENT.current.fim != TIME_REPLACEMENT.replacement.fim) {
             getID('time-replacement-container').style.display = 'block';
 
@@ -128,4 +129,33 @@ function _replaceTimeIfEnabled() {
     TIME_REPLACEMENT.replacement.fim = '';
     getID('time-replacement-checkbox').checked = false;
     getID('time-replacement-container').style.display = 'none';
+}
+
+function _processAccomodationReplacement(labelValue, itineraryJ) {
+    const date = DATAS[itineraryJ - 1];
+    const inputDate = _jsDateToInputDate(date);
+    const value = getID('inner-programacao-select-hospedagens').value;
+    if (!inputDate || !value) return labelValue;
+
+    const j = _findJFromID(value, 'hospedagens');
+    const checkInValue = getID(`check-in-${j}`).value;
+    const checkOutValue = getID(`check-out-${j}`).value;
+
+    const isCheckIn = inputDate === checkInValue;
+    const isCheckOut = inputDate === checkOutValue;
+
+    if (!isCheckIn && !isCheckOut) return labelValue;
+
+    const labelKey = isCheckIn 
+        ? 'trip.accommodation.checkin' 
+        : 'trip.accommodation.checkout';
+    const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
+
+    const itineraries = INNER_PROGRAMACAO[_inputDateToKey(inputDate)];
+    const allEntries = Object.values(itineraries).flat();
+    const hasTreatedLabel = allEntries.some(entry => entry.programacao === treatedLabel);
+    const alreadyIncluded = allEntries.some(entry => entry.programacao.includes(labelValue));
+    const labelKeyMentioned = allEntries.some(entry => entry.programacao.includes(labelKey));
+
+    return (hasTreatedLabel || alreadyIncluded || labelKeyMentioned) ? labelValue : treatedLabel;
 }
