@@ -161,11 +161,11 @@ function _processAccomodationReplacement(labelValue, itineraryJ) {
         : 'trip.accommodation.checkout';
     const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
 
-    const itineraries = INNER_PROGRAMACAO[inputDate];
+    const itineraries = INNER_PROGRAMACAO[_inputDateToKey(inputDate)];
     const allEntries = Object.values(itineraries).flat();
-    const hasTreatedLabel = allEntries.includes(treatedLabel);
-    const alreadyIncluded = allEntries.some(entry => entry.includes(labelValue));
-    const labelKeyMentioned = allEntries.some(entry => entry.includes(labelKey));
+    const hasTreatedLabel = allEntries.some(entry => entry.programacao === treatedLabel);
+    const alreadyIncluded = allEntries.some(entry => entry.programacao.includes(labelValue));
+    const labelKeyMentioned = allEntries.some(entry => entry.programacao.includes(labelKey));
 
     return (hasTreatedLabel || alreadyIncluded || labelKeyMentioned) ? labelValue : treatedLabel;
 }
