@@ -7,6 +7,7 @@
 */
 
 const MISSING_TRANSLATIONS = new Set();
+var LANGUAGES = ['en', 'pt'];
 
 const APP = {
   projectId: null,

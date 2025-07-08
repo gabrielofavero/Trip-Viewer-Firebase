@@ -67,5 +67,5 @@ function _getValorVisibility(item, isLineup) {
 
 function _getDescricaoVisibility(item, isLineup) {
     if (isLineup) return "none";
-    else return item.descricao ? "block" : "none";
+    else return _getDescricaoValue(item) ? "block" : "none";
 }

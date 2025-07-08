@@ -28,8 +28,8 @@ async function _buildDestinosObject() {
     }
 }
 
-function _buildDestinoCategoryObject(tipo) {
-    const childIDs = _getChildIDs(`${tipo}-box`);
+function _buildDestinoCategoryObject(categoria) {
+    const childIDs = _getChildIDs(`${categoria}-box`);
 
     let result = [];
 
@@ -37,20 +37,20 @@ function _buildDestinoCategoryObject(tipo) {
         let item = {};
         const j = _getJ(childIDs[i]);
 
-        item.id = _getOrCreateCategoriaID(tipo, j);
-        item.novo = getID(`${tipo}-novo-${j}`).checked;
-        item.nome = getID(`${tipo}-nome-${j}`).value;
-        item.emoji = getID(`${tipo}-emoji-${j}`).value;
-        item.descricao = getID(`${tipo}-descricao-${j}`).value;
-        item.website = getID(`${tipo}-website-${j}`).value;
-        item.instagram = getID(`${tipo}-instagram-${j}`).value;
-        item.regiao = getID(`${tipo}-regiao-select-${j}`).value;
-        item.mapa = getID(`${tipo}-mapa-${j}`).value;
-        item.midia = getID(`${tipo}-midia-${j}`).value;
-        item.nota = getID(`${tipo}-nota-${j}`).value;
+        item.id = _getOrCreateCategoriaID(categoria, j);
+        item.novo = getID(`${categoria}-novo-${j}`).checked;
+        item.nome = getID(`${categoria}-nome-${j}`).value;
+        item.emoji = getID(`${categoria}-emoji-${j}`).value;
+        item.descricao = _getDescription(categoria, j);
+        item.website = getID(`${categoria}-website-${j}`).value;
+        item.instagram = getID(`${categoria}-instagram-${j}`).value;
+        item.regiao = getID(`${categoria}-regiao-select-${j}`).value;
+        item.mapa = getID(`${categoria}-mapa-${j}`).value;
+        item.midia = getID(`${categoria}-midia-${j}`).value;
+        item.nota = getID(`${categoria}-nota-${j}`).value;
 
-        const valor = getID(`${tipo}-valor-${j}`);
-        item.valor = valor.innerHTML && valor.value != 'outro' ? valor.value : getID(`${tipo}-outro-valor-${j}`).value;
+        const valor = getID(`${categoria}-valor-${j}`);
+        item.valor = valor.innerHTML && valor.value != 'outro' ? valor.value : getID(`${categoria}-outro-valor-${j}`).value;
 
         result.push(item);
     }

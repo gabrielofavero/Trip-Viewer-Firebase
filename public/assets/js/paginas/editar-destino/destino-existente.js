@@ -45,24 +45,10 @@ function _loadDestinoExistente(categoria) {
   const size = FIRESTORE_DESTINOS_DATA[categoria].length;
   if (size > 0) {
     for (let j = 1; j <= size; j++) {
-      _addDestino(categoria);
-
       const i = j - 1;
-      const destino = {
-        id: FIRESTORE_DESTINOS_DATA[categoria][i].id,
-        novo: FIRESTORE_DESTINOS_DATA[categoria][i].novo,
-        nome: FIRESTORE_DESTINOS_DATA[categoria][i].nome,
-        emoji: FIRESTORE_DESTINOS_DATA[categoria][i].emoji,
-        descricao: FIRESTORE_DESTINOS_DATA[categoria][i].descricao,
-        website: FIRESTORE_DESTINOS_DATA[categoria][i].website,
-        mapa: FIRESTORE_DESTINOS_DATA[categoria][i].mapa,
-        instagram: FIRESTORE_DESTINOS_DATA[categoria][i].instagram,
-        regiao: FIRESTORE_DESTINOS_DATA[categoria][i].regiao,
-        valor: FIRESTORE_DESTINOS_DATA[categoria][i].valor,
-        midia: FIRESTORE_DESTINOS_DATA[categoria][i].midia,
-        nota: FIRESTORE_DESTINOS_DATA[categoria][i].nota
-      }
-
+      const destino = FIRESTORE_DESTINOS_DATA[categoria][i];
+      _addDescricao(categoria, i, destino.descricao);
+      _addDestino(categoria);
       _addDestinoHTML(categoria, j, destino);
     }
   }
@@ -105,7 +91,7 @@ function _addDestinoHTML(categoria, j, destino) {
   getID(`${categoria}-emoji-${j}`).value = emoji;
   getID(`${categoria}-title-text-${j}`).innerText += ` ${emoji}`;
 
-  getID(`${categoria}-descricao-${j}`).value = destino.descricao || '';
+  _updateDescriptionButtonLabel(categoria, j);
   getID(`${categoria}-website-${j}`).value = destino.website || '';
   getID(`${categoria}-mapa-${j}`).value = destino.mapa || '';
   getID(`${categoria}-instagram-${j}`).value = destino.instagram || '';
