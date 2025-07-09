@@ -1,6 +1,6 @@
 function _loadResumo() {
   const dias = Math.ceil((FIM.date - INICIO.date) / (1000 * 60 * 60 * 24)) + 1;
-  const pessoas = FIRESTORE_DATA.quantidadePessoas;
+  const pessoas = FIRESTORE_DATA.pessoas.length || 1;
 
   // Dado 1
   getID("dado1").innerHTML = `<i class="bx bxs-plane-take-off"></i>

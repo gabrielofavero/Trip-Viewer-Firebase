@@ -131,6 +131,11 @@
             "title": "Galeria",
             "subtitle": "Insira fotos relevantes para a sua viagem, como mapas, comprovantes, horários de eventos, entre outros",
             "description_placeholder": "Mapa oficial do evento"
+        },
+        "travelers": {
+            "title": "Viajantes",
+            "info": "Informações dos viajantes",
+            "quantity": "Quantidade de viajantes"
         }
     },
     "destination": {
@@ -403,6 +408,7 @@
         "no_data": "Sem dados cadastrados 😔",
         "share": "Venha visualizar meus dados criados no TripViewer",
         "exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
+        "select_one": "Selecione pelo menos um item",
         "errors": {
             "load_title": "Erro no Carregamento 🙁",
             "unknown": "Um erro inesperado impediu o carregamento da página",
@@ -463,9 +469,8 @@
     "labels": {
         "intro": "Isso é ",
         "greeting": "Olá",
-        "people_quantity": "Quantidade de Pessoas",
-        "light_mode": "Tema Claro",
-        "dark_mode": "Tema Escuro",
+        "light_mode": "Tema claro",
+        "dark_mode": "Tema escuro",
         "duration": "Duração",
         "company": "Empresa",
         "start": "Início",

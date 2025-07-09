@@ -17,7 +17,7 @@ async function _buildTripObject() {
         modulos: _buildModulosObject(),
         moeda: getID(`moeda`).value,
         programacoes: _buildProgramacaoObject(),
-        quantidadePessoas: !isNaN(getID(`quantidadePessoas`).value) ? parseInt(getID(`quantidadePessoas`).value) : 1,
+        pessoas: TRAVELERS,
         titulo: getID(`titulo`).value,
         transportes: _buildTransporteObject(),
         versao: {

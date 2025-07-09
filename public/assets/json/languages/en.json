@@ -131,6 +131,11 @@
             "title": "Gallery",
             "subtitle": "Upload relevant photos for your trip, such as maps, confirmations, event times, and more",
             "description_placeholder": "Official event map"
+        },
+        "travelers": {
+            "title": "Travelers",
+            "info": "Travelers information",
+            "quantity": "Number of travelers"
         }
     },
     "destination": {
@@ -403,6 +408,7 @@
         "no_data": "No data found 😔",
         "share": "Check out what I've created on TripViewer",
         "exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
+        "select_one": "Please select at least one item",
         "errors": {
             "load_title": "Loading Error 🙁",
             "unknown": "An unexpected error prevented the page from loading",
@@ -463,9 +469,8 @@
     "labels": {
         "intro": "This is",
         "greeting": "Hello",
-        "people_quantity": "Number of people",
-        "light_mode": "Light Mode",
-        "dark_mode": "Dark Mode",
+        "light_mode": "Light mode",
+        "dark_mode": "Dark mode",
         "duration": "Duration",
         "company": "Company",
         "start": "Start",

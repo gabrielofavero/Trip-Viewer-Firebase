@@ -64,6 +64,7 @@ function _openInnerProgramacao(j, k, turno) {
     }
 
     _loadInnerProgramacaoListeners(selects, j);
+    _enableAllTravelersFieldset('inner-programacao-travelers');
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
     _loadInnerProgramacaoEventListeners();
 }
@@ -177,6 +178,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
         getID(`inner-programacao`).value = dados.programacao;
         getID(`inner-programacao-inicio`).value = dados.inicio;
         getID(`inner-programacao-fim`).value = dados.fim;
+        _updateTravelersFieldset('inner-programacao-travelers', dados.pessoas || []);
 
         switch (dados?.item?.tipo) {
             case 'transporte':
@@ -297,13 +299,11 @@ function _addInnerProgramacao(j, k, turno) {
         _replaceTimeIfEnabled();
     }
     
-    
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
         const innerProgramacao = _buildInnerProgramacao(programacao);
         _setInnerProgramacao(innerProgramacao, j, k, turno);
-
         _closeMessage();
     }
 
@@ -330,6 +330,7 @@ function _addInnerProgramacao(j, k, turno) {
 
         return {
             programacao: programacao.value,
+            pessoas: _getCheckedTravelersIDs('inner-programacao-travelers'),
             inicio: getID(`inner-programacao-inicio`).value,
             fim: getID(`inner-programacao-fim`).value,
             item: item

@@ -28,7 +28,7 @@ function _loadDadosBasicosViagemData() {
     getID('inicio').value = _getDateString(inicio, 'yyyy-mm-dd');
     getID('fim').value = _getDateString(fim, 'yyyy-mm-dd');
 
-    getID('quantidadePessoas').value = FIRESTORE_DATA.quantidadePessoas;
+    TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
 }
 
 function _loadCompartilhamentoData() {

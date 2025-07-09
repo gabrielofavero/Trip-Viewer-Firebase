@@ -65,6 +65,7 @@ function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES))
   // Descrição
   const descriptionDiv = document.createElement('div');
   descriptionDiv.className = 'message-description';
+  descriptionDiv.id = 'message-description';
   descriptionDiv.innerHTML = propriedades.conteudo;
   textDiv.appendChild(descriptionDiv);
 
