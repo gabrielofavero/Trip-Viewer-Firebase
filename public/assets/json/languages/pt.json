@@ -135,7 +135,9 @@
         "travelers": {
             "title": "Viajantes",
             "info": "Informações dos viajantes",
-            "quantity": "Quantidade de viajantes"
+            "quantity": "Quantidade de viajantes",
+            "one": "Um viajante",
+            "multiple": "Múltiplos viajantes ({{count}})"
         }
     },
     "destination": {

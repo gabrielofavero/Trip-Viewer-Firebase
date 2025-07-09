@@ -29,6 +29,7 @@ function _loadDadosBasicosViagemData() {
     getID('fim').value = _getDateString(fim, 'yyyy-mm-dd');
 
     TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
+    _updateTravelersButtonLabel();
 }
 
 function _loadCompartilhamentoData() {

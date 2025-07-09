@@ -57,6 +57,7 @@ function _saveTravelersInfo() {
         j++;
     }
     _closeMessage();
+    _updateTravelersButtonLabel();
 }
 
 function _getTravelersFieldset(id) {
@@ -180,4 +181,9 @@ function _validateTravelersFieldset(id) {
     if (!hasOptios) {
         // mensagem
     }
+}
+
+function _updateTravelersButtonLabel() {
+    const count = TRAVELERS.length || 1;
+    getID('travelers-info').textContent = count > 1 ? translate('trip.travelers.multiple', { count }) : translate('trip.travelers.one');
 }
