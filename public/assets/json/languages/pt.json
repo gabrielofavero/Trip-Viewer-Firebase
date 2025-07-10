@@ -137,7 +137,8 @@
             "info": "Informações dos viajantes",
             "quantity": "Quantidade de viajantes",
             "one": "Um viajante",
-            "multiple": "Múltiplos viajantes ({{count}})"
+            "multiple": "Múltiplos viajantes ({{count}})",
+            "unique": "Os nomes dos viajantes devem ser únicos"
         }
     },
     "destination": {

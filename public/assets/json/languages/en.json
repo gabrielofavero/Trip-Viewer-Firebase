@@ -137,7 +137,8 @@
             "info": "Travelers information",
             "quantity": "Number of travelers",
             "one": "One traveler",
-            "multiple": "Multiple travelers ({{count}})"
+            "multiple": "Multiple travelers ({{count}})",
+            "unique": "Traveler names must be unique"
         }
     },
     "destination": {
