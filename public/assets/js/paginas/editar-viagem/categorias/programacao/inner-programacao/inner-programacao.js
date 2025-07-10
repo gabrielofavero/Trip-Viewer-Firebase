@@ -64,6 +64,7 @@ function _openInnerProgramacao(j, k, turno) {
     }
 
     _loadInnerProgramacaoListeners(selects, j);
+    _enableAllTravelersFieldset('inner-programacao-travelers');
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
     _loadInnerProgramacaoEventListeners();
 }
@@ -125,7 +126,6 @@ function _getInnerProgramacaoSelectsDestinos(j) {
         turismo: translate('destination.tourism.title'),
         lojas: translate('destination.shopping.title')
     };
-    
 
     for (const destino of destinoFromCheckbox) {
         const currentID = destino.destinosID;
@@ -177,6 +177,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
         getID(`inner-programacao`).value = dados.programacao;
         getID(`inner-programacao-inicio`).value = dados.inicio;
         getID(`inner-programacao-fim`).value = dados.fim;
+        _updateTravelersFieldset('inner-programacao-travelers', dados.pessoas || []);
 
         switch (dados?.item?.tipo) {
             case 'transporte':
@@ -231,7 +232,7 @@ function _openInnerProgramacaoItem(j) {
     TEXT_REPLACEMENT_APPLIED = false;
 }
 
-function _openInnerProgramacaoTroca(j) {
+function _openInnerProgramacaoTroca() {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemTrocar = getID('inner-programacao-item-trocar');
     itemTrocar.style.minHeight = `${height}px`;
@@ -296,14 +297,15 @@ function _addInnerProgramacao(j, k, turno) {
         _replaceTextIfEnabled();
         _replaceTimeIfEnabled();
     }
-    
-    
+
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
+        if (!_validateTravelersFieldset('inner-programacao-travelers')) {
+            return;
+        }
         const innerProgramacao = _buildInnerProgramacao(programacao);
         _setInnerProgramacao(innerProgramacao, j, k, turno);
-
         _closeMessage();
     }
 
@@ -330,6 +332,7 @@ function _addInnerProgramacao(j, k, turno) {
 
         return {
             programacao: programacao.value,
+            pessoas: _getCheckedTravelersIDs('inner-programacao-travelers'),
             inicio: getID(`inner-programacao-inicio`).value,
             fim: getID(`inner-programacao-fim`).value,
             item: item
@@ -503,10 +506,10 @@ function _pairTurnos(callerID) {
 
 function _getMostRecentJ(j) {
     const nova = getID('inner-programacao-select-troca-data')?.value;
-    
+
     if (nova) {
         const keys = DATAS.map(data => _jsDateToKey(data));
-        const atual = keys[j-1];
+        const atual = keys[j - 1];
         if (atual != nova) {
             const turno = getID('inner-programacao-select-troca-turno').value;
             if (keys.includes(nova) && INNER_PROGRAMACAO[nova] && INNER_PROGRAMACAO[nova][turno]) {

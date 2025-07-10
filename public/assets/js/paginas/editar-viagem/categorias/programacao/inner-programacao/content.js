@@ -12,6 +12,8 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                         <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="${translate('trip.itinerary.placeholder')}" maxlength="50" autocomplete="off" />
                     </div>
 
+                    ${_getTravelersFieldset('inner-programacao-travelers', [])}
+
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">
                         <label>

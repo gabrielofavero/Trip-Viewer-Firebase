@@ -97,7 +97,6 @@
 
 ### Low Priority
 
-- 🏆 **F095:** Include traveler names in edit/trip.html (General / Itinerary)
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
 - 📈 **M098:** Change js functions/folder structures to EN-US
 - ⚔️ **E024:** Migrate project to React OR Angular
@@ -126,6 +125,7 @@
 
 ### July 2025
 - 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
+- 🏆 **F095:** Include traveler names in edit/trip.html (General / Itinerary)
 
 ### June 2025
 - 🏆 **F072:** Multi-person tickets
