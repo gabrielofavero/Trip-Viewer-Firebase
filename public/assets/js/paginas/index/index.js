@@ -360,7 +360,7 @@ function _loadNotificationBar() {
   if (VIAGENS.coletado && VIAGENS.viagensEmAndamento.length > 0) {
     getID('notification-bar').style.display = 'flex';
     if (VIAGENS.viagensEmAndamento.length == 1) {
-      getID('notification-text').innerHTML = `${translate('pages.index.trips.current_single')}:<br>${VIAGENS.viagensEmAndamento[0].titulo}`;
+      getID('notification-text').innerHTML = `${translate('trip.current_single')}:<br>${VIAGENS.viagensEmAndamento[0].titulo}`;
       if (VIAGENS.viagensEmAndamento[0].cores.ativo) {
         notificationBar.changed = true;
         notificationBar.claro = VIAGENS.viagensEmAndamento[0].cores.claro;
@@ -368,7 +368,7 @@ function _loadNotificationBar() {
         _applyNotificationBarColor();
       }
     } else {
-      getID('notification-text').innerHTML = `${translate('pages.index.trips.current_multi_1')}<br> ${translate('pages.index.trips.current_multi_2')}"`;
+      getID('notification-text').innerHTML = `${translate('trip.current_multi_1')}<br> ${translate('trip.current_multi_2')}"`;
       getID('notification-link').style.display = 'none';	
     }
   }
