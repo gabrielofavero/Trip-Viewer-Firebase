@@ -4,7 +4,7 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 75    | 75        | 0       |
+| 🐞   | Bug          | B000  | 76    | 75        | 1       |
 | 🏆   | Feature      | F000  | 97    | 70        | 27      |
 | 📈   | Improvement  | M000  | 108   | 80        | 28      |
 | ⚔️   | Epic         | E000  | 34    | 19        | 15      |
@@ -95,6 +95,7 @@
 - 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
 - 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
 - 📈 **M108:** Change USER_DATA in index to only get necessary data
+- 🐞 **B076:** Import backup function not getting data from "gastos" database
 
 ### Low Priority
 
