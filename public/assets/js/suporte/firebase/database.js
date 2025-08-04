@@ -147,41 +147,7 @@ async function _getSingleData(type) {
   return data;
 }
 
-// Backup e System
-async function _getBackup() {
-  try {
-    const uid = await _getUID();
-    if (uid) {
-      const collections = [
-        "admin",
-        "config",
-        "destinos",
-        "usuarios",
-        "viagens",
-      ];
-
-      const promises = collections.map(async (collectionName) => {
-        try {
-          const collectionRef = firebase.firestore().collection(collectionName);
-          const snapshot = await collectionRef.get();
-          const docs = snapshot.docs.map((doc) => doc.data());
-          return { collection: collectionName, docs };
-        } catch (error) {
-          console.error(`Error fetching data from ${collectionName}:`, error);
-          throw error;
-        }
-      });
-
-      const results = await Promise.all(promises);
-      console.log(JSON.stringify(results));
-    } else {
-      console.log("No authenticated user found.");
-    }
-  } catch (error) {
-    console.error("Error while fetching data:", error);
-  }
-}
-
+// System
 async function _getSystemData() {
   const systemData = await _get("config/system");
   return systemData;

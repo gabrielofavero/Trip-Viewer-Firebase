@@ -1,3 +1,3 @@
-import * as migration from "./migrations/05-migrate-destination-descriptions";
 
-export const migrate = migration.migrateDestinationDescriptions;
+import * as migration from "./migrations/06-migrate-pessoas"
+export const migrate = migration.migrate

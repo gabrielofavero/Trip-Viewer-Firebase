@@ -1555,13 +1555,10 @@ details summary::-webkit-details-marker {
   margin-top: 21.5px;
 }
 
-.input-full {
-  width: 100% !important;
-  ;
-}
-
-.flex-input-50-50 {
-  width: 100% !important;
+.travelers-input {
+  width: 196px !important;
+  height: 44px !important;
+  margin-top: 0px !important;
 }
 
 @media (max-width: 790px) {
@@ -1574,7 +1571,8 @@ details summary::-webkit-details-marker {
     margin-right: 0;
   }
 
-  .flex-input {
+  .flex-input,
+  .travelers-input {
     width: 100% !important;
   }
 
@@ -2054,4 +2052,33 @@ details summary::-webkit-details-marker {
 
 .lang-options button:hover {
   background: #eee;
+}
+
+.message-description {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+/* Double Fieldset */
+
+.double-fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.checkbox-label {
+  display: inline-block;
+  margin-left: 0.4em;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.double-fieldset .nice-form-group {
+  display: flex;
+  align-items: center;
+  min-width: 120px;
 }

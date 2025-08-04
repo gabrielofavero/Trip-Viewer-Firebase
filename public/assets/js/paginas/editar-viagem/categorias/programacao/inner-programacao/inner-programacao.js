@@ -53,7 +53,7 @@ function _openInnerProgramacao(j, k, turno) {
         tipo: 'cancelar',
     }, {
         tipo: 'confirmar',
-        acao: turno ? `_addInnerProgramacao(${j}, ${k}, '${turno}')` : `_addInnerProgramacao(${j})`
+        acao: `_innerProgramacaoConfirmAction(${j}, ${k}, '${turno}')`
     }];
 
     _displayFullMessage(propriedades);
@@ -64,6 +64,7 @@ function _openInnerProgramacao(j, k, turno) {
     }
 
     _loadInnerProgramacaoListeners(selects, j);
+    _enableAllTravelersFieldset('inner-programacao-travelers');
     _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
     _loadInnerProgramacaoEventListeners();
 }
@@ -125,7 +126,6 @@ function _getInnerProgramacaoSelectsDestinos(j) {
         turismo: translate('destination.tourism.title'),
         lojas: translate('destination.shopping.title')
     };
-    
 
     for (const destino of destinoFromCheckbox) {
         const currentID = destino.destinosID;
@@ -161,8 +161,6 @@ function _getInnerProgramacaoSelectsDestinos(j) {
     return result;
 }
 
-
-
 // Carrega dados atuais no Modal
 function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
     if (turno) {
@@ -179,6 +177,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
         getID(`inner-programacao`).value = dados.programacao;
         getID(`inner-programacao-inicio`).value = dados.inicio;
         getID(`inner-programacao-fim`).value = dados.fim;
+        _updateTravelersFieldset('inner-programacao-travelers', dados.pessoas || []);
 
         switch (dados?.item?.tipo) {
             case 'transporte':
@@ -218,7 +217,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
 }
 
 // Navegação do Modal
-function _openInnerProgramacaoItem() {
+function _openInnerProgramacaoItem(j) {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemSelecionar = getID('inner-programacao-item-selecionar');
     itemSelecionar.style.minHeight = `${height}px`;
@@ -229,11 +228,11 @@ function _openInnerProgramacaoItem() {
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
-    _loadTextReplacementCheckboxes();
+    _loadTextReplacementCheckboxes(j);
     TEXT_REPLACEMENT_APPLIED = false;
 }
 
-function _openInnerProgramacaoTroca(j) {
+function _openInnerProgramacaoTroca() {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemTrocar = getID('inner-programacao-item-trocar');
     itemTrocar.style.minHeight = `${height}px`;
@@ -278,6 +277,18 @@ function _getInnerProgramacaoTitle(j) {
     return _getDateTitle(DATAS[newJ - 1], 'mini');
 }
 
+function _innerProgramacaoConfirmAction(j, k, turno) {
+    if (getID('inner-programacao-item-selecionar').style.display === 'block') {
+        _closeInnerProgramacao(j);
+        return;
+    }
+    if (turno && turno != 'undefined') {
+        _addInnerProgramacao(j, k, turno);
+    } else {
+        _addInnerProgramacao(j);
+    }
+}
+
 // Salvar Inner Programação
 function _addInnerProgramacao(j, k, turno) {
     const programacao = getID(`inner-programacao`);
@@ -286,14 +297,15 @@ function _addInnerProgramacao(j, k, turno) {
         _replaceTextIfEnabled();
         _replaceTimeIfEnabled();
     }
-    
-    
+
     if (!programacao.value) {
         programacao.reportValidity();
     } else {
+        if (!_validateTravelersFieldset('inner-programacao-travelers')) {
+            return;
+        }
         const innerProgramacao = _buildInnerProgramacao(programacao);
         _setInnerProgramacao(innerProgramacao, j, k, turno);
-
         _closeMessage();
     }
 
@@ -320,6 +332,7 @@ function _addInnerProgramacao(j, k, turno) {
 
         return {
             programacao: programacao.value,
+            pessoas: _getCheckedTravelersIDs('inner-programacao-travelers'),
             inicio: getID(`inner-programacao-inicio`).value,
             fim: getID(`inner-programacao-fim`).value,
             item: item
@@ -365,7 +378,7 @@ function _deleteInnerProgramacao(j, k, turno) {
 }
 
 // Listeners
-function _loadInnerProgramacaoListeners(selects) {
+function _loadInnerProgramacaoListeners(selects, j) {
     const itemTransporte = getID(`inner-programacao-item-transporte`);
     const itemHospedagens = getID(`inner-programacao-item-hospedagens`);
     const itemDestinos = getID(`inner-programacao-item-destinos`);
@@ -374,28 +387,28 @@ function _loadInnerProgramacaoListeners(selects) {
         itemTransporte.style.display = 'block';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-item-hospedagens-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'block';
         itemDestinos.style.display = 'none';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-item-destinos-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'block';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-item-nenhum-radio`).addEventListener('change', () => {
         itemTransporte.style.display = 'none';
         itemHospedagens.style.display = 'none';
         itemDestinos.style.display = 'none';
-        _loadTextReplacementCheckboxes();
+        _loadTextReplacementCheckboxes(j);
     });
 
     getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction(selects));
@@ -493,10 +506,10 @@ function _pairTurnos(callerID) {
 
 function _getMostRecentJ(j) {
     const nova = getID('inner-programacao-select-troca-data')?.value;
-    
+
     if (nova) {
         const keys = DATAS.map(data => _jsDateToKey(data));
-        const atual = keys[j-1];
+        const atual = keys[j - 1];
         if (atual != nova) {
             const turno = getID('inner-programacao-select-troca-turno').value;
             if (keys.includes(nova) && INNER_PROGRAMACAO[nova] && INNER_PROGRAMACAO[nova][turno]) {

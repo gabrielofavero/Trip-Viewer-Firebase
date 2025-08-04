@@ -4,13 +4,15 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some(item => item.ativo) ? 'block' : 'none'}">
                         <label style="margin-bottom: 0px;">${translate('trip.itinerary.linked_item')} <span class="opcional">(${translate('labels.optional')})</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem()" style="margin-top: 8px;">${translate('trip.itinerary.link_item')}</button>
+                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem(${j})" style="margin-top: 8px;">${translate('trip.itinerary.link_item')}</button>
                     </div>
 
                     <div class="nice-form-group">
                         <label>${translate('trip.itinerary.title')}</label>
                         <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="${translate('trip.itinerary.placeholder')}" maxlength="50" autocomplete="off" />
                     </div>
+
+                    ${_getTravelersFieldset('inner-programacao-travelers', [])}
 
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">

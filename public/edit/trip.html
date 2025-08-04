@@ -298,12 +298,15 @@
             </div>
           </div>
 
-          <div class="nice-form-group">
-            <label data-translate="labels.people"></label>
-            <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" />
+          <div class="side-by-side-box">
+            <div class="nice-form-group side-by-side">
+              <label data-translate="trip.travelers.info"></label>
+              <button id="travelers-info" class="btn input-botao travelers-input" onclick="_openTravelersInfo()"
+                data-translate="labels.edit"></button>
+            </div>
           </div>
 
-          <div id="delete-text" style="display: none;">
+          <div id="delete-text" style="display: none; margin-top:1em">
             <a href="#" onclick="_deleteViagem()" data-translate="trip.delete.title"></a>
           </div>
 
@@ -814,9 +817,9 @@
                 d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2m0 14H5V5c0-.806.55-.988 1-1h13z">
               </path>
             </svg>
-            <span data-translate="trip.itinerary.title"></span>
+            <span data-translate="trip.gallery.title"></span>
           </h1>
-          <p data-translate="trip.itinerary.subtitle"></p>
+          <p data-translate="trip.gallery.subtitle"></p>
 
           <div class="nice-form-group">
             <input type="checkbox" id="habilitado-galeria" class="switch" />
@@ -968,10 +971,9 @@
   <script src="../assets/js/paginas/editar-viagem/categorias/destinos.js"></script>
   <script src="../assets/js/paginas/editar-viagem/categorias/programacao/programacao.js"></script>
   <script src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/content.js"></script>
-  <script
-    src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/inner-programacao.js"></script>
-  <script
-    src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/text-replacement.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/inner-programacao.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/programacao/inner-programacao/text-replacement.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/travelers.js"></script>
   <script src="../assets/js/paginas/editar-viagem/categorias/galeria.js"></script>
   <script src="../assets/js/paginas/editar-viagem/nova-viagem.js"></script>
   <script src="../assets/js/paginas/editar-viagem/viagem-existente.js"></script>

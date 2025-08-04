@@ -12,7 +12,6 @@ function _loadDadosBasicosNewTrip() {
   getID('fim').value = TOMORROW;
 
   getID('moeda').value = 'BRL';
-  getID('quantidadePessoas').value = 1;
 }
 
 function _addEditores() {

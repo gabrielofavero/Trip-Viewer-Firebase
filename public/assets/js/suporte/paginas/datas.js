@@ -163,12 +163,12 @@ function _formattedDateToDateObject(formattedDate, time) {
     return _convertToDateObject(date);
 }
 
-function _getTimeString(date) {
+function _getTimeString(date, localize = false) {
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let period = "";
 
-    if (_getLanguagePackName() == "en") {
+    if (localize && _getLanguagePackName() == "en") {
         if (hours > 12) {
             hours -= 12;
             period = "PM";
