@@ -119,7 +119,7 @@ function _loadHeader() {
 
   if (TYPE == 'destinos' && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
     const ultimaAtualizacao = new Date(FIRESTORE_DATA.versao.ultimaAtualizacao);
-    getID("subtitulo").innerHTML = `${translate(labels.last_updated_on)} ${_getDateString(ultimaAtualizacao, _getDateRegionalFormat())}`;
+    getID("subtitulo").innerHTML = `${translate('labels.last_updated_on')} ${_getDateString(ultimaAtualizacao, _getDateRegionalFormat())}`;
   }
 
   if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
@@ -212,6 +212,9 @@ function _loadHeader() {
       getID("header2").src = _isOnDarkMode() ? LOGO_ESCURO : LOGO_CLARO;
       getID("header1").style.display = "none";
       getID("header2").style.display = "block";
+      document.querySelectorAll('.header-text').forEach((element) => {
+        element.style.textAlign = 'center';
+      });
     }
   }
 }

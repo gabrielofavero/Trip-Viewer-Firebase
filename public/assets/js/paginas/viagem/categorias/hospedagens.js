@@ -56,7 +56,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
 
   return `<div class="hotel-box${innerProgramacao? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${j}${innerProgramacao ? '-inner' : ''}">
             <div class="portfolio-wrap" style="display: ${imagens.length > 0 ? 'block' : 'none'};">
-              <div class="hotel-img" style="background-image: url('${imagens[0].link}');">
+              <div class="hotel-img" style="background-image: url('${imagens?.[0]?.link}');">
                 <div class="portfolio-info">
                   <div class="portfolio-links">
                     ${galeriaItems}

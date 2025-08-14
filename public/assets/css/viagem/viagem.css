@@ -161,8 +161,11 @@ h6 {
 }
 
 #header2 {
-  max-height: 250px;
-  max-width: 50%;
+  width: 400px
+}
+
+.header-text {
+  width: 400px;
 }
 
 #programacao-hoje {
@@ -267,6 +270,10 @@ h6 {
   .swiper-button-prev,
   .swiper-button-next {
     display: none;
+  }
+
+  .header-text {
+    width: auto;
   }
 
 }
