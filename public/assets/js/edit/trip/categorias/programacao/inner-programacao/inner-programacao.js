@@ -1,3 +1,5 @@
+import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
+
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
 var LAST_OPENED_TURNO = {};
@@ -60,7 +62,7 @@ function _openInnerProgramacao(j, k, turno) {
 
     if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';
-        getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
+        getID('inner-programacao-item-destinos-radio-label').innerText = getSelectCurrentLabel(getID(`inner-programacao-select-local`));
     }
 
     _loadInnerProgramacaoListeners(selects, j);
@@ -184,13 +186,13 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
                 getID(`inner-programacao-item-transporte-radio`).checked = true;
                 getID(`inner-programacao-item-transporte`).style.display = 'block';
                 getID(`inner-programacao-select-transporte`).value = dados.item.id;
-                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+                itemAssociado.innerText = getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
                 break;
             case 'hospedagens':
                 getID(`inner-programacao-item-hospedagens-radio`).checked = true;
                 getID(`inner-programacao-item-hospedagens`).style.display = 'block';
                 getID(`inner-programacao-select-hospedagens`).value = dados.item.id;
-                itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+                itemAssociado.innerText = getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
                 break;
             case 'destinos':
                 getID(`inner-programacao-item-destinos-radio`).checked = true;
@@ -203,7 +205,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
                 const passeio = getID(`inner-programacao-select-passeio`);
                 passeio.value = dados.item.id;
                 if (passeio.value) {
-                    itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+                    itemAssociado.innerText = getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
                 }
                 break;
             default:
@@ -246,11 +248,11 @@ function _closeInnerProgramacao(j) {
     if (getID('inner-programacao-item-selecionar').style.display === 'block') {
         const itemAssociado = getID('inner-programacao-item-associado');
         if (getID('inner-programacao-item-transporte-radio').checked) {
-            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
+            itemAssociado.innerText = getSelectCurrentLabel(getID(`inner-programacao-select-transporte`));
         } else if (getID('inner-programacao-item-hospedagens-radio').checked) {
-            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
+            itemAssociado.innerText = getSelectCurrentLabel(getID(`inner-programacao-select-hospedagens`));
         } else if (getID('inner-programacao-item-destinos-radio').checked) {
-            itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+            itemAssociado.innerText = getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
         } else {
             itemAssociado.innerText = translate('trip.itinerary.link_item');
         }

@@ -1,3 +1,4 @@
+import { getSelectOptionsHTML } from "../../../support/html/fields.js";
 
 var DESCRIPTIONS = {};
 
@@ -83,7 +84,7 @@ function _getDescriptionContent(categoria) {
         <div class="nice-form-group">
             <label>${translate('labels.language.title')}</label>
             <select id="description-language-select" class="form-control select">
-                ${_getSelectOptionsHTML(languages, selectedLanguage)}
+                ${getSelectOptionsHTML(languages, selectedLanguage)}
             </select>
         </div>
 

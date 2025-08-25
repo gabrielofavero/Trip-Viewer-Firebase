@@ -1,6 +1,7 @@
 import { buildDS } from "../../../support/components/dynamic-select.js";
 import { closeAccordions } from "../../../support/html/accordion.js";
 import { openLastAccordion } from "../../../support/html/accordion.js";
+import { validateLink } from "../../../support/html/fields.js";
 
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
@@ -188,7 +189,7 @@ function _loadTransporteListeners(j) {
     getID(`chegada-horario-${j}`).addEventListener('change', () => _loadAutoDuration(j));
 
     // Validação de Link
-    getID(`transporte-link-${j}`).addEventListener('change', () => _validateLink(`transporte-link-${j}`));
+    getID(`transporte-link-${j}`).addEventListener('change', () => validateLink(`transporte-link-${j}`));
 }
 
 function _transporteAdicionarListenerAction() {

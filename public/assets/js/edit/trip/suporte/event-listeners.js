@@ -1,5 +1,6 @@
 import { addRemoveChildListenerDS } from "../../../support/components/dynamic-select.js";
 import { DOCUMENT_ID } from "../../../support/firebase/database.js";
+import { editFieldAgain, validateLink, validateImageLink } from "../../../support/html/fields.js";
 
 var INPUT_DETECTED = false;
 
@@ -12,7 +13,7 @@ function _loadEventListeners() {
     // Botões
     getID('editores-adicionar').addEventListener('click', () => _addEditores());
     getID('salvar').addEventListener('click', () => _setViagem());
-    getID('re-editar').addEventListener('click', () => _reEdit('viagens', SUCCESSFUL_SAVE));
+    getID('re-editar').addEventListener('click', () => editFieldAgain('viagens', SUCCESSFUL_SAVE));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
     getID('home').addEventListener('click', () => window.location.href = '../index.html');
     getID('home').addEventListener('click', () => window.location.href = '../index.html');
@@ -29,18 +30,18 @@ function _loadEventListeners() {
     getID('people-view').addEventListener('change', () => _applyTransportationTypeVisualization());
 
     // Validação de Imagens no módulo de Customização
-    getID('link-background').addEventListener('change', () => _validateImageLink('link-background'));
-    getID('link-logo-light').addEventListener('change', () => _validateImageLink('link-logo-light'));
-    getID('link-logo-dark').addEventListener('change', () => _validateImageLink('link-logo-dark'));
+    getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
+    getID('link-logo-light').addEventListener('change', () => validateImageLink('link-logo-light'));
+    getID('link-logo-dark').addEventListener('change', () => validateImageLink('link-logo-dark'));
 
     // Validação de Links no módulo de Customização
-    getID('link-attachments').addEventListener('change', () => _validateLink('link-attachments'));
-    getID('link-drive').addEventListener('change', () => _validateLink('link-drive'));
-    getID('link-maps').addEventListener('change', () => _validateLink('link-maps'));
-    getID('link-pdf').addEventListener('change', () => _validateLink('link-pdf'));
-    getID('link-ppt').addEventListener('change', () => _validateLink('link-ppt'));
-    getID('link-sheet').addEventListener('change', () => _validateLink('link-sheet'));
-    getID('link-vacina').addEventListener('change', () => _validateLink('link-vacina'));
+    getID('link-attachments').addEventListener('change', () => validateLink('link-attachments'));
+    getID('link-drive').addEventListener('change', () => validateLink('link-drive'));
+    getID('link-maps').addEventListener('change', () => validateLink('link-maps'));
+    getID('link-pdf').addEventListener('change', () => validateLink('link-pdf'));
+    getID('link-ppt').addEventListener('change', () => validateLink('link-ppt'));
+    getID('link-sheet').addEventListener('change', () => validateLink('link-sheet'));
+    getID('link-vacina').addEventListener('change', () => validateLink('link-vacina'));
 
     // Barra de pesquisa em destinos
     getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());

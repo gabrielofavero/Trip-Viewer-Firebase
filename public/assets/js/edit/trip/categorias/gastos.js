@@ -1,3 +1,5 @@
+import { getFieldValueOrNotify } from "../../../support/html/fields";
+
 var PIN_GASTOS = {
     current: '',
     new: '',
@@ -212,11 +214,11 @@ function _getInnerGastoContent(categoria, tipo, index) {
 }
 
 function _saveInnerGasto(categoria, tipo, index = -1) {
-    const valor = _getFieldValueOrNotify('gasto-valor');
+    const valor = getFieldValueOrNotify('gasto-valor');
     const newGasto = {
-        nome: _getFieldValueOrNotify('gasto-nome'),
-        tipo: getID('gasto-tipo-select').value === 'custom' ? _getFieldValueOrNotify('gasto-tipo-input') : getID('gasto-tipo-select').value,
-        moeda: _getFieldValueOrNotify('gasto-moeda'),
+        nome: getFieldValueOrNotify('gasto-nome'),
+        tipo: getID('gasto-tipo-select').value === 'custom' ? getFieldValueOrNotify('gasto-tipo-input') : getID('gasto-tipo-select').value,
+        moeda: getFieldValueOrNotify('gasto-moeda'),
         valor: valor ? parseFloat(parseFloat(valor).toFixed(2)) : null,
     }
 

@@ -1,7 +1,8 @@
 import { DOCUMENT_ID } from "../firebase/database";
+import { setSuccessfulSave } from "../../main/main.js";
 
 // Required Fields
-function _validateRequiredFields(customChecks=[]) {
+export function validateRequiredFields(customChecks=[]) {
     var invalidFields = [];
 
     var inputs = document.querySelectorAll('input[required]');
@@ -16,14 +17,14 @@ function _validateRequiredFields(customChecks=[]) {
     });
 
     if (invalidFields.length > 0) {
-        SUCCESSFUL_SAVE = false;
-        getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields, customChecks);
+        setSuccessfulSave(false)
+        getID('modal-inner-text').innerHTML = getInvalidFieldsText(invalidFields, customChecks);
         _openModal();
         _stopLoadingScreen();
     }
 }
 
-function _getInvalidFieldsText(invalidFields, customChecks) {
+function getInvalidFieldsText(invalidFields, customChecks) {
     const dadosBasicos = ['titulo', 'moeda'];
 
     let intro = 'Os seguintes campos obrigatórios não foram preenchidos:<br>'
@@ -59,7 +60,7 @@ function _getInvalidFieldsText(invalidFields, customChecks) {
                 }
             } else {
                 innerTitle = _firstCharToUpperCase(idSplit[0])
-                innerText = _getInnerText(idSplit);
+                innerText = getFieldText(idSplit);
             }
     
             if (title == innerTitle || dadosBasicos.includes(id)) {
@@ -102,7 +103,7 @@ function _getInvalidFieldsText(invalidFields, customChecks) {
     return result;
 }
 
-function _reEdit(type, SUCCESSFUL_SAVE = true) {
+export function editFieldAgain(type, successfulSave = true) {
     let param;
     let url;
 
@@ -117,16 +118,16 @@ function _reEdit(type, SUCCESSFUL_SAVE = true) {
         url = 'listing.html';
     }
 
-    if (param && DOCUMENT_ID && SUCCESSFUL_SAVE) {
+    if (param && DOCUMENT_ID && successfulSave) {
         window.location.href = `${url}?${param}=${DOCUMENT_ID}`;
-    } else if (!SUCCESSFUL_SAVE) {
+    } else if (!successfulSave) {
         _closeModal();
     } else {
         window.location.href = '../index.html';
     }
 }
 
-function _getInnerText(idSplit) {
+function getFieldText(idSplit) {
     let innerText = '';
     for (let i = 1; i < idSplit.length; i++) {
         innerText += _firstCharToUpperCase(idSplit[i]) + " ";
@@ -134,14 +135,7 @@ function _getInnerText(idSplit) {
     return innerText.trim();
 }
 
-function _notifyFieldIfAbsent(id) {
-    const field = getID(id);
-    if (!field.value) {
-        field.reportValidity();
-    }
-}
-
-function _getFieldValueOrNotify(id) {
+export function getFieldValueOrNotify(id) {
     const field = getID(id);
     if (!field.value) {
         field.reportValidity();
@@ -151,7 +145,7 @@ function _getFieldValueOrNotify(id) {
 }
 
 // Selects
-function _closeAllSelects(excludeElement) {
+function closeAllSelects(excludeElement) {
     var selectElements = document.getElementsByTagName('select');
     for (var i = 0; i < selectElements.length; i++) {
         var select = selectElements[i];
@@ -161,11 +155,11 @@ function _closeAllSelects(excludeElement) {
     }
 }
 
-function _getSelectCurrentLabel(select) {
+export function getSelectCurrentLabel(select) {
     return select.options[select.selectedIndex].innerText;
 }
 
-function _addValueToSelectIfExists(value, select) {
+export function addValueToSelectIfExists(value, select) {
     if (!select) return;
     for (var i = 0; i < select.options.length; i++) {
         if (select.options[i].value === value) {
@@ -174,7 +168,7 @@ function _addValueToSelectIfExists(value, select) {
     }
 }
 
-function _getAllValuesFromSelect(select) {
+export function getAllValuesFromSelect(select) {
     var values = [];
     for (var i = 0; i < select.options.length; i++) {
         values.push(select.options[i].value);
@@ -182,33 +176,33 @@ function _getAllValuesFromSelect(select) {
     return values;
 }
 
-// Validação de links
-function _isHttp(link) {
+// Link Validation
+function isHttp(link) {
     return link.startsWith('http://') || link.startsWith('https://');
 }
 
-function _validateLink(id) {
+export function validateLink(id) {
     const div = getID(id);
     const link = div.value;
 
-    if (!link || _isHttp(link)) return;
+    if (!link || isHttp(link)) return;
 
-    _closeAllSelects();
+    closeAllSelects();
     div.value = '';
 
     _openToast('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>: Certifique-se de que ele comece com "http://" ou "https://".');
 }
 
-function _validateMapLink(id) {
+export function validateMapLink(id) {
     const div = getID(id);
     const link = div.value;
 
     const isGoogleMaps = (link.includes('google') && link.includes('maps')) || link.includes('goo.gl/maps') || link.includes('maps.app.goo.gl');
     const isAppleMaps = link.includes('maps.apple.com');
 
-    if (!link || (_isHttp(link) && (isGoogleMaps || isAppleMaps))) return;
+    if (!link || (isHttp(link) && (isGoogleMaps || isAppleMaps))) return;
 
-    _closeAllSelects();
+    closeAllSelects();
     div.value = '';
 
     const mapsI = '<i class="iconify" data-icon="hugeicons:maps"></i>'
@@ -219,11 +213,11 @@ function _validateMapLink(id) {
                                                ${appleMapsI} <strong>Apple Maps</strong><br>`);
 }
 
-function _validateInstagramLink(id) {
+export function validateInstagramLink(id) {
     const div = getID(id);
     const link = div.value;
 
-    if (!link || (_isHttp(link) && link.includes('instagram.com'))) return;
+    if (!link || (isHttp(link) && link.includes('instagram.com'))) return;
 
     div.value = '';
 
@@ -231,13 +225,13 @@ function _validateInstagramLink(id) {
     _displayMessage('Link do Instagram Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "https://www.instagram.com".`);
 }
 
-function _validateMediaLink(id) {
+export function validateMediaLink(id) {
     const div = getID(id);
     const link = div.value;
 
     const validDomains = ['youtu.be/', 'youtube.com', 'tiktok.com', 'instagram.com/reel/', 'instagram.com/reels/', 'instagram.com/p/'];
 
-    if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)))) {
+    if (!link || (isHttp(link) && validDomains.some(domain => link.includes(domain)))) {
         return;
     } else {
         div.value = '';
@@ -252,27 +246,11 @@ function _validateMediaLink(id) {
     }
 }
 
-function _validatePlaylistLink(id) {
-    const div = getID(id);
-    const link = div.value;
-
-    const validDomains = ['spotify.com'];
-
-    if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)))) return;
-
-    div.value = '';
-
-    const linkI = '<i class="iconify" data-icon="ic:baseline-music-off"></i>';
-    const spotifyI = '<i class="iconify" data-icon="mdi:spotify"></i>';
-    _displayMessage('Playlist / Página do Artista Inválida ' + linkI, `A playlist ou Página do do Artista fornecida não é válida. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                               ${spotifyI} <strong>Spotify</strong>`);
-}
-
-function _validateImageLink(id) {
+export function validateImageLink(id) {
     const div = getID(id);
     const imageLink = div.value;
 
-    if (_isHttp(imageLink) && !imageLink.includes('pbs.twimg.com')) return;
+    if (isHttp(imageLink) && !imageLink.includes('pbs.twimg.com')) return;
 
     let title = '';
     let content = '';
@@ -286,13 +264,13 @@ function _validateImageLink(id) {
         content = `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`;
     }
 
-    _closeAllSelects();
+    closeAllSelects();
     div.value = '';
 
     _displayMessage(title, content);
 }
 
-function _getSelectOptionsHTML(object, selectedKey) {
+export function getSelectOptionsHTML(object, selectedKey) {
     let result = '';
     for (const key in object) {
         const selected = (key == selectedKey) ? 'selected' : '';

@@ -1,3 +1,5 @@
+import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
+
 const TITLE_REPLACEMENT = {
     current: '',
     replacement: '',
@@ -57,7 +59,7 @@ function _getTitleReplacement(j) {
     };
 
     const select = getID(idToSelectMap[selected.id]);
-    const labelValue = select?.value && _getSelectCurrentLabel(select);
+    const labelValue = select?.value && getSelectCurrentLabel(select);
 
     if (!labelValue) return '';
 

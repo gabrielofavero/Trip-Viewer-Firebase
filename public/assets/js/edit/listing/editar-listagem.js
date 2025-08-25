@@ -2,6 +2,7 @@ import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList } from "../..
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "../../support/firebase/storage.js";
 import { loadUserPermissions } from "../../support/firebase/user.js";
 import { canUserEdit } from "../../support/firebase/user.js";
+import { editFieldAgain } from "../../support/html/fields.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -91,7 +92,7 @@ function _loadEventListeners() {
   });
 
   getID('re-editar').addEventListener('click', () => {
-    _reEdit('listagens', SUCCESSFUL_SAVE);
+    editFieldAgain('listagens', SUCCESSFUL_SAVE);
   });
 
   getID('home').addEventListener('click', () => {

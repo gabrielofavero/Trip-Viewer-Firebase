@@ -2,6 +2,7 @@ import { newDynamicSelect, updateValueDS, buildDS, addRemoveChildListenerDS, rem
 import { DOCUMENT_ID, getSingleData, deleteUserObject } from "../../support/firebase/database.js";
 import { canUserEdit } from "../../support/firebase/user.js";
 import { closeAccordions, openLastAccordion } from "../../support/html/accordion.js";
+import { editFieldAgain, validateLink, validateMapLink, validateInstagramLink, validateMediaLink } from "../../support/html/fields.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -107,7 +108,7 @@ function _loadEventListeners() {
   });
 
   getID('re-editar').addEventListener('click', () => {
-    _reEdit('destinos', SUCCESSFUL_SAVE);
+    editFieldAgain('destinos', SUCCESSFUL_SAVE);
   });
 
   getID('cancelar').addEventListener('click', () => {
@@ -191,10 +192,10 @@ function _addDestinosListeners(categoria, j) {
   // Região
 
   // Links
-  getID(`${categoria}-website-${j}`).addEventListener('change', () => _validateLink(`${categoria}-website-${j}`));
-  getID(`${categoria}-mapa-${j}`).addEventListener('change', () => _validateMapLink(`${categoria}-mapa-${j}`));
-  getID(`${categoria}-instagram-${j}`).addEventListener('change', () => _validateInstagramLink(`${categoria}-instagram-${j}`));
-  getID(`${categoria}-midia-${j}`).addEventListener('change', () => _validateMediaLink(`${categoria}-midia-${j}`));
+  getID(`${categoria}-website-${j}`).addEventListener('change', () => validateLink(`${categoria}-website-${j}`));
+  getID(`${categoria}-mapa-${j}`).addEventListener('change', () => validateMapLink(`${categoria}-mapa-${j}`));
+  getID(`${categoria}-instagram-${j}`).addEventListener('change', () => validateInstagramLink(`${categoria}-instagram-${j}`));
+  getID(`${categoria}-midia-${j}`).addEventListener('change', () => validateMediaLink(`${categoria}-midia-${j}`));
 }
 
 function _valorListenerAction(j, categoria) {

@@ -1,4 +1,5 @@
 import { initializeSortableForGroup } from "../../../../support/components/sortable.js";
+import { addValueToSelectIfExists, getAllValuesFromSelect } from "../../../../support/html/fields.js";
 
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
@@ -16,7 +17,7 @@ function _applyLoadedProgramacaoData(j, dados) {
 
     let titulo = dados.titulo;
     if (titulo) {
-        const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
+        const selectValues = getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
         if (destinosIDs && destinosIDs.includes(titulo)) {
             getID(`programacao-inner-title-${j}`).style.display = 'none';
         } else if (titulo.toLowerCase() == 'outro' || !selectValues.includes(titulo)) {
@@ -119,7 +120,7 @@ function _updateProgramacaoTitleSelect(j) {
     const value = select.value;
     select.innerHTML = _getProgramacaoTitleSelectOptions(j);
     if (value) {
-        _addValueToSelectIfExists(value, select);
+        addValueToSelectIfExists(value, select);
     }
     _updateProgramacaoTitle(j);
 }

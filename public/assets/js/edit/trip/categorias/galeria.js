@@ -1,6 +1,7 @@
 import { buildDS } from "../../../support/components/dynamic-select.js";
 import { IMAGE_UPLOAD_STATUS, uploadImages, removeImageSelectorListeners } from "../../../support/firebase/storage.js";
 import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
+import { validateImageLink } from "../../../support/html/fields.js";
 
 function _deleteGaleria(i) {
     const id = `galeria-${i}`;
@@ -15,7 +16,7 @@ function _loadGaleriaListeners(j) {
     getID(`galeria-titulo-${j}`).addEventListener('change', () => getID(`galeria-title-${j}`).innerText = getID(`galeria-titulo-${j}`).value);
 
     // Validação de Link
-    getID(`link-galeria-${j}`).addEventListener('change', () => _validateImageLink(`link-galeria-${j}`));
+    getID(`link-galeria-${j}`).addEventListener('change', () => validateImageLink(`link-galeria-${j}`));
 }
 
 function _galeriaAdicionarListenerAction() {

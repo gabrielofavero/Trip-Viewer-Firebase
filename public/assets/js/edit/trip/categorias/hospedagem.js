@@ -1,6 +1,7 @@
 import { initializeSortableForGroup } from "../../../support/components/sortable.js";
 import { IMAGE_UPLOAD_STATUS, uploadImages, loadImageSelector } from "../../../support/firebase/storage.js";
 import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
+import { validateLink, validateImageLink } from "../../../support/html/fields.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 
@@ -37,7 +38,7 @@ function _loadHospeagemCheck(chave, checkTipo, hospedagem, j) {
 // Listener
 function _loadHospedagemListeners(j) {
     // Validação de Link
-    getID(`reserva-hospedagens-link-${j}`).addEventListener('change', () => _validateLink(`reserva-hospedagens-link-${j}`));
+    getID(`reserva-hospedagens-link-${j}`).addEventListener('change', () => validateLink(`reserva-hospedagens-link-${j}`));
 
     // Nome
     getID(`hospedagens-nome-${j}`).addEventListener('change', function () {
@@ -81,7 +82,7 @@ function _openImagensHospedagem(j) {
         }
 
         loadImageSelector(`hospedagens-${k}`);
-        getID(`link-hospedagens-${k}`).addEventListener('change', () => _validateImageLink(`link-hospedagens-${k}`));
+        getID(`link-hospedagens-${k}`).addEventListener('change', () => validateImageLink(`link-hospedagens-${k}`));
     }
 
 }

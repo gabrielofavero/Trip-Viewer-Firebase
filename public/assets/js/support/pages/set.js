@@ -1,6 +1,7 @@
 import { DOCUMENT_ID, create, update, getUserListIDs } from "../firebase/database.js";
 import { IMAGE_UPLOAD_STATUS, uploadImage } from "../firebase/storage.js";
 import { getUID } from "../firebase/user.js";
+import { validateRequiredFields } from "../html/fields.js";
 
 var CUSTOM_UPLOADS = {
     hospedagens: [],
@@ -20,7 +21,7 @@ async function _setDocumento(tipo) {
     _startLoadingScreen(false);
 
     const customChecks = await eval(CONFIG.set[tipo].customChecks);
-    _validateRequiredFields(customChecks);
+    validateRequiredFields(customChecks);
     if (_isModalOpen()) return;
 
     for (const beforeItem of CONFIG.set[tipo].before) {
