@@ -225,6 +225,7 @@ function _loadConfig() {
   ]).then(() => {
     CONFIG = config;
     _translatePage();
+    _initializeApp()
   }).catch(error => {
     console.error('Erro ao carregar a configuração:', error);
     _displayError('Erro ao carregar a configuração');
@@ -235,10 +236,14 @@ function _openLinkInNewTab(url) {
   var win = window.open(url, '_blank');
   win.focus();
 }
-window.addEventListener('load', () => {
-  // App Initialization
+
+
+function _initializeApp() {
+  const isLocalhost = window.location.hostname === "localhost";
+  const isIP = /^\d{1,3}(\.\d{1,3}){3}$/.test(window.location.hostname);
+
   APP.projectId = firebase.app().options.projectId;
-  APP.version = window.location.hostname === "localhost" ? new Date().getTime() : CONFIG.versoes[APP.projectId];
+  APP.version = isLocalhost || isIP ? new Date().getTime() : CONFIG.versoes[APP.projectId];
 
   // Cache Busting
   if (APP.version) {
@@ -250,7 +255,7 @@ window.addEventListener('load', () => {
       tag.setAttribute(attr, url.toString());
     });
   }
-});
+}
 
 function _getUserLanguage() {
   let language = localStorage.getItem("userLanguage");
