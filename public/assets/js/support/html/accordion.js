@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 // Accordion Open - Close
 export function closeAccordions(categoria) {
     const childs = _getChildIDs(`${categoria}-box`);

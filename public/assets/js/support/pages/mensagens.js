@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {
   titulo: '',

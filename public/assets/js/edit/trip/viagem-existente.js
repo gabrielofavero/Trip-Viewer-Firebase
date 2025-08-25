@@ -1,5 +1,6 @@
 import { updateValueDS, buildDS } from "../../support/components/dynamic-select.js";
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, get, getUserList } from "../../support/firebase/database.js";
+import { getID } from "../../main/app.js";
 
 async function _loadTripData() {
     try {

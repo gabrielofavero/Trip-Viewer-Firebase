@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var THEME_COLOR;
 var THEME_COLOR_HOVER;
 var THEME_COLOR_SECONDARY;

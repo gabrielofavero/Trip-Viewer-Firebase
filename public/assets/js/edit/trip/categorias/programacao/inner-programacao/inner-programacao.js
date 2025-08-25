@@ -1,4 +1,5 @@
 import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
+import { getID } from "../../../../../main/app.js";
 
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};

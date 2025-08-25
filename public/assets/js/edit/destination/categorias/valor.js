@@ -1,3 +1,5 @@
+import { getID } from "../../../main/app.js";
+
 const VALORES_KEYS = ['-', '$', '$$', '$$$', '$$$$', 'default'];
 var VALOR_OPTIONS = '';
 

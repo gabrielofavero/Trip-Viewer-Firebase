@@ -2,12 +2,12 @@ import { newDynamicSelect } from "../../support/components/dynamic-select.js";
 import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList, getUserPermissions } from "../../support/firebase/database.js";
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "../../support/firebase/storage.js";
 import { canUserEdit } from "../../support/firebase/user.js";
+import { getID, initApp } from "../../main/app.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
 var FIRESTORE_GASTOS_DATA;
 
-var SUCCESSFUL_SAVE = false;
 var CAN_EDIT = false;
 var NEW_TRIP = false;
 
@@ -18,7 +18,7 @@ _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    _main();
+    initApp();
 
     DOCUMENT_ID = _getURLParam('v');
     await loadUserPermissions();

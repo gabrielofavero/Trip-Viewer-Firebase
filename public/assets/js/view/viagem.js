@@ -1,4 +1,5 @@
 import { ERROR_FROM_GET_REQUEST, getSingleData } from "../support/firebase/database.js";
+import { getID, initApp } from "../main/app.js";
 
 var REFRESHED = false;
 var TYPE = 'viagens';
@@ -16,7 +17,7 @@ var FIM = {
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
-    _main();
+    initApp();
     const urlParams = _getURLParams();
     TYPE = urlParams['l'] ? 'listagens' : urlParams['d'] ? "destinos" : 'viagens';
 

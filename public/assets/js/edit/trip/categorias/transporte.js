@@ -2,6 +2,7 @@ import { buildDS } from "../../../support/components/dynamic-select.js";
 import { closeAccordions } from "../../../support/html/accordion.js";
 import { openLastAccordion } from "../../../support/html/accordion.js";
 import { validateLink } from "../../../support/html/fields.js";
+import { getID } from "../../../main/app.js";
 
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;

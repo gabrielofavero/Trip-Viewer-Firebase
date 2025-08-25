@@ -1,4 +1,5 @@
-// ======= Visibility JS =======
+import { getID } from "../../main/app.js";
+
 var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
 var LOGO_ESCURO = "";

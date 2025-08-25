@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var CURRENT_PLACES_SIZE = 0;

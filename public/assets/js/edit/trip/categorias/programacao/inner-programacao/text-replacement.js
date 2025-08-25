@@ -1,4 +1,5 @@
 import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
+import { getID } from "../../../../../main/app.js";
 
 const TITLE_REPLACEMENT = {
     current: '',

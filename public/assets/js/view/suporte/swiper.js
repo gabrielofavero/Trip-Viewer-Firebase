@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 function _initSwiper(id) {
     const swiper = getID(`${id}-swiper`);
 

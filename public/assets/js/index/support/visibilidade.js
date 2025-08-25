@@ -1,3 +1,5 @@
+import { select, getID } from "../../main/app.js";
+
 const notificationBar = {
   changed: false,
   claro: '',

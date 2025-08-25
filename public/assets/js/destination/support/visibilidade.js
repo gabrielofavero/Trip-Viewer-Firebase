@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 function _adjustButtonsPositionDestinos() {
     const first = "10px";
     const second = "50px";

@@ -1,4 +1,5 @@
 import { closeAccordions } from "../support/html/accordion.js";
+import { getID } from "../main/app.js";
 
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
 var CONTENT = {};

@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var ADJUST_HEIGHT_CARDS = [];
 
 function _adjustCardsHeightsListener() {

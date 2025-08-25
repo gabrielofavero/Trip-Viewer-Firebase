@@ -1,5 +1,6 @@
 import { addSelectorDS } from "../../support/components/dynamic-select.js";
 import { loadImageSelector } from "../../support/firebase/storage.js";
+import { getID } from "../../main/app.js";
 
 var DESTINOS = [];
 var DATAS = [];

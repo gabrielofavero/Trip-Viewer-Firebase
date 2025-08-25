@@ -1,3 +1,5 @@
+import { getID } from "../main/app.js";
+
 // Resumo
 function _loadResumo() {
     _loadChartResumo();

@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 function _loadResumo() {
   const dias = Math.ceil((FIM.date - INICIO.date) / (1000 * 60 * 60 * 24)) + 1;
   const pessoas = FIRESTORE_DATA.pessoas.length || 1;

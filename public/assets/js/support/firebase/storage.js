@@ -1,5 +1,6 @@
 import { DOCUMENT_ID } from "./database.js";
 import { USER_PERMISSIONS } from "./user.js";
+import { getID } from "../../main/app.js";
 
 export var IMAGE_UPLOAD_STATUS = {
   hasErrors: false,

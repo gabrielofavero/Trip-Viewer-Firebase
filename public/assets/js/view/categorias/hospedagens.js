@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 function _loadHospedagens() {
   let swiperData = []
 

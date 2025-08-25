@@ -1,7 +1,9 @@
+import { setSuccessfulSave } from "../../main/app.js";
 import { DOCUMENT_ID, create, update, getUserListIDs } from "../firebase/database.js";
 import { IMAGE_UPLOAD_STATUS, uploadImage } from "../firebase/storage.js";
 import { getUID } from "../firebase/user.js";
 import { validateRequiredFields } from "../html/fields.js";
+import { setSuccessfulSave, getID } from "../../main/app.js";
 
 var CUSTOM_UPLOADS = {
     hospedagens: [],
@@ -121,7 +123,7 @@ function _buildSetMessage() {
     const allFailed = SET_RESPONSES.every(response => response.sucesso === false);
 
     if (allPassed) {
-        SUCCESSFUL_SAVE = true;
+        setSuccessfulSave(true);
         return translate('messages.documents.save.success');
     } else if (allFailed) {
         return `${translate('messages.documents.save.incomplete')}. <a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}

@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var TRANSPORTE_ICONES = [];
 var TRANSPORTE_ATIVO;
 var TRANSPORTES_ATIVOS = [];

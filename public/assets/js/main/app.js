@@ -6,9 +6,7 @@
     - Modified by: Gabriel Fávero
 */
 
-const MISSING_TRANSLATIONS = new Set();
-var LANGUAGES = ['en', 'pt'];
-
+export const MISSING_TRANSLATIONS = new Set();
 export var SUCCESSFUL_SAVE = false;
 
 const APP = {
@@ -17,7 +15,7 @@ const APP = {
 }
 
 // Easy Selectors
-const select = (el, all = false) => {
+export const select = (el, all = false) => {
   el = el.trim();
   if (all) {
     return [...document.querySelectorAll(el)];
@@ -26,7 +24,7 @@ const select = (el, all = false) => {
   }
 };
 
-const on = (type, el, listener, all = false) => {
+export const on = (type, el, listener, all = false) => {
   if (el === 'document') {
     document.addEventListener(type, listener);
   } else if (el === 'window') {
@@ -45,12 +43,11 @@ export const getID = (id) => {
   return document.getElementById(id);
 }
 
-// Firebase
-export function _main() {
+export function initApp() {
   "use strict";
   $('body').css('overflow', 'hidden');
 
-  _loadConfig();
+  loadConfig();
   _loadLangSelectorSelect();
 
   /**
@@ -210,7 +207,26 @@ export function _main() {
   });
 }
 
-function _loadConfig() {
+function loadAppVersioning() {
+  const isLocalhost = window.location.hostname === "localhost";
+  const isIP = /^\d{1,3}(\.\d{1,3}){3}$/.test(window.location.hostname);
+
+  APP.projectId = firebase.app().options.projectId;
+  APP.version = isLocalhost || isIP ? new Date().getTime() : CONFIG.versoes[APP.projectId];
+
+  // Cache Busting
+  if (APP.version) {
+    const tags = document.querySelectorAll('script[src], link[rel="stylesheet"]');
+    tags.forEach(tag => {
+      const attr = tag.tagName === 'LINK' ? 'href' : 'src';
+      const url = new URL(tag.getAttribute(attr), window.location.origin);
+      url.searchParams.set('v', APP.version);
+      tag.setAttribute(attr, url.toString());
+    });
+  }
+}
+
+async function loadConfig() {
   const config = {};
   return Promise.all([
     $.getJSON("/assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
@@ -226,37 +242,16 @@ function _loadConfig() {
   ]).then(() => {
     CONFIG = config;
     _translatePage();
-    _initializeApp()
+    loadAppVersioning()
   }).catch(error => {
     console.error('Erro ao carregar a configuração:', error);
     _displayError('Erro ao carregar a configuração');
   });
 }
 
-export function _openLinkInNewTab(url) {
+export function openLinkInNewTab(url) {
   var win = window.open(url, '_blank');
   win.focus();
-}
-
-export function _searchObject(obj, key, strict = true) {
-  const keys = key.split(".");
-  let result = obj;
-
-  for (const k of keys) {
-    if (result && k in result) {
-      result = result[k];
-    } else {
-      return strict ? null : key;
-    }
-  }
-
-  const type = typeof result;
-  if (type != "string") {
-    console.error(`Invalid search value for key "${key}": expected a string, got ${type}.`);
-    return "";
-  }
-
-  return result;
 }
 
 export function setSuccessfulSave(value) {

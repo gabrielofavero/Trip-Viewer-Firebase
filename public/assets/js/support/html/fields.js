@@ -1,5 +1,5 @@
 import { DOCUMENT_ID } from "../firebase/database";
-import { setSuccessfulSave } from "../../main/main.js";
+import { setSuccessfulSave, getID } from "../../main/app.js";
 
 // Required Fields
 export function validateRequiredFields(customChecks=[]) {

@@ -1,4 +1,5 @@
 import { getUID } from "../../support/firebase/user";
+import { getID } from "../../main/app.js";
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 

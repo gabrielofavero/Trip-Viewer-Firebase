@@ -1,4 +1,5 @@
 import { get } from "../support/firebase/database.js";
+import { getID, initApp } from "../main/app.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
@@ -10,7 +11,7 @@ var GASTOS_TOTAIS = {
 var GASTO_ATIVO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', async function () {
-    _main();
+    initApp();
     _loadVisibilityExternal();
 
     const closeButton = getID("closeButton");

@@ -1,4 +1,4 @@
-// ======= Countdown JS =======
+import { getID } from "../../main/app.js";
 
 var COUNTDOWN;
 

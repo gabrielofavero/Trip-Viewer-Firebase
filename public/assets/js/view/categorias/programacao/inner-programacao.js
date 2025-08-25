@@ -1,3 +1,5 @@
+import { getID } from "../../../main/app.js";
+
 var PROGRAMACAO_ABERTA = false;
 var PROGRAMACAO_ATUAL = {
     dia: 0,

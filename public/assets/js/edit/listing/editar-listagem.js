@@ -3,12 +3,13 @@ import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "..
 import { loadUserPermissions } from "../../support/firebase/user.js";
 import { canUserEdit } from "../../support/firebase/user.js";
 import { editFieldAgain } from "../../support/html/fields.js";
+import { SUCCESSFUL_SAVE } from "../../main/app.js";
+import { getID, initApp } from "../../main/app.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
 var FIRESTORE_NEW_DATA = {};
 
-var SUCCESSFUL_SAVE = false;
 var CAN_EDIT = false;
 
 var INPUT_DETECTED = false;
@@ -17,7 +18,7 @@ _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    _main();
+    initApp();
 
     DOCUMENT_ID = _getURLParam('l');
     await loadUserPermissions();

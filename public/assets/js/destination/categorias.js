@@ -1,3 +1,5 @@
+import { openLinkInNewTab } from "../main/app.js";
+
 // Título
 function _getTitulo(item) {
     if (item.nome && (item.emoji || item.headliner)) {
@@ -43,7 +45,7 @@ function _getNotaText(item, notas) {
 // Links
 function _getLinkOnClick(item, tipo) {
     if (item[tipo]) {
-        return ` onclick="_openLinkInNewTab('${item[tipo]}')"`
+        return ` onclick="openLinkInNewTab('${item[tipo]}')"`
     } else return "";
 }
 

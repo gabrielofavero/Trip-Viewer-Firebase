@@ -2,6 +2,7 @@ import { initializeSortableForGroup } from "../../../support/components/sortable
 import { IMAGE_UPLOAD_STATUS, uploadImages, loadImageSelector } from "../../../support/firebase/storage.js";
 import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
 import { validateLink, validateImageLink } from "../../../support/html/fields.js";
+import { getID } from "../../../main/app.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 

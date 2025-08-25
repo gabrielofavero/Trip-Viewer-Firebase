@@ -1,5 +1,6 @@
 import { get, deleteAccount, getUserList } from "../support/firebase/database.js";
 import { signInWithEmailAndPassword, signOut, registerIfUserNotPresent } from "../support/firebase/user.js";
+import { select, getID, initApp } from "../main/app.js";
 
 var USER_DATA = {};
 
@@ -20,7 +21,7 @@ _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    _main();
+    initApp();
 
     _loadVisibilityIndex();
     _loadListenersIndex();

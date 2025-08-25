@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;
 

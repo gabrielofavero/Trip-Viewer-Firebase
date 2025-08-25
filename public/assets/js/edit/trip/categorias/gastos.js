@@ -1,4 +1,5 @@
-import { getFieldValueOrNotify } from "../../../support/html/fields";
+import { getFieldValueOrNotify } from "../../../support/html/fields.js";
+import { getID } from "../../../main/app.js";
 
 var PIN_GASTOS = {
     current: '',

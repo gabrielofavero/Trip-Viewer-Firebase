@@ -1,3 +1,5 @@
+import { setSuccessfulSave, getID } from "../../main/app.js";
+
 var CALL_SYNC = [];
 var FIRESTORE_DATA;
 
@@ -387,7 +389,7 @@ function _validateIfDocumentChanged() {
     const errorMsgPath = `messages.documents.save.${noNewData ? 'no_new_data' : 'unknown'}`;
     getID('modal-inner-text').innerText = `${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`;
 
-    SUCCESSFUL_SAVE = false;
+    setSuccessfulSave(false);
     _openModal();
     _stopLoadingScreen();
   }
@@ -446,4 +448,25 @@ function _getLocalJSON() {
 
     input.click();
   });
+}
+
+export function searchObject(obj, key, strict = true) {
+  const keys = key.split(".");
+  let result = obj;
+
+  for (const k of keys) {
+    if (result && k in result) {
+      result = result[k];
+    } else {
+      return strict ? null : key;
+    }
+  }
+
+  const type = typeof result;
+  if (type != "string") {
+    console.error(`Invalid search value for key "${key}": expected a string, got ${type}.`);
+    return "";
+  }
+
+  return result;
 }

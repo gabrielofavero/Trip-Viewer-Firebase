@@ -1,3 +1,5 @@
+import { getID } from "../../../main/app.js";
+
 function _loadCustomizacaoImageData(value, id) {
     if (value && typeof value === 'string') {
         getID(id).value = value;

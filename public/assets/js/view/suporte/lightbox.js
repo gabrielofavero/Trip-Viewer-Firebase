@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var SAVED_SCROLL_POSITION = 0;
 
 function _openLightbox(link) {

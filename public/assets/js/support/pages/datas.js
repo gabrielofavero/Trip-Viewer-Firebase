@@ -1,4 +1,4 @@
-// ======= Date JS =======
+import { getID } from "../../main/app.js";
 
 var DATE_REGIONAL_FORMAT;
 

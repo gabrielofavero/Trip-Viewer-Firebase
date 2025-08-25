@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var GASTOS_CHARTS = {};
 
 // Tabelas

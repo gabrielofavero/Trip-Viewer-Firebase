@@ -3,12 +3,13 @@ import { DOCUMENT_ID, getSingleData, deleteUserObject } from "../../support/fire
 import { canUserEdit } from "../../support/firebase/user.js";
 import { closeAccordions, openLastAccordion } from "../../support/html/accordion.js";
 import { editFieldAgain, validateLink, validateMapLink, validateInstagramLink, validateMediaLink } from "../../support/html/fields.js";
+import { SUCCESSFUL_SAVE } from "../../main/app.js";
+import { getID, initApp } from "../../main/app.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
 var INPUT_DETECTED = false;
 
-SUCCESSFUL_SAVE = false;
 var CAN_EDIT = false;
 
 const TODAY = _getTodayFormatted();
@@ -21,7 +22,7 @@ var REGIOES = [];
 document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
-    _main();
+    initApp();
     DOCUMENT_ID = _getURLParam('d')
 
     _loadVisibilityIndex();

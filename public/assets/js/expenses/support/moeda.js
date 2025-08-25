@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var MOEDA_PADRAO;
 var MOEDA_CONVERSAO = {};
 var MOEDA_ATUAL;

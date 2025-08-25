@@ -1,3 +1,5 @@
+import { getID } from "../../../main/app.js";
+
 var DESTINOS_ATIVOS = [];
 var DESTINOS_ORDENADOS = [];
 

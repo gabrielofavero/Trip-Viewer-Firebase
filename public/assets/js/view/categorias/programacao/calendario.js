@@ -1,6 +1,8 @@
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
 
+import { getID } from "../../../main/app.js";
+
 CALENDAR = {
     start: null,
     end: null,

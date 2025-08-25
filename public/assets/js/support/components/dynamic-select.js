@@ -1,3 +1,5 @@
+import { getID } from "../../main/app.js";
+
 var DYNAMIC_SELECT = {};
 
 export function newDynamicSelect(type) {
