@@ -7,6 +7,7 @@
 */
 
 import { getLanguagePackName, translatePage, loadLangSelectorSelect } from "./translate.js";
+import { loadCreditsListeners } from "../support/pages/credits.js";
 
 export var SUCCESSFUL_SAVE = false;
 export var CONFIG;
@@ -51,6 +52,7 @@ export function initApp() {
 
   loadConfig();
   loadLangSelectorSelect();
+  loadCreditsListeners();
 
   /**
    * Navbar links active state on scroll

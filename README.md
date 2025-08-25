@@ -21,6 +21,7 @@
 - ⚔️ **E034:** Frontend code refactoring
 - 📈 **M105:** Remove CONFIG and reduce use of global variables
 - 📈 **M098:** Change js functions/folder structures to EN-US
+- 📈 **M104:** All external links should open via window.open
 
 ### High Priority
 
@@ -48,7 +49,6 @@
 ### Medium Priority
 
 - 📈 **M107:** Edit "Confirm" at inner-itinerary suggestion to return to previous instead of closing pop-up
-- 📈 **M104:** All external links should open via window.open
 - 🏆 **F065:** Show if accommodation was prepaid or not
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)

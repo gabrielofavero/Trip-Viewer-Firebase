@@ -22,12 +22,14 @@ strong {
 }
 
 a,
+.a,
 .link {
   color: #3d85c6;
   text-decoration: none;
 }
 
 a:hover,
+.a:hover,
 .link:hover {
   color: #195b96;
   text-decoration: none;
@@ -326,15 +328,15 @@ section {
   padding: 20px 0;
 }
 
-.atribuicoes {
+.credits {
   cursor: pointer;
 }
 
-.atribuicoes:hover {
+.credits:hover {
   color: #666768;
 }
 
-.atribuicoes-icon {
+.credits-icon {
   font-size: 10px;
 }
 

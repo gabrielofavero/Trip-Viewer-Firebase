@@ -19,6 +19,10 @@ const MENSAGEM_PROPRIEDADES = {
   }
 }
 
+export function getDefaultProperties() {
+  return _cloneObject(MENSAGEM_PROPRIEDADES);
+}
+
 
 // Mensagem Genérica
 function _displayMessage(titulo, conteudo) {
@@ -28,7 +32,7 @@ function _displayMessage(titulo, conteudo) {
   _displayFullMessage(properties);
 }
 
-function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES)) {
+export function displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES)) {
   const preloader = getID('preloader');
   const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 

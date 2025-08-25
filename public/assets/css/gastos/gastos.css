@@ -20,7 +20,8 @@ body {
   padding-top: env(safe-area-inset-top);
 }
 
-a {
+a,
+.a {
   color: #3d85c6;
   text-decoration: none;
 }
@@ -101,15 +102,15 @@ h6 {
   padding: 20px 0;
 }
 
-.atribuicoes {
+.credits {
   cursor: pointer;
 }
 
-.atribuicoes:hover {
+.credits:hover {
   color: #666768;
 }
 
-.atribuicoes-icon {
+.credits-icon {
   font-size: 10px;
 }
 

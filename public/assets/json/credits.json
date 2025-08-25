@@ -1,0 +1,97 @@
+[
+    {
+        "adapted": false,
+        "author": "jcomp",
+        "href": "https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph",
+        "label": "labels.image.background",
+        "pages": [
+            "destination",
+            "edit/destination",
+            "edit/listing",
+            "edit/trip",
+            "index",
+            "view"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "Anshul Kumar",
+        "href": "https://codepen.io/the_anshulkumar/pen/RKzYKj",
+        "label": "trip.expenses.pin.title",
+        "pages": [
+            "expenses"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "Håvard Brynjulfsen",
+        "href": "https://codepen.io/havardob/pen/ExVaELV",
+        "label": "labels.tabs",
+        "pages": [
+            "expenses",
+            "view"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "Niels Voogt",
+        "href": "https://github.com/nielsVoogt/nice-forms.css",
+        "label": "labels.accordion",
+        "pages": [
+            "destination"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "Niels Voogt",
+        "href": "https://github.com/nielsVoogt/nice-forms.css",
+        "label": "labels.forms",
+        "pages": [
+            "edit/destination",
+            "edit/listing",
+            "edit/trip"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "Ranielly Ferreira",
+        "href": "https://docs.awesomeapi.com.br/api-de-moedas",
+        "label": "trip.expenses.exchange_rate_api",
+        "pages": [
+            "expenses"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "dudebro",
+        "href": "https://codepen.io/dudebro69/pen/jOvEaVe",
+        "label": "labels.dashboard",
+        "pages": [
+            "expenses"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "niinpatel",
+        "href": "https://www.cssscript.com/minimal-calendar-ui-generator/",
+        "label": "labels.calendar",
+        "pages": [
+            "view"
+        ]
+    },
+    {
+        "adapted": true,
+        "author": "studiogstock",
+        "href": "https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph",
+        "label": "labels.logo",
+        "pages": [
+            "destination",
+            "edit/destination",
+            "edit/listing",
+            "edit/trip",
+            "expenses",
+            "index",
+            "view"
+        ]
+    }
+]

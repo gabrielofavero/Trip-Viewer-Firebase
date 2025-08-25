@@ -30,12 +30,14 @@ strong {
   color: #3A3838;
 }
 
-a {
+a,
+.a {
   color: #3d85c6;
   text-decoration: none;
 }
 
-a:hover {
+a:hover,
+.a:hover {
   color: #6fa8dc;
   text-decoration: none;
 }
@@ -1297,15 +1299,15 @@ details summary::-webkit-details-marker {
   margin-bottom: 32px;
 }
 
-.atribuicoes {
+.credits {
   cursor: pointer;
 }
 
-.atribuicoes:hover {
+.credits:hover {
   color: #666768;
 }
 
-.atribuicoes-icon {
+.credits-icon {
   font-size: 10px;
 }
 

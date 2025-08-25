@@ -10,7 +10,8 @@ strong {
   color: #F2F2F2;
 }
 
-a:hover {
+a:hover,
+.a:hover {
   color: #78a4ca;
   text-decoration: none;
 }
@@ -128,7 +129,7 @@ a:hover {
   color: #F2F2F2;
 }
 
-.atribuicoes:hover {
+.credits:hover {
   color: #d1d0d0;
 }
 

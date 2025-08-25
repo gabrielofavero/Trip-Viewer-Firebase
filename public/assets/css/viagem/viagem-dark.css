@@ -16,11 +16,13 @@ strong {
   color: #F2F2F2;
 }
 
-a {
+a,
+.a {
   color: #92caff;
 }
 
-a:hover {
+a:hover,
+.a:hover {
   color: #acd7ff;
 }
 
@@ -435,7 +437,7 @@ a:hover {
   color: #F2F2F2;
 }
 
-.atribuicoes:hover {
+.credits:hover {
   color: #d1d0d0;
 }
 

@@ -10,6 +10,20 @@ var HYPERLINK;
 
 var DOCS_CHANGED;
 
+// Getters
+export async function getJson(path) {
+  const response = await fetch(path);
+  if (!response.ok) {
+    _displayError()
+  }
+  return response.json();
+}
+
+export function getPage() {
+  const path = new URL(document.URL).pathname.slice(1);
+  return path || 'index';
+}
+
 // ======= CONVERTERS =======
 function _sortByArray(arrayToSort, referenceArray) {
   arrayToSort.sort((a, b) => {
