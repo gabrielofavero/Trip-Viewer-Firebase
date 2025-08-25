@@ -1,6 +1,7 @@
 import { ERROR_FROM_GET_REQUEST, getSingleData } from "../support/firebase/database.js";
 import { getID, initApp } from "../main/app.js";
 import { translate } from "../main/translate.js";
+import { stopLoadingScreen, startLoadingTimer } from "../support/pages/loading.js";
 
 var REFRESHED = false;
 var TYPE = 'viagens';
@@ -17,7 +18,7 @@ var FIM = {
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    _startLoadingTimer();
+    startLoadingTimer();
     initApp();
     const urlParams = _getURLParams();
     TYPE = urlParams['l'] ? 'listagens' : urlParams['d'] ? "destinos" : 'viagens';
@@ -47,10 +48,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
       _displayError("Cannot load document. It is possible that it does not exist or that you don't have enough permissions", true);
-      _stopLoadingScreen();
+      stopLoadingScreen();
     } else {
       _displayError(ERROR_FROM_GET_REQUEST);
-      _stopLoadingScreen();
+      stopLoadingScreen();
     }
 
     $('body').css('overflow', 'auto');
@@ -79,7 +80,7 @@ async function _mainLoad() {
       console.warn("No functions to sync");
     }
     // Loading Screen
-    _stopLoadingScreen();
+    stopLoadingScreen();
   } catch (error) {
     _displayError(error);
     throw error;

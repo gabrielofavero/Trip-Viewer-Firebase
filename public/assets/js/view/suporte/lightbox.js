@@ -1,9 +1,11 @@
 import { getID } from "../../main/app.js";
+import { startLoadingScreen } from "../../support/pages/loading.js";
+import { stopLoadingScreen } from "../../support/pages/loading.js";
 
 var SAVED_SCROLL_POSITION = 0;
 
 function _openLightbox(link) {
-  _startLoadingScreen(false);
+  startLoadingScreen(false);
   SAVED_SCROLL_POSITION = window.pageYOffset || document.documentElement.scrollTop;
   window.scrollTo(0, 0);
   var lightboxIframe = getID('lightbox-iframe');
@@ -13,7 +15,7 @@ function _openLightbox(link) {
     getID('night-mode').style.display = 'none';
     getID('menu').style.display = 'none';
     getID('navbar').style.display = 'none';
-    _stopLoadingScreen();
+    stopLoadingScreen();
     _disableScroll();
   };
   lightboxIframe.src = link;

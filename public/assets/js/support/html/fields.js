@@ -1,5 +1,6 @@
 import { DOCUMENT_ID } from "../firebase/database";
 import { setSuccessfulSave, getID } from "../../main/app.js";
+import { stopLoadingScreen } from "../pages/loading.js";
 
 // Required Fields
 export function validateRequiredFields(customChecks=[]) {
@@ -20,7 +21,7 @@ export function validateRequiredFields(customChecks=[]) {
         setSuccessfulSave(false)
         getID('modal-inner-text').innerHTML = getInvalidFieldsText(invalidFields, customChecks);
         _openModal();
-        _stopLoadingScreen();
+        stopLoadingScreen();
     }
 }
 

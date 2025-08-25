@@ -1,6 +1,7 @@
 import { get } from "../support/firebase/database.js";
 import { getID, initApp } from "../main/app.js";
 import { translate } from "../main/translate.js";
+import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (!gastosExport?.pin) {
         _loadGastos();
     } else {
-        _stopLoadingScreen();
+        stopLoadingScreen();
         _requestPinGastos();
     }
 });
@@ -84,7 +85,7 @@ async function _loadGastos() {
     const pin = getID('pin-code')?.innerText || '';
     _closeMessage();
     _removePinListener();
-    _startLoadingScreen(false);
+    startLoadingScreen(false);
     try {
         if (pin) {
             GASTOS = await get(`gastos/protected/${pin}/${documentID}`, false);
@@ -98,7 +99,7 @@ async function _loadGastos() {
             _applyGastos();
             getID('conversao').innerText = _getConversaoText();
             _setTabListeners();
-            _stopLoadingScreen();
+            stopLoadingScreen();
         }
     } catch (error) {
         if (error?.message == 'Missing or insufficient permissions.') {
@@ -108,7 +109,7 @@ async function _loadGastos() {
             console.error(error);
             _displayError(translate('messages.errors.unknown'));
         }
-        _stopLoadingScreen();
+        stopLoadingScreen();
     }
 }
 

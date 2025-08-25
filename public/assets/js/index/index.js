@@ -2,6 +2,7 @@ import { get, deleteAccount, getUserList } from "../support/firebase/database.js
 import { signInWithEmailAndPassword, signOut, registerIfUserNotPresent } from "../support/firebase/user.js";
 import { select, getID, initApp } from "../main/app.js";
 import { translate } from "../main/translate.js";
+import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
 
 var USER_DATA = {};
 
@@ -18,7 +19,7 @@ var VIAGENS = {
   viagensAnteriores: []
 }
 
-_startLoadingScreen();
+startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
@@ -99,11 +100,11 @@ function _loadListenersIndex() {
   });
 
   getID('apagar').addEventListener('click', async function () {
-    _startLoadingScreen(false);
+    startLoadingScreen(false);
     await deleteAccount();
     _closeModal();
     signOut();
-    _stopLoadingScreen();
+    stopLoadingScreen();
   });
 }
 
@@ -136,11 +137,11 @@ async function _loadUserIndex() {
       }
     });
   } catch (error) {
-    _stopLoadingScreen();
+    stopLoadingScreen();
     _displayError(error);
     throw error;
   }
-  _stopLoadingScreen();
+  stopLoadingScreen();
 }
 
 async function _loadUserDataList(tipo, userData) {

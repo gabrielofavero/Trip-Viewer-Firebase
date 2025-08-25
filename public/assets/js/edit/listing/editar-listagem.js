@@ -6,6 +6,7 @@ import { editFieldAgain } from "../../support/html/fields.js";
 import { SUCCESSFUL_SAVE } from "../../main/app.js";
 import { getID, initApp } from "../../main/app.js";
 import { translate } from "../../main/translate.js";
+import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -15,7 +16,7 @@ var CAN_EDIT = false;
 
 var INPUT_DETECTED = false;
 
-_startLoadingScreen();
+startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadEventListeners();
 
     if (!blockLoadingEnd) {
-      _stopLoadingScreen();
+      stopLoadingScreen();
     }
     $('body').css('overflow', 'auto');
 
@@ -120,14 +121,14 @@ function _loadEventListeners() {
 async function _carregarListagem() {
   getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
-  _startLoadingScreen();
+  startLoadingScreen();
 
   FIRESTORE_DATA = await getSingleData('listagens');
   const canEdit = await canUserEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
 
   if (canEdit) {
     await _loadListData(FIRESTORE_DATA);
-    _stopLoadingScreen();
+    stopLoadingScreen();
   }
 }
 

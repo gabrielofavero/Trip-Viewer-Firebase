@@ -6,6 +6,7 @@ import { editFieldAgain, validateLink, validateMapLink, validateInstagramLink, v
 import { SUCCESSFUL_SAVE } from "../../main/app.js";
 import { getID, initApp } from "../../main/app.js";
 import { translate } from "../../main/translate.js";
+import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -21,7 +22,7 @@ var PROGRAMACAO = {};
 var REGIOES = [];
 
 document.addEventListener('DOMContentLoaded', async function () {
-  _startLoadingScreen();
+  startLoadingScreen();
   try {
     initApp();
     DOCUMENT_ID = _getURLParam('d')
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadEventListeners();
 
     if (!blockLoadingEnd) {
-      _stopLoadingScreen();
+      stopLoadingScreen();
     }
     $('body').css('overflow', 'auto');
 
@@ -167,14 +168,14 @@ function _addListenerToRemoveDestino(categoria, j) {
 async function _loadDestinos() {
   blockLoadingEnd = true;
   getID('delete-text').style.display = 'block';
-  _startLoadingScreen();
+  startLoadingScreen();
 
   FIRESTORE_DESTINOS_DATA = await getSingleData('destinos');
   const canEdit = await canUserEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono, []);
 
   if (canEdit) {
     _loadDestinationsData(FIRESTORE_DESTINOS_DATA);
-    _stopLoadingScreen();
+    stopLoadingScreen();
   }
 }
 

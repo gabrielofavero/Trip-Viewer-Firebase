@@ -1,5 +1,6 @@
 import { setSuccessfulSave, getID } from "../../main/app.js";
 import { translate } from "../../main/translate.js";
+import { stopLoadingScreen } from "./loading.js";
 
 var CALL_SYNC = [];
 var FIRESTORE_DATA;
@@ -405,7 +406,7 @@ function _validateIfDocumentChanged() {
 
     setSuccessfulSave(false);
     _openModal();
-    _stopLoadingScreen();
+    stopLoadingScreen();
   }
 }
 

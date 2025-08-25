@@ -1,7 +1,8 @@
 import { getID } from "../../main/app.js";
 import { translate } from "../../main/translate.js";
+import { stopLoadingScreen, stopLoadingTimer } from "./loading.js";
 
-var MESSAGE_MODAL_OPEN = false;
+export var MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {
   titulo: '',
   conteudo: '',
@@ -36,8 +37,8 @@ export function displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIED
   const preloader = getID('preloader');
   const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
-  if (typeof _stopLoadingTimer === 'function') {
-    _stopLoadingTimer();
+  if (typeof stopLoadingTimer === 'function') {
+    stopLoadingTimer();
   }
 
   if (!preloader) {
@@ -175,7 +176,7 @@ function _closeMessage() {
       preloader.style.background = '';
     }
     MESSAGE_MODAL_OPEN = false;
-    if (typeof _stopLoadingScreen === 'function') _stopLoadingScreen();
+    if (typeof stopLoadingScreen === 'function') stopLoadingScreen();
 
   } else {
     console.warn('Cannot close an unopened message modal.');

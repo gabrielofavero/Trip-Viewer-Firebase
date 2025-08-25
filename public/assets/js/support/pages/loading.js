@@ -1,14 +1,13 @@
 import { getID } from "../../main/app.js";
 import { translate } from "../../main/translate.js";
+import { MESSAGE_MODAL_OPEN } from "./mensagens.js";
 
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;
 
-// Loading Screen
-
-function _startLoadingScreen(useTimer = false) {
+export function startLoadingScreen(useTimer = false) {
   if (useTimer) {
-    _startLoadingTimer();
+    startLoadingTimer();
   }
   const preloader = getID('preloader');
   if (preloader) {
@@ -17,8 +16,8 @@ function _startLoadingScreen(useTimer = false) {
   }
 }
 
-function _stopLoadingScreen() {
-  _stopLoadingTimer();
+export function stopLoadingScreen() {
+  stopLoadingTimer();
   localStorage.setItem('firstLoad', 'true');
   if (!MESSAGE_MODAL_OPEN) {
     const preloader = getID('preloader');
@@ -31,19 +30,18 @@ function _stopLoadingScreen() {
   }
 }
 
-// Loading Timer
-function _startLoadingTimer() {
+export function startLoadingTimer() {
   if (LOADING_TIMER == null && MESSAGE_MODAL_OPEN == false) {
     LOADING_SECONDS = 0;
     LOADING_TIMER = setInterval(() => {
       const firstLoad = localStorage.getItem('firstLoad');
       LOADING_SECONDS++;
       if (LOADING_SECONDS >= 10 && (firstLoad == 'true' || firstLoad == null)) {
-        _stopLoadingTimer();
+        stopLoadingTimer();
         localStorage.setItem('firstLoad', 'false');
         window.location.reload();
       } else if (LOADING_SECONDS >= 10 && firstLoad == 'false') {
-        _stopLoadingTimer();
+        stopLoadingTimer();
         localStorage.setItem('firstLoad', 'true');
         const error = new Error(translate('messages.errors.loading_timeout'));
         _displayError(error, true);
@@ -52,7 +50,7 @@ function _startLoadingTimer() {
   }
 }
 
-function _stopLoadingTimer() {
+export function stopLoadingTimer() {
   if (LOADING_TIMER) {
     clearInterval(LOADING_TIMER);
     LOADING_TIMER = null;

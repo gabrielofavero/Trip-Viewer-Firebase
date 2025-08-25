@@ -4,6 +4,7 @@ import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "..
 import { canUserEdit } from "../../support/firebase/user.js";
 import { getID, initApp } from "../../main/app.js";
 import { translate } from "../../main/translate.js";
+import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -15,7 +16,7 @@ var NEW_TRIP = false;
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
 
-_startLoadingScreen();
+startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _loadEventListeners();
 
     if (!blockLoadingEnd) {
-      _stopLoadingScreen();
+      stopLoadingScreen();
     }
     $('body').css('overflow', 'auto');
 
@@ -84,7 +85,7 @@ function _loadUploadSelectors() {
 async function _loadTrip(stripped = false) {
   getID('delete-text').style.display = 'block';
   blockLoadingEnd = true;
-  _startLoadingScreen();
+  startLoadingScreen();
 
   if (stripped) {
     const id = _getURLParam('v');
@@ -97,7 +98,7 @@ async function _loadTrip(stripped = false) {
 
   if (canEdit) {
     await _loadTripData();
-    _stopLoadingScreen();
+    stopLoadingScreen();
   }
 }
 

@@ -5,6 +5,8 @@ import { getUID } from "../firebase/user.js";
 import { validateRequiredFields } from "../html/fields.js";
 import { setSuccessfulSave, getID } from "../../main/app.js";
 import { translate } from "../../main/translate.js";
+import { startLoadingScreen } from "./loading.js";
+import { stopLoadingScreen } from "./loading.js";
 
 var CUSTOM_UPLOADS = {
     hospedagens: [],
@@ -21,7 +23,7 @@ async function _setDocumento(tipo) {
     }
 
     let mainResponse, userSavingResponse;
-    _startLoadingScreen(false);
+    startLoadingScreen(false);
 
     const customChecks = await eval(CONFIG.set[tipo].customChecks);
     validateRequiredFields(customChecks);
@@ -60,7 +62,7 @@ async function _setDocumento(tipo) {
     }
 
     getID('modal-inner-text').innerHTML = _buildSetMessage();
-    _stopLoadingScreen();
+    stopLoadingScreen();
     _openModal('modal');
 }
 
