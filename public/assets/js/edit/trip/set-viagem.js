@@ -1,3 +1,5 @@
+import { DOCUMENT_ID, create, deepCreate, update, override, deleteData, combineDatabaseResponses } from "../../support/firebase/database.js";
+
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
 var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
@@ -302,14 +304,14 @@ async function _setGastos() {
     if (getID('pin-disable').checked) {
         if (PIN_GASTOS.current) {
             // 1. Existing Document (With PIN) -> Without PIN
-            responses.push(await _delete(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
-            responses.push(await _override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+            responses.push(await deleteData(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
+            responses.push(await override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
         } else if (FIRESTORE_GASTOS_DATA) {
             // 2. Existing Document (Without PIN) -> Without PIN
-            responses.push(await _update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+            responses.push(await update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
         } else {
             //3. New Document (Without PIN)
-            responses.push(await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+            responses.push(await create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
         }
     }
 
@@ -317,24 +319,24 @@ async function _setGastos() {
     else if (getID('pin-enable').checked) {
         if (!PIN_GASTOS.current) {
             // 4. Existing Document (Without PIN) -> With PIN
-            responses.push(await _delete(`gastos/${DOCUMENT_ID}`));
-            responses.push(await _create('gastos', FIRESTORE_GASTOS_PROTECTED_NEW_DATA, DOCUMENT_ID));
-            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+            responses.push(await deleteData(`gastos/${DOCUMENT_ID}`));
+            responses.push(await create('gastos', FIRESTORE_GASTOS_PROTECTED_NEW_DATA, DOCUMENT_ID));
+            responses.push(await deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
         } else if (PIN_GASTOS.current != PIN_GASTOS.new && PIN_GASTOS.new) {
             // 5. Existing Document (With PIN) -> With PIN (Different)
-            responses.push(await _delete(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
-            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+            responses.push(await deleteData(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`));
+            responses.push(await deepCreate(`gastos/protected/${PIN_GASTOS.new}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
         } else if (FIRESTORE_GASTOS_DATA && PIN_GASTOS.current) {
             // 6. Existing Document (With PIN) -> With PIN (Same)
-            responses.push(await _update(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+            responses.push(await update(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
         } else if (PIN_GASTOS.current) {
             // 7. New Document (With PIN)
-            responses.push(await _deepCreate(`gastos/protected/${PIN_GASTOS.current}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+            responses.push(await deepCreate(`gastos/protected/${PIN_GASTOS.current}`, FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
         }
     }
 
     if (responses.length > 0) {
-        const masterResponse = _combineDatabaseResponses(responses);
+        const masterResponse = combineDatabaseResponses(responses);
         _addSetResponse(translate('trip.expenses.title'), masterResponse.success);
     }
 }

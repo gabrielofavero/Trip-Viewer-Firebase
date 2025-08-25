@@ -1,3 +1,5 @@
+import { DOCUMENT_ID, create, update, getUserListIDs } from "../firebase/database.js";
+
 var CUSTOM_UPLOADS = {
     hospedagens: [],
     galeria: []
@@ -29,14 +31,14 @@ async function _setDocumento(tipo) {
     const newData = _getNewDataDocument(tipo);
 
     if (DOCUMENT_ID && newData) {
-        mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
+        mainResponse = await update(`${tipo}/${DOCUMENT_ID}`, newData);
     } else if (newData) {
-        mainResponse = await _create(tipo, newData);
+        mainResponse = await create(tipo, newData);
         DOCUMENT_ID = mainResponse?.data?.id;
         if (DOCUMENT_ID) {
-            const userListIDs = await _getUserListIDs(tipo);
+            const userListIDs = await getUserListIDs(tipo);
             userListIDs.push(DOCUMENT_ID);
-            userSavingResponse = await _update(`usuarios/${userID}`, { [tipo]: userListIDs });
+            userSavingResponse = await update(`usuarios/${userID}`, { [tipo]: userListIDs });
         }
     }
 
@@ -103,7 +105,7 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
     if (UPLOAD_AFTER_SET) {
         const newData = _getNewDataDocument(tipo);
         if (DOCUMENT_ID && newData) {
-            mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
+            mainResponse = await update(`${tipo}/${DOCUMENT_ID}`, newData);
             _addSetResponse(translate('labels.image.add'), true);
         } else {
             _addSetResponse(translate('labels.image.add'), false);

@@ -1,4 +1,5 @@
 import { newDynamicSelect } from "../../support/components/dynamic-select.js";
+import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList, getUserPermissions } from "../../support/firebase/database.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _main();
 
     DOCUMENT_ID = _getURLParam('v');
-    PERMISSOES = await _getPermissoes();
+    PERMISSOES = await getUserPermissions();
 
     _loadVisibilityIndex();
     _loadHabilitados();
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     } else {
       NEW_TRIP = true;
       CAN_EDIT = true;
-      DESTINOS = await _getUserList('destinos', true);
+      DESTINOS = await getUserList('destinos', true);
       _loadNewTrip();
     }
 
@@ -84,9 +85,9 @@ async function _loadTrip(stripped = false) {
 
   if (stripped) {
     const id = _getURLParam('v');
-    FIRESTORE_DATA = await _get(`viagens/${id}`);
+    FIRESTORE_DATA = await get(`viagens/${id}`);
   } else {
-    FIRESTORE_DATA = await _getSingleData('viagens');
+    FIRESTORE_DATA = await getSingleData('viagens');
   }
 
   CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
@@ -116,7 +117,7 @@ function _deleteViagem() {
 
 async function _deleteViagemAction() {
   if (DOCUMENT_ID) {
-    await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
+    await deleteUserObject(DOCUMENT_ID, "viagens");
     await _deleteUserObjectStorage();
     window.location.href = `index.html`;
   }

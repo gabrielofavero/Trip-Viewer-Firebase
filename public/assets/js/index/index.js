@@ -1,3 +1,5 @@
+import { get, deleteAccount, getUserList } from "../support/firebase/database.js";
+
 var USER_DATA = {};
 
 var TENTATIVAS = {
@@ -95,7 +97,7 @@ function _loadListenersIndex() {
 
   getID('apagar').addEventListener('click', async function () {
     _startLoadingScreen(false);
-    await _deleteAccount();
+    await deleteAccount();
     _closeModal();
     _signOut();
     _stopLoadingScreen();
@@ -109,7 +111,7 @@ async function _loadUserIndex() {
         _registerIfUserNotPresent();
         _openIndexPage('logged');
 
-        const userData = await _get(`usuarios/${user.uid}`);
+        const userData = await get(`usuarios/${user.uid}`);
 
         const displayName = userData.nome;
         const photoURL = 'url(' + userData.foto + ')';
@@ -139,7 +141,7 @@ async function _loadUserIndex() {
 }
 
 async function _loadUserDataList(tipo, userData) {
-  const promise = _getUserList(tipo, true, userData);
+  const promise = getUserList(tipo, true, userData);
   let responseReceived = false;
 
   function onResponseReceived(response) {

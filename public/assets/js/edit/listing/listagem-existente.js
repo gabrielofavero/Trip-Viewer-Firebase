@@ -1,7 +1,9 @@
+import { getUserList } from "../../support/firebase/database.js";
+
 // Listagem Existente
 async function _loadListData(FIRESTORE_DATA) {
   try {
-    DESTINOS = await _getUserList('destinos');
+    DESTINOS = await getUserList('destinos');
     _loadDadosBasicosListagemData(FIRESTORE_DATA);
     _loadCompartilhamentoData(FIRESTORE_DATA);
     _loadCustomizacaoData(FIRESTORE_DATA);

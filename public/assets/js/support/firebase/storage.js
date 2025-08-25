@@ -1,10 +1,11 @@
+import { DOCUMENT_ID } from "./database.js";
+
 var IMAGE_UPLOAD_STATUS = {
   hasErrors: false,
   messages: {}
 }
 
 var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
-var PERMISSOES;
 
 async function _uploadImage(path, file) {
   let result = {

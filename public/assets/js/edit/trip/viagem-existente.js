@@ -1,8 +1,9 @@
 import { updateValueDS, buildDS } from "../../support/components/dynamic-select.js";
+import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, get, getUserList } from "../../support/firebase/database.js";
 
 async function _loadTripData() {
     try {
-        DESTINOS = await _getUserList('destinos', true);
+        DESTINOS = await getUserList('destinos', true);
         _loadDadosBasicosViagemData();
         _loadCompartilhamentoData();
         _loadCustomizacaoData();
@@ -102,12 +103,12 @@ async function _loadGastosData() {
         getID('pin-enable').checked = true;
         getID('pin-container').style.display = 'block';
         _setPinButtonText(false);
-        const protectedGastos = await _get(`gastos/${DOCUMENT_ID}`);
+        const protectedGastos = await get(`gastos/${DOCUMENT_ID}`);
         PIN_GASTOS.current = protectedGastos.pin;
         PIN_GASTOS.new = protectedGastos.pin;
-        FIRESTORE_GASTOS_DATA = await _get(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`);
+        FIRESTORE_GASTOS_DATA = await get(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`);
     } else {
-        FIRESTORE_GASTOS_DATA = await _get(`gastos/${DOCUMENT_ID}`);
+        FIRESTORE_GASTOS_DATA = await get(`gastos/${DOCUMENT_ID}`);
     }
     
     if (ERROR_FROM_GET_REQUEST) {

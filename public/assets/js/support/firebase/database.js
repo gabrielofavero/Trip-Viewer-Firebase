@@ -1,10 +1,10 @@
-var DOCUMENT_ID;
-var ERROR_FROM_GET_REQUEST = "";
+export var DOCUMENT_ID;
+export var ERROR_FROM_GET_REQUEST = "";
 
 const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
 
 // Constructors
-function _buildDatabaseObject(success, message = "", data = {}) {
+function buildDatabaseObject(success, message = "", data = {}) {
   return ({
     success: success,
     data: data,
@@ -14,7 +14,7 @@ function _buildDatabaseObject(success, message = "", data = {}) {
 }
 
 // Generic Methods
-async function _get(path, treatError = true) {
+export async function get(path, treatError = true) {
   try {
     const docRef = firebase.firestore().doc(path);
     const snapshot = await docRef.get();
@@ -35,23 +35,7 @@ async function _get(path, treatError = true) {
   }
 }
 
-async function _hasReadPermission(path) {
-  try {
-    const docRef = firebase.firestore().doc(path);
-    const snapshot = await docRef.get();
-
-    if (!snapshot.exists) {
-      console.warn(`Document has reading permissions, but it was not found: ${path}`);
-    }
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-
-}
-
-async function _create(collection, data, docName = "") {
+export async function create(collection, data, docName = "") {
   try {
     let docRef = '';
     if (!docName) {
@@ -59,15 +43,15 @@ async function _create(collection, data, docName = "") {
     } else {
       docRef = await firebase.firestore().collection(collection).doc(docName).set(data)
     }
-    return _buildDatabaseObject(true, translate('messages.documents.create.success'), docRef)
+    return buildDatabaseObject(true, translate('messages.documents.create.success'), docRef)
 
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, `${translate('messages.documents.create.error')}: ${error.message}`)
+    return buildDatabaseObject(false, `${translate('messages.documents.create.error')}: ${error.message}`)
   }
 }
 
-async function _deepCreate(path, data, docId = "") {
+export async function deepCreate(path, data, docId = "") {
   try {
     let docRef;
 
@@ -80,57 +64,57 @@ async function _deepCreate(path, data, docId = "") {
       await docRef.set(data);
     }
 
-    return _buildDatabaseObject(true, translate('messages.documents.create.success'), docRef);
+    return buildDatabaseObject(true, translate('messages.documents.create.success'), docRef);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, `${translate('messages.documents.create.error')}: ${error.message}`);
+    return buildDatabaseObject(false, `${translate('messages.documents.create.error')}: ${error.message}`);
   }
 }
 
-async function _update(path, newData) {
+export async function update(path, newData) {
   const docRef = firebase.firestore().doc(path);
   try {
     const update = await docRef.update(newData);
-    return _buildDatabaseObject(true, translate('messages.documents.update.success'), update);
+    return buildDatabaseObject(true, translate('messages.documents.update.success'), update);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, `${translate('messages.documents.update.error')}: ${error.message}`)
+    return buildDatabaseObject(false, `${translate('messages.documents.update.error')}: ${error.message}`)
   }
 }
 
-async function _override(path, newData) {
+export async function override(path, newData) {
   const docRef = firebase.firestore().doc(path);
   try {
     await docRef.set(newData, { merge: false });
-    return _buildDatabaseObject(true, translate('messages.documents.replace.success'));
+    return buildDatabaseObject(true, translate('messages.documents.replace.success'));
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, `${translate('messages.documents.replace.error')}: ${error.message}`);
+    return buildDatabaseObject(false, `${translate('messages.documents.replace.error')}: ${error.message}`);
   }
 }
 
-async function _delete(path) {
+export async function deleteData(path) {
   const docRef = firebase.firestore().doc(path);
   try {
     const deleteObj = await docRef.delete();
-    return _buildDatabaseObject(true, translate('messages.documents.delete.success'), deleteObj);
+    return buildDatabaseObject(true, translate('messages.documents.delete.success'), deleteObj);
   } catch (error) {
     console.error(error.message);
-    return _buildDatabaseObject(false, `${translate('messages.documents.delete.error')}: ${error.message}`)
+    return buildDatabaseObject(false, `${translate('messages.documents.delete.error')}: ${error.message}`)
   }
 }
 
 // Generic Data
-async function _getSingleData(type) {
+export async function getSingleData(type) {
   let data;
   try {
-    data = await _get(`${type}/${_getURLParam(type[0])}`);
+    data = await get(`${type}/${_getURLParam(type[0])}`);
 
     if (data) {
       for (let i = 0; i < data?.destinos?.length; i++) {
         let place;
         try {
-          place = await _get(`destinos/${data.destinos[i].destinosID}`, false);
+          place = await get(`destinos/${data.destinos[i].destinosID}`, false);
           data.destinos[i].destinos = place
         } catch (e) {
           console.warn(`Unable to get destination ${data.destinos[i].destinosID}: ${e.message}`);
@@ -148,126 +132,91 @@ async function _getSingleData(type) {
 }
 
 // System
-async function _getSystemData() {
-  const systemData = await _get("config/system");
+export async function getSystemData() {
+  const systemData = await get("config/system");
   return systemData;
 }
 
-// Visibilidade
-
-// Usuário
-async function _deleteUserObjectDB(id, type) {
+// User
+export async function deleteUserObject(id, type) {
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+    const userData = await get(`usuarios/${uid}`);
     let dataArray = userData[type];
     dataArray = dataArray.filter(item => item !== id);
 
     let result = {};
     result[type] = dataArray;
 
-    _update(`usuarios/${uid}/`, result)
+    update(`usuarios/${uid}/`, result)
 
-    return await _delete(`${type}/${id}`);
+    return await deleteData(`${type}/${id}`);
   }
 
 }
 
-async function _deleteAccount() {
+export async function deleteAccount() {
   const uid = await _getUID();
   if (uid) {
-    await _deleteAccountDocuments();
-    await _delete(`usuarios/${uid}`);
+    await deleteAccountDocuments();
+    await deleteData(`usuarios/${uid}`);
     await firebase.auth().currentUser.delete();
   }
 }
 
-async function _deleteAccountDocuments() {
+export async function deleteAccountDocuments() {
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+    const userData = await get(`usuarios/${uid}`);
     const promises = [];
 
     for (const type of DATABASE_TRIP_DOCUMENTS) {
       if (userData[type]) {
         for (const docID of userData[type]) {
-          promises.push(_delete(`${type}/${docID}`));
+          promises.push(deleteData(`${type}/${docID}`));
         }
         userData[type] = [];
       }
     }
 
-    promises.push(_update(`usuarios/${uid}`, userData));
+    promises.push(update(`usuarios/${uid}`, userData));
     await Promise.all(promises);
   }
 }
 
-async function _createAccountDocuments(data) {
+export async function createAccountDocuments(data) {
   const uid = await _getUID();
   if (!uid) return;
 
   const promises = [];
-  const userData = await _get(`usuarios/${uid}`);
+  const userData = await get(`usuarios/${uid}`);
 
   for (const type of DATABASE_TRIP_DOCUMENTS) {
     if (data[type]) {
       for (const document of data[type]) {
-        promises.push(_create(type, document.data, document.code));
+        promises.push(create(type, document.data, document.code));
         userData[type].push(document.code);
       }
     }
   }
 
-  promises.push(_update(`usuarios/${uid}`, userData));
+  promises.push(update(`usuarios/${uid}`, userData));
   await Promise.all(promises);
 }
 
-async function _addToUserArray(type, value) {
-  const uid = await _getUID();
-  if (uid) {
-    const userDoc = await _get(`usuarios/${uid}`);
-    if (userDoc) {
-      let list = userDoc[type];
-      if (!list) {
-        list = [];
-      }
-      if (!list.includes(value)) {
-        list.push(value);
-        await _update(`usuarios/${uid}`, {
-          [type]: list
-        });
-      }
-      console.log("User data updated successfully");
-    }
-  }
-}
-
-async function _newUserObjectDB(object, type) {
-  if (await _getUID()) {
-    const result = await _create(type, object)
-    console.log(`Document created in ${type}:`);
-    console.log(result);
-    if (result.data) {
-      const id = _getIdFromObjectDB(result);
-      _addToUserArray(type, id);
-      return result;
-    }
-  } else return translate('messages.unauthenticated');
-}
-
-async function _getUserList(type, includeData = false, userData) {
+export async function getUserList(type, includeData = false, userData) {
   const uid = await _getUID();
   if (uid) {
 
     if (!userData) {
-      userData = await _get(`usuarios/${uid}`);
+      userData = await get(`usuarios/${uid}`);
     }
 
     var result = [];
 
     if (userData) {
       for (const id of userData[type]) {
-        const data = await _get(`${type}/${id}`);
+        const data = await get(`${type}/${id}`);
         var singleResult = {
           code: id,
           titulo: data.titulo,
@@ -308,21 +257,21 @@ async function _getUserList(type, includeData = false, userData) {
   }
 }
 
-async function _getUserListIDs(type) {
-  const userList = await _getUserList(type);
+export async function getUserListIDs(type) {
+  const userList = await getUserList(type);
   return userList.map(item => item.code);
 }
 
-async function _getPermissoes() {
+export async function getUserPermissions() {
   // Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+    const userData = await get(`usuarios/${uid}`);
     return userData?.permissoes;
   }
 }
 
-function _combineDatabaseResponses(responses) {
+export function combineDatabaseResponses(responses) {
   if (responses.length === 1) {
     return responses[0];
   }

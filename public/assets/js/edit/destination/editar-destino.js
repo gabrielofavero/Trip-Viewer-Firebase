@@ -1,4 +1,5 @@
 import { newDynamicSelect, updateValueDS, buildDS, addRemoveChildListenerDS, removeSelectorDS } from "../../support/components/dynamic-select.js";
+import { DOCUMENT_ID, getSingleData, deleteUserObject } from "../../support/firebase/database.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -163,7 +164,7 @@ async function _loadDestinos() {
   getID('delete-text').style.display = 'block';
   _startLoadingScreen();
 
-  FIRESTORE_DESTINOS_DATA = await _getSingleData('destinos');
+  FIRESTORE_DESTINOS_DATA = await getSingleData('destinos');
   CAN_EDIT = await _canEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono, []);
 
   if (CAN_EDIT) {
@@ -326,7 +327,7 @@ function _deleteDestino() {
 
 async function _deleteDestinoAction() {
   if (DOCUMENT_ID) {
-    await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
+    await deleteUserObject(DOCUMENT_ID, "destinos");
     window.location.href = '../index.html';
   }
 }

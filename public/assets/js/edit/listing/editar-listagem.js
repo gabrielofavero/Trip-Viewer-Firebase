@@ -1,3 +1,5 @@
+import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList, getUserPermissions } from "../../support/firebase/database.js";
+
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
 var FIRESTORE_NEW_DATA = {};
@@ -14,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _main();
 
     DOCUMENT_ID = _getURLParam('l');
-    PERMISSOES = await _getPermissoes();
+    PERMISSOES = await getUserPermissions();
 
     _loadVisibilityIndex();
     _loadHabilitados();
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       await _carregarListagem()
     } else {
       CAN_EDIT = true;
-      DESTINOS = await _getUserList('destinos');
+      DESTINOS = await getUserList('destinos');
       _loadDestinos();
     }
 
@@ -114,7 +116,7 @@ async function _carregarListagem() {
   blockLoadingEnd = true;
   _startLoadingScreen();
 
-  FIRESTORE_DATA = await _getSingleData('listagens');
+  FIRESTORE_DATA = await getSingleData('listagens');
   CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
 
   if (CAN_EDIT) {
@@ -180,7 +182,7 @@ function _deleteListagem() {
 
 async function _deleteListagemAction() {
   if (DOCUMENT_ID) {
-    await _deleteUserObjectDB(DOCUMENT_ID, "listagens");
+    await deleteUserObject(DOCUMENT_ID, "listagens");
     await _deleteUserObjectStorage();
     window.location.href = '../index.html';
   }

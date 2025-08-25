@@ -1,3 +1,5 @@
+import { get } from "../support/firebase/database.js";
+
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
 var GASTOS_TOTAIS = {
@@ -83,9 +85,9 @@ async function _loadGastos() {
     _startLoadingScreen(false);
     try {
         if (pin) {
-            GASTOS = await _get(`gastos/protected/${pin}/${documentID}`, false);
+            GASTOS = await get(`gastos/protected/${pin}/${documentID}`, false);
         } else {
-            GASTOS = await _get(`gastos/${documentID}`, false);
+            GASTOS = await get(`gastos/${documentID}`, false);
         }
 
         if (GASTOS) {

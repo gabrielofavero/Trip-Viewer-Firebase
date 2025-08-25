@@ -1,3 +1,5 @@
+import { ERROR_FROM_GET_REQUEST, getSingleData } from "../support/firebase/database.js";
+
 var REFRESHED = false;
 var TYPE = 'viagens';
 
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
     });
 
-    const firestoreData = await _getSingleData(TYPE);
+    const firestoreData = await getSingleData(TYPE);
 
     if (!ERROR_FROM_GET_REQUEST) {
       FIRESTORE_DATA = firestoreData;

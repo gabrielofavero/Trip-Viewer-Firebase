@@ -1,3 +1,5 @@
+import { deleteAccountDocuments, createAccountDocuments } from "../support/firebase/database.js";
+
 TRIP_DOCUMENT_BACKUP_LIMIT = 5;
 
 // Account Data Export and Import Functions
@@ -28,10 +30,10 @@ async function _importAllUserData() {
     }
 
     console.log("Deleting current user data...");
-    await _deleteAccountDocuments();
+    await deleteAccountDocuments();
 
     console.log("Restoring user data from backup...");
-    await _createAccountDocuments(backup);
+    await createAccountDocuments(backup);
 
     console.log("User data restored successfully.");
 

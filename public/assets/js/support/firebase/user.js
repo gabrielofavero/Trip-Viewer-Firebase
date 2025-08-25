@@ -1,3 +1,8 @@
+import { DOCUMENT_ID } from "./database.js";
+import { get, create, getSystemData } from "./database.js";
+
+var PERMISSOES;
+
 function _unloadPageUserFunctions() {
     const html = _getHTMLpage();
     if (html == 'index') {
@@ -45,8 +50,8 @@ async function _registerIfUserNotPresent() {
         return;
     }
 
-    const userDoc = await _get(`usuarios/${user.uid}`);
-    const systemData = await _getSystemData();
+    const userDoc = await get(`usuarios/${user.uid}`);
+    const systemData = await getSystemData();
     const registrationOpen = (systemData?.registrationOpen == true);
 
     if (!userDoc && !registrationOpen) {
@@ -58,7 +63,7 @@ async function _registerIfUserNotPresent() {
     }
 
     if (!userDoc && registrationOpen) {
-        await _create(`usuarios`, {
+        await create(`usuarios`, {
             listagens: [],
             viagens: [],
             destinos: [],

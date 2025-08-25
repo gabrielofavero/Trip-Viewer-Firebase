@@ -1,3 +1,5 @@
+import { DOCUMENT_ID } from "../firebase/database";
+
 // Required Fields
 function _validateRequiredFields(customChecks=[]) {
     var invalidFields = [];
