@@ -1,7 +1,8 @@
 import { DOCUMENT_ID } from "./database.js";
 import { USER_PERMISSIONS } from "./user.js";
-import { getID } from "../../main/app.js";
+import { getID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { codifyText } from "../data/data.js";
 
 export var IMAGE_UPLOAD_STATUS = {
   hasErrors: false,
@@ -35,7 +36,7 @@ export async function uploadImage(path, file) {
       IMAGE_UPLOAD_STATUS.hasErrors = true;
       console.error('Error while uploading image:', error.message || error);
 
-      const key = _codifyText(getLastDir(path));
+      const key = codifyText(getLastDir(path));
       IMAGE_UPLOAD_STATUS.messages[key] = getStorageErrorMessage(error);
     }
   }

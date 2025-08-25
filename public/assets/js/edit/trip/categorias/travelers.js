@@ -1,11 +1,12 @@
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors";
 import { translate } from "../../../main/translate.js";
+import { getDefaultProperties } from "../../../support/pages/mensagens.js";
 
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
 
 function _openTravelersInfo() {
-    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    const propriedades = getDefaultProperties();
     propriedades.titulo = translate('trip.travelers.info')
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getTravelersInfoContent();

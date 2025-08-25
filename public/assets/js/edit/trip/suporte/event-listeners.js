@@ -1,7 +1,7 @@
 import { addRemoveChildListenerDS } from "../../../support/components/dynamic-select.js";
 import { DOCUMENT_ID } from "../../../support/firebase/database.js";
 import { editFieldAgain, validateLink, validateImageLink } from "../../../support/html/fields.js";
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 
 var INPUT_DETECTED = false;

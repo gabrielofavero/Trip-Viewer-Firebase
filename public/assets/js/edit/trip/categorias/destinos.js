@@ -1,4 +1,4 @@
-import { getID } from "../../../main/app.js";
+import { getID, getIDs, getChildIDs, getSecondaryID, getSecondaryIDs } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 
 var DESTINOS_ATIVOS = [];
@@ -10,11 +10,11 @@ function _loadDestinosAtivos(firstBoot = true) {
     const habilidadoDestinos = getID('habilitado-destinos');
     if (habilidadoDestinos && !habilidadoDestinos.checked) return;
 
-    const childIDs = _getChildIDs('destinos-checkboxes');
+    const childIDs = getChildIDs('destinos-checkboxes');
     let result = [];
 
     for (const child of childIDs) {
-        const j = _getJ(child);
+        const j = getSecondaryID(child);
         const checkbox = getID(`check-destinos-${j}`);
         if (checkbox.checked) {
             result.push({
@@ -46,9 +46,9 @@ function _loadDestinosOrdenados() {
     const programacao = getID('habilitado-programacao');
     if (destinos && destinos.checked && programacao && programacao.checked && DESTINOS_ATIVOS.length > 0) {
         const order = [];
-        for (const fieldsetJ of _getJs('programacao-box')) {
-            for (const child of _getChildIDs(`programacao-local-${fieldsetJ}`)) {
-                const checkbox = getID(`check-programacao-${_getIDs(child)}`);
+        for (const fieldsetJ of getSecondaryIDs('programacao-box')) {
+            for (const child of getChildIDs(`programacao-local-${fieldsetJ}`)) {
+                const checkbox = getID(`check-programacao-${getIDs(child)}`);
                 if (checkbox.checked) {
                     if (!order.includes(checkbox.value)) {
                         order.push(checkbox.value);
@@ -91,9 +91,9 @@ function _updateDestinosAtivosSelectHTML(tipo, j) {
     if (j) {
         _write(tipo, j);
     } else {
-        const childs = _getChildIDs(`${tipo}-box`);
+        const childs = getChildIDs(`${tipo}-box`);
         for (const child of childs) {
-            const j = _getJ(child);
+            const j = getSecondaryID(child);
             _write(tipo, j);
         }
     }
@@ -118,7 +118,7 @@ function _updateDestinosAtivosCheckboxHTML(tipo, j) {
 
     function _write(tipo, j) {
         const id = `${tipo}-local-${j}`;
-        const childs = _getChildIDs(id);
+        const childs = getChildIDs(id);
         const div = getID(id);
 
         getID(`${tipo}-local-box-${j}`).style.display = visibility;
@@ -149,9 +149,9 @@ function _updateDestinosAtivosCheckboxHTML(tipo, j) {
     if (j) {
         _write(tipo, j);
     } else {
-        const childs = _getChildIDs(`${tipo}-box`);
+        const childs = getChildIDs(`${tipo}-box`);
         for (const child of childs) {
-            const innerJ = _getJ(child);
+            const innerJ = getSecondaryID(child);
             _write(tipo, innerJ);
         }
     }
@@ -172,8 +172,8 @@ function _getDestinosAtivosCheckboxOptionWithID(checkboxOption, tipo) {
 
 function _addValuesForDestinosAtivosCheckbox(tipo, j, values) {
     const fieldsetID = `${tipo}-local-${j}`;
-    for (const containerID of _getChildIDs(fieldsetID)) {
-        const ids = _getIDs(containerID);
+    for (const containerID of getChildIDs(fieldsetID)) {
+        const ids = getIDs(containerID);
         const checkbox = getID(`check-${tipo}-${ids}`);
         if (values.includes(checkbox.value)) {
             checkbox.checked = true;
@@ -201,7 +201,7 @@ function _loadDestinosCheckboxListeners(tipo, j) {
 
 function _getDestinosFromCheckbox(tipo, j) {
     result = [];
-    for (const child of _getChildIDs(`${tipo}-local-${j}`)) {
+    for (const child of getChildIDs(`${tipo}-local-${j}`)) {
         const k = child.split('-')[2];
         const checkbox = getID(`check-${tipo}-${j}-${k}`);
         if (checkbox.checked) {

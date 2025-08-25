@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 
 var MOEDA_PADRAO;
@@ -100,7 +100,7 @@ function _loadMoedasTab() {
 
     moedasTab.innerHTML += '<span class="glider-mini"></span>';
 
-    const childs = _getChildIDs('tab-moedas');
+    const childs = getChildIDs('tab-moedas');
     for (let i = 0; i < childs.length; i++) {
         _setCSSRule(`input[id="${childs[i]}"]:checked~.glider-mini`, 'transform', `translateX(${i * 100}%)`);
 

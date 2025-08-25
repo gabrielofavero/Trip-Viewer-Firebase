@@ -1,5 +1,5 @@
 import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
-import { getID } from "../../../../../main/app.js";
+import { getID, findSecondaryIdFromPrimaryId } from "../../../../../support/pages/selectors.js";
 import { translate } from "../../../../../main/translate.js";
 
 const TITLE_REPLACEMENT = {
@@ -87,7 +87,7 @@ function _loadTimeReplacementCheckbox() {
     const value = getID('inner-programacao-select-transporte').value;
 
     if (getID('inner-programacao-item-transporte-radio').checked && value) {
-        const j = _findJFromID(value, 'transporte');
+        const j = findSecondaryIdFromPrimaryId(value, 'transporte');
 
         TIME_REPLACEMENT.replacement.inicio = getID(`partida-horario-${j}`).value;
         TIME_REPLACEMENT.replacement.fim = getID(`chegada-horario-${j}`).value;
@@ -141,7 +141,7 @@ function _processAccomodationReplacement(labelValue, itineraryJ) {
     const value = getID('inner-programacao-select-hospedagens').value;
     if (!inputDate || !value) return labelValue;
 
-    const j = _findJFromID(value, 'hospedagens');
+    const j = findSecondaryIdFromPrimaryId(value, 'hospedagens');
     const checkInValue = getID(`check-in-${j}`).value;
     const checkOutValue = getID(`check-out-${j}`).value;
 

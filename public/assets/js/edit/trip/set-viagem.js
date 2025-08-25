@@ -1,8 +1,10 @@
 import { DOCUMENT_ID, create, deepCreate, update, override, deleteData, combineDatabaseResponses } from "../../support/firebase/database.js";
 import { IMAGE_UPLOAD_STATUS, deleteUnusedImages } from "../../support/firebase/storage.js";
 import { getUID } from "../../support/firebase/user.js";
-import { getID } from "../../main/app.js";
+import { getID, getChildIDs, getSecondaryID, getSecondaryIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { setRequired } from "../../support/html/fields.js";
+import { getTypeID } from "../../support/data/data.js";
 
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
@@ -93,9 +95,9 @@ async function _buildCompartilhamentoObject() {
     }
 
     if (editores) {
-        const childIDs = _getChildIDs('habilitado-editores-content');
+        const childIDs = getChildIDs('habilitado-editores-content');
         for (var i = 0; i < childIDs.length; i++) {
-            const j = _getJ(childIDs[i]);
+            const j = getSecondaryID(childIDs[i]);
             const divEditor = getID(`editores-email-${j}`);
             const valueEditor = divEditor ? divEditor.value || '' : "";
             editoresArray.push(valueEditor);
@@ -136,8 +138,8 @@ function _buildTransporteObject() {
         dados: [],
         visualizacao: getID('people-view').checked ? 'people-view' : getID('leg-view').checked ? 'leg-view' : 'simple-view'
     }
-    for (const child of _getChildIDs('transporte-box')) {
-        const j = _getJ(child);
+    for (const child of getChildIDs('transporte-box')) {
+        const j = getSecondaryID(child);
         result.dados.push({
             datas: {
                 chegada: _formattedDateToDateObject(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
@@ -145,7 +147,7 @@ function _buildTransporteObject() {
             },
             duracao: getID(`transporte-duracao-${j}`).value,
             empresa: _getValueEmpresa(j),
-            id: _getOrCreateCategoriaID('transporte', j),
+            id: getTypeID('transporte', j),
             idaVolta: getID(`ida-${j}`).checked ? 'ida' : getID(`volta-${j}`).checked ? 'volta' : 'durante',
             link: getID(`transporte-link-${j}`).value,
             pontos: {
@@ -162,8 +164,8 @@ function _buildTransporteObject() {
 
 function _buildHospedagemObject() {
     let result = [];
-    for (const id of _getChildIDs('hospedagens-box')) {
-        const j = _getJ(id);
+    for (const id of getChildIDs('hospedagens-box')) {
+        const j = getSecondaryID(id);
         result.push({
             cafe: getID(`hospedagens-cafe-${j}`).checked,
             datas: {
@@ -172,7 +174,7 @@ function _buildHospedagemObject() {
             },
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
-            id: _getOrCreateCategoriaID('hospedagens', j),
+            id: getTypeID('hospedagens', j),
             imagens: _getHospedagemImages(j),
             reserva: getID(`reserva-hospedagens-${j}`).value,
             link: getID(`reserva-hospedagens-link-${j}`).value,
@@ -232,10 +234,10 @@ function _buildDestinosArray() {
 function _buildLineupObject() {
     let result = [];
 
-    for (const j of _getJs('lineup-box')) {
+    for (const j of getSecondaryIDs('lineup-box')) {
         const data = getID(`lineup-data-${j}`).value;
         result.push({
-            id: _getOrCreateCategoriaID('lineup', j),
+            id: getTypeID('lineup', j),
             headliner: getID(`lineup-headliner-${j}`).checked,
             nome: getID(`lineup-nome-${j}`).value,
             local: getID(`lineup-local-${j}`).value,
@@ -260,9 +262,9 @@ function _buildGaleriaObject() {
         titulos: []
     }
 
-    const childIDs = _getChildIDs('galeria-box');
+    const childIDs = getChildIDs('galeria-box');
     for (var i = 0; i < childIDs.length; i++) {
-        const j = _getJ(childIDs[i]);
+        const j = getSecondaryID(childIDs[i]);
 
         const descricao = getID(`galeria-descricao-${j}`).value || "";
         result.descricoes.push(descricao);
@@ -293,9 +295,9 @@ function _buildVisibilidadeObject() {
 
 async function _setViagem() {
     if (getID('habilitado-destinos').checked) {
-        for (const child of _getChildIDs('com-destinos')) {
+        for (const child of getChildIDs('com-destinos')) {
             const i = parseInt(child.split("-")[2]);
-            _setRequired(`select-destinos-${i}`)
+            setRequired(`select-destinos-${i}`)
         }
     }
 

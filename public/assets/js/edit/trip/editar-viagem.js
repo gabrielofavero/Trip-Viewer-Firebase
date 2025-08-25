@@ -2,9 +2,12 @@ import { newDynamicSelect } from "../../support/components/dynamic-select.js";
 import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList, getUserPermissions } from "../../support/firebase/database.js";
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "../../support/firebase/storage.js";
 import { canUserEdit } from "../../support/firebase/user.js";
-import { getID, initApp } from "../../main/app.js";
+import { initApp } from "../../main/app.js";
+import { getID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
+import { getDefaultProperties } from "../../support/pages/mensagens.js";
+import { getURLParam } from "../../support/data/data.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -22,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     initApp();
 
-    DOCUMENT_ID = _getURLParam('v');
+    DOCUMENT_ID = getURLParam('v');
     await loadUserPermissions();
 
     _loadVisibilityIndex();
@@ -88,7 +91,7 @@ async function _loadTrip(stripped = false) {
   startLoadingScreen();
 
   if (stripped) {
-    const id = _getURLParam('v');
+    const id = getURLParam('v');
     FIRESTORE_DATA = await get(`viagens/${id}`);
   } else {
     FIRESTORE_DATA = await getSingleData('viagens');
@@ -106,7 +109,7 @@ function _deleteViagem() {
   let viagem = getID('titulo').value;
   viagem = viagem ? ` "${viagem}"` : '';
 
-  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const propriedades = getDefaultProperties();
   propriedades.titulo = translate('trip.delete.title');
   propriedades.conteudo = translate('trip.delete.message', { name: viagem });
   propriedades.botoes = [{

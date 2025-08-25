@@ -1,6 +1,7 @@
 import { get, deleteAccount, getUserList } from "../support/firebase/database.js";
 import { signInWithEmailAndPassword, signOut, registerIfUserNotPresent } from "../support/firebase/user.js";
-import { select, getID, initApp } from "../main/app.js";
+import { initApp } from "../main/app.js";
+import { select, getID } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
 

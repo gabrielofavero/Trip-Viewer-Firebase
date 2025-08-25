@@ -1,5 +1,6 @@
 import { addSelectorDS } from "../../support/components/dynamic-select.js";
 import { translate } from "../../main/translate.js";
+import { getNextSecondaryID } from "../../support/pages/selectors.js";
 
 // Adicionar
 function _addRestaurantes() {
@@ -8,7 +9,7 @@ function _addRestaurantes() {
   }
 
   const categoria = 'restaurantes';
-  const j = _getNextJ('restaurantes-box');
+  const j = getNextSecondaryID('restaurantes-box');
 
   $('#restaurantes-box').append(`
     <div id="restaurantes-${j}" class="accordion-item accordion-restaurantes" >
@@ -135,7 +136,7 @@ function _addLanches() {
   }
 
   const categoria = 'lanches';
-  const j = _getNextJ('lanches-box');
+  const j = getNextSecondaryID('lanches-box');
 
   $('#lanches-box').append(`
     <div id="lanches-${j}" class="accordion-item accordion-lanches" >
@@ -262,7 +263,7 @@ function _addSaidas() {
   }
 
   const categoria = 'saidas';
-  const j = _getNextJ('saidas-box');
+  const j = getNextSecondaryID('saidas-box');
 
   $('#saidas-box').append(`
     <div id="saidas-${j}" class="accordion-item accordion-saidas" >
@@ -388,7 +389,7 @@ function _addTurismo() {
   }
 
   const categoria = 'turismo';
-  const j = _getNextJ('turismo-box');
+  const j = getNextSecondaryID('turismo-box');
 
   $('#turismo-box').append(`
     <div id="turismo-${j}" class="accordion-item accordion-turismo" >
@@ -514,7 +515,7 @@ function _addLojas() {
   }
 
   const categoria = 'lojas';
-  const j = _getNextJ('lojas-box');
+  const j = getNextSecondaryID('lojas-box');
 
   $('#lojas-box').append(`
     <div id="lojas-${j}" class="accordion-item accordion-lojas" >

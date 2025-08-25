@@ -1,6 +1,7 @@
 import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
-import { getID } from "../../../../../main/app.js";
+import { getID, getSecondaryIDs } from "../../../../../support/pages/selectors.js";
 import { translate } from "../../../../../main/translate.js";
+import { getDefaultProperties } from "../../../../../support/pages/mensagens.js";
 
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
@@ -48,7 +49,7 @@ function _openInnerProgramacao(j, k, turno) {
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
 
-    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    const propriedades = getDefaultProperties();
     propriedades.titulo = _getInnerProgramacaoTitle(j);
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
@@ -88,7 +89,7 @@ function _getInnerProgramacaoSelect(tipo) {
     let options = '';
 
     if (getID(`habilitado-${tipo}`).checked === true) {
-        for (const j of _getJs(`${tipo}-box`)) {
+        for (const j of getSecondaryIDs(`${tipo}-box`)) {
             const label = getID(`${tipo}-title-${j}`).innerText;
             const id = getID(`${tipo}-id-${j}`).value;
             if (id && label) {

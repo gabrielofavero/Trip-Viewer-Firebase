@@ -8,6 +8,7 @@
 
 import { getLanguagePackName, translatePage, loadLangSelectorSelect } from "./translate.js";
 import { loadCreditsListeners } from "../support/pages/credits.js";
+import {on, select, onscroll} from "../support/pages/selectors.js"
 
 export var SUCCESSFUL_SAVE = false;
 export var CONFIG;
@@ -15,35 +16,6 @@ export var CONFIG;
 const APP = {
   projectId: null,
   version: null,
-}
-
-// Easy Selectors
-export const select = (el, all = false) => {
-  el = el.trim();
-  if (all) {
-    return [...document.querySelectorAll(el)];
-  } else {
-    return document.querySelector(el);
-  }
-};
-
-export const on = (type, el, listener, all = false) => {
-  if (el === 'document') {
-    document.addEventListener(type, listener);
-  } else if (el === 'window') {
-    window.addEventListener(type, listener);
-  } else {
-    let selectEl = all ? [...document.querySelectorAll(el)] : [document.querySelector(el)];
-    selectEl.forEach(e => e && e.addEventListener(type, listener));
-  }
-};
-
-const onscroll = (el, listener) => {
-  el.addEventListener('scroll', listener)
-}
-
-export const getID = (id) => {
-  return document.getElementById(id);
 }
 
 export function initApp() {

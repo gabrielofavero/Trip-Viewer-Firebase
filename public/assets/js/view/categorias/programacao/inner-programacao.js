@@ -1,5 +1,6 @@
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { getDefaultProperties } from "../../../support/pages/mensagens.js";
 
 var PROGRAMACAO_ABERTA = false;
 var PROGRAMACAO_ATUAL = {
@@ -67,7 +68,7 @@ function _reloadModalCalendar(programacao) {
 }
 
 function _displayInnerProgramacaoMessage(index, container = 'programacao-container') {
-    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    const propriedades = getDefaultProperties();
     propriedades.titulo = INNER_PROGRAMACAO_ATUAL[index].titulo;
     propriedades.conteudo = INNER_PROGRAMACAO_ATUAL[index].content;
     propriedades.botoes = [];

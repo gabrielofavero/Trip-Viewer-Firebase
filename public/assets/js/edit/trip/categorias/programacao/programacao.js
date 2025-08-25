@@ -1,7 +1,8 @@
 import { initializeSortableForGroup } from "../../../../support/components/sortable.js";
 import { addValueToSelectIfExists, getAllValuesFromSelect } from "../../../../support/html/fields.js";
-import { getID } from "../../../../main/app.js";
+import { getID, getIDs, getChildIDs } from "../../../../support/pages/selectors.js";
 import { translate } from "../../../../main/translate.js";
+import { getReadableArray } from "../../../../support/data/data.js";
 
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
@@ -80,8 +81,8 @@ function _getProgramacaoTitleSelectOptions(j = null) {
         let labels = [];
         let values = [];
 
-        for (const child of _getChildIDs(`programacao-local-${j}`)) {
-            const ids = _getIDs(child);
+        for (const child of getChildIDs(`programacao-local-${j}`)) {
+            const ids = getIDs(child);
             const checkbox = getID(`check-programacao-${ids}`);
             if (checkbox.checked) {
                 labels.push(getID(`check-programacao-label-${ids}`).innerText);
@@ -94,15 +95,15 @@ function _getProgramacaoTitleSelectOptions(j = null) {
                 destino += `<option value="${values[i]}">${labels[i]}</option>`;
             }
             if (labels.length > 1) {
-                const text = _getReadableArray(labels);
+                const text = getReadableArray(labels);
                 destino += `<option value="${text}">${text}</option>`;
             }
             const idaArray = [translate('trip.transportation.departure'), ...labels];
-            const idaText = _getReadableArray(idaArray);
+            const idaText = getReadableArray(idaArray);
             idaVoltaDestino += `<option value="${idaText}">${idaText}</option>`;
 
             const voltaArray = [...labels, translate('trip.transportation.return')];
-            const voltaText = _getReadableArray(voltaArray);
+            const voltaText = getReadableArray(voltaArray);
             idaVoltaDestino += `<option value="${voltaText}">${voltaText}</option>`;
         }
     }
@@ -155,8 +156,8 @@ function _reloadProgramacao() {
 function _loadProgramacaoListeners(j) {
     // Checkbox Local
     const fieldsetID = `programacao-local-${j}`;
-    for (const containerID of _getChildIDs(fieldsetID)) {
-        const ids = _getIDs(containerID);
+    for (const containerID of getChildIDs(fieldsetID)) {
+        const ids = getIDs(containerID);
         getID(`check-programacao-${ids}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j));
     }
 }

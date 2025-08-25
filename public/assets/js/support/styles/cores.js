@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID } from "../pages/selectors.js";
 
 var THEME_COLOR;
 var THEME_COLOR_HOVER;

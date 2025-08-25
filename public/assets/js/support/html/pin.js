@@ -42,8 +42,9 @@ Two callback functions are provided - onSuccess and onFailure
 
 */
 
-import { getID } from "../../main/app.js";
+import { getID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { getDefaultProperties } from "../pages/mensagens.js";
 
 (function ($) {
   //Declare our function
@@ -226,7 +227,7 @@ function _loadPin() {
 }
 
 function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent='', invalido=false}) {
-  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const propriedades = getDefaultProperties();
   const classComplement = invalido ? '-invalid' : '';
   propriedades.titulo = translate('trip.expenses.pin.title');
   propriedades.conteudo = `${precontent}<div class="pin-wrapper">

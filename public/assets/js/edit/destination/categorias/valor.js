@@ -1,4 +1,4 @@
-import { getID } from "../../../main/app.js";
+import { getID, getChildIDs } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 
 const VALORES_KEYS = ['-', '$', '$$', '$$$', '$$$$', 'default'];
@@ -8,7 +8,7 @@ function _loadCurrencySelects() {
     _loadMoedaOptions();
 
     for (const categoria of CONFIG.destinos.categorias.passeios) {
-        const childs = _getChildIDs(`${categoria}-box`);
+        const childs = getChildIDs(`${categoria}-box`);
         for (const child of childs) {
             const i = child.split('-').pop();
             if (VALOR_OPTIONS) {

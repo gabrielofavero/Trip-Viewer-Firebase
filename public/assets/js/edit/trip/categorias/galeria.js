@@ -2,7 +2,7 @@ import { buildDS } from "../../../support/components/dynamic-select.js";
 import { IMAGE_UPLOAD_STATUS, uploadImages, removeImageSelectorListeners } from "../../../support/firebase/storage.js";
 import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
 import { validateImageLink } from "../../../support/html/fields.js";
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors.js";
 
 function _deleteGaleria(i) {
     const id = `galeria-${i}`;

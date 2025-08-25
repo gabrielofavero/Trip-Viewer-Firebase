@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID } from "../../support/pages/selectors.js";
 
 function _initSwiper(id) {
     const swiper = getID(`${id}-swiper`);

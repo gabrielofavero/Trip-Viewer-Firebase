@@ -1,7 +1,9 @@
 import { updateValueDS, buildDS } from "../../support/components/dynamic-select.js";
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, get, getUserList } from "../../support/firebase/database.js";
-import { getID } from "../../main/app.js";
+import { getID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { getAllValuesFromSelect } from "../../support/html/fields.js";
+import { cloneObject } from "../../support/data/object.js";
 
 async function _loadTripData() {
     try {
@@ -33,7 +35,7 @@ function _loadDadosBasicosViagemData() {
     getID('inicio').value = _getDateString(inicio, 'yyyy-mm-dd');
     getID('fim').value = _getDateString(fim, 'yyyy-mm-dd');
 
-    TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
+    TRAVELERS = cloneObject(FIRESTORE_DATA.pessoas);
     _updateTravelersButtonLabel();
 }
 
@@ -182,10 +184,11 @@ function _loadTransportesData() {
         const empresa = transporte.empresa;
         if (empresa) {
             _loadTransporteVisibility(j);
-            if (_getOptionsFromSelect(`empresa-select-${j}`).includes(empresa)) {
-                getID(`empresa-select-${j}`).value = empresa;
+            const select = getID(`empresa-select-${j}`);
+            if (getAllValuesFromSelect(select).includes(empresa)) {
+                select.value = empresa;
             } else {
-                getID(`empresa-select-${j}`).value = 'outra';
+                select.value = 'outra';
                 getID(`empresa-${j}`).value = empresa;
                 _loadTransporteVisibility(j);
             }
@@ -279,7 +282,7 @@ function _loadProgramacaoData() {
     }
     _loadDestinosOrdenados();
     _updateDestinosAtivosCheckboxHTML('programacao');
-    FIRESTORE_PROGRAMACAO_DATA = _cloneObject(FIRESTORE_DATA.programacoes);
+    FIRESTORE_PROGRAMACAO_DATA = cloneObject(FIRESTORE_DATA.programacoes);
 }
 
 function _loadGaleriaData() {

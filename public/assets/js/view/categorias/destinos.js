@@ -1,5 +1,6 @@
-import { getID } from "../../main/app.js";
+import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { cloneObject } from "../../support/data/object.js";
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
@@ -18,7 +19,7 @@ function _loadDestinos() {
   }
 
   if (DESTINOS.length === 1 && getID("destinos-select").style.display === 'none'
-    && _getChildIDs('destinosBox').length <= 1) {
+    && getChildIDs('destinosBox').length <= 1) {
     getID('destinosTitleContainer').style.display = 'none';
   }
 
@@ -112,7 +113,7 @@ function _buildDestinoExport(destino, type) {
 }
 
 function _getDestinoValores(destino) {
-  const moeda = _cloneObject(CONFIG.moedas.escala[destino.destinos.moeda]);
+  const moeda = cloneObject(CONFIG.moedas.escala[destino.destinos.moeda]);
   const max = translate('destination.price.max', { value: moeda["$$$$"] });
   moeda["-"] = translate('destination.price.free');
   moeda["default"] = translate('destination.price.default');

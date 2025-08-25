@@ -1,10 +1,14 @@
 import { ERROR_FROM_GET_REQUEST, getSingleData } from "../support/firebase/database.js";
-import { getID, initApp } from "../main/app.js";
+import { initApp } from "../main/app.js";
+import { getID } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
 import { stopLoadingScreen, startLoadingTimer } from "../support/pages/loading.js";
+import { sortByArray, getURLParams } from "../support/data/data.js";
+import { getURLParam } from "../support/data/data.js";
 
 var REFRESHED = false;
 var TYPE = 'viagens';
+var CALL_SYNC = [];
 
 var INICIO = {
   date: null,
@@ -20,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     startLoadingTimer();
     initApp();
-    const urlParams = _getURLParams();
+    const urlParams = getURLParams();
     TYPE = urlParams['l'] ? 'listagens' : urlParams['d'] ? "destinos" : 'viagens';
 
     window.addEventListener('scroll', () => {
@@ -72,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function _mainLoad() {
   try {
     if (CALL_SYNC.length > 0) {
-      _sortByArray(CALL_SYNC, CONFIG.callSyncOrder.data);
+      sortByArray(CALL_SYNC, CONFIG.callSyncOrder.data);
       for (let _function of CALL_SYNC) {
         _function();
       }
@@ -288,7 +292,7 @@ function _loadModules() {
     if (ativo) {
       getID('gastos-container').style.display = '';
       getID('gastos').addEventListener('click', () => {
-        _openLightbox(`expenses.html?g=${_getURLParam('v')}`);
+        _openLightbox(`expenses.html?g=${getURLParam('v')}`);
       });
     }
   }
@@ -353,7 +357,7 @@ function _loadModules() {
 
     function _loadDestinosExclusive() {
       DESTINOS = [{
-        destinosID: _getURLParam('d'),
+        destinosID: getURLParam('d'),
         destinos: FIRESTORE_DATA
       }];
 

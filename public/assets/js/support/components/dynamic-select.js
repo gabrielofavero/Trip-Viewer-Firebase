@@ -1,5 +1,6 @@
-import { getID } from "../../main/app.js";
+import { getID } from "../pages/selectors";
 import { translate } from "../../main/translate.js";
+import { removeChildWithValidation } from "../data/data.js";
 
 var DYNAMIC_SELECT = {};
 
@@ -116,7 +117,7 @@ export function addRemoveChildListenerDS(categoria, j, dynamicSelects=[]) {
             removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
         }
         
-        _removeChildWithValidation(categoria, j);
+        removeChildWithValidation(categoria, j);
 
         for (const dynamicSelect of dynamicSelects) {
             buildDS(dynamicSelect.type);

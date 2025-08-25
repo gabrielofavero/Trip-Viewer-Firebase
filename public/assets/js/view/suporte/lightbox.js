@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID } from "../../support/pages/selectors.js";
 import { startLoadingScreen } from "../../support/pages/loading.js";
 import { stopLoadingScreen } from "../../support/pages/loading.js";
 

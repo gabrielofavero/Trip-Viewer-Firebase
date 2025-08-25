@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID, getSecondaryIDs, getLastSecondaryID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
 
 var DATE_REGIONAL_FORMAT;
@@ -272,10 +272,10 @@ function _getNextCategoriaInicioFim(tipo, lastEndStructure) {
     let inicio = getID('inicio').value;
     let fim = getID('fim').value;
 
-    const js = _getJs(`${tipo}-box`);
+    const js = getSecondaryIDs(`${tipo}-box`);
 
     if (js.length != 0) {
-        const lastJ = _getLastJ(`${tipo}-box`);
+        const lastJ = getLastSecondaryID(`${tipo}-box`);
         inicio = getID(`${lastEndStructure}-${lastJ}`).value;
     }
 

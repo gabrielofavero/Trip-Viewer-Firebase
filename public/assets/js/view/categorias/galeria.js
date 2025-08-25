@@ -1,5 +1,7 @@
 import { BiMap } from "../../support/components/bimap.js";
-import { select, on, getID } from "../../main/app.js";
+import { select, on, getID } from "../../support/pages/selectors.js";
+import { codifyText } from "../../support/data/data.js";
+import { isObject } from "../../support/data/object.js";
 
 var FILTER_MAP = new BiMap();
 
@@ -56,7 +58,7 @@ function _loadGaleriaBody(galeria) {
 }
 
 function _loadFilterClass(filter) {
-    let filterName = 'filter-' + _codifyText(filter);
+    let filterName = 'filter-' + codifyText(filter);
 
     if (FILTER_MAP[filterName]) {
         filterName += '-' + Object.keys(FILTER_MAP).length;
@@ -98,7 +100,7 @@ function _getGaleriaCategoria(galeria, i) {
 }
 
 function _getGaleriaLink(imagem) {
-    if (_isObject(imagem)) {
+    if (isObject(imagem)) {
         return imagem.link;
     } else {
         return imagem;

@@ -2,11 +2,14 @@ import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList } from "../..
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "../../support/firebase/storage.js";
 import { loadUserPermissions } from "../../support/firebase/user.js";
 import { canUserEdit } from "../../support/firebase/user.js";
-import { editFieldAgain } from "../../support/html/fields.js";
+import { editFieldAgain, setRequired } from "../../support/html/fields.js";
 import { SUCCESSFUL_SAVE } from "../../main/app.js";
-import { getID, initApp } from "../../main/app.js";
+import { initApp } from "../../main/app.js";
+import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
+import { getDefaultProperties } from "../../support/pages/mensagens.js";
+import { getURLParam } from "../../support/data/data.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -22,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     initApp();
 
-    DOCUMENT_ID = _getURLParam('l');
+    DOCUMENT_ID = getURLParam('l');
     await loadUserPermissions();
 
     _loadVisibilityIndex();
@@ -163,9 +166,9 @@ function _getIgnoredPathDestinos() {
 }
 
 async function _setListagem() {
-  for (const child of _getChildIDs('com-destinos')) {
+  for (const child of getChildIDs('com-destinos')) {
     const i = parseInt(child.split("-")[2]);
-    _setRequired(`select-destinos-${i}`)
+    setRequired(`select-destinos-${i}`)
   }
   await _setDocumento('listagens');
 }
@@ -174,7 +177,7 @@ function _deleteListagem() {
   let listagem = getID('titulo').value;
   listagem = listagem ? ` "${listagem}"` : '';
 
-  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const propriedades = getDefaultProperties();
   propriedades.titulo = 'Apagar Listagem';
   propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da listagem${listagem}? A ação não poderá ser desfeita.`;
   propriedades.botoes = [{

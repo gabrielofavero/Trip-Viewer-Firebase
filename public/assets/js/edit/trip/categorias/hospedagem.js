@@ -2,8 +2,9 @@ import { initializeSortableForGroup } from "../../../support/components/sortable
 import { IMAGE_UPLOAD_STATUS, uploadImages, loadImageSelector } from "../../../support/firebase/storage.js";
 import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
 import { validateLink, validateImageLink } from "../../../support/html/fields.js";
-import { getID } from "../../../main/app.js";
+import { getID, getChildIDs, getSecondaryID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { getDefaultProperties } from "../../../support/pages/mensagens.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 
@@ -59,7 +60,7 @@ function _hospedagensAdicionarListenerAction() {
 // Carregamento Interno (Modal)
 function _openImagensHospedagem(j) {
     const size = 5;
-    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    const propriedades = getDefaultProperties();
 
     propriedades.titulo = translate('labels.image.add_title');
     propriedades.containers = _getContainersInput();
@@ -149,8 +150,8 @@ function _openInnerImagemHospedagem(k) {
 }
 
 function _closeInnerImagemHospedagem() {
-    for (const orderId of _getChildIDs('inner-hospedagens-imagem')) {
-        const k = _getJ(orderId);
+    for (const orderId of getChildIDs('inner-hospedagens-imagem')) {
+        const k = getSecondaryID(orderId);
         const id = `hospedagens-imagem-${k}`;
         if (getID(id).style.display == 'block') {
             let titulo = translate('labels.image.add');
@@ -174,8 +175,8 @@ function _hasInnerImagemHospedagem(k) {
 
 function _saveImagensHospedagem(j) {
     const result = [];
-    for (const id of _getChildIDs('imagem-hospedagens-botoes')) {
-        const k = _getJ(id);
+    for (const id of getChildIDs('imagem-hospedagens-botoes')) {
+        const k = getSecondaryID(id);
         if (_hasInnerImagemHospedagem(k)) {
             result.push({
                 descricao: getID(`hospedagens-imagem-descricao-${k}`).value,

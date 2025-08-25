@@ -1,8 +1,17 @@
 import { getUID } from "./user.js";
 import { translate } from "../../main/translate.js";
+import { getURLParam } from "../data/data.js";
 
 export var DOCUMENT_ID;
 export var ERROR_FROM_GET_REQUEST = "";
+
+export var FIRESTORE_DATA;
+export var FIRESTORE_NEW_DATA;
+export var FIRESTORE_DESTINOS_DATA;
+export var FIRESTORE_DESTINOS_NEW_DATA
+export var FIRESTORE_PROGRAMACAO_DATA;
+export var FIRESTORE_GASTOS_DATA;
+export var FIRESTORE_GASTOS_NEW_DATA
 
 const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
 
@@ -111,7 +120,7 @@ export async function deleteData(path) {
 export async function getSingleData(type) {
   let data;
   try {
-    data = await get(`${type}/${_getURLParam(type[0])}`);
+    data = await get(`${type}/${getURLParam(type[0])}`);
 
     if (data) {
       for (let i = 0; i < data?.destinos?.length; i++) {
@@ -287,4 +296,33 @@ export function combineDatabaseResponses(responses) {
     success: success,
     data: responses
   }
+}
+
+// Setters
+export function setFirestoreData(data) {
+  FIRESTORE_DATA = data;
+}
+
+export function setFirestoreNewData(data) {
+  FIRESTORE_NEW_DATA = data;
+}
+
+export function setFirestoreDestinosData(data) {
+  FIRESTORE_DESTINOS_DATA = data;
+}
+
+export function setFirestoreDestinosNewData(data) {
+  FIRESTORE_DESTINOS_NEW_DATA = data;
+}
+
+export function setFirestoreProgramacaoData(data) {
+  FIRESTORE_PROGRAMACAO_DATA = data;
+}
+
+export function setFirestoreGastosData(data) {
+  FIRESTORE_GASTOS_DATA = data;
+}
+
+export function setFirestoreGastosNewData(data) {
+  FIRESTORE_GASTOS_NEW_DATA = data;
 }

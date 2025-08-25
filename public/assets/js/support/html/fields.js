@@ -1,9 +1,11 @@
 import { DOCUMENT_ID } from "../firebase/database";
-import { setSuccessfulSave, getID } from "../../main/app.js";
+import { setSuccessfulSave } from "../../main/app.js";
+import { getID } from "../pages/selectors.js";
 import { stopLoadingScreen } from "../pages/loading.js";
+import { firstCharToUpperCase } from "../pages/data/data.js";
 
 // Required Fields
-export function validateRequiredFields(customChecks=[]) {
+export function validateRequiredFields(customChecks = []) {
     var invalidFields = [];
 
     var inputs = document.querySelectorAll('input[required]');
@@ -25,6 +27,21 @@ export function validateRequiredFields(customChecks=[]) {
     }
 }
 
+export function setRequired(id) {
+    const div = getID(id);
+    if (div) {
+        div.setAttribute('required', "");
+    }
+}
+
+export function removeRequired(id) {
+    const div = getID(id);
+    if (div) {
+        div.removeAttribute('required');
+    }
+}
+
+
 function getInvalidFieldsText(invalidFields, customChecks) {
     const dadosBasicos = ['titulo', 'moeda'];
 
@@ -38,20 +55,20 @@ function getInvalidFieldsText(invalidFields, customChecks) {
             title = 'Dados Básicos'
             normalText += `<strong>${title}:</strong><br><ul>`
         }
-    
+
         for (const id of invalidFields) {
             const label = getID(id + '-label');
             const idSplit = id.split('-');
-    
+
             let innerTitle = title;
             let innerText = "";
-    
+
             if (label && label.innerText) {
                 const lastChar = id[id.length - 1];
-    
-                innerTitle = _firstCharToUpperCase(idSplit[0]);
+
+                innerTitle = firstCharToUpperCase(idSplit[0]);
                 innerText = label.innerText;
-    
+
                 if (!isNaN(lastChar)) {
                     let position = idSplit[idSplit.length - 1];
                     const typeTitle = getID(`${innerTitle}-title-${position}`);
@@ -60,21 +77,21 @@ function getInvalidFieldsText(invalidFields, customChecks) {
                     }
                 }
             } else {
-                innerTitle = _firstCharToUpperCase(idSplit[0])
+                innerTitle = firstCharToUpperCase(idSplit[0])
                 innerText = getFieldText(idSplit);
             }
-    
+
             if (title == innerTitle || dadosBasicos.includes(id)) {
                 normalText += `
                 <li>
                     ${innerText || innerTitle}
                 </li>`
             } else {
-    
+
                 if (innerTitle == 'Select') {
                     innerTitle = innerText.replace(/[0-9]/g, '').trim();
                 }
-    
+
                 title = innerTitle
                 normalText += `
                 </ul><br>
@@ -131,7 +148,7 @@ export function editFieldAgain(type, successfulSave = true) {
 function getFieldText(idSplit) {
     let innerText = '';
     for (let i = 1; i < idSplit.length; i++) {
-        innerText += _firstCharToUpperCase(idSplit[i]) + " ";
+        innerText += firstCharToUpperCase(idSplit[i]) + " ";
     }
     return innerText.trim();
 }
@@ -176,6 +193,7 @@ export function getAllValuesFromSelect(select) {
     }
     return values;
 }
+
 
 // Link Validation
 function isHttp(link) {

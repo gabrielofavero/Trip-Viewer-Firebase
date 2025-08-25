@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID } from "../../support/pages/selectors";
 
 var GASTOS_CHARTS = {};
 

@@ -1,5 +1,6 @@
-import { getID } from "../../main/app.js";
+import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { codifyText } from "../../support/data/data.js";
 
 var TRANSPORTE_ICONES = [];
 var TRANSPORTE_ATIVO;
@@ -23,7 +24,7 @@ function _getSwiperData() {
   const key = visualizacao === 'people-view' ? 'pessoa' : 'idaVolta';
   const complement = key === 'pessoa' ? 'custom-' : '';
 
-  TRANSPORTES_ATIVOS = [...new Set(FIRESTORE_DATA.transportes.dados.map(item => `${complement}${_codifyText(item[key])}`))];
+  TRANSPORTES_ATIVOS = [...new Set(FIRESTORE_DATA.transportes.dados.map(item => `${complement}${codifyText(item[key])}`))];
   TRANSPORTES_ATIVOS_TITULOS = [...new Set(FIRESTORE_DATA.transportes.dados.map(item => item[key]))];
   TRANSPORTE_ATIVO = visualizacao === 'people-view' ? TRANSPORTES_ATIVOS[0] : 'ida';
 
@@ -32,7 +33,7 @@ function _getSwiperData() {
   }
 
   for (let i = 0; i < FIRESTORE_DATA.transportes.dados.length; i++) {
-    const identifier = `${complement}${_codifyText(FIRESTORE_DATA.transportes.dados[i][key])}`;
+    const identifier = `${complement}${codifyText(FIRESTORE_DATA.transportes.dados[i][key])}`;
     const htmlContent = _getTransporteHTML(i + 1, identifier);
     swiperData[identifier].push(htmlContent);
   }
@@ -78,9 +79,9 @@ function _getEmpresaObj(j) {
   const tipo = transporte.transporte;
   const titulo = transporte.empresa;
 
-  const tituloConfig = _getIfExists(`CONFIG.transportes.empresas.${tipo}.${titulo}`);
-  const siteConfig = _getIfExists(`CONFIG.transportes.sites.${tipo}.${titulo}`);
-  const imagemConfig = _getIfExists(`CONFIG.transportes.imagens.${tipo}.${titulo}`);
+  const tituloConfig = CONFIG?.transportes?.empresas?.[tipo]?.[titulo];
+  const siteConfig = CONFIG?.transportes?.sites?.[tipo]?.[titulo];
+  const imagemConfig = CONFIG?.transportes?.imagens?.[tipo]?.[titulo];
 
   return {
     titulo: tituloConfig || titulo,
@@ -314,7 +315,7 @@ function _loadAbasTransportesHTML() {
 
   tab.innerHTML += '<span class="glider"></span>';
 
-  const childs = _getChildIDs('tab-transporte');
+  const childs = getChildIDs('tab-transporte');
   for (let i = 0; i < childs.length; i++) {
     _setCSSRule(`.tabs-container input[id="${childs[i]}"]:checked~.glider`, 'transform', `translateX(${i * 100}%)`);
   }

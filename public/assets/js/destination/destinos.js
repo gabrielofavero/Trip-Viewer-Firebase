@@ -1,5 +1,5 @@
 import { closeAccordions } from "../support/html/accordion.js";
-import { getID } from "../main/app.js";
+import { getID, getSecondaryIDs } from "../support/pages/selectors.js";
 
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
 var CONTENT = {};
@@ -190,7 +190,7 @@ function _toggleMedia(j) {
 }
 
 function closeAccordions(exclude) {
-  for (const j of _getJs('content')) {
+  for (const j of getSecondaryIDs('content')) {
     if (j !== exclude) {
       $(`#collapse-destinos-${j}`).collapse("hide");
     }

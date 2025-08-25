@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID } from "./selectors.js";
 import { translate } from "../../main/translate.js";
 import { MESSAGE_MODAL_OPEN } from "./mensagens.js";
 

@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID, getChildIDs, getSecondaryID } from "../../support/pages/selectors.js";
 
 var ADJUST_HEIGHT_CARDS = [];
 
@@ -24,11 +24,11 @@ function _adjustCardsHeights(type) {
 function _adjustSingleCardsHeights(tipo, second = false) {
     let innerID = (tipo === 'hospedagens' && !second) ? 'nome' : 'box';
 
-    const sliders = _getChildIDs(`${tipo}-wrapper`);
+    const sliders = getChildIDs(`${tipo}-wrapper`);
     let maxHeight = 0;
 
     for (const slider of sliders) {
-        const j = _getJ(slider);
+        const j = getSecondaryID(slider);
         const box = getID(`${tipo}-${innerID}-${j}`);
 
         if (box) {
@@ -41,7 +41,7 @@ function _adjustSingleCardsHeights(tipo, second = false) {
     }
 
     for (const slider of sliders) {
-        const j = _getJ(slider);
+        const j = getSecondaryID(slider);
         const div = getID(`${tipo}-${innerID}-${j}`);
         if (div) {
             div.style.height = `${maxHeight}px`;

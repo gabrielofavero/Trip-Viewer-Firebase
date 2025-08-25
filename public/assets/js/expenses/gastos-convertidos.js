@@ -1,3 +1,4 @@
+import { getEmptyChar } from "../support/data/data.js";
 
 var GASTOS_CONVERTIDOS = {};
 
@@ -85,7 +86,7 @@ function _calculateGastosConvertidos(tipo, moeda) {
 
 function _getConversaoText() {
     if (MOEDAS.resumo.length == 1) {
-        return _getEmptyChar();
+        return getEmptyChar();
     }
     const conversoes = [`1 ${MOEDA_PADRAO}`];
     for (const moeda of MOEDAS.resumo) {

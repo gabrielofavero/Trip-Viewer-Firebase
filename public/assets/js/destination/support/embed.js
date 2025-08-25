@@ -1,4 +1,4 @@
-import { getID } from "../../main/app.js";
+import { getID, getSecondaryIDs } from "../../support/pages/selectors.js";
 
 var MEDIA_HYPERLINKS = {};
 
@@ -38,7 +38,7 @@ function _unloadMedia(id) {
 }
 
 function _unloadMedias(exclude) {
-    for (const j of _getJs('content')) {
+    for (const j of getSecondaryIDs('content')) {
         if (j !== exclude) {
             _unloadMedia(`midia-${j}`);
         }

@@ -1,8 +1,9 @@
 import { getFieldValueOrNotify } from "../../../support/html/fields.js";
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { getDefaultProperties } from "../../../support/pages/mensagens.js";
 
-var PIN_GASTOS = {
+export var PIN_GASTOS = {
     current: '',
     new: '',
 };
@@ -98,7 +99,7 @@ function _loadGastosHTML() {
 }
 
 function _openInnerGasto(categoria, tipo = '', index = -1) {
-    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    const propriedades = getDefaultProperties();
     propriedades.titulo = tipo ? translate('labels.edit') : translate('labels.add');
     propriedades.conteudo = _getInnerGastoContent(categoria, tipo, index);
     propriedades.icones = [{ tipo: 'voltar', acao: '' }];

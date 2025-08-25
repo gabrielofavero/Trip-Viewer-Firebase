@@ -4,9 +4,13 @@ import { canUserEdit } from "../../support/firebase/user.js";
 import { closeAccordions, openLastAccordion } from "../../support/html/accordion.js";
 import { editFieldAgain, validateLink, validateMapLink, validateInstagramLink, validateMediaLink } from "../../support/html/fields.js";
 import { SUCCESSFUL_SAVE } from "../../main/app.js";
-import { getID, initApp } from "../../main/app.js";
+import { initApp } from "../../main/app.js";
+import { getID, getLastSecondaryID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
+import { firstCharToUpperCase, removeChildWithValidation, getURLParam } from "../../support/data/data.js";
+import { setRequired, removeRequired } from "../../support/html/fields.js";
+import { getDefaultProperties } from "../../support/pages/mensagens.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -25,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   startLoadingScreen();
   try {
     initApp();
-    DOCUMENT_ID = _getURLParam('d')
+    DOCUMENT_ID = getURLParam('d')
 
     _loadVisibilityIndex();
     _loadHabilitados();
@@ -63,9 +67,9 @@ function _loadHabilitados() {
   const mapa = getID('habilitado-mapa');
   mapa.addEventListener('change', function () {
     if (mapa.checked) {
-      _setRequired('mapa-link');
+      setRequired('mapa-link');
     } else {
-      _removeRequired('mapa-link');
+      removeRequired('mapa-link');
     }
   });
 }
@@ -244,9 +248,9 @@ function _emojisOnInputAction(j, categoria) {
 }
 
 function _openMoveDestinoModal(j, categoria) {
-  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const propriedades = getDefaultProperties();
 
-  propriedades.titulo = getID(`${categoria}-nome-${j}`).value || `Mover - ${_firstCharToUpperCase(categoria)}`;
+  propriedades.titulo = getID(`${categoria}-nome-${j}`).value || `Mover - ${firstCharToUpperCase(categoria)}`;
   propriedades.containers = _getContainersInput();
   propriedades.botoes = [{
     tipo: 'cancelar',
@@ -301,10 +305,10 @@ function _moveDestino(j, categoria) {
       nota: getID(`${categoria}-nota-${j}`).value,
     }
 
-    const newJ = _getLastJ(`${newCategoria}-box`) + 1;
+    const newJ = getLastSecondaryID(`${newCategoria}-box`) + 1;
     _addDestino(newCategoria);
     _addDestinoHTML(newCategoria, newJ, destino);
-    _removeChildWithValidation(categoria, j);
+    removeChildWithValidation(categoria, j);
 
     removeSelectorDS('regiao', `${categoria}-regiao-select-${j}`);
     updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
@@ -318,7 +322,7 @@ function _moveDestino(j, categoria) {
 function _deleteDestino() {
   const name = getID('titulo').value;
 
-  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const propriedades = getDefaultProperties();
   propriedades.titulo = translate('destination.delete.title');
   propriedades.conteudo = translate('destination.delete.message', { name });
   propriedades.botoes = [{

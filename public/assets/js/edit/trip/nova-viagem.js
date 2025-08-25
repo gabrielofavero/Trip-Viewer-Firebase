@@ -1,7 +1,8 @@
 import { addSelectorDS } from "../../support/components/dynamic-select.js";
 import { loadImageSelector } from "../../support/firebase/storage.js";
-import { getID } from "../../main/app.js";
+import { getID, getChildIDs, getSecondaryID, getNextSecondaryID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { getNewTypeID } from "../../support/data/data.js";
 
 var DESTINOS = [];
 var DATAS = [];
@@ -20,7 +21,7 @@ function _loadDadosBasicosNewTrip() {
 }
 
 function _addEditores() {
-  const j = _getNextJ('habilitado-editores-content');
+  const j = getNextSecondaryID('habilitado-editores-content');
   $('#habilitado-editores-content').append(`
     <div class="nice-form-group" id="editores-${j}">
       <label>${translate('labels.editors.editor')} ${j}</label>
@@ -36,7 +37,7 @@ function _addEditores() {
 }
 
 function _addTransporte() {
-  const j = _getNextJ('transporte-box');
+  const j = getNextSecondaryID('transporte-box');
 
   $('#transporte-box').append(`
       <div id="transporte-${j}" class="accordion-item accordion-transporte" >
@@ -162,7 +163,7 @@ function _addTransporte() {
     </div>
       `);
 
-  getID(`transporte-id-${j}`).value = _getCategoriaID('transporte', j);
+  getID(`transporte-id-${j}`).value = getNewTypeID('transporte', j);
   getID(`ponto-partida-${j}`).value = j == 1 ? "" : getID(`ponto-chegada-${j-1}`).value;
   getID(`ponto-chegada-${j}`).value = j == 2 ? getID(`ponto-partida-${j-1}`).value : "";
   getID(`partida-${j}`).value = j == 1 ? getID('inicio').value : j == 2 ? getID('fim').value : getID(`chegada-${j-1}`).value;
@@ -177,7 +178,7 @@ function _addTransporte() {
 
 function _addHospedagens() {
   const inicioFim = _getNextCategoriaInicioFim('hospedagens', 'check-out');
-  const j = _getNextJ('hospedagens-box');
+  const j = getNextSecondaryID('hospedagens-box');
   $('#hospedagens-box').append(`
       <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens" >
       <h2 class="accordion-header" id="heading-hospedagens-${j}">
@@ -268,7 +269,7 @@ function _addHospedagens() {
     </div>
       `);
 
-  getID(`hospedagens-id-${j}`).value = _getCategoriaID('hospedagens', j);
+  getID(`hospedagens-id-${j}`).value = getNewTypeID('hospedagens', j);
   _addRemoveChildListener('hospedagens', j, `_removeHospedagemImagens(${j})`);
   _loadHospedagemListeners(j);
   HOSPEDAGEM_IMAGENS[j] = [];
@@ -290,8 +291,8 @@ function _loadDestinos() {
   }
 
   getID('habilitado-destinos')?.addEventListener('change', () => _updateDestinosAtivosHTMLs());
-  for (const child of _getChildIDs('destinos-checkboxes')) {
-    getID(`check-destinos-${_getJ(child)}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
+  for (const child of getChildIDs('destinos-checkboxes')) {
+    getID(`check-destinos-${getSecondaryID(child)}`).addEventListener('change', () => _updateDestinosAtivosHTMLs())
   }
 }
 
@@ -375,8 +376,8 @@ function _loadProgramacao() {
     </div>`
   }
 
-  for (const child of _getChildIDs('programacao-box')) {
-    const j = _getJ(child);
+  for (const child of getChildIDs('programacao-box')) {
+    const j = getSecondaryID(child);
     getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     _loadProgramacaoListeners(j);
@@ -386,7 +387,7 @@ function _loadProgramacao() {
 }
 
 function _addGaleria() {
-  const j = _getNextJ('galeria-box');
+  const j = getNextSecondaryID('galeria-box');
   $('#galeria-box').append(`
       <div id="galeria-${j}" class="accordion-item accordion-galeria" >
       <h2 class="accordion-header" id="heading-galeria-${j}">

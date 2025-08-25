@@ -1,4 +1,4 @@
-import { select, getID } from "../../main/app.js";
+import { select, getID } from "../../support/pages/selectors.js";
 
 const notificationBar = {
   changed: false,

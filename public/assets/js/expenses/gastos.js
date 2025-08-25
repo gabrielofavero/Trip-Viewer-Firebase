@@ -1,7 +1,9 @@
 import { get } from "../support/firebase/database.js";
-import { getID, initApp } from "../main/app.js";
+import { initApp } from "../main/app.js";
+import { getID } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
+import { getURLParam } from "../support/data/data.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
 
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
-    let documentID = _getURLParam('g');
+    let documentID = getURLParam('g');
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
@@ -73,15 +75,15 @@ function _requestPinGastosInvalido() {
 function _exitGastos() {
     if (window.parent._closeLightbox) {
         window.parent._closeLightbox();
-    } else if (_getURLParam('g')) {
-        window.location.href = `view.html?v=${_getURLParam('g')}`;
+    } else if (getURLParam('g')) {
+        window.location.href = `view.html?v=${getURLParam('g')}`;
     } else {
         window.location.href = 'index.html';
     }
 }
 
 async function _loadGastos() {
-    const documentID = _getURLParam('g');
+    const documentID = getURLParam('g');
     const pin = getID('pin-code')?.innerText || '';
     _closeMessage();
     _removePinListener();

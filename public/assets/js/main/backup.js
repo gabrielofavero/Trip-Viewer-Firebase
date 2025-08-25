@@ -1,5 +1,6 @@
 import { deleteAccountDocuments, createAccountDocuments } from "../support/firebase/database.js";
 import { getUID } from "../support/firebase/user.js";
+import { requestAndGetLocalJSON } from "../support/data/data.js";
 
 TRIP_DOCUMENT_BACKUP_LIMIT = 5;
 
@@ -23,7 +24,7 @@ async function _exportAllUserData() {
 }
 
 async function _importAllUserData() {
-    const backup = await _getLocalJSON();
+    const backup = await requestAndGetLocalJSON();
 
     if (!backup) {
         console.error("No file provided for restoration.");

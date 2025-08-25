@@ -1,4 +1,4 @@
-import { searchObject } from "../support/pages/dados.js";
+import { searchObject } from "../support/data/object.js";
 import { CONFIG } from "./app.js";
 
 export var LANGUAGES = ['en', 'pt'];

@@ -1,4 +1,4 @@
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors.js";
 
 function _loadCustomizacaoImageData(value, id) {
     if (value && typeof value === 'string') {

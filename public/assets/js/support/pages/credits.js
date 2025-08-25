@@ -1,5 +1,5 @@
 import { translate } from "../../main/translate.js";
-import { getJson, getPage } from "./dados.js";
+import { getJson, getPage } from "./data/data.js";
 import { getDefaultProperties, displayFullMessage } from "./mensagens.js";
 import { on } from "../../main/app.js";
 

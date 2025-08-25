@@ -1,6 +1,7 @@
-import { getID } from "../../main/app.js";
+import { getID } from "./selectors.js";
 import { translate } from "../../main/translate.js";
 import { stopLoadingScreen, stopLoadingTimer } from "./loading.js";
+import { cloneObject } from "../data/object.js";
 
 export var MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {
@@ -21,19 +22,19 @@ const MENSAGEM_PROPRIEDADES = {
 }
 
 export function getDefaultProperties() {
-  return _cloneObject(MENSAGEM_PROPRIEDADES);
+  return cloneObject(MENSAGEM_PROPRIEDADES);
 }
 
 
 // Mensagem Genérica
 function _displayMessage(titulo, conteudo) {
-  const properties = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const properties = getDefaultProperties();
   if (titulo) properties.titulo = titulo;
   if (conteudo) properties.conteudo = conteudo;
   _displayFullMessage(properties);
 }
 
-export function displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES)) {
+export function displayFullMessage(propriedades = getDefaultProperties()) {
   const preloader = getID('preloader');
   const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
@@ -121,7 +122,7 @@ export function displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIED
 
 // Mensagem de Erro
 function _displayError(erro, tentarNovamente = false) {
-  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const propriedades = getDefaultProperties();
 
   propriedades.titulo = translate('messages.errors.load_title');
   propriedades.critico = true;
@@ -155,7 +156,7 @@ function _getErrorMessage(erro) {
 
 // Mensagem de Não Autorizado
 function _displayForbidden(conteudo, redirectTo = 'view.html') {
-  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  const propriedades = getDefaultProperties();
   propriedades.titulo = translate('messages.access_denied.title');
   propriedades.conteudo = conteudo || translate('messages.access_denied.message');
   propriedades.critico = true;

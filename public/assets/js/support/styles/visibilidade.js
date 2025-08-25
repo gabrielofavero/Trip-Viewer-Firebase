@@ -1,4 +1,5 @@
-import { getID } from "../../main/app.js";
+import { getID, getSecondaryIDs } from "../pages/selectors.js";
+import { firstCharToUpperCase, removeChildWithValidation, removeEmptyChild } from "../pages/data/data.js";
 
 var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
@@ -278,7 +279,7 @@ function _loadEditModule(categoria) {
      if (habilitado.checked) {
           _showContent(categoria);
           if (!getID(`habilitado-${categoria}-content`).innerText) {
-               _add(_firstCharToUpperCase(categoria).trim())
+               _add(firstCharToUpperCase(categoria).trim())
           }
      } else {
           _hideContent(categoria);
@@ -295,11 +296,11 @@ function _loadListener(categoria) {
                const habilitadoContent = getID(`habilitado-${categoria}-content`);
 
                if ((box && !box.innerText) || (habilitadoContent && !habilitadoContent.innerText)) {
-                    _add(_firstCharToUpperCase(categoria).trim())
+                    _add(firstCharToUpperCase(categoria).trim())
                }
 
           } else {
-               _removeEmptyChild(categoria);
+               removeEmptyChild(categoria);
                _hideContent(categoria);
           }
      });
@@ -336,7 +337,7 @@ function _hideContent(type) {
 
 function _addRemoveChildListener(categoria, j, customFunction = null) {
      getID(`remove-${categoria}-${j}`).addEventListener('click', function () {
-          _removeChildWithValidation(categoria, j);
+          removeChildWithValidation(categoria, j);
           if (customFunction) {
                eval(customFunction);
           }
@@ -359,7 +360,7 @@ function _toggleFadingVisibility(id = 'copy-msg') {
 function _searchDestinosListenerAction() {
      const search = getID('destinos-search').value.toLowerCase();
 
-     for (const j of _getJs('destinos-checkboxes')) {
+     for (const j of getSecondaryIDs('destinos-checkboxes')) {
           const label = getID(`check-destinos-label-${j}`).innerText.toLowerCase();
           getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
      }

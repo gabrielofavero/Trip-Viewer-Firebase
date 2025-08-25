@@ -3,10 +3,13 @@ import { DOCUMENT_ID, create, update, getUserListIDs } from "../firebase/databas
 import { IMAGE_UPLOAD_STATUS, uploadImage } from "../firebase/storage.js";
 import { getUID } from "../firebase/user.js";
 import { validateRequiredFields } from "../html/fields.js";
-import { setSuccessfulSave, getID } from "../../main/app.js";
+import { setSuccessfulSave } from "../../main/app.js";
+import { getID } from "./selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen } from "./loading.js";
 import { stopLoadingScreen } from "./loading.js";
+import { validateIfDocumentChanged } from "../data/object.js";
+import { getNewDataDocument } from "../data/data.js";
 
 var CUSTOM_UPLOADS = {
     hospedagens: [],
@@ -33,10 +36,10 @@ async function _setDocumento(tipo) {
         await eval(beforeItem);
     }
 
-    _validateIfDocumentChanged();
+    validateIfDocumentChanged(FIRESTORE_DATA);
     if (_isModalOpen()) return;
 
-    const newData = _getNewDataDocument(tipo);
+    const newData = getNewDataDocument(tipo);
 
     if (DOCUMENT_ID && newData) {
         mainResponse = await update(`${tipo}/${DOCUMENT_ID}`, newData);
@@ -111,7 +114,7 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
     _addSetResponse(translate('labels.image.upload'), !IMAGE_UPLOAD_STATUS.hasErrors);
 
     if (UPLOAD_AFTER_SET) {
-        const newData = _getNewDataDocument(tipo);
+        const newData = getNewDataDocument(tipo);
         if (DOCUMENT_ID && newData) {
             mainResponse = await update(`${tipo}/${DOCUMENT_ID}`, newData);
             _addSetResponse(translate('labels.image.add'), true);

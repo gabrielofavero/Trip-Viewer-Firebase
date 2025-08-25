@@ -2,8 +2,9 @@ import { buildDS } from "../../../support/components/dynamic-select.js";
 import { closeAccordions } from "../../../support/html/accordion.js";
 import { openLastAccordion } from "../../../support/html/accordion.js";
 import { validateLink } from "../../../support/html/fields.js";
-import { getID } from "../../../main/app.js";
+import { getID, getChildIDs, getSecondaryID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { setRequired, removeRequired } from "../../../support/html/fields.js";
 
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
@@ -122,8 +123,8 @@ function _applyTransportationTypeVisualization(i) {
         return;
     }
 
-    for (const child of _getChildIDs('transporte-box')) {
-        _apply(_getJ(child))
+    for (const child of getChildIDs('transporte-box')) {
+        _apply(getSecondaryID(child))
     }
 
     function _apply(j) {
@@ -132,9 +133,9 @@ function _applyTransportationTypeVisualization(i) {
         getID(`people-box-${j}`).style.display = getID('people-view').checked ? 'block' : 'none';
 
         if (getID('people-view').checked) {
-            _setRequired(`transporte-pessoa-select-${j}`);
+            setRequired(`transporte-pessoa-select-${j}`);
         } else {
-            _removeRequired(`transporte-pessoa-select-${j}`);
+            removeRequired(`transporte-pessoa-select-${j}`);
         }
     }
 }

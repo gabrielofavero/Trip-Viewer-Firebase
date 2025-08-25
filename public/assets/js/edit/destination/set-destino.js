@@ -1,6 +1,7 @@
 import { getUID } from "../../support/firebase/user";
-import { getID } from "../../main/app.js";
+import { getID, getChildIDs, getSecondaryID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { firstCharToUpperCase, getTypeID } from "../../support/data/data.js";
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 
@@ -33,15 +34,15 @@ async function _buildDestinosObject() {
 }
 
 function _buildDestinoCategoryObject(categoria) {
-    const childIDs = _getChildIDs(`${categoria}-box`);
+    const childIDs = getChildIDs(`${categoria}-box`);
 
     let result = [];
 
     for (let i = 0; i < childIDs.length; i++) {
         let item = {};
-        const j = _getJ(childIDs[i]);
+        const j = getSecondaryID(childIDs[i]);
 
-        item.id = _getOrCreateCategoriaID(categoria, j);
+        item.id = getTypeID(categoria, j);
         item.novo = getID(`${categoria}-novo-${j}`).checked;
         item.nome = getID(`${categoria}-nome-${j}`).value;
         item.emoji = getID(`${categoria}-emoji-${j}`).value;
@@ -122,7 +123,7 @@ function _displayTikTokError(unableToConvert) {
     const titulo = `${translate('destination.errors.tiktok.conversion')} <i class="iconify" data-icon="mdi:instagram"></i>`;
     let conteudo = `${translate('destination.errors.tiktok.conversion_message')}<br><br>`;
     for (const categoria in unableToConvert) {
-        const categoriaTitle = _firstCharToUpperCase(categoria);
+        const categoriaTitle = firstCharToUpperCase(categoria);
         conteudo += `<strong>${categoriaTitle}:</strong><br>`;
         for (const index of unableToConvert[categoria]) {
             const item = FIRESTORE_DESTINOS_NEW_DATA[categoria][index]?.nome || `Item ${index + 1}`;

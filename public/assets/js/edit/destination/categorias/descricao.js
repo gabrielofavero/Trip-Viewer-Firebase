@@ -1,6 +1,7 @@
 import { getSelectOptionsHTML } from "../../../support/html/fields.js";
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors.js";
 import { getUserLanguage, translate } from "../../../main/translate.js";
+import { getDefaultProperties } from "../../../support/pages/mensagens.js";
 
 var DESCRIPTIONS = {};
 
@@ -49,7 +50,7 @@ function _getDescription(categoria, j) {
 }
 
 function _openDescription(categoria, j) {
-    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    const propriedades = getDefaultProperties();
     propriedades.titulo = _getDescriptionLabel(categoria, j);
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getDescriptionContent(categoria);

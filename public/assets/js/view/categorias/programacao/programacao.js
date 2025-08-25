@@ -1,4 +1,4 @@
-import { getID } from "../../../main/app.js";
+import { getID } from "../../../support/pages/selectors.js";
 
 var PROGRAMACAO_DESTINOS = {};
 var PILLS_ACTIONS = {};
