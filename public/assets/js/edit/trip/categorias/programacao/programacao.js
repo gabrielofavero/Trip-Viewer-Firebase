@@ -1,3 +1,5 @@
+import { initializeSortableForGroup } from "../../../../support/components/sortable.js";
+
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
 function _applyLoadedProgramacaoData(j, dados) {
@@ -36,7 +38,7 @@ function _applyLoadedProgramacaoData(j, dados) {
 
     _updateProgramacaoTitle(j);
     _loadInnerProgramacaoHTML(j);
-    _initializeSortableForGroup(`programacao-${j}`, {onEnd: _afterDragInnerProgramacao})
+    initializeSortableForGroup(`programacao-${j}`, {onEnd: _afterDragInnerProgramacao})
 }
 
 function _updateProgramacaoTitle(j) {

@@ -1,3 +1,5 @@
+import { initializeSortableForGroup } from "../../../support/components/sortable.js";
+
 var HOSPEDAGEM_IMAGENS = {};
 
 function _getHospedagemImages(j) {
@@ -66,7 +68,7 @@ function _openImagensHospedagem(j) {
     }];
 
     _displayFullMessage(propriedades);
-    _initializeSortableForGroup(`imagem-hospedagens`, { onEnd: '' });
+    initializeSortableForGroup(`imagem-hospedagens`, { onEnd: '' });
 
     for (let k = 1; k <= size; k++) {
         const imagem = HOSPEDAGEM_IMAGENS[j][k - 1];

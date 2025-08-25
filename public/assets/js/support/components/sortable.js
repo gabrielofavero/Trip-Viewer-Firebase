@@ -1,5 +1,5 @@
-function _initializeSortableForGroup(groupName, properties) {
-    function _initializeSortable(groupName) {
+export function initializeSortableForGroup(groupName, properties) {
+    function initializeSortable(groupName) {
         const containers = document.querySelectorAll(`.draggable-area[data-group="${groupName}"]`);
         const handleSelector = properties?.handleSelector || '.drag-icon';
         const onStartFunc = properties?.onStart;
@@ -26,14 +26,14 @@ function _initializeSortableForGroup(groupName, properties) {
         });
     }
 
-    _initializeSortable(groupName);
+    initializeSortable(groupName);
 
     const observer = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
             mutation.addedNodes.forEach(node => {
                 if (node.nodeType === 1 && node.classList.contains('draggable-area')) {
                     if (node.dataset.group === groupName) {
-                        _initializeSortable(groupName);
+                        initializeSortable(groupName);
                     }
                 }
             });
