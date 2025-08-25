@@ -1,4 +1,5 @@
 import { getID } from "../main/app.js";
+import { translate } from "../main/translate.js";
 
 // Resumo
 function _loadResumo() {

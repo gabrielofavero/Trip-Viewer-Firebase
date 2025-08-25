@@ -5,6 +5,7 @@ import { closeAccordions, openLastAccordion } from "../../support/html/accordion
 import { editFieldAgain, validateLink, validateMapLink, validateInstagramLink, validateMediaLink } from "../../support/html/fields.js";
 import { SUCCESSFUL_SAVE } from "../../main/app.js";
 import { getID, initApp } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;

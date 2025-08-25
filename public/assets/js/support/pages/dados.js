@@ -1,4 +1,5 @@
 import { setSuccessfulSave, getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var CALL_SYNC = [];
 var FIRESTORE_DATA;
@@ -7,7 +8,6 @@ var SHEET_DATA;
 var P_DATA;
 var HYPERLINK;
 
-var CONFIG;
 var DOCS_CHANGED;
 
 // ======= CONVERTERS =======

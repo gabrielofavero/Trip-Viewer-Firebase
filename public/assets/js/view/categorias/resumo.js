@@ -1,4 +1,5 @@
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 function _loadResumo() {
   const dias = Math.ceil((FIM.date - INICIO.date) / (1000 * 60 * 60 * 24)) + 1;

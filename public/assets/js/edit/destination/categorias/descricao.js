@@ -1,5 +1,6 @@
 import { getSelectOptionsHTML } from "../../../support/html/fields.js";
 import { getID } from "../../../main/app.js";
+import { getUserLanguage, translate } from "../../../main/translate.js";
 
 var DESCRIPTIONS = {};
 
@@ -70,7 +71,7 @@ function _openDescription(categoria, j) {
 }
 
 function _getDescriptionContent(categoria) {
-    const selectedLanguage = _getUserLanguage();
+    const selectedLanguage = getUserLanguage();
     const translation = CONFIG.destinos.translation[categoria];
     const placeholders = {};
     const languages = {};

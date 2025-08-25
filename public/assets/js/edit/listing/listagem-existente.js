@@ -1,5 +1,6 @@
 import { getUserList } from "../../support/firebase/database.js";
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 // Listagem Existente
 async function _loadListData(FIRESTORE_DATA) {

@@ -5,6 +5,7 @@ import { canUserEdit } from "../../support/firebase/user.js";
 import { editFieldAgain } from "../../support/html/fields.js";
 import { SUCCESSFUL_SAVE } from "../../main/app.js";
 import { getID, initApp } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;

@@ -6,8 +6,10 @@
     - Modified by: Gabriel Fávero
 */
 
-export const MISSING_TRANSLATIONS = new Set();
+import { getLanguagePackName, translatePage, loadLangSelectorSelect } from "./translate.js";
+
 export var SUCCESSFUL_SAVE = false;
+export var CONFIG;
 
 const APP = {
   projectId: null,
@@ -48,7 +50,7 @@ export function initApp() {
   $('body').css('overflow', 'hidden');
 
   loadConfig();
-  _loadLangSelectorSelect();
+  loadLangSelectorSelect();
 
   /**
    * Navbar links active state on scroll
@@ -238,10 +240,10 @@ async function loadConfig() {
     $.getJSON("/assets/json/set.json").then(data => config.set = data),
     $.getJSON("/assets/json/icons.json").then(data => config.icons = data),
     $.getJSON("/assets/json/version.json").then(data => config.versoes = data),
-    $.getJSON(`/assets/json/languages/${_getLanguagePackName()}.json`).then(data => config.language = data),
+    $.getJSON(`/assets/json/languages/${getLanguagePackName()}.json`).then(data => config.language = data),
   ]).then(() => {
     CONFIG = config;
-    _translatePage();
+    translatePage();
     loadAppVersioning()
   }).catch(error => {
     console.error('Erro ao carregar a configuração:', error);

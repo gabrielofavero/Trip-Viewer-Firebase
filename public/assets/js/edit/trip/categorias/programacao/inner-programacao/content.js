@@ -1,4 +1,6 @@
-// Conteúdo do Modal (HTML)
+import { translate } from "../../../../../main/translate.js";
+
+// Modal content (html)
 function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
     return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">

@@ -1,4 +1,5 @@
 import { getUID } from "./user.js";
+import { translate } from "../../main/translate.js";
 
 export var DOCUMENT_ID;
 export var ERROR_FROM_GET_REQUEST = "";

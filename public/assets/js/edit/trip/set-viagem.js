@@ -2,6 +2,7 @@ import { DOCUMENT_ID, create, deepCreate, update, override, deleteData, combineD
 import { IMAGE_UPLOAD_STATUS, deleteUnusedImages } from "../../support/firebase/storage.js";
 import { getUID } from "../../support/firebase/user.js";
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};

@@ -1,4 +1,5 @@
 import { getID } from "../../../main/app.js";
+import { translate } from "../../../main/translate.js";
 
 var PROGRAMACAO_ABERTA = false;
 var PROGRAMACAO_ATUAL = {

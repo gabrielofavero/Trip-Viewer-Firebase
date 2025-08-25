@@ -1,4 +1,5 @@
 import { addSelectorDS } from "../../support/components/dynamic-select.js";
+import { translate } from "../../main/translate.js";
 
 // Adicionar
 function _addRestaurantes() {

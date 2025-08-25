@@ -3,6 +3,7 @@ import { IMAGE_UPLOAD_STATUS, uploadImages, loadImageSelector } from "../../../s
 import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
 import { validateLink, validateImageLink } from "../../../support/html/fields.js";
 import { getID } from "../../../main/app.js";
+import { translate } from "../../../main/translate.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 

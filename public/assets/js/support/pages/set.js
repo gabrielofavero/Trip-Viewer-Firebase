@@ -4,6 +4,7 @@ import { IMAGE_UPLOAD_STATUS, uploadImage } from "../firebase/storage.js";
 import { getUID } from "../firebase/user.js";
 import { validateRequiredFields } from "../html/fields.js";
 import { setSuccessfulSave, getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var CUSTOM_UPLOADS = {
     hospedagens: [],

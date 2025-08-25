@@ -1,5 +1,6 @@
 import { get } from "../support/firebase/database.js";
 import { getID, initApp } from "../main/app.js";
+import { translate } from "../main/translate.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;

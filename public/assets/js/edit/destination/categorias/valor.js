@@ -1,4 +1,5 @@
 import { getID } from "../../../main/app.js";
+import { translate } from "../../../main/translate.js";
 
 const VALORES_KEYS = ['-', '$', '$$', '$$$', '$$$$', 'default'];
 var VALOR_OPTIONS = '';

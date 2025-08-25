@@ -1,6 +1,7 @@
 import { DOCUMENT_ID } from "./database.js";
 import { get, create, getSystemData, getUserPermissions } from "./database.js";
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 export var USER_PERMISSIONS;
 

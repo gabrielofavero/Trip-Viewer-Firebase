@@ -1,4 +1,5 @@
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;

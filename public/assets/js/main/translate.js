@@ -1,8 +1,10 @@
 import { searchObject } from "../support/pages/dados.js";
+import { CONFIG } from "./app.js";
 
 export var LANGUAGES = ['en', 'pt'];
+export const MISSING_TRANSLATIONS = new Set();
 
-function _getUserLanguage() {
+export function getUserLanguage() {
   let language = localStorage.getItem("userLanguage");
   if (!language) {
     language = navigator.language || navigator.userLanguage;
@@ -12,14 +14,14 @@ function _getUserLanguage() {
   return language;
 }
 
-function _getLanguagePackName() {
-  let language = _getUserLanguage();
+export function getLanguagePackName() {
+  let language = getUserLanguage();
   if (["pt", 'en'].includes(language)) {
     return language;
   } else return "en"
 }
 
-function _updateUserLanguage(language) {
+function updateUserLanguage(language) {
   const previousLang = localStorage.getItem("userLanguage");
   localStorage.setItem("userLanguage", language);
 
@@ -28,7 +30,7 @@ function _updateUserLanguage(language) {
   }
 }
 
-function translate(key, replacements = {}, strict = true) {
+export function translate(key, replacements = {}, strict = true) {
   if (!CONFIG?.language) return "";
   let result = searchObject(CONFIG.language, key, strict);
 
@@ -49,7 +51,7 @@ function translate(key, replacements = {}, strict = true) {
   return result;
 }
 
-function _translatePage() {
+export function translatePage() {
   const elements = document.querySelectorAll("[data-translate]");
   for (const element of elements) {
     const key = element.getAttribute("data-translate");
@@ -64,7 +66,7 @@ function _translatePage() {
   }
 }
 
-function _loadLangSelectorSelect() {
+export function loadLangSelectorSelect() {
   const langButton = document.querySelector('.lang-button');
   const langOptions = document.querySelector('.lang-options');
   _setLanguage(_getLanguagePackName());
@@ -89,6 +91,6 @@ function _loadLangSelectorSelect() {
 
   function _setLanguage(lang) {
     langButton.textContent = lang.toUpperCase();
-    _updateUserLanguage(lang);
+    updateUserLanguage(lang);
   }
 }

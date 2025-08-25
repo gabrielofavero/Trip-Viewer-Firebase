@@ -1,4 +1,5 @@
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {

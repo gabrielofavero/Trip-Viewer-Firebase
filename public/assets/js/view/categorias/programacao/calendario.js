@@ -2,6 +2,7 @@
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
 
 import { getID } from "../../../main/app.js";
+import { translate } from "../../../main/translate.js";
 
 CALENDAR = {
     start: null,

@@ -1,5 +1,6 @@
 import { updateValueDS, buildDS } from "../../support/components/dynamic-select.js";
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 // Destino Existente
 function _loadDestinationsData() {

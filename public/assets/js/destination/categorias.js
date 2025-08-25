@@ -1,4 +1,5 @@
 import { openLinkInNewTab } from "../main/app.js";
+import { getUserLanguage } from "../main/translate.js";
 
 // Título
 function _getTitulo(item) {
@@ -87,6 +88,6 @@ function _convertCustomValor(valor, moeda) {
 // Descrição
 function _getDescricaoValue(item, isLineup) {
     if (isLineup) return "";
-    const lang = _getUserLanguage();
+    const lang = getUserLanguage();
     return item.descricao[lang] || "";
 }

@@ -1,4 +1,5 @@
 import { getID } from "../../../main/app.js";
+import { translate } from "../../../main/translate.js";
 
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset

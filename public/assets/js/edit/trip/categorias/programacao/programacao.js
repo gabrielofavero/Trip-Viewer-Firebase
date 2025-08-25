@@ -1,6 +1,7 @@
 import { initializeSortableForGroup } from "../../../../support/components/sortable.js";
 import { addValueToSelectIfExists, getAllValuesFromSelect } from "../../../../support/html/fields.js";
 import { getID } from "../../../../main/app.js";
+import { translate } from "../../../../main/translate.js";
 
 var FIRESTORE_PROGRAMACAO_DATA = {};
 

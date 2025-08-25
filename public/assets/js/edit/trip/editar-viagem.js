@@ -3,6 +3,7 @@ import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList, getUserPermi
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "../../support/firebase/storage.js";
 import { canUserEdit } from "../../support/firebase/user.js";
 import { getID, initApp } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;

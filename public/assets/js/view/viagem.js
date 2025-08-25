@@ -1,5 +1,6 @@
 import { ERROR_FROM_GET_REQUEST, getSingleData } from "../support/firebase/database.js";
 import { getID, initApp } from "../main/app.js";
+import { translate } from "../main/translate.js";
 
 var REFRESHED = false;
 var TYPE = 'viagens';

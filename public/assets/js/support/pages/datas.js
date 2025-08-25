@@ -1,4 +1,5 @@
 import { getID } from "../../main/app.js";
+import { translate } from "../../main/translate.js";
 
 var DATE_REGIONAL_FORMAT;
 
