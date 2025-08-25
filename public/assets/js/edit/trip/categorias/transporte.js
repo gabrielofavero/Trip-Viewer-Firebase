@@ -1,4 +1,6 @@
 import { buildDS } from "../../../support/components/dynamic-select.js";
+import { closeAccordions } from "../../../support/html/accordion.js";
+import { openLastAccordion } from "../../../support/html/accordion.js";
 
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
@@ -190,8 +192,8 @@ function _loadTransporteListeners(j) {
 }
 
 function _transporteAdicionarListenerAction() {
-    _closeAccordions('transporte');
+    closeAccordions('transporte');
     _addTransporte();
-    _openLastAccordion('transporte');
+    openLastAccordion('transporte');
     buildDS('transporte-pessoa');
 }

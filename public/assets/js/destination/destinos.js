@@ -1,3 +1,5 @@
+import { closeAccordions } from "../support/html/accordion.js";
+
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
 var CONTENT = {};
 
@@ -172,7 +174,7 @@ function _orderInnerHTMLs(innerContents) {
 function _processAccordion(j) {
   _toggleMedia(j);
   _unloadMedias(j);
-  _closeAccordions(j);
+  closeAccordions(j);
 }
 
 function _toggleMedia(j) {
@@ -186,7 +188,7 @@ function _toggleMedia(j) {
   }
 }
 
-function _closeAccordions(exclude) {
+function closeAccordions(exclude) {
   for (const j of _getJs('content')) {
     if (j !== exclude) {
       $(`#collapse-destinos-${j}`).collapse("hide");

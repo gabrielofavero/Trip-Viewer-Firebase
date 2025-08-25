@@ -1,5 +1,5 @@
 // Accordion Open - Close
-function _closeAccordions(categoria) {
+export function closeAccordions(categoria) {
     const childs = _getChildIDs(`${categoria}-box`);
     
     for (const child of childs) {
@@ -12,7 +12,7 @@ function _closeAccordions(categoria) {
     }
 }
 
-function _openLastAccordion(categoria) {
+export function openLastAccordion(categoria) {
     const childs = _getChildIDs(`${categoria}-box`);
     const lastChild = childs[childs.length - 1];
     const i = lastChild.split('-').pop();

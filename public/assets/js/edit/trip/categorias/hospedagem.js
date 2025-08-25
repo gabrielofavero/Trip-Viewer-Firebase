@@ -1,5 +1,6 @@
 import { initializeSortableForGroup } from "../../../support/components/sortable.js";
 import { IMAGE_UPLOAD_STATUS, uploadImages, loadImageSelector } from "../../../support/firebase/storage.js";
+import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 
@@ -47,9 +48,9 @@ function _loadHospedagemListeners(j) {
 }
 
 function _hospedagensAdicionarListenerAction() {
-    _closeAccordions('hospedagens');
+    closeAccordions('hospedagens');
     _addHospedagens();
-    _openLastAccordion('hospedagens');
+    openLastAccordion('hospedagens');
 }
 
 // Carregamento Interno (Modal)

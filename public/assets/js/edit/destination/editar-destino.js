@@ -1,6 +1,7 @@
 import { newDynamicSelect, updateValueDS, buildDS, addRemoveChildListenerDS, removeSelectorDS } from "../../support/components/dynamic-select.js";
 import { DOCUMENT_ID, getSingleData, deleteUserObject } from "../../support/firebase/database.js";
 import { canUserEdit } from "../../support/firebase/user.js";
+import { closeAccordions, openLastAccordion } from "../../support/html/accordion.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -67,37 +68,37 @@ function _loadHabilitados() {
 
 function _loadEventListeners() {
   getID('restaurantes-adicionar').addEventListener('click', () => {
-    _closeAccordions('restaurantes');
+    closeAccordions('restaurantes');
     _addRestaurantes();
-    _openLastAccordion('restaurantes');
+    openLastAccordion('restaurantes');
     buildDS('regiao');
   });
 
   getID('lanches-adicionar').addEventListener('click', () => {
-    _closeAccordions('lanches');
+    closeAccordions('lanches');
     _addLanches();
-    _openLastAccordion('lanches');
+    openLastAccordion('lanches');
     buildDS('regiao');
   });
 
   getID('saidas-adicionar').addEventListener('click', () => {
-    _closeAccordions('saidas');
+    closeAccordions('saidas');
     _addSaidas();
-    _openLastAccordion('saidas');
+    openLastAccordion('saidas');
     buildDS('regiao');
   });
 
   getID('turismo-adicionar').addEventListener('click', () => {
-    _closeAccordions('turismo');
+    closeAccordions('turismo');
     _addTurismo();
-    _openLastAccordion('turismo');
+    openLastAccordion('turismo');
     buildDS('regiao');
   });
 
   getID('lojas-adicionar').addEventListener('click', () => {
-    _closeAccordions('lojas');
+    closeAccordions('lojas');
     _addLojas();
-    _openLastAccordion('lojas');
+    openLastAccordion('lojas');
     buildDS('regiao');
   });
 

@@ -1,5 +1,6 @@
 import { buildDS } from "../../../support/components/dynamic-select.js";
 import { IMAGE_UPLOAD_STATUS, uploadImages, removeImageSelectorListeners } from "../../../support/firebase/storage.js";
+import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
 
 function _deleteGaleria(i) {
     const id = `galeria-${i}`;
@@ -18,9 +19,9 @@ function _loadGaleriaListeners(j) {
 }
 
 function _galeriaAdicionarListenerAction() {
-    _closeAccordions('galeria');
+    closeAccordions('galeria');
     _addGaleria();
-    _openLastAccordion('galeria');
+    openLastAccordion('galeria');
     buildDS('galeria-categoria');
 }
 
