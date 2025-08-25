@@ -1,3 +1,5 @@
+import { addRemoveChildListenerDS } from "../../../support/components/dynamic-select.js";
+
 var INPUT_DETECTED = false;
 
 // Loader
@@ -103,7 +105,7 @@ function _addRemoveTransporteListener(j) {
         type: 'transporte-pessoa',
         selectID: `transporte-pessoa-select-${j}`,
     }]
-    _addRemoveChildListenerDS('transporte', j, dynamicSelects);
+    addRemoveChildListenerDS('transporte', j, dynamicSelects);
 }
 
 
@@ -112,7 +114,7 @@ function _addRemoveGaleriaListener(j) {
         type: 'galeria-categoria',
         selectID: `galeria-categoria-select-${j}`,
     }]
-    _addRemoveChildListenerDS('galeria', j, dynamicSelects);
+    addRemoveChildListenerDS('galeria', j, dynamicSelects);
 }
 
 function _visibilityListenerAction(visibilidade) {

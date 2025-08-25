@@ -1,3 +1,5 @@
+import { updateValueDS, buildDS } from "../../support/components/dynamic-select.js";
+
 // Destino Existente
 function _loadDestinationsData() {
   try {
@@ -7,7 +9,7 @@ function _loadDestinationsData() {
     _loadDestinoExistente('saidas');
     _loadDestinoExistente('turismo');
     _loadDestinoExistente('lojas');
-    _buildDS('regiao');
+    buildDS('regiao');
     
     _loadMapaData();
     document.title = `${translate('labels.edit')} ${FIRESTORE_DESTINOS_DATA.titulo}`;
@@ -97,7 +99,7 @@ function _addDestinoHTML(categoria, j, destino) {
   getID(`${categoria}-instagram-${j}`).value = destino.instagram || '';
   getID(`${categoria}-regiao-${j}`).value = destino.regiao || '';
 
-  _updateValueDS('regiao', destino.regiao, `${categoria}-regiao-select-${j}`);
+  updateValueDS('regiao', destino.regiao, `${categoria}-regiao-select-${j}`);
   _loadMoedaValorAndVisibility(destino.valor || '', categoria, j);
 
   getID(`${categoria}-midia-${j}`).value = destino.midia || '';

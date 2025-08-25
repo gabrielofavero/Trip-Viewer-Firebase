@@ -1,7 +1,9 @@
+import { BiMap } from "../../support/components/bimap.js";
+
 var FILTER_MAP = new BiMap();
 
 // Carregamento
-function _loadGaleria() {
+export function _loadGaleria() {
     _loadGaleriaCategorias(FIRESTORE_DATA.galeria.categorias || FIRESTORE_DATA.galeria.filtros);
     _loadGaleriaBody(FIRESTORE_DATA.galeria);
     _adjustPortfolioHeight();

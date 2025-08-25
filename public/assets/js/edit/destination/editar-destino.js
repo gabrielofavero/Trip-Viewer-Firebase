@@ -1,3 +1,5 @@
+import { newDynamicSelect, updateValueDS, buildDS, addRemoveChildListenerDS, removeSelectorDS } from "../../support/components/dynamic-select.js";
+
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
 var INPUT_DETECTED = false;
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     _loadVisibilityIndex();
     _loadHabilitados();
-    _newDynamicSelect('regiao');
+    newDynamicSelect('regiao');
 
     if (DOCUMENT_ID) {
       await _loadDestinos()
@@ -66,35 +68,35 @@ function _loadEventListeners() {
     _closeAccordions('restaurantes');
     _addRestaurantes();
     _openLastAccordion('restaurantes');
-    _buildDS('regiao');
+    buildDS('regiao');
   });
 
   getID('lanches-adicionar').addEventListener('click', () => {
     _closeAccordions('lanches');
     _addLanches();
     _openLastAccordion('lanches');
-    _buildDS('regiao');
+    buildDS('regiao');
   });
 
   getID('saidas-adicionar').addEventListener('click', () => {
     _closeAccordions('saidas');
     _addSaidas();
     _openLastAccordion('saidas');
-    _buildDS('regiao');
+    buildDS('regiao');
   });
 
   getID('turismo-adicionar').addEventListener('click', () => {
     _closeAccordions('turismo');
     _addTurismo();
     _openLastAccordion('turismo');
-    _buildDS('regiao');
+    buildDS('regiao');
   });
 
   getID('lojas-adicionar').addEventListener('click', () => {
     _closeAccordions('lojas');
     _addLojas();
     _openLastAccordion('lojas');
-    _buildDS('regiao');
+    buildDS('regiao');
   });
 
   getID('salvar').addEventListener('click', () => {
@@ -153,7 +155,7 @@ function _addListenerToRemoveDestino(categoria, j) {
     type: 'regiao',
     selectID: `${categoria}-regiao-select-${j}`,
   }]
-  _addRemoveChildListenerDS(categoria, j, dynamicSelects);
+  addRemoveChildListenerDS(categoria, j, dynamicSelects);
 }
 
 async function _loadDestinos() {
@@ -297,9 +299,9 @@ function _moveDestino(j, categoria) {
     _addDestinoHTML(newCategoria, newJ, destino);
     _removeChildWithValidation(categoria, j);
 
-    _removeSelectorDS('regiao', `${categoria}-regiao-select-${j}`);
-    _updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
-    _buildDS('regiao');
+    removeSelectorDS('regiao', `${categoria}-regiao-select-${j}`);
+    updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
+    buildDS('regiao');
 
   }
 

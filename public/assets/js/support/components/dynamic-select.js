@@ -1,6 +1,6 @@
 var DYNAMIC_SELECT = {};
 
-function _newDynamicSelect(type) {
+export function newDynamicSelect(type) {
     DYNAMIC_SELECT[type] = {
         selectors: {},
         values: {},
@@ -8,15 +8,15 @@ function _newDynamicSelect(type) {
     }
 }
 
-function _addSelectorDS(type, selectID, inputID, customFunction = "") {
+export function addSelectorDS(type, selectID, inputID, customFunction = "") {
     DYNAMIC_SELECT[type].selectors[selectID] = {
         inputID: inputID,
         value: '',
     }
-    _addEventListenersDS(type, selectID, inputID, customFunction);
+    addEventListenersDS(type, selectID, inputID, customFunction);
 }
 
-function _removeValueDS(type, value) {
+function removeValueDS(type, value) {
     if (value) {
         DYNAMIC_SELECT[type].values[value]--;
         if (DYNAMIC_SELECT[type].values[value] === 0) {
@@ -25,9 +25,9 @@ function _removeValueDS(type, value) {
     }
 }
 
-function _updateValueDS(type, value, selectID) {
+export function updateValueDS(type, value, selectID) {
     const lastValue = DYNAMIC_SELECT[type].selectors[selectID].value;
-    _removeValueDS(type, lastValue);
+    removeValueDS(type, lastValue);
     DYNAMIC_SELECT[type].selectors[selectID].value = '';
 
     if (value) {
@@ -49,7 +49,7 @@ function _updateValueDS(type, value, selectID) {
     }
 }
 
-function _buildDS(type) {
+export function buildDS(type) {
     _buildSelectDS(type);
     _applySelectDS(type);
 
@@ -82,7 +82,7 @@ function _buildDS(type) {
     }
 }
 
-function _addEventListenersDS(type, selectID, inputID, customFunction = "") {
+function addEventListenersDS(type, selectID, inputID, customFunction = "") {
     const select = getID(selectID);
     const input = getID(inputID);
 
@@ -92,38 +92,38 @@ function _addEventListenersDS(type, selectID, inputID, customFunction = "") {
             input.style.display = 'block';
         } else {
             input.style.display = 'none';
-            _updateValueDS(type, value, selectID);
-            _buildDS(type);
+            updateValueDS(type, value, selectID);
+            buildDS(type);
         }
     });
 
     input.addEventListener('change', () => {
-        _updateValueDS(type, input.value, selectID);
-        _buildDS(type);
+        updateValueDS(type, input.value, selectID);
+        buildDS(type);
         if (customFunction) {
             eval(customFunction);
         }
     });
 }
 
-function _addRemoveChildListenerDS(categoria, j, dynamicSelects=[]) {
+export function addRemoveChildListenerDS(categoria, j, dynamicSelects=[]) {
     getID(`remove-${categoria}-${j}`).addEventListener('click', function () {
         
         for (const dynamicSelect of dynamicSelects) {
-            _removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
+            removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
         }
         
         _removeChildWithValidation(categoria, j);
 
         for (const dynamicSelect of dynamicSelects) {
-            _buildDS(dynamicSelect.type);
+            buildDS(dynamicSelect.type);
         }
         
     });
 }
 
-function _removeSelectorDS(type, selectID) {
+export function removeSelectorDS(type, selectID) {
     const value = DYNAMIC_SELECT[type].selectors[selectID].value;
-    _removeValueDS(type, value);
+    removeValueDS(type, value);
     delete DYNAMIC_SELECT[type].selectors[selectID];
 }

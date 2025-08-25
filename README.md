@@ -14,6 +14,13 @@
 - ❗️: Critical (production deploy)
 
 ## Backlog
+
+### Doing
+
+- 📈 **M106:** Use require in js files
+- ⚔️ **E034:** Frontend code refactoring
+- 📈 **M105:** Remove CONFIG and reduce use of global variables
+
 ### High Priority
 
 - 🏆 **F094:** Multi-language description (destinations)
@@ -40,11 +47,6 @@
 ### Medium Priority
 
 - 📈 **M107:** Edit "Confirm" at inner-itinerary suggestion to return to previous instead of closing pop-up
-- 📈 **M105:** Remove CONFIG and reduce use of global variables
-- 📈 **M106:** Use require in js files
-- ⚔️ **E034:** Frontend code refactoring
-  - *Use require*
-  - *Convert to ts*
 - 📈 **M104:** All external links should open via window.open
 - 🏆 **F065:** Show if accommodation was prepaid or not
 - ⚔️ **E028:** Places API Text Search

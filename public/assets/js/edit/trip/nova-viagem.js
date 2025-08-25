@@ -1,3 +1,5 @@
+import { addSelectorDS } from "../../support/components/dynamic-select.js";
+
 var DESTINOS = [];
 var DATAS = [];
 
@@ -167,7 +169,7 @@ function _addTransporte() {
   _loadTransporteVisibility(j);
   _applyTransportationTypeVisualization(j);
   _addRemoveTransporteListener(j);
-  _addSelectorDS('transporte-pessoa', `transporte-pessoa-select-${j}`, `transporte-pessoa-${j}`, `_updateTransporteTitle(${j})`);
+  addSelectorDS('transporte-pessoa', `transporte-pessoa-select-${j}`, `transporte-pessoa-${j}`, `_updateTransporteTitle(${j})`);
 }
 
 function _addHospedagens() {
@@ -451,5 +453,5 @@ function _addGaleria() {
   _loadImageSelector(`galeria-${j}`);
   _loadGaleriaListeners(j);
   _addRemoveGaleriaListener(j);
-  _addSelectorDS('galeria-categoria', `galeria-categoria-select-${j}`, `galeria-categoria-${j}`);
+  addSelectorDS('galeria-categoria', `galeria-categoria-select-${j}`, `galeria-categoria-${j}`);
 }

@@ -1,3 +1,5 @@
+import { updateValueDS, buildDS } from "../../support/components/dynamic-select.js";
+
 async function _loadTripData() {
     try {
         DESTINOS = await _getUserList('destinos', true);
@@ -157,8 +159,8 @@ function _loadTransportesData() {
         const pessoa = transporte.pessoa;
         if (pessoa) {
             getID(`transporte-pessoa-${j}`).value = pessoa;
-            _updateValueDS('transporte-pessoa', pessoa, `transporte-pessoa-select-${j}`);
-            _buildDS('transporte-pessoa');
+            updateValueDS('transporte-pessoa', pessoa, `transporte-pessoa-select-${j}`);
+            buildDS('transporte-pessoa');
         }
 
         const partida = _convertFromDateObject(transporte.datas.partida);
@@ -299,8 +301,8 @@ function _loadGaleriaData() {
             const categoria = FIRESTORE_DATA.galeria.categorias[i];
             if (categoria) {
                 getID(`galeria-categoria-${j}`).value = categoria;
-                _updateValueDS('galeria-categoria', categoria, `galeria-categoria-select-${j}`);
-                _buildDS('galeria-categoria');
+                updateValueDS('galeria-categoria', categoria, `galeria-categoria-select-${j}`);
+                buildDS('galeria-categoria');
             }
 
             const descricao = FIRESTORE_DATA.galeria.descricoes[i];

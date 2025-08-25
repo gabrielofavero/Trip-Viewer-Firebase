@@ -1,3 +1,5 @@
+import { buildDS } from "../../../support/components/dynamic-select.js";
+
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
     const chegada = getID(`ponto-chegada-${i}`).value;
@@ -191,5 +193,5 @@ function _transporteAdicionarListenerAction() {
     _closeAccordions('transporte');
     _addTransporte();
     _openLastAccordion('transporte');
-    _buildDS('transporte-pessoa');
+    buildDS('transporte-pessoa');
 }

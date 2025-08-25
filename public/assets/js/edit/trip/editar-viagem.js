@@ -1,3 +1,5 @@
+import { newDynamicSelect } from "../../support/components/dynamic-select.js";
+
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
 var FIRESTORE_GASTOS_DATA;
@@ -20,8 +22,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     _loadVisibilityIndex();
     _loadHabilitados();
-    _newDynamicSelect('galeria-categoria');
-    _newDynamicSelect('transporte-pessoa');
+    newDynamicSelect('galeria-categoria');
+    newDynamicSelect('transporte-pessoa');
 
     if (DOCUMENT_ID) {
       await _loadTrip(true);

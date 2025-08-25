@@ -1,4 +1,4 @@
-class BiMap {
+export class BiMap {
   constructor() {
     this.keyToValue = new Map();
     this.valueToKey = new Map();

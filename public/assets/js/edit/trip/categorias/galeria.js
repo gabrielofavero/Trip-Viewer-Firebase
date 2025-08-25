@@ -1,3 +1,5 @@
+import { buildDS } from "../../../support/components/dynamic-select.js";
+
 function _deleteGaleria(i) {
     const id = `galeria-${i}`;
     _removeImageSelectorListeners(id);
@@ -18,7 +20,7 @@ function _galeriaAdicionarListenerAction() {
     _closeAccordions('galeria');
     _addGaleria();
     _openLastAccordion('galeria');
-    _buildDS('galeria-categoria');
+    buildDS('galeria-categoria');
 }
 
 async function _uploadAndSetGaleriaImages() {
