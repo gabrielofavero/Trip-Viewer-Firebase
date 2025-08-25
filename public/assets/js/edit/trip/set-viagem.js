@@ -1,4 +1,5 @@
 import { DOCUMENT_ID, create, deepCreate, update, override, deleteData, combineDatabaseResponses } from "../../support/firebase/database.js";
+import { IMAGE_UPLOAD_STATUS, deleteUnusedImages } from "../../support/firebase/storage.js";
 
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
@@ -367,7 +368,7 @@ function _verifyImageUploads(type) {
             documentLinks.push(...FIRESTORE_NEW_DATA.galeria.imagens)
         }
 
-        _deleteUnusedImages(path, documentLinks);
+        deleteUnusedImages(path, documentLinks);
     }
 
     _addSetResponse(translate('labels.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);

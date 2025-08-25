@@ -1,8 +1,9 @@
 import { buildDS } from "../../../support/components/dynamic-select.js";
+import { IMAGE_UPLOAD_STATUS, uploadImages, removeImageSelectorListeners } from "../../../support/firebase/storage.js";
 
 function _deleteGaleria(i) {
     const id = `galeria-${i}`;
-    _removeImageSelectorListeners(id);
+    removeImageSelectorListeners(id);
     const div = getID(id);
     div.parentNode.removeChild(div);
 }
@@ -28,7 +29,7 @@ async function _uploadAndSetGaleriaImages() {
         return;
     }
     const galeriaFiles = CUSTOM_UPLOADS.galeria.map(file => file.file)
-    const galeriaResult = await _uploadImages('viagens', galeriaFiles);
+    const galeriaResult = await uploadImages('viagens', galeriaFiles);
     
     if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
         for (let i = 0; i < galeriaResult.length; i++) {

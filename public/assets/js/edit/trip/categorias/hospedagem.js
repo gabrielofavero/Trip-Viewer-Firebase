@@ -1,4 +1,5 @@
 import { initializeSortableForGroup } from "../../../support/components/sortable.js";
+import { IMAGE_UPLOAD_STATUS, uploadImages, loadImageSelector } from "../../../support/firebase/storage.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 
@@ -78,7 +79,7 @@ function _openImagensHospedagem(j) {
             getID(`hospedagens-imagem-botao-${k}`).innerText = imagem.descricao || `Imagem ${k}`;
         }
 
-        _loadImageSelector(`hospedagens-${k}`);
+        loadImageSelector(`hospedagens-${k}`);
         getID(`link-hospedagens-${k}`).addEventListener('change', () => _validateImageLink(`link-hospedagens-${k}`));
     }
 
@@ -195,7 +196,7 @@ async function _uploadAndSetHospedagemImages() {
     }
 
     const hospedagensFiles = CUSTOM_UPLOADS.hospedagens.map(file => file.file);
-    const hospedagemResult = await _uploadImages('viagens', hospedagensFiles);
+    const hospedagemResult = await uploadImages('viagens', hospedagensFiles);
 
     if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
         for (let i = 0; i < hospedagemResult.length; i++) {

@@ -1,5 +1,6 @@
 import { newDynamicSelect } from "../../support/components/dynamic-select.js";
 import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList, getUserPermissions } from "../../support/firebase/database.js";
+import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "../../support/firebase/storage.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -37,8 +38,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!CAN_EDIT) return;
 
-    _loadImageSelector('background');
-    _loadLogoSelector();
+    loadImageSelector('background');
+    loadLogoSelector();
 
     _loadEventListeners();
 
@@ -118,7 +119,7 @@ function _deleteViagem() {
 async function _deleteViagemAction() {
   if (DOCUMENT_ID) {
     await deleteUserObject(DOCUMENT_ID, "viagens");
-    await _deleteUserObjectStorage();
+    await deleteUserObjectStorage(FIRESTORE_DATA);
     window.location.href = `index.html`;
   }
 }

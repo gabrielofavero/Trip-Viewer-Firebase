@@ -1,4 +1,5 @@
 import { addSelectorDS } from "../../support/components/dynamic-select.js";
+import { loadImageSelector } from "../../support/firebase/storage.js";
 
 var DESTINOS = [];
 var DATAS = [];
@@ -450,7 +451,7 @@ function _addGaleria() {
     </div>
       `);
 
-  _loadImageSelector(`galeria-${j}`);
+  loadImageSelector(`galeria-${j}`);
   _loadGaleriaListeners(j);
   _addRemoveGaleriaListener(j);
   addSelectorDS('galeria-categoria', `galeria-categoria-select-${j}`, `galeria-categoria-${j}`);

@@ -1,4 +1,5 @@
 import { DOCUMENT_ID, create, update, getUserListIDs } from "../firebase/database.js";
+import { IMAGE_UPLOAD_STATUS, uploadImage } from "../firebase/storage.js";
 
 var CUSTOM_UPLOADS = {
     hospedagens: [],
@@ -70,21 +71,21 @@ async function _uploadAndSetImages(tipo, isBeforeSet) {
     }
     try {
         if (getID('upload-background').value) {
-            const background = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-background')?.files[0]);
+            const background = await uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-background')?.files[0]);
             if (background.link) {
                 FIRESTORE_NEW_DATA.imagem.background = background.link;
             }
         }
 
         if (getID('upload-logo-light').value) {
-            const logoLight = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-light')?.files[0]);
+            const logoLight = await uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-light')?.files[0]);
             if (logoLight.link) {
                 FIRESTORE_NEW_DATA.imagem.claro = logoLight.link;
             }
         }
 
         if (getID('upload-logo-dark').value) {
-            const logoDark = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-dark')?.files[0]);
+            const logoDark = await uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-dark')?.files[0]);
             if (logoDark.link) {
                 FIRESTORE_NEW_DATA.imagem.escuro = logoDark.link;
             }
