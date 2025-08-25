@@ -20,6 +20,7 @@
 - 📈 **M106:** Use require in js files
 - ⚔️ **E034:** Frontend code refactoring
 - 📈 **M105:** Remove CONFIG and reduce use of global variables
+- 📈 **M098:** Change js functions/folder structures to EN-US
 
 ### High Priority
 
@@ -53,7 +54,7 @@
 - ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
 - 📈 **M096:** Mobile and webview adjustments
 - 📈 **M097:** Itinerary automations (edit/trip.html)
-- 📈 **M087:** Destination load loads everything immediately
+- 📈 **M087:** Destination loads everything immediately
 - 🏆 **F069:** Tab for selecting destinations within the page
 - 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
   - *Change in get and set (edit/trip.html)*
@@ -102,9 +103,6 @@
 ### Low Priority
 
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
-- 📈 **M098:** Change js functions/folder structures to EN-US
-- ⚔️ **E024:** Migrate project to React OR Angular
-- ⚔️ **E025:** iOS and Android implementation
 - 📈 **M090:** Load logo inside pre loader
 - 🏆 **F043:** Create customizable keypoints
 - 📈 **M018:** Improve centering of demo-box element on edit screens in tablet mode
@@ -114,8 +112,6 @@
 - 📈 **M041:** Improve validation of missing fields in edit pages to show item title (when available)
 - 📈 **M045:** Show rating inside edit-destinations accordion and order by Rating + title
 - 📈 **M047:** Change modal messages to bottomsheet messages
-- 📈 **M054:** Improve getJs functions for more scenarios
-- 🏆 **F055:** Implement getKs function + Rename functions for clarity
 - 📈 **M046:** Clean unused properties in application CSS
 - 📈 **M055:** Improve all dark mode changes to be applied via js
 - 📈 **M058:** Modularize CSS files to reduce redundancy
@@ -123,7 +119,6 @@
 - 📈 **M069:** Loading timer disabled by default
 - 🏆 **F060:** Allow switching between destination categories within a page
 - 📈 **M089:** Replace color values with environment variables in CSS
-- 🏆 **F067:** OneDrive integration
 
 ## Done
 
@@ -502,3 +497,8 @@
 - 📈 **M072:** Improve automatic date adjustment in edit trips
 - 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
 - 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
+- ⚔️ **E024:** Migrate project to React OR Angular
+- ⚔️ **E025:** iOS and Android implementation
+- 📈 **M054:** Improve getJs functions for more scenarios
+- 🏆 **F055:** Implement getKs function + Rename functions for clarity
+- 🏆 **F067:** OneDrive integration
