@@ -1,5 +1,7 @@
-import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList, getUserPermissions } from "../../support/firebase/database.js";
+import { DOCUMENT_ID, getSingleData, deleteUserObject, getUserList } from "../../support/firebase/database.js";
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from "../../support/firebase/storage.js";
+import { loadUserPermissions } from "../../support/firebase/user.js";
+import { canUserEdit } from "../../support/firebase/user.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -17,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _main();
 
     DOCUMENT_ID = _getURLParam('l');
-    PERMISSOES = await getUserPermissions();
+    await loadUserPermissions();
 
     _loadVisibilityIndex();
     _loadHabilitados();
@@ -118,9 +120,9 @@ async function _carregarListagem() {
   _startLoadingScreen();
 
   FIRESTORE_DATA = await getSingleData('listagens');
-  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
+  const canEdit = await canUserEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
 
-  if (CAN_EDIT) {
+  if (canEdit) {
     await _loadListData(FIRESTORE_DATA);
     _stopLoadingScreen();
   }

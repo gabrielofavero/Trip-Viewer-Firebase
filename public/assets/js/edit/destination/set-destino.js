@@ -1,3 +1,5 @@
+import { getUID } from "../../support/firebase/user";
+
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 
 async function _buildDestinosObject() {
@@ -20,7 +22,7 @@ async function _buildDestinosObject() {
         },
         compartilhamento: {
             ativo: true,
-            dono: FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || await _getUID()
+            dono: FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || await getUID()
         },
         versao: {
             ultimaAtualizacao: new Date().toISOString()

@@ -1,16 +1,13 @@
 import { DOCUMENT_ID } from "./database.js";
-import { get, create, getSystemData } from "./database.js";
+import { get, create, getSystemData, getUserPermissions } from "./database.js";
 
-var PERMISSOES;
+export var USER_PERMISSIONS;
 
-function _unloadPageUserFunctions() {
-    const html = _getHTMLpage();
-    if (html == 'index') {
-        _openIndexPage('unlogged', 0, 1);
-    };
+export async function loadUserPermissions() {
+    USER_PERMISSIONS = await getUserPermissions();
 }
 
-async function _signInWithEmailAndPassword() {
+export async function signInWithEmailAndPassword() {
     const email = getID('login-email').value;
     const password = getID('login-password').value;
 
@@ -32,7 +29,7 @@ async function _signInWithEmailAndPassword() {
     }
 }
 
-function _signOut() {
+export function signOut() {
     firebase.auth().signOut()
     if (window.location.href.includes('index.html')) {
         _openIndexPage('unlogged', 0, 1);
@@ -41,11 +38,11 @@ function _signOut() {
     }
 }
 
-async function _registerIfUserNotPresent() {
+export async function registerIfUserNotPresent() {
     const user = firebase.auth().currentUser;
 
     if (!user) {
-        _signOut();
+        signOut();
         _displayError(translate('messages.error.unauthenticated'));
         return;
     }
@@ -55,7 +52,7 @@ async function _registerIfUserNotPresent() {
     const registrationOpen = (systemData?.registrationOpen == true);
 
     if (!userDoc && !registrationOpen) {
-        _signOut();
+        signOut();
         const title = 'Você chegou muito cedo! 😅';
         const content = 'Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀';
         _displayMessage(title, content);
@@ -72,7 +69,7 @@ async function _registerIfUserNotPresent() {
     }
 }
 
-async function _getUID() {
+export async function getUID() {
     return new Promise((resolve, reject) => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             unsubscribe();
@@ -86,37 +83,9 @@ async function _getUID() {
     });
 }
 
-async function _getFirebaseIdToken(user) {
-    if (!user) {
-        user = firebase.auth().currentUser;
-    }
-    if (user) {
-        return await user.getIdToken();
-    } else {
-        return Promise.reject("User is not authenticated.");
-    }
-}
-
-async function _getUser() {
-    return new Promise((resolve, reject) => {
-        const auth = firebase.auth();
-        const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            unsubscribe();
-
-            if (user) {
-                resolve(user);
-            } else {
-                resolve(undefined);
-            }
-        }, (error) => {
-            reject(error);
-        });
-    });
-}
-
 // Editar sem permissão
-async function _canEdit(dono, editores) {
-    const uid = await _getUID();
+export async function canUserEdit(dono, editores) {
+    const uid = await getUID();
     if (DOCUMENT_ID && (!uid || (uid != dono && !editores.includes(uid)))) {
         _displayError('Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.');
         return false;

@@ -1,3 +1,5 @@
+import { getUID } from "./user.js";
+
 export var DOCUMENT_ID;
 export var ERROR_FROM_GET_REQUEST = "";
 
@@ -139,7 +141,7 @@ export async function getSystemData() {
 
 // User
 export async function deleteUserObject(id, type) {
-  const uid = await _getUID();
+  const uid = await getUID();
   if (uid) {
     const userData = await get(`usuarios/${uid}`);
     let dataArray = userData[type];
@@ -156,7 +158,7 @@ export async function deleteUserObject(id, type) {
 }
 
 export async function deleteAccount() {
-  const uid = await _getUID();
+  const uid = await getUID();
   if (uid) {
     await deleteAccountDocuments();
     await deleteData(`usuarios/${uid}`);
@@ -165,7 +167,7 @@ export async function deleteAccount() {
 }
 
 export async function deleteAccountDocuments() {
-  const uid = await _getUID();
+  const uid = await getUID();
   if (uid) {
     const userData = await get(`usuarios/${uid}`);
     const promises = [];
@@ -185,7 +187,7 @@ export async function deleteAccountDocuments() {
 }
 
 export async function createAccountDocuments(data) {
-  const uid = await _getUID();
+  const uid = await getUID();
   if (!uid) return;
 
   const promises = [];
@@ -205,7 +207,7 @@ export async function createAccountDocuments(data) {
 }
 
 export async function getUserList(type, includeData = false, userData) {
-  const uid = await _getUID();
+  const uid = await getUID();
   if (uid) {
 
     if (!userData) {
@@ -264,7 +266,7 @@ export async function getUserListIDs(type) {
 
 export async function getUserPermissions() {
   // Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
-  const uid = await _getUID();
+  const uid = await getUID();
   if (uid) {
     const userData = await get(`usuarios/${uid}`);
     return userData?.permissoes;

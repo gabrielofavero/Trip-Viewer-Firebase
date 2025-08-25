@@ -1,5 +1,6 @@
 import { DOCUMENT_ID, create, deepCreate, update, override, deleteData, combineDatabaseResponses } from "../../support/firebase/database.js";
 import { IMAGE_UPLOAD_STATUS, deleteUnusedImages } from "../../support/firebase/storage.js";
+import { getUID } from "../../support/firebase/user.js";
 
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
@@ -86,7 +87,7 @@ async function _buildCompartilhamentoObject() {
     if (FIRESTORE_DATA) {
         dono = FIRESTORE_DATA.compartilhamento.dono;
     } else {
-        dono = await _getUID();
+        dono = await getUID();
     }
 
     if (editores) {

@@ -1,4 +1,5 @@
 import { get, deleteAccount, getUserList } from "../support/firebase/database.js";
+import { signInWithEmailAndPassword, signOut, registerIfUserNotPresent } from "../support/firebase/user.js";
 
 var USER_DATA = {};
 
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 function _loadListenersIndex() {
   getID('login-button').addEventListener('click', function () {
-    _signInWithEmailAndPassword();
+    signInWithEmailAndPassword();
   });
 
   getID('proximasViagens').addEventListener('click', function () {
@@ -99,7 +100,7 @@ function _loadListenersIndex() {
     _startLoadingScreen(false);
     await deleteAccount();
     _closeModal();
-    _signOut();
+    signOut();
     _stopLoadingScreen();
   });
 }
@@ -108,7 +109,7 @@ async function _loadUserIndex() {
   try {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        _registerIfUserNotPresent();
+        registerIfUserNotPresent();
         _openIndexPage('logged');
 
         const userData = await get(`usuarios/${user.uid}`);

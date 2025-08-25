@@ -1,4 +1,5 @@
 import { DOCUMENT_ID } from "./database.js";
+import { USER_PERMISSIONS } from "./user.js";
 
 export var IMAGE_UPLOAD_STATUS = {
   hasErrors: false,
@@ -133,7 +134,7 @@ export async function deleteUserObjectStorage(firestoreData) {
 function checkFileSize(fileInput, type) {
   const file = fileInput.files[0];
 
-  if ((PERMISSOES && PERMISSOES['tamanhoUploadIrrestrito'] === true) ||
+  if ((USER_PERMISSIONS && USER_PERMISSIONS['tamanhoUploadIrrestrito'] === true) ||
     (file.size <= UPLOAD_SIZE)) {
     getID(`upload-${type}-size-message`).style.display = 'none'
   } else {
@@ -150,7 +151,7 @@ export function loadImageSelector(type) {
   const link = getID(`link-${type}`);
   const upload = getID(`upload-${type}`);
 
-  if (PERMISSOES && PERMISSOES['upload'] === true) {
+  if (USER_PERMISSIONS && USER_PERMISSIONS['upload'] === true) {
     if (checkboxLink.checked) {
       link.style.display = 'block';
       upload.style.display = 'none';
@@ -224,7 +225,7 @@ export function loadLogoSelector() {
   const linkDark = getID(`link-logo-dark`);
   const uploadDark = getID(`upload-logo-dark`);
 
-  if (PERMISSOES && PERMISSOES['upload'] === true) {
+  if (USER_PERMISSIONS && USER_PERMISSIONS['upload'] === true) {
     if (checkboxLink.checked) {
       linkLight.style.display = 'block';
       linkDark.style.display = 'block';

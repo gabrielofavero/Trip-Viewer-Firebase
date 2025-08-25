@@ -1,5 +1,6 @@
 import { newDynamicSelect, updateValueDS, buildDS, addRemoveChildListenerDS, removeSelectorDS } from "../../support/components/dynamic-select.js";
 import { DOCUMENT_ID, getSingleData, deleteUserObject } from "../../support/firebase/database.js";
+import { canUserEdit } from "../../support/firebase/user.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -165,9 +166,9 @@ async function _loadDestinos() {
   _startLoadingScreen();
 
   FIRESTORE_DESTINOS_DATA = await getSingleData('destinos');
-  CAN_EDIT = await _canEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono, []);
+  const canEdit = await canUserEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono, []);
 
-  if (CAN_EDIT) {
+  if (canEdit) {
     _loadDestinationsData(FIRESTORE_DESTINOS_DATA);
     _stopLoadingScreen();
   }

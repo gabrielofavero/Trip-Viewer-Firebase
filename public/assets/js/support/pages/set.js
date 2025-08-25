@@ -1,5 +1,6 @@
 import { DOCUMENT_ID, create, update, getUserListIDs } from "../firebase/database.js";
 import { IMAGE_UPLOAD_STATUS, uploadImage } from "../firebase/storage.js";
+import { getUID } from "../firebase/user.js";
 
 var CUSTOM_UPLOADS = {
     hospedagens: [],
@@ -9,7 +10,7 @@ var SET_RESPONSES = [];
 var UPLOAD_AFTER_SET = false;
 
 async function _setDocumento(tipo) {
-    const userID = await _getUID();
+    const userID = await getUID();
 
     if (!userID) {
         throw new Error('Usuário não autenticado');

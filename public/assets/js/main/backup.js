@@ -1,4 +1,5 @@
 import { deleteAccountDocuments, createAccountDocuments } from "../support/firebase/database.js";
+import { getUID } from "../support/firebase/user.js";
 
 TRIP_DOCUMENT_BACKUP_LIMIT = 5;
 
@@ -9,7 +10,7 @@ async function _exportAllUserData() {
     const url = URL.createObjectURL(blob);
 
     const timestamp = _getTimestamp();
-    const uid = await _getUID();
+    const uid = await getUID();
 
     const link = document.createElement('a');
     link.href = url;
