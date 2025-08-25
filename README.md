@@ -4,9 +4,9 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 76    | 75        | 1       |
+| 🐞   | Bug          | B000  | 78    | 77        | 1       |
 | 🏆   | Feature      | F000  | 97    | 70        | 27      |
-| 📈   | Improvement  | M000  | 108   | 80        | 28      |
+| 📈   | Improvement  | M000  | 109   | 80        | 28      |
 | ⚔️   | Epic         | E000  | 34    | 19        | 15      |
 
 - 🚦: Blocked
@@ -126,6 +126,7 @@
 ## Done
 
 ## August 2025
+- 📈 **M109:** Make highlights display 2/2 when screen width is tablet/mobile
 - 🐞 **B077:** Daily schedule not scrolling to table
 - 🐞 **B078:** App version not loading due to CONFIG async nature
 
