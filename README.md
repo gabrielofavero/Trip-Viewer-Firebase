@@ -125,6 +125,10 @@
 
 ## Done
 
+## August 2025
+- 🐞 **B077:** Daily schedule not scrolling to table
+- 🐞 **B078:** App version not loading due to CONFIG async nature
+
 ### July 2025
 - 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
 - 🏆 **F095:** Include traveler names in edit/trip.html (General / Itinerary)
