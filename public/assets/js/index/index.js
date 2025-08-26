@@ -4,6 +4,8 @@ import { initApp } from "../main/app.js";
 import { select, getID } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
+import { convertFromDateObject } from "../support/data/dates.js";
+import { getDateString } from "../support/data/dates.js";
 
 var USER_DATA = {};
 
@@ -258,10 +260,10 @@ function _loadUserDataHTML(dados, tipo) {
       case 'proximasViagens':
       case 'viagensAnteriores':
         innertipo = 'viagens';
-        const inicioDate = _convertFromDateObject(dados[i].inicio);
-        const fimDate = _convertFromDateObject(dados[i].fim);
-        const inicio = _getDateString(inicioDate);
-        const fim = _getDateString(fimDate);
+        const inicioDate = convertFromDateObject(dados[i].inicio);
+        const fimDate = convertFromDateObject(dados[i].fim);
+        const inicio = getDateString(inicioDate);
+        const fim = getDateString(fimDate);
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
         break;
       case 'destinos':
@@ -299,13 +301,13 @@ function _loadUserDataHTML(dados, tipo) {
 
     for (let i = 0; i < dados.length; i++) {
       const viagem = dados[i];
-      const fim = _convertFromDateObject(viagem.fim);
+      const fim = convertFromDateObject(viagem.fim);
 
       if (hoje > fim) {
         viagensAnteriores.push(viagem);
       } else {
         proximasViagens.push(viagem);
-        if (hoje >= _convertFromDateObject(viagem.inicio)) {
+        if (hoje >= convertFromDateObject(viagem.inicio)) {
           VIAGENS.viagensEmAndamento.push(viagem);
         }
       }
@@ -318,8 +320,8 @@ function _loadUserDataHTML(dados, tipo) {
     VIAGENS.viagensAnteriores = viagensAnteriores;
 
     function _sortByToday(a, b) {
-      const fimA = _convertFromDateObject(a.fim);
-      const fimB = _convertFromDateObject(b.fim);
+      const fimA = convertFromDateObject(a.fim);
+      const fimB = convertFromDateObject(b.fim);
       const diferencaA = Math.abs(hoje - fimA);
       const diferencaB = Math.abs(hoje - fimB);
       return diferencaA - diferencaB;

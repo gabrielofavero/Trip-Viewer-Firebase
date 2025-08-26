@@ -3,6 +3,7 @@ import { loadImageSelector } from "../../support/firebase/storage.js";
 import { getID, getChildIDs, getSecondaryID, getNextSecondaryID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { getNewTypeID } from "../../support/data/data.js";
+import { getDateTitle, TODAY, TOMORROW, getArrayOfDates, formattedDateToDate, getNextTypeStartAndEnd } from "../../support/data/dates.js";
 
 var DESTINOS = [];
 var DATAS = [];
@@ -177,7 +178,7 @@ function _addTransporte() {
 }
 
 function _addHospedagens() {
-  const inicioFim = _getNextCategoriaInicioFim('hospedagens', 'check-out');
+  const inicioFim = getNextTypeStartAndEnd('hospedagens', 'check-out');
   const j = getNextSecondaryID('hospedagens-box');
   $('#hospedagens-box').append(`
       <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens" >
@@ -300,14 +301,14 @@ function _loadProgramacao() {
   const inicio = getID('inicio').value;
   const fim = getID('fim').value;
 
-  DATAS = _getArrayOfDates(_formattedDateToDate(inicio), _formattedDateToDate(fim));
+  DATAS = getArrayOfDates(formattedDateToDate(inicio), formattedDateToDate(fim));
 
   const programacaoBox = getID('programacao-box');
   programacaoBox.innerHTML = '';
 
   for (let j = 1; j <= DATAS.length; j++) {
     const data = DATAS[j - 1];
-    let dataFormatada = _getDateTitle(data, 'weekday_day_month');
+    let dataFormatada = getDateTitle(data, 'weekday_day_month');
 
     programacaoBox.innerHTML += `
       <div id="programacao-${j}" class="accordion-item accordion-programacao" >

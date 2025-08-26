@@ -1,6 +1,7 @@
 import { deleteAccountDocuments, createAccountDocuments } from "../support/firebase/database.js";
 import { getUID } from "../support/firebase/user.js";
 import { requestAndGetLocalJSON } from "../support/data/data.js";
+import { getTimestamp } from "../support/data/dates.js";
 
 TRIP_DOCUMENT_BACKUP_LIMIT = 5;
 
@@ -10,7 +11,7 @@ async function _exportAllUserData() {
     const blob = new Blob([jsonStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
-    const timestamp = _getTimestamp();
+    const timestamp = getTimestamp();
     const uid = await getUID();
 
     const link = document.createElement('a');

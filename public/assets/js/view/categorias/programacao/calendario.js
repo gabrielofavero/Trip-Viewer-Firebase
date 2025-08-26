@@ -3,6 +3,7 @@
 
 import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { getDateNoTime, convertFromDateObject, getMonth } from "../../../support/data/dates.js";
 
 CALENDAR = {
     start: null,
@@ -15,8 +16,8 @@ CALENDAR = {
 }
 
 function _loadCalendar() {
-    CALENDAR.start = _convertFromDateObject(FIRESTORE_DATA.inicio);
-    CALENDAR.end = _convertFromDateObject(FIRESTORE_DATA.fim);
+    CALENDAR.start = convertFromDateObject(FIRESTORE_DATA.inicio);
+    CALENDAR.end = convertFromDateObject(FIRESTORE_DATA.fim);
 
     CALENDAR.startMonth = CALENDAR.start.getMonth();
     CALENDAR.startYear = CALENDAR.start.getFullYear();
@@ -46,7 +47,7 @@ function _showCalendar(month, year) {
     let tbl = getID("calendar-body");
 
     tbl.innerHTML = "";
-    CALENDAR.calendarTitle.innerHTML = translate('datetime.titles.month_year', {month: _getMonth(month), year});
+    CALENDAR.calendarTitle.innerHTML = translate('datetime.titles.month_year', {month: getMonth(month), year});
 
     let day = 1;
     for (let i = 0; i < 6; i++) {
@@ -68,9 +69,9 @@ function _showCalendar(month, year) {
                 let cell = document.createElement("td");
                 let cellText = document.createTextNode(day);
 
-                const currentNoTime = _getDateNoTime(currentDate);
-                const startNoTime = _getDateNoTime(CALENDAR.start);
-                const endNoTime = _getDateNoTime(CALENDAR.end);
+                const currentNoTime = getDateNoTime(currentDate);
+                const startNoTime = getDateNoTime(CALENDAR.start);
+                const endNoTime = getDateNoTime(CALENDAR.end);
 
                 if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
                     cell.classList.add("calendarTrip");

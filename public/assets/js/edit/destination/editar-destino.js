@@ -18,9 +18,6 @@ var INPUT_DETECTED = false;
 
 var CAN_EDIT = false;
 
-const TODAY = _getTodayFormatted();
-const TOMORROW = _getTomorrowFormatted();
-
 var PROGRAMACAO = {};
 
 var REGIOES = [];

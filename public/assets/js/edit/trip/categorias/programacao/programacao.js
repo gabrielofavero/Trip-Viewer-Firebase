@@ -3,11 +3,13 @@ import { addValueToSelectIfExists, getAllValuesFromSelect } from "../../../../su
 import { getID, getIDs, getChildIDs } from "../../../../support/pages/selectors.js";
 import { translate } from "../../../../main/translate.js";
 import { getReadableArray } from "../../../../support/data/data.js";
+import { getDateTitle } from "../../../../support/data/dates.js";
+import { convertFromDateObject, dateObjectToKey, jsDateToKey } from "../../../../support/data/dates.js";
 
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
 function _applyLoadedProgramacaoData(j, dados) {
-    const jsDate = _convertFromDateObject(dados.data);
+    const jsDate = convertFromDateObject(dados.data);
 
     const destinosIDsObject = dados.destinosIDs;
     let destinosIDs = [];
@@ -33,7 +35,7 @@ function _applyLoadedProgramacaoData(j, dados) {
         }
     }
 
-    INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = {
+    INNER_PROGRAMACAO[jsDateToKey(jsDate)] = {
         madrugada: dados.madrugada || [],
         manha: dados.manha || [],
         tarde: dados.tarde || [],
@@ -68,7 +70,7 @@ function _updateProgramacaoTitle(j) {
     }
 
     const data = DATAS[j - 1]
-    const dataFormatada = _getDateTitle(data, 'weekday_day_month');
+    const dataFormatada = getDateTitle(data, 'weekday_day_month');
     div.innerText = _getProgramacaoTitle(dataFormatada, value);
 }
 
@@ -136,11 +138,11 @@ function _getProgramacaoTitle(dataFormatada, titulo = '') {
 function _reloadProgramacao() {
     if (!getID('habilitado-programacao').checked) return;
     const originalData = _buildProgramacaoObject();
-    const originalDataInputs = originalData.map(data => _dateObjectToKey(data.data));
+    const originalDataInputs = originalData.map(data => dateObjectToKey(data.data));
 
     _loadProgramacao();
     let j = 1;
-    for (const data of DATAS.map(data => _jsDateToKey(data))) {
+    for (const data of DATAS.map(data => jsDateToKey(data))) {
         if (originalDataInputs.includes(data)) {
             const index = originalDataInputs.indexOf(data);
             const dados = originalData[index];

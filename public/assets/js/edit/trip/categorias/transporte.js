@@ -5,6 +5,7 @@ import { validateLink } from "../../../support/html/fields.js";
 import { getID, getChildIDs, getSecondaryID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 import { setRequired, removeRequired } from "../../../support/html/fields.js";
+import { getTimeBetweenDates } from "../../../support/data/dates.js";
 
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
@@ -152,7 +153,7 @@ function _loadAutoDuration(i) {
     if (startDate != "" && startTime != "" && endDate != "" && endTime != "") {
         const start = new Date(`${startDate}T${startTime}`);
         const end = new Date(`${endDate}T${endTime}`);
-        div.value = _getTimeBetweenDates(start, end);
+        div.value = getTimeBetweenDates(start, end);
     }
 }
 

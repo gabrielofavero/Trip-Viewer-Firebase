@@ -6,7 +6,7 @@
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 78    | 77        | 1       |
 | 🏆   | Feature      | F000  | 97    | 70        | 27      |
-| 📈   | Improvement  | M000  | 109   | 80        | 28      |
+| 📈   | Improvement  | M000  | 110   | 80        | 28      |
 | ⚔️   | Epic         | E000  | 34    | 19        | 15      |
 
 - 🚦: Blocked
@@ -17,20 +17,22 @@
 
 ### Doing
 
-- 📈 **M106:** Use require in js files
 - ⚔️ **E034:** Frontend code refactoring
-- 📈 **M105:** Remove CONFIG and reduce use of global variables
-- 📈 **M098:** Change js functions/folder structures to EN-US
-- 📈 **M104:** All external links should open via window.open
+  - 📈 **M106:** [⚔️E034] Use require in js files
+  - 📈 **M105:** [⚔️E034] Remove CONFIG and reduce use of global variables
+  - 📈 **M098:** [⚔️E034] Change js functions/folder structures to EN-US
+  - 📈 **M104:** [⚔️E034] All external links should open via window.open
+  - 📈 **M110:** [⚔️E034] Use logo as symbol instead of dynamic svg
+  - 📈 **M111:** [⚔️E034] Make database EN-US
 
 ### High Priority
 
 - 🏆 **F094:** Multi-language description (destinations)
 - 🏆 **F078:** Ability to reorder transportation / group types in edit/trip.html
 - ⚔️ **E030:** Account Import/Export
-  - 🏆 **F088:** *Export Selected (Functions Only)*
-  - 🏆 **F089:** *Import Selected (Functions Only)*
-  - 🏆 **F090:** *Account Import/Export: Interface*
+  - 🏆 **F088:** [⚔️E030] Export Selected (Functions Only)
+  - 🏆 **F089:** [⚔️E030] Import Selected (Functions Only)
+  - 🏆 **F090:** [⚔️E030] Account Import/Export: Interface
 - ⚔️ **E031:** Document History
   - 🏆 **F084:** Store copies within the document itself
   - 🏆 **F091:** Restore function + compatibility check

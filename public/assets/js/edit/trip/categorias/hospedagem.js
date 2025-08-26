@@ -5,6 +5,7 @@ import { validateLink, validateImageLink } from "../../../support/html/fields.js
 import { getID, getChildIDs, getSecondaryID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 import { getDefaultProperties } from "../../../support/pages/mensagens.js";
+import { convertFromDateObject, getDateString, getTimeString } from "../../../support/data/dates.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 
@@ -31,10 +32,10 @@ function _loadCheckOut(hospedagem, j) {
 }
 
 function _loadHospeagemCheck(chave, checkTipo, hospedagem, j) {
-    const data = _convertFromDateObject(hospedagem.datas[chave]);
+    const data = convertFromDateObject(hospedagem.datas[chave]);
     if (data) {
-        getID(`check-${checkTipo}-${j}`).value = _getDateString(data, 'yyyy-mm-dd');
-        getID(`check-${checkTipo}-horario-${j}`).value = _getTimeString(data);
+        getID(`check-${checkTipo}-${j}`).value = getDateString(data, 'yyyy-mm-dd');
+        getID(`check-${checkTipo}-horario-${j}`).value = getTimeString(data);
     }
 }
 

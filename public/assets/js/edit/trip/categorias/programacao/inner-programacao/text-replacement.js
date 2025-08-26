@@ -1,6 +1,7 @@
 import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
 import { getID, findSecondaryIdFromPrimaryId } from "../../../../../support/pages/selectors.js";
 import { translate } from "../../../../../main/translate.js";
+import { inputDateToKey, jsDateToInputDate } from "../../../../../support/data/dates.js";
 
 const TITLE_REPLACEMENT = {
     current: '',
@@ -137,7 +138,7 @@ function _replaceTimeIfEnabled() {
 
 function _processAccomodationReplacement(labelValue, itineraryJ) {
     const date = DATAS[itineraryJ - 1];
-    const inputDate = _jsDateToInputDate(date);
+    const inputDate = jsDateToInputDate(date);
     const value = getID('inner-programacao-select-hospedagens').value;
     if (!inputDate || !value) return labelValue;
 
@@ -155,7 +156,7 @@ function _processAccomodationReplacement(labelValue, itineraryJ) {
         : 'trip.accommodation.checkout';
     const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
 
-    const itineraries = INNER_PROGRAMACAO[_inputDateToKey(inputDate)];
+    const itineraries = INNER_PROGRAMACAO[inputDateToKey(inputDate)];
     const allEntries = Object.values(itineraries).flat();
     const hasTreatedLabel = allEntries.some(entry => entry.programacao === treatedLabel);
     const alreadyIncluded = allEntries.some(entry => entry.programacao.includes(labelValue));

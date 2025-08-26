@@ -4,6 +4,7 @@ import { getID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { getAllValuesFromSelect } from "../../support/html/fields.js";
 import { cloneObject } from "../../support/data/object.js";
+import { convertFromDateObject, getDateString, getTimeString } from "../../support/data/dates.js";
 
 async function _loadTripData() {
     try {
@@ -29,11 +30,11 @@ function _loadDadosBasicosViagemData() {
     getID('titulo').value = FIRESTORE_DATA.titulo;
     getID('moeda').value = FIRESTORE_DATA.moeda;
 
-    const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
-    const fim = _convertFromDateObject(FIRESTORE_DATA.fim);
+    const inicio = convertFromDateObject(FIRESTORE_DATA.inicio);
+    const fim = convertFromDateObject(FIRESTORE_DATA.fim);
 
-    getID('inicio').value = _getDateString(inicio, 'yyyy-mm-dd');
-    getID('fim').value = _getDateString(fim, 'yyyy-mm-dd');
+    getID('inicio').value = getDateString(inicio, 'yyyy-mm-dd');
+    getID('fim').value = getDateString(fim, 'yyyy-mm-dd');
 
     TRAVELERS = cloneObject(FIRESTORE_DATA.pessoas);
     _updateTravelersButtonLabel();
@@ -168,17 +169,17 @@ function _loadTransportesData() {
             buildDS('transporte-pessoa');
         }
 
-        const partida = _convertFromDateObject(transporte.datas.partida);
-        const chegada = _convertFromDateObject(transporte.datas.chegada);
+        const partida = convertFromDateObject(transporte.datas.partida);
+        const chegada = convertFromDateObject(transporte.datas.chegada);
 
         if (partida) {
-            getID(`partida-${j}`).value = _getDateString(partida, 'yyyy-mm-dd');
-            getID(`partida-horario-${j}`).value = _getTimeString(partida);
+            getID(`partida-${j}`).value = getDateString(partida, 'yyyy-mm-dd');
+            getID(`partida-horario-${j}`).value = getTimeString(partida);
         }
 
         if (chegada) {
-            getID(`chegada-${j}`).value = _getDateString(chegada, 'yyyy-mm-dd');
-            getID(`chegada-horario-${j}`).value = _getTimeString(chegada);
+            getID(`chegada-${j}`).value = getDateString(chegada, 'yyyy-mm-dd');
+            getID(`chegada-horario-${j}`).value = getTimeString(chegada);
         }
 
         const empresa = transporte.empresa;

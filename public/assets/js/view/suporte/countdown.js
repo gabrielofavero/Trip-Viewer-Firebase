@@ -1,5 +1,6 @@
 import { getID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { convertFromDateObject } from "../../support/data/dates.js";
 
 var COUNTDOWN;
 
@@ -7,7 +8,7 @@ var COUNTDOWN;
 COUNTDOWN = setInterval(function () {
   if (FIRESTORE_DATA && FIRESTORE_DATA.inicio) {
     const now = new Date().getTime();
-    const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
+    const inicio = convertFromDateObject(FIRESTORE_DATA.inicio);
     var distance = inicio - now;
 
     if (now > inicio || distance < 0) {

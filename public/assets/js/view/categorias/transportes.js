@@ -1,6 +1,7 @@
 import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { codifyText } from "../../support/data/data.js";
+import { convertFromDateObject, getDateString, getTimeString, jsTimeToVisualTime } from "../../support/data/dates.js";
 
 var TRANSPORTE_ICONES = [];
 var TRANSPORTE_ATIVO;
@@ -125,12 +126,12 @@ function _getReservaHTML(j, empresa) {
 
 function _getPartidaChegadaHTML(j, tipo) {
   const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
-  const data = _convertFromDateObject(transporte.datas[tipo]);
+  const data = convertFromDateObject(transporte.datas[tipo]);
   const local = transporte.pontos[tipo];
   const flightTimeSuffix = _getLanguagePackName() == 'en' ? '-en' : '';
 
-  let result = `<div class="flight-date">${_getDateString(data, 'dd/mm')}</div>
-                <div class="flight-time${flightTimeSuffix}">${_getTimeString(data)}</div>`;
+  let result = `<div class="flight-date">${getDateString(data, 'dd/mm')}</div>
+                <div class="flight-time${flightTimeSuffix}">${getTimeString(data)}</div>`;
 
   if (local) result += `<div class="flight-location">${local}</div>`;
   return result;
@@ -146,7 +147,7 @@ function _getTransporteIcon(j) {
 function _getDuracaoHTML(j) {
   const duracao = FIRESTORE_DATA.transportes.dados[j - 1].duracao;
   if (!duracao) return ""
-  else return `<div class="flight-duration">${_jsTimeToVisualTime(duracao)}</div>`;
+  else return `<div class="flight-duration">${jsTimeToVisualTime(duracao)}</div>`;
 }
 
 function _adjustFlightLine(j) {

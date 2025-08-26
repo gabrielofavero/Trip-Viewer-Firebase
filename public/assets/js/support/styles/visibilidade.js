@@ -1,5 +1,6 @@
 import { getID, getSecondaryIDs } from "../pages/selectors.js";
 import { firstCharToUpperCase, removeChildWithValidation, removeEmptyChild } from "../pages/data/data.js";
+import { getCurrentHour } from "../data/dates.js";
 
 var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
@@ -189,7 +190,7 @@ function _refreshVisibility() {
 }
 
 function _autoVisibility() {
-     let now = _getCurrentHour();
+     let now = getCurrentHour();
      if (now >= 18 || now < 6) {
           _loadDarkMode();
      } else {

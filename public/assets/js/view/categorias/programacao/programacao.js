@@ -1,4 +1,5 @@
 import { getID } from "../../../support/pages/selectors.js";
+import { getDateString, dateObjectToKey } from "../../../support/data/dates.js";
 
 var PROGRAMACAO_DESTINOS = {};
 var PILLS_ACTIONS = {};
@@ -12,7 +13,7 @@ function _loadProgramacao() {
 
 function _loadProgramacaoDestinos() {
     for (const programacao of FIRESTORE_DATA.programacoes) {
-        const key = _dateObjectToKey(programacao.data);
+        const key = dateObjectToKey(programacao.data);
         PROGRAMACAO_DESTINOS[key] = programacao.destinosIDs;
     }
 }
@@ -141,13 +142,13 @@ function _loadProgramacaoHojeButton() {
     if (hoje >= INICIO.date && hoje <= FIM.date) {
         getID('programacao-hoje').style.display = '';
         getID('programacao-hoje').addEventListener('click', function () {
-            const hojeText = _getDateString(hoje, 'dd/mm/yyyy');
+            const hojeText = getDateString(hoje, 'dd/mm/yyyy');
             const programacaoText = (PROGRAMACAO_ATUAL.dia).toString().padStart(2, '0') + "/" + 
                                     (PROGRAMACAO_ATUAL.mes).toString().padStart(2, '0') + "/" + 
                                     PROGRAMACAO_ATUAL.ano;
 
             if (!PROGRAMACAO_ABERTA || (PROGRAMACAO_ABERTA && hojeText != programacaoText)) {
-                _loadCalendarItem(_getDateString(hoje, 'dd/mm/yyyy'));
+                _loadCalendarItem(getDateString(hoje, 'dd/mm/yyyy'));
             }
 
             getID("tabela").scrollIntoView({ behavior: "smooth" });

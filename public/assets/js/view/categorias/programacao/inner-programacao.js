@@ -1,6 +1,7 @@
 import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 import { getDefaultProperties } from "../../../support/pages/mensagens.js";
+import { getDateTitle, convertFromDateObject } from "../../../support/data/dates.js";
 
 var PROGRAMACAO_ABERTA = false;
 var PROGRAMACAO_ATUAL = {
@@ -13,7 +14,7 @@ var INNER_PROGRAMACAO_ATUAL = [];
 // ======= LOADERS =======
 function _loadModalContentCalendar(programacao) {
     let titulo = programacao.titulo;
-    const data = _getDateTitle(_convertFromDateObject(programacao.data));
+    const data = getDateTitle(convertFromDateObject(programacao.data));
 
     if (FIRESTORE_DATA.modulos.destinos && DESTINOS && DESTINOS.length > 0) {
         const destinosIDs = DESTINOS.map(destino => destino.destinosID);
@@ -124,7 +125,7 @@ function _loadCalendarItem(dataString) {
             PROGRAMACAO_ATUAL.ano = year;
             if (day != 0) {
                 for (let i = 0; i < FIRESTORE_DATA.programacoes.length; i++) {
-                    var currentDate = _convertFromDateObject(FIRESTORE_DATA.programacoes[i].data);
+                    var currentDate = convertFromDateObject(FIRESTORE_DATA.programacoes[i].data);
                     if (currentDate.getDate() == day && currentDate.getMonth() == month - 1 && currentDate.getFullYear() == year) {
                         if (!PROGRAMACAO_ABERTA) {
                             PROGRAMACAO_ABERTA = true;

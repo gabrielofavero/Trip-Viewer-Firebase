@@ -5,6 +5,7 @@ import { getID, getChildIDs, getSecondaryID, getSecondaryIDs } from "../../suppo
 import { translate } from "../../main/translate.js";
 import { setRequired } from "../../support/html/fields.js";
 import { getTypeID } from "../../support/data/data.js";
+import { convertToDateObject, formattedDateToDateObject, jsDateToKey, keyToDateObject } from "../../support/data/dates.js";
 
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
@@ -15,12 +16,12 @@ async function _buildTripObject() {
         destinos: _buildDestinosArray(),
         compartilhamento: await _buildCompartilhamentoObject(),
         cores: _buildCoresObject(),
-        fim: getID(`fim`).value ? _formattedDateToDateObject(getID(`fim`).value) : "",
+        fim: getID(`fim`).value ? formattedDateToDateObject(getID(`fim`).value) : "",
         gastosPin: getID('pin-enable').checked,
         galeria: _buildGaleriaObject(),
         hospedagens: _buildHospedagemObject(),
         imagem: _buildImagemObject(),
-        inicio: getID(`inicio`).value ? _formattedDateToDateObject(getID(`inicio`).value) : "",
+        inicio: getID(`inicio`).value ? formattedDateToDateObject(getID(`inicio`).value) : "",
         links: _buildLinksObject(),
         modulos: _buildModulosObject(),
         moeda: getID(`moeda`).value,
@@ -142,8 +143,8 @@ function _buildTransporteObject() {
         const j = getSecondaryID(child);
         result.dados.push({
             datas: {
-                chegada: _formattedDateToDateObject(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
-                partida: _formattedDateToDateObject(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
+                chegada: formattedDateToDateObject(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
+                partida: formattedDateToDateObject(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
             },
             duracao: getID(`transporte-duracao-${j}`).value,
             empresa: _getValueEmpresa(j),
@@ -169,8 +170,8 @@ function _buildHospedagemObject() {
         result.push({
             cafe: getID(`hospedagens-cafe-${j}`).checked,
             datas: {
-                checkin: _formattedDateToDateObject(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
-                checkout: _formattedDateToDateObject(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
+                checkin: formattedDateToDateObject(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
+                checkout: formattedDateToDateObject(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
             },
             descricao: getID(`hospedagens-descricao-${j}`).value,
             endereco: getID(`hospedagens-endereco-${j}`).value,
@@ -189,7 +190,7 @@ function _buildProgramacaoObject() {
 
     for (let j = 1; j <= DATAS.length; j++) {
         const innerResult = {
-            data: _convertToDateObject(DATAS[j - 1]),
+            data: convertToDateObject(DATAS[j - 1]),
             destinosIDs: [],
             titulo: '',
             madrugada: [],
@@ -207,8 +208,8 @@ function _buildProgramacaoObject() {
             innerResult.titulo = tituloSelectValue;
         }
 
-        if (DATAS[j - 1] && DATAS[j - 1] && INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])]) {
-            const turnos = INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])];
+        if (DATAS[j - 1] && DATAS[j - 1] && INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])]) {
+            const turnos = INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])];
             innerResult.madrugada = turnos.madrugada;
             innerResult.manha = turnos.manha;
             innerResult.tarde = turnos.tarde;
@@ -243,7 +244,7 @@ function _buildLineupObject() {
             local: getID(`lineup-local-${j}`).value,
             genero: getID(`lineup-genero-select-${j}`).value,
             palco: getID(`lineup-palco-select-${j}`).value,
-            data: data ? _keyToDateObject(data) : "",
+            data: data ? keyToDateObject(data) : "",
             inicio: getID(`lineup-inicio-${j}`).value,
             fim: getID(`lineup-fim-${j}`).value,
             midia: getID(`lineup-midia-${j}`).value,

@@ -2,6 +2,7 @@ import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
 import { getID, getSecondaryIDs } from "../../../../../support/pages/selectors.js";
 import { translate } from "../../../../../main/translate.js";
 import { getDefaultProperties } from "../../../../../support/pages/mensagens.js";
+import { getDateTitle, jsDateToKey } from "../../../../../support/data/dates.js";
 
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
@@ -9,7 +10,7 @@ var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
 function _loadInnerProgramacaoHTML(j) {
-    const key = _jsDateToKey(DATAS[j - 1]);
+    const key = jsDateToKey(DATAS[j - 1]);
     if (Object.keys(INNER_PROGRAMACAO).length == 0 || !INNER_PROGRAMACAO[key]) return;
 
     getID(`inner-programacao-madrugada-${j}`).innerHTML = '';
@@ -174,7 +175,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
         LAST_OPENED_TURNO[j] = turno;
     }
 
-    const key = _jsDateToKey(DATAS[j - 1]);
+    const key = jsDateToKey(DATAS[j - 1]);
     if (!isNew && INNER_PROGRAMACAO && INNER_PROGRAMACAO[key] && INNER_PROGRAMACAO[key][turno] && INNER_PROGRAMACAO[key][turno][k - 1]) {
         const dados = INNER_PROGRAMACAO[key][turno][k - 1];
         const itemAssociado = getID('inner-programacao-item-associado');
@@ -279,7 +280,7 @@ function _closeInnerProgramacao(j) {
 
 function _getInnerProgramacaoTitle(j) {
     const newJ = _getMostRecentJ(j);
-    return _getDateTitle(DATAS[newJ - 1], 'mini');
+    return getDateTitle(DATAS[newJ - 1], 'mini');
 }
 
 function _innerProgramacaoConfirmAction(j, k, turno) {
@@ -345,7 +346,7 @@ function _addInnerProgramacao(j, k, turno) {
     }
 
     function _setInnerProgramacao(innerProgramacao, j, k, turno) {
-        const key = _jsDateToKey(DATAS[j - 1]);
+        const key = jsDateToKey(DATAS[j - 1]);
         const isNew = (!k && !turno);
         const newTurno = getID(`inner-programacao-select-turno`).value;
 
@@ -357,7 +358,7 @@ function _addInnerProgramacao(j, k, turno) {
             if (turno == newTurno && newJ == j) { // Substituição Simples
                 INNER_PROGRAMACAO[key][turno][k - 1] = innerProgramacao;
             } else { // Substituição Composta
-                const newKey = _jsDateToKey(DATAS[newJ - 1]);
+                const newKey = jsDateToKey(DATAS[newJ - 1]);
                 INNER_PROGRAMACAO[newKey][newTurno].push(innerProgramacao);
                 INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
                 LAST_OPENED_TURNO[newJ] = newTurno;
@@ -375,7 +376,7 @@ function _deleteInnerProgramacao(j, k, turno) {
         _closeMessage();
         return;
     } else {
-        const key = _jsDateToKey(DATAS[j - 1]);
+        const key = jsDateToKey(DATAS[j - 1]);
         INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
         _loadInnerProgramacaoHTML(j);
         _closeMessage();
@@ -513,7 +514,7 @@ function _getMostRecentJ(j) {
     const nova = getID('inner-programacao-select-troca-data')?.value;
 
     if (nova) {
-        const keys = DATAS.map(data => _jsDateToKey(data));
+        const keys = DATAS.map(data => jsDateToKey(data));
         const atual = keys[j - 1];
         if (atual != nova) {
             const turno = getID('inner-programacao-select-troca-turno').value;
@@ -545,7 +546,7 @@ function _afterDragInnerProgramacao(evt) {
     const turnoFinal = evt.to.id.split('-')[2];
 
     const j = evt.item.children[0].id.split('-')[3];
-    const key = _jsDateToKey(DATAS[j - 1]);
+    const key = jsDateToKey(DATAS[j - 1]);
 
     // Remover elemento da posição inicial
     const element = INNER_PROGRAMACAO[key][turnoInicial].splice(evt.oldIndex, 1)[0];

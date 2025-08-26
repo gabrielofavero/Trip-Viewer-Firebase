@@ -8,6 +8,7 @@ import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
 import { getDefaultProperties } from "../../support/pages/mensagens.js";
 import { getURLParam } from "../../support/data/data.js";
+import { getDateTitle, jsDateToKey } from "../../support/data/dates.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -16,8 +17,6 @@ var FIRESTORE_GASTOS_DATA;
 var CAN_EDIT = false;
 var NEW_TRIP = false;
 
-const TODAY = _getTodayFormatted();
-const TOMORROW = _getTomorrowFormatted();
 
 startLoadingScreen();
 
@@ -131,8 +130,8 @@ async function _deleteViagemAction() {
 }
 
 function _getDataSelectOptions(j) {
-  const values = DATAS.map(data => _jsDateToKey(data));
-  const labels = DATAS.map(data => _getDateTitle(data, 'mini'));
+  const values = DATAS.map(data => jsDateToKey(data));
+  const labels = DATAS.map(data => getDateTitle(data, 'mini'));
   let result = j ? '' : `<option value="" selected>${translate('datetime.select_date')}</option>`;
 
   for (let i = 0; i < values.length; i++) {

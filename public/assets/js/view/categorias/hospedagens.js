@@ -1,5 +1,7 @@
 import { getID } from "../../support/pages/selectors";
 import { translate } from "../../main/translate.js";
+import { convertFromDateObject } from "../../support/data/dates.js";
+import { getDateString, getTimeString } from "../../support/data/dates.js";
 
 function _loadHospedagens() {
   let swiperData = []
@@ -111,8 +113,8 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
 }
 
 function _getHospedagensData(dataFirestore) {
-  const date = _convertFromDateObject(dataFirestore);
-  return `${_getDateString(date)}, ${_getTimeString(date)}`;
+  const date = convertFromDateObject(dataFirestore);
+  return `${getDateString(date)}, ${getTimeString(date)}`;
 }
 
 function _buildHospedagensSwiper(swiperData) {

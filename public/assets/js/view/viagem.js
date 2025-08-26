@@ -5,6 +5,7 @@ import { translate } from "../main/translate.js";
 import { stopLoadingScreen, startLoadingTimer } from "../support/pages/loading.js";
 import { sortByArray, getURLParams } from "../support/data/data.js";
 import { getURLParam } from "../support/data/data.js";
+import { convertFromDateObject, getDateString, getDateRegionalFormat } from "../support/data/dates.js";
 
 var REFRESHED = false;
 var TYPE = 'viagens';
@@ -110,10 +111,10 @@ function _start() {
 }
 
 function _loadInicioFim() {
-  INICIO.date = _convertFromDateObject(FIRESTORE_DATA.inicio);
+  INICIO.date = convertFromDateObject(FIRESTORE_DATA.inicio);
   INICIO.text = `${INICIO.date.getDate()}/${INICIO.date.getMonth() + 1}`;
 
-  FIM.date = _convertFromDateObject(FIRESTORE_DATA.fim);
+  FIM.date = convertFromDateObject(FIRESTORE_DATA.fim);
   FIM.text = `${FIM.date.getDate()}/${FIM.date.getMonth() + 1}`;
 }
 
@@ -128,7 +129,7 @@ function _loadHeader() {
 
   if (TYPE == 'destinos' && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
     const ultimaAtualizacao = new Date(FIRESTORE_DATA.versao.ultimaAtualizacao);
-    getID("subtitulo").innerHTML = `${translate('labels.last_updated_on')} ${_getDateString(ultimaAtualizacao, _getDateRegionalFormat())}`;
+    getID("subtitulo").innerHTML = `${translate('labels.last_updated_on')} ${getDateString(ultimaAtualizacao, getDateRegionalFormat())}`;
   }
 
   if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
@@ -142,7 +143,7 @@ function _loadHeader() {
     }
 
     const mostRecentDate = datas.reduce((a, b) => a > b ? a : b);
-    const mostRecentDateString = _getDateString(mostRecentDate, _getDateRegionalFormat());
+    const mostRecentDateString = getDateString(mostRecentDate, getDateRegionalFormat());
 
     getID("dUpdate").innerHTML = `${translate(labels.last_updated_on)} ${mostRecentDateString}`;
   }

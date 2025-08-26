@@ -3,6 +3,7 @@ import { DOCUMENT_ID } from "../../../support/firebase/database.js";
 import { editFieldAgain, validateLink, validateImageLink } from "../../../support/html/fields.js";
 import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from "../../../support/data/dates.js";
 
 var INPUT_DETECTED = false;
 
@@ -75,8 +76,8 @@ function _inicioListenerAction() {
     const inicio = inicioDiv.value;
     const fim = fimDiv.value;
 
-    if (NEW_TRIP || !fim || _inputDateToJsDate(fim).getTime() < _inputDateToJsDate(inicio).getTime()) {
-        fimDiv.value = _getNextInputDay(inicio);
+    if (NEW_TRIP || !fim || inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()) {
+        fimDiv.value = getNextInputDay(inicio);
     }
 
     _reloadProgramacao();
@@ -89,8 +90,8 @@ function _fimListenerAction() {
     const inicio = inicioDiv.value;
     const fim = fimDiv.value;
 
-    if (!inicio || _inputDateToJsDate(fim).getTime() < _inputDateToJsDate(inicio).getTime()) {
-        inicioDiv.value = _getPreviousInputDay(fim);
+    if (!inicio || inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()) {
+        inicioDiv.value = getPreviousInputDay(fim);
     }
 
     _reloadProgramacao();

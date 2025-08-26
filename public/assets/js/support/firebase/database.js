@@ -1,6 +1,7 @@
 import { getUID } from "./user.js";
 import { translate } from "../../main/translate.js";
 import { getURLParam } from "../data/data.js";
+import { getDateString } from "../data/dates.js";
 
 export var DOCUMENT_ID;
 export var ERROR_FROM_GET_REQUEST = "";
@@ -241,7 +242,7 @@ export async function getUserList(type, includeData = false, userData) {
 
         if (data.versao?.ultimaAtualizacao) {
           const date = new Date(data.versao.ultimaAtualizacao);
-          const dateString = _getDateString(date, "dd/mm/yyyy");
+          const dateString = getDateString(date, "dd/mm/yyyy");
           singleResult.ultimaAtualizacao = data.versao.ultimaAtualizacao;
           singleResult.ultimaAtualizacaoText = `${translate('labels.last_updated_on')} ${dateString}`;
         }
