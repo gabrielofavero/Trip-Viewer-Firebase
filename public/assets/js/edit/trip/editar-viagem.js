@@ -6,9 +6,10 @@ import { initApp } from "../../main/app.js";
 import { getID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
-import { getDefaultProperties } from "../../support/pages/mensagens.js";
+import { getDefaultProperties, displayError } from "../../support/pages/messages.js";
 import { getURLParam } from "../../support/data/data.js";
-import { getDateTitle, jsDateToKey } from "../../support/data/dates.js";
+import { getDateTitle, jsDateToKey, } from "../../support/data/dates.js";
+import { closeMessage, displayFullMessage } from "../../support/pages/messages.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -55,12 +56,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   } catch (error) {
     if (error?.responseJSON?.error) {
-      _displayError(error.responseJSON.error)
+      displayError(error.responseJSON.error)
     } else {
-      _displayError(error);
+      displayError(error);
     }
     if (window.location.href.includes('editar-template.html')) {
-      _closeMessage();
+      closeMessage();
     }
     throw error;
   }
@@ -118,7 +119,7 @@ function _deleteViagem() {
     acao: '_deleteViagemAction()'
   }];
 
-  _displayFullMessage(propriedades);
+  displayFullMessage(propriedades);
 }
 
 async function _deleteViagemAction() {

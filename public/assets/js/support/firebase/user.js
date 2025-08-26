@@ -2,6 +2,7 @@ import { DOCUMENT_ID } from "./database.js";
 import { get, create, getSystemData, getUserPermissions } from "./database.js";
 import { getID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { displayMessage, displayError } from "../pages/messages.js";
 
 export var USER_PERMISSIONS;
 
@@ -27,7 +28,7 @@ export async function signInWithEmailAndPassword() {
         return user; // Optionally return the user for further use
     } catch (error) {
         console.error('Error signing in:', error.message);
-        _displayError(error);
+        displayError(error);
     }
 }
 
@@ -45,7 +46,7 @@ export async function registerIfUserNotPresent() {
 
     if (!user) {
         signOut();
-        _displayError(translate('messages.error.unauthenticated'));
+        displayError(translate('messages.error.unauthenticated'));
         return;
     }
 
@@ -57,7 +58,7 @@ export async function registerIfUserNotPresent() {
         signOut();
         const title = 'Você chegou muito cedo! 😅';
         const content = 'Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀';
-        _displayMessage(title, content);
+        displayMessage(title, content);
         return;
     }
 
@@ -89,7 +90,7 @@ export async function getUID() {
 export async function canUserEdit(dono, editores) {
     const uid = await getUID();
     if (DOCUMENT_ID && (!uid || (uid != dono && !editores.includes(uid)))) {
-        _displayError('Você não tem permissão para editar essa viagem. Realize o login com a conta correta para acessar o conteúdo.');
+        displayError(translate('messages.errors.edit'));
         return false;
     } else return true;
 }

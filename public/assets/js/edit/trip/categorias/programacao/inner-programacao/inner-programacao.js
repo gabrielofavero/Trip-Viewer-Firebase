@@ -1,7 +1,7 @@
 import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
 import { getID, getSecondaryIDs } from "../../../../../support/pages/selectors.js";
 import { translate } from "../../../../../main/translate.js";
-import { getDefaultProperties } from "../../../../../support/pages/mensagens.js";
+import { getDefaultProperties, displayFullMessage, closeMessage, getContainersInput } from "../../../../../support/pages/messages.js";
 import { getDateTitle, jsDateToKey } from "../../../../../support/data/dates.js";
 
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
@@ -52,7 +52,7 @@ function _openInnerProgramacao(j, k, turno) {
 
     const propriedades = getDefaultProperties();
     propriedades.titulo = _getInnerProgramacaoTitle(j);
-    propriedades.containers = _getContainersInput();
+    propriedades.containers = getContainersInput();
     propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
     propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacao(${j})` }];
     propriedades.botoes = [{
@@ -62,7 +62,7 @@ function _openInnerProgramacao(j, k, turno) {
         acao: `_innerProgramacaoConfirmAction(${j}, ${k}, '${turno}')`
     }];
 
-    _displayFullMessage(propriedades);
+    displayFullMessage(propriedades);
 
     if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';
@@ -312,7 +312,7 @@ function _addInnerProgramacao(j, k, turno) {
         }
         const innerProgramacao = _buildInnerProgramacao(programacao);
         _setInnerProgramacao(innerProgramacao, j, k, turno);
-        _closeMessage();
+        closeMessage();
     }
 
     function _buildInnerProgramacao(programacao) {
@@ -373,13 +373,13 @@ function _addInnerProgramacao(j, k, turno) {
 function _deleteInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
     if (isNew) {
-        _closeMessage();
+        closeMessage();
         return;
     } else {
         const key = jsDateToKey(DATAS[j - 1]);
         INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
         _loadInnerProgramacaoHTML(j);
-        _closeMessage();
+        closeMessage();
     }
 }
 

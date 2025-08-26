@@ -299,6 +299,10 @@
         "new": "Nova lista de destinos",
         "edit": "Editar lista de destinos",
         "share": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
+        "delete": {
+            "title": "Excluir listagem",
+            "message": "Tem certeza que deseja excluir a listagem {{name}}? A ação não poderá ser desfeita"
+        },
         "basic_information": "Adicione aqui as principais informações da sua lista de destinos",
         "last_update": {
             "title": "Exibir data da última atualização",
@@ -412,6 +416,8 @@
         "share": "Venha visualizar meus dados criados no TripViewer",
         "exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
         "select_one": "Selecione pelo menos um item",
+        "emoji": "Insira um Emoji Válido 🫠",
+        "move_to": "Mover para",
         "errors": {
             "load_title": "Erro no Carregamento 🙁",
             "unknown": "Um erro inesperado impediu o carregamento da página",
@@ -423,7 +429,32 @@
             "upload_error": "Erro ao fazer upload de arquivos",
             "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
             "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
-            "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde"
+            "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
+            "config": "Erro ao carregar a configuração da aplicação",
+            "edit": "Você não tem permissão para editar o documento. Certifique-se de estar autenticado com um usuário com permissões suficientes",
+            "not_found": "Não foi possível carregar o documento. É possível que ele não exista ou que você não tenha permissões suficientes",
+            "invalid_link": {
+                "map": {
+                    "title": "Link de Mapa Inválido {{mapsI}}",
+                    "content": "O link de mapa fornecido não é válido. Certifique-se de que o link comece com \"http://\" ou \"https://\" e que seja de uma das seguintes plataformas: <br><br> {{googleMapsI}} <strong>Google Maps</strong><br> {{appleMapsI}} <strong>Apple Maps</strong><br>"
+                },
+                "instagram": {
+                    "title": "Link do Instagram Inválido {{linkI}}",
+                    "content": "O link fornecido não é válido. Certifique-se de que ele comece com \"https://www.instagram.com\""
+                },
+                "media": {
+                    "title": "Link Inválido {{linkI}}",
+                    "content": "O link fornecido não é válido. Certifique-se de que ele comece com \"http://\" ou \"https://\" e que seja de uma das seguintes plataformas: <br><br> {{tiktokI}} <strong>TikTok</strong><br> {{youtubeI}} <strong>Youtube</strong><br> {{instagramI}} <strong>Instagram Reels</strong>"
+                },
+                "twitter_image": {
+                    "title": "Imagem do Twitter Inválida {{twitterI}}",
+                    "content": "O sistema não suporta imagens vindas do Twitter (Vulgo {{xI}} se você for uma pessoa chata).<br><br> Por favor, utilize outra fonte externa para suas imagens."
+                },
+                "generic": {
+                    "title": "Link Inválido {{genericI}}",
+                    "content": "O link fornecido não é válido. Certifique-se de que ele comece com \"http://\" ou \"https://\""
+                }
+            }
         },
         "too_early": {
             "title": "Você chegou muito cedo! 😅",
@@ -590,7 +621,7 @@
             "website": "Site",
             "instagram": "Instagram"
         },
-    "region": "Região",
+        "region": "Região",
         "priority": "Prioridade",
         "video": "Vídeo",
         "language": {

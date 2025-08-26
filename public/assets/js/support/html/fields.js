@@ -3,6 +3,7 @@ import { setSuccessfulSave } from "../../main/app.js";
 import { getID } from "../pages/selectors.js";
 import { stopLoadingScreen } from "../pages/loading.js";
 import { firstCharToUpperCase } from "../pages/data/data.js";
+import { displayMessage, openToast } from "../pages/messages.js";
 
 // Required Fields
 export function validateRequiredFields(customChecks = []) {
@@ -209,7 +210,11 @@ export function validateLink(id) {
     closeAllSelects();
     div.value = '';
 
-    _openToast('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>: Certifique-se de que ele comece com "http://" ou "https://".');
+    const genericI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>';
+    title = translate('messages.error.invalid_link.generic.title', { genericI });
+    content = translate('messages.error.invalid_link.generic.content');
+
+    openToast(`${title}: ${content}`);
 }
 
 export function validateMapLink(id) {
@@ -227,9 +232,10 @@ export function validateMapLink(id) {
     const mapsI = '<i class="iconify" data-icon="hugeicons:maps"></i>'
     const googleMapsI = '<i class="iconify" data-icon="simple-icons:googlemaps"></i>'
     const appleMapsI = '<i class="iconify" data-icon="ic:baseline-apple"></i>'
-    _displayMessage('Link de Mapa Inválido ' + mapsI, `O link de mapa fornecido não é válido. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                               ${googleMapsI} <strong>Google Maps</strong><br>
-                                               ${appleMapsI} <strong>Apple Maps</strong><br>`);
+    
+    const title = translate('messages.error.invalid_link.map.title', { mapsI });
+    const content = translate('messages.error.invalid_link.map.content', { googleMapsI, appleMapsI});
+    displayMessage(title, content);
 }
 
 export function validateInstagramLink(id) {
@@ -241,7 +247,10 @@ export function validateInstagramLink(id) {
     div.value = '';
 
     const linkI = '<i class="iconify" data-icon="mdi:instagram"></i>';
-    _displayMessage('Link do Instagram Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "https://www.instagram.com".`);
+
+    const title = translate('messages.error.invalid_link.instagram.title', { linkI });
+    const content = translate('messages.error.invalid_link.instagram.content');
+    displayMessage(title, content);
 }
 
 export function validateMediaLink(id) {
@@ -258,10 +267,10 @@ export function validateMediaLink(id) {
         const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
         const youtubeI = '<i class="iconify" data-icon="mdi:youtube"></i>'
         const instagramI = '<i class="iconify" data-icon="mdi:instagram"></i>'
-        _displayMessage('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                                   ${tiktokI} <strong>TikTok</strong><br>
-                                                   ${youtubeI} <strong>Youtube</strong><br>
-                                                   ${instagramI} <strong>Instagram Reels</strong>`);
+
+        const title = translate('messages.error.invalid_link.media.title', { linkI });
+        const content = translate('messages.error.invalid_link.media.content', { tiktokI, youtubeI, instagramI });
+        displayMessage(title, content);
     }
 }
 
@@ -275,18 +284,20 @@ export function validateImageLink(id) {
     let content = '';
 
     if (imageLink.includes('pbs.twimg.com')) {
-        title = 'Imagem do Twitter Inválida <i class="iconify" data-icon="mdi:twitter"></i>';
-        content = `O sistema não suporta imagens vindas do Twitter (Vulgo <i class="iconify" data-icon="fa6-brands:x-twitter"></i> se você for uma pessoa chata).<br><br> 
-                   Por favor, utilize outra fonte externa para suas imagens.`;
+        const twitterI = '<i class="iconify" data-icon="mdi:twitter"></i>'
+        const xI = '<i class="iconify" data-icon="fa6-brands:x-twitter"></i>'
+        title = translate('messages.error.invalid_link.twitter_image.title', { twitterI });
+        content = translate('messages.error.invalid_link.twitter_image.content', { xI });;
     } else {
-        title = 'Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>';
-        content = `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`;
+        const genericI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>';
+        title = translate('messages.error.invalid_link.generic.title', { genericI });
+        content = translate('messages.error.invalid_link.generic.content');
     }
 
     closeAllSelects();
     div.value = '';
 
-    _displayMessage(title, content);
+    displayMessage(title, content);
 }
 
 export function getSelectOptionsHTML(object, selectedKey) {

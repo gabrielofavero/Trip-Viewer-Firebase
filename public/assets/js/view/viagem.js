@@ -6,6 +6,7 @@ import { stopLoadingScreen, startLoadingTimer } from "../support/pages/loading.j
 import { sortByArray, getURLParams } from "../support/data/data.js";
 import { getURLParam } from "../support/data/data.js";
 import { convertFromDateObject, getDateString, getDateRegionalFormat } from "../support/data/dates.js";
+import { displayError } from "../support/pages/messages.js";
 
 var REFRESHED = false;
 var TYPE = 'viagens';
@@ -52,10 +53,10 @@ document.addEventListener('DOMContentLoaded', async function () {
       _refreshCategorias();
 
     } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
-      _displayError("Cannot load document. It is possible that it does not exist or that you don't have enough permissions", true);
+      displayError(translate('messages.errors.not_found'), true);
       stopLoadingScreen();
     } else {
-      _displayError(ERROR_FROM_GET_REQUEST);
+      displayError(ERROR_FROM_GET_REQUEST);
       stopLoadingScreen();
     }
 
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       }, 1000);
     }
   } catch (error) {
-    _displayError(error);
+    displayError(error);
     throw error;
   }
 });
@@ -87,7 +88,7 @@ async function _mainLoad() {
     // Loading Screen
     stopLoadingScreen();
   } catch (error) {
-    _displayError(error);
+    displayError(error);
     throw error;
   }
 }

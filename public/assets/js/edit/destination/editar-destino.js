@@ -10,7 +10,7 @@ import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
 import { firstCharToUpperCase, removeChildWithValidation, getURLParam } from "../../support/data/data.js";
 import { setRequired, removeRequired } from "../../support/html/fields.js";
-import { getDefaultProperties } from "../../support/pages/mensagens.js";
+import { getDefaultProperties, displayError, closeMessage, displayFullMessage, getContainersInput } from "../../support/pages/messages.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _displayError(error);
+    displayError(error);
     throw error;
   }
 });
@@ -240,15 +240,15 @@ function _emojisOnInputAction(j, categoria) {
     emojiDiv.value = emojiTreated;
   } else if (!emojiTreated && emojiUntreated) {
     emojiDiv.value = '';
-    emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
+    emojiDiv.placeholder = translate('messages.emoji');
   }
 }
 
 function _openMoveDestinoModal(j, categoria) {
   const propriedades = getDefaultProperties();
 
-  propriedades.titulo = getID(`${categoria}-nome-${j}`).value || `Mover - ${firstCharToUpperCase(categoria)}`;
-  propriedades.containers = _getContainersInput();
+  propriedades.titulo = getID(`${categoria}-nome-${j}`).value;
+  propriedades.containers = getContainersInput();
   propriedades.botoes = [{
     tipo: 'cancelar',
   }, {
@@ -257,11 +257,11 @@ function _openMoveDestinoModal(j, categoria) {
   }];
 
   const options = {
-    restaurantes: "Restaurantes",
-    lanches: "Lanches",
-    saidas: "Saídas",
-    turismo: "Turismo",
-    lojas: "Lojas"
+    restaurantes: translate('destination.restaurants.title'),
+    lanches: translate('destination.snacks.title'),
+    saidas: translate('destination.nightlife.title'),
+    turismo: translate('destination.tourism.title'),
+    lojas: translate('destination.shopping.title')
   }
 
   let optionsString = "";
@@ -274,13 +274,13 @@ function _openMoveDestinoModal(j, categoria) {
 
   propriedades.conteudo = `
   <div class="nice-form-group"">
-    <label>Mover para:</label>
+    <label>${translate('messages.move_to')}:</label>
       <select class="editar-select" id="move-select">
         ${optionsString}
       </select>
   </div>`
 
-  _displayFullMessage(propriedades);
+  displayFullMessage(propriedades);
 }
 
 function _moveDestino(j, categoria) {
@@ -313,7 +313,7 @@ function _moveDestino(j, categoria) {
 
   }
 
-  _closeMessage();
+  closeMessage();
 }
 
 function _deleteDestino() {
@@ -329,7 +329,7 @@ function _deleteDestino() {
     acao: '_deleteDestinoAction()'
   }];
 
-  _displayFullMessage(propriedades);
+  displayFullMessage(propriedades);
 }
 
 async function _deleteDestinoAction() {

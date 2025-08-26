@@ -2,6 +2,7 @@ import { getUID } from "../../support/firebase/user";
 import { getID, getChildIDs, getSecondaryID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { firstCharToUpperCase, getTypeID } from "../../support/data/data.js";
+import { displayMessage, displayError } from "../../support/pages/messages.js";
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 
@@ -113,7 +114,7 @@ async function _updateTikTokLinks() {
             }
 
         } catch (error) {
-            _displayError(error);
+            displayError(error);
             console.error(error);
         }
     }
@@ -130,5 +131,5 @@ function _displayTikTokError(unableToConvert) {
             conteudo += `${item}<br>`;
         }
     }
-    _displayMessage(titulo, conteudo);
+    displayMessage(titulo, conteudo);
 }

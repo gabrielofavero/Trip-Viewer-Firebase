@@ -1,6 +1,6 @@
 import { getID } from "../../../support/pages/selectors";
 import { translate } from "../../../main/translate.js";
-import { getDefaultProperties } from "../../../support/pages/mensagens.js";
+import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
 
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
@@ -8,7 +8,7 @@ const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the f
 function _openTravelersInfo() {
     const propriedades = getDefaultProperties();
     propriedades.titulo = translate('trip.travelers.info')
-    propriedades.containers = _getContainersInput();
+    propriedades.containers = getContainersInput();
     propriedades.conteudo = _getTravelersInfoContent();
     propriedades.botoes = [{
         tipo: 'cancelar',
@@ -17,7 +17,7 @@ function _openTravelersInfo() {
         acao: `_saveTravelersInfo()`
     }];
 
-    _displayFullMessage(propriedades);
+    displayFullMessage(propriedades);
     getID('quantidadePessoas').addEventListener('change', function () {
         getID('travelers-names-container').innerHTML = _getTravelersNameContent(parseInt(this.value));
     });
@@ -80,7 +80,7 @@ function _saveTravelersInfo() {
         TRAVELERS.push({ nome: nome || '' });
     }
 
-    _closeMessage();
+    closeMessage();
     _updateTravelersButtonLabel();
 }
 

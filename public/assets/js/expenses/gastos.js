@@ -4,6 +4,7 @@ import { getID } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
 import { getURLParam } from "../support/data/data.js";
+import { displayError, displayForbidden, closeMessage } from "../support/pages/messages.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
@@ -40,12 +41,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
-        _displayForbidden(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}` , url);
+        displayForbidden(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}` , url);
         return;
     }
 
     if (!gastosExport?.ativo) {
-        _displayForbidden(translate('messages.errors.module_not_active', {module: translate('trip.expenses.title')}), `view.html?v=${documentID}`);
+        displayForbidden(translate('messages.errors.module_not_active', {module: translate('trip.expenses.title')}), `view.html?v=${documentID}`);
         return;
     }
 
@@ -85,7 +86,7 @@ function _exitGastos() {
 async function _loadGastos() {
     const documentID = getURLParam('g');
     const pin = getID('pin-code')?.innerText || '';
-    _closeMessage();
+    closeMessage();
     _removePinListener();
     startLoadingScreen(false);
     try {
@@ -109,7 +110,7 @@ async function _loadGastos() {
             _requestPinGastosInvalido()
         } else {
             console.error(error);
-            _displayError(translate('messages.errors.unknown'));
+            displayError(translate('messages.errors.unknown'));
         }
         stopLoadingScreen();
     }
@@ -146,7 +147,7 @@ function _applyGastos() {
     }
 
     if (!hasGastosPrevios && !hasGastosDurante) {
-        _displayError(translate('messages.errors.no_data_on_module', {module: translate('trip.expenses.title')}));
+        displayError(translate('messages.errors.no_data_on_module', {module: translate('trip.expenses.title')}));
     }
 }
 

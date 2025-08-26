@@ -1,12 +1,13 @@
 import { getID, getChildIDs, getSecondaryIDs, getFirstSecondaryID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { FIRESTORE_NEW_DATA, FIRESTORE_DESTINOS_NEW_DATA } from "../firebase/database.js";
+import { displayError } from "../pages/messages.js";
 
 // Getters
 export async function getJson(path) {
   const response = await fetch(path);
   if (!response.ok) {
-    _displayError()
+    displayError()
   }
   return response.json();
 }

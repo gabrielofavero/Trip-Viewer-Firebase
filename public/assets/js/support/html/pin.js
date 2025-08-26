@@ -44,7 +44,7 @@ Two callback functions are provided - onSuccess and onFailure
 
 import { getID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
-import { getDefaultProperties } from "../pages/mensagens.js";
+import { getDefaultProperties, displayFullMessage, closeMessage, getContainersInput } from "../pages/messages.js";
 
 (function ($) {
   //Declare our function
@@ -226,7 +226,7 @@ function _loadPin() {
   });
 }
 
-function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent='', invalido=false}) {
+function _requestPin({confirmAction, cancelAction='closeMessage()', precontent='', invalido=false}) {
   const propriedades = getDefaultProperties();
   const classComplement = invalido ? '-invalid' : '';
   propriedades.titulo = translate('trip.expenses.pin.title');
@@ -238,7 +238,7 @@ function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent=
                               </div>
                               <div id="pin-code" class="pin"></div>`;
   propriedades.critico = true;
-  propriedades.containers = _getContainersInput();
+  propriedades.containers = getContainersInput();
   propriedades.botoes = [{
     tipo: 'cancelar',
     acao: cancelAction
@@ -246,7 +246,7 @@ function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent=
     tipo: 'confirmar',
     acao: confirmAction
   }];
-  _displayFullMessage(propriedades);
+  displayFullMessage(propriedades);
   _loadPin();
 
   document.addEventListener('keydown', _pinListenerAction);

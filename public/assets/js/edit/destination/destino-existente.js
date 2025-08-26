@@ -1,6 +1,7 @@
 import { updateValueDS, buildDS } from "../../support/components/dynamic-select.js";
 import { getID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { displayError } from "../../support/pages/messages.js";
 
 // Destino Existente
 function _loadDestinationsData() {
@@ -17,7 +18,7 @@ function _loadDestinationsData() {
     document.title = `${translate('labels.edit')} ${FIRESTORE_DESTINOS_DATA.titulo}`;
 
   } catch (error) {
-    _displayError(error);
+    displayError(error);
     throw error;
   }
 }

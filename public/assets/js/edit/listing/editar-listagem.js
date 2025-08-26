@@ -8,8 +8,9 @@ import { initApp } from "../../main/app.js";
 import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
-import { getDefaultProperties } from "../../support/pages/mensagens.js";
+import { getDefaultProperties, displayError } from "../../support/pages/messages.js";
 import { getURLParam } from "../../support/data/data.js";
+import { closeMessage, displayFullMessage } from "../../support/pages/messages.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -52,9 +53,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _displayError(error);
+    displayError(error);
     if (window.location.href.includes('editar-template.html')) {
-      _closeMessage();
+      closeMessage();
     }
     throw error;
   }
@@ -178,8 +179,8 @@ function _deleteListagem() {
   listagem = listagem ? ` "${listagem}"` : '';
 
   const propriedades = getDefaultProperties();
-  propriedades.titulo = 'Apagar Listagem';
-  propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da listagem${listagem}? A ação não poderá ser desfeita.`;
+  propriedades.titulo = translate('listing.delete.title');
+  propriedades.conteudo = translate('listing.delete.title', {name: listagem});
   propriedades.botoes = [{
     tipo: 'cancelar',
   }, {
@@ -187,7 +188,7 @@ function _deleteListagem() {
     acao: '_deleteListagemAction()'
   }];
 
-  _displayFullMessage(propriedades);
+  displayFullMessage(propriedades);
 }
 
 async function _deleteListagemAction() {

@@ -6,7 +6,7 @@
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 78    | 77        | 1       |
 | 🏆   | Feature      | F000  | 97    | 70        | 27      |
-| 📈   | Improvement  | M000  | 115   | 81        | 34      |
+| 📈   | Improvement  | M000  | 118   | 81        | 37      |
 | ⚔️   | Epic         | E000  | 34    | 19        | 15      |
 
 - 🚦: Blocked
@@ -17,7 +17,7 @@
 
 ### Doing
 
-- ⚔️ **E034:** Frontend code refactoring
+- ⚔️ **E034:** Frontend code overhaul
   - 📈 **M106:** [⚔️E034] Use require in js files
   - 📈 **M105:** [⚔️E034] Remove CONFIG and reduce use of global variables
   - 📈 **M098:** [⚔️E034] Change js functions/folder structures to EN-US
@@ -28,6 +28,9 @@
   - 📈 **M113:** [⚔️E034] Remove JSON from call-sync-order logic
   - 📈 **M114:** [⚔️E034] Reduce eval logic
   - 📈 **M115:** [⚔️E034] Change css files/folder structures to EN-US
+  - 📈 **M116:** [⚔️E034] Translate all pop-ups
+  - 📈 **M117:** [⚔️E034] Change all on-clicks to event listeners
+  - 📈 **M118:** [⚔️E034] Remove underline from beggining of each function
 
 ### High Priority
 

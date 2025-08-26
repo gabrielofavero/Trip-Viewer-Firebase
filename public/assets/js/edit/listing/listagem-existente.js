@@ -1,6 +1,7 @@
 import { getUserList } from "../../support/firebase/database.js";
 import { getID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { displayError } from "../../support/pages/messages.js";
 
 // Listagem Existente
 async function _loadListData(FIRESTORE_DATA) {
@@ -14,7 +15,7 @@ async function _loadListData(FIRESTORE_DATA) {
     document.title = `${translate('labels.edit')} ${FIRESTORE_DATA.titulo}`;
 
   } catch (error) {
-    _displayError(error);
+    displayError(error);
     throw error;
   }
 }

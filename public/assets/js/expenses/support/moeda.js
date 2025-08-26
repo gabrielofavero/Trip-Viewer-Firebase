@@ -1,5 +1,6 @@
 import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { displayError } from "../../support/pages/messages.js";
 
 var MOEDA_PADRAO;
 var MOEDA_CONVERSAO = {};
@@ -144,7 +145,7 @@ function _convertMoeda(from, to, valor) {
         return valor / MOEDA_CONVERSAO[to + from];
     } else {
         console.error(`Conversion error: from ${valor} ${from} to ? ${to}`)
-        _displayError(translate('messages.errors.unknown'));
+        displayError(translate('messages.errors.unknown'));
     }
 }
 

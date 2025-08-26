@@ -299,6 +299,10 @@
         "new": "New destination list",
         "edit": "Edit destination List",
         "share": "Check out the destination list {{name}} I created on TripViewer",
+        "delete": {
+            "title": "Delete listing",
+            "message": "Are you sure you want to delete the listing {{name}}? This action cannot be undone"
+        },
         "basic_information": "Add the main information about your destination list here",
         "last_update": {
             "title": "Show last update date",
@@ -412,6 +416,8 @@
         "share": "Check out what I've created on TripViewer",
         "exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
         "select_one": "Please select at least one item",
+        "emoji": "Insert a valid emoji 🫠",
+        "move_to": "Move to",
         "errors": {
             "load_title": "Loading Error 🙁",
             "unknown": "An unexpected error prevented the page from loading",
@@ -423,7 +429,33 @@
             "upload_error": "Error uploading file(s)",
             "module_not_active": "Cannot load the page. The module {{module}} is not active",
             "no_data_on_module": "No data found for the module {{module}}",
-            "loading_timeout": "The request took too long to respond. Please try again later"
+            "loading_timeout": "The request took too long to respond. Please try again later",
+            "config": "Error while loading the application configuration",
+            "edit": "You don't have permission to edit this document. Please make sure you’re signed in with an account that has the required permissions",
+            "not_found": "Cannot load document. It is possible that it does not exist or that you don't have enough permissions",
+            "invalid_link": {
+                "map": {
+                    "title": "Invalid Map Link {{mapsI}}",
+                    "content": "The provided map link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from one of the following platforms: <br><br> {{googleMapsI}} <strong>Google Maps</strong><br> {{appleMapsI}} <strong>Apple Maps</strong><br>"
+                },
+                "instagram": {
+                    "title": "Invalid Instagram Link {{linkI}}",
+                    "content": "The provided link is not valid. Make sure it starts with \"https://www.instagram.com\""
+                },
+                "media": {
+                    "title": "Invalid Link {{linkI}}",
+                    "content": "The provided link is not valid. Make sure it starts with \"http://\" or \"https://\" and that it is from one of the following platforms: <br><br> {{tiktokI}} <strong>TikTok</strong><br> {{youtubeI}} <strong>Youtube</strong><br> {{instagramI}} <strong>Instagram Reels</strong>"
+                },
+                "twitter_image": {
+                    "title": "Invalid Twitter Image {{twitterI}}",
+                    "content": "The system does not support images coming from Twitter (a.k.a. {{xI}} if you’re a picky person).<br><br> Please use another external source for your images."
+                },
+                "generic": {
+                    "title": "Invalid Link {{genericI}}",
+                    "content": "The provided link is not valid. Make sure it starts with \"http://\" or \"https://\""
+                }
+            }
+            
         },
         "too_early": {
             "title": "You're a bit early! 😅",

@@ -1,7 +1,7 @@
 import { getSelectOptionsHTML } from "../../../support/html/fields.js";
 import { getID } from "../../../support/pages/selectors.js";
 import { getUserLanguage, translate } from "../../../main/translate.js";
-import { getDefaultProperties } from "../../../support/pages/mensagens.js";
+import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
 
 var DESCRIPTIONS = {};
 
@@ -52,7 +52,7 @@ function _getDescription(categoria, j) {
 function _openDescription(categoria, j) {
     const propriedades = getDefaultProperties();
     propriedades.titulo = _getDescriptionLabel(categoria, j);
-    propriedades.containers = _getContainersInput();
+    propriedades.containers = getContainersInput();
     propriedades.conteudo = _getDescriptionContent(categoria);
     propriedades.botoes = [{
         tipo: 'cancelar',
@@ -61,7 +61,7 @@ function _openDescription(categoria, j) {
         acao: `_saveDescription('${categoria}', ${j})`,
     }];
 
-    _displayFullMessage(propriedades);
+    displayFullMessage(propriedades);
 
     if (!_isDescriptionPreset(categoria, j-1)) {
         return;
@@ -128,7 +128,7 @@ function _saveDescription(categoria, j) {
         }
     }
     _addDescricao(categoria, j-1, description);
-    _closeMessage();
+    closeMessage();
 }
 
 function _descriptionSelectChangeAction() {

@@ -1,6 +1,6 @@
 import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
-import { getDefaultProperties } from "../../../support/pages/mensagens.js";
+import { getDefaultProperties, displayFullMessage } from "../../../support/pages/messages.js";
 import { getDateTitle, convertFromDateObject } from "../../../support/data/dates.js";
 
 var PROGRAMACAO_ABERTA = false;
@@ -75,7 +75,7 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
     propriedades.botoes = [];
     propriedades.containers.principal = container;
 
-    _displayFullMessage(propriedades);
+    displayFullMessage(propriedades);
 
     switch (INNER_PROGRAMACAO_ATUAL[index].tipo) {
         case 'hospedagens':

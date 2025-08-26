@@ -1,7 +1,7 @@
 import { getFieldValueOrNotify } from "../../../support/html/fields.js";
 import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
-import { getDefaultProperties } from "../../../support/pages/mensagens.js";
+import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
 
 export var PIN_GASTOS = {
     current: '',
@@ -46,7 +46,7 @@ function _reconfirmPin() {
 function _validatePin(pin) {
     if (getID('pin-code').innerText === pin) {
         PIN_GASTOS.new = pin;
-        _closeMessage();
+        closeMessage();
     } else {
         _invalidPin();
     }
@@ -103,14 +103,14 @@ function _openInnerGasto(categoria, tipo = '', index = -1) {
     propriedades.titulo = tipo ? translate('labels.edit') : translate('labels.add');
     propriedades.conteudo = _getInnerGastoContent(categoria, tipo, index);
     propriedades.icones = [{ tipo: 'voltar', acao: '' }];
-    propriedades.containers = _getContainersInput();
+    propriedades.containers = getContainersInput();
     propriedades.botoes = [{
         tipo: 'cancelar',
     }, {
         tipo: 'confirmar',
         acao: `_saveInnerGasto('${categoria}', '${tipo}', ${index})`
     }];
-    _displayFullMessage(propriedades);
+    displayFullMessage(propriedades);
 
     if (tipo && index >= 0) {
         const gasto = INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos[index];
@@ -251,7 +251,7 @@ function _saveInnerGasto(categoria, tipo, index = -1) {
     }
     _updateInnerGastos();
     _loadGastosHTML();
-    _closeMessage();
+    closeMessage();
 }
 
 function _updateInnerGastos() {
@@ -268,5 +268,5 @@ function _updateInnerGastos() {
 function _deleteInnerGasto(categoria, tipo, index) {
     INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos.splice(index, 1);
     _loadGastosHTML();
-    _closeMessage();
+    closeMessage();
 }

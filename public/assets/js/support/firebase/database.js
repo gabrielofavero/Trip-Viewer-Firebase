@@ -2,6 +2,7 @@ import { getUID } from "./user.js";
 import { translate } from "../../main/translate.js";
 import { getURLParam } from "../data/data.js";
 import { getDateString } from "../data/dates.js";
+import { displayError } from "../pages/messages.js";
 
 export var DOCUMENT_ID;
 export var ERROR_FROM_GET_REQUEST = "";
@@ -135,7 +136,7 @@ export async function getSingleData(type) {
         }
       }
     } else {
-      _displayError(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`);
+      displayError(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`);
     }
   } catch (error) {
     console.error('Error fetching data from Firestore:', error.message);

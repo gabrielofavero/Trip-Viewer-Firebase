@@ -1,6 +1,6 @@
 import { translate } from "../../main/translate.js";
 import { getJson, getPage } from "./data/data.js";
-import { getDefaultProperties, displayFullMessage } from "./mensagens.js";
+import { getDefaultProperties, displayFullMessage } from "./messages.js";
 import { on } from "../../main/app.js";
 
 export function loadCreditsListeners() {

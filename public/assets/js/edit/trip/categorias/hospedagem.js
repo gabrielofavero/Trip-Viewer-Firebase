@@ -4,7 +4,7 @@ import { closeAccordions, openLastAccordion } from "../../../support/html/accord
 import { validateLink, validateImageLink } from "../../../support/html/fields.js";
 import { getID, getChildIDs, getSecondaryID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
-import { getDefaultProperties } from "../../../support/pages/mensagens.js";
+import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
 import { convertFromDateObject, getDateString, getTimeString } from "../../../support/data/dates.js";
 
 var HOSPEDAGEM_IMAGENS = {};
@@ -64,7 +64,7 @@ function _openImagensHospedagem(j) {
     const propriedades = getDefaultProperties();
 
     propriedades.titulo = translate('labels.image.add_title');
-    propriedades.containers = _getContainersInput();
+    propriedades.containers = getContainersInput();
     propriedades.conteudo = _getImagemHospedagemContent(size);
     propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerImagemHospedagem()` }];
     propriedades.botoes = [{
@@ -74,7 +74,7 @@ function _openImagensHospedagem(j) {
         acao: `_saveImagensHospedagem(${j})`,
     }];
 
-    _displayFullMessage(propriedades);
+    displayFullMessage(propriedades);
     initializeSortableForGroup(`imagem-hospedagens`, { onEnd: '' });
 
     for (let k = 1; k <= size; k++) {
@@ -189,7 +189,7 @@ function _saveImagensHospedagem(j) {
     }
     
     HOSPEDAGEM_IMAGENS[j] = result;
-    _closeMessage();
+    closeMessage();
 }
 
 function _removeHospedagemImagens(j) {

@@ -22,17 +22,19 @@ const MENSAGEM_PROPRIEDADES = {
   }
 }
 
+
+// Default Message Styling
 export function getDefaultProperties() {
   return cloneObject(MENSAGEM_PROPRIEDADES);
 }
 
 
-// Mensagem Genérica
-function _displayMessage(titulo, conteudo) {
+// Generic Message
+export function displayMessage(titulo, conteudo) {
   const properties = getDefaultProperties();
   if (titulo) properties.titulo = titulo;
   if (conteudo) properties.conteudo = conteudo;
-  _displayFullMessage(properties);
+  displayFullMessage(properties);
 }
 
 export function displayFullMessage(propriedades = getDefaultProperties()) {
@@ -61,7 +63,7 @@ export function displayFullMessage(propriedades = getDefaultProperties()) {
 
   // Criticidade
   if (!propriedades.critico) {
-    const buttonsBox = _getIconsBox(propriedades.icones);
+    const buttonsBox = getIconsBox(propriedades.icones);
     textDiv.appendChild(buttonsBox);
   }
 
@@ -81,7 +83,7 @@ export function displayFullMessage(propriedades = getDefaultProperties()) {
 
   // Mensagem de Erro
   if (isErrorMessage) {
-    const errorElement = _getErrorElement(propriedades.erro, textDiv);
+    const errorElement = getErrorElement(propriedades.erro, textDiv);
     textDiv.appendChild(errorElement);
   }
 
@@ -93,7 +95,7 @@ export function displayFullMessage(propriedades = getDefaultProperties()) {
     buttonBox.style.marginTop = '25px';
 
     for (const buttonType of propriedades.botoes) {
-      const button = _getButton(buttonType);
+      const button = getButton(buttonType);
       buttonBox.appendChild(button);
     }
 
@@ -121,13 +123,13 @@ export function displayFullMessage(propriedades = getDefaultProperties()) {
 }
 
 
-// Mensagem de Erro
-function _displayError(erro, tentarNovamente = false) {
+// Error Message
+export function displayError(erro, tentarNovamente = false) {
   const propriedades = getDefaultProperties();
 
   propriedades.titulo = translate('messages.errors.load_title');
   propriedades.critico = true;
-  propriedades.conteudo = _getErrorMessage(erro);
+  propriedades.conteudo = getErrorMessage(erro);
   propriedades.localizacao = false; // Desabilitado. Não faz sentido mostrar ao usuário.
 
   const botoes = tentarNovamente ? [{ tipo: 'tente-novamente' }] : [];
@@ -135,10 +137,10 @@ function _displayError(erro, tentarNovamente = false) {
     botoes.push({ tipo: 'home' });
   }
   propriedades.botoes = botoes;
-  _displayFullMessage(propriedades);
+  displayFullMessage(propriedades);
 }
 
-function _getErrorMessage(erro) {
+function getErrorMessage(erro) {
   const isError = (erro && erro instanceof Error);
   const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
 
@@ -155,8 +157,8 @@ function _getErrorMessage(erro) {
   }
 }
 
-// Mensagem de Não Autorizado
-function _displayForbidden(conteudo, redirectTo = 'view.html') {
+// Forbidden Message
+export function displayForbidden(conteudo, redirectTo = 'view.html') {
   const propriedades = getDefaultProperties();
   propriedades.titulo = translate('messages.access_denied.title');
   propriedades.conteudo = conteudo || translate('messages.access_denied.message');
@@ -165,12 +167,12 @@ function _displayForbidden(conteudo, redirectTo = 'view.html') {
     tipo: 'voltar',
     acao: redirectTo
   }];
-  _displayFullMessage(propriedades);
+  displayFullMessage(propriedades);
 }
 
 
-// Fechar Mensagem
-function _closeMessage() {
+// Message Navigation
+export function closeMessage() {
   if (MESSAGE_MODAL_OPEN) {
     const preloader = getID('preloader');
     if (preloader) {
@@ -186,15 +188,15 @@ function _closeMessage() {
 }
 
 
-// Funções de Suporte
-function _getContainersInput() {
+// Support Functions
+export function getContainersInput() {
   return {
     principal: 'input-container',
     botoes: 'button-box-right'
   }
 }
 
-function _getIconsBox(icones) {
+function getIconsBox(icones) {
   const iconContainer = document.createElement('div');
   iconContainer.className = 'icon-container';
   iconContainer.style.textAlign = 'right';
@@ -214,7 +216,7 @@ function _getIconsBox(icones) {
   cancelIcon.id = 'cancel-icon';
   cancelIcon.className = 'iconify';
   cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
-  cancelIcon.setAttribute('onclick', '_closeMessage()');
+  cancelIcon.setAttribute('onclick', 'closeMessage()');
   cancelIcon.style.cursor = 'pointer';
 
   iconContainer.appendChild(cancelIcon);
@@ -222,7 +224,7 @@ function _getIconsBox(icones) {
   return iconContainer;
 }
 
-function _getErrorElement(erro) {
+function getErrorElement(erro) {
   let location = "";
   if (erro?.showLocation) {
     const stackTrace = erro.error ? erro.error.stack : (new Error()).stack;
@@ -251,31 +253,31 @@ function _getErrorElement(erro) {
   return errorElement;
 }
 
-// Botões
-function _getButton(botao) {
+// Buttons
+function getButton(botao) {
   switch (botao.tipo) {
     case 'tente-novamente':
-      return _getTryAgainButton();
+      return getTryAgainButton();
     case 'home':
-      return _getHomeButton();
+      return getHomeButton();
     case 'voltar':
-      return _getBackButton(botao.acao);
+      return getBackButton(botao.acao);
     case 'fechar':
-      return _getCloseButton();
+      return getCloseButton();
     case 'cancelar':
-      return _getCloseButton(translate('labels.cancel'), botao.acao);
+      return getCloseButton(translate('labels.cancel'), botao.acao);
     case 'confirmar':
-      return _getConfirmButton(botao.acao);
+      return getConfirmButton(botao.acao);
     case 'apagar':
-      return _getDeleteButton(botao.acao);
+      return getDeleteButton(botao.acao);
     case 'apagar-basico':
-      return _getDeleteButtonBasic(botao.acao);
+      return getDeleteButtonBasic(botao.acao);
     default:
-      return _getCloseButton(translate('labels.understood'));
+      return getCloseButton(translate('labels.understood'));
   }
 }
 
-function _getHomeButton() {
+function getHomeButton() {
   const homeButton = ['edit/trip', 'edit/destination', 'edit/listing'].includes(getPage()) ? '../index.html' : 'index.html'
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
@@ -293,7 +295,7 @@ function _getHomeButton() {
   return button;
 }
 
-function _getBackButton(redirectTo = 'index.html') {
+function getBackButton(redirectTo = 'index.html') {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
@@ -310,7 +312,7 @@ function _getBackButton(redirectTo = 'index.html') {
   return button;
 }
 
-function _getTryAgainButton() {
+function getTryAgainButton() {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
@@ -327,19 +329,19 @@ function _getTryAgainButton() {
   return button;
 }
 
-function _getCloseButton(name, onclick) {
+function getCloseButton(name, onclick) {
   name = name ? name : translate('labels.close');
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', onclick ? onclick : '_closeMessage();');
+  button.setAttribute('onclick', onclick ? onclick : 'closeMessage();');
   button.id = 'message-close';
 
   button.innerHTML = name;
   return button;
 }
 
-function _getConfirmButton(onclick = '_closeMessage();') {
+function getConfirmButton(onclick = 'closeMessage();') {
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
@@ -350,7 +352,7 @@ function _getConfirmButton(onclick = '_closeMessage();') {
   return button;
 }
 
-function _getDeleteButton(onclick, buttonClass = 'btn-secondary') {
+function getDeleteButton(onclick, buttonClass = 'btn-secondary') {
   const button = document.createElement('button');
   button.className = `btn ${buttonClass} btn-format`;
   button.type = 'submit';
@@ -367,19 +369,21 @@ function _getDeleteButton(onclick, buttonClass = 'btn-secondary') {
   return button;
 }
 
-function _getDeleteButtonBasic(onclick) {
-  return _getDeleteButton(onclick, 'btn-basic');
+function getDeleteButtonBasic(onclick) {
+  return getDeleteButton(onclick, 'btn-basic');
 }
 
-function _openToast(text) {
+
+// Toast
+export function openToast(text) {
   getID('toast-text').innerHTML = text;
   _fadeIn(['toast']);
   setTimeout(() => {
-    _closeToast();
+    closeToast();
   }, 3000);
 }
 
-function _closeToast() {
+function closeToast() {
   if (getID('toast').style.display != 'none') {
     _fadeOut(['toast']);
   }

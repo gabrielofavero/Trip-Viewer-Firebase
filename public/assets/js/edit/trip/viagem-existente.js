@@ -6,6 +6,7 @@ import { getAllValuesFromSelect } from "../../support/html/fields.js";
 import { cloneObject } from "../../support/data/object.js";
 import { convertFromDateObject, getDateString, getTimeString } from "../../support/data/dates.js";
 import { getPage } from "../../support/data/data.js";
+import { displayError } from "../../support/pages/messages.js";
 
 async function _loadTripData() {
     try {
@@ -22,7 +23,7 @@ async function _loadTripData() {
 
         document.title = `${translate('labels.edit')} ${FIRESTORE_DATA.titulo}`;
     } catch (error) {
-        _displayError(error);
+        displayError(error);
         throw error;
     }
 }
@@ -118,7 +119,7 @@ async function _loadGastosData() {
     }
     
     if (ERROR_FROM_GET_REQUEST) {
-        _displayError(ERROR_FROM_GET_REQUEST);
+        displayError(ERROR_FROM_GET_REQUEST);
         return;
     }
 

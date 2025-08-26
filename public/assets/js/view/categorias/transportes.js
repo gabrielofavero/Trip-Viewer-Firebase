@@ -2,6 +2,7 @@ import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { codifyText } from "../../support/data/data.js";
 import { convertFromDateObject, getDateString, getTimeString, jsTimeToVisualTime } from "../../support/data/dates.js";
+import { openToast } from "../../support/pages/messages.js";
 
 var TRANSPORTE_ICONES = [];
 var TRANSPORTE_ATIVO;
@@ -258,7 +259,7 @@ function _loadIconeGeralTransporte() {
 
 function _copyToClipboard(text) {
   navigator.clipboard.writeText(text);
-  _openToast(translate('messages.text_copied'));
+  openToast(translate('messages.text_copied'));
 }
 
 function _loadSelectTransportes() {

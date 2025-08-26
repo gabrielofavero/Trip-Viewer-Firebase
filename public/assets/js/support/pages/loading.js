@@ -1,6 +1,6 @@
 import { getID } from "./selectors.js";
 import { translate } from "../../main/translate.js";
-import { MESSAGE_MODAL_OPEN } from "./mensagens.js";
+import { MESSAGE_MODAL_OPEN, displayError } from "./messages.js";
 
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;
@@ -44,7 +44,7 @@ export function startLoadingTimer() {
         stopLoadingTimer();
         localStorage.setItem('firstLoad', 'true');
         const error = new Error(translate('messages.errors.loading_timeout'));
-        _displayError(error, true);
+        displayError(error, true);
       }
     }, 1000);
   }

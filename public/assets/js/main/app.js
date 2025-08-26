@@ -9,6 +9,7 @@
 import { getLanguagePackName, translatePage, loadLangSelectorSelect } from "./translate.js";
 import { loadCreditsListeners } from "../support/pages/credits.js";
 import {on, select, onscroll} from "../support/pages/selectors.js"
+import { displayError } from "../support/pages/messages.js";
 
 export var SUCCESSFUL_SAVE = false;
 export var CONFIG;
@@ -220,8 +221,8 @@ async function loadConfig() {
     translatePage();
     loadAppVersioning()
   }).catch(error => {
-    console.error('Erro ao carregar a configuração:', error);
-    _displayError('Erro ao carregar a configuração');
+    console.error('Error while loading the application configuration:', error);
+    displayError(translate('messages.errors.config'));
   });
 }
 

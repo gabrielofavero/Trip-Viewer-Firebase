@@ -6,6 +6,7 @@ import { translate } from "../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
 import { convertFromDateObject } from "../support/data/dates.js";
 import { getDateString } from "../support/data/dates.js";
+import { displayError } from "../support/pages/messages.js";
 
 var USER_DATA = {};
 
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('body').css('overflow', 'auto');
 
   } catch (error) {
-    _displayError(error);
+    displayError(error);
     throw error;
   }
 });
@@ -141,7 +142,7 @@ async function _loadUserIndex() {
     });
   } catch (error) {
     stopLoadingScreen();
-    _displayError(error);
+    displayError(error);
     throw error;
   }
   stopLoadingScreen();
