@@ -1,4 +1,5 @@
 import { getID } from "../pages/selectors.js";
+import { getPage } from "../data/data.js";
 
 var THEME_COLOR;
 var THEME_COLOR_HOVER;
@@ -149,8 +150,8 @@ function _hexToRgbText(hex, a) {
 
 // Checkers
 function _isCustomColorsActive() {
-    const html = _getHTMLpage();
-    if (html === 'destinos' || html === 'gastos') {
+    const html = getPage();
+    if (html === 'destination' || html === 'expenses') {
         return localStorage.getItem("customColors") === "true";
     } else {
         return CUSTOM_COLORS

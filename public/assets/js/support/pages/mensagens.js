@@ -2,6 +2,7 @@ import { getID } from "./selectors.js";
 import { translate } from "../../main/translate.js";
 import { stopLoadingScreen, stopLoadingTimer } from "./loading.js";
 import { cloneObject } from "../data/object.js";
+import { getPage } from "../data/data.js";
 
 export var MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {
@@ -275,7 +276,7 @@ function _getButton(botao) {
 }
 
 function _getHomeButton() {
-  const homeButton = ['editar-viagem', 'editar-destino', 'editar-listagem'].includes(_getHTMLpage()) ? '../index.html' : 'index.html'
+  const homeButton = ['edit/trip', 'edit/destination', 'edit/listing'].includes(getPage()) ? '../index.html' : 'index.html'
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
   button.type = 'submit';

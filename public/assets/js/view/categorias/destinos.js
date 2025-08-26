@@ -1,6 +1,7 @@
 import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { cloneObject } from "../../support/data/object.js";
+import { isIOSDevice } from "../../support/pages/dispositivos.js";
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
@@ -154,7 +155,7 @@ function _getDestinationsBoxesIndex(i) {
 }
 
 function _getLinkType() {
-  if (_isIOSDevice()) {
+  if (isIOSDevice()) {
     return "";
   } else {
     return "target='_blank'";

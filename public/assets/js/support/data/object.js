@@ -3,6 +3,7 @@ import { FIRESTORE_DATA } from "../firebase/database.js";
 import { stopLoadingScreen } from "../pages/loading.js";
 import { FIRESTORE_DATA, FIRESTORE_NEW_DATA, FIRESTORE_PROGRAMACAO_DATA, FIRESTORE_GASTOS_DATA, FIRESTORE_GASTOS_NEW_DATA, FIRESTORE_DESTINOS_DATA, FIRESTORE_DESTINOS_NEW_DATA } from "../firebase/database.js";
 import { PIN_GASTOS } from "../../edit/trip/categorias/gastos.js";
+import { getPage } from "./data.js";
 
 var DOCS_CHANGED;
 
@@ -51,20 +52,20 @@ function compareDocuments() {
     data: [],
   };
 
-  switch (_getHTMLpage()) {
-    case 'editar-viagem':
+  switch (getPage()) {
+    case 'edit/trip':
       result.multiple = true;
       _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
       _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
       _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
       _compareAndPush({ obj1: { pin: PIN_GASTOS.current }, obj2: { pin: PIN_GASTOS.new }, ignoredPaths: [], name: 'senha de acesso aos gastos' });
       break;
-    case 'editar-listagem':
+    case 'edit/listing':
       const ignoredPaths = _getIgnoredPathDestinos();
       ignoredPaths.push('versao.ultimaAtualizacao');
       _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ignoredPaths, name: 'dados da listagem' });
       break;
-    case 'editar-destino':
+    case 'edit/destination':
       _compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
       break;
     default:

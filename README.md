@@ -6,7 +6,7 @@
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 78    | 77        | 1       |
 | 🏆   | Feature      | F000  | 97    | 70        | 27      |
-| 📈   | Improvement  | M000  | 110   | 80        | 28      |
+| 📈   | Improvement  | M000  | 115   | 81        | 34      |
 | ⚔️   | Epic         | E000  | 34    | 19        | 15      |
 
 - 🚦: Blocked
@@ -24,6 +24,10 @@
   - 📈 **M104:** [⚔️E034] All external links should open via window.open
   - 📈 **M110:** [⚔️E034] Use logo as symbol instead of dynamic svg
   - 📈 **M111:** [⚔️E034] Make database EN-US
+  - 📈 **M112:** [⚔️E034] Remove JSON file from set logic
+  - 📈 **M113:** [⚔️E034] Remove JSON from call-sync-order logic
+  - 📈 **M114:** [⚔️E034] Reduce eval logic
+  - 📈 **M115:** [⚔️E034] Change css files/folder structures to EN-US
 
 ### High Priority
 

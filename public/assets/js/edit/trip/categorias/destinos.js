@@ -1,5 +1,6 @@
 import { getID, getIDs, getChildIDs, getSecondaryID, getSecondaryIDs } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { getPage } from "../../../support/data/data.js";
 
 var DESTINOS_ATIVOS = [];
 var DESTINOS_ORDENADOS = [];
@@ -35,9 +36,8 @@ function _loadDestinosAtivos(firstBoot = true) {
 function _updateDestinosAtivosHTMLs() {
     _loadDestinosAtivos(false);
 
-    if (_getHTMLpage() === 'editar-viagem') {
+    if (getPage() === 'edit/trip') {
         _updateDestinosAtivosCheckboxHTML('programacao');
-        // _updateDestinosAtivosSelectHTML('lineup');
     }
 }
 

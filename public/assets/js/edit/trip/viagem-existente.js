@@ -5,6 +5,7 @@ import { translate } from "../../main/translate.js";
 import { getAllValuesFromSelect } from "../../support/html/fields.js";
 import { cloneObject } from "../../support/data/object.js";
 import { convertFromDateObject, getDateString, getTimeString } from "../../support/data/dates.js";
+import { getPage } from "../../support/data/data.js";
 
 async function _loadTripData() {
     try {
@@ -239,7 +240,7 @@ function _loadHospedagemData() {
 }
 
 function _loadDestinosData() {
-    if (_getHTMLpage() === 'editar-listagem' || FIRESTORE_DATA.modulos.destinos === true) {
+    if (getPage() === 'edit/listing' || FIRESTORE_DATA.modulos.destinos === true) {
         if (getID('habilitado-destinos')) {
             getID('habilitado-destinos').checked = true;
         }

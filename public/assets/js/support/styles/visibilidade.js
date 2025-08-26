@@ -1,5 +1,5 @@
 import { getID, getSecondaryIDs } from "../pages/selectors.js";
-import { firstCharToUpperCase, removeChildWithValidation, removeEmptyChild } from "../pages/data/data.js";
+import { firstCharToUpperCase, removeChildWithValidation, removeEmptyChild, getPage } from "../pages/data/data.js";
 import { getCurrentHour } from "../data/dates.js";
 
 var CHANGED_SVGS = [];
@@ -73,7 +73,8 @@ function _loadDarkMode() {
      THEME_COLOR_HOVER = _getDarkerColor(ESCURO, 10);
      THEME_COLOR_SECONDARY = _getDarkerColor(ESCURO);
 
-     const name = _getHTMLpage();
+     const name = getPage().split('/')[0];
+
      var link = document.createElement("link");
      link.href = _getCssHref(name, true) + '?version=' + new Date().getTime(); // Adiciona um timestamp como parâmetro de consulta
      link.type = "text/css";
@@ -96,7 +97,7 @@ function _loadLightMode() {
      THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
      THEME_COLOR_SECONDARY = _getLighterColor(CLARO);
 
-     const name = _getHTMLpage();
+     const name = getPage().split('/')[0];
      var link = document.createElement("link");
      link.href = _getCssHref(name, false);
      link.type = "text/css";
@@ -199,20 +200,20 @@ function _autoVisibility() {
 }
 
 function _applyCustomVisibilityRules() {
-     const html = _getHTMLpage()
+     const html = getPage()
      _clearCustomColors();
      switch (html) {
-          case 'viagem':
+          case 'view':
                _loadLogoColors();
                _applyCustomColors();
                _loadTransporteImagens();
                break;
-          case 'destinos':
+          case 'destination':
                _loadLogoColors();
                _applyAccordionArrowCustomColor();
                _applyCustomColors();
                break;
-          case 'gastos':
+          case 'expenses':
                _loadLogoColors();
                _applyCustomColors();
                _changeChartsLabelsVisibility();
