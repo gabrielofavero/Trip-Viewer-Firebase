@@ -17,20 +17,27 @@
 
 ### Doing
 
-- ⚔️ **E034:** Frontend code overhaul
-  - 📈 **M106:** [⚔️E034] Use require in js files
+- ⚔️ **E034:** Frontend code overhaul  
+  - 📈 **M106:** [⚔️E034] Use imports in js files
   - 📈 **M105:** [⚔️E034] Remove CONFIG and reduce use of global variables
-  - 📈 **M098:** [⚔️E034] Change js functions/folder structures to EN-US
   - 📈 **M104:** [⚔️E034] All external links should open via window.open
   - 📈 **M110:** [⚔️E034] Use logo as symbol instead of dynamic svg
   - 📈 **M111:** [⚔️E034] Make database EN-US
   - 📈 **M112:** [⚔️E034] Remove JSON file from set logic
   - 📈 **M113:** [⚔️E034] Remove JSON from call-sync-order logic
   - 📈 **M114:** [⚔️E034] Reduce eval logic
-  - 📈 **M115:** [⚔️E034] Change css files/folder structures to EN-US
   - 📈 **M116:** [⚔️E034] Translate all pop-ups
   - 📈 **M117:** [⚔️E034] Change all on-clicks to event listeners
   - 📈 **M118:** [⚔️E034] Remove underline from beggining of each function
+
+
+  - Pages
+  - Styles
+  - Index
+  - View
+  - Destination
+  - Expenses
+  - Edit (good luck)
 
 ### High Priority
 
@@ -135,6 +142,9 @@
 - 📈 **M109:** Make highlights display 2/2 when screen width is tablet/mobile
 - 🐞 **B077:** Daily schedule not scrolling to table
 - 🐞 **B078:** App version not loading due to CONFIG async nature
+- ⚔️ **E034:** Frontend code overhaul
+  - 📈 **M098:** [⚔️E034] Change js functions/folder structures to EN-US
+  - 📈 **M115:** [⚔️E034] Change css files/folder structures to EN-US
 
 ### July 2025
 - 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
