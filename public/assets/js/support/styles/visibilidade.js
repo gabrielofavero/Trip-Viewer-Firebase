@@ -1,6 +1,7 @@
 import { getID, getSecondaryIDs } from "../pages/selectors.js";
 import { firstCharToUpperCase, removeChildWithValidation, removeEmptyChild, getPage } from "../pages/data/data.js";
 import { getCurrentHour } from "../data/dates.js";
+import { animateFadeIn, animateFadeOut } from "./animations.js";
 
 var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
@@ -264,11 +265,11 @@ function _isOnDarkMode() {
 
 // ======= Modal Functions =======
 function _openModal(modalID = 'modal') {
-     _fadeIn([modalID]);
+     animateFadeIn([modalID]);
 }
 
 function _closeModal(modalID = 'modal') {
-     _fadeOut([modalID], 'down');
+     animateFadeOut([modalID], 'down');
 }
 
 export function isModalOpen(modalID = 'modal') {

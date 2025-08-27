@@ -3,6 +3,7 @@ import { translate } from "../../main/translate.js";
 import { stopLoadingScreen, stopLoadingTimer } from "./loading.js";
 import { cloneObject } from "../data/object.js";
 import { getPage } from "../data/data.js";
+import { animateFadeIn, animateFadeOut } from "../styles/animations.js";
 
 export var MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {
@@ -377,7 +378,7 @@ function getDeleteButtonBasic(onclick) {
 // Toast
 export function openToast(text) {
   getID('toast-text').innerHTML = text;
-  _fadeIn(['toast']);
+  animateFadeIn(['toast']);
   setTimeout(() => {
     closeToast();
   }, 3000);
@@ -385,6 +386,6 @@ export function openToast(text) {
 
 function closeToast() {
   if (getID('toast').style.display != 'none') {
-    _fadeOut(['toast']);
+    animateFadeOut(['toast']);
   }
 }

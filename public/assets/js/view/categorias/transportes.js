@@ -3,6 +3,7 @@ import { translate } from "../../main/translate.js";
 import { codifyText, getJson } from "../../support/data/data.js";
 import { convertFromDateObject, getDateString, getTimeString, jsTimeToVisualTime } from "../../support/data/dates.js";
 import { openToast } from "../../support/pages/messages.js";
+import { animateFade } from "../../support/styles/animations.js";
 
 const TRANSPORTATION = await getJson("/assets/json/transportes.json");
 
@@ -341,7 +342,7 @@ function _setTransporteAbasListeners() {
       getID(atual).style.visibility = '';
       getID(anterior).style.visibility = '';
 
-      _fade([anterior], [atual]);
+      animateFade([anterior], [atual]);
     });
   });
 }
@@ -393,6 +394,6 @@ function _resetSwiperVisibility() {
 
 function _customTransporteSelectAction() {
   const current = getID('transporte-select').value;
-  _fade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${current}`])
+  animateFade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${current}`])
   TRANSPORTE_ATIVO = current;
 }

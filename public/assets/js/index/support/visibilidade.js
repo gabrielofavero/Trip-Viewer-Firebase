@@ -1,4 +1,5 @@
 import { select, getID } from "../../support/pages/selectors.js";
+import { animate, animateFadeIn, animateFadeOut, fadeOut } from "../../support/styles/animations.js";
 
 const notificationBar = {
   changed: false,
@@ -79,8 +80,8 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
   }
 
   contentBox.style.overflowY = 'hidden';
-  _animate(fadeIn, fadeOut, from, to, horizontal);
-  _fadeIn(fadeInNoDirection);
-  _fadeOut(fadeOutNoDirection);
+  animate(fadeIn, fadeOut, from, to, horizontal);
+  animateFadeIn(fadeInNoDirection);
+  animateFadeOut(fadeOutNoDirection);
   contentBox.style.overflowY = 'auto';
 }

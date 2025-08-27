@@ -6,11 +6,10 @@
     - Modified by: Gabriel Fávero
 */
 
-import { getLanguagePackName, translatePage, loadLangSelectorSelect } from "./translate.js";
-import { loadCreditsListeners } from "../support/pages/credits.js";
-import {on, select, onscroll} from "../support/pages/selectors.js"
-import { displayError } from "../support/pages/messages.js";
 import { getJson } from "../support/data/data.js";
+import { loadCreditsListeners } from "../support/pages/credits.js";
+import { on, onscroll, select } from "../support/pages/selectors.js";
+import { loadLangSelectorSelect, translatePage } from "./translate.js";
 
 export var SUCCESSFUL_SAVE = false;
 

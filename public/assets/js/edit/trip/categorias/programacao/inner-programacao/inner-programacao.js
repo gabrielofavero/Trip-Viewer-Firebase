@@ -4,6 +4,7 @@ import { translate } from "../../../../../main/translate.js";
 import { getDefaultProperties, displayFullMessage, closeMessage, getContainersInput } from "../../../../../support/pages/messages.js";
 import { getDateTitle, jsDateToKey } from "../../../../../support/data/dates.js";
 import { DESTINATIONS } from "../../../../../view/categorias/destinos.js";
+import { animate } from "../../../../../support/styles/animations.js";
 
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
@@ -233,7 +234,7 @@ function _openInnerProgramacaoItem(j) {
         getID('message-title').innerText = translate('trip.itinerary.link_item');
     }
 
-    _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
+    animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
     _loadTextReplacementCheckboxes(j);
     TEXT_REPLACEMENT_APPLIED = false;
@@ -245,7 +246,7 @@ function _openInnerProgramacaoTroca() {
     itemTrocar.style.minHeight = `${height}px`;
 
     getID('message-title').innerText = "Trocar Programação";
-    _animate(['inner-programacao-item-trocar'], ['inner-programacao-tela-principal'])
+    animate(['inner-programacao-item-trocar'], ['inner-programacao-tela-principal'])
     getID('back-icon').style.visibility = 'visible';
 }
 
@@ -269,13 +270,13 @@ function _closeInnerProgramacao(j) {
         _replaceTimeIfEnabled();
         TEXT_REPLACEMENT_APPLIED = true;
 
-        _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
+        animate(['inner-programacao-tela-principal'], ['inner-programacao-item-selecionar'])
 
     } else if (getID('inner-programacao-item-trocar').style.display === 'block') {
         getID('message-title').innerText = _getInnerProgramacaoTitle(j);
         getID('back-icon').style.visibility = 'hidden';
 
-        _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
+        animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
     }
 }
 

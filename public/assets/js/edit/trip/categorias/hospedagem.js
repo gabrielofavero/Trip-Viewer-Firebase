@@ -6,6 +6,7 @@ import { getID, getChildIDs, getSecondaryID } from "../../../support/pages/selec
 import { translate } from "../../../main/translate.js";
 import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
 import { convertFromDateObject, getDateString, getTimeString } from "../../../support/data/dates.js";
+import { animateFade } from "../../../support/styles/animations.js";
 
 var HOSPEDAGEM_IMAGENS = {};
 
@@ -146,7 +147,7 @@ function _getImagemHospedagemContent(size = 5) {
 }
 
 function _openInnerImagemHospedagem(k) {
-    _fade([`imagem-hospedagens-botoes`], [`hospedagens-imagem-${k}`]);
+    animateFade([`imagem-hospedagens-botoes`], [`hospedagens-imagem-${k}`]);
     getID('back-icon').style.visibility = 'visible';
 }
 
@@ -162,7 +163,7 @@ function _closeInnerImagemHospedagem() {
             }
 
             getID(`hospedagens-imagem-botao-${k}`).innerText = titulo;
-            _fade([`hospedagens-imagem-${k}`], [`imagem-hospedagens-botoes`]);
+            animateFade([`hospedagens-imagem-${k}`], [`imagem-hospedagens-botoes`]);
             break;
         }
     }

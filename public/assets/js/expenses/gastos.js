@@ -5,6 +5,7 @@ import { translate } from "../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
 import { getURLParam } from "../support/data/data.js";
 import { displayError, displayForbidden, closeMessage } from "../support/pages/messages.js";
+import { animateFade } from "../support/styles/animations.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
@@ -165,9 +166,9 @@ function _setTabListeners() {
             const novo = radios.indexOf(radio);
 
             if (novo > antigo) {
-                _fade([gastoAnterior], [GASTO_ATIVO], 150);
+                animateFade([gastoAnterior], [GASTO_ATIVO], 150);
             } else {
-                _fade([gastoAnterior], [GASTO_ATIVO], 150);
+                animateFade([gastoAnterior], [GASTO_ATIVO], 150);
             }
         });
     });
