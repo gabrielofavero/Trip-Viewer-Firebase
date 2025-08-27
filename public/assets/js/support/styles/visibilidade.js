@@ -3,6 +3,7 @@ import { firstCharToUpperCase, removeChildWithValidation, removeEmptyChild, getP
 import { getCurrentHour } from "../data/dates.js";
 import { animateFadeIn, animateFadeOut } from "./animations.js";
 import { DARK_COLOR, LIGHT_COLOR, THEME_COLOR, THEME_COLOR_HOVER, THEME_COLOR_SECONDARY, changeBarColorIOS, clearCustomColors, getDarkerColor, getLighterColor, getLocalColors, isCustomColorsActive, loadLogoColors, saveLocalColors, setCustomColors, setDarkColor, setLightColor, setThemeColor, setThemeColorHover, setThemeColorSecondary } from "./colors.js";
+import { setCSSVariable } from "./stylesheets.js";
 
 var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
@@ -226,9 +227,9 @@ function _applyCustomVisibilityRules() {
 
 
 function _applyCustomColors() {
-     _setCSSVariable('theme-color', THEME_COLOR);
-     _setCSSVariable('theme-color-hover', THEME_COLOR_HOVER);
-     _setCSSVariable('theme-color-secondary', THEME_COLOR_SECONDARY);
+     setCSSVariable('theme-color', THEME_COLOR);
+     setCSSVariable('theme-color-hover', THEME_COLOR_HOVER);
+     setCSSVariable('theme-color-secondary', THEME_COLOR_SECONDARY);
 }
 
 function _disableScroll() {

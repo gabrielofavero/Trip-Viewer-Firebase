@@ -1,4 +1,5 @@
 import { getID } from "../../support/pages/selectors.js";
+import { setCSSRule } from "../../support/styles/stylesheets.js";
 
 function _adjustButtonsPositionDestinos() {
     const first = "10px";
@@ -20,12 +21,12 @@ function _applyDestinosMediaHeight() {
         const heightPortrait = (width * 16) / 9;
         const heightLandscape = (width * 9) / 16;
         
-        _setCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
+        setCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
 
         if (getID('content').offsetWidth <= 550) {
-            _setCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
+            setCSSRule('.tiktok-embed-v3', 'height', `${heightPortrait}px`);
         } else {
-            _setCSSRule('.tiktok-embed-v3', 'height', `533px`);
+            setCSSRule('.tiktok-embed-v3', 'height', `533px`);
         }
     }
 }
@@ -33,7 +34,7 @@ function _applyDestinosMediaHeight() {
 function _applyAccordionArrowCustomColor() {
     const color = THEME_COLOR.replace("#", "%23");
     const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='${color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>`;
-    _setCSSRule('.accordion-button::after', 'background-image', `url("data:image/svg+xml,${svg}") !important`);
+    setCSSRule('.accordion-button::after', 'background-image', `url("data:image/svg+xml,${svg}") !important`);
 }
 
 

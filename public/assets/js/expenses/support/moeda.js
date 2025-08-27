@@ -2,6 +2,7 @@ import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { displayError } from "../../support/pages/messages.js";
 import { getJson } from "../../support/data/data.js";
+import { setCSSRule } from "../../support/styles/stylesheets.js";
 
 export const CURRENCY = await getJson("/assets/json/moedas.json");
 
@@ -106,7 +107,7 @@ function _loadMoedasTab() {
 
     const childs = getChildIDs('tab-moedas');
     for (let i = 0; i < childs.length; i++) {
-        _setCSSRule(`input[id="${childs[i]}"]:checked~.glider-mini`, 'transform', `translateX(${i * 100}%)`);
+        setCSSRule(`input[id="${childs[i]}"]:checked~.glider-mini`, 'transform', `translateX(${i * 100}%)`);
 
         const radio = getID(`radio-moeda-${i+1}`);
         radio.addEventListener('change', () => {

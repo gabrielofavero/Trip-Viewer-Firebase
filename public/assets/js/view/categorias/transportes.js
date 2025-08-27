@@ -4,6 +4,7 @@ import { codifyText, getJson } from "../../support/data/data.js";
 import { convertFromDateObject, getDateString, getTimeString, jsTimeToVisualTime } from "../../support/data/dates.js";
 import { openToast } from "../../support/pages/messages.js";
 import { animateFade } from "../../support/styles/animations.js";
+import { setCSSRule } from "../../support/styles/stylesheets.js";
 
 const TRANSPORTATION = await getJson("/assets/json/transportes.json");
 
@@ -322,7 +323,7 @@ function _loadAbasTransportesHTML() {
 
   const childs = getChildIDs('tab-transporte');
   for (let i = 0; i < childs.length; i++) {
-    _setCSSRule(`.tabs-container input[id="${childs[i]}"]:checked~.glider`, 'transform', `translateX(${i * 100}%)`);
+    setCSSRule(`.tabs-container input[id="${childs[i]}"]:checked~.glider`, 'transform', `translateX(${i * 100}%)`);
   }
 }
 
