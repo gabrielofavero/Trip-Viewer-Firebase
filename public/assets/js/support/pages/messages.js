@@ -385,7 +385,7 @@ export function openToast(text) {
   }, 3000);
 }
 
-function closeToast() {
+export function closeToast() {
   if (getID('toast').style.display != 'none') {
     animateFadeOut(['toast']);
   }

@@ -115,8 +115,8 @@
   </div>
   <div class="notification-bar" id="notification-bar">
     <span class="notification-text" id="notification-text"></span>
-    <span class="notification-link" id="notification-link" onclick="goToCurrentTrip()"><i class="iconify external-link" data-icon="tabler:external-link"></i></span>
-    <span class="notification-close" onclick="closeNotification()"><i class="iconify" data-icon="material-symbols:close"></i></span>
+    <span class="notification-link" id="notification-link"><i class="iconify external-link" data-icon="tabler:external-link"></i></span>
+    <span class="notification-close"><i class="iconify" data-icon="material-symbols:close"></i></span>
   </div>
 
   <!-- ======= Hero ======= -->
@@ -172,8 +172,7 @@
           <div id="preloader-proximasViagens"></div>
           <div class="demora-carregamento" id="demora-carregamento-proximasViagens" style="display:none" data-translate="">
             <span data-translate="messages.long_load"></span><br>
-            <button id="carregar-novamente-proximasViagens" class="btn btn-theme carregar-novamente" type="button"
-              onclick="_manualListLoad('viagens')">
+            <button id="carregar-novamente-proximasViagens" class="btn btn-theme carregar-novamente" type="button">
               <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-proximasViagens" style="display:none" data-translate="messages.no_data"></div>
@@ -189,8 +188,7 @@
           <div id="preloader-viagensAnteriores"></div>
           <div class="demora-carregamento" id="demora-carregamento-viagensAnteriores" style="display:none">
             <span data-translate="messages.long_load"></span><br>
-            <button id="carregar-novamente-viagensAnteriores" class="btn btn-theme carregar-novamente" type="button"
-              onclick="_manualListLoad('viagens')">
+            <button id="carregar-novamente-viagensAnteriores" class="btn btn-theme carregar-novamente" type="button">
               <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-viagensAnteriores" style="display:none" data-translate="messages.no_data"></div>
@@ -206,8 +204,7 @@
           <div id="preloader-destinos"></div>
           <div class="demora-carregamento" id="demora-carregamento-destinos" style="display:none">
             <span data-translate="messages.long_load"></span><br>
-            <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button"
-              onclick="_manualListLoad('destinos')">
+            <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button">
               <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-destinos" style="display:none" data-translate="messages.no_data"></div>
@@ -223,8 +220,7 @@
           <div id="preloader-listagens"></div>
           <div class="demora-carregamento" id="demora-carregamento-listagens" style="display:none">
             <span data-translate="messages.long_load"></span><br>
-            <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button"
-              onclick="_manualListLoad('listagens')">
+            <button id="carregar-novamente-listagens" class="btn btn-theme carregar-novamente" type="button">
               <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-listagens" style="display:none" data-translate="messages.no_data"></div>
@@ -244,11 +240,11 @@
           </div>
 
           <div id="delete-account-container">
-            <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="auth.delete_account.title"></a>
+            <a id="settings-delete-account" href="#" data-translate="auth.delete_account.title"></a>
           </div>
         </div>
 
-        <button id="settings-sign-out" class="btn btn-theme" onclick="_signOut()" type="button" data-translate="">
+        <button id="settings-sign-out" class="btn btn-theme" type="button" data-translate="">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
             <path fill="currentColor"
               d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z">
@@ -266,7 +262,7 @@
       <div class="modal-content">
         <div class="modal-text">
           <div id="cancel-icon" style="text-align: right;">
-            <a onclick="_closeModal()">
+            <a id="cancel-action">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor"
                   d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
@@ -278,7 +274,7 @@
           <p data-translate="auth.delete_account.message"></p>
         </div>
         <div class="button-box">
-          <button id="cancelar" class="btn btn-secondary" type="button" onclick="_closeModal()" data-translate="">
+          <button id="cancelar" class="btn btn-secondary" type="button" data-translate="">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
               <path fill="currentColor"
                 d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">

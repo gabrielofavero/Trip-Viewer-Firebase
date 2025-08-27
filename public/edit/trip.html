@@ -110,7 +110,7 @@
             <button data-lang="pt">PT</button>
           </div>
         </div>
-        <i onclick="window.location = '../index.html'" id="back" class="bx bx-arrow-back icon-buttons"></i>
+        <i id="back" class="bx bx-arrow-back icon-buttons"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
 
@@ -301,13 +301,13 @@
           <div class="side-by-side-box">
             <div class="nice-form-group side-by-side">
               <label data-translate="trip.travelers.info"></label>
-              <button id="travelers-info" class="btn input-botao travelers-input" onclick="_openTravelersInfo()"
+              <button id="travelers-info" class="btn input-botao travelers-input"
                 data-translate="labels.edit"></button>
             </div>
           </div>
 
           <div id="delete-text" style="display: none; margin-top:1em">
-            <a href="#" onclick="_deleteViagem()" data-translate="trip.delete.title"></a>
+            <a id="delete-trip" href="#" data-translate="trip.delete.title"></a>
           </div>
 
         </section>
@@ -582,7 +582,7 @@
                 <label for="pin-enable" data-translate="trip.expenses.private"></span></label>
               </div>
               <div class="nice-form-group" id="pin-container" style="display: none; margin-top: 16px">
-                <button id="request-pin" class="btn input-botao" onclick="_requestPinEditarGastos()"
+                <button id="request-pin" class="btn input-botao"
                   data-translate="trip.expenses.pin.new"></button>
               </div>
             </fieldset>
@@ -599,8 +599,7 @@
                     <div id="gastosPrevios"></div>
                     <div class="button-box-right" id="gasto-adicionar-box-gastosPrevios"
                       style="display: block; margin-top: 24px">
-                      <button id="programacao-adicionar-gastosPrevios" class="btn btn-theme"
-                        onclick="_openInnerGasto('gastosPrevios')">
+                      <button id="programacao-adicionar-gastosPrevios" class="btn btn-theme">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path
@@ -631,8 +630,7 @@
                     <div id="gastosDurante"></div>
                     <div class="button-box-right" id="gasto-adicionar-box-gastosDurante"
                       style="display: block; margin-top: 24px">
-                      <button id="programacao-adicionar-gastosDurante" class="btn btn-theme"
-                        onclick="_openInnerGasto('gastosDurante')">
+                      <button id="programacao-adicionar-gastosDurante" class="btn btn-theme">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path
@@ -694,7 +692,7 @@
           </div>
 
           <div class="button-box-formatted" id="transporte-adicionar-box">
-            <button id="transporte-adicionar" class="btn btn-theme" onclick="">
+            <button id="transporte-adicionar" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -886,7 +884,7 @@
       </div>
 
       <div class="button-box">
-        <button id="re-editar" class="btn btn-basic btn-format" type="button" onclick="_closeModal('delete-modal')">
+        <button id="re-editar" class="btn btn-basic btn-format" type="button">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
             <path fill="currentColor"
               d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36M20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z">
@@ -917,7 +915,7 @@
   <div id="preloader"></div>
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>

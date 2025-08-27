@@ -47,7 +47,7 @@ function _openModalCalendar(programacao) {
 
 }
 
-function _closeModalCalendar() {
+export function closeModalCalendar() {
     PROGRAMACAO_ABERTA = false;
     PROGRAMACAO_ATUAL.dia = 0;
     PROGRAMACAO_ATUAL.mes = 0;
@@ -118,7 +118,7 @@ function _loadCalendarItem(dataString) {
         const year = parseInt(dataString.split("/")[2]);
 
         if (day != 0 && day == PROGRAMACAO_ATUAL.dia && month == PROGRAMACAO_ATUAL.mes && year == PROGRAMACAO_ATUAL.ano) {
-            _closeModalCalendar();
+            closeModalCalendar();
         } else {
             PROGRAMACAO_ATUAL.dia = day;
             PROGRAMACAO_ATUAL.mes = month;

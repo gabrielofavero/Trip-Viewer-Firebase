@@ -1,72 +1,74 @@
 import { addRemoveChildListenerDS } from "../../../support/components/dynamic-select.js";
 import { DOCUMENT_ID } from "../../../support/firebase/database.js";
 import { editFieldAgain, validateLink, validateImageLink } from "../../../support/html/fields.js";
-import { getID } from "../../../support/pages/selectors.js";
+import { getID, on } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from "../../../support/data/dates.js";
 import { searchDestination } from "../categorias/destinos.js";
+import { goHomeFromEditDocumentPage } from "../../../support/pages/navigation.js";
+import { deleteViagem } from "../editar-viagem.js";
+import { closeToast } from "../../../support/pages/messages.js";
 
 var INPUT_DETECTED = false;
 
 // Loader
-function _loadEventListeners() {
+export function loadEditTripListeners() {
+
     // Inputs
-    getID('inicio').addEventListener('change', () => _inicioListenerAction());
-    getID('fim').addEventListener('change', () => _fimListenerAction());
+    on('change', '#inicio', _inicioListenerAction);
+    on('change', '#fim', _fimListenerAction);
 
-    // Botões
-    getID('editores-adicionar').addEventListener('click', () => _addEditores());
-    getID('salvar').addEventListener('click', () => _setViagem());
-    getID('re-editar').addEventListener('click', () => editFieldAgain('viagens', SUCCESSFUL_SAVE));
-    getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
-    getID('home').addEventListener('click', () => window.location.href = '../index.html');
-    getID('home').addEventListener('click', () => window.location.href = '../index.html');
-    getID('cancelar').addEventListener('click', () => window.location.href = '../index.html');
-    getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
-    getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
-    getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
-    getID('pin-enable').addEventListener('click', () => _switchPin());
-    getID('pin-disable').addEventListener('click', () => _switchPin());
+    // Buttons
+    on('click', '#editores-adicionar', _addEditores);
+    on('click', '#salvar', _setViagem);
+    on('click', '#re-editar', editTripFieldAgain);
+    on('click', '#visualizar', _visualizarListenerAction);
+    on('click', '#home', goHomeFromEditDocumentPage);
+    on('click', '#back', goHomeFromEditDocumentPage);
+    on('click', '#cancelar', goHomeFromEditDocumentPage);
+    on('click', '#transporte-adicionar', _transporteAdicionarListenerAction);
+    on('click', '#hospedagens-adicionar', _hospedagensAdicionarListenerAction);
+    on('click', '#galeria-adicionar', _galeriaAdicionarListenerAction);
+    on('click', '#pin-enable', _switchPin);
+    on('click', '#pin-disable', _switchPin);
+    on('click', '#travelers-info', _openTravelersInfo);
+    on('click', '#delete-trip', deleteViagem);
+    on('click', '#request-pin', _requestPinEditarGastos);
+    on('click', '#programacao-adicionar-gastosPrevios', () => _openInnerGasto('gastosPrevios'));
+    on('click', '#programacao-adicionar-gastosDurante', () => _openInnerGasto('gastosDurante'));
+    on('click', '#programacao-adicionar-gastosPrevios', () => _openInnerGasto('gastosPrevios'));
+    on('click', '.toast-close', closeToast, false);
 
-    // Visibilidade do Ida e Volta (Transporte)
-    getID('simple-view').addEventListener('change', () => _applyTransportationTypeVisualization());
-    getID('leg-view').addEventListener('change', () => _applyTransportationTypeVisualization());
-    getID('people-view').addEventListener('change', () => _applyTransportationTypeVisualization());
+    // Transportation View Validation
+    on('change', '#simple-view', _applyTransportationTypeVisualization);
+    on('change', '#leg-view', _applyTransportationTypeVisualization);
+    on('change', '#people-view', _applyTransportationTypeVisualization);
 
-    // Validação de Imagens no módulo de Customização
-    getID('link-background').addEventListener('change', () => validateImageLink('link-background'));
-    getID('link-logo-light').addEventListener('change', () => validateImageLink('link-logo-light'));
-    getID('link-logo-dark').addEventListener('change', () => validateImageLink('link-logo-dark'));
+    // Image Link Validation
+    on('change', '#link-background', () => validateImageLink('link-background'));
+    on('change', '#link-logo-light', () => validateImageLink('link-logo-light'));
+    on('change', '#link-logo-dark', () => validateImageLink('link-logo-dark'));
 
-    // Validação de Links no módulo de Customização
-    getID('link-attachments').addEventListener('change', () => validateLink('link-attachments'));
-    getID('link-drive').addEventListener('change', () => validateLink('link-drive'));
-    getID('link-maps').addEventListener('change', () => validateLink('link-maps'));
-    getID('link-pdf').addEventListener('change', () => validateLink('link-pdf'));
-    getID('link-ppt').addEventListener('change', () => validateLink('link-ppt'));
-    getID('link-sheet').addEventListener('change', () => validateLink('link-sheet'));
-    getID('link-vacina').addEventListener('change', () => validateLink('link-vacina'));
+    // Link Validation
+    on('change', '#link-attachments', () => validateLink('link-attachments'));
+    on('change', '#link-drive', () => validateLink('link-drive'));
+    on('change', '#link-maps', () => validateLink('link-maps'));
+    on('change', '#link-pdf', () => validateLink('link-pdf'));
+    on('change', '#link-ppt', () => validateLink('link-ppt'));
+    on('change', '#link-sheet', () => validateLink('link-sheet'));
+    on('change', '#link-vacina', () => validateLink('link-vacina'));
 
-    // Barra de pesquisa em destinos
-    getID('destinos-search').addEventListener('input', () => searchDestination());
+    // Destination Search Bar
+    on('input', '#destinos-search', searchDestination);
 
     // Radios
-    getID('dark-and-light').addEventListener('change', () => _visibilityListenerAction());
-    getID('light-exclusive').addEventListener('change', () => _visibilityListenerAction());
-    getID('dark-exclusive').addEventListener('change', () => _visibilityListenerAction());
+    on('change', '#dark-and-light', _visibilityListenerAction);
+    on('change', '#light-exclusive', _visibilityListenerAction);
+    on('change', '#dark-exclusive', _visibilityListenerAction);
 
-    document.addEventListener("input", (event) => {
-        if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
-          INPUT_DETECTED = true;
-        }
-      });
-    
-      window.addEventListener("beforeunload", (event) => {
-        if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
-          event.preventDefault();
-          event.returnValue = translate('messages.exit_confirmation');
-        }
-      });
+    // Document and Window
+    on('input', 'document', detectInput);
+    on('beforeunload', 'window', confirmExit);
 }
 
 // Actions
@@ -130,4 +132,22 @@ function _visibilityListenerAction(visibilidade) {
 
     getID('tema-claro').style.display = visibilidade.claro ? 'block' : 'none';
     getID('tema-escuro').style.display = visibilidade.escuro ? 'block' : 'none';
+}
+
+function editTripFieldAgain() {
+    editFieldAgain('viagens', SUCCESSFUL_SAVE);
+    _closeModal('delete-modal');
+}
+
+function detectInput(event) {
+    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
+        INPUT_DETECTED = true;
+    }
+}
+
+function confirmExit(event) {
+    if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
+        event.preventDefault();
+        event.returnValue = translate('messages.exit_confirmation');
+    }
 }

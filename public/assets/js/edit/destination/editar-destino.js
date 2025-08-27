@@ -319,7 +319,7 @@ function _moveDestino(j, categoria) {
   closeMessage();
 }
 
-function _deleteDestino() {
+export function deleteDestination() {
   const name = getID('titulo').value;
 
   const propriedades = getDefaultProperties();

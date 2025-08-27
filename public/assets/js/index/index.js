@@ -386,11 +386,11 @@ function _loadNotificationBar() {
   }
 }
 
-function closeNotification() {
+export function closeNotification() {
   document.querySelector('.notification-bar').style.display = 'none';
 }
 
-function goToCurrentTrip() {
+export function goToCurrentTrip() {
   if (VIAGENS.viagensEmAndamento.length == 1) {
     _viagensVisualizar(VIAGENS.viagensEmAndamento[0].code);
   }
@@ -398,4 +398,16 @@ function goToCurrentTrip() {
 
 function _applyNotificationBarColor() {
   getID('notification-bar').style.backgroundColor = isOnDarkMode() ? notificationBar.escuro : notificationBar.claro;
+}
+
+export function manualTripLoad() {
+  _manualListLoad('viagens');
+}
+
+export function manualDestinationLoad() {
+  _manualListLoad('destinos');
+}
+
+export function manualListingLoad() {
+  _manualListLoad('listagens');
 }

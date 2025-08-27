@@ -30,8 +30,6 @@
   - 📈 **M118:** [⚔️E034] Remove underline from beggining of each function
 
 
-  - Pages
-  - Styles
   - Index
   - View
   - Destination

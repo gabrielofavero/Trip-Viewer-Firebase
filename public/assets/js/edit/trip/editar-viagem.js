@@ -11,6 +11,7 @@ import { getURLParam } from "../../support/data/data.js";
 import { getDateTitle, jsDateToKey, } from "../../support/data/dates.js";
 import { closeMessage, displayFullMessage } from "../../support/pages/messages.js";
 import { loadEditModuleVisibility } from "../../support/pages/edit-module.js";
+import { loadEditTripListeners } from "./suporte/event-listeners.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     loadImageSelector('background');
     loadLogoSelector();
 
-    _loadEventListeners();
+    loadEditTripListeners();
 
     if (!blockLoadingEnd) {
       stopLoadingScreen();
@@ -106,7 +107,7 @@ async function _loadTrip(stripped = false) {
   }
 }
 
-function _deleteViagem() {
+export function deleteViagem() {
   let viagem = getID('titulo').value;
   viagem = viagem ? ` "${viagem}"` : '';
 

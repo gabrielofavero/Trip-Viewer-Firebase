@@ -176,7 +176,7 @@ async function _setListagem() {
   await _setDocumento('listagens');
 }
 
-function _deleteListagem() {
+export function deleteListing() {
   let listagem = getID('titulo').value;
   listagem = listagem ? ` "${listagem}"` : '';
 

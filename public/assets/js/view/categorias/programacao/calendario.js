@@ -28,13 +28,13 @@ function _loadCalendar() {
     _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
 }
 
-function _calendarNext() {
+export function calendarNext() {
     CALENDAR.startYear = (CALENDAR.startMonth === 11) ? CALENDAR.startYear + 1 : CALENDAR.startYear;
     CALENDAR.startMonth = (CALENDAR.startMonth + 1) % 12;
     _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
 }
 
-function _calendarPrevious() {
+export function calendarPrevious() {
     CALENDAR.startYear = (CALENDAR.startMonth === 0) ? CALENDAR.startYear - 1 : CALENDAR.startYear;
     CALENDAR.startMonth = (CALENDAR.startMonth === 0) ? 11 : CALENDAR.startMonth - 1;
     _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
