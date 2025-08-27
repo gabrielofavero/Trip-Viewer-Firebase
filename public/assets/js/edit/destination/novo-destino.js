@@ -1,6 +1,7 @@
 import { addSelectorDS } from "../../support/components/dynamic-select.js";
 import { translate } from "../../main/translate.js";
 import { getNextSecondaryID } from "../../support/pages/selectors.js";
+import { getNewSvg } from "../../support/styles/svgs.js";
 
 // Adicionar
 function _addRestaurantes() {
@@ -18,7 +19,7 @@ function _addRestaurantes() {
           data-bs-target="#collapse-restaurantes-${j}" aria-expanded="true"
           aria-controls="collapse-restaurantes-${j}">
           <span class="title-text" id="restaurantes-title-text-${j}">${translate('destination.restaurants.title_singular')} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`restaurantes-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`restaurantes-title-icon-${j}`)}</div>
         </button>
       </h2>
       <div id="collapse-restaurantes-${j}" class="accordion-collapse collapse"
@@ -144,7 +145,7 @@ function _addLanches() {
         <button id="lanches-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lanches-${j}" aria-expanded="true" aria-controls="collapse-lanches-${j}">
           <span class="title-text" id="lanches-title-text-${j}">${translate('destination.snacks.title_singular')} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`lanches-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`lanches-title-icon-${j}`)}</div>
         </button>
       </h2>
       <div id="collapse-lanches-${j}" class="accordion-collapse collapse" aria-labelledby="heading-lanches-${j}"
@@ -271,7 +272,7 @@ function _addSaidas() {
         <button id="saidas-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-saidas-${j}" aria-expanded="true" aria-controls="collapse-saidas-${j}">
           <span class="title-text" id="saidas-title-text-${j}">${translate('destination.nightlife.title_singular')} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`saidas-title-icon-${j}`)}</i></div>
+          <div class="icon-container">${getNewSvg(`saidas-title-icon-${j}`)}</i></div>
         </button>
       </h2>
       <div id="collapse-saidas-${j}" class="accordion-collapse collapse" aria-labelledby="heading-saidas-${j}"
@@ -397,7 +398,7 @@ function _addTurismo() {
         <button id="turismo-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-turismo-${j}" aria-expanded="true" aria-controls="collapse-turismo-${j}">
           <span class="title-text" id="turismo-title-text-${j}">${translate('destination.tourism.title_singular')} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`turismo-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`turismo-title-icon-${j}`)}</div>
         </button>
       </h2>
       <div id="collapse-turismo-${j}" class="accordion-collapse collapse" aria-labelledby="heading-turismo-${j}"
@@ -523,7 +524,7 @@ function _addLojas() {
         <button id="lojas-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lojas-${j}" aria-expanded="true" aria-controls="collapse-lojas-${j}">
           <span class="title-text" id="lojas-title-text-${j}">${translate('destination.shopping.title_singular')} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`lojas-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`lojas-title-icon-${j}`)}</div>
         </button>
       </h2>
 
