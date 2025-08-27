@@ -63,7 +63,7 @@ function _setPinButtonText(newPin = true) {
     getID('request-pin').innerText = newPin ? translate('trip.expenses.pin.new') : translate('trip.expenses.pin.change');
 }
 
-function _validateSavedPIN() {
+export function validateSavedPIN() {
     if (getID('pin-enable').checked && !PIN_GASTOS.new) {
         return [translate('trip.expenses.pin.title')];
     }

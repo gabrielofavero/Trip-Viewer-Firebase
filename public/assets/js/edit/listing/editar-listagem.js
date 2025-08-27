@@ -11,10 +11,10 @@ import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loadi
 import { getDefaultProperties, displayError } from "../../support/pages/messages.js";
 import { getURLParam } from "../../support/data/data.js";
 import { closeMessage, displayFullMessage } from "../../support/pages/messages.js";
+import { setDocument, uploadAndSetImages } from "../../support/pages/set.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
-var FIRESTORE_NEW_DATA = {};
 
 var CAN_EDIT = false;
 
@@ -197,4 +197,22 @@ async function _deleteListagemAction() {
     await deleteUserObjectStorage(FIRESTORE_DATA);
     window.location.href = '../index.html';
   }
+}
+
+async function setListing() {
+  const before = [_buildListObject, uploadListingImagesBefore];
+  const after = [uploadListingImagesAfter, verifyListingImages];
+  await setDocument('listagens', [], before, after);
+}
+
+async function uploadListingImagesBefore() {
+  await uploadAndSetImages('listagens', true)
+}
+
+async function uploadListingImagesAfter() {
+  await uploadAndSetImages('listagens', false)
+}
+
+function verifyListingImages() {
+  _verifyImageUploads('listagens');
 }

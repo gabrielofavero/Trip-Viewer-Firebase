@@ -3,8 +3,14 @@ import { getID, getChildIDs, getSecondaryID } from "../../support/pages/selector
 import { translate } from "../../main/translate.js";
 import { firstCharToUpperCase, getTypeID } from "../../support/data/data.js";
 import { displayMessage, displayError } from "../../support/pages/messages.js";
+import { setDocument } from "../../support/pages/set.js";
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
+
+export async function setDestination() {
+    const before = [_buildDestinosObject, _updateTikTokLinks];
+    setDocument('destinos', [], before, []);
+}
 
 async function _buildDestinosObject() {
     FIRESTORE_DESTINOS_NEW_DATA = {

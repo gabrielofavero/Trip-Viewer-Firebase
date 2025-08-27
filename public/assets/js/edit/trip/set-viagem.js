@@ -1,4 +1,4 @@
-import { DOCUMENT_ID, create, deepCreate, update, override, deleteData, combineDatabaseResponses } from "../../support/firebase/database.js";
+import { DOCUMENT_ID, create, deepCreate, update, override, deleteData, combineDatabaseResponses, FIRESTORE_NEW_DATA } from "../../support/firebase/database.js";
 import { IMAGE_UPLOAD_STATUS, deleteUnusedImages } from "../../support/firebase/storage.js";
 import { getUID } from "../../support/firebase/user.js";
 import { getID, getChildIDs, getSecondaryID, getSecondaryIDs } from "../../support/pages/selectors.js";
@@ -6,8 +6,13 @@ import { translate } from "../../main/translate.js";
 import { setRequired } from "../../support/html/fields.js";
 import { getTypeID } from "../../support/data/data.js";
 import { convertToDateObject, formattedDateToDateObject, jsDateToKey, keyToDateObject } from "../../support/data/dates.js";
+import { addToSetResponse, setDocument } from "../../support/pages/set.js";
 
-var FIRESTORE_NEW_DATA = {};
+var CUSTOM_UPLOADS = {
+    hospedagens: [],
+    galeria: []
+};
+
 var FIRESTORE_GASTOS_NEW_DATA = {};
 var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
 
@@ -302,7 +307,10 @@ async function _setViagem() {
         }
     }
 
-    _setDocumento('viagens');
+    const validations = [_buildTripObject];
+    const before = [_buildTripObject, _buildGastosObject, _buildGastosProtectedObject, uploadTripImagesBefore];
+    const after = [uploadTripImagesAfter, verifyTripImages, _setGastos];
+    setDocument('viagens', validations, before, after);
 }
 
 async function _setGastos() {
@@ -344,7 +352,7 @@ async function _setGastos() {
 
     if (responses.length > 0) {
         const masterResponse = combineDatabaseResponses(responses);
-        _addSetResponse(translate('trip.expenses.title'), masterResponse.success);
+        addToSetResponse(translate('trip.expenses.title'), masterResponse.success);
     }
 }
 
@@ -377,5 +385,17 @@ function _verifyImageUploads(type) {
         deleteUnusedImages(path, documentLinks);
     }
 
-    _addSetResponse(translate('labels.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);
+    addToSetResponse(translate('labels.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);
+}
+
+async function uploadTripImagesBefore() {
+    await uploadAndSetImages('viagens', true)
+}
+
+async function uploadTripImagesAfter() {
+    await uploadAndSetImages('viagens', false)
+}
+
+function verifyTripImages() {
+    _verifyImageUploads('viagens');
 }

@@ -271,7 +271,7 @@ function _closeModal(modalID = 'modal') {
      _fadeOut([modalID], 'down');
 }
 
-function _isModalOpen(modalID = 'modal') {
+export function isModalOpen(modalID = 'modal') {
      return getID(modalID).style.display === 'block';
 }
 

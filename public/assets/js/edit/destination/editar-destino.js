@@ -11,6 +11,8 @@ import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loadi
 import { firstCharToUpperCase, removeChildWithValidation, getURLParam } from "../../support/data/data.js";
 import { setRequired, removeRequired } from "../../support/html/fields.js";
 import { getDefaultProperties, displayError, closeMessage, displayFullMessage, getContainersInput } from "../../support/pages/messages.js";
+import { setDocument, uploadAndSetImages } from "../../support/pages/set.js";
+import { setDestination } from "./set-destino.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -108,7 +110,7 @@ function _loadEventListeners() {
   });
 
   getID('salvar').addEventListener('click', () => {
-    _setDocumento('destinos');
+    setDestination();
   });
 
   getID('re-editar').addEventListener('click', () => {
