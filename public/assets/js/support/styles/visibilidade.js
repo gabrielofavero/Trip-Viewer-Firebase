@@ -2,6 +2,7 @@ import { getID, getSecondaryIDs } from "../pages/selectors.js";
 import { firstCharToUpperCase, removeChildWithValidation, removeEmptyChild, getPage } from "../pages/data/data.js";
 import { getCurrentHour } from "../data/dates.js";
 import { animateFadeIn, animateFadeOut } from "./animations.js";
+import { DARK_COLOR, LIGHT_COLOR, THEME_COLOR, THEME_COLOR_HOVER, THEME_COLOR_SECONDARY, changeBarColorIOS, clearCustomColors, getDarkerColor, getLighterColor, getLocalColors, isCustomColorsActive, loadLogoColors, saveLocalColors, setCustomColors, setDarkColor, setLightColor, setThemeColor, setThemeColorHover, setThemeColorSecondary } from "./colors.js";
 
 var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
@@ -11,20 +12,20 @@ var LOGO_ESCURO = "";
 function _loadVisibility() {
      try {
           if (FIRESTORE_DATA && FIRESTORE_DATA.cores && FIRESTORE_DATA.cores.ativo) {
-               CUSTOM_COLORS = true;
+               setCustomColors(true);
                localStorage.setItem("customColors", true);
-               CLARO = FIRESTORE_DATA.cores.claro;
-               ESCURO = FIRESTORE_DATA.cores.escuro;
+               setLightColor(FIRESTORE_DATA.cores.claro);
+               setDarkColor(FIRESTORE_DATA.cores.escuro);
           } else {
-               CUSTOM_COLORS = false;
+               setCustomColors(false);
                localStorage.setItem("customColors", false);
           }
      } catch (e) {
-          CUSTOM_COLORS = false;
+          setCustomColors(false);
           localStorage.setItem("customColors", false);
      }
 
-     _saveLocalColors();
+     saveLocalColors();
      _loadUserVisibility();
 
      getID("night-mode").onclick = function () {
@@ -38,10 +39,10 @@ function _setManualVisibility() {
 }
 
 function _loadVisibilityExternal() {
-     const localColors = _getLocalColors();
+     const localColors = getLocalColors();
      if (localColors) {
-          CLARO = localColors.claro;
-          ESCURO = localColors.escuro;
+          setLightColor(localColors.claro);
+          setDarkColor(localColors.escuro);
      }
 
      if (_isOnDarkMode()) {
@@ -70,9 +71,9 @@ function _loadToggle() {
 
 function _loadDarkMode() {
      localStorage.setItem("darkMode", true);
-     THEME_COLOR = ESCURO;
-     THEME_COLOR_HOVER = _getDarkerColor(ESCURO, 10);
-     THEME_COLOR_SECONDARY = _getDarkerColor(ESCURO);
+     setThemeColor(DARK_COLOR);
+     setThemeColorHover(getDarkerColor(DARK_COLOR, 10));
+     setThemeColorSecondary(getDarkerColor(DARK_COLOR));
 
      const name = getPage().split('/')[0];
 
@@ -83,20 +84,20 @@ function _loadDarkMode() {
      document.getElementsByTagName("head")[0].appendChild(link)
 
      _loadToggle();
-     _ChangeBarColorIOS("#303030");
+     changeBarColorIOS("#303030");
 
      _loadTripViewerLogo();
 
-     if (_isCustomColorsActive()) {
+     if (isCustomColorsActive()) {
           _applyCustomVisibilityRules();
      }
 }
 
 function _loadLightMode() {
      localStorage.setItem("darkMode", false);
-     THEME_COLOR = CLARO;
-     THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
-     THEME_COLOR_SECONDARY = _getLighterColor(CLARO);
+     setThemeColor(LIGHT_COLOR);
+     setThemeColorHover(getLighterColor(LIGHT_COLOR, 10));
+     setThemeColorSecondary(getLighterColor(LIGHT_COLOR));
 
      const name = getPage().split('/')[0];
      var link = document.createElement("link");
@@ -106,26 +107,26 @@ function _loadLightMode() {
      document.getElementsByTagName("head")[0].appendChild(link);
 
      _loadToggle();
-     _ChangeBarColorIOS("#fff");
+     changeBarColorIOS("#fff");
 
      _loadTripViewerLogo();
 
-     if (_isCustomColorsActive()) {
+     if (isCustomColorsActive()) {
           _applyCustomVisibilityRules();
      }
 }
 
 function _loadLightModeLite() {
      localStorage.setItem("darkMode", false);
-     THEME_COLOR = CLARO;
-     THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
-     THEME_COLOR_SECONDARY = _getLighterColor(CLARO);
+     setThemeColor(LIGHT_COLOR);
+     setThemeColorHover(getLighterColor(LIGHT_COLOR, 10));
+     setThemeColorSecondary(getLighterColor(LIGHT_COLOR));
 
      _loadToggle();
 
      _loadTripViewerLogo();
 
-     if (_isCustomColorsActive()) {
+     if (isCustomColorsActive()) {
           _applyCustomVisibilityRules();
      }
 }
@@ -202,20 +203,20 @@ function _autoVisibility() {
 
 function _applyCustomVisibilityRules() {
      const html = getPage()
-     _clearCustomColors();
+     clearCustomColors();
      switch (html) {
           case 'view':
-               _loadLogoColors();
+               loadLogoColors();
                _applyCustomColors();
                _loadTransporteImagens();
                break;
           case 'destination':
-               _loadLogoColors();
+               loadLogoColors();
                _applyAccordionArrowCustomColor();
                _applyCustomColors();
                break;
           case 'expenses':
-               _loadLogoColors();
+               loadLogoColors();
                _applyCustomColors();
                _changeChartsLabelsVisibility();
                _loadMoedasTab();

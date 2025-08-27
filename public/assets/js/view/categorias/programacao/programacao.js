@@ -1,5 +1,6 @@
 import { getID } from "../../../support/pages/selectors.js";
 import { getDateString, dateObjectToKey } from "../../../support/data/dates.js";
+import { getColorNameFromOptions } from "../../../support/styles/colors.js";
 
 var PROGRAMACAO_DESTINOS = {};
 var PILLS_ACTIONS = {};
@@ -45,7 +46,7 @@ function _loadProgramacaoPills(multipleColors = true) {
             const destino = DESTINOS.find(destino => destino.destinosID === destinoID);
             if (!destino) continue;
 
-            const circleClass = multipleColors ? `pill-circle pill-circle-${_getColorNameFromOptions(i)}` : `pill-circle pill-circle-default`;
+            const circleClass = multipleColors ? `pill-circle pill-circle-${getColorNameFromOptions(i)}` : `pill-circle pill-circle-default`;
             innerHTML += `<div class="pill" id="pill-${destinoID}">
                             <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destino.destinos.titulo}</span>
                           </div>`
@@ -126,7 +127,7 @@ function _getPillClasses(colorIndex) {
     let activeCalendar = 'active-calendar';
 
     if (colorIndex >= 0) {
-        const colorName = _getColorNameFromOptions(colorIndex);
+        const colorName = getColorNameFromOptions(colorIndex);
         pillCircle = `pill-circle-${colorName}`;
         activeCircle = `active-circle-${colorName}`;
         activeCalendar = `active-calendar-${colorName}`;

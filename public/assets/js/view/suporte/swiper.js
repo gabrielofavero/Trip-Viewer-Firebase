@@ -1,4 +1,5 @@
 import { getID } from "../../support/pages/selectors.js";
+import { THEME_COLOR } from "../../support/styles/colors.js";
 
 function _initSwiper(id) {
     const swiper = getID(`${id}-swiper`);

@@ -1,5 +1,5 @@
 import { getID } from "../../support/pages/selectors";
-import { COLORS } from "../../support/styles/cores";
+import { COLORS, hexToRgb, rgbToText } from "../../support/styles/colors";
 
 var GASTOS_CHARTS = {};
 
@@ -139,7 +139,7 @@ function _getChartData(labels, valores, coresRGB) {
 function _getChartColorsRGB(size) {
     const result = [];
     const coresHex = COLORS.opcoes.map((cor) => cor.hex);
-    const coresRGB = coresHex.map((cor) => _hexToRgb(cor));
+    const coresRGB = coresHex.map((cor) => hexToRgb(cor));
 
     for (let i = 0; i < size; i++) {
         const index = i % coresRGB.length;
@@ -153,7 +153,7 @@ function _getArrayRGBA(coresRGB, a) {
     const result = [];
 
     for (const rgb of coresRGB) {
-        result.push(_rgbToText(rgb[0], rgb[1], rgb[2], a));
+        result.push(rgbToText(rgb[0], rgb[1], rgb[2], a));
     }
 
     return result;
