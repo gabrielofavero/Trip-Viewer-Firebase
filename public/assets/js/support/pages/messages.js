@@ -4,6 +4,7 @@ import { stopLoadingScreen, stopLoadingTimer } from "./loading.js";
 import { cloneObject } from "../data/object.js";
 import { getPage } from "../data/data.js";
 import { animateFadeIn, animateFadeOut } from "../styles/animations.js";
+import { disableScroll } from "../styles/visibility.js";
 
 export var MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {
@@ -52,7 +53,7 @@ export function displayFullMessage(propriedades = getDefaultProperties()) {
   }
 
   MESSAGE_MODAL_OPEN = true;
-  _disableScroll();
+  disableScroll();
 
   // Container
   const container = document.createElement('div');

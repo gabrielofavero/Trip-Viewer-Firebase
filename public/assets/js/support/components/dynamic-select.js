@@ -1,6 +1,6 @@
 import { getID } from "../pages/selectors";
 import { translate } from "../../main/translate.js";
-import { removeChildWithValidation } from "../data/data.js";
+import { removeChildWithValidation } from "../pages/edit-module.js";
 
 var DYNAMIC_SELECT = {};
 

@@ -5,7 +5,7 @@ import { validateIfDocumentChanged } from "../data/object.js";
 import { DOCUMENT_ID, FIRESTORE_DATA, FIRESTORE_NEW_DATA, create, getUserListIDs, update } from "../firebase/database.js";
 import { IMAGE_UPLOAD_STATUS, uploadImage } from "../firebase/storage.js";
 import { getUID } from "../firebase/user.js";
-import { isModalOpen } from "../styles/visibilidade.js";
+import { openModal, isModalOpen } from "../styles/modal.js";
 import { startLoadingScreen, stopLoadingScreen } from "./loading.js";
 import { getID } from "./selectors.js";
 
@@ -55,7 +55,7 @@ export async function setDocument(type, validations = [], beforeFunctions = [], 
 
     getID('modal-inner-text').innerHTML = buildSetMessage();
     stopLoadingScreen();
-    _openModal('modal');
+    openModal('modal');
 }
 
 async function runFunctions(functions) {

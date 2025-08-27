@@ -135,7 +135,7 @@ export function rgbToText(r, g, b, a) {
 }
 
 
-// Checkers
+// Validators
 export function isCustomColorsActive() {
     const html = getPage();
     if (html === 'destination' || html === 'expenses') {

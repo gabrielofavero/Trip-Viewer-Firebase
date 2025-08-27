@@ -1,12 +1,13 @@
 import { closeAccordions } from "../support/html/accordion.js";
 import { getID, getSecondaryIDs } from "../support/pages/selectors.js";
+import { loadExternalVisibility } from "../support/styles/visibility.js";
 
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
 var CONTENT = {};
 
 // Métodos Principais
 function _loadDestinosHTML() {
-  _loadVisibilityExternal();
+  loadExternalVisibility();
 
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {

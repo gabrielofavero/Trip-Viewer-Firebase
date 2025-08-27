@@ -4,6 +4,7 @@ import { editFieldAgain, validateLink, validateImageLink } from "../../../suppor
 import { getID } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from "../../../support/data/dates.js";
+import { searchDestination } from "../categorias/destinos.js";
 
 var INPUT_DETECTED = false;
 
@@ -47,7 +48,7 @@ function _loadEventListeners() {
     getID('link-vacina').addEventListener('change', () => validateLink('link-vacina'));
 
     // Barra de pesquisa em destinos
-    getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
+    getID('destinos-search').addEventListener('input', () => searchDestination());
 
     // Radios
     getID('dark-and-light').addEventListener('change', () => _visibilityListenerAction());

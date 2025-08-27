@@ -255,3 +255,12 @@ function _getDestinoTitle(destinoID) {
         }
     }
 }
+
+export function searchDestination() {
+    const search = getID('destinos-search').value.toLowerCase();
+
+    for (const j of getSecondaryIDs('destinos-checkboxes')) {
+         const label = getID(`check-destinos-label-${j}`).innerText.toLowerCase();
+         getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
+    }
+}

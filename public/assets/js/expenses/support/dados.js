@@ -1,5 +1,6 @@
 import { getID } from "../../support/pages/selectors";
 import { COLORS, hexToRgb, rgbToText } from "../../support/styles/colors";
+import { isOnDarkMode } from "../../support/styles/visibilidade";
 
 var GASTOS_CHARTS = {};
 
@@ -88,7 +89,7 @@ function _getChartConfig(tipo, dados) {
         legenda.display = true;
         legenda.position = "right";
         legenda.labels = {
-            color: _isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)',
+            color: isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)',
         };
     }
 
@@ -160,7 +161,7 @@ function _getArrayRGBA(coresRGB, a) {
 }
 
 function _changeChartsLabelsVisibility() {
-    const cor = _isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)';
+    const cor = isOnDarkMode() ? 'rgba(227, 236, 248, 1)' : 'rgba(75, 85, 99, 1)';
     for (const chart in GASTOS_CHARTS) {
         GASTOS_CHARTS[chart].options.plugins.legend.labels.color = cor;
         GASTOS_CHARTS[chart].update();

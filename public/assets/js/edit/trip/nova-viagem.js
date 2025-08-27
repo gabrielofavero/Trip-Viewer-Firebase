@@ -4,6 +4,7 @@ import { getID, getChildIDs, getSecondaryID, getNextSecondaryID } from "../../su
 import { translate } from "../../main/translate.js";
 import { getNewTypeID } from "../../support/data/data.js";
 import { getDateTitle, TODAY, TOMORROW, getArrayOfDates, formattedDateToDate, getNextTypeStartAndEnd } from "../../support/data/dates.js";
+import { loadEditModuleRemoveListener } from "../../support/pages/edit-module.js";
 
 var DESTINOS = [];
 var DATAS = [];
@@ -271,7 +272,7 @@ function _addHospedagens() {
       `);
 
   getID(`hospedagens-id-${j}`).value = getNewTypeID('hospedagens', j);
-  _addRemoveChildListener('hospedagens', j, `_removeHospedagemImagens(${j})`);
+  loadEditModuleRemoveListener('hospedagens', j, `_removeHospedagemImagens(${j})`);
   _loadHospedagemListeners(j);
   HOSPEDAGEM_IMAGENS[j] = [];
 }

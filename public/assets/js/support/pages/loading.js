@@ -1,6 +1,7 @@
 import { getID } from "./selectors.js";
 import { translate } from "../../main/translate.js";
 import { MESSAGE_MODAL_OPEN, displayError } from "./messages.js";
+import { disableScroll, enableScroll } from "../styles/visibility.js";
 
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;
@@ -12,7 +13,7 @@ export function startLoadingScreen(useTimer = false) {
   const preloader = getID('preloader');
   if (preloader) {
     preloader.style.display = 'block';
-    _disableScroll();
+    disableScroll();
   }
 }
 
@@ -23,7 +24,7 @@ export function stopLoadingScreen() {
     const preloader = getID('preloader');
     if (preloader) {
       preloader.style.display = 'none';
-      _enableScroll();
+      enableScroll();
     }
   } else {
     console.warn('Cannot stop loading in error mode');

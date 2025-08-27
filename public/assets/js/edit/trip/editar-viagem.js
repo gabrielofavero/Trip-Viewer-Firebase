@@ -10,6 +10,7 @@ import { getDefaultProperties, displayError } from "../../support/pages/messages
 import { getURLParam } from "../../support/data/data.js";
 import { getDateTitle, jsDateToKey, } from "../../support/data/dates.js";
 import { closeMessage, displayFullMessage } from "../../support/pages/messages.js";
+import { loadEditModuleVisibility } from "../../support/pages/edit-module.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -68,16 +69,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function _loadHabilitados() {
-  _loadEditModule('imagens');
-  _loadEditModule('cores');
-  _loadEditModule('links');
-  _loadEditModule('editores');
-  _loadEditModule('gastos');
-  _loadEditModule('transporte');
-  _loadEditModule('hospedagens');
-  _loadEditModule('programacao');
-  _loadEditModule('destinos');
-  _loadEditModule('galeria');
+  loadEditModuleVisibility('imagens');
+  loadEditModuleVisibility('cores');
+  loadEditModuleVisibility('links');
+  loadEditModuleVisibility('editores');
+  loadEditModuleVisibility('gastos');
+  loadEditModuleVisibility('transporte');
+  loadEditModuleVisibility('hospedagens');
+  loadEditModuleVisibility('programacao');
+  loadEditModuleVisibility('destinos');
+  loadEditModuleVisibility('galeria');
 }
 
 function _loadUploadSelectors() {

@@ -7,6 +7,8 @@ import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.
 import { convertFromDateObject } from "../support/data/dates.js";
 import { getDateString } from "../support/data/dates.js";
 import { displayError } from "../support/pages/messages.js";
+import { closeModal } from "../support/styles/modal.js";
+import { isOnDarkMode } from "../support/styles/visibility.js";
 
 var USER_DATA = {};
 
@@ -106,7 +108,7 @@ function _loadListenersIndex() {
   getID('apagar').addEventListener('click', async function () {
     startLoadingScreen(false);
     await deleteAccount();
-    _closeModal();
+    closeModal();
     signOut();
     stopLoadingScreen();
   });
@@ -395,5 +397,5 @@ function goToCurrentTrip() {
 }
 
 function _applyNotificationBarColor() {
-  getID('notification-bar').style.backgroundColor = _isOnDarkMode() ? notificationBar.escuro : notificationBar.claro;
+  getID('notification-bar').style.backgroundColor = isOnDarkMode() ? notificationBar.escuro : notificationBar.claro;
 }

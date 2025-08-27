@@ -1,6 +1,7 @@
 import { select, getID } from "../../support/pages/selectors.js";
 import { animate, animateFadeIn, animateFadeOut, fadeOut } from "../../support/styles/animations.js";
 import { loadLogoColors } from "../../support/styles/colors.js";
+import { loadUserVisibility, setManualVisibility, switchVisibility } from "../../support/styles/visibility.js";
 
 const notificationBar = {
   changed: false,
@@ -9,12 +10,12 @@ const notificationBar = {
 }
 
 function _loadVisibilityIndex() {
-  _loadUserVisibility();
+  loadUserVisibility();
   loadLogoColors();
 
   getID("night-mode").onclick = function () {
-    _switchVisibility();
-    _setManualVisibility();
+    switchVisibility();
+    setManualVisibility();
     
     if (notificationBar.changed) {
       _applyNotificationBarColor();

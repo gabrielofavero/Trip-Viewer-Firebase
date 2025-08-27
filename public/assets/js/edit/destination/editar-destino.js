@@ -8,11 +8,12 @@ import { initApp } from "../../main/app.js";
 import { getID, getLastSecondaryID } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
-import { firstCharToUpperCase, removeChildWithValidation, getURLParam } from "../../support/data/data.js";
+import { firstCharToUpperCase, getURLParam } from "../../support/data/data.js";
 import { setRequired, removeRequired } from "../../support/html/fields.js";
 import { getDefaultProperties, displayError, closeMessage, displayFullMessage, getContainersInput } from "../../support/pages/messages.js";
 import { setDocument, uploadAndSetImages } from "../../support/pages/set.js";
 import { setDestination } from "./set-destino.js";
+import { loadEditModuleVisibility, removeChildWithValidation } from "../../support/pages/edit-module.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -56,12 +57,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function _loadHabilitados() {
-  _loadEditModule('restaurantes');
-  _loadEditModule('lanches');
-  _loadEditModule('saidas');
-  _loadEditModule('turismo');
-  _loadEditModule('lojas');
-  _loadEditModule('mapa');
+  loadEditModuleVisibility('restaurantes');
+  loadEditModuleVisibility('lanches');
+  loadEditModuleVisibility('saidas');
+  loadEditModuleVisibility('turismo');
+  loadEditModuleVisibility('lojas');
+  loadEditModuleVisibility('mapa');
 
   const mapa = getID('habilitado-mapa');
   mapa.addEventListener('change', function () {

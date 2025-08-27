@@ -4,6 +4,7 @@ import { stopLoadingScreen } from "../pages/loading.js";
 import { FIRESTORE_DATA, FIRESTORE_NEW_DATA, FIRESTORE_PROGRAMACAO_DATA, FIRESTORE_GASTOS_DATA, FIRESTORE_GASTOS_NEW_DATA, FIRESTORE_DESTINOS_DATA, FIRESTORE_DESTINOS_NEW_DATA } from "../firebase/database.js";
 import { PIN_GASTOS } from "../../edit/trip/categorias/gastos.js";
 import { getPage } from "./data.js";
+import { openModal } from "../styles/modal.js";
 
 var DOCS_CHANGED;
 
@@ -90,7 +91,7 @@ export function validateIfDocumentChanged() {
     getID('modal-inner-text').innerText = `${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`;
 
     setSuccessfulSave(false);
-    _openModal();
+    openModal();
     stopLoadingScreen();
   }
 }

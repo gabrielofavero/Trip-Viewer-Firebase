@@ -6,6 +6,7 @@ import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.
 import { getURLParam } from "../support/data/data.js";
 import { displayError, displayForbidden, closeMessage } from "../support/pages/messages.js";
 import { animateFade } from "../support/styles/animations.js";
+import { loadExternalVisibility } from "../support/styles/visibility.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
@@ -18,7 +19,7 @@ var GASTO_ATIVO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', async function () {
     initApp();
-    _loadVisibilityExternal();
+    loadExternalVisibility();
 
     const closeButton = getID("closeButton");
     if (window.parent._closeLightbox) {

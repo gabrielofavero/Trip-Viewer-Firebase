@@ -5,6 +5,7 @@ import { convertFromDateObject, getDateString, getTimeString, jsTimeToVisualTime
 import { openToast } from "../../support/pages/messages.js";
 import { animateFade } from "../../support/styles/animations.js";
 import { setCSSRule } from "../../support/styles/stylesheets.js";
+import { isOnDarkMode } from "../../support/styles/visibility.js";
 
 const TRANSPORTATION = await getJson("/assets/json/transportes.json");
 
@@ -102,9 +103,9 @@ function _getImagemHTML(j, empresa) {
   if (!empresa.isCustom) {
     return `<a href="${empresa.site}">
               <img class="flight-img" id="flight-img-claro-${j}" src="${empresa.imagens.claro}"
-                style="display: ${_isOnDarkMode() ? 'none' : 'block'};">
+                style="display: ${isOnDarkMode() ? 'none' : 'block'};">
               <img class="flight-img" id="flight-img-escuro-${j}" src="${empresa.imagens.escuro}"
-                style="display: ${_isOnDarkMode() ? 'block' : 'none'};">
+                style="display: ${isOnDarkMode() ? 'block' : 'none'};">
             </a>`;
   } else if (empresa.titulo) {
     return `<div class="flight-title-text">${empresa.titulo}</div>`
@@ -246,8 +247,8 @@ function _loadTransporteImagens() {
     const escuro = getID(`flight-img-escuro-${j}`);
 
     if (claro && escuro) {
-      claro.style.display = _isOnDarkMode() ? "none" : "block";
-      escuro.style.display = _isOnDarkMode() ? "block" : "none";
+      claro.style.display = isOnDarkMode() ? "none" : "block";
+      escuro.style.display = isOnDarkMode() ? "block" : "none";
     }
 
     j++;

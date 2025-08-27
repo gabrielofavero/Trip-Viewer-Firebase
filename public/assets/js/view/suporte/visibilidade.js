@@ -1,4 +1,5 @@
 import { getID, getChildIDs, getSecondaryID } from "../../support/pages/selectors.js";
+import { loadDarkMode, loadLightMode } from "../../support/styles/visibility.js";
 
 var ADJUST_HEIGHT_CARDS = [];
 
@@ -59,11 +60,11 @@ function _loadViagemVisibility() {
 
         if (!FIRESTORE_DATA.visibilidade.claro) {
             nightMode.style.display = 'none';
-            _loadDarkMode();
+            loadDarkMode();
 
         } else if (!FIRESTORE_DATA.visibilidade.escuro) {
             nightMode.style.display = 'none';
-            _loadLightMode();
+            loadLightMode();
         }
     }
 }

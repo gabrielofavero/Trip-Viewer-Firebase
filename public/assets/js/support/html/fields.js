@@ -4,6 +4,7 @@ import { getID } from "../pages/selectors.js";
 import { stopLoadingScreen } from "../pages/loading.js";
 import { firstCharToUpperCase } from "../pages/data/data.js";
 import { displayMessage, openToast } from "../pages/messages.js";
+import { closeModal, openModal } from "../styles/modal.js";
 
 // Required Fields
 export function validateRequiredFields(customChecks = []) {
@@ -23,7 +24,7 @@ export function validateRequiredFields(customChecks = []) {
     if (invalidFields.length > 0) {
         setSuccessfulSave(false)
         getID('modal-inner-text').innerHTML = getInvalidFieldsText(invalidFields, customChecks);
-        _openModal();
+        openModal();
         stopLoadingScreen();
     }
 }
@@ -140,7 +141,7 @@ export function editFieldAgain(type, successfulSave = true) {
     if (param && DOCUMENT_ID && successfulSave) {
         window.location.href = `${url}?${param}=${DOCUMENT_ID}`;
     } else if (!successfulSave) {
-        _closeModal();
+        closeModal();
     } else {
         window.location.href = '../index.html';
     }

@@ -7,6 +7,7 @@ import { sortByArray, getURLParams } from "../support/data/data.js";
 import { getURLParam } from "../support/data/data.js";
 import { convertFromDateObject, getDateString, getDateRegionalFormat } from "../support/data/dates.js";
 import { displayError } from "../support/pages/messages.js";
+import { LOGO_DARK, LOGO_LIGHT, isOnDarkMode, loadVisibility, loadVisibilityToggle, setLogoDark, setLogoLight } from "../support/styles/visibility.js";
 
 var REFRESHED = false;
 var TYPE = 'viagens';
@@ -101,8 +102,8 @@ function _start() {
   }
 
   // Visibilidade
-  _loadVisibility();
-  _loadToggle();
+  loadVisibility();
+  loadVisibilityToggle();
   _adjustCardsHeightsListener();
 
   // Cabeçalho
@@ -204,8 +205,8 @@ function _loadHeader() {
   if (FIRESTORE_DATA.imagem?.ativo) {
 
     const background = FIRESTORE_DATA.imagem.background;
-    const claro = FIRESTORE_DATA.imagem.claro;
-    const escuro = FIRESTORE_DATA.imagem.escuro;
+    const logoLight = FIRESTORE_DATA.imagem.claro;
+    const logoDark = FIRESTORE_DATA.imagem.escuro;
 
     if (background) {
       var hero = getID('hero');
@@ -213,15 +214,15 @@ function _loadHeader() {
       hero.style.backgroundSize = 'cover';
     }
 
-    if (claro) {
-      LOGO_CLARO = claro;
-      if (escuro) {
-        LOGO_ESCURO = escuro;
+    if (logoLight) {
+      setLogoLight(logoLight);
+      if (logoDark) {
+        setLogoDark(logoDark);
       } else {
-        LOGO_ESCURO = LOGO_CLARO;
+        setLogoDark(logoLight);
       }
 
-      getID("header2").src = _isOnDarkMode() ? LOGO_ESCURO : LOGO_CLARO;
+      getID("header2").src = isOnDarkMode() ? LOGO_DARK : LOGO_LIGHT;
       getID("header1").style.display = "none";
       getID("header2").style.display = "block";
       document.querySelectorAll('.header-text').forEach((element) => {

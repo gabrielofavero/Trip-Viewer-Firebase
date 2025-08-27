@@ -12,6 +12,8 @@ import { getDefaultProperties, displayError } from "../../support/pages/messages
 import { getURLParam } from "../../support/data/data.js";
 import { closeMessage, displayFullMessage } from "../../support/pages/messages.js";
 import { setDocument, uploadAndSetImages } from "../../support/pages/set.js";
+import { loadEditModuleVisibility } from "../../support/pages/edit-module.js";
+import { searchDestination } from "../trip/categorias/destinos.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -62,10 +64,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function _loadHabilitados() {
-  _loadEditModule('imagens');
-  _loadEditModule('cores');
-  _loadEditModule('links');
-  _loadEditModule('editores');
+  loadEditModuleVisibility('imagens');
+  loadEditModuleVisibility('cores');
+  loadEditModuleVisibility('links');
+  loadEditModuleVisibility('editores');
 }
 
 function _loadUploadSelectors() {
@@ -106,7 +108,7 @@ function _loadEventListeners() {
     window.location.href = '../index.html';
   });
 
-  getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
+  getID('destinos-search').addEventListener('input', () => searchDestination());
 
   document.addEventListener("input", (event) => {
     if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {

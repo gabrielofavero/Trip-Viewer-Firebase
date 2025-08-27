@@ -141,18 +141,6 @@ function replaceLast(text, search, replacement) {
   return target.replace(new RegExp(search + "(?![\\s\\S]*" + search + ")", "g"), replacement);
 }
 
-export function removeChildWithValidation(categoria, j) {
-  removeChild(`${categoria}-${j}`);
-  hideParentIfNoChildren(categoria);
-}
-
-function hideParentIfNoChildren(categoria) {
-  if (getChildIDs(`${categoria}-box`).length === 0) {
-    getID(`habilitado-${categoria}`).checked = false;
-    _hideContent(categoria);
-  }
-}
-
 export function removeEmptyChild(categoria) {
   let itens = [];
 
@@ -184,7 +172,7 @@ export function removeEmptyChild(categoria) {
   }
 }
 
-// Checkers
+// Validators
 function hasUserData(itens, j) {
   for (const item of itens) {
     if (getID(`${item}-${j}`).value) {

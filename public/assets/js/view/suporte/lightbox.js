@@ -1,6 +1,7 @@
 import { getID } from "../../support/pages/selectors.js";
 import { startLoadingScreen } from "../../support/pages/loading.js";
 import { stopLoadingScreen } from "../../support/pages/loading.js";
+import { disableScroll, enableScroll, refreshVisibility } from "../../support/styles/visibility.js";
 
 var SAVED_SCROLL_POSITION = 0;
 
@@ -16,19 +17,19 @@ function _openLightbox(link) {
     getID('menu').style.display = 'none';
     getID('navbar').style.display = 'none';
     stopLoadingScreen();
-    _disableScroll();
+    disableScroll();
   };
   lightboxIframe.src = link;
-  _refreshVisibility();
+  refreshVisibility();
 }
 
 function _closeLightbox(redirectToHome = false) {
-  _refreshVisibility();
+  refreshVisibility();
   getID('lightbox').style.display = 'none';
   getID('night-mode').style.display = 'block';
   getID('menu').style.display = 'block';
   getID('navbar').style.display = 'block';
-  _enableScroll();
+  enableScroll();
 
   if (redirectToHome) {
     window.location.href = '/';
