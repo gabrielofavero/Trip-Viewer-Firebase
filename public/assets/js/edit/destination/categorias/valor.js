@@ -1,5 +1,7 @@
 import { getID, getChildIDs } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
+import { DESTINATIONS } from "../../../view/categorias/destinos.js";
+import { CURRENCY } from "../../../expenses/support/moeda.js";
 
 const VALORES_KEYS = ['-', '$', '$$', '$$$', '$$$$', 'default'];
 var VALOR_OPTIONS = '';
@@ -7,7 +9,7 @@ var VALOR_OPTIONS = '';
 function _loadCurrencySelects() {
     _loadMoedaOptions();
 
-    for (const categoria of CONFIG.destinos.categorias.passeios) {
+    for (const categoria of DESTINATIONS.categorias.passeios) {
         const childs = getChildIDs(`${categoria}-box`);
         for (const child of childs) {
             const i = child.split('-').pop();
@@ -28,7 +30,7 @@ function _loadMoedaOptions() {
     const moeda = getID('moeda').value;
     VALOR_OPTIONS = '';
 
-    if (moeda != 'outra' && CONFIG.moedas.escala[moeda]) {
+    if (moeda != 'outra' && CURRENCY.escala[moeda]) {
         for (const categoria of VALORES_KEYS) {
             const label = _getLabel(categoria);
             VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
@@ -48,9 +50,9 @@ function _loadMoedaOptions() {
             case "$":
             case "$$":
             case "$$$":
-                return CONFIG.moedas.escala[moeda][categoria];
+                return CURRENCY.escala[moeda][categoria];
             case "$$$$":
-                return translate(`destination.price.max`, { value: CONFIG.moedas.escala[moeda][categoria] });
+                return translate(`destination.price.max`, { value: CURRENCY.escala[moeda][categoria] });
             default:
                 return translate('labels.other');
         }

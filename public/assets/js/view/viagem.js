@@ -78,7 +78,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function _mainLoad() {
   try {
     if (CALL_SYNC.length > 0) {
-      sortByArray(CALL_SYNC, CONFIG.callSyncOrder.data);
+      const callSyncOrder = [_loadResumo, _loadTransporte, _loadHospedagens, _loadDestinos, _loadGaleria];
+      sortByArray(CALL_SYNC, callSyncOrder);
       for (let _function of CALL_SYNC) {
         _function();
       }

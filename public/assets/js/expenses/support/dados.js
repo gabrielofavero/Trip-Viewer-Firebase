@@ -1,4 +1,5 @@
 import { getID } from "../../support/pages/selectors";
+import { COLORS } from "../../support/styles/cores";
 
 var GASTOS_CHARTS = {};
 
@@ -137,7 +138,7 @@ function _getChartData(labels, valores, coresRGB) {
 
 function _getChartColorsRGB(size) {
     const result = [];
-    const coresHex = CONFIG.cores.opcoes.map((cor) => cor.hex);
+    const coresHex = COLORS.opcoes.map((cor) => cor.hex);
     const coresRGB = coresHex.map((cor) => _hexToRgb(cor));
 
     for (let i = 0; i < size; i++) {

@@ -1,5 +1,8 @@
 import { getID } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
+import { getJson } from "../support/data/data.js";
+
+const ICONS = await getJson("/assets/json/icons.json");
 
 // Resumo
 function _loadResumo() {
@@ -94,11 +97,11 @@ function _unsetTableCategoria(tipo) {
 
 function _getTitleWithIcon(titlePath, forceIcon = true) {
     const title = translate(titlePath, {}, false);
-    const icon = CONFIG.icons[titlePath];
+    const icon = ICONS[titlePath];
     
     if (!icon && !forceIcon) {
         return title;
     }
 
-    return `<i class="iconify" data-icon="${icon || CONFIG.icons["trip.expenses.title"]}"></i> ${title}`;
+    return `<i class="iconify" data-icon="${icon || ICONS["trip.expenses.title"]}"></i> ${title}`;
 }

@@ -1,6 +1,7 @@
+import { getJson } from "../support/data/data.js";
 import { searchObject } from "../support/data/object.js";
-import { CONFIG } from "./app.js";
 
+export const LANGUAGE_PACK = await getJson(`/assets/json/languages/${getLanguagePackName()}.json`);
 export var LANGUAGES = ['en', 'pt'];
 export const MISSING_TRANSLATIONS = new Set();
 
@@ -31,8 +32,8 @@ function updateUserLanguage(language) {
 }
 
 export function translate(key, replacements = {}, strict = true) {
-  if (!CONFIG?.language) return "";
-  let result = searchObject(CONFIG.language, key, strict);
+  if (!LANGUAGE_PACK) return "";
+  let result = searchObject(LANGUAGE_PACK, key, strict);
 
   if (result == null) {
     if (strict) {
@@ -51,7 +52,7 @@ export function translate(key, replacements = {}, strict = true) {
   return result;
 }
 
-export function translatePage() {
+export async function translatePage() {
   const elements = document.querySelectorAll("[data-translate]");
   for (const element of elements) {
     const key = element.getAttribute("data-translate");

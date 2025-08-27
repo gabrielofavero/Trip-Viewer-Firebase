@@ -1,8 +1,11 @@
 import { getID, getChildIDs } from "../../support/pages/selectors.js";
-import { translate } from "../../main/translate.js";
+import { LANGUAGE_PACK, translate } from "../../main/translate.js";
 import { cloneObject } from "../../support/data/object.js";
 import { isIOSDevice } from "../../support/pages/dispositivos.js";
+import { getJson } from "../../support/data/data.js";
+import { CURRENCY } from "../../expenses/support/moeda.js";
 
+export const DESTINATIONS = await getJson("/assets/json/destinos.json");
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var CURRENT_PLACES_SIZE = 0;
@@ -68,17 +71,17 @@ function _loadDestinationsHTML(destino) {
 
   for (let i = 0; i < headers.length; i++) {
     const type = headers[i];
-    const translatedType = CONFIG.destinos.translation[type] || type;
+    const translatedType = DESTINATIONS.translation[type] || type;
     _buildDestinoExport(destino, type)
 
     const j = i + 1;
-    const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
+    const box = DESTINATIONS.boxes[_getDestinationsBoxesIndex(i)];
     const title = translate(`destination.${translatedType}.title`);
     const description = translate(`destination.${translatedType}.description`);
     const href = type === "mapa" ? destino.destinos.myMaps : "#";
     const lt = type === "mapa" ? linktype : "";
     const onclick = type === "mapa" ? "" : `onclick="_loadAndOpenDestino('${type}')"`;
-    const icon = CONFIG.destinos.icons[type];
+    const icon = DESTINATIONS.icons[type];
 
     text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
@@ -102,19 +105,19 @@ function _loadDestinationsHTML(destino) {
 }
 
 function _buildDestinoExport(destino, type) {
-  const translatedType = CONFIG.destinos.translation[type] || type;
+  const translatedType = DESTINATIONS.translation[type] || type;
   DESTINO_EXPORT[type] = {
     data: destino.destinos[type],
     moeda: destino.destinos.moeda,
     valores: _getDestinoValores(destino),
-    notas: CONFIG.language.destination.scores,
+    notas: LANGUAGE_PACK.destination.scores,
     categoria: type,
     titulo: translate(`destination.${translatedType}.title`)
   }
 }
 
 function _getDestinoValores(destino) {
-  const moeda = cloneObject(CONFIG.moedas.escala[destino.destinos.moeda]);
+  const moeda = cloneObject(CURRENCY.escala[destino.destinos.moeda]);
   const max = translate('destination.price.max', { value: moeda["$$$$"] });
   moeda["-"] = translate('destination.price.free');
   moeda["default"] = translate('destination.price.default');
@@ -128,7 +131,7 @@ function _loadAndOpenDestino(code) {
 }
 
 function _getDestinationsHeaders(module) {
-  const headerBase = CONFIG.destinos.categorias.geral;
+  const headerBase = DESTINATIONS.categorias.geral;
   const headerMap = new Map(headerBase.map((element, index) => [element, index]));
 
   let result = [];
@@ -149,8 +152,8 @@ function getDestinationsSelectValue() {
 }
 
 function _getDestinationsBoxesIndex(i) {
-  if (i > CONFIG.destinos.boxes.length - 1) {
-    return i % CONFIG.destinos.boxes.length;
+  if (i > DESTINATIONS.boxes.length - 1) {
+    return i % DESTINATIONS.boxes.length;
   } else return i
 }
 

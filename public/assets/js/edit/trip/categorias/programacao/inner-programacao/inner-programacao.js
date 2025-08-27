@@ -3,6 +3,7 @@ import { getID, getSecondaryIDs } from "../../../../../support/pages/selectors.j
 import { translate } from "../../../../../main/translate.js";
 import { getDefaultProperties, displayFullMessage, closeMessage, getContainersInput } from "../../../../../support/pages/messages.js";
 import { getDateTitle, jsDateToKey } from "../../../../../support/data/dates.js";
+import { DESTINATIONS } from "../../../../../view/categorias/destinos.js";
 
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
@@ -144,7 +145,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
             let innerResult = {};
 
             const currentDestinoData = DESTINOS[index].data;
-            const passeios = CONFIG.destinos.categorias.passeios;
+            const passeios = DESTINATIONS.categorias.passeios;
 
             let categorias = Object.keys(currentDestinoData).filter(key => passeios.includes(key) && currentDestinoData[key].length > 1);
             categorias = categorias.sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));

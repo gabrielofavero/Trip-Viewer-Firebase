@@ -2,6 +2,7 @@ import { getSelectOptionsHTML } from "../../../support/html/fields.js";
 import { getID } from "../../../support/pages/selectors.js";
 import { getUserLanguage, translate } from "../../../main/translate.js";
 import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
+import { DESTINATIONS } from "../../../view/categorias/destinos.js";
 
 var DESCRIPTIONS = {};
 
@@ -73,7 +74,7 @@ function _openDescription(categoria, j) {
 
 function _getDescriptionContent(categoria) {
     const selectedLanguage = getUserLanguage();
-    const translation = CONFIG.destinos.translation[categoria];
+    const translation = DESTINATIONS.translation[categoria];
     const placeholders = {};
     const languages = {};
 

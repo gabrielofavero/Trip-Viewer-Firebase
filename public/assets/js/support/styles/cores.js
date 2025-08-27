@@ -1,5 +1,7 @@
 import { getID } from "../pages/selectors.js";
-import { getPage } from "../data/data.js";
+import { getJson, getPage } from "../data/data.js";
+
+export const COLORS = await getJson("/assets/json/cores.json");
 
 var THEME_COLOR;
 var THEME_COLOR_HOVER;
@@ -31,8 +33,8 @@ function _getLocalColors() {
 }
 
 function _getEquivalentColorAndPosition(claro) {
-    const claroObj = CONFIG.cores.claro;
-    const escuroObj = CONFIG.cores.escuro;
+    const claroObj = COLORS.claro;
+    const escuroObj = COLORS.escuro;
 
     for (let i = 0; i < claroObj.length; i++) {
         if (claroObj[i] === claro) {
@@ -64,18 +66,18 @@ function _getDarkerColor(hex, percentage = 75) {
 }
 
 function _getColorIndexFromOptions(i) {
-    if (i >= CONFIG.cores.opcoes.length) {
-        i = i % CONFIG.cores.opcoes.length;
+    if (i >= COLORS.opcoes.length) {
+        i = i % COLORS.opcoes.length;
     }
     return i;
 }
 
 function _getColorNameFromOptions(i) {
-    return CONFIG.cores.opcoes[_getColorIndexFromOptions(i)].cor;
+    return COLORS.opcoes[_getColorIndexFromOptions(i)].cor;
 }
 
 function _getColorHexFromOptions(i) {
-    return CONFIG.cores.opcoes[_getColorIndexFromOptions(i)].hex;
+    return COLORS.opcoes[_getColorIndexFromOptions(i)].hex;
 }
 
 function _getThemeColorBoxShadow(cor=THEME_COLOR_SECONDARY) {

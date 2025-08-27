@@ -10,9 +10,11 @@ import { getLanguagePackName, translatePage, loadLangSelectorSelect } from "./tr
 import { loadCreditsListeners } from "../support/pages/credits.js";
 import {on, select, onscroll} from "../support/pages/selectors.js"
 import { displayError } from "../support/pages/messages.js";
+import { getJson } from "../support/data/data.js";
 
 export var SUCCESSFUL_SAVE = false;
-export var CONFIG;
+
+const APP_VERSION = await getJson("/assets/json/version.json");
 
 const APP = {
   projectId: null,
@@ -23,7 +25,8 @@ export function initApp() {
   "use strict";
   $('body').css('overflow', 'hidden');
 
-  loadConfig();
+  loadAppVersioning();
+  translatePage();
   loadLangSelectorSelect();
   loadCreditsListeners();
 
@@ -189,7 +192,7 @@ function loadAppVersioning() {
   const isIP = /^\d{1,3}(\.\d{1,3}){3}$/.test(window.location.hostname);
 
   APP.projectId = firebase.app().options.projectId;
-  APP.version = isLocalhost || isIP ? new Date().getTime() : CONFIG.versoes[APP.projectId];
+  APP.version = isLocalhost || isIP ? new Date().getTime() : APP_VERSION[APP.projectId];
 
   // Cache Busting
   if (APP.version) {
@@ -201,29 +204,6 @@ function loadAppVersioning() {
       tag.setAttribute(attr, url.toString());
     });
   }
-}
-
-async function loadConfig() {
-  const config = {};
-  return Promise.all([
-    $.getJSON("/assets/json/call-sync-order.json").then(data => config.callSyncOrder = data),
-    $.getJSON("/assets/json/cores.json").then(data => config.cores = data),
-    $.getJSON("/assets/json/destinos.json").then(data => config.destinos = data),
-    $.getJSON("/assets/json/information.json").then(data => config.information = data),
-    $.getJSON("/assets/json/moedas.json").then(data => config.moedas = data),
-    $.getJSON("/assets/json/transportes.json").then(data => config.transportes = data),
-    $.getJSON("/assets/json/set.json").then(data => config.set = data),
-    $.getJSON("/assets/json/icons.json").then(data => config.icons = data),
-    $.getJSON("/assets/json/version.json").then(data => config.versoes = data),
-    $.getJSON(`/assets/json/languages/${getLanguagePackName()}.json`).then(data => config.language = data),
-  ]).then(() => {
-    CONFIG = config;
-    translatePage();
-    loadAppVersioning()
-  }).catch(error => {
-    console.error('Error while loading the application configuration:', error);
-    displayError(translate('messages.errors.config'));
-  });
 }
 
 export function openLinkInNewTab(url) {

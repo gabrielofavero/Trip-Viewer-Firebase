@@ -1,6 +1,9 @@
 import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { displayError } from "../../support/pages/messages.js";
+import { getJson } from "../../support/data/data.js";
+
+export const CURRENCY = await getJson("/assets/json/moedas.json");
 
 var MOEDA_PADRAO;
 var MOEDA_CONVERSAO = {};
@@ -150,11 +153,7 @@ function _convertMoeda(from, to, valor) {
 }
 
 function _getMoedaSymbol(moeda) {
-    if (CONFIG.moedas.simbolos[moeda]) {
-        return CONFIG.moedas.simbolos[moeda];
-    } else {
-        return moeda;
-    }
+    CURRENCY?.simbolos?.[moeda] || moeda
 }
 
 function _canConvert(moedas) {

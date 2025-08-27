@@ -1,8 +1,10 @@
 import { getID, getChildIDs } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
-import { codifyText } from "../../support/data/data.js";
+import { codifyText, getJson } from "../../support/data/data.js";
 import { convertFromDateObject, getDateString, getTimeString, jsTimeToVisualTime } from "../../support/data/dates.js";
 import { openToast } from "../../support/pages/messages.js";
+
+const TRANSPORTATION = await getJson("/assets/json/transportes.json");
 
 var TRANSPORTE_ICONES = [];
 var TRANSPORTE_ATIVO;
@@ -81,9 +83,9 @@ function _getEmpresaObj(j) {
   const tipo = transporte.transporte;
   const titulo = transporte.empresa;
 
-  const tituloConfig = CONFIG?.transportes?.empresas?.[tipo]?.[titulo];
-  const siteConfig = CONFIG?.transportes?.sites?.[tipo]?.[titulo];
-  const imagemConfig = CONFIG?.transportes?.imagens?.[tipo]?.[titulo];
+  const tituloConfig = TRANSPORTATION?.empresas?.[tipo]?.[titulo];
+  const siteConfig = TRANSPORTATION?.sites?.[tipo]?.[titulo];
+  const imagemConfig = TRANSPORTATION?.imagens?.[tipo]?.[titulo];
 
   return {
     titulo: tituloConfig || titulo,
@@ -140,7 +142,7 @@ function _getPartidaChegadaHTML(j, tipo) {
 
 function _getTransporteIcon(j) {
   const tipo = FIRESTORE_DATA.transportes.dados[j - 1].transporte;
-  const icone = CONFIG.transportes.icones[tipo] || CONFIG.transportes.icones.outro;
+  const icone = TRANSPORTATION.icones[tipo] || TRANSPORTATION.icones.outro;
   TRANSPORTE_ICONES.push(icone);
   return icone;
 }

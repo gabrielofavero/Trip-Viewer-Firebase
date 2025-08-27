@@ -1,5 +1,5 @@
 import { getID } from "../../../support/pages/selectors.js";
-import { translate } from "../../../main/translate.js";
+import { LANGUAGE_PACK, translate } from "../../../main/translate.js";
 import { getDefaultProperties, displayFullMessage } from "../../../support/pages/messages.js";
 import { getDateTitle, convertFromDateObject } from "../../../support/data/dates.js";
 
@@ -200,7 +200,7 @@ function _getInnerProgramacaoHTML(item) {
                                 item: categoria[j],
                                 isLineup: false,
                                 innerProgramacao: true,
-                                notas: CONFIG.language.destination.scores,
+                                notas: LANGUAGE_PACK.destination.scores,
                                 valores: _getDestinoValores(DESTINOS[i]),
                                 moeda: destino.moeda
                             });

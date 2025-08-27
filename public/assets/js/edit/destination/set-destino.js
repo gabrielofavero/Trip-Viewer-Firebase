@@ -4,6 +4,7 @@ import { translate } from "../../main/translate.js";
 import { firstCharToUpperCase, getTypeID } from "../../support/data/data.js";
 import { displayMessage, displayError } from "../../support/pages/messages.js";
 import { setDocument } from "../../support/pages/set.js";
+import { DESTINATIONS } from "../../view/categorias/destinos.js";
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 
@@ -73,7 +74,7 @@ function _buildDestinoCategoryObject(categoria) {
 async function _updateTikTokLinks() {
     let toUpdate = false;
     const urls = {};
-    for (const categoria of CONFIG.destinos.categorias.passeios) {
+    for (const categoria of DESTINATIONS.categorias.passeios) {
         const midias = FIRESTORE_DESTINOS_NEW_DATA[categoria].map(item => item.midia)
         if (!toUpdate && midias.length > 0 && midias.some(midia => midia.includes('https://vm.tiktok.com/'))) {
             toUpdate = true;
@@ -112,7 +113,7 @@ async function _updateTikTokLinks() {
             if (Object.keys(unableToConvert).length > 0) {
                 _displayTikTokError(unableToConvert)
             } else {
-                for (const categoria of CONFIG.destinos.categorias.passeios) {
+                for (const categoria of DESTINATIONS.categorias.passeios) {
                     for (let i = 0; i < FIRESTORE_DESTINOS_NEW_DATA[categoria].length; i++) {
                         FIRESTORE_DESTINOS_NEW_DATA[categoria][i].midia = data[categoria][i];
                     }
