@@ -21,14 +21,7 @@
   - 📈 **M106:** [⚔️E034] Use imports in js files
   - 📈 **M104:** [⚔️E034] All external links should open via window.open
   - 📈 **M110:** [⚔️E034] Use logo as symbol instead of dynamic svg
-  - 📈 **M111:** [⚔️E034] Make database EN-US
-  - 📈 **M112:** [⚔️E034] Remove JSON file from set logic
-  - 📈 **M113:** [⚔️E034] Remove JSON from call-sync-order logic
-  - 📈 **M114:** [⚔️E034] Reduce eval logic
-  - 📈 **M116:** [⚔️E034] Translate all pop-ups
-  - 📈 **M117:** [⚔️E034] Change all on-clicks to event listeners
   - 📈 **M118:** [⚔️E034] Remove underline from beggining of each function
-
 
   - Index
   - View
@@ -143,6 +136,12 @@
   - 📈 **M098:** [⚔️E034] Change js functions/folder structures to EN-US
   - 📈 **M115:** [⚔️E034] Change css files/folder structures to EN-US
   - 📈 **M105:** [⚔️E034] Remove CONFIG and reduce use of global variables
+  - 📈 **M117:** [⚔️E034] Change all on-clicks to event listeners
+  - 📈 **M111:** [⚔️E034] Make database EN-US
+  - 📈 **M114:** [⚔️E034] Reduce eval logic
+  - 📈 **M112:** [⚔️E034] Remove JSON file from set logic
+  - 📈 **M113:** [⚔️E034] Remove JSON from call-sync-order logic
+  - 📈 **M116:** [⚔️E034] Translate all pop-ups
 
 ### July 2025
 - 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
