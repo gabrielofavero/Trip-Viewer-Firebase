@@ -8,32 +8,32 @@ import { convertFromDateObject } from "../support/data/dates.js";
 import { getDateString } from "../support/data/dates.js";
 import { displayError } from "../support/pages/messages.js";
 import { closeModal } from "../support/styles/modal.js";
-import { isOnDarkMode } from "../support/styles/visibility.js";
+import { NOTIFICATION_BAR, applyNotificationBarColor } from "./support/visibilidade.js";
 
-var USER_DATA = {};
+export var USER_DATA = {};
 
-var TENTATIVAS = {
+var LOAD_ATTEMPTS = {
   viagens: 0,
   destinos: 0,
   listagens: 0
 }
 
-var VIAGENS = {
-  coletado: false,
-  viagensEmAndamento: [],
-  proximasViagens: [],
-  viagensAnteriores: []
+var TRIPS = {
+  collected: false,
+  during: [],
+  next: [],
+  previous: []
 }
 
-startLoadingScreen();
-
+// Loaders
 document.addEventListener('DOMContentLoaded', async function () {
+  startLoadingScreen();
   try {
     initApp();
 
     _loadVisibilityIndex();
-    _loadListenersIndex();
-    _loadUserIndex();
+    loadListenersIndex();
+    loadUserIndex();
 
     $('body').css('overflow', 'auto');
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 });
 
-function _loadListenersIndex() {
+function loadListenersIndex() {
   getID('login-button').addEventListener('click', function () {
     signInWithEmailAndPassword();
   });
@@ -73,19 +73,19 @@ function _loadListenersIndex() {
   });
 
   getID('nova-viagem-1').addEventListener('click', function () {
-    _viagensNovo();
+    goToNewTrip();
   });
 
   getID('nova-viagem-2').addEventListener('click', function () {
-    _viagensNovo();
+    goToNewTrip();
   });
 
   getID('new-destino').addEventListener('click', function () {
-    _destinosNovo();
+    goToNewDestination();
   });
 
   getID('new-listagem').addEventListener('click', function () {
-    _listagensNovo();
+    goToNewListing();
   });
 
   getID('back').addEventListener('click', function () {
@@ -114,7 +114,7 @@ function _loadListenersIndex() {
   });
 }
 
-async function _loadUserIndex() {
+async function loadUserIndex() {
   try {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
@@ -134,9 +134,9 @@ async function _loadUserIndex() {
         getID('profile-icon').style.backgroundImage = photoURL;
         getID('profile-icon').style.backgroundSize = 'cover';
 
-        _loadUserDataList('viagens', userData);
-        _loadUserDataList('listagens', userData);
-        _loadUserDataList('destinos', userData);
+        loadUserDataList('viagens', userData);
+        loadUserDataList('listagens', userData);
+        loadUserDataList('destinos', userData);
 
       } else {
         _openIndexPage('unlogged');
@@ -150,43 +150,43 @@ async function _loadUserIndex() {
   stopLoadingScreen();
 }
 
-async function _loadUserDataList(tipo, userData) {
-  const promise = getUserList(tipo, true, userData);
+async function loadUserDataList(type, userData) {
+  const promise = getUserList(type, true, userData);
   let responseReceived = false;
 
   function onResponseReceived(response) {
-    const tipos = _getTipos(tipo);
-    for (const innerTipo of tipos) {
-      innerTipo.preloader.style.display = 'none';
-      innerTipo.demoraCarregamento.style.display = 'none';
+    const tipos = getTypes(type);
+    for (const innerType of tipos) {
+      innerType.preloader.style.display = 'none';
+      innerType.longLoad.style.display = 'none';
       if (response.length === 0) {
-        innerTipo.semDados.style.display = 'block';
+        innerType.noData.style.display = 'block';
       } else {
-        innerTipo.semDados.style.display = 'none';
-        USER_DATA[tipo] = response;
-        _loadUserDataHTML(USER_DATA[tipo], innerTipo.titulo);
+        innerType.noData.style.display = 'none';
+        USER_DATA[type] = response;
+        loadUserDataHTML(USER_DATA[type], innerType.title);
       }
     }
   }
 
-  function _getTipos(tipo) {
+  function getTypes(type) {
     const result = [];
-    const tipos = tipo == 'viagens' ? ['proximasViagens', 'viagensAnteriores'] : [tipo];
-    for (const innerTipo of tipos) {
+    const types = type == 'viagens' ? ['proximasViagens', 'viagensAnteriores'] : [type];
+    for (const innerTipo of types) {
       result.push({
-        titulo: innerTipo,
+        title: innerTipo,
         preloader: getID(`preloader-${innerTipo}`),
-        demoraCarregamento: getID(`demora-carregamento-${innerTipo}`),
-        semDados: getID(`sem-${innerTipo}`)
+        longLoad: getID(`demora-carregamento-${innerTipo}`),
+        noData: getID(`sem-${innerTipo}`)
       });
     }
     return result;
   }
 
   function onTimeout() {
-    for (const innerTipo of _getTipos(tipo)) {
-      innerTipo.preloader.style.display = 'none';
-      innerTipo.demoraCarregamento.style.display = 'block';
+    for (const innerType of getTypes(type)) {
+      innerType.preloader.style.display = 'none';
+      innerType.longLoad.style.display = 'block';
     }
   }
 
@@ -207,7 +207,7 @@ async function _loadUserDataList(tipo, userData) {
     if (!responseReceived) {
       onTimeout();
     }
-  }, 8000); // 8 segundos
+  }, 8000);
 
   while (!responseReceived) {
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -225,116 +225,116 @@ async function _loadUserDataList(tipo, userData) {
   }
 }
 
-function _manualListLoad(type) {
-  TENTATIVAS[type]++;
+function manualListLoad(type) {
+  LOAD_ATTEMPTS[type]++;
 
   getID(`preloader-${type}`).style.display = 'block';
   getID(`demora-carregamento-${type}`).style.display = 'none';
 
-  if (TENTATIVAS[type] < 2) {
-    _loadUserDataList(type);
+  if (LOAD_ATTEMPTS[type] < 2) {
+    loadUserDataList(type);
   } else {
     window.location.reload(true);
   }
 }
 
-function _loadUserDataHTML(dados, tipo) {
-  const div = getID(`dados-${tipo}`);
-  let conteudo = '';
+function loadUserDataHTML(data, type) {
+  const div = getID(`dados-${type}`);
+  let content = '';
 
-  if ((tipo == 'proximasViagens' || tipo == 'viagensAnteriores')) {
-    if (!VIAGENS.coletado) {
-      _coletarViagens(dados);
-      _loadNotificationBar();
+  if ((type == 'proximasViagens' || type == 'viagensAnteriores')) {
+    if (!TRIPS.collected) {
+      collectTrips(data);
+      loadNotificationBar();
     }
-    dados = VIAGENS[tipo];
-  } else if (dados[0].ultimaAtualizacao) {
-    dados.sort((a, b) => {
+    data = TRIPS[type];
+  } else if (data[0].ultimaAtualizacao) {
+    data.sort((a, b) => {
       return new Date(b.ultimaAtualizacao).getTime() - new Date(a.ultimaAtualizacao).getTime();
     });
   }
 
-  for (let i = 0; i < dados.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     let secondaryDiv = '';
-    let visualizarDiv = '';
-    let innertipo = tipo;
+    let viewDiv = '';
+    let innerType = type;
 
     const viewItems = [];
     const editItems = [];
 
-    switch (tipo) {
+    switch (type) {
       case 'proximasViagens':
       case 'viagensAnteriores':
-        innertipo = 'viagens';
-        const inicioDate = convertFromDateObject(dados[i].inicio);
-        const fimDate = convertFromDateObject(dados[i].fim);
+        innerType = 'viagens';
+        const inicioDate = convertFromDateObject(data[i].inicio);
+        const fimDate = convertFromDateObject(data[i].fim);
         const inicio = getDateString(inicioDate);
         const fim = getDateString(fimDate);
         secondaryDiv = `<div class="user-data-item-date">${inicio} - ${fim}</div>`;
         break;
       case 'destinos':
       case 'listagens':
-        secondaryDiv = `<div class="user-data-item-date">${dados[i].ultimaAtualizacaoText}</div>`;
+        secondaryDiv = `<div class="user-data-item-date">${data[i].ultimaAtualizacaoText}</div>`;
         break;
       default:
         break;
     }
 
-    if (DATABASE_TRIP_DOCUMENTS.includes(innertipo)) {
-      visualizarDiv = `<i id="visualizar-${tipo}-${i+1}" class="iconify user-data-icon" data-icon="fluent:eye-16-regular"></i>`
-      viewItems.push({id: `#visualizar-${tipo}-${i+1}`, code: dados[i].code, innerType: innertipo})
+    if (DATABASE_TRIP_DOCUMENTS.includes(innerType)) {
+      viewDiv = `<i id="visualizar-${type}-${i+1}" class="iconify user-data-icon" data-icon="fluent:eye-16-regular"></i>`
+      viewItems.push({id: `#visualizar-${type}-${i+1}`, code: data[i].code, innerType: innerType})
     }
 
-    conteudo += `
+    content += `
     <div class="user-data-item">
       <div class="user-data-item-text">
-        <div class="user-data-item-title">${dados[i].titulo}</div>
+        <div class="user-data-item-title">${data[i].title}</div>
         ${secondaryDiv}
       </div>
       <div class="trip-data-icons">
-        <i id="editar-${tipo}-${i+1}" class="iconify user-data-icon" data-icon="tabler:edit"></i>
-        ${visualizarDiv}
+        <i id="editar-${type}-${i+1}" class="iconify user-data-icon" data-icon="tabler:edit"></i>
+        ${viewDiv}
       </div>
     </div>`;
-    editItems.push({id: `#editar-${tipo}-${i+1}`, code: dados[i].code, innerType: innertipo})
+    editItems.push({id: `#editar-${type}-${i+1}`, code: data[i].code, innerType: innerType})
   }
 
-  div.innerHTML = conteudo;
+  div.innerHTML = content;
   
   loadViewItemsListeners(viewItems);
   loadEditItemsListeners(editItems);
 
-  function _coletarViagens(dados) {
-    const proximasViagens = [];
-    const viagensAnteriores = [];
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
+  function collectTrips(data) {
+    const next = [];
+    const previous = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    for (let i = 0; i < dados.length; i++) {
-      const viagem = dados[i];
-      const fim = convertFromDateObject(viagem.fim);
+    for (let i = 0; i < data.length; i++) {
+      const trip = data[i];
+      const end = convertFromDateObject(trip.fim);
 
-      if (hoje > fim) {
-        viagensAnteriores.push(viagem);
+      if (today > end) {
+        previous.push(trip);
       } else {
-        proximasViagens.push(viagem);
-        if (hoje >= convertFromDateObject(viagem.inicio)) {
-          VIAGENS.viagensEmAndamento.push(viagem);
+        next.push(trip);
+        if (today >= convertFromDateObject(trip.inicio)) {
+          TRIPS.during.push(trip);
         }
       }
     }
-    proximasViagens.sort((a, b) => _sortByToday(a, b));
-    viagensAnteriores.sort((a, b) => _sortByToday(a, b));
+    next.sort((a, b) => _sortByToday(a, b));
+    previous.sort((a, b) => _sortByToday(a, b));
 
-    VIAGENS.coletado = true;
-    VIAGENS.proximasViagens = proximasViagens;
-    VIAGENS.viagensAnteriores = viagensAnteriores;
+    TRIPS.collected = true;
+    TRIPS.next = next;
+    TRIPS.previous = previous;
 
     function _sortByToday(a, b) {
       const fimA = convertFromDateObject(a.fim);
       const fimB = convertFromDateObject(b.fim);
-      const diferencaA = Math.abs(hoje - fimA);
-      const diferencaB = Math.abs(hoje - fimB);
+      const diferencaA = Math.abs(today - fimA);
+      const diferencaB = Math.abs(today - fimB);
       return diferencaA - diferencaB;
     }
   }
@@ -345,13 +345,13 @@ function loadViewItemsListeners(viewItems) {
     onClick(item.id, () => {
       switch (item.innerType) {
         case 'viagens':
-          _viagensVisualizar(item.code);
+          goToViewTrip(item.code);
           break;
         case 'destinos':
-          _destinosVisualizar(item.code);
+          goToViewDestination(item.code);
           break;
         case 'listagens':
-          _listagensVisualizar(item.code);
+          goToViewListing(item.code);
       }
     })
   }
@@ -362,64 +362,28 @@ function loadEditItemsListeners(editItems) {
     onClick(item.id, () => {
       switch (item.innerType) {
         case 'viagens':
-          _viagensEditar(item.code);
+          goToEditTrip(item.code);
           break;
         case 'destinos':
-          _destinosEditar(item.code);
+          goToEditDestination(item.code);
           break;
         case 'listagens':
-          _listagensEditar(item.code);
+          goToEditListing(item.code);
       }
     })
   }
 }
 
-function _viagensEditar(code) {
-  window.open(`edit/trip.html?v=${code}`, '_blank');
-}
-
-function _viagensVisualizar(code) {
-  window.open(`view.html?v=${code}`, '_blank'); 
-}
-
-function _viagensNovo() {
-  window.open(`edit/trip.html`, '_blank');
-}
-
-function _destinosNovo() {
-  window.open(`edit/destination.html`, '_blank');
-}
-
-function _destinosEditar(code) {
-  window.open(`edit/destination.html?d=${code}`, '_blank');
-}
-
-function _destinosVisualizar(code) {
-  window.open(`view.html?d=${code}`, '_blank');
-}
-
-function _listagensEditar(code) {
-  window.open(`edit/listing.html?l=${code}`, '_blank');
-}
-
-function _listagensVisualizar(code) {
-  window.open(`view.html?l=${code}`, '_blank');
-}
-
-function _listagensNovo() {
-  window.open(`edit/listing.html`, '_blank');
-}
-
-function _loadNotificationBar() {
-  if (VIAGENS.coletado && VIAGENS.viagensEmAndamento.length > 0) {
+function loadNotificationBar() {
+  if (TRIPS.collected && TRIPS.during.length > 0) {
     getID('notification-bar').style.display = 'flex';
-    if (VIAGENS.viagensEmAndamento.length == 1) {
-      getID('notification-text').innerHTML = `${translate('trip.current_single')}:<br>${VIAGENS.viagensEmAndamento[0].titulo}`;
-      if (VIAGENS.viagensEmAndamento[0].cores.ativo) {
-        notificationBar.changed = true;
-        notificationBar.claro = VIAGENS.viagensEmAndamento[0].cores.claro;
-        notificationBar.escuro = VIAGENS.viagensEmAndamento[0].cores.escuro;
-        _applyNotificationBarColor();
+    if (TRIPS.during.length == 1) {
+      getID('notification-text').innerHTML = `${translate('trip.current_single')}:<br>${TRIPS.during[0].title}`;
+      if (TRIPS.during[0].cores.ativo) {
+        NOTIFICATION_BAR.changed = true;
+        NOTIFICATION_BAR.light = TRIPS.during[0].cores.claro;
+        NOTIFICATION_BAR.dark = TRIPS.during[0].cores.escuro;
+        applyNotificationBarColor();
       }
     } else {
       getID('notification-text').innerHTML = `${translate('trip.current_multi_1')}<br> ${translate('trip.current_multi_2')}"`;
@@ -428,28 +392,61 @@ function _loadNotificationBar() {
   }
 }
 
+export function manualTripLoad() {
+  manualListLoad('viagens');
+}
+
+export function manualDestinationLoad() {
+  manualListLoad('destinos');
+}
+
+export function manualListingLoad() {
+  manualListLoad('listagens');
+}
+
+// Page Navigation
+function goToEditTrip(code) {
+  window.open(`edit/trip.html?v=${code}`, '_blank');
+}
+
+function goToViewTrip(code) {
+  window.open(`view.html?v=${code}`, '_blank'); 
+}
+
+function goToNewTrip() {
+  window.open(`edit/trip.html`, '_blank');
+}
+
+function goToNewDestination() {
+  window.open(`edit/destination.html`, '_blank');
+}
+
+function goToEditDestination(code) {
+  window.open(`edit/destination.html?d=${code}`, '_blank');
+}
+
+function goToViewDestination(code) {
+  window.open(`view.html?d=${code}`, '_blank');
+}
+
+function goToEditListing(code) {
+  window.open(`edit/listing.html?l=${code}`, '_blank');
+}
+
+function goToViewListing(code) {
+  window.open(`view.html?l=${code}`, '_blank');
+}
+
+function goToNewListing() {
+  window.open(`edit/listing.html`, '_blank');
+}
+
 export function closeNotification() {
   document.querySelector('.notification-bar').style.display = 'none';
 }
 
 export function goToCurrentTrip() {
-  if (VIAGENS.viagensEmAndamento.length == 1) {
-    _viagensVisualizar(VIAGENS.viagensEmAndamento[0].code);
+  if (TRIPS.during.length == 1) {
+    goToViewTrip(TRIPS.during[0].code);
   }
-}
-
-function _applyNotificationBarColor() {
-  getID('notification-bar').style.backgroundColor = isOnDarkMode() ? notificationBar.escuro : notificationBar.claro;
-}
-
-export function manualTripLoad() {
-  _manualListLoad('viagens');
-}
-
-export function manualDestinationLoad() {
-  _manualListLoad('destinos');
-}
-
-export function manualListingLoad() {
-  _manualListLoad('listagens');
 }

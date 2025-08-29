@@ -3,10 +3,14 @@ import { animate, animateFadeIn, animateFadeOut, fadeOut } from "../../support/s
 import { loadLogoColors } from "../../support/styles/colors.js";
 import { loadUserVisibility, setManualVisibility, switchVisibility } from "../../support/styles/visibility.js";
 
-const notificationBar = {
+export const NOTIFICATION_BAR = {
   changed: false,
-  claro: '',
-  escuro: ''
+  light: '',
+  dark: ''
+}
+
+export function applyNotificationBarColor() {
+  getID('notification-bar').style.backgroundColor = isOnDarkMode() ? NOTIFICATION_BAR.dark : NOTIFICATION_BAR.light;
 }
 
 function _loadVisibilityIndex() {
@@ -17,8 +21,8 @@ function _loadVisibilityIndex() {
     switchVisibility();
     setManualVisibility();
     
-    if (notificationBar.changed) {
-      _applyNotificationBarColor();
+    if (NOTIFICATION_BAR.changed) {
+      applyNotificationBarColor();
     }
   })
 }
