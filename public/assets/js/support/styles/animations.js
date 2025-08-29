@@ -1,4 +1,3 @@
-
 export function animate(fadeIn, fadeOut, from = 0, to = 0, horizontal = true) {
     const forward = horizontal ? 'left' : 'down';
     const backwards = horizontal ? 'right' : 'up';
@@ -46,7 +45,7 @@ export function animateFadeIn(elementIds, mili = 250) {
     });
 }
 
-export function animateFade(fadeOutIds, fadeInIds, duration=250) {
+export function animateFade(fadeOutIds, fadeInIds, duration = 250) {
     animateFadeOut(fadeOutIds);
     setTimeout(function () {
         animateFadeIn(fadeInIds);

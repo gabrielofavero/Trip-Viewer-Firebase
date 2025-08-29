@@ -1,9 +1,9 @@
-import { getID, getChildIDs } from "../pages/selectors";
+import { getChildIDs, getID } from "../pages/selectors.js";
 
 // Accordion Open - Close
 export function closeAccordions(categoria) {
     const childs = getChildIDs(`${categoria}-box`);
-    
+
     for (const child of childs) {
         const i = child.split('-').pop();
         const accordionID = `collapse-${categoria}-${i}`;

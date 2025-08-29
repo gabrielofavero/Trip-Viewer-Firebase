@@ -1,9 +1,9 @@
-import { DOCUMENT_ID } from "../firebase/database";
 import { setSuccessfulSave } from "../../main/app.js";
-import { getID } from "../pages/selectors.js";
-import { stopLoadingScreen } from "../pages/loading.js";
+import { DOCUMENT_ID } from "../firebase/database";
 import { firstCharToUpperCase } from "../pages/data/data.js";
+import { stopLoadingScreen } from "../pages/loading.js";
 import { displayMessage, openToast } from "../pages/messages.js";
+import { getID } from "../pages/selectors.js";
 import { closeModal, openModal } from "../styles/modal.js";
 
 // Required Fields
@@ -42,7 +42,6 @@ export function removeRequired(id) {
         div.removeAttribute('required');
     }
 }
-
 
 function getInvalidFieldsText(invalidFields, customChecks) {
     const dadosBasicos = ['titulo', 'moeda'];
@@ -233,9 +232,9 @@ export function validateMapLink(id) {
     const mapsI = '<i class="iconify" data-icon="hugeicons:maps"></i>'
     const googleMapsI = '<i class="iconify" data-icon="simple-icons:googlemaps"></i>'
     const appleMapsI = '<i class="iconify" data-icon="ic:baseline-apple"></i>'
-    
+
     const title = translate('messages.error.invalid_link.map.title', { mapsI });
-    const content = translate('messages.error.invalid_link.map.content', { googleMapsI, appleMapsI});
+    const content = translate('messages.error.invalid_link.map.content', { googleMapsI, appleMapsI });
     displayMessage(title, content);
 }
 

@@ -1,5 +1,5 @@
-import { getID } from "../pages/selectors";
-import { animateFadeIn, animateFadeOut } from "./animations";
+import { getID } from "../pages/selectors.js";
+import { animateFadeIn, animateFadeOut } from "./animations.js";
 
 export function openModal(modalID = 'modal') {
     animateFadeIn([modalID]);

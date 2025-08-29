@@ -1,10 +1,9 @@
-import { getID, getSecondaryIDs, onClick } from "../pages/selectors.js";
-import { firstCharToUpperCase, removeEmptyChild, getPage } from "../pages/data/data.js";
 import { getCurrentHour } from "../data/dates.js";
-import { animateFadeIn, animateFadeOut } from "./animations.js";
+import { FIRESTORE_DATA } from "../firebase/database.js";
+import { getPage } from "../pages/data/data.js";
+import { getID, onClick } from "../pages/selectors.js";
 import { DARK_COLOR, LIGHT_COLOR, THEME_COLOR, THEME_COLOR_HOVER, THEME_COLOR_SECONDARY, changeBarColorIOS, clearCustomColors, getDarkerColor, getLighterColor, getLocalColors, isCustomColorsActive, loadLogoColors, saveLocalColors, setCustomColors, setDarkColor, setLightColor, setThemeColor, setThemeColorHover, setThemeColorSecondary } from "./colors.js";
 import { setCSSVariable } from "./stylesheets.js";
-import { FIRESTORE_DATA } from "../firebase/database.js";
 
 export var LOGO_LIGHT = "";
 export var LOGO_DARK = "";

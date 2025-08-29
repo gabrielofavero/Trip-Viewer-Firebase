@@ -1,7 +1,7 @@
-import { getID } from "./selectors.js";
 import { translate } from "../../main/translate.js";
-import { MESSAGE_MODAL_OPEN, displayError } from "./messages.js";
 import { disableScroll, enableScroll } from "../styles/visibility.js";
+import { MESSAGE_MODAL_OPEN, displayError } from "./messages.js";
+import { getID } from "./selectors.js";
 
 export var LOADING_TIMER;
 var LOADING_SECONDS = 0;

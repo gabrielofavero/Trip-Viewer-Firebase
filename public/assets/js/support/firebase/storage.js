@@ -1,8 +1,8 @@
-import { DOCUMENT_ID } from "./database.js";
-import { USER_PERMISSIONS } from "./user.js";
-import { getID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { codifyText } from "../data/data.js";
+import { getID } from "../pages/selectors.js";
+import { DOCUMENT_ID } from "./database.js";
+import { USER_PERMISSIONS } from "./user.js";
 
 export var IMAGE_UPLOAD_STATUS = {
   hasErrors: false,
@@ -51,7 +51,7 @@ export async function uploadImages(type, files) {
     if (upload.link) {
       results.push(upload);
     }
-  }  
+  }
   return results;
 }
 

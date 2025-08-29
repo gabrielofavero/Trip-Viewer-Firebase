@@ -11,12 +11,12 @@ export function initializeSortableForGroup(groupName, properties) {
                     handle: handleSelector,
                     group: groupName,
                     animation: 150,
-                    onStart: function(evt) {
+                    onStart: function (evt) {
                         if (onStartFunc) {
                             onStartFunc(evt);
                         }
                     },
-                    onEnd: function(evt) {
+                    onEnd: function (evt) {
                         if (onEndFunc) {
                             onEndFunc(evt);
                         }

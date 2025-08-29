@@ -1,6 +1,6 @@
-import { getID } from "../pages/selectors";
 import { translate } from "../../main/translate.js";
 import { removeChildWithValidation } from "../pages/edit-module.js";
+import { getID } from "../pages/selectors.js";
 
 var DYNAMIC_SELECT = {};
 
@@ -110,19 +110,19 @@ function addEventListenersDS(type, selectID, inputID, customFunction = "") {
     });
 }
 
-export function addRemoveChildListenerDS(categoria, j, dynamicSelects=[]) {
+export function addRemoveChildListenerDS(categoria, j, dynamicSelects = []) {
     getID(`remove-${categoria}-${j}`).addEventListener('click', function () {
-        
+
         for (const dynamicSelect of dynamicSelects) {
             removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
         }
-        
+
         removeChildWithValidation(categoria, j);
 
         for (const dynamicSelect of dynamicSelects) {
             buildDS(dynamicSelect.type);
         }
-        
+
     });
 }
 

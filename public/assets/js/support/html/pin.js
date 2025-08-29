@@ -226,7 +226,7 @@ function _loadPin() {
   });
 }
 
-function _requestPin({confirmAction, cancelAction=closeMessage, precontent='', invalido=false}) {
+function _requestPin({ confirmAction, cancelAction = closeMessage, precontent = '', invalido = false }) {
   const propriedades = getDefaultProperties();
   const classComplement = invalido ? '-invalid' : '';
   propriedades.title = translate('trip.expenses.pin.title');
@@ -253,6 +253,6 @@ function _pinListenerAction(event) {
   }
 }
 
-function _removePinListener() {
+export function removePinListener() {
   document.removeEventListener('keydown', _pinListenerAction);
 }

@@ -1,8 +1,7 @@
-import { DOCUMENT_ID } from "./database.js";
-import { get, create, getSystemData, getUserPermissions } from "./database.js";
-import { getID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
-import { displayMessage, displayError } from "../pages/messages.js";
+import { displayError, displayMessage } from "../pages/messages.js";
+import { getID } from "../pages/selectors.js";
+import { DOCUMENT_ID, create, get, getSystemData, getUserPermissions } from "./database.js";
 
 export var USER_PERMISSIONS;
 
@@ -17,10 +16,10 @@ export async function signInWithEmailAndPassword() {
     try {
         // Set persistence to LOCAL
         await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-        
+
         // Sign in with email and password
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-        
+
         // Get the signed-in user
         const user = userCredential.user;
         console.log('User signed in:', user);

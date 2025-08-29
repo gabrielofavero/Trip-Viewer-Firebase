@@ -7,6 +7,7 @@ import { getURLParam } from "../support/data/data.js";
 import { displayError, displayForbidden, closeMessage } from "../support/pages/messages.js";
 import { animateFade } from "../support/styles/animations.js";
 import { loadExternalVisibility } from "../support/styles/visibility.js";
+import { removePinListener } from "../support/html/pin.js";
 
 var GASTOS;
 var GASTOS_QUANTIDADE = 0;
@@ -87,7 +88,7 @@ async function _loadGastos() {
     const documentID = getURLParam('g');
     const pin = getID('pin-code')?.innerText || '';
     closeMessage();
-    _removePinListener();
+    removePinListener();
     startLoadingScreen(false);
     try {
         if (pin) {

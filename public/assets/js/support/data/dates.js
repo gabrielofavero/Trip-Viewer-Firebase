@@ -1,5 +1,5 @@
-import { getID, getSecondaryIDs, getLastSecondaryID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
+import { getID, getLastSecondaryID, getSecondaryIDs } from "../pages/selectors.js";
 
 var DATE_REGIONAL_FORMAT;
 
@@ -183,7 +183,7 @@ export function convertFromDateObject(dateObject) {
     date.setHours(dateObject.hour);
     date.setMinutes(dateObject.minute);
     date.setSeconds(dateObject.second || 0)
-    
+
     return date;
 }
 

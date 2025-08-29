@@ -1,5 +1,5 @@
-import { getID } from "../pages/selectors.js";
 import { getJson, getPage } from "../data/data.js";
+import { getID } from "../pages/selectors.js";
 
 export const COLORS = await getJson("/assets/json/cores.json");
 

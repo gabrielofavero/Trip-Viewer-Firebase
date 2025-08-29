@@ -1,10 +1,9 @@
-import { getID, onClick } from "./selectors.js";
 import { translate } from "../../main/translate.js";
-import { IS_LOADING, LOADING_TIMER, stopLoadingScreen, stopLoadingTimer } from "./loading.js";
-import { cloneObject } from "../data/object.js";
 import { getPage } from "../data/data.js";
 import { animateFadeIn, animateFadeOut } from "../styles/animations.js";
 import { disableScroll } from "../styles/visibility.js";
+import { IS_LOADING, LOADING_TIMER, stopLoadingScreen, stopLoadingTimer } from "./loading.js";
+import { getID, onClick } from "./selectors.js";
 
 export var MESSAGE_MODAL_OPEN = false;
 const MESSAGE_LISTENERS = [];
@@ -172,7 +171,7 @@ function getHomeButton() {
   button.className = 'btn btn-theme btn-format';
   button.id = 'home-button'
   button.type = 'submit';
-  MESSAGE_LISTENERS.push({id: '#home-button', action: () => window.location.href = homeButton});
+  MESSAGE_LISTENERS.push({ id: '#home-button', action: () => window.location.href = homeButton });
 
   const icon = document.createElement('i');
   icon.id = 'transporte-nav';
@@ -190,7 +189,7 @@ function getBackButton(redirectTo = 'index.html') {
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
   button.id = 'message-back';
-  MESSAGE_LISTENERS.push({id: '#message-back', action: () => window.location.href = redirectTo});
+  MESSAGE_LISTENERS.push({ id: '#message-back', action: () => window.location.href = redirectTo });
 
   const icon = document.createElement('i');
   icon.className = 'iconify';
@@ -207,7 +206,7 @@ function getTryAgainButton() {
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
   button.id = 'message-try-again';
-  MESSAGE_LISTENERS.push({id: '#message-try-again', action: () => window.location.reload(true)});
+  MESSAGE_LISTENERS.push({ id: '#message-try-again', action: () => window.location.reload(true) });
 
   const icon = document.createElement('i');
   icon.className = 'iconify';
@@ -224,7 +223,7 @@ function getCloseButton(name = translate('labels.close'), action = closeMessage)
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
   button.id = 'message-close';
-  MESSAGE_LISTENERS.push({id: '#message-close', action });
+  MESSAGE_LISTENERS.push({ id: '#message-close', action });
 
   button.innerHTML = name;
   return button;
@@ -235,7 +234,7 @@ function getConfirmButton(action = closeMessage) {
   button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
   button.id = 'message-confirm';
-  MESSAGE_LISTENERS.push({id: '#message-confirm', action });
+  MESSAGE_LISTENERS.push({ id: '#message-confirm', action });
 
   button.innerHTML = translate('labels.confirm');
   return button;
@@ -246,7 +245,7 @@ function getDeleteButton(action, buttonClass = 'btn-secondary') {
   button.className = `btn ${buttonClass} btn-format`;
   button.type = 'submit';
   button.id = 'message-delete';
-  MESSAGE_LISTENERS.push({id: '#message-delete', action });
+  MESSAGE_LISTENERS.push({ id: '#message-delete', action });
 
   const icon = document.createElement('i');
   icon.className = 'iconify';
@@ -314,7 +313,7 @@ function getIconsBox(icons) {
     backIcon.className = 'bx bx-arrow-back';
     backIcon.style.visibility = 'hidden';
     backIcon.style.cursor = 'pointer';
-    MESSAGE_LISTENERS.push({id: '#back-icon', action: icons[0].acao });
+    MESSAGE_LISTENERS.push({ id: '#back-icon', action: icons[0].acao });
 
     iconContainer.appendChild(backIcon);
   }
@@ -324,7 +323,7 @@ function getIconsBox(icons) {
   cancelIcon.className = 'iconify';
   cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
   cancelIcon.style.cursor = 'pointer';
-  MESSAGE_LISTENERS.push({id: '#cancel-icon', action: closeMessage });
+  MESSAGE_LISTENERS.push({ id: '#cancel-icon', action: closeMessage });
 
   iconContainer.appendChild(cancelIcon);
 
@@ -344,7 +343,7 @@ function getErrorElement(error) {
   let errorMessage = "";
 
   if (location && error.error && error.error instanceof Error) {
-    errorMessage = translate('messages.errors.error_location', {error: error.error.message, location});
+    errorMessage = translate('messages.errors.error_location', { error: error.error.message, location });
   } else if (error.error && error.error instanceof Error) {
     errorMessage = `${translate('messages.errors.error')} ${error.error.message}`;
   }

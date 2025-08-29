@@ -1,7 +1,7 @@
-import { getID, getChildIDs, getSecondaryIDs, getFirstSecondaryID } from "../pages/selectors.js";
 import { translate } from "../../main/translate.js";
-import { FIRESTORE_NEW_DATA, FIRESTORE_DESTINOS_NEW_DATA } from "../firebase/database.js";
+import { FIRESTORE_DESTINOS_NEW_DATA, FIRESTORE_NEW_DATA } from "../firebase/database.js";
 import { displayError } from "../pages/messages.js";
+import { getFirstSecondaryID, getID, getSecondaryIDs } from "../pages/selectors.js";
 
 // Getters
 export async function getJson(path) {

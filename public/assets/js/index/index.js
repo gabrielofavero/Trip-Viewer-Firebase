@@ -1,12 +1,11 @@
-import { get, deleteAccount, getUserList, DATABASE_TRIP_DOCUMENTS } from "../support/firebase/database.js";
-import { signInWithEmailAndPassword, signOut, registerIfUserNotPresent } from "../support/firebase/user.js";
 import { initApp } from "../main/app.js";
-import { select, getID, onClick } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
+import { convertFromDateObject, getDateString } from "../support/data/dates.js";
+import { DATABASE_TRIP_DOCUMENTS, deleteAccount, get, getUserList } from "../support/firebase/database.js";
+import { registerIfUserNotPresent, signInWithEmailAndPassword, signOut } from "../support/firebase/user.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
-import { convertFromDateObject } from "../support/data/dates.js";
-import { getDateString } from "../support/data/dates.js";
 import { displayError } from "../support/pages/messages.js";
+import { getID, onClick, select } from "../support/pages/selectors.js";
 import { closeModal } from "../support/styles/modal.js";
 import { NOTIFICATION_BAR, applyNotificationBarColor } from "./support/visibilidade.js";
 
@@ -281,8 +280,8 @@ function loadUserDataHTML(data, type) {
     }
 
     if (DATABASE_TRIP_DOCUMENTS.includes(innerType)) {
-      viewDiv = `<i id="visualizar-${type}-${i+1}" class="iconify user-data-icon" data-icon="fluent:eye-16-regular"></i>`
-      viewItems.push({id: `#visualizar-${type}-${i+1}`, code: data[i].code, innerType: innerType})
+      viewDiv = `<i id="visualizar-${type}-${i + 1}" class="iconify user-data-icon" data-icon="fluent:eye-16-regular"></i>`
+      viewItems.push({ id: `#visualizar-${type}-${i + 1}`, code: data[i].code, innerType: innerType })
     }
 
     content += `
@@ -292,15 +291,15 @@ function loadUserDataHTML(data, type) {
         ${secondaryDiv}
       </div>
       <div class="trip-data-icons">
-        <i id="editar-${type}-${i+1}" class="iconify user-data-icon" data-icon="tabler:edit"></i>
+        <i id="editar-${type}-${i + 1}" class="iconify user-data-icon" data-icon="tabler:edit"></i>
         ${viewDiv}
       </div>
     </div>`;
-    editItems.push({id: `#editar-${type}-${i+1}`, code: data[i].code, innerType: innerType})
+    editItems.push({ id: `#editar-${type}-${i + 1}`, code: data[i].code, innerType: innerType })
   }
 
   div.innerHTML = content;
-  
+
   loadViewItemsListeners(viewItems);
   loadEditItemsListeners(editItems);
 
@@ -387,7 +386,7 @@ function loadNotificationBar() {
       }
     } else {
       getID('notification-text').innerHTML = `${translate('trip.current_multi_1')}<br> ${translate('trip.current_multi_2')}"`;
-      getID('notification-link').style.display = 'none';	
+      getID('notification-link').style.display = 'none';
     }
   }
 }
@@ -410,7 +409,7 @@ function goToEditTrip(code) {
 }
 
 function goToViewTrip(code) {
-  window.open(`view.html?v=${code}`, '_blank'); 
+  window.open(`view.html?v=${code}`, '_blank');
 }
 
 function goToNewTrip() {

@@ -1,10 +1,9 @@
-import { setSuccessfulSave } from "../../main/app.js";
-import { FIRESTORE_DATA } from "../firebase/database.js";
-import { stopLoadingScreen } from "../pages/loading.js";
-import { FIRESTORE_DATA, FIRESTORE_NEW_DATA, FIRESTORE_PROGRAMACAO_DATA, FIRESTORE_GASTOS_DATA, FIRESTORE_GASTOS_NEW_DATA, FIRESTORE_DESTINOS_DATA, FIRESTORE_DESTINOS_NEW_DATA } from "../firebase/database.js";
 import { PIN_GASTOS } from "../../edit/trip/categorias/gastos.js";
-import { getPage } from "./data.js";
+import { setSuccessfulSave } from "../../main/app.js";
+import { FIRESTORE_DATA, FIRESTORE_DESTINOS_DATA, FIRESTORE_DESTINOS_NEW_DATA, FIRESTORE_GASTOS_DATA, FIRESTORE_GASTOS_NEW_DATA, FIRESTORE_NEW_DATA, FIRESTORE_PROGRAMACAO_DATA } from "../firebase/database.js";
+import { stopLoadingScreen } from "../pages/loading.js";
 import { openModal } from "../styles/modal.js";
+import { getPage } from "./data.js";
 
 var DOCS_CHANGED;
 
