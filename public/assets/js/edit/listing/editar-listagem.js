@@ -181,14 +181,9 @@ export function deleteListing() {
   listagem = listagem ? ` "${listagem}"` : '';
 
   const propriedades = getDefaultProperties();
-  propriedades.titulo = translate('listing.delete.title');
-  propriedades.conteudo = translate('listing.delete.title', {name: listagem});
-  propriedades.botoes = [{
-    tipo: 'cancelar',
-  }, {
-    tipo: 'confirmar',
-    acao: '_deleteListagemAction()'
-  }];
+  propriedades.title = translate('listing.delete.title');
+  propriedades.content = translate('listing.delete.title', {name: listagem});
+  propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(_deleteListagemAction)];
 
   displayFullMessage(propriedades);
 }

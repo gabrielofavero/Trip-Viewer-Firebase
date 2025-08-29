@@ -419,6 +419,8 @@
         "emoji": "Insira um Emoji Válido 🫠",
         "move_to": "Mover para",
         "errors": {
+            "error": "Erro",
+            "error_location": "Erro {{error}} localizado em {{location}}",
             "load_title": "Erro no Carregamento 🙁",
             "unknown": "Um erro inesperado impediu o carregamento da página",
             "contact_admin": "Entre em contato com o administrador do sistema",

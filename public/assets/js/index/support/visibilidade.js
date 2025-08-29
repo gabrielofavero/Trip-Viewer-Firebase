@@ -1,4 +1,4 @@
-import { select, getID } from "../../support/pages/selectors.js";
+import { select, getID, onClick } from "../../support/pages/selectors.js";
 import { animate, animateFadeIn, animateFadeOut, fadeOut } from "../../support/styles/animations.js";
 import { loadLogoColors } from "../../support/styles/colors.js";
 import { loadUserVisibility, setManualVisibility, switchVisibility } from "../../support/styles/visibility.js";
@@ -13,14 +13,14 @@ function _loadVisibilityIndex() {
   loadUserVisibility();
   loadLogoColors();
 
-  getID("night-mode").onclick = function () {
+  onClick('#night-mode', () => {
     switchVisibility();
     setManualVisibility();
     
     if (notificationBar.changed) {
       _applyNotificationBarColor();
     }
-  };
+  })
 }
 
 function _expandContentBox() {

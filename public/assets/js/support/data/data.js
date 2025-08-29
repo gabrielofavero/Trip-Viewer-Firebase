@@ -21,7 +21,7 @@ export function getReadableArray(array) {
   return replaceLast(array.join(", "), ",", ` ${translate('labels.and')}`);
 }
 
-function getRandomID(idLength = 5) {
+export function getRandomID(idLength = 5) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let randomId = '';
 
@@ -122,15 +122,6 @@ export async function requestAndGetLocalJSON() {
 
 
 // Setters
-export function addFunction(type) {
-  const dynamicFunctionName = `_add${type}`;
-  if (typeof window[dynamicFunctionName] === 'function') {
-    window[dynamicFunctionName]();
-  } else {
-    console.error(`${dynamicFunctionName} is not defined.`);
-  }
-}
-
 function removeChild(tipo) {
   const div = getID(tipo);
   div.parentNode.removeChild(div);

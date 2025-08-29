@@ -1,5 +1,5 @@
 import { closeAccordions } from "../support/html/accordion.js";
-import { getID, getSecondaryIDs } from "../support/pages/selectors.js";
+import { getID, getSecondaryIDs, on, onClick } from "../support/pages/selectors.js";
 import { loadExternalVisibility } from "../support/styles/visibility.js";
 
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
@@ -11,21 +11,21 @@ function _loadDestinosHTML() {
 
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {
-    closeButton.onclick = function () {
+    onClick('#closeButton', () => {
       _unloadMedias();
       window.parent._closeLightbox();
-    };
+    });
   } else {
     closeButton.style.display = "none";
   }
 
-  getID("logo-link").onclick = function () {
+  onClick("#logo-link", () => {
     if (window.parent._closeLightbox) {
       window.parent._closeLightbox(true);
     } else {
       window.location.href = "index.html";
     }
-  };
+  });
 
   if (DESTINO && Object.keys(DESTINO).length > 0) {
     document.title = DESTINO.titulo;
@@ -52,7 +52,7 @@ function _loadDestinosHTML() {
                               <h2 class="accordion-header" id="heading-destinos-${j}">
                                   <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button"
                                       data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false"
-                                      aria-controls="collapse-destinos-${j}" onclick="_processAccordion(${j})">
+                                      aria-controls="collapse-destinos-${j}">
                                       <span class="title-text" id="destinos-titulo-text-${j}">${_getTitulo(item)}</span>
                                       <div class="icon-container new-box" style="display: ${item.novo ? 'block' : 'none'}">
                                           <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ function _loadDestinosHTML() {
                           </div>
                       </div>`;
       _loadEmbed(item?.midia, isLineup, j)
-      _setInnerContent(item, key, data, innerHTML);
+      _setInnerContent(j, item, key, data, innerHTML);
     }
 
     _applyContent();
@@ -123,10 +123,11 @@ function _getLineupKey(item) {
 
 
 // Setters
-function _setInnerContent(item, key, data, innerHTML) {
+function _setInnerContent(j, item, key, data, innerHTML) {
   const innerContent = {
     titulo: item.nome,
     nota: item.nota || "?",
+    posicao: j,
     innerHTML: innerHTML
   }
 
@@ -149,6 +150,11 @@ function _applyContent() {
     const titulo = CONTENT[key].titulo ? `<div class="data-lineup">${CONTENT[key].titulo}</div>` : "";
     const innerHTMLs = _orderInnerHTMLs(CONTENT[key].innerContents);
     div.innerHTML += titulo + innerHTMLs.join("")
+  }
+
+  for (const key of keys) {
+    const j = CONTENT[key].posicao;
+    onClick(`#destinos-titulo-${j}`, () => _processAccordion(j))
   }
 }
 

@@ -23,20 +23,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const closeButton = getID("closeButton");
     if (window.parent._closeLightbox) {
-        closeButton.onclick = function () {
-            window.parent._closeLightbox();
-        };
+        onClick('#closeButton', () => window.parent._closeLightbox())
     } else {
         closeButton.style.display = "none";
     }
 
-    getID("logo-link").onclick = function () {
+    onClick("#logo-link", () => {
         if (window.parent._closeLightbox) {
             window.parent._closeLightbox(true);
         } else {
             window.location.href = "index.html";
         }
-    };
+    });
 
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
     let documentID = getURLParam('g');
@@ -61,15 +59,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function _requestPinGastos() {
-    const cancelAction = `_exitGastos()`;
-    const confirmAction = '_loadGastos()';
+    const cancelAction = _exitGastos;
+    const confirmAction = _loadGastos();
     const precontent = translate('trip.expenses.pin.request');
     _requestPin({ confirmAction, cancelAction, precontent });
 }
 
 function _requestPinGastosInvalido() {
-    const cancelAction = `_exitGastos()`;
-    const confirmAction = '_loadGastos()';
+    const cancelAction = _exitGastos;
+    const confirmAction = _loadGastos;
     const precontent = translate('trip.expenses.pin.invalid');
     const invalido = true;
     _requestPin({ confirmAction, cancelAction, precontent, invalido });

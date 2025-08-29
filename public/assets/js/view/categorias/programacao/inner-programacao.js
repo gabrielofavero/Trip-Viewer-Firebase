@@ -1,4 +1,4 @@
-import { getID } from "../../../support/pages/selectors.js";
+import { getID, onClick } from "../../../support/pages/selectors.js";
 import { LANGUAGE_PACK, translate } from "../../../main/translate.js";
 import { getDefaultProperties, displayFullMessage } from "../../../support/pages/messages.js";
 import { getDateTitle, convertFromDateObject } from "../../../support/data/dates.js";
@@ -10,6 +10,7 @@ var PROGRAMACAO_ATUAL = {
     ano: 0
 };
 var INNER_PROGRAMACAO_ATUAL = [];
+var INNER_PROGRAMACAO_ATUAL_EXTERNAL_LINKS = [];
 
 // ======= LOADERS =======
 function _loadModalContentCalendar(programacao) {
@@ -28,6 +29,7 @@ function _loadModalContentCalendar(programacao) {
     getID("programacao-data").innerText = data;
 
     INNER_PROGRAMACAO_ATUAL = [];
+    INNER_PROGRAMACAO_ATUAL_EXTERNAL_LINKS = [];
 
     _setModalCalendarInnerHTML(getID("programacao-itens-madrugada"), programacao.madrugada);
     _setModalCalendarInnerHTML(getID("programacao-itens-manha"), programacao.manha);
@@ -35,6 +37,7 @@ function _loadModalContentCalendar(programacao) {
     _setModalCalendarInnerHTML(getID("programacao-itens-noite"), programacao.noite);
 
     _adaptModalCalendarInnerHTML();
+    loadInnerProgramacaoAtualExternalLinks();
 }
 
 // Modal
@@ -70,9 +73,9 @@ function _reloadModalCalendar(programacao) {
 
 function _displayInnerProgramacaoMessage(index, container = 'programacao-container') {
     const propriedades = getDefaultProperties();
-    propriedades.titulo = INNER_PROGRAMACAO_ATUAL[index].titulo;
-    propriedades.conteudo = INNER_PROGRAMACAO_ATUAL[index].content;
-    propriedades.botoes = [];
+    propriedades.title = INNER_PROGRAMACAO_ATUAL[index].titulo;
+    propriedades.content = INNER_PROGRAMACAO_ATUAL[index].content;
+    propriedades.buttons = [];
     propriedades.containers.principal = container;
 
     displayFullMessage(propriedades);
@@ -213,7 +216,9 @@ function _getInnerProgramacaoHTML(item) {
 
     if (index >= 0) {
         INNER_PROGRAMACAO_ATUAL.push(innerProgramacao);
-        return `<i class="iconify external-link" data-icon="tabler:external-link" onclick="_displayInnerProgramacaoMessage(${INNER_PROGRAMACAO_ATUAL.length - 1}, '${container}')"></i>`
+        const identifier = INNER_PROGRAMACAO_ATUAL.length - 1;
+        INNER_PROGRAMACAO_ATUAL_EXTERNAL_LINKS.push(identifier, container);
+        return `<i id="inner-programacao-external-link-${identifier}" class="iconify external-link" data-icon="tabler:external-link"></i>`
     }
 
     return '';
@@ -246,4 +251,10 @@ function _adaptModalCalendarInnerHTML() {
     getID("programacao-tarde").style.display = tarde.innerHTML ? "block" : "none";
     getID("programacao-noite").style.display = noite.innerHTML ? "block" : "none";
     getID("sem-programacao").style.display = (madrugada.innerHTML || manha.innerHTML || tarde.innerHTML || noite.innerHTML) ? "none" : "block";
+}
+
+function loadInnerProgramacaoAtualExternalLinks() {
+    for (const item of INNER_PROGRAMACAO_ATUAL_EXTERNAL_LINKS) {
+        onClick(`#inner-programacao-external-link-${item.identifier}`, () => _displayInnerProgramacaoMessage(item.identifier, item.container));
+    }
 }

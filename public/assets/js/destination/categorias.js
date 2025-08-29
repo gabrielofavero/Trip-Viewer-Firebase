@@ -1,4 +1,4 @@
-import { openLinkInNewTab } from "../main/app.js";
+import { openLinkInNewTab } from "../support/pages/navigation.js";
 import { getUserLanguage } from "../main/translate.js";
 
 // Título
@@ -41,13 +41,6 @@ function _getNotaClass(item) {
 
 function _getNotaText(item, notas) {
     return notas[item.nota] || notas['default'] || "Não Avaliado";
-}
-
-// Links
-function _getLinkOnClick(item, tipo) {
-    if (item[tipo]) {
-        return ` onclick="openLinkInNewTab('${item[tipo]}')"`
-    } else return "";
 }
 
 // Lineup

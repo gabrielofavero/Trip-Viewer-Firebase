@@ -112,14 +112,9 @@ export function deleteViagem() {
   viagem = viagem ? ` "${viagem}"` : '';
 
   const propriedades = getDefaultProperties();
-  propriedades.titulo = translate('trip.delete.title');
-  propriedades.conteudo = translate('trip.delete.message', { name: viagem });
-  propriedades.botoes = [{
-    tipo: 'cancelar',
-  }, {
-    tipo: 'confirmar',
-    acao: '_deleteViagemAction()'
-  }];
+  propriedades.title = translate('trip.delete.title');
+  propriedades.content = translate('trip.delete.message', { name: viagem });
+  propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(_deleteViagemAction)];
 
   displayFullMessage(propriedades);
 }

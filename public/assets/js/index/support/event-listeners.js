@@ -1,17 +1,17 @@
 import { signOut } from "../../support/firebase/user.js";
-import { on } from "../../support/pages/selectors.js";
+import { on, onClick } from "../../support/pages/selectors.js";
 import { closeModal, openModal } from "../../support/styles/modal.js";
 import { closeNotification, goToCurrentTrip, manualListingLoad, manualTripLoad } from "../index.js";
 
 export function loadIndexEventListeners() {
-    on('click', '#notification-link', goToCurrentTrip);
-    on('click', '.notification-close', closeNotification, true);
-    on('click', '#carregar-novamente-proximasViagens', manualTripLoad);
-    on('click', '#carregar-novamente-viagensAnteriores', manualTripLoad);
-    on('click', '#carregar-novamente-destinos', manualTripLoad);
-    on('click', '#carregar-novamente-listagens', manualListingLoad);
-    on('click', '#settings-delete-account', openModal);
-    on('click', '#settings-sign-out', signOut);
-    on('click', '#cancel-action', closeModal);
-    on('click', '#cancel', closeModal);
+    onClick('#notification-link', goToCurrentTrip);
+    onClick('.notification-close', closeNotification, true);
+    onClick('#carregar-novamente-proximasViagens', manualTripLoad);
+    onClick('#carregar-novamente-viagensAnteriores', manualTripLoad);
+    onClick('#carregar-novamente-destinos', manualTripLoad);
+    onClick('#carregar-novamente-listagens', manualListingLoad);
+    onClick('#settings-delete-account', openModal);
+    onClick('#settings-sign-out', signOut);
+    onClick('#cancel-action', closeModal);
+    onClick('#cancel', closeModal);
 }

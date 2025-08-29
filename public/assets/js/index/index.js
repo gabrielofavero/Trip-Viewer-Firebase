@@ -1,7 +1,7 @@
-import { get, deleteAccount, getUserList } from "../support/firebase/database.js";
+import { get, deleteAccount, getUserList, DATABASE_TRIP_DOCUMENTS } from "../support/firebase/database.js";
 import { signInWithEmailAndPassword, signOut, registerIfUserNotPresent } from "../support/firebase/user.js";
 import { initApp } from "../main/app.js";
-import { select, getID } from "../support/pages/selectors.js";
+import { select, getID, onClick } from "../support/pages/selectors.js";
 import { translate } from "../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../support/pages/loading.js";
 import { convertFromDateObject } from "../support/data/dates.js";
@@ -259,6 +259,9 @@ function _loadUserDataHTML(dados, tipo) {
     let visualizarDiv = '';
     let innertipo = tipo;
 
+    const viewItems = [];
+    const editItems = [];
+
     switch (tipo) {
       case 'proximasViagens':
       case 'viagensAnteriores':
@@ -277,8 +280,9 @@ function _loadUserDataHTML(dados, tipo) {
         break;
     }
 
-    if (typeof window[`_${innertipo}Visualizar`] === 'function') {
-      visualizarDiv = `<i class="iconify user-data-icon" onclick="_${innertipo}Visualizar('${dados[i].code}')" data-icon="fluent:eye-16-regular"></i>`
+    if (DATABASE_TRIP_DOCUMENTS.includes(innertipo)) {
+      visualizarDiv = `<i id="visualizar-${tipo}-${i+1}" class="iconify user-data-icon" data-icon="fluent:eye-16-regular"></i>`
+      viewItems.push({id: `#visualizar-${tipo}-${i+1}`, code: dados[i].code, innerType: innertipo})
     }
 
     conteudo += `
@@ -288,13 +292,17 @@ function _loadUserDataHTML(dados, tipo) {
         ${secondaryDiv}
       </div>
       <div class="trip-data-icons">
-        <i class="iconify user-data-icon" onclick="_${innertipo}Editar('${dados[i].code}')" data-icon="tabler:edit"></i>
+        <i id="editar-${tipo}-${i+1}" class="iconify user-data-icon" data-icon="tabler:edit"></i>
         ${visualizarDiv}
       </div>
-    </div>`
+    </div>`;
+    editItems.push({id: `#editar-${tipo}-${i+1}`, code: dados[i].code, innerType: innertipo})
   }
 
   div.innerHTML = conteudo;
+  
+  loadViewItemsListeners(viewItems);
+  loadEditItemsListeners(editItems);
 
   function _coletarViagens(dados) {
     const proximasViagens = [];
@@ -329,6 +337,40 @@ function _loadUserDataHTML(dados, tipo) {
       const diferencaB = Math.abs(hoje - fimB);
       return diferencaA - diferencaB;
     }
+  }
+}
+
+function loadViewItemsListeners(viewItems) {
+  for (const item of viewItems) {
+    onClick(item.id, () => {
+      switch (item.innerType) {
+        case 'viagens':
+          _viagensVisualizar(item.code);
+          break;
+        case 'destinos':
+          _destinosVisualizar(item.code);
+          break;
+        case 'listagens':
+          _listagensVisualizar(item.code);
+      }
+    })
+  }
+}
+
+function loadEditItemsListeners(editItems) {
+  for (const item of editItems) {
+    onClick(item.id, () => {
+      switch (item.innerType) {
+        case 'viagens':
+          _viagensEditar(item.code);
+          break;
+        case 'destinos':
+          _destinosEditar(item.code);
+          break;
+        case 'listagens':
+          _listagensEditar(item.code);
+      }
+    })
   }
 }
 

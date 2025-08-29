@@ -1,11 +1,11 @@
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
 
-import { getID } from "../../../support/pages/selectors.js";
+import { getID, onClick } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 import { getDateNoTime, convertFromDateObject, getMonth } from "../../../support/data/dates.js";
 
-CALENDAR = {
+const CALENDAR = {
     start: null,
     end: null,
     startMonth: null,
@@ -15,7 +15,10 @@ CALENDAR = {
     calendarTitle: null,
 }
 
+const CALENDAR_TRIPS = [];
+
 function _loadCalendar() {
+    CALENDAR_TRIPS = [];
     CALENDAR.start = convertFromDateObject(FIRESTORE_DATA.inicio);
     CALENDAR.end = convertFromDateObject(FIRESTORE_DATA.fim);
 
@@ -26,6 +29,7 @@ function _loadCalendar() {
 
     CALENDAR.calendarTitle = getID("calendarTitle");
     _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
+    loadCalendarTripsListeners();
 }
 
 export function calendarNext() {
@@ -74,8 +78,10 @@ function _showCalendar(month, year) {
                 const endNoTime = getDateNoTime(CALENDAR.end);
 
                 if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
+                    const id = `calendarTrip-${i}-${j}`;;
                     cell.classList.add("calendarTrip");
-                    cell.setAttribute("onclick", "_loadCalendarItem('" + day + "/" + (month + 1) + "/" + year + "')");
+                    cell.id = id;
+                    CALENDAR_TRIPS.push ({ id, day, month, year })
 
                     const formattedMonth = String(month + 1).padStart(2, '0');
                     const formattedDay = String(day).padStart(2, '0');
@@ -117,4 +123,10 @@ function _hideMonthSelector() {
 
 function _isCalendarMultiMonth() {
     return CALENDAR.startMonth != CALENDAR.endMonth || CALENDAR.startYear != CALENDAR.endYear;
+}
+
+function loadCalendarTripsListeners() {
+    for (const item of CALENDAR_TRIPS) {
+        onClick(`#${item.id}`, () => _loadCalendarItem(`${item.day}/${item.month + 1}/${item.year}`));
+    }
 }

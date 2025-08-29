@@ -1,26 +1,27 @@
 import { translate } from "../../main/translate.js";
 import { getJson, getPage } from "./data/data.js";
 import { getDefaultProperties, displayFullMessage } from "./messages.js";
-import { on } from "../../main/app.js";
+import { onClick } from "./selectors.js";
 
 export function loadCreditsListeners() {
-  on('click', '.credits', openCredits)
+  onClick('.credits', openCredits)
 }
 
 async function openCredits() {
   const page = getPage();
   const credits = await getCredits();
+  const content = [];
 
   for (const credit of credits) {
     if (credit.pages.includes(page)) {
-      credits.push(getCreditText(credit));
+      content.push(getCreditText(credit));
     }
   }
 
   const message = getDefaultProperties();
-  message.titulo = translate('labels.credits');
-  message.conteudo = credits.join('<br>');
-  message.botoes = [];
+  message.title = translate('labels.credits');
+  message.content = content.join('<br>');
+  message.buttons = [];
 
   displayFullMessage(message);
 }

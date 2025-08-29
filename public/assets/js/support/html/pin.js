@@ -226,26 +226,21 @@ function _loadPin() {
   });
 }
 
-function _requestPin({confirmAction, cancelAction='closeMessage()', precontent='', invalido=false}) {
+function _requestPin({confirmAction, cancelAction=closeMessage, precontent='', invalido=false}) {
   const propriedades = getDefaultProperties();
   const classComplement = invalido ? '-invalid' : '';
-  propriedades.titulo = translate('trip.expenses.pin.title');
-  propriedades.conteudo = `${precontent}<div class="pin-wrapper">
+  propriedades.title = translate('trip.expenses.pin.title');
+  propriedades.content = `${precontent}<div class="pin-wrapper">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                               </div>
                               <div id="pin-code" class="pin"></div>`;
-  propriedades.critico = true;
+  propriedades.critical = true;
   propriedades.containers = getContainersInput();
-  propriedades.botoes = [{
-    tipo: 'cancelar',
-    acao: cancelAction
-  }, {
-    tipo: 'confirmar',
-    acao: confirmAction
-  }];
+  propriedades.buttons = [getCancelMessageProperty(cancelAction), getConfirmMessageProperty(confirmAction)];
+
   displayFullMessage(propriedades);
   _loadPin();
 

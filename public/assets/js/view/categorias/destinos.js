@@ -1,4 +1,4 @@
-import { getID, getChildIDs } from "../../support/pages/selectors.js";
+import { getID, getChildIDs, onClick } from "../../support/pages/selectors.js";
 import { LANGUAGE_PACK, translate } from "../../main/translate.js";
 import { cloneObject } from "../../support/data/object.js";
 import { isIOSDevice } from "../../support/pages/dispositivos.js";
@@ -63,6 +63,7 @@ function _loadDestinationsSelect() {
 function _loadDestinationsHTML(destino) {
   let div = getID("destinosBox");
   let text = "";
+  const onClicks = [];
 
   const headers = _getDestinationsHeaders(destino.destinos.modulos);
   CURRENT_PLACES_SIZE = headers.length;
@@ -74,18 +75,21 @@ function _loadDestinationsHTML(destino) {
     const translatedType = DESTINATIONS.translation[type] || type;
     _buildDestinoExport(destino, type)
 
+    if (type != "mapa") {
+      onClicks.push({ id: `#ba${j}`, type});
+    }
+
     const j = i + 1;
     const box = DESTINATIONS.boxes[_getDestinationsBoxesIndex(i)];
     const title = translate(`destination.${translatedType}.title`);
     const description = translate(`destination.${translatedType}.description`);
     const href = type === "mapa" ? destino.destinos.myMaps : "#";
     const lt = type === "mapa" ? linktype : "";
-    const onclick = type === "mapa" ? "" : `onclick="_loadAndOpenDestino('${type}')"`;
     const icon = DESTINATIONS.icons[type];
 
     text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
-    <a href="${href}" ${lt} ${onclick} id="ba${j}">
+    <a href="${href}" ${lt} id="ba${j}">
         <div class="icon-box iconbox-${box.color}" id="ib${j}">
           <div class="icon">
             <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -102,6 +106,10 @@ function _loadDestinationsHTML(destino) {
 
   div.innerHTML = text;
   _adjustDestinationsHTML();
+
+  for (const item of onClicks) {
+    onClick(item.id, () => _loadAndOpenDestino(item.type));
+  }
 }
 
 function _buildDestinoExport(destino, type) {

@@ -1,6 +1,6 @@
 import { initializeSortableForGroup } from "../../../../support/components/sortable.js";
 import { addValueToSelectIfExists, getAllValuesFromSelect } from "../../../../support/html/fields.js";
-import { getID, getIDs, getChildIDs } from "../../../../support/pages/selectors.js";
+import { getID, getIDs, getChildIDs, on, onClick, onChange } from "../../../../support/pages/selectors.js";
 import { translate } from "../../../../main/translate.js";
 import { getReadableArray } from "../../../../support/data/data.js";
 import { getDateTitle } from "../../../../support/data/dates.js";
@@ -156,10 +156,12 @@ function _reloadProgramacao() {
 
 // Listeners
 function _loadProgramacaoListeners(j) {
-    // Checkbox Local
+    getID(`programacao-inner-title-select-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
+    getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     const fieldsetID = `programacao-local-${j}`;
     for (const containerID of getChildIDs(fieldsetID)) {
         const ids = getIDs(containerID);
-        getID(`check-programacao-${ids}`).addEventListener('change', () => _updateProgramacaoTitleSelect(j));
+        onChange(`#check-programacao-${ids}`, () => _updateProgramacaoTitleSelect(j))
     }
+    onClick(`programacao-adicionar-${j}`, () => _openInnerProgramacao(j));
 }

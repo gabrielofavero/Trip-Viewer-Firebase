@@ -1,4 +1,4 @@
-import { getID, getSecondaryIDs } from "../pages/selectors.js";
+import { getID, getSecondaryIDs, onClick } from "../pages/selectors.js";
 import { firstCharToUpperCase, removeEmptyChild, getPage } from "../pages/data/data.js";
 import { getCurrentHour } from "../data/dates.js";
 import { animateFadeIn, animateFadeOut } from "./animations.js";
@@ -29,10 +29,10 @@ export function loadVisibility() {
      saveLocalColors();
      loadUserVisibility();
 
-     getID("night-mode").onclick = function () {
+     onClick('#night-mode', () => {
           setManualVisibility();
           switchVisibility();
-     };
+     });
 }
 
 export function loadExternalVisibility() {
@@ -49,9 +49,7 @@ export function loadExternalVisibility() {
      }
 
      getID("night-mode").style.display = "block";
-     getID("night-mode").onclick = function () {
-          switchVisibility();
-     };
+     onClick('#night-mode', switchVisibility)
 }
 
 export function loadVisibilityToggle() {

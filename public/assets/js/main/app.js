@@ -8,7 +8,7 @@
 
 import { getJson } from "../support/data/data.js";
 import { loadCreditsListeners } from "../support/pages/credits.js";
-import { on, onscroll, select } from "../support/pages/selectors.js";
+import { on, onClick, onscroll, select } from "../support/pages/selectors.js";
 import { loadLangSelectorSelect, translatePage } from "./translate.js";
 
 export var SUCCESSFUL_SAVE = false;
@@ -79,7 +79,7 @@ export function initApp() {
   /**
    * Mobile nav toggle
    */
-  on('click', '.mobile-nav-toggle', function (e) {
+  onClick('.mobile-nav-toggle', function (e) {
     select('body').classList.toggle('mobile-nav-active')
     this.classList.toggle('bi-list')
     this.classList.toggle('bi-x')
@@ -88,7 +88,7 @@ export function initApp() {
   /**
    * Scrool with ofset on links with a class name .scrollto
    */
-  on('click', '.scrollto', function (e) {
+  onClick('.scrollto', function (e) {
     if (select(this.hash)) {
       e.preventDefault()
 
@@ -159,7 +159,7 @@ export function initApp() {
 
       let portfolioFilters = select('#portfolio-flters li', true);
 
-      on('click', '#portfolio-flters li', function (e) {
+      onClick('#portfolio-flters li', function (e) {
         e.preventDefault();
         portfolioFilters.forEach(function (el) {
           el.classList.remove('filter-active');
@@ -203,11 +203,6 @@ function loadAppVersioning() {
       tag.setAttribute(attr, url.toString());
     });
   }
-}
-
-export function openLinkInNewTab(url) {
-  var win = window.open(url, '_blank');
-  win.focus();
 }
 
 export function setSuccessfulSave(value) {

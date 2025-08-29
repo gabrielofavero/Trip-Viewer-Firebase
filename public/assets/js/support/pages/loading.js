@@ -3,8 +3,9 @@ import { translate } from "../../main/translate.js";
 import { MESSAGE_MODAL_OPEN, displayError } from "./messages.js";
 import { disableScroll, enableScroll } from "../styles/visibility.js";
 
-var LOADING_TIMER;
+export var LOADING_TIMER;
 var LOADING_SECONDS = 0;
+export var IS_LOADING = false;
 
 export function startLoadingScreen(useTimer = false) {
   if (useTimer) {
@@ -15,6 +16,7 @@ export function startLoadingScreen(useTimer = false) {
     preloader.style.display = 'block';
     disableScroll();
   }
+  IS_LOADING = true;
 }
 
 export function stopLoadingScreen() {
@@ -26,6 +28,7 @@ export function stopLoadingScreen() {
       preloader.style.display = 'none';
       enableScroll();
     }
+    IS_LOADING = false;
   } else {
     console.warn('Cannot stop loading in error mode');
   }

@@ -1,4 +1,4 @@
-import { getID, getChildIDs } from "../../support/pages/selectors.js";
+import { getID, getChildIDs, onClick } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { codifyText, getJson } from "../../support/data/data.js";
 import { convertFromDateObject, getDateString, getTimeString, jsTimeToVisualTime } from "../../support/data/dates.js";
@@ -14,7 +14,10 @@ var TRANSPORTE_ATIVO;
 var TRANSPORTES_ATIVOS = [];
 var TRANSPORTES_ATIVOS_TITULOS = [];
 
+var FLIGHT_CODES = [];
+
 function _loadTransporte() {
+  FLIGHT_CODES = [];
   const swiperData = _getSwiperData();
   getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo();
 
@@ -22,6 +25,7 @@ function _loadTransporte() {
   _resetSwiperVisibility();
 
   _observeFlightBoxes();
+  loadFlightCodesListeners();
 }
 
 function _getSwiperData() {
@@ -119,6 +123,8 @@ function _getReservaHTML(j, empresa) {
   let reserva = transporte.reserva;
   let link = empresa.site || "";
 
+  FLIGHT_CODES.push({ j, reserva })
+
   if (transporte.link) {
     link = transporte.link;
   }
@@ -126,7 +132,7 @@ function _getReservaHTML(j, empresa) {
   if (!reserva) return ""
   reserva = reserva[0] === "#" ? reserva.slice(1) : reserva;
   const flightCode = link ? `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>` : `<div class="flight-code">#${reserva}</div>`;
-  const copyIcon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="_copyToClipboard('${reserva}')"></i>`;
+  const copyIcon = `<i id="flight-code-icon-${j}" class="iconify copy-icon" data-icon="mdi:content-copy"></i>`;
   return `${flightCode} ${copyIcon}`;
 }
 
@@ -398,4 +404,10 @@ function _customTransporteSelectAction() {
   const current = getID('transporte-select').value;
   animateFade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${current}`])
   TRANSPORTE_ATIVO = current;
+}
+
+function loadFlightCodesListeners() {
+  for (const item of FLIGHT_CODES) {
+    onClick(`#flight-code-icon-${item.j}`, () => _copyToClipboard(item.reserva));
+  }
 }

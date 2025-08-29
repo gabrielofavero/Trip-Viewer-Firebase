@@ -5,12 +5,12 @@ import { closeAccordions, openLastAccordion } from "../../support/html/accordion
 import { editFieldAgain, validateLink, validateMapLink, validateInstagramLink, validateMediaLink } from "../../support/html/fields.js";
 import { SUCCESSFUL_SAVE } from "../../main/app.js";
 import { initApp } from "../../main/app.js";
-import { getID, getLastSecondaryID } from "../../support/pages/selectors.js";
+import { getID, getLastSecondaryID, onChange, onClick, onInput } from "../../support/pages/selectors.js";
 import { translate } from "../../main/translate.js";
 import { startLoadingScreen, stopLoadingScreen } from "../../support/pages/loading.js";
 import { firstCharToUpperCase, getURLParam } from "../../support/data/data.js";
 import { setRequired, removeRequired } from "../../support/html/fields.js";
-import { getDefaultProperties, displayError, closeMessage, displayFullMessage, getContainersInput } from "../../support/pages/messages.js";
+import { getDefaultProperties, displayError, closeMessage, displayFullMessage, getContainersInput, getCancelMessageProperty, getConfirmMessageProperty } from "../../support/pages/messages.js";
 import { setDocument, uploadAndSetImages } from "../../support/pages/set.js";
 import { setDestination } from "./set-destino.js";
 import { loadEditModuleVisibility, removeChildWithValidation } from "../../support/pages/edit-module.js";
@@ -185,24 +185,17 @@ async function _loadDestinos() {
 
 // Listeners
 function _addDestinosListeners(categoria, j) {
-  // Título Interativo
-  getID(`${categoria}-nome-${j}`).addEventListener('change', () => _updateDestinosTitle(j, categoria));
-  getID(`${categoria}-emoji-${j}`).addEventListener('change', () => _updateDestinosTitle(j, categoria));
-  getID(`${categoria}-novo-${j}`).addEventListener('click', () => _updateDestinosTitle(j, categoria));
-
-  // Validação de Emoji
-  getID(`${categoria}-emoji-${j}`).addEventListener('input', () => _emojisOnInputAction(j, categoria));
-
-  // Valor
-  getID(`${categoria}-valor-${j}`).addEventListener('change', () => _valorListenerAction(j, categoria));
-
-  // Região
-
-  // Links
-  getID(`${categoria}-website-${j}`).addEventListener('change', () => validateLink(`${categoria}-website-${j}`));
-  getID(`${categoria}-mapa-${j}`).addEventListener('change', () => validateMapLink(`${categoria}-mapa-${j}`));
-  getID(`${categoria}-instagram-${j}`).addEventListener('change', () => validateInstagramLink(`${categoria}-instagram-${j}`));
-  getID(`${categoria}-midia-${j}`).addEventListener('change', () => validateMediaLink(`${categoria}-midia-${j}`));
+  onChange(`#${categoria}-nome-${j}`, () => _updateDestinosTitle(j, categoria));
+  onChange(`#${categoria}-emoji-${j}`, () => _updateDestinosTitle(j, categoria));
+  onClick(`#${categoria}-novo-${j}`, () => _updateDestinosTitle(j, categoria));
+  onInput(`#${categoria}-emoji-${j}`, () => _emojisOnInputAction(j, categoria));
+  onChange(`#${categoria}-valor-${j}`, () => _valorListenerAction(j, categoria));
+  onClick(`#restaurantes-descricao-button-${j}`, () => _openDescription(categoria, j));
+  onChange(`#${categoria}-website-${j}`, () => validateLink(`${categoria}-website-${j}`));
+  onChange(`#${categoria}-mapa-${j}`, () => validateMapLink(`${categoria}-mapa-${j}`));
+  onChange(`#${categoria}-instagram-${j}`, () => validateInstagramLink(`${categoria}-instagram-${j}`));
+  onChange(`#${categoria}-midia-${j}`, () => validateMediaLink(`${categoria}-midia-${j}`));
+  onClick(`#move-${categoria}-${j}`, () => _openMoveDestinoModal(j, categoria));
 }
 
 function _valorListenerAction(j, categoria) {
@@ -250,14 +243,9 @@ function _emojisOnInputAction(j, categoria) {
 function _openMoveDestinoModal(j, categoria) {
   const propriedades = getDefaultProperties();
 
-  propriedades.titulo = getID(`${categoria}-nome-${j}`).value;
+  propriedades.title = getID(`${categoria}-nome-${j}`).value;
   propriedades.containers = getContainersInput();
-  propriedades.botoes = [{
-    tipo: 'cancelar',
-  }, {
-    tipo: 'confirmar',
-    acao: `_moveDestino(${j}, '${categoria}')`,
-  }];
+  propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(() => _moveDestino(j, categoria))];
 
   const options = {
     restaurantes: translate('destination.restaurants.title'),
@@ -323,14 +311,9 @@ export function deleteDestination() {
   const name = getID('titulo').value;
 
   const propriedades = getDefaultProperties();
-  propriedades.titulo = translate('destination.delete.title');
-  propriedades.conteudo = translate('destination.delete.message', { name });
-  propriedades.botoes = [{
-    tipo: 'cancelar',
-  }, {
-    tipo: 'confirmar',
-    acao: '_deleteDestinoAction()'
-  }];
+  propriedades.title = translate('destination.delete.title');
+  propriedades.content = translate('destination.delete.message', { name });
+  propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(_deleteDestinoAction)];
 
   displayFullMessage(propriedades);
 }

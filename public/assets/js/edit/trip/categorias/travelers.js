@@ -7,15 +7,10 @@ const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the f
 
 function _openTravelersInfo() {
     const propriedades = getDefaultProperties();
-    propriedades.titulo = translate('trip.travelers.info')
+    propriedades.title = translate('trip.travelers.info')
     propriedades.containers = getContainersInput();
-    propriedades.conteudo = _getTravelersInfoContent();
-    propriedades.botoes = [{
-        tipo: 'cancelar',
-    }, {
-        tipo: 'confirmar',
-        acao: `_saveTravelersInfo()`
-    }];
+    propriedades.content = _getTravelersInfoContent();
+    propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(_saveTravelersInfo)];
 
     displayFullMessage(propriedades);
     getID('quantidadePessoas').addEventListener('change', function () {

@@ -1,49 +1,49 @@
-import { getID } from "./selectors.js";
+import { getID, onClick } from "./selectors.js";
 import { translate } from "../../main/translate.js";
-import { stopLoadingScreen, stopLoadingTimer } from "./loading.js";
+import { IS_LOADING, LOADING_TIMER, stopLoadingScreen, stopLoadingTimer } from "./loading.js";
 import { cloneObject } from "../data/object.js";
 import { getPage } from "../data/data.js";
 import { animateFadeIn, animateFadeOut } from "../styles/animations.js";
 import { disableScroll } from "../styles/visibility.js";
 
 export var MESSAGE_MODAL_OPEN = false;
-const MENSAGEM_PROPRIEDADES = {
-  titulo: '',
-  conteudo: '',
-  critico: false,
-  blur: true,
-  erro: {},
-  icones: [],
-  botoes: [{
-    tipo: 'ok',
-    acao: ''
-  }],
-  containers: {
-    principal: 'message-container',
-    botoes: 'button-box'
-  }
-}
+const MESSAGE_LISTENERS = [];
 
 
 // Default Message Styling
 export function getDefaultProperties() {
-  return cloneObject(MENSAGEM_PROPRIEDADES);
+  return {
+    title: '',
+    content: '',
+    critical: false,
+    blur: true,
+    error: {},
+    icons: [],
+    buttons: [{
+      type: 'ok',
+      action: ''
+    }],
+    containers: {
+      main: 'message-container',
+      buttons: 'button-box'
+    }
+  };
 }
 
 
-// Generic Message
-export function displayMessage(titulo, conteudo) {
+// Messages
+export function displayMessage(title, content) {
   const properties = getDefaultProperties();
-  if (titulo) properties.titulo = titulo;
-  if (conteudo) properties.conteudo = conteudo;
+  if (title) properties.title = title;
+  if (content) properties.content = content;
   displayFullMessage(properties);
 }
 
-export function displayFullMessage(propriedades = getDefaultProperties()) {
+export function displayFullMessage(properties = getDefaultProperties()) {
   const preloader = getID('preloader');
-  const isErrorMessage = Object.keys(propriedades.erro).length > 0;
+  const isErrorMessage = Object.keys(properties.error).length > 0;
 
-  if (typeof stopLoadingTimer === 'function') {
+  if (LOADING_TIMER) {
     stopLoadingTimer();
   }
 
@@ -55,48 +55,41 @@ export function displayFullMessage(propriedades = getDefaultProperties()) {
   MESSAGE_MODAL_OPEN = true;
   disableScroll();
 
-  // Container
   const container = document.createElement('div');
-  container.className = propriedades.containers.principal;
+  container.className = properties.containers.main;
 
-  // Container de Texto
   const textDiv = document.createElement('div');
   textDiv.className = 'message-text-container';
 
-  // Criticidade
-  if (!propriedades.critico) {
-    const buttonsBox = getIconsBox(propriedades.icones);
+  if (!properties.critical) {
+    const buttonsBox = getIconsBox(properties.icons);
     textDiv.appendChild(buttonsBox);
   }
 
-  // Título
   const titleDiv = document.createElement('div');
   titleDiv.className = 'message-title';
   titleDiv.id = 'message-title';
-  titleDiv.innerHTML = propriedades.titulo;
+  titleDiv.innerHTML = properties.title;
   textDiv.appendChild(titleDiv);
 
-  // Descrição
   const descriptionDiv = document.createElement('div');
   descriptionDiv.className = 'message-description';
   descriptionDiv.id = 'message-description';
-  descriptionDiv.innerHTML = propriedades.conteudo;
+  descriptionDiv.innerHTML = properties.content;
   textDiv.appendChild(descriptionDiv);
 
-  // Mensagem de Erro
   if (isErrorMessage) {
-    const errorElement = getErrorElement(propriedades.erro, textDiv);
+    const errorElement = getErrorElement(properties.error, textDiv);
     textDiv.appendChild(errorElement);
   }
 
-  // Botões
-  if (propriedades.botoes && propriedades.botoes.length > 0) {
+  if (properties.buttons && properties.buttons.length > 0) {
     const buttonBox = document.createElement('div');
-    buttonBox.className = propriedades.containers?.botoes || 'button-box';
+    buttonBox.className = properties.containers?.buttons || 'button-box';
 
     buttonBox.style.marginTop = '25px';
 
-    for (const buttonType of propriedades.botoes) {
+    for (const buttonType of properties.buttons) {
       const button = getButton(buttonType);
       buttonBox.appendChild(button);
     }
@@ -104,176 +97,70 @@ export function displayFullMessage(propriedades = getDefaultProperties()) {
     textDiv.appendChild(buttonBox);
   }
 
-  // Adiciona ao Container
   container.appendChild(textDiv);
   preloader.innerHTML = '';
   preloader.style.background = 'rgba(0, 0, 0, 0.6)';
 
-  // Blur
-  if (propriedades.blur) {
+  if (properties.blur) {
     preloader.style.backdropFilter = 'blur(10px)';
     preloader.style.webkitBackdropFilter = 'blur(10px)';
   }
 
-  // Adiciona ao Preloader
   preloader.appendChild(container);
 
-  // Exibe o Preloader
   if (preloader.style.display != 'block') {
     preloader.style.display = 'block';
   }
+
+  loadMessageEventListeners();
 }
 
+export function displayError(error, tryAgain = false) {
+  const properties = getDefaultProperties();
 
-// Error Message
-export function displayError(erro, tentarNovamente = false) {
-  const propriedades = getDefaultProperties();
+  properties.title = translate('messages.errors.load_title');
+  properties.critical = true;
+  properties.content = getErrorMessage(error);
 
-  propriedades.titulo = translate('messages.errors.load_title');
-  propriedades.critico = true;
-  propriedades.conteudo = getErrorMessage(erro);
-  propriedades.localizacao = false; // Desabilitado. Não faz sentido mostrar ao usuário.
-
-  const botoes = tentarNovamente ? [{ tipo: 'tente-novamente' }] : [];
+  const buttons = tryAgain ? [{ type: 'try-again' }] : [];
   if (!window.location.href.includes('index.html')) {
-    botoes.push({ tipo: 'home' });
+    buttons.push({ type: 'home' });
   }
-  propriedades.botoes = botoes;
-  displayFullMessage(propriedades);
+  properties.buttons = buttons;
+  displayFullMessage(properties);
 }
 
-function getErrorMessage(erro) {
-  const isError = (erro && erro instanceof Error);
-  const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
-
-  if (!erro || isError && !erro.message) {
-    return `${translate('messages.errors.unknown')}. ${contact}`;
-  } else if (isError) {
-    let msg = erro.message;
-    if (msg[msg.length - 1] === '.') {
-      msg = msg.substring(0, msg.length - 1);
-    }
-    return `${msg}. ${contact}`;
-  } else {
-    return erro;
-  }
-}
-
-// Forbidden Message
-export function displayForbidden(conteudo, redirectTo = 'view.html') {
-  const propriedades = getDefaultProperties();
-  propriedades.titulo = translate('messages.access_denied.title');
-  propriedades.conteudo = conteudo || translate('messages.access_denied.message');
-  propriedades.critico = true;
-  propriedades.botoes = [{
-    tipo: 'voltar',
-    acao: redirectTo
+export function displayForbidden(content, redirectTo = 'view.html') {
+  const properties = getDefaultProperties();
+  properties.title = translate('messages.access_denied.title');
+  properties.content = content || translate('messages.access_denied.message');
+  properties.critical = true;
+  properties.buttons = [{
+    type: 'back',
+    action: redirectTo
   }];
-  displayFullMessage(propriedades);
-}
-
-
-// Message Navigation
-export function closeMessage() {
-  if (MESSAGE_MODAL_OPEN) {
-    const preloader = getID('preloader');
-    if (preloader) {
-      preloader.innerHTML = '';
-      preloader.style.background = '';
-    }
-    MESSAGE_MODAL_OPEN = false;
-    if (typeof stopLoadingScreen === 'function') stopLoadingScreen();
-
-  } else {
-    console.warn('Cannot close an unopened message modal.');
-  }
-}
-
-
-// Support Functions
-export function getContainersInput() {
-  return {
-    principal: 'input-container',
-    botoes: 'button-box-right'
-  }
-}
-
-function getIconsBox(icones) {
-  const iconContainer = document.createElement('div');
-  iconContainer.className = 'icon-container';
-  iconContainer.style.textAlign = 'right';
-
-  if (icones && icones[0] && icones[0].tipo === 'voltar') {
-    const backIcon = document.createElement('i');
-    backIcon.id = 'back-icon';
-    backIcon.className = 'bx bx-arrow-back';
-    backIcon.setAttribute('onclick', icones[0].acao);
-    backIcon.style.visibility = 'hidden';
-    backIcon.style.cursor = 'pointer';
-
-    iconContainer.appendChild(backIcon);
-  }
-
-  const cancelIcon = document.createElement('i');
-  cancelIcon.id = 'cancel-icon';
-  cancelIcon.className = 'iconify';
-  cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
-  cancelIcon.setAttribute('onclick', 'closeMessage()');
-  cancelIcon.style.cursor = 'pointer';
-
-  iconContainer.appendChild(cancelIcon);
-
-  return iconContainer;
-}
-
-function getErrorElement(erro) {
-  let location = "";
-  if (erro?.showLocation) {
-    const stackTrace = erro.error ? erro.error.stack : (new Error()).stack;
-    const stackSplit = stackTrace.split('\n');
-    location = stackSplit[2] ? stackSplit[2] : stackSplit[stackSplit.length - 1];
-    location = location.split("/")[location.split("/").length - 1]
-    location = location.trim().replace("at ", "");
-  }
-
-  let errorMessage = "";
-
-  if (location && erro.error && erro.error instanceof Error) {
-    errorMessage = `Erro "${erro.error.message}" localizado em ${location}`;
-  } else if (erro.error && erro.error instanceof Error) {
-    errorMessage = `Erro "${erro.error.message}"`;
-  }
-
-  const errorElement = document.createElement('p');
-  errorElement.innerText = errorMessage;
-  errorElement.className = 'error-message';
-
-  if (!errorMessage) {
-    errorElement.style.display = 'none';
-  }
-
-  return errorElement;
+  displayFullMessage(properties);
 }
 
 // Buttons
-function getButton(botao) {
-  switch (botao.tipo) {
-    case 'tente-novamente':
+function getButton(button) {
+  switch (button.type) {
+    case 'try-again':
       return getTryAgainButton();
     case 'home':
       return getHomeButton();
-    case 'voltar':
-      return getBackButton(botao.acao);
-    case 'fechar':
+    case 'back':
+      return getBackButton(button.action);
+    case 'close':
       return getCloseButton();
-    case 'cancelar':
-      return getCloseButton(translate('labels.cancel'), botao.acao);
-    case 'confirmar':
-      return getConfirmButton(botao.acao);
-    case 'apagar':
-      return getDeleteButton(botao.acao);
-    case 'apagar-basico':
-      return getDeleteButtonBasic(botao.acao);
+    case 'cancel':
+      return getCloseButton(translate('labels.cancel'), button.action);
+    case 'confirm':
+      return getConfirmButton(button.action);
+    case 'delete':
+      return getDeleteButton(button.action);
+    case 'basic-delete':
+      return getDeleteButtonBasic(button.action);
     default:
       return getCloseButton(translate('labels.understood'));
   }
@@ -283,8 +170,9 @@ function getHomeButton() {
   const homeButton = ['edit/trip', 'edit/destination', 'edit/listing'].includes(getPage()) ? '../index.html' : 'index.html'
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
+  button.id = 'home-button'
   button.type = 'submit';
-  button.setAttribute('onclick', `window.location.href = "${homeButton}";`)
+  MESSAGE_LISTENERS.push({id: '#home-button', action: () => window.location.href = homeButton});
 
   const icon = document.createElement('i');
   icon.id = 'transporte-nav';
@@ -301,8 +189,8 @@ function getBackButton(redirectTo = 'index.html') {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', `window.location.href = "${redirectTo}";`);
   button.id = 'message-back';
+  MESSAGE_LISTENERS.push({id: '#message-back', action: () => window.location.href = redirectTo});
 
   const icon = document.createElement('i');
   icon.className = 'iconify';
@@ -318,8 +206,8 @@ function getTryAgainButton() {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', 'window.location.reload(true);');
   button.id = 'message-try-again';
+  MESSAGE_LISTENERS.push({id: '#message-try-again', action: () => window.location.reload(true)});
 
   const icon = document.createElement('i');
   icon.className = 'iconify';
@@ -331,35 +219,34 @@ function getTryAgainButton() {
   return button;
 }
 
-function getCloseButton(name, onclick) {
-  name = name ? name : translate('labels.close');
+function getCloseButton(name = translate('labels.close'), action = closeMessage) {
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', onclick ? onclick : 'closeMessage();');
   button.id = 'message-close';
+  MESSAGE_LISTENERS.push({id: '#message-close', action });
 
   button.innerHTML = name;
   return button;
 }
 
-function getConfirmButton(onclick = 'closeMessage();') {
+function getConfirmButton(action = closeMessage) {
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
-  button.setAttribute('onclick', onclick)
   button.id = 'message-confirm';
+  MESSAGE_LISTENERS.push({id: '#message-confirm', action });
 
   button.innerHTML = translate('labels.confirm');
   return button;
 }
 
-function getDeleteButton(onclick, buttonClass = 'btn-secondary') {
+function getDeleteButton(action, buttonClass = 'btn-secondary') {
   const button = document.createElement('button');
   button.className = `btn ${buttonClass} btn-format`;
   button.type = 'submit';
-  button.setAttribute('onclick', onclick);
   button.id = 'message-delete';
+  MESSAGE_LISTENERS.push({id: '#message-delete', action });
 
   const icon = document.createElement('i');
   icon.className = 'iconify';
@@ -371,8 +258,8 @@ function getDeleteButton(onclick, buttonClass = 'btn-secondary') {
   return button;
 }
 
-function getDeleteButtonBasic(onclick) {
-  return getDeleteButton(onclick, 'btn-basic');
+function getDeleteButtonBasic(action) {
+  return getDeleteButton(action, 'btn-basic');
 }
 
 
@@ -389,4 +276,125 @@ export function closeToast() {
   if (getID('toast').style.display != 'none') {
     animateFadeOut(['toast']);
   }
+}
+
+// Helpers
+export function closeMessage() {
+  if (MESSAGE_MODAL_OPEN) {
+    const preloader = getID('preloader');
+    if (preloader) {
+      preloader.innerHTML = '';
+      preloader.style.background = '';
+    }
+    MESSAGE_MODAL_OPEN = false;
+    if (IS_LOADING) {
+      stopLoadingScreen();
+    }
+
+  } else {
+    console.warn('Cannot close an unopened message modal.');
+  }
+}
+
+export function getContainersInput() {
+  return {
+    main: 'input-container',
+    buttons: 'button-box-right'
+  }
+}
+
+function getIconsBox(icons) {
+  const iconContainer = document.createElement('div');
+  iconContainer.className = 'icon-container';
+  iconContainer.style.textAlign = 'right';
+
+  if (icons && icons[0] && icons[0].tipo === 'voltar') {
+    const backIcon = document.createElement('i');
+    backIcon.id = 'back-icon';
+    backIcon.className = 'bx bx-arrow-back';
+    backIcon.style.visibility = 'hidden';
+    backIcon.style.cursor = 'pointer';
+    MESSAGE_LISTENERS.push({id: '#back-icon', action: icons[0].acao });
+
+    iconContainer.appendChild(backIcon);
+  }
+
+  const cancelIcon = document.createElement('i');
+  cancelIcon.id = 'cancel-icon';
+  cancelIcon.className = 'iconify';
+  cancelIcon.setAttribute('data-icon', 'material-symbols-light:close');
+  cancelIcon.style.cursor = 'pointer';
+  MESSAGE_LISTENERS.push({id: '#cancel-icon', action: closeMessage });
+
+  iconContainer.appendChild(cancelIcon);
+
+  return iconContainer;
+}
+
+function getErrorElement(error) {
+  let location = "";
+  if (error?.showLocation) {
+    const stackTrace = error.error ? error.error.stack : (new Error()).stack;
+    const stackSplit = stackTrace.split('\n');
+    location = stackSplit[2] ? stackSplit[2] : stackSplit[stackSplit.length - 1];
+    location = location.split("/")[location.split("/").length - 1]
+    location = location.trim().replace("at ", "");
+  }
+
+  let errorMessage = "";
+
+  if (location && error.error && error.error instanceof Error) {
+    errorMessage = translate('messages.errors.error_location', {error: error.error.message, location});
+  } else if (error.error && error.error instanceof Error) {
+    errorMessage = `${translate('messages.errors.error')} ${error.error.message}`;
+  }
+
+  const errorElement = document.createElement('p');
+  errorElement.innerText = errorMessage;
+  errorElement.className = 'error-message';
+
+  if (!errorMessage) {
+    errorElement.style.display = 'none';
+  }
+
+  return errorElement;
+}
+
+function getErrorMessage(error) {
+  const isError = (error && error instanceof Error);
+  const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
+
+  if (!error || isError && !error.message) {
+    return `${translate('messages.errors.unknown')}. ${contact}`;
+  } else if (isError) {
+    let msg = error.message;
+    if (msg[msg.length - 1] === '.') {
+      msg = msg.substring(0, msg.length - 1);
+    }
+    return `${msg}. ${contact}`;
+  } else {
+    return error;
+  }
+}
+
+function loadMessageEventListeners() {
+  for (const listener of MESSAGE_LISTENERS) {
+    onClick(listener.id, listener.action)
+  }
+}
+
+function getMessageProperty(type, action) {
+  return { type, action };
+}
+
+export function getCancelMessageProperty(action) {
+  return getMessageProperty('cancel', action);
+}
+
+export function getConfirmMessageProperty(action) {
+  return getMessageProperty('confirm', action);
+}
+
+export function getBackMessageProperty(action) {
+  return getMessageProperty('back', action);
 }

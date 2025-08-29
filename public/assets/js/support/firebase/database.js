@@ -15,7 +15,7 @@ export var FIRESTORE_PROGRAMACAO_DATA;
 export var FIRESTORE_GASTOS_DATA;
 export var FIRESTORE_GASTOS_NEW_DATA
 
-const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
+export const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
 
 // Constructors
 function buildDatabaseObject(success, message = "", data = {}) {

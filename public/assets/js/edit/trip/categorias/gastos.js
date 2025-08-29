@@ -1,7 +1,7 @@
 import { getFieldValueOrNotify } from "../../../support/html/fields.js";
-import { getID } from "../../../support/pages/selectors.js";
+import { getID, on, onClick } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
-import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
+import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput, getBackMessageProperty } from "../../../support/pages/messages.js";
 
 export var PIN_GASTOS = {
     current: '',
@@ -27,7 +27,7 @@ function _switchPin() {
 }
 
 function _requestPinEditarGastos(invalido = false) {
-    const confirmAction = '_reconfirmPin()';
+    const confirmAction = _reconfirmPin;
     const precontent = translate('trip.expenses.pin.insert');
     _requestPin({ confirmAction, precontent, invalido });
 }
@@ -37,7 +37,7 @@ function _reconfirmPin() {
     if (!atual || atual.length < 4) {
         _requestPinEditarGastos(true)
     } else {
-        const confirmAction = `_validatePin('${atual}')`;
+        const confirmAction = () => _validatePin(atual);
         const precontent = translate('trip.expenses.pin.again');
         _requestPin({ confirmAction, precontent });
     }
@@ -53,7 +53,7 @@ function _validatePin(pin) {
 }
 
 function _invalidPin() {
-    const confirmAction = '_reconfirmPin()';
+    const confirmAction = _reconfirmPin;
     const precontent = translate('trip.expenses.pin.invalid');
     const invalido = true;
     _requestPin({ confirmAction, precontent, invalido });
@@ -86,31 +86,32 @@ function _loadGastosHTML() {
         label.innerText = tipoObj.tipo;
         div.appendChild(label);
 
-        for (let i = 0; i < tipoObj.gastos.length; i++) {
+        let lastJ = 0
+        for (lastJ = 0; lastJ < tipoObj.gastos.length; lastJ++) {
             const button = document.createElement('button');
+            button.id = `inner-gasto-${lastJ+1}`
             button.className = 'btn input-botao';
-            button.innerText = tipoObj.gastos[i].nome;
-            button.onclick = () => _openInnerGasto(categoria, tipoObj.tipo, i);
+            button.innerText = tipoObj.gastos[lastJ].nome;
             div.appendChild(button);
         }
 
         getID(categoria).appendChild(div);
+        for (let j = 1; j <= lastJ; j++) {
+            onClick(`#inner-gasto-${j}`, () => _openInnerGasto(categoria, tipoObj.tipo, j));
+        }
     }
 }
 
 function _openInnerGasto(categoria, tipo = '', index = -1) {
     const propriedades = getDefaultProperties();
-    propriedades.titulo = tipo ? translate('labels.edit') : translate('labels.add');
-    propriedades.conteudo = _getInnerGastoContent(categoria, tipo, index);
-    propriedades.icones = [{ tipo: 'voltar', acao: '' }];
+    propriedades.title = tipo ? translate('labels.edit') : translate('labels.add');
+    propriedades.content = _getInnerGastoContent(categoria, tipo, index);
+    propriedades.icons = [getBackMessageProperty()];
     propriedades.containers = getContainersInput();
-    propriedades.botoes = [{
-        tipo: 'cancelar',
-    }, {
-        tipo: 'confirmar',
-        acao: `_saveInnerGasto('${categoria}', '${tipo}', ${index})`
-    }];
+    propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(() => _saveInnerGasto(categoria, tipo, index))]; 
+
     displayFullMessage(propriedades);
+    onClick('delete-inner-gasto', () => _deleteInnerGasto(categoria, tipo, index))
 
     if (tipo && index >= 0) {
         const gasto = INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos[index];
@@ -207,7 +208,7 @@ function _getInnerGastoContent(categoria, tipo, index) {
                     <input required class="input-full" id="gasto-valor" type="number" placeholder="0.00" step="0.01">
                 </div>
                 <div class="button-box-right" id="gasto-deletar" style="margin-top: 8px; margin-bottom: 8px;">
-                        <button onclick="_deleteInnerGasto('${categoria}', '${tipo}', ${index})" class="btn btn-basic btn-format">
+                        <button id="delete-inner-gasto" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
                             </svg>

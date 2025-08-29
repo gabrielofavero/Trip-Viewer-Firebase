@@ -1,4 +1,7 @@
-function _getDestinosBoxHTML({ j, item, isLineup, innerProgramacao, notas, valores, moeda }) {
+import { openLinkInNewTab } from "../support/pages/navigation.js";
+import { on, onClick } from "../support/pages/selectors.js";
+
+export function getDestinosBoxHTML({ j, item, isLineup, innerProgramacao, notas, valores, moeda }) {
     const identifiers = innerProgramacao ? '' : `class="accordion-body" id="accordion-body-${j}"`;
     return `<div ${identifiers}>
     <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
@@ -7,9 +10,9 @@ function _getDestinosBoxHTML({ j, item, isLineup, innerProgramacao, notas, valor
             <span class="nota-texto">${_getNotaText(item, notas)}</span>
         </div>
         <div class="links-container" style="display: ${_getLinksContainerVisibility(item, isLineup)}">
-            <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? 'block' : 'none'}"${_getLinkOnClick(item, 'mapa')}></i>
-            <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"${_getLinkOnClick(item, 'instagram')}></i>
-            <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? 'block' : 'none'}"${_getLinkOnClick(item, 'website')}></i>
+            <i id="map-icon-${j}" class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? 'block' : 'none'}"></i>
+            <i id="instagram-icon-${j}" class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"></i>
+            <i id="website-icon-${j}" class="iconify link" data-icon="tabler:world" style="display: ${item.website ? 'block' : 'none'}"></i>
         </div>
     </div>
     <div class="destinos-text">
@@ -42,3 +45,10 @@ function _getDestinosBoxHTML({ j, item, isLineup, innerProgramacao, notas, valor
     </div>
 </div>`
 }
+
+export function loadDestinosBoxListeners(j, item) {
+    onClick(`map-icon-${j}`, () => openLinkInNewTab(item.mapa))
+    onClick(`instagram-icon-${j}`, () => openLinkInNewTab(item.instagram))
+    onClick(`website-icon-${j}`, () => openLinkInNewTab(item.website))
+}
+

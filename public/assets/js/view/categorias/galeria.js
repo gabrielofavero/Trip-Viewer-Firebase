@@ -1,5 +1,5 @@
 import { BiMap } from "../../support/components/bimap.js";
-import { select, on, getID } from "../../support/pages/selectors.js";
+import { select, onClick, getID } from "../../support/pages/selectors.js";
 import { codifyText } from "../../support/data/data.js";
 import { isObject } from "../../support/data/object.js";
 
@@ -132,7 +132,7 @@ function _refreshCategorias() {
 
         let portfolioFilters = select('#portfolio-flters li', true);
 
-        on('click', '#portfolio-flters li', function (e) {
+        onClick('#portfolio-flters li', function (e) {
             e.preventDefault();
             portfolioFilters.forEach(function (el) {
                 el.classList.remove('filter-active');

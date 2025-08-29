@@ -2,9 +2,9 @@ import { initializeSortableForGroup } from "../../../support/components/sortable
 import { IMAGE_UPLOAD_STATUS, uploadImages, loadImageSelector } from "../../../support/firebase/storage.js";
 import { closeAccordions, openLastAccordion } from "../../../support/html/accordion.js";
 import { validateLink, validateImageLink } from "../../../support/html/fields.js";
-import { getID, getChildIDs, getSecondaryID } from "../../../support/pages/selectors.js";
+import { getID, getChildIDs, getSecondaryID, on, onClick, onChange } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
-import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
+import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput, getBackMessageProperty } from "../../../support/pages/messages.js";
 import { convertFromDateObject, getDateString, getTimeString } from "../../../support/data/dates.js";
 import { animateFade } from "../../../support/styles/animations.js";
 
@@ -42,13 +42,13 @@ function _loadHospeagemCheck(chave, checkTipo, hospedagem, j) {
 
 // Listener
 function _loadHospedagemListeners(j) {
-    // Validação de Link
-    getID(`reserva-hospedagens-link-${j}`).addEventListener('change', () => validateLink(`reserva-hospedagens-link-${j}`));
-
-    // Nome
-    getID(`hospedagens-nome-${j}`).addEventListener('change', function () {
-        if (getID(`hospedagens-nome-${j}`).value) {
-            getID(`hospedagens-title-${j}`).innerText = getID(`hospedagens-nome-${j}`).value;
+    onChange(`#reserva-hospedagens-link-${j}`, () => validateLink(`reserva-hospedagens-link-${j}`));
+    onClick(`#imagens-hospedagem-button-${j}`, _openImagensHospedagem(j));
+    onChange(`#hospedagens-nome-${j}`, () => {
+        const input = document.querySelector(`#hospedagens-nome-${j}`);
+        const title = document.querySelector(`#hospedagens-title-${j}`);
+        if (input && input.value && title) {
+            title.innerText = input.value;
         }
     });
 }
@@ -64,18 +64,14 @@ function _openImagensHospedagem(j) {
     const size = 5;
     const propriedades = getDefaultProperties();
 
-    propriedades.titulo = translate('labels.image.add_title');
+    propriedades.title = translate('labels.image.add_title');
     propriedades.containers = getContainersInput();
-    propriedades.conteudo = _getImagemHospedagemContent(size);
-    propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerImagemHospedagem()` }];
-    propriedades.botoes = [{
-        tipo: 'cancelar',
-    }, {
-        tipo: 'confirmar',
-        acao: `_saveImagensHospedagem(${j})`,
-    }];
+    propriedades.content = _getImagemHospedagemContent(size);
+    propriedades.icons = [getBackMessageProperty(_closeInnerImagemHospedagem)];
+    propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(() => _saveImagensHospedagem(j))];
 
     displayFullMessage(propriedades);
+    onClick(`#hospedagens-imagem-botao-${k}`, () => _openInnerImagemHospedagem(k));
     initializeSortableForGroup(`imagem-hospedagens`, { onEnd: '' });
 
     for (let k = 1; k <= size; k++) {
@@ -98,7 +94,7 @@ function _getImagemHospedagemContent(size = 5) {
     for (let k = 1; k <= size; k++) {
         botoes += `
         <div class="input-botao-container" id="input-botao-container-${k}">
-            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" onclick="_openInnerImagemHospedagem(${k})" style="margin-top:1em">${translate('labels.image.add')}</button>
+            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" style="margin-top:1em">${translate('labels.image.add')}</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
         </div>`;
 

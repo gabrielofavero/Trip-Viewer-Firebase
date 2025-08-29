@@ -1,7 +1,7 @@
 import { addRemoveChildListenerDS } from "../../../support/components/dynamic-select.js";
 import { DOCUMENT_ID } from "../../../support/firebase/database.js";
 import { editFieldAgain, validateLink, validateImageLink } from "../../../support/html/fields.js";
-import { getID, on } from "../../../support/pages/selectors.js";
+import { getID, on, onChange, onClick, onInput } from "../../../support/pages/selectors.js";
 import { translate } from "../../../main/translate.js";
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from "../../../support/data/dates.js";
 import { searchDestination } from "../categorias/destinos.js";
@@ -15,59 +15,59 @@ var INPUT_DETECTED = false;
 export function loadEditTripListeners() {
 
     // Inputs
-    on('change', '#inicio', _inicioListenerAction);
-    on('change', '#fim', _fimListenerAction);
+    onChange('#inicio', _inicioListenerAction);
+    onChange('#fim', _fimListenerAction);
 
     // Buttons
-    on('click', '#editores-adicionar', _addEditores);
-    on('click', '#salvar', _setViagem);
-    on('click', '#re-editar', editTripFieldAgain);
-    on('click', '#visualizar', _visualizarListenerAction);
-    on('click', '#home', goHomeFromEditDocumentPage);
-    on('click', '#back', goHomeFromEditDocumentPage);
-    on('click', '#cancelar', goHomeFromEditDocumentPage);
-    on('click', '#transporte-adicionar', _transporteAdicionarListenerAction);
-    on('click', '#hospedagens-adicionar', _hospedagensAdicionarListenerAction);
-    on('click', '#galeria-adicionar', _galeriaAdicionarListenerAction);
-    on('click', '#pin-enable', _switchPin);
-    on('click', '#pin-disable', _switchPin);
-    on('click', '#travelers-info', _openTravelersInfo);
-    on('click', '#delete-trip', deleteViagem);
-    on('click', '#request-pin', _requestPinEditarGastos);
-    on('click', '#programacao-adicionar-gastosPrevios', () => _openInnerGasto('gastosPrevios'));
-    on('click', '#programacao-adicionar-gastosDurante', () => _openInnerGasto('gastosDurante'));
-    on('click', '#programacao-adicionar-gastosPrevios', () => _openInnerGasto('gastosPrevios'));
-    on('click', '.toast-close', closeToast, false);
+    onClick('#editores-adicionar', _addEditores);
+    onClick('#salvar', _setViagem);
+    onClick('#re-editar', editTripFieldAgain);
+    onClick('#visualizar', _visualizarListenerAction);
+    onClick('#home', goHomeFromEditDocumentPage);
+    onClick('#back', goHomeFromEditDocumentPage);
+    onClick('#cancelar', goHomeFromEditDocumentPage);
+    onClick('#transporte-adicionar', _transporteAdicionarListenerAction);
+    onClick('#hospedagens-adicionar', _hospedagensAdicionarListenerAction);
+    onClick('#galeria-adicionar', _galeriaAdicionarListenerAction);
+    onClick('#pin-enable', _switchPin);
+    onClick('#pin-disable', _switchPin);
+    onClick('#travelers-info', _openTravelersInfo);
+    onClick('#delete-trip', deleteViagem);
+    onClick('#request-pin', _requestPinEditarGastos);
+    onClick('#programacao-adicionar-gastosPrevios', () => _openInnerGasto('gastosPrevios'));
+    onClick('#programacao-adicionar-gastosDurante', () => _openInnerGasto('gastosDurante'));
+    onClick('#programacao-adicionar-gastosPrevios', () => _openInnerGasto('gastosPrevios'));
+    onClick('.toast-close', closeToast, false);
 
     // Transportation View Validation
-    on('change', '#simple-view', _applyTransportationTypeVisualization);
-    on('change', '#leg-view', _applyTransportationTypeVisualization);
-    on('change', '#people-view', _applyTransportationTypeVisualization);
+    onChange('#simple-view', _applyTransportationTypeVisualization);
+    onChange('#leg-view', _applyTransportationTypeVisualization);
+    onChange('#people-view', _applyTransportationTypeVisualization);
 
     // Image Link Validation
-    on('change', '#link-background', () => validateImageLink('link-background'));
-    on('change', '#link-logo-light', () => validateImageLink('link-logo-light'));
-    on('change', '#link-logo-dark', () => validateImageLink('link-logo-dark'));
+    onChange('#link-background', () => validateImageLink('link-background'));
+    onChange('#link-logo-light', () => validateImageLink('link-logo-light'));
+    onChange('#link-logo-dark', () => validateImageLink('link-logo-dark'));
 
     // Link Validation
-    on('change', '#link-attachments', () => validateLink('link-attachments'));
-    on('change', '#link-drive', () => validateLink('link-drive'));
-    on('change', '#link-maps', () => validateLink('link-maps'));
-    on('change', '#link-pdf', () => validateLink('link-pdf'));
-    on('change', '#link-ppt', () => validateLink('link-ppt'));
-    on('change', '#link-sheet', () => validateLink('link-sheet'));
-    on('change', '#link-vacina', () => validateLink('link-vacina'));
+    onChange('#link-attachments', () => validateLink('link-attachments'));
+    onChange('#link-drive', () => validateLink('link-drive'));
+    onChange('#link-maps', () => validateLink('link-maps'));
+    onChange('#link-pdf', () => validateLink('link-pdf'));
+    onChange('#link-ppt', () => validateLink('link-ppt'));
+    onChange('#link-sheet', () => validateLink('link-sheet'));
+    onChange('#link-vacina', () => validateLink('link-vacina'));
 
     // Destination Search Bar
-    on('input', '#destinos-search', searchDestination);
+    onInput('#destinos-search', searchDestination);
 
     // Radios
-    on('change', '#dark-and-light', _visibilityListenerAction);
-    on('change', '#light-exclusive', _visibilityListenerAction);
-    on('change', '#dark-exclusive', _visibilityListenerAction);
+    onChange('#dark-and-light', _visibilityListenerAction);
+    onChange('#light-exclusive', _visibilityListenerAction);
+    onChange('#dark-exclusive', _visibilityListenerAction);
 
     // Document and Window
-    on('input', 'document', detectInput);
+    onInput('document', detectInput);
     on('beforeunload', 'window', confirmExit);
 }
 

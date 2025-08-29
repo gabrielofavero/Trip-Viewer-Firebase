@@ -1,7 +1,7 @@
 import { getSelectOptionsHTML } from "../../../support/html/fields.js";
 import { getID } from "../../../support/pages/selectors.js";
 import { getUserLanguage, translate } from "../../../main/translate.js";
-import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput } from "../../../support/pages/messages.js";
+import { getDefaultProperties, closeMessage, displayFullMessage, getContainersInput, getCancelMessageProperty, getConfirmMessageProperty } from "../../../support/pages/messages.js";
 import { DESTINATIONS } from "../../../view/categorias/destinos.js";
 
 var DESCRIPTIONS = {};
@@ -52,15 +52,10 @@ function _getDescription(categoria, j) {
 
 function _openDescription(categoria, j) {
     const propriedades = getDefaultProperties();
-    propriedades.titulo = _getDescriptionLabel(categoria, j);
+    propriedades.title = _getDescriptionLabel(categoria, j);
     propriedades.containers = getContainersInput();
-    propriedades.conteudo = _getDescriptionContent(categoria);
-    propriedades.botoes = [{
-        tipo: 'cancelar',
-    }, {
-        tipo: 'confirmar',
-        acao: `_saveDescription('${categoria}', ${j})`,
-    }];
+    propriedades.content = _getDescriptionContent(categoria);
+    propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(() => _saveDescription(categoria, j))];
 
     displayFullMessage(propriedades);
 

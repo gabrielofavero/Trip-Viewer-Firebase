@@ -1,5 +1,5 @@
 // By Primary ID
-export const getID = (id) => {
+export function getID(id) {
     return document.getElementById(id);
 }
 
@@ -75,7 +75,7 @@ export function getNextSecondaryID(parentID) {
 }
 
 // By El
-export const select = (el, all = false) => {
+export function select(el, all = false) {
     el = el.trim();
     if (all) {
         return [...document.querySelectorAll(el)];
@@ -84,7 +84,7 @@ export const select = (el, all = false) => {
     }
 };
 
-export const on = (type, el, listener, all = false) => {
+export function on(type, el, listener, all = false) {
     if (el === 'document') {
         document.addEventListener(type, listener);
     } else if (el === 'window') {
@@ -95,6 +95,18 @@ export const on = (type, el, listener, all = false) => {
     }
 };
 
-export const onscroll = (el, listener) => {
+export function onClick(el, listener, all = false) {
+    on('click', el, listener, all);
+}
+
+export function onChange(el, listener, all = false) {
+    on('change', el, listener, all);
+}
+
+export function onInput(el, listener, all = false) {
+    on('input', el, listener, all);
+}
+
+export function onscroll(el, listener) {
     el.addEventListener('scroll', listener)
 }

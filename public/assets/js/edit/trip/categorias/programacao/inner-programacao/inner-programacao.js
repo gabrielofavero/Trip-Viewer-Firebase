@@ -1,10 +1,11 @@
 import { getSelectCurrentLabel } from "../../../../../support/html/fields.js";
-import { getID, getSecondaryIDs } from "../../../../../support/pages/selectors.js";
+import { getID, getSecondaryIDs, onClick } from "../../../../../support/pages/selectors.js";
 import { translate } from "../../../../../main/translate.js";
-import { getDefaultProperties, displayFullMessage, closeMessage, getContainersInput } from "../../../../../support/pages/messages.js";
-import { getDateTitle, jsDateToKey } from "../../../../../support/data/dates.js";
+import { getDefaultProperties, displayFullMessage, closeMessage, getContainersInput, getBackMessageProperty } from "../../../../../support/pages/messages.js";
+import { getDateTitle, jsDateToInputDate, jsDateToKey } from "../../../../../support/data/dates.js";
 import { DESTINATIONS } from "../../../../../view/categorias/destinos.js";
 import { animate } from "../../../../../support/styles/animations.js";
+import { getInnerProgramacaoContent } from "./content.js";
 
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
@@ -34,13 +35,13 @@ function _loadInnerProgramacaoHTML(j) {
                     texto = `<span class="time">${dado.inicio}:</span> ${texto}`;
                 }
                 div.innerHTML += `<div class="input-botao-container">
-                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
+                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable">
                                         ${texto}
                                     </button>
                                     <i class="iconify drag-icon" data-icon="mdi:drag"></i>
                                 </div>`;
+                onClick(`input-botao-${turno}-${j}-${k}`, () => _openInnerProgramacao(j, k, turno));
             }
-
             getID(`programacao-${turno}-${j}`).style.display = div.innerHTML ? 'block' : 'none';
         }
     }
@@ -53,18 +54,14 @@ function _openInnerProgramacao(j, k, turno) {
     const isNew = (!k && !turno);
 
     const propriedades = getDefaultProperties();
-    propriedades.titulo = _getInnerProgramacaoTitle(j);
+    propriedades.title = _getInnerProgramacaoTitle(j);
     propriedades.containers = getContainersInput();
-    propriedades.conteudo = _getInnerProgramacaoContent(j, k, turno, selects, isNew);
-    propriedades.icones = [{ tipo: 'voltar', acao: `_closeInnerProgramacao(${j})` }];
-    propriedades.botoes = [{
-        tipo: 'cancelar',
-    }, {
-        tipo: 'confirmar',
-        acao: `_innerProgramacaoConfirmAction(${j}, ${k}, '${turno}')`
-    }];
+    propriedades.content = getInnerProgramacaoContent(j, k, turno, selects, isNew);
+    propriedades.icons = [getBackMessageProperty(() => _closeInnerProgramacao(j))];
+    propriedades.buttons = [getCancelMessageProperty(), getConfirmMessageProperty(() => _innerProgramacaoConfirmAction(j, k, turno))];
 
     displayFullMessage(propriedades);
+    addInnerProgramacaoListeners()
 
     if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';
