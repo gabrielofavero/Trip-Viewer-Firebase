@@ -258,10 +258,6 @@
             "instructions": "Create a map for free at",
             "my_maps": "My Maps"
         },
-        "lineup": {
-            "title": "Lineup",
-            "description": "Event lineup — may include times, stages, artists, notes, and links to artists' Spotify profiles."
-        },
         "tourismAndShopping": {
             "title": "Tourism & Shopping",
             "title_singular": "Tourism / Shopping",
@@ -631,6 +627,7 @@
             "title": "Language",
             "pt": "Portuguese",
             "en": "English"
-        }
+        },
+        "lineup": "Lineup"
     }
 }

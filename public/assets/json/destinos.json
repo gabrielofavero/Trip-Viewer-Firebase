@@ -36,7 +36,6 @@
             "saidas",
             "turismo",
             "lojas",
-            "lineup",
             "mapa"
         ],
         "passeios": [
@@ -50,7 +49,6 @@
     "icons": {
         "tourismAndShopping": "bx bx-dish",
         "comida": "bx bx-dish",
-        "lineup": "bx bx-music",
         "lanches": "bx bx-cookie",
         "lojas": "bx bx-shopping-bag",
         "mapa": "bx bx-map-alt",
@@ -65,7 +63,6 @@
         "turismo": "tourism",
         "lojas": "shopping",
         "mapa": "map",
-        "lineup": "lineup",
         "tourismAndShopping": "tourismAndShopping",
         "comida": "food"
     }

@@ -141,7 +141,6 @@ export function removeEmptyChild(categoria) {
     case 'saidas':
     case 'turismo':
     case 'lojas':
-    case 'lineup':
       itens = [`${categoria}-nome`];
       break;
     case 'transporte':

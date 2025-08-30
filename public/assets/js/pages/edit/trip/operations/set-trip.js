@@ -237,29 +237,6 @@ function _buildDestinosArray() {
     return result;
 }
 
-function _buildLineupObject() {
-    let result = [];
-
-    for (const j of getSecondaryIDs('lineup-box')) {
-        const data = getID(`lineup-data-${j}`).value;
-        result.push({
-            id: getTypeID('lineup', j),
-            headliner: getID(`lineup-headliner-${j}`).checked,
-            nome: getID(`lineup-nome-${j}`).value,
-            local: getID(`lineup-local-${j}`).value,
-            genero: getID(`lineup-genero-select-${j}`).value,
-            palco: getID(`lineup-palco-select-${j}`).value,
-            data: data ? keyToDateObject(data) : "",
-            inicio: getID(`lineup-inicio-${j}`).value,
-            fim: getID(`lineup-fim-${j}`).value,
-            midia: getID(`lineup-midia-${j}`).value,
-            nota: getID(`lineup-nota-${j}`).value,
-        })
-    }
-
-    return result;
-}
-
 function _buildGaleriaObject() {
     let result = {
         descricoes: [],

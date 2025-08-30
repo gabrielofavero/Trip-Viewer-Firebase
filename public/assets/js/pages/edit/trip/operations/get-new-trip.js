@@ -400,7 +400,7 @@ function _addGaleria() {
         <div class="accordion-body">
           <div class="nice-form-group">
             <label>${translate('labels.title')}</label>
-            <input required id="galeria-titulo-${j}" type="text" placeholder="${translate('destination.lineup.title')}" />
+            <input required id="galeria-titulo-${j}" type="text" placeholder="${translate('labels.lineup')}" />
           </div>
 
           <div class="nice-form-group" id="galeria-select-form-group-${j}">

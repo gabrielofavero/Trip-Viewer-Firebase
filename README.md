@@ -22,6 +22,7 @@
   - 📈 **M104:** [⚔️E034] All external links should open via window.open
   - 📈 **M110:** [⚔️E034] Use logo as symbol instead of dynamic svg
   - 📈 **M118:** [⚔️E034] Remove underline from beggining of each function
+  - 📈 **M119:** [⚔️E034] Remove all lineup references
 
   - Index
   - View

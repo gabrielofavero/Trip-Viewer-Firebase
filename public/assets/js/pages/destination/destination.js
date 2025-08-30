@@ -1,40 +1,37 @@
 import { closeAccordions } from "../support/html/accordion.js";
 import { getID, getSecondaryIDs, on, onClick } from "../support/pages/selectors.js";
 import { loadExternalVisibility } from "../support/styles/visibility.js";
+import { loadDestinationListeners } from "./support/destination-event-listeners.js";
 
-var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
-var CONTENT = {};
+export var DESTINATION_RAW_DATA = JSON.parse(window.localStorage.getItem('DESTINATION_RAW_DATA'));
+var DESTINATION_CONTENT = {};
 
-// Métodos Principais
-function _loadDestinosHTML() {
+
+document.addEventListener("DOMContentLoaded", () => {
   loadExternalVisibility();
+  loadDestinationListeners();
+});
 
-  const closeButton = getID("closeButton");
-  if (window.parent._closeLightbox) {
-    onClick('#closeButton', () => {
-      _unloadMedias();
-      window.parent._closeLightbox();
-    });
-  } else {
-    closeButton.style.display = "none";
-  }
 
-  onClick("#logo-link", () => {
-    if (window.parent._closeLightbox) {
-      window.parent._closeLightbox(true);
-    } else {
-      window.location.href = "index.html";
-    }
-  });
 
-  if (DESTINO && Object.keys(DESTINO).length > 0) {
-    document.title = DESTINO.titulo;
-    getID("titulo-destinos").innerHTML = "<h2>" + DESTINO.titulo + "</h2>";
+
+
+
+
+// Loaders
+function _loadDestinosHTML() {
+  
+
+
+
+  if (DESTINATION_RAW_DATA && Object.keys(DESTINATION_RAW_DATA).length > 0) {
+    document.title = DESTINATION_RAW_DATA.title;
+    getID("titulo-destinos").innerHTML = "<h2>" + DESTINATION_RAW_DATA.title + "</h2>";
 
     const isLineup = false;
 
-    for (let j = 1; j <= DESTINO.data.length; j++) {
-      const item = DESTINO.data[j - 1];
+    for (let j = 1; j <= DESTINATION_RAW_DATA.data.length; j++) {
+      const item = DESTINATION_RAW_DATA.data[j - 1];
       const data = isLineup ? _getLineupData(item) : "";
       const key = isLineup ? _getLineupKey(item) : "semData";
       const params = {
@@ -42,9 +39,9 @@ function _loadDestinosHTML() {
         item: item,
         isLineup: isLineup,
         innerProgramacao: false,
-        notas: DESTINO.notas,
-        valores: DESTINO.valores,
-        moeda: DESTINO.moeda
+        notas: DESTINATION_RAW_DATA.scores,
+        valores: DESTINATION_RAW_DATA.prices,
+        moeda: DESTINATION_RAW_DATA.currency
       }
 
       const innerHTML = `<div class="accordion-group" id='destinos-box-${j}'>
@@ -131,29 +128,29 @@ function _setInnerContent(j, item, key, data, innerHTML) {
     innerHTML: innerHTML
   }
 
-  if (!CONTENT[key]) {
-    CONTENT[key] = {
+  if (!DESTINATION_CONTENT[key]) {
+    DESTINATION_CONTENT[key] = {
       titulo: data,
       innerContents: [innerContent]
     };
   } else {
-    CONTENT[key].innerContents.push(innerContent);
+    DESTINATION_CONTENT[key].innerContents.push(innerContent);
   }
 }
 
 function _applyContent() {
   const div = getID("content");
-  const keys = Object.keys(CONTENT).sort((a, b) => a - b); // Ordem Crescente
+  const keys = Object.keys(DESTINATION_CONTENT).sort((a, b) => a - b); // Ordem Crescente
 
   div.innerHTML = "";
   for (const key of keys) {
-    const titulo = CONTENT[key].titulo ? `<div class="data-lineup">${CONTENT[key].titulo}</div>` : "";
-    const innerHTMLs = _orderInnerHTMLs(CONTENT[key].innerContents);
+    const titulo = DESTINATION_CONTENT[key].titulo ? `<div class="data-title">${DESTINATION_CONTENT[key].titulo}</div>` : "";
+    const innerHTMLs = _orderInnerHTMLs(DESTINATION_CONTENT[key].innerContents);
     div.innerHTML += titulo + innerHTMLs.join("")
   }
 
   for (const key of keys) {
-    const j = CONTENT[key].posicao;
+    const j = DESTINATION_CONTENT[key].posicao;
     onClick(`#destinos-titulo-${j}`, () => _processAccordion(j))
   }
 }

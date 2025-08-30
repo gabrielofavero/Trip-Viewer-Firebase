@@ -116,11 +116,11 @@ function _buildDestinoExport(destino, type) {
   const translatedType = DESTINATIONS.translation[type] || type;
   DESTINO_EXPORT[type] = {
     data: destino.destinos[type],
-    moeda: destino.destinos.moeda,
-    valores: _getDestinoValores(destino),
-    notas: LANGUAGE_PACK.destination.scores,
-    categoria: type,
-    titulo: translate(`destination.${translatedType}.title`)
+    currency: destino.destinos.moeda,
+    prices: _getDestinoValores(destino),
+    scores: LANGUAGE_PACK.destination.scores,
+    types: type,
+    title: translate(`destination.${translatedType}.title`)
   }
 }
 
@@ -134,7 +134,7 @@ function _getDestinoValores(destino) {
 }
 
 function _loadAndOpenDestino(code) {
-  window.localStorage.setItem('DESTINO', JSON.stringify(DESTINO_EXPORT[code]));
+  window.localStorage.setItem('DESTINATION_RAW_DATA', JSON.stringify(DESTINO_EXPORT[code]));
   _openLightbox('destination.html')
 }
 

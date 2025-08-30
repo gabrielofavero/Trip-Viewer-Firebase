@@ -258,10 +258,6 @@
             "instructions": "Cadastre um mapa gratuitamente no",
             "my_maps": "My Maps"
         },
-        "lineup": {
-            "title": "Lineup",
-            "description": "Lineup do evento. Pode incluir horários, palcos e artistas, notas e um link para o Spotify do artista"
-        },
         "tourismAndShopping": {
             "title": "Turismo e Lojas",
             "title_singular": "Turismo / Loja",
@@ -630,6 +626,7 @@
             "title": "Idioma",
             "pt": "Português",
             "en": "Inglês"
-        }
+        },
+        "lineup": "Lineup"
     }
 }

@@ -55,7 +55,7 @@ function compareDocuments() {
   switch (getPage()) {
     case 'edit/trip':
       result.multiple = true;
-      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
+      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'dados da viagem' });
       _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
       _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
       _compareAndPush({ obj1: { pin: PIN_GASTOS.current }, obj2: { pin: PIN_GASTOS.new }, ignoredPaths: [], name: 'senha de acesso aos gastos' });

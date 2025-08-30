@@ -1,5 +1,6 @@
 import { openLinkInNewTab } from "../../support/pages/navigation.js";
 import { on, onClick } from "../../support/pages/selectors.js";
+import { DESTINATION_RAW_DATA } from "../destination.js";
 
 export function getDestinosBoxHTML({ j, item, isLineup, innerProgramacao, notas, valores, moeda }) {
     const identifiers = innerProgramacao ? '' : `class="accordion-body" id="accordion-body-${j}"`;
@@ -31,7 +32,7 @@ export function getDestinosBoxHTML({ j, item, isLineup, innerProgramacao, notas,
             </div>
             <div class="destinos-topico" style="display: ${_getValorVisibility(item, isLineup)}">
                 <i class="iconify color-icon" data-icon="bx:dollar"></i>
-                ${_getValorValue(item, isLineup, (valores), (moeda || DESTINO.moeda))}
+                ${_getValorValue(item, isLineup, (valores), (moeda || DESTINATION_RAW_DATA.currency))}
             </div>
             <div class="destinos-topico" style="display: ${_getGeneroVisibility(item, isLineup)}">
                 <i class="iconify color-icon" data-icon="mingcute:music-fill"></i>
