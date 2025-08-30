@@ -1,4 +1,4 @@
-import { openIndexPage } from "../../index/support/visibility-index.js";
+import { openIndexPage } from "../../index/support/index-visibility.js";
 import { translate } from "../../main/translate.js";
 import { displayError, displayMessage } from "../pages/messages.js";
 import { getID } from "../pages/selectors.js";
