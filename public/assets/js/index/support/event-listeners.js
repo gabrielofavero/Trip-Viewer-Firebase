@@ -1,5 +1,5 @@
 import { signOut } from "../../support/firebase/user.js";
-import { on, onClick } from "../../support/pages/selectors.js";
+import { onClick } from "../../support/pages/selectors.js";
 import { closeModal, openModal } from "../../support/styles/modal.js";
 import { closeNotification, goToCurrentTrip, manualListingLoad, manualTripLoad } from "../index.js";
 

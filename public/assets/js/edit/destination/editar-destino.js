@@ -14,6 +14,7 @@ import { getDefaultProperties, displayError, closeMessage, displayFullMessage, g
 import { setDocument, uploadAndSetImages } from "../../support/pages/set.js";
 import { setDestination } from "./set-destino.js";
 import { loadEditModuleVisibility, removeChildWithValidation } from "../../support/pages/edit-module.js";
+import { loadVisibilityIndex } from "../../index/support/visibility-index.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DESTINOS_DATA;
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     initApp();
     DOCUMENT_ID = getURLParam('d')
 
-    _loadVisibilityIndex();
+    loadVisibilityIndex();
     _loadHabilitados();
     newDynamicSelect('regiao');
 

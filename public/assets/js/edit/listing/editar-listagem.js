@@ -14,6 +14,7 @@ import { closeMessage, displayFullMessage } from "../../support/pages/messages.j
 import { setDocument, uploadAndSetImages } from "../../support/pages/set.js";
 import { loadEditModuleVisibility } from "../../support/pages/edit-module.js";
 import { searchDestination } from "../trip/categorias/destinos.js";
+import { loadVisibilityIndex } from "../../index/support/visibility-index.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     DOCUMENT_ID = getURLParam('l');
     await loadUserPermissions();
 
-    _loadVisibilityIndex();
+    loadVisibilityIndex();
     _loadHabilitados();
 
     if (DOCUMENT_ID) {

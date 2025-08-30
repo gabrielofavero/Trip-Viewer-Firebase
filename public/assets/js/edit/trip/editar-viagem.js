@@ -12,6 +12,7 @@ import { getDateTitle, jsDateToKey, } from "../../support/data/dates.js";
 import { closeMessage, displayFullMessage } from "../../support/pages/messages.js";
 import { loadEditModuleVisibility } from "../../support/pages/edit-module.js";
 import { loadEditTripListeners } from "./suporte/event-listeners.js";
+import { loadVisibilityIndex } from "../../index/support/visibility-index.js";
 
 var blockLoadingEnd = false;
 var FIRESTORE_DATA;
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     DOCUMENT_ID = getURLParam('v');
     await loadUserPermissions();
 
-    _loadVisibilityIndex();
+    loadVisibilityIndex();
     _loadHabilitados();
     newDynamicSelect('galeria-categoria');
     newDynamicSelect('transporte-pessoa');

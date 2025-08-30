@@ -1,3 +1,4 @@
+import { openIndexPage } from "../../index/support/visibility-index.js";
 import { translate } from "../../main/translate.js";
 import { displayError, displayMessage } from "../pages/messages.js";
 import { getID } from "../pages/selectors.js";
@@ -34,7 +35,7 @@ export async function signInWithEmailAndPassword() {
 export function signOut() {
     firebase.auth().signOut()
     if (window.location.href.includes('index.html')) {
-        _openIndexPage('unlogged', 0, 1);
+        openIndexPage('unlogged', 0, 1);
     } else {
         window.location.href = 'index.html';
     }

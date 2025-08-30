@@ -8,6 +8,7 @@ import { displayError } from "../support/pages/messages.js";
 import { getID, onClick, select } from "../support/pages/selectors.js";
 import { closeModal } from "../support/styles/modal.js";
 import { NOTIFICATION_BAR, applyNotificationBarColor } from "./support/visibilidade.js";
+import { loadVisibilityIndex, openIndexPage, setNotificationBar } from "./support/visibility-index.js";
 
 export var USER_DATA = {};
 
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     initApp();
 
-    _loadVisibilityIndex();
+    loadVisibilityIndex();
     loadListenersIndex();
     loadUserIndex();
 
@@ -48,27 +49,27 @@ function loadListenersIndex() {
   });
 
   getID('proximasViagens').addEventListener('click', function () {
-    _openIndexPage('proximasViagens', 0, 1);
+    openIndexPage('proximasViagens', 0, 1);
   });
 
   getID('viagensAnteriores').addEventListener('click', function () {
-    _openIndexPage('viagensAnteriores', 0, 1);
+    openIndexPage('viagensAnteriores', 0, 1);
   });
 
   getID('destinosCadastrados').addEventListener('click', function () {
-    _openIndexPage('destinos', 0, 1);
+    openIndexPage('destinos', 0, 1);
   });
 
   getID('profile-icon').addEventListener('click', function () {
     if (getID('settings-box').style.display === 'none') {
       back.classList.remove('bx-arrow-back');
       back.classList.add('bx-up-arrow-alt');
-      _openIndexPage('settings', 0, 1, false);
+      openIndexPage('settings', 0, 1, false);
     }
   });
 
   getID('ajustesDaConta').addEventListener('click', function () {
-    _openIndexPage('settings', 0, 1);
+    openIndexPage('settings', 0, 1);
   });
 
   getID('nova-viagem-1').addEventListener('click', function () {
@@ -90,18 +91,18 @@ function loadListenersIndex() {
   getID('back').addEventListener('click', function () {
     const back = select('#back');
     if (back.classList.contains('bx-up-arrow-alt')) {
-      _openIndexPage('logged', 1, 0, false);
+      openIndexPage('logged', 1, 0, false);
       setTimeout(() => {
         back.classList.remove('bx-up-arrow-alt');
         back.classList.add('bx-arrow-back');
       }, 300);
     } else {
-      _openIndexPage('logged', 1, 0);
+      openIndexPage('logged', 1, 0);
     }
   });
 
   getID('listasDeDestinos').addEventListener('click', function () {
-    _openIndexPage('listagens', 0, 1);
+    openIndexPage('listagens', 0, 1);
   });
 
   getID('apagar').addEventListener('click', async function () {
@@ -118,7 +119,7 @@ async function loadUserIndex() {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         registerIfUserNotPresent();
-        _openIndexPage('logged');
+        openIndexPage('logged');
 
         const userData = await get(`usuarios/${user.uid}`);
 
@@ -138,7 +139,7 @@ async function loadUserIndex() {
         loadUserDataList('destinos', userData);
 
       } else {
-        _openIndexPage('unlogged');
+        openIndexPage('unlogged');
       }
     });
   } catch (error) {
@@ -379,9 +380,7 @@ function loadNotificationBar() {
     if (TRIPS.during.length == 1) {
       getID('notification-text').innerHTML = `${translate('trip.current_single')}:<br>${TRIPS.during[0].title}`;
       if (TRIPS.during[0].cores.ativo) {
-        NOTIFICATION_BAR.changed = true;
-        NOTIFICATION_BAR.light = TRIPS.during[0].cores.claro;
-        NOTIFICATION_BAR.dark = TRIPS.during[0].cores.escuro;
+        setNotificationBar({changed: true, light: TRIPS.during[0].cores.claro, dark: TRIPS.during[0].cores.escuro})
         applyNotificationBarColor();
       }
     } else {

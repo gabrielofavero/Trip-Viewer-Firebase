@@ -1,39 +1,39 @@
-import { select, getID, onClick } from "../../support/pages/selectors.js";
-import { animate, animateFadeIn, animateFadeOut, fadeOut } from "../../support/styles/animations.js";
+import { getID, onClick, select } from "../../support/pages/selectors.js";
+import { animate, animateFadeIn, animateFadeOut } from "../../support/styles/animations.js";
 import { loadLogoColors } from "../../support/styles/colors.js";
 import { loadUserVisibility, setManualVisibility, switchVisibility } from "../../support/styles/visibility.js";
 
-export const NOTIFICATION_BAR = {
+const NOTIFICATION_BAR = {
   changed: false,
   light: '',
   dark: ''
+}
+
+export function setNotificationBar({ changed, light, dark }) {
+  if (changed = !undefined) NOTIFICATION_BAR.changed = changed
+  if (light = !undefined) NOTIFICATION_BAR.light = light
+  if (dark = !undefined) NOTIFICATION_BAR.dark = dark
 }
 
 export function applyNotificationBarColor() {
   getID('notification-bar').style.backgroundColor = isOnDarkMode() ? NOTIFICATION_BAR.dark : NOTIFICATION_BAR.light;
 }
 
-function _loadVisibilityIndex() {
+export function loadVisibilityIndex() {
   loadUserVisibility();
   loadLogoColors();
 
   onClick('#night-mode', () => {
     switchVisibility();
     setManualVisibility();
-    
+
     if (NOTIFICATION_BAR.changed) {
       applyNotificationBarColor();
     }
   })
 }
 
-function _expandContentBox() {
-  const contentBox = document.querySelector('.content-box');
-  contentBox.style.height = '600px'
-  contentBox.style.transition = 'height 0.5s ease';
-}
-
-function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
+export function openIndexPage(id, from = 0, to = 0, horizontal = true) {
   const contentBox = select('.content-box');
   let fadeIn = [];
   let fadeOut = [];
