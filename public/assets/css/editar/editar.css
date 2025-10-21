@@ -1815,6 +1815,8 @@ details summary::-webkit-details-marker {
   padding: 12px;
   padding-left: 10px;
   min-height: 44px;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .draggable {

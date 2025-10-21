@@ -27,7 +27,14 @@ function _isDescriptionPreset(categoria, i) {
 }
 
 function _getDescriptionLabel(categoria, j) {
-    return _isDescriptionPreset(categoria, j-1) ? translate('labels.description.edit') : translate('labels.description.add');
+    if (!_isDescriptionPreset(categoria, j-1)) {
+        return translate('labels.description.add');
+    }
+
+    const descriptions = DESCRIPTIONS[categoria][j-1];
+    const lang = _getUserLanguage();
+
+    return descriptions[lang] || translate('labels.description.edit')
 }
 
 function _updateDescriptionButtonLabel(categoria, j) {
@@ -120,10 +127,11 @@ function _saveDescription(categoria, j) {
     for (const lang of LANGUAGES) {
         const input = getID(`description-${lang}`);
         if (input) {
-            description[lang] = input.value.trim();
+            description[lang] = _firstCharToUpperCase(input.value.trim());
         }
     }
     _addDescricao(categoria, j-1, description);
+    _updateDescriptionButtonLabel(categoria, j);
     _closeMessage();
 }
 
@@ -136,3 +144,43 @@ function _descriptionSelectChangeAction() {
         }
     }
 }
+function _moveDescription(categoria, i, novaCategoria, novoI) {
+    if (!DESCRIPTIONS[categoria]) {
+      console.error(`Category "${categoria}" not found`);
+      return;
+    }
+  
+    const oldItems = { ...DESCRIPTIONS[categoria] };
+    const itemToMove = oldItems[i];
+    if (!itemToMove) {
+      console.error(`Item at position "${i}" not found in "${categoria}"`);
+      return;
+    }
+  
+    delete oldItems[i];
+  
+    const reindexedOld = Object.values(oldItems).reduce((acc, cur, idx) => {
+      acc[idx] = cur;
+      return acc;
+    }, {});
+    DESCRIPTIONS[categoria] = reindexedOld;
+  
+    if (!DESCRIPTIONS[novaCategoria]) {
+      DESCRIPTIONS[novaCategoria] = {};
+    }
+  
+    const newItems = { ...DESCRIPTIONS[novaCategoria] };
+    const entries = Object.values(newItems);
+  
+    const insertIndex = Math.min(novoI, entries.length);
+    entries.splice(insertIndex, 0, itemToMove);
+  
+    const reindexedNew = entries.reduce((acc, cur, idx) => {
+      acc[idx] = cur;
+      return acc;
+    }, {});
+    DESCRIPTIONS[novaCategoria] = reindexedNew;
+    _updateDescriptionButtonLabel(novaCategoria, insertIndex + 1);
+  }
+  
+  

@@ -23,8 +23,16 @@ async function _setDocumento(tipo) {
         await eval(beforeItem);
     }
 
-    _validateIfDocumentChanged();
-    if (_isModalOpen()) return;
+    const wasChanged = _validateIfDocumentChanged();
+    if (!wasChanged) {
+        const errorMsgPath = `messages.documents.save.no_new_data`;
+        getID('modal-inner-text').innerText = `${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`;
+    
+        SUCCESSFUL_SAVE = false;
+        _openModal();
+        _stopLoadingScreen();
+        return;
+    };
 
     const newData = _getNewDataDocument(tipo);
 

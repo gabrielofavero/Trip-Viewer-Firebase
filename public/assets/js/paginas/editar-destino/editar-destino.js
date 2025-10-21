@@ -282,7 +282,6 @@ function _moveDestino(j, categoria) {
       novo: getID(`${categoria}-novo-${j}`).checked,
       nome: getID(`${categoria}-nome-${j}`).value,
       emoji: getID(`${categoria}-emoji-${j}`).value,
-      descricao: getID(`${categoria}-descricao-${j}`).value,
       website: getID(`${categoria}-website-${j}`).value,
       mapa: getID(`${categoria}-mapa-${j}`).value,
       instagram: getID(`${categoria}-instagram-${j}`).value,
@@ -300,6 +299,7 @@ function _moveDestino(j, categoria) {
     _removeSelectorDS('regiao', `${categoria}-regiao-select-${j}`);
     _updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
     _buildDS('regiao');
+    _moveDescription(categoria, j-1, newCategoria, newJ-1);
 
   }
 

@@ -380,17 +380,7 @@ function _compareDocuments() {
 
 function _validateIfDocumentChanged() {
   DOCS_CHANGED = _compareDocuments();
-  const noNewData = !DOCS_CHANGED;
-  const unknownError = ((DOCS_CHANGED.multiple && DOCS_CHANGED.data.every(item => item.areEqual)) || DOCS_CHANGED.data[0].areEqual)
-
-  if (noNewData || unknownError) {
-    const errorMsgPath = `messages.documents.save.${noNewData ? 'no_new_data' : 'unknown'}`;
-    getID('modal-inner-text').innerText = `${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`;
-
-    SUCCESSFUL_SAVE = false;
-    _openModal();
-    _stopLoadingScreen();
-  }
+  return !DOCS_CHANGED.data.every(item => item.areEqual);
 }
 
 function _getDataDocument(tipo) {

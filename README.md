@@ -4,10 +4,10 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 78    | 77        | 1       |
-| 🏆   | Feature      | F000  | 97    | 70        | 27      |
-| 📈   | Improvement  | M000  | 109   | 80        | 28      |
-| ⚔️   | Epic         | E000  | 34    | 19        | 15      |
+| 🐞   | Bug          | B000  | 79    | 78        | 1       |
+| 🏆   | Feature      | F000  | 97    | 92        | 5      |
+| 📈   | Improvement  | M000  | 109   | 104        | 5      |
+| ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
 - ❔: No apparent solution
@@ -18,112 +18,26 @@
 
 - 🏆 **F094:** Multi-language description (destinations)
 - 🏆 **F078:** Ability to reorder transportation / group types in edit/trip.html
-- ⚔️ **E030:** Account Import/Export
-  - 🏆 **F088:** *Export Selected (Functions Only)*
-  - 🏆 **F089:** *Import Selected (Functions Only)*
-  - 🏆 **F090:** *Account Import/Export: Interface*
-- ⚔️ **E031:** Document History
-  - 🏆 **F084:** Store copies within the document itself
-  - 🏆 **F091:** Restore function + compatibility check
-  - 🏆 **F092:** Document History: Interface
-- ⚔️ **E032:** Local export of trips
-  - 🏆 **F085:** Create printable trip/destination page
-  - 🏆 **F093:** Automatic PDF export + Interface
-- 🏆 **F087:** Single load of destinations
-  - *All destinations loaded*
-  - *Switch via function*
-  - *Switch via tab*
-  - *Lightbox persists (no reload)*
-- ⚔️🚦 **E018:** New Front-End: index.html
-  - *Waiting for Guilherme's template*
 
 ### Medium Priority
 
 - 📈 **M107:** Edit "Confirm" at inner-itinerary suggestion to return to previous instead of closing pop-up
-- 📈 **M105:** Remove CONFIG and reduce use of global variables
-- 📈 **M106:** Use require in js files
-- ⚔️ **E034:** Frontend code refactoring
-  - *Use require*
-  - *Convert to ts*
-- 📈 **M104:** All external links should open via window.open
-- 🏆 **F065:** Show if accommodation was prepaid or not
-- ⚔️ **E028:** Places API Text Search
-- ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
-- 📈 **M096:** Mobile and webview adjustments
-- 📈 **M097:** Itinerary automations (edit/trip.html)
-- 📈 **M087:** Destination load loads everything immediately
-- 🏆 **F069:** Tab for selecting destinations within the page
-- 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
-  - *Change in get and set (edit/trip.html)*
-  - *Create structure in front (edit/trip.html)*
-  - *Change in get (view.html and destination.html)*
-  - *Change in dynamic select (edit/trip.html)*
-  - *Migration script*
 - 🏆 **F081:** Embed map when there is no video in the destination
-- 🏆 **F071:** Multi-person expenses
-- 📈 **M086:** Improved error pop-up
-  - *Force Refresh (Home or try again)*
-  - *Try again enabled on first load, disabled later*
-  - *Message in English at the end with different highlight*
-  - *Ensure a notification is always shown to the user*
-- ⚔️ **E021:** Implementation: Lineup in view.html
-  - *Instead of being in Destinations, it's a new category*
-  - *Displays list of artists as a festival lineup (Example: RiR site)*
-  - *Interactive schedule board (Example: Lollapalooza App)*
-  - *Lineup and Schedules separated by Tab similar to expenses.html*
-  - *Select with festival days, but default is general*
-  - *Editing similar to itinerary, but date is customizable*
-- 🏆 **F046:** Create reordering options for destinations
-  - *On edit and trip pages*
-  - *Order by rating and by name (↑↓)*
-- 📈 **M021:** Improve "My Trips / Destinations / Listings" in index.html
-  - *Order by date (ascending) in trips*
-  - *Add previous trips in trips*
-  - *Order by update date in Destinations and Listings*
-- ⚔️ **E014:** Implementation: Wishlist
-  - *Find a template online and apply (credit the source)*
-- ⚔️🚦 **E016:** New Front-End: destination.html
-  - *Waiting for Guilherme to develop new template version*
-- ⚔️🚦**E017:** New Front-End: view.html
-  - *Waiting for Guilherme's template*
-- ⚔️ **E019:** Implement Sonarqube
 - 📈 **M091:** Align city select with destination box
 - 📈 **M092:** Title in dark mode with more highlight
-- 🏆 **F070:** Add to calendar component
-- ⚔️ **E026:** Import data from Google Maps
-- 📈 **M100:** Storage size limit for document (10MB)
-- 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
-- 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
-- 📈 **M108:** Change USER_DATA in index to only get necessary data
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
 
 ### Low Priority
 
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
 - 📈 **M098:** Change js functions/folder structures to EN-US
-- ⚔️ **E024:** Migrate project to React OR Angular
-- ⚔️ **E025:** iOS and Android implementation
 - 📈 **M090:** Load logo inside pre loader
-- 🏆 **F043:** Create customizable keypoints
-- 📈 **M018:** Improve centering of demo-box element on edit screens in tablet mode
-- 🏆 **F044:** Create animations throughout the site
-- 📈 **M034:** Move Back button (←) to left corner of screen in index.html
-- 📈 **M037:** Increase spacing in destination boxes in view.html
-- 📈 **M041:** Improve validation of missing fields in edit pages to show item title (when available)
-- 📈 **M045:** Show rating inside edit-destinations accordion and order by Rating + title
-- 📈 **M047:** Change modal messages to bottomsheet messages
-- 📈 **M054:** Improve getJs functions for more scenarios
-- 🏆 **F055:** Implement getKs function + Rename functions for clarity
-- 📈 **M046:** Clean unused properties in application CSS
-- 📈 **M055:** Improve all dark mode changes to be applied via js
-- 📈 **M058:** Modularize CSS files to reduce redundancy
-  -*Will also need to change dark mode calculation function*
-- 📈 **M069:** Loading timer disabled by default
 - 🏆 **F060:** Allow switching between destination categories within a page
-- 📈 **M089:** Replace color values with environment variables in CSS
-- 🏆 **F067:** OneDrive integration
 
 ## Done
+
+## October 2025
+- 🐞 **B079:** Edit Destination fixes
 
 ## August 2025
 - 📈 **M109:** Make highlights display 2/2 when screen width is tablet/mobile
@@ -493,10 +407,99 @@
 - ⚔️ **E005:** Backend structure via Cloud Functions (NodeJS with TypeScript)
 - ⚔️ **E006:** Main backend read functions (get.ts)
 
-### Discarded
+### Discarded (Most will be done on the 2.0 version)
 - 🏆 **F046:** Firebase Firestore Rules in Front-End
   - *Security risk exposing rules to user*
 - 🐞❔ **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
 - 📈 **M072:** Improve automatic date adjustment in edit trips
 - 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
 - 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
+- ⚔️ **E030:** Account Import/Export
+  - 🏆 **F088:** *Export Selected (Functions Only)*
+  - 🏆 **F089:** *Import Selected (Functions Only)*
+  - 🏆 **F090:** *Account Import/Export: Interface*
+- ⚔️ **E031:** Document History
+  - 🏆 **F084:** Store copies within the document itself
+  - 🏆 **F091:** Restore function + compatibility check
+  - 🏆 **F092:** Document History: Interface
+- ⚔️ **E032:** Local export of trips
+  - 🏆 **F085:** Create printable trip/destination page
+  - 🏆 **F093:** Automatic PDF export + Interface
+- 🏆 **F087:** Single load of destinations
+  - *All destinations loaded*
+  - *Switch via function*
+  - *Switch via tab*
+  - *Lightbox persists (no reload)*
+- ⚔️🚦 **E018:** New Front-End: index.html
+  - *Waiting for Guilherme's template*
+- 📈 **M105:** Remove CONFIG and reduce use of global variables
+- 📈 **M106:** Use require in js files
+- ⚔️ **E034:** Frontend code refactoring
+  - *Use require*
+  - *Convert to ts*
+- ⚔️ **E028:** Places API Text Search
+- ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
+- 📈 **M096:** Mobile and webview adjustments
+- 📈 **M097:** Itinerary automations (edit/trip.html)
+- 🏆 **F069:** Tab for selecting destinations within the page
+- 🏆 **F063:** Allow adding multiple regions to a destination (edit/trip.html)
+  - *Change in get and set (edit/trip.html)*
+  - *Create structure in front (edit/trip.html)*
+  - *Change in get (view.html and destination.html)*
+  - *Change in dynamic select (edit/trip.html)*
+  - *Migration script*
+- 🏆 **F065:** Show if accommodation was prepaid or not
+- 🏆 **F071:** Multi-person expenses
+- 📈 **M086:** Improved error pop-up
+  - *Force Refresh (Home or try again)*
+  - *Try again enabled on first load, disabled later*
+  - *Message in English at the end with different highlight*
+  - *Ensure a notification is always shown to the user*
+- ⚔️ **E021:** Implementation: Lineup in view.html
+  - *Instead of being in Destinations, it's a new category*
+  - *Displays list of artists as a festival lineup (Example: RiR site)*
+  - *Interactive schedule board (Example: Lollapalooza App)*
+  - *Lineup and Schedules separated by Tab similar to expenses.html*
+  - *Select with festival days, but default is general*
+  - *Editing similar to itinerary, but date is customizable*
+- 🏆 **F046:** Create reordering options for destinations
+  - *On edit and trip pages*
+  - *Order by rating and by name (↑↓)*
+- 📈 **M021:** Improve "My Trips / Destinations / Listings" in index.html
+  - *Order by date (ascending) in trips*
+  - *Add previous trips in trips*
+  - *Order by update date in Destinations and Listings*
+- ⚔️ **E014:** Implementation: Wishlist
+  - *Find a template online and apply (credit the source)*
+- ⚔️🚦 **E016:** New Front-End: destination.html
+  - *Waiting for Guilherme to develop new template version*
+- ⚔️🚦**E017:** New Front-End: view.html
+  - *Waiting for Guilherme's template*
+- 📈 **M104:** All external links should open via window.open
+- 📈 **M087:** Destination load loads everything immediately
+- ⚔️ **E019:** Implement Sonarqube
+- 🏆 **F070:** Add to calendar component
+- ⚔️ **E026:** Import data from Google Maps
+- 📈 **M100:** Storage size limit for document (10MB)
+- 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
+- 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
+- 📈 **M108:** Change USER_DATA in index to only get necessary data
+- ⚔️ **E024:** Migrate project to React OR Angular
+- ⚔️ **E025:** iOS and Android implementation
+- 🏆 **F043:** Create customizable keypoints
+- 📈 **M018:** Improve centering of demo-box element on edit screens in tablet mode
+- 🏆 **F044:** Create animations throughout the site
+- 📈 **M034:** Move Back button (←) to left corner of screen in index.html
+- 📈 **M037:** Increase spacing in destination boxes in view.html
+- 📈 **M041:** Improve validation of missing fields in edit pages to show item title (when available)
+- 📈 **M045:** Show rating inside edit-destinations accordion and order by Rating + title
+- 📈 **M054:** Improve getJs functions for more scenarios
+- 🏆 **F055:** Implement getKs function + Rename functions for clarity
+- 📈 **M046:** Clean unused properties in application CSS
+- 📈 **M055:** Improve all dark mode changes to be applied via js
+- 📈 **M058:** Modularize CSS files to reduce redundancy
+  -*Will also need to change dark mode calculation function*
+- 📈 **M069:** Loading timer disabled by default
+- 📈 **M047:** Change modal messages to bottomsheet messages
+- 📈 **M089:** Replace color values with environment variables in CSS
+- 🏆 **F067:** OneDrive integration
