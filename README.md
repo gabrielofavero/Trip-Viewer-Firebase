@@ -4,9 +4,9 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 82    | 81        | 1       |
+| 🐞   | Bug          | B000  | 84    | 83        | 1       |
 | 🏆   | Feature      | F000  | 97    | 92        | 5      |
-| 📈   | Improvement  | M000  | 110   | 106        | 4      |
+| 📈   | Improvement  | M000  | 111   | 107        | 4      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
@@ -36,6 +36,9 @@
 ## Done
 
 ## October 2025
+- 🐞 **B084:** Share social message fix
+- 📈 **M111:** Itinerary titles now being translated
+- 🐞 **B083:** Transportation title fix
 - 🐞 **B082:** View transportation swiper fix
 - 📈 **M110:** Edit trip auto color improvement
 - 🐞 **B081:** Edit Destination move fix
