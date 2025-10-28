@@ -43,7 +43,7 @@ function _addRestaurantes() {
 
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="restaurantes-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
+            <button id="restaurantes-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -169,7 +169,7 @@ function _addLanches() {
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="lanches-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
+            <button id="lanches-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -296,7 +296,7 @@ function _addSaidas() {
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="saidas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
+            <button id="saidas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -354,7 +354,7 @@ function _addSaidas() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, ${categoria})" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -422,7 +422,7 @@ function _addTurismo() {
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="turismo-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
+            <button id="turismo-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -480,7 +480,7 @@ function _addTurismo() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, ${categoria})" class="btn btn-basic-secondary btn-format">
+          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -549,7 +549,7 @@ function _addLojas() {
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="lojas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.add')}</button>
+            <button id="lojas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">

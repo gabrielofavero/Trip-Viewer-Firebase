@@ -54,7 +54,8 @@ function _getDescription(categoria, j) {
 
 function _openDescription(categoria, j) {
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-    propriedades.titulo = _getDescriptionLabel(categoria, j);
+    const defaultTitle = DESCRIPTIONS[categoria]?.[j-1] ? translate('labels.description.edit') : translate('labels.description.add');
+    propriedades.titulo = getID(`${categoria}-nome-${j}`).value || defaultTitle;
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getDescriptionContent(categoria);
     propriedades.botoes = [{
