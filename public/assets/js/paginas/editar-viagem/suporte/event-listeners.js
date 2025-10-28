@@ -19,6 +19,7 @@ function _loadEventListeners() {
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
     getID('pin-enable').addEventListener('click', () => _switchPin());
     getID('pin-disable').addEventListener('click', () => _switchPin());
+    getID('claro').addEventListener('change', () => _autoFillDarkColor());
 
     // Visibilidade do Ida e Volta (Transporte)
     getID('simple-view').addEventListener('change', () => _applyTransportationTypeVisualization());

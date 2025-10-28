@@ -107,6 +107,7 @@ function _loadEventListeners() {
       event.returnValue = translate('messages.exit_confirmation');
     }
   });
+  getID('claro').addEventListener('change', () => _autoFillDarkColor());
 }
 
 async function _carregarListagem() {

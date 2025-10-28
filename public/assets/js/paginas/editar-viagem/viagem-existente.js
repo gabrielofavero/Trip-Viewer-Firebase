@@ -68,6 +68,7 @@ function _loadCustomizacaoData() {
         getID('habilitado-cores').checked = true;
         claro.value = FIRESTORE_DATA.cores.claro;
         escuro.value = FIRESTORE_DATA.cores.escuro;
+        CURRENT_LIGHT = FIRESTORE_DATA.cores.claro;
         getID('habilitado-cores-content').style.display = 'block';
     }
 

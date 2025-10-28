@@ -1,3 +1,5 @@
+var CURRENT_LIGHT;
+
 function _loadCustomizacaoImageData(value, id) {
     if (value && typeof value === 'string') {
         getID(id).value = value;
@@ -13,4 +15,12 @@ function _imageDataIncludes(value, includes) {
         return value.url.includes(includes);
     }
     return false;
+}
+
+function _autoFillDarkColor() {
+    const escuro = getID('escuro');
+    if (escuro.value == '#7f75b6' || (CURRENT_LIGHT && escuro.value == CURRENT_LIGHT)) {
+        escuro.value = getID('claro').value;
+    }
+    CURRENT_LIGHT = getID('claro').value;
 }
