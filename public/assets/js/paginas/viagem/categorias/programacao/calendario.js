@@ -1,6 +1,7 @@
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
 
+var IS_CALENDAR_MULTI_MONTH = false;
 CALENDAR = {
     start: null,
     end: null,
@@ -112,5 +113,8 @@ function _hideMonthSelector() {
 }
 
 function _isCalendarMultiMonth() {
-    return CALENDAR.startMonth != CALENDAR.endMonth || CALENDAR.startYear != CALENDAR.endYear;
+    if (!IS_CALENDAR_MULTI_MONTH) {
+        IS_CALENDAR_MULTI_MONTH = CALENDAR.startMonth != CALENDAR.endMonth || CALENDAR.startYear != CALENDAR.endYear;
+    }
+    return IS_CALENDAR_MULTI_MONTH;
 }
