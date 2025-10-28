@@ -15,10 +15,10 @@ function _loadModalContentCalendar(programacao) {
     if (FIRESTORE_DATA.modulos.destinos && DESTINOS && DESTINOS.length > 0) {
         const destinosIDs = DESTINOS.map(destino => destino.destinosID);
         for (const destinoID of programacao.destinosIDs) {
-            programacaoDestinos.push(DESTINOS[destinosIDs.indexOf(destinoID)].destinos.titulo);
+            programacaoDestinos.push(destinoID.titulo);
         }
 
-        const index = destinosIDs.indexOf(titulo);
+        const index = destinosIDs.indexOf(titulo?.valor || titulo);
         if (index >= 0) {
             titulo = DESTINOS[index].destinos.titulo;
         }
@@ -42,12 +42,14 @@ function _loadModalContentCalendar(programacao) {
         }
 
         if (titulo.traduzir) {
-            return translate(titulo.valor);
+            return translate(`trip.transportation.${titulo.valor}`);
         }
 
         if (titulo.destinos) {
             if (titulo.valor.includes('_and_destinations')) {
-                return _getReadableArray([translate(titulo.valor.replace('_and_destinations')), ...destinos]);
+                const translationKey = titulo.valor.replace('_and_destinations');
+                const transportation = translate(`trip.transportation.${translationKey}`);
+                return _getReadableArray([transportation, ...destinos]);
             }
             return _getReadableArray(destinos);
         }
