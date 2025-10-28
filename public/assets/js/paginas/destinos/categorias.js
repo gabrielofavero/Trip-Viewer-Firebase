@@ -37,7 +37,7 @@ function _getNotaClass(item) {
 }
 
 function _getNotaText(item, notas) {
-    return notas[item.nota] || notas['default'] || "Não Avaliado";
+    return notas[item.nota] || notas['default'] || translate('destination.scores.default');
 }
 
 // Links
@@ -62,6 +62,7 @@ function _getPalcoRegiaoValue(item, isLineup) {
 function _getValorValue(item, isLineup, valores, moeda) {
     if (isLineup) return "";
     switch (item.valor) {
+        case "default":
         case "-":
         case "$":
         case "$$":
