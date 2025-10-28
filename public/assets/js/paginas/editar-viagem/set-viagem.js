@@ -183,7 +183,11 @@ function _buildProgramacaoObject() {
         const innerResult = {
             data: _convertToDateObject(DATAS[j - 1]),
             destinosIDs: [],
-            titulo: '',
+            titulo: {
+                valor: '',
+                traduzir: false,
+                destinos: false
+            },
             madrugada: [],
             manha: [],
             tarde: [],
@@ -194,10 +198,13 @@ function _buildProgramacaoObject() {
 
         const tituloSelectValue = getID(`programacao-inner-title-select-${j}`).value;
         if (tituloSelectValue == 'outro') {
-            innerResult.titulo = getID(`programacao-inner-title-${j}`).value;
+            innerResult.titulo.valor = getID(`programacao-inner-title-${j}`).value;
         } else {
-            innerResult.titulo = tituloSelectValue;
+            innerResult.titulo.valor = tituloSelectValue;
         }
+
+        innerResult.titulo.traduzir = ['departure', 'return', 'during', 'departure_and_destinations', 'return_and_destinations'].includes(tituloSelectValue);
+        innerResult.titulo.destinos = ['departure_and_destinations', 'return_and_destinations', 'all_destinations'].includes(tituloSelectValue);
 
         if (DATAS[j - 1] && DATAS[j - 1] && INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])]) {
             const turnos = INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])];

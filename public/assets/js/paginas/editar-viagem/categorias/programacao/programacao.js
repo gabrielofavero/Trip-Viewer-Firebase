@@ -43,27 +43,31 @@ function _updateProgramacaoTitle(j) {
     const div = getID(`programacao-title-${j}`);
     const tituloInput = getID(`programacao-inner-title-${j}`);
     const tituloSelect = getID(`programacao-inner-title-select-${j}`);
+    let titulo;
+    let isDefault = false;
 
     value = tituloSelect.value;
-
-    if (value == 'outro') {
-        titulo = tituloInput.value;
-        tituloInput.style.display = 'block';
-        value = tituloInput.value;
-    } else {
-        titulo = tituloSelect.value;
-        tituloInput.style.display = 'none';
-        if (!['', 'Ida', 'Volta', 'Deslocamento', 'outro'].includes(value)) { // Destino
-            value = _getDestinoTitle(titulo);
-            if (!value) { // Múltiplos Destinos
-                value = titulo;
+    switch (value) {
+        case 'outro':
+            titulo = tituloInput.value;
+            tituloInput.style.display = 'block';
+            value = tituloInput.value;
+            break;
+        case 'departure':
+        case 'return':
+        case 'during':
+            titulo = translate(`trip.transportation.${tituloSelect.value}`);
+            isDefault = true;
+        default:
+            tituloInput.style.display = 'none';
+            if (!isDefault) { // Destino
+                titulo = _getDestinoTitle(tituloSelect.value) || tituloSelect.value;
             }
-        }
     }
 
     const data = DATAS[j - 1]
     const dataFormatada = _getDateTitle(data, 'weekday_day_month');
-    div.innerText = _getProgramacaoTitle(dataFormatada, value);
+    div.innerText = _getProgramacaoTitle(dataFormatada, titulo);
 }
 
 function _getProgramacaoTitleSelectOptions(j = null) {
@@ -90,23 +94,23 @@ function _getProgramacaoTitleSelectOptions(j = null) {
             }
             if (labels.length > 1) {
                 const text = _getReadableArray(labels);
-                destino += `<option value="${text}">${text}</option>`;
+                destino += `<option value="all_destinations">${text}</option>`;
             }
             const idaArray = [translate('trip.transportation.departure'), ...labels];
             const idaText = _getReadableArray(idaArray);
-            idaVoltaDestino += `<option value="${idaText}">${idaText}</option>`;
+            idaVoltaDestino += `<option value="departure_and_destinations">${idaText}</option>`;
 
             const voltaArray = [...labels, translate('trip.transportation.return')];
             const voltaText = _getReadableArray(voltaArray);
-            idaVoltaDestino += `<option value="${voltaText}">${voltaText}</option>`;
+            idaVoltaDestino += `<option value="return_and_destinations">${voltaText}</option>`;
         }
     }
 
     return `${destino}
             ${destino ? '' : semTitulo}
-            <option value="Ida">${translate('trip.transportation.departure')}</option>
-            <option value="Volta">${translate('trip.transportation.return')}</option>
-            <option value="Deslocamento">${translate('trip.transportation.during')}</option>
+            <option value="departure">${translate('trip.transportation.departure')}</option>
+            <option value="return">${translate('trip.transportation.return')}</option>
+            <option value="during">${translate('trip.transportation.during')}</option>
             ${idaVoltaDestino}
             ${destino ? semTitulo : ''}
             <option value="outro">${translate('labels.other')}</option>`;

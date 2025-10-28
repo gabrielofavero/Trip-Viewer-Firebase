@@ -10,16 +10,21 @@ var INNER_PROGRAMACAO_ATUAL = [];
 function _loadModalContentCalendar(programacao) {
     let titulo = programacao.titulo;
     const data = _getDateTitle(_convertFromDateObject(programacao.data));
+    let programacaoDestinos = [];
 
     if (FIRESTORE_DATA.modulos.destinos && DESTINOS && DESTINOS.length > 0) {
         const destinosIDs = DESTINOS.map(destino => destino.destinosID);
+        for (const destinoID of programacao.destinosIDs) {
+            programacaoDestinos.push(DESTINOS[destinosIDs.indexOf(destinoID)].destinos.titulo);
+        }
+
         const index = destinosIDs.indexOf(titulo);
         if (index >= 0) {
             titulo = DESTINOS[index].destinos.titulo;
         }
     }
 
-    getID("programacao-titulo").innerText = titulo || translate('trip.itinerary.title');
+    getID("programacao-titulo").innerText = _getProgramacaoTitulo(titulo, programacaoDestinos);
     getID("programacao-data").innerText = data;
 
     INNER_PROGRAMACAO_ATUAL = [];
@@ -30,6 +35,25 @@ function _loadModalContentCalendar(programacao) {
     _setModalCalendarInnerHTML(getID("programacao-itens-noite"), programacao.noite);
 
     _adaptModalCalendarInnerHTML();
+
+    function _getProgramacaoTitulo(titulo, destinos) {
+        if (!titulo?.valor) {
+            return titulo || translate('trip.itinerary.title')
+        }
+
+        if (titulo.traduzir) {
+            return translate(titulo.valor);
+        }
+
+        if (titulo.destinos) {
+            if (titulo.valor.includes('_and_destinations')) {
+                return _getReadableArray([translate(titulo.valor.replace('_and_destinations')), ...destinos]);
+            }
+            return _getReadableArray(destinos);
+        }
+
+        return translate('trip.itinerary.title');
+    }
 }
 
 // Modal
