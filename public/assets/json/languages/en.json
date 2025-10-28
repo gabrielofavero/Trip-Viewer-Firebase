@@ -470,6 +470,7 @@
         }
     },
     "labels": {
+        "adapted": "Adapted",
         "intro": "This is",
         "greeting": "Hello",
         "light_mode": "Light mode",

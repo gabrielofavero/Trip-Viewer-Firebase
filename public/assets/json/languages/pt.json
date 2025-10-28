@@ -470,6 +470,7 @@
         }
     },
     "labels": {
+        "adapted": "Adaptado",
         "intro": "Isso é ",
         "greeting": "Olá",
         "light_mode": "Tema claro",
