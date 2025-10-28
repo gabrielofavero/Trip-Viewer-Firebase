@@ -253,14 +253,14 @@ function _loadModules() {
     function _getCompartilhamentoText() {
       switch (TYPE) {
         case 'listagens':
-          return translate('pages.view.share.listing', {name : FIRESTORE_DATA.titulo});
+          return translate('listing.share', {name : FIRESTORE_DATA.titulo});
         case 'destinos':
-          return translate('pages.view.share.destination', {name : FIRESTORE_DATA.titulo});
+          return translate('destination.share', {name : FIRESTORE_DATA.titulo});
         case 'viagem':
         case 'viagens':
-          return translate('pages.view.share.trip', {name : FIRESTORE_DATA.titulo, start: INICIO.text, end: FIM.text});
+          return translate('trip.share', {name : FIRESTORE_DATA.titulo, start: INICIO.text, end: FIM.text});
         default:
-          return translate('pages.view.share.default');
+          return translate('messages.share');
       }
     }
   }
