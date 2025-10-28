@@ -6,7 +6,7 @@
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 84    | 83        | 1       |
 | 🏆   | Feature      | F000  | 97    | 92        | 5      |
-| 📈   | Improvement  | M000  | 111   | 107        | 4      |
+| 📈   | Improvement  | M000  | 112   | 107        | 4      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
@@ -16,8 +16,9 @@
 ## Backlog
 ### High Priority
 
-- 🏆 **F094:** Multi-language description (destinations)
 - 🏆 **F078:** Ability to reorder transportation / group types in edit/trip.html
+- 🏆 **F060:** Allow switching between destination categories within a page
+- 📈 **M112:** Disable calendar navigation buttons if nothing present on following month
 
 ### Medium Priority
 
@@ -29,13 +30,15 @@
 ### Low Priority
 
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
-- 📈 **M098:** Change js functions/folder structures to EN-US
 - 📈 **M090:** Load logo inside pre loader
-- 🏆 **F060:** Allow switching between destination categories within a page
+
 
 ## Done
 
 ## October 2025
+- 🐞 **B087:** Fix Attributions
+- 🐞 **B086:** Fix Calendar navigation being hidden after clicking on it
+- 🐞 **B085:** Fix destination default price being shown without translation
 - 🐞 **B084:** Share social message fix
 - 📈 **M111:** Itinerary titles now being translated
 - 🐞 **B083:** Transportation title fix
@@ -51,6 +54,7 @@
 - 🐞 **B078:** App version not loading due to CONFIG async nature
 
 ### July 2025
+- 🏆 **F094:** Multi-language description (destinations)
 - 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
 - 🏆 **F095:** Include traveler names in edit/trip.html (General / Itinerary)
 
@@ -414,6 +418,7 @@
 - ⚔️ **E006:** Main backend read functions (get.ts)
 
 ### Discarded (Most will be done on the 2.0 version)
+- 📈 **M098:** Change js functions/folder structures to EN-US
 - 🏆 **F046:** Firebase Firestore Rules in Front-End
   - *Security risk exposing rules to user*
 - 🐞❔ **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
