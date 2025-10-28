@@ -159,7 +159,7 @@ function _buildTransporteSwiper(swiperData) {
 
   for (const key of keys) {
     const content = getID(`transporte-${key}-content`)
-    if (swiperData[key].length > 0 || visualizacao === 'simple-view') {
+    if (swiperData[key]?.length > 0 || visualizacao === 'simple-view') {
       const data = visualizacao === 'simple-view' ? [...(swiperData['ida'] || []), ...(swiperData['durante'] || []), ...(swiperData['volta'] || [])] : swiperData[key];
       const swiperButtonStyle = data.length > 1 ? '' : `style="display: none"`
 

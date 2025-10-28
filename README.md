@@ -4,9 +4,9 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 79    | 78        | 1       |
+| 🐞   | Bug          | B000  | 82    | 81        | 1       |
 | 🏆   | Feature      | F000  | 97    | 92        | 5      |
-| 📈   | Improvement  | M000  | 109   | 104        | 5      |
+| 📈   | Improvement  | M000  | 110   | 106        | 4      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
@@ -22,7 +22,6 @@
 ### Medium Priority
 
 - 📈 **M107:** Edit "Confirm" at inner-itinerary suggestion to return to previous instead of closing pop-up
-- 🏆 **F081:** Embed map when there is no video in the destination
 - 📈 **M091:** Align city select with destination box
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
@@ -37,6 +36,10 @@
 ## Done
 
 ## October 2025
+- 🐞 **B082:** View transportation swiper fix
+- 📈 **M110:** Edit trip auto color improvement
+- 🐞 **B081:** Edit Destination move fix
+- 🐞 **B080:** Edit Trip Description fixes
 - 🐞 **B079:** Edit Destination fixes
 
 ## August 2025
@@ -503,3 +506,4 @@
 - 📈 **M047:** Change modal messages to bottomsheet messages
 - 📈 **M089:** Replace color values with environment variables in CSS
 - 🏆 **F067:** OneDrive integration
+- 🏆 **F081:** Embed map when there is no video in the destination
