@@ -2,6 +2,11 @@
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
 
 var IS_CALENDAR_MULTI_MONTH = false;
+var CURRENT_CALENDAR = {
+    month: null,
+    year: null,
+}
+
 CALENDAR = {
     start: null,
     end: null,
@@ -22,20 +27,52 @@ function _loadCalendar() {
     CALENDAR.endYear = CALENDAR.end.getFullYear();
 
     CALENDAR.calendarTitle = getID("calendarTitle");
+    CURRENT_CALENDAR.month = CALENDAR.startMonth;
+    CURRENT_CALENDAR.year = CALENDAR.startYear;
     _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
+}
+
+function _changeCalendarMonth(direction) {
+    const result = { month: CURRENT_CALENDAR.month, year: CURRENT_CALENDAR.year };
+
+    if (direction === 'next') {
+        if (result.month === 11) {
+            result.month = 0;
+            result.year += 1;
+        } else {
+            result.month += 1;
+        }
+
+        if (result.month > CALENDAR.endMonth && result.year >= CALENDAR.endYear) {
+            return;
+        }
+    } else if (direction === 'previous') {
+        if (result.month === 0) {
+            result.month = 11;
+            result.year -= 1;
+        } else {
+            result.month -= 1;
+        }
+
+        if (result.month < CALENDAR.startMonth && result.year <= CALENDAR.startYear) {
+            return;
+        }
+    }
+
+    CURRENT_CALENDAR.month = result.month;
+    CURRENT_CALENDAR.year = result.year;
+    _showCalendar(CURRENT_CALENDAR.month, CURRENT_CALENDAR.year);
+    _loadMonthNavigatorVisibility();
 }
 
 function _calendarNext() {
-    CALENDAR.startYear = (CALENDAR.startMonth === 11) ? CALENDAR.startYear + 1 : CALENDAR.startYear;
-    CALENDAR.startMonth = (CALENDAR.startMonth + 1) % 12;
-    _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
+    _changeCalendarMonth('next');
 }
 
 function _calendarPrevious() {
-    CALENDAR.startYear = (CALENDAR.startMonth === 0) ? CALENDAR.startYear - 1 : CALENDAR.startYear;
-    CALENDAR.startMonth = (CALENDAR.startMonth === 0) ? 11 : CALENDAR.startMonth - 1;
-    _showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
+    _changeCalendarMonth('previous');
 }
+
 
 function _showCalendar(month, year) {
     let firstDay = (new Date(year, month)).getDay();
@@ -44,7 +81,7 @@ function _showCalendar(month, year) {
     let tbl = getID("calendar-body");
 
     tbl.innerHTML = "";
-    CALENDAR.calendarTitle.innerHTML = translate('datetime.titles.month_year', {month: _getMonth(month), year});
+    CALENDAR.calendarTitle.innerHTML = translate('datetime.titles.month_year', { month: _getMonth(month), year });
 
     let day = 1;
     for (let i = 0; i < 6; i++) {
@@ -94,22 +131,34 @@ function _showCalendar(month, year) {
         }
 
         tbl.appendChild(row);
+    }
 
-        if (_isCalendarMultiMonth()) {
-            _showMonthSelector();
-        } else {
-            _hideMonthSelector();
-        }
+    if (_isCalendarMultiMonth()) {
+        _loadMonthSelector();
     }
 
 }
 
-function _showMonthSelector() {
+function _loadMonthSelector() {
+    _loadMonthNavigatorVisibility();
     getID('calendarMonthSelector').style.display = 'block'
 }
 
-function _hideMonthSelector() {
-    getID('calendarMonthSelector').style.display = 'none'
+function _loadMonthNavigatorVisibility() {
+    const previous = getID('previous');
+    const next = getID('next');
+
+    if (CURRENT_CALENDAR.month === CALENDAR.startMonth && CURRENT_CALENDAR.year === CALENDAR.startYear) {
+        previous.classList.add('disabled');
+    } else {
+        previous.classList.remove('disabled');
+    }
+
+    if (CURRENT_CALENDAR.month === CALENDAR.endMonth && CURRENT_CALENDAR.year === CALENDAR.endYear) {
+        next.classList.add('disabled');
+    } else {
+        next.classList.remove('disabled');
+    }
 }
 
 function _isCalendarMultiMonth() {

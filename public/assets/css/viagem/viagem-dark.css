@@ -463,9 +463,13 @@ a:hover {
   color: #ADADAD;
 }
 
-#previous,
-#next {
+.calendar-navigation {
   background-color: var(--theme-color);
+}
+
+.calendar-navigation.disabled {
+  background-color: #3b3b3b;
+  color: #ADADAD;
 }
 
 .calendarTrip {

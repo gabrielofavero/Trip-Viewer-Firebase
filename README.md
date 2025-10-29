@@ -4,7 +4,7 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 85    | 84        | 1       |
+| 🐞   | Bug          | B000  | 89    | 87        | 1       |
 | 🏆   | Feature      | F000  | 97    | 92        | 5      |
 | 📈   | Improvement  | M000  | 112   | 107        | 4      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
@@ -16,27 +16,26 @@
 ## Backlog
 ### High Priority
 
+- 🐞 **B089:** Fix calendar title and loading issues
+- 📈 **M112:** Disable calendar navigation buttons if nothing present on following month
 - 🏆 **F078:** Ability to reorder transportation / group types in edit/trip.html
 - 🏆 **F060:** Allow switching between destination categories within a page
-- 📈 **M112:** Disable calendar navigation buttons if nothing present on following month
+- 🏆 **F096:** Include traveler names in view.html (Itinerary)
 
 ### Medium Priority
 
-- 📈 **M107:** Edit "Confirm" at inner-itinerary suggestion to return to previous instead of closing pop-up
-- 📈 **M091:** Align city select with destination box
-- 📈 **M092:** Title in dark mode with more highlight
-- 🐞 **B076:** Import backup function not getting data from "gastos" database
+- 📈 **M107:** Edit "Confirm" at accomodation images to return to previous instead of closing pop-up
+- 📈 **M091:** Align city select with destination box (or create custom select)
 
 ### Low Priority
-
-- 🏆 **F096:** Include traveler names in view.html (Itinerary)
 - 📈 **M090:** Load logo inside pre loader
-
+- 📈 **M092:** Title in dark mode with more highlight
+- 🐞 **B076:** Import backup function not getting data from "gastos" database
 
 ## Done
 
 ## October 2025
-- 🐞 **B087:** Fix date calculation when in daylight saving time
+- 🐞 **B088:** Fix date calculation when in daylight saving time
 - 🐞 **B087:** Fix Attributions
 - 🐞 **B086:** Fix Calendar navigation being hidden after clicking on it
 - 🐞 **B085:** Fix destination default price being shown without translation

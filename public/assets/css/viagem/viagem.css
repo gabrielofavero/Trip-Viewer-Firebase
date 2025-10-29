@@ -2120,8 +2120,7 @@ iframe {
   text-align: center;
 }
 
-#previous,
-#next {
+.calendar-navigation {
   background-color: var(--theme-color);
   color: #fff;
   border-radius: 5px;
@@ -2131,6 +2130,12 @@ iframe {
   cursor: pointer;
   width: 50px;
   font-size: x-large;
+}
+
+.calendar-navigation.disabled {
+  background-color: #F6F6F6;
+  color: #B0B0B0;
+  cursor: default;
 }
 
 .calendarTrip {
