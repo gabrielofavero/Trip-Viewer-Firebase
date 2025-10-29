@@ -4,7 +4,7 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 84    | 83        | 1       |
+| 🐞   | Bug          | B000  | 85    | 84        | 1       |
 | 🏆   | Feature      | F000  | 97    | 92        | 5      |
 | 📈   | Improvement  | M000  | 112   | 107        | 4      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
@@ -36,6 +36,7 @@
 ## Done
 
 ## October 2025
+- 🐞 **B087:** Fix date calculation when in daylight saving time
 - 🐞 **B087:** Fix Attributions
 - 🐞 **B086:** Fix Calendar navigation being hidden after clicking on it
 - 🐞 **B085:** Fix destination default price being shown without translation

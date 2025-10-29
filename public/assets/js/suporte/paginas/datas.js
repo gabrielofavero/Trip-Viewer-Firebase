@@ -50,15 +50,14 @@ function _getDateNoTime(date) {
 }
 
 function _convertFromDateObject(dateObject) {
-    const date = new Date();
-    date.setFullYear(dateObject.year);
-    date.setMonth(dateObject.month - 1);
-    date.setDate(dateObject.day);
-    date.setHours(dateObject.hour);
-    date.setMinutes(dateObject.minute);
-    date.setSeconds(dateObject.second || 0)
-    
-    return date;
+    return new Date(
+        dateObject.year,
+        dateObject.month - 1,
+        dateObject.day,
+        dateObject.hour,
+        dateObject.minute,
+        dateObject.second || 0
+    );
 }
 
 function _convertToDateObject(date) {
