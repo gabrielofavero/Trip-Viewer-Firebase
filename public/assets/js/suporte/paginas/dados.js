@@ -437,3 +437,10 @@ function _getLocalJSON() {
     input.click();
   });
 }
+
+function _getAndDestinationTitle(value, destinos) {
+  if (value.includes('departure')) {
+      return _getReadableArray([translate('trip.transportation.departure'), ...destinos]);
+  }
+  return _getReadableArray([...destinos, translate('trip.transportation.return')]);
+}

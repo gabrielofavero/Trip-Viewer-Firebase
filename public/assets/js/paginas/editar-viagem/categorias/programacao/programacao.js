@@ -12,7 +12,7 @@ function _applyLoadedProgramacaoData(j, dados) {
 
     getID(`programacao-inner-title-select-${j}`).innerHTML = _getProgramacaoTitleSelectOptions(j);
 
-    let titulo = dados.titulo;
+    let titulo = dados.titulo?.valor || dados.titulo;
     if (titulo) {
         const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
         if (destinosIDs && destinosIDs.includes(titulo)) {
@@ -44,7 +44,6 @@ function _updateProgramacaoTitle(j) {
     const tituloInput = getID(`programacao-inner-title-${j}`);
     const tituloSelect = getID(`programacao-inner-title-select-${j}`);
     let titulo;
-    let isDefault = false;
 
     value = tituloSelect.value;
     switch (value) {
@@ -57,12 +56,16 @@ function _updateProgramacaoTitle(j) {
         case 'return':
         case 'during':
             titulo = translate(`trip.transportation.${tituloSelect.value}`);
-            isDefault = true;
-        default:
             tituloInput.style.display = 'none';
-            if (!isDefault) { // Destino
-                titulo = _getDestinoTitle(tituloSelect.value) || tituloSelect.value;
+            break;
+        default:
+            const destinos = DESTINOS_ATIVOS.map(destino => destino.titulo);
+            if (value.includes('_and_destinations')) {
+                titulo = _getAndDestinationTitle(value, destinos);
+            } else {
+                titulo = _getReadableArray(destinos);
             }
+            tituloInput.style.display = 'none';
     }
 
     const data = DATAS[j - 1]

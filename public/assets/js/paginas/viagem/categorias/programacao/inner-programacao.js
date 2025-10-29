@@ -41,17 +41,12 @@ function _loadModalContentCalendar(programacao) {
             return titulo || translate('trip.itinerary.title')
         }
 
-        if (titulo.traduzir) {
-            return translate(`trip.transportation.${titulo.valor}`);
+        if (titulo.destinos) {
+            return _getAndDestinationTitle(titulo.valor, destinos);
         }
 
-        if (titulo.destinos) {
-            if (titulo.valor.includes('_and_destinations')) {
-                const translationKey = titulo.valor.replace('_and_destinations');
-                const transportation = translate(`trip.transportation.${translationKey}`);
-                return _getReadableArray([transportation, ...destinos]);
-            }
-            return _getReadableArray(destinos);
+        if (titulo.traduzir) {
+            return translate(`trip.transportation.${titulo.valor}`);
         }
 
         return translate('trip.itinerary.title');
