@@ -4,7 +4,7 @@
     "deployedAt": "2025-08-24T22:03:50.6487946-03:00"
   },
   "trip-viewer-prd": {
-    "deployedAt": "2025-10-28T18:59:18.5941643-03:00",
-    "version": "ecd32e24e46b37d1"
+    "deployedAt": "2025-11-01T01:52:44.4562736-03:00",
+    "version": "344ebc9e2f64fbe7"
   }
 }
