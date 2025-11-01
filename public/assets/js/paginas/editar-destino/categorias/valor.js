@@ -1,4 +1,4 @@
-const VALORES_KEYS = ['-', '$', '$$', '$$$', '$$$$', 'default'];
+const VALORES_KEYS = ['default', '-', '$', '$$', '$$$', '$$$$'];
 var VALOR_OPTIONS = '';
 
 function _loadCurrencySelects() {

@@ -48,9 +48,9 @@ function _updateDescriptionButtonLabel(categoria, j) {
 }
 
 function _getDescription(categoria, j) {
-    const descricao = DESCRIPTIONS[categoria][j-1];
-    return descricao ? descricao : {};
-}
+    const descricao = DESCRIPTIONS?.[categoria]?.[j - 1];
+    return descricao || {};
+  }
 
 function _openDescription(categoria, j) {
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
