@@ -38,10 +38,16 @@ function _loadDestinosHTML() {
 }
 
 function _loadDestinoByType(activeCategory) {
-  getID('content').innerHTML = "";
-  
+  const content = getID('content');
+  content.innerHTML = "";
+  CONTENT = {};
+
   if (activeCategory === 'myMaps') {
+    content.classList = "map-content";
+    _loadMapDestino(DESTINO[activeCategory].link);
     return
+  } else {
+    content.classList = "";
   }
 
   const destino = DESTINO[activeCategory];
@@ -102,6 +108,15 @@ function _loadDestinoByType(activeCategory) {
   _applyContent();
   _applyDestinosMediaHeight();
   _adjustInstagramMedia();
+}
+
+function _loadMapDestino(link) {
+  if (!link || !link.includes("mid=")) {
+    console.error("Link do My Maps inválido.");
+    return;
+  }
+  const mid = link.split("mid=")[1].split("&")[0];
+  getID('content').innerHTML = `<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F" width="640" height="480"></iframe>`
 }
 
 // Getters
