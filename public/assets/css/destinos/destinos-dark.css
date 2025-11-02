@@ -15,15 +15,15 @@ a:hover {
   text-decoration: none;
 }
 
-.section-title h2 {
+.destinos-select  {
   color: #A6A6A6;
 }
 
-.section-title h2::before {
+.destinos-select::before {
   background: #A6A6A6;
 }
 
-.section-title h2::after {
+.destinos-select::after {
   background: var(--theme-color);
 }
 

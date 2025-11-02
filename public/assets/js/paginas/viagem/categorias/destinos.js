@@ -94,6 +94,8 @@ function _loadDestinationsHTML(destino) {
 
   div.innerHTML = text;
   _adjustDestinationsHTML();
+  delete DESTINO_EXPORT.mapa;
+  DESTINO_EXPORT.myMaps = { titulo: translate('destination.map.title'), link: destino.destinos.myMaps };
 }
 
 function _buildDestinoExport(destino, type) {
@@ -118,7 +120,9 @@ function _getDestinoValores(destino) {
 }
 
 function _loadAndOpenDestino(code) {
-  window.localStorage.setItem('DESTINO', JSON.stringify(DESTINO_EXPORT[code]));
+  const exportFile = _cloneObject(DESTINO_EXPORT);
+  exportFile.activeCategory = code;
+  window.localStorage.setItem('DESTINO', JSON.stringify(exportFile));
   _openLightbox('destination.html')
 }
 
