@@ -23,27 +23,51 @@ function _loadDestinosHTML() {
     }
   };
 
-  if (DESTINO && Object.keys(DESTINO).length > 0) {
-    document.title = DESTINO.titulo;
-    getID("titulo-destinos").innerHTML = "<h2>" + DESTINO.titulo + "</h2>";
+  if (DESTINO?.activeCategory && Object.keys(DESTINO[DESTINO.activeCategory]).length > 0) {
+    _loadDropdown();
+    _loadDropdownAction(DESTINO.activeCategory);
 
-    const isLineup = false;
+    window.addEventListener("resize", () => {
+      _applyDestinosMediaHeight();
+      _adjustInstagramMedia();
+    });
 
-    for (let j = 1; j <= DESTINO.data.length; j++) {
-      const item = DESTINO.data[j - 1];
-      const data = isLineup ? _getLineupData(item) : "";
-      const key = isLineup ? _getLineupKey(item) : "semData";
-      const params = {
-        j: j,
-        item: item,
-        isLineup: isLineup,
-        innerProgramacao: false,
-        notas: DESTINO.notas,
-        valores: DESTINO.valores,
-        moeda: DESTINO.moeda
-      }
+  } else {
+    console.error("O Código não foi localizado na base de dados");
+  }
+}
 
-      const innerHTML = `<div class="accordion-group" id='destinos-box-${j}'>
+function _loadDestinoByType(activeCategory) {
+  const content = getID('content');
+  content.innerHTML = "";
+  CONTENT = {};
+
+  if (activeCategory === 'myMaps') {
+    content.classList = "map-content";
+    _loadMapDestino(DESTINO[activeCategory].link);
+    return
+  } else {
+    content.classList = "";
+  }
+
+  const destino = DESTINO[activeCategory];
+  const isLineup = false;
+
+  for (let j = 1; j <= destino.data.length; j++) {
+    const item = destino.data[j - 1];
+    const data = isLineup ? _getLineupData(item) : "";
+    const key = isLineup ? _getLineupKey(item) : "semData";
+    const params = {
+      j: j,
+      item: item,
+      isLineup: isLineup,
+      innerProgramacao: false,
+      notas: destino.notas,
+      valores: destino.valores,
+      moeda: destino.moeda
+    }
+
+    const innerHTML = `<div class="accordion-group" id='destinos-box-${j}'>
                           <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
                               <h2 class="accordion-header" id="heading-destinos-${j}">
                                   <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button"
@@ -77,22 +101,22 @@ function _loadDestinosHTML() {
                               </div>
                           </div>
                       </div>`;
-      _loadEmbed(item?.midia, isLineup, j)
-      _setInnerContent(item, key, data, innerHTML);
-    }
-
-    _applyContent();
-    _applyDestinosMediaHeight();
-    _adjustInstagramMedia();
-    
-    window.addEventListener("resize", () => {
-      _applyDestinosMediaHeight();
-      _adjustInstagramMedia();
-    });
-
-  } else {
-    console.error("O Código não foi localizado na base de dados");
+    _loadEmbed(item?.midia, isLineup, j)
+    _setInnerContent(item, key, data, innerHTML);
   }
+
+  _applyContent();
+  _applyDestinosMediaHeight();
+  _adjustInstagramMedia();
+}
+
+function _loadMapDestino(link) {
+  if (!link || !link.includes("mid=")) {
+    console.error("Link do My Maps inválido.");
+    return;
+  }
+  const mid = link.split("mid=")[1].split("&")[0];
+  getID('content').innerHTML = `<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F" width="640" height="480"></iframe>`
 }
 
 // Getters
@@ -153,16 +177,16 @@ function _orderInnerHTMLs(innerContents) {
     // Verifica se uma das notas é '?', para priorizar as outras notas
     if (a.nota === '?') return 1;
     if (b.nota === '?') return -1;
-    
+
     // Ordena por nota em ordem decrescente (5, 4, 3, 2, 1)
     if (b.nota !== a.nota) {
       return b.nota - a.nota;
     }
-    
+
     // Se as notas são iguais, ordena por título em ordem crescente
     return a.titulo.localeCompare(b.titulo);
   });
-  
+
   return innerContents.map(item => item.innerHTML);
 }
 
