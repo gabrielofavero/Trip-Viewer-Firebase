@@ -300,7 +300,20 @@ async function _setViagem() {
         }
     }
 
-    _setDocumento('viagens');
+    const customChecks = _validateSavedPIN;
+    const before = [
+      _buildTripObject,
+      _buildGastosObject,
+      _buildGastosProtectedObject,
+      () => _uploadAndSetImages('viagens', true)
+    ]
+    const after = [
+      () => _uploadAndSetImages('viagens', false),
+      () => _verifyImageUploads('viagens'),
+      _setGastos
+    ];
+
+    _setDocumento('viagens', { customChecks, before, after });
 }
 
 async function _setGastos() {

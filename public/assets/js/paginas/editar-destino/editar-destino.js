@@ -98,7 +98,12 @@ function _loadEventListeners() {
   });
 
   getID('salvar').addEventListener('click', () => {
-    _setDocumento('destinos');
+    const before = [
+      _buildDestinosObject,
+      _updateTikTokLinks
+    ]
+
+    _setDocumento('destinos', { before });
   });
 
   getID('re-editar').addEventListener('click', () => {
@@ -299,7 +304,7 @@ function _moveDestino(j, categoria) {
     _removeSelectorDS('regiao', `${categoria}-regiao-select-${j}`);
     _updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
     _buildDS('regiao');
-    _moveDescription(categoria, j-1, newCategoria, newJ-1);
+    _moveDescription(categoria, j - 1, newCategoria, newJ - 1);
 
   }
 

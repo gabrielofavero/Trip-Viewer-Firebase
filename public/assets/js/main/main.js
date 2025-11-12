@@ -217,7 +217,6 @@ function _loadConfig() {
     $.getJSON("/assets/json/information.json").then(data => config.information = data),
     $.getJSON("/assets/json/moedas.json").then(data => config.moedas = data),
     $.getJSON("/assets/json/transportes.json").then(data => config.transportes = data),
-    $.getJSON("/assets/json/set.json").then(data => config.set = data),
     $.getJSON("/assets/json/icons.json").then(data => config.icons = data),
     $.getJSON("/assets/json/version.json").then(data => config.versoes = data),
     $.getJSON(`/assets/json/languages/${_getLanguagePackName()}.json`).then(data => config.language = data),

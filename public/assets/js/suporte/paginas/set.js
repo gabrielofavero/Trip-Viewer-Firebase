@@ -5,7 +5,7 @@ var CUSTOM_UPLOADS = {
 var SET_RESPONSES = [];
 var UPLOAD_AFTER_SET = false;
 
-async function _setDocumento(tipo) {
+async function _setDocumento(tipo, funcoes = {}) {
     const userID = await _getUID();
 
     if (!userID) {
@@ -15,13 +15,12 @@ async function _setDocumento(tipo) {
     let mainResponse, userSavingResponse;
     _startLoadingScreen(false);
 
-    const customChecks = await eval(CONFIG.set[tipo].customChecks);
+    const customChecks = funcoes.customChecks ? funcoes.customChecks() : [];
     _validateRequiredFields(customChecks);
+    
     if (_isModalOpen()) return;
 
-    for (const beforeItem of CONFIG.set[tipo].before) {
-        await eval(beforeItem);
-    }
+    await _runCustomFunctions(funcoes, 'before');
 
     const wasChanged = _validateIfDocumentChanged();
     if (!wasChanged) {
@@ -54,14 +53,19 @@ async function _setDocumento(tipo) {
     }
 
     if (mainResponse.success === true) {
-        for (const afterItem of CONFIG.set[tipo].after) {
-            await eval(afterItem);
-        }
+        await _runCustomFunctions(funcoes, 'after');
     }
 
     getID('modal-inner-text').innerHTML = _buildSetMessage();
     _stopLoadingScreen();
     _openModal('modal');
+}
+
+async function _runCustomFunctions(funcoes, key) {
+    const toRun = funcoes[key] || [];
+    for (const func of toRun) {
+        await func();
+    };
 }
 
 async function _uploadAndSetImages(tipo, isBeforeSet) {

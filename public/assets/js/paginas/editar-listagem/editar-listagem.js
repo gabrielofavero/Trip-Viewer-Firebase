@@ -159,7 +159,18 @@ async function _setListagem() {
     const i = parseInt(child.split("-")[2]);
     _setRequired(`select-destinos-${i}`)
   }
-  await _setDocumento('listagens');
+
+  const before = [
+    _buildListObject,
+    () => _uploadAndSetImages('listagens', true)
+  ];
+
+  const after = [
+    () => _uploadAndSetImages('listagens', false),
+    () => _verifyImageUploads('listagens')
+  ];
+
+  await _setDocumento('listagens', { before, after });
 }
 
 function _deleteListagem() {
