@@ -4,7 +4,7 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 92    | 90        | 2       |
+| 🐞   | Bug          | B000  | 95    | 92        | 3       |
 | 🏆   | Feature      | F000  | 97    | 94        | 3      |
 | 📈   | Improvement  | M000  | 116   | 111        | 5      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
@@ -30,12 +30,14 @@
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
 - 📈 **M114:** Make button / select outlines theme color
 - 📈 **M115:** Replace set.json with native functions
-
-- 🐞 **B097:** Destination boxes outlines from view.html not in dark color
+- 🐞 **B095:** Destination boxes outlines from view.html not in dark color
+- 🐞 **B094:** fields.js is not being translated
 
 ## Done
 
 ## November 2025
+
+- 🐞 **B093:** Trip without itinerary data is not loading on edit trip pages
 - 📈 **M116:** Replace call-sync-order.json with native functions
 - 📈 **M113:** Update all link validations from pop-ups to toasts.
 - 🐞 **B091:** fields.js is not being translated

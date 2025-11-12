@@ -12,7 +12,7 @@ function _applyLoadedProgramacaoData(j, dados) {
 
     getID(`programacao-inner-title-select-${j}`).innerHTML = _getProgramacaoTitleSelectOptions(j);
 
-    let titulo = dados.titulo?.valor || dados.titulo;
+    let titulo = dados.titulo?.valor ?? dados.titulo;
     if (titulo) {
         const selectValues = _getAllValuesFromSelect(getID(`programacao-inner-title-select-${j}`));
         if (destinosIDs && destinosIDs.includes(titulo)) {
