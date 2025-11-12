@@ -4,9 +4,9 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 90    | 89        | 1       |
+| 🐞   | Bug          | B000  | 91    | 90        | 1       |
 | 🏆   | Feature      | F000  | 97    | 94        | 3      |
-| 📈   | Improvement  | M000  | 112   | 108        | 4      |
+| 📈   | Improvement  | M000  | 112   | 109        | 3      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
@@ -22,17 +22,18 @@
 
 ### Medium Priority
 
-- 📈 **M107:** Edit "Confirm" at accomodation images to return to previous instead of closing pop-up
 - 📈 **M091:** Align city select with destination box (or create custom select)
 
 ### Low Priority
 - 📈 **M090:** Load logo inside pre loader
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
+- 🐞 **B091:** fields.js is not being translated
 
 ## Done
 
 ## November 2025
+- 📈 **M107:** Edit "Confirm" at accomodation images to return to previous instead of closing pop-up
 - 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 
 ## October 2025

@@ -62,7 +62,7 @@ function _openImagensHospedagem(j) {
         tipo: 'cancelar',
     }, {
         tipo: 'confirmar',
-        acao: `_saveImagensHospedagem(${j})`,
+        acao: `_confirmImagensHospedagem(${j})`,
     }];
 
     _displayFullMessage(propriedades);
@@ -73,7 +73,7 @@ function _openImagensHospedagem(j) {
         if (imagem) {
             getID(`hospedagens-imagem-descricao-${k}`).value = imagem.descricao;
             getID(`link-hospedagens-${k}`).value = imagem.link;
-            getID(`hospedagens-imagem-botao-${k}`).innerText = imagem.descricao || `Imagem ${k}`;
+            getID(`hospedagens-imagem-botao-${k}`).innerText = imagem.descricao || `${translate('labels.image.title')} ${k}`;
         }
 
         _loadImageSelector(`hospedagens-${k}`);
@@ -94,11 +94,6 @@ function _getImagemHospedagemContent(size = 5) {
 
         inner += `
         <div id="hospedagens-imagem-${k}" style="display: none">
-            <div class="nice-form-group">
-                <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-                <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
-            </div>
-
             <div class="nice-form-group customization-box" id="hospedagens-box-${k}">
                 <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
                 <input id="upload-hospedagens-${k}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
@@ -121,6 +116,11 @@ function _getImagemHospedagemContent(size = 5) {
                 <label for="enable-upload-hospedagens-${k}">${translate('labels.image.upload')} <span class="opcional"> (${translate('labels.image.upload_limit')})</span></label>
                 </div>
             </fieldset>
+
+            <div class="nice-form-group">
+                <label>${translate('labels.image.description')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+                <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
+            </div>
         </div>
         `;
     }
@@ -149,7 +149,7 @@ function _closeInnerImagemHospedagem() {
             let titulo = translate('labels.image.add');
 
             if (_hasInnerImagemHospedagem(k)) {
-                titulo = getID(`hospedagens-imagem-descricao-${k}`).value || `Imagem ${k}`;
+                titulo = getID(`hospedagens-imagem-descricao-${k}`).value || `${translate('labels.image.title')} ${k}`;
             }
 
             getID(`hospedagens-imagem-botao-${k}`).innerText = titulo;
@@ -163,6 +163,20 @@ function _closeInnerImagemHospedagem() {
 function _hasInnerImagemHospedagem(k) {
     return (getID(`enable-link-hospedagens-${k}`).checked && getID(`link-hospedagens-${k}`).value)
         || (getID(`enable-upload-hospedagens-${k}`).checked && getID(`upload-hospedagens-${k}`).value);
+}
+
+function _confirmImagensHospedagem(j) {
+    const isEditing = getID(`hospedagens-imagem-${j}`).style.display === 'block';
+    if (isEditing) {
+        _closeInnerImagemHospedagem()
+    } else {
+        _saveImagensHospedagem(j);
+        _setImagemButtonLabel(j);
+    }
+}
+
+function _setImagemButtonLabel(j) {
+    getID(`imagens-hospedagem-button-${j}`).innerText = HOSPEDAGEM_IMAGENS[j].length > 0 ? translate('labels.image.edit') : translate('labels.image.add');
 }
 
 function _saveImagensHospedagem(j) {

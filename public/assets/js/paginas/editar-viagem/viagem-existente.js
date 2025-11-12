@@ -210,6 +210,7 @@ function _loadHospedagemData() {
     for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
         _addHospedagens();
         const hospedagem = FIRESTORE_DATA.hospedagens[j - 1];
+        HOSPEDAGEM_IMAGENS[j] = hospedagem.imagens || [];
 
         getID(`hospedagens-id-${j}`).value = hospedagem.id;
         getID(`hospedagens-cafe-${j}`).checked = hospedagem.cafe;
@@ -219,12 +220,8 @@ function _loadHospedagemData() {
         getID(`hospedagens-descricao-${j}`).value = hospedagem.descricao;
         getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
         getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
-
-        HOSPEDAGEM_IMAGENS[j] = hospedagem.imagens || [];
-        if (HOSPEDAGEM_IMAGENS[j].length > 0) {
-            getID(`imagens-hospedagem-button-${j}`).innerText = translate('labels.image.edit');
-        }
-
+        
+        _setImagemButtonLabel(j);
         _loadCheckIn(hospedagem, j);
         _loadCheckOut(hospedagem, j);
     }
