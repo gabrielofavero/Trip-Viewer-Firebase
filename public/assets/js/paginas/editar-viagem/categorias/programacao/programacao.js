@@ -47,6 +47,9 @@ function _updateProgramacaoTitle(j) {
 
     value = tituloSelect.value;
     switch (value) {
+        case "":
+            titulo = '';
+            break;
         case 'outro':
             titulo = tituloInput.value;
             tituloInput.style.display = 'block';
@@ -59,16 +62,8 @@ function _updateProgramacaoTitle(j) {
             tituloInput.style.display = 'none';
             break;
         default:
-            const destino = DESTINOS_ATIVOS.find(d => d.destinosID === value);
-            const destinosTitulos = DESTINOS_ATIVOS.map(d => d.titulo);
-            
-            if (destino) {
-              titulo = destino.titulo;
-            } else if (value.includes('_and_destinations')) {
-              titulo = _getAndDestinationTitle(value, destinosTitulos);
-            } else {
-              titulo = _getReadableArray(destinosTitulos);
-            }
+            titulo = _getDestinationProgramacaoTitle(value, j);
+
             
             tituloInput.style.display = 'none';
     }
@@ -76,6 +71,43 @@ function _updateProgramacaoTitle(j) {
     const data = DATAS[j - 1]
     const dataFormatada = _getDateTitle(data, 'weekday_day_month');
     div.innerText = _getProgramacaoTitle(dataFormatada, titulo);
+}
+
+function _getDestinationProgramacaoTitle(value, j) {
+    const activeDestinations = _getActiveDestinations(j);
+    const destinosTitulos = activeDestinations.map(destino => destino.label);
+    const destinosIDs = activeDestinations.map(destino => destino.value);
+
+    if (value === 'all_destinations') {
+        return _getReadableArray(destinosTitulos);
+    } 
+    
+    if (value.includes('_and_destinations')) {
+        return _getAndDestinationTitle(value, destinosTitulos);
+    } 
+    
+    if (destinosIDs.includes(value)) {
+        const index = destinosIDs.indexOf(value);
+        return destinosTitulos[index];
+    } 
+
+    return '';
+}
+
+
+function _getActiveDestinations(j) {
+    const result = [];
+    const fieldSet = getID(`programacao-local-${j}`);
+    if (!fieldSet) return result;
+    const children = fieldSet.children;
+    for (const checkbox of children) {
+        const input = checkbox.querySelector('input[type="checkbox"]');
+        const label = checkbox.querySelector('label');
+        if (input.checked) {
+            result.push({label: label.innerText, value: input.value});
+        }
+    }
+    return result;
 }
 
 function _getProgramacaoTitleSelectOptions(j = null) {
