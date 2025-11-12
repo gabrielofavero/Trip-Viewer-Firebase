@@ -24,14 +24,14 @@ function _validateRequiredFields(customChecks=[]) {
 function _getInvalidFieldsText(invalidFields, customChecks) {
     const dadosBasicos = ['titulo', 'moeda'];
 
-    let intro = 'Os seguintes campos obrigatórios não foram preenchidos:<br>'
+    let intro = `${translate('messages.fields.invalid')}<br>`
     let title = '';
     let normalText = '';
     let customText = '';
 
     if (invalidFields.length > 0) {
         if (dadosBasicos.includes(invalidFields[0])) {
-            title = 'Dados Básicos'
+            title = translate('labels.basic_information')
             normalText += `<strong>${title}:</strong><br><ul>`
         }
     
@@ -194,7 +194,10 @@ function _validateLink(id) {
     _closeAllSelects();
     div.value = '';
 
-    _openToast('Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>: Certifique-se de que ele comece com "http://" ou "https://".');
+    const title = translate('messages.fields.link.title', {icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>'});
+    const content = translate('messages.fields.link.message');
+
+    _openToast(`${title}: ${content}`);
 }
 
 function _validateMapLink(id) {
@@ -209,12 +212,14 @@ function _validateMapLink(id) {
     _closeAllSelects();
     div.value = '';
 
-    const mapsI = '<i class="iconify" data-icon="hugeicons:maps"></i>'
-    const googleMapsI = '<i class="iconify" data-icon="simple-icons:googlemaps"></i>'
-    const appleMapsI = '<i class="iconify" data-icon="ic:baseline-apple"></i>'
-    _displayMessage('Link de Mapa Inválido ' + mapsI, `O link de mapa fornecido não é válido. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                               ${googleMapsI} <strong>Google Maps</strong><br>
-                                               ${appleMapsI} <strong>Apple Maps</strong><br>`);
+    const icon = '<i class="iconify" data-icon="hugeicons:maps"></i>'
+    const googleMapsIcon = '<i class="iconify" data-icon="simple-icons:googlemaps"></i>'
+    const appleMapsIcon = '<i class="iconify" data-icon="ic:baseline-apple"></i>'
+
+    const title = translate('messages.fields.map_link.title', { icon });
+    const content = translate('messages.fields.map_link.message', { googleMapsIcon, appleMapsIcon });
+
+    _openToast(`${title}: ${content}`);
 }
 
 function _validateInstagramLink(id) {
@@ -225,8 +230,12 @@ function _validateInstagramLink(id) {
 
     div.value = '';
 
-    const linkI = '<i class="iconify" data-icon="mdi:instagram"></i>';
-    _displayMessage('Link do Instagram Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "https://www.instagram.com".`);
+    const icon = '<i class="iconify" data-icon="mdi:instagram"></i>';
+    
+    const title = translate('messages.fields.instagram_link.title', { icon });
+    const content = translate('messages.fields.instagram_link.message');
+
+    _openToast(`${title}: ${content}`);
 }
 
 function _validateMediaLink(id) {
@@ -239,31 +248,16 @@ function _validateMediaLink(id) {
         return;
     } else {
         div.value = '';
-        const linkI = '<i class="iconify" data-icon="ic:twotone-link-off"></i>'
-        const tiktokI = '<i class="iconify" data-icon="cib:tiktok"></i>'
-        const youtubeI = '<i class="iconify" data-icon="mdi:youtube"></i>'
-        const instagramI = '<i class="iconify" data-icon="mdi:instagram"></i>'
-        _displayMessage('Link Inválido ' + linkI, `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                                   ${tiktokI} <strong>TikTok</strong><br>
-                                                   ${youtubeI} <strong>Youtube</strong><br>
-                                                   ${instagramI} <strong>Instagram Reels</strong>`);
+        const icon = '<i class="iconify" data-icon="ic:twotone-link-off"></i>';
+        const tiktokIcon = '<i class="iconify" data-icon="cib:tiktok"></i>';
+        const youtubeIcon = '<i class="iconify" data-icon="mdi:youtube"></i>';
+        const instagramIcon = '<i class="iconify" data-icon="mdi:instagram"></i>';
+
+        const title = translate('messages.fields.media_link.title', { icon });
+        const content = translate('messages.fields.media_link.message', { youtubeIcon, tiktokIcon, instagramIcon });
+
+        _openToast(`${title}: ${content}`);
     }
-}
-
-function _validatePlaylistLink(id) {
-    const div = getID(id);
-    const link = div.value;
-
-    const validDomains = ['spotify.com'];
-
-    if (!link || (_isHttp(link) && validDomains.some(domain => link.includes(domain)))) return;
-
-    div.value = '';
-
-    const linkI = '<i class="iconify" data-icon="ic:baseline-music-off"></i>';
-    const spotifyI = '<i class="iconify" data-icon="mdi:spotify"></i>';
-    _displayMessage('Playlist / Página do Artista Inválida ' + linkI, `A playlist ou Página do do Artista fornecida não é válida. Certifique-se de que o link comece com "http://" ou "https://" e que seja de uma das seguintes plataformas: <br><br>
-                                               ${spotifyI} <strong>Spotify</strong>`);
 }
 
 function _validateImageLink(id) {
@@ -272,22 +266,22 @@ function _validateImageLink(id) {
 
     if (_isHttp(imageLink) && !imageLink.includes('pbs.twimg.com')) return;
 
+    let icon = '';
     let title = '';
     let content = '';
 
     if (imageLink.includes('pbs.twimg.com')) {
-        title = 'Imagem do Twitter Inválida <i class="iconify" data-icon="mdi:twitter"></i>';
-        content = `O sistema não suporta imagens vindas do Twitter (Vulgo <i class="iconify" data-icon="fa6-brands:x-twitter"></i> se você for uma pessoa chata).<br><br> 
-                   Por favor, utilize outra fonte externa para suas imagens.`;
+        title = translate('messages.fields.twitter_link.title', {icon: '<i class="iconify" data-icon="mdi:twitter"></i>'});
+        content = translate('messages.fields.twitter_link.message', {xIcon: '<i class="iconify" data-icon="fa6-brands:x-twitter"></i>'});
     } else {
-        title = 'Link Inválido <i class="iconify" data-icon="ic:twotone-link-off"></i>';
-        content = `O link fornecido não é válido. Certifique-se de que ele comece com "http://" ou "https://".`;
+        title = translate('messages.fields.link.title', {icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>'});
+        content = translate('messages.fields.link.message');
     }
 
     _closeAllSelects();
     div.value = '';
 
-    _displayMessage(title, content);
+    _openToast(`${title}: ${content}`);
 }
 
 function _getSelectOptionsHTML(object, selectedKey) {

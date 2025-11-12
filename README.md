@@ -4,9 +4,9 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 91    | 90        | 1       |
+| 🐞   | Bug          | B000  | 92    | 90        | 2       |
 | 🏆   | Feature      | F000  | 97    | 94        | 3      |
-| 📈   | Improvement  | M000  | 112   | 109        | 3      |
+| 📈   | Improvement  | M000  | 116   | 110        | 6      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
@@ -28,11 +28,16 @@
 - 📈 **M090:** Load logo inside pre loader
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
-- 🐞 **B091:** fields.js is not being translated
+- 📈 **M114:** Make button / select outlines theme color
+- 📈 **M115:** Replace destination select with native element
+- 📈 **M116:** Replace set.json with native functions
+- 🐞 **B097:** Destination boxes outlines from view.html not in dark color
 
 ## Done
 
 ## November 2025
+- 📈 **M113:** Update all link validations from pop-ups to toasts.
+- 🐞 **B091:** fields.js is not being translated
 - 📈 **M107:** Edit "Confirm" at accomodation images to return to previous instead of closing pop-up
 - 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 

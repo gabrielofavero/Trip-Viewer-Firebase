@@ -467,6 +467,29 @@
         "operations": {
             "success": "Operações concluídas com sucesso",
             "error": "Uma ou mais operações falharam"
+        },
+        "fields": {
+            "invalid": "Os seguintes campos obrigatórios não foram preenchidos:",
+            "link": {
+                "title": "Link Inválido {{icon}}",
+                "message": "Certifique-se de que ele comece com \"http://\" ou \"https://\""
+            },
+            "map_link": {
+                "title": "Link de Mapa Inválido {{icon}}",
+                "message": "O link de mapa fornecido não é válido. Certifique-se de que o link comece com \"http://\" ou \"https://\" e que seja do Google Maps {{googleMapsIcon}} ou Apple Maps {{appleMapsIcon}}"
+            },
+            "instagram_link": {
+                "title": "Link de Instagram Inválido {{icon}}",
+                "message": "O link de Instagram fornecido não é válido. Certifique-se de que o link comece com \"http://\" ou \"https://\" e que seja do Instagram"
+            },
+            "twitter_link": {
+                "title": "Link de Twitter Inválido {{icon}}",
+                "message": "O sistema não suporta links do Twitter / {{xIcon}}. Por favor, utilize links de outras plataformas"
+            },
+            "media_link": {
+                "title": "Link de Mídia Inválido {{icon}}",
+                "message": "O link de mídia fornecido não é válido. Certifique-se de que o link comece com \"http://\" ou \"https://\" e que seja do YouTube {{youtubeIcon}}, TikTok {{tiktokIcon}} ou Instagram Reels {{instagramIcon}}"
+            }
         }
     },
     "labels": {

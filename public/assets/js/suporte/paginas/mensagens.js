@@ -366,7 +366,7 @@ function _openToast(text) {
   _fadeIn(['toast']);
   setTimeout(() => {
     _closeToast();
-  }, 3000);
+  }, 10000);
 }
 
 function _closeToast() {
