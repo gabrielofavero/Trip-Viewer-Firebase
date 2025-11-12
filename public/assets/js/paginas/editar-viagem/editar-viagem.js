@@ -116,7 +116,7 @@ async function _deleteViagemAction() {
   if (DOCUMENT_ID) {
     await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
     await _deleteUserObjectStorage();
-    window.location.href = `index.html`;
+    window.location.href = `../index.html`;
   }
 }
 
