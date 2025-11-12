@@ -59,12 +59,17 @@ function _updateProgramacaoTitle(j) {
             tituloInput.style.display = 'none';
             break;
         default:
-            const destinos = DESTINOS_ATIVOS.map(destino => destino.titulo);
-            if (value.includes('_and_destinations')) {
-                titulo = _getAndDestinationTitle(value, destinos);
+            const destino = DESTINOS_ATIVOS.find(d => d.destinosID === value);
+            const destinosTitulos = DESTINOS_ATIVOS.map(d => d.titulo);
+            
+            if (destino) {
+              titulo = destino.titulo;
+            } else if (value.includes('_and_destinations')) {
+              titulo = _getAndDestinationTitle(value, destinosTitulos);
             } else {
-                titulo = _getReadableArray(destinos);
+              titulo = _getReadableArray(destinosTitulos);
             }
+            
             tituloInput.style.display = 'none';
     }
 

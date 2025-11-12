@@ -4,7 +4,7 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 89    | 88        | 1       |
+| 🐞   | Bug          | B000  | 90    | 89        | 1       |
 | 🏆   | Feature      | F000  | 97    | 94        | 3      |
 | 📈   | Improvement  | M000  | 112   | 108        | 4      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
@@ -31,6 +31,9 @@
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
 
 ## Done
+
+## November 2025
+- 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 
 ## October 2025
 - 🐞 **B089:** Fix calendar title and loading issues
