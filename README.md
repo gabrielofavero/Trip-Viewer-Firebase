@@ -29,17 +29,17 @@
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
 - 📈 **M114:** Make button / select outlines theme color
-- 📈 **M115:** Replace set.json with native functions
 - 🐞 **B095:** Destination boxes outlines from view.html not in dark color
 
 ## Done
 
 ## November 2025
+- 📈 **M115:** Replace set.json with native functions
 - 🐞 **B094:** Edit Trip page not going to home after deleting a trip
 - 🐞 **B093:** Trip without itinerary data is not loading on edit trip pages
 - 📈 **M116:** Replace call-sync-order.json with native functions
 - 📈 **M113:** Update all link validations from pop-ups to toasts.
-- 🐞 **B091:** fields.js is not being translated
+- 🐞 **B091:** fields.js and destination modal are not being translated
 - 📈 **M107:** Edit "Confirm" at accomodation images to return to previous instead of closing pop-up
 - 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 
