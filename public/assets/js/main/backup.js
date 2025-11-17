@@ -19,8 +19,8 @@ async function _exportAllUserData() {
     URL.revokeObjectURL(url);
 }
 
-async function _importAllUserData() {
-    const backup = await _getLocalJSON();
+async function _importAllUserData(backupFile) {
+    const backup = backupFile || await _getLocalJSON();
 
     if (!backup) {
         console.error("No file provided for restoration.");

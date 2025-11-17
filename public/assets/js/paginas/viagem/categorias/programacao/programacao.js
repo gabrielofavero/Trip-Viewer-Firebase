@@ -1,5 +1,7 @@
 var PROGRAMACAO_DESTINOS = {};
 var PILLS_ACTIONS = {};
+var PILLS_INDEX = {};
+
 
 function _loadProgramacao() {
     _loadProgramacaoDestinos();
@@ -53,10 +55,10 @@ function _loadProgramacaoPills(multipleColors = true) {
         for (let i = 0; i < destinos.length; i++) {
             const colorIndex = multipleColors ? i : -1;
             _addPillListeners(destinos[i], colorIndex);
+            PILLS_INDEX[destinos[i]] = colorIndex;
         }
     }
 }
-
 
 function _loadPill(destinoID, action, colorIndex = -1) {
     const lastAction = PILLS_ACTIONS[destinoID];
@@ -81,6 +83,15 @@ function _loadPill(destinoID, action, colorIndex = -1) {
             PILLS_ACTIONS[destinoID] = action;
             _activatePill();
         }
+    }
+}
+
+function _refreshPills() {
+    for (const destinoID in PILLS_ACTIONS) {
+        const action = PILLS_ACTIONS[destinoID];
+        const index = PILLS_INDEX[destinoID];
+        _deactivatePill(destinoID, index);
+        _loadPill(destinoID, action, index);
     }
 }
 

@@ -34,6 +34,7 @@
 ## Done
 
 ## November 2025
+- 🐞 **B092:** Pill colors not loading when switching calendar page
 - 📈 **M115:** Replace set.json with native functions
 - 🐞 **B094:** Edit Trip page not going to home after deleting a trip
 - 🐞 **B093:** Trip without itinerary data is not loading on edit trip pages

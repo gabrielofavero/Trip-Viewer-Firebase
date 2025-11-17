@@ -67,10 +67,12 @@ function _changeCalendarMonth(direction) {
 
 function _calendarNext() {
     _changeCalendarMonth('next');
+    _refreshPills();
 }
 
 function _calendarPrevious() {
     _changeCalendarMonth('previous');
+    _refreshPills();
 }
 
 
