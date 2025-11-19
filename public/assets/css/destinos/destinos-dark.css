@@ -27,17 +27,17 @@ a:hover {
   background: var(--theme-color);
 }
 
-.custom-select-dropdown{
+.destinos-select .dropdown{
   background: #404040;
   border: 1px solid #505050;
   box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-.custom-select-option {
+.destinos-select .option {
   color: #E2E2E2;
 }
 
-.custom-select-option:hover {
+.destinos-select .option:hover {
   background: #505050;
 }
 

@@ -102,7 +102,7 @@ section {
   left: calc(50% - 20px);
 }
 
-.destinos-select-container {
+.destinos-select .container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,12 +110,12 @@ section {
   cursor: pointer;
 }
 
-#destination-chevron {
+.destinos-select .chevron {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
 }
 
-.custom-select-dropdown {
+.destinos-select .dropdown {
   position: absolute;
   top: 100%;
   left: 50%;
@@ -128,7 +128,7 @@ section {
   min-width: 180px;
 }
 
-.custom-select-option {
+.destinos-select .option {
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-family: "Open Sans", sans-serif;
@@ -138,11 +138,11 @@ section {
   text-transform: none;
 }
 
-.custom-select-option:hover {
+.destinos-select .option:hover {
   background: #f1f1f1;
 }
 
-.destinos-select-container {
+.destinos-select .container {
   position: relative;
 }
 

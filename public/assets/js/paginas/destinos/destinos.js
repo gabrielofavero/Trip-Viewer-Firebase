@@ -24,9 +24,7 @@ function _loadDestinosHTML() {
   };
 
   if (DESTINO?.activeCategory && Object.keys(DESTINO[DESTINO.activeCategory]).length > 0) {
-    _loadDropdown();
-    _loadDropdownAction(DESTINO.activeCategory);
-
+    _loadDestinoCustomSelect()
     window.addEventListener("resize", () => {
       _applyDestinosMediaHeight();
       _adjustInstagramMedia();
@@ -215,5 +213,32 @@ function _closeAccordions(exclude) {
     if (j !== exclude) {
       $(`#collapse-destinos-${j}`).collapse("hide");
     }
+  }
+}
+
+function _loadDestinoCustomSelect() {
+  const customSelect = {
+    id: 'destinos-select',
+    options: _getDestinoCustomSelectOptions(),
+    activeOption: DESTINO.activeCategory,
+    action: _loadDestinoCustomSelectAction
+  }
+
+  _loadCustomSelect(customSelect);
+  _loadCloseCustomSelectListeners();
+
+  function _getDestinoCustomSelectOptions() {
+    const result = [];
+    for (const categoryKey in DESTINO) {
+      if (categoryKey == 'activeCategory') continue;
+      result.push({ value: categoryKey, label: DESTINO[categoryKey].titulo });
+    }
+    return result;
+  }
+
+  function _loadDestinoCustomSelectAction(value) {
+    const titulo = DESTINO[value].titulo;
+    document.title = titulo;
+    _loadDestinoByType(value);
   }
 }

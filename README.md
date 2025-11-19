@@ -4,9 +4,9 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 95    | 93        | 2       |
-| 🏆   | Feature      | F000  | 98    | 96        | 2      |
-| 📈   | Improvement  | M000  | 116   | 111        | 5      |
+| 🐞   | Bug          | B000  | 94    | 93        | 1       |
+| 🏆   | Feature      | F000  | 99    | 96        | 2      |
+| 📈   | Improvement  | M000  | 117   | 112        | 5      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
@@ -15,24 +15,23 @@
 
 ## Backlog
 ### High Priority
-
+- 🏆 **F099:** Replace all selects with custom selects (view.html)
 - 🏆 **F098:** Protect sensitive trip data (reservation codes)
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
 
 ### Medium Priority
-
-- 📈 **M091:** Align city select with destination box (or create custom select)
+- 📈 **M090:** Load logo inside pre loader
+- 📈 **M117:** Redirect map page to destination.html
 
 ### Low Priority
-- 📈 **M090:** Load logo inside pre loader
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
-- 📈 **M114:** Make button / select outlines theme color
-- 🐞 **B095:** Destination boxes outlines from view.html not in dark color
+- 📈 **M114:** Make button / select outlines theme color (view.html)
 
 ## Done
 
-## November 2025
+### November 2025
+- 📈 **M091:** Refactor destionations.html custom select to be a component
 - 🏆 **F078:** Ability to reorder transportation / accommodations
 - 🐞 **B092:** Pill colors not loading when switching calendar page
 - 📈 **M115:** Replace set.json with native functions
@@ -45,7 +44,7 @@
 - 📈 **M107:** Edit "Confirm" at accomodation images to return to previous instead of closing pop-up
 - 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 
-## October 2025
+### October 2025
 - 🐞 **B089:** Fix calendar title and loading issues
 - 📈 **M112:** Disable calendar navigation buttons if nothing present on following month
 - 🐞 **B088:** Fix date calculation when in daylight saving time
@@ -61,7 +60,7 @@
 - 🐞 **B080:** Edit Trip Description fixes
 - 🐞 **B079:** Edit Destination fixes
 
-## August 2025
+### August 2025
 - 📈 **M109:** Make highlights display 2/2 when screen width is tablet/mobile
 - 🐞 **B077:** Daily schedule not scrolling to table
 - 🐞 **B078:** App version not loading due to CONFIG async nature
