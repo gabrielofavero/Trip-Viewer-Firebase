@@ -1,3 +1,5 @@
+let SORTABLE_SKIP_NEXT_ACTION = false;
+
 function _initializeSortableForGroup(groupName, properties) {
     function _initializeSortable(groupName) {
         const containers = document.querySelectorAll(`.draggable-area[data-group="${groupName}"]`);
@@ -47,3 +49,50 @@ function _initializeSortableForGroup(groupName, properties) {
 
     return observer; // Return the observer instance in case you want to disconnect it later (observer.disconnect())
 }
+
+function _loadDraggablesWithAccordions(items = []) {
+    for (const item of items) {
+        _initializeSortableForGroup(item)
+    }
+
+    _onAccordionOpen([_hideDragIcon]);
+    _onAccordionClose([_showDragIcon]);
+
+    function _changeDragIconVisibility(collapseElement, headerButton, toShow) {
+        const type = headerButton.id.split('-')[0];
+
+        if (!items.includes(type)) {
+            return;
+        }
+
+        if ((!toShow && _areThereOpenedAccordions(type))) {
+            SORTABLE_SKIP_NEXT_ACTION = true;
+            return;
+        }
+
+        if (SORTABLE_SKIP_NEXT_ACTION) {
+            SORTABLE_SKIP_NEXT_ACTION = false;
+            return;
+        }
+
+        const parent = document.querySelector(collapseElement.getAttribute('data-bs-parent'));
+        if (!parent || parent.children.length == 0) {
+            return;
+        }
+
+        for (const child of parent.children) {
+            const dragIcon = child.querySelector('.drag-icon');
+            if (dragIcon) {
+                dragIcon.style.display = toShow ? 'block' : 'none';
+            }
+        }
+    }
+
+    function _showDragIcon(collapseElement, headerButton) {
+        _changeDragIconVisibility(collapseElement, headerButton, true)
+    }
+
+    function _hideDragIcon(collapseElement, headerButton) {
+        _changeDragIconVisibility(collapseElement, headerButton, false)
+    }
+  }

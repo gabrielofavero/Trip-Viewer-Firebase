@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     _loadVisibilityIndex();
     _loadHabilitados();
-    _loadDraggables();
+    _loadDraggablesWithAccordions(['transporte', 'hospedagens']);
     _newDynamicSelect('galeria-categoria');
     _newDynamicSelect('transporte-pessoa');
 
@@ -71,10 +71,7 @@ function _loadHabilitados() {
   _loadEditModule('galeria');
 }
 
-function _loadDraggables() {
-  _initializeSortableForGroup('transporte');
-  _initializeSortableForGroup('hospedagens')
-}
+
 
 function _loadUploadSelectors() {
   _loadUploadSelector('background');

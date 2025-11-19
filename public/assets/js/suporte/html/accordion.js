@@ -21,8 +21,24 @@ function _openLastAccordion(categoria) {
     $(`#${accordionID}`).collapse('show');
 }
 
-function _addAccordionListeners(actions = []) {
-    document.addEventListener('shown.bs.collapse', function (event) {
+function _areThereOpenedAccordions(categoria) {
+    const childs = _getChildIDs(`${categoria}-box`);
+
+    for (const child of childs) {
+        const i = child.split('-').pop();
+        const accordionID = `collapse-${categoria}-${i}`;
+
+        if (getID(accordionID).classList.contains('show')) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+function _onAccordionAction(type, actions = []) {
+    document.addEventListener(type, function (event) {
         const collapseElement = event.target;
         const headerButton = collapseElement
             .previousElementSibling
@@ -33,3 +49,13 @@ function _addAccordionListeners(actions = []) {
         }
     });
 }
+
+function _onAccordionOpen(actions = []) {
+    _onAccordionAction('show.bs.collapse', actions);
+}
+
+function _onAccordionClose(actions = []) {
+    _onAccordionAction('hide.bs.collapse', actions);
+}
+
+
