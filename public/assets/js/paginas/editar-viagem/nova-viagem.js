@@ -34,126 +34,129 @@ function _addTransporte() {
   const j = _getNextJ('transporte-box');
 
   $('#transporte-box').append(`
-      <div id="transporte-${j}" class="accordion-item accordion-transporte" >
-      <h2 class="accordion-header" id="heading-transporte-${j}">
-        <button id="transporte-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-transporte-${j}" aria-expanded="false" aria-controls="collapse-transporte-${j}">
-          ${translate('trip.transportation.title')} ${j}
-        </button>
-      </h2>
-      <div id="collapse-transporte-${j}" class="accordion-collapse collapse"
-        aria-labelledby="heading-transporte-${j}" data-bs-parent="#transporte-box">
-          <div class="accordion-body">
-            <div class="nice-form-group" style="display: none">
-            <label>${translate('labels.id')}</label>
-            <input id="transporte-id-${j}" type="text" disabled />
-          </div>
-
-          <fieldset class="nice-form-group" id="idaVolta-box-${j}">
-            <div class="nice-form-group" style="margin-top: -15px">
-              <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${j === 1 ? 'checked' : ''} />
-              <label for="ida-${j}">${translate('trip.transportation.departure')}</label>
-            </div>
-  
-            <div class="nice-form-group">
-              <input type="radio" name="idaVolta-${j}" id="durante-${j}"/>
-              <label for="durante-${j}">${translate('trip.transportation.during')}</label>
-            </div>
-  
-            <div class="nice-form-group">
-              <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${j != 1 ? 'checked' : ''} />
-              <label for="volta-${j}">${translate('trip.transportation.return')}</label>
-            </div>
-          </fieldset>
-
-          <div class="nice-form-group" id="people-box-${j}">
-            <label>${translate('labels.person')}</label>
-            <select ${getID('people-view').checked ? 'required' : ""} class="editar-select" id="transporte-pessoa-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="transporte-pessoa-${j}" type="text" placeholder="${translate('labels.person')}" />
-          </div>
-
-          <div class="nice-form-group">
-            <label>Ponto de Partida <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="ponto-partida-${j}" type="text" placeholder="Belo Horizonte" />
-          </div>
-
-          <div class="nice-form-group">
-            <label>Ponto de Chegada <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="ponto-chegada-${j}" type="text" placeholder="Las Vegas" />
-          </div>
-  
-          <div class="side-by-side-box">
-            <div class="nice-form-group side-by-side">
-              <label>${translate('trip.transportation.departure')}</label>
-              <input required class="flex-input" id="partida-${j}" type="date" />
-            </div>
-            <div class="nice-form-group side-by-side">
-              <input required class="flex-input mini-box" id="partida-horario-${j}" type="time" value="00:00" />
-            </div>
-          </div>
-  
-          <div class="side-by-side-box">
-            <div class="nice-form-group side-by-side">
-              <label>${translate('trip.transportation.arrival')}</label>
-              <input required class="flex-input" id="chegada-${j}" type="date" />
-            </div>
-            <div class="nice-form-group side-by-side">
-              <input required class="flex-input mini-box" id="chegada-horario-${j}" type="time" value="00:30" />
-            </div>
-          </div>
-  
-          <div class="nice-form-group">
-            <label>Meio de Transporte</label>
-            <select class="editar-select" required id="transporte-tipo-${j}">
-              <option value="voo">${translate('trip.transportation.type.flight')}</option>
-              <option value="carro">${translate('trip.transportation.type.car')}</option>
-              <option value="onibus">${translate('trip.transportation.type.bus')}</option>
-              <option value="bondinho">${translate('trip.transportation.type.cable_car')}</option>
-              <option value="helicoptero">${translate('trip.transportation.type.helicopter')}</option>
-              <option value="locomotiva">${translate('trip.transportation.type.train')}</option>
-              <option value="metro">${translate('trip.transportation.type.subway')}</option>
-              <option value="moto">${translate('trip.transportation.type.motocycle')}</option>
-              <option value="navio">${translate('trip.transportation.type.ship')}</option>
-              <option value="trem-bala">${translate('trip.transportation.type.bullet_train')}</option>
-              <option value="outro">${translate('labels.other')}</option>
-            </select>
-          </div>
-
-          <div class="nice-form-group">
-            <label>${translate('labels.other')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input class="flex-input" id="transporte-duracao-${j}" type="time" />
-          </div>
-
-          <div class="nice-form-group" id="empresa-select-form-group-${j}">
-            <label>${translate('labels.company')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <select class="editar-select" id="empresa-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="empresa-${j}" type="text" placeholder="${translate('labels.company')}" />
-          </div>
-
-          <div class="nice-form-group">
-            <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="reserva-transporte-${j}" type="text" placeholder="ABC123" />
-          </div>
-
-          <div class="nice-form-group">
-            <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="transporte-link-${j}" type="url" placeholder="https://www.google.com/" value=""
-              class="icon-right" />
-          </div>
-  
-        </div>
-  
-        <div class="button-box-right-formatted">
-          <button id="remove-transporte-${j}" class="btn btn-basic btn-format">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path fill="currentColor" fill-rule="evenodd"
-                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                  clip-rule="evenodd"></path>
-          </svg>
+  <div id="transporte-inner-box-${j}" class="inner-box draggable">
+        <div id="transporte-${j}" class="accordion-item accordion-transporte accordion-draggable" >
+        <h2 class="accordion-header" id="heading-transporte-${j}">
+          <button id="transporte-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-transporte-${j}" aria-expanded="false" aria-controls="collapse-transporte-${j}">
+            ${translate('trip.transportation.title')} ${j}
           </button>
+        </h2>
+        <div id="collapse-transporte-${j}" class="accordion-collapse collapse"
+          aria-labelledby="heading-transporte-${j}" data-bs-parent="#transporte-box">
+            <div class="accordion-body">
+              <div class="nice-form-group" style="display: none">
+              <label>${translate('labels.id')}</label>
+              <input id="transporte-id-${j}" type="text" disabled />
+            </div>
+
+            <fieldset class="nice-form-group" id="idaVolta-box-${j}">
+              <div class="nice-form-group" style="margin-top: -15px">
+                <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${j === 1 ? 'checked' : ''} />
+                <label for="ida-${j}">${translate('trip.transportation.departure')}</label>
+              </div>
+    
+              <div class="nice-form-group">
+                <input type="radio" name="idaVolta-${j}" id="durante-${j}"/>
+                <label for="durante-${j}">${translate('trip.transportation.during')}</label>
+              </div>
+    
+              <div class="nice-form-group">
+                <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${j != 1 ? 'checked' : ''} />
+                <label for="volta-${j}">${translate('trip.transportation.return')}</label>
+              </div>
+            </fieldset>
+
+            <div class="nice-form-group" id="people-box-${j}">
+              <label>${translate('labels.person')}</label>
+              <select ${getID('people-view').checked ? 'required' : ""} class="editar-select" id="transporte-pessoa-select-${j}" style="display: none;"></select>
+              <input class="nice-form-group" id="transporte-pessoa-${j}" type="text" placeholder="${translate('labels.person')}" />
+            </div>
+
+            <div class="nice-form-group">
+              <label>Ponto de Partida <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="ponto-partida-${j}" type="text" placeholder="Belo Horizonte" />
+            </div>
+
+            <div class="nice-form-group">
+              <label>Ponto de Chegada <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="ponto-chegada-${j}" type="text" placeholder="Las Vegas" />
+            </div>
+    
+            <div class="side-by-side-box">
+              <div class="nice-form-group side-by-side">
+                <label>${translate('trip.transportation.departure')}</label>
+                <input required class="flex-input" id="partida-${j}" type="date" />
+              </div>
+              <div class="nice-form-group side-by-side">
+                <input required class="flex-input mini-box" id="partida-horario-${j}" type="time" value="00:00" />
+              </div>
+            </div>
+    
+            <div class="side-by-side-box">
+              <div class="nice-form-group side-by-side">
+                <label>${translate('trip.transportation.arrival')}</label>
+                <input required class="flex-input" id="chegada-${j}" type="date" />
+              </div>
+              <div class="nice-form-group side-by-side">
+                <input required class="flex-input mini-box" id="chegada-horario-${j}" type="time" value="00:30" />
+              </div>
+            </div>
+    
+            <div class="nice-form-group">
+              <label>Meio de Transporte</label>
+              <select class="editar-select" required id="transporte-tipo-${j}">
+                <option value="voo">${translate('trip.transportation.type.flight')}</option>
+                <option value="carro">${translate('trip.transportation.type.car')}</option>
+                <option value="onibus">${translate('trip.transportation.type.bus')}</option>
+                <option value="bondinho">${translate('trip.transportation.type.cable_car')}</option>
+                <option value="helicoptero">${translate('trip.transportation.type.helicopter')}</option>
+                <option value="locomotiva">${translate('trip.transportation.type.train')}</option>
+                <option value="metro">${translate('trip.transportation.type.subway')}</option>
+                <option value="moto">${translate('trip.transportation.type.motocycle')}</option>
+                <option value="navio">${translate('trip.transportation.type.ship')}</option>
+                <option value="trem-bala">${translate('trip.transportation.type.bullet_train')}</option>
+                <option value="outro">${translate('labels.other')}</option>
+              </select>
+            </div>
+
+            <div class="nice-form-group">
+              <label>${translate('labels.other')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input class="flex-input" id="transporte-duracao-${j}" type="time" />
+            </div>
+
+            <div class="nice-form-group" id="empresa-select-form-group-${j}">
+              <label>${translate('labels.company')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <select class="editar-select" id="empresa-select-${j}" style="display: none;"></select>
+              <input class="nice-form-group" id="empresa-${j}" type="text" placeholder="${translate('labels.company')}" />
+            </div>
+
+            <div class="nice-form-group">
+              <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="reserva-transporte-${j}" type="text" placeholder="ABC123" />
+            </div>
+
+            <div class="nice-form-group">
+              <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="transporte-link-${j}" type="url" placeholder="https://www.google.com/" value=""
+                class="icon-right" />
+            </div>
+    
+          </div>
+    
+          <div class="button-box-right-formatted">
+            <button id="remove-transporte-${j}" class="btn btn-basic btn-format">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor" fill-rule="evenodd"
+                    d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            </button>
+          </div>
+    
         </div>
-  
       </div>
+      <i class="iconify drag-icon" data-icon="mdi:drag"></i>
     </div>
       `);
 
@@ -174,93 +177,96 @@ function _addHospedagens() {
   const inicioFim = _getNextCategoriaInicioFim('hospedagens', 'check-out');
   const j = _getNextJ('hospedagens-box');
   $('#hospedagens-box').append(`
-      <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens" >
-      <h2 class="accordion-header" id="heading-hospedagens-${j}">
-        <button id="hospedagens-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapse-hospedagens-${j}" aria-expanded="false" aria-controls="collapse-hospedagens-${j}">
-          ${translate('trip.accommodation.accommodation')} ${j}
-        </button>
-      </h2>
-      <div id="collapse-hospedagens-${j}" class="accordion-collapse collapse"
-        aria-labelledby="heading-hospedagens-${j}" data-bs-parent="#hospedagens-box">
-          <div class="accordion-body">
-            <div class="nice-form-group" style="display: none">
-            <label>${translate('labels.id')}</label>
-            <input id="hospedagens-id-${j}" type="text" disabled />
-          </div>
+      <div id="hospedagens-inner-box-${j}" class="inner-box draggable">
+        <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens accordion-draggable" >
+        <h2 class="accordion-header" id="heading-hospedagens-${j}">
+          <button id="hospedagens-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-hospedagens-${j}" aria-expanded="false" aria-controls="collapse-hospedagens-${j}">
+            ${translate('trip.accommodation.accommodation')} ${j}
+          </button>
+        </h2>
+        <div id="collapse-hospedagens-${j}" class="accordion-collapse collapse"
+          aria-labelledby="heading-hospedagens-${j}" data-bs-parent="#hospedagens-box">
+            <div class="accordion-body">
+              <div class="nice-form-group" style="display: none">
+              <label>${translate('labels.id')}</label>
+              <input id="hospedagens-id-${j}" type="text" disabled />
+            </div>
 
-          <div class="nice-form-group">
-            <input id="hospedagens-cafe-${j}" type="checkbox" class="switch">
-            <label for="hospedagens-cafe-${j}">
-              ${translate('trip.accommodation.breakfast')}
-            </label>
-          </div>
+            <div class="nice-form-group">
+              <input id="hospedagens-cafe-${j}" type="checkbox" class="switch">
+              <label for="hospedagens-cafe-${j}">
+                ${translate('trip.accommodation.breakfast')}
+              </label>
+            </div>
 
-          <div class="nice-form-group">
-            <label>${translate('labels.name')}</label>
-            <input required id="hospedagens-nome-${j}" type="text" placeholder="${translate('trip.accommodation.name_placeholder')}" />
-          </div>
-  
-          <div class="nice-form-group">
-            <label>${translate('labels.address')}</label>
-            <input required id="hospedagens-endereco-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
-          </div>
-  
-          <div class="side-by-side-box">
-            <div class="nice-form-group side-by-side">
-              <label>${translate('trip.accommodation.checkin')}</label>
-              <input class="flex-input" id="check-in-${j}" type="date" value="${inicioFim.inicio}" />
+            <div class="nice-form-group">
+              <label>${translate('labels.name')}</label>
+              <input required id="hospedagens-nome-${j}" type="text" placeholder="${translate('trip.accommodation.name_placeholder')}" />
             </div>
-            <div class="nice-form-group side-by-side">
-              <input class="flex-input mini-box" id="check-in-horario-${j}" type="time" value="14:00" />
-            </div>
-          </div>
-  
-          <div class="side-by-side-box">
-            <div class="nice-form-group side-by-side">
-              <label>${translate('trip.accommodation.checkout')}</label>
-              <input class="flex-input" id="check-out-${j}" type="date" value="${inicioFim.fim}" />
-            </div>
-            <div class="nice-form-group side-by-side">
-              <input class="flex-input mini-box" id="check-out-horario-${j}" type="time" value="12:00" />
-            </div>
-          </div>
-  
-          <div class="nice-form-group">
-            <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="hospedagens-descricao-${j}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
-          </div>
-
-          <div class="nice-form-group">
-            <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="reserva-hospedagens-${j}" type="text" placeholder="ABC123" />
-          </div>
     
-          <div class="nice-form-group">
-            <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <input id="reserva-hospedagens-link-${j}" type="url" placeholder="https://www.google.com/" value=""
-              class="icon-right" />
-          </div>
+            <div class="nice-form-group">
+              <label>${translate('labels.address')}</label>
+              <input required id="hospedagens-endereco-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
+            </div>
+    
+            <div class="side-by-side-box">
+              <div class="nice-form-group side-by-side">
+                <label>${translate('trip.accommodation.checkin')}</label>
+                <input class="flex-input" id="check-in-${j}" type="date" value="${inicioFim.inicio}" />
+              </div>
+              <div class="nice-form-group side-by-side">
+                <input class="flex-input mini-box" id="check-in-horario-${j}" type="time" value="14:00" />
+              </div>
+            </div>
+    
+            <div class="side-by-side-box">
+              <div class="nice-form-group side-by-side">
+                <label>${translate('trip.accommodation.checkout')}</label>
+                <input class="flex-input" id="check-out-${j}" type="date" value="${inicioFim.fim}" />
+              </div>
+              <div class="nice-form-group side-by-side">
+                <input class="flex-input mini-box" id="check-out-horario-${j}" type="time" value="12:00" />
+              </div>
+            </div>
+    
+            <div class="nice-form-group">
+              <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="hospedagens-descricao-${j}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
+            </div>
 
-          <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
-            <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate('labels.image.add_title')}</button>
+            <div class="nice-form-group">
+              <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="reserva-hospedagens-${j}" type="text" placeholder="ABC123" />
+            </div>
+      
+            <div class="nice-form-group">
+              <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="reserva-hospedagens-link-${j}" type="url" placeholder="https://www.google.com/" value=""
+                class="icon-right" />
+            </div>
+
+            <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
+              <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate('labels.image.add_title')}</button>
+            </div>
+              
           </div>
-            
+      
+            <div class="button-box-right-formatted">
+              <button id="remove-hospedagens-${j}" class="btn btn-basic btn-format">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor" fill-rule="evenodd"
+                    d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                    clip-rule="evenodd"></path>
+              </svg>
+              </button>
+            </div>
+          
         </div>
-    
-          <div class="button-box-right-formatted">
-            <button id="remove-hospedagens-${j}" class="btn btn-basic btn-format">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path fill="currentColor" fill-rule="evenodd"
-                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                  clip-rule="evenodd"></path>
-            </svg>
-            </button>
-          </div>
-        
+        </div>
+        <i class="iconify drag-icon" data-icon="mdi:drag"></i>
       </div>
-    </div>
       `);
 
   getID(`hospedagens-id-${j}`).value = _getCategoriaID('hospedagens', j);

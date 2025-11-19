@@ -5,7 +5,7 @@
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 95    | 93        | 2       |
-| 🏆   | Feature      | F000  | 97    | 94        | 3      |
+| 🏆   | Feature      | F000  | 98    | 94        | 4      |
 | 📈   | Improvement  | M000  | 116   | 111        | 5      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
@@ -16,7 +16,8 @@
 ## Backlog
 ### High Priority
 
-- 🏆 **F078:** Ability to reorder transportation / group types in edit/trip.html
+- 🏆 **F098:** Protect sensitive trip data (reservation codes)
+- 🏆 **F078:** Ability to reorder transportation / accommodations
 - 🏆 **F060:** Allow switching between destination categories within a page
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
 

@@ -2078,3 +2078,12 @@ details summary::-webkit-details-marker {
   align-items: center;
   min-width: 120px;
 }
+
+.inner-box.draggable{
+  display: flex;
+  width: 100%;
+}
+
+.accordion-draggable{
+  flex: 1
+}

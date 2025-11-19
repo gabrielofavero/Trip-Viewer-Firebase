@@ -148,7 +148,8 @@ function _removeChild(tipo) {
 }
 
 function _removeChildWithValidation(categoria, j) {
-  _removeChild(`${categoria}-${j}`);
+  const id = getID(`${categoria}-inner-box-${j}`) ? `${categoria}-inner-box-${j}` : `${categoria}-${j}`;
+  _removeChild(id);
   _hideParentIfNoChildren(categoria);
 }
 

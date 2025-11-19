@@ -20,3 +20,16 @@ function _openLastAccordion(categoria) {
 
     $(`#${accordionID}`).collapse('show');
 }
+
+function _addAccordionListeners(actions = []) {
+    document.addEventListener('shown.bs.collapse', function (event) {
+        const collapseElement = event.target;
+        const headerButton = collapseElement
+            .previousElementSibling
+            .querySelector('.accordion-button');
+    
+        for (const action of actions) {
+            action(collapseElement, headerButton);
+        }
+    });
+}
