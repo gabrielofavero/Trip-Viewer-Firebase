@@ -21,7 +21,6 @@
 
 ### Medium Priority
 - 📈 **M090:** Load logo inside pre loader
-- 📈 **M117:** Redirect map page to destination.html
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
@@ -31,6 +30,7 @@
 ## Done
 
 ### November 2025
+- 📈 **M117:** Redirect map page to destination.html
 - 📈 **M091:** Refactor destionations.html custom select to be a component
 - 🏆 **F078:** Ability to reorder transportation / accommodations
 - 🐞 **B092:** Pill colors not loading when switching calendar page

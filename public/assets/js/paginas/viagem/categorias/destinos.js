@@ -59,8 +59,6 @@ function _loadDestinationsHTML(destino) {
   const headers = _getDestinationsHeaders(destino.destinos.modulos);
   CURRENT_PLACES_SIZE = headers.length;
 
-  let linktype = _getLinkType();
-
   for (let i = 0; i < headers.length; i++) {
     const type = headers[i];
     const translatedType = CONFIG.destinos.translation[type] || type;
@@ -70,14 +68,11 @@ function _loadDestinationsHTML(destino) {
     const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
     const title = translate(`destination.${translatedType}.title`);
     const description = translate(`destination.${translatedType}.description`);
-    const href = type === "mapa" ? destino.destinos.myMaps : "#";
-    const lt = type === "mapa" ? linktype : "";
-    const onclick = type === "mapa" ? "" : `onclick="_loadAndOpenDestino('${type}')"`;
     const icon = CONFIG.destinos.icons[type];
 
     text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
-    <a href="${href}" ${lt} ${onclick} id="ba${j}">
+    <a href="#" onclick="_loadAndOpenDestino('${type}')" id="ba${j}">
         <div class="icon-box iconbox-${box.color}" id="ib${j}">
           <div class="icon">
             <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -151,14 +146,6 @@ function _getDestinationsBoxesIndex(i) {
   if (i > CONFIG.destinos.boxes.length - 1) {
     return i % CONFIG.destinos.boxes.length;
   } else return i
-}
-
-function _getLinkType() {
-  if (_isIOSDevice()) {
-    return "";
-  } else {
-    return "target='_blank'";
-  }
 }
 
 function _adjustDestinationsHTML() {

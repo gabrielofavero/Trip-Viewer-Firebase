@@ -23,7 +23,8 @@ function _loadDestinosHTML() {
     }
   };
 
-  if (DESTINO?.activeCategory && Object.keys(DESTINO[DESTINO.activeCategory]).length > 0) {
+  if (DESTINO?.activeCategory && (DESTINO.activeCategory === 'mapa' || Object.keys(DESTINO[DESTINO.activeCategory]).length > 0)) {
+    
     _loadDestinoCustomSelect()
     window.addEventListener("resize", () => {
       _applyDestinosMediaHeight();
@@ -220,7 +221,7 @@ function _loadDestinoCustomSelect() {
   const customSelect = {
     id: 'destinos-select',
     options: _getDestinoCustomSelectOptions(),
-    activeOption: DESTINO.activeCategory,
+    activeOption: DESTINO.activeCategory === 'mapa' ? 'myMaps' : DESTINO.activeCategory,
     action: _loadDestinoCustomSelectAction
   }
 

@@ -8,8 +8,11 @@ function _loadCloseCustomSelectListeners() {
 
 function _loadCustomSelect({ id, options = [], activeOption, action }) {
   CUSTOM_SELECTS[id] = { options, activeOption, action, onAction: true };
-  getID(id).innerHTML = _getCustomSelectHTML(id);
+  const customSelect = getID(id);
+  customSelect.innerHTML = _getCustomSelectHTML(id);
   _hideActiveOption(id);
+  const label = options.find(option => option.value === activeOption)?.label || options[0].label;
+  customSelect.querySelector('.title').innerText = label;
   action(activeOption);
   _loadCustomSelectListeners(id);
 }
