@@ -5,8 +5,8 @@
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 94    | 93        | 1       |
-| 🏆   | Feature      | F000  | 99    | 96        | 2      |
-| 📈   | Improvement  | M000  | 117   | 112        | 5      |
+| 🏆   | Feature      | F000  | 99    | 97        | 2      |
+| 📈   | Improvement  | M000  | 117   | 114        | 3      |
 | ⚔️   | Epic         | E000  | 34    | 34        | 0      |
 
 - 🚦: Blocked
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### High Priority
-- 🏆 **F099:** Replace all selects with custom selects (view.html)
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
 - 🏆 **F098:** Protect sensitive trip data (reservation codes)
 
@@ -30,6 +29,7 @@
 ## Done
 
 ### November 2025
+- 🏆 **F099:** Replace all selects with custom selects
 - 📈 **M117:** Redirect map page to destination.html
 - 📈 **M091:** Refactor destionations.html custom select to be a component
 - 🏆 **F078:** Ability to reorder transportation / accommodations
