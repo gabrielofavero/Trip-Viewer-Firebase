@@ -35,30 +35,30 @@ function _loadInnerProgramacaoHTML(j) {
         const programacao = dado.programacao || '';
         const presentes = dado.pessoas
             .filter(p => p.isPresent)
-            .map(p => p.nome);
-    
+            .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
+
         const todasPresentes = presentes.length === dado.pessoas.length;
         const pessoasTexto = todasPresentes ? '' : _getReadableArray(presentes);
-    
+
         let horario = '';
         if (dado.inicio && dado.fim) {
             horario = `${dado.inicio} - ${dado.fim}`;
         } else if (dado.inicio) {
             horario = dado.inicio;
         }
-    
+
         if (pessoasTexto && horario && programacao) {
             return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
         }
-    
+
         if (pessoasTexto && programacao) {
             return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
         }
-    
+
         if (horario && programacao) {
             return `${_highlight(`${horario}:`)} ${programacao}`;
         }
-    
+
         return programacao;
     }
 

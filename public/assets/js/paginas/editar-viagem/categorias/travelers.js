@@ -15,19 +15,18 @@ function _openTravelersInfo() {
 
     _displayFullMessage(propriedades);
     getID('quantidadePessoas').addEventListener('change', function () {
-        getID('travelers-names-container').innerHTML = _getTravelersNameContent(parseInt(this.value));
+        getID('travelers-names-container').innerHTML = _getTravelersNameContent();
     });
 }
 
 function _getTravelersInfoContent() {
-    const value = TRAVELERS.length || 1;
     return `
     <div class="nice-form-group">
         <label>${translate('trip.travelers.quantity')}</label>
-        <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" min="1" max="10" value="${value}" />
+        <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" min="1" max="10" value="${TRAVELERS.length || 1}" />
     </div>
     <div id="travelers-names-container">
-        ${_getTravelersNameContent(value)}
+        ${_getTravelersNameContent()}
     </div>
     <div class="nice-form-group" id="travelers-names-unique" style="display: none">
         <span class="red">${translate('trip.travelers.unique')}</span>
@@ -36,32 +35,40 @@ function _getTravelersInfoContent() {
     `
 }
 
-function _getTravelersNameContent(quantity) {
+function _getTravelersNameContent() {
     const properties = [];
     const nameLabel = translate('labels.name');
-    for (let i = 0; i < quantity; i++) {
-        const id = `traveler-name-${i + 1}`;
-        const person = TRAVELERS[i]?.nome || '';
-        const value = getID(id)?.value || person || '';
+    const quantidadePessoas = getID('quantidadePessoas');
+    const quantity = quantidadePessoas ? parseInt(quantidadePessoas.value) || 1 : TRAVELERS.length || 1;
+
+    for (let j = 1; j <= quantity; j++) {
+        const traveler = TRAVELERS[j - 1];
+        const id = getID(`traveler-id-${j}`)?.value || traveler?.id || _getRandomID();
+        const name = getID(`traveler-name-${j}`)?.value || traveler?.nome || '';
 
         properties.push(`
             <div class="nice-form-group">
-                <label>${nameLabel} ${i + 1}</label>
-                <input id="traveler-name-${i + 1}" type="text" maxlength="10" placeholder="${nameLabel}" ${value ? `value="${value}"` : ''}>
+                <label>${nameLabel} ${j}</label>
+                <input id="traveler-id-${j}" type="text" value="${id}" style="display: none" disabled>
+                <input id="traveler-name-${j}" type="text" maxlength="10" placeholder="${nameLabel}" ${name ? `value="${name}"` : ''}>
             </div>
         `);
     }
+
     return properties.join('');
 }
 
 function _saveTravelersInfo() {
     let j = 1;
-    const nomes = []
+    const travelers = []
     while (getID(`traveler-name-${j}`)) {
-        nomes.push(getID(`traveler-name-${j}`).value.trim())
+        travelers.push({ 
+            id: getID(`traveler-id-${j}`).value,
+            nome: getID(`traveler-name-${j}`).value.trim()});
         j++;
     }
 
+    const nomes = travelers.map(t => t.nome);
     const hasRepetitions = nomes.some((nome, index) => {
         return nomes.indexOf(nome) !== index && nome !== '';
     });
@@ -71,13 +78,10 @@ function _saveTravelersInfo() {
         return;
     }
 
-    TRAVELERS = [];
-    for (const nome of nomes) {
-        TRAVELERS.push({ nome: nome || '' });
-    }
-
+    TRAVELERS = travelers;
     _closeMessage();
     _updateTravelersButtonLabel();
+    _loadProgramacaoData();
 }
 
 function _getTravelersFieldset(id) {
@@ -95,7 +99,7 @@ function _getTravelersFieldset(id) {
     mandatory.style.display = 'none';
 
     const titleLabel = document.createElement('label');
-    titleLabel.appendChild(document.createTextNode(translate('trip.travelers.title') + ' ')); // texto + espaço
+    titleLabel.appendChild(document.createTextNode(translate('trip.travelers.title') + ' '));
     titleLabel.appendChild(mandatory);
     result.appendChild(titleLabel);
 
@@ -104,9 +108,9 @@ function _getTravelersFieldset(id) {
     let travelers = 0;
 
     for (let j = 1; j <= TRAVELERS.length; j++) {
-        const nome = TRAVELERS[j - 1].nome;
+        const traveler = TRAVELERS[j - 1];
 
-        if (!nome) {
+        if (!traveler.nome) {
             continue; // Skip if no name is provided
         }
 
@@ -118,14 +122,14 @@ function _getTravelersFieldset(id) {
         const input = document.createElement('input');
         input.type = 'checkbox';
         input.id = `${id}-${j}`;
-        input.value = nome || '';
-        input.checked = true; // Default to checked
+        input.value = traveler.id;
+        input.checked = true;
 
         const label = document.createElement('label');
         label.id = `${id}-label-${j}`;
         label.className = 'checkbox-label';
         label.setAttribute('for', input.id);
-        label.textContent = nome;
+        label.textContent = traveler.nome;
 
         div.appendChild(input);
         div.appendChild(label);
@@ -152,8 +156,8 @@ function _updateTravelersFieldset(id, checkedData = []) {
     let j = 1;
     while (getID(`${id}-${j}`)) {
         const checkbox = getID(`${id}-${j}`);
-        const checkboxName = checkbox.value;
-        const traveler = checkedData.find(t => t.nome === checkboxName);
+        const value = checkbox.value;
+        const traveler = checkedData.find(t => t.id === value);
 
         checkbox.checked = traveler?.isPresent === undefined ? INCLUDE_LATE_TRAVELERS : traveler.isPresent;
         j++;

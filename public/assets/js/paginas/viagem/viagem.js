@@ -11,6 +11,8 @@ var FIM = {
   text: ''
 };
 
+var TRAVELERS;
+
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
