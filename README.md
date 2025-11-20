@@ -7,7 +7,7 @@
 | 🐞   | Bug          | B000  | 94    | 93        | 1       |
 | 🏆   | Feature      | F000  | 99    | 97        | 2      |
 | 📈   | Improvement  | M000  | 117   | 114        | 3      |
-| ⚔️   | Epic         | E000  | 34    | 34        | 0      |
+| ⚔️   | Epic         | E000  | 36    | 34        | 2      |
 
 - 🚦: Blocked
 - ❔: No apparent solution
@@ -15,8 +15,9 @@
 
 ## Backlog
 ### High Priority
-- 🏆 **F096:** Include traveler names in view.html (Itinerary)
-- 🏆 **F098:** Protect sensitive trip data (reservation codes)
+- ⚔️ **E035:** Include traveler names in view.html (Itinerary)
+- ⚔️ **E036:** Protect sensitive trip data (reservation codes)
+- 🏆 **F098:** 
 
 ### Medium Priority
 - 📈 **M090:** Load logo inside pre loader
@@ -29,6 +30,8 @@
 ## Done
 
 ### November 2025
+- ⚔️ **E035:** Include traveler names in view.html (Itinerary)
+  - *[🏆F096] Add ID into travelers*
 - 🏆 **F099:** Replace all selects with custom selects
 - 📈 **M117:** Redirect map page to destination.html
 - 📈 **M091:** Refactor destionations.html custom select to be a component
