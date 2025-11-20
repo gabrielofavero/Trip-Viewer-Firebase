@@ -24,7 +24,7 @@ function _getTravelersInfoContent() {
     return `
     <div class="nice-form-group">
         <label>${translate('trip.travelers.quantity')}</label>
-        <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" min="1" value="${value}" />
+        <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" min="1" max="10" value="${value}" />
     </div>
     <div id="travelers-names-container">
         ${_getTravelersNameContent(value)}
