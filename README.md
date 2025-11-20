@@ -16,8 +16,8 @@
 ## Backlog
 ### High Priority
 - 🏆 **F099:** Replace all selects with custom selects (view.html)
-- 🏆 **F098:** Protect sensitive trip data (reservation codes)
 - 🏆 **F096:** Include traveler names in view.html (Itinerary)
+- 🏆 **F098:** Protect sensitive trip data (reservation codes)
 
 ### Medium Priority
 - 📈 **M090:** Load logo inside pre loader

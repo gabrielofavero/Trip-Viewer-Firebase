@@ -199,7 +199,7 @@ function _buildTransporteSwiper(swiperData) {
         break;
       case 'people-view':
         keys.push(...TRANSPORTES_ATIVOS);
-        _loadSelectTransportes();
+        _loadCustomSelectTransportes();
         _loadCustomTransportesDivs();
         break;
     }
@@ -256,14 +256,25 @@ function _copyToClipboard(text) {
   _openToast(translate('messages.text_copied'));
 }
 
-function _loadSelectTransportes() {
-  const select = getID('transporte-select');
-  select.innerHTML = '';
-  select.style.display = TRANSPORTES_ATIVOS.length > 1 ? '' : 'none';
-
+function _loadCustomSelectTransportes() {
+  if (TRANSPORTES_ATIVOS.length <= 1) return;
+  getID('transporte-select').style.display = '';
+  const options = [];
   for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
-    select.innerHTML += `<option value="${TRANSPORTES_ATIVOS[i]}">${TRANSPORTES_ATIVOS_TITULOS[i]}</option>`;
+    options.push({
+      value: TRANSPORTES_ATIVOS[i],
+      label: TRANSPORTES_ATIVOS_TITULOS[i]
+    });
   }
+
+  const customSelect = {
+    id: 'transporte-select',
+    options: options,
+    activeOption: TRANSPORTE_ATIVO,
+    action: _customTransporteSelectAction
+  }
+
+  _loadCustomSelect(customSelect);
 }
 
 function _loadCustomTransportesDivs() {
@@ -379,12 +390,10 @@ function _resetSwiperVisibility() {
     case 'people-view':
       getID('transporte-subtitulo').style.display = 'none';
       _adjustTransporteBoxContainerHeight();
-      getID('transporte-select').addEventListener('change', _customTransporteSelectAction);
   }
 }
 
-function _customTransporteSelectAction() {
-  const current = getID('transporte-select').value;
-  _fade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${current}`])
-  TRANSPORTE_ATIVO = current;
+function _customTransporteSelectAction(value) {
+  _fade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${value}`])
+  TRANSPORTE_ATIVO = value;
 }

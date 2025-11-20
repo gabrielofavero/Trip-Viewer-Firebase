@@ -24,31 +24,39 @@ function _loadDestinos() {
   });
 }
 
-function _loadDestinationsSelect() {
+function _loadDestinationsCustomSelect() {
   DESTINOS = FIRESTORE_DATA.destinos;
-  const select = getID("destinos-select");
 
-  if (DESTINOS.length > 1) {
-    for (let i = 0; i < DESTINOS.length; i++) {
-      const option = document.createElement("option");
-      option.value = DESTINOS[i].destinosID;
-      option.text = DESTINOS[i].destinos.titulo;
-      option.selected = i === 0;
-      select.add(option);
-    }
+  if (DESTINOS.length <= 1) {
+    getID("destinos-select").style.display = 'none';
+    return;
+  }
 
-    select.addEventListener("change", function () {
-      for (let i = 0; i < DESTINOS.length; i++) {
-        if (DESTINOS[i].destinosID === select.value) {
-          _loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
-          _adjustDestinationsHTML();
-          break;
-        }
-      }
+  const options = [];
+  for (const destino of DESTINOS) {
+    options.push({
+      value: destino.destinosID,
+      label: destino.destinos.titulo
     });
+  }
 
-  } else {
-    select.style.display = "none";
+  const customSelect = {
+    id: "destinos-select",
+    options, 
+    activeOption: options[0].value,
+    action: _loadDestionationCustomSelectAction
+  }
+
+  _loadCustomSelect(customSelect);
+
+  function _loadDestionationCustomSelectAction(value) {
+    for (let i = 0; i < DESTINOS.length; i++) {
+      if (DESTINOS[i].destinosID === value) {
+        _loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
+        _adjustDestinationsHTML();
+        break;
+      }
+    }
   }
 }
 
@@ -135,11 +143,6 @@ function _getDestinationsHeaders(module) {
   }
 
   return result.sort((a, b) => headerMap.get(a) - headerMap.get(b));
-}
-
-function getDestinationsSelectValue() {
-  let select = getID("destinos-select");
-  return select.value || DESTINOS[0].destinosID;
 }
 
 function _getDestinationsBoxesIndex(i) {

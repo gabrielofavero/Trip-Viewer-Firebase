@@ -7,7 +7,7 @@ function _loadCloseCustomSelectListeners() {
 }
 
 function _loadCustomSelect({ id, options = [], activeOption, action }) {
-  CUSTOM_SELECTS[id] = { options, activeOption, action, onAction: true };
+  CUSTOM_SELECTS[id] = { options, activeOption, action, onAction: false };
   const customSelect = getID(id);
   customSelect.innerHTML = _getCustomSelectHTML(id);
   _hideActiveOption(id);
@@ -39,7 +39,6 @@ function _loadCustomSelectListeners(id) {
   const customSelect = getID(id);
   const container = customSelect.querySelector('.container');
   const dropdown = customSelect.querySelector('.dropdown');
-  const chevron = customSelect.querySelector('.chevron');
 
   container.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -47,9 +46,13 @@ function _loadCustomSelectListeners(id) {
       CUSTOM_SELECTS[id].onAction = false;
       return;
     }
-    const isOpen = dropdown.style.display === 'block';
-    dropdown.style.display = isOpen ? 'none' : 'block';
-    chevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+    if (dropdown.style.display === 'block') {
+      dropdown.style.display = 'none';
+      customSelect.classList.remove('opened');
+    } else {
+      dropdown.style.display = 'block';
+      customSelect.classList.add('opened');
+    }
   });
 
   customSelect.querySelectorAll('.option').forEach(option => {
@@ -68,11 +71,10 @@ function _closeCustomSelects() {
 
 function _closeCustomSelect(id) {
   const customSelect = getID(id);
-  const chevron = customSelect.querySelector('.chevron');
   const dropdown = customSelect.querySelector('.dropdown');
   if (dropdown.style.display === 'block') {
     dropdown.style.display = 'none';
-    chevron.style.transform = 'rotate(180deg)';
+    customSelect.classList.remove('opened');
   }
 }
 
@@ -90,7 +92,11 @@ function _hideActiveOption(id) {
     if (option.getAttribute('data-value') === CUSTOM_SELECTS[id].activeOption) {
       option.style.display = 'none';
     } else {
-      option.style.display = 'block';
+      option.style.display = 'flex';
     }
   });
+}
+
+function _getCustomSelectActiveOption(id) {
+  return CUSTOM_SELECTS[id]?.activeOption || null;
 }

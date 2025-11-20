@@ -99,6 +99,7 @@ function _start() {
   _loadVisibility();
   _loadToggle();
   _adjustCardsHeightsListener();
+  _loadCloseCustomSelectListeners();
 
   // Cabeçalho
   _loadHeader();
@@ -343,7 +344,7 @@ function _loadModules() {
     }
 
     function _loadDestinosDefault() {
-      _loadDestinationsSelect();
+      _loadDestinationsCustomSelect();
       _loadDestinationsHTML(DESTINOS[0]);
 
       if (DESTINOS.length === 1) {
