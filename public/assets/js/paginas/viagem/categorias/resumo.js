@@ -1,4 +1,7 @@
+var TRAVELERS = [];
+
 function _loadResumo() {
+  TRAVELERS = FIRESTORE_DATA.pessoas;
   const dias = Math.ceil((FIM.date - INICIO.date) / (1000 * 60 * 60 * 24)) + 1;
   const pessoas = FIRESTORE_DATA.pessoas.length || 1;
 

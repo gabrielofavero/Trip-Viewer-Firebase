@@ -151,9 +151,9 @@ function _loadProgramacaoHojeButton() {
         getID('programacao-hoje').style.display = '';
         getID('programacao-hoje').addEventListener('click', function () {
             const hojeText = _getDateString(hoje, 'dd/mm/yyyy');
-            const programacaoText = (PROGRAMACAO_ATUAL.dia).toString().padStart(2, '0') + "/" + 
-                                    (PROGRAMACAO_ATUAL.mes).toString().padStart(2, '0') + "/" + 
-                                    PROGRAMACAO_ATUAL.ano;
+            const programacaoText = (PROGRAMACAO_ATUAL_DATA.dia).toString().padStart(2, '0') + "/" + 
+                                    (PROGRAMACAO_ATUAL_DATA.mes).toString().padStart(2, '0') + "/" + 
+                                    PROGRAMACAO_ATUAL_DATA.ano;
 
             if (!PROGRAMACAO_ABERTA || (PROGRAMACAO_ABERTA && hojeText != programacaoText)) {
                 _loadCalendarItem(_getDateString(hoje, 'dd/mm/yyyy'));

@@ -6,14 +6,18 @@ function _loadCloseCustomSelectListeners() {
   });
 }
 
-function _loadCustomSelect({ id, options = [], activeOption, action }) {
+function _loadCustomSelect({ id, options = [], activeOption, action, autoExecute = true}) {
   CUSTOM_SELECTS[id] = { options, activeOption, action, onAction: false };
   const customSelect = getID(id);
   customSelect.innerHTML = _getCustomSelectHTML(id);
   _hideActiveOption(id);
   const label = options.find(option => option.value === activeOption)?.label || options[0].label;
   customSelect.querySelector('.title').innerText = label;
-  action(activeOption);
+
+  if (autoExecute) {
+    action(activeOption);
+  }
+
   _loadCustomSelectListeners(id);
 }
 

@@ -125,7 +125,11 @@
                 "playlist": "Visualizar Playlist"
             },
             "replace_title": "Substituir o título \"{{old}}\" por \"{{new}}\"",
-            "set_title": "Definir o título da programação como \"{{title}}\""
+            "set_title": "Definir o título da programação como \"{{title}}\"",
+            "travelers": {
+                "everything": "Programação completa",
+                "together": "Programação em conjunto"
+            }
         },
         "gallery": {
             "title": "Galeria",

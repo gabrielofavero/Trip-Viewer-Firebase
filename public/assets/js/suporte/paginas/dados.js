@@ -445,3 +445,39 @@ function _getAndDestinationTitle(value, destinos) {
   }
   return _getReadableArray([...destinos, translate('trip.transportation.return')]);
 }
+
+function _getInnerProgramacaoTitleHTML(dado, spanClass, isCustomTraveler = false) {
+  const programacao = dado.programacao || '';
+  const presentes = dado.pessoas
+      .filter(p => p.isPresent)
+      .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
+
+  const todasPresentes = presentes.length === dado.pessoas.length;
+  const pessoasTexto = (todasPresentes || isCustomTraveler === true) ? '' : _getReadableArray(presentes);
+
+  let horario = '';
+  if (dado.inicio && dado.fim) {
+      horario = `${dado.inicio} - ${dado.fim}`;
+  } else if (dado.inicio) {
+      horario = dado.inicio;
+  }
+
+  if (pessoasTexto && horario && programacao) {
+      return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
+  }
+
+  if (pessoasTexto && programacao) {
+      return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
+  }
+
+  if (horario && programacao) {
+      return `${_highlight(`${horario}:`)} ${programacao}`;
+  }
+
+  return programacao;
+
+  function _highlight(text) {
+    return `<span class="${spanClass}">${text}</span>`;
+  }
+}
+

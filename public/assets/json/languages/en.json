@@ -125,7 +125,11 @@
                 "playlist": "View Playlist"
             },
             "replace_title": "Replace the title \"{{old}}\" with \"{{new}}\"",
-            "set_title": "Set the title of the itinerary to \"{{title}}\""
+            "set_title": "Set the title of the itinerary to \"{{title}}\"",
+            "travelers": {
+                "everything": "Full itinerary",
+                "together": "Group itinerary"
+            }
         },
         "gallery": {
             "title": "Gallery",

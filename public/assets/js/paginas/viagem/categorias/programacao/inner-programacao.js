@@ -1,20 +1,21 @@
 var PROGRAMACAO_ABERTA = false;
-var PROGRAMACAO_ATUAL = {
+var PROGRAMACAO_ATUAL_DATA = {
     dia: 0,
     mes: 0,
     ano: 0
 };
+var PROGRAMACAO_ATUAL = null;
 var INNER_PROGRAMACAO_ATUAL = [];
-
+var IS_TRAVELER_CUSTOM_SELECT_OPTION_EXCLUSIVE = false;
 // ======= LOADERS =======
-function _loadModalContentCalendar(programacao) {
-    let titulo = programacao.titulo;
-    const data = _getDateTitle(_convertFromDateObject(programacao.data));
+function _loadModalContentCalendar() {
+    let titulo = PROGRAMACAO_ATUAL.titulo;
+    const data = _getDateTitle(_convertFromDateObject(PROGRAMACAO_ATUAL.data));
     let programacaoDestinos = [];
 
     if (FIRESTORE_DATA.modulos.destinos && DESTINOS && DESTINOS.length > 0) {
         const destinosIDs = DESTINOS.map(destino => destino.destinosID);
-        for (const destinoID of programacao.destinosIDs) {
+        for (const destinoID of PROGRAMACAO_ATUAL.destinosIDs) {
             programacaoDestinos.push(destinoID.titulo);
         }
 
@@ -24,17 +25,13 @@ function _loadModalContentCalendar(programacao) {
         }
     }
 
-    getID("programacao-titulo").innerText = _getProgramacaoTitulo(titulo, programacaoDestinos);
+    getID("programacao-titulo").querySelector('.titulo').innerText = _getProgramacaoTitulo(titulo, programacaoDestinos);
     getID("programacao-data").innerText = data;
 
     INNER_PROGRAMACAO_ATUAL = [];
 
-    _setModalCalendarInnerHTML(getID("programacao-itens-madrugada"), programacao.madrugada);
-    _setModalCalendarInnerHTML(getID("programacao-itens-manha"), programacao.manha);
-    _setModalCalendarInnerHTML(getID("programacao-itens-tarde"), programacao.tarde);
-    _setModalCalendarInnerHTML(getID("programacao-itens-noite"), programacao.noite);
-
-    _adaptModalCalendarInnerHTML();
+    _loadProgramacaoTravelersSelect();
+    _loadProgramacaoTravelersSelectAction();
 
     function _getProgramacaoTitulo(titulo, destinos) {
         if (!titulo?.valor) {
@@ -55,7 +52,8 @@ function _loadModalContentCalendar(programacao) {
 
 // Modal
 function _openModalCalendar(programacao) {
-    _loadModalContentCalendar(programacao);
+    PROGRAMACAO_ATUAL = programacao;
+    _loadModalContentCalendar();
     $("#programacao-box").show()
     setTimeout(() => {
         getID("programacao-box").classList.toggle('show')
@@ -65,9 +63,10 @@ function _openModalCalendar(programacao) {
 
 function _closeModalCalendar() {
     PROGRAMACAO_ABERTA = false;
-    PROGRAMACAO_ATUAL.dia = 0;
-    PROGRAMACAO_ATUAL.mes = 0;
-    PROGRAMACAO_ATUAL.ano = 0;
+    PROGRAMACAO_ATUAL = null;
+    PROGRAMACAO_ATUAL_DATA.dia = 0;
+    PROGRAMACAO_ATUAL_DATA.mes = 0;
+    PROGRAMACAO_ATUAL_DATA.ano = 0;
 
     getID("programacao-box").classList.toggle('show')
     setTimeout(() => {
@@ -77,9 +76,10 @@ function _closeModalCalendar() {
 }
 
 function _reloadModalCalendar(programacao) {
+    PROGRAMACAO_ATUAL = programacao;
     getID("programacao-modal").classList.toggle('show');
     setTimeout(() => {
-        _loadModalContentCalendar(programacao);
+        _loadModalContentCalendar();
         getID("programacao-modal").classList.toggle('show');
     }, 300);
 }
@@ -133,12 +133,12 @@ function _loadCalendarItem(dataString) {
         const month = parseInt(dataString.split("/")[1]);
         const year = parseInt(dataString.split("/")[2]);
 
-        if (day != 0 && day == PROGRAMACAO_ATUAL.dia && month == PROGRAMACAO_ATUAL.mes && year == PROGRAMACAO_ATUAL.ano) {
+        if (day != 0 && day == PROGRAMACAO_ATUAL_DATA.dia && month == PROGRAMACAO_ATUAL_DATA.mes && year == PROGRAMACAO_ATUAL_DATA.ano) {
             _closeModalCalendar();
         } else {
-            PROGRAMACAO_ATUAL.dia = day;
-            PROGRAMACAO_ATUAL.mes = month;
-            PROGRAMACAO_ATUAL.ano = year;
+            PROGRAMACAO_ATUAL_DATA.dia = day;
+            PROGRAMACAO_ATUAL_DATA.mes = month;
+            PROGRAMACAO_ATUAL_DATA.ano = year;
             if (day != 0) {
                 for (let i = 0; i < FIRESTORE_DATA.programacoes.length; i++) {
                     var currentDate = _convertFromDateObject(FIRESTORE_DATA.programacoes[i].data);
@@ -158,15 +158,6 @@ function _loadCalendarItem(dataString) {
     } else {
         console.warn("No data string provided to load calendar item.");
     }
-}
-
-function _getHorarioHTML(inicio, fim) {
-    if (inicio && fim) {
-        return `<span class='programacao-item'>${inicio} - ${fim}: </span>`;
-    } else if (inicio) {
-        return `<span class='programacao-item'>${inicio}: </span>`;
-    }
-    return '';
 }
 
 function _getInnerProgramacaoHTML(item) {
@@ -242,8 +233,7 @@ function _setModalCalendarInnerHTML(div, programacao) {
         if (programacao[i].programacao) {
             div.innerHTML += `<div>
                                 <i class="bi bi-chevron-right color-icon"></i>
-                                ${_getHorarioHTML(programacao[i].inicio, programacao[i].fim)}
-                                ${programacao[i].programacao}
+                                ${_getInnerProgramacaoTitleHTML(programacao[i], 'programacao-item', IS_TRAVELER_CUSTOM_SELECT_OPTION_EXCLUSIVE)}
                                 ${_getInnerProgramacaoHTML(programacao[i].item)}
                               </div>`;
         }
@@ -262,4 +252,134 @@ function _adaptModalCalendarInnerHTML() {
     getID("programacao-tarde").style.display = tarde.innerHTML ? "block" : "none";
     getID("programacao-noite").style.display = noite.innerHTML ? "block" : "none";
     getID("sem-programacao").style.display = (madrugada.innerHTML || manha.innerHTML || tarde.innerHTML || noite.innerHTML) ? "none" : "block";
+}
+
+// Custom Select
+function _loadProgramacaoTravelersSelect() {
+    const options = _loadProgramacaoTravelersSelectOptions();
+    
+    if (options.length === 0) {
+        getID('innner-programacao-travelers-select').style.display = 'none';
+        return;
+    }
+
+    getID('innner-programacao-travelers-select').style.display = '';
+    const customSelect = {
+        id: 'innner-programacao-travelers-select',
+        options,
+        activeOption: 'everything',
+        action: _loadProgramacaoTravelersSelectAction,
+        autoExecute: false
+    }
+
+    _loadCustomSelect(customSelect);
+}
+
+function _loadProgramacaoTravelersSelectOptions() {
+    const allProgs = [
+        ...PROGRAMACAO_ATUAL.madrugada,
+        ...PROGRAMACAO_ATUAL.manha,
+        ...PROGRAMACAO_ATUAL.tarde,
+        ...PROGRAMACAO_ATUAL.noite
+    ];
+
+    const idToName = new Map(TRAVELERS.map(t => [t.id, t.nome]));
+    const totalTravelers = TRAVELERS.length;
+    const combinationSet = new Map();
+    let addTogether = false;
+
+    for (const prog of allProgs) {
+        const presentes = prog.pessoas
+            .filter(p => p.isPresent)
+            .map(p => p.id)
+            .sort();
+
+        if (presentes.length === totalTravelers) {
+            addTogether = true;
+            continue;
+        };
+
+        const names = presentes
+            .map(id => idToName.get(id))
+            .filter(Boolean);
+
+        const key = presentes.join('|');
+
+        if (!combinationSet.has(key)) {
+            combinationSet.set(key, {
+                names,
+                size: presentes.length
+            });
+        }
+    }
+
+    if (combinationSet.size <= 1) return [];
+
+    if (combinationSet.size > 5) {
+        for (const [key, info] of combinationSet.entries()) {
+            if (info.size > 1) {
+                combinationSet.delete(key);
+            }
+        }
+    }
+
+    const options = [{
+        value: 'everything',
+        label: translate('trip.itinerary.travelers.everything')
+    }];
+
+    if (addTogether) {
+        options.push({
+            value: 'together',
+            label: translate('trip.itinerary.travelers.together')
+        });
+    }
+
+    for (const [key, info] of combinationSet.entries()) {
+        if (info.size < totalTravelers) {
+            options.push({
+                value: key,
+                label: _getReadableArray(info.names)
+            });
+        }
+    }
+
+    return options;
+}
+
+function _loadProgramacaoTravelersSelectAction(value="everything") {
+    IS_TRAVELER_CUSTOM_SELECT_OPTION_EXCLUSIVE = !['everything', 'together'].includes(value);
+    const madrugada = _filterInnerProgramacoes(PROGRAMACAO_ATUAL.madrugada, value);
+    const manha = _filterInnerProgramacoes(PROGRAMACAO_ATUAL.manha, value);
+    const tarde = _filterInnerProgramacoes(PROGRAMACAO_ATUAL.tarde, value);
+    const noite = _filterInnerProgramacoes(PROGRAMACAO_ATUAL.noite, value);
+
+    _setModalCalendarInnerHTML(getID("programacao-itens-madrugada"), madrugada);
+    _setModalCalendarInnerHTML(getID("programacao-itens-manha"), manha);
+    _setModalCalendarInnerHTML(getID("programacao-itens-tarde"), tarde);
+    _setModalCalendarInnerHTML(getID("programacao-itens-noite"), noite);
+    
+    _adaptModalCalendarInnerHTML();
+}
+
+function _filterInnerProgramacoes(obj, filter) {
+    switch (filter) {
+        case 'everything':
+            return obj;
+        case 'together':
+            return obj.filter(item => {
+                const presentes = item.pessoas
+                    .filter(p => p.isPresent)
+                    .map(p => p.id);
+                return presentes.length === TRAVELERS.length;
+            });
+        default:
+            const filterIds = filter.split('|');
+            return obj.filter(item => {
+                const presentes = item.pessoas
+                    .filter(p => p.isPresent)
+                    .map(p => p.id);
+                return filterIds.length === presentes.length && filterIds.every(id => presentes.includes(id));
+            });
+    }
 }

@@ -6,8 +6,8 @@
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 94    | 93        | 1       |
 | 🏆   | Feature      | F000  | 99    | 97        | 2      |
-| 📈   | Improvement  | M000  | 117   | 114        | 3      |
-| ⚔️   | Epic         | E000  | 36    | 34        | 2      |
+| 📈   | Improvement  | M000  | 117   | 113        | 4      |
+| ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
 - ❔: No apparent solution
@@ -15,12 +15,11 @@
 
 ## Backlog
 ### High Priority
-- ⚔️ **E035:** Include traveler names in view.html (Itinerary)
-- ⚔️ **E036:** Protect sensitive trip data (reservation codes)
-- 🏆 **F098:** 
+- ⚔️ **E035:** Protect sensitive trip data (reservation codes)
 
 ### Medium Priority
 - 📈 **M090:** Load logo inside pre loader
+- 📈 **M105:** Remove CONFIG and reduce use of global variables
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
@@ -30,8 +29,8 @@
 ## Done
 
 ### November 2025
-- ⚔️ **E035:** Include traveler names in view.html (Itinerary)
-  - *[🏆F096] Add ID into travelers*
+- 🏆 **F098:** Include traveler names in view.html (Itinerary)
+- 🏆 **F096:** Add ID into travelers
 - 🏆 **F099:** Replace all selects with custom selects
 - 📈 **M117:** Redirect map page to destination.html
 - 📈 **M091:** Refactor destionations.html custom select to be a component
@@ -458,7 +457,6 @@
   - *Lightbox persists (no reload)*
 - ⚔️🚦 **E018:** New Front-End: index.html
   - *Waiting for Guilherme's template*
-- 📈 **M105:** Remove CONFIG and reduce use of global variables
 - 📈 **M106:** Use require in js files
 - ⚔️ **E034:** Frontend code refactoring
   - *Use require*

@@ -21,7 +21,7 @@ function _loadInnerProgramacaoHTML(j) {
             if (dado.programacao) {
                 div.innerHTML += `<div class="input-botao-container">
                                     <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
-                                        ${_getTexto(dado)}
+                                        ${_getInnerProgramacaoTitleHTML(dado, 'inner-programacao-highlight')}
                                     </button>
                                     <i class="iconify drag-icon" data-icon="mdi:drag"></i>
                                 </div>`;
@@ -30,42 +30,6 @@ function _loadInnerProgramacaoHTML(j) {
             getID(`programacao-${turno}-${j}`).style.display = div.innerHTML ? 'block' : 'none';
         }
     }
-
-    function _getTexto(dado) {
-        const programacao = dado.programacao || '';
-        const presentes = dado.pessoas
-            .filter(p => p.isPresent)
-            .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
-
-        const todasPresentes = presentes.length === dado.pessoas.length;
-        const pessoasTexto = todasPresentes ? '' : _getReadableArray(presentes);
-
-        let horario = '';
-        if (dado.inicio && dado.fim) {
-            horario = `${dado.inicio} - ${dado.fim}`;
-        } else if (dado.inicio) {
-            horario = dado.inicio;
-        }
-
-        if (pessoasTexto && horario && programacao) {
-            return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
-        }
-
-        if (pessoasTexto && programacao) {
-            return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
-        }
-
-        if (horario && programacao) {
-            return `${_highlight(`${horario}:`)} ${programacao}`;
-        }
-
-        return programacao;
-    }
-
-    function _highlight(text) {
-        return `<span class="inner-programacao-highlight">${text}</span>`;
-    }
-
 }
 
 // Carregamento Interno (Modal)
