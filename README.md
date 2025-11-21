@@ -5,8 +5,8 @@
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 94    | 93        | 1       |
-| 🏆   | Feature      | F000  | 99    | 97        | 2      |
-| 📈   | Improvement  | M000  | 117   | 114        | 3      |
+| 🏆   | Feature      | F000  | 99    | 99        | 0      |
+| 📈   | Improvement  | M000  | 117   | 116        | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -18,12 +18,10 @@
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
 
 ### Medium Priority
-- 📈 **M105:** Remove CONFIG ~~and reduce use of global variables~~
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
-- 📈 **M114:** Make button / select outlines theme color (view.html)
 
 ## Done
 
@@ -528,3 +526,5 @@
 - 📈 **M089:** Replace color values with environment variables in CSS
 - 🏆 **F067:** OneDrive integration
 - 🏆 **F081:** Embed map when there is no video in the destination
+- 📈 **M105:** Remove CONFIG ~~and reduce use of global variables~~
+- 📈 **M114:** Make button / select outlines theme color (view.html)
