@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
 
   <title>TripViewer</title>
   <meta content="Gerencie viagens com o TripViewer" name="description">
@@ -48,7 +49,7 @@
 </head>
 
 <body>
-  <div class="top-bar" id="top-bar">
+  <div class="top-bar loadable" id="top-bar" style="display: none">
     <a href="index.html" class="logo-link">
       <div class="logo-box">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
@@ -113,15 +114,16 @@
       <i id="profile-icon" class="icon-buttons" style="display: none;"></i>
     </div>
   </div>
-  <div class="notification-bar" id="notification-bar">
+  <div class="notification-bar loadable" id="notification-bar" style="display: none">
     <span class="notification-text" id="notification-text"></span>
-    <span class="notification-link" id="notification-link" onclick="goToCurrentTrip()"><i class="iconify external-link" data-icon="tabler:external-link"></i></span>
-    <span class="notification-close" onclick="closeNotification()"><i class="iconify" data-icon="material-symbols:close"></i></span>
+    <span class="notification-link" id="notification-link" onclick="goToCurrentTrip()"><i class="iconify external-link"
+        data-icon="tabler:external-link"></i></span>
+    <span class="notification-close" onclick="closeNotification()"><i class="iconify"
+        data-icon="material-symbols:close"></i></span>
   </div>
 
   <!-- ======= Hero ======= -->
-  <section id="hero">
-
+  <section id="hero" class="loadable" style="display: none">
     <div class="content-box">
       <div id="index-unlogged-title" class="index-title" style="display: none">
         <p>
@@ -148,7 +150,7 @@
             data-icon="material-symbols-light:trip"></i>
           <div class="logged-menu-text" data-translate="trip.next"></div>
         </div>
-          <div class="logged-menu-item" id="viagensAnteriores"><i class="iconify index-buttons logged-menu-buttons"
+        <div class="logged-menu-item" id="viagensAnteriores"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="wpf:past"></i>
           <div class="logged-menu-text" data-translate="trip.previous"></div>
         </div>
@@ -161,26 +163,28 @@
           <div class="logged-menu-text" data-translate="listing.title"></div>
         </div>
         <div class="logged-menu-item" id="ajustesDaConta"><i class="iconify index-buttons logged-menu-buttons"
-          data-icon="material-symbols:settings"></i>
-        <div class="logged-menu-text" data-translate="auth.account_settings"></div>
-      </div>
+            data-icon="material-symbols:settings"></i>
+          <div class="logged-menu-text" data-translate="auth.account_settings"></div>
+        </div>
       </div>
 
       <div class="userList-box" id="proximasViagens-box" style="display: none">
         <h4 data-translate="trip.next"></h4>
         <div class="content-list">
           <div id="preloader-proximasViagens"></div>
-          <div class="demora-carregamento" id="demora-carregamento-proximasViagens" style="display:none" data-translate="">
+          <div class="demora-carregamento" id="demora-carregamento-proximasViagens" style="display:none"
+            data-translate="">
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-proximasViagens" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('viagens')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span
+                data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-proximasViagens" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-proximasViagens"></div>
         </div>
         <button id="nova-viagem-1" class="btn btn-theme" type="button"><i class="iconify add"
-          data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
+            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
       </div>
 
       <div class="userList-box" id="viagensAnteriores-box" style="display: none">
@@ -191,13 +195,14 @@
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-viagensAnteriores" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('viagens')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span
+                data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-viagensAnteriores" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-viagensAnteriores"></div>
         </div>
         <button id="nova-viagem-2" class="btn btn-theme" type="button"><i class="iconify add"
-          data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
+            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
       </div>
 
       <div class="userList-box" id="destinos-box" style="display: none">
@@ -208,7 +213,8 @@
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('destinos')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span
+                data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-destinos" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-destinos"></div>
@@ -225,7 +231,8 @@
             <span data-translate="messages.long_load"></span><br>
             <button id="carregar-novamente-destinos" class="btn btn-theme carregar-novamente" type="button"
               onclick="_manualListLoad('listagens')">
-              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span data-translate="labels.try_again"></span></button>
+              <i class="iconify add" data-icon="pepicons-pop:reload"></i><span
+                data-translate="labels.try_again"></span></button>
           </div>
           <div id="sem-listagens" style="display:none" data-translate="messages.no_data"></div>
           <div id="dados-listagens"></div>
@@ -244,7 +251,8 @@
           </div>
 
           <div id="delete-account-container">
-            <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="auth.delete_account.title"></a>
+            <a id="settings-delete-account" href="#" onclick="_openModal()"
+              data-translate="auth.delete_account.title"></a>
           </div>
         </div>
 
@@ -259,8 +267,6 @@
       </div>
 
     </div>
-    <!-- ======= Support: Preloader ======= -->
-    <div id="preloader"></div>
 
     <div id="modal" class="modal">
       <div class="modal-content">
@@ -299,15 +305,19 @@
   </section>
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
+  <footer id="footer" class="loadable" style="display: none">
     <div class="container">
       <div class="credits">
-        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
-          class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
+        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel
+          Fávero</a>. <span class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify"
+            data-icon="ri:information-line"></i>
           <span data-translate="labels.credits"></span></span>
       </div>
     </div>
   </footer><!-- End Footer -->
+
+  <!-- ======= Support: Preloader ======= -->
+  <div id="preloader"></div>
 
   <!-- Firebase -->
   <script src="../index.js" type=text/JSX"></script>

@@ -6,7 +6,7 @@
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 94    | 93        | 1       |
 | 🏆   | Feature      | F000  | 99    | 97        | 2      |
-| 📈   | Improvement  | M000  | 117   | 113        | 4      |
+| 📈   | Improvement  | M000  | 117   | 114        | 3      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -18,8 +18,7 @@
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
 
 ### Medium Priority
-- 📈 **M090:** Load logo inside pre loader
-- 📈 **M105:** Remove CONFIG and reduce use of global variables
+- 📈 **M105:** Remove CONFIG ~~and reduce use of global variables~~
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
@@ -29,6 +28,7 @@
 ## Done
 
 ### November 2025
+- 📈 **M090:** Load logo inside pre loader
 - 🏆 **F098:** Include traveler names in view.html (Itinerary)
 - 🏆 **F096:** Add ID into travelers
 - 🏆 **F099:** Replace all selects with custom selects

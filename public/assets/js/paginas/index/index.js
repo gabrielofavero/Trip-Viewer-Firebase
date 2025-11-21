@@ -16,6 +16,7 @@ var VIAGENS = {
 _startLoadingScreen();
 
 document.addEventListener('DOMContentLoaded', async function () {
+  _startLoadingScreen();
   try {
     _main();
 
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     _displayError(error);
     throw error;
   }
+  _stopLoadingScreen();
 });
 
 function _loadListenersIndex() {
@@ -325,7 +327,7 @@ function _viagensEditar(code) {
 }
 
 function _viagensVisualizar(code) {
-  window.open(`view.html?v=${code}`, '_blank'); 
+  window.open(`view.html?v=${code}`, '_blank');
 }
 
 function _viagensNovo() {
@@ -369,7 +371,7 @@ function _loadNotificationBar() {
       }
     } else {
       getID('notification-text').innerHTML = `${translate('trip.current_multi_1')}<br> ${translate('trip.current_multi_2')}"`;
-      getID('notification-link').style.display = 'none';	
+      getID('notification-link').style.display = 'none';
     }
   }
 }

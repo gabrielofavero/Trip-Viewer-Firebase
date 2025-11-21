@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
 
   <title>TripViewer</title>
   <meta content="Venha visualizar minhas informações criadas no TripViewer" name="description">
@@ -48,385 +49,397 @@
 </head>
 
 <body>
-  <div class="top-bar">
-    <a href="index.html" class="logo-link">
-      <div class="logo-box">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
-          <g style="isolation: isolate;">
-            <g id="Capa_1" data-name="Capa 1">
-              <g>
-                <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                  style="fill: none; stroke: #595a5a; stroke-miterlimit: 10; stroke-width: 8px;" />
-                <path id="light-color-1"
-                  d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                  style="fill: #5859a7; stroke-width: 0px;" />
-                <path
-                  d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <path id="light-color-2"
-                  d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                  style="fill: #5859a7; stroke-width: 0px;" />
-                <path
-                  d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #595a5a; stroke-width: 0px;" />
+  <div class="loadable" style="display: none">
+    <div class="top-bar">
+      <a href="index.html" class="logo-link">
+        <div class="logo-box">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
+            <g style="isolation: isolate;">
+              <g id="Capa_1" data-name="Capa 1">
+                <g>
+                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                    style="fill: none; stroke: #595a5a; stroke-miterlimit: 10; stroke-width: 8px;" />
+                  <path id="light-color-1"
+                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                    style="fill: #5859a7; stroke-width: 0px;" />
+                  <path
+                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                  <path id="light-color-2"
+                    d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                    style="fill: #5859a7; stroke-width: 0px;" />
+                  <path
+                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #595a5a; stroke-width: 0px;" />
+                </g>
               </g>
             </g>
-          </g>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
-          <g style="isolation: isolate;">
-            <g id="Capa_1" data-name="Capa 1">
-              <g>
-                <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                  style="fill: none; stroke: #bfbfbf; stroke-miterlimit: 10; stroke-width: 8px;" />
-                <path id="dark-color-1"
-                  d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                  style="fill: #7f75b6; stroke-width: 0px;" />
-                <path
-                  d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <path id="dark-color-2"
-                  d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                  style="fill: #7f75b6; stroke-width: 0px;" />
-                <path
-                  d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                  style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #bfbfbf; stroke-width: 0px;" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
+            <g style="isolation: isolate;">
+              <g id="Capa_1" data-name="Capa 1">
+                <g>
+                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
+                    style="fill: none; stroke: #bfbfbf; stroke-miterlimit: 10; stroke-width: 8px;" />
+                  <path id="dark-color-1"
+                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
+                    style="fill: #7f75b6; stroke-width: 0px;" />
+                  <path
+                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
+                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                  <path id="dark-color-2"
+                    d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
+                    style="fill: #7f75b6; stroke-width: 0px;" />
+                  <path
+                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
+                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
+                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #bfbfbf; stroke-width: 0px;" />
+                </g>
               </g>
             </g>
-          </g>
-        </svg>
-        <div id="trip-viewer-text">TripViewer</div>
-      </div>
-    </a>
-    <div class="icons-box" id="icons-box">
-      <div class="lang-selector">
-        <button class="lang-button">EN</button>
-        <div class="lang-options">
-          <button data-lang="en">EN</button>
-          <button data-lang="pt">PT</button>
+          </svg>
+          <div id="trip-viewer-text">TripViewer</div>
         </div>
+      </a>
+      <div class="icons-box" id="icons-box">
+        <div class="lang-selector">
+          <button class="lang-button">EN</button>
+          <div class="lang-options">
+            <button data-lang="en">EN</button>
+            <button data-lang="pt">PT</button>
+          </div>
+        </div>
+        <i id="share" class="bx bx-share-alt icon-buttons"></i>
+        <i id="night-mode" class="bx bx-moon icon-buttons"></i>
+        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>
       </div>
-      <i id="share" class="bx bx-share-alt icon-buttons"></i>
-      <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-      <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>
     </div>
-  </div>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex flex-column justify-content-center">
-    <nav id="navbar" class="navbar nav-menu">
-      <ul>
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex flex-column justify-content-center">
+      <nav id="navbar" class="navbar nav-menu">
+        <ul>
 
-        <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
 
-        <div id="keypointsNav">
-          <li><a href="#keypoints" class="nav-link scrollto"><i class="bx bx-dots-horizontal-rounded"></i>
-              <span data-translate="labels.highlights"></span></a></li>
-        </div>
-
-        <div id="transportationNav">
-          <li><a href="#transportation" class="nav-link scrollto"><i id="transporte-nav" class="iconify"
-                data-icon="mingcute:rocket-fill"></i>
-              <span data-translate="trip.transportation.title"></span></a></li>
-        </div>
-
-        <div id="stayNav">
-          <li><a href="#stay" class="nav-link scrollto"><i class="bx bxs-hotel"></i>
-            <span data-translate="trip.accommodation.title"></span></a>
-          </li>
-        </div>
-
-        <div id="scheduleCalendarNav">
-          <li><a href="#scheduleCalendar" class="nav-link scrollto"><i class="bx bx-calendar"></i>
-              <span data-translate="trip.itinerary.title"></span></a></li>
-        </div>
-
-        <div id="destinosNav">
-          <li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-map"></i>
-            <span id="destinosNavText" data-translate="destination.title"></span></a></li>
-        </div>
-
-        <div id="portfolioM">
-          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-photo-album"></i>
-            <span data-translate="trip.gallery.title"></span></a>
-          </li>
-        </div>
-
-      </ul>
-    </nav>
-  </header>
-
-  <!-- ======= Hero ======= -->
-  <section id="hero" class="d-flex flex-column justify-content-center">
-    <div class="container" data-aos="zoom-in" data-aos-delay="100">
-      <h1 id="header1"></h1>
-      <img id="header2">
-      <h2 class="header-text" id="subtitulo"></h2>
-      <h2 class="header-text" id="countdown"></h2>
-      <div class="social-links" id="social-links" style="display: none">
-        <a id="attachmentsLink" href="" target="_blank" class="documents"><i class="iconify"
-            data-icon="heroicons:paper-clip-20-solid" style="display:none"></i></a>
-        <a id="driveLink" href="" target="_blank" class="documents"><i class="iconify"
-            data-icon="fa-brands:google-drive" style="display:none"></i></a>
-        <a id="sheetLink" href="" target="_blank" class="sheets"><i class="iconify"
-            data-icon="file-icons:microsoft-excel" style="display:none"></i></a>
-        <a id="pptLink" href="" target="_blank" class="sheets"><i class="iconify"
-            data-icon="file-icons:microsoft-powerpoint" style="display:none"></i></a>
-        <a id="pdfLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="fa6-solid:file-pdf"
-            style="display:none"></i></a>
-        <a id="mapsLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="clarity:map-marker-solid"
-            style="display:none"></i></a>
-        <a id="vaccineLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="tabler:vaccine"
-            style="display:none"></i></a>
-      </div>
-      <button id="programacao-hoje" style="display: none"><span data-translate="trip.itinerary.todays_itinerary"></span></button>
-    </div>
-  </section>
-
-  <main id="main">
-
-    <!-- ======= Keypoints ======= -->
-    <section id="keypoints" class="facts">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2 data-translate="labels.highlights"></h2>
-        </div>
-        <div class="col-lg-4" id="googleMaps"></div>
-
-        <div class="row" id="dados">
-          <div class="col-6 col-lg-3">
-            <div class="count-box" id="dado1">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
+          <div id="keypointsNav">
+            <li><a href="#keypoints" class="nav-link scrollto"><i class="bx bx-dots-horizontal-rounded"></i>
+                <span data-translate="labels.highlights"></span></a></li>
           </div>
 
-          <div class="col-6 col-lg-3">
-            <div class="count-box" id="dado2">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
+          <div id="transportationNav">
+            <li><a href="#transportation" class="nav-link scrollto"><i id="transporte-nav" class="iconify"
+                  data-icon="mingcute:rocket-fill"></i>
+                <span data-translate="trip.transportation.title"></span></a></li>
           </div>
 
-          <div class="col-6 col-lg-3">
-            <div class="count-box" id="dado3">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
+          <div id="stayNav">
+            <li><a href="#stay" class="nav-link scrollto"><i class="bx bxs-hotel"></i>
+                <span data-translate="trip.accommodation.title"></span></a>
+            </li>
           </div>
 
-          <div class="col-6 col-lg-3">
-            <div class="count-box" id="dado4">
-              <i></i>
-              <span> </span>
-              <p>...</p>
-            </div>
+          <div id="scheduleCalendarNav">
+            <li><a href="#scheduleCalendar" class="nav-link scrollto"><i class="bx bx-calendar"></i>
+                <span data-translate="trip.itinerary.title"></span></a></li>
           </div>
+
+          <div id="destinosNav">
+            <li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-map"></i>
+                <span id="destinosNavText" data-translate="destination.title"></span></a></li>
+          </div>
+
+          <div id="portfolioM">
+            <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-photo-album"></i>
+                <span data-translate="trip.gallery.title"></span></a>
+            </li>
+          </div>
+
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ======= Hero ======= -->
+    <section id="hero" class="d-flex flex-column justify-content-center">
+      <div class="container" data-aos="zoom-in" data-aos-delay="100">
+        <h1 id="header1"></h1>
+        <img id="header2">
+        <h2 class="header-text" id="subtitulo"></h2>
+        <h2 class="header-text" id="countdown"></h2>
+        <div class="social-links" id="social-links" style="display: none">
+          <a id="attachmentsLink" href="" target="_blank" class="documents"><i class="iconify"
+              data-icon="heroicons:paper-clip-20-solid" style="display:none"></i></a>
+          <a id="driveLink" href="" target="_blank" class="documents"><i class="iconify"
+              data-icon="fa-brands:google-drive" style="display:none"></i></a>
+          <a id="sheetLink" href="" target="_blank" class="sheets"><i class="iconify"
+              data-icon="file-icons:microsoft-excel" style="display:none"></i></a>
+          <a id="pptLink" href="" target="_blank" class="sheets"><i class="iconify"
+              data-icon="file-icons:microsoft-powerpoint" style="display:none"></i></a>
+          <a id="pdfLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="fa6-solid:file-pdf"
+              style="display:none"></i></a>
+          <a id="mapsLink" href="" target="_blank" class="sheets"><i class="iconify"
+              data-icon="clarity:map-marker-solid" style="display:none"></i></a>
+          <a id="vaccineLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="tabler:vaccine"
+              style="display:none"></i></a>
         </div>
-
-        <div id="gastos-container" class="button-box" style="margin-top: 25px; display: none;">
-          <button id="gastos" class="btn btn-theme btn-format"><span data-translate="trip.expenses.full_title"></span></button>
-        </div>
-
-    </section>
-
-    <!-- ======= Transportation ======= -->
-    <section id="transportation" class="about">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2 id="transporte-titulo" data-translate="trip.transportation.title"></h2>
-          <div id="transporte-subtitulo"></div>
-        </div>
-
-        <div class="custom-select" id="transporte-select" style="display: none;"></div>
-
-        <div class="tabs-container" id="tabs-container-transportes" style="display: none">
-          <div class="tabs" id="tab-transporte">
-          </div>
-        </div>
-
-        <div id="transporte-box-container">
-          <div class='transporte-box' id="transporte-ida">
-            <div id="transporte-ida-content"></div>
-          </div>
-  
-          <div class='transporte-box' id="transporte-durante" style="display: none;">
-            <div id="transporte-durante-content"></div>
-          </div>
-  
-          <div class='transporte-box' id="transporte-volta" style="display: none;">
-            <div id="transporte-volta-content"></div>
-          </div>
-
-          <div id="transporte-custom-container"></div>
-        </div>
-
+        <button id="programacao-hoje" style="display: none"><span
+            data-translate="trip.itinerary.todays_itinerary"></span></button>
       </div>
     </section>
 
-    <!-- ======= Stay ======= -->
-    <section id="stay" class="about">
-      <div class="container" data-aos="fade-up">
+    <main id="main">
 
-        <div class="section-title">
-          <h2 data-translate="trip.accommodation.title"></h2>
-          <div id="sobre"></div>
-        </div>
+      <!-- ======= Keypoints ======= -->
+      <section id="keypoints" class="facts">
+        <div class="container" data-aos="fade-up">
+          <div class="section-title">
+            <h2 data-translate="labels.highlights"></h2>
+          </div>
+          <div class="col-lg-4" id="googleMaps"></div>
 
-        <div id="hospedagens-box"></div>
-
-      </div>
-    </section>
-
-    <!-- ======= Schedule: Calendar ======= -->
-    <section id="scheduleCalendar" class="resume">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2 data-translate="trip.itinerary.title"></h2>
-          <div id="progDescription" data-translate="trip.itinerary.instructions"></div>
-          <div id="pTotal"></div>
-          <div id="pAjuste"></div>
-          <div class="backup" id="dadosBackup"></div>
-
-          <div id="pill-box" class="pill-box" style="display: none;"></div>
-
-          <div class="card" id="tabela">
-            <h3 class="card-header" id="calendarTitle"></h3>
-            <table class="table table-bordered table-responsive-sm" id="calendar">
-              <thead id="tabHeader">
-                <tr>
-                  <th data-translate="datetime.weekdays.mini.sunday"></th>
-                  <th data-translate="datetime.weekdays.mini.monday"></th>
-                  <th data-translate="datetime.weekdays.mini.tuesday"></th>
-                  <th data-translate="datetime.weekdays.mini.wednesday"></th>
-                  <th data-translate="datetime.weekdays.mini.thursday"></th>
-                  <th data-translate="datetime.weekdays.mini.friday"></th>
-                  <th data-translate="datetime.weekdays.mini.saturday"></th>
-                </tr>
-              </thead>
-
-              <tbody id="calendar-body">
-
-              </tbody>
-            </table>
-
-            <div id="calendarMonthSelector" class="form-inline" style="display: none;">
-              <button class="calendar-navigation" id="previous" onclick="_calendarPrevious()"><i class="bx bx-left-arrow-alt"></i></button>
-              <button class="calendar-navigation" id="next" onclick="_calendarNext()"><i class="bx bx-right-arrow-alt"></i></button>
+          <div class="row" id="dados">
+            <div class="col-6 col-lg-3">
+              <div class="count-box" id="dado1">
+                <i></i>
+                <span> </span>
+                <p>...</p>
+              </div>
             </div>
-            <br />
+
+            <div class="col-6 col-lg-3">
+              <div class="count-box" id="dado2">
+                <i></i>
+                <span> </span>
+                <p>...</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+              <div class="count-box" id="dado3">
+                <i></i>
+                <span> </span>
+                <p>...</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+              <div class="count-box" id="dado4">
+                <i></i>
+                <span> </span>
+                <p>...</p>
+              </div>
+            </div>
           </div>
 
+          <div id="gastos-container" class="button-box" style="margin-top: 25px; display: none;">
+            <button id="gastos" class="btn btn-theme btn-format"><span
+                data-translate="trip.expenses.full_title"></span></button>
+          </div>
 
-          <div id="programacao-box">
-            <div id="programacao-modal">
-              <div id="programacao-fechar" onclick="_closeModalCalendar()"><i class="iconify"
-                  data-icon="material-symbols:close"></i></div>
+      </section>
 
-              <div class="programacao-titulo-box">
-                <div class="programacao-linha">
-                  <div id="programacao-titulo">
-                    <div class="titulo"></div>
-                    <div id="innner-programacao-travelers-select" class="custom-select travelers" style="display: none"></div>
+      <!-- ======= Transportation ======= -->
+      <section id="transportation" class="about">
+        <div class="container" data-aos="fade-up">
+
+          <div class="section-title">
+            <h2 id="transporte-titulo" data-translate="trip.transportation.title"></h2>
+            <div id="transporte-subtitulo"></div>
+          </div>
+
+          <div class="custom-select" id="transporte-select" style="display: none;"></div>
+
+          <div class="tabs-container" id="tabs-container-transportes" style="display: none">
+            <div class="tabs" id="tab-transporte">
+            </div>
+          </div>
+
+          <div id="transporte-box-container">
+            <div class='transporte-box' id="transporte-ida">
+              <div id="transporte-ida-content"></div>
+            </div>
+
+            <div class='transporte-box' id="transporte-durante" style="display: none;">
+              <div id="transporte-durante-content"></div>
+            </div>
+
+            <div class='transporte-box' id="transporte-volta" style="display: none;">
+              <div id="transporte-volta-content"></div>
+            </div>
+
+            <div id="transporte-custom-container"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======= Stay ======= -->
+      <section id="stay" class="about">
+        <div class="container" data-aos="fade-up">
+
+          <div class="section-title">
+            <h2 data-translate="trip.accommodation.title"></h2>
+            <div id="sobre"></div>
+          </div>
+
+          <div id="hospedagens-box"></div>
+
+        </div>
+      </section>
+
+      <!-- ======= Schedule: Calendar ======= -->
+      <section id="scheduleCalendar" class="resume">
+        <div class="container" data-aos="fade-up">
+
+          <div class="section-title">
+            <h2 data-translate="trip.itinerary.title"></h2>
+            <div id="progDescription" data-translate="trip.itinerary.instructions"></div>
+            <div id="pTotal"></div>
+            <div id="pAjuste"></div>
+            <div class="backup" id="dadosBackup"></div>
+
+            <div id="pill-box" class="pill-box" style="display: none;"></div>
+
+            <div class="card" id="tabela">
+              <h3 class="card-header" id="calendarTitle"></h3>
+              <table class="table table-bordered table-responsive-sm" id="calendar">
+                <thead id="tabHeader">
+                  <tr>
+                    <th data-translate="datetime.weekdays.mini.sunday"></th>
+                    <th data-translate="datetime.weekdays.mini.monday"></th>
+                    <th data-translate="datetime.weekdays.mini.tuesday"></th>
+                    <th data-translate="datetime.weekdays.mini.wednesday"></th>
+                    <th data-translate="datetime.weekdays.mini.thursday"></th>
+                    <th data-translate="datetime.weekdays.mini.friday"></th>
+                    <th data-translate="datetime.weekdays.mini.saturday"></th>
+                  </tr>
+                </thead>
+
+                <tbody id="calendar-body">
+
+                </tbody>
+              </table>
+
+              <div id="calendarMonthSelector" class="form-inline" style="display: none;">
+                <button class="calendar-navigation" id="previous" onclick="_calendarPrevious()"><i
+                    class="bx bx-left-arrow-alt"></i></button>
+                <button class="calendar-navigation" id="next" onclick="_calendarNext()"><i
+                    class="bx bx-right-arrow-alt"></i></button>
+              </div>
+              <br />
+            </div>
+
+
+            <div id="programacao-box">
+              <div id="programacao-modal">
+                <div id="programacao-fechar" onclick="_closeModalCalendar()"><i class="iconify"
+                    data-icon="material-symbols:close"></i></div>
+
+                <div class="programacao-titulo-box">
+                  <div class="programacao-linha">
+                    <div id="programacao-titulo">
+                      <div class="titulo"></div>
+                      <div id="innner-programacao-travelers-select" class="custom-select travelers"
+                        style="display: none"></div>
+                    </div>
+                  </div>
+                  <div class="programacao-data-box">
+                    <i class="bx bx-calendar color-icon"></i>
+                    <span id="programacao-data"></span>
                   </div>
                 </div>
-                <div class="programacao-data-box">
-                  <i class="bx bx-calendar color-icon"></i>
-                  <span id="programacao-data"></span>
+
+                <div id="sem-programacao" data-translate="trip.itinerary.no_itinerary"></div>
+
+                <div class="programacao-item" id="programacao-madrugada"
+                  data-translate="datetime.time_of_day.early_hours"></div>
+                <div id="programacao-itens-madrugada">
+                </div>
+
+                <div class="programacao-item" id="programacao-manha" data-translate="datetime.time_of_day.morning">
+                </div>
+                <div id="programacao-itens-manha">
+                </div>
+
+                <div class="programacao-item" id="programacao-tarde" data-translate="datetime.time_of_day.afternoon">
+                </div>
+                <div id="programacao-itens-tarde">
+                </div>
+
+                <div class="programacao-item" id="programacao-noite" data-translate="datetime.time_of_day.evening">
+                </div>
+                <div id="programacao-itens-noite">
                 </div>
               </div>
 
-              <div id="sem-programacao" data-translate="trip.itinerary.no_itinerary"></div>
-
-              <div class="programacao-item" id="programacao-madrugada" data-translate="datetime.time_of_day.early_hours"></div>
-              <div id="programacao-itens-madrugada">
-              </div>
-
-              <div class="programacao-item" id="programacao-manha" data-translate="datetime.time_of_day.morning"></div>
-              <div id="programacao-itens-manha">
-              </div>
-
-              <div class="programacao-item" id="programacao-tarde" data-translate="datetime.time_of_day.afternoon"></div>
-              <div id="programacao-itens-tarde">
-              </div>
-
-              <div class="programacao-item" id="programacao-noite" data-translate="datetime.time_of_day.evening"></div>
-              <div id="programacao-itens-noite">
-              </div>
             </div>
 
           </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ======= Destinations ======= -->
-    <section id="destinos" class="services">
-      <div class="container" data-aos="fade-up">
+      <!-- ======= Destinations ======= -->
+      <section id="destinos" class="services">
+        <div class="container" data-aos="fade-up">
 
-        <div class="section-title" id="destinosTitleContainer">
-          <h2 id="dTitle" data-translate="destination.title"></h2>
-          <div id="dUpdate"></div>
-        </div>
-
-        <div id="dDescription"></div>
-
-        <div id="destinos-select" class="custom-select"></div>
-        </select>
-
-        <div class="row" id="destinosBox"></div>
-
-      </div>
-    </section>
-
-    <!-- ======= Galeria Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2 data-translate="trip.gallery.title"></h2>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active" data-translate="labels.all"></li>
-            </ul>
+          <div class="section-title" id="destinosTitleContainer">
+            <h2 id="dTitle" data-translate="destination.title"></h2>
+            <div id="dUpdate"></div>
           </div>
+
+          <div id="dDescription"></div>
+
+          <div id="destinos-select" class="custom-select"></div>
+          </select>
+
+          <div class="row" id="destinosBox"></div>
+
         </div>
+      </section>
 
-        <div class="row portfolio-container" id="portfolio-container" data-aos="fade-up" data-aos-delay="200"></div>
+      <!-- ======= Galeria Section ======= -->
+      <section id="portfolio" class="portfolio section-bg">
+        <div class="container" data-aos="fade-up">
 
+          <div class="section-title">
+            <h2 data-translate="trip.gallery.title"></h2>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+              <ul id="portfolio-flters">
+                <li data-filter="*" class="filter-active" data-translate="labels.all"></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row portfolio-container" id="portfolio-container" data-aos="fade-up" data-aos-delay="200"></div>
+
+        </div>
+      </section><!-- End Portfolio Section -->
+
+      <!-- ======= Support: LightBox ======= -->
+      <div id="lightbox" class="lightbox">
+        <div id="lightbox-content" class="lightbox-content">
+          <iframe id="lightbox-iframe"></iframe>
+        </div>
       </div>
-    </section><!-- End Portfolio Section -->
 
-    <!-- ======= Support: LightBox ======= -->
-    <div id="lightbox" class="lightbox">
-      <div id="lightbox-content" class="lightbox-content">
-        <iframe id="lightbox-iframe"></iframe>
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+      <div class="container">
+        <div class="credits">
+          <span data-translate="labels.developed_by"></span> <a
+            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
+            onclick="_openAtribuicoes()"><i class="bx bx-info-circle"></i>
+            <span data-translate="labels.credits"></span></span>
+        </div>
       </div>
-    </div>
-
-  </main>
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-      <div class="credits">
-        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
-          class="atribuicoes" onclick="_openAtribuicoes()"><i class="bx bx-info-circle"></i>
-          <span data-translate="labels.credits"></span></span>
-      </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>

@@ -9,6 +9,9 @@ function _startLoadingScreen(useTimer = false) {
   }
   const preloader = getID('preloader');
   if (preloader) {
+    document.querySelectorAll('.loadable').forEach((el) => {
+      el.style.display = 'none';
+    });
     preloader.style.display = 'block';
     _disableScroll();
   }
@@ -20,6 +23,9 @@ function _stopLoadingScreen() {
   if (!MESSAGE_MODAL_OPEN) {
     const preloader = getID('preloader');
     if (preloader) {
+      document.querySelectorAll('.loadable').forEach((el) => {
+        el.style.display = '';
+      });
       preloader.style.display = 'none';
       _enableScroll();
     }

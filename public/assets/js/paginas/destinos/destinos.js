@@ -3,6 +3,7 @@ var CONTENT = {};
 
 // Métodos Principais
 function _loadDestinosHTML() {
+  _startLoadingScreen();
   _loadVisibilityExternal();
 
   const closeButton = getID("closeButton");
@@ -24,7 +25,7 @@ function _loadDestinosHTML() {
   };
 
   if (DESTINO?.activeCategory && (DESTINO.activeCategory === 'mapa' || Object.keys(DESTINO[DESTINO.activeCategory]).length > 0)) {
-    
+
     _loadDestinoCustomSelect()
     window.addEventListener("resize", () => {
       _applyDestinosMediaHeight();
@@ -34,6 +35,7 @@ function _loadDestinosHTML() {
   } else {
     console.error("O Código não foi localizado na base de dados");
   }
+  _stopLoadingScreen();
 }
 
 function _loadDestinoByType(activeCategory) {

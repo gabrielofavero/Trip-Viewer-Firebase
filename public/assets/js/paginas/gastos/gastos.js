@@ -8,6 +8,7 @@ var GASTOS_TOTAIS = {
 var GASTO_ATIVO = 'resumo';
 
 document.addEventListener('DOMContentLoaded', async function () {
+    _startLoadingScreen();
     _main();
     _loadVisibilityExternal();
 
@@ -33,12 +34,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
-        _displayForbidden(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}` , url);
+        _displayForbidden(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`, url);
         return;
     }
 
     if (!gastosExport?.ativo) {
-        _displayForbidden(translate('messages.errors.module_not_active', {module: translate('trip.expenses.title')}), `view.html?v=${documentID}`);
+        _displayForbidden(translate('messages.errors.module_not_active', { module: translate('trip.expenses.title') }), `view.html?v=${documentID}`);
         return;
     }
 
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         _stopLoadingScreen();
         _requestPinGastos();
     }
+    _stopLoadingScreen();
 });
 
 function _requestPinGastos() {
@@ -139,7 +141,7 @@ function _applyGastos() {
     }
 
     if (!hasGastosPrevios && !hasGastosDurante) {
-        _displayError(translate('messages.errors.no_data_on_module', {module: translate('trip.expenses.title')}));
+        _displayError(translate('messages.errors.no_data_on_module', { module: translate('trip.expenses.title') }));
     }
 }
 
