@@ -10,6 +10,12 @@ var INNER_GASTOS = {
 
 var LAST_INNER_GASTO_TIPO = '';
 
+function _loadGastos(data = FIRESTORE_GASTOS_DATA) {
+    _pushGasto('gastosPrevios', data);
+    _pushGasto('gastosDurante', data);    
+    _loadGastosHTML();
+}
+
 async function _getGastosObject() {
     return {
         compartilhamento: await _getCompartilhamentoObject(),
@@ -36,61 +42,30 @@ function _getGastosProtectedObject() {
     }
 }
 
-// Pin
-function _switchPin() {
-    if (getID('pin-disable').checked) {
-        PIN_GASTOS.new = '';
-        getID('pin-container').style.display = 'none';
-    } else {
-        PIN_GASTOS.new = PIN_GASTOS.current;
-        getID('pin-container').style.display = 'block';
-    }
-}
-
-function _requestPinEditarGastos(invalido = false) {
-    const confirmAction = '_reconfirmPin()';
-    const precontent = translate('trip.expenses.pin.insert');
-    _requestPin({ confirmAction, precontent, invalido });
-}
-
-function _reconfirmPin() {
-    const atual = getID('pin-code').innerText;
-    if (!atual || atual.length < 4) {
-        _requestPinEditarGastos(true)
-    } else {
-        const confirmAction = `_validatePin('${atual}')`;
-        const precontent = translate('trip.expenses.pin.again');
-        _requestPin({ confirmAction, precontent });
-    }
-}
-
-function _validatePin(pin) {
-    if (getID('pin-code').innerText === pin) {
-        PIN_GASTOS.new = pin;
-        _closeMessage();
-    } else {
-        _invalidPin();
-    }
-}
-
-function _invalidPin() {
-    const confirmAction = '_reconfirmPin()';
-    const precontent = translate('trip.expenses.pin.invalid');
-    const invalido = true;
-    _requestPin({ confirmAction, precontent, invalido });
-}
-
-function _setPinButtonText(newPin = true) {
-    getID('request-pin').innerText = newPin ? translate('trip.expenses.pin.new') : translate('trip.expenses.pin.change');
-}
-
-function _validateSavedPIN() {
-    if (getID('pin-enable').checked && !PIN_GASTOS.new) {
-        return [translate('trip.expenses.pin.title')];
-    }
-}
-
 // Gastos e Inner Gastos
+function _pushGasto(tipo, data) {
+    if (!data[tipo]) {
+        data[tipo] = [];
+    }
+
+    for (const gasto of data[tipo]) {
+        const tipos = INNER_GASTOS[tipo].map(gasto => gasto.tipo);
+        const index = tipos.indexOf(gasto.tipo);
+        if (index === -1) {
+            INNER_GASTOS[tipo].push({
+                tipo: gasto.tipo,
+                gastos: [gasto],
+            });
+        } else {
+            INNER_GASTOS[tipo][index].gastos.push(gasto);
+        }
+    }
+}
+
+function _loadGastosContent(data) {
+
+}
+
 function _loadGastosHTML() {
     for (const categoria in INNER_GASTOS) {
         getID(categoria).innerHTML = '';

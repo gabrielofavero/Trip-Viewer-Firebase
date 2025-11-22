@@ -60,12 +60,62 @@ async function _setProtectedDataWithPIN() {
     }
 
     return responses;
+}
+
+// Pin
+function _validateAndLoadProtectedData() {
 
 }
 
+function _switchPin() {
+    if (getID('pin-disable').checked) {
+        PIN_GASTOS.new = '';
+        getID('pin-container').style.display = 'none';
+    } else {
+        PIN_GASTOS.new = PIN_GASTOS.current;
+        getID('pin-container').style.display = 'block';
+    }
+}
 
-async function _setSensitiveDataOnly() {
-    if (!PIN.current) {
-        
+function _requestPinEditarGastos(invalido = false) {
+    const confirmAction = '_reconfirmPin()';
+    const precontent = translate('trip.expenses.pin.insert');
+    _requestPin({ confirmAction, precontent, invalido });
+}
+
+function _reconfirmPin() {
+    const atual = getID('pin-code').innerText;
+    if (!atual || atual.length < 4) {
+        _requestPinEditarGastos(true)
+    } else {
+        const confirmAction = `_validatePin('${atual}')`;
+        const precontent = translate('trip.expenses.pin.again');
+        _requestPin({ confirmAction, precontent });
+    }
+}
+
+function _validatePin(pin) {
+    if (getID('pin-code').innerText === pin) {
+        PIN_GASTOS.new = pin;
+        _closeMessage();
+    } else {
+        _invalidPin();
+    }
+}
+
+function _invalidPin() {
+    const confirmAction = '_reconfirmPin()';
+    const precontent = translate('trip.expenses.pin.invalid');
+    const invalido = true;
+    _requestPin({ confirmAction, precontent, invalido });
+}
+
+function _setPinButtonText(newPin = true) {
+    getID('request-pin').innerText = newPin ? translate('trip.expenses.pin.new') : translate('trip.expenses.pin.change');
+}
+
+function _validateSavedPIN() {
+    if (getID('pin-enable').checked && !PIN_GASTOS.new) {
+        return [translate('trip.expenses.pin.title')];
     }
 }

@@ -83,47 +83,16 @@ async function _loadGastosData() {
         getID('habilitado-gastos').checked = true;
         getID('habilitado-gastos-content').style.display = 'block';
     }
-    if (FIRESTORE_DATA.gastosPin === true) {
-        getID('pin-enable').checked = true;
-        getID('pin-container').style.display = 'block';
-        _setPinButtonText(false);
-        const protectedGastos = await _get(`gastos/${DOCUMENT_ID}`);
-        PIN_GASTOS.current = protectedGastos.pin;
-        PIN_GASTOS.new = protectedGastos.pin;
-        FIRESTORE_GASTOS_DATA = await _get(`gastos/protected/${PIN_GASTOS.current}/${DOCUMENT_ID}`);
-    } else {
-        FIRESTORE_GASTOS_DATA = await _get(`gastos/${DOCUMENT_ID}`);
-    }
+
+    FIRESTORE_GASTOS_DATA = await _get(`gastos/${DOCUMENT_ID}`);
     
     if (ERROR_FROM_GET_REQUEST) {
         _displayError(ERROR_FROM_GET_REQUEST);
         return;
     }
 
-    if (FIRESTORE_GASTOS_DATA) {
-        _pushGasto('gastosPrevios');
-        _pushGasto('gastosDurante');
-    
-        function _pushGasto(tipo) {
-            if (!FIRESTORE_GASTOS_DATA[tipo]) {
-                FIRESTORE_GASTOS_DATA[tipo] = [];
-            }
-
-            for (const gasto of FIRESTORE_GASTOS_DATA[tipo]) {
-                const tipos = INNER_GASTOS[tipo].map(gasto => gasto.tipo);
-                const index = tipos.indexOf(gasto.tipo);
-                if (index === -1) {
-                    INNER_GASTOS[tipo].push({
-                        tipo: gasto.tipo,
-                        gastos: [gasto],
-                    });
-                } else {
-                    INNER_GASTOS[tipo][index].gastos.push(gasto);
-                }
-            }
-        }
-    
-        _loadGastosHTML();
+    if (FIRESTORE_GASTOS_DATA && FIRESTORE_GASTOS_DATA.protegido === false) {
+        _loadGastos();
     }
 }
 
