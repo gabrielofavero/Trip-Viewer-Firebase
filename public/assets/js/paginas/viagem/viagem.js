@@ -17,56 +17,59 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
     _main();
-    const urlParams = _getURLParams();
-    TYPE = urlParams['l'] ? 'listagens' : urlParams['d'] ? "destinos" : 'viagens';
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 0) {
-        if (!REFRESHED) {
-          _refreshCategorias();
-          REFRESHED = true;
-        }
-      } else {
-        REFRESHED = false;
-      }
-    });
-
-    const firestoreData = await _getSingleData(TYPE);
-
-    if (!ERROR_FROM_GET_REQUEST) {
-      FIRESTORE_DATA = firestoreData;
-      console.log('Firestore Database data loaded successfully');
-
-      _start();
-      _mainLoad();
-      _loadViagemVisibility();
-      _adjustPortfolioHeight();
-      _refreshCategorias();
-
-    } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
-      _displayError("Cannot load document. It is possible that it does not exist or that you don't have enough permissions", true);
-      _stopLoadingScreen();
-    } else {
-      _displayError(ERROR_FROM_GET_REQUEST);
-      _stopLoadingScreen();
-    }
-
-    $('body').css('overflow', 'auto');
-
-    if (!MESSAGE_MODAL_OPEN) {
-      setTimeout(() => {
-        _adjustCardsHeights();
-        _adjustPortfolioHeight();
-        _refreshCategorias();
-      }, 1000);
-    }
   } catch (error) {
     _displayError(error);
     throw error;
   }
 });
 
-async function _mainLoad() {
+async function _loadViagemPage() {
+  const urlParams = _getURLParams();
+  TYPE = urlParams['l'] ? 'listagens' : urlParams['d'] ? "destinos" : 'viagens';
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 0) {
+      if (!REFRESHED) {
+        _refreshCategorias();
+        REFRESHED = true;
+      }
+    } else {
+      REFRESHED = false;
+    }
+  });
+
+  const firestoreData = await _getSingleData(TYPE);
+
+  if (!ERROR_FROM_GET_REQUEST) {
+    FIRESTORE_DATA = firestoreData;
+    console.log('Firestore Database data loaded successfully');
+
+    _prepareViewData();
+    _syncModules();
+    _loadViagemVisibility();
+    _adjustPortfolioHeight();
+    _refreshCategorias();
+
+  } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
+    _displayError("Cannot load document. It is possible that it does not exist or that you don't have enough permissions", true);
+    _stopLoadingScreen();
+  } else {
+    _displayError(ERROR_FROM_GET_REQUEST);
+    _stopLoadingScreen();
+  }
+
+  $('body').css('overflow', 'auto');
+
+  if (!MESSAGE_MODAL_OPEN) {
+    setTimeout(() => {
+      _adjustCardsHeights();
+      _adjustPortfolioHeight();
+      _refreshCategorias();
+    }, 1000);
+  }
+}
+
+async function _syncModules() {
   try {
     if (CALL_SYNC.length > 0) {
       const callSyncOrder = [
@@ -75,7 +78,7 @@ async function _mainLoad() {
         _loadHospedagens,
         _loadDestinos,
         _loadGaleria
-    ]
+      ]
       _sortByArray(CALL_SYNC, callSyncOrder);
       for (let _function of CALL_SYNC) {
         _function();
@@ -92,7 +95,7 @@ async function _mainLoad() {
   }
 }
 
-function _start() {
+function _prepareViewData() {
   // Dados Básicos
   if (FIRESTORE_DATA.inicio && FIRESTORE_DATA.fim) {
     _loadInicioFim();
@@ -156,7 +159,7 @@ function _loadHeader() {
 
   if (FIRESTORE_DATA.links?.ativo) {
     getID("social-links").style.display = "block";
-    
+
     if (FIRESTORE_DATA.links.attachments) {
       getID("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
     } else {
@@ -264,12 +267,12 @@ function _loadModules() {
     function _getCompartilhamentoText() {
       switch (TYPE) {
         case 'listagens':
-          return translate('listing.share', {name : FIRESTORE_DATA.titulo});
+          return translate('listing.share', { name: FIRESTORE_DATA.titulo });
         case 'destinos':
-          return translate('destination.share', {name : FIRESTORE_DATA.titulo});
+          return translate('destination.share', { name: FIRESTORE_DATA.titulo });
         case 'viagem':
         case 'viagens':
-          return translate('trip.share', {name : FIRESTORE_DATA.titulo, start: INICIO.text, end: FIM.text});
+          return translate('trip.share', { name: FIRESTORE_DATA.titulo, start: INICIO.text, end: FIM.text });
         default:
           return translate('messages.share');
       }

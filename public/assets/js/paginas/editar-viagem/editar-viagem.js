@@ -14,49 +14,46 @@ _startLoadingScreen();
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     _main();
-
-    DOCUMENT_ID = _getURLParam('v');
-    PERMISSOES = await _getPermissoes();
-
-    _loadVisibilityIndex();
-    _loadHabilitados();
-    _loadDraggablesWithAccordions(['transporte', 'hospedagens']);
-    _newDynamicSelect('galeria-categoria');
-    _newDynamicSelect('transporte-pessoa');
-
-    if (DOCUMENT_ID) {
-      await _loadTrip(true);
-    } else {
-      NEW_TRIP = true;
-      CAN_EDIT = true;
-      DESTINOS = await _getUserList('destinos', true);
-      _loadNewTrip();
-    }
-
-    if (!CAN_EDIT) return;
-
-    _loadImageSelector('background');
-    _loadLogoSelector();
-
-    _loadEventListeners();
-
-    if (!blockLoadingEnd) {
-      _stopLoadingScreen();
-    }
-    $('body').css('overflow', 'auto');
-
   } catch (error) {
     if (error?.responseJSON?.error) {
       _displayError(error.responseJSON.error)
     } else {
       _displayError(error);
     }
-    if (window.location.href.includes('editar-template.html')) {
-      _closeMessage();
-    }
-    throw error;
   }
 });
+
+async function _loadEditarViagemPage() {
+  DOCUMENT_ID = _getURLParam('v');
+  PERMISSOES = await _getPermissoes();
+
+  _loadVisibilityIndex();
+  _loadHabilitados();
+  _loadDraggablesWithAccordions(['transporte', 'hospedagens']);
+  _newDynamicSelect('galeria-categoria');
+  _newDynamicSelect('transporte-pessoa');
+
+  if (DOCUMENT_ID) {
+    await _loadTrip(true);
+  } else {
+    NEW_TRIP = true;
+    CAN_EDIT = true;
+    DESTINOS = await _getUserList('destinos', true);
+    _loadNewTrip();
+  }
+
+  if (!CAN_EDIT) return;
+
+  _loadImageSelector('background');
+  _loadLogoSelector();
+
+  _loadEventListeners();
+
+  if (!blockLoadingEnd) {
+    _stopLoadingScreen();
+  }
+  $('body').css('overflow', 'auto');
+}
 
 function _loadHabilitados() {
   _loadEditModule('imagens');

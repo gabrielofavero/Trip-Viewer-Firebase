@@ -10,6 +10,9 @@ var GASTO_ATIVO = 'resumo';
 document.addEventListener('DOMContentLoaded', async function () {
     _startLoadingScreen();
     _main();
+});
+
+async function _loadGastosPage() {
     _loadVisibilityExternal();
 
     const closeButton = getID("closeButton");
@@ -50,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         _requestPinGastos();
     }
     _stopLoadingScreen();
-});
+}
 
 function _requestPinGastos() {
     const cancelAction = `_exitGastos()`;

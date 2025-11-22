@@ -2,7 +2,7 @@ var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
 var CONTENT = {};
 
 // Métodos Principais
-function _loadDestinosHTML() {
+function _loadDestinosPage() {
   _startLoadingScreen();
   _loadVisibilityExternal();
 

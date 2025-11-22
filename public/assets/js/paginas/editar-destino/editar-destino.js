@@ -16,32 +16,33 @@ document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
     _main();
-    DOCUMENT_ID = _getURLParam('d')
-
-    _loadVisibilityIndex();
-    _loadHabilitados();
-    _newDynamicSelect('regiao');
-
-    if (DOCUMENT_ID) {
-      await _loadDestinos()
-    } else {
-      CAN_EDIT = true;
-    }
-
-    if (!CAN_EDIT) return;
-
-    _loadEventListeners();
-
-    if (!blockLoadingEnd) {
-      _stopLoadingScreen();
-    }
-    $('body').css('overflow', 'auto');
-
   } catch (error) {
     _displayError(error);
-    throw error;
   }
 });
+
+async function _loadEditarDestinoPage() {
+  DOCUMENT_ID = _getURLParam('d')
+
+  _loadVisibilityIndex();
+  _loadHabilitados();
+  _newDynamicSelect('regiao');
+
+  if (DOCUMENT_ID) {
+    await _loadDestinos()
+  } else {
+    CAN_EDIT = true;
+  }
+
+  if (!CAN_EDIT) return;
+
+  _loadEventListeners();
+
+  if (!blockLoadingEnd) {
+    _stopLoadingScreen();
+  }
+  $('body').css('overflow', 'auto');
+}
 
 function _loadHabilitados() {
   _loadEditModule('restaurantes');
@@ -298,7 +299,7 @@ function _moveDestino(j, categoria) {
     }
 
     const newJ = _getLastJ(`${newCategoria}-box`) + 1;
-    
+
     _addDestino(newCategoria);
     _addDestinoHTML(newCategoria, newJ, destino);
     _setDescription(newCategoria, newJ, description);

@@ -12,41 +12,38 @@ _startLoadingScreen();
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     _main();
-
-    DOCUMENT_ID = _getURLParam('l');
-    PERMISSOES = await _getPermissoes();
-
-    _loadVisibilityIndex();
-    _loadHabilitados();
-
-    if (DOCUMENT_ID) {
-      await _carregarListagem()
-    } else {
-      CAN_EDIT = true;
-      DESTINOS = await _getUserList('destinos');
-      _loadDestinos();
-    }
-
-    if (!CAN_EDIT) return;
-
-    _loadImageSelector('background');
-    _loadLogoSelector();
-
-    _loadEventListeners();
-
-    if (!blockLoadingEnd) {
-      _stopLoadingScreen();
-    }
-    $('body').css('overflow', 'auto');
-
   } catch (error) {
     _displayError(error);
-    if (window.location.href.includes('editar-template.html')) {
-      _closeMessage();
-    }
-    throw error;
   }
 });
+
+async function _loadEditarListagemPage() {
+  DOCUMENT_ID = _getURLParam('l');
+  PERMISSOES = await _getPermissoes();
+
+  _loadVisibilityIndex();
+  _loadHabilitados();
+
+  if (DOCUMENT_ID) {
+    await _carregarListagem()
+  } else {
+    CAN_EDIT = true;
+    DESTINOS = await _getUserList('destinos');
+    _loadDestinos();
+  }
+
+  if (!CAN_EDIT) return;
+
+  _loadImageSelector('background');
+  _loadLogoSelector();
+
+  _loadEventListeners();
+
+  if (!blockLoadingEnd) {
+    _stopLoadingScreen();
+  }
+  $('body').css('overflow', 'auto');
+}
 
 function _loadHabilitados() {
   _loadEditModule('imagens');

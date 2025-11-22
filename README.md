@@ -6,7 +6,7 @@
 |------|----------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 95    | 93        | 1       |
 | 🏆   | Feature      | F000  | 99    | 99        | 0      |
-| 📈   | Improvement  | M000  | 117   | 116        | 1      |
+| 📈   | Improvement  | M000  | 118   | 117        | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -26,6 +26,7 @@
 ## Done
 
 ### November 2025
+- 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader
 - 🏆 **F098:** Include traveler names in view.html (Itinerary)

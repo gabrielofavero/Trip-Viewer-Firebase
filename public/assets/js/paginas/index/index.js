@@ -19,19 +19,20 @@ document.addEventListener('DOMContentLoaded', async function () {
   _startLoadingScreen();
   try {
     _main();
-
-    _loadVisibilityIndex();
-    _loadListenersIndex();
-    _loadUserIndex();
-
-    $('body').css('overflow', 'auto');
-
   } catch (error) {
     _displayError(error);
     throw error;
   }
   _stopLoadingScreen();
 });
+
+async function _loadIndexPage() {
+  _loadVisibilityIndex();
+  _loadListenersIndex();
+  _loadUserIndex();
+
+  $('body').css('overflow', 'auto');
+}
 
 function _loadListenersIndex() {
   getID('login-button').addEventListener('click', function () {

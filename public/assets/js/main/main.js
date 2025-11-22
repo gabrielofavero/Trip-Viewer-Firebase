@@ -44,13 +44,14 @@ const getID = (id) => {
 }
 
 
-// Firebase
 function _main() {
+  _mainAdjustments();
+  _mainStart();
+}
+
+function _mainAdjustments() {
   "use strict";
   $('body').css('overflow', 'hidden');
-
-  _loadConfig();
-  _loadLangSelectorSelect();
 
   /**
    * Navbar links active state on scroll
@@ -209,7 +210,7 @@ function _main() {
   });
 }
 
-function _loadConfig() {
+function _mainStart() {
   const config = {};
   return Promise.all([
     $.getJSON("/assets/json/cores.json").then(data => config.cores = data),
@@ -223,11 +224,64 @@ function _loadConfig() {
   ]).then(() => {
     CONFIG = config;
     _translatePage();
-    _initializeApp()
+    _initializeApp();
+    _loadLangSelectorSelect();
+    _loadPage();
   }).catch(error => {
-    console.error('Erro ao carregar a configuração:', error);
-    _displayError('Erro ao carregar a configuração');
+    _displayError('Initialization Error:' + error.message);
   });
+}
+
+function _loadPage() {
+  switch (_getHTMLpage()) {
+    case "index":
+      _loadIndexPage();
+      break;
+    case "viagem":
+      _loadViagemPage();
+      break;
+    case "destinos":
+      _loadDestinosPage();
+      break;
+    case "gastos":
+      _loadGastosPage();
+      break;
+    case "editar-listagem":
+      _loadEditarListagemPage();
+      break;
+    case "editar-destino":
+      _loadEditarDestinoPage();
+      break;
+    case "editar-viagem":
+      _loadEditarViagemPage();
+      break;
+    default:
+      _displayError(`Page "${_getHTMLpage()}" not found.`);
+      break;
+  }
+
+}
+
+function _getHTMLpage() {
+  let result = window.location.pathname.replace(".html", "");
+  switch (result) {
+    case "/":
+      return "index";
+    case "/view":
+      return "viagem";
+    case "/destination":
+      return "destinos";
+    case "/expenses":
+      return "gastos";
+    case "/edit/listing":
+      return "editar-listagem";
+    case "/edit/destination":
+      return "editar-destino";
+    case "/edit/trip":
+      return "editar-viagem";
+    default:
+      return result;
+  }
 }
 
 function _openLinkInNewTab(url) {
@@ -340,29 +394,29 @@ function _translatePage() {
 
 function _loadLangSelectorSelect() {
   const langButton = document.querySelector('.lang-button');
-    const langOptions = document.querySelector('.lang-options');
-    _setLanguage(_getLanguagePackName());
+  const langOptions = document.querySelector('.lang-options');
+  _setLanguage(_getLanguagePackName());
 
-    langButton.addEventListener('click', () => {
-      langOptions.style.display = langOptions.style.display === 'block' ? 'none' : 'block';
-    });
+  langButton.addEventListener('click', () => {
+    langOptions.style.display = langOptions.style.display === 'block' ? 'none' : 'block';
+  });
 
-    langOptions.addEventListener('click', (e) => {
-      if (e.target.tagName === 'BUTTON') {
-        const lang = e.target.dataset.lang;
-        _setLanguage(lang);
-        langOptions.style.display = 'none';
-      }
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.lang-selector')) {
-        langOptions.style.display = 'none';
-      }
-    });
-
-    function _setLanguage(lang) {
-      langButton.textContent = lang.toUpperCase();
-      _updateUserLanguage(lang);
+  langOptions.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON') {
+      const lang = e.target.dataset.lang;
+      _setLanguage(lang);
+      langOptions.style.display = 'none';
     }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.lang-selector')) {
+      langOptions.style.display = 'none';
+    }
+  });
+
+  function _setLanguage(lang) {
+    langButton.textContent = lang.toUpperCase();
+    _updateUserLanguage(lang);
+  }
 }
