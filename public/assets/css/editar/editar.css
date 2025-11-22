@@ -1548,11 +1548,13 @@ details summary::-webkit-details-marker {
 .mini-box {
   margin-top: 21.5px;
 }
-
 .travelers-input {
-  width: 196px !important;
-  height: 44px !important;
   margin-top: 0px !important;
+  min-height: 44px !important;
+  height: auto !important;
+  padding: 8px 12px !important;
+  overflow-y: hidden !important;
+  resize: none;
 }
 
 @media (max-width: 790px) {
@@ -1565,8 +1567,7 @@ details summary::-webkit-details-marker {
     margin-right: 0;
   }
 
-  .flex-input,
-  .travelers-input {
+  .flex-input {
     width: 100% !important;
   }
 
@@ -1840,6 +1841,7 @@ details summary::-webkit-details-marker {
   .draggable {
     width: 95%;
   }
+
   .drag-icon {
     width: 5%;
   }
@@ -1849,6 +1851,7 @@ details summary::-webkit-details-marker {
   .draggable {
     width: 90%;
   }
+
   .drag-icon {
     width: 10%;
   }
@@ -1858,6 +1861,7 @@ details summary::-webkit-details-marker {
   .draggable {
     width: 87%;
   }
+
   .drag-icon {
     width: 13%;
   }
@@ -1875,8 +1879,10 @@ details summary::-webkit-details-marker {
   overflow-y: auto;
   padding: 10px;
   box-sizing: border-box;
-  scrollbar-width: auto; /* Firefox */
-  -ms-overflow-style: auto; /* IE 10+ */
+  scrollbar-width: auto;
+  /* Firefox */
+  -ms-overflow-style: auto;
+  /* IE 10+ */
 }
 
 /* (Chrome, Safari, Edge) */
@@ -1984,7 +1990,8 @@ details summary::-webkit-details-marker {
   word-wrap: break-word;
   word-break: break-word;
   white-space: normal;
-  padding: 10px 40px 10px 10px; /* Espaço extra para o botão de fechar */
+  padding: 10px 40px 10px 10px;
+  /* Espaço extra para o botão de fechar */
 }
 
 #toast-text {
@@ -2079,11 +2086,11 @@ details summary::-webkit-details-marker {
   min-width: 120px;
 }
 
-.inner-box.draggable{
+.inner-box.draggable {
   display: flex;
   width: 100%;
 }
 
-.accordion-draggable{
+.accordion-draggable {
   flex: 1
 }

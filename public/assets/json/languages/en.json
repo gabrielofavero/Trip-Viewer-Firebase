@@ -25,7 +25,13 @@
         },
         "basic_information": {
             "subtitle": "Add the main information about your trip here",
-            "title_placeholder": "Enter the trip title"
+            "title_placeholder": "Enter the trip title",
+            "security": {
+                "title": "Data protection",
+                "disabled": "Don't protect trip data",
+                "sensitive_only": "Protect only sensitive data (expenses and reservation codes)",
+                "all_data": "Protect all trip data"
+            }
         },
         "visibility": {
             "subtitle": "Determine who can view and edit your trip",
@@ -140,9 +146,8 @@
             "title": "Travelers",
             "info": "Travelers information",
             "quantity": "Number of travelers",
-            "one": "One traveler",
-            "multiple": "Multiple travelers ({{count}})",
-            "unique": "Traveler names must be unique"
+            "unique": "Traveler names must be unique",
+            "add": "Add travelers"
         }
     },
     "destination": {
@@ -427,7 +432,8 @@
             "upload_error": "Error uploading file(s)",
             "module_not_active": "Cannot load the page. The module {{module}} is not active",
             "no_data_on_module": "No data found for the module {{module}}",
-            "loading_timeout": "The request took too long to respond. Please try again later"
+            "loading_timeout": "The request took too long to respond. Please try again later",
+            "unauthorized_access": "You don't have permission to access this resource"
         },
         "too_early": {
             "title": "You're a bit early! 😅",

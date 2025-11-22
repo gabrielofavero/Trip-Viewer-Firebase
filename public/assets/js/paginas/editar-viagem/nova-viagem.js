@@ -14,22 +14,6 @@ function _loadDadosBasicosNewTrip() {
   getID('moeda').value = 'BRL';
 }
 
-function _addEditores() {
-  const j = _getNextJ('habilitado-editores-content');
-  $('#habilitado-editores-content').append(`
-    <div class="nice-form-group" id="editores-${j}">
-      <label>${translate('labels.editors.editor')} ${j}</label>
-      <input
-        id="editores-email-${j}"
-        type="email"
-        placeholder="${translate('auth.email')}"
-        value=""
-        class="icon-left"
-      />
-    </div>
-    `);
-}
-
 function _addTransporte() {
   const j = _getNextJ('transporte-box');
 

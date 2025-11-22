@@ -206,6 +206,13 @@ function _validateTravelersFieldset(id) {
 }
 
 function _updateTravelersButtonLabel() {
-    const count = TRAVELERS.length || 1;
-    getID('travelers-info').textContent = count > 1 ? translate('trip.travelers.multiple', { count }) : translate('trip.travelers.one');
+    const el = getID('travelers-info');
+
+    if (TRAVELERS.length === 0) {
+        el.textContent = translate('trip.travelers.add');
+        return;
+    }
+
+    const names = TRAVELERS.map(t => t.nome).filter(n => n);
+    el.textContent = _getReadableArray(names);
 }

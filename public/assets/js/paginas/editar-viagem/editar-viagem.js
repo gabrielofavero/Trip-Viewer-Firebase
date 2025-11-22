@@ -59,7 +59,6 @@ function _loadHabilitados() {
   _loadEditModule('imagens');
   _loadEditModule('cores');
   _loadEditModule('links');
-  _loadEditModule('editores');
   _loadEditModule('gastos');
   _loadEditModule('transporte');
   _loadEditModule('hospedagens');
@@ -87,7 +86,7 @@ async function _loadTrip(stripped = false) {
     FIRESTORE_DATA = await _getSingleData('viagens');
   }
 
-  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
+  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono);
 
   if (CAN_EDIT) {
     await _loadTripData();

@@ -25,7 +25,13 @@
         },
         "basic_information": {
             "subtitle": "Adicione aqui as principais informações da sua viagem",
-            "title_placeholder": "Digite o título da viagem"
+            "title_placeholder": "Digite o título da viagem",
+            "security": {
+                "title": "Segurança",
+                "disabled": "Não proteger dados da viagem",
+                "sensitive_only": "Proteger apenas dados sensíveis (gastos e códigos de reserva)",
+                "all_data": "Proteger todos os dados da viagem"
+            }
         },
         "visibility": {
             "subtitle": "Determine quem pode ver e editar sua viagem",
@@ -140,9 +146,8 @@
             "title": "Viajantes",
             "info": "Informações dos viajantes",
             "quantity": "Quantidade de viajantes",
-            "one": "Um viajante",
-            "multiple": "Múltiplos viajantes ({{count}})",
-            "unique": "Os nomes dos viajantes devem ser únicos"
+            "unique": "Os nomes dos viajantes devem ser únicos",
+            "add": "Adicionar viajantes"
         }
     },
     "destination": {
@@ -427,7 +432,8 @@
             "upload_error": "Erro ao fazer upload de arquivos",
             "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
             "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
-            "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde"
+            "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
+            "unauthorized_access": "Acesso não autorizado para este documento"
         },
         "too_early": {
             "title": "Você chegou muito cedo! 😅",
@@ -618,7 +624,7 @@
             "website": "Site",
             "instagram": "Instagram"
         },
-    "region": "Região",
+        "region": "Região",
         "priority": "Prioridade",
         "video": "Vídeo",
         "language": {

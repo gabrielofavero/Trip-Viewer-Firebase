@@ -245,7 +245,7 @@ function _loadModules() {
 
   function _loadCompartilhamentoModule() {
     const share = getID('share');
-    if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share && window.location.hostname != 'localhost') {
+    if (navigator.share && window.location.hostname != 'localhost') {
       share.addEventListener('click', () => {
         _compartilhar();
       });

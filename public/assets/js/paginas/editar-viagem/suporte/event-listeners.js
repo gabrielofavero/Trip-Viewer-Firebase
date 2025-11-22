@@ -7,7 +7,6 @@ function _loadEventListeners() {
     getID('fim').addEventListener('change', () => _fimListenerAction());
 
     // Botões
-    getID('editores-adicionar').addEventListener('click', () => _addEditores());
     getID('salvar').addEventListener('click', () => _setViagem());
     getID('re-editar').addEventListener('click', () => _reEdit('viagens', SUCCESSFUL_SAVE));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());

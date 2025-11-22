@@ -168,7 +168,7 @@ async function _loadDestinos() {
   _startLoadingScreen();
 
   FIRESTORE_DESTINOS_DATA = await _getSingleData('destinos');
-  CAN_EDIT = await _canEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono, []);
+  CAN_EDIT = await _canEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono);
 
   if (CAN_EDIT) {
     _loadDestinationsData(FIRESTORE_DESTINOS_DATA);

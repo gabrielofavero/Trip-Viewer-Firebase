@@ -2,7 +2,6 @@ async function _loadTripData() {
     try {
         DESTINOS = await _getUserList('destinos', true);
         _loadDadosBasicosViagemData();
-        _loadCompartilhamentoData();
         _loadCustomizacaoData();
         await _loadGastosData();
         _loadTransportesData();
@@ -30,19 +29,6 @@ function _loadDadosBasicosViagemData() {
 
     TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
     _updateTravelersButtonLabel();
-}
-
-function _loadCompartilhamentoData() {
-    getID('habilitado-publico').checked = FIRESTORE_DATA.compartilhamento.ativo;
-    const editores = FIRESTORE_DATA.compartilhamento.editores;
-
-    if (editores && editores.length > 0) {
-        getID('habilitado-editores').checked = true;
-        for (let j = 1; j <= editores.length; j++) {
-            _addEditores();
-            getID(`editores-email-${j}`).value = editores[j - 1];
-        }
-    }
 }
 
 function _loadCustomizacaoData() {
