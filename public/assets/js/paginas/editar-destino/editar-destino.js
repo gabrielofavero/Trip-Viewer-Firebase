@@ -280,6 +280,7 @@ function _openMoveDestinoModal(j, categoria) {
 
 function _moveDestino(j, categoria) {
   const newCategoria = getID('move-select').value;
+  const description = _getDescription(categoria, j);
 
   if (categoria != newCategoria) {
 
@@ -297,14 +298,15 @@ function _moveDestino(j, categoria) {
     }
 
     const newJ = _getLastJ(`${newCategoria}-box`) + 1;
+    
     _addDestino(newCategoria);
     _addDestinoHTML(newCategoria, newJ, destino);
+    _setDescription(newCategoria, newJ, description);
     _removeChildWithValidation(categoria, j);
 
     _removeSelectorDS('regiao', `${categoria}-regiao-select-${j}`);
     _updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
     _buildDS('regiao');
-    _moveDescription(categoria, j - 1, newCategoria, newJ - 1);
 
   }
 
@@ -332,4 +334,8 @@ async function _deleteDestinoAction() {
     await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
     window.location.href = '../index.html';
   }
+}
+
+function _getID(categoria, j) {
+  return getID(`${categoria}-id-${j}`).value;
 }

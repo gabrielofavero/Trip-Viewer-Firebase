@@ -4,7 +4,7 @@
 
 | Icon | Title    | Code  | Total | Completed | Pending |
 |------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 94    | 93        | 1       |
+| 🐞   | Bug          | B000  | 95    | 93        | 1       |
 | 🏆   | Feature      | F000  | 99    | 99        | 0      |
 | 📈   | Improvement  | M000  | 117   | 116        | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
@@ -26,6 +26,7 @@
 ## Done
 
 ### November 2025
+- 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader
 - 🏆 **F098:** Include traveler names in view.html (Itinerary)
 - 🏆 **F096:** Add ID into travelers

@@ -43,7 +43,7 @@ function _getTravelersNameContent() {
 
     for (let j = 1; j <= quantity; j++) {
         const traveler = TRAVELERS[j - 1];
-        const id = getID(`traveler-id-${j}`)?.value || traveler?.id || _getRandomID();
+        const id = getID(`traveler-id-${j}`)?.value || traveler?.id || _getRandomID({ pool: TRAVELERS.map(t => t.id) });
         const name = getID(`traveler-name-${j}`)?.value || traveler?.nome || '';
 
         properties.push(`

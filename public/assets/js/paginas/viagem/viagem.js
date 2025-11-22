@@ -85,6 +85,7 @@ async function _mainLoad() {
     }
     // Loading Screen
     _stopLoadingScreen();
+    _adjustDestinationsHTML();
   } catch (error) {
     _displayError(error);
     throw error;

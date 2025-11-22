@@ -1,60 +1,66 @@
 
-var DESCRIPTIONS = {};
 
-function _addDescricao(categoria, i, descricao) {
-    if (!DESCRIPTIONS[categoria]) {
-        DESCRIPTIONS[categoria] = {};
+function _getDescriptionHTML(categoria, j) {
+    let content = '';
+
+    for (const lang of LANGUAGES) {
+        content += `
+        <div class="nice-form-group" style="display: none">
+            <label>${translate('labels.description.title')} (${lang}) <span class="opcional"> (${translate('labels.optional')})</span></label>
+            <input id="${categoria}-descricao-${lang}-${j}" type="text" disabled />
+        </div>`
     }
-    DESCRIPTIONS[categoria][i] = descricao;
+
+    return content;
 }
 
-function _isDescriptionPreset(categoria, i) {
-    const data = DESCRIPTIONS[categoria];
-
-    if (!data || !data[i]) {
-        return false;
-    }
-
-    let valueFound = false;
-    for (const key in data[i]) {
-        if (data[i][key]) {
-            valueFound = true;
-            break;
+function _setDescription(categoria, j, descricao) {
+    for (const lang of LANGUAGES) {
+        const input = getID(`${categoria}-descricao-${lang}-${j}`);
+        if (input) {
+            input.value = descricao[lang] || '';
         }
     }
-
-    return valueFound;
-}
-
-function _getDescriptionLabel(categoria, j) {
-    if (!_isDescriptionPreset(categoria, j-1)) {
-        return translate('labels.description.add');
-    }
-
-    const descriptions = DESCRIPTIONS[categoria][j-1];
-    const lang = _getUserLanguage();
-
-    return descriptions[lang] || translate('labels.description.edit')
 }
 
 function _updateDescriptionButtonLabel(categoria, j) {
     const button = getID(`${categoria}-descricao-button-${j}`);
-    if (!button) {
-        console.warn(`Description button not found for category: ${categoria} and index: ${j}`);
-        return;
-    }
     const text = _getDescriptionLabel(categoria, j);
     button.innerText = text;
 }
 
-function _getDescription(categoria, j) {
-    const descricao = DESCRIPTIONS?.[categoria]?.[j - 1];
-    return descricao || {};
-  }
+function _getDescriptionLabel(categoria, j) {
+    if (!_isDescriptionPreset(categoria, j)) {
+        return translate('labels.description.add');
+    }
 
-function _openDescription(categoria, j) {
+    const description = _getDescription(categoria, j)
+    const lang = _getUserLanguage();
+    return description[lang] || translate('labels.description.edit')
+}
+
+function _isDescriptionPreset(categoria, j) {
+    for (const lang of LANGUAGES) {
+        const input = getID(`${categoria}-descricao-${lang}-${j}`);
+        if (input && input.value.trim() !== '') {
+            return true;
+        }
+    }
+    return false;
+}
+
+function _getDescription(categoria, j) {
+    const description = {};
+    for (const lang of LANGUAGES) {
+        const input = getID(`${categoria}-descricao-${lang}-${j}`);
+        description[lang] = input ? input.value.trim() : '';
+    }
+    return description;
+}
+
+function _openDescriptionModal(categoria, j) {
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-    const defaultTitle = DESCRIPTIONS[categoria]?.[j-1] ? translate('labels.description.edit') : translate('labels.description.add');
+    const defaultTitle = _isDescriptionPreset(categoria, j) ? translate('labels.description.edit') : translate('labels.description.add');
     propriedades.titulo = getID(`${categoria}-nome-${j}`).value || defaultTitle;
     propriedades.containers = _getContainersInput();
     propriedades.conteudo = _getDescriptionContent(categoria);
@@ -67,7 +73,7 @@ function _openDescription(categoria, j) {
 
     _displayFullMessage(propriedades);
 
-    if (!_isDescriptionPreset(categoria, j-1)) {
+    if (!_isDescriptionPreset(categoria, j)) {
         return;
     }
 
@@ -98,7 +104,7 @@ function _getDescriptionContent(categoria) {
         ${_getDescriptionContainers(languages, placeholders)}
     </div>`
 
-    function _getDescriptionContainers(languages, placeholders, selected) {
+    function _getDescriptionContainers(languages, placeholders) {
         let result = '';
         for (const lang in languages) {
             const display = lang === selectedLanguage ? 'block' : 'none';
@@ -131,7 +137,7 @@ function _saveDescription(categoria, j) {
             description[lang] = _firstCharToUpperCase(input.value.trim());
         }
     }
-    _addDescricao(categoria, j-1, description);
+    _setDescription(categoria, j, description);
     _updateDescriptionButtonLabel(categoria, j);
     _closeMessage();
 }
@@ -145,43 +151,35 @@ function _descriptionSelectChangeAction() {
         }
     }
 }
-function _moveDescription(categoria, i, novaCategoria, novoI) {
-    if (!DESCRIPTIONS[categoria]) {
-      console.error(`Category "${categoria}" not found`);
-      return;
+
+function _getAllDescriptions() {
+    const result = {};
+    for (const categoria of CONFIG.destinos.categorias.passeios) {
+        result[categoria] = {};
+        for (const childID of _getChildIDs(`${categoria}-box`)) {
+            const j = _getJ(childID);
+            const id = getID(`${categoria}-id-${j}`).value;
+            const nome = getID(`${categoria}-nome-${j}`).value;
+            const descricao = _getDescription(categoria, j);
+            result[categoria][id] = {
+                nome: nome,
+                descricao: descricao
+            };
+        }
     }
-  
-    const oldItems = { ...DESCRIPTIONS[categoria] };
-    const itemToMove = oldItems[i];
-    if (!itemToMove) {
-      console.error(`Item at position "${i}" not found in "${categoria}"`);
-      return;
+    return result;
+}
+
+function _updateAllDescriptions(data) {
+    for (const categoria of CONFIG.destinos.categorias.passeios) {
+        for (const childID of _getChildIDs(`${categoria}-box`)) {
+            const j = _getJ(childID);
+            const id = getID(`${categoria}-id-${j}`).value;
+            if (data[categoria] && data[categoria][id]) {
+                const descricao = data[categoria][id].descricao;
+                _setDescription(categoria, j, descricao);
+                _updateDescriptionButtonLabel(categoria, j);
+            }
+        }
     }
-  
-    delete oldItems[i];
-  
-    const reindexedOld = Object.values(oldItems).reduce((acc, cur, idx) => {
-      acc[idx] = cur;
-      return acc;
-    }, {});
-    DESCRIPTIONS[categoria] = reindexedOld;
-  
-    if (!DESCRIPTIONS[novaCategoria]) {
-      DESCRIPTIONS[novaCategoria] = {};
-    }
-  
-    const newItems = { ...DESCRIPTIONS[novaCategoria] };
-    const entries = Object.values(newItems);
-  
-    const insertIndex = Math.min(novoI, entries.length);
-    entries.splice(insertIndex, 0, itemToMove);
-  
-    const reindexedNew = entries.reduce((acc, cur, idx) => {
-      acc[idx] = cur;
-      return acc;
-    }, {});
-    DESCRIPTIONS[novaCategoria] = reindexedNew;
-    _updateDescriptionButtonLabel(novaCategoria, insertIndex + 1);
-  }
-  
-  
+}

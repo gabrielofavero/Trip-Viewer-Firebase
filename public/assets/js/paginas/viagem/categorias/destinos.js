@@ -96,7 +96,6 @@ function _loadDestinationsHTML(destino) {
   }
 
   div.innerHTML = text;
-  _adjustDestinationsHTML();
   delete DESTINO_EXPORT.mapa;
   DESTINO_EXPORT.myMaps = { titulo: translate('destination.map.title'), link: destino.destinos.myMaps };
 }
@@ -152,18 +151,17 @@ function _getDestinationsBoxesIndex(i) {
 }
 
 function _adjustDestinationsHTML() {
-  let heights = [];
-  let maxHeight = 0;
+  const elements = [];
 
   for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
-    let height = getID(`b${i}d`).offsetHeight;
-    if (height > maxHeight) {
-      maxHeight = height;
-    }
-    heights.push(height);
+    const el = getID(`b${i}d`);
+    el.style.height = "auto";
+    elements.push(el);
   }
 
-  for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
-    getID(`b${i}d`).style.height = `${maxHeight}px`;
-  }
+  const maxHeight = Math.max(...elements.map(el => el.offsetHeight));
+
+  elements.forEach(el => {
+    el.style.height = `${maxHeight}px`;
+  });
 }

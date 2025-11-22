@@ -4,7 +4,8 @@ function _adjustCardsHeightsListener() {
     window.addEventListener('resize', function () {
         _adjustCardsHeights();
         
-        if (FIRESTORE_DATA.transportes.visualizacao != 'simple-view') {
+        const visualizacao = FIRESTORE_DATA?.transportes?.visualizacao;
+        if (visualizacao && visualizacao != 'simple-view') {
             _adjustTransporteBoxContainerHeight();
         }
     });

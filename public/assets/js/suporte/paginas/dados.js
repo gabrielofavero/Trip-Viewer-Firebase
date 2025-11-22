@@ -250,13 +250,17 @@ function _getNextJ(parentID) {
   return _getLastJ(parentID) + 1;
 }
 
-function _getRandomID(idLength = 5) {
+function _getRandomID({idLength = 5, pool = []}) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let randomId = '';
 
   for (let i = 0; i < idLength; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     randomId += characters[randomIndex];
+  }
+
+  if (pool.includes(randomId)) {
+    return _getRandomID({idLength, pool});
   }
 
   return randomId;
@@ -276,11 +280,7 @@ function _getCategoriaID(tipo, j) {
     return currentID;
   }
 
-  let newID = _getRandomID();
-  while (ids.includes(newID)) {
-    newID = _getRandomID();
-  }
-  return newID;
+  return _getRandomID({ pool: ids });
 }
 
 function _getOrCreateCategoriaID(tipo, j) {

@@ -41,9 +41,11 @@ function _addRestaurantes() {
             <input id="restaurantes-emoji-${j}" type="text" placeholder="${translate('destination.restaurants.placeholders.emoji')}" />
           </div>
 
+          ${_getDescriptionHTML(categoria, j)}
+
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="restaurantes-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+            <button id="restaurantes-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -166,10 +168,12 @@ function _addLanches() {
             <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lanches-emoji-${j}" type="text" placeholder="${translate('destination.snacks.placeholders.emoji')}" />
           </div>
+
+          ${_getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="lanches-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+            <button id="lanches-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -293,10 +297,12 @@ function _addSaidas() {
             <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="saidas-emoji-${j}" type="text" placeholder="${translate('destination.nightlife.placeholders.emoji')}" />
           </div>
+
+          ${_getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="saidas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+            <button id="saidas-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -419,10 +425,12 @@ function _addTurismo() {
             <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="turismo-emoji-${j}" type="text" placeholder="${translate('destination.tourism.placeholders.emoji')}" />
           </div>
+
+          ${_getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="turismo-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+            <button id="turismo-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">
@@ -546,10 +554,12 @@ function _addLojas() {
             <label>${translate('labels.emoji')} <span class="opcional"> (${translate('labels.optional')})</span></label>
             <input id="lojas-emoji-${j}" type="text" placeholder="${translate('destination.shopping.placeholders.emoji')}" />
           </div>
+
+          ${_getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
-            <button id="lojas-descricao-button-${j}" onclick="_openDescription('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
+            <button id="lojas-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate('labels.description.add')}</button>
           </div>
 
           <div class="nice-form-group">

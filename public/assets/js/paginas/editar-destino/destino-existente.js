@@ -47,9 +47,10 @@ function _loadDestinoExistente(categoria) {
     for (let j = 1; j <= size; j++) {
       const i = j - 1;
       const destino = FIRESTORE_DESTINOS_DATA[categoria][i];
-      _addDescricao(categoria, i, destino.descricao);
       _addDestino(categoria);
       _addDestinoHTML(categoria, j, destino);
+      _setDescription(categoria, j, destino.descricao);
+      _updateDescriptionButtonLabel(categoria, j);
     }
   }
 }
