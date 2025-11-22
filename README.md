@@ -4,8 +4,8 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 95    | 93        | 1       |
-| 🏆   | Feature      | F000  | 106   | 101       | 06     |
+| 🐞   | Bug          | B000  | 97    | 94        | 3       |
+| 🏆   | Feature      | F000  | 106   | 101       | 5     |
 | 📈   | Improvement  | M000  | 118   | 117       | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
@@ -16,17 +16,20 @@
 ## Backlog
 ### High Priority
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
-  - *[🏆F102] Make exclusive expenses pin methods generic*
+  - *[🏆F102] Implement new "protected" document in js*
   - *[🏆F103] Create and apply database migrations for new structures*
-  - *[🏆F104] Adapt existing trip data loading for new structure (edit/trip.html)*
-  - *[🏆F105] Add PIN component to view.html and senstive data box (with eye icon)*
-  - *[🏆F106] Adapt existing trip data loading for new structure (view.html)* 
+  - *[🏆F104] Make exclusive expenses pin methods generic*
+  - *[🏆F105] Adapt existing trip data loading for new structure (edit/trip.html)*
+  - *[🏆F106] Add PIN component to view.html and senstive data box (with eye icon)*
+  - *[🏆F107] Adapt existing trip data loading for new structure (view.html)* 
 
 ### Medium Priority
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B076:** Import backup function not getting data from "gastos" database
+- 🐞 **B096:** Fix Gallery module
+- 🐞 **B097:** Fix Image upload module
 
 ## Done
 
