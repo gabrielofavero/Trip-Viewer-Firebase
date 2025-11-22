@@ -1,6 +1,17 @@
 var DESTINOS_ATIVOS = [];
 var DESTINOS_ORDENADOS = [];
 
+function _getDestinosArray() {
+    const result = [];
+    _loadDestinosOrdenados();
+    for (const destino of DESTINOS_ATIVOS) {
+        result.push({
+            destinosID: destino.destinosID
+        })
+    }
+    return result;
+}
+
 // Destinos Ativos
 function _loadDestinosAtivos(firstBoot = true) {
     DESTINOS_ATIVOS = [];

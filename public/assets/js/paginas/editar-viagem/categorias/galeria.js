@@ -1,3 +1,35 @@
+function _getGaleriaObject() {
+    let result = {
+        descricoes: [],
+        categorias: [],
+        imagens: [],
+        titulos: []
+    }
+
+    const childIDs = _getChildIDs('galeria-box');
+    for (var i = 0; i < childIDs.length; i++) {
+        const j = _getJ(childIDs[i]);
+
+        const descricao = getID(`galeria-descricao-${j}`).value || "";
+        result.descricoes.push(descricao);
+
+        const titulo = getID(`galeria-titulo-${j}`).value || "";
+        result.titulos.push(titulo);
+
+        if (getID(`enable-upload-galeria-${j}`).checked) {
+            result.imagens.push('');
+            CUSTOM_UPLOADS.galeria.push({
+                file: getID(`upload-galeria-${j}`)?.files[0],
+                position: j
+            });
+        } else {
+            result.imagens.push(getID(`link-galeria-${j}`).value);
+        }
+    }
+
+    return result;
+}
+
 function _deleteGaleria(i) {
     const id = `galeria-${i}`;
     _removeImageSelectorListeners(id);

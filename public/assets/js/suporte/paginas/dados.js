@@ -448,7 +448,7 @@ function _getAndDestinationTitle(value, destinos) {
 
 function _getInnerProgramacaoTitleHTML(dado, spanClass, isCustomTraveler = false) {
   const programacao = dado.programacao || '';
-  const presentes = dado.pessoas
+  const presentes = !dado.pessoas ? [] : dado.pessoas
       .filter(p => p.isPresent)
       .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
 

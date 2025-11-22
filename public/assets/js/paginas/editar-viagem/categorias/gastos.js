@@ -10,6 +10,32 @@ var INNER_GASTOS = {
 
 var LAST_INNER_GASTO_TIPO = '';
 
+async function _getGastosObject() {
+    return {
+        compartilhamento: await _getCompartilhamentoObject(),
+        gastosDurante: _getGastos('gastosDurante'),
+        gastosPrevios: _getGastos('gastosPrevios'),
+        moeda: getID(`moeda`).value,
+        versao: {
+            ultimaAtualizacao: new Date().toISOString()
+        }
+    }
+
+    function _getGastos(categoria) {
+        let result = [];
+        for (const tipoObj of INNER_GASTOS[categoria]) {
+            result = [...result, ...tipoObj.gastos];
+        }
+        return result;
+    }
+}
+
+function _getGastosProtectedObject() {
+    return {
+        compartilhamento: FIRESTORE_GASTOS_NEW_DATA.compartilhamento
+    }
+}
+
 // Pin
 function _switchPin() {
     if (getID('pin-disable').checked) {

@@ -1,3 +1,49 @@
+function _getTransporteObject(protectedReservationCodes = false) {
+    const result = {
+        dados: [],
+        visualizacao: getID('people-view').checked ? 'people-view' : getID('leg-view').checked ? 'leg-view' : 'simple-view'
+    }
+    for (const child of _getChildIDs('transporte-box')) {
+        const j = _getJ(child);
+        result.dados.push({
+            datas: {
+                chegada: _formattedDateToDateObject(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
+                partida: _formattedDateToDateObject(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
+            },
+            duracao: getID(`transporte-duracao-${j}`).value,
+            empresa: _getValueEmpresa(j),
+            id: _getOrCreateCategoriaID('transporte', j),
+            idaVolta: getID(`ida-${j}`).checked ? 'ida' : getID(`volta-${j}`).checked ? 'volta' : 'durante',
+            link: protectedReservationCodes ? '' : getID(`transporte-link-${j}`).value,
+            pontos: {
+                chegada: getID(`ponto-chegada-${j}`).value,
+                partida: getID(`ponto-partida-${j}`).value
+            },
+            reserva: protectedReservationCodes ? '' : getID(`reserva-transporte-${j}`).value,
+            transporte: getID(`transporte-tipo-${j}`).value,
+            pessoa: getID(`transporte-pessoa-select-${j}`).value,
+        });
+    }
+    return result;
+}
+
+function _getProtectedTransporteObject() {
+    const result = {
+        dados: [],
+    }
+    for (const child of _getChildIDs('transporte-box')) {
+        const j = _getJ(child);
+        result.dados.push({
+            id: getID(`transporte-id-${j}`).value,
+            link: getID(`transporte-link-${j}`).value,
+            reserva: getID(`reserva-transporte-${j}`).value,
+        });
+    }
+    return result;
+}
+
+
+
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
     const chegada = getID(`ponto-chegada-${i}`).value;

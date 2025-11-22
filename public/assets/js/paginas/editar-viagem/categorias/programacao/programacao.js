@@ -1,5 +1,49 @@
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
+
+function _getProgramacaoArray() {
+    let result = [];
+
+    for (let j = 1; j <= DATAS.length; j++) {
+        const innerResult = {
+            data: _convertToDateObject(DATAS[j - 1]),
+            destinosIDs: [],
+            titulo: {
+                valor: '',
+                traduzir: false,
+                destinos: false
+            },
+            madrugada: [],
+            manha: [],
+            tarde: [],
+            noite: []
+        }
+
+        innerResult.destinosIDs = _getDestinosFromCheckbox('programacao', j);
+
+        const tituloSelectValue = getID(`programacao-inner-title-select-${j}`).value;
+        if (tituloSelectValue == 'outro') {
+            innerResult.titulo.valor = getID(`programacao-inner-title-${j}`).value;
+        } else {
+            innerResult.titulo.valor = tituloSelectValue;
+        }
+
+        innerResult.titulo.traduzir = ['departure', 'return', 'during', 'departure_and_destinations', 'return_and_destinations'].includes(tituloSelectValue);
+        innerResult.titulo.destinos = ['departure_and_destinations', 'return_and_destinations', 'all_destinations'].includes(tituloSelectValue);
+
+        if (DATAS[j - 1] && DATAS[j - 1] && INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])]) {
+            const turnos = INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])];
+            innerResult.madrugada = turnos.madrugada;
+            innerResult.manha = turnos.manha;
+            innerResult.tarde = turnos.tarde;
+            innerResult.noite = turnos.noite;
+        }
+        result.push(innerResult);
+    }
+
+    return result;
+}
+
 function _applyLoadedProgramacaoData(j, dados) {
     const jsDate = _convertFromDateObject(dados.data);
 
