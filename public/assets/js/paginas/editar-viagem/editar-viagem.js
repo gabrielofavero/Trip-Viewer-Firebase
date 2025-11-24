@@ -67,8 +67,6 @@ function _loadHabilitados() {
   _loadEditModule('galeria');
 }
 
-
-
 function _loadUploadSelectors() {
   _loadUploadSelector('background');
   _loadUploadSelector('logo');
@@ -79,11 +77,22 @@ async function _loadTrip(stripped = false) {
   blockLoadingEnd = true;
   _startLoadingScreen();
 
-  if (stripped) {
-    const id = _getURLParam('v');
-    FIRESTORE_DATA = await _get(`viagens/${id}`);
-  } else {
-    FIRESTORE_DATA = await _getSingleData('viagens');
+  await _loadPinData();
+  let protectedData;
+
+  if (PIN.current) {
+    protectedData = await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
+  }
+
+  switch (protectedData?.pin) {
+    case 'all-data':
+      FIRESTORE_DATA = stripped ? protectedData : await _getTripDataWithDestinos(protectedData); 
+      break;
+    case 'sensitive-only':
+      FIRESTORE_DATA = _getMergedTripObject(await _getTravelDocument(stripped), protectedData);
+      break;
+    default:
+      FIRESTORE_DATA = await _getTravelDocument(stripped);
   }
 
   CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono);
@@ -129,4 +138,18 @@ function _getDataSelectOptions(j) {
   }
 
   return result;
+}
+
+async function _getTravelDocument(stripped = false) {
+  return stripped ? await _get(`viagens/${DOCUMENT_ID}`) : await _getSingleData('viagens')
+}
+
+function _getMergedTripObject(tripData, protectedData) {
+  for (const key in protectedData) {
+    if (typeof protectedData[key] != 'object') continue;
+    for (const subKey in protectedData[key]) {
+      tripData[key][subKey] = protectedData[key][subKey];
+    }
+  }
+  return tripData;
 }

@@ -3,7 +3,7 @@ async function _loadTripData() {
         DESTINOS = await _getUserList('destinos', true);
         _loadDadosBasicosViagemData();
         _loadCustomizacaoData();
-        await _loadGastosData();
+        await _loadExpensesData();
         _loadTransportesData();
         _loadHospedagemData();
         _loadDestinosData();
@@ -29,6 +29,7 @@ function _loadDadosBasicosViagemData() {
 
     TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
     _updateTravelersButtonLabel();
+    _setCurrentPreferencePIN(FIRESTORE_DATA.pin);
 }
 
 function _loadCustomizacaoData() {
@@ -78,31 +79,36 @@ function _loadCustomizacaoData() {
     getID('link-vacina').value = FIRESTORE_DATA.links.vacina;
 }
 
-async function _loadGastosData() {
+async function _loadExpensesData() {
     if (FIRESTORE_DATA.modulos.gastos === true) {
         getID('habilitado-gastos').checked = true;
         getID('habilitado-gastos-content').style.display = 'block';
     }
 
-    FIRESTORE_GASTOS_DATA = await _get(`gastos/${DOCUMENT_ID}`);
+    const getPath = PIN.current ? `gastos/protected/${PIN.current}/${DOCUMENT_ID}` : `gastos/${DOCUMENT_ID}`; 
+
+    FIRESTORE_GASTOS_DATA = await _get(getPath);
     
     if (ERROR_FROM_GET_REQUEST) {
         _displayError(ERROR_FROM_GET_REQUEST);
         return;
     }
 
-    if (FIRESTORE_GASTOS_DATA && FIRESTORE_GASTOS_DATA.protegido === false) {
-        _loadGastos();
-    }
+    _loadGastos();
 }
 
-function _loadTransportesData() {
+async function _loadTransportesData() {
     if (FIRESTORE_DATA.modulos.transportes === true) {
         getID('habilitado-transporte').checked = true;
         getID('habilitado-transporte-content').style.display = 'block';
         getID('transporte-adicionar-box').style.display = 'block';
     }
     getID(FIRESTORE_DATA.transportes.visualizacao || 'simple-view').checked = true;
+
+    let sensitiveData = {};
+    if (_getCurrentPreferencePIN() === 'sensitive-only') {
+        sensitiveData =  await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
+    }
 
     for (let j = 1; j <= FIRESTORE_DATA.transportes.dados.length; j++) {
         _addTransporte();

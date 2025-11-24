@@ -5,7 +5,7 @@
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 97    | 94        | 3       |
-| 🏆   | Feature      | F000  | 106   | 101       | 5     |
+| 🏆   | Feature      | F000  | 105   | 102       | 3     |
 | 📈   | Improvement  | M000  | 118   | 117       | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
@@ -16,12 +16,9 @@
 ## Backlog
 ### High Priority
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
-  - *[🏆F102] Implement new "protected" document in js*
   - *[🏆F103] Create and apply database migrations for new structures*
-  - *[🏆F104] Make exclusive expenses pin methods generic*
-  - *[🏆F105] Adapt existing trip data loading for new structure (edit/trip.html)*
-  - *[🏆F106] Add PIN component to view.html and senstive data box (with eye icon)*
-  - *[🏆F107] Adapt existing trip data loading for new structure (view.html)* 
+  - *[🏆F104] Add PIN component to view.html and senstive data box (with eye icon)*
+  - *[🏆F105] Adapt existing trip data loading for new structure (view.html)* 
 
 ### Medium Priority
 
@@ -38,6 +35,7 @@
   - *[📈M118] Remove all mentions of editors and sharing options (legacy)*
   - *[🏆F100] Move HTML elements from expenses into general data (pin)*
   - *[🏆F101] Change how set system works so that it can record protected data*
+  - *[🏆F102] Implement new "protected" document logic in js*
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader

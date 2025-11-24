@@ -1,8 +1,3 @@
-var PIN_GASTOS = {
-    current: '',
-    new: '',
-};
-
 var INNER_GASTOS = {
     gastosPrevios: [],
     gastosDurante: [],

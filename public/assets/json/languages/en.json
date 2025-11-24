@@ -31,6 +31,15 @@
                 "disabled": "Don't protect trip data",
                 "sensitive_only": "Protect only sensitive data (expenses and reservation codes)",
                 "all_data": "Protect all trip data"
+            },
+            "pin": {
+                "title": "Access PIN",
+                "request": "To access the expenses, enter the PIN set for this trip",
+                "new": "Set access PIN",
+                "change": "Change access PIN",
+                "invalid": "Invalid PIN. Please try again",
+                "insert": "Enter a 4-digit access PIN",
+                "again": "Enter the access PIN again"
             }
         },
         "visibility": {
@@ -47,17 +56,6 @@
             "title": "Expenses",
             "full_title": "Trip expenses",
             "subtitle": "Manage your expenses before and during the trip",
-            "public": "Make your expenses visible to others",
-            "private": "Secure your expenses with a PIN",
-            "pin": {
-                "title": "Access PIN",
-                "request": "To access the expenses, enter the PIN set for this trip",
-                "new": "Set access PIN",
-                "change": "Change access PIN",
-                "invalid": "Invalid PIN. Please try again",
-                "insert": "Enter a 4-digit access PIN",
-                "again": "Enter the access PIN again"
-            },
             "pre_trip": "Pre-trip expenses",
             "during_trip": "On-trip expenses",
             "overview": "Expenses overview",

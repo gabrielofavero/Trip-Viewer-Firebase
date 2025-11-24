@@ -48,7 +48,8 @@ async function _getUnprotectedTripObject() {
 function _getSensitiveTripObject() {
     return {
         hospedagens: _getProtectedHospedagemArray(),
-        transportes: _getTransporteObject(protectedReservationCodes)
+        transportes: _getTransporteObject(protectedReservationCodes),
+        pin: _getCurrentPreferencePIN()
     }
 }
 

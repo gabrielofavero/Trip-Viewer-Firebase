@@ -225,7 +225,7 @@ function _loadPin() {
 function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent='', invalido=false}) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   const classComplement = invalido ? '-invalid' : '';
-  propriedades.titulo = translate('trip.expenses.pin.title');
+  propriedades.titulo = translate('trip.basic_information.pin.title');
   propriedades.conteudo = `${precontent}<div class="pin-wrapper">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">

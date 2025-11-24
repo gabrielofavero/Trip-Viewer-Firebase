@@ -16,14 +16,10 @@ function _loadEventListeners() {
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
-    getID('pin-enable').addEventListener('click', () => _switchPin());
-    getID('pin-disable').addEventListener('click', () => _switchPin());
+    getID('pin-disabled').addEventListener('click', _switchPin);
+    getID('pin-sensitive-only').addEventListener('click', _switchPin);
+    getID('pin-all-data').addEventListener('click', _switchPin);
     getID('claro').addEventListener('change', () => _autoFillDarkColor());
-    getID('programacao-title-gastosPrevios').addEventListener('click', _validateAndLoadProtectedData);
-    getID('programacao-title-gastosDurante').addEventListener('click', _validateAndLoadProtectedData);
-    document.querySelectorAll('.ver-reserva').forEach(button => {
-        button.addEventListener('click', _validateAndLoadProtectedData);
-    });
 
     // Visibilidade do Ida e Volta (Transporte)
     getID('simple-view').addEventListener('change', () => _applyTransportationTypeVisualization());

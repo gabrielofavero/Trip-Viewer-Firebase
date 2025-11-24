@@ -120,31 +120,36 @@ async function _delete(path) {
   }
 }
 
-// Generic Data
+// Trip Data
 async function _getSingleData(type) {
   let data;
   try {
     data = await _get(`${type}/${_getURLParam(type[0])}`);
-
-    if (data) {
-      for (let i = 0; i < data?.destinos?.length; i++) {
-        let place;
-        try {
-          place = await _get(`destinos/${data.destinos[i].destinosID}`, false);
-          data.destinos[i].destinos = place
-        } catch (e) {
-          console.warn(`Unable to get destination ${data.destinos[i].destinosID}: ${e.message}`);
-          data.destinos.splice(i, 1);
-        }
-      }
-    } else {
+    if (!data) {
       _displayError(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`);
+    }
+    if (type === 'viagens' && data?.destinos && data.destinos.length > 0) {
+      data = await _getTripDataWithDestinos(data);
     }
   } catch (error) {
     console.error('Error fetching data from Firestore:', error.message);
   }
 
   return data;
+}
+
+async function _getTripDataWithDestinos(tripData) {
+  for (let i = 0; i < tripData?.destinos?.length; i++) {
+    let place;
+    try {
+      place = await _get(`destinos/${tripData.destinos[i].destinosID}`, false);
+      tripData.destinos[i].destinos = place
+    } catch (e) {
+      console.warn(`Unable to get destination ${tripData.destinos[i].destinosID}: ${e.message}`);
+      tripData.destinos.splice(i, 1);
+    }
+  }
+  return tripData;
 }
 
 // System

@@ -311,8 +311,8 @@
               <label for="pin-all-data" data-translate="trip.basic_information.security.all_data"></span></label>
             </div>
             <div class="nice-form-group" id="pin-container" style="display: none; margin-top: 16px">
-              <button class="btn input-botao" onclick="_requestPinEditarGastos()"
-                data-translate="trip.expenses.pin.new"></button>
+              <button id="request-pin" class="btn input-botao" onclick="_requestPinEditarGastos()"
+                data-translate="trip.basic_information.pin.new"></button>
             </div>
           </fieldset>
 
@@ -535,24 +535,6 @@
           </div>
 
           <div id="habilitado-gastos-content">
-
-            
-            <fieldset class="nice-form-group">
-              <div class="nice-form-group">
-                <input type="radio" name="proteger-gastos" id="pin-disable" checked />
-                <label for="pin-disable" data-translate="trip.expenses.public"></label>
-              </div>
-              <div class="nice-form-group">
-                <input type="radio" name="proteger-gastos" id="pin-enable" />
-                <label for="pin-enable" data-translate="trip.expenses.private"></span></label>
-              </div>
-              <div class="nice-form-group" id="pin-container" style="display: none; margin-top: 16px">
-                <button id="request-pin" class="btn input-botao" onclick="_requestPinEditarGastos()"
-                  data-translate="trip.expenses.pin.new"></button>
-              </div>
-            </fieldset>
-
-
             <div class="item-box accordion gastos-box" id="gastos-box">
               <div id="programacao-gastosPrevios" class="accordion-item accordion-programacao">
                 <h2 class="accordion-header" id="heading-programacao-gastosPrevios">
