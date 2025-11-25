@@ -8,7 +8,7 @@ async function _loadPinData() {
     const pinObject = await _get(`protegido/${DOCUMENT_ID}`);
     
     if (!pinObject || !pinObject.pin) {
-        _displayError('messages.error.protected_fetch');
+        return;
     }
 
     PIN.current = pinObject.pin;

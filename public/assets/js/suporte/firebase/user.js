@@ -108,12 +108,3 @@ async function _getUser() {
         });
     });
 }
-
-// Editar sem permissão
-async function _canEdit(dono) {
-    const uid = await _getUID();
-    if (uid !== dono) {
-        _displayError(translate('messages.error.unauthorized_access'));
-        return false;
-    } else return true;
-}

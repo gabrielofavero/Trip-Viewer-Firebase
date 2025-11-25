@@ -6,7 +6,7 @@
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 97    | 94        | 3       |
 | 🏆   | Feature      | F000  | 105   | 102       | 3     |
-| 📈   | Improvement  | M000  | 118   | 117       | 1      |
+| 📈   | Improvement  | M000  | 119   | 118       | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -36,6 +36,7 @@
   - *[🏆F100] Move HTML elements from expenses into general data (pin)*
   - *[🏆F101] Change how set system works so that it can record protected data*
   - *[🏆F102] Implement new "protected" document logic in js*
+  - *[📈M119] Remove can-edit logic*
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader

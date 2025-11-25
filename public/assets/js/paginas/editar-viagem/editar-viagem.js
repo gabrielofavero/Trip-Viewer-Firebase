@@ -3,7 +3,6 @@ var FIRESTORE_DATA;
 var FIRESTORE_GASTOS_DATA;
 
 var SUCCESSFUL_SAVE = false;
-var CAN_EDIT = false;
 var NEW_TRIP = false;
 
 const TODAY = _getTodayFormatted();
@@ -37,12 +36,9 @@ async function _loadEditarViagemPage() {
     await _loadTrip(true);
   } else {
     NEW_TRIP = true;
-    CAN_EDIT = true;
     DESTINOS = await _getUserList('destinos', true);
     _loadNewTrip();
   }
-
-  if (!CAN_EDIT) return;
 
   _loadImageSelector('background');
   _loadLogoSelector();
@@ -95,12 +91,8 @@ async function _loadTrip(stripped = false) {
       FIRESTORE_DATA = await _getTravelDocument(stripped);
   }
 
-  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono);
-
-  if (CAN_EDIT) {
-    await _loadTripData();
-    _stopLoadingScreen();
-  }
+  await _loadTripData();
+  _stopLoadingScreen();
 }
 
 function _deleteViagem() {
