@@ -39,6 +39,7 @@ function _getGastosProtectedObject() {
 
 // Gastos e Inner Gastos
 function _pushGasto(tipo, data) {
+    data = data || {};
     if (!data[tipo]) {
         data[tipo] = [];
     }

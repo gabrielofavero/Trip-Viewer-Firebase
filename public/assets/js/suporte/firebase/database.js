@@ -109,12 +109,15 @@ async function _override(path, newData) {
   }
 }
 
-async function _delete(path) {
+async function _delete(path, ignoreError = false) {
   const docRef = firebase.firestore().doc(path);
   try {
     const deleteObj = await docRef.delete();
     return _buildDatabaseObject(true, translate('messages.documents.delete.success'), deleteObj);
   } catch (error) {
+    if (ignoreError) {
+      _buildDatabaseObject(true, translate('messages.documents.delete.success'));
+    }
     console.error(error.message);
     return _buildDatabaseObject(false, `${translate('messages.documents.delete.error')}: ${error.message}`)
   }
