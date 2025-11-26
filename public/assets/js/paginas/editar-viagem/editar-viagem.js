@@ -113,11 +113,23 @@ function _deleteViagem() {
 }
 
 async function _deleteViagemAction() {
-  if (DOCUMENT_ID) {
-    await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
-    await _deleteUserObjectStorage();
-    window.location.href = `../index.html`;
+  if (!DOCUMENT_ID) return;
+
+  const tasks = [
+    _deleteUserObjectDB(DOCUMENT_ID, "viagens"),
+    _deleteUserObjectStorage()
+  ];
+
+  if (PIN.current) {
+    tasks.push(
+      _delete(`protegido/${DOCUMENT_ID}`, true),
+      _delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true),
+      _delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, true)
+    );
   }
+
+  await Promise.all(tasks);
+  window.location.href = "../index.html";
 }
 
 function _getDataSelectOptions(j) {
@@ -137,11 +149,17 @@ async function _getTravelDocument(stripped = false) {
 }
 
 function _getMergedTripObject(tripData, protectedData) {
-  for (const key in protectedData) {
-    if (typeof protectedData[key] != 'object') continue;
-    for (const subKey in protectedData[key]) {
-      tripData[key][subKey] = protectedData[key][subKey];
-    }
+  for (let i = 0; i < tripData.transportes.dados.length; i++) {
+    const id = tripData.transportes.dados[i].id;
+    tripData.transportes.dados[i].reserva = protectedData.transportes[id]?.reserva || '';
+    tripData.transportes.dados[i].link = protectedData.transportes[id]?.link || '';
   }
+
+  for (let i = 0; i < tripData.hospedagens.length; i++) {
+    const id = tripData.hospedagens[i].id;
+    tripData.hospedagens[i].reserva = protectedData.hospedagens[id]?.reserva || '';
+    tripData.hospedagens[i].link = protectedData.hospedagens[id]?.link || '';
+  }
+
   return tripData;
 }

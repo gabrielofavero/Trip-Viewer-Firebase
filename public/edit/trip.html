@@ -298,11 +298,11 @@
           <fieldset class="nice-form-group">
             <label data-translate="trip.basic_information.security.title"></label>
             <div class="nice-form-group">
-              <input type="radio" name="proteger-viagem" id="pin-disabled" checked />
+              <input type="radio" name="proteger-viagem" id="pin-disabled" />
               <label for="pin-disabled" data-translate="trip.basic_information.security.disabled"></label>
             </div>
             <div class="nice-form-group">
-              <input type="radio" name="proteger-viagem" id="pin-sensitive-only" />
+              <input type="radio" name="proteger-viagem" id="pin-sensitive-only" checked/>
               <label for="pin-sensitive-only"
                 data-translate="trip.basic_information.security.sensitive_only"></span></label>
             </div>
@@ -310,7 +310,7 @@
               <input type="radio" name="proteger-viagem" id="pin-all-data" />
               <label for="pin-all-data" data-translate="trip.basic_information.security.all_data"></span></label>
             </div>
-            <div class="nice-form-group" id="pin-container" style="display: none; margin-top: 16px">
+            <div class="nice-form-group" id="pin-container" style="margin-top: 16px">
               <button id="request-pin" class="btn input-botao" onclick="_requestPinEditarGastos()"
                 data-translate="trip.basic_information.pin.new"></button>
             </div>
@@ -915,7 +915,8 @@
   <script src="../assets/js/suporte/componentes/dynamic-select.js"></script>
   <script src="../assets/js/paginas/editar-viagem/categorias/customizacao.js"></script>
   <script src="../assets/js/suporte/paginas/pin.js"></script>
-  <script src="../assets/js/paginas/editar-viagem/categorias/dados-basicos/seguranca.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/dados-basicos/protected-data.js"></script>
+  <script src="../assets/js/paginas/editar-viagem/categorias/dados-basicos/set-protected-data.js"></script>
   <script src="../assets/js/paginas/editar-viagem/categorias/gastos.js"></script>
   <script src="../assets/js/paginas/editar-viagem/categorias/transporte.js"></script>
   <script src="../assets/js/paginas/editar-viagem/categorias/hospedagem.js"></script>

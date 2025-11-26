@@ -12,10 +12,17 @@ function _loadGastos(data = FIRESTORE_GASTOS_DATA) {
 }
 
 async function _getGastosObject() {
+    const gastosDurante = _getGastos('gastosDurante');
+    const gastosPrevios = _getGastos('gastosPrevios');
+
+    if (gastosDurante.length === 0 && gastosPrevios.length === 0) {
+        return {};
+    }
+
     return {
         compartilhamento: await _getCompartilhamentoObject(),
-        gastosDurante: _getGastos('gastosDurante'),
-        gastosPrevios: _getGastos('gastosPrevios'),
+        gastosDurante,
+        gastosPrevios,
         moeda: getID(`moeda`).value,
         versao: {
             ultimaAtualizacao: new Date().toISOString()
@@ -31,9 +38,9 @@ async function _getGastosObject() {
     }
 }
 
-function _getGastosProtectedObject() {
+async function _getUnprotectedGastosObject() {
     return {
-        compartilhamento: FIRESTORE_GASTOS_NEW_DATA.compartilhamento
+        compartilhamento: await _getCompartilhamentoObject(),
     }
 }
 

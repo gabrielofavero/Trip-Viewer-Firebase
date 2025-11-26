@@ -599,7 +599,8 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20vh;
+  margin-top: 30px;
+  margin-bottom: 5px;
 }
 
 .pin-input,
@@ -617,6 +618,7 @@ section {
 }
 
 .pin-input-invalid {
+  color: #3A3838;
   background: #eee0e0;
   border-color: #DBBBBB;
 }

@@ -30,6 +30,8 @@ function _loadDadosBasicosViagemData() {
     TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
     _updateTravelersButtonLabel();
     _setCurrentPreferencePIN(FIRESTORE_DATA.pin);
+    _switchPinVisibility();
+    _switchPinLabel();
 }
 
 function _loadCustomizacaoData() {
@@ -104,11 +106,6 @@ async function _loadTransportesData() {
         getID('transporte-adicionar-box').style.display = 'block';
     }
     getID(FIRESTORE_DATA.transportes.visualizacao || 'simple-view').checked = true;
-
-    let sensitiveData = {};
-    if (_getCurrentPreferencePIN() === 'sensitive-only') {
-        sensitiveData =  await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
-    }
 
     for (let j = 1; j <= FIRESTORE_DATA.transportes.dados.length; j++) {
         _addTransporte();

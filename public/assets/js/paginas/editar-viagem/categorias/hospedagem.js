@@ -22,20 +22,17 @@ function _getHospedagemArray(protectedReservationCodes = false) {
     return result;
 }
 
-function _getProtectedHospedagemArray() {
-    let result = [];
-    for (const id of _getChildIDs('hospedagens-box')) {
-        const j = _getJ(id);
-        result.push({
-            id: getID(`hospedagens-id-${j}`).value,
-            reserva: getID(`reserva-hospedagens-${j}`).value,
-            link: getID(`reserva-hospedagens-link-${j}`).value,
-        });
+function _getProtectedHospedagemObject() {
+    let result = {};
+    for (const childID of _getChildIDs('hospedagens-box')) {
+        const j = _getJ(childID);
+        const id = getID(`hospedagens-id-${j}`).value;
+        const reserva = getID(`reserva-hospedagens-${j}`).value;
+        const link = getID(`reserva-hospedagens-link-${j}`).value;
+        result[id] = { reserva, link };
     }
     return result;
 }
-
-
 
 function _getHospedagemImages(j) {
     const result = [];
@@ -229,7 +226,7 @@ function _saveImagensHospedagem(j) {
             })
         }
     }
-    
+
     HOSPEDAGEM_IMAGENS[j] = result;
     _closeMessage();
 }

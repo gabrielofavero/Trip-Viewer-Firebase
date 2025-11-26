@@ -8,14 +8,14 @@ async function _buildTripObject() {
     switch (_getCurrentPreferencePIN()) {
         case 'all-data':
             FIRESTORE_NEW_DATA = await _getUnprotectedTripObject();
-            FIRESTORE_PROTECTED_NEW_DATA = _getTripObjectFull(false);
+            FIRESTORE_PROTECTED_NEW_DATA = await _getTripObjectFull(false);
             break;
         case 'sensitive-only':
             FIRESTORE_NEW_DATA = await _getTripObjectFull(true);
             FIRESTORE_PROTECTED_NEW_DATA = _getSensitiveTripObject();
             break;
         default:
-            FIRESTORE_NEW_DATA = _getTripObjectFull(false);
+            FIRESTORE_NEW_DATA = await _getTripObjectFull(false);
             FIRESTORE_PROTECTED_NEW_DATA = {};
     }
 }
@@ -46,9 +46,16 @@ async function _getUnprotectedTripObject() {
 }
 
 function _getSensitiveTripObject() {
+    const hospedagens = _getProtectedHospedagemObject();
+    const transportes = _getProtectedTransporteObject();
+
+    if (hospedagens.length === 0 && transportes.dados.length === 0) {
+        return {};
+    }
+    
     return {
-        hospedagens: _getProtectedHospedagemArray(),
-        transportes: _getTransporteObject(protectedReservationCodes),
+        hospedagens: _getProtectedHospedagemObject(),
+        transportes: _getProtectedTransporteObject(),
         pin: _getCurrentPreferencePIN()
     }
 }
@@ -82,11 +89,11 @@ async function _buildGastosObject() {
     switch (_getCurrentPreferencePIN()) {
         case 'all-data':
         case 'sensitive-only':
-            FIRESTORE_GASTOS_NEW_DATA = await _getGastosObject();
-            FIRESTORE_GASTOS_PROTECTED_NEW_DATA = _getGastosProtectedObject();
+            FIRESTORE_GASTOS_PROTECTED_NEW_DATA = await _getGastosObject();
+            FIRESTORE_GASTOS_NEW_DATA = _objectExistsAndHasKeys(FIRESTORE_GASTOS_PROTECTED_NEW_DATA) ? await _getUnprotectedGastosObject() : {};
             break;
         default:
-            FIRESTORE_NEW_DATA = _getGastosObject(false);
+            FIRESTORE_GASTOS_NEW_DATA = await _getGastosObject(false);
             FIRESTORE_PROTECTED_NEW_DATA = {};
     }
     }
@@ -112,18 +119,9 @@ function _getCoresObject() {
 }
 
 async function _getCompartilhamentoObject() {
-    const publica = getID('habilitado-publico').checked;
-    var dono;
-
-    if (FIRESTORE_DATA) {
-        dono = FIRESTORE_DATA.compartilhamento.dono;
-    } else {
-        dono = await _getUID();
-    }
-
     return {
-        ativo: publica,
-        dono: dono,
+        ativo: true,
+        dono: FIRESTORE_DATA ? FIRESTORE_DATA.compartilhamento.dono : await _getUID(),
         editores: []
     }
 }

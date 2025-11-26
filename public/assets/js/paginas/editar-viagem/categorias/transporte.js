@@ -28,21 +28,16 @@ function _getTransporteObject(protectedReservationCodes = false) {
 }
 
 function _getProtectedTransporteObject() {
-    const result = {
-        dados: [],
-    }
-    for (const child of _getChildIDs('transporte-box')) {
-        const j = _getJ(child);
-        result.dados.push({
-            id: getID(`transporte-id-${j}`).value,
-            link: getID(`transporte-link-${j}`).value,
-            reserva: getID(`reserva-transporte-${j}`).value,
-        });
+    const result = {}
+    for (const childID of _getChildIDs('transporte-box')) {
+        const j = _getJ(childID);
+        const id = getID(`transporte-id-${j}`).value;
+        const reserva = getID(`reserva-transporte-${j}`).value;
+        const link = getID(`transporte-link-${j}`).value;
+        result[id] = { reserva, link };
     }
     return result;
 }
-
-
 
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
@@ -51,7 +46,7 @@ function _updateTransporteTitle(i) {
     if (!partida || !chegada) {
         return;
     }
-    
+
     let texto = `${partida} → ${chegada}`;
 
     if (getID('leg-view').checked) {
@@ -59,7 +54,7 @@ function _updateTransporteTitle(i) {
     } else {
         const pessoa = _getPessoa(i);
         if (getID('people-view').checked && pessoa) {
-        texto = `${pessoa}: ${texto}`;
+            texto = `${pessoa}: ${texto}`;
         }
     }
 
