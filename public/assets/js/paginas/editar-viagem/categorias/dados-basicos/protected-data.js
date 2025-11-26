@@ -47,7 +47,7 @@ function _switchPinVisibility() {
 }
 
 function _switchPinLabel() {
-    getID('request-pin').innerText = PIN.current || PIN.new ? translate('trip.basic_information.pin.change') : translate('trip.basic_information.pin.set');
+    getID('request-pin').innerText = PIN.current || PIN.new ? translate('trip.basic_information.pin.change') : translate('trip.basic_information.pin.change');
 }
 
 function _requestPinEditarGastos(invalido = false) {
@@ -84,8 +84,11 @@ function _invalidPin() {
     _requestPin({ confirmAction, precontent, invalido });
 }
 
-function _validateSavedPIN() {
+function _validatePinField() {
     if ((getID('pin-all-data').checked || getID('pin-sensitive-only').checked) && !PIN.new) {
-        return [translate('trip.basic_information.pin.title')];
+        getID('modal-inner-text').innerHTML = translate('trip.basic_information.pin.no_pin');
+        SUCCESSFUL_SAVE = false;
+        _stopLoadingScreen();
+        _openModal();
     }
 }

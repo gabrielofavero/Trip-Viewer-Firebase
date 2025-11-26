@@ -4,7 +4,7 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 97    | 94        | 3       |
+| 🐞   | Bug          | B000  | 98    | 94        | 3       |
 | 🏆   | Feature      | F000  | 105   | 102       | 3     |
 | 📈   | Improvement  | M000  | 119   | 118       | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
@@ -31,6 +31,7 @@
 ## Done
 
 ### November 2025
+- 🐞 **B098:** Fields validation and custom checks not working on sets (edit/*.html)
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
   - *[📈M118] Remove all mentions of editors and sharing options (legacy)*
   - *[🏆F100] Move HTML elements from expenses into general data (pin)*

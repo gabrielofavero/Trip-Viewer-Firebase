@@ -39,7 +39,8 @@
                 "change": "Alterar PIN de acesso",
                 "invalid": "PIN inválido. Tente novamente",
                 "insert": "Insira um PIN de acesso de 4 dígitos",
-                "again": "Digite novamento o PIN de acesso"
+                "again": "Digite novamento o PIN de acesso",
+                "no_pin": "O documento de viagem foi configurado como \"protegido\", mas não há um PIN de acesso definido"
             }
         },
         "visibility": {

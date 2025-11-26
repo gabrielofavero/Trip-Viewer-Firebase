@@ -39,7 +39,8 @@
                 "change": "Change access PIN",
                 "invalid": "Invalid PIN. Please try again",
                 "insert": "Enter a 4-digit access PIN",
-                "again": "Enter the access PIN again"
+                "again": "Enter the access PIN again",
+                "no_pin": "The trip document was configured with data protection, but no access PIN was set"
             }
         },
         "visibility": {

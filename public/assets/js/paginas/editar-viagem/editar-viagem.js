@@ -117,14 +117,15 @@ async function _deleteViagemAction() {
 
   const tasks = [
     _deleteUserObjectDB(DOCUMENT_ID, "viagens"),
-    _deleteUserObjectStorage()
+    _deleteUserObjectStorage(),
+    _delete(`gastos/${DOCUMENT_ID}`, true)
   ];
 
   if (PIN.current) {
     tasks.push(
       _delete(`protegido/${DOCUMENT_ID}`, true),
       _delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true),
-      _delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, true)
+      _delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, true),
     );
   }
 

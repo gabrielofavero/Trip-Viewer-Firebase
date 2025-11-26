@@ -162,8 +162,8 @@ function _getInnerGastoContent(categoria, tipo, index) {
                     <label>${translate('labels.type')}</label>
                     <select id="gasto-tipo-select" clas="editar-select"">
                         <option value="trip.transportation.type.flights">${translate('trip.transportation.type.flights')}</option>
-                        <option value="trip.accomodation.title">${translate('trip.accomodation.title')}</option>
-                        <option value="labels.entretainment">${translate('labels.entretainment')}</option>
+                        <option value="trip.accomodation.title">${translate('trip.accommodation.title')}</option>
+                        <option value="labels.entretainment">${translate('labels.entrertainment')}</option>
                         <option value="trip.expenses.daily">${translate('trip.expenses.daily')}</option>
                         <option value="labels.people">${translate('labels.people')}</option>
                         <option value="trip.transportation.type.car">${translate('trip.transportation.type.car')}</option>

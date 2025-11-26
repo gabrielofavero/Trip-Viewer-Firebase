@@ -195,7 +195,7 @@ async function _setViagem() {
         }
     }
 
-    const customChecks = _validateSavedPIN;
+    const customChecks = _validatePinField;
     const before = [
       _buildTripObject,
       _buildGastosObject,
