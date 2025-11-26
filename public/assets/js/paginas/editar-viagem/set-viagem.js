@@ -27,7 +27,7 @@ async function _getUnprotectedTripObject() {
         cores: _getCoresObject(),
         fim: getID(`fim`).value ? _formattedDateToDateObject(getID(`fim`).value) : "",
         galeria: {},
-        hospedagens: {},
+        hospedagens: [],
         imagem: _getImagemObject(),
         inicio: getID(`inicio`).value ? _formattedDateToDateObject(getID(`inicio`).value) : "",
         links: {},
@@ -174,11 +174,18 @@ function _verifyImageUploads(type) {
         }
 
         if (type == 'viagens') {
-            const hospedagemLinks = FIRESTORE_NEW_DATA.hospedagens.map(hospedagem => {
-                return hospedagem.imagens.map(imagem => imagem.link);
-            }).flat();
+            const data = _getCurrentPreferencePIN() === 'all-data' ? FIRESTORE_PROTECTED_NEW_DATA : FIRESTORE_NEW_DATA;
+            const hospedagens = data.hospedagens || [];
+            const hospedagemLinks = (hospedagens ?? [])
+            .flatMap(hospedagem =>
+              (hospedagem?.imagens ?? [])
+                .map(imagem => imagem?.link)
+                .filter(Boolean)
+            );
+
+            const imagens = data?.galeria?.imagens || [];
             documentLinks.push(...hospedagemLinks);
-            documentLinks.push(...FIRESTORE_NEW_DATA.galeria.imagens)
+            documentLinks.push(...imagens)
         }
 
         _deleteUnusedImages(path, documentLinks);

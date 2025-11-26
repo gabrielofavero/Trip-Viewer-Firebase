@@ -38,7 +38,7 @@ function _getCurrentPreferencePIN() {
 
 // Pin
 function _switchPin() {
-    PIN.new = getID('pin-disabled').checked ? '' : PIN.current;
+    PIN.new = getID('pin-disabled').checked ? '' : PIN.current || PIN.new;
     _switchPinVisibility();
 }
 
