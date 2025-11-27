@@ -5,10 +5,13 @@
         "email": "E-mail",
         "password": "Senha",
         "account_settings": "Ajustes da conta",
+        "backup_account": "Backup da conta",
+        "restore_account": "Restaurar conta",
         "delete_account": {
             "title": "Excluir conta",
             "message": "Tem certeza que deseja realizar a exclusão? A ação não poderá ser desfeita e todos os dados associados também serão excluídos"
-        }
+        },
+        "backup_prompt": "Você também gostaria de fazer backup dos dados sensíveis da viagem? Será necessário inserir o PIN de acesso para cada viagem protegida"
     },
     "trip": {
         "next": "Próximas viagens",
@@ -630,6 +633,9 @@
             "title": "Idioma",
             "pt": "Português",
             "en": "Inglês"
-        }
+        },
+        "advanced": "Avançado",
+        "yes": "Sim",
+        "no": "Não"
     }
 }

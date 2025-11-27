@@ -242,66 +242,88 @@
       </div>
 
       <div class="settings-box" id="settings-box" style="display: none">
-        <div id="settings-account-container">
-          <div id="settings-account" class="settings-account-item">
-            <div id="settings-account-picture"></div>
-            <div id="settings-account-text">
-              <div id="settings-account-name"></div>
+        <div class="general-settings">
+          <div id="settings-account-container">
+            <div id="settings-account" class="settings-account-item">
+              <div id="settings-account-picture"></div>
+              <div id="settings-account-text">
+                <div id="settings-account-name"></div>
+              </div>
             </div>
-          </div>
 
-          <div id="delete-account-container">
-            <a id="settings-delete-account" href="#" onclick="_openModal()"
-              data-translate="auth.delete_account.title"></a>
+            <a id="settings-sign-out" href="#" onclick="_signOut()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z">
+                </path>
+              </svg>
+              <span data-translate="auth.sign_out"></span>
+            </a>
           </div>
         </div>
 
-        <button id="settings-sign-out" class="btn btn-theme" onclick="_signOut()" type="button" data-translate="">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="currentColor"
-              d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z">
-            </path>
-          </svg>
-          <span data-translate="auth.sign_in"></span>
-        </button>
+        <div class="advanced-settings">
+          <span class="title" data-translate="labels.advanced"></span>
+          <div class="options">
+            <button id="settings-backup-account" class="btn btn-theme" onclick="_backupOnClickAction()" type="button"
+              data-translate="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M12 15.575q-.2 0-.375-.062T11.3 15.3l-3.6-3.6q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L11 12.15V5q0-.425.288-.712T12 4t.713.288T13 5v7.15l1.875-1.875q.3-.3.713-.288t.712.313q.275.3.288.7t-.288.7l-3.6 3.6q-.15.15-.325.213t-.375.062M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20z" />
+              </svg>
+              <span data-translate="auth.backup_account"></span>
+            </button>
+            <button id="settings-restore-account" class="btn btn-theme" onclick="_signOut()" type="button"
+              data-translate="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20zm5-12.15L9.125 9.725q-.3.3-.712.288T7.7 9.7q-.275-.3-.288-.7t.288-.7l3.6-3.6q.15-.15.325-.212T12 4.425t.375.063t.325.212l3.6 3.6q.3.3.288.7t-.288.7q-.3.3-.712.313t-.713-.288L13 7.85V15q0 .425-.288.713T12 16t-.712-.288T11 15z" />
+              </svg>
+              <span data-translate="auth.restore_account"></span>
+            </button>
+            <div id="delete-account-container">
+              <a id="settings-delete-account" href="#" onclick="_openModal()"
+                data-translate="auth.delete_account.title"></a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-text">
-          <div id="cancel-icon" style="text-align: right;">
-            <a onclick="_closeModal()">
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-text">
+            <div id="cancel-icon" style="text-align: right;">
+              <a onclick="_closeModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
+                  </path>
+                </svg>
+              </a>
+            </div>
+            <h4 id="modal-text-title" data-translate="auth.delete_account.title"></h4>
+            <p data-translate="auth.delete_account.message"></p>
+          </div>
+          <div class="button-box">
+            <button id="cancelar" class="btn btn-secondary" type="button" onclick="_closeModal()" data-translate="">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor"
                   d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
                 </path>
               </svg>
-            </a>
+              <span data-translate="labels.cancel"></span>
+              <button id="apagar" class="btn btn-theme" type="submit" data-translate="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                <span data-translate="labels.delete"></span>
+              </button>
           </div>
-          <h4 id="modal-text-title" data-translate="auth.delete_account.title"></h4>
-          <p data-translate="auth.delete_account.message"></p>
-        </div>
-        <div class="button-box">
-          <button id="cancelar" class="btn btn-secondary" type="button" onclick="_closeModal()" data-translate="">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-              <path fill="currentColor"
-                d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
-              </path>
-            </svg>
-            Cancelar
-            <button id="apagar" class="btn btn-theme" type="submit" data-translate="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="currentColor" fill-rule="evenodd"
-                  d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                  clip-rule="evenodd"></path>
-              </svg>
-              Apagar
-            </button>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- ======= Footer ======= -->

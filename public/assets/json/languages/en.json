@@ -5,10 +5,13 @@
         "email": "E-mail",
         "password": "Password",
         "account_settings": "Account settings",
+        "backup_account": "Backup account",
+        "restore_account": "Restore account",
         "delete_account": {
             "title": "Delete account",
             "message": "Are you sure you want to delete your account? This action cannot be undone and all associated data will also be deleted as well"
-        }
+        },
+        "backup_prompt": "Would you also like to back up sensitive trip data? You will need to enter the access PIN for each protected trip"
     },
     "trip": {
         "next": "Next trips",
@@ -630,6 +633,9 @@
             "title": "Language",
             "pt": "Portuguese",
             "en": "English"
-        }
+        },
+        "advanced": "Advanced",
+        "yes": "Yes",
+        "no": "No"
     }
 }

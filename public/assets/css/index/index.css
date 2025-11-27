@@ -559,6 +559,28 @@ section {
   }
 }
 
+.settings-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.settings-box .title {
+  font-weight: bold;
+}
+
+.settings-box .options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-box button {
+  width: 200px;
+}
+
 #settings-account-container {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -591,8 +613,6 @@ section {
 
 #delete-account-container {
   width: 300px;
-  margin-bottom: 20px;
-  margin-top: 5px;
 }
 
 #settings-delete-account {

@@ -5,7 +5,7 @@
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 98    | 95        | 3       |
-| 🏆   | Feature      | F000  | 105   | 102       | 3     |
+| 🏆   | Feature      | F000  | 106   | 103       | 3     |
 | 📈   | Improvement  | M000  | 119   | 118       | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
@@ -16,9 +16,10 @@
 ## Backlog
 ### High Priority
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
-  - *[🐞B076] Import backup function not getting data from "gastos" database*
-  - *[🏆F104] Add PIN component to view.html and senstive data box (with eye icon)*
-  - *[🏆F105] Adapt existing trip data loading for new structure (view.html)* 
+  - *[🐞B076] Import backup function not getting sensitive data*
+  - *[🏆F104] Create Import/Export buttons account settings*
+  - *[🏆F105] Add PIN component to view.html and senstive data box (with eye icon)*
+  - *[🏆F106] Adapt existing trip data loading for new structure (view.html)* 
 
 ### Medium Priority
 

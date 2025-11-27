@@ -1,5 +1,9 @@
 TRIP_DOCUMENT_BACKUP_LIMIT = 5;
 
+async function _backupOnClickAction() {
+    _displayPrompt(translate('auth.backup_account'), translate('auth.backup_prompt'))
+} 
+
 // Account Data Export and Import Functions
 async function _backupAccountData() {
     const jsonStr = JSON.stringify(USER_DATA, null, 2);
