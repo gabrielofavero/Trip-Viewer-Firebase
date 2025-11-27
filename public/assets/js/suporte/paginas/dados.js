@@ -250,20 +250,20 @@ function _getNextJ(parentID) {
   return _getLastJ(parentID) + 1;
 }
 
-function _getRandomID({idLength = 5, pool = []}) {
+function _getRandomID({ idLength = 5, pool = [] } = {}) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const array = new Uint32Array(idLength);
+  crypto.getRandomValues(array); // native + secure
+
   let randomId = '';
-
   for (let i = 0; i < idLength; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomId += characters[randomIndex];
+    randomId += characters[array[i] % characters.length];
   }
 
-  if (pool.includes(randomId)) {
-    return _getRandomID({idLength, pool});
-  }
-
-  return randomId;
+  // avoid collision
+  return pool.includes(randomId)
+    ? _getRandomID({ idLength, pool })
+    : randomId;
 }
 
 function _getCategoriaID(tipo, j) {

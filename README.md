@@ -16,7 +16,7 @@
 ## Backlog
 ### High Priority
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
-  - *[🏆F103] Create and apply database migrations for new structures*
+  - *[🐞B076] Import backup function not getting data from "gastos" database*
   - *[🏆F104] Add PIN component to view.html and senstive data box (with eye icon)*
   - *[🏆F105] Adapt existing trip data loading for new structure (view.html)* 
 
@@ -24,7 +24,6 @@
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
-- 🐞 **B076:** Import backup function not getting data from "gastos" database
 - 🐞 **B096:** Fix Gallery module
 - 🐞 **B097:** Fix Image upload module
 
@@ -38,6 +37,7 @@
   - *[🏆F102] Implement new "protected" document logic in js*
   - *[📈M119] Remove can-edit logic*
   - *[🐞B098] Fields validation and custom checks not working on sets (edit/\*.html)*
+  - *[🏆F103] Create and apply database migrations for new structures*
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader

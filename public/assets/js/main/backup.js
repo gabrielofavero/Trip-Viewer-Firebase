@@ -35,4 +35,5 @@ async function _restoreAccountData(backupFile) {
 
     console.log("User data restored successfully.");
 
+    location.reload();
 }

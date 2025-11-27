@@ -49,13 +49,13 @@ function _getSensitiveTripObject() {
     const hospedagens = _getProtectedHospedagemObject();
     const transportes = _getProtectedTransporteObject();
 
-    if (hospedagens.length === 0 && transportes.dados.length === 0) {
+    if (Object.keys(hospedagens).length === 0 && Object.keys(transportes).length === 0) {
         return {};
     }
     
     return {
-        hospedagens: _getProtectedHospedagemObject(),
-        transportes: _getProtectedTransporteObject(),
+        hospedagens: hospedagens,
+        transportes: transportes,
         pin: _getCurrentPreferencePIN()
     }
 }
