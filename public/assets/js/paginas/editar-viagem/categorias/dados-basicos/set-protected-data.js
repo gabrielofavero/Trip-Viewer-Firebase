@@ -24,11 +24,13 @@ async function _setProtectedDataWithoutPIN() {
     
     const hasCurrentGastos = _objectExistsAndHasKeys(FIRESTORE_GASTOS_DATA);
     const hasNewGastos = _objectExistsAndHasKeys(FIRESTORE_GASTOS_NEW_DATA);
+
+    const hasCurrentViagens = _hasCurrentViagens();
     const hasNewProtectedViagens = _objectExistsAndHasKeys(FIRESTORE_PROTECTED_NEW_DATA);
 
     if (!FIRESTORE_DATA) {
         await _setNewDocumentNoPin();
-    } else if (!PIN.current) {
+    } else if (PIN.current) {
         await _removePinAndSet();
     } else {
         await _setNoPinDocument();
@@ -41,9 +43,22 @@ async function _setProtectedDataWithoutPIN() {
     }
 
     async function _removePinAndSet() {
-        if (hasCurrentGastos) responses.push(await _delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`));
-        if (hasNewProtectedViagens) responses.push(await _delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`));
-        responses.push(hasNewGastos ? await _override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA) : responses.push(await _delete(`gastos/${DOCUMENT_ID}`), true));
+        if (hasCurrentGastos) {
+            responses.push(await _delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`));
+        }
+
+        if (hasCurrentViagens) {
+            responses.push(await _delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`));
+        } 
+        
+        if (hasNewGastos && !hasCurrentGastos) {
+            responses.push(await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
+        } else if (hasNewGastos && hasCurrentGastos) {
+            responses.push(await _override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else if (!hasNewGastos && hasCurrentGastos) {
+            responses.push(await _delete(`gastos/${DOCUMENT_ID}`));
+        }
+        
         responses.push(await _delete(`protegido/${DOCUMENT_ID}`), true);
     }
 
@@ -92,8 +107,10 @@ async function _setProtectedDataWithPIN() {
     }
 
     async function _addPinAndSet() {
-        if (hasNewGastos) {
+        if (hasNewGastos && hasCurrentGastos) {
             responses.push(await _override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
+        } else if (hasNewGastos && !hasCurrentGastos) {
+            responses.push(await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
         }
 
         if (hasNewProtectedGastos) {
@@ -137,7 +154,7 @@ async function _setProtectedDataWithPIN() {
         }
 
         if (hasCurrentViagens && hasNewProtectedViagens) {
-            responses.push(await _update(`viagens/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA));
+            responses.push(await _override(`viagens/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA));
         } else if (!hasCurrentViagens && hasNewProtectedViagens) {
             responses.push(await _deepCreate(`viagens/protected/${PIN.new}`, FIRESTORE_PROTECTED_NEW_DATA, DOCUMENT_ID));
         }
@@ -145,11 +162,11 @@ async function _setProtectedDataWithPIN() {
         responses.push(await _update(`protegido/${DOCUMENT_ID}`, _getNewPinObject()));
     }
 
-    function _hasCurrentViagens() {
-        return !!FIRESTORE_DATA && !_isDataUnprotected() && (
-            ((FIRESTORE_DATA.transportes?.dados ?? []).some(t => t.reserva || t.link)) ||
-            ((FIRESTORE_DATA.hospedagens ?? []).some(h => h.reserva || h.link))
-        );
-    }
+}
 
+function _hasCurrentViagens() {
+    return !!FIRESTORE_DATA && !_isDataUnprotected() && (
+        ((FIRESTORE_DATA.transportes?.dados ?? []).some(t => t.reserva || t.link)) ||
+        ((FIRESTORE_DATA.hospedagens ?? []).some(h => h.reserva || h.link))
+    );
 }

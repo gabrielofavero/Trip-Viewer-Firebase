@@ -40,6 +40,7 @@ function _getCurrentPreferencePIN() {
 function _switchPin() {
     PIN.new = getID('pin-disabled').checked ? '' : PIN.current || PIN.new;
     _switchPinVisibility();
+    _switchPinLabel();
 }
 
 function _switchPinVisibility() {
@@ -47,7 +48,7 @@ function _switchPinVisibility() {
 }
 
 function _switchPinLabel() {
-    getID('request-pin').innerText = PIN.current || PIN.new ? translate('trip.basic_information.pin.change') : translate('trip.basic_information.pin.change');
+    getID('request-pin').innerText = PIN.current || PIN.new ? translate('trip.basic_information.pin.change') : translate('trip.basic_information.pin.new');
 }
 
 function _requestPinEditarGastos(invalido = false) {
