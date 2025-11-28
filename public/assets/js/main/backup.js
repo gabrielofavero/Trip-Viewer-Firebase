@@ -1,12 +1,17 @@
-TRIP_DOCUMENT_BACKUP_LIMIT = 5;
+let MISSING_ACCOUNT_DATA = { jobs: [], dataToRequest: []};
 
 async function _backupOnClickAction() {
-    _displayPrompt(translate('auth.backup_account'), translate('auth.backup_prompt'))
-} 
+    _prepareMissingAccountData(useSensitiveData);
+    _displayPrompt(translate('auth.backup_account'), translate('auth.backup_prompt'));
+}
 
 // Account Data Export and Import Functions
-async function _backupAccountData() {
-    const jsonStr = JSON.stringify(USER_DATA, null, 2);
+async function _backupAccountData(useSensitiveData = false) {
+    // FUnction to execute all jobs
+
+
+    const data = await _gatherAccountData(useSensitiveData);
+    const jsonStr = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
@@ -21,6 +26,24 @@ async function _backupAccountData() {
 
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+
+    function _prepareMissingAccountData(includeSensitive) {
+        const data = _cloneObject(USER_DATA);
+        const jobs = [];
+        const dataToRequest = [];
+
+        for (const key in data.viagens) {
+            const viagem = data.viagens[key];
+            if (!includeSensitive && viagem.modulos.gastos === true && viagem.pin === 'no-pin') {
+                jobs.push({path: 'gastos', key});
+            } else if (includeSensitive && (viagem.pin === 'all-data' || viagem.pin === 'sensitive-only')) {
+                dataToRequest.push({title: viagem.titulo, key});
+            }
+        }
+
+        MISSING_ACCOUNT_DATA.jobs = jobs;
+        MISSING_ACCOUNT_DATA.dataToRequest = dataToRequest;
+    }
 }
 
 async function _restoreAccountData(backupFile) {
