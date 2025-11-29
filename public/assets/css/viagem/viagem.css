@@ -2026,7 +2026,8 @@ iframe {
 
 .message-container,
 .programacao-container,
-.destinos-container {
+.destinos-container,
+.input-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2084,7 +2085,8 @@ iframe {
 
   .message-container,
   .programacao-container,
-  .destinos-container {
+  .destinos-container,
+  .input-container {
     width: 90%;
     height: auto;
   }
@@ -2168,6 +2170,10 @@ iframe {
 
 .button-box {
   text-align: center;
+}
+
+.button-box-right {
+  text-align: right;
 }
 
 @media (max-width: 600px) {
@@ -3066,4 +3072,46 @@ input[type="radio"] {
   padding: 0 10px;
   height: 40px;
   font-size: 15px;
+}
+
+/*--------------------------------------------------------------
+# Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
+--------------------------------------------------------------*/
+.pin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+
+.pin-input,
+.pin-input-invalid {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  outline: none;
+  margin: 1px;
+  text-align: center;
+  margin: 0 5px;
+  background: #eeeeee;
+  font-size: 20px;
+}
+
+.pin-input-invalid {
+  color: #3A3838;
+  background: #eee0e0;
+  border-color: #DBBBBB;
+}
+
+.pin {
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  display: none;
+}
+
+.placeholder-text {
+  color: var(--nf-input-placeholder-color);
 }

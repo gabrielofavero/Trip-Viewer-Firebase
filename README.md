@@ -16,8 +16,8 @@
 ## Backlog
 ### High Priority
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
-  - *[🏆F105] Add PIN component to view.html and senstive data box (with eye icon)*
   - *[🏆F106] Adapt existing trip data loading for new structure (view.html)* 
+  - test backup/restore
 
 ### Medium Priority
 
@@ -39,6 +39,7 @@
   - *[🏆F103] Create database migrations for new structures*
   - *[🐞B076] Import backup function not getting sensitive data*
   - *[🏆F104] Create Import/Export buttons account settings*
+  - *[🏆F105] Add PIN component to view.html and senstive data box (with eye icon)*
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader

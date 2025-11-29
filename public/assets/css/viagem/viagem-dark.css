@@ -444,7 +444,8 @@ a:hover {
 
 .message-container,
 .programacao-container,
-.destinos-container {
+.destinos-container,
+.input-container {
   background: #303030;
   box-shadow: 0 2px 6px rgba(166, 166, 166, 0.05);
 }
@@ -657,4 +658,22 @@ a:hover {
 
 .custom-select.travelers .dropdown .option:hover {
   background: #4d4d4d
+}
+
+/* Pin */
+
+.pin-input {
+  border: 1px solid #414040;;
+  background: #3b3b3b;
+  color: #E2E2E2;
+}
+
+.pin-input-invalid {
+  color: #ffffff;
+  background: #463838;
+  border-color: #403434;
+}
+
+.pin {
+  color: #ffffff;
 }
