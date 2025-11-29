@@ -191,44 +191,97 @@ async function _deleteAccount() {
   }
 }
 
-async function _deleteAccountDocuments() {
-  const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    const promises = [];
+async function _deleteAccountDocuments(userId) {
+  const userRef = db.collection("users").doc(userId);
+  const userSnap = await userRef.get();
+  if (!userSnap.exists) return console.log("User does not exist");
 
-    for (const type of DATABASE_TRIP_DOCUMENTS) {
-      if (userData[type]) {
-        for (const docID of userData[type]) {
-          promises.push(_delete(`${type}/${docID}`));
+  const userData = userSnap.data();
+  const batch = db.batch();
+
+  // --- CASE A: destinos + listagens (simple delete array) ---
+  const simpleCollections = ["destinos", "listagens"];
+  simpleCollections.forEach(type => {
+    const ids = userData[type] ?? [];
+    ids.forEach(id => batch.delete(db.collection(type).doc(id)));
+    userData[type] = []; // cleanup
+  });
+
+  // --- CASE B: viagens (extra protected handling) ---
+  if (Array.isArray(userData.viagens)) {
+    for (const viagemID of userData.viagens) {
+      // Always delete public trip data
+      batch.delete(db.collection("viagens").doc(viagemID));
+
+      // Check protegido/viagemID
+      const protSnap = await db.collection("protegido").doc(viagemID).get();
+
+      if (protSnap.exists) {
+        const pin = protSnap.data()?.pin;
+
+        if (pin) {
+          // Delete protected dirs
+          batch.delete(db.doc(`viagens/protected/${pin}/${viagemID}`));
+          batch.delete(db.doc(`gastos/protected/${pin}/${viagemID}`));
         }
-        userData[type] = [];
+
+        // Remove protegido reference
+        batch.delete(db.collection("protegido").doc(viagemID));
+
+      } else {
+        // No protected doc → delete normal gastos
+        batch.delete(db.collection("gastos").doc(viagemID));
       }
     }
 
-    promises.push(_update(`usuarios/${uid}`, userData));
-    await Promise.all(promises);
+    userData.viagens = [];
   }
+
+  // Save cleaned user object
+  batch.update(userRef, userData);
+
+  await batch.commit();
+  console.log("All user data removed successfully.");
 }
+
+
 
 async function _createAccountDocuments(data) {
   const uid = await _getUID();
   if (!uid) return;
 
-  const promises = [];
-  const userData = await _get(`usuarios/${uid}`);
+  const userRef = firebase.firestore().doc(`usuarios/${uid}`);
 
-  for (const type of DATABASE_EDITABLE_DOCUMENTS) {
-    if (data[type] && Object.keys(data[type]).length > 0) {
-      for (const docID in data[type]) {
-        const docData = data[type][docID];
-        
+  await firebase.firestore().runTransaction(async (tx) => {
+    const userData = (await tx.get(userRef)).data();
+
+    for (const type of DATABASE_EDITABLE_DOCUMENTS) {
+      const group = data?.[type];
+      if (!group) continue;
+
+      for (const docID of Object.keys(group)) {
+        if (docID === "protected") {
+          _processProtectedDocuments(group[docID], type, tx);
+          continue;
+        }
+
+        tx.set(firebase.firestore().doc(`${type}/${docID}`), group[docID]);
       }
     }
-  }
 
-  promises.push(_update(`usuarios/${uid}`, userData));
-  await Promise.all(promises);
+    tx.update(userRef, userData);
+  });
+}
+
+function _processProtectedDocuments(tree, type, tx) {
+  for (const pin of Object.keys(tree)) {
+    for (const docID of Object.keys(tree[pin])) {
+      tx.set(
+        firebase.firestore().doc(`${type}/protected/${pin}/${docID}`),
+        tree[pin][docID]
+      );
+    }
+  }
 }
 
 async function _addToUserArray(type, value) {

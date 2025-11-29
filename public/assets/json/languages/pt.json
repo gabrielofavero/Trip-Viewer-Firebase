@@ -59,7 +59,10 @@
                 "insert": "Insira um PIN de acesso de 4 dígitos",
                 "again": "Digite novamento o PIN de acesso",
                 "no_pin": "O documento de viagem foi configurado como \"protegido\", mas não há um PIN de acesso definido",
-                "trip_pin": "Digite os PINs de acesso das viagens abaixo. Caso deixe algum em branco, os dados sensíveis dessa viagem não serão restaurados"
+                "trip_pin": {
+                    "optional": "Digite os PINs de acesso das viagens abaixo. Caso deixe algum em branco, os dados sensíveis dessa viagem não serão restaurados",
+                    "required": "Digite os PINs de acesso das viagens abaixo para restaurar os dados sensíveis"
+                }
             }
         },
         "visibility": {

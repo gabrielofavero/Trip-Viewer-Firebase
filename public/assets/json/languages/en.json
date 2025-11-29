@@ -59,7 +59,10 @@
                 "insert": "Enter a 4-digit access PIN",
                 "again": "Enter the access PIN again",
                 "no_pin": "The trip document was configured with data protection, but no access PIN was set",
-                "trip_pin": "Enter the access PINs for the trips below. If you leave any blank, the sensitive data for that trip will not be restored"
+                "trip_pin":  {
+                    "optional": "Enter the access PINs for the trips below. If you leave any blank, the sensitive data for that trip will not be restored",
+                    "required": "Enter the access PINs for the trips below"
+                }
             }
         },
         "visibility": {
