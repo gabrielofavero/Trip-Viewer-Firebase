@@ -38,12 +38,6 @@ async function _getGastosObject() {
     }
 }
 
-async function _getUnprotectedGastosObject() {
-    return {
-        compartilhamento: await _getCompartilhamentoObject(),
-    }
-}
-
 // Gastos e Inner Gastos
 function _pushGasto(tipo, data) {
     data = data || {};

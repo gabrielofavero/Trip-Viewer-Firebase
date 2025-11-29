@@ -446,6 +446,7 @@
         "share": "Check out what I've created on TripViewer",
         "exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
         "select_one": "Please select at least one item",
+        "protected": "To access this document, please enter the access PIN set for it",
         "errors": {
             "load_title": "Loading Error 🙁",
             "unknown": "An unexpected error prevented the page from loading",

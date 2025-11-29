@@ -53,8 +53,9 @@ function _switchPinLabel() {
 
 function _requestPinEditarGastos(invalido = false) {
     const confirmAction = '_reconfirmPin()';
+    const cancelAction = `_closeMessage()`;
     const precontent = translate('trip.basic_information.pin.insert');
-    _requestPin({ confirmAction, precontent, invalido });
+    _requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
 function _reconfirmPin() {
@@ -63,8 +64,9 @@ function _reconfirmPin() {
         _requestPinEditarGastos(true)
     } else {
         const confirmAction = `_validatePin('${atual}')`;
+        const cancelAction = `_closeMessage()`;
         const precontent = translate('trip.basic_information.pin.again');
-        _requestPin({ confirmAction, precontent });
+        _requestPin({ confirmAction, cancelAction, precontent });
     }
 }
 
@@ -80,13 +82,14 @@ function _validatePin(pin) {
 
 function _invalidPin() {
     const confirmAction = '_reconfirmPin()';
+    const cancelAction = `_closeMessage()`;
     const precontent = translate('trip.basic_information.pin.invalid');
     const invalido = true;
-    _requestPin({ confirmAction, precontent, invalido });
+    _requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
 function _validatePinField() {
-    if ((getID('pin-all-data').checked || getID('pin-sensitive-only').checked) && !PIN.new) {
+    if ((getID('pin-all-data').checked || getID('pin-sensitive-only').checked) && (!PIN.current && !PIN.new)) {
         getID('modal-inner-text').innerHTML = translate('trip.basic_information.pin.no_pin');
         SUCCESSFUL_SAVE = false;
         _stopLoadingScreen();

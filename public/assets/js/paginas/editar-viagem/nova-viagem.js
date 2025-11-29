@@ -190,8 +190,8 @@ function _addHospedagens() {
             </div>
     
             <div class="nice-form-group">
-              <label>${translate('labels.address')}</label>
-              <input required id="hospedagens-endereco-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
+              <label>${translate('labels.address')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="hospedagens-endereco-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
             </div>
     
             <div class="side-by-side-box">

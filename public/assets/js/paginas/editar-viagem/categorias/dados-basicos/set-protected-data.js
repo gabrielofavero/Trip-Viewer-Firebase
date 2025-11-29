@@ -82,7 +82,7 @@ async function _setProtectedDataWithPIN() {
         await _setNewDocumentWithPin();
     } else if (!PIN.current) {
         await _addPinAndSet();
-    } else if (PIN.current !== PIN.new) {
+    } else if (PIN.current !== PIN.new && PIN.new) {
         await _setChangedPinDocument();
     } else {
         await _setSamePinDocument();

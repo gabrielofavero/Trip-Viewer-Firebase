@@ -446,6 +446,7 @@
         "share": "Venha visualizar meus dados criados no TripViewer",
         "exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
         "select_one": "Selecione pelo menos um item",
+        "protected": "Para visualizar os dados dessa viagem, insira o PIN de acesso",
         "errors": {
             "load_title": "Erro no Carregamento 🙁",
             "unknown": "Um erro inesperado impediu o carregamento da página",

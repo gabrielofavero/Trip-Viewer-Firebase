@@ -90,7 +90,7 @@ async function _buildGastosObject() {
         case 'all-data':
         case 'sensitive-only':
             FIRESTORE_GASTOS_PROTECTED_NEW_DATA = await _getGastosObject();
-            FIRESTORE_GASTOS_NEW_DATA = _objectExistsAndHasKeys(FIRESTORE_GASTOS_PROTECTED_NEW_DATA) ? await _getUnprotectedGastosObject() : {};
+            FIRESTORE_GASTOS_NEW_DATA = {};
             break;
         default:
             FIRESTORE_GASTOS_NEW_DATA = await _getGastosObject(false);

@@ -222,7 +222,7 @@ function _loadPin() {
   });
 }
 
-function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent='', invalido=false}) {
+function _requestPin({confirmAction, cancelAction, precontent='', invalido=false}) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   const classComplement = invalido ? '-invalid' : '';
   propriedades.titulo = translate('trip.basic_information.pin.title');
@@ -235,13 +235,20 @@ function _requestPin({confirmAction, cancelAction='_closeMessage()', precontent=
                               <div id="pin-code" class="pin"></div>`;
   propriedades.critico = true;
   propriedades.containers = _getContainersInput();
-  propriedades.botoes = [{
-    tipo: 'cancelar',
-    acao: cancelAction
-  }, {
+  propriedades.botoes = [];
+
+  if (cancelAction) {
+    propriedades.botoes.push({
+      tipo: 'cancelar',
+      acao: cancelAction
+    });
+  }
+
+  propriedades.botoes.push({
     tipo: 'confirmar',
     acao: confirmAction
-  }];
+  });
+  
   _displayFullMessage(propriedades);
   _loadPin();
 

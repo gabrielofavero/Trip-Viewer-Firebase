@@ -502,3 +502,6 @@ function _getTranslatedDocumentLabel(type) {
   }
 }
 
+function _getErrorFromGetRequestMessage() {
+  return ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions') ? translate('messages.errors.unauthorized_access') : ERROR_FROM_GET_REQUEST;
+}
