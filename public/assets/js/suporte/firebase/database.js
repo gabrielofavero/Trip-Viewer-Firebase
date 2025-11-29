@@ -191,7 +191,8 @@ async function _deleteAccount() {
   }
 }
 
-async function _deleteAccountDocuments(userId) {
+async function _deleteAccountDocuments() {
+  const userId = await _getUID();
   const userRef = db.collection("users").doc(userId);
   const userSnap = await userRef.get();
   if (!userSnap.exists) return console.log("User does not exist");
