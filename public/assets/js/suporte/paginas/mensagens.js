@@ -25,19 +25,21 @@ function _displayMessage(titulo, conteudo) {
   _displayFullMessage(properties);
 }
 
+
 // Prompt (Sim / Não)
-function _displayPrompt(titulo, conteudo, confirmarAcao = '_closeMessage();', cancelarAcao = '_closeMessage();') {
+function _displayPrompt(titulo, conteudo, yesAction, noAction = '_closeMessage()') {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   propriedades.titulo = titulo;
   propriedades.conteudo = conteudo;
+  propriedades.critico = true;
   propriedades.botoes = [
     {
-      tipo: 'não',
-      acao: cancelarAcao
+      tipo: 'nao',
+      acao: noAction
     },
     {
       tipo: 'sim',
-      acao: confirmarAcao
+      acao: yesAction
     }
   ];
   _displayFullMessage(propriedades);
@@ -340,7 +342,7 @@ function _getTryAgainButton() {
 }
 
 function _getCloseButton(label, onclick) {
-  label = label ? label : translate('labels.close');
+  label = label ? label : translate('labels.understood');
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';

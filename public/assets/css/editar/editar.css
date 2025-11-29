@@ -1326,14 +1326,6 @@ details summary::-webkit-details-marker {
   overflow-wrap: break-word;
 }
 
-/* @media (max-height: 730px) {
-  .input-container {
-    display: block;
-    height: 95% !important;
-    overflow: auto;
-  }
-} */
-
 .message-container {
   text-align: center;
 }

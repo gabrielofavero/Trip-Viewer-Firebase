@@ -1,5 +1,5 @@
 :root {
-  --notification-color: #7f75b6;
+  --theme-color: #7f75b6;
 }
 
 body {
@@ -36,7 +36,7 @@ strong {
 
 .notification-bar {
   /* color: #303030; */
-  background-color: var(--notification-color);
+  background-color: var(--theme-color);
 }
 
 #trip-viewer-text {
@@ -90,7 +90,8 @@ strong {
   color: #d1d0d0;
 }
 
-.message-container {
+.message-container,
+.input-container {
   background: #303030;
 }
 
@@ -200,4 +201,22 @@ strong {
 
 .lang-options button:hover {
   background: #3b3b3b;
+}
+
+/* Nice Form Group (Mini) */
+.nice-form-group {
+  --nf-input-color: #E2E2E2;
+  --nf-input-border-color: #383838;
+  --nf-input-background: #404040;
+  --nf-input-placeholder: #a3a3a3;
+}
+
+.nice-form-group > label {
+  color: #E2E2E2;
+}
+
+/* Toast */
+
+#toast {
+  color: #303030;
 }

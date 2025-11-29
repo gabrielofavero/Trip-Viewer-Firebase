@@ -2,6 +2,7 @@ var DOCUMENT_ID;
 var ERROR_FROM_GET_REQUEST = "";
 
 const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
+const DATABASE_EDITABLE_DOCUMENTS = ["viagens", "destinos", "listagens", "gastos", "protegido"];
 
 // Constructors
 function _buildDatabaseObject(success, message = "", data = {}) {
@@ -14,14 +15,14 @@ function _buildDatabaseObject(success, message = "", data = {}) {
 }
 
 // Generic Methods
-async function _get(path, treatError = true) {
+async function _get(path, treatError = true, hideWarn = false) {
   try {
     const docRef = firebase.firestore().doc(path);
     const snapshot = await docRef.get();
 
     if (snapshot.exists) {
       return snapshot.data();
-    } else {
+    } else if (!hideWarn) {
       const message = `Document not found: ${path}`;
       console.warn(message);
       return;
@@ -217,11 +218,11 @@ async function _createAccountDocuments(data) {
   const promises = [];
   const userData = await _get(`usuarios/${uid}`);
 
-  for (const type of DATABASE_TRIP_DOCUMENTS) {
-    if (data[type]) {
-      for (const document of data[type]) {
-        promises.push(_create(type, document.data, document.code));
-        userData[type].push(document.code);
+  for (const type of DATABASE_EDITABLE_DOCUMENTS) {
+    if (data[type] && Object.keys(data[type]).length > 0) {
+      for (const docID in data[type]) {
+        const docData = data[type][docID];
+        
       }
     }
   }

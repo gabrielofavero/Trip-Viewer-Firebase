@@ -441,7 +441,7 @@ function _getLocalJSON() {
 
 function _getAndDestinationTitle(value, destinos) {
   if (value.includes('departure')) {
-      return _getReadableArray([translate('trip.transportation.departure'), ...destinos]);
+    return _getReadableArray([translate('trip.transportation.departure'), ...destinos]);
   }
   return _getReadableArray([...destinos, translate('trip.transportation.return')]);
 }
@@ -449,35 +449,56 @@ function _getAndDestinationTitle(value, destinos) {
 function _getInnerProgramacaoTitleHTML(dado, spanClass, isCustomTraveler = false) {
   const programacao = dado.programacao || '';
   const presentes = !dado.pessoas ? [] : dado.pessoas
-      .filter(p => p.isPresent)
-      .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
+    .filter(p => p.isPresent)
+    .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
 
   const todasPresentes = presentes.length === dado.pessoas.length;
   const pessoasTexto = (todasPresentes || isCustomTraveler === true) ? '' : _getReadableArray(presentes);
 
   let horario = '';
   if (dado.inicio && dado.fim) {
-      horario = `${dado.inicio} - ${dado.fim}`;
+    horario = `${dado.inicio} - ${dado.fim}`;
   } else if (dado.inicio) {
-      horario = dado.inicio;
+    horario = dado.inicio;
   }
 
   if (pessoasTexto && horario && programacao) {
-      return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
+    return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
   }
 
   if (pessoasTexto && programacao) {
-      return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
+    return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
   }
 
   if (horario && programacao) {
-      return `${_highlight(`${horario}:`)} ${programacao}`;
+    return `${_highlight(`${horario}:`)} ${programacao}`;
   }
 
   return programacao;
 
   function _highlight(text) {
     return `<span class="${spanClass}">${text}</span>`;
+  }
+}
+
+function _getTranslatedDocumentLabel(type) {
+  switch (type) {
+    case 'viagens':
+      return translate('trip.document');
+    case 'viagens/protected':
+      return translate('trip.protected');
+    case 'destinos':
+      return translate('destination.document');
+    case 'listagens':
+      return translate('listing.document');
+    case 'gastos':
+      return translate('trip.expenses.document');
+    case 'gastos/protected':
+      return translate('trip.expenses.protected');
+    case 'protegido':
+      return translate('labels.protected');
+    default:
+      return translate('labels.unknown');
   }
 }
 

@@ -38,7 +38,7 @@
   - *[🏆F102] Implement new "protected" document logic in js*
   - *[📈M119] Remove can-edit logic*
   - *[🐞B098] Fields validation and custom checks not working on sets (edit/\*.html)*
-  - *[🏆F103] Create and apply database migrations for new structures*
+  - *[🏆F103] Create database migrations for new structures*
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader

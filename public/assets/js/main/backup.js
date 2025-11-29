@@ -1,17 +1,91 @@
-let MISSING_ACCOUNT_DATA = { jobs: [], dataToRequest: []};
+const MISSING_ACCOUNT_DATA = { jobs: [], protected: [], failed: [] };
 
+// Backup
 async function _backupOnClickAction() {
-    _prepareMissingAccountData(useSensitiveData);
-    _displayPrompt(translate('auth.backup_account'), translate('auth.backup_prompt'));
+    MISSING_ACCOUNT_DATA.jobs = [];
+    MISSING_ACCOUNT_DATA.protected = [];
+    MISSING_ACCOUNT_DATA.failed = [];
+
+    _prepareMissingData();
+
+    if (MISSING_ACCOUNT_DATA.protected.length === 0) {
+        _backupAccountData(false);
+        return;
+    }
+
+    _displayPrompt(translate('account.backup.title'), translate('account.backup.prompt'), '_displayPinRequestBackup()', '_backupAccountData()');
 }
 
-// Account Data Export and Import Functions
+function _prepareMissingData() {
+    const viagens = _cloneObject(USER_DATA).viagens;
+    const jobs = [];
+    const protectedJobs = [];
+
+    for (const viagem of viagens) {
+        const documentID = viagem.code;
+        const data = viagem.data;
+
+        switch (data.pin) {
+            case 'no-pin':
+                if (data.modulos.gastos === true) jobs.push(_getJobObject(viagem.titulo, documentID, 'gastos'));
+                break;
+            case 'all-data':
+            case 'sensitive-only':
+                const innerJobs = [];
+                if (data.modulos.gastos === true) {
+                    innerJobs.push(_getJobObject(viagem.titulo, documentID, 'gastos', 'protected'));
+                    innerJobs.push(_getJobObject(viagem.titulo, documentID, 'protegido'));
+                }
+                if (data.modulos.hospedagens === true || data.modulos.transportes === true) innerJobs.push(_getJobObject(viagem.titulo, documentID, 'viagens', 'protected'));
+                protectedJobs.push(_getProtectedJobObject(data.titulo, documentID, innerJobs));
+        }
+    }
+
+    MISSING_ACCOUNT_DATA.jobs = jobs;
+    MISSING_ACCOUNT_DATA.protected = protectedJobs;
+}
+
+function _getJobObject(title, documentID, collection, subpath = '') {
+    return { title, documentID, collection, subpath };
+}
+
+function _getProtectedJobObject(title, documentID, jobs, pin = '') {
+    return { title, documentID, jobs, pin };
+}
+
+function _displayPinRequestBackup() {
+    _stopLoadingScreen();
+    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    propriedades.titulo = translate('trip.basic_information.pin.title')
+    propriedades.containers = _getContainersInput();
+    propriedades.conteudo = _getContent();
+    propriedades.botoes = [{ tipo: 'cancelar', }, { tipo: 'confirmar', acao: '_backupAccountData(true)' }];
+
+    _displayFullMessage(propriedades);
+
+    function _getContent() {
+        const content = [translate('trip.basic_information.pin.trip_pin')];
+        for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
+            content.push(`
+                <div class="nice-form-group">
+                    <label>${protectedJob.title}</label>
+                    <input id="${protectedJob.documentID}" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" pattern="[0-9]*" placeholder="${translate('trip.basic_information.pin.insert')}" />
+                </div>
+            `);
+        }
+        return content.join('');
+    }
+}
+
 async function _backupAccountData(useSensitiveData = false) {
-    // FUnction to execute all jobs
+    if (useSensitiveData) {
+        _getProtectedJobPins();
+        _closeMessage();
+    }
 
-
-    const data = await _gatherAccountData(useSensitiveData);
-    const jsonStr = JSON.stringify(data, null, 2);
+    _startLoadingScreen();
+    const accountData = await _getAccountData(useSensitiveData);
+    const jsonStr = JSON.stringify(accountData, null, 2);
     const blob = new Blob([jsonStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
@@ -26,31 +100,162 @@ async function _backupAccountData(useSensitiveData = false) {
 
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+    _stopLoadingScreen();
 
-    function _prepareMissingAccountData(includeSensitive) {
-        const data = _cloneObject(USER_DATA);
-        const jobs = [];
-        const dataToRequest = [];
-
-        for (const key in data.viagens) {
-            const viagem = data.viagens[key];
-            if (!includeSensitive && viagem.modulos.gastos === true && viagem.pin === 'no-pin') {
-                jobs.push({path: 'gastos', key});
-            } else if (includeSensitive && (viagem.pin === 'all-data' || viagem.pin === 'sensitive-only')) {
-                dataToRequest.push({title: viagem.titulo, key});
-            }
-        }
-
-        MISSING_ACCOUNT_DATA.jobs = jobs;
-        MISSING_ACCOUNT_DATA.dataToRequest = dataToRequest;
+    if (MISSING_ACCOUNT_DATA.failed.length > 0) {
+        _displayPartialBackupWarning();
+    } else {
+        _toast(translate('account.backup.success'));
     }
 }
 
-async function _restoreAccountData(backupFile) {
-    const backup = backupFile || await _getLocalJSON();
+function _getProtectedJobPins() {
+    const inputs = getID('message-description').querySelectorAll('input');
+    const ids = Array.from(inputs).map(input => input.id);
 
-    if (!backup) {
-        console.error("No file provided for restoration.");
+    for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
+        const index = ids.indexOf(protectedJob.documentID);
+        if (index === -1) {
+
+            continue;
+        };
+
+        const pin = inputs[index].value.trim();
+        if (!isNaN(pin) && pin.length === 4) {
+            protectedJob.pin = pin;
+        } else if (pin === '') {
+            console.warn("No PIN provided for trip:", protectedJob.title);
+            for (const job of protectedJob.jobs) {
+                _newBackupFail(job, "skipped");
+            }
+        } else {
+            console.warn("Invalid PIN for trip:", protectedJob.title);
+            for (const job of protectedJob.jobs) {
+                _newBackupFail(job, "not_found");
+            }
+        }
+    }
+}
+
+async function _getAccountData(useSensitiveData = false) {
+    const data = getEmptyBaseStructure();
+    hydrateFromCache(data);
+    const jobs = buildMissingJobs(useSensitiveData);
+    await loadJobsConcurrently(jobs, data);
+    return data;
+
+
+    function getEmptyBaseStructure() {
+        return {
+            destinos: {},
+            gastos: { protected: {} },
+            listagens: {},
+            protegido: {},
+            viagens: { protected: {} },
+        };
+    }
+
+    function hydrateFromCache(target) {
+        for (const key in target) {
+            const docs = USER_DATA?.[key];
+            if (!docs || docs.length === 0) continue;
+
+            for (const { code, data } of docs)
+                if (code && data) target[key][code] = data;
+        }
+    }
+
+    function buildMissingJobs(includeSensitive) {
+        const list = [...MISSING_ACCOUNT_DATA.jobs];
+
+        if (!includeSensitive) return list;
+
+        for (const entry of MISSING_ACCOUNT_DATA.protected) {
+            if (!entry.pin) continue;
+            for (const job of entry.jobs) {
+                if (!entry.pin && job.subpath === "protected") continue;
+
+                list.push({
+                    title: job.title,
+                    collection: job.collection,
+                    documentID: job.documentID,
+                    subpath: job.subpath === "protected"
+                        ? `protected/${entry.pin}`
+                        : job.subpath,
+                });
+            }
+        }
+
+        return list;
+    }
+
+    async function loadJobsConcurrently(jobList, store) {
+        const promises = jobList.map(async job => {
+            try {
+                const path = `${job.collection}/${job.subpath ? job.subpath + "/" : ""}${job.documentID}`;
+                const result = await _get(path, true, false);
+
+                if (!result?.exists) return _newBackupFail(job, "not_found");
+
+                store[job.collection][job.documentID] = result;
+            } catch (err) {
+                MISSING_ACCOUNT_DATA
+                console.error("Load job failed:", job, err);
+                _newBackupFail(job, "unknown");
+            }
+        });
+
+        await Promise.allSettled(promises);
+    }
+}
+
+function _newBackupFail(job, reason) {
+    MISSING_ACCOUNT_DATA.failed.push({ job, reason });
+}
+
+function _displayPartialBackupWarning() {
+    const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+    propriedades.titulo = translate('account.backup.partial.title');
+    propriedades.conteudo = _getContent();
+    propriedades.botoes = [{ tipo: 'fechar' }];
+
+    _displayFullMessage(propriedades);
+
+    function _getContent() {
+        const list = [];
+        const protectedDataAdded = [];
+
+        for (const failed of MISSING_ACCOUNT_DATA.failed) {
+            const isProtected = failed.job.subpath?.includes('protected') || failed.job.collection === 'protegido';
+            if (isProtected) {
+                if (protectedDataAdded.includes(failed.job.documentID)) continue;
+                protectedDataAdded.push(failed.job.documentID);
+            }
+
+            const label = isProtected ? 'viagens/protected' : failed.job.collection;
+            const type = _getTranslatedDocumentLabel(label);
+            list.push(`<li><b>${failed.job.title}</b><br>${translate(`account.backup.partial.reason.${failed.reason}`, { type })}</li>`);
+        }
+
+        return `${translate('account.backup.partial.message')}<br><br><ul style="margin-left:18px">${list.join("")}</ul>`;
+    }
+}
+
+
+// Restore
+async function _restoreOnClickAction() {
+    _displayPrompt(translate('account.restore.title'), translate('account.restore.prompt'), '_openBackupFilePicker()');
+}
+
+function _openBackupFilePicker() {
+    document.getElementById("restore-file-input").click();
+}
+
+async function _restoreAccountData(backup) {
+    _startLoadingScreen();
+
+    if (!_isBackupValid()) {
+        _displayMessage(translate('account.restore.title'), translate('account.restore.invalid_file'));
         return;
     }
 
@@ -60,7 +265,19 @@ async function _restoreAccountData(backupFile) {
     console.log("Restoring user data from backup...");
     await _createAccountDocuments(backup);
 
-    console.log("User data restored successfully.");
+    _toast(translate('account.restore.success'));
+    
+    setTimeout(() => {
+        location.reload();
+    }, 5000);
 
-    location.reload();
+    function _isBackupValid() {
+        return backup &&
+            typeof backup === 'object' &&
+            'destinos' in backup &&
+            'gastos' in backup &&
+            'listagens' in backup &&
+            'protegido' in backup &&
+            'viagens' in backup;
+    }
 }
