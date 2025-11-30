@@ -85,7 +85,7 @@ async function _loadGastos() {
     const pin = getID('pin-code')?.innerText || '';
     _closeMessage();
     _removePinListener();
-    _startLoadingScreen(false);
+    _startLoadingScreen();
     try {
         if (pin) {
             GASTOS = await _get(`gastos/protected/${pin}/${documentID}`, false);

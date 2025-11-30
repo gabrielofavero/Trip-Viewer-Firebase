@@ -97,7 +97,7 @@ function _loadListenersIndex() {
   });
 
   getID('apagar').addEventListener('click', async function () {
-    _startLoadingScreen(false);
+    _startLoadingScreen();
     await _deleteAccount();
     _closeModal();
     _signOut();

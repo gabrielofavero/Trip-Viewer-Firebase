@@ -1,5 +1,6 @@
 var REFRESHED = false;
 var TYPE = 'viagens';
+var PIN = null;
 
 var INICIO = {
   date: null,
@@ -285,8 +286,7 @@ function _loadModules() {
 
   function _loadGastosModule() {
     const ativo = FIRESTORE_DATA.modulos?.gastos === true;
-    const pin = FIRESTORE_DATA.gastosPin || false;
-    localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
+    localStorage.setItem('gastos', JSON.stringify({ ativo, pin: PIN }));
 
     if (ativo) {
       getID('gastos-container').style.display = '';
@@ -403,6 +403,10 @@ function _loadDocumentData() {
   _adjustPortfolioHeight();
   _refreshCategorias();
 
+  if (FIRESTORE_DATA.pin == 'sensitive-only') {
+    _loadSensitiveReservations();
+  }
+
   $('body').css('overflow', 'auto');
 
   if (!MESSAGE_MODAL_OPEN) {
@@ -422,35 +426,37 @@ function _loadProtectedData(firestoreData) {
   _requestDocumentPin();
 }
 
-async function _protectedDataConfirmAction() {
-  const pin = getID('pin-code')?.innerText || '';
+async function _protectedDataConfirmAction(afterAction = _setFirestoreData) {
+  PIN = getID('pin-code')?.innerText || '';
   _closeMessage();
-  _startLoadingScreen();
+  const adjustLoadables = false;
+  _startLoadingScreen({ adjustLoadables });
+  const invalido = true;
 
-  if (!pin) {
-    _requestDocumentPin(true);
+  if (!PIN) {
+    _requestDocumentPin({ invalido });
     return;
   }
 
-  const path = `${TYPE}/protected/${pin}/${_getURLParam(TYPE[0])}`;
+  const path = `${TYPE}/protected/${PIN}/${_getURLParam(TYPE[0])}`;
   const firestoreData = await _get(path);
 
   if (!ERROR_FROM_GET_REQUEST && !firestoreData) {
-    _requestDocumentPin(true);
+    _requestDocumentPin({ invalido });
     return;
   }
 
   if (ERROR_FROM_GET_REQUEST) {
     _displayError(_getErrorFromGetRequestMessage(), true);
-    _stopLoadingScreen();
+    const adjustLoadables = false;
+    _stopLoadingScreen({ adjustLoadables });
     return;
   }
 
-  _setFirestoreData(firestoreData);
+  afterAction(firestoreData);
 }
 
-function _requestDocumentPin(invalido = false) {
-  const confirmAction = `_protectedDataConfirmAction()`
+function _requestDocumentPin({ invalido = false, confirmAction = `_protectedDataConfirmAction()` } = {}) {
   const precontent = translate('messages.protected');
   _stopLoadingScreen();
   _requestPin({ confirmAction, precontent, invalido })

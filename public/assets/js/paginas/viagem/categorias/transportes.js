@@ -5,7 +5,6 @@ var TRANSPORTES_ATIVOS_TITULOS = [];
 
 function _loadTransporte() {
   const swiperData = _getSwiperData();
-  getID('transporte-subtitulo').innerText = _loadTransporteSubtitulo();
 
   _buildTransporteSwiper(swiperData);
   _resetSwiperVisibility();
@@ -108,15 +107,19 @@ function _getReservaHTML(j, empresa) {
   let reserva = transporte.reserva;
   let link = empresa.site || "";
 
+  if (FIRESTORE_DATA.pin === 'sensitive-only') {
+    return _getSensitiveReservationHTML('transportes', transporte.id);
+  }
+
   if (transporte.link) {
     link = transporte.link;
   }
 
   if (!reserva) return ""
   reserva = reserva[0] === "#" ? reserva.slice(1) : reserva;
-  const flightCode = link ? `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>` : `<div class="flight-code">#${reserva}</div>`;
-  const copyIcon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="_copyToClipboard('${reserva}')"></i>`;
-  return `${flightCode} ${copyIcon}`;
+  const reservation = link ? `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>` : `<div class="flight-code">#${reserva}</div>`;
+  const icon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="_copyToClipboard('${reserva}')"></i>`;
+  return `${reservation} ${icon}`;
 }
 
 function _getPartidaChegadaHTML(j, tipo) {
@@ -204,28 +207,6 @@ function _buildTransporteSwiper(swiperData) {
         break;
     }
     return keys;
-  }
-}
-
-function _loadTransporteSubtitulo() {
-  const reservas = FIRESTORE_DATA.transportes.dados.map(reserva => reserva.reserva);
-  const unique = [...new Set(reservas)];
-  const filtered = unique.filter(reserva => reserva);
-  const size = filtered.length;
-
-  switch (size) {
-    case 0:
-      return "";
-    case 1:
-      return `${translate('trip.transportation.single_reservation')} ${filtered[0]}`
-    default:
-      const last = filtered.pop();
-      const remaining = filtered.join(', ');
-      const replacements = {
-        reservationsList: remaining,
-        lastReservation: last
-      }
-      return translate('trip.transportation.multi_reservation', replacements)
   }
 }
 
@@ -388,7 +369,6 @@ function _resetSwiperVisibility() {
       getID('transporte-ida').style.visibility = '';
       break;
     case 'people-view':
-      getID('transporte-subtitulo').style.display = 'none';
       _adjustTransporteBoxContainerHeight();
   }
 }

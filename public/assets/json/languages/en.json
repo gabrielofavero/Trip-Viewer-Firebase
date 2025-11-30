@@ -92,8 +92,6 @@
         "transportation": {
             "title": "Transportation",
             "subtitle": "Add your main travel legs: departure, during the trip, and return",
-            "single_reservation": "Reservation",
-            "multi_reservation": "Reservations {{reservationsList}} and {{lastReservation}}",
             "departure": "Departure",
             "arrival": "Arrival",
             "during": "While traveling",
@@ -544,8 +542,11 @@
         "company": "Company",
         "start": "Start",
         "end": "End",
-        "reservation_code": "Reservation code",
-        "reservation_link": "Reservation link",
+        "reservation": {
+            "title": "Reservation",
+            "code": "Reservation code",
+            "link": "Reservation link"
+        },
         "select": "Select",
         "other": "Other",
         "optional": "Optional",

@@ -24,9 +24,7 @@ async function _setProtectedDataWithoutPIN() {
     
     const hasCurrentGastos = _objectExistsAndHasKeys(FIRESTORE_GASTOS_DATA);
     const hasNewGastos = _objectExistsAndHasKeys(FIRESTORE_GASTOS_NEW_DATA);
-
     const hasCurrentViagens = _hasCurrentViagens();
-    const hasNewProtectedViagens = _objectExistsAndHasKeys(FIRESTORE_PROTECTED_NEW_DATA);
 
     if (!FIRESTORE_DATA) {
         await _setNewDocumentNoPin();
@@ -147,16 +145,16 @@ async function _setProtectedDataWithPIN() {
     async function _setSamePinDocument() {
         if (hasCurrentGastos && hasNewGastos) {
             responses.push(await _update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA));
-            responses.push(await _update(`gastos/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_GASTOS_PROTECTED_NEW_DATA));
+            responses.push(await _update(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, FIRESTORE_GASTOS_PROTECTED_NEW_DATA));
         } else if (!hasCurrentGastos && hasNewGastos) {
             responses.push(await _create('gastos', FIRESTORE_GASTOS_NEW_DATA, DOCUMENT_ID));
-            responses.push(await _deepCreate(`gastos/protected/${PIN.new}`, FIRESTORE_GASTOS_PROTECTED_NEW_DATA, DOCUMENT_ID));
+            responses.push(await _deepCreate(`gastos/protected/${PIN.current}`, FIRESTORE_GASTOS_PROTECTED_NEW_DATA, DOCUMENT_ID));
         }
 
         if (hasCurrentViagens && hasNewProtectedViagens) {
-            responses.push(await _override(`viagens/protected/${PIN.new}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA));
+            responses.push(await _override(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, FIRESTORE_PROTECTED_NEW_DATA));
         } else if (!hasCurrentViagens && hasNewProtectedViagens) {
-            responses.push(await _deepCreate(`viagens/protected/${PIN.new}`, FIRESTORE_PROTECTED_NEW_DATA, DOCUMENT_ID));
+            responses.push(await _deepCreate(`viagens/protected/${PIN.current}`, FIRESTORE_PROTECTED_NEW_DATA, DOCUMENT_ID));
         }
 
         responses.push(await _update(`protegido/${DOCUMENT_ID}`, _getNewPinObject()));

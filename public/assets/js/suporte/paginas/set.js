@@ -13,8 +13,7 @@ async function _setDocumento(tipo, funcoes = {}) {
     }
 
     let mainResponse, userSavingResponse;
-    _startLoadingScreen(false);
-
+    _startLoadingScreen();
 
     if (funcoes.customChecks) {
         funcoes.customChecks();

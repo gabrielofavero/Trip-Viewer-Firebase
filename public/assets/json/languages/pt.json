@@ -92,8 +92,6 @@
         "transportation": {
             "title": "Transporte",
             "subtitle": "Cadastre os principais deslocamentos de ida, durante e volta",
-            "single_reservation": "Reserva",
-            "multi_reservation": "Reservas {{reservationsList}} e {{lastReservation}}",
             "departure": "Partida",
             "arrival": "Chegada",
             "during": "Durante",
@@ -544,8 +542,11 @@
         "company": "Empresa",
         "start": "Início",
         "end": "Fim",
-        "reservation_code": "Código de reserva",
-        "reservation_link": "Link da reserva",
+        "reservation": {
+            "title": "Reserva",
+            "code": "Código de reserva",
+            "link": "Link da reserva"
+        },
         "select": "Selecione",
         "other": "Outro(a)",
         "optional": "Opcional",

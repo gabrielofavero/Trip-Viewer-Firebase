@@ -116,12 +116,12 @@ function _addTransporte() {
             </div>
 
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reserva-transporte-${j}" type="text" placeholder="ABC123" />
             </div>
 
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="transporte-link-${j}" type="url" placeholder="https://www.google.com/" value=""
                 class="icon-right" />
             </div>
@@ -220,12 +220,12 @@ function _addHospedagens() {
             </div>
 
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reserva-hospedagens-${j}" type="text" placeholder="ABC123" />
             </div>
       
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reserva-hospedagens-link-${j}" type="url" placeholder="https://www.google.com/" value=""
                 class="icon-right" />
             </div>
