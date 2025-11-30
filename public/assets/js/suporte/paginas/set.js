@@ -13,11 +13,14 @@ async function _setDocumento(tipo, funcoes = {}) {
     }
 
     let mainResponse, userSavingResponse;
-    _startLoadingScreen(false);
+    _startLoadingScreen();
 
-    const customChecks = funcoes.customChecks ? funcoes.customChecks() : [];
-    _validateRequiredFields(customChecks);
-    
+    if (funcoes.customChecks) {
+        funcoes.customChecks();
+        if (_isModalOpen()) return;
+    }
+
+    _validateRequiredFields();
     if (_isModalOpen()) return;
 
     await _runCustomFunctions(funcoes, 'before');

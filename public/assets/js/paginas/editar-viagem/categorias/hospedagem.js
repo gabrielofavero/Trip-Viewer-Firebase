@@ -1,5 +1,39 @@
 var HOSPEDAGEM_IMAGENS = {};
 
+function _getHospedagemArray(protectedReservationCodes = false) {
+    let result = [];
+    for (const id of _getChildIDs('hospedagens-box')) {
+        const j = _getJ(id);
+        result.push({
+            cafe: getID(`hospedagens-cafe-${j}`).checked,
+            datas: {
+                checkin: _formattedDateToDateObject(getID(`check-in-${j}`).value, getID(`check-in-horario-${j}`).value),
+                checkout: _formattedDateToDateObject(getID(`check-out-${j}`).value, getID(`check-out-horario-${j}`).value)
+            },
+            descricao: getID(`hospedagens-descricao-${j}`).value,
+            endereco: getID(`hospedagens-endereco-${j}`).value,
+            id: _getOrCreateCategoriaID('hospedagens', j),
+            imagens: _getHospedagemImages(j),
+            reserva: protectedReservationCodes ? '' : getID(`reserva-hospedagens-${j}`).value,
+            link: protectedReservationCodes ? '' : getID(`reserva-hospedagens-link-${j}`).value,
+            nome: getID(`hospedagens-nome-${j}`).value,
+        });
+    }
+    return result;
+}
+
+function _getProtectedHospedagemObject() {
+    let result = {};
+    for (const childID of _getChildIDs('hospedagens-box')) {
+        const j = _getJ(childID);
+        const id = getID(`hospedagens-id-${j}`).value;
+        const reserva = getID(`reserva-hospedagens-${j}`).value;
+        const link = getID(`reserva-hospedagens-link-${j}`).value;
+        result[id] = { reserva, link };
+    }
+    return result;
+}
+
 function _getHospedagemImages(j) {
     const result = [];
     for (const imagem of HOSPEDAGEM_IMAGENS[j]) {
@@ -192,7 +226,7 @@ function _saveImagensHospedagem(j) {
             })
         }
     }
-    
+
     HOSPEDAGEM_IMAGENS[j] = result;
     _closeMessage();
 }

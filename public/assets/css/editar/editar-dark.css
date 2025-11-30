@@ -272,6 +272,7 @@ details .toggle-code:hover {
 }
 
 .pin-input-invalid {
+  color: #ffffff;
   background: #463838;
   border-color: #403434;
 }

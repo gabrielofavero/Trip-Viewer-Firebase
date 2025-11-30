@@ -3,7 +3,6 @@ var FIRESTORE_DATA;
 var FIRESTORE_NEW_DATA = {};
 
 var SUCCESSFUL_SAVE = false;
-var CAN_EDIT = false;
 
 var INPUT_DETECTED = false;
 
@@ -27,12 +26,9 @@ async function _loadEditarListagemPage() {
   if (DOCUMENT_ID) {
     await _carregarListagem()
   } else {
-    CAN_EDIT = true;
     DESTINOS = await _getUserList('destinos');
     _loadDestinos();
   }
-
-  if (!CAN_EDIT) return;
 
   _loadImageSelector('background');
   _loadLogoSelector();
@@ -49,7 +45,6 @@ function _loadHabilitados() {
   _loadEditModule('imagens');
   _loadEditModule('cores');
   _loadEditModule('links');
-  _loadEditModule('editores');
 }
 
 function _loadUploadSelectors() {
@@ -72,10 +67,6 @@ function _loadEventListeners() {
     } else {
       window.location.href = '../index.html';
     }
-  });
-
-  getID('editores-adicionar').addEventListener('click', () => {
-    _addEditores();
   });
 
   getID('salvar').addEventListener('click', () => {
@@ -113,12 +104,9 @@ async function _carregarListagem() {
   _startLoadingScreen();
 
   FIRESTORE_DATA = await _getSingleData('listagens');
-  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
 
-  if (CAN_EDIT) {
-    await _loadListData(FIRESTORE_DATA);
-    _stopLoadingScreen();
-  }
+  await _loadListData(FIRESTORE_DATA);
+  _stopLoadingScreen();
 }
 
 async function _buildListObject() {

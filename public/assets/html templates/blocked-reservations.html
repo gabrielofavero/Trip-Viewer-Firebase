@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Multi Reservation Toggle</title>
+
+  <style>
+    .sensitive-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-family: monospace;
+      margin-bottom: 10px;
+    }
+
+    .sensitive-box .code-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      transition: width 0.25s ease;
+      white-space: nowrap;
+      padding-right: 0.5ch;
+    }
+
+    .sensitive-box .code-text {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: black;
+      text-decoration: none;
+    }
+
+    .sensitive-box .code-text:not(.masked) {
+      pointer-events: auto;
+      user-select: none;
+      cursor: copy;
+    }
+
+    .sensitive-box .masked {
+      color: #6b7280;
+      letter-spacing: 0.15em;
+      pointer-events: none;
+    }
+
+    .sensitive-box .toggle-eye {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .sensitive-box .eye-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .sensitive-box .code-text.link-active {
+      color: #2563eb;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sensitive-box" data-visible="false" data-reservation="ABCD-1234-XYZ">
+    <span class="code-wrapper"><span class="code-text masked">***</span></span>
+    <button class="toggle-eye">
+      <svg class="eye-icon eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 3l18 18" />
+        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+      </svg>
+      <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+        style="display:none">
+        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="sensitive-box" data-visible="false" data-reservation="Full Details"
+    data-link="https://example.com/booking/ABC-999">
+    <span class="code-wrapper"><a class="code-text masked" href="#" target="_blank">***</a></span>
+    <button class="toggle-eye">
+      <svg class="eye-icon eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 3l18 18" />
+        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+      </svg>
+      <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+        style="display:none">
+        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    const boxes = document.querySelectorAll('.sensitive-box');
+
+    const measure = document.createElement('span');
+    measure.style.position = 'absolute';
+    measure.style.visibility = 'hidden';
+    measure.style.whiteSpace = 'nowrap';
+    document.body.appendChild(measure);
+
+    const getWidth = (el, txt) => {
+      measure.style.font = getComputedStyle(el).font;
+      measure.textContent = txt;
+      return measure.getBoundingClientRect().width;
+    }
+
+    boxes.forEach(box => {
+      const wrapper = box.querySelector('.code-wrapper');
+      const textEl = box.querySelector('.code-text');
+      const button = box.querySelector('.toggle-eye');
+
+      const label = box.dataset.reservation;
+      const link = box.dataset.link || null;
+      const masked = "***";
+
+      wrapper.style.width = getWidth(textEl, masked) + "px";
+
+      function updateUI(show) {
+        box.dataset.visible = show;
+
+        textEl.textContent = show ? label : masked;
+        textEl.classList.toggle("masked", !show);
+        textEl.classList.toggle("link-active", show && link);
+
+        if (link) textEl.href = show ? link : "#";
+
+        wrapper.style.width = getWidth(textEl, show ? label : masked) + "px";
+
+        box.querySelector(".eye-closed").style.display = show ? "none" : "";
+        box.querySelector(".eye-open").style.display = show ? "" : "none";
+      }
+
+      // updateUI(false);
+      button.onclick = () => updateUI(box.dataset.visible !== "true");
+
+
+      if (!link) {
+        wrapper.style.cursor = "pointer";
+
+        wrapper.onclick = () => {
+          alert('test')
+        };
+      }
+    });
+  </script>
+
+</body>
+
+</html>

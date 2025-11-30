@@ -3,29 +3,33 @@ var LOADING_SECONDS = 0;
 
 // Loading Screen
 
-function _startLoadingScreen(useTimer = false) {
+function _startLoadingScreen({ useTimer = false, adjustLoadables = true } = {}) {
   if (useTimer) {
     _startLoadingTimer();
   }
   const preloader = getID('preloader');
   if (preloader) {
-    document.querySelectorAll('.loadable').forEach((el) => {
-      el.style.display = 'none';
-    });
+    if (adjustLoadables) {
+      document.querySelectorAll('.loadable').forEach((el) => {
+        el.style.display = 'none';
+      });
+    }
     preloader.style.display = 'block';
     _disableScroll();
   }
 }
 
-function _stopLoadingScreen() {
+function _stopLoadingScreen({ adjustLoadables = true } = {}) {
   _stopLoadingTimer();
   localStorage.setItem('firstLoad', 'true');
   if (!MESSAGE_MODAL_OPEN) {
     const preloader = getID('preloader');
     if (preloader) {
-      document.querySelectorAll('.loadable').forEach((el) => {
-        el.style.display = '';
-      });
+      if (adjustLoadables) {
+        document.querySelectorAll('.loadable').forEach((el) => {
+          el.style.display = '';
+        });
+      }
       preloader.style.display = 'none';
       _enableScroll();
     }

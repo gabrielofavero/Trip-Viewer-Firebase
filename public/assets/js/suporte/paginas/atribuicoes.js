@@ -72,7 +72,7 @@ function _openAtribuicoes() {
   }
 
   function _getPinStyle() {
-    return `<strong>${translate('trip.expenses.pin.title')}: </strong> <a href="https://codepen.io/the_anshulkumar/pen/RKzYKj" target="_blank">Anshul Kumar</a> (${translate('labels.adapted')})`
+    return `<strong>${translate('trip.basic_information.pin.title')}: </strong> <a href="https://codepen.io/the_anshulkumar/pen/RKzYKj" target="_blank">Anshul Kumar</a> (${translate('labels.adapted')})`
   }
 }
 

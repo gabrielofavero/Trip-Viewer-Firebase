@@ -1,8 +1,3 @@
-var PIN_GASTOS = {
-    current: '',
-    new: '',
-};
-
 var INNER_GASTOS = {
     gastosPrevios: [],
     gastosDurante: [],
@@ -10,61 +5,64 @@ var INNER_GASTOS = {
 
 var LAST_INNER_GASTO_TIPO = '';
 
-// Pin
-function _switchPin() {
-    if (getID('pin-disable').checked) {
-        PIN_GASTOS.new = '';
-        getID('pin-container').style.display = 'none';
-    } else {
-        PIN_GASTOS.new = PIN_GASTOS.current;
-        getID('pin-container').style.display = 'block';
+function _loadGastos(data = FIRESTORE_GASTOS_DATA) {
+    _pushGasto('gastosPrevios', data);
+    _pushGasto('gastosDurante', data);    
+    _loadGastosHTML();
+}
+
+async function _getGastosObject() {
+    const gastosDurante = _getGastos('gastosDurante');
+    const gastosPrevios = _getGastos('gastosPrevios');
+
+    if (gastosDurante.length === 0 && gastosPrevios.length === 0) {
+        return {};
     }
-}
 
-function _requestPinEditarGastos(invalido = false) {
-    const confirmAction = '_reconfirmPin()';
-    const precontent = translate('trip.expenses.pin.insert');
-    _requestPin({ confirmAction, precontent, invalido });
-}
-
-function _reconfirmPin() {
-    const atual = getID('pin-code').innerText;
-    if (!atual || atual.length < 4) {
-        _requestPinEditarGastos(true)
-    } else {
-        const confirmAction = `_validatePin('${atual}')`;
-        const precontent = translate('trip.expenses.pin.again');
-        _requestPin({ confirmAction, precontent });
+    return {
+        compartilhamento: await _getCompartilhamentoObject(),
+        gastosDurante,
+        gastosPrevios,
+        moeda: getID(`moeda`).value,
+        versao: {
+            ultimaAtualizacao: new Date().toISOString()
+        }
     }
-}
 
-function _validatePin(pin) {
-    if (getID('pin-code').innerText === pin) {
-        PIN_GASTOS.new = pin;
-        _closeMessage();
-    } else {
-        _invalidPin();
-    }
-}
-
-function _invalidPin() {
-    const confirmAction = '_reconfirmPin()';
-    const precontent = translate('trip.expenses.pin.invalid');
-    const invalido = true;
-    _requestPin({ confirmAction, precontent, invalido });
-}
-
-function _setPinButtonText(newPin = true) {
-    getID('request-pin').innerText = newPin ? translate('trip.expenses.pin.new') : translate('trip.expenses.pin.change');
-}
-
-function _validateSavedPIN() {
-    if (getID('pin-enable').checked && !PIN_GASTOS.new) {
-        return [translate('trip.expenses.pin.title')];
+    function _getGastos(categoria) {
+        let result = [];
+        for (const tipoObj of INNER_GASTOS[categoria]) {
+            result = [...result, ...tipoObj.gastos];
+        }
+        return result;
     }
 }
 
 // Gastos e Inner Gastos
+function _pushGasto(tipo, data) {
+    data = data || {};
+    if (!data[tipo]) {
+        data[tipo] = [];
+    }
+
+    for (const gasto of data[tipo]) {
+        const tipos = INNER_GASTOS[tipo].map(gasto => gasto.tipo);
+        const index = tipos.indexOf(gasto.tipo);
+        if (index === -1) {
+            INNER_GASTOS[tipo].push({
+                tipo: gasto.tipo,
+                gastos: [gasto],
+            });
+        } else {
+            INNER_GASTOS[tipo][index].gastos.push(gasto);
+        }
+    }
+}
+
+function _loadGastosContent(data) {
+
+}
+
 function _loadGastosHTML() {
     for (const categoria in INNER_GASTOS) {
         getID(categoria).innerHTML = '';
@@ -78,7 +76,8 @@ function _loadGastosHTML() {
         div.className = 'gastos-item';
 
         const label = document.createElement('label');
-        label.innerText = tipoObj.tipo;
+        const labelKey = tipoObj.tipo == 'custom' ? 'labels.custom' : tipoObj.tipo;
+        label.innerText = translate(labelKey);
         div.appendChild(label);
 
         for (let i = 0; i < tipoObj.gastos.length; i++) {
@@ -158,8 +157,8 @@ function _getInnerGastoContent(categoria, tipo, index) {
                     <label>${translate('labels.type')}</label>
                     <select id="gasto-tipo-select" clas="editar-select"">
                         <option value="trip.transportation.type.flights">${translate('trip.transportation.type.flights')}</option>
-                        <option value="trip.accomodation.title">${translate('trip.accomodation.title')}</option>
-                        <option value="labels.entretainment">${translate('labels.entretainment')}</option>
+                        <option value="trip.accomodation.title">${translate('trip.accommodation.title')}</option>
+                        <option value="labels.entrertainment">${translate('labels.entrertainment')}</option>
                         <option value="trip.expenses.daily">${translate('trip.expenses.daily')}</option>
                         <option value="labels.people">${translate('labels.people')}</option>
                         <option value="trip.transportation.type.car">${translate('trip.transportation.type.car')}</option>

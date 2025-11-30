@@ -1,5 +1,5 @@
 // Required Fields
-function _validateRequiredFields(customChecks=[]) {
+function _validateRequiredFields() {
     var invalidFields = [];
 
     var inputs = document.querySelectorAll('input[required]');
@@ -15,19 +15,18 @@ function _validateRequiredFields(customChecks=[]) {
 
     if (invalidFields.length > 0) {
         SUCCESSFUL_SAVE = false;
-        getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields, customChecks);
-        _openModal();
+        getID('modal-inner-text').innerHTML = _getInvalidFieldsText(invalidFields);
         _stopLoadingScreen();
+        _openModal();
     }
 }
 
-function _getInvalidFieldsText(invalidFields, customChecks) {
+function _getInvalidFieldsText(invalidFields) {
     const dadosBasicos = ['titulo', 'moeda'];
 
     let intro = `${translate('messages.fields.invalid')}<br>`
     let title = '';
     let normalText = '';
-    let customText = '';
 
     if (invalidFields.length > 0) {
         if (dadosBasicos.includes(invalidFields[0])) {
@@ -85,18 +84,7 @@ function _getInvalidFieldsText(invalidFields, customChecks) {
         normalText += '</ul>';
     }
 
-    if (customChecks.length > 0) {
-        customText = '<strong>Outros:</strong><br><ul>'
-        for (const check of customChecks) {
-            customText += `
-            <li>
-                ${check}
-            </li>`
-        }
-        customText += '</ul>';
-    }
-
-    const result = [intro, normalText, customText].join('<br>');
+    const result = [intro, normalText].join('<br>');
     return result;
 }
 

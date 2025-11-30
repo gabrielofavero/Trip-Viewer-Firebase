@@ -3,7 +3,6 @@ var FIRESTORE_DATA;
 var FIRESTORE_GASTOS_DATA;
 
 var SUCCESSFUL_SAVE = false;
-var CAN_EDIT = false;
 var NEW_TRIP = false;
 
 const TODAY = _getTodayFormatted();
@@ -37,12 +36,9 @@ async function _loadEditarViagemPage() {
     await _loadTrip(true);
   } else {
     NEW_TRIP = true;
-    CAN_EDIT = true;
     DESTINOS = await _getUserList('destinos', true);
     _loadNewTrip();
   }
-
-  if (!CAN_EDIT) return;
 
   _loadImageSelector('background');
   _loadLogoSelector();
@@ -59,7 +55,6 @@ function _loadHabilitados() {
   _loadEditModule('imagens');
   _loadEditModule('cores');
   _loadEditModule('links');
-  _loadEditModule('editores');
   _loadEditModule('gastos');
   _loadEditModule('transporte');
   _loadEditModule('hospedagens');
@@ -67,8 +62,6 @@ function _loadHabilitados() {
   _loadEditModule('destinos');
   _loadEditModule('galeria');
 }
-
-
 
 function _loadUploadSelectors() {
   _loadUploadSelector('background');
@@ -80,19 +73,26 @@ async function _loadTrip(stripped = false) {
   blockLoadingEnd = true;
   _startLoadingScreen();
 
-  if (stripped) {
-    const id = _getURLParam('v');
-    FIRESTORE_DATA = await _get(`viagens/${id}`);
-  } else {
-    FIRESTORE_DATA = await _getSingleData('viagens');
+  await _loadPinData();
+  let protectedData;
+
+  if (PIN.current) {
+    protectedData = await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
   }
 
-  CAN_EDIT = await _canEdit(FIRESTORE_DATA.compartilhamento.dono, FIRESTORE_DATA.compartilhamento.editores);
-
-  if (CAN_EDIT) {
-    await _loadTripData();
-    _stopLoadingScreen();
+  switch (protectedData?.pin) {
+    case 'all-data':
+      FIRESTORE_DATA = stripped ? protectedData : await _getTripDataWithDestinos(protectedData); 
+      break;
+    case 'sensitive-only':
+      FIRESTORE_DATA = _getMergedTripObject(await _getTravelDocument(stripped), protectedData);
+      break;
+    default:
+      FIRESTORE_DATA = await _getTravelDocument(stripped);
   }
+
+  await _loadTripData();
+  _stopLoadingScreen();
 }
 
 function _deleteViagem() {
@@ -113,11 +113,24 @@ function _deleteViagem() {
 }
 
 async function _deleteViagemAction() {
-  if (DOCUMENT_ID) {
-    await _deleteUserObjectDB(DOCUMENT_ID, "viagens");
-    await _deleteUserObjectStorage();
-    window.location.href = `../index.html`;
+  if (!DOCUMENT_ID) return;
+
+  const tasks = [
+    _deleteUserObjectDB(DOCUMENT_ID, "viagens"),
+    _deleteUserObjectStorage(),
+    _delete(`gastos/${DOCUMENT_ID}`, true)
+  ];
+
+  if (PIN.current) {
+    tasks.push(
+      _delete(`protegido/${DOCUMENT_ID}`, true),
+      _delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true),
+      _delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, true),
+    );
   }
+
+  await Promise.all(tasks);
+  window.location.href = "../index.html";
 }
 
 function _getDataSelectOptions(j) {
@@ -130,4 +143,24 @@ function _getDataSelectOptions(j) {
   }
 
   return result;
+}
+
+async function _getTravelDocument(stripped = false) {
+  return stripped ? await _get(`viagens/${DOCUMENT_ID}`) : await _getSingleData('viagens')
+}
+
+function _getMergedTripObject(tripData, protectedData) {
+  for (let i = 0; i < tripData.transportes.dados.length; i++) {
+    const id = tripData.transportes.dados[i].id;
+    tripData.transportes.dados[i].reserva = protectedData.transportes[id]?.reserva || '';
+    tripData.transportes.dados[i].link = protectedData.transportes[id]?.link || '';
+  }
+
+  for (let i = 0; i < tripData.hospedagens.length; i++) {
+    const id = tripData.hospedagens[i].id;
+    tripData.hospedagens[i].reserva = protectedData.hospedagens[id]?.reserva || '';
+    tripData.hospedagens[i].link = protectedData.hospedagens[id]?.link || '';
+  }
+
+  return tripData;
 }

@@ -9,6 +9,8 @@
   --background-color: #fff;
   --font-color: #272829;
   --table-border: #D9D9D9;
+  --a-color: #3d85c6;
+  --a-color-hover: #6fa8dc;
 }
 
 @font-face {
@@ -31,12 +33,12 @@ strong {
 }
 
 a {
-  color: #3d85c6;
+  color: var(--a-color);
   text-decoration: none;
 }
 
 a:hover {
-  color: #6fa8dc;
+  color: var(--a-color-hover);
   text-decoration: none;
 }
 
@@ -2026,7 +2028,8 @@ iframe {
 
 .message-container,
 .programacao-container,
-.destinos-container {
+.destinos-container,
+.input-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2084,7 +2087,8 @@ iframe {
 
   .message-container,
   .programacao-container,
-  .destinos-container {
+  .destinos-container,
+  .input-container {
     width: 90%;
     height: auto;
   }
@@ -2168,6 +2172,10 @@ iframe {
 
 .button-box {
   text-align: center;
+}
+
+.button-box-right {
+  text-align: right;
 }
 
 @media (max-width: 600px) {
@@ -3066,4 +3074,104 @@ input[type="radio"] {
   padding: 0 10px;
   height: 40px;
   font-size: 15px;
+}
+
+/*--------------------------------------------------------------
+# Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
+--------------------------------------------------------------*/
+.pin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+
+.pin-input,
+.pin-input-invalid {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  outline: none;
+  margin: 1px;
+  text-align: center;
+  margin: 0 5px;
+  background: #eeeeee;
+  font-size: 20px;
+  color: var(--font-color);
+}
+
+.pin-input-invalid {
+  color: #3A3838;
+  background: #eee0e0;
+  border-color: #DBBBBB;
+}
+
+.pin {
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  display: none;
+}
+
+.placeholder-text {
+  color: var(--nf-input-placeholder-color);
+}
+
+/* Blocked Reservation Container */
+
+.sensitive-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #f6f6f6;
+  border: 1px solid #d7d7d7;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.sensitive-box .code-wrapper {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: width 0.25s ease;
+  padding-right: 0.6ch;
+}
+
+.sensitive-box .code-text {
+  font-weight: 600;
+  line-height: 1;
+}
+
+.sensitive-box .masked {
+  color: var(--font-color);
+  letter-spacing: 0.15em;
+  pointer-events: none;
+}
+
+.sensitive-box .toggle-eye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sensitive-box .eye-icon {
+  width: 17px;
+  height: 17px;
+  color: var(--font-color);
+}
+
+.sensitive-box .code-text a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sensitive-box .code-text a:hover {
+  text-decoration: none;
 }

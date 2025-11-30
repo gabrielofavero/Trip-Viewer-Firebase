@@ -1,5 +1,6 @@
 var REFRESHED = false;
 var TYPE = 'viagens';
+var PIN = null;
 
 var INICIO = {
   date: null,
@@ -40,32 +41,18 @@ async function _loadViagemPage() {
 
   const firestoreData = await _getSingleData(TYPE);
 
-  if (!ERROR_FROM_GET_REQUEST) {
-    FIRESTORE_DATA = firestoreData;
-    console.log('Firestore Database data loaded successfully');
-
-    _prepareViewData();
-    _syncModules();
-    _loadViagemVisibility();
-    _adjustPortfolioHeight();
-    _refreshCategorias();
-
-  } else if (ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions')) {
-    _displayError("Cannot load document. It is possible that it does not exist or that you don't have enough permissions", true);
+  if (ERROR_FROM_GET_REQUEST) {
+    _displayError(_getErrorFromGetRequestMessage(), true);
     _stopLoadingScreen();
-  } else {
-    _displayError(ERROR_FROM_GET_REQUEST);
-    _stopLoadingScreen();
+    return;
   }
 
-  $('body').css('overflow', 'auto');
-
-  if (!MESSAGE_MODAL_OPEN) {
-    setTimeout(() => {
-      _adjustCardsHeights();
-      _adjustPortfolioHeight();
-      _refreshCategorias();
-    }, 1000);
+  if (!ERROR_FROM_GET_REQUEST) {
+    if (firestoreData.pin === 'all-data') {
+      _loadProtectedData(firestoreData);
+    } else {
+      _setFirestoreData(firestoreData);
+    }
   }
 }
 
@@ -114,22 +101,16 @@ function _prepareViewData() {
   _loadModules();
 }
 
-function _loadInicioFim() {
-  INICIO.date = _convertFromDateObject(FIRESTORE_DATA.inicio);
+function _loadInicioFim(data = FIRESTORE_DATA) {
+  INICIO.date = _convertFromDateObject(data.inicio);
   INICIO.text = `${INICIO.date.getDate()}/${INICIO.date.getMonth() + 1}`;
 
-  FIM.date = _convertFromDateObject(FIRESTORE_DATA.fim);
+  FIM.date = _convertFromDateObject(data.fim);
   FIM.text = `${FIM.date.getDate()}/${FIM.date.getMonth() + 1}`;
 }
 
 function _loadHeader() {
-  document.title = FIRESTORE_DATA.titulo;
-  getID("header1").innerHTML = FIRESTORE_DATA.titulo;
-  getID("header2").style.display = "none";
-
-  if (FIRESTORE_DATA.subtitulo) {
-    getID("subtitulo").innerHTML = FIRESTORE_DATA.subtitulo;
-  }
+  _loadTitle();
 
   if (TYPE == 'destinos' && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
     const ultimaAtualizacao = new Date(FIRESTORE_DATA.versao.ultimaAtualizacao);
@@ -203,11 +184,25 @@ function _loadHeader() {
     }
   }
 
-  if (FIRESTORE_DATA.imagem?.ativo) {
+  _loadHeaderImageAndLogo();
+}
 
-    const background = FIRESTORE_DATA.imagem.background;
-    const claro = FIRESTORE_DATA.imagem.claro;
-    const escuro = FIRESTORE_DATA.imagem.escuro;
+function _loadTitle(data = FIRESTORE_DATA) {
+  document.title = data.titulo;
+  getID("header1").innerHTML = data.titulo;
+  getID("header2").style.display = "none";
+
+  if (data.subtitulo) {
+    getID("subtitulo").innerHTML = data.subtitulo;
+  }
+}
+
+function _loadHeaderImageAndLogo(data = FIRESTORE_DATA) {
+  if (data.imagem?.ativo) {
+
+    const background = data.imagem.background;
+    const claro = data.imagem.claro;
+    const escuro = data.imagem.escuro;
 
     if (background) {
       var hero = getID('hero');
@@ -245,7 +240,7 @@ function _loadModules() {
 
   function _loadCompartilhamentoModule() {
     const share = getID('share');
-    if (FIRESTORE_DATA.compartilhamento.ativo == true && navigator.share && window.location.hostname != 'localhost') {
+    if (navigator.share && window.location.hostname != 'localhost') {
       share.addEventListener('click', () => {
         _compartilhar();
       });
@@ -291,8 +286,7 @@ function _loadModules() {
 
   function _loadGastosModule() {
     const ativo = FIRESTORE_DATA.modulos?.gastos === true;
-    const pin = FIRESTORE_DATA.gastosPin || false;
-    localStorage.setItem('gastos', JSON.stringify({ ativo, pin }));
+    localStorage.setItem('gastos', JSON.stringify({ ativo, pin: PIN }));
 
     if (ativo) {
       getID('gastos-container').style.display = '';
@@ -394,5 +388,76 @@ function _loadModules() {
       getID("portfolio").style.display = "none";
     }
   }
+}
 
+function _setFirestoreData(firestoreData) {
+  FIRESTORE_DATA = firestoreData;
+  console.log('Firestore Database data loaded successfully');
+  _loadDocumentData();
+}
+
+function _loadDocumentData() {
+  _prepareViewData();
+  _syncModules();
+  _loadViagemVisibility();
+  _adjustPortfolioHeight();
+  _refreshCategorias();
+
+  if (FIRESTORE_DATA.pin == 'sensitive-only') {
+    _loadSensitiveReservations();
+  }
+
+  $('body').css('overflow', 'auto');
+
+  if (!MESSAGE_MODAL_OPEN) {
+    setTimeout(() => {
+      _adjustCardsHeights();
+      _adjustPortfolioHeight();
+      _refreshCategorias();
+    }, 1000);
+  }
+}
+
+function _loadProtectedData(firestoreData) {
+  _loadTitle(firestoreData);
+  _loadInicioFim(firestoreData);
+  _loadHeaderImageAndLogo(firestoreData);
+  _loadVisibility(firestoreData);
+  _requestDocumentPin();
+}
+
+async function _protectedDataConfirmAction(afterAction = _setFirestoreData) {
+  PIN = getID('pin-code')?.innerText || '';
+  _closeMessage();
+  const adjustLoadables = false;
+  _startLoadingScreen({ adjustLoadables });
+  const invalido = true;
+
+  if (!PIN) {
+    _requestDocumentPin({ invalido });
+    return;
+  }
+
+  const path = `${TYPE}/protected/${PIN}/${_getURLParam(TYPE[0])}`;
+  const firestoreData = await _get(path);
+
+  if (!ERROR_FROM_GET_REQUEST && !firestoreData) {
+    _requestDocumentPin({ invalido });
+    return;
+  }
+
+  if (ERROR_FROM_GET_REQUEST) {
+    _displayError(_getErrorFromGetRequestMessage(), true);
+    const adjustLoadables = false;
+    _stopLoadingScreen({ adjustLoadables });
+    return;
+  }
+
+  afterAction(firestoreData);
+}
+
+function _requestDocumentPin({ invalido = false, confirmAction = `_protectedDataConfirmAction()` } = {}) {
+  const precontent = translate('messages.protected');
+  _stopLoadingScreen();
+  _requestPin({ confirmAction, precontent, invalido })
 }

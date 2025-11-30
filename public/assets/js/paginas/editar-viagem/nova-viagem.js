@@ -14,22 +14,6 @@ function _loadDadosBasicosNewTrip() {
   getID('moeda').value = 'BRL';
 }
 
-function _addEditores() {
-  const j = _getNextJ('habilitado-editores-content');
-  $('#habilitado-editores-content').append(`
-    <div class="nice-form-group" id="editores-${j}">
-      <label>${translate('labels.editors.editor')} ${j}</label>
-      <input
-        id="editores-email-${j}"
-        type="email"
-        placeholder="${translate('auth.email')}"
-        value=""
-        class="icon-left"
-      />
-    </div>
-    `);
-}
-
 function _addTransporte() {
   const j = _getNextJ('transporte-box');
 
@@ -132,12 +116,12 @@ function _addTransporte() {
             </div>
 
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reserva-transporte-${j}" type="text" placeholder="ABC123" />
             </div>
 
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="transporte-link-${j}" type="url" placeholder="https://www.google.com/" value=""
                 class="icon-right" />
             </div>
@@ -206,8 +190,8 @@ function _addHospedagens() {
             </div>
     
             <div class="nice-form-group">
-              <label>${translate('labels.address')}</label>
-              <input required id="hospedagens-endereco-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
+              <label>${translate('labels.address')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="hospedagens-endereco-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
             </div>
     
             <div class="side-by-side-box">
@@ -236,12 +220,12 @@ function _addHospedagens() {
             </div>
 
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reserva-hospedagens-${j}" type="text" placeholder="ABC123" />
             </div>
       
             <div class="nice-form-group">
-              <label>${translate('labels.reservation_link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <label>${translate('labels.reservation.link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reserva-hospedagens-link-${j}" type="url" placeholder="https://www.google.com/" value=""
                 class="icon-right" />
             </div>

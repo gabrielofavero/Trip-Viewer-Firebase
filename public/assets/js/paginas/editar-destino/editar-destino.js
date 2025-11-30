@@ -3,7 +3,6 @@ var FIRESTORE_DESTINOS_DATA;
 var INPUT_DETECTED = false;
 
 SUCCESSFUL_SAVE = false;
-var CAN_EDIT = false;
 
 const TODAY = _getTodayFormatted();
 const TOMORROW = _getTomorrowFormatted();
@@ -30,11 +29,7 @@ async function _loadEditarDestinoPage() {
 
   if (DOCUMENT_ID) {
     await _loadDestinos()
-  } else {
-    CAN_EDIT = true;
   }
-
-  if (!CAN_EDIT) return;
 
   _loadEventListeners();
 
@@ -168,12 +163,9 @@ async function _loadDestinos() {
   _startLoadingScreen();
 
   FIRESTORE_DESTINOS_DATA = await _getSingleData('destinos');
-  CAN_EDIT = await _canEdit(FIRESTORE_DESTINOS_DATA.compartilhamento.dono, []);
 
-  if (CAN_EDIT) {
-    _loadDestinationsData(FIRESTORE_DESTINOS_DATA);
-    _stopLoadingScreen();
-  }
+  _loadDestinationsData(FIRESTORE_DESTINOS_DATA);
+  _stopLoadingScreen();
 }
 
 // Listeners

@@ -7,7 +7,6 @@ function _loadEventListeners() {
     getID('fim').addEventListener('change', () => _fimListenerAction());
 
     // Botões
-    getID('editores-adicionar').addEventListener('click', () => _addEditores());
     getID('salvar').addEventListener('click', () => _setViagem());
     getID('re-editar').addEventListener('click', () => _reEdit('viagens', SUCCESSFUL_SAVE));
     getID('visualizar').addEventListener('click', () => _visualizarListenerAction());
@@ -17,8 +16,9 @@ function _loadEventListeners() {
     getID('transporte-adicionar').addEventListener('click', () => _transporteAdicionarListenerAction());
     getID('hospedagens-adicionar').addEventListener('click', () => _hospedagensAdicionarListenerAction());
     getID('galeria-adicionar').addEventListener('click', () => _galeriaAdicionarListenerAction());
-    getID('pin-enable').addEventListener('click', () => _switchPin());
-    getID('pin-disable').addEventListener('click', () => _switchPin());
+    getID('pin-disabled').addEventListener('click', _switchPin);
+    getID('pin-sensitive-only').addEventListener('click', _switchPin);
+    getID('pin-all-data').addEventListener('click', _switchPin);
     getID('claro').addEventListener('change', () => _autoFillDarkColor());
 
     // Visibilidade do Ida e Volta (Transporte)

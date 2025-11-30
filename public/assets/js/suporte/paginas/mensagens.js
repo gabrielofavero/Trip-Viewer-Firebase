@@ -25,6 +25,26 @@ function _displayMessage(titulo, conteudo) {
   _displayFullMessage(properties);
 }
 
+
+// Prompt (Sim / Não)
+function _displayPrompt({titulo, conteudo, yesAction, noAction = '_closeMessage()', critico = false} = {}) {
+  const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+  propriedades.titulo = titulo;
+  propriedades.conteudo = conteudo;
+  propriedades.critico = critico;
+  propriedades.botoes = [
+    {
+      tipo: 'nao',
+      acao: noAction
+    },
+    {
+      tipo: 'sim',
+      acao: yesAction
+    }
+  ];
+  _displayFullMessage(propriedades);
+}
+
 function _displayFullMessage(propriedades = _cloneObject(MENSAGEM_PROPRIEDADES)) {
   const preloader = getID('preloader');
   const isErrorMessage = Object.keys(propriedades.erro).length > 0;
@@ -253,15 +273,19 @@ function _getButton(botao) {
     case 'fechar':
       return _getCloseButton();
     case 'cancelar':
-      return _getCloseButton(translate('labels.cancel'), botao.acao);
+      return _getCloseButton('labels.cancel', botao.acao);
     case 'confirmar':
       return _getConfirmButton(botao.acao);
     case 'apagar':
       return _getDeleteButton(botao.acao);
     case 'apagar-basico':
       return _getDeleteButtonBasic(botao.acao);
+    case 'sim':
+      return _getConfirmButton(botao.acao, 'labels.yes');
+    case 'nao':
+      return _getCloseButton('labels.no', botao.acao);
     default:
-      return _getCloseButton(translate('labels.understood'));
+      return _getCloseButton('labels.understood');
   }
 }
 
@@ -317,26 +341,26 @@ function _getTryAgainButton() {
   return button;
 }
 
-function _getCloseButton(name, onclick) {
-  name = name ? name : translate('labels.close');
+function _getCloseButton(label, onclick) {
+  label = label ? label : translate('labels.understood');
   const button = document.createElement('button');
   button.className = 'btn btn-secondary btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', onclick ? onclick : '_closeMessage();');
   button.id = 'message-close';
 
-  button.innerHTML = name;
+  button.innerHTML = translate(label);
   return button;
 }
 
-function _getConfirmButton(onclick = '_closeMessage();') {
+function _getConfirmButton(onclick = '_closeMessage();', label = 'labels.confirm') {
   const button = document.createElement('button');
   button.className = 'btn btn-theme btn-format';
   button.type = 'submit';
   button.setAttribute('onclick', onclick)
   button.id = 'message-confirm';
 
-  button.innerHTML = translate('labels.confirm');
+  button.innerHTML = translate(label);
   return button;
 }
 

@@ -1,3 +1,44 @@
+function _getTransporteObject(protectedReservationCodes = false) {
+    const result = {
+        dados: [],
+        visualizacao: getID('people-view').checked ? 'people-view' : getID('leg-view').checked ? 'leg-view' : 'simple-view'
+    }
+    for (const child of _getChildIDs('transporte-box')) {
+        const j = _getJ(child);
+        result.dados.push({
+            datas: {
+                chegada: _formattedDateToDateObject(getID(`chegada-${j}`).value, getID(`chegada-horario-${j}`).value),
+                partida: _formattedDateToDateObject(getID(`partida-${j}`).value, getID(`partida-horario-${j}`).value)
+            },
+            duracao: getID(`transporte-duracao-${j}`).value,
+            empresa: _getValueEmpresa(j),
+            id: _getOrCreateCategoriaID('transporte', j),
+            idaVolta: getID(`ida-${j}`).checked ? 'ida' : getID(`volta-${j}`).checked ? 'volta' : 'durante',
+            link: protectedReservationCodes ? '' : getID(`transporte-link-${j}`).value,
+            pontos: {
+                chegada: getID(`ponto-chegada-${j}`).value,
+                partida: getID(`ponto-partida-${j}`).value
+            },
+            reserva: protectedReservationCodes ? '' : getID(`reserva-transporte-${j}`).value,
+            transporte: getID(`transporte-tipo-${j}`).value,
+            pessoa: getID(`transporte-pessoa-select-${j}`).value,
+        });
+    }
+    return result;
+}
+
+function _getProtectedTransporteObject() {
+    const result = {}
+    for (const childID of _getChildIDs('transporte-box')) {
+        const j = _getJ(childID);
+        const id = getID(`transporte-id-${j}`).value;
+        const reserva = getID(`reserva-transporte-${j}`).value;
+        const link = getID(`transporte-link-${j}`).value;
+        result[id] = { reserva, link };
+    }
+    return result;
+}
+
 function _updateTransporteTitle(i) {
     const partida = getID(`ponto-partida-${i}`).value;
     const chegada = getID(`ponto-chegada-${i}`).value;
@@ -5,7 +46,7 @@ function _updateTransporteTitle(i) {
     if (!partida || !chegada) {
         return;
     }
-    
+
     let texto = `${partida} → ${chegada}`;
 
     if (getID('leg-view').checked) {
@@ -13,7 +54,7 @@ function _updateTransporteTitle(i) {
     } else {
         const pessoa = _getPessoa(i);
         if (getID('people-view').checked && pessoa) {
-        texto = `${pessoa}: ${texto}`;
+            texto = `${pessoa}: ${texto}`;
         }
     }
 

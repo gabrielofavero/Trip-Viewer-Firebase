@@ -13,12 +13,13 @@ function _loadHospedagens() {
   for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
     _loadImageLightbox(`hospedagens-galeria-${j}`);
   }
-  
+
 }
 
-function _getHospedagensHTML(i, innerProgramacao=false) {
+function _getHospedagensHTML(i, innerProgramacao = false) {
   const original = FIRESTORE_DATA.hospedagens[i];
   const hospedagem = {
+    id: original.id,
     cafe: original.cafe,
     checkIn: _getHospedagensData(original.datas.checkin),
     checkOut: _getHospedagensData(original.datas.checkout),
@@ -42,7 +43,7 @@ function _getHospedagensHTML(i, innerProgramacao=false) {
           </div>`
 }
 
-function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
+function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
   const imagens = hospedagem.imagens;
   const checkIn = hospedagem.checkIn;
   const checkOut = hospedagem.checkOut
@@ -54,7 +55,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
     galeriaItems += `<a href="${imagem.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${imagem.descricao}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ''}</a>`;
   }
 
-  return `<div class="hotel-box${innerProgramacao? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${j}${innerProgramacao ? '-inner' : ''}">
+  return `<div class="hotel-box${innerProgramacao ? "-inner inner-programacao-item" : ''}" id="hospedagens-box-${j}${innerProgramacao ? '-inner' : ''}">
             <div class="portfolio-wrap" style="display: ${imagens.length > 0 ? 'block' : 'none'};">
               <div class="hotel-img" style="background-image: url('${imagens?.[0]?.link}');">
                 <div class="portfolio-info">
@@ -86,9 +87,9 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
                 </div>
               </div>
               <div class="hotel-text">
-              <div class="hotel-reservation" style="display: ${hospedagem.reserva ? 'block' : 'none'}">
-                <i class="bx bxs-file color-icon"></i> 
-                Reserva #${hospedagem.reserva}
+              <div class="hotel-reservation" style="display: ${(hospedagem.reserva || FIRESTORE_DATA.pin === 'sensitive-only') ? 'block' : 'none'}">
+                <i class="bx bxs-file color-icon"></i>
+                ${_getHospedagemReservationHTML(hospedagem)} 
               </div>
                 <div class="hotel-description" style="display: ${hospedagem.descricao ? 'block' : 'none'}">
                   <i class="bx bxs-hotel color-icon"></i> 
@@ -110,6 +111,22 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao=false) {
 function _getHospedagensData(dataFirestore) {
   const date = _convertFromDateObject(dataFirestore);
   return `${_getDateString(date)}, ${_getTimeString(date)}`;
+}
+
+function _getHospedagemReservationHTML(hospedagem) {
+  if (FIRESTORE_DATA.pin === 'sensitive-only') {
+    return _getSensitiveReservationHTML('hospedagens', hospedagem.id);
+  }
+  // remove # if first char is #
+  if (hospedagem.reserva && hospedagem.reserva.charAt(0) === '#') {
+    return `${translate('labels.reservation.title')} ${hospedagem.reserva}`;
+  }
+
+  if (!hospedagem.reserva) {
+    return '';
+  }
+
+  return `${translate('labels.reservation.title')} #${hospedagem.reserva}`
 }
 
 function _buildHospedagensSwiper(swiperData) {

@@ -2,6 +2,7 @@ var DOCUMENT_ID;
 var ERROR_FROM_GET_REQUEST = "";
 
 const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
+const DATABASE_EDITABLE_DOCUMENTS = ["viagens", "destinos", "listagens", "gastos", "protegido"];
 
 // Constructors
 function _buildDatabaseObject(success, message = "", data = {}) {
@@ -14,14 +15,14 @@ function _buildDatabaseObject(success, message = "", data = {}) {
 }
 
 // Generic Methods
-async function _get(path, treatError = true) {
+async function _get(path, treatError = true, hideWarn = false) {
   try {
     const docRef = firebase.firestore().doc(path);
     const snapshot = await docRef.get();
 
     if (snapshot.exists) {
       return snapshot.data();
-    } else {
+    } else if (!hideWarn) {
       const message = `Document not found: ${path}`;
       console.warn(message);
       return;
@@ -109,42 +110,50 @@ async function _override(path, newData) {
   }
 }
 
-async function _delete(path) {
+async function _delete(path, ignoreError = false) {
   const docRef = firebase.firestore().doc(path);
   try {
     const deleteObj = await docRef.delete();
     return _buildDatabaseObject(true, translate('messages.documents.delete.success'), deleteObj);
   } catch (error) {
+    if (ignoreError) {
+      _buildDatabaseObject(true, translate('messages.documents.delete.success'));
+    }
     console.error(error.message);
     return _buildDatabaseObject(false, `${translate('messages.documents.delete.error')}: ${error.message}`)
   }
 }
 
-// Generic Data
+// Trip Data
 async function _getSingleData(type) {
   let data;
   try {
     data = await _get(`${type}/${_getURLParam(type[0])}`);
-
-    if (data) {
-      for (let i = 0; i < data?.destinos?.length; i++) {
-        let place;
-        try {
-          place = await _get(`destinos/${data.destinos[i].destinosID}`, false);
-          data.destinos[i].destinos = place
-        } catch (e) {
-          console.warn(`Unable to get destination ${data.destinos[i].destinosID}: ${e.message}`);
-          data.destinos.splice(i, 1);
-        }
-      }
-    } else {
+    if (!data) {
       _displayError(`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`);
+    }
+    if (type === 'viagens' && data?.destinos && data.destinos.length > 0) {
+      data = await _getTripDataWithDestinos(data);
     }
   } catch (error) {
     console.error('Error fetching data from Firestore:', error.message);
   }
 
   return data;
+}
+
+async function _getTripDataWithDestinos(tripData) {
+  for (let i = 0; i < tripData?.destinos?.length; i++) {
+    let place;
+    try {
+      place = await _get(`destinos/${tripData.destinos[i].destinosID}`, false);
+      tripData.destinos[i].destinos = place
+    } catch (e) {
+      console.warn(`Unable to get destination ${tripData.destinos[i].destinosID}: ${e.message}`);
+      tripData.destinos.splice(i, 1);
+    }
+  }
+  return tripData;
 }
 
 // System
@@ -184,42 +193,90 @@ async function _deleteAccount() {
 
 async function _deleteAccountDocuments() {
   const uid = await _getUID();
-  if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
-    const promises = [];
+  const userData = await _get(`usuarios/${uid}`);
+  const batch = firebase.firestore().batch();
 
-    for (const type of DATABASE_TRIP_DOCUMENTS) {
-      if (userData[type]) {
-        for (const docID of userData[type]) {
-          promises.push(_delete(`${type}/${docID}`));
+  // --- CASE A: destinos + listagens (simple delete array) ---
+  const simpleCollections = ["destinos", "listagens"];
+  simpleCollections.forEach(type => {
+    const ids = userData[type] ?? [];
+    ids.forEach(id => batch.delete(firebase.firestore().collection(type).doc(id)));
+    userData[type] = []; // cleanup
+  });
+
+  // --- CASE B: viagens (extra protected handling) ---
+  if (Array.isArray(userData.viagens)) {
+    for (const viagemID of userData.viagens) {
+      // Always delete public trip data
+      batch.delete(firebase.firestore().collection("viagens").doc(viagemID));
+
+      // Check protegido/viagemID
+      const protSnap = await firebase.firestore().collection("protegido").doc(viagemID).get();
+
+      if (protSnap.exists) {
+        const pin = protSnap.data()?.pin;
+
+        if (pin) {
+          // Delete protected dirs
+          batch.delete(firebase.firestore().doc(`viagens/protected/${pin}/${viagemID}`));
+          batch.delete(firebase.firestore().doc(`gastos/protected/${pin}/${viagemID}`));
         }
-        userData[type] = [];
+
+        // Remove protegido reference
+        batch.delete(firebase.firestore().collection("protegido").doc(viagemID));
+
+      } else {
+        // No protected doc → delete normal gastos
+        batch.delete(firebase.firestore().collection("gastos").doc(viagemID));
       }
     }
 
-    promises.push(_update(`usuarios/${uid}`, userData));
-    await Promise.all(promises);
+    userData.viagens = [];
   }
+
+  // Save cleaned user object
+  batch.update(firebase.firestore().collection("users").doc(uid), userData);
+
+  await batch.commit();
+  console.log("All user data removed successfully.");
 }
 
 async function _createAccountDocuments(data) {
   const uid = await _getUID();
   if (!uid) return;
 
-  const promises = [];
-  const userData = await _get(`usuarios/${uid}`);
+  const userRef = firebase.firestore().doc(`usuarios/${uid}`);
 
-  for (const type of DATABASE_TRIP_DOCUMENTS) {
-    if (data[type]) {
-      for (const document of data[type]) {
-        promises.push(_create(type, document.data, document.code));
-        userData[type].push(document.code);
+  await firebase.firestore().runTransaction(async (tx) => {
+    const userData = (await tx.get(userRef)).data();
+
+    for (const type of DATABASE_EDITABLE_DOCUMENTS) {
+      const group = data?.[type];
+      if (!group) continue;
+
+      for (const docID of Object.keys(group)) {
+        if (docID === "protected") {
+          _processProtectedDocuments(group[docID], type, tx);
+          continue;
+        }
+
+        tx.set(firebase.firestore().doc(`${type}/${docID}`), group[docID]);
       }
     }
-  }
 
-  promises.push(_update(`usuarios/${uid}`, userData));
-  await Promise.all(promises);
+    tx.update(userRef, userData);
+  });
+}
+
+function _processProtectedDocuments(tree, type, tx) {
+  for (const pin of Object.keys(tree)) {
+    for (const docID of Object.keys(tree[pin])) {
+      tx.set(
+        firebase.firestore().doc(`${type}/protected/${pin}/${docID}`),
+        tree[pin][docID]
+      );
+    }
+  }
 }
 
 async function _addToUserArray(type, value) {

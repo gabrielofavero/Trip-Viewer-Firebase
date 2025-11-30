@@ -2,11 +2,11 @@
 
 # Tasks
 
-| Icon | Title    | Code  | Total | Completed | Pending |
-|------|----------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 95    | 93        | 1       |
-| 🏆   | Feature      | F000  | 99    | 99        | 0      |
-| 📈   | Improvement  | M000  | 118   | 117        | 1      |
+| Icon | Title        | Code  | Total | Completed | Pending |
+|------|--------------|-------|-------|-----------|---------|
+| 🐞   | Bug          | B000  | 99    | 96        | 3       |
+| 🏆   | Feature      | F000  | 106   | 103       | 3     |
+| 📈   | Improvement  | M000  | 119   | 118       | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -15,17 +15,30 @@
 
 ## Backlog
 ### High Priority
-- ⚔️ **E035:** Protect sensitive trip data (reservation codes)
 
 ### Medium Priority
+- 🐞 **B099:** Fix Restore function (permissions)
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
-- 🐞 **B076:** Import backup function not getting data from "gastos" database
+- 🐞 **B096:** Fix Gallery module
+- 🐞 **B097:** Fix Image upload module
 
 ## Done
 
 ### November 2025
+- ⚔️ **E035:** Protect sensitive trip data (reservation codes)
+  - *[📈M118] Remove all mentions of editors and sharing options (legacy)*
+  - *[🏆F100] Move HTML elements from expenses into general data (pin)*
+  - *[🏆F101] Change how set system works so that it can record protected data*
+  - *[🏆F102] Implement new "protected" document logic in js*
+  - *[📈M119] Remove can-edit logic*
+  - *[🐞B098] Fields validation and custom checks not working on sets (edit/\*.html)*
+  - *[🏆F103] Create database migrations for new structures*
+  - *[🐞B076] Import backup function not getting sensitive data*
+  - *[🏆F104] Create Import/Export buttons account settings*
+  - *[🏆F105] Add PIN component to view.html and senstive data box (with eye icon)*
+  - *[🏆F106] Adapt existing trip data loading for new structure (view.html)* 
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader

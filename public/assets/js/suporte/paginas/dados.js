@@ -250,20 +250,20 @@ function _getNextJ(parentID) {
   return _getLastJ(parentID) + 1;
 }
 
-function _getRandomID({idLength = 5, pool = []}) {
+function _getRandomID({ idLength = 5, pool = [] } = {}) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const array = new Uint32Array(idLength);
+  crypto.getRandomValues(array); // native + secure
+
   let randomId = '';
-
   for (let i = 0; i < idLength; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomId += characters[randomIndex];
+    randomId += characters[array[i] % characters.length];
   }
 
-  if (pool.includes(randomId)) {
-    return _getRandomID({idLength, pool});
-  }
-
-  return randomId;
+  // avoid collision
+  return pool.includes(randomId)
+    ? _getRandomID({ idLength, pool })
+    : randomId;
 }
 
 function _getCategoriaID(tipo, j) {
@@ -357,7 +357,7 @@ function _compareDocuments() {
       _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
       _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
       _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
-      _compareAndPush({ obj1: { pin: PIN_GASTOS.current }, obj2: { pin: PIN_GASTOS.new }, ignoredPaths: [], name: 'senha de acesso aos gastos' });
+      _compareAndPush({ obj1: { pin: PIN.current }, obj2: { pin: PIN.new }, ignoredPaths: [], name: 'senha de acesso aos gastos' });
       break;
     case 'editar-listagem':
       const ignoredPaths = _getIgnoredPathDestinos();
@@ -441,37 +441,37 @@ function _getLocalJSON() {
 
 function _getAndDestinationTitle(value, destinos) {
   if (value.includes('departure')) {
-      return _getReadableArray([translate('trip.transportation.departure'), ...destinos]);
+    return _getReadableArray([translate('trip.transportation.departure'), ...destinos]);
   }
   return _getReadableArray([...destinos, translate('trip.transportation.return')]);
 }
 
 function _getInnerProgramacaoTitleHTML(dado, spanClass, isCustomTraveler = false) {
   const programacao = dado.programacao || '';
-  const presentes = dado.pessoas
-      .filter(p => p.isPresent)
-      .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
+  const presentes = !dado.pessoas ? [] : dado.pessoas
+    .filter(p => p.isPresent)
+    .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
 
   const todasPresentes = presentes.length === dado.pessoas.length;
   const pessoasTexto = (todasPresentes || isCustomTraveler === true) ? '' : _getReadableArray(presentes);
 
   let horario = '';
   if (dado.inicio && dado.fim) {
-      horario = `${dado.inicio} - ${dado.fim}`;
+    horario = `${dado.inicio} - ${dado.fim}`;
   } else if (dado.inicio) {
-      horario = dado.inicio;
+    horario = dado.inicio;
   }
 
   if (pessoasTexto && horario && programacao) {
-      return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
+    return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
   }
 
   if (pessoasTexto && programacao) {
-      return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
+    return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
   }
 
   if (horario && programacao) {
-      return `${_highlight(`${horario}:`)} ${programacao}`;
+    return `${_highlight(`${horario}:`)} ${programacao}`;
   }
 
   return programacao;
@@ -481,3 +481,27 @@ function _getInnerProgramacaoTitleHTML(dado, spanClass, isCustomTraveler = false
   }
 }
 
+function _getTranslatedDocumentLabel(type) {
+  switch (type) {
+    case 'viagens':
+      return translate('trip.document');
+    case 'viagens/protected':
+      return translate('trip.protected');
+    case 'destinos':
+      return translate('destination.document');
+    case 'listagens':
+      return translate('listing.document');
+    case 'gastos':
+      return translate('trip.expenses.document');
+    case 'gastos/protected':
+      return translate('trip.expenses.protected');
+    case 'protegido':
+      return translate('labels.protected');
+    default:
+      return translate('labels.unknown');
+  }
+}
+
+function _getErrorFromGetRequestMessage() {
+  return ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions') ? translate('messages.errors.unauthorized_access') : ERROR_FROM_GET_REQUEST;
+}
