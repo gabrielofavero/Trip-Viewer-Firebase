@@ -103,23 +103,9 @@ function _loadListenersIndex() {
     _signOut();
     _stopLoadingScreen();
   });
-  
-  document.getElementById("restore-account-input").addEventListener("change", async function (event) {
-    const file = event.target.files[0];
-    if (!file) return;
-  
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      try {
-        const jsonData = JSON.parse(e.target.result);
-        _restoreOnClickAction(jsonData);
-      } catch (err) {
-        _stopLoadingScreen();
-        _displayError(translate('messages.documents.get.error'))
-        console.error(err);
-      }
-    };
-    reader.readAsText(file);
+
+  document.getElementById("restore-account-input").addEventListener("change", function (event) {
+    _restoreOnFileSelectionAction(event);
   });
 }
 

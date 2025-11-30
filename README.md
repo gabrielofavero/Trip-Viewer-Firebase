@@ -15,7 +15,6 @@
 
 ## Backlog
 ### High Priority
-- *[🏆F104] Create Import/Export buttons account settings*
 
 ### Medium Priority
 

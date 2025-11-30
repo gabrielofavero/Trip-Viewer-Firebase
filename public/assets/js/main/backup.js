@@ -13,7 +13,11 @@ async function _backupOnClickAction() {
         return;
     }
 
-    _displayPrompt(translate('account.backup.title'), translate('account.backup.prompt'), '_displayPinRequestBackup()', '_backupAccountData()');
+    const titulo = translate('account.backup.title');
+    const conteudo = translate('account.backup.prompt');
+    const yesAction = '_displayPinRequestBackup()';
+    const noAction = '_backupAccountData()';
+    _displayPrompt({ titulo, conteudo, yesAction, noAction });
 }
 
 function _prepareMissingData() {
@@ -64,7 +68,7 @@ function _displayPinRequestBackup() {
     _displayFullMessage(propriedades);
 
     function _getContent() {
-        const content = [translate('trip.basic_information.pin.trip_pin')];
+        const content = [translate('trip.basic_information.pin.trip_pin.optional')];
         for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
             content.push(`
                 <div class="nice-form-group">
@@ -80,9 +84,9 @@ function _displayPinRequestBackup() {
 async function _backupAccountData(useSensitiveData = false) {
     if (useSensitiveData) {
         _getProtectedJobPins();
-        _closeMessage();
     }
 
+    _closeMessage();
     _startLoadingScreen();
     const accountData = await _getAccountData(useSensitiveData);
     const jsonStr = JSON.stringify(accountData, null, 2);
@@ -116,7 +120,6 @@ function _getProtectedJobPins() {
     for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
         const index = ids.indexOf(protectedJob.documentID);
         if (index === -1) {
-
             continue;
         };
 
@@ -124,10 +127,7 @@ function _getProtectedJobPins() {
         if (!isNaN(pin) && pin.length === 4) {
             protectedJob.pin = pin;
         } else if (pin === '') {
-            console.warn("No PIN provided for trip:", protectedJob.title);
-            for (const job of protectedJob.jobs) {
-                _newBackupFail(job, "skipped");
-            }
+            console.warn("Skipping. No PIN provided for trip:", protectedJob.title);
         } else {
             console.warn("Invalid PIN for trip:", protectedJob.title);
             for (const job of protectedJob.jobs) {
@@ -173,8 +173,6 @@ async function _getAccountData(useSensitiveData = false) {
         for (const entry of MISSING_ACCOUNT_DATA.protected) {
             if (!entry.pin) continue;
             for (const job of entry.jobs) {
-                if (!entry.pin && job.subpath === "protected") continue;
-
                 list.push({
                     title: job.title,
                     collection: job.collection,
@@ -195,9 +193,9 @@ async function _getAccountData(useSensitiveData = false) {
                 const path = `${job.collection}/${job.subpath ? job.subpath + "/" : ""}${job.documentID}`;
                 const result = await _get(path, true, false);
 
-                if (!result?.exists) return _newBackupFail(job, "not_found");
+                if (!result || Object.keys(result) === 0) return _newBackupFail(job, "not_found");
 
-                store[job.collection][job.documentID] = result;
+                _deepStore(path, result);
             } catch (err) {
                 MISSING_ACCOUNT_DATA
                 console.error("Load job failed:", job, err);
@@ -206,6 +204,19 @@ async function _getAccountData(useSensitiveData = false) {
         });
 
         await Promise.allSettled(promises);
+
+        function _deepStore(path, value) {
+            const keys = path.split('/');
+            let current = store;
+
+            for (let i = 0; i < keys.length - 1; i++) {
+                const key = keys[i];
+                if (!(key in current)) current[key] = {};
+                current = current[key];
+            }
+
+            current[keys[keys.length - 1]] = value;
+        }
     }
 }
 
@@ -222,7 +233,7 @@ function _displayPartialBackupWarning() {
     _displayFullMessage(propriedades);
 
     function _getContent() {
-        const list = [];
+        const list = [translate('account.backup.partial.message')];
         const protectedDataAdded = [];
 
         for (const failed of MISSING_ACCOUNT_DATA.failed) {
@@ -234,24 +245,46 @@ function _displayPartialBackupWarning() {
 
             const label = isProtected ? 'viagens/protected' : failed.job.collection;
             const type = _getTranslatedDocumentLabel(label);
-            list.push(`<li><b>${failed.job.title}</b><br>${translate(`account.backup.partial.reason.${failed.reason}`, { type })}</li>`);
+            list.push(`<b>${failed.job.title}</b><br>${translate(`account.backup.partial.reason.${failed.reason}`, { type })}`);
         }
 
-        return `${translate('account.backup.partial.message')}<br><br><ul style="margin-left:18px">${list.join("")}</ul>`;
+        return list.join("<br><br>");
     }
 }
 
 
 // Restore
 async function _restoreOnClickAction() {
-    _displayPrompt(translate('account.restore.title'), translate('account.restore.prompt'), '_openBackupFilePicker()');
+    const titulo = translate('account.restore.title');
+    const conteudo = translate('account.restore.prompt');
+    const yesAction = '_openBackupFilePicker()';
+    _displayPrompt({ titulo, conteudo, yesAction });
+}
+
+function _restoreOnFileSelectionAction(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            const jsonData = JSON.parse(e.target.result);
+            _restoreAccountData(jsonData);
+        } catch (err) {
+            _stopLoadingScreen();
+            _displayError(translate('messages.documents.get.error'))
+            console.error(err);
+        }
+    };
+    reader.readAsText(file);
 }
 
 function _openBackupFilePicker() {
-    document.getElementById("restore-file-input").click();
+    document.getElementById("restore-account-input").click();
 }
 
 async function _restoreAccountData(backup) {
+    _closeMessage();
     _startLoadingScreen();
 
     if (!_isBackupValid()) {
@@ -266,7 +299,7 @@ async function _restoreAccountData(backup) {
     await _createAccountDocuments(backup);
 
     _toast(translate('account.restore.success'));
-    
+
     setTimeout(() => {
         location.reload();
     }, 5000);

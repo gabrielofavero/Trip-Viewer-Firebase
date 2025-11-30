@@ -7,7 +7,7 @@
             "success": "The account backup was completed successfully",
             "partial": {
                 "title": "Backup partially completed",
-                "message": "One or more documents could not be backed up. If a protected data was not found, it may be due to an incorrect",
+                "message": "One or more documents could not be backed up. If a protected data was not found, it may be due to an incorrect PIN",
                 "reason": {
                     "skipped": "The \"{{type}}\" was skipped because no access PIN was provided",
                     "not_found": "Unable to find the \"{{type}}\"",

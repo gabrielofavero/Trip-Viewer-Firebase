@@ -192,19 +192,15 @@ async function _deleteAccount() {
 }
 
 async function _deleteAccountDocuments() {
-  const userId = await _getUID();
-  const userRef = db.collection("users").doc(userId);
-  const userSnap = await userRef.get();
-  if (!userSnap.exists) return console.log("User does not exist");
-
-  const userData = userSnap.data();
-  const batch = db.batch();
+  const uid = await _getUID();
+  const userData = await _get(`usuarios/${uid}`);
+  const batch = firebase.firestore().batch();
 
   // --- CASE A: destinos + listagens (simple delete array) ---
   const simpleCollections = ["destinos", "listagens"];
   simpleCollections.forEach(type => {
     const ids = userData[type] ?? [];
-    ids.forEach(id => batch.delete(db.collection(type).doc(id)));
+    ids.forEach(id => batch.delete(firebase.firestore().collection(type).doc(id)));
     userData[type] = []; // cleanup
   });
 
@@ -212,26 +208,26 @@ async function _deleteAccountDocuments() {
   if (Array.isArray(userData.viagens)) {
     for (const viagemID of userData.viagens) {
       // Always delete public trip data
-      batch.delete(db.collection("viagens").doc(viagemID));
+      batch.delete(firebase.firestore().collection("viagens").doc(viagemID));
 
       // Check protegido/viagemID
-      const protSnap = await db.collection("protegido").doc(viagemID).get();
+      const protSnap = await firebase.firestore().collection("protegido").doc(viagemID).get();
 
       if (protSnap.exists) {
         const pin = protSnap.data()?.pin;
 
         if (pin) {
           // Delete protected dirs
-          batch.delete(db.doc(`viagens/protected/${pin}/${viagemID}`));
-          batch.delete(db.doc(`gastos/protected/${pin}/${viagemID}`));
+          batch.delete(firebase.firestore().doc(`viagens/protected/${pin}/${viagemID}`));
+          batch.delete(firebase.firestore().doc(`gastos/protected/${pin}/${viagemID}`));
         }
 
         // Remove protegido reference
-        batch.delete(db.collection("protegido").doc(viagemID));
+        batch.delete(firebase.firestore().collection("protegido").doc(viagemID));
 
       } else {
         // No protected doc → delete normal gastos
-        batch.delete(db.collection("gastos").doc(viagemID));
+        batch.delete(firebase.firestore().collection("gastos").doc(viagemID));
       }
     }
 
@@ -239,13 +235,11 @@ async function _deleteAccountDocuments() {
   }
 
   // Save cleaned user object
-  batch.update(userRef, userData);
+  batch.update(firebase.firestore().collection("users").doc(uid), userData);
 
   await batch.commit();
   console.log("All user data removed successfully.");
 }
-
-
 
 async function _createAccountDocuments(data) {
   const uid = await _getUID();

@@ -27,11 +27,11 @@ function _displayMessage(titulo, conteudo) {
 
 
 // Prompt (Sim / Não)
-function _displayPrompt(titulo, conteudo, yesAction, noAction = '_closeMessage()') {
+function _displayPrompt({titulo, conteudo, yesAction, noAction = '_closeMessage()', critico = false} = {}) {
   const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
   propriedades.titulo = titulo;
   propriedades.conteudo = conteudo;
-  propriedades.critico = true;
+  propriedades.critico = critico;
   propriedades.botoes = [
     {
       tipo: 'nao',
