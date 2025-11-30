@@ -15,7 +15,7 @@ async function _loadPinData() {
 }
 
 function _getNewPinObject() {
-    return PIN.new ? { pin: PIN.new } : {};
+    return PIN.new ? { pin: PIN.new, compartilhamento: FIRESTORE_NEW_DATA.compartilhamento} : {};
 }
 
 function _isDataUnprotected() {
