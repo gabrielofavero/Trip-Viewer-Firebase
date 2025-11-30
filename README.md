@@ -4,7 +4,7 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 98    | 95        | 3       |
+| 🐞   | Bug          | B000  | 99    | 96        | 3       |
 | 🏆   | Feature      | F000  | 106   | 103       | 3     |
 | 📈   | Improvement  | M000  | 119   | 118       | 1      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
@@ -17,6 +17,7 @@
 ### High Priority
 
 ### Medium Priority
+- 🐞 **B099:** Fix Restore function (permissions)
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
