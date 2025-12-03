@@ -4,9 +4,9 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 99    | 96        | 3       |
+| 🐞   | Bug          | B000  | 102   | 97        | 5       |
 | 🏆   | Feature      | F000  | 106   | 103       | 3     |
-| 📈   | Improvement  | M000  | 119   | 118       | 1      |
+| 📈   | Improvement  | M000  | 122   | 118       | 4      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -15,16 +15,24 @@
 
 ## Backlog
 ### High Priority
+- 🐞 **B101:** Fix Backup/Restore functions
+- 🐞 **B100:** sensitive-box not animating when inside of accommodations
 
 ### Medium Priority
-- 🐞 **B099:** Fix Restore function (permissions)
+- 🐞 **B102:** When moving destinations, description view does not reload
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B096:** Fix Gallery module
 - 🐞 **B097:** Fix Image upload module
+- 📈 **M120:** Add Vueling company logo
+- 📈 **M121:** Replace "Flight" expense type with "transportation"
+- 📈 **M122:** Put each expense type as draggable
 
 ## Done
+
+### December 2025
+- 🐞 **B099:** Fix Expenses update / loading
 
 ### November 2025
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)

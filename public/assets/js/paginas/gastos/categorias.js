@@ -45,7 +45,7 @@ function _setDoughnutChartCategoria(titulo, tipo) {
     getID(`${tipo}-titulo`).innerHTML = _getTitleWithIcon(titulo);
     getID(`${tipo}-total`).innerText = `Total: ${_formatMoeda(total, true)}`;
 
-    const labels = itens.map(item => item.nome);
+    const labels = itens.map(item => translate(item.nome, {}, false));
     const valores = itens.map(item => item.total);
 
     _setChart('doughnut', `${tipo}-grafico`, labels, valores);

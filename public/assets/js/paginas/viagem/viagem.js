@@ -286,7 +286,7 @@ function _loadModules() {
 
   function _loadGastosModule() {
     const ativo = FIRESTORE_DATA.modulos?.gastos === true;
-    localStorage.setItem('gastos', JSON.stringify({ ativo, pin: PIN }));
+    localStorage.setItem('gastos', JSON.stringify({ ativo, pin: FIRESTORE_DATA.pin || 'no-pin' }));
 
     if (ativo) {
       getID('gastos-container').style.display = '';

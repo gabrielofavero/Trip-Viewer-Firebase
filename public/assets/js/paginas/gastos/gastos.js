@@ -46,7 +46,7 @@ async function _loadGastosPage() {
         return;
     }
 
-    if (!gastosExport?.pin) {
+    if (gastosExport?.pin == 'no-pin') {
         _loadGastos();
     } else {
         _stopLoadingScreen();
