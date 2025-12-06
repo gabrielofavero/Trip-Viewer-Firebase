@@ -109,7 +109,7 @@ async function _backupAccountData(useSensitiveData = false) {
     if (MISSING_ACCOUNT_DATA.failed.length > 0) {
         _displayPartialBackupWarning();
     } else {
-        _toast(translate('account.backup.success'));
+        _openToast(translate('account.backup.success'));
     }
 }
 
@@ -249,68 +249,5 @@ function _displayPartialBackupWarning() {
         }
 
         return list.join("<br><br>");
-    }
-}
-
-
-// Restore
-async function _restoreOnClickAction() {
-    const titulo = translate('account.restore.title');
-    const conteudo = translate('account.restore.prompt');
-    const yesAction = '_openBackupFilePicker()';
-    _displayPrompt({ titulo, conteudo, yesAction });
-}
-
-function _restoreOnFileSelectionAction(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        try {
-            const jsonData = JSON.parse(e.target.result);
-            _restoreAccountData(jsonData);
-        } catch (err) {
-            _stopLoadingScreen();
-            _displayError(translate('messages.documents.get.error'))
-            console.error(err);
-        }
-    };
-    reader.readAsText(file);
-}
-
-function _openBackupFilePicker() {
-    document.getElementById("restore-account-input").click();
-}
-
-async function _restoreAccountData(backup) {
-    _closeMessage();
-    _startLoadingScreen();
-
-    if (!_isBackupValid()) {
-        _displayMessage(translate('account.restore.title'), translate('account.restore.invalid_file'));
-        return;
-    }
-
-    console.log("Deleting current user data...");
-    await _deleteAccountDocuments();
-
-    console.log("Restoring user data from backup...");
-    await _createAccountDocuments(backup);
-
-    _toast(translate('account.restore.success'));
-
-    setTimeout(() => {
-        location.reload();
-    }, 5000);
-
-    function _isBackupValid() {
-        return backup &&
-            typeof backup === 'object' &&
-            'destinos' in backup &&
-            'gastos' in backup &&
-            'listagens' in backup &&
-            'protegido' in backup &&
-            'viagens' in backup;
     }
 }

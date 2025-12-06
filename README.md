@@ -4,7 +4,7 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 102   | 97        | 5       |
+| 🐞   | Bug          | B000  | 102   | 98        | 4       |
 | 🏆   | Feature      | F000  | 106   | 103       | 3     |
 | 📈   | Improvement  | M000  | 122   | 118       | 4      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
@@ -15,7 +15,6 @@
 
 ## Backlog
 ### High Priority
-- 🐞 **B101:** Fix Backup/Restore functions
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
 
 ### Medium Priority
@@ -33,6 +32,7 @@
 
 ### December 2025
 - 🐞 **B099:** Fix Expenses update / loading
+- 🐞 **B101:** Fix Backup/Restore functions
 
 ### November 2025
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)

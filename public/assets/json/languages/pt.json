@@ -17,8 +17,10 @@
         },
         "restore": {
             "title": "Restaurar conta",
+            "error_title": "Erro ao restaurar o backup",
             "prompt": "Tem certeza que deseja restaurar os dados da conta? Todos os dados atuais serão substituídos pelos dados do backup. A ação não poderá ser desfeita",
             "invalid_file": "O arquivo selecionado não é um backup válido",
+            "incorrect_owner": "O backup selecionado pertence a outro usuário",
             "success": "Restauração realizada com sucesso"
         },
         "delete": {

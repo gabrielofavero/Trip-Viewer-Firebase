@@ -194,89 +194,76 @@ async function _deleteAccount() {
 async function _deleteAccountDocuments() {
   const uid = await _getUID();
   const userData = await _get(`usuarios/${uid}`);
-  const batch = firebase.firestore().batch();
 
-  // --- CASE A: destinos + listagens (simple delete array) ---
-  const simpleCollections = ["destinos", "listagens"];
-  simpleCollections.forEach(type => {
+  const deleteOps = [];
+
+  const safePushDelete = (ref) => {
+    deleteOps.push(
+      ref.delete().then(
+        () => console.log("Deleted:", ref.path),
+        (err) => console.warn("⚠️ Failed:", ref.path, err.message)
+      )
+    );
+  };
+
+  // --- CASE A: destinos + listagens ---
+  for (const type of ["destinos", "listagens"]) {
     const ids = userData[type] ?? [];
-    ids.forEach(id => batch.delete(firebase.firestore().collection(type).doc(id)));
-    userData[type] = []; // cleanup
-  });
+    for (const id of ids) {
+      const ref = firebase.firestore().collection(type).doc(id);
+      safePushDelete(ref);
+    }
+    userData[type] = [];
+  }
 
-  // --- CASE B: viagens (extra protected handling) ---
+  // --- CASE B: viagens ---
   if (Array.isArray(userData.viagens)) {
+
     for (const viagemID of userData.viagens) {
-      // Always delete public trip data
-      batch.delete(firebase.firestore().collection("viagens").doc(viagemID));
 
-      // Check protegido/viagemID
-      const protSnap = await firebase.firestore().collection("protegido").doc(viagemID).get();
+      const refViagem = firebase.firestore().collection("viagens").doc(viagemID);
+      safePushDelete(refViagem);
 
-      if (protSnap.exists) {
+      const protRef = firebase.firestore().collection("protegido").doc(viagemID);
+
+      // Read protRef (read must be awaited, deletes can be parallel)
+      let protSnap = null;
+      try {
+        protSnap = await protRef.get();
+      } catch (e) {
+        console.warn("⚠️ Failed reading:", protRef.path, e.message);
+      }
+
+      if (protSnap?.exists) {
         const pin = protSnap.data()?.pin;
 
         if (pin) {
-          // Delete protected dirs
-          batch.delete(firebase.firestore().doc(`viagens/protected/${pin}/${viagemID}`));
-          batch.delete(firebase.firestore().doc(`gastos/protected/${pin}/${viagemID}`));
+          safePushDelete(firebase.firestore().doc(`viagens/protected/${pin}/${viagemID}`));
+          safePushDelete(firebase.firestore().doc(`gastos/protected/${pin}/${viagemID}`));
         }
 
-        // Remove protegido reference
-        batch.delete(firebase.firestore().collection("protegido").doc(viagemID));
+        safePushDelete(protRef);
 
       } else {
-        // No protected doc → delete normal gastos
-        batch.delete(firebase.firestore().collection("gastos").doc(viagemID));
+        const gastosRef = firebase.firestore().collection("gastos").doc(viagemID);
+        safePushDelete(gastosRef);
       }
     }
 
     userData.viagens = [];
   }
 
-  // Save cleaned user object
-  batch.update(firebase.firestore().collection("users").doc(uid), userData);
+  // --- Update user object individually (not batched) ---
+  const userRef = firebase.firestore().collection("usuarios").doc(uid);
+  deleteOps.push(
+    userRef.update(userData).then(
+      () => console.log("Updated user:", userRef.path),
+      (err) => console.warn("⚠️ Failed updating user:", userRef.path, err.message)
+    )
+  );
 
-  await batch.commit();
-  console.log("All user data removed successfully.");
-}
-
-async function _createAccountDocuments(data) {
-  const uid = await _getUID();
-  if (!uid) return;
-
-  const userRef = firebase.firestore().doc(`usuarios/${uid}`);
-
-  await firebase.firestore().runTransaction(async (tx) => {
-    const userData = (await tx.get(userRef)).data();
-
-    for (const type of DATABASE_EDITABLE_DOCUMENTS) {
-      const group = data?.[type];
-      if (!group) continue;
-
-      for (const docID of Object.keys(group)) {
-        if (docID === "protected") {
-          _processProtectedDocuments(group[docID], type, tx);
-          continue;
-        }
-
-        tx.set(firebase.firestore().doc(`${type}/${docID}`), group[docID]);
-      }
-    }
-
-    tx.update(userRef, userData);
-  });
-}
-
-function _processProtectedDocuments(tree, type, tx) {
-  for (const pin of Object.keys(tree)) {
-    for (const docID of Object.keys(tree[pin])) {
-      tx.set(
-        firebase.firestore().doc(`${type}/protected/${pin}/${docID}`),
-        tree[pin][docID]
-      );
-    }
-  }
+  console.log("Running all delete ops...");
+  await Promise.allSettled(deleteOps);
 }
 
 async function _addToUserArray(type, value) {
