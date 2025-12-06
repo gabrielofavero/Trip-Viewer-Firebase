@@ -108,7 +108,7 @@ function _loadSensitiveReservationAction(type, id) {
 
     if (linkActive) {
         textEl.href = link;
-    } else
+    }
 
     wrapper.style.width = _getSensitiveReservationWidth(textEl, show ? label : MASKED) + "px";
 
