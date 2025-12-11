@@ -5,14 +5,12 @@
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 104   | 100       | 4      |
-| 🏆   | Feature      | F000  | 108   | 107       | 0      |
-| 📈   | Improvement  | M000  | 126   | 120       | 6      |
-| ⚔️   | Epic         | E000  | 35    | 34        | 1      |
+| 🏆   | Feature      | F000  | 107   | 107       | 0      |
+| 📈   | Improvement  | M000  | 124   | 119       | 5      |
+| ⚔️   | Epic         | E000  | 35    | 35        | 0      |
 
 ## Backlog
 ### High Priority
-- 📈 **M125:** Reduce document calls for view page
-- 🏆 **F108:** Enable document calls for destinations page
 - 🐞 **B104:** Missing type causes select to show previous destination.html data 
 - 🐞 **B103:** When dragging transportations, new transportation button glitches out
 
