@@ -4,7 +4,7 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 102   | 100       | 2      |
+| 🐞   | Bug          | B000  | 103   | 100       | 3      |
 | 🏆   | Feature      | F000  | 107   | 107       | 0      |
 | 📈   | Improvement  | M000  | 126   | 120       | 6      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
@@ -15,9 +15,10 @@
 
 ## Backlog
 ### High Priority
+- 🐞 **B103:** When dragging transportations, new transportation button glitches out
+- 🐞 **B102:** When moving destinations, description view does not reload
 
 ### Medium Priority
-- 🐞 **B102:** When moving destinations, description view does not reload
 - 📈 **M123:** Reduce document calls for index
 - 📈 **M124:** Reduce document calls for edit pages
 - 📈 **M125:** Reduce document calls for view page
