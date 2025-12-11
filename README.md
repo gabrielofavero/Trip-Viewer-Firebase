@@ -4,7 +4,7 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 103   | 100       | 3      |
+| 🐞   | Bug          | B000  | 104   | 100       | 4      |
 | 🏆   | Feature      | F000  | 107   | 107       | 0      |
 | 📈   | Improvement  | M000  | 126   | 120       | 6      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
@@ -15,6 +15,7 @@
 
 ## Backlog
 ### High Priority
+- 🐞 **B104:** Missing type causes select to show previous destination.html data 
 - 🐞 **B103:** When dragging transportations, new transportation button glitches out
 - 🐞 **B102:** When moving destinations, description view does not reload
 
