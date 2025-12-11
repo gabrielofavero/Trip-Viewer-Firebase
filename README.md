@@ -25,7 +25,6 @@
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B096:** Fix Gallery module
-- 📈 **M120:** Add Vueling company logo
 - 📈 **M121:** Replace "Flight" expense type with "transportation"
 - 📈 **M122:** Put each expense type as draggable
 
@@ -36,6 +35,7 @@
 - 🐞 **B101:** Fix Backup/Restore functions
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
 - 🏆 **F107:** Disable image uploads / Firebase Storage (free plan limitation)
+- 📈 **M120:** Add Vueling company logo
 - 📈 **M126:** Make edit-trip transportation select to fetch from json file
 
 ### November 2025
