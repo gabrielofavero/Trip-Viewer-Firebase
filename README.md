@@ -4,9 +4,9 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 102   | 99        | 3       |
-| 🏆   | Feature      | F000  | 106   | 103       | 3     |
-| 📈   | Improvement  | M000  | 122   | 118       | 4      |
+| 🐞   | Bug          | B000  | 102   | 100       | 2      |
+| 🏆   | Feature      | F000  | 107   | 107       | 0      |
+| 📈   | Improvement  | M000  | 125   | 119       | 6      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -18,11 +18,13 @@
 
 ### Medium Priority
 - 🐞 **B102:** When moving destinations, description view does not reload
+- 📈 **M123:** Reduce document calls for index
+- 📈 **M124:** Reduce document calls for edit pages
+- 📈 **M125:** Reduce document calls for view page
 
 ### Low Priority
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B096:** Fix Gallery module
-- 🐞 **B097:** Fix Image upload module
 - 📈 **M120:** Add Vueling company logo
 - 📈 **M121:** Replace "Flight" expense type with "transportation"
 - 📈 **M122:** Put each expense type as draggable
@@ -33,6 +35,7 @@
 - 🐞 **B099:** Fix Expenses update / loading
 - 🐞 **B101:** Fix Backup/Restore functions
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
+- 🏆 **F107:** Disable image uploads / Firebase Storage (free plan limitation)
 
 ### November 2025
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
@@ -551,3 +554,4 @@
 - 🏆 **F081:** Embed map when there is no video in the destination
 - 📈 **M105:** Remove CONFIG ~~and reduce use of global variables~~
 - 📈 **M114:** Make button / select outlines theme color (view.html)
+- 🐞 **B097:** Fix Image upload module
