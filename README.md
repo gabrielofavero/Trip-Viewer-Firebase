@@ -5,30 +5,28 @@
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 104   | 100       | 4      |
-| 🏆   | Feature      | F000  | 107   | 107       | 0      |
+| 🏆   | Feature      | F000  | 108   | 107       | 0      |
 | 📈   | Improvement  | M000  | 126   | 120       | 6      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
-- 🚦: Blocked
-- ❔: No apparent solution
-- ❗️: Critical (production deploy)
-
 ## Backlog
 ### High Priority
+- 📈 **M125:** Reduce document calls for view page
+- 🏆 **F108:** Enable document calls for destinations page
 - 🐞 **B104:** Missing type causes select to show previous destination.html data 
 - 🐞 **B103:** When dragging transportations, new transportation button glitches out
-- 🐞 **B102:** When moving destinations, description view does not reload
 
 ### Medium Priority
 - 📈 **M123:** Reduce document calls for index
 - 📈 **M124:** Reduce document calls for edit pages
-- 📈 **M125:** Reduce document calls for view page
+- 🐞 **B105:** When returning a destination, view page auto scrolls up
+- 🐞 **B102:** When moving destinations, description view does not reload
 
 ### Low Priority
-- 📈 **M092:** Title in dark mode with more highlight
-- 🐞 **B096:** Fix Gallery module
-- 📈 **M121:** Replace "Flight" expense type with "transportation"
 - 📈 **M122:** Put each expense type as draggable
+- 📈 **M121:** Replace "Flight" expense type with "transportation"
+- 🐞 **B096:** Fix Gallery module
+- 📈 **M092:** Title in dark mode with more highlight
 
 ## Done
 
