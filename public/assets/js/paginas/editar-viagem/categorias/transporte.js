@@ -81,6 +81,7 @@ function _getPessoa(i) {
 }
 
 function _loadTransporteVisibility(i) {
+    const transportes = CONFIG.transportes.empresas;
     const select = getID(`empresa-select-${i}`);
     const value = select.value;
     const empresa = getID(`empresa-${i}`);
@@ -89,46 +90,12 @@ function _loadTransporteVisibility(i) {
     let selectValid = false;
     let selectOptions = "";
 
-    switch (tipo.value) {
-        case "voo":
-            selectOptions = `
-        <option value="americanAirlines">American Airlines</option>
-        <option value="avianca">Avianca</option>
-        <option value="azul">Azul</option>
-        <option value="copa">Copa Airlines</option>
-        <option value="delta">Delta Airlines</option>
-        <option value="gol">Gol</option>
-        <option value="jetblue">JetBlue</option>
-        <option value="latam">LATAM</option>
-        <option value="tap">TAP Air Portugal</option>
-        <option value="united">United Airlines</option>
-        `
-            selectValid = true;
-            break;
-        case "carro":
-            selectOptions = `
-        <option value="99">99</option>
-        <option value="avis">Avis</option>
-        <option value="cabify">Cabify</option>
-        <option value="hertz">Hertz</option>
-        <option value="localiza">Localiza</option>
-        <option value="lyft">Lyft</option>
-        <option value="movida">Movida</option>
-        <option value="uber">Uber</option>
-        <option value="unidas">Unidas</option>
-        <option value="">${translate('labels.none')}</option>
-        `
-            selectValid = true;
-            break;
-        case "onibus":
-            selectOptions = `
-          <option value="aguiaBranca">Águia Branca</option>
-          <option value="buser">Buser</option>
-          <option value="cometa">Cometa</option>
-          <option value="gontijo">Gontijo</option>
-          `
-            selectValid = true;
-            break;
+    if (['voo', 'carro', 'onibus'].includes(tipo.value)) {
+        selectValid = true;
+        for (const value in transportes[tipo.value]) {
+            const label = transportes[tipo.value][value];
+            selectOptions += `<option value="${value}">${label}</option>`;
+        }
     }
 
     select.innerHTML = `

@@ -6,7 +6,7 @@
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 102   | 100       | 2      |
 | 🏆   | Feature      | F000  | 107   | 107       | 0      |
-| 📈   | Improvement  | M000  | 125   | 119       | 6      |
+| 📈   | Improvement  | M000  | 126   | 120       | 6      |
 | ⚔️   | Epic         | E000  | 35    | 34        | 1      |
 
 - 🚦: Blocked
@@ -36,6 +36,7 @@
 - 🐞 **B101:** Fix Backup/Restore functions
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
 - 🏆 **F107:** Disable image uploads / Firebase Storage (free plan limitation)
+- 📈 **M126:** Make edit-trip transportation select to fetch from json file
 
 ### November 2025
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
