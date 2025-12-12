@@ -5,7 +5,7 @@
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 107   | 100       | 4      |
-| 🏆   | Feature      | F000  | 115   | 107       | 8      |
+| 🏆   | Feature      | F000  | 116   | 107       | 9      |
 | 📈   | Improvement  | M000  | 124   | 119       | 5      |
 | ⚔️   | Epic         | E000  | 37    | 35        | 2      |
 
@@ -14,9 +14,10 @@
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F111] Create migration for adding document/trip/listing minimal data into user data*
   - *[🏆F112] Adapt database functions with new user data structure*
-  - *[🏆F113] Update trip saving method to also update trip minimal data*
-  - *[🏆F114] Update destination saving method to also update destination minimal data*
-  - *[🏆F115] Update listing saving method to also update listing minimal data*
+  - *[🏆F113] Adapt backup functions with new user data structure*
+  - *[🏆F114] Update trip saving method to also update trip minimal data*
+  - *[🏆F115] Update destination saving method to also update destination minimal data*
+  - *[🏆F116] Update listing saving method to also update listing minimal data*
   - *[📈M123] Reduce document calls for index*
   - *[📈M124] Reduce document calls for edit pages*
 - ⚔️ **E036:** Separate expenses by traveler
