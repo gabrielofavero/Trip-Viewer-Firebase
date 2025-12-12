@@ -11,7 +11,6 @@
 
 ## Backlog
 ### High Priority
-- 🐞 **B106:** PIN being exposed on logs
 - 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B103:** When dragging transportations, new transportation button glitches out
 - ⚔️ **E036:** Separate expenses by traveler
@@ -34,6 +33,7 @@
 ## Done
 
 ### December 2025
+- 🐞 **B106:** PIN being exposed on logs
 - 🐞 **B107:** "Last updated on" not being properly translated on index
 - 🐞 **B104:** Missing type causes select to show previous destination.html data 
 - 🐞 **B099:** Fix Expenses update / loading

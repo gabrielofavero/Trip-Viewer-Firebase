@@ -77,7 +77,7 @@ async function _loadTrip(stripped = false) {
   let protectedData;
 
   if (PIN.current) {
-    protectedData = await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
+    protectedData = await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true, true);
   }
 
   switch (protectedData?.pin) {

@@ -5,7 +5,7 @@ var PIN = {
 
 async function _loadPinData() {
     // This data can only be fetch by the owner of the document
-    const pinObject = await _get(`protegido/${DOCUMENT_ID}`);
+    const pinObject = await _get(`protegido/${DOCUMENT_ID}`, true, true);
 
     if (!pinObject || !pinObject.pin) {
         return;
