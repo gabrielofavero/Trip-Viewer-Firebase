@@ -69,8 +69,9 @@ async function getTripMinimalData(ids: string[]) {
                 titulo: d?.titulo,
                 inicio: d?.inicio,
                 fim: d?.fim,
+                imagem: d?.imagem,
                 cores: d?.cores,
-                ultimaAtualizacao: d?.ultimaAtualizacao
+                versao: d?.versao
             };
         })
     );
@@ -92,7 +93,7 @@ async function getDestinationMinimalData(ids: string[]) {
             result[id] = {
                 titulo: d?.titulo,
                 moeda: d?.moeda,
-                ultimaAtualizacao: d?.ultimaAtualizacao
+                versao: d?.versao
             };
         })
     );
@@ -113,10 +114,11 @@ async function getListingMinimalData(ids: string[]) {
             const d = doc.data();
             result[id] = {
                 titulo: d?.titulo,
-                inicio: d?.inicio,
-                fim: d?.fim,
+                subtitulo: d?.subtitulo,
+                descricao: d?.descricao,
+                imagem: d?.imagem,
                 cores: d?.cores,
-                ultimaAtualizacao: d?.ultimaAtualizacao
+                versao: d?.versao
             };
         })
     );
