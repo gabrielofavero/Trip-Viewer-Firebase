@@ -505,3 +505,11 @@ function _getTranslatedDocumentLabel(type) {
 function _getErrorFromGetRequestMessage() {
   return ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions') ? translate('messages.errors.unauthorized_access') : ERROR_FROM_GET_REQUEST;
 }
+
+function _getLastUpdatedOnText(date) {
+  if (typeof date === 'string') {
+    date = new Date(date);
+  }
+  const dateString = _getDateString(date, _getDateRegionalFormat());
+  return `${translate('labels.last_updated_on')} ${dateString}`;
+}

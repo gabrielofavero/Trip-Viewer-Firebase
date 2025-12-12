@@ -323,10 +323,8 @@ async function _getUserList(type, includeData = false, userData) {
         }
 
         if (data.versao?.ultimaAtualizacao) {
-          const date = new Date(data.versao.ultimaAtualizacao);
-          const dateString = _getDateString(date, "dd/mm/yyyy");
           singleResult.ultimaAtualizacao = data.versao.ultimaAtualizacao;
-          singleResult.ultimaAtualizacaoText = `${translate('labels.last_updated_on')} ${dateString}`;
+          singleResult.ultimaAtualizacaoText = _getLastUpdatedOnText(data.versao.ultimaAtualizacao);
         }
 
         if (data.subtitulo) {

@@ -5,13 +5,19 @@
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 104   | 100       | 4      |
-| 🏆   | Feature      | F000  | 107   | 107       | 0      |
+| 🏆   | Feature      | F000  | 110   | 107       | 3      |
 | 📈   | Improvement  | M000  | 124   | 119       | 5      |
-| ⚔️   | Epic         | E000  | 35    | 35        | 0      |
+| ⚔️   | Epic         | E000  | 36    | 35        | 1      |
 
 ## Backlog
 ### High Priority
+- 🐞 **B106:** PIN being exposed on logs
+- 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B103:** When dragging transportations, new transportation button glitches out
+- ⚔️ **E036:** Separate expenses by traveler
+  - *[🏆F108] Add expense type on edit trip page + saving*
+  - *[🏆F109] Add custom select on expenses page*
+  - *[🏆F110] Custom load action for select on expenses page*
 
 ### Medium Priority
 - 📈 **M123:** Reduce document calls for index
@@ -28,6 +34,7 @@
 ## Done
 
 ### December 2025
+- 🐞 **B107:** "Last updated on" not being properly translated on index
 - 🐞 **B104:** Missing type causes select to show previous destination.html data 
 - 🐞 **B099:** Fix Expenses update / loading
 - 🐞 **B101:** Fix Backup/Restore functions
