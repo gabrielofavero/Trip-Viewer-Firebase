@@ -246,8 +246,13 @@ function _getLastJ(parentID) {
   return js.length === 0 ? 0 : js[js.length - 1];
 }
 
+function _getLastUnorderedJ(parentID) {
+  const js = _getJs(parentID).sort((a, b) => a - b);
+  return js.length === 0 ? 0 : js[js.length - 1];
+}
+
 function _getNextJ(parentID) {
-  return _getLastJ(parentID) + 1;
+  return _getLastUnorderedJ(parentID) + 1;
 }
 
 function _getRandomID({ idLength = 5, pool = [] } = {}) {

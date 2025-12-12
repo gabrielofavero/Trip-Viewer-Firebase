@@ -11,7 +11,6 @@
 
 ## Backlog
 ### High Priority
-- 🐞 **B103:** When dragging transportations, new transportation button glitches out
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F109] Add custom select on expenses page*
@@ -32,6 +31,7 @@
 ## Done
 
 ### December 2025
+- 🐞 **B103:** When dragging transportations and accommodations, new transportation button glitches out
 - 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B106:** PIN being exposed on logs
 - 🐞 **B107:** "Last updated on" not being properly translated on index
