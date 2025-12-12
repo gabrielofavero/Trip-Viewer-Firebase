@@ -28,6 +28,7 @@ function _loadDadosBasicosViagemData() {
     getID('fim').value = _getDateString(fim, 'yyyy-mm-dd');
 
     TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
+    _validateTravelersObject();
     _updateTravelersButtonLabel();
     _setCurrentPreferencePIN(FIRESTORE_DATA.pin);
     _switchPinVisibility();
@@ -89,7 +90,7 @@ async function _loadExpensesData() {
 
     const getPath = PIN.current ? `gastos/protected/${PIN.current}/${DOCUMENT_ID}` : `gastos/${DOCUMENT_ID}`; 
 
-    FIRESTORE_GASTOS_DATA = await _get(getPath);
+    FIRESTORE_GASTOS_DATA = await _get(getPath, true, true);
     
     if (ERROR_FROM_GET_REQUEST) {
         _displayError(ERROR_FROM_GET_REQUEST);

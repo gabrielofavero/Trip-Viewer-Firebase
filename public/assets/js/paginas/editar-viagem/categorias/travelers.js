@@ -1,6 +1,14 @@
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
 
+function _validateTravelersObject() {
+    for (const traveler of TRAVELERS) {
+        if (!traveler.id) {
+            traveler.id = _getNewTravelerID();
+        }
+    }
+}
+
 function _openTravelersInfo() {
     const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
     propriedades.titulo = translate('trip.travelers.info')
@@ -43,7 +51,7 @@ function _getTravelersNameContent() {
 
     for (let j = 1; j <= quantity; j++) {
         const traveler = TRAVELERS[j - 1];
-        const id = getID(`traveler-id-${j}`)?.value || traveler?.id || _getRandomID({ pool: TRAVELERS.map(t => t.id) });
+        const id = getID(`traveler-id-${j}`)?.value || traveler?.id || _getNewTravelerID();
         const name = getID(`traveler-name-${j}`)?.value || traveler?.nome || '';
 
         properties.push(`
@@ -58,13 +66,18 @@ function _getTravelersNameContent() {
     return properties.join('');
 }
 
+function _getNewTravelerID() {
+    return _getRandomID({ pool: TRAVELERS.map(t => t.id) });
+}
+
 function _saveTravelersInfo() {
     let j = 1;
     const travelers = []
     while (getID(`traveler-name-${j}`)) {
-        travelers.push({ 
+        travelers.push({
             id: getID(`traveler-id-${j}`).value,
-            nome: getID(`traveler-name-${j}`).value.trim()});
+            nome: getID(`traveler-name-${j}`).value.trim()
+        });
         j++;
     }
 
@@ -144,10 +157,8 @@ function _getTravelersFieldset(id) {
 
 function _enableAllTravelersFieldset(id) {
     const checkedData = []
-    for (let j = 1; j <= TRAVELERS.length; j++) {
-        const nome = TRAVELERS[j - 1].nome;
-        const isPresent = true;
-        checkedData.push({ nome, isPresent });
+    for (const traveler of TRAVELERS) {
+        checkedData.push({ id: traveler.id, nome: traveler.nome, isPresent: true });
     }
     _updateTravelersFieldset(id, checkedData);
 }
@@ -164,21 +175,23 @@ function _updateTravelersFieldset(id, checkedData = []) {
     }
 }
 
-function _getCheckedTravelersIDs(id) {
-    const result = [];
-    let j = 1;
-    while (getID(`${id}-${j}`)) {
-        const checkbox = getID(`${id}-${j}`);
+function _getCheckedTravelersIDs(containerID) {
+    const fieldset = getID(containerID).querySelector('fieldset');
+
+    for (const checkBoxContainer of fieldset.children) {
+        const label = checkBoxContainer.querySelector('label');
+        const checkbox = checkBoxContainer.querySelector('input');
         result.push({
-            nome: checkbox.value,
+            id: checkbox.value,
+            nome: label.innerText,
             isPresent: checkbox.checked,
         })
-        j++;
     }
 
     const missingNames = TRAVELERS.filter(t => !result.some(r => r.nome === t.nome));
     for (const missing of missingNames) {
         result.push({
+            id: missing.id,
             nome: missing.nome,
             isPresent: INCLUDE_LATE_TRAVELERS,
         });

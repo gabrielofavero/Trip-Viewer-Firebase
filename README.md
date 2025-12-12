@@ -4,14 +4,13 @@
 
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 104   | 100       | 4      |
+| 🐞   | Bug          | B000  | 107   | 100       | 4      |
 | 🏆   | Feature      | F000  | 110   | 107       | 3      |
 | 📈   | Improvement  | M000  | 124   | 119       | 5      |
 | ⚔️   | Epic         | E000  | 36    | 35        | 1      |
 
 ## Backlog
 ### High Priority
-- 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B103:** When dragging transportations, new transportation button glitches out
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
@@ -33,6 +32,7 @@
 ## Done
 
 ### December 2025
+- 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B106:** PIN being exposed on logs
 - 🐞 **B107:** "Last updated on" not being properly translated on index
 - 🐞 **B104:** Missing type causes select to show previous destination.html data 
