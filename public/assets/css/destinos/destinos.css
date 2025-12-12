@@ -138,6 +138,9 @@ section {
 }
 
 .destinos-select .option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-family: "Open Sans", sans-serif;
@@ -145,6 +148,7 @@ section {
   font-weight: normal;
   color: #272829;
   text-transform: none;
+  text-align: center;
 }
 
 .destinos-select .option:hover {

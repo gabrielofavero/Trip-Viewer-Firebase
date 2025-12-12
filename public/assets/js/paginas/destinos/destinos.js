@@ -233,7 +233,12 @@ function _loadDestinoCustomSelect() {
   function _getDestinoCustomSelectOptions() {
     const result = [];
     for (const categoryKey in DESTINO) {
-      if (categoryKey == 'activeCategory') continue;
+      if (
+        categoryKey === 'activeCategory' ||
+        (categoryKey !== 'myMaps' && DESTINO[categoryKey].data.length === 0)
+      ) {
+        continue;
+      }
       result.push({ value: categoryKey, label: DESTINO[categoryKey].titulo });
     }
     return result;

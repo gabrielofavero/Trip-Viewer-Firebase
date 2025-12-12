@@ -1,6 +1,5 @@
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
-var CURRENT_PLACES_SIZE = 0;
 var DESTINOS = [];
 var DESTINO_EXPORT = {};
 
@@ -64,14 +63,16 @@ function _loadDestinationsHTML(destino) {
   let div = getID("destinosBox");
   let text = "";
 
-  const headers = _getDestinationsHeaders(destino.destinos.modulos);
-  CURRENT_PLACES_SIZE = headers.length;
-
-  for (let i = 0; i < headers.length; i++) {
-    const type = headers[i];
-    const translatedType = CONFIG.destinos.translation[type] || type;
+  const types = CONFIG.destinos.categorias.geral;
+  for (let i = 0; i < types.length; i++) {
+    const type = types[i];
     _buildDestinoExport(destino, type)
 
+    if (type != 'mapa' && destino.destinos[type].length === 0) {
+      continue;
+    }
+
+    const translatedType = CONFIG.destinos.translation[type] || type;
     const j = i + 1;
     const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
     const title = translate(`destination.${translatedType}.title`);
@@ -89,7 +90,7 @@ function _loadDestinationsHTML(destino) {
             <i class="${icon}"></i>
           </div>
           <div id="b${j}t"><h4>${title}</h4></div>
-          <div id="b${j}d"><p>${description}</p></div>
+          <div class="bd" id="b${j}d"><p>${description}</p></div>
         </div>
       </a>
     </div>`;
@@ -128,22 +129,6 @@ function _loadAndOpenDestino(code) {
   _openLightbox('destination.html')
 }
 
-function _getDestinationsHeaders(module) {
-  const headerBase = CONFIG.destinos.categorias.geral;
-  const headerMap = new Map(headerBase.map((element, index) => [element, index]));
-
-  let result = [];
-  const keys = Object.keys(module);
-
-  for (const key of keys) {
-    if (module[key] === true) {
-      result.push(key)
-    }
-  }
-
-  return result.sort((a, b) => headerMap.get(a) - headerMap.get(b));
-}
-
 function _getDestinationsBoxesIndex(i) {
   if (i > CONFIG.destinos.boxes.length - 1) {
     return i % CONFIG.destinos.boxes.length;
@@ -151,17 +136,15 @@ function _getDestinationsBoxesIndex(i) {
 }
 
 function _adjustDestinationsHTML() {
-  const elements = [];
+  const elements = Array.from(document.querySelectorAll('.bd'));
 
-  for (let i = 1; i <= CURRENT_PLACES_SIZE; i++) {
-    const el = getID(`b${i}d`);
+  for (const el of elements) {
     el.style.height = "auto";
-    elements.push(el);
   }
 
   const maxHeight = Math.max(...elements.map(el => el.offsetHeight));
 
-  elements.forEach(el => {
+  for (const el of elements) {
     el.style.height = `${maxHeight}px`;
-  });
+  }
 }

@@ -11,7 +11,6 @@
 
 ## Backlog
 ### High Priority
-- 🐞 **B104:** Missing type causes select to show previous destination.html data 
 - 🐞 **B103:** When dragging transportations, new transportation button glitches out
 
 ### Medium Priority
@@ -29,6 +28,7 @@
 ## Done
 
 ### December 2025
+- 🐞 **B104:** Missing type causes select to show previous destination.html data 
 - 🐞 **B099:** Fix Expenses update / loading
 - 🐞 **B101:** Fix Backup/Restore functions
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
