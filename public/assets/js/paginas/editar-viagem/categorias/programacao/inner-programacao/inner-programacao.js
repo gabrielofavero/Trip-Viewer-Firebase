@@ -96,7 +96,7 @@ function _getInnerProgramacaoSelect(tipo) {
 function _getInnerProgramacaoSelectsDestinos(j) {
     const destinoFromCheckbox = _getDestinosFromCheckbox('programacao', j);
     const idsAtivos = DESTINOS_ATIVOS.map(destino => destino.destinosID);
-    const todosIds = DESTINOS.map(destino => destino.code);
+    const todosIds = DESTINOS.map(destino => destino.id);
     if (getID('habilitado-destinos').checked === false || DESTINOS_ATIVOS.length === 0 || destinoFromCheckbox.length === 0) {
         return {
             ativo: false,
@@ -130,7 +130,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
             localOptions += `<option value="${currentID}">${destino.titulo}</option>`;
             let innerResult = {};
 
-            const currentDestinoData = DESTINOS[index].data;
+            const currentDestinoData = DESTINOS_ATIVOS[currentID];
             const passeios = CONFIG.destinos.categorias.passeios;
 
             let categorias = Object.keys(currentDestinoData).filter(key => passeios.includes(key) && currentDestinoData[key].length > 1);

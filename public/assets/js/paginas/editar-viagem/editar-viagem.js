@@ -32,11 +32,13 @@ async function _loadEditarViagemPage() {
   _newDynamicSelect('galeria-categoria');
   _newDynamicSelect('transporte-pessoa');
 
+  const userData = await _getUserData();
+  DESTINOS = _getOrderedDestinations(userData.destinos);
+
   if (DOCUMENT_ID) {
     await _loadTrip(true);
   } else {
     NEW_TRIP = true;
-    DESTINOS = await _getUserList('destinos', true);
     _loadNewTrip();
   }
 
@@ -82,7 +84,7 @@ async function _loadTrip(stripped = false) {
 
   switch (protectedData?.pin) {
     case 'all-data':
-      FIRESTORE_DATA = stripped ? protectedData : await _getTripDataWithDestinos(protectedData); 
+      FIRESTORE_DATA = stripped ? protectedData : await _getTripDataWithDestinos(protectedData);
       break;
     case 'sensitive-only':
       FIRESTORE_DATA = _getMergedTripObject(await _getTravelDocument(stripped), protectedData);

@@ -80,7 +80,7 @@ function _applyLoadedProgramacaoData(j, dados) {
 
     _updateProgramacaoTitle(j);
     _loadInnerProgramacaoHTML(j);
-    _initializeSortableForGroup(`programacao-${j}`, {onEnd: _afterDragInnerProgramacao})
+    _initializeSortableForGroup(`programacao-${j}`, { onEnd: _afterDragInnerProgramacao })
 }
 
 function _updateProgramacaoTitle(j) {
@@ -108,7 +108,7 @@ function _updateProgramacaoTitle(j) {
         default:
             titulo = _getDestinationProgramacaoTitle(value, j);
 
-            
+
             tituloInput.style.display = 'none';
     }
 
@@ -124,16 +124,16 @@ function _getDestinationProgramacaoTitle(value, j) {
 
     if (value === 'all_destinations') {
         return _getReadableArray(destinosTitulos);
-    } 
-    
+    }
+
     if (value.includes('_and_destinations')) {
         return _getAndDestinationTitle(value, destinosTitulos);
-    } 
-    
+    }
+
     if (destinosIDs.includes(value)) {
         const index = destinosIDs.indexOf(value);
         return destinosTitulos[index];
-    } 
+    }
 
     return '';
 }
@@ -148,7 +148,7 @@ function _getActiveDestinations(j) {
         const input = checkbox.querySelector('input[type="checkbox"]');
         const label = checkbox.querySelector('label');
         if (input.checked) {
-            result.push({label: label.innerText, value: input.value});
+            result.push({ label: label.innerText, value: input.value });
         }
     }
     return result;
@@ -230,7 +230,6 @@ function _reloadProgramacao() {
         }
         j++;
     }
-    _loadDestinosOrdenados();
     _updateDestinosAtivosCheckboxHTML('programacao');
 }
 

@@ -1,12 +1,11 @@
 async function _loadTripData() {
     try {
-        DESTINOS = await _getUserList('destinos', true);
         _loadDadosBasicosViagemData();
         _loadCustomizacaoData();
         await _loadExpensesData();
         _loadTransportesData();
         _loadHospedagemData();
-        _loadDestinosData();
+        await _loadDestinosData();
         _loadProgramacaoData();
         _loadGaleriaData();
 
@@ -88,10 +87,10 @@ async function _loadExpensesData() {
         getID('habilitado-gastos-content').style.display = 'block';
     }
 
-    const getPath = PIN.current ? `gastos/protected/${PIN.current}/${DOCUMENT_ID}` : `gastos/${DOCUMENT_ID}`; 
+    const getPath = PIN.current ? `gastos/protected/${PIN.current}/${DOCUMENT_ID}` : `gastos/${DOCUMENT_ID}`;
 
     FIRESTORE_GASTOS_DATA = await _get(getPath, true, true);
-    
+
     if (ERROR_FROM_GET_REQUEST) {
         _displayError(ERROR_FROM_GET_REQUEST);
         return;
@@ -179,14 +178,14 @@ function _loadHospedagemData() {
         getID(`hospedagens-descricao-${j}`).value = hospedagem.descricao;
         getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
         getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
-        
+
         _setImagemButtonLabel(j);
         _loadCheckIn(hospedagem, j);
         _loadCheckOut(hospedagem, j);
     }
 }
 
-function _loadDestinosData() {
+async function _loadDestinosData() {
     if (_getHTMLpage() === 'editar-listagem' || FIRESTORE_DATA.modulos.destinos === true) {
         if (getID('habilitado-destinos')) {
             getID('habilitado-destinos').checked = true;
@@ -210,7 +209,7 @@ function _loadDestinosData() {
             }
         }
     }
-    _loadDestinosAtivos();
+    await _loadDestinosAtivos();
 }
 
 function _loadProgramacaoData() {
@@ -229,7 +228,6 @@ function _loadProgramacaoData() {
         }
         j++;
     }
-    _loadDestinosOrdenados();
     _updateDestinosAtivosCheckboxHTML('programacao');
     FIRESTORE_PROGRAMACAO_DATA = _cloneObject(FIRESTORE_DATA.programacoes);
 }
