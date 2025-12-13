@@ -16,22 +16,19 @@ async function _loadDestinosAtivos(firstBoot = true) {
     const habilidadoDestinos = getID('habilitado-destinos');
     if (habilidadoDestinos && !habilidadoDestinos.checked) return;
 
-    const childIDs = _getChildIDs('destinos-checkboxes');
     let result = [];
+    const checkboxes = getID('destinos-checkboxes');
+    for (const checkbox of checkboxes.children) {
+        const input = checkbox.querySelector('input');
+        if (!input.checked) continue;
 
-    for (const child of childIDs) {
-        const j = _getJ(child);
-        const checkbox = getID(`check-destinos-${j}`);
-        if (checkbox.checked) {
-            const destinosID = checkbox.value;
-            if (!Object.keys(DESTINOS_DATA).includes(destinosID)) {
-                DESTINOS_DATA[destinosID] = await _get(`destinos/${destinosID}`)
-            }
-            result.push({
-                titulo: getID(`check-destinos-label-${j}`).innerText,
-                destinosID,
-            });
+        const titulo = checkbox.querySelector('label').innerText;
+        const destinosID = input.value;
+        
+        if (!Object.keys(DESTINOS_DATA).includes(destinosID)) {
+            DESTINOS_DATA[destinosID] = await _get(`destinos/${destinosID}`)
         }
+        result.push ({ titulo, destinosID})
     }
 
     DESTINOS_ATIVOS = result;
@@ -205,10 +202,4 @@ function _getDestinoTitle(destinoID) {
             return destino.titulo;
         }
     }
-}
-
-function _getOrderedDestinations(data) {
-    return Object.entries(data)
-        .map(([id, v]) => ({ id, ...v }))
-        .sort((a, b) => a.titulo.localeCompare(b.titulo));
 }

@@ -270,7 +270,7 @@ function _loadDestinos() {
   fieldset.innerHTML = '';
   for (let j = 1; j <= destinos.length; j++) {
     const i = j - 1;
-    fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].code, destinos[i].titulo);
+    fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].id, destinos[i].titulo);
   }
 
   getID('habilitado-destinos')?.addEventListener('change', () => _updateDestinosAtivosHTMLs());

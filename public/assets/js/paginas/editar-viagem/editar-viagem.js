@@ -33,7 +33,7 @@ async function _loadEditarViagemPage() {
   _newDynamicSelect('transporte-pessoa');
 
   const userData = await _getUserData();
-  DESTINOS = _getOrderedDestinations(userData.destinos);
+  DESTINOS = _getOrderedDocumentByTitle(userData.destinos);
 
   if (DOCUMENT_ID) {
     await _loadTrip(true);

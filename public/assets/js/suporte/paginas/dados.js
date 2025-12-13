@@ -551,3 +551,9 @@ function _getOrderedDocumentByUpdateDate(data) {
     .map(([id, v]) => ({ id, ...v }))
     .sort((a, b) => new Date(b.versao.ultimaAtualizacao) - new Date(a.versao.ultimaAtualizacao));
 }
+
+function _getOrderedDocumentByTitle(data) {
+  return Object.entries(data)
+      .map(([id, v]) => ({ id, ...v }))
+      .sort((a, b) => a.titulo.localeCompare(b.titulo));
+}

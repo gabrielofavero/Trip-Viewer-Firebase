@@ -22,11 +22,13 @@ async function _loadEditarListagemPage() {
 
   _loadVisibilityIndex();
   _loadHabilitados();
+  
+  const userData = await _getUserData();
+  DESTINOS = _getOrderedDocumentByTitle(userData.destinos);
 
   if (DOCUMENT_ID) {
     await _carregarListagem()
   } else {
-    DESTINOS = await _getUserList('destinos');
     _loadDestinos();
   }
 

@@ -21,6 +21,9 @@
   - *[🏆F109] Add custom select on expenses page*
   - *[🏆F110] Custom load action for select on expenses page*
 
+  _getUserListIDs
+  _getUserList
+
 ### Medium Priority
 - 🐞 **B105:** When returning a destination, view page auto scrolls up
 - 🐞 **B102:** When moving destinations, description view does not reload

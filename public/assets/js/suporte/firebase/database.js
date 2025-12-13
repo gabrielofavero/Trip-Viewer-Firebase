@@ -306,11 +306,6 @@ async function _getUserData(uid) {
   return await _get(`usuarios/${uid}`);
 }
 
-async function _getUserListIDs(type) {
-  const userList = await _getUserList(type);
-  return userList.map(item => item.code);
-}
-
 async function _getPermissoes() {
   // Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
   const uid = await _getUID();
