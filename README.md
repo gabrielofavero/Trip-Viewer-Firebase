@@ -5,19 +5,16 @@
 | Icon | Title        | Code  | Total | Completed | Pending |
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 107   | 101       | 3      |
-| 🏆   | Feature      | F000  | 117   | 108       | 8      |
+| 🏆   | Feature      | F000  | 114   | 108       | 6      |
 | 📈   | Improvement  | M000  | 124   | 120       | 4      |
 | ⚔️   | Epic         | E000  | 37    | 35        | 2      |
 
 ## Backlog
 ### High Priority
 - ⚔️ **E037:** Reduce Firestore document calls
-  - *[🏆F112] Adapt database functions with new user data structure*
-  - *[🏆F113] Adapt backup functions with new user data structure*
-  - *[🏆F114] Update set method to be in batches for Firestore (either updates everything or nothing)*
-  - *[🏆F115] Update trip saving method to also update trip minimal data*
-  - *[🏆F116] Update destination saving method to also update destination minimal data*
-  - *[🏆F117] Update listing saving method to also update listing minimal data*
+  - *[🏆F112] Adapt backup functions with new user data structure*
+  - *[🏆F113] Update set method to be in batches for Firestore (either updates everything or nothing)*
+  - *[🏆F114] Update set saving methods to also update minimal data into user*
   - *[📈M124] Reduce document calls for edit pages*
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
