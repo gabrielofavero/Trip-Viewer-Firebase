@@ -29,9 +29,9 @@ async function _loadUserIndex() {
                     listagens: userData.listagens
                 }
 
-                _loadCurrentTrips();
-                _loadPreviousTrips();
-                _loadNextTrips();
+                CURRENT_TRIPS = _getCurrentTrips(INDEX_DATA.viagens);
+                PREVIOUS_TRIPS = _getPreviousTrips(INDEX_DATA.viagens);
+                NEXT_TRIPS = _getNextTrips(INDEX_DATA.viagens);
 
                 _loadIndexDataHTML(userData)
 
@@ -48,10 +48,13 @@ async function _loadUserIndex() {
 }
 
 function _loadIndexDataHTML() {
+    const destinos = _getOrderedDocumentByUpdateDate(INDEX_DATA.destinos);
+    const listagens = _getOrderedDocumentByUpdateDate(INDEX_DATA.listagens);
+
     _loadDataHTML('proximasViagens-box', NEXT_TRIPS, '_viagensEditar', '_viagensVisualizar', true);
     _loadDataHTML('viagensAnteriores-box', PREVIOUS_TRIPS, '_viagensEditar', '_viagensVisualizar', true);
-    _loadDataHTML('destinos-box', INDEX_DATA.destinos, '_destinosEditar', '_destinosVisualizar');
-    _loadDataHTML('listagens-box', INDEX_DATA.listagens, '_listagensEditar', '_listagensVisualizar');
+    _loadDataHTML('destinos-box', destinos, '_destinosEditar', '_destinosVisualizar');
+    _loadDataHTML('listagens-box', listagens, '_listagensEditar', '_listagensVisualizar');
 
     function _loadDataHTML(boxID, dataArray, editFunction, viewFunction, showStartEnd = false) {
         const box = getID(boxID);
@@ -82,37 +85,4 @@ function _loadIndexDataHTML() {
         }
         contentList.innerHTML = innerHTML;
     }
-}
-
-function _loadCurrentTrips() {
-    const today = new Date();
-    return Object.entries(INDEX_DATA.viagens)
-        .filter(([_, v]) => {
-            const start = _convertFromDateObject(v.inicio);
-            const end = _convertFromDateObject(v.fim);
-            return start <= today && today <= end;
-        })
-        .map(([id, v]) => ({ id, ...v }));
-}
-
-function _loadPreviousTrips() {
-    const today = new Date();
-    PREVIOUS_TRIPS = Object.entries(INDEX_DATA.viagens)
-        .filter(([_, v]) => _convertFromDateObject(v.fim) < today)
-        .map(([id, v]) => ({ id, ...v }))
-        .sort((a, b) => _convertFromDateObject(b.fim) - _convertFromDateObject(a.fim));
-}
-
-function _loadNextTrips() {
-    const today = new Date();
-    NEXT_TRIPS = Object.entries(INDEX_DATA.viagens)
-        .filter(([_, v]) => _convertFromDateObject(v.fim) >= today)
-        .map(([id, v]) => ({ id, ...v }))
-        .sort((a, b) => _convertFromDateObject(a.inicio) - _convertFromDateObject(b.inicio));
-}
-
-function _getOrderedIndexData(data) {
-    return Object.entries(data)
-        .map(([id, v]) => ({ id, ...v }))
-        .sort((a, b) => new Date(b.versao.ultimaAtualizacao) - new Date(a.versao.ultimaAtualizacao));
 }

@@ -518,3 +518,36 @@ function _getLastUpdatedOnText(date) {
   const dateString = _getDateString(date, _getDateRegionalFormat());
   return `${translate('labels.last_updated_on')} ${dateString}`;
 }
+
+function _getCurrentTrips(data) {
+  const today = new Date();
+  return Object.entries(data)
+    .filter(([_, v]) => {
+      const start = _convertFromDateObject(v.inicio);
+      const end = _convertFromDateObject(v.fim);
+      return start <= today && today <= end;
+    })
+    .map(([id, v]) => ({ id, ...v }));
+}
+
+function _getPreviousTrips(data) {
+  const today = new Date();
+  return Object.entries(data)
+    .filter(([_, v]) => _convertFromDateObject(v.fim) < today)
+    .map(([id, v]) => ({ id, ...v }))
+    .sort((a, b) => _convertFromDateObject(b.fim) - _convertFromDateObject(a.fim));
+}
+
+function _getNextTrips(data) {
+  const today = new Date();
+  return Object.entries(data)
+    .filter(([_, v]) => _convertFromDateObject(v.fim) >= today)
+    .map(([id, v]) => ({ id, ...v }))
+    .sort((a, b) => _convertFromDateObject(a.inicio) - _convertFromDateObject(b.inicio));
+}
+
+function _getOrderedDocumentByUpdateDate(data) {
+  return Object.entries(data)
+    .map(([id, v]) => ({ id, ...v }))
+    .sort((a, b) => new Date(b.versao.ultimaAtualizacao) - new Date(a.versao.ultimaAtualizacao));
+}
