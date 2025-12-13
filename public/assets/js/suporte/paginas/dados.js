@@ -457,8 +457,7 @@ function _getInnerProgramacaoTitleHTML(dado, spanClass, isCustomTraveler = false
     .filter(p => p.isPresent)
     .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
 
-  const todasPresentes = presentes.length === dado.pessoas.length;
-  const pessoasTexto = (todasPresentes || isCustomTraveler === true) ? '' : _getReadableArray(presentes);
+  const pessoasTexto = (presentes.length === 0 || presentes.length === dado.pessoas.length || isCustomTraveler === true) ? '' : _getReadableArray(presentes);
 
   let horario = '';
   if (dado.inicio && dado.fim) {
