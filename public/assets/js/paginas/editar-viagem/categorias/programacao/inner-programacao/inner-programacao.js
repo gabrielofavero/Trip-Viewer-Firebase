@@ -94,14 +94,10 @@ function _getInnerProgramacaoSelect(tipo) {
 }
 
 function _getInnerProgramacaoSelectsDestinos(j) {
-    const destinoFromCheckbox = _getDestinosFromCheckbox('programacao', j);
-    const idsAtivos = DESTINOS_ATIVOS.map(destino => destino.destinosID);
-    const todosIds = DESTINOS.map(destino => destino.id);
-    if (getID('habilitado-destinos').checked === false || DESTINOS_ATIVOS.length === 0 || destinoFromCheckbox.length === 0) {
-        return {
-            ativo: false,
-        };
-    };
+    if (getID('habilitado-destinos').checked === false || DESTINOS_ATIVOS.length === 0) _returnFalse();
+
+    const itineraryDestinations = _getDestinosFromCheckbox('programacao', j);
+    if (itineraryDestinations.length === 0) _returnFalse();
 
     let result = {
         ativo: true,
@@ -120,18 +116,25 @@ function _getInnerProgramacaoSelectsDestinos(j) {
         lojas: translate('destination.shopping.title')
     };
 
-    for (const destino of destinoFromCheckbox) {
-        const currentID = destino.destinosID;
-        if (!idsAtivos.includes(currentID)) continue;
+    for (const strippedData of itineraryDestinations) {
+        const id = strippedData.destinosID;
+        const data = DESTINOS_DATA?.[id]
+        if (!id || !data) continue;
 
-        const index = todosIds.findIndex(destino => destino == currentID);
+        ativo = true;
+        localOptions += `<option value="${id}">${strippedData.titulo}</option>`;
+
+        let innerResult = {};
+        const passeios = CONFIG.destinos.categorias.passeios;
+
+
         if (index > -1) {
-            ativo = true;
-            localOptions += `<option value="${currentID}">${destino.titulo}</option>`;
-            let innerResult = {};
+            
+            
+            
 
-            const currentDestinoData = DESTINOS_ATIVOS[currentID];
-            const passeios = CONFIG.destinos.categorias.passeios;
+            const currentDestinoData = DESTINOS_ATIVOS[id];
+            
 
             let categorias = Object.keys(currentDestinoData).filter(key => passeios.includes(key) && currentDestinoData[key].length > 1);
             categorias = categorias.sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
@@ -145,13 +148,18 @@ function _getInnerProgramacaoSelectsDestinos(j) {
             }
             innerResult.passeioOptions = passeioOptions;
 
-            result.locais[currentID] = innerResult;
+            result.locais[id] = innerResult;
         }
     }
 
     result.localOptions = localOptions;
     result.ativo = ativo;
     return result;
+
+    function _returnFalse() {
+        const ativo = false;
+        return { ativo }
+    }
 }
 
 // Carrega dados atuais no Modal
