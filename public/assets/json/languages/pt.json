@@ -440,7 +440,6 @@
         "select_date": "Selecione uma data"
     },
     "messages": {
-        "long_load": "O carregamento está demorando mais que o esperado",
         "text_copied": "Texto copiado para a área de transferência",
         "no_data": "Sem dados cadastrados 😔",
         "share": "Venha visualizar meus dados criados no TripViewer",

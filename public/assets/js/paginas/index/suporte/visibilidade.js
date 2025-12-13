@@ -11,7 +11,7 @@ function _loadVisibilityIndex() {
   getID("night-mode").onclick = function () {
     _switchVisibility();
     _setManualVisibility();
-    
+
     if (notificationBar.changed) {
       _applyNotificationBarColor();
     }
@@ -81,4 +81,30 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
   _fadeIn(fadeInNoDirection);
   _fadeOut(fadeOutNoDirection);
   contentBox.style.overflowY = 'auto';
+}
+
+function _loadNotificationBar() {
+  if (CURRENT_TRIPS.length > 0) {
+    getID('notification-bar').style.display = 'flex';
+    if (CURRENT_TRIPS.length == 1) {
+      getID('notification-text').innerHTML = `${translate('trip.current_single')}:<br>${CURRENT_TRIPS[0].titulo}`;
+      if (CURRENT_TRIPS[0].cores.ativo) {
+        notificationBar.changed = true;
+        notificationBar.claro = CURRENT_TRIPS[0].cores.claro;
+        notificationBar.escuro = CURRENT_TRIPS[0].cores.escuro;
+        _applyNotificationBarColor();
+      }
+    } else {
+      getID('notification-text').innerHTML = `${translate('trip.current_multi_1')}<br> ${translate('trip.current_multi_2')}"`;
+      getID('notification-link').style.display = 'none';
+    }
+  }
+}
+
+function closeNotification() {
+  document.querySelector('.notification-bar').style.display = 'none';
+}
+
+function _applyNotificationBarColor() {
+  getID('notification-bar').style.backgroundColor = _isOnDarkMode() ? notificationBar.escuro : notificationBar.claro;
 }

@@ -299,55 +299,11 @@ async function _newUserObjectDB(object, type) {
   } else return translate('messages.unauthenticated');
 }
 
-async function _getUserList(type, includeData = false, userData) {
-  const uid = await _getUID();
-  if (uid) {
-
-    if (!userData) {
-      userData = await _get(`usuarios/${uid}`);
-    }
-
-    var result = [];
-
-    if (userData) {
-      for (const id of userData[type]) {
-        const data = await _get(`${type}/${id}`);
-        var singleResult = {
-          code: id,
-          titulo: data.titulo,
-        }
-
-        if (data.inicio && data.fim) {
-          singleResult.inicio = data.inicio;
-          singleResult.fim = data.fim;
-        }
-
-        if (data.versao?.ultimaAtualizacao) {
-          singleResult.ultimaAtualizacao = data.versao.ultimaAtualizacao;
-          singleResult.ultimaAtualizacaoText = _getLastUpdatedOnText(data.versao.ultimaAtualizacao);
-        }
-
-        if (data.subtitulo) {
-          singleResult.subtitulo = data.subtitulo;
-        }
-
-        if (data.cores) {
-          singleResult.cores = data.cores;
-        }
-
-        if (includeData) {
-          singleResult.data = data;
-        }
-
-        result.push(singleResult);
-      }
-    }
-
-    return result;
-
-  } else {
-    throw new Error(translate('messages.errors.unauthenticated'));
+async function _getUserData(uid) {
+  if (!uid) {
+    uid = await _getUID();
   }
+  return await _get(`usuarios/${uid}`);
 }
 
 async function _getUserListIDs(type) {

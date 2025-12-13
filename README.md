@@ -6,7 +6,7 @@
 |------|--------------|-------|-------|-----------|---------|
 | 🐞   | Bug          | B000  | 107   | 101       | 3      |
 | 🏆   | Feature      | F000  | 117   | 108       | 8      |
-| 📈   | Improvement  | M000  | 124   | 119       | 5      |
+| 📈   | Improvement  | M000  | 124   | 120       | 4      |
 | ⚔️   | Epic         | E000  | 37    | 35        | 2      |
 
 ## Backlog
@@ -18,7 +18,6 @@
   - *[🏆F115] Update trip saving method to also update trip minimal data*
   - *[🏆F116] Update destination saving method to also update destination minimal data*
   - *[🏆F117] Update listing saving method to also update listing minimal data*
-  - *[📈M123] Reduce document calls for index*
   - *[📈M124] Reduce document calls for edit pages*
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
@@ -40,6 +39,7 @@
 ### December 2025
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F111] Create migration for adding document/trip/listing minimal data into user data*
+  - *[📈M123] Reduce document calls for index*
 - 🐞 **B103:** When dragging transportations and accommodations, new transportation button glitches out
 - 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B106:** PIN being exposed on logs

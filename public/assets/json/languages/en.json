@@ -440,7 +440,6 @@
         "select_date": "Select a date"
     },
     "messages": {
-        "long_load": "Loading is taking longer than expected",
         "text_copied": "Text copied to clipboard",
         "no_data": "No data found 😔",
         "share": "Check out what I've created on TripViewer",

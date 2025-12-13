@@ -239,6 +239,11 @@ function _dateObjectToInputDate(dateObject) {
     return _jsDateToInputDate(jsDate);
 }
 
+function _dateObjectToString(dateObject) {
+    const jsDate = _convertFromDateObject(dateObject);
+    return _getDateString(jsDate);
+}
+
 function _jsDateToKey(jsDate) {
     const inputDate = _getDateString(jsDate, 'yyyy-mm-dd');
     return _inputDateToKey(inputDate);

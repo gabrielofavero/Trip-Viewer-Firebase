@@ -428,11 +428,7 @@ section {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-#preloader,
-#preloader-proximasViagens,
-#preloader-viagensAnteriores,
-#preloader-destinos,
-#preloader-listagens {
+#preloader {
   position: fixed;
   top: 0;
   left: 0;
@@ -446,11 +442,7 @@ section {
   background: #fff;
 }
 
-#preloader:before,
-#preloader-proximasViagens:before,
-#preloader-viagensAnteriores:before,
-#preloader-destinos:before,
-#preloader-listagens:before {
+#preloader:before {
   content: "";
   position: fixed;
   top: calc(50% - 30px);
