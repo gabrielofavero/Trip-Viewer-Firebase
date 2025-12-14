@@ -492,7 +492,7 @@
             },
             "save": {
                 "success": "Document saved successfully",
-                "error": "Cannot proceed with saving action",
+                "error": "Your document cound't be saved due to an unknown error",
                 "no_new_data": "No new data was detected in the document",
                 "unknown": "An error occurred while checking the document for changes",
                 "main": "Main saving action",

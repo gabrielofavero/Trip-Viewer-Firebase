@@ -22,7 +22,7 @@ async function _loadEditarListagemPage() {
 
   _loadVisibilityIndex();
   _loadHabilitados();
-  
+
   const userData = await _getUserData();
   DESTINOS = _getOrderedDocumentByTitle(userData.destinos);
 
@@ -147,17 +147,9 @@ async function _setListagem() {
     _setRequired(`select-destinos-${i}`)
   }
 
-  const before = [
-    _buildListObject,
-    () => _uploadAndSetImages('listagens', true)
-  ];
-
-  const after = [
-    () => _uploadAndSetImages('listagens', false),
-    () => _verifyImageUploads('listagens')
-  ];
-
-  await _setDocumento('listagens', { before, after });
+  const type = 'listagens'
+  const dataBuildingFunctions = [_buildListObject];
+  await _setDocumento({ type, dataBuildingFunctions });
 }
 
 function _deleteListagem() {

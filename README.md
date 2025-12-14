@@ -13,9 +13,7 @@
 ### High Priority
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F112] Adapt backup functions with new user data structure*
-  - *[🏆F113] Update set method to be in batches for Firestore (either updates everything or nothing)*
   - *[🏆F114] Update set saving methods to also update minimal data into user*
-  - *[📈M124] Reduce document calls for edit pages*
   - *[📈M125] Reduce document calls for view page*
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
@@ -41,6 +39,8 @@
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F111] Create migration for adding document/trip/listing minimal data into user data*
   - *[📈M123] Reduce document calls for index*
+  - *[📈M124] Reduce document calls for edit pages*
+  - *[🏆F113] Update set method to be in batches for Firestore (either updates everything or nothing)*
 - 🐞 **B103:** When dragging transportations and accommodations, new transportation button glitches out
 - 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B106:** PIN being exposed on logs

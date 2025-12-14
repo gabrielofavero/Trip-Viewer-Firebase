@@ -492,7 +492,7 @@
             },
             "save": {
                 "success": "Documento salvo com sucesso",
-                "error": "Não foi possível salvar o documento",
+                "error": "Um erro impediu o documento de ser salvo",
                 "no_new_data": "Não há novos dados para salvar",
                 "unknown": "Ocorreu um erro ao verificar mudanças no documento",
                 "main": "Salvamento principal",

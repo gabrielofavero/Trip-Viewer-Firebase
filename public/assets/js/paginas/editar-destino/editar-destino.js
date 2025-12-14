@@ -94,12 +94,10 @@ function _loadEventListeners() {
   });
 
   getID('salvar').addEventListener('click', () => {
-    const before = [
-      _buildDestinosObject,
-      _updateTikTokLinks
-    ]
+    const type = 'destinos'
+    const dataBuildingFunctions = [_buildDestinosObject, _updateTikTokLinks];
 
-    _setDocumento('destinos', { before });
+    _setDocumento({ type, dataBuildingFunctions });
   });
 
   getID('re-editar').addEventListener('click', () => {

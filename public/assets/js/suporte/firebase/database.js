@@ -125,6 +125,59 @@ async function _delete(path, ignoreError = false) {
 }
 
 // Business logic functions
+function _createBatchOps() {
+  const db = firebase.firestore();
+  const batch = db.batch();
+  const ops = [];
+
+  function ref(path) {
+    return db.doc(path);
+  }
+
+  function track(type, path, data) {
+    ops.push({ type, path, data });
+  }
+
+  return {
+    set(path, data) {
+      batch.set(ref(path), data, { merge: true });
+      track('set', path, data);
+    },
+
+    overwrite(path, data) {
+      batch.set(ref(path), data, { merge: false });
+      track('overwrite', path, data);
+    },
+
+    update(path, data) {
+      batch.update(ref(path), data);
+      track('update', path, data);
+    },
+
+    delete(path) {
+      batch.delete(ref(path));
+      track('delete', path);
+    },
+
+    commit: async () => {
+      try {
+        await batch.commit();
+        return {
+          success: true,
+          operations: ops.length
+        };
+      } catch (error) {
+        return {
+          success: false,
+          error: error.message,
+          operations: ops
+        };
+      }
+    }
+  };
+}
+
+
 async function _getSingleData(type) {
   let data;
   try {
@@ -316,28 +369,28 @@ async function _getDestination(id, containerID) {
 
   let content, preloader, isAlreadyLoading;
   if (containerID) {
-      const container = getID(containerID);
-      content = container.querySelector('.content');
-      preloader = container.querySelector('.preloader');
+    const container = getID(containerID);
+    content = container.querySelector('.content');
+    preloader = container.querySelector('.preloader');
 
-      content.style.display = 'none';
-      preloader.style.display = 'block';
+    content.style.display = 'none';
+    preloader.style.display = 'block';
   } else {
-      isAlreadyLoading = _isAlreadyLoading();
-      if (!isAlreadyLoading) {
-          _startLoadingScreen();
-      }
+    isAlreadyLoading = _isAlreadyLoading();
+    if (!isAlreadyLoading) {
+      _startLoadingScreen();
+    }
   }
 
   try {
-      DESTINOS_ATIVOS[id] = await _get(`destinos/${id}`);
-      return DESTINOS_ATIVOS[id];
+    DESTINOS_ATIVOS[id] = await _get(`destinos/${id}`);
+    return DESTINOS_ATIVOS[id];
   } finally {
-      if (containerID) {
-          content.style.display = 'block';
-          preloader.style.display = 'none';
-      } else if (!isAlreadyLoading) {
-          _stopLoadingScreen();
-      }
+    if (containerID) {
+      content.style.display = 'block';
+      preloader.style.display = 'none';
+    } else if (!isAlreadyLoading) {
+      _stopLoadingScreen();
+    }
   }
 }
