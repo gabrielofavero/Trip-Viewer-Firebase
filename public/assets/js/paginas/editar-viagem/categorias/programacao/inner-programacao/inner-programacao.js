@@ -1,7 +1,7 @@
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};
-var INNER_PROGRAMACAO_CURRENT_DESTINO_ITINERARY = {};
+var INNER_PROGRAMACAO_DETINOS_ITINERARY = {};
 var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
@@ -156,7 +156,7 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
 
                 const id = dados.item.id;
                 if (id) {
-                    INNER_PROGRAMACAO_CURRENT_DESTINO_ITINERARY = _cloneObject(dados.item);
+                    INNER_PROGRAMACAO_DETINOS_ITINERARY = _cloneObject(dados.item);
                     itemAssociado.innerText = translate('trip.itinerary.linked_destination');
                 }
                 break;
@@ -183,6 +183,12 @@ async function _openInnerProgramacaoItem(j) {
     if (getID('inner-programacao-item-destinos-radio').checked) {
         await _innerProgramacaoSelectLocalAction();
         await _innerProgramacaoSelectCategoriaAction();
+
+        if (Object.keys(INNER_PROGRAMACAO_DETINOS_ITINERARY).length > 0) {
+            getID('inner-programacao-select-local').value = INNER_PROGRAMACAO_DETINOS_ITINERARY.local;
+            getID('inner-programacao-select-categoria').value = INNER_PROGRAMACAO_DETINOS_ITINERARY.categoria;
+            getID('inner-programacao-select-passeio').value = INNER_PROGRAMACAO_DETINOS_ITINERARY.id;
+        }
     }
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
@@ -230,7 +236,7 @@ function _closeInnerProgramacao(j) {
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
     }
 
-    INNER_PROGRAMACAO_CURRENT_DESTINO_ITINERARY = {};
+    INNER_PROGRAMACAO_DETINOS_ITINERARY = {};
 }
 
 function _getInnerProgramacaoTitle(j) {
@@ -398,12 +404,6 @@ async function _innerProgramacaoSelectLocalAction() {
         selectPasseio.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
     }
 
-    if (INNER_PROGRAMACAO_CURRENT_DESTINO_ITINERARY.id && _selectHasValue(selectPasseio, INNER_PROGRAMACAO_CURRENT_DESTINO_ITINERARY.id)) {
-        selectPasseio.value = passeioValue;
-    } else {
-        INNER_PROGRAMACAO_CURRENT_DESTINO_ITINERARY = {};
-    }
-
     selectCategoria.addEventListener('change', () => {
         _innerProgramacaoSelectCategoriaAction();
     });
@@ -425,7 +425,7 @@ async function _innerProgramacaoSelectCategoriaAction() {
 }
 
 function _innerProgramacaoSelectPasseioAction() {
-    INNER_PROGRAMACAO_CURRENT_DESTINO_ITINERARY = {
+    INNER_PROGRAMACAO_DETINOS_ITINERARY = {
         categoria: getID('inner-programacao-select-categoria').value,
         id: getID('inner-programacao-select-passeio').value,
         local: getID('inner-programacao-select-local').value,
