@@ -348,13 +348,6 @@ async function _newUserObjectDB(object, type) {
   } else return translate('messages.unauthenticated');
 }
 
-async function _getUserData(uid) {
-  if (!uid) {
-    uid = await _getUID();
-  }
-  return await _get(`usuarios/${uid}`);
-}
-
 async function _getPermissoes() {
   // Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
   const uid = await _getUID();

@@ -10,10 +10,10 @@ async function _loadUserIndex() {
                 _registerIfUserNotPresent();
                 _openIndexPage('logged');
 
-                const userData = await _getUserData(user.uid);
+                USER_DATA = await _getUserData(user.uid);
 
-                const displayName = userData.nome;
-                const photoURL = 'url(' + userData.foto + ')';
+                const displayName = USER_DATA.nome;
+                const photoURL = 'url(' + USER_DATA.foto + ')';
 
                 getID('title-name').innerHTML = displayName.split(' ')[0];
 
@@ -24,9 +24,9 @@ async function _loadUserIndex() {
                 getID('profile-icon').style.backgroundSize = 'cover';
 
                 INDEX_DATA = {
-                    viagens: userData.viagens,
-                    destinos: userData.destinos,
-                    listagens: userData.listagens
+                    viagens: USER_DATA.viagens,
+                    destinos: USER_DATA.destinos,
+                    listagens: USER_DATA.listagens
                 }
 
                 CURRENT_TRIPS = _getCurrentTrips(INDEX_DATA.viagens);

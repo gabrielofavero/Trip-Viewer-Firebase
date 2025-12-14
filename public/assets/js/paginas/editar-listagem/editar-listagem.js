@@ -23,8 +23,8 @@ async function _loadEditarListagemPage() {
   _loadVisibilityIndex();
   _loadHabilitados();
 
-  const userData = await _getUserData();
-  DESTINOS = _getOrderedDocumentByTitle(userData.destinos);
+  USER_DATA = await _getUserData();
+  DESTINOS = _getOrderedDocumentByTitle(USER_DATA.destinos);
 
   if (DOCUMENT_ID) {
     await _carregarListagem()

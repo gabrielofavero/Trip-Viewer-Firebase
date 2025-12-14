@@ -1,3 +1,12 @@
+var USER_DATA;
+
+async function _getUserData(uid) {
+    if (!uid) {
+      uid = await _getUID();
+    }
+    return await _get(`usuarios/${uid}`);
+  }
+
 function _unloadPageUserFunctions() {
     const html = _getHTMLpage();
     if (html == 'index') {

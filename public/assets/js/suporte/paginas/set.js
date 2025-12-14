@@ -11,9 +11,8 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
     let response = translate('messages.documents.save.success');
 
     if (!userID || !type) {
-        getID('modal-inner-text').innerHTML = !userID ? translate('labels.unauthenticated') : translate('messages.documents.save.error');;
-        _stopLoadingScreen();
-        _openModal('modal');
+        const message = !userID ? translate('labels.unauthenticated') : translate('messages.documents.save.error');
+        _throwSetError(message);
         return
     }
 
@@ -72,6 +71,65 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
     _stopLoadingScreen();
     _openModal('modal');
 }
+
+function _throwSetError(message) {
+    getID('modal-inner-text').innerHTML = message;
+    _stopLoadingScreen();
+    _openModal('modal');
+}
+
+async function _setUserData(ops, type, id, data) {
+    if (!type || !id || !data || Object.keys(data).length === 0) {
+        _throwSetError('Invalid User Data');
+        return;
+    }
+
+    const uid = await _getUID();
+    if (!USER_DATA) {
+        USER_DATA = await _getUserData(uid);
+    }
+
+    const newData = _getSingleUserData(type, data);
+
+    if (Object.keys(newData) === 0) {
+        _throwSetError('Error while fetching user data');
+        return;
+    }
+
+    ops.update(`usuarios/${uid}`, {
+        [`${type}.${id}`]: newData
+    });
+
+    function _getSingleUserData(type, data) {
+        switch (type) {
+            case 'destinos':
+                return {
+                    moeda: data.moeda,
+                    titulo: data.titulo,
+                    versao: data.versao,
+                }
+            case 'listagens':
+                return {
+                    cores: data.cores,
+                    descricao: data.descricao,
+                    imagem: data.imagem,
+                    subtitulo: data.subtitulo,
+                    titulo: data.titulo,
+                    versao: data.versao,
+                }
+            case 'viagens':
+                return {
+                    cores: data.cores,
+                    fim: data.fim,
+                    imagem: data.imagem,
+                    inicio: data.inicio,
+                    titulo: data.titulo,
+                    versao: data.versao,
+                }
+        }
+    }
+}
+
 
 function _getSetErrorTableHTML(result) {
     if (!result || result.success) return '';

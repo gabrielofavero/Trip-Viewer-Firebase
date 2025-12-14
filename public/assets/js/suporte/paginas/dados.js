@@ -118,39 +118,85 @@ function _getLocalJSON() {
   });
 }
 
-function _compareObjects({ obj1, obj2, ignoredPaths = [], name = 'Objeto' }) {
-  let result = {
-    name: name,
-    areEqual: true,
-    differences: []
-  };
+function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
+  return _deepObjectsEqual(obj1, obj2, '', new Set(ignoredPaths));
 
-  function _compare(path, val1, val2) {
-    if (typeof val1 === 'object' && val1 !== null && typeof val2 === 'object' && val2 !== null) {
-      const keys = new Set([...Object.keys(val1), ...Object.keys(val2)]);
-      for (let key of keys) {
-        _compare(`${path ? path + '.' : ''}${key}`, val1[key], val2[key]);
+  function _deepObjectsEqual(val1, val2, path, ignored) {
+    if (ignored.has(path)) return true;
+  
+    if (val1 === val2) return true;
+  
+    if (
+      typeof val1 !== 'object' ||
+      typeof val2 !== 'object' ||
+      val1 === null ||
+      val2 === null
+    ) {
+      return false;
+    }
+  
+    const keys = new Set([
+      ...Object.keys(val1),
+      ...Object.keys(val2)
+    ]);
+  
+    for (const key of keys) {
+      const nextPath = path ? `${path}.${key}` : key;
+      if (!_deepObjectsEqual(val1[key], val2[key], nextPath, ignored)) {
+        return false;
       }
-    } else if (val1 !== val2) {
-      result.areEqual = false;
-      result.differences.push({
-        path: path || '',
-        value1: val1,
-        value2: val2
-      });
     }
+  
+    return true;
+  }
+}
+
+function _getObjectDiff({
+  obj1,
+  obj2,
+  ignoredPaths = [],
+  name = 'Objeto'
+}) {
+  const differences = [];
+  const ignored = new Set(ignoredPaths);
+
+  _collectObjectDiffs(obj1, obj2, '', ignored, differences);
+
+  return {
+    name,
+    areEqual: differences.length === 0,
+    differences
+  };
+}
+
+function _collectObjectDiffs(val1, val2, path, ignored, diffs) {
+  if (ignored.has(path)) return;
+
+  if (val1 === val2) return;
+
+  if (
+    typeof val1 !== 'object' ||
+    typeof val2 !== 'object' ||
+    val1 === null ||
+    val2 === null
+  ) {
+    diffs.push({
+      path,
+      value1: val1,
+      value2: val2
+    });
+    return;
   }
 
-  _compare('', obj1, obj2);
+  const keys = new Set([
+    ...Object.keys(val1),
+    ...Object.keys(val2)
+  ]);
 
-  if (ignoredPaths.length > 0) {
-    result.differences = result.differences.filter(diff => !ignoredPaths.includes(diff.path));
-    if (result.differences.length === 0) {
-      result.areEqual = true;
-    }
+  for (const key of keys) {
+    const nextPath = path ? `${path}.${key}` : key;
+    _collectObjectDiffs(val1[key], val2[key], nextPath, ignored, diffs);
   }
-
-  return result;
 }
 
 
@@ -384,14 +430,14 @@ function _compareDocuments() {
       _compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
       break;
     default:
-      console.warn('Page not supported. Use "_compareObjects()"');
+      console.warn('Page not supported. Use "_getObjectDiff()"');
       return null;
   }
 
   return result;
 
   function _compareAndPush({ obj1, obj2, ignoredPaths, name }) {
-    result.data.push(_compareObjects({ obj1, obj2, ignoredPaths, name }));
+    result.data.push(_getObjectDiff({ obj1, obj2, ignoredPaths, name }));
   };
 }
 

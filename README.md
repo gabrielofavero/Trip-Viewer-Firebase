@@ -2,32 +2,32 @@
 
 # Tasks
 
-| Icon | Title        | Code  | Total | Completed | Pending |
-|------|--------------|-------|-------|-----------|---------|
-| 🐞   | Bug          | B000  | 107   | 101       | 3      |
-| 🏆   | Feature      | F000  | 114   | 108       | 6      |
-| 📈   | Improvement  | M000  | 125   | 120       | 5      |
-| ⚔️   | Epic         | E000  | 37    | 35        | 2      |
+| Icon | Title       | Code | Total | Completed | Pending |
+| ---- | ----------- | ---- | ----- | --------- | ------- |
+| 🐞   | Bug         | B000 | 107   | 101       | 3       |
+| 🏆   | Feature     | F000 | 114   | 108       | 6       |
+| 📈   | Improvement | M000 | 125   | 120       | 5       |
+| ⚔️   | Epic        | E000 | 37    | 35        | 2       |
 
 ## Backlog
+
 ### High Priority
+
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F112] Adapt backup functions with new user data structure*
-  - *[🏆F114] Update set saving methods to also update minimal data into user*
   - *[📈M125] Reduce document calls for view page*
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F109] Add custom select on expenses page*
   - *[🏆F110] Custom load action for select on expenses page*
 
-  _getUserListIDs
-  _getUserList
-
 ### Medium Priority
+
 - 🐞 **B105:** When returning a destination, view page auto scrolls up
 - 🐞 **B102:** When moving destinations, description view does not reload
 
 ### Low Priority
+
 - 📈 **M122:** Put each expense type as draggable
 - 📈 **M121:** Replace "Flight" expense type with "transportation"
 - 🐞 **B096:** Fix Gallery module
@@ -36,6 +36,7 @@
 ## Done
 
 ### December 2025
+
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F111] Create migration for adding document/trip/listing minimal data into user data*
   - *[📈M123] Reduce document calls for index*
@@ -45,7 +46,7 @@
 - 🐞 **B105:** Can't add people into itinerary
 - 🐞 **B106:** PIN being exposed on logs
 - 🐞 **B107:** "Last updated on" not being properly translated on index
-- 🐞 **B104:** Missing type causes select to show previous destination.html data 
+- 🐞 **B104:** Missing type causes select to show previous destination.html data
 - 🐞 **B099:** Fix Expenses update / loading
 - 🐞 **B101:** Fix Backup/Restore functions
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
@@ -54,6 +55,7 @@
 - 📈 **M126:** Make edit-trip transportation select to fetch from json file
 
 ### November 2025
+
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
   - *[📈M118] Remove all mentions of editors and sharing options (legacy)*
   - *[🏆F100] Move HTML elements from expenses into general data (pin)*
@@ -65,7 +67,7 @@
   - *[🐞B076] Import backup function not getting sensitive data*
   - *[🏆F104] Create Import/Export buttons account settings*
   - *[🏆F105] Add PIN component to view.html and senstive data box (with eye icon)*
-  - *[🏆F106] Adapt existing trip data loading for new structure (view.html)* 
+  - *[🏆F106] Adapt existing trip data loading for new structure (view.html)*
 - 📈 **M118:** Improve config/async load of main data
 - 🐞 **B095:** Destination Descriptions getting mixed up
 - 📈 **M090:** Load logo inside pre loader
@@ -87,6 +89,7 @@
 - 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 
 ### October 2025
+
 - 🐞 **B089:** Fix calendar title and loading issues
 - 📈 **M112:** Disable calendar navigation buttons if nothing present on following month
 - 🐞 **B088:** Fix date calculation when in daylight saving time
@@ -103,21 +106,25 @@
 - 🐞 **B079:** Edit Destination fixes
 
 ### August 2025
+
 - 📈 **M109:** Make highlights display 2/2 when screen width is tablet/mobile
 - 🐞 **B077:** Daily schedule not scrolling to table
 - 🐞 **B078:** App version not loading due to CONFIG async nature
 
 ### July 2025
+
 - 🏆 **F094:** Multi-language description (destinations)
 - 🏆 **F097:** Auto suggest automations for itinerary in edit/trip.html
 - 🏆 **F095:** Include traveler names in edit/trip.html (General / Itinerary)
 
 ### June 2025
+
 - 🏆 **F072:** Multi-person tickets
 - 🏆 **F086:** [⚔️E030] Export All + Import all (Functions Only)
 - ⚔️ **E033:** Create language system + EN-US
 
 ### May 2025
+
 - 🏆 **F083:** Cache Busting
 - 🏆 **F082:** Versioning
 - ❗️🐞 **B075:** Timezone implementation causes issues
@@ -127,13 +134,14 @@
 - 🐞 **B073:** Timezone implementation causes conversion issues
 
 ### April 2025
+
 - 🐞 **B072:** Gallery does not respect dark mode
 - 📈 **M103:** Improve save message on edit pages
 - 📈 **M094:** Fix scrolls (destination checkboxes in edit)
 - 🏆 **F080:** Multiple images for the same accommodation
 - ⚔️ **E029:** Refactor storage methods
- - Test accommodation
- - Test Gallery
+- Test accommodation
+- Test Gallery
 - 📈 **M099:** Implement Toast on invalid link in edit pages
 - 🐞 **B071:** Shift does not auto-update when schedule time is imported
 - 🐞 **B070:** Itinerary calendar bullets not displaying correctly
@@ -149,6 +157,7 @@
 - 🏆 **F077:** Confirm leaving page if there are changes
 
 ### March 2025
+
 - 📈 **M093:** Improve automatic date detection
 - 📈 **M088:** Improve copy-paste feature with toast
 - 🏆 **F075:** Create toast notification
@@ -166,16 +175,19 @@
 - 🐞 **B064:** Extra destination when moving destination
 
 ### February 2025
+
 - 🐞 **B061:** Adjust dark mode persistence
 - 🐞 **B057:** Dark mode fixes
 - 🐞 **B063:** Share button fixes
 - 🐞 **B060:** Timezone fix
 
 ### January 2025
+
 - 🏆 **F066:** Switch Google Login to user-password login
 - 🏆 **F062:** Allow customizing trip to only show in dark or light mode
 
 ### October 2024
+
 - 🐞 **B056:** Dynamic Select errors:
   - *Error when trying to transfer destination*;
   - *Sorting error (not ascending)*
@@ -192,6 +204,7 @@
 - 🐞 **B057:** Slow load in index.html not showing elements correctly
 
 ### September 2024
+
 - 📈 **M071:** Include reservation code in Accommodations
 - 📈 **M073:** If only one destination, rename view.html from "destinations" to destination name
 - 🐞 **B047:** Itinerary in view.html does not show start time if end is missing
@@ -242,6 +255,7 @@
   - *Fix errors creating new trips*
 
 ### June 2024
+
 - 🐞 **B042:** Fix listeners in trip (start, end, reloadProgramacao) not working
 - 📈 **M019:** More customizable itinerary module
   - *Include Time*
@@ -288,6 +302,7 @@
   - *Create custom domain for prd*
 
 ### May 2024
+
 - 📈 **M028:** Improve share function to show adapted text (trip/listing)
 - 🐞 **B029:** Fix lists in index.html showing "No data" even when loading not finished
 - 🏆 **F048:** Dynamic Select for "Value" in edit-destination.html
@@ -341,6 +356,7 @@
 - 📈 **M036:** Improve destination CSS so table does not break at zooms below 100%
 
 ### April 2024
+
 - 🐞 **B021:** Fix public trips showing as private (Firestore Rules)
 - 📈 **M013:** Upload block / Security improvement
   - *Create permissions system in database and storage rules*
@@ -368,6 +384,7 @@
 - 📈 **M027:** Improve responsiveness of trip bars in index.html
 
 ### March 2024
+
 - 🐞 **B018:** Fix login bug in safari (probably related to animation in index)
 - 🏆 **F038:** Create option to drag accordions (Desktop)
 - 🐞 **B017:** Fix ":" when title not filled
@@ -385,6 +402,7 @@
 - 🐞 **B013:** Fix embeds in destination.html out of order
 
 ### February 2024
+
 - 📈 **M006:** Minor mobile front improvement
 - 🏆 **F032:** Create way to delete destinations / trips
 - 🏆 **F033:** Create Gallery Module
@@ -406,6 +424,7 @@
 - 🏆 **F037:** Create animations in index.html
 
 ### January 2024
+
 - ⚔️ **E009:** Migrate Project to Spark Plan
 - 🏆 **F027:** Create upload size limit + backend method for more security
 - 🐞 **B006:** Fix Loading in index finishing before loading trip/destination list
@@ -420,6 +439,7 @@
   - *Only tripviewer text is clickable on some pages. Missing logo*
 
 ### December 2023
+
 - 🐞 **B004:** Fix transportation select position in trip
 - 🏆 **F021:** Create front-end functions for editing trips and destinations
 - 🏆 **F022:** Create image system
@@ -432,6 +452,7 @@
 - ⚔️ **E008:** Reimplement application security
 
 ### November 2023
+
 - 📈 **M002:** Automate user-defined theme colors
 - 🐞 **B003:** Fix dark mode bugs
 - 🏆 **F013:** Create Login Page
@@ -445,6 +466,7 @@
 - 🏆 **F020:** Front-end functions for index.html
 
 ### October 2023
+
 - 🏆 **F003:** Migrate 'transportation' to Firestore
 - 🏆 **F004:** Create transportation/accommodation artwork
 - 🏆 **F005:** Migrate config JSONs to Firestore
@@ -460,10 +482,12 @@
 - 🏆 **F012:** Add authentication to backend and frontend
 
 ### September 2023
+
 - 🏆 **F001:** Migrate 'Destinations' to Firestore
 - 🏆 **F002:** Migrate 'Itinerary' to Firestore
 
 ### Previously
+
 - ⚔️ **E001:** Create project Git
 - ⚔️ **E002:** Create Firebase project
 - ⚔️ **E003:** Create Firestore database
@@ -472,6 +496,7 @@
 - ⚔️ **E006:** Main backend read functions (get.ts)
 
 ### Discarded (Most will be done on the 2.0 version)
+
 - 📈 **M098:** Change js functions/folder structures to EN-US
 - 🏆 **F046:** Firebase Firestore Rules in Front-End
   - *Security risk exposing rules to user*
