@@ -149,6 +149,7 @@
             "instructions": "Select a date to view the itinerary",
             "linked_item": "Linked item",
             "link_item": "Link an item to the itinerary",
+            "linked_destination": "Destination data",
             "media_button": {
                 "video": "Watch Video",
                 "playlist": "View Playlist"

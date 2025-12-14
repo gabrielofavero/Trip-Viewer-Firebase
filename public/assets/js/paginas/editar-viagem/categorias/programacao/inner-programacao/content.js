@@ -104,7 +104,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                         <div class="nice-form-group" id="inner-programacao-item-destinos-local">
                             <label>${translate('destination.title')}</label>
                             <select class="editar-select" id="inner-programacao-select-local">
-                                ${selects.destinos.localOptions}
+                                ${selects.destinos.options}
                                 <option value="">${translate('labels.select')}</option>
                             </select>
                         </div>

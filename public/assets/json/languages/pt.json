@@ -149,6 +149,7 @@
             "instructions": "Selecione uma data para ver a programação",
             "linked_item": "Item vinculado",
             "link_item": "Vincular item à programação",
+            "linked_destination": "Dado de destino",
             "media_button": {
                 "video": "Visualizar Vídeo",
                 "playlist": "Visualizar Playlist"

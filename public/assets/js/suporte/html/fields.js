@@ -168,6 +168,10 @@ function _getAllValuesFromSelect(select) {
     return values;
 }
 
+function _selectHasValue(select, value) {
+    return Array.from(select.options).some(opt => opt.value === value);
+}
+
 // Validação de links
 function _isHttp(link) {
     return link.startsWith('http://') || link.startsWith('https://');
