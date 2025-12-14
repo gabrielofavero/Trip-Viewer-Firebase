@@ -96,8 +96,8 @@ function _getInnerProgramacaoSelect(tipo) {
 function _getInnerProgramacaoSelectsDestinos(j) {
     if (getID('habilitado-destinos').checked === false || DESTINOS_ATIVOS.length === 0) _returnFalse();
 
-    const itineraryDestinations = _getDestinosFromCheckbox('programacao', j);
-    if (itineraryDestinations.length === 0) _returnFalse();
+    const destinations = _getDestinosFromCheckbox('programacao', j);
+    if (destinations.length === 0) _returnFalse();
 
     let result = {
         ativo: true,
@@ -116,7 +116,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
         lojas: translate('destination.shopping.title')
     };
 
-    for (const strippedData of itineraryDestinations) {
+    for (const strippedData of destinations) {
         const id = strippedData.destinosID;
         const data = DESTINOS_DATA?.[id]
         if (!id || !data) continue;
@@ -126,30 +126,20 @@ function _getInnerProgramacaoSelectsDestinos(j) {
 
         let innerResult = {};
         const passeios = CONFIG.destinos.categorias.passeios;
+        let categorias = Object.keys(data)
+            .filter(key => passeios.includes(key) && data[key].length > 1)
+            .sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
 
+        innerResult.categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${titulos[categoria]}</option>`).join('');
 
-        if (index > -1) {
-            
-            
-            
-
-            const currentDestinoData = DESTINOS_ATIVOS[id];
-            
-
-            let categorias = Object.keys(currentDestinoData).filter(key => passeios.includes(key) && currentDestinoData[key].length > 1);
-            categorias = categorias.sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
-            const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${titulos[categoria]}</option>`).join('');
-            innerResult.categoriaOptions = categoriaOptions;
-
-            let passeioOptions = {};
-            for (const categoria of categorias) {
-                const passeios = currentDestinoData[categoria].sort((a, b) => a.nome.localeCompare(b.nome));
-                passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
-            }
-            innerResult.passeioOptions = passeioOptions;
-
-            result.locais[id] = innerResult;
+        let passeioOptions = {};
+        for (const categoria of categorias) {
+            const passeios = currentDestinoData[categoria].sort((a, b) => a.nome.localeCompare(b.nome));
+            passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
         }
+        innerResult.passeioOptions = passeioOptions;
+
+        result.locais[id] = innerResult;
     }
 
     result.localOptions = localOptions;
@@ -543,13 +533,8 @@ function _afterDragInnerProgramacao(evt) {
     const j = evt.item.children[0].id.split('-')[3];
     const key = _jsDateToKey(DATAS[j - 1]);
 
-    // Remover elemento da posição inicial
-    const element = INNER_PROGRAMACAO[key][turnoInicial].splice(evt.oldIndex, 1)[0];
-
-    // Adicionar elemento na posição final
-    INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element);
-
-    // Atualizar último turno aberto
+    const element = INNER_PROGRAMACAO[key][turnoInicial].splice(evt.oldIndex, 1)[0]; // First 
+    INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element); // Last
     LAST_OPENED_TURNO[j] = turnoFinal;
 
     _loadInnerProgramacaoHTML(j);
