@@ -25,9 +25,9 @@ async function _loadDestinosAtivos(firstBoot = true) {
         const titulo = checkbox.querySelector('label').innerText;
         const destinosID = input.value;
         
-        if (!Object.keys(DESTINOS_DATA).includes(destinosID)) {
-            DESTINOS_DATA[destinosID] = await _get(`destinos/${destinosID}`)
-        }
+        // if (!Object.keys(DESTINOS_DATA).includes(destinosID)) {
+        //     DESTINOS_DATA[destinosID] = await _get(`destinos/${destinosID}`)
+        // }
         result.push ({ titulo, destinosID})
     }
 

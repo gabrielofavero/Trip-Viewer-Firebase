@@ -38,6 +38,10 @@ function _stopLoadingScreen({ adjustLoadables = true } = {}) {
   }
 }
 
+function _isAlreadyLoading(){
+  return getID('preloader').style.display === 'block';
+}
+
 // Loading Timer
 function _startLoadingTimer() {
   if (LOADING_TIMER == null && MESSAGE_MODAL_OPEN == false) {
