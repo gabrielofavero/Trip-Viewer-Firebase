@@ -124,7 +124,7 @@ async function _delete(path, ignoreError = false) {
   }
 }
 
-// Trip Data
+// Business logic functions
 async function _getSingleData(type) {
   let data;
   try {
@@ -156,15 +156,11 @@ async function _getTripDataWithDestinos(tripData) {
   return tripData;
 }
 
-// System
 async function _getSystemData() {
   const systemData = await _get("config/system");
   return systemData;
 }
 
-// Visibilidade
-
-// Usuário
 async function _deleteUserObjectDB(id, type) {
   const uid = await _getUID();
   if (uid) {
@@ -315,17 +311,33 @@ async function _getPermissoes() {
   }
 }
 
-function _combineDatabaseResponses(responses) {
-  if (responses.length === 1) {
-    return responses[0];
+async function _getDestination(id, containerID) {
+  if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
+
+  let content, preloader, isAlreadyLoading;
+  if (containerID) {
+      const container = getID(containerID);
+      content = container.querySelector('.content');
+      preloader = container.querySelector('.preloader');
+
+      content.style.display = 'none';
+      preloader.style.display = 'block';
+  } else {
+      isAlreadyLoading = _isAlreadyLoading();
+      if (!isAlreadyLoading) {
+          _startLoadingScreen();
+      }
   }
 
-  const success = !responses.some(response => response.success === false);
-  let message = success ? translate('messages.operations.success') : `${translate('messages.operations.error')}. ${translate('messages.documents.update.error')}`;
-
-  return {
-    message: message,
-    success: success,
-    data: responses
+  try {
+      DESTINOS_ATIVOS[id] = await _get(`destinos/${id}`);
+      return DESTINOS_ATIVOS[id];
+  } finally {
+      if (containerID) {
+          content.style.display = 'block';
+          preloader.style.display = 'none';
+      } else if (!isAlreadyLoading) {
+          _stopLoadingScreen();
+      }
   }
 }

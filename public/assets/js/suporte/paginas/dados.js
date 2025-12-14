@@ -525,39 +525,23 @@ function _getOrderedDocumentByTitle(data) {
       .sort((a, b) => a.titulo.localeCompare(b.titulo));
 }
 
-async function _getDestination(id, containerID) {
-  if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
-
-  let content, preloader, isAlreadyLoading;
-  if (containerID) {
-      const container = getID(containerID);
-      content = container.querySelector('.content');
-      preloader = container.querySelector('.preloader');
-
-      content.style.display = 'none';
-      preloader.style.display = 'block';
-  } else {
-      isAlreadyLoading = _isAlreadyLoading();
-      if (!isAlreadyLoading) {
-          _startLoadingScreen();
-      }
-  }
-
-  try {
-      DESTINOS_ATIVOS[id] = await _get(`destinos/${id}`);
-      return DESTINOS_ATIVOS[id];
-  } finally {
-      if (containerID) {
-          content.style.display = 'block';
-          preloader.style.display = 'none';
-      } else if (!isAlreadyLoading) {
-          _stopLoadingScreen();
-      }
-  }
-}
-
 
 // Request Utils
 function _getErrorFromGetRequestMessage() {
   return ERROR_FROM_GET_REQUEST.message.includes('Missing or insufficient permissions') ? translate('messages.errors.unauthorized_access') : ERROR_FROM_GET_REQUEST;
+}
+
+function _combineDatabaseResponses(responses) {
+  if (responses.length === 1) {
+    return responses[0];
+  }
+
+  const success = !responses.some(response => response.success === false);
+  let message = success ? translate('messages.operations.success') : `${translate('messages.operations.error')}. ${translate('messages.documents.update.error')}`;
+
+  return {
+    message: message,
+    success: success,
+    data: responses
+  }
 }
