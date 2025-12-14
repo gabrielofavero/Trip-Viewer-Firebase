@@ -167,14 +167,14 @@ async function _restoreAccount(restore) {
 
         // --- CASE A: destinos + listagens ---
         for (const type of ["destinos", "listagens"]) {
-            const ids = userData[type] ?? [];
-            for (const id of ids) pushDelete(firebase.firestore().collection(type).doc(id));
+            const data = userData[type] ?? [];
+            for (const id in data) pushDelete(firebase.firestore().collection(type).doc(id));
             userData[type] = [];
         }
 
         // --- CASE B: viagens (+ protected / gastos) ---
         if (Array.isArray(userData.viagens)) {
-            for (const viagemID of userData.viagens) {
+            for (const viagemID in userData.viagens) {
 
                 // Main viagem
                 pushDelete(firebase.firestore().collection("viagens").doc(viagemID));
