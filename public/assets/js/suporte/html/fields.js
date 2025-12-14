@@ -172,6 +172,18 @@ function _selectHasValue(select, value) {
     return Array.from(select.options).some(opt => opt.value === value);
 }
 
+// Checkboxes
+function _getCheckedCheckboxesQuantity(fieldsetID) {
+    const fieldset = getID(fieldsetID);
+    let quantity = 0;
+    for (const checkbox of fieldset.querySelectorAll('input')) {
+        if (checkbox.checked) {
+            quantity++;
+        }
+    }
+    return quantity;
+}
+
 // Validação de links
 function _isHttp(link) {
     return link.startsWith('http://') || link.startsWith('https://');

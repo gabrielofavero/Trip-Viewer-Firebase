@@ -1,7 +1,6 @@
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};
-var INNER_PROGRAMACAO_DETINOS_ITINERARY = {};
 var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
@@ -60,7 +59,7 @@ async function _openInnerProgramacao(j, k, turno) {
 
     await _loadInnerProgramacaoListeners(j);
     _enableAllTravelersFieldset('inner-programacao-travelers');
-    await _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
+    await _loadInnerProgramacaoCurrentData(j, k, turno, isNew);
     _loadInnerProgramacaoEventListeners();
 }
 
@@ -117,7 +116,7 @@ function _getInnerProgramacaoSelectsDestinos(j) {
 }
 
 // Carrega dados atuais no Modal
-async function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
+async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
     if (turno) {
         getID('inner-programacao-select-turno').value = turno;
         getID('inner-programacao-select-troca-turno').value = turno;
@@ -152,12 +151,19 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
                 getID('inner-programacao-item-destinos').style.display = 'block';
 
                 getID(`inner-programacao-select-local`).value = dados.item.local
-                getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
+                await _innerProgramacaoSelectLocalAction();
 
-                const id = dados.item.id;
-                if (id) {
-                    INNER_PROGRAMACAO_DETINOS_ITINERARY = _cloneObject(dados.item);
+                getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
+                await _innerProgramacaoSelectCategoriaAction();
+
+                const passeio = dados.item.id
+                if (passeio) {
+                    getID(`inner-programacao-select-passeio`).value = passeio;
                     itemAssociado.innerText = translate('trip.itinerary.linked_destination');
+                }
+        
+                if (_getCheckedCheckboxesQuantity(`programacao-local-${j}`) <= 1) {
+                    getID('inner-programacao-item-destinos-local').style.display = 'none';
                 }
                 break;
             default:
@@ -178,17 +184,6 @@ async function _openInnerProgramacaoItem(j) {
 
     if (getID('inner-programacao').value) {
         getID('message-title').innerText = translate('trip.itinerary.link_item');
-    }
-
-    if (getID('inner-programacao-item-destinos-radio').checked) {
-        await _innerProgramacaoSelectLocalAction();
-        await _innerProgramacaoSelectCategoriaAction();
-
-        if (Object.keys(INNER_PROGRAMACAO_DETINOS_ITINERARY).length > 0) {
-            getID('inner-programacao-select-local').value = INNER_PROGRAMACAO_DETINOS_ITINERARY.local;
-            getID('inner-programacao-select-categoria').value = INNER_PROGRAMACAO_DETINOS_ITINERARY.categoria;
-            getID('inner-programacao-select-passeio').value = INNER_PROGRAMACAO_DETINOS_ITINERARY.id;
-        }
     }
 
     _animate(['inner-programacao-item-selecionar'], ['inner-programacao-tela-principal'])
@@ -235,8 +230,6 @@ function _closeInnerProgramacao(j) {
 
         _animate(['inner-programacao-tela-principal'], ['inner-programacao-item-trocar'])
     }
-
-    INNER_PROGRAMACAO_DETINOS_ITINERARY = {};
 }
 
 function _getInnerProgramacaoTitle(j) {
@@ -380,7 +373,7 @@ async function _loadInnerProgramacaoListeners(j) {
 
     getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction());
     getID(`inner-programacao-select-categoria`).addEventListener('change', () => _innerProgramacaoSelectCategoriaAction());
-    getID('inner-programacao-select-passeio').addEventListener('change', () => _innerProgramacaoSelectPasseioAction());
+    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTextReplacementCheckboxes());
 
     getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTextReplacementCheckboxes());
     getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTextReplacementCheckboxes());
@@ -397,7 +390,7 @@ async function _innerProgramacaoSelectLocalAction() {
     const id = selectLocal.value;
     const locais = INNER_PROGRAMACAO_DETINOS_DATA[id] || await _buildInnerProgramacaoDestinosData(id);
 
-    if (selectLocal.value && locais) {
+    if (locais) {
         selectCategoria.innerHTML = `<option value="">${translate('labels.select')}</option>` + locais.categoriaOptions;
     } else {
         selectCategoria.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
@@ -422,16 +415,6 @@ async function _innerProgramacaoSelectCategoriaAction() {
     } else {
         selectPasseio.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
     }
-}
-
-function _innerProgramacaoSelectPasseioAction() {
-    INNER_PROGRAMACAO_DETINOS_ITINERARY = {
-        categoria: getID('inner-programacao-select-categoria').value,
-        id: getID('inner-programacao-select-passeio').value,
-        local: getID('inner-programacao-select-local').value,
-        tipo: 'destinos'
-    };
-    _loadTextReplacementCheckboxes()
 }
 
 async function _buildInnerProgramacaoDestinosData(id) {
