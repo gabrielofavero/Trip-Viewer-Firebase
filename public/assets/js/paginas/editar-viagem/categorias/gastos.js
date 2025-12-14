@@ -77,7 +77,7 @@ function _loadGastosHTML() {
 
         const label = document.createElement('label');
         const labelKey = tipoObj.tipo == 'custom' ? 'labels.custom' : tipoObj.tipo;
-        label.innerText = translate(labelKey);
+        label.innerText = translate(labelKey, {}, false);
         div.appendChild(label);
 
         for (let i = 0; i < tipoObj.gastos.length; i++) {
