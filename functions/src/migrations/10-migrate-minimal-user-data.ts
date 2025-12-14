@@ -71,7 +71,8 @@ async function getTripMinimalData(ids: string[]) {
                 fim: d?.fim,
                 imagem: d?.imagem,
                 cores: d?.cores,
-                versao: d?.versao
+                versao: d?.versao,
+                pin: d?.pin
             };
         })
     );

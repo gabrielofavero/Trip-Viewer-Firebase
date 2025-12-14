@@ -1,6 +1,9 @@
 var USER_DATA;
 
 async function _getUserData(uid) {
+    if (USER_DATA) {
+        return USER_DATA;
+    }
     if (!uid) {
       uid = await _getUID();
     }

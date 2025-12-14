@@ -217,7 +217,7 @@ async function _getSystemData() {
 async function _deleteUserObjectDB(id, type) {
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+    const userData = await _getUserData(uid);
     let dataArray = userData[type];
     dataArray = dataArray.filter(item => item !== id);
 
@@ -242,7 +242,7 @@ async function _deleteAccount() {
 
 async function _deleteAccountDocuments() {
   const uid = await _getUID();
-  const userData = await _get(`usuarios/${uid}`);
+  const userData = await _getUserData(uid);
 
   const deleteOps = [];
 
@@ -352,7 +352,7 @@ async function _getPermissoes() {
   // Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+    const userData = await _getUserData(uid);
     return userData?.permissoes;
   }
 }

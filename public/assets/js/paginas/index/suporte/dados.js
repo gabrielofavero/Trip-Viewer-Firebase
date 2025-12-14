@@ -33,7 +33,7 @@ async function _loadUserIndex() {
                 PREVIOUS_TRIPS = _getPreviousTrips(INDEX_DATA.viagens);
                 NEXT_TRIPS = _getNextTrips(INDEX_DATA.viagens);
 
-                _loadIndexDataHTML(userData)
+                _loadIndexDataHTML(USER_DATA)
 
             } else {
                 _openIndexPage('unlogged');
