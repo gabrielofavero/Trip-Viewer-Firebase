@@ -162,7 +162,7 @@ a:hover {
 #hero {
   width: 100%;
   height: 100vh;
-  background: url("https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Fbackgrounds%2Fhome-light.jpg?alt=media&token=9547a59f-264c-4929-95a7-670464646ad9") top center no-repeat;
+  background: url("/assets/img/backgrounds/home-light.jpg") top center no-repeat;
   background-size: cover;
   background-position: 50% 50%;
   overflow: auto;
