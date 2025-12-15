@@ -149,6 +149,7 @@
             "instructions": "Selecione uma data para ver a programação",
             "linked_item": "Item vinculado",
             "link_item": "Vincular item à programação",
+            "linked_destination": "Dado de destino",
             "media_button": {
                 "video": "Visualizar Vídeo",
                 "playlist": "Visualizar Playlist"
@@ -440,7 +441,6 @@
         "select_date": "Selecione uma data"
     },
     "messages": {
-        "long_load": "O carregamento está demorando mais que o esperado",
         "text_copied": "Texto copiado para a área de transferência",
         "no_data": "Sem dados cadastrados 😔",
         "share": "Venha visualizar meus dados criados no TripViewer",
@@ -492,7 +492,7 @@
             },
             "save": {
                 "success": "Documento salvo com sucesso",
-                "error": "Não foi possível salvar o documento",
+                "error": "Um erro impediu o documento de ser salvo",
                 "no_new_data": "Não há novos dados para salvar",
                 "unknown": "Ocorreu um erro ao verificar mudanças no documento",
                 "main": "Salvamento principal",

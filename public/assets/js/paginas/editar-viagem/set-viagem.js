@@ -52,7 +52,7 @@ function _getSensitiveTripObject() {
     if (Object.keys(hospedagens).length === 0 && Object.keys(transportes).length === 0) {
         return {};
     }
-    
+
     return {
         hospedagens: hospedagens,
         transportes: transportes,
@@ -96,7 +96,7 @@ async function _buildGastosObject() {
             FIRESTORE_GASTOS_NEW_DATA = await _getGastosObject(false);
             FIRESTORE_PROTECTED_NEW_DATA = {};
     }
-    }
+}
 
 function _getModulosObject() {
     return {
@@ -177,11 +177,11 @@ function _verifyImageUploads(type) {
             const data = _getCurrentPreferencePIN() === 'all-data' ? FIRESTORE_PROTECTED_NEW_DATA : FIRESTORE_NEW_DATA;
             const hospedagens = data.hospedagens || [];
             const hospedagemLinks = (hospedagens ?? [])
-            .flatMap(hospedagem =>
-              (hospedagem?.imagens ?? [])
-                .map(imagem => imagem?.link)
-                .filter(Boolean)
-            );
+                .flatMap(hospedagem =>
+                    (hospedagem?.imagens ?? [])
+                        .map(imagem => imagem?.link)
+                        .filter(Boolean)
+                );
 
             const imagens = data?.galeria?.imagens || [];
             documentLinks.push(...hospedagemLinks);
@@ -202,17 +202,10 @@ async function _setViagem() {
         }
     }
 
-    const customChecks = _validatePinField;
-    const before = [
-      _buildTripObject,
-      _buildGastosObject,
-      () => _uploadAndSetImages('viagens', true)
-    ]
-    const after = [
-      () => _uploadAndSetImages('viagens', false),
-      () => _verifyImageUploads('viagens'),
-      _setProtectedDataAndExpenses
-    ];
+    const type = 'viagens'
+    const checks = [_validatePinField];
+    const dataBuildingFunctions = [_buildTripObject, _buildGastosObject];
+    const batchFunctions = [_setProtectedDataAndExpenses];
 
-    _setDocumento('viagens', { customChecks, before, after });
+    await _setDocumento({ type, checks, dataBuildingFunctions, batchFunctions });
 }

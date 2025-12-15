@@ -5,150 +5,114 @@ var CUSTOM_UPLOADS = {
 var SET_RESPONSES = [];
 var UPLOAD_AFTER_SET = false;
 
-async function _setDocumento(tipo, funcoes = {}) {
-    const userID = await _getUID();
+async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], batchFunctions = [] }) {
+    try {
+        const uid = await _getUID();
+    const ops = _createBatchOps();
+    let response = translate('messages.documents.save.success');
 
-    if (!userID) {
-        throw new Error('Usuário não autenticado');
+    if (!uid || !type) {
+        _throwSetError(!uid ? translate('labels.unauthenticated') : translate('messages.documents.save.error'));
+        return
     }
 
-    let mainResponse, userSavingResponse;
     _startLoadingScreen();
 
-    if (funcoes.customChecks) {
-        funcoes.customChecks();
-        if (_isModalOpen()) return;
-    }
+    for (const check of checks) {
+        await check();
+    };
+
+    if (_isModalOpen()) return;
 
     _validateRequiredFields();
     if (_isModalOpen()) return;
 
-    await _runCustomFunctions(funcoes, 'before');
+    for (const build of dataBuildingFunctions) {
+        await build();
+    }
 
-    const wasChanged = _validateIfDocumentChanged();
-    if (!wasChanged) {
-        const errorMsgPath = `messages.documents.save.no_new_data`;
-        getID('modal-inner-text').innerText = `${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`;
-    
-        SUCCESSFUL_SAVE = false;
-        _openModal();
-        _stopLoadingScreen();
+    if (!INPUT_DETECTED) {
+        _throwSetError(`${translate('messages.documents.save.no_new_data')}`)
         return;
     };
 
-    const newData = _getNewDataDocument(tipo);
+    const documentData = _getNewDataDocument(type);
 
-    if (DOCUMENT_ID && newData) {
-        mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
-    } else if (newData) {
-        mainResponse = await _create(tipo, newData);
-        DOCUMENT_ID = mainResponse?.data?.id;
-        if (DOCUMENT_ID) {
-            const userListIDs = await _getUserListIDs(tipo);
-            userListIDs.push(DOCUMENT_ID);
-            userSavingResponse = await _update(`usuarios/${userID}`, { [tipo]: userListIDs });
-        }
+    if (DOCUMENT_ID && documentData) {
+        ops.update(`${type}/${DOCUMENT_ID}`, documentData);
+    } else if (documentData) {
+        const id = ops.create(`${type}/${DOCUMENT_ID}`, documentData);
+        DOCUMENT_ID = id;
     }
 
-    _addSetResponse(translate('messages.documents.save.main'), mainResponse.success);
-    if (userSavingResponse) {
-        _addSetResponse(translate('messages.documents.save.user'), userSavingResponse.success);
+    _setUserData(ops, uid, type, documentData)
+
+    for (const batch of batchFunctions) {
+        await batch(ops);
     }
 
-    if (mainResponse.success === true) {
-        await _runCustomFunctions(funcoes, 'after');
+    const result = await ops.commit();
+
+    if (!result.success) {
+        _throwSetError(translate('messages.documents.save.error'));
+        return;
     }
 
-    getID('modal-inner-text').innerHTML = _buildSetMessage();
+    SUCCESSFUL_SAVE = true;
+    getID('modal-inner-text').innerHTML = response;
+    _stopLoadingScreen();
+    _openModal('modal');
+    }
+    catch (e) {
+        console.log(e);
+        _throwSetError(translate('messages.documents.save.error'));
+    }
+}
+
+function _throwSetError(message) {
+    SUCCESSFUL_SAVE = false;
+    getID('modal-inner-text').innerHTML = message;
     _stopLoadingScreen();
     _openModal('modal');
 }
 
-async function _runCustomFunctions(funcoes, key) {
-    const toRun = funcoes[key] || [];
-    for (const func of toRun) {
-        await func();
-    };
-}
-
-async function _uploadAndSetImages(tipo, isBeforeSet) {
-    if (!DOCUMENT_ID && isBeforeSet) {
-        UPLOAD_AFTER_SET = true;
-        return;
-    } else if (!DOCUMENT_ID && !isBeforeSet) {
-        _addSetResponse(translate('labels.image.upload'), false);
-        return;
-    } else if ((!UPLOAD_AFTER_SET && !isBeforeSet) || (UPLOAD_AFTER_SET && isBeforeSet)) {
+function _setUserData(ops, uid, type, documentData) {
+    const newData = _getSingleUserData(type, documentData);
+    if (Object.keys(newData) === 0) {
+        _throwSetError('Error while fetching user data');
         return;
     }
-    try {
-        if (getID('upload-background').value) {
-            const background = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-background')?.files[0]);
-            if (background.link) {
-                FIRESTORE_NEW_DATA.imagem.background = background.link;
-            }
-        }
 
-        if (getID('upload-logo-light').value) {
-            const logoLight = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-light')?.files[0]);
-            if (logoLight.link) {
-                FIRESTORE_NEW_DATA.imagem.claro = logoLight.link;
-            }
-        }
+    ops.update(`usuarios/${uid}`, {
+        [`${type}.${DOCUMENT_ID}`]: newData
+    });
 
-        if (getID('upload-logo-dark').value) {
-            const logoDark = await _uploadImage(`${tipo}/${DOCUMENT_ID}`, getID('upload-logo-dark')?.files[0]);
-            if (logoDark.link) {
-                FIRESTORE_NEW_DATA.imagem.escuro = logoDark.link;
-            }
-        }
-
-        if (tipo == 'viagens') {
-            await _uploadAndSetHospedagemImages();
-            await _uploadAndSetGaleriaImages();
-        }
-
-    } catch (error) {
-        console.error(error);
-        IMAGE_UPLOAD_STATUS.hasErrors = true;
-    }
-
-    _addSetResponse(translate('labels.image.upload'), !IMAGE_UPLOAD_STATUS.hasErrors);
-
-    if (UPLOAD_AFTER_SET) {
-        const newData = _getNewDataDocument(tipo);
-        if (DOCUMENT_ID && newData) {
-            mainResponse = await _update(`${tipo}/${DOCUMENT_ID}`, newData);
-            _addSetResponse(translate('labels.image.add'), true);
-        } else {
-            _addSetResponse(translate('labels.image.add'), false);
+    function _getSingleUserData(type, data) {
+        switch (type) {
+            case 'destinos':
+                return {
+                    moeda: data.moeda,
+                    titulo: data.titulo,
+                    versao: data.versao,
+                }
+            case 'listagens':
+                return {
+                    cores: data.cores,
+                    descricao: data.descricao,
+                    imagem: data.imagem,
+                    subtitulo: data.subtitulo,
+                    titulo: data.titulo,
+                    versao: data.versao,
+                }
+            case 'viagens':
+                return {
+                    cores: data.cores,
+                    fim: data.fim,
+                    imagem: data.imagem,
+                    inicio: data.inicio,
+                    titulo: data.titulo,
+                    versao: data.versao,
+                }
         }
     }
-}
-
-function _buildSetMessage() {
-    const allPassed = SET_RESPONSES.every(response => response.sucesso === true);
-    const allFailed = SET_RESPONSES.every(response => response.sucesso === false);
-
-    if (allPassed) {
-        SUCCESSFUL_SAVE = true;
-        return translate('messages.documents.save.success');
-    } else if (allFailed) {
-        return `${translate('messages.documents.save.incomplete')}. <a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}
-                <br><br>${_getSetResponsesHTML()}`;
-    } else {
-        return `Não foi possível atualizar ${titulo || altTitulo2}.  <a href=\"mailto:gabriel.o.favero@live.com\">${translate('messages.errors.contact_admin')}</a> ${translate('messages.errors.to_report')}`;
-    }
-
-    function _getSetResponsesHTML() {
-        const setResponses = [];
-        for (const response of SET_RESPONSES) {
-            setResponses.push(`<strong>${response.titulo}:</strong><br>${response.sucesso ? 'Salvo com sucesso' : 'Falha no salvamento'}<br>`);
-        }
-        return setResponses.join('<br>');
-    }
-}
-
-function _addSetResponse(titulo, sucesso) {
-    SET_RESPONSES.push({ titulo, sucesso });
 }

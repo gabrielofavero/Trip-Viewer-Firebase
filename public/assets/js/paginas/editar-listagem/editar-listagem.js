@@ -1,5 +1,6 @@
-var blockLoadingEnd = false;
-var FIRESTORE_DATA;
+var BLOCK_LOADING_END = false;
+var FIRESTORE_DATA = {};
+var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_NEW_DATA = {};
 
 var SUCCESSFUL_SAVE = false;
@@ -23,10 +24,12 @@ async function _loadEditarListagemPage() {
   _loadVisibilityIndex();
   _loadHabilitados();
 
+  USER_DATA = await _getUserData();
+  DESTINOS = _getOrderedDocumentByTitle(USER_DATA.destinos);
+
   if (DOCUMENT_ID) {
     await _carregarListagem()
   } else {
-    DESTINOS = await _getUserList('destinos');
     _loadDestinos();
   }
 
@@ -35,7 +38,7 @@ async function _loadEditarListagemPage() {
 
   _loadEventListeners();
 
-  if (!blockLoadingEnd) {
+  if (!BLOCK_LOADING_END) {
     _stopLoadingScreen();
   }
   $('body').css('overflow', 'auto');
@@ -100,7 +103,7 @@ function _loadEventListeners() {
 
 async function _carregarListagem() {
   getID('delete-text').style.display = 'block';
-  blockLoadingEnd = true;
+  BLOCK_LOADING_END = true;
   _startLoadingScreen();
 
   FIRESTORE_DATA = await _getSingleData('listagens');
@@ -145,17 +148,9 @@ async function _setListagem() {
     _setRequired(`select-destinos-${i}`)
   }
 
-  const before = [
-    _buildListObject,
-    () => _uploadAndSetImages('listagens', true)
-  ];
-
-  const after = [
-    () => _uploadAndSetImages('listagens', false),
-    () => _verifyImageUploads('listagens')
-  ];
-
-  await _setDocumento('listagens', { before, after });
+  const type = 'listagens'
+  const dataBuildingFunctions = [_buildListObject];
+  await _setDocumento({ type, dataBuildingFunctions });
 }
 
 function _deleteListagem() {

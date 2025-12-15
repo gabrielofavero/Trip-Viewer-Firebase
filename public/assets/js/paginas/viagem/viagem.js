@@ -66,7 +66,11 @@ async function _syncModules() {
         _loadDestinos,
         _loadGaleria
       ]
-      _sortByArray(CALL_SYNC, callSyncOrder);
+      CALL_SYNC.sort((a, b) => {
+        const indexA = callSyncOrder.indexOf(a.name);
+        const indexB = callSyncOrder.indexOf(b.name);
+        return indexA - indexB;
+      });
       for (let _function of CALL_SYNC) {
         _function();
       }

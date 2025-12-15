@@ -1,3 +1,3 @@
 
-import * as migration from "./migrations/08-migrate-trip-protected-data";
+import * as migration from "./migrations/10-migrate-minimal-user-data"
 export const migrate = migration.migrate

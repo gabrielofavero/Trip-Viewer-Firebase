@@ -50,11 +50,7 @@ h6 {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-#preloader,
-#preloader-proximasViagens,
-#preloader-viagensAnteriores,
-#preloader-destinos,
-#preloader-listagens {
+#preloader {
   position: fixed;
   top: 0;
   left: 0;
@@ -68,11 +64,7 @@ h6 {
   background: #fff;
 }
 
-#preloader:before,
-#preloader-proximasViagens:before,
-#preloader-viagensAnteriores:before,
-#preloader-destinos:before,
-#preloader-listagens:before {
+#preloader:before {
   content: "";
   position: fixed;
   top: calc(50% - 30px);
@@ -229,7 +221,7 @@ h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: url("https://firebasestorage.googleapis.com/v0/b/trip-viewer-tcc.appspot.com/o/config%2Fbackgrounds%2Fhome-light.jpg?alt=media&token=9547a59f-264c-4929-95a7-670464646ad9") top center no-repeat;
+  background: url("/assets/img/backgrounds/home-light.jpg") top center no-repeat;
   background-size: cover;
   background-position: 50% 50%;
   position: relative;
@@ -530,37 +522,37 @@ section {
 
 @media (max-height: 770px) {
   .content-list {
-    height: 400px;
+    height: 420px;
   }
 }
 
 @media (max-height: 720px) {
   .content-list {
-    height: 350px;
+    height: 400px;
   }
 }
 
 @media (max-height: 670px) {
   .content-list {
-    height: 300px;
+    height: 375px;
   }
 }
 
 @media (max-height: 620px) {
   .content-list {
-    height: 250px;
+    height: 350px;
   }
 }
 
 @media (max-height: 570px) {
   .content-list {
-    height: 200px;
+    height: 325px;
   }
 }
 
 @media (max-height: 520px) {
   .content-list {
-    height: 150px;
+    height: 35vh;
   }
 }
 
@@ -872,16 +864,6 @@ section {
 .btn-theme:hover {
   background: #505197;
   color: #fff;
-}
-
-.demora-carregamento {
-  margin-top: 30px;
-  padding: 10px;
-}
-
-.carregar-novamente{
-  margin-top: 20px;
-  cursor: pointer;
 }
 
 /* Language Selector */

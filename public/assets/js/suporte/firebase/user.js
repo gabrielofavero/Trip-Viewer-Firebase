@@ -1,3 +1,16 @@
+var USER_DATA;
+var UID;
+
+async function _getUserData(uid) {
+    if (USER_DATA) {
+        return USER_DATA;
+    }
+    if (!uid) {
+      uid = await _getUID();
+    }
+    return await _get(`usuarios/${uid}`);
+  }
+
 function _unloadPageUserFunctions() {
     const html = _getHTMLpage();
     if (html == 'index') {
@@ -28,6 +41,7 @@ async function _signInWithEmailAndPassword() {
 }
 
 function _signOut() {
+    UID = null;
     firebase.auth().signOut()
     if (window.location.href.includes('index.html')) {
         _openIndexPage('unlogged', 0, 1);
@@ -68,15 +82,14 @@ async function _registerIfUserNotPresent() {
 }
 
 async function _getUID() {
+    if (UID) {
+        return UID;
+    }
     return new Promise((resolve, reject) => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             unsubscribe();
-
-            if (user) {
-                resolve(user.uid);
-            } else {
-                resolve(null)
-            }
+            UID = user?.uid || null;
+            resolve(UID);
         });
     });
 }

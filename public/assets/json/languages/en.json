@@ -149,6 +149,7 @@
             "instructions": "Select a date to view the itinerary",
             "linked_item": "Linked item",
             "link_item": "Link an item to the itinerary",
+            "linked_destination": "Destination data",
             "media_button": {
                 "video": "Watch Video",
                 "playlist": "View Playlist"
@@ -440,7 +441,6 @@
         "select_date": "Select a date"
     },
     "messages": {
-        "long_load": "Loading is taking longer than expected",
         "text_copied": "Text copied to clipboard",
         "no_data": "No data found 😔",
         "share": "Check out what I've created on TripViewer",
@@ -492,7 +492,7 @@
             },
             "save": {
                 "success": "Document saved successfully",
-                "error": "Cannot proceed with saving action",
+                "error": "Your document cound't be saved due to an unknown error",
                 "no_new_data": "No new data was detected in the document",
                 "unknown": "An error occurred while checking the document for changes",
                 "main": "Main saving action",

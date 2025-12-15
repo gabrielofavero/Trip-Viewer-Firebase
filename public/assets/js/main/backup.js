@@ -21,32 +21,44 @@ async function _backupOnClickAction() {
 }
 
 function _prepareMissingData() {
-    const viagens = _cloneObject(USER_DATA).viagens;
     const jobs = [];
     const protectedJobs = [];
 
-    for (const viagem of viagens) {
-        const documentID = viagem.code;
-        const data = viagem.data;
-
-        switch (data.pin) {
-            case 'no-pin':
-                if (data.modulos.gastos === true) jobs.push(_getJobObject(viagem.titulo, documentID, 'gastos'));
-                break;
-            case 'all-data':
-            case 'sensitive-only':
-                const innerJobs = [];
-                if (data.modulos.gastos === true) {
-                    innerJobs.push(_getJobObject(viagem.titulo, documentID, 'gastos', 'protected'));
-                    innerJobs.push(_getJobObject(viagem.titulo, documentID, 'protegido'));
-                }
-                if (data.modulos.hospedagens === true || data.modulos.transportes === true) innerJobs.push(_getJobObject(viagem.titulo, documentID, 'viagens', 'protected'));
-                protectedJobs.push(_getProtectedJobObject(data.titulo, documentID, innerJobs));
-        }
-    }
+    _prepareMainData();
+    _prepareAdditionalData();
 
     MISSING_ACCOUNT_DATA.jobs = jobs;
     MISSING_ACCOUNT_DATA.protected = protectedJobs;
+
+    function _prepareMainData() {
+        for (const type of ['viagens', 'destinos', 'listagens']) {
+            for (const documentID in USER_DATA[type]) {
+                const titulo = USER_DATA[type][documentID].titulo;
+                jobs.push(_getJobObject(titulo, documentID, type))
+            }
+        }
+    }
+
+    function _prepareAdditionalData() {
+        for (const documentID in USER_DATA.viagens) {
+            const viagem = viagens[documentID];
+    
+            switch (data.pin) {
+                case 'no-pin':
+                    if (data.modulos.gastos === true) jobs.push(_getJobObject(viagem.titulo, documentID, 'gastos'));
+                    break;
+                case 'all-data':
+                case 'sensitive-only':
+                    const innerJobs = [];
+                    if (data.modulos.gastos === true) {
+                        innerJobs.push(_getJobObject(viagem.titulo, documentID, 'gastos', 'protected'));
+                        innerJobs.push(_getJobObject(viagem.titulo, documentID, 'protegido'));
+                    }
+                    if (data.modulos.hospedagens === true || data.modulos.transportes === true) innerJobs.push(_getJobObject(viagem.titulo, documentID, 'viagens', 'protected'));
+                    protectedJobs.push(_getProtectedJobObject(viagem.titulo, documentID, innerJobs));
+            }
+        }
+    }
 }
 
 function _getJobObject(title, documentID, collection, subpath = '') {
@@ -138,14 +150,12 @@ function _getProtectedJobPins() {
 }
 
 async function _getAccountData(useSensitiveData = false) {
-    const data = getEmptyBaseStructure();
-    hydrateFromCache(data);
-    const jobs = buildMissingJobs(useSensitiveData);
-    await loadJobsConcurrently(jobs, data);
+    const data = _getEmptyBaseStructure();
+    const jobs = _buildMissingJobs(useSensitiveData);
+    await _loadJobsConcurrently(jobs, data);
     return data;
 
-
-    function getEmptyBaseStructure() {
+    function _getEmptyBaseStructure() {
         return {
             destinos: {},
             gastos: { protected: {} },
@@ -155,17 +165,7 @@ async function _getAccountData(useSensitiveData = false) {
         };
     }
 
-    function hydrateFromCache(target) {
-        for (const key in target) {
-            const docs = USER_DATA?.[key];
-            if (!docs || docs.length === 0) continue;
-
-            for (const { code, data } of docs)
-                if (code && data) target[key][code] = data;
-        }
-    }
-
-    function buildMissingJobs(includeSensitive) {
+    function _buildMissingJobs(includeSensitive) {
         const list = [...MISSING_ACCOUNT_DATA.jobs];
 
         if (!includeSensitive) return list;
@@ -187,7 +187,7 @@ async function _getAccountData(useSensitiveData = false) {
         return list;
     }
 
-    async function loadJobsConcurrently(jobList, store) {
+    async function _loadJobsConcurrently(jobList, store) {
         const promises = jobList.map(async job => {
             try {
                 const path = `${job.collection}/${job.subpath ? job.subpath + "/" : ""}${job.documentID}`;

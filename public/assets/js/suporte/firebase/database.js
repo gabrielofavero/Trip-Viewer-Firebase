@@ -124,7 +124,73 @@ async function _delete(path, ignoreError = false) {
   }
 }
 
-// Trip Data
+// Business logic functions
+function _createBatchOps() {
+  const db = firebase.firestore();
+  const batch = db.batch();
+  const ops = [];
+
+  function ref(path) {
+    return db.doc(path);
+  }
+
+  function track(type, path, data) {
+    ops.push({ type, path, data });
+  }
+
+  return {
+    create(path, data) {
+      const docRef = db.collection(path).doc(); // auto ID generated now
+      batch.set(docRef, data, { merge: false });
+      track('set', docRef.path, data);
+      return docRef.id;
+    },
+
+    set(path, data) {
+      batch.set(ref(path), data, { merge: true });
+      track('set', path, data);
+    },
+
+    overwrite(path, data) {
+      batch.set(ref(path), data, { merge: false });
+      track('overwrite', path, data);
+    },
+
+    update(path, data) {
+      batch.update(ref(path), data);
+      track('update', path, data);
+    },
+
+    delete(path) {
+      batch.delete(ref(path));
+      track('delete', path);
+    },
+
+    commit: async () => {
+      console.log('[Firestore batch] Operations to commit:', ops);
+
+      try {
+        await batch.commit();
+        return {
+          success: true,
+          operations: ops.length
+        };
+      } catch (error) {
+        console.error('[Firestore batch] Commit failed:', {
+          error,
+          operations: ops
+        });
+
+        return {
+          success: false,
+          error: error.message,
+          operations: ops
+        };
+      }
+    }
+  };
+}
+
 async function _getSingleData(type) {
   let data;
   try {
@@ -156,19 +222,15 @@ async function _getTripDataWithDestinos(tripData) {
   return tripData;
 }
 
-// System
 async function _getSystemData() {
   const systemData = await _get("config/system");
   return systemData;
 }
 
-// Visibilidade
-
-// Usuário
 async function _deleteUserObjectDB(id, type) {
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+    const userData = await _getUserData(uid);
     let dataArray = userData[type];
     dataArray = dataArray.filter(item => item !== id);
 
@@ -193,7 +255,7 @@ async function _deleteAccount() {
 
 async function _deleteAccountDocuments() {
   const uid = await _getUID();
-  const userData = await _get(`usuarios/${uid}`);
+  const userData = await _getUserData(uid);
 
   const deleteOps = [];
 
@@ -299,82 +361,42 @@ async function _newUserObjectDB(object, type) {
   } else return translate('messages.unauthenticated');
 }
 
-async function _getUserList(type, includeData = false, userData) {
-  const uid = await _getUID();
-  if (uid) {
-
-    if (!userData) {
-      userData = await _get(`usuarios/${uid}`);
-    }
-
-    var result = [];
-
-    if (userData) {
-      for (const id of userData[type]) {
-        const data = await _get(`${type}/${id}`);
-        var singleResult = {
-          code: id,
-          titulo: data.titulo,
-        }
-
-        if (data.inicio && data.fim) {
-          singleResult.inicio = data.inicio;
-          singleResult.fim = data.fim;
-        }
-
-        if (data.versao?.ultimaAtualizacao) {
-          singleResult.ultimaAtualizacao = data.versao.ultimaAtualizacao;
-          singleResult.ultimaAtualizacaoText = _getLastUpdatedOnText(data.versao.ultimaAtualizacao);
-        }
-
-        if (data.subtitulo) {
-          singleResult.subtitulo = data.subtitulo;
-        }
-
-        if (data.cores) {
-          singleResult.cores = data.cores;
-        }
-
-        if (includeData) {
-          singleResult.data = data;
-        }
-
-        result.push(singleResult);
-      }
-    }
-
-    return result;
-
-  } else {
-    throw new Error(translate('messages.errors.unauthenticated'));
-  }
-}
-
-async function _getUserListIDs(type) {
-  const userList = await _getUserList(type);
-  return userList.map(item => item.code);
-}
-
 async function _getPermissoes() {
   // Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
   const uid = await _getUID();
   if (uid) {
-    const userData = await _get(`usuarios/${uid}`);
+    const userData = await _getUserData(uid);
     return userData?.permissoes;
   }
 }
 
-function _combineDatabaseResponses(responses) {
-  if (responses.length === 1) {
-    return responses[0];
+async function _getDestination(id, containerID) {
+  if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
+
+  let content, preloader, isAlreadyLoading;
+  if (containerID) {
+    const container = getID(containerID);
+    content = container.querySelector('.content');
+    preloader = container.querySelector('.preloader');
+
+    content.style.display = 'none';
+    preloader.style.display = 'block';
+  } else {
+    isAlreadyLoading = _isAlreadyLoading();
+    if (!isAlreadyLoading) {
+      _startLoadingScreen();
+    }
   }
 
-  const success = !responses.some(response => response.success === false);
-  let message = success ? translate('messages.operations.success') : `${translate('messages.operations.error')}. ${translate('messages.documents.update.error')}`;
-
-  return {
-    message: message,
-    success: success,
-    data: responses
+  try {
+    DESTINOS_ATIVOS[id] = await _get(`destinos/${id}`);
+    return DESTINOS_ATIVOS[id];
+  } finally {
+    if (containerID) {
+      content.style.display = 'block';
+      preloader.style.display = 'none';
+    } else if (!isAlreadyLoading) {
+      _stopLoadingScreen();
+    }
   }
 }

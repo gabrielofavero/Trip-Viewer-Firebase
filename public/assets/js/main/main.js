@@ -341,10 +341,22 @@ function translate(key, replacements = {}, strict = true) {
 
   if (result == null) {
     if (strict) {
-      console.warn(`Translation key "${key}" not found in language pack. Using key as fallback.`);
-      MISSING_TRANSLATIONS.add(key);
+      if (strict) {
+        const stack = new Error().stack;
+        console.warn(
+          `Translation key "${key}" not found.`,
+          { caller: getCallerFromStack(stack) }
+        );
+        MISSING_TRANSLATIONS.add(key);
+      }
     }
     return key;
+
+    function getCallerFromStack(stack) {
+      if (!stack) return 'unknown';
+      const lines = stack.split('\n');
+      return lines[2]?.trim() || 'unknown';
+    }
   }
 
   if (Object.keys(replacements).length > 0) {

@@ -74,9 +74,9 @@ function _getEmpresaObj(j) {
   const tipo = transporte.transporte;
   const titulo = transporte.empresa;
 
-  const tituloConfig = _getIfExists(`CONFIG.transportes.empresas.${tipo}.${titulo}`);
-  const siteConfig = _getIfExists(`CONFIG.transportes.sites.${tipo}.${titulo}`);
-  const imagemConfig = _getIfExists(`CONFIG.transportes.imagens.${tipo}.${titulo}`);
+  const tituloConfig = CONFIG?.transportes?.empresas?.[tipo]?.[titulo];
+  const siteConfig = CONFIG?.transportes?.sites?.[tipo]?.[titulo];
+  const imagemConfig = CONFIG?.transportes?.imagens?.[tipo]?.[titulo];
 
   return {
     titulo: tituloConfig || titulo,

@@ -277,7 +277,7 @@ function _loadEditModule(categoria) {
      if (habilitado.checked) {
           _showContent(categoria);
           if (!getID(`habilitado-${categoria}-content`).innerText) {
-               _add(_firstCharToUpperCase(categoria).trim())
+               _visibilityAdd(_firstCharToUpperCase(categoria).trim())
           }
      } else {
           _hideContent(categoria);
@@ -294,7 +294,7 @@ function _loadListener(categoria) {
                const habilitadoContent = getID(`habilitado-${categoria}-content`);
 
                if ((box && !box.innerText) || (habilitadoContent && !habilitadoContent.innerText)) {
-                    _add(_firstCharToUpperCase(categoria).trim())
+                    _visibilityAdd(_firstCharToUpperCase(categoria).trim())
                }
 
           } else {
@@ -363,3 +363,12 @@ function _searchDestinosListenerAction() {
           getID(`checkbox-${j}`).style.display = label.includes(search) ? '' : 'none';
      }
 }
+
+function _visibilityAdd(type) {
+     const dynamicFunctionName = `_add${type}`;
+     if (typeof window[dynamicFunctionName] === 'function') {
+       window[dynamicFunctionName]();
+     } else {
+       console.error(`${dynamicFunctionName} is not defined.`);
+     }
+   }

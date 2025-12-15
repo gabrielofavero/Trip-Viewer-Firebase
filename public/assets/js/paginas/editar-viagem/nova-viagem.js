@@ -1,4 +1,3 @@
-var DESTINOS = [];
 var DATAS = [];
 
 function _loadNewTrip() {
@@ -145,9 +144,9 @@ function _addTransporte() {
       `);
 
   getID(`transporte-id-${j}`).value = _getCategoriaID('transporte', j);
-  getID(`ponto-partida-${j}`).value = j == 1 ? "" : getID(`ponto-chegada-${j-1}`).value;
-  getID(`ponto-chegada-${j}`).value = j == 2 ? getID(`ponto-partida-${j-1}`).value : "";
-  getID(`partida-${j}`).value = j == 1 ? getID('inicio').value : j == 2 ? getID('fim').value : getID(`chegada-${j-1}`).value;
+  getID(`ponto-partida-${j}`).value = j == 1 ? "" : getID(`ponto-chegada-${j - 1}`).value;
+  getID(`ponto-chegada-${j}`).value = j == 2 ? getID(`ponto-partida-${j - 1}`).value : "";
+  getID(`partida-${j}`).value = j == 1 ? getID('inicio').value : j == 2 ? getID('fim').value : getID(`chegada-${j - 1}`).value;
   getID(`chegada-${j}`).value = getID(`partida-${j}`).value;
 
   _loadTransporteListeners(j);
@@ -271,7 +270,7 @@ function _loadDestinos() {
   fieldset.innerHTML = '';
   for (let j = 1; j <= destinos.length; j++) {
     const i = j - 1;
-    fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].code, destinos[i].titulo);
+    fieldset.innerHTML += _getDestinosItemCheckbox(j, destinos[i].id, destinos[i].titulo);
   }
 
   getID('habilitado-destinos')?.addEventListener('change', () => _updateDestinosAtivosHTMLs());
@@ -366,7 +365,7 @@ function _loadProgramacao() {
     getID(`programacao-inner-title-${j}`).addEventListener('change', () => _updateProgramacaoTitle(j))
     _loadProgramacaoListeners(j);
   }
-  
+
   getID('habilitado-programacao').addEventListener('change', () => _reloadProgramacao());
 }
 

@@ -1,5 +1,6 @@
 const TURNOS = ['madrugada', 'manha', 'tarde', 'noite'];
 var INNER_PROGRAMACAO = {};
+var INNER_PROGRAMACAO_DETINOS_DATA = {};
 var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
@@ -33,7 +34,7 @@ function _loadInnerProgramacaoHTML(j) {
 }
 
 // Carregamento Interno (Modal)
-function _openInnerProgramacao(j, k, turno) {
+async function _openInnerProgramacao(j, k, turno) {
     const selects = _getInnerProgramacaoSelects(j);
     const isNew = (!k && !turno);
 
@@ -56,9 +57,9 @@ function _openInnerProgramacao(j, k, turno) {
         getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
     }
 
-    _loadInnerProgramacaoListeners(selects, j);
+    await _loadInnerProgramacaoListeners(j);
     _enableAllTravelersFieldset('inner-programacao-travelers');
-    _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew);
+    await _loadInnerProgramacaoCurrentData(j, k, turno, isNew);
     _loadInnerProgramacaoEventListeners();
 }
 
@@ -94,68 +95,28 @@ function _getInnerProgramacaoSelect(tipo) {
 }
 
 function _getInnerProgramacaoSelectsDestinos(j) {
-    const destinoFromCheckbox = _getDestinosFromCheckbox('programacao', j);
-    const idsAtivos = DESTINOS_ATIVOS.map(destino => destino.destinosID);
-    const todosIds = DESTINOS.map(destino => destino.code);
-    if (getID('habilitado-destinos').checked === false || DESTINOS_ATIVOS.length === 0 || destinoFromCheckbox.length === 0) {
-        return {
-            ativo: false,
-        };
-    };
+    if (getID('habilitado-destinos').checked === false || DESTINOS_ATIVOS.length === 0) _returnFalse();
+    const destinations = _getDestinosFromCheckbox('programacao', j);
+    if (destinations.length === 0) _returnFalse();
 
-    let result = {
-        ativo: true,
-        localOptions: '',
-        locais: {}
-    };
-
-    let localOptions = '';
+    let options = '';
     let ativo = false;
-
-    const titulos = {
-        restaurantes: translate('destination.restaurants.title'),
-        lanches: translate('destination.snacks.title'),
-        saidas: translate('destination.nightlife.title'),
-        turismo: translate('destination.tourism.title'),
-        lojas: translate('destination.shopping.title')
-    };
-
-    for (const destino of destinoFromCheckbox) {
-        const currentID = destino.destinosID;
-        if (!idsAtivos.includes(currentID)) continue;
-
-        const index = todosIds.findIndex(destino => destino == currentID);
-        if (index > -1) {
-            ativo = true;
-            localOptions += `<option value="${currentID}">${destino.titulo}</option>`;
-            let innerResult = {};
-
-            const currentDestinoData = DESTINOS[index].data;
-            const passeios = CONFIG.destinos.categorias.passeios;
-
-            let categorias = Object.keys(currentDestinoData).filter(key => passeios.includes(key) && currentDestinoData[key].length > 1);
-            categorias = categorias.sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
-            const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${titulos[categoria]}</option>`).join('');
-            innerResult.categoriaOptions = categoriaOptions;
-
-            let passeioOptions = {};
-            for (const categoria of categorias) {
-                const passeios = currentDestinoData[categoria].sort((a, b) => a.nome.localeCompare(b.nome));
-                passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
-            }
-            innerResult.passeioOptions = passeioOptions;
-
-            result.locais[currentID] = innerResult;
-        }
+    for (const strippedData of destinations) {
+        const id = strippedData.destinosID;
+        if (!id) continue;
+        ativo = true;
+        options += `<option value="${id}">${strippedData.titulo}</option>`;
     }
 
-    result.localOptions = localOptions;
-    result.ativo = ativo;
-    return result;
+    return { ativo, options };
+    function _returnFalse() {
+        const ativo = false;
+        return { ativo }
+    }
 }
 
 // Carrega dados atuais no Modal
-function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
+async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
     if (turno) {
         getID('inner-programacao-select-turno').value = turno;
         getID('inner-programacao-select-troca-turno').value = turno;
@@ -190,13 +151,19 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
                 getID('inner-programacao-item-destinos').style.display = 'block';
 
                 getID(`inner-programacao-select-local`).value = dados.item.local
-                getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
-                _innerProgramacaoSelectCategoriaAction(selects);
+                await _innerProgramacaoSelectLocalAction();
 
-                const passeio = getID(`inner-programacao-select-passeio`);
-                passeio.value = dados.item.id;
-                if (passeio.value) {
-                    itemAssociado.innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-passeio`));
+                getID(`inner-programacao-select-categoria`).value = dados.item.categoria;
+                await _innerProgramacaoSelectCategoriaAction();
+
+                const passeio = dados.item.id
+                if (passeio) {
+                    getID(`inner-programacao-select-passeio`).value = passeio;
+                    itemAssociado.innerText = translate('trip.itinerary.linked_destination');
+                }
+        
+                if (_getCheckedCheckboxesQuantity(`programacao-local-${j}`) <= 1) {
+                    getID('inner-programacao-item-destinos-local').style.display = 'none';
                 }
                 break;
             default:
@@ -210,7 +177,7 @@ function _loadInnerProgramacaoCurrentData(j, k, turno, selects, isNew) {
 }
 
 // Navegação do Modal
-function _openInnerProgramacaoItem(j) {
+async function _openInnerProgramacaoItem(j) {
     const height = getID('inner-programacao-tela-principal').offsetHeight;
     const itemSelecionar = getID('inner-programacao-item-selecionar');
     itemSelecionar.style.minHeight = `${height}px`;
@@ -371,7 +338,7 @@ function _deleteInnerProgramacao(j, k, turno) {
 }
 
 // Listeners
-function _loadInnerProgramacaoListeners(selects, j) {
+async function _loadInnerProgramacaoListeners(j) {
     const itemTransporte = getID(`inner-programacao-item-transporte`);
     const itemHospedagens = getID(`inner-programacao-item-hospedagens`);
     const itemDestinos = getID(`inner-programacao-item-destinos`);
@@ -404,46 +371,84 @@ function _loadInnerProgramacaoListeners(selects, j) {
         _loadTextReplacementCheckboxes(j);
     });
 
-    getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction(selects));
-    getID(`inner-programacao-select-categoria`).addEventListener('change', () => _innerProgramacaoSelectCategoriaAction(selects));
+    getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction());
+    getID(`inner-programacao-select-categoria`).addEventListener('change', () => _innerProgramacaoSelectCategoriaAction());
+    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTextReplacementCheckboxes());
 
     getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTextReplacementCheckboxes());
     getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTextReplacementCheckboxes());
-    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTextReplacementCheckboxes());
 
     getID('inner-programacao-select-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-turno'));
     getID('inner-programacao-select-troca-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-troca-turno'));
-
-    _innerProgramacaoSelectLocalAction(selects);
 }
 
-function _innerProgramacaoSelectLocalAction(selects) {
+async function _innerProgramacaoSelectLocalAction() {
     const selectLocal = getID('inner-programacao-select-local');
     const selectCategoria = getID('inner-programacao-select-categoria');
     const selectPasseio = getID('inner-programacao-select-passeio');
 
-    if (selectLocal.value && selects.destinos.locais[selectLocal.value]) {
-        selectCategoria.innerHTML = `<option value="">${translate('labels.select')}</option>` + selects.destinos.locais[selectLocal.value].categoriaOptions;
+    const id = selectLocal.value;
+    const locais = INNER_PROGRAMACAO_DETINOS_DATA[id] || await _buildInnerProgramacaoDestinosData(id);
+
+    if (locais) {
+        selectCategoria.innerHTML = `<option value="">${translate('labels.select')}</option>` + locais.categoriaOptions;
     } else {
         selectCategoria.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
         selectPasseio.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
     }
 
     selectCategoria.addEventListener('change', () => {
-        _innerProgramacaoSelectCategoriaAction(selects);
+        _innerProgramacaoSelectCategoriaAction();
     });
 }
 
-function _innerProgramacaoSelectCategoriaAction(selects) {
+async function _innerProgramacaoSelectCategoriaAction() {
     const selectLocal = getID('inner-programacao-select-local');
     const selectCategoria = getID('inner-programacao-select-categoria');
     const selectPasseio = getID('inner-programacao-select-passeio');
 
-    if (selectLocal.value && selectCategoria.value && selects.destinos.locais[selectLocal.value].passeioOptions[selectCategoria.value]) {
-        selectPasseio.innerHTML = `<option value="">${translate('labels.select')}</option>` + selects.destinos.locais[selectLocal.value].passeioOptions[selectCategoria.value];
+    const id = selectLocal.value;
+    const locais = INNER_PROGRAMACAO_DETINOS_DATA[id] || await _buildInnerProgramacaoDestinosData(id);
+
+    if (selectLocal.value && selectCategoria.value && locais?.passeioOptions?.[selectCategoria.value]) {
+        selectPasseio.innerHTML = `<option value="">${translate('labels.select')}</option>` + locais.passeioOptions[selectCategoria.value];
     } else {
         selectPasseio.innerHTML = `<option value="">${translate('labels.no_data')}</option>`;
     }
+}
+
+async function _buildInnerProgramacaoDestinosData(id) {
+    if (INNER_PROGRAMACAO_DETINOS_DATA[id]) {
+        return INNER_PROGRAMACAO_DETINOS_DATA[id];
+    }
+
+    if (!DESTINOS_DATA[id]) {
+        DESTINOS_DATA[id] = await _getDestination(id);
+    }
+
+    const data = DESTINOS_DATA[id];
+    const titulos = {
+        restaurantes: translate('destination.restaurants.title'),
+        lanches: translate('destination.snacks.title'),
+        saidas: translate('destination.nightlife.title'),
+        turismo: translate('destination.tourism.title'),
+        lojas: translate('destination.shopping.title')
+    };
+
+    const passeios = CONFIG.destinos.categorias.passeios;
+    let categorias = Object.keys(data)
+        .filter(key => passeios.includes(key) && data[key].length > 1)
+        .sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
+
+    const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${titulos[categoria]}</option>`).join('');
+    let passeioOptions = {};
+    for (const categoria of categorias) {
+        const passeios = data[categoria].sort((a, b) => a.nome.localeCompare(b.nome));
+        passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
+    }
+
+    INNER_PROGRAMACAO_DETINOS_DATA[id] = { categoriaOptions, passeioOptions }
+    return INNER_PROGRAMACAO_DETINOS_DATA[id];
 }
 
 function _loadInnerProgramacaoEventListeners() {
@@ -535,13 +540,8 @@ function _afterDragInnerProgramacao(evt) {
     const j = evt.item.children[0].id.split('-')[3];
     const key = _jsDateToKey(DATAS[j - 1]);
 
-    // Remover elemento da posição inicial
-    const element = INNER_PROGRAMACAO[key][turnoInicial].splice(evt.oldIndex, 1)[0];
-
-    // Adicionar elemento na posição final
-    INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element);
-
-    // Atualizar último turno aberto
+    const element = INNER_PROGRAMACAO[key][turnoInicial].splice(evt.oldIndex, 1)[0]; // First 
+    INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element); // Last
     LAST_OPENED_TURNO[j] = turnoFinal;
 
     _loadInnerProgramacaoHTML(j);

@@ -118,11 +118,11 @@ async function _restoreAccount(restore) {
     const uid = await _getUID();
 
     console.log("Preparing delete operations...");
-    const deleteOps = await collectDeleteOps(uid);
+    const deleteOps = await _collectDeleteOps(uid);
     console.log(`${deleteOps.length} delete operations.`);
 
     console.log("Executing delete batches...");
-    await commitInChunks(deleteOps);
+    await _commitInChunks(deleteOps);
     console.log("Deletions complete");
 
     console.log("Preparing create operations...");
@@ -130,19 +130,19 @@ async function _restoreAccount(restore) {
     console.log(`${createOps.length} create operations.`);
 
     console.log("Executing create batches...");
-    await commitInChunks(createOps);
+    await _commitInChunks(createOps);
     console.log("Restoration complete");
 
     console.log("Preparing user update...");
     const userUpdateOp = collectUserUpdateOp(restore, uid);
 
     console.log("Executing user update...");
-    await commitInChunks([userUpdateOp]);
+    await _commitInChunks([userUpdateOp]);
     console.log("User update complete");
 
     console.log("All operations finished successfully");
 
-    async function commitInChunks(ops, chunkSize = 450) {
+    async function _commitInChunks(ops, chunkSize = 450) {
         for (let i = 0; i < ops.length; i += chunkSize) {
             const batch = firebase.firestore().batch();
             const slice = ops.slice(i, i + chunkSize);
@@ -159,22 +159,22 @@ async function _restoreAccount(restore) {
         }
     }
 
-    async function collectDeleteOps(uid) {
-        const userData = await _get(`usuarios/${uid}`);
+    async function _collectDeleteOps(uid) {
+        const userData = _cloneObject(USER_DATA);
         const ops = [];
 
         const pushDelete = (ref) => ops.push({ type: "delete", ref });
 
         // --- CASE A: destinos + listagens ---
         for (const type of ["destinos", "listagens"]) {
-            const ids = userData[type] ?? [];
-            for (const id of ids) pushDelete(firebase.firestore().collection(type).doc(id));
+            const data = userData[type] ?? [];
+            for (const id in data) pushDelete(firebase.firestore().collection(type).doc(id));
             userData[type] = [];
         }
 
         // --- CASE B: viagens (+ protected / gastos) ---
         if (Array.isArray(userData.viagens)) {
-            for (const viagemID of userData.viagens) {
+            for (const viagemID in userData.viagens) {
 
                 // Main viagem
                 pushDelete(firebase.firestore().collection("viagens").doc(viagemID));
