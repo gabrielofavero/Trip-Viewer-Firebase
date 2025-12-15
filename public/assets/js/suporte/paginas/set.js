@@ -30,8 +30,8 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
         await build();
     }
 
-    if (_areDocumentsEqual()) {
-        _throwSetError(`${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`)
+    if (!INPUT_DETECTED) {
+        _throwSetError(`${translate('messages.documents.save.no_new_data')}`)
         return;
     };
 
