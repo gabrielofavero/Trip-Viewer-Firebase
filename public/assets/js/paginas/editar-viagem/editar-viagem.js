@@ -1,6 +1,7 @@
-var blockLoadingEnd = false;
-var FIRESTORE_DATA;
-var FIRESTORE_GASTOS_DATA;
+var BLOCK_LOADING_END = false;
+var FIRESTORE_DATA = {};
+var FIRESTORE_PROTECTED_DATA = {};
+var FIRESTORE_GASTOS_DATA = {};
 
 var SUCCESSFUL_SAVE = false;
 var NEW_TRIP = false;
@@ -47,7 +48,7 @@ async function _loadEditarViagemPage() {
 
   _loadEventListeners();
 
-  if (!blockLoadingEnd) {
+  if (!BLOCK_LOADING_END) {
     _stopLoadingScreen();
   }
   $('body').css('overflow', 'auto');
@@ -72,22 +73,21 @@ function _loadUploadSelectors() {
 
 async function _loadTrip(stripped = false) {
   getID('delete-text').style.display = 'block';
-  blockLoadingEnd = true;
+  BLOCK_LOADING_END = true;
   _startLoadingScreen();
 
   await _loadPinData();
-  let protectedData;
 
   if (PIN.current) {
-    protectedData = await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true, true);
+    FIRESTORE_PROTECTED_DATA = await _get(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true, true);
   }
 
-  switch (protectedData?.pin) {
+  switch (FIRESTORE_PROTECTED_DATA?.pin) {
     case 'all-data':
-      FIRESTORE_DATA = stripped ? protectedData : await _getTripDataWithDestinos(protectedData);
+      FIRESTORE_DATA = stripped ? FIRESTORE_PROTECTED_DATA : await _getTripDataWithDestinos(FIRESTORE_PROTECTED_DATA);
       break;
     case 'sensitive-only':
-      FIRESTORE_DATA = _getMergedTripObject(await _getTravelDocument(stripped), protectedData);
+      FIRESTORE_DATA = _getMergedTripObject(await _getTravelDocument(stripped));
       break;
     default:
       FIRESTORE_DATA = await _getTravelDocument(stripped);
@@ -151,17 +151,17 @@ async function _getTravelDocument(stripped = false) {
   return stripped ? await _get(`viagens/${DOCUMENT_ID}`) : await _getSingleData('viagens')
 }
 
-function _getMergedTripObject(tripData, protectedData) {
+function _getMergedTripObject(tripData) {
   for (let i = 0; i < tripData.transportes.dados.length; i++) {
     const id = tripData.transportes.dados[i].id;
-    tripData.transportes.dados[i].reserva = protectedData.transportes[id]?.reserva || '';
-    tripData.transportes.dados[i].link = protectedData.transportes[id]?.link || '';
+    tripData.transportes.dados[i].reserva = FIRESTORE_PROTECTED_DATA.transportes[id]?.reserva || '';
+    tripData.transportes.dados[i].link = FIRESTORE_PROTECTED_DATA.transportes[id]?.link || '';
   }
 
   for (let i = 0; i < tripData.hospedagens.length; i++) {
     const id = tripData.hospedagens[i].id;
-    tripData.hospedagens[i].reserva = protectedData.hospedagens[id]?.reserva || '';
-    tripData.hospedagens[i].link = protectedData.hospedagens[id]?.link || '';
+    tripData.hospedagens[i].reserva = FIRESTORE_PROTECTED_DATA.hospedagens[id]?.reserva || '';
+    tripData.hospedagens[i].link = FIRESTORE_PROTECTED_DATA.hospedagens[id]?.link || '';
   }
 
   return tripData;

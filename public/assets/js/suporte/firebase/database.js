@@ -139,6 +139,13 @@ function _createBatchOps() {
   }
 
   return {
+    create(path, data) {
+      const docRef = db.collection(path).doc(); // auto ID generated now
+      batch.set(docRef, data, { merge: false });
+      track('set', docRef.path, data);
+      return docRef.id;
+    },
+
     set(path, data) {
       batch.set(ref(path), data, { merge: true });
       track('set', path, data);
@@ -183,7 +190,6 @@ function _createBatchOps() {
     }
   };
 }
-
 
 async function _getSingleData(type) {
   let data;

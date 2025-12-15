@@ -6,17 +6,15 @@ var SET_RESPONSES = [];
 var UPLOAD_AFTER_SET = false;
 
 async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], batchFunctions = [] }) {
-    const userID = await _getUID();
+    const uid = await _getUID();
     const ops = _createBatchOps();
     let response = translate('messages.documents.save.success');
 
-    if (!userID || !type) {
-        const message = !userID ? translate('labels.unauthenticated') : translate('messages.documents.save.error');
-        _throwSetError(message);
+    if (!uid || !type) {
+        _throwSetError(!uid ? translate('labels.unauthenticated') : translate('messages.documents.save.error'));
         return
     }
 
-    let mainResponse, userSavingResponse;
     _startLoadingScreen();
 
     for (const check of checks) {
@@ -32,30 +30,21 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
         await build();
     }
 
-    const wasChanged = _validateIfDocumentChanged();
-    if (!wasChanged) {
-        const errorMsgPath = `messages.documents.save.no_new_data`;
-        getID('modal-inner-text').innerText = `${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`;
-
-        SUCCESSFUL_SAVE = false;
-        _openModal();
-        _stopLoadingScreen();
+    if (_areDocumentsEqual()) {
+        _throwSetError(`${translate('messages.documents.save.error')}. ${translate(errorMsgPath)}`)
         return;
     };
 
-    const newData = _getNewDataDocument(type);
+    const documentData = _getNewDataDocument(type);
 
-    if (DOCUMENT_ID && newData) {
-        ops.update(`${type}/${DOCUMENT_ID}`, newData);
-    } else if (newData) {
-        ops.set(`${type}/${DOCUMENT_ID}`, newData);
-        DOCUMENT_ID = mainResponse?.data?.id;
-        if (DOCUMENT_ID) {
-            const userListIDs = await _getUserListIDs(type);
-            userListIDs.push(DOCUMENT_ID);
-            userSavingResponse = ops.update(`usuarios/${userID}`, { [type]: userListIDs });
-        }
+    if (DOCUMENT_ID && documentData) {
+        ops.update(`${type}/${DOCUMENT_ID}`, documentData);
+    } else if (documentData) {
+        const id = ops.create(`${type}/${DOCUMENT_ID}`, documentData);
+        DOCUMENT_ID = id;
     }
+
+    _setUserData(ops, uid, type, documentData)
 
     for (const batch of batchFunctions) {
         await batch(ops);
@@ -64,7 +53,8 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
     const result = await ops.commit();
 
     if (!result.success) {
-        response = _getSetErrorTableHTML(result)
+        _throwSetError(translate('messages.documents.save.error'));
+        return;
     }
 
     getID('modal-inner-text').innerHTML = response;
@@ -73,24 +63,14 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
 }
 
 function _throwSetError(message) {
+    SUCCESSFUL_SAVE = false;
     getID('modal-inner-text').innerHTML = message;
     _stopLoadingScreen();
     _openModal('modal');
 }
 
-async function _setUserData(ops, type, id, data) {
-    if (!type || !id || !data || Object.keys(data).length === 0) {
-        _throwSetError('Invalid User Data');
-        return;
-    }
-
-    const uid = await _getUID();
-    if (!USER_DATA) {
-        USER_DATA = await _getUserData(uid);
-    }
-
-    const newData = _getSingleUserData(type, data);
-
+function _setUserData(ops, uid, type, documentData) {
+    const newData = _getSingleUserData(type, documentData);
     if (Object.keys(newData) === 0) {
         _throwSetError('Error while fetching user data');
         return;
@@ -127,34 +107,5 @@ async function _setUserData(ops, type, id, data) {
                     versao: data.versao,
                 }
         }
-    }
-}
-
-
-function _getSetErrorTableHTML(result) {
-    if (!result || result.success) return '';
-
-    let html = '<table><thead><tr>';
-    html += '<th>Type</th><th>Path</th><th>Data</th>';
-    html += '</tr></thead><tbody>';
-
-    for (const op of result.operations || []) {
-        html += '<tr>';
-        html += `<td>${op.type}</td>`;
-        html += `<td>${op.path}</td>`;
-        html += `<td><pre>${escapeHTML(JSON.stringify(op.data ?? null, null, 2))}</pre></td>`;
-        html += '</tr>';
-    }
-
-    html += '</tbody></table>';
-    return html;
-
-    function escapeHTML(str) {
-        return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
     }
 }

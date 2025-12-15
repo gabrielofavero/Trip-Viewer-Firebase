@@ -1,5 +1,6 @@
-var blockLoadingEnd = false;
-var FIRESTORE_DATA;
+var BLOCK_LOADING_END = false;
+var FIRESTORE_DATA = {};
+var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_NEW_DATA = {};
 
 var SUCCESSFUL_SAVE = false;
@@ -37,7 +38,7 @@ async function _loadEditarListagemPage() {
 
   _loadEventListeners();
 
-  if (!blockLoadingEnd) {
+  if (!BLOCK_LOADING_END) {
     _stopLoadingScreen();
   }
   $('body').css('overflow', 'auto');
@@ -102,7 +103,7 @@ function _loadEventListeners() {
 
 async function _carregarListagem() {
   getID('delete-text').style.display = 'block';
-  blockLoadingEnd = true;
+  BLOCK_LOADING_END = true;
   _startLoadingScreen();
 
   FIRESTORE_DATA = await _getSingleData('listagens');

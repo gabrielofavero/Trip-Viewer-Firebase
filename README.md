@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 107   | 101       | 3       |
+| 🐞   | Bug         | B000 | 108   | 104       | 4       |
 | 🏆   | Feature     | F000 | 114   | 108       | 6       |
 | 📈   | Improvement | M000 | 124   | 121       | 3       |
 | ⚔️   | Epic        | E000 | 37    | 35        | 2       |
@@ -12,7 +12,7 @@
 ## Backlog
 
 ### High Priority
-
+- 🐞 **B105:** Traveler-exclusive itinerary not working
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F109] Add custom select on expenses page*

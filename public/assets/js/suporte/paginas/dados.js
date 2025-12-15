@@ -6,7 +6,6 @@ var P_DATA;
 var HYPERLINK;
 
 var CONFIG;
-var DOCS_CHANGED;
 
 // Text Utils
 function _firstCharToUpperCase(str) {
@@ -123,9 +122,9 @@ function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
 
   function _deepObjectsEqual(val1, val2, path, ignored) {
     if (ignored.has(path)) return true;
-  
+
     if (val1 === val2) return true;
-  
+
     if (
       typeof val1 !== 'object' ||
       typeof val2 !== 'object' ||
@@ -134,19 +133,19 @@ function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
     ) {
       return false;
     }
-  
+
     const keys = new Set([
       ...Object.keys(val1),
       ...Object.keys(val2)
     ]);
-  
+
     for (const key of keys) {
       const nextPath = path ? `${path}.${key}` : key;
       if (!_deepObjectsEqual(val1[key], val2[key], nextPath, ignored)) {
         return false;
       }
     }
-  
+
     return true;
   }
 }
@@ -155,7 +154,7 @@ function _getObjectDiff({
   obj1,
   obj2,
   ignoredPaths = [],
-  name = 'Objeto'
+  name = 'Object'
 }) {
   const differences = [];
   const ignored = new Set(ignoredPaths);
@@ -408,42 +407,131 @@ function _getURLParam(param) {
 
 // Document Utils
 function _compareDocuments() {
-  const result = {
-    multiple: false,
-    data: [],
-  };
+  const page = _getHTMLpage();
+  const config = _getCompareDocumentsConfig()[page];
 
-  switch (_getHTMLpage()) {
-    case 'editar-viagem':
-      result.multiple = true;
-      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'lineup'], name: 'dados da viagem' });
-      _compareAndPush({ obj1: FIRESTORE_PROGRAMACAO_DATA, obj2: FIRESTORE_NEW_DATA.programacoes, ignoredPaths: [], name: 'programação' });
-      _compareAndPush({ obj1: FIRESTORE_GASTOS_DATA, obj2: FIRESTORE_GASTOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao'], name: 'gastos' });
-      _compareAndPush({ obj1: { pin: PIN.current }, obj2: { pin: PIN.new }, ignoredPaths: [], name: 'senha de acesso aos gastos' });
-      break;
-    case 'editar-listagem':
-      const ignoredPaths = _getIgnoredPathDestinos();
-      ignoredPaths.push('versao.ultimaAtualizacao');
-      _compareAndPush({ obj1: FIRESTORE_DATA, obj2: FIRESTORE_NEW_DATA, ignoredPaths: ignoredPaths, name: 'dados da listagem' });
-      break;
-    case 'editar-destino':
-      _compareAndPush({ obj1: FIRESTORE_DESTINOS_DATA, obj2: FIRESTORE_DESTINOS_NEW_DATA, ignoredPaths: ['versao.ultimaAtualizacao', 'links'], name: 'dados do destino' });
-      break;
-    default:
-      console.warn('Page not supported. Use "_getObjectDiff()"');
-      return null;
+  if (!config) {
+    console.warn('Page not supported. Use "_getObjectDiff()"');
+    return null;
   }
 
-  return result;
+  return {
+    multiple: config.multiple,
+    data: config.items.map(item => runCompare(item()))
+  };
 
-  function _compareAndPush({ obj1, obj2, ignoredPaths, name }) {
-    result.data.push(_getObjectDiff({ obj1, obj2, ignoredPaths, name }));
+  function runCompare({
+    obj1,
+    obj2,
+    ignoredPaths = ['versao.ultimaAtualizacao'],
+    name
+  }) {
+    return _getObjectDiff({ obj1, obj2, ignoredPaths, name });
+  }
+}
+
+function _getCompareDocumentsConfig() {
+  return {
+    'editar-viagem': {
+      multiple: true,
+      items: [
+        {
+          getObj1: () => FIRESTORE_DATA,
+          getObj2: () => FIRESTORE_NEW_DATA,
+          nameKey: 'trip.title'
+        },
+        {
+          getObj1: () => FIRESTORE_PROTECTED_DATA,
+          getObj2: () => FIRESTORE_PROTECTED_NEW_DATA,
+          nameKey: 'trip.protected'
+        },
+        {
+          getObj1: () => FIRESTORE_PROGRAMACAO_DATA,
+          getObj2: () => FIRESTORE_NEW_DATA.programacoes,
+          ignoredPaths: [],
+          nameKey: 'trip.itinerary.title'
+        },
+        {
+          getObj1: () => (PIN.current ? {} : FIRESTORE_GASTOS_DATA),
+          getObj2: () => FIRESTORE_GASTOS_NEW_DATA,
+          nameKey: 'trip.expenses.title'
+        },
+        {
+          getObj1: () => (PIN.current ? FIRESTORE_GASTOS_DATA : {}),
+          getObj2: () => FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
+          nameKey: 'trip.expenses.title'
+        },
+        {
+          getObj1: () => ({ pin: PIN.current }),
+          getObj2: () => ({ pin: PIN.new }),
+          ignoredPaths: [],
+          nameKey: 'trip.pin.title'
+        }
+      ]
+    },
+
+    'editar-listagem': {
+      multiple: false,
+      items: [
+        {
+          getObj1: () => FIRESTORE_DATA,
+          getObj2: () => FIRESTORE_NEW_DATA,
+          getIgnoredPaths: () => [
+            ..._getIgnoredPathDestinos(),
+            'versao.ultimaAtualizacao'
+          ],
+          nameKey: 'listing.title'
+        }
+      ]
+    },
+
+    'editar-destino': {
+      multiple: false,
+      items: [
+        {
+          getObj1: () => FIRESTORE_DESTINOS_DATA,
+          getObj2: () => FIRESTORE_DESTINOS_NEW_DATA,
+          ignoredPaths: ['versao.ultimaAtualizacao', 'links'],
+          nameKey: 'destination.title'
+        }
+      ]
+    }
   };
 }
 
-function _validateIfDocumentChanged() {
-  DOCS_CHANGED = _compareDocuments();
-  return !DOCS_CHANGED.data.every(item => item.areEqual);
+function _compareDocuments() {
+  const page = _getHTMLpage();
+  const config = _getCompareDocumentsConfig()[page];
+
+  if (!config) {
+    console.warn('Page not supported. Use "_getObjectDiff()"');
+    return null;
+  }
+
+  const resolvedItems = _resolveCompareDocuments(config.items);
+
+  return {
+    multiple: config.multiple,
+    data: resolvedItems.map(item =>
+      _getObjectDiff(item)
+    )
+  };
+
+  function _resolveCompareDocuments(items) {
+    return items.map(item => ({
+      obj1: item.getObj1(),
+      obj2: item.getObj2(),
+      ignoredPaths: item.getIgnoredPaths
+        ? item.getIgnoredPaths()
+        : item.ignoredPaths ?? ['versao.ultimaAtualizacao'],
+      name: translate(item.nameKey)
+    }));
+  }
+}
+
+function _areDocumentsEqual() {
+  const comparedDocs = _compareDocuments();
+  return comparedDocs.data.every(item => item.areEqual);
 }
 
 function _getDataDocument(tipo) {
@@ -567,8 +655,8 @@ function _getOrderedDocumentByUpdateDate(data) {
 
 function _getOrderedDocumentByTitle(data) {
   return Object.entries(data)
-      .map(([id, v]) => ({ id, ...v }))
-      .sort((a, b) => a.titulo.localeCompare(b.titulo));
+    .map(([id, v]) => ({ id, ...v }))
+    .sort((a, b) => a.titulo.localeCompare(b.titulo));
 }
 
 

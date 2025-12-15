@@ -1,4 +1,4 @@
-var blockLoadingEnd = false;
+var BLOCK_LOADING_END = false;
 var FIRESTORE_DESTINOS_DATA;
 var INPUT_DETECTED = false;
 
@@ -33,7 +33,7 @@ async function _loadEditarDestinoPage() {
 
   _loadEventListeners();
 
-  if (!blockLoadingEnd) {
+  if (!BLOCK_LOADING_END) {
     _stopLoadingScreen();
   }
   $('body').css('overflow', 'auto');
@@ -156,7 +156,7 @@ function _addListenerToRemoveDestino(categoria, j) {
 }
 
 async function _loadDestinos() {
-  blockLoadingEnd = true;
+  BLOCK_LOADING_END = true;
   getID('delete-text').style.display = 'block';
   _startLoadingScreen();
 
