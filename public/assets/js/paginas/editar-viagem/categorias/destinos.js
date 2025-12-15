@@ -4,7 +4,8 @@ var DESTINOS_ATIVOS = [];
 
 function _getDestinosArray() {
     const result = [];
-    for (const destinosID in DESTINOS_ATIVOS) {
+    for (const destino of DESTINOS_ATIVOS) {
+        const destinosID = destino.destinosID;
         result.push({ destinosID })
     }
     return result;
