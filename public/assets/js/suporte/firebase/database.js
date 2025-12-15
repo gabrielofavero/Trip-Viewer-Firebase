@@ -160,6 +160,8 @@ function _createBatchOps() {
     },
 
     commit: async () => {
+      console.log('[Firestore batch] Operations to commit:', ops);
+
       try {
         await batch.commit();
         return {
@@ -167,6 +169,11 @@ function _createBatchOps() {
           operations: ops.length
         };
       } catch (error) {
+        console.error('[Firestore batch] Commit failed:', {
+          error,
+          operations: ops
+        });
+
         return {
           success: false,
           error: error.message,

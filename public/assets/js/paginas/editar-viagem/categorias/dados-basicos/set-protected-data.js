@@ -44,7 +44,7 @@ function _setProtectedDataWithoutPIN(ops) {
         if (hasNewGastos && !hasCurrentGastos) {
             ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
         } else if (hasNewGastos && hasCurrentGastos) {
-            ops.override(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+            ops.overwrite(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
         } else if (!hasNewGastos && hasCurrentGastos) {
             ops.delete(`gastos/${DOCUMENT_ID}`);
         }
@@ -168,7 +168,7 @@ function _setProtectedDataWithPIN(ops) {
         }
 
         if (hasCurrentViagens && hasNewProtectedViagens) {
-            ops.override(
+            ops.overwrite(
                 `viagens/protected/${PIN.current}/${DOCUMENT_ID}`,
                 FIRESTORE_PROTECTED_NEW_DATA
             );

@@ -58,7 +58,7 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
     }
 
     for (const batch of batchFunctions) {
-        await batch(op);
+        await batch(ops);
     }
 
     const result = await ops.commit();
