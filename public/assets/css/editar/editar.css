@@ -1862,7 +1862,19 @@ details summary::-webkit-details-marker {
 .destinos-checkboxes {
   margin-top: 8px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10px;
+  row-gap: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.destinos-checkboxes {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
   column-gap: 10px;
   row-gap: 4px;
@@ -1895,6 +1907,12 @@ details summary::-webkit-details-marker {
 @media (max-width: 570px) {
   .destinos-checkboxes {
     -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 500px) {
+  .destinos-checkboxes {
+    grid-template-columns: 1fr;
   }
 }
 
