@@ -438,7 +438,7 @@ function _getCompareDocumentsConfig() {
         {
           getObj1: () => FIRESTORE_DATA,
           getObj2: () => FIRESTORE_NEW_DATA,
-          nameKey: 'trip.title'
+          nameKey: 'trip.document'
         },
         {
           getObj1: () => FIRESTORE_PROTECTED_DATA,
@@ -465,7 +465,7 @@ function _getCompareDocumentsConfig() {
           getObj1: () => ({ pin: PIN.current }),
           getObj2: () => ({ pin: PIN.new }),
           ignoredPaths: [],
-          nameKey: 'trip.pin.title'
+          nameKey: 'trip.basic_information.pin.title'
         }
       ]
     },
