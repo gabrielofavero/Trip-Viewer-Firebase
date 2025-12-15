@@ -6,7 +6,8 @@ var SET_RESPONSES = [];
 var UPLOAD_AFTER_SET = false;
 
 async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], batchFunctions = [] }) {
-    const uid = await _getUID();
+    try {
+        const uid = await _getUID();
     const ops = _createBatchOps();
     let response = translate('messages.documents.save.success');
 
@@ -60,6 +61,11 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
     getID('modal-inner-text').innerHTML = response;
     _stopLoadingScreen();
     _openModal('modal');
+    }
+    catch (e) {
+        console.log(e);
+        _throwSetError(translate('messages.documents.save.error'));
+    }
 }
 
 function _throwSetError(message) {
@@ -77,7 +83,7 @@ function _setUserData(ops, uid, type, documentData) {
     }
 
     ops.update(`usuarios/${uid}`, {
-        [`${type}.${id}`]: newData
+        [`${type}.${DOCUMENT_ID}`]: newData
     });
 
     function _getSingleUserData(type, data) {
