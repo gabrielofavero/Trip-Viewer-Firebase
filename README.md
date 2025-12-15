@@ -6,15 +6,13 @@
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 107   | 101       | 3       |
 | 🏆   | Feature     | F000 | 114   | 108       | 6       |
-| 📈   | Improvement | M000 | 125   | 120       | 5       |
+| 📈   | Improvement | M000 | 124   | 121       | 3       |
 | ⚔️   | Epic        | E000 | 37    | 35        | 2       |
 
 ## Backlog
 
 ### High Priority
 
-- ⚔️ **E037:** Reduce Firestore document calls
-  - *[📈M125] Reduce document calls for view page*
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F109] Add custom select on expenses page*
