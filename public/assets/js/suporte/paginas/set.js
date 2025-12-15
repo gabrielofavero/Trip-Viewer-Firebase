@@ -58,6 +58,7 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
         return;
     }
 
+    SUCCESSFUL_SAVE = true;
     getID('modal-inner-text').innerHTML = response;
     _stopLoadingScreen();
     _openModal('modal');

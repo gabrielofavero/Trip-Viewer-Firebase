@@ -9,8 +9,13 @@ function _setCurrentPreferencePIN(preference) {
 }
 
 function _setProtectedDataAndExpenses(ops) {
-    _setProtectedDataWithoutPIN(ops);
-    _setProtectedDataWithPIN(ops);
+    const pinType = FIRESTORE_NEW_DATA.pin;
+    if (pinType == 'no-pin') {
+        _setProtectedDataWithoutPIN(ops);
+    } else if (['all-data', 'sensitive-only'].includes(pinType)) {
+        _setProtectedDataWithPIN(ops);
+    } else throw new Error('Invalid expenses type')
+    
 }
 
 function _setProtectedDataWithoutPIN(ops) {
