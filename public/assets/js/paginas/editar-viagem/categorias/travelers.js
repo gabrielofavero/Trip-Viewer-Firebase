@@ -176,6 +176,7 @@ function _updateTravelersFieldset(id, checkedData = []) {
 }
 
 function _getCheckedTravelersIDs(containerID) {
+    const result = [];
     const fieldset = getID(containerID).querySelector('fieldset');
 
     for (const checkBoxContainer of fieldset.children) {

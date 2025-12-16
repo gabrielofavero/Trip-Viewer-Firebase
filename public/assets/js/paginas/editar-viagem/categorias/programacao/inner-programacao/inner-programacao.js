@@ -52,7 +52,8 @@ async function _openInnerProgramacao(j, k, turno) {
 
     _displayFullMessage(propriedades);
 
-    if (selects?.destinos?.locais && Object.keys(selects.destinos.locais).length === 1) {
+    const activeDestinations = _getActiveDestinations(j);
+    if (activeDestinations.length === 1) {
         getID('inner-programacao-item-destinos-local').style.display = 'none';
         getID('inner-programacao-item-destinos-radio-label').innerText = _getSelectCurrentLabel(getID(`inner-programacao-select-local`));
     }
@@ -161,10 +162,6 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
                     getID(`inner-programacao-select-passeio`).value = passeio;
                     itemAssociado.innerText = translate('trip.itinerary.linked_destination');
                 }
-        
-                if (_getCheckedCheckboxesQuantity(`programacao-local-${j}`) <= 1) {
-                    getID('inner-programacao-item-destinos-local').style.display = 'none';
-                }
                 break;
             default:
                 getID(`inner-programacao-item-nenhum-radio`).checked = true;
@@ -247,6 +244,8 @@ function _innerProgramacaoConfirmAction(j, k, turno) {
     } else {
         _addInnerProgramacao(j);
     }
+
+    _closeMessage();
 }
 
 // Salvar Inner Programação
@@ -265,8 +264,7 @@ function _addInnerProgramacao(j, k, turno) {
             return;
         }
         const innerProgramacao = _buildInnerProgramacao(programacao);
-        _setInnerProgramacao(innerProgramacao, j, k, turno);
-        _closeMessage();
+        _setInnerProgramacao(innerProgramacao, j, k, turno);     
     }
 
     function _buildInnerProgramacao(programacao) {
@@ -471,6 +469,10 @@ function _loadInnerProgramacaoEventListeners() {
             getID(`inner-programacao-fim`).value = '';
             getID(`inner-programacao-fim`).reportValidity();
         }
+    });
+
+    getID('inner-programacao-item-destinos-radio').addEventListener('click', function () {
+        _innerProgramacaoSelectLocalAction();
     });
 }
 

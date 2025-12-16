@@ -107,8 +107,6 @@ function _updateProgramacaoTitle(j) {
             break;
         default:
             titulo = _getDestinationProgramacaoTitle(value, j);
-
-
             tituloInput.style.display = 'none';
     }
 
