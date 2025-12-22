@@ -12,6 +12,11 @@
 ## Backlog
 
 ### High Priority
+- ⚔️ **E038:** Destinations data and features overhaul
+  - *[🏆F115] Change destinations inner data structure to Object*
+  - *[🏆F116] Update set and get methods for destinations new structure*
+  - *[🏆F117] Add filtering and sorting options to destinations page*
+  - *[🏆F118] Add option to quick edit destination on main page (if owner)*
 - 🐞 **B110:** Backup not getting all data from 'protegidos' collection
 - 🐞 **B109:** Traveler-exclusive itinerary not working
 - ⚔️ **E036:** Separate expenses by traveler
