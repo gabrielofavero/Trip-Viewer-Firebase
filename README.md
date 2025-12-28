@@ -5,14 +5,19 @@
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 111   | 106       | 5       |
-| 🏆   | Feature     | F000 | 114   | 108       | 6       |
+| 🏆   | Feature     | F000 | 118   | 108       | 10       |
 | 📈   | Improvement | M000 | 124   | 121       | 3       |
-| ⚔️   | Epic        | E000 | 37    | 35        | 2       |
+| ⚔️   | Epic        | E000 | 38    | 35        | 2       |
 
 ## Backlog
 
 ### High Priority
 
+- ⚔️ **E038:** Destinations data and features overhaul
+  - *[🏆F115] Change destinations inner data structure to Object*
+  - *[🏆F116] Update set and get methods for destinations new structure*
+  - *[🏆F117] Add filtering and sorting options to destinations page*
+  - *[🏆F118] Add option to quick edit destination on main page (if owner)*
 - 🐞 **B110:** Backup not getting all data from 'protegidos' collection
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
