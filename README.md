@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 112   | 108       | 3       |
+| 🐞   | Bug         | B000 | 113   | 108       | 3       |
 | 🏆   | Feature     | F000 | 118   | 108       | 10       |
 | 📈   | Improvement | M000 | 125   | 122       | 3       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
@@ -26,8 +26,6 @@
 
 ### Medium Priority
 
-- 🐞 **B102:** When moving destinations, description view does not reload
-
 ### Low Priority
 
 - 📈 **M122:** Put each expense type as draggable
@@ -39,6 +37,7 @@
 
 ### December 2025
 
+- 🐞 **B102:** When moving destinations, description view does not reload
 - 📈 **M125:** Improve sensitive box visibility
 - 🐞 **B108:** When returning a destination, view page auto scrolls up
 - 🐞 **B112:** Destination select animation not working

@@ -299,6 +299,7 @@ function _moveDestino(j, categoria) {
     _updateValueDS('regiao', destino.regiao, `${newCategoria}-regiao-select-${newJ}`);
     _buildDS('regiao');
 
+    _updateDescriptionButtonLabel(newCategoria, newJ);
   }
 
   _closeMessage();
