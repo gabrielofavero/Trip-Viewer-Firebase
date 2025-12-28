@@ -162,6 +162,7 @@ function _getInnerGastoContent(categoria, tipo, index) {
                         <option value="trip.expenses.daily">${translate('trip.expenses.daily')}</option>
                         <option value="labels.people">${translate('labels.people')}</option>
                         <option value="trip.transportation.type.car">${translate('trip.transportation.type.car')}</option>
+                        <option value="trip.transportation.title">${translate('trip.transportation.title')}</option>
                         <option value="labels.other">${translate('labels.other')}</option>
                         <option value="custom">${translate('labels.custom')}</option>
                     </select>
