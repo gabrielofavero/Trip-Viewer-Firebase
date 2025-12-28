@@ -31,7 +31,7 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
         await build();
     }
 
-    if (!INPUT_DETECTED) {
+    if (!_hasUnsavedChanges()) {
         _throwSetError(`${translate('messages.documents.save.no_new_data')}`)
         return;
     };

@@ -1,3 +1,44 @@
+var ORIGINAL_STATE = new Map();
+
+// Detect Changes
+function _snapshotFormState(root = document) {
+    if (!DOCUMENT_ID) {
+        return;
+    }
+    ORIGINAL_STATE.clear();
+
+    const fields = root.querySelectorAll("input, textarea, select");
+
+    fields.forEach(el => {
+        const value =
+            (el.type === "checkbox" || el.type === "radio")
+                ? el.checked
+                : el.value;
+
+        ORIGINAL_STATE.set(el, value);
+    });
+}
+
+function _hasUnsavedChanges(root = document) {
+    if (!DOCUMENT_ID) {
+        return true;
+    }
+    for (const [el, original] of ORIGINAL_STATE.entries()) {
+
+        // ignore elements that no longer exist in the DOM
+        if (!root.contains(el)) continue;
+
+        const current =
+            (el.type === "checkbox" || el.type === "radio")
+                ? el.checked
+                : el.value;
+
+        if (current !== original) return true;
+    }
+
+    return false;
+}
+
 // Required Fields
 function _validateRequiredFields() {
     var invalidFields = [];
@@ -33,20 +74,20 @@ function _getInvalidFieldsText(invalidFields) {
             title = translate('labels.basic_information')
             normalText += `<strong>${title}:</strong><br><ul>`
         }
-    
+
         for (const id of invalidFields) {
             const label = getID(id + '-label');
             const idSplit = id.split('-');
-    
+
             let innerTitle = title;
             let innerText = "";
-    
+
             if (label && label.innerText) {
                 const lastChar = id[id.length - 1];
-    
+
                 innerTitle = _firstCharToUpperCase(idSplit[0]);
                 innerText = label.innerText;
-    
+
                 if (!isNaN(lastChar)) {
                     let position = idSplit[idSplit.length - 1];
                     const typeTitle = getID(`${innerTitle}-title-${position}`);
@@ -58,18 +99,18 @@ function _getInvalidFieldsText(invalidFields) {
                 innerTitle = _firstCharToUpperCase(idSplit[0])
                 innerText = _getInnerText(idSplit);
             }
-    
+
             if (title == innerTitle || dadosBasicos.includes(id)) {
                 normalText += `
                 <li>
                     ${innerText || innerTitle}
                 </li>`
             } else {
-    
+
                 if (innerTitle == 'Select') {
                     innerTitle = innerText.replace(/[0-9]/g, '').trim();
                 }
-    
+
                 title = innerTitle
                 normalText += `
                 </ul><br>
@@ -186,7 +227,7 @@ function _validateLink(id) {
     _closeAllSelects();
     div.value = '';
 
-    const title = translate('messages.fields.link.title', {icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>'});
+    const title = translate('messages.fields.link.title', { icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>' });
     const content = translate('messages.fields.link.message');
 
     _openToast(`${title}: ${content}`);
@@ -223,7 +264,7 @@ function _validateInstagramLink(id) {
     div.value = '';
 
     const icon = '<i class="iconify" data-icon="mdi:instagram"></i>';
-    
+
     const title = translate('messages.fields.instagram_link.title', { icon });
     const content = translate('messages.fields.instagram_link.message');
 
@@ -263,10 +304,10 @@ function _validateImageLink(id) {
     let content = '';
 
     if (imageLink.includes('pbs.twimg.com')) {
-        title = translate('messages.fields.twitter_link.title', {icon: '<i class="iconify" data-icon="mdi:twitter"></i>'});
-        content = translate('messages.fields.twitter_link.message', {xIcon: '<i class="iconify" data-icon="fa6-brands:x-twitter"></i>'});
+        title = translate('messages.fields.twitter_link.title', { icon: '<i class="iconify" data-icon="mdi:twitter"></i>' });
+        content = translate('messages.fields.twitter_link.message', { xIcon: '<i class="iconify" data-icon="fa6-brands:x-twitter"></i>' });
     } else {
-        title = translate('messages.fields.link.title', {icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>'});
+        title = translate('messages.fields.link.title', { icon: '<i class="iconify" data-icon="ic:twotone-link-off"></i>' });
         content = translate('messages.fields.link.message');
     }
 

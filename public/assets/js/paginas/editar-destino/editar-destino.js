@@ -1,6 +1,4 @@
-var BLOCK_LOADING_END = false;
 var FIRESTORE_DESTINOS_DATA;
-var INPUT_DETECTED = false;
 
 SUCCESSFUL_SAVE = false;
 
@@ -28,14 +26,12 @@ async function _loadEditarDestinoPage() {
   _newDynamicSelect('regiao');
 
   if (DOCUMENT_ID) {
-    await _loadDestinos()
+    await _loadDestinos();
   }
 
   _loadEventListeners();
-
-  if (!BLOCK_LOADING_END) {
-    _stopLoadingScreen();
-  }
+  _stopLoadingScreen();
+  _snapshotFormState();
   $('body').css('overflow', 'auto');
 }
 
@@ -133,14 +129,8 @@ function _loadEventListeners() {
     _loadCurrencySelects();
   });
 
-  document.addEventListener("input", (event) => {
-    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
-      INPUT_DETECTED = true;
-    }
-  });
-
   window.addEventListener("beforeunload", (event) => {
-    if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
+    if (_hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
       event.preventDefault();
       event.returnValue = translate('messages.exit_confirmation');
     }
@@ -156,7 +146,6 @@ function _addListenerToRemoveDestino(categoria, j) {
 }
 
 async function _loadDestinos() {
-  BLOCK_LOADING_END = true;
   getID('delete-text').style.display = 'block';
   _startLoadingScreen();
 

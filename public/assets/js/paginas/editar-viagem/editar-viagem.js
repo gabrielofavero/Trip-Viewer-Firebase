@@ -1,4 +1,3 @@
-var BLOCK_LOADING_END = false;
 var FIRESTORE_DATA = {};
 var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_GASTOS_DATA = {};
@@ -47,10 +46,9 @@ async function _loadEditarViagemPage() {
   _loadLogoSelector();
 
   _loadEventListeners();
+  _stopLoadingScreen();
+  _snapshotFormState();
 
-  if (!BLOCK_LOADING_END) {
-    _stopLoadingScreen();
-  }
   $('body').css('overflow', 'auto');
 }
 
@@ -73,7 +71,6 @@ function _loadUploadSelectors() {
 
 async function _loadTrip(stripped = false) {
   getID('delete-text').style.display = 'block';
-  BLOCK_LOADING_END = true;
   _startLoadingScreen();
 
   await _loadPinData();

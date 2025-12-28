@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 114   | 112       | 2       |
+| 🐞   | Bug         | B000 | 115   | 113       | 2       |
 | 🏆   | Feature     | F000 | 118   | 111       | 7       |
 | 📈   | Improvement | M000 | 125   | 124       | 1       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
@@ -35,6 +35,7 @@
 
 ### December 2025
 
+- 🐞 **B115:** Change detection not working for edit pages
 - 📈 **M121:** Add "transportation" expense type
 - 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B114:** When moving destinations, content visibility and toggle are not auto-changed

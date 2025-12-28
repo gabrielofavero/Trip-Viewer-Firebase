@@ -1,11 +1,8 @@
-var BLOCK_LOADING_END = false;
 var FIRESTORE_DATA = {};
 var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_NEW_DATA = {};
 
 var SUCCESSFUL_SAVE = false;
-
-var INPUT_DETECTED = false;
 
 _startLoadingScreen();
 
@@ -28,7 +25,7 @@ async function _loadEditarListagemPage() {
   DESTINOS = _getOrderedDocumentByTitle(USER_DATA.destinos);
 
   if (DOCUMENT_ID) {
-    await _carregarListagem()
+    await _carregarListagem();
   } else {
     _loadDestinos();
   }
@@ -37,10 +34,9 @@ async function _loadEditarListagemPage() {
   _loadLogoSelector();
 
   _loadEventListeners();
+  _stopLoadingScreen();
+  _snapshotFormState();
 
-  if (!BLOCK_LOADING_END) {
-    _stopLoadingScreen();
-  }
   $('body').css('overflow', 'auto');
 }
 
@@ -86,14 +82,8 @@ function _loadEventListeners() {
 
   getID('destinos-search').addEventListener('input', () => _searchDestinosListenerAction());
 
-  document.addEventListener("input", (event) => {
-    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
-      INPUT_DETECTED = true;
-    }
-  });
-
   window.addEventListener("beforeunload", (event) => {
-    if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
+    if (_hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
       event.preventDefault();
       event.returnValue = translate('messages.exit_confirmation');
     }
@@ -103,7 +93,6 @@ function _loadEventListeners() {
 
 async function _carregarListagem() {
   getID('delete-text').style.display = 'block';
-  BLOCK_LOADING_END = true;
   _startLoadingScreen();
 
   FIRESTORE_DATA = await _getSingleData('listagens');

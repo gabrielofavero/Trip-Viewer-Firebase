@@ -1,5 +1,3 @@
-var INPUT_DETECTED = false;
-
 // Loader
 function _loadEventListeners() {
     // Inputs
@@ -47,15 +45,9 @@ function _loadEventListeners() {
     getID('dark-and-light').addEventListener('change', () => _visibilityListenerAction());
     getID('light-exclusive').addEventListener('change', () => _visibilityListenerAction());
     getID('dark-exclusive').addEventListener('change', () => _visibilityListenerAction());
-
-    document.addEventListener("input", (event) => {
-        if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA") {
-          INPUT_DETECTED = true;
-        }
-      });
     
       window.addEventListener("beforeunload", (event) => {
-        if (INPUT_DETECTED && !SUCCESSFUL_SAVE) {
+        if (_hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
           event.preventDefault();
           event.returnValue = translate('messages.exit_confirmation');
         }
