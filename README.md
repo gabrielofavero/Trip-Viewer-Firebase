@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 114   | 112       | 2       |
 | 🏆   | Feature     | F000 | 118   | 111       | 7       |
-| 📈   | Improvement | M000 | 125   | 122       | 3       |
+| 📈   | Improvement | M000 | 125   | 123       | 2       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
 
 ## Backlog
@@ -31,12 +31,12 @@
 - 📈 **M122:** Put each expense type as draggable
 - 📈 **M121:** Replace "Flight" expense type with "transportation"
 - 🐞 **B096:** Fix Gallery module
-- 📈 **M092:** Title in dark mode with more highlight
 
 ## Done
 
 ### December 2025
 
+- 📈 **M092:** Title in dark mode with more highlight
 - 🐞 **B114:** When moving destinations, content visibility and toggle are not auto-changed
 - 🐞 **B102:** When moving destinations, description view does not reload
 - 📈 **M125:** Improve sensitive box visibility
