@@ -367,8 +367,8 @@ function _searchDestinosListenerAction() {
 function _visibilityAdd(type) {
      const dynamicFunctionName = `_add${type}`;
      if (typeof window[dynamicFunctionName] === 'function') {
-       window[dynamicFunctionName]();
+          window[dynamicFunctionName]();
      } else {
-       console.error(`${dynamicFunctionName} is not defined.`);
+          console.error(`${dynamicFunctionName} is not defined.`);
      }
-   }
+}

@@ -4,8 +4,8 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 113   | 108       | 3       |
-| 🏆   | Feature     | F000 | 118   | 108       | 10       |
+| 🐞   | Bug         | B000 | 114   | 112       | 2       |
+| 🏆   | Feature     | F000 | 118   | 111       | 7       |
 | 📈   | Improvement | M000 | 125   | 122       | 3       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
 
@@ -13,16 +13,16 @@
 
 ### High Priority
 
+- ⚔️ **E036:** Separate expenses by traveler
+  - *[🏆F108] Add expense type on edit trip page + saving*
+  - *[🏆F109] Add custom select on expenses page*
+  - *[🏆F110] Custom load action for select on expenses page*
 - ⚔️ **E038:** Destinations data and features overhaul
   - *[🏆F115] Change destinations inner data structure to Object*
   - *[🏆F116] Update set and get methods for destinations new structure*
   - *[🏆F117] Add filtering and sorting options to destinations page*
   - *[🏆F118] Add option to quick edit destination on main page (if owner)*
 - 🐞 **B110:** Backup not getting all data from 'protegidos' collection
-- ⚔️ **E036:** Separate expenses by traveler
-  - *[🏆F108] Add expense type on edit trip page + saving*
-  - *[🏆F109] Add custom select on expenses page*
-  - *[🏆F110] Custom load action for select on expenses page*
 
 ### Medium Priority
 
@@ -37,6 +37,7 @@
 
 ### December 2025
 
+- 🐞 **B114:** When moving destinations, content visibility and toggle are not auto-changed
 - 🐞 **B102:** When moving destinations, description view does not reload
 - 📈 **M125:** Improve sensitive box visibility
 - 🐞 **B108:** When returning a destination, view page auto scrolls up

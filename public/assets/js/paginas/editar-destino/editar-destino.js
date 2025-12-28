@@ -300,6 +300,16 @@ function _moveDestino(j, categoria) {
     _buildDS('regiao');
 
     _updateDescriptionButtonLabel(newCategoria, newJ);
+
+    if (getID(`habilitado-${newCategoria}-content`).children.length === 1) {
+      getID(`habilitado-${newCategoria}`).checked = true;
+      _showContent(newCategoria);
+    }
+
+    if (getID(`habilitado-${categoria}-content`).children.length === 0) {
+      getID(`habilitado-${categoria}`).checked = false;
+      _hideContent(categoria);
+    }
   }
 
   _closeMessage();
