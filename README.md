@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 110   | 105       | 5       |
+| 🐞   | Bug         | B000 | 111   | 106       | 5       |
 | 🏆   | Feature     | F000 | 114   | 108       | 6       |
 | 📈   | Improvement | M000 | 124   | 121       | 3       |
 | ⚔️   | Epic        | E000 | 37    | 35        | 2       |
@@ -12,8 +12,8 @@
 ## Backlog
 
 ### High Priority
+
 - 🐞 **B110:** Backup not getting all data from 'protegidos' collection
-- 🐞 **B109:** Traveler-exclusive itinerary not working
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F109] Add custom select on expenses page*
@@ -35,6 +35,8 @@
 
 ### December 2025
 
+- 🐞 **B111:** Destination data mixing between categories
+- 🐞 **B109:** Traveler-exclusive itinerary not working
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F111] Create migration for adding document/trip/listing minimal data into user data*
   - *[📈M123] Reduce document calls for index*

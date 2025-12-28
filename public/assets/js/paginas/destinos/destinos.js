@@ -42,6 +42,7 @@ function _loadDestinoByType(activeCategory) {
   const content = getID('content');
   content.innerHTML = "";
   CONTENT = {};
+  MEDIA_HYPERLINKS = {};
 
   if (activeCategory === 'myMaps') {
     content.classList = "map-content";

@@ -1,10 +1,10 @@
 {
-  "trip-viewer-dev": {
-    "deployedAt": "2025-12-15T20:21:27.6893492-03:00",
-    "version": "0d35bb2b71bec5b2"
-  },
   "trip-viewer-prd": {
-    "deployedAt": "2025-12-15T20:22:30.1292708-03:00",
-    "version": "40838a526c4f5a59"
+    "deployedAt": "2025-12-15T21:54:59.4661052-03:00",
+    "version": "b27c6c73f2125157"
+  },
+  "trip-viewer-dev": {
+    "deployedAt": "2025-12-15T23:03:01.9816339-03:00",
+    "version": "a81b521220afa53e"
   }
 }
