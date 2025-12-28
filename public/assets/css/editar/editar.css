@@ -1795,7 +1795,7 @@ details summary::-webkit-details-marker {
   width: 100%;
   border: 1px solid #c0c4c9;
   border-radius: 0.25rem;
-  margin-top: 1.25rem;
+  margin-top: 4px;
   text-align: left;
   height: auto;
   font-size: 14px;

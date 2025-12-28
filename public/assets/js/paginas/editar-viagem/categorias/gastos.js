@@ -7,7 +7,7 @@ var LAST_INNER_GASTO_TIPO = '';
 
 function _loadGastos(data = FIRESTORE_GASTOS_DATA) {
     _pushGasto('gastosPrevios', data);
-    _pushGasto('gastosDurante', data);    
+    _pushGasto('gastosDurante', data);
     _loadGastosHTML();
 }
 
@@ -59,36 +59,45 @@ function _pushGasto(tipo, data) {
     }
 }
 
-function _loadGastosContent(data) {
-
-}
-
 function _loadGastosHTML() {
     for (const categoria in INNER_GASTOS) {
         getID(categoria).innerHTML = '';
-        for (const tipoObj of INNER_GASTOS[categoria]) {
-            _buildTipo(categoria, tipoObj)
+        for (const innerGasto of INNER_GASTOS[categoria]) {
+            _buildInnerGasto(categoria, innerGasto);
         }
     }
 
-    function _buildTipo(categoria, tipoObj) {
+    function _buildInnerGasto(categoria, innerGasto) {
         const div = document.createElement('div');
-        div.className = 'gastos-item';
+        const id = `${categoria}-${innerGasto.tipo}`
+        div.className = 'gastos-item draggable-area';
+        div.dataset.group = id;
+        div.id = id;
 
         const label = document.createElement('label');
-        const labelKey = tipoObj.tipo == 'custom' ? 'labels.custom' : tipoObj.tipo;
-        label.innerText = translate(labelKey, {}, false);
+        label.innerText = translate(innerGasto.tipo, {}, false);
         div.appendChild(label);
 
-        for (let i = 0; i < tipoObj.gastos.length; i++) {
+        for (let i = 0; i < innerGasto.gastos.length; i++) {
+            const container = document.createElement('div');
+            container.className = 'input-botao-container';
+
             const button = document.createElement('button');
-            button.className = 'btn input-botao';
-            button.innerText = tipoObj.gastos[i].nome;
-            button.onclick = () => _openInnerGasto(categoria, tipoObj.tipo, i);
-            div.appendChild(button);
+            button.className = 'btn input-botao draggable';
+            button.innerText = innerGasto.gastos[i].nome;
+            button.onclick = () => _openInnerGasto(categoria, innerGasto.tipo, i);
+            container.appendChild(button);
+
+            const icon = document.createElement("i");
+            icon.className = "iconify drag-icon";
+            icon.dataset.icon = "mdi:drag";
+            container.appendChild(icon);
+
+            div.appendChild(container);
         }
 
         getID(categoria).appendChild(div);
+        _initializeSortableForGroup(id, { onEnd: _afterDragInnerGasto });
     }
 }
 
@@ -134,6 +143,10 @@ function _openInnerGasto(categoria, tipo = '', index = -1) {
             }
         }
     });
+
+    getID('gasto-tipo-input').addEventListener('change', (e) => {
+        e.target.value = _firstCharToUpperCase(e.target.value.trim());
+    });
 }
 
 function _applyGastoInnerTipo(tipo) {
@@ -157,7 +170,7 @@ function _getInnerGastoContent(categoria, tipo, index) {
                     <label>${translate('labels.type')}</label>
                     <select id="gasto-tipo-select" clas="editar-select"">
                         <option value="trip.transportation.type.flights">${translate('trip.transportation.type.flights')}</option>
-                        <option value="trip.accomodation.title">${translate('trip.accommodation.title')}</option>
+                        <option value="trip.accommodation.title">${translate('trip.accommodation.title')}</option>
                         <option value="labels.entrertainment">${translate('labels.entrertainment')}</option>
                         <option value="trip.expenses.daily">${translate('trip.expenses.daily')}</option>
                         <option value="labels.people">${translate('labels.people')}</option>
@@ -264,4 +277,27 @@ function _deleteInnerGasto(categoria, tipo, index) {
     INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos.splice(index, 1);
     _loadGastosHTML();
     _closeMessage();
+}
+
+function _afterDragInnerGasto(evt) {
+    const id = evt.from.getAttribute('data-group');
+    const split = id.split('-');
+    const categoria = split[0];
+
+    const from = evt.oldIndex - 1;
+    const to = evt.newIndex - 1;
+
+    const groupArr = INNER_GASTOS[categoria];
+    if (!groupArr) return;
+
+    const tipo = split.slice(1).join('-');
+    const findSubgroup = tipo =>
+        INNER_GASTOS.gastosPrevios.find(entry => entry && entry.tipo === tipo);
+
+    const gastos = findSubgroup(tipo).gastos;
+
+    const [moved] = gastos.splice(from, 1);
+    gastos.splice(to, 0, moved);
+
+    _loadGastosHTML();
 }

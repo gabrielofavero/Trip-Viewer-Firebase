@@ -4,15 +4,16 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 115   | 113       | 2       |
+| 🐞   | Bug         | B000 | 116   | 113       | 3       |
 | 🏆   | Feature     | F000 | 118   | 111       | 7       |
-| 📈   | Improvement | M000 | 125   | 124       | 1       |
+| 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
 
 ## Backlog
 
 ### High Priority
 
+- 🐞 **B116:** Fix expenses currency API
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F109] Add custom select on expenses page*
@@ -28,13 +29,13 @@
 
 ### Low Priority
 
-- 📈 **M122:** Put each expense type as draggable
 - 🐞 **B096:** Fix Gallery module
 
 ## Done
 
 ### December 2025
 
+- 📈 **M122:** Put each expense type as draggable
 - 🐞 **B115:** Change detection not working for edit pages
 - 📈 **M121:** Add "transportation" expense type
 - 📈 **M092:** Title in dark mode with more highlight
@@ -94,7 +95,7 @@
 - 📈 **M116:** Replace call-sync-order.json with native functions
 - 📈 **M113:** Update all link validations from pop-ups to toasts.
 - 🐞 **B091:** fields.js and destination modal are not being translated
-- 📈 **M107:** Edit "Confirm" at accomodation images to return to previous instead of closing pop-up
+- 📈 **M107:** Edit "Confirm" at accommodation images to return to previous instead of closing pop-up
 - 🐞 **B090:** Itinerary title now showing if single destination (edit-trip)
 
 ### October 2025
