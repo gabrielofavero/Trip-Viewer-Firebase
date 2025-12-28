@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 112   | 107       | 5       |
+| 🐞   | Bug         | B000 | 112   | 108       | 3       |
 | 🏆   | Feature     | F000 | 118   | 108       | 10       |
 | 📈   | Improvement | M000 | 124   | 121       | 3       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
@@ -26,7 +26,6 @@
 
 ### Medium Priority
 
-- 🐞 **B108:** When returning a destination, view page auto scrolls up
 - 🐞 **B102:** When moving destinations, description view does not reload
 
 ### Low Priority
@@ -40,6 +39,7 @@
 
 ### December 2025
 
+- 🐞 **B108:** When returning a destination, view page auto scrolls up
 - 🐞 **B112:** Destination select animation not working
 - 🐞 **B111:** Destination data mixing between categories
 - 🐞 **B109:** Traveler-exclusive itinerary not working

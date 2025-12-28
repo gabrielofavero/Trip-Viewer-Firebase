@@ -1,8 +1,8 @@
 var SAVED_SCROLL_POSITION = 0;
 
 function _openLightbox(link) {
-  _startLoadingScreen();
   SAVED_SCROLL_POSITION = window.pageYOffset || document.documentElement.scrollTop;
+  _startLoadingScreen();
   window.scrollTo(0, 0);
   var lightboxIframe = getID('lightbox-iframe');
   lightboxIframe.src = 'about:blank';
