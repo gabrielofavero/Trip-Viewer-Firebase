@@ -111,8 +111,8 @@ section {
   cursor: pointer;
 }
 
-.destinos-select .container.opened .chevron {
-  transform: translateY(-50%) rotate(0deg);
+.destinos-select.opened .chevron {
+  transform: rotate(0deg);
 }
 
 .destinos-select .chevron {

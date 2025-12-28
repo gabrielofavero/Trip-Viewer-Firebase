@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 111   | 106       | 5       |
+| 🐞   | Bug         | B000 | 112   | 107       | 5       |
 | 🏆   | Feature     | F000 | 118   | 108       | 10       |
 | 📈   | Improvement | M000 | 124   | 121       | 3       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
@@ -40,6 +40,7 @@
 
 ### December 2025
 
+- 🐞 **B112:** Destination select animation not working
 - 🐞 **B111:** Destination data mixing between categories
 - 🐞 **B109:** Traveler-exclusive itinerary not working
 - ⚔️ **E037:** Reduce Firestore document calls
