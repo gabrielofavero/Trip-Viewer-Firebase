@@ -2486,6 +2486,11 @@ iframe {
   margin-top: 10px;
 }
 
+.hotel-reservation.sensitive {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .hotel-description {
   margin-bottom: 10px;
 }

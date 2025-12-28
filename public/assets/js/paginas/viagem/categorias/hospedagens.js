@@ -48,6 +48,10 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
   const checkIn = hospedagem.checkIn;
   const checkOut = hospedagem.checkOut
   const galeriaId = innerProgramacao ? 'programacao-galeria' : `hospedagens-galeria-${j}`;
+  const isSensitive = FIRESTORE_DATA.pin === 'sensitive-only';
+  const reservationClass = isSensitive ? 'hotel-reservation sensitive' : 'hotel-reservation';
+  const reservationVisibility = (isSensitive || hospedagem.reserva) ? 'block' : 'none';
+
   let galeriaItems = '';
 
   for (let i = 0; i < imagens.length; i++) {
@@ -87,7 +91,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
                 </div>
               </div>
               <div class="hotel-text">
-              <div class="hotel-reservation" style="display: ${(hospedagem.reserva || FIRESTORE_DATA.pin === 'sensitive-only') ? 'block' : 'none'}">
+              <div class="${reservationClass}" style="display: ${reservationVisibility}">
                 <i class="bx bxs-file color-icon"></i>
                 ${_getHospedagemReservationHTML(hospedagem)} 
               </div>
