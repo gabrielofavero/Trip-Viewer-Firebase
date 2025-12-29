@@ -7,16 +7,24 @@ function _snapshotFormState(root = document) {
     }
     ORIGINAL_STATE.clear();
 
-    const fields = root.querySelectorAll("input, textarea, select");
+    const fields = root.querySelectorAll("input, textarea, select, .input-botao");
 
     fields.forEach(el => {
-        const value =
-            (el.type === "checkbox" || el.type === "radio")
-                ? el.checked
-                : el.value;
-
+        const value = _getElValue(el);
         ORIGINAL_STATE.set(el, value);
     });
+
+    function _getElValue(el) {
+        switch (el.type) {
+            case "checkbox":
+            case "radio":
+                return el.checked;
+            case "submit":
+                return el.innerText;
+            default:
+                return el.value;
+        }
+    }
 }
 
 function _hasUnsavedChanges(root = document) {
