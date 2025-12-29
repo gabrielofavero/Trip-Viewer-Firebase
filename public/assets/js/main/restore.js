@@ -266,13 +266,13 @@ async function _restoreAccount(restore) {
         const types = ["viagens", "destinos", "listagens"];
 
         for (const type of types) {
-            const group = restore?.[type];
-            if (!group) {
-                patch[type] = [];
+            const group = restore?.usuario?.[type];
+            if (!group || Object.keys(group).length === 0) {
+                patch[type] = {};
                 continue;
             }
 
-            patch[type] = Object.keys(group).filter(id => id !== "protected");
+            patch[type] = group;
         }
 
         return patch;

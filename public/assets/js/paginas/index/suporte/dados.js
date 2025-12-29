@@ -61,7 +61,7 @@ function _loadIndexDataHTML() {
         const contentList = box.querySelector('.content-list');
 
         if (dataArray.length === 0) {
-            contentList.innerText = translate('messages.no_data');
+            contentList.innerHTML = `<div style="margin-top: 1em">${translate('messages.no_data')}</div>`;
             return;
         }
 

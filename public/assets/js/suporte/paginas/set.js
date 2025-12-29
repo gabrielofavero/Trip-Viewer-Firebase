@@ -110,6 +110,8 @@ function _setUserData(ops, uid, type, documentData) {
                     fim: data.fim,
                     imagem: data.imagem,
                     inicio: data.inicio,
+                    modulos: data.modulos,
+                    pin: data.pin,
                     titulo: data.titulo,
                     versao: data.versao,
                 }

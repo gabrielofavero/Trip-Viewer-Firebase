@@ -216,3 +216,8 @@ strong {
 #toast {
   color: #303030;
 }
+
+.partial-backup-scroll {
+  border: 0.5px solid #383838;
+  background: #404040;
+}

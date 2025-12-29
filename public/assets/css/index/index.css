@@ -998,3 +998,11 @@ section {
     min-width: 80%;
   }
 }
+
+.partial-backup-scroll {
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 4px;
+  border: 0.5px solid #D9D9D9;
+  background: #f7f8f9;
+}

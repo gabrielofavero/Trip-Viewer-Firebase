@@ -40,21 +40,22 @@ function _prepareMissingData() {
     }
 
     function _prepareAdditionalData() {
-        for (const documentID in USER_DATA.viagens) {
+        const viagens = USER_DATA.viagens || {};
+        for (const documentID in viagens) {
             const viagem = viagens[documentID];
     
-            switch (data.pin) {
+            switch (viagem.pin) {
                 case 'no-pin':
-                    if (data.modulos.gastos === true) jobs.push(_getJobObject(viagem.titulo, documentID, 'gastos'));
+                    if (viagem?.modulos?.gastos === true) jobs.push(_getJobObject(viagem.titulo, documentID, 'gastos'));
                     break;
                 case 'all-data':
                 case 'sensitive-only':
                     const innerJobs = [];
-                    if (data.modulos.gastos === true) {
+                    if (viagem?.modulos?.gastos === true) {
                         innerJobs.push(_getJobObject(viagem.titulo, documentID, 'gastos', 'protected'));
                         innerJobs.push(_getJobObject(viagem.titulo, documentID, 'protegido'));
                     }
-                    if (data.modulos.hospedagens === true || data.modulos.transportes === true) innerJobs.push(_getJobObject(viagem.titulo, documentID, 'viagens', 'protected'));
+                    if (viagem?.modulos?.hospedagens === true ||viagem?.modulos?.transportes === true) innerJobs.push(_getJobObject(viagem.titulo, documentID, 'viagens', 'protected'));
                     protectedJobs.push(_getProtectedJobObject(viagem.titulo, documentID, innerJobs));
             }
         }
@@ -150,13 +151,18 @@ function _getProtectedJobPins() {
 }
 
 async function _getAccountData(useSensitiveData = false) {
-    const data = _getEmptyBaseStructure();
+    const data = _getInitialBaseStructure();
     const jobs = _buildMissingJobs(useSensitiveData);
     await _loadJobsConcurrently(jobs, data);
     return data;
 
-    function _getEmptyBaseStructure() {
+    function _getInitialBaseStructure() {
         return {
+            usuario: {
+                destinos: USER_DATA.destinos,
+                listagens: USER_DATA.listagens,
+                viagens: USER_DATA.viagens,
+            },
             destinos: {},
             gastos: { protected: {} },
             listagens: {},
@@ -235,19 +241,39 @@ function _displayPartialBackupWarning() {
     function _getContent() {
         const list = [translate('account.backup.partial.message')];
         const protectedDataAdded = [];
-
+        const failedItems = [];
+    
         for (const failed of MISSING_ACCOUNT_DATA.failed) {
-            const isProtected = failed.job.subpath?.includes('protected') || failed.job.collection === 'protegido';
+            const isProtected =
+                failed.job.subpath?.includes('protected') ||
+                failed.job.collection === 'protegido';
+    
             if (isProtected) {
                 if (protectedDataAdded.includes(failed.job.documentID)) continue;
                 protectedDataAdded.push(failed.job.documentID);
             }
-
+    
             const label = isProtected ? 'viagens/protected' : failed.job.collection;
             const type = _getTranslatedDocumentLabel(label);
-            list.push(`<b>${failed.job.title}</b><br>${translate(`account.backup.partial.reason.${failed.reason}`, { type })}`);
+    
+            failedItems.push(
+                `<b>${failed.job.title}</b><br>${translate(
+                    `account.backup.partial.reason.${failed.reason}`,
+                    { type }
+                )}`
+            );
         }
-
+    
+        const scrollableContent = `
+            <div class="partial-backup-scroll">
+                ${failedItems.join("<br><br>")}
+            </div>
+        `;
+    
+        // mensagem + lista rolável
+        list.push(scrollableContent);
+    
         return list.join("<br><br>");
     }
+    
 }

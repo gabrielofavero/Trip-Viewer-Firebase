@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 116   | 113       | 3       |
+| 🐞   | Bug         | B000 | 116   | 114       | 2       |
 | 🏆   | Feature     | F000 | 118   | 111       | 7       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 38    | 35        | 2       |
@@ -23,7 +23,6 @@
   - *[🏆F116] Update set and get methods for destinations new structure*
   - *[🏆F117] Add filtering and sorting options to destinations page*
   - *[🏆F118] Add option to quick edit destination on main page (if owner)*
-- 🐞 **B110:** Backup not getting all data from 'protegidos' collection
 
 ### Medium Priority
 
@@ -35,6 +34,7 @@
 
 ### December 2025
 
+- 🐞 **B110:** Backup and Restore functions not working
 - 📈 **M122:** Put each expense type as draggable
 - 🐞 **B115:** Change detection not working for edit pages
 - 📈 **M121:** Add "transportation" expense type
