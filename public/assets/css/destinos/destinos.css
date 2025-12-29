@@ -563,7 +563,8 @@ section {
 }
 
 .nota,
-.nota-sem-margem {
+.nota-sem-margem,
+.planejado {
   font-size: 25px;
   color: #1f2937;
   margin-right: 10px;
@@ -611,6 +612,10 @@ section {
 
 .nota-ausente {
   background-color: #ead1dc;
+}
+
+.planejado {
+  background-color: none;
 }
 
 .accordion-body {

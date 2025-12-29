@@ -7,33 +7,32 @@
 | 🐞   | Bug         | B000 | 116   | 114       | 2       |
 | 🏆   | Feature     | F000 | 118   | 111       | 7       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
-| ⚔️   | Epic        | E000 | 38    | 35        | 2       |
+| ⚔️   | Epic        | E000 | 37    | 35        | 1       |
 
 ## Backlog
 
 ### High Priority
 
+- 🏆 **F117:** Add filtering and sorting options to destinations page
+- 🏆 **F118:** Add option to quick edit destination on main page (if owner)
 - 🐞 **B116:** Fix expenses currency API
 - ⚔️ **E036:** Separate expenses by traveler
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F109] Add custom select on expenses page*
   - *[🏆F110] Custom load action for select on expenses page*
-- ⚔️ **E038:** Destinations data and features overhaul
-  - *[🏆F115] Change destinations inner data structure to Object*
-  - *[🏆F116] Update set and get methods for destinations new structure*
-  - *[🏆F117] Add filtering and sorting options to destinations page*
-  - *[🏆F118] Add option to quick edit destination on main page (if owner)*
 
 ### Medium Priority
 
 ### Low Priority
 
 - 🐞 **B096:** Fix Gallery module
+- 🏆 **F116:** Destinations data refactoring
 
 ## Done
 
 ### December 2025
 
+- 🏆 **F115:** Put visual indication if destination is planned for the trip*
 - 🐞 **B110:** Backup and Restore functions not working
 - 📈 **M122:** Put each expense type as draggable
 - 🐞 **B115:** Change detection not working for edit pages

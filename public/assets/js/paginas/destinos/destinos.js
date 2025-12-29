@@ -92,6 +92,7 @@ function _loadDestinoByType(activeCategory) {
                                               <path class="st0" d="M0-3.3h12v12H0V-3.3z" />
                                           </svg>
                                       </div>
+                                      ${_getPlannedHTML(item.planejado)}
                                       <div class="icon-container" style="display: ${item.nota ? 'block' : 'none'}">
                                           <i class="iconify nota ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
                                       </div>
@@ -250,4 +251,11 @@ function _loadDestinoCustomSelect() {
     document.title = titulo;
     _loadDestinoByType(value);
   }
+}
+
+function _getPlannedHTML(planejado) {
+  if (!planejado) return '';
+  return `<div class="icon-container">
+            <i class="iconify planejado" data-icon="fa-solid:check"></i>
+          </div>`
 }

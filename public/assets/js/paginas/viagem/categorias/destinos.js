@@ -18,6 +18,10 @@ function _loadDestinos() {
     getID('destinosTitleContainer').style.display = 'none';
   }
 
+  if (FIRESTORE_DATA.modulos.programacao) {
+    _loadPlannedDestinations();
+  }
+
   window.addEventListener("resize", function () {
     _adjustDestinationsHTML();
   });
@@ -146,5 +150,39 @@ function _adjustDestinationsHTML() {
 
   for (const el of elements) {
     el.style.height = `${maxHeight}px`;
+  }
+}
+
+function _loadPlannedDestinations() {
+  for (const dia of FIRESTORE_DATA.programacoes) {
+    for (const turno of ['madrugada', 'manha', 'tarde', 'noite']) {
+      const programacoes = dia[turno];
+      if (!programacoes) continue;
+
+      for (const programacao of programacoes) {
+        const item = programacao?.item;
+        if (!item || item.tipo !== 'destinos') continue;
+
+        _addPlannedDestination(item);
+      }
+    }
+  }
+
+  function _addPlannedDestination(item) {
+    for (const destino of DESTINOS) {
+      if (destino.destinosID !== item.local) continue;
+
+      const categoriaLista = destino.destinos?.[item.categoria];
+      if (!Array.isArray(categoriaLista)) return;
+
+      for (const destinoItem of categoriaLista) {
+        if (destinoItem.id === item.id) {
+          destinoItem.planejado = true;
+          return;
+        }
+      }
+
+      return;
+    }
   }
 }
