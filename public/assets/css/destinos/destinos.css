@@ -139,8 +139,14 @@ section {
   min-width: 180px;
 }
 
+.destinos-select .dropdown .option {
+  background-color: transparent;
+  transition: background-color .15s ease;
+  border-radius: 0.5rem;
+}
+
 .destinos-select .dropdown .option:hover {
-  background: #F6F6F6;
+  background-color: var(--theme-color-secondary);
 }
 
 .destinos-select .option {

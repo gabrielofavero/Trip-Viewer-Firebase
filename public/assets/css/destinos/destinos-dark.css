@@ -36,16 +36,12 @@ a:hover {
 
 .destinos-select .dropdown{
   background: var(--box-color);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color-alt);
   box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 .destinos-select .dropdown .option {
   color: var(--font-color);
-}
-
-.destinos-select .dropdown .option:hover {
-  background: #3b3b3b;
 }
 
 .destinos-select .option:hover {

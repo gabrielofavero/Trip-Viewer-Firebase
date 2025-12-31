@@ -1,23 +1,22 @@
-
 // User Actions
 function _openFilterDrawer() {
     const title = getID('filter').innerText;
     const innerHTML = `<button class="option-btn">Newest First</button>`
-    openDrawer(title, innerHTML);
+    _openDrawer(title, innerHTML);
 }
 
 function _openSortDrawer() {
     const title = getID('order').innerText;
     const innerHTML = `<button class="option-btn">Newest First</button>`
-    openDrawer(title, innerHTML);
+    _openDrawer(title, innerHTML);
 }
 
 // Drawer
-function openDrawer(titleText, innerHTML) {
-    const title = document.getElementById("drawerTitle");
-    const content = document.getElementById("drawerContent");
-    const overlay = document.getElementById("overlay");
-    const drawer = document.getElementById("drawer");
+function _openDrawer(titleText, innerHTML) {
+    const overlay = getID("overlay");
+    const drawer = getID("drawer");
+    const title = getID("drawerTitle");
+    const content = getID("drawerContent");
 
     title.textContent = titleText;
     content.innerHTML = innerHTML;
@@ -27,14 +26,17 @@ function openDrawer(titleText, innerHTML) {
     drawer.classList.add("open");
 }
 
-function closeDrawer() {
-    const overlay = document.getElementById("overlay");
-    const drawer = document.getElementById("drawer");
-
+function _closeDrawer() {
+    const overlay = getID("overlay");
+    const drawer = getID("drawer");
     drawer.classList.remove("open");
-
-    setTimeout(() => overlay.style.display = "none", 280);
+    setTimeout(() => {
+        overlay.style.display = "none";
+    }, 280);
 }
+
+
+
 
 function _filterDestinations() {
 
