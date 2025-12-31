@@ -16,7 +16,7 @@ function _getFilterInnerHTML() {
             return '';
         }
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-planned">
             <div class="drawer-title">${f.planned.title}</div>
             <button class="option-btn" data-value="everything">${f.show_everything}</button>
             <button class="option-btn" data-value="planned">${f.planned.planned}</button>
@@ -30,7 +30,7 @@ function _getFilterInnerHTML() {
             return '';
         }
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-scores">
             <div class="drawer-title">${f.scores.title}</div>
             <button class="option-btn" data-value="everything">${f.show_everything}</button>
             <button class="option-btn" data-value="5">${f.scores['5']}</button>
@@ -51,7 +51,7 @@ function _getFilterInnerHTML() {
         });
 
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-regions">
             <div class="drawer-title">${f.region.title}</div>
             <button class="option-btn" data-value="everything">${f.show_everything}</button>
             <button class="option-btn" data-value="none">${f.region.none}</button>
@@ -80,7 +80,7 @@ function _getFilterInnerHTML() {
         });
 
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-prices">
             <div class="drawer-title">${f.price.title}</div>
             <button class="option-btn" data-value="everything">${f.show_everything}</button>
             ${optionsHTML}
@@ -93,15 +93,15 @@ function _getSortInnerHTML() {
     PRICES_FILTERED = null;
     const s = DESTINO.translations.sort;
     return `
-    ${_getNameHTML(s)}
-    ${_getPlannedHTML(s)}
     ${_getScoresHTML(s)}
+    ${_getPlannedHTML(s)}
     ${_getPricesHTML(s)}
+    ${_getNameHTML(s)}
     `
 
     function _getNameHTML(s) {
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-name">
             <div class="drawer-title">${s.name.title}</div>
             <button class="option-btn" data-value="ascending">${s.name.ascending}</button>
             <button class="option-btn" data-value="descending">${s.name.descending}</button>
@@ -113,7 +113,7 @@ function _getSortInnerHTML() {
             return '';
         }
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-planned">
             <div class="drawer-title">${s.planned.title}</div>
             <button class="option-btn" data-value="planned_first">${s.planned.planned_first}</button>
             <button class="option-btn" data-value="not_planned_first">${s.planned.not_planned_first}</button>
@@ -125,7 +125,7 @@ function _getSortInnerHTML() {
             return '';
         }
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-scores">
             <div class="drawer-title">${s.score.title}</div>
             <button class="option-btn" data-value="highest_first">${s.score.highest_first}</button>
             <button class="option-btn" data-value="lowest_first">${s.score.lowest_first}</button>
@@ -137,7 +137,7 @@ function _getSortInnerHTML() {
             return '';
         }
         return `
-        <div class="drawer-container">
+        <div class="drawer-container" id="drawer-prices">
             <div class="drawer-title">${s.price.title}</div>
             <button class="option-btn" data-value="lowest_first">${s.price.lowest_first}</button>
             <button class="option-btn" data-value="highest_first">${s.price.highest_first}</button>

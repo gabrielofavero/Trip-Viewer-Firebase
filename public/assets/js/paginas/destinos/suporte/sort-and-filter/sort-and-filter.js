@@ -1,3 +1,15 @@
+const DEFAULT_FILTER_PREFERENCES = {
+    planned: "everything",
+    scores: "everything",
+    regions: "everything",
+    prices: "everything"   
+}
+
+const DEFAULT_SORTING_PREFERENCES = {
+    type: "scores",
+    sorting: "highest_first"
+}
+
 // Loading Action
 
 function _loadSortAndFilterButtons() {
@@ -50,25 +62,12 @@ function _closeDrawer() {
 
 
 
-
+// Main Operations
 function _filterDestinations() {
 
 }
 
 function _sortDestinations() {
-
-}
-
-// Content Handling
-function _getFilteredAndSortedDestinations(content) {
-    return content;
-}
-
-function _getFilteredContent(content) {
-
-}
-
-function _getSortedContent() {
 
 }
 
@@ -83,9 +82,17 @@ function _setSortedPreferences(preferences) {
 }
 
 function _getFilteredPreferences() {
-    sessionStorage.getItem("destinos-filtered-preferences");
+    const stored = sessionStorage.getItem("destinos-filtered-preferences");
+    if (stored) {
+        return JSON.parse(stored);
+    }
+    return DEFAULT_FILTER_PREFERENCES;
 }
 
 function _getSortedPreferences() {
     sessionStorage.getItem("destinos-sorted-preferences");
+    if (stored) {
+        return JSON.parse(stored);
+    }
+    return DEFAULT_SORTING_PREFERENCES;
 }
