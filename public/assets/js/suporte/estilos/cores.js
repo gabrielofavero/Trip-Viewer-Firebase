@@ -71,7 +71,7 @@ function _getColorIndexFromOptions(i) {
     return i;
 }
 
-function _getMixedColor(mainColor, mixColor, mixColorPercentage = 95) {
+function _getMixedColor(mainColor, mixColor, mixColorPercentage = 85) {
     let [r1, g1, b1] = _hexToRgb(mainColor);
     let [r2, g2, b2] = _hexToRgb(mixColor);
 

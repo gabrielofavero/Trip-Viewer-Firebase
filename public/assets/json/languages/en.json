@@ -353,8 +353,7 @@
             },
             "price": {
                 "title": "Price",
-                "free": "Free",
-                "default": "Unknown price"
+                "up_to": "Up to"
             }
         },
         "sort": {

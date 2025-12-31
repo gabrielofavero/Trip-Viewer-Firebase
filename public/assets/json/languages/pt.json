@@ -353,8 +353,7 @@
             },
             "price": {
                 "title": "Preço",
-                "free": "Gratuito",
-                "default": "Preço não informado"
+                "up_to": "Até"
             }
         },
         "sort": {
