@@ -1,12 +1,16 @@
 :root {
   --theme-color: #7f75b6;
+  --theme-color-secondary: #D5D6E9;
   --font-color: #E2E2E2;
   --box-color: #404040;
   --box-color-hover: #444444;
+  --border-color: #ccc;
+  --border-color-alt: #383838;
+  --background-color: #303030;
 }
 body {
   color: var(--font-color);
-  background: #303030;
+  background: var(--background-color);
 }
 
 strong {
@@ -32,7 +36,7 @@ a:hover {
 
 .destinos-select .dropdown{
   background: var(--box-color);
-  border: 1px solid #505050;
+  border: 1px solid var(--border-color);
   box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
@@ -95,7 +99,7 @@ a:hover {
 .nav-menu a,
 .nav-menu a:focus {
   color: #F2F2F2;
-  background: #303030;
+  background: var(--background-color);
 }
 
 .nav-menu a span,
@@ -132,7 +136,7 @@ a:hover {
 }
 
 .top-bar {
-  background-color: #303030;
+  background-color: var(--background-color);
   border-bottom: 0.5px solid #383838;
 }
 
@@ -167,7 +171,7 @@ a:hover {
 }
 
 .accordion-item {
-  background-color: #303030;
+  background-color: var(--background-color);
   color: var(--font-color);
 }
 
@@ -217,4 +221,21 @@ a:hover {
 
 .mobile-nav-toggle:hover, .custom-nav-toggle:hover {
   color: #aaaaaa;
+}
+
+.filter-sort {
+  border: 1px solid var(--border-color-alt);
+}
+
+.drawer-header {
+  border-bottom: 1px solid #383838;
+}
+
+.option-btn {
+  border: 1px solid var(--border-color-alt);
+  background: var(--box-color);
+}
+
+.option-btn:hover {
+  background: var(--theme-color-secondary);
 }
