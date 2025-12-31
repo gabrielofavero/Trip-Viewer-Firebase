@@ -282,22 +282,34 @@ function _deleteInnerGasto(categoria, tipo, index) {
 function _afterDragInnerGasto(evt) {
     const id = evt.from.getAttribute('data-group');
     const split = id.split('-');
+  
     const categoria = split[0];
-
     const from = evt.oldIndex - 1;
-    const to = evt.newIndex - 1;
-
-    const groupArr = INNER_GASTOS[categoria];
-    if (!groupArr) return;
-
+    const to   = evt.newIndex - 1;
+  
+    const grupos = INNER_GASTOS[categoria];
+    if (!grupos) return;
+  
     const tipo = split.slice(1).join('-');
-    const findSubgroup = tipo =>
-        INNER_GASTOS.gastosPrevios.find(entry => entry && entry.tipo === tipo);
-
-    const gastos = findSubgroup(tipo).gastos;
-
+  
+    // locate subgroup + index
+    const subgroupIndex = grupos.findIndex(
+      entry => entry && entry.tipo === tipo
+    );
+  
+    if (subgroupIndex === -1) return;
+  
+    const subgroup = grupos[subgroupIndex];
+    const gastos = [...subgroup.gastos];
+  
     const [moved] = gastos.splice(from, 1);
     gastos.splice(to, 0, moved);
-
+  
+    INNER_GASTOS[categoria][subgroupIndex] = {
+      ...subgroup,
+      gastos
+    };
+  
     _loadGastosHTML();
-}
+  }
+  
