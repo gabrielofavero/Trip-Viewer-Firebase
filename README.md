@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 119   | 117       | 2       |
+| 🐞   | Bug         | B000 | 119   | 118       | 1       |
 | 🏆   | Feature     | F000 | 118   | 116       | 2       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 37    | 36        | 1       |
@@ -15,8 +15,6 @@
 
 - 🏆 **F117:** Add filtering and sorting options to destinations page
 - 🏆 **F118:** Add option to quick edit destination on main page (if owner)
-- ⚔️ **E036:** Expenses Overhaul
-  - *[🐞B116] Fix expenses currency API*
 
 ### Medium Priority
 
@@ -34,6 +32,7 @@
   - *[🐞B118] Expenses dynamic icons not showing*
   - *[🐞B119] Expenses values sometimes breaking lines*
   - *[🏆F109] Add custom tab on expenses page*
+  - *[🐞B116] Fix expenses currency API*
 - 🐞 **B117:** Translation issue on expenses page
 - 🏆 **F115:** Put visual indication if destination is planned for the trip*
 - 🐞 **B110:** Backup and Restore functions not working

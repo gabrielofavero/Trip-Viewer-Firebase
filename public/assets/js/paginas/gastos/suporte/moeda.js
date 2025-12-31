@@ -59,6 +59,9 @@ async function _loadMoedaConversao() {
             chaves.push(moeda + MOEDA_PADRAO);
         }
     }
+    if (comparacoes.length === 0) {
+        return;
+    }
     const url = `https://economia.awesomeapi.com.br/last/${comparacoes.join(',')}`;
     const data = await _fetchConversoes(url);
     if (data) {
@@ -73,7 +76,8 @@ async function _fetchConversoes(url) {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            console.error(`Network issue while trying to fetch currency information: ${response.statusText}`);
+            console.error(`Network issue while trying to fetch currency information:`);
+            console.error(response);
             console.warn(`Using default currency ${MOEDA_PADRAO}`);
         }
         const data = await response.json();
