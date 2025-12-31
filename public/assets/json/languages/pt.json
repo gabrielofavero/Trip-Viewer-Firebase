@@ -90,7 +90,11 @@
             "other": "Outros gastos",
             "daily": "Gastos por dia",
             "exchange_rate_api": "Taxa de Câmbio (API)",
-            "paid_by": "Pago por"
+            "paid_by": "Pago por",
+            "min": {
+                "pre_trip": "Pré-Viagem",
+                "during_trip": "Durante"
+            }
         },
         "transportation": {
             "title": "Transporte",

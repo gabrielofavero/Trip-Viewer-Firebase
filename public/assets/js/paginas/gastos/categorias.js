@@ -14,6 +14,10 @@ function _loadResumo() {
     const gastosDurante = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosDurante'].resumo;
     getID(`resumo-gastosDurante-titulo`).innerHTML = _getTitleWithIcon("trip.expenses.during_trip");
     _setTable('resumo-gastosDurante', gastosDurante.itens, gastosDurante.total);
+
+    const gastosViajantes = GASTOS_CONVERTIDOS[MOEDA_ATUAL]['gastosViajantes'].resumo;
+    getID(`resumo-gastosViajantes-titulo`).innerHTML = _getTitleWithIcon("trip.travelers.title");
+    _setTable('resumo-gastosViajantes', gastosViajantes.itens, gastosViajantes.total);
 }
 
 function _loadChartResumo() {
@@ -28,21 +32,26 @@ function _loadChartResumo() {
 
 // Gastos Prévios
 function _loadGastosPrevios() {
-    _setDoughnutChartCategoria(translate('trip.expenses.pre_trip'), 'gastosPrevios');
+    _setDoughnutChartCategoria('trip.expenses.pre_trip', 'gastosPrevios');
     _setTableCategoria('gastosPrevios');
 }
 
 // Gastos na Viagem
 function _loadGastosDurante() {
-    _setDoughnutChartCategoria(translate('trip.expenses.during_trip'), 'gastosDurante');
+    _setDoughnutChartCategoria('trip.expenses.during_trip', 'gastosDurante');
     _setTableCategoria('gastosDurante');
+}
+
+function _loadGastosViajantes() {
+    _setDoughnutChartCategoria('trip.travelers.title', 'gastosViajantes');
+    _setTableCategoria('gastosViajantes');
 }
 
 function _setDoughnutChartCategoria(titulo, tipo) {
     const itens = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].itens;
     const total = GASTOS_CONVERTIDOS[MOEDA_ATUAL][tipo].resumo.total;
 
-    getID(`${tipo}-titulo`).innerHTML = _getTitleWithIcon(titulo);
+    getID(`${tipo}-titulo`).innerHTML = _getTitleWithIcon(titulo, tipo);
     getID(`${tipo}-total`).innerText = `Total: ${_formatMoeda(total, true)}`;
 
     const labels = itens.map(item => translate(item.nome, {}, false));
@@ -67,7 +76,7 @@ function _setTableCategoria(tipo) {
 
         const h2 = document.createElement('h2');
         h2.className = 'gastos-titulo';
-        h2.innerHTML = _getTitleWithIcon(item.nome);
+        h2.innerHTML = _getTitleWithIcon(item.nome, tipo);
         recibo.appendChild(h2);
 
         const table = document.createElement('table');
@@ -89,13 +98,7 @@ function _unsetTableCategoria(tipo) {
     }
 }
 
-function _getTitleWithIcon(titlePath, forceIcon = true) {
+function _getTitleWithIcon(titlePath, backupIconPath) {
     const title = translate(titlePath, {}, false);
-    const icon = CONFIG.icons[titlePath];
-    
-    if (!icon && !forceIcon) {
-        return title;
-    }
-
-    return `<i class="iconify" data-icon="${icon || CONFIG.icons["trip.expenses.title"]}"></i> ${title}`;
+    return `<i class="iconify" data-icon="${CONFIG.icons[titlePath] || CONFIG.icons[backupIconPath] || CONFIG.icons["trip.expenses.title"]}"></i> ${title}`;
 }

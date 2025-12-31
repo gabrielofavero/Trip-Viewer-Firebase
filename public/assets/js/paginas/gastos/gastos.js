@@ -120,36 +120,64 @@ function _applyGastos() {
     if (hasGastosPrevios && hasGastosDurante) {
         getID('tab-gastos').style.display = '';
         getID('radio-resumo').style.display = '';
+        getID('radio-gastosPrevios').style.display = '';
+        getID('radio-gastosDurante').style.display = '';
+
         _loadResumo();
+        _loadGastosPrevios();
+        _loadGastosDurante();
+        _loadGastosViajantes();
+
+        _applyAndLoadGastosViajantes();
+        return;
     }
 
     if (hasGastosPrevios) {
         getID('radio-gastosPrevios').style.display = '';
-        _loadGastosPrevios();
-    }
-
-    if (hasGastosDurante > 0) {
-        getID('radio-gastosDurante').style.display = '';
-        _loadGastosDurante();
-    }
-
-    if (hasGastosPrevios && !hasGastosDurante) {
         getID('resumo').style.display = 'none';
         getID('gastosPrevios').style.display = '';
+
+        _loadGastosPrevios();
+
+        _applyAndLoadGastosViajantes();
+        return;
     }
 
-    if (!hasGastosPrevios && hasGastosDurante) {
+    if (hasGastosDurante) {
+        getID('radio-gastosDurante').style.display = '';
         getID('resumo').style.display = 'none';
         getID('gastosDurante').style.display = '';
+        _applyGastosViajantes();
+
+        _loadGastosDurante();
+
+        _applyAndLoadGastosViajantes();
+        return;
     }
 
-    if (!hasGastosPrevios && !hasGastosDurante) {
-        _displayError(translate('messages.errors.no_data_on_module', { module: translate('trip.expenses.title') }));
+    _displayError(
+        translate('messages.errors.no_data_on_module', {
+            module: translate('trip.expenses.title')
+        })
+    );
+
+    function _applyAndLoadGastosViajantes() {
+        if (!_hasGastosViajantes()) {
+            return;
+        }
+        getID('radio-gastosPrevios').style.display = '';
+        _loadGastosViajantes();
+    }
+
+    function _hasGastosViajantes() {
+        const hasPessoaDurante = GASTOS.gastosDurante.some(i => i.pessoa);
+        const hasPessoaPrevios = GASTOS.gastosPrevios.some(i => i.pessoa);
+        return GASTOS.pessoas && (hasPessoaDurante || hasPessoaPrevios);
     }
 }
 
 function _setTabListeners() {
-    const radios = ['radio-resumo', 'radio-gastosPrevios', 'radio-gastosDurante'];
+    const radios = ['radio-resumo', 'radio-gastosPrevios', 'radio-gastosDurante', 'radio-gastosViajantes'];
     radios.forEach(radio => {
         getID(radio).addEventListener('click', function () {
             const gasto = radio.replace('radio-', '');

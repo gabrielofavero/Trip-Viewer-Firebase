@@ -90,7 +90,11 @@
             "other": "Other expenses",
             "daily": "Daily expenses",
             "exchange_rate_api": "Exchange rate (API)",
-            "paid_by": "Paid by"
+            "paid_by": "Paid by",
+            "min": {
+                "pre_trip": "Pre-trip",
+                "during_trip": "During Trip"
+            }
         },
         "transportation": {
             "title": "Transportation",

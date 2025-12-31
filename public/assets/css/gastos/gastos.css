@@ -245,6 +245,10 @@ input[id="radio-gastosDurante"]:checked~.glider {
   transform: translateX(200%);
 }
 
+input[id="radio-gastosViajantes"]:checked~.glider {
+  transform: translateX(300%);
+}
+
 .glider,
 .glider-mini {
   position: absolute;
@@ -423,6 +427,7 @@ section {
 
 .tabela-texto-direita {
   text-align: right;
+  min-width: 100px;
 }
 
 /*--------------------------------------------------------------

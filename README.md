@@ -4,10 +4,10 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 117   | 115       | 2       |
-| 🏆   | Feature     | F000 | 118   | 113       | 5       |
+| 🐞   | Bug         | B000 | 119   | 117       | 2       |
+| 🏆   | Feature     | F000 | 118   | 116       | 2       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
-| ⚔️   | Epic        | E000 | 37    | 35        | 1       |
+| ⚔️   | Epic        | E000 | 37    | 36        | 1       |
 
 ## Backlog
 
@@ -15,23 +15,25 @@
 
 - 🏆 **F117:** Add filtering and sorting options to destinations page
 - 🏆 **F118:** Add option to quick edit destination on main page (if owner)
-- 🐞 **B116:** Fix expenses currency API
-- ⚔️ **E036:** Separate expenses by traveler
-  - *[🏆F109] Add custom tab on expenses page*
+- ⚔️ **E036:** Expenses Overhaul
+  - *[🐞B116] Fix expenses currency API*
 
 ### Medium Priority
 
 ### Low Priority
 
 - 🐞 **B096:** Fix Gallery module
-- 🏆 **F116:** Destinations data refactoring
 
 ## Done
 
 ### December 2025
-- ⚔️ **E036:** Separate expenses by traveler
+
+- ⚔️ **E036:** Expenses Overhaul
   - *[🏆F108] Add expense type on edit trip page + saving*
   - *[🏆F110] Add traveler name into expense name*
+  - *[🐞B118] Expenses dynamic icons not showing*
+  - *[🐞B119] Expenses values sometimes breaking lines*
+  - *[🏆F109] Add custom tab on expenses page*
 - 🐞 **B117:** Translation issue on expenses page
 - 🏆 **F115:** Put visual indication if destination is planned for the trip*
 - 🐞 **B110:** Backup and Restore functions not working
@@ -606,3 +608,4 @@
 - 📈 **M105:** Remove CONFIG ~~and reduce use of global variables~~
 - 📈 **M114:** Make button / select outlines theme color (view.html)
 - 🐞 **B097:** Fix Image upload module
+- 🏆 **F116:** Destinations data refactoring

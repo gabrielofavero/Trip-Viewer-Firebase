@@ -4,6 +4,7 @@ var GASTOS_CONVERTIDOS = {};
 function _loadGastosConvertidos() {
     _processGastosConvertidos('gastosDurante');
     _processGastosConvertidos('gastosPrevios');
+    _processGastosConvertidosViajantes();
 }
 
 function _processGastosConvertidos(tipoGasto) {
@@ -14,6 +15,91 @@ function _processGastosConvertidos(tipoGasto) {
         GASTOS_CONVERTIDOS[moeda][tipoGasto] = _calculateGastosConvertidos(tipoGasto, moeda);
     }
 }
+
+function _processGastosConvertidosViajantes() {
+    const tipos = {
+        gastosPrevios: 'trip.expenses.pre_trip',
+        gastosDurante: 'trip.expenses.during_trip'
+    };
+
+    for (const moeda of MOEDAS.resumo) {
+        const viajanteMap = new Map();
+        const resumoMap = new Map();
+        let resumoTotal = 0;
+
+        for (const tipo in tipos) {
+            const grupo = GASTOS_CONVERTIDOS?.[moeda]?.[tipo];
+            if (!grupo?.itens) continue;
+
+            for (const gasto of grupo.itens) {
+                if (!gasto?.itens?.length) continue;
+
+                for (const item of gasto.itens) {
+                    const pessoa = item.pessoa
+                        ? GASTOS.pessoas[item.pessoa]
+                        : 'labels.non_specified';
+
+                    const valor = Number(item.valor) || 0;
+                    const nome = tipos[tipo];
+
+                    let entry = viajanteMap.get(pessoa);
+                    if (!entry) {
+                        entry = { nome: pessoa, total: 0, itens: [] };
+                        entry._byTipo = new Map();
+                        viajanteMap.set(pessoa, entry);
+                    }
+
+                    let tipoItem = entry._byTipo.get(nome);
+                    if (!tipoItem) {
+                        tipoItem = { nome, pessoa, valor: 0 };
+                        entry._byTipo.set(nome, tipoItem);
+                        entry.itens.push(tipoItem);
+                    }
+
+                    tipoItem.valor += valor;
+                    entry.total += valor;
+
+                    resumoTotal += valor;
+
+                    let resumoEntry = resumoMap.get(pessoa);
+                    if (!resumoEntry) {
+                        resumoEntry = { nome: pessoa, valor: 0 };
+                        resumoMap.set(pessoa, resumoEntry);
+                    }
+
+                    resumoEntry.valor += valor;
+                }
+            }
+        }
+
+        function compareWithNonSpecifiedLast(a, b) {
+            const nonSpecified = 'labels.non_specified';
+
+            const aIsNS = a.nome === nonSpecified;
+            const bIsNS = b.nome === nonSpecified;
+
+            if (aIsNS && !bIsNS) return 1;   // a goes last
+            if (!aIsNS && bIsNS) return -1;  // b goes last
+
+            return a.nome.localeCompare(b.nome, undefined, { sensitivity: 'base' });
+        }
+
+        const itens = Array.from(viajanteMap.values())
+            .map(v => {
+                delete v._byTipo;
+                return v;
+            })
+            .sort(compareWithNonSpecifiedLast);
+
+        const resumo = {
+            total: resumoTotal,
+            itens: Array.from(resumoMap.values()).sort(compareWithNonSpecifiedLast)
+        };
+
+        GASTOS_CONVERTIDOS[moeda].gastosViajantes = { resumo, itens };
+    }
+}
+
 
 function _calculateGastosConvertidos(tipo, moeda) {
 

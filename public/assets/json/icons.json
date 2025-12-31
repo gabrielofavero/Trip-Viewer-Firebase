@@ -1,21 +1,24 @@
-[
-    {
-        "trip.expenses.title": "mdi:dollar",
-        "trip.expenses.pre_trip": "mdi:graph-line",
-        "trip.expenses.during_trip": "mdi:graph-line",
-        "trip.expenses.overview": "mdi:graph-line",
-        "trip.accommodation.title": "material-symbols:hotel-outline",
-        "trip.transportation.title": "mingcute:rocket-line",
-        "trip.transportation.type.flights": "mingcute:airplane-line",
-        "trip.transportation.type.car": "lucide:car",
-        "trip.transportation.type.bus": "lucide:bus",
-        "labels.entrertainment": "tabler:microphone-2",
-        "trip.expenses.daily": "ph:sun-bold",
-        "labels.gifts": "mdi:gift-outline",
-        "trip.expenses.personal": "gravity-ui:person",
-        "labels.people": "gravity-ui:person",
-        "trip.destination.shopping.title": "mdi:cart-outline",
-        "trip.destination.food.title": "uil:food",
-        "trip.destination.nightlife.title": "bxs:drink"
-    }
-]
+{
+    "gastosDurante": "mdi:graph-line",
+    "gastosPrevios": "mdi:graph-line",
+    "gastosViajantes": "gravity-ui:person",
+    "labels.entrertainment": "tabler:microphone-2",
+    "labels.gifts": "mdi:gift-outline",
+    "labels.non_specified": "gravity-ui:person-xmark",
+    "labels.people": "gravity-ui:person",
+    "trip.accommodation.title": "material-symbols:hotel-outline",
+    "trip.destination.food.title": "uil:food",
+    "trip.destination.nightlife.title": "bxs:drink",
+    "trip.destination.shopping.title": "mdi:cart-outline",
+    "trip.expenses.daily": "ph:sun-bold",
+    "trip.expenses.during_trip": "mdi:graph-line",
+    "trip.expenses.overview": "mdi:graph-line",
+    "trip.expenses.personal": "gravity-ui:person",
+    "trip.expenses.pre_trip": "mdi:graph-line",
+    "trip.expenses.title": "mdi:dollar",
+    "trip.transportation.title": "mingcute:rocket-line",
+    "trip.transportation.type.bus": "lucide:bus",
+    "trip.transportation.type.car": "lucide:car",
+    "trip.transportation.type.flights": "mingcute:airplane-line",
+    "trip.travelers.title": "gravity-ui:persons"
+}
