@@ -89,7 +89,8 @@
             "personal": "Personal expenses",
             "other": "Other expenses",
             "daily": "Daily expenses",
-            "exchange_rate_api": "Exchange rate (API)"
+            "exchange_rate_api": "Exchange rate (API)",
+            "paid_by": "Paid by"
         },
         "transportation": {
             "title": "Transportation",
@@ -671,6 +672,7 @@
         "yes": "Yes",
         "no": "No",
         "protected": "Protected",
-        "unknown": "Unknown"
+        "unknown": "Unknown",
+        "non_specified": "Non-specified"
     }
 }

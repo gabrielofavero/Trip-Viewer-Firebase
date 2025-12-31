@@ -79,12 +79,13 @@ function _loadGastosHTML() {
         div.appendChild(label);
 
         for (let i = 0; i < innerGasto.gastos.length; i++) {
+            const gasto = innerGasto.gastos[i];
             const container = document.createElement('div');
             container.className = 'input-botao-container';
 
             const button = document.createElement('button');
             button.className = 'btn input-botao draggable';
-            button.innerText = innerGasto.gastos[i].nome;
+            button.innerHTML = gasto.pessoa? `<span class="highlight">${_getTravelerName(gasto.pessoa)}:</span> ${gasto.nome}` : gasto.nome;
             button.onclick = () => _openInnerGasto(categoria, innerGasto.tipo, i);
             container.appendChild(button);
 
@@ -118,6 +119,7 @@ function _openInnerGasto(categoria, tipo = '', index = -1) {
     if (tipo && index >= 0) {
         const gasto = INNER_GASTOS[categoria].find(tipoObj => tipoObj.tipo === tipo).gastos[index];
         getID('gasto-nome').value = gasto.nome;
+        getID('gasto-pessoa').value = gasto.pessoa || '';
         getID('gasto-moeda').value = gasto.moeda;
         getID('gasto-valor').value = gasto.valor;
         _applyGastoInnerTipo(gasto.tipo);
@@ -181,8 +183,15 @@ function _getInnerGastoContent(categoria, tipo, index) {
                     </select>
                     <input required id="gasto-tipo-input" type="text" placeholder="${translate('trip.transportation.title')}" style="margin-top: 8px; display: none"/>
                 </div>
+                <div class="nice-form-group" style="display:${TRAVELERS.length === 0 ? 'none': ''}">
+                    <label>${translate('trip.expenses.paid_by')}</label>
+                        <select id="gasto-pessoa" class="editar-select" name="pessoa">
+                        <option value="">${translate('labels.non_specified')}</option>
+                        ${_getTravelersSelectOptionsHTML()}
+                    </select>
+                </div>
                 <div class="nice-form-group">
-                    <label>Moeda</label>
+                    <label>${translate('currency.title')}</label>
                         <select id="gasto-moeda" class="editar-select" name="currency">
                         <option value="BRL">${translate('currency.type.BRL')}</option>
                         <option value="USD">${translate('currency.type.USD')}</option>
@@ -229,6 +238,7 @@ function _saveInnerGasto(categoria, tipo, index = -1) {
     const newGasto = {
         nome: _getFieldValueOrNotify('gasto-nome'),
         tipo: getID('gasto-tipo-select').value === 'custom' ? _getFieldValueOrNotify('gasto-tipo-input') : getID('gasto-tipo-select').value,
+        pessoa: getID('gasto-pessoa').value || '',
         moeda: _getFieldValueOrNotify('gasto-moeda'),
         valor: valor ? parseFloat(parseFloat(valor).toFixed(2)) : null,
     }

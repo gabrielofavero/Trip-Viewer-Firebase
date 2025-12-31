@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 117   | 115       | 2       |
-| 🏆   | Feature     | F000 | 118   | 111       | 7       |
+| 🏆   | Feature     | F000 | 118   | 112       | 6       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 37    | 35        | 1       |
 
@@ -17,9 +17,8 @@
 - 🏆 **F118:** Add option to quick edit destination on main page (if owner)
 - 🐞 **B116:** Fix expenses currency API
 - ⚔️ **E036:** Separate expenses by traveler
-  - *[🏆F108] Add expense type on edit trip page + saving*
-  - *[🏆F109] Add custom select on expenses page*
-  - *[🏆F110] Custom load action for select on expenses page*
+  - *[🏆F109] Add custom tab on expenses page*
+  - *[🏆F110] Custom data on people expenses page*
 
 ### Medium Priority
 
@@ -31,7 +30,8 @@
 ## Done
 
 ### December 2025
-
+- ⚔️ **E036:** Separate expenses by traveler
+  - *[🏆F108] Add expense type on edit trip page + saving*
 - 🐞 **B117:** Translation issue on expenses page
 - 🏆 **F115:** Put visual indication if destination is planned for the trip*
 - 🐞 **B110:** Backup and Restore functions not working

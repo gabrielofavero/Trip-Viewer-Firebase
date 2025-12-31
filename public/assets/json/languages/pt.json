@@ -89,7 +89,8 @@
             "personal": "Gastos pessoais",
             "other": "Outros gastos",
             "daily": "Gastos por dia",
-            "exchange_rate_api": "Taxa de Câmbio (API)"
+            "exchange_rate_api": "Taxa de Câmbio (API)",
+            "paid_by": "Pago por"
         },
         "transportation": {
             "title": "Transporte",
@@ -671,6 +672,7 @@
         "yes": "Sim",
         "no": "Não",
         "protected": "Protegido",
-        "unknown": "Desconhecido"
+        "unknown": "Desconhecido",
+        "non_specified": "Não especificado"
     }
 }

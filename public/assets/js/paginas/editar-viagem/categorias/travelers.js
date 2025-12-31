@@ -1,5 +1,6 @@
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
+let TRAVELER_SELECT_OPTIONS = '';
 
 function _validateTravelersObject() {
     for (const traveler of TRAVELERS) {
@@ -229,4 +230,21 @@ function _updateTravelersButtonLabel() {
 
     const names = TRAVELERS.map(t => t.nome).filter(n => n);
     el.textContent = _getReadableArray(names);
+}
+
+function _getTravelersSelectOptionsHTML() {
+    if (!TRAVELER_SELECT_OPTIONS) {
+        for (const traveler of TRAVELERS) {
+            if (!traveler.nome) {
+                continue;
+            }
+            TRAVELER_SELECT_OPTIONS += `<option value="${traveler.id}">${traveler.nome}</option>`;
+        }
+    }
+    return TRAVELER_SELECT_OPTIONS;
+}
+
+function _getTravelerName(id) {
+    const traveler = TRAVELERS.find(t => t.id === id);
+    return traveler ? traveler.nome : '';
 }
