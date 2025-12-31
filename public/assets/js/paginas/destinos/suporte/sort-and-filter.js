@@ -1,11 +1,15 @@
 
 // User Actions
 function _openFilterDrawer() {
-    openDrawer("filter");
+    const title = getID('filter').innerText;
+    const innerHTML = `<button class="option-btn">Newest First</button>`
+    openDrawer(title, innerHTML);
 }
 
 function _openSortDrawer() {
-    openDrawer("order");
+    const title = getID('order').innerText;
+    const innerHTML = `<button class="option-btn">Newest First</button>`
+    openDrawer(title, innerHTML);
 }
 
 // Drawer

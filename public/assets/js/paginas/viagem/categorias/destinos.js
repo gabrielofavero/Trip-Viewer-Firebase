@@ -2,6 +2,7 @@ var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var DESTINOS = [];
 var DESTINO_EXPORT = {};
+var DESTINO_TRANSLATIONS = {};
 
 // ======= LOADERS =======
 function _loadDestinos() {
@@ -68,6 +69,12 @@ function _loadDestinationsHTML(destino) {
   let text = "";
 
   const types = CONFIG.destinos.categorias.geral;
+  
+  DESTINO_EXPORT = {};
+  DESTINO_EXPORT.title = destino.destinos.titulo;
+  DESTINO_EXPORT.translations = _getDestinosTranslations();
+  DESTINO_EXPORT.activeCategory = undefined;
+
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
     _buildDestinoExport(destino, type)
@@ -128,10 +135,6 @@ function _getDestinoValores(destino) {
 
 function _loadAndOpenDestino(code) {
   const exportFile = _cloneObject(DESTINO_EXPORT);
-  exportFile.translations = {
-    filter: CONFIG.language.destination.filter,
-    sort: CONFIG.language.destination.sort
-  }
   exportFile.activeCategory = code;
   window.localStorage.setItem('DESTINO', JSON.stringify(exportFile));
   _openLightbox('destination.html')
@@ -189,4 +192,14 @@ function _loadPlannedDestinations() {
       return;
     }
   }
+}
+
+function _getDestinosTranslations() {
+  if (Object.keys(DESTINO_TRANSLATIONS) == 0) {
+    DESTINO_TRANSLATIONS = {
+      filter: CONFIG.language.destination.filter,
+      sort: CONFIG.language.destination.sort
+    }
+  }
+  return DESTINO_TRANSLATIONS;
 }

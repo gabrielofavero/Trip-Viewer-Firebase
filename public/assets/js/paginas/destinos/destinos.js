@@ -7,6 +7,7 @@ function _loadDestinosPage() {
   _loadVisibilityExternal();
   _loadButtonTranslations();
 
+  document.title = DESTINO.title || "TripViewer";
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {
     closeButton.onclick = function () {
@@ -197,7 +198,7 @@ function _loadDestinoCustomSelect() {
     const result = [];
     for (const categoryKey in DESTINO) {
       if (
-        ['activeCategory', 'translations'].includes(categoryKey) ||
+        ['activeCategory', 'translations', 'title'].includes(categoryKey) ||
         (categoryKey !== 'myMaps' && DESTINO[categoryKey].data.length === 0)
       ) {
         continue;
@@ -208,8 +209,6 @@ function _loadDestinoCustomSelect() {
   }
 
   function _loadDestinoCustomSelectAction(value) {
-    const titulo = DESTINO[value].titulo;
-    document.title = titulo;
     _loadDestinoByType(value);
   }
 }
@@ -222,6 +221,6 @@ function _getPlannedHTML(planejado) {
 }
 
 function _loadButtonTranslations() {
-  getID('filtrar').querySelector('span').innerText = DESTINO.translations.filter.title;
-  getID('ordenar').querySelector('span').innerText = DESTINO.translations.sort.title;
+  getID('filter').querySelector('span').innerText = DESTINO.translations.filter.title;
+  getID('order').querySelector('span').innerText = DESTINO.translations.sort.title;
 }
