@@ -61,7 +61,7 @@
                 "insert": "Enter a 4-digit access PIN",
                 "again": "Enter the access PIN again",
                 "no_pin": "The trip document was configured with data protection, but no access PIN was set",
-                "trip_pin":  {
+                "trip_pin": {
                     "optional": "Enter the access PINs for the trips below. If you leave any blank, the sensitive data for that trip will not be restored",
                     "required": "Enter the access PINs for the trips below"
                 }
@@ -330,6 +330,54 @@
                 "not_found": "TikTok link not found",
                 "conversion": "Conversion error: Tiktok",
                 "conversion_message": "The following links should be removed or replaced with the desktop version:"
+            }
+        },
+        "filter": {
+            "title": "Filter",
+            "show_everything": "Show everything",
+            "planned": {
+                "title": "Planning",
+                "planned": "Planned destinations",
+                "not_planed": "Not planned destinations"
+            },
+            "scores": {
+                "title": "Scores",
+                "5": "Only 5-star ratings",
+                "4": "Ratings 4 and above",
+                "3": "Ratings 3 and above",
+                "2": "Ratings 2 and above"
+            },
+            "region": {
+                "title": "Region",
+                "none": "No region defined"
+            },
+            "price": {
+                "title": "Price",
+                "free": "Free",
+                "default": "Unknown price"
+            }
+        },
+        "sort": {
+            "title": "Sort by",
+            "name": {
+                "title": "Title",
+                "ascending": "Name (A → Z)",
+                "descending": "Name (Z → A)"
+            },
+            "planned": {
+                "title": "Planning",
+                "planned_first": "Planned first",
+                "not_planned_first": "Not planned first"
+            },
+            "score": {
+                "title": "Rating",
+                "highest_first": "Highest ratings first",
+                "lowest_first": "Lowest ratings first"
+            },
+            "price": {
+                "title": "Price",
+                "lowest_first": "Lowest price first",
+                "highest_first": "Highest price first"
             }
         }
     },

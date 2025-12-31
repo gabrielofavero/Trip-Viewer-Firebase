@@ -1,8 +1,11 @@
 :root {
   --theme-color: #7f75b6;
+  --font-color: #E2E2E2;
+  --box-color: #404040;
+  --box-color-hover: #444444;
 }
 body {
-  color: #E2E2E2;
+  color: var(--font-color);
   background: #303030;
 }
 
@@ -28,13 +31,13 @@ a:hover {
 }
 
 .destinos-select .dropdown{
-  background: #404040;
+  background: var(--box-color);
   border: 1px solid #505050;
   box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 .destinos-select .dropdown .option {
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 .destinos-select .dropdown .option:hover {
@@ -54,7 +57,7 @@ a:hover {
 }
 
 .btn {
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 .btn:hover {
@@ -62,7 +65,7 @@ a:hover {
 }
 
 .card-header {
-  background-color: #404040;
+  background-color: var(--box-color);
 }
 
 .score {
@@ -85,7 +88,7 @@ a:hover {
 }
 
 .card-body {
-  background: #404040;
+  background: var(--box-color);
   color: #DADADA;
 }
 
@@ -165,22 +168,22 @@ a:hover {
 
 .accordion-item {
   background-color: #303030;
-  color: #E2E2E2;
+  color: var(--font-color);
 }
 
 .accordion-header {
-  background-color: #404040;
+  background-color: var(--box-color);
   color: #f1f1f1;
   border-radius: .75rem;
 }
 
 .accordion-button {
-  background-color: #404040;
+  background-color: var(--box-color);
   color: #f1f1f1;
 }
 
 .accordion-button[aria-expanded="true"] {
-  background-color: #404040;
+  background-color: var(--box-color);
   color: #f1f1f1;
 }
 
@@ -214,28 +217,4 @@ a:hover {
 
 .mobile-nav-toggle:hover, .custom-nav-toggle:hover {
   color: #aaaaaa;
-}
-
-/* Language Selector */
-
-.lang-selector {
-  position: relative;
-}
-
-.lang-button {
-  color: #F2F2F2;
-}
-
-.lang-options {
-  background: #303030;
-  border: 1px solid #404040;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.lang-options button {
-  color: #F2F2F2;
-}
-
-.lang-options button:hover {
-  background: #3b3b3b;
 }

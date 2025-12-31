@@ -331,6 +331,54 @@
                 "conversion": "Erro ao converter TikTok",
                 "conversion_message": "Os seguintes links deverão ser removidos ou trocados pela versão desktop:"
             }
+        },
+        "filter": {
+            "title": "Filtrar",
+            "show_everything": "Mostrar tudo",
+            "planned": {
+                "title": "Planejamento",
+                "planned": "Destinos incluídos no planejamento",
+                "not_planed": "Destinos fora do planejamento"
+            },
+            "scores": {
+                "title": "Avaliação do público",
+                "5": "Somente avaliações nota 5",
+                "4": "Avaliações a partir de 4",
+                "3": "Avaliações a partir de 3",
+                "2": "Avaliações a partir de 2"
+            },
+            "region": {
+                "title": "Região",
+                "none": "Sem região definida"
+            },
+            "price": {
+                "title": "Preço",
+                "free": "Gratuito",
+                "default": "Preço não informado"
+            }
+        },
+        "sort": {
+            "title": "Ordenar",
+            "name": {
+                "title": "Título",
+                "ascending": "Nome (A → Z)",
+                "descending": "Nome (Z → A)"
+            },
+            "planned": {
+                "title": "Planejamento",
+                "planned_first": "Planejados primeiro",
+                "not_planned_first": "Não planejados primeiro"
+            },
+            "score": {
+                "title": "Avaliação",
+                "highest_first": "Melhores avaliações primeiro",
+                "lowest_first": "Piores avaliações primeiro"
+            },
+            "price": {
+                "title": "Preço",
+                "lowest_first": "Menor preço primeiro",
+                "highest_first": "Maior preço primeiro"
+            }
         }
     },
     "listing": {

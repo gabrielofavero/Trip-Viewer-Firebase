@@ -1,5 +1,5 @@
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
-var CONTENT = {};
+var CONTENT = [];
 
 // Métodos Principais
 function _loadDestinosPage() {
@@ -41,7 +41,7 @@ function _loadDestinosPage() {
 function _loadDestinoByType(activeCategory) {
   const content = getID('content');
   content.innerHTML = "";
-  CONTENT = {};
+  CONTENT = [];
   MEDIA_HYPERLINKS = {};
 
   if (activeCategory === 'myMaps') {
@@ -53,16 +53,12 @@ function _loadDestinoByType(activeCategory) {
   }
 
   const destino = DESTINO[activeCategory];
-  const isLineup = false;
 
   for (let j = 1; j <= destino.data.length; j++) {
     const item = destino.data[j - 1];
-    const data = isLineup ? _getLineupData(item) : "";
-    const key = isLineup ? _getLineupKey(item) : "semData";
     const params = {
       j: j,
       item: item,
-      isLineup: isLineup,
       innerProgramacao: false,
       notas: destino.notas,
       valores: destino.valores,
@@ -104,8 +100,8 @@ function _loadDestinoByType(activeCategory) {
                               </div>
                           </div>
                       </div>`;
-    _loadEmbed(item?.midia, isLineup, j)
-    _setInnerContent(item, key, data, innerHTML);
+    _loadEmbed(item?.midia, j)
+    _setInnerContent(item, innerHTML);
   }
 
   _applyContent();
@@ -122,77 +118,41 @@ function _loadMapDestino(link) {
   getID('content').innerHTML = `<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F" width="640" height="480"></iframe>`
 }
 
-// Getters
-function _getLineupData(item) {
-  if (item.data) {
-    const dataSplit = item.data.split("-");
-    if (dataSplit.length === 3) {
-      const dia = dataSplit[0].length === 1 ? "0" + dataSplit[0] : dataSplit[0];
-      const mes = dataSplit[1].length === 1 ? "0" + dataSplit[1] : dataSplit[1];
-      const ano = dataSplit[2];
-      return `${dia}/${mes}/${ano}`;
-    }
-  }
-  return "";
-}
-
-function _getLineupKey(item) {
-  if (item.data) {
-    const filteredData = item.data.split("-").join("");
-    if (filteredData && !isNaN(filteredData)) return filteredData;
-  }
-  return 'semData';
-}
-
 
 // Setters
-function _setInnerContent(item, key, data, innerHTML) {
+function _setInnerContent(item, innerHTML) {
   const innerContent = {
     titulo: item.nome,
-    nota: item.nota || "?",
+    nota: item.nota || "default",
+    valor: item.valor || "default",
+    regiao: item.regiao,
+    planejado: item?.planejado === true,
     innerHTML: innerHTML
   }
 
-  if (!CONTENT[key]) {
-    CONTENT[key] = {
-      titulo: data,
-      innerContents: [innerContent]
-    };
-  } else {
-    CONTENT[key].innerContents.push(innerContent);
-  }
+  CONTENT.push(innerContent);
 }
 
 function _applyContent() {
   const div = getID("content");
-  const keys = Object.keys(CONTENT).sort((a, b) => a - b); // Ordem Crescente
-
-  div.innerHTML = "";
-  for (const key of keys) {
-    const titulo = CONTENT[key].titulo ? `<div class="data-lineup">${CONTENT[key].titulo}</div>` : "";
-    const innerHTMLs = _orderInnerHTMLs(CONTENT[key].innerContents);
-    div.innerHTML += titulo + innerHTMLs.join("")
-  }
+  const content = _getFilteredAndSortedDestinations(CONTENT);
+  div.innerHTML = content.map(item => item.innerHTML).join("");
 }
 
 function _orderInnerHTMLs(innerContents) {
   innerContents.sort((a, b) => {
-    // Verifica se uma das notas é '?', para priorizar as outras notas
     if (a.nota === '?') return 1;
     if (b.nota === '?') return -1;
 
-    // Ordena por nota em ordem decrescente (5, 4, 3, 2, 1)
     if (b.nota !== a.nota) {
       return b.nota - a.nota;
     }
 
-    // Se as notas são iguais, ordena por título em ordem crescente
     return a.titulo.localeCompare(b.titulo);
   });
 
   return innerContents.map(item => item.innerHTML);
 }
-
 
 
 // Actions
@@ -236,7 +196,7 @@ function _loadDestinoCustomSelect() {
     const result = [];
     for (const categoryKey in DESTINO) {
       if (
-        categoryKey === 'activeCategory' ||
+        ['activeCategory', 'translations'].includes(categoryKey) ||
         (categoryKey !== 'myMaps' && DESTINO[categoryKey].data.length === 0)
       ) {
         continue;
@@ -258,4 +218,50 @@ function _getPlannedHTML(planejado) {
   return `<div class="icon-container">
             <i class="iconify planejado" data-icon="fa-solid:check"></i>
           </div>`
+}
+
+function _translateDestino(key, strict = true) {
+  let result = _searchObject(DESTINOS.translations, key, strict);
+
+  if (result == null) {
+    if (strict) {
+      if (strict) {
+        const stack = new Error().stack;
+        console.warn(
+          `Translation key "${key}" not found.`,
+          { caller: getCallerFromStack(stack) }
+        );
+      }
+    }
+    return key;
+
+    function getCallerFromStack(stack) {
+      if (!stack) return 'unknown';
+      const lines = stack.split('\n');
+      return lines[2]?.trim() || 'unknown';
+    }
+  }
+
+  return result;
+
+  function _searchObject(obj, key, strict = true) {
+    const keys = key.split(".");
+    let result = obj;
+
+    for (const k of keys) {
+      if (result && k in result) {
+        result = result[k];
+      } else {
+        return strict ? null : key;
+      }
+    }
+
+    const type = typeof result;
+    if (type != "string") {
+      console.error(`Invalid search value for key "${key}": expected a string, got ${type}.`);
+      return "";
+    }
+
+    return result;
+  }
 }
