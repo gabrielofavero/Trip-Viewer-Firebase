@@ -843,15 +843,15 @@ section {
 
 .drawer-body {
   padding: 14px;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
-  gap: 16px;
+  gap: 2em;
+  overflow-y: auto;
 }
 
 .option-btn {
   width: 100%;
   padding: 10px;
-  margin-bottom: 8px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background: var(--box-color);
@@ -867,5 +867,10 @@ section {
 
 .drawer-title{
   font-weight: bold;
-  margin-bottom: 8px;
+}
+
+.drawer-container{
+  display: flex !important;
+  flex-direction: column;
+  gap: 8px;
 }

@@ -5,7 +5,7 @@ var CONTENT = [];
 function _loadDestinosPage() {
   _startLoadingScreen();
   _loadVisibilityExternal();
-  _loadButtonTranslations();
+  _loadSortAndFilterButtons();
 
   document.title = DESTINO.title || "TripViewer";
   const closeButton = getID("closeButton");
@@ -109,6 +109,7 @@ function _loadDestinoByType(activeCategory) {
   _applyContent();
   _applyDestinosMediaHeight();
   _adjustInstagramMedia();
+  _loadFilterButtonVisibility();
 }
 
 function _loadMapDestino(link) {
@@ -218,9 +219,4 @@ function _getPlannedHTML(planejado) {
   return `<div class="icon-container">
             <i class="iconify planejado" data-icon="fa-solid:check"></i>
           </div>`
-}
-
-function _loadButtonTranslations() {
-  getID('filter').querySelector('span').innerText = DESTINO.translations.filter.title;
-  getID('order').querySelector('span').innerText = DESTINO.translations.sort.title;
 }
