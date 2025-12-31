@@ -30,21 +30,23 @@ function _calculateGastosConvertidos(tipo, moeda) {
         }
     }
 
-    function _updateItens(itens, tipoGasto, nomeGasto, valor) {
+    function _updateItens(itens, gasto, valor) {
+        const nome = gasto.nome;
+        const tipo = gasto.tipo;
+        const pessoa = gasto.pessoa;
+
         const itemNomes = itens.map(item => item.nome);
-        const itemIndex = itemNomes.indexOf(tipoGasto);
+        const itemIndex = itemNomes.indexOf(tipo);
         if (itemIndex >= 0) {
             itens[itemIndex].total += valor;
-            itens[itemIndex].itens.push({
-                nome: nomeGasto,
-                valor
-            });
+            itens[itemIndex].itens.push({ nome, pessoa, valor });
         } else {
             itens.push({
-                nome: tipoGasto,
+                nome: tipo,
                 total: valor,
                 itens: [{
-                    nome: nomeGasto,
+                    nome,
+                    pessoa,
                     valor
                 }]
             });
@@ -75,7 +77,7 @@ function _calculateGastosConvertidos(tipo, moeda) {
             valor = parseFloat(valor.toFixed(2));
 
             _updateResumo(resumo, gasto.tipo, valor);
-            _updateItens(itens, gasto.tipo, gasto.nome, valor);
+            _updateItens(itens, gasto, valor);
         }
     }
 

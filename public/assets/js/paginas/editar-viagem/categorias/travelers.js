@@ -248,3 +248,11 @@ function _getTravelerName(id) {
     const traveler = TRAVELERS.find(t => t.id === id);
     return traveler ? traveler.nome : '';
 }
+
+function _getTravelersObject() {
+    const result = {};
+    for (const traveler of TRAVELERS) {
+        result[traveler.id] = traveler.nome;
+    }
+    return result;
+}

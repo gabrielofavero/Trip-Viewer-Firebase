@@ -673,6 +673,7 @@
         "no": "Não",
         "protected": "Protegido",
         "unknown": "Desconhecido",
-        "non_specified": "Não especificado"
+        "non_specified": "Não especificado",
+        "total": "Total"
     }
 }

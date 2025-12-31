@@ -24,6 +24,7 @@ async function _getGastosObject() {
         gastosDurante,
         gastosPrevios,
         moeda: getID(`moeda`).value,
+        pessoas: _getTravelersObject(),
         versao: {
             ultimaAtualizacao: new Date().toISOString()
         }

@@ -26,11 +26,13 @@ function _setTable(id, itens, total) {
     }
 
     function tr(item) {
+        const titulo = translate(item.nome, {}, false);
+        const pessoa = item.pessoa ? GASTOS?.pessoas?.[item.pessoa] : undefined;
         const tr = document.createElement('tr');
 
         const td1 = document.createElement('td');
         td1.className = `tabela-texto-esquerda`;
-        td1.innerText = translate(item.nome, {}, false);
+        td1.innerHTML = pessoa ? `<span class="highlight">${pessoa}:</span> ${titulo}` : titulo;
         tr.appendChild(td1);
 
         const td2 = document.createElement('td');
@@ -47,7 +49,7 @@ function _setTable(id, itens, total) {
         const tr = document.createElement('tr');
         const td1 = document.createElement('td');
         td1.className = 'tabela-texto-esquerda total';
-        td1.innerText = 'Total';
+        td1.innerText = translate('labels.total');
         tr.appendChild(td1);
 
         const td2 = document.createElement('td');

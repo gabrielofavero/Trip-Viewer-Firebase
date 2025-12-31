@@ -673,6 +673,7 @@
         "no": "No",
         "protected": "Protected",
         "unknown": "Unknown",
-        "non_specified": "Non-specified"
+        "non_specified": "Non-specified",
+        "total": "Total"
     }
 }
