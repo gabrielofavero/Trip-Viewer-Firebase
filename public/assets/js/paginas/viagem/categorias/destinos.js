@@ -129,8 +129,8 @@ function _getDestinoValores(destino) {
 function _loadAndOpenDestino(code) {
   const exportFile = _cloneObject(DESTINO_EXPORT);
   exportFile.translations = {
-    sort: CONFIG.language.destination.sort,
-    order: CONFIG.language.destination.order
+    filter: CONFIG.language.destination.filter,
+    sort: CONFIG.language.destination.sort
   }
   exportFile.activeCategory = code;
   window.localStorage.setItem('DESTINO', JSON.stringify(exportFile));

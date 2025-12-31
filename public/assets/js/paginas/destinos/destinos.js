@@ -5,6 +5,7 @@ var CONTENT = [];
 function _loadDestinosPage() {
   _startLoadingScreen();
   _loadVisibilityExternal();
+  _loadButtonTranslations();
 
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {
@@ -220,48 +221,7 @@ function _getPlannedHTML(planejado) {
           </div>`
 }
 
-function _translateDestino(key, strict = true) {
-  let result = _searchObject(DESTINOS.translations, key, strict);
-
-  if (result == null) {
-    if (strict) {
-      if (strict) {
-        const stack = new Error().stack;
-        console.warn(
-          `Translation key "${key}" not found.`,
-          { caller: getCallerFromStack(stack) }
-        );
-      }
-    }
-    return key;
-
-    function getCallerFromStack(stack) {
-      if (!stack) return 'unknown';
-      const lines = stack.split('\n');
-      return lines[2]?.trim() || 'unknown';
-    }
-  }
-
-  return result;
-
-  function _searchObject(obj, key, strict = true) {
-    const keys = key.split(".");
-    let result = obj;
-
-    for (const k of keys) {
-      if (result && k in result) {
-        result = result[k];
-      } else {
-        return strict ? null : key;
-      }
-    }
-
-    const type = typeof result;
-    if (type != "string") {
-      console.error(`Invalid search value for key "${key}": expected a string, got ${type}.`);
-      return "";
-    }
-
-    return result;
-  }
+function _loadButtonTranslations() {
+  getID('filtrar').querySelector('span').innerText = DESTINO.translations.filter.title;
+  getID('ordenar').querySelector('span').innerText = DESTINO.translations.sort.title;
 }

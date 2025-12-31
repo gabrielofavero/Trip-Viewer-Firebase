@@ -7,14 +7,16 @@
 | 🐞   | Bug         | B000 | 119   | 118       | 1       |
 | 🏆   | Feature     | F000 | 118   | 116       | 2       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
-| ⚔️   | Epic        | E000 | 37    | 36        | 1       |
+| ⚔️   | Epic        | E000 | 38    | 37        | 1       |
 
 ## Backlog
 
 ### High Priority
 
-- 🏆 **F117:** Add filtering and sorting options to destinations page
-- 🏆 **F118:** Add option to quick edit destination on main page (if owner)
+- ⚔️ **E038:** Expenses Overhaul
+  - *[🏆F117] Add filtering and sorting options to destinations page*
+  - *[🏆F118] Add option to quickly edit destination on main page (if owner)*
+  - *[🏆F119] Add option to quickly create destination on main page (if owner)*
 
 ### Medium Priority
 
