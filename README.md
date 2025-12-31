@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 116   | 114       | 2       |
+| 🐞   | Bug         | B000 | 117   | 115       | 2       |
 | 🏆   | Feature     | F000 | 118   | 111       | 7       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 37    | 35        | 1       |
@@ -32,6 +32,7 @@
 
 ### December 2025
 
+- 🐞 **B117:** Translation issue on expenses page
 - 🏆 **F115:** Put visual indication if destination is planned for the trip*
 - 🐞 **B110:** Backup and Restore functions not working
 - 📈 **M122:** Put each expense type as draggable

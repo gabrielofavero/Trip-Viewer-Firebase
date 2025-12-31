@@ -30,7 +30,7 @@ function _setTable(id, itens, total) {
 
         const td1 = document.createElement('td');
         td1.className = `tabela-texto-esquerda`;
-        td1.innerText = item.nome;
+        td1.innerText = translate(item.nome, {}, false);
         tr.appendChild(td1);
 
         const td2 = document.createElement('td');
