@@ -161,6 +161,7 @@ function _orderInnerHTMLs(innerContents) {
 
 // Actions
 function _processAccordion(j) {
+  _adjustDrawer();
   _toggleMedia(j);
   _unloadMedias(j);
   _closeAccordions(j);
@@ -211,6 +212,7 @@ function _loadDestinoCustomSelect() {
   }
 
   function _loadDestinoCustomSelectAction(value) {
+    _adjustDrawer();
     _loadDestinoByType(value);
   }
 }

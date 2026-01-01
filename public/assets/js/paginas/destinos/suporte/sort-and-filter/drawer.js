@@ -1,6 +1,12 @@
 // Open and Close Actions
 function _openFilterDrawer() {
     const title = getID('filter').innerText;
+
+    if (_isDrawerOpen() && title === getID('drawerTitle').innerText) {
+        _closeDrawer();
+        return;
+    }
+
     const innerHTML = _getFilterDrawerInnerHTML();
     const actions = {
         click: _filterDrawerOptionClickAction,
@@ -11,6 +17,12 @@ function _openFilterDrawer() {
 
 function _openSortDrawer() {
     const title = getID('order').innerText;
+
+    if (_isDrawerOpen() && title === getID('drawerTitle').innerText) {
+        _closeDrawer();
+        return;
+    }
+
     const innerHTML = _getSortDrawerInnerHTML();
     const actions = {
         click: _sortDrawerOptionClickAction,
@@ -174,4 +186,14 @@ function _handleDrawerOptionClick(e, container, applyPreference) {
     const value = target.getAttribute('data-value');
 
     applyPreference(type, value);
+}
+
+function _isDrawerOpen() {
+    return getID("drawer").classList.contains("open");
+}
+
+function _adjustDrawer() {
+    if (_isDrawerOpen()) {
+        _closeDrawer();
+    }
 }
