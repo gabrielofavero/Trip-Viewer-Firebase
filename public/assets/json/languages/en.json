@@ -338,7 +338,7 @@
             "planned": {
                 "title": "Planning",
                 "planned": "Planned destinations",
-                "not_planed": "Not planned destinations"
+                "not_planned": "Not planned destinations"
             },
             "scores": {
                 "title": "Scores",
@@ -368,7 +368,7 @@
                 "planned_first": "Planned first",
                 "not_planned_first": "Not planned first"
             },
-            "score": {
+            "scores": {
                 "title": "Rating",
                 "highest_first": "Highest ratings first",
                 "lowest_first": "Lowest ratings first"

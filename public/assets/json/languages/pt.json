@@ -338,7 +338,7 @@
             "planned": {
                 "title": "Planejamento",
                 "planned": "Destinos incluídos no planejamento",
-                "not_planed": "Destinos fora do planejamento"
+                "not_planned": "Destinos fora do planejamento"
             },
             "scores": {
                 "title": "Avaliação do público",
@@ -368,7 +368,7 @@
                 "planned_first": "Planejados primeiro",
                 "not_planned_first": "Não planejados primeiro"
             },
-            "score": {
+            "scores": {
                 "title": "Avaliação",
                 "highest_first": "Melhores avaliações primeiro",
                 "lowest_first": "Piores avaliações primeiro"
