@@ -232,6 +232,7 @@ a:hover {
   background: var(--box-color);
 }
 
-.option-btn:hover {
+.option-btn:hover,
+.option-btn.active {
   background: var(--theme-color-secondary);
 }

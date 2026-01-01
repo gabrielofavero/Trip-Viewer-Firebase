@@ -861,7 +861,8 @@ section {
   color: var(--font-color);
 }
 
-.option-btn:hover {
+.option-btn:hover,
+.option-btn.active {
   background: var(--theme-color-secondary);
 }
 

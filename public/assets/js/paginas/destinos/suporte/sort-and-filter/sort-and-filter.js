@@ -1,32 +1,21 @@
-const FILTER_SORTING_KEYS_ORDER = {
+const FILTER_SORT_KEYS_ORDER = {
     planned: ['planned', 'not_planned'],
     prices: ["-", "$", "$$", "$$$", "$$$$", 'default'],
     scores: ["5", "4", "3", "2", "1", "default"]
 }
 
-const DEFAULT_FILTER_PREFERENCES = {
-    planned: "everything",
-    scores: "everything",
-    regions: "everything",
-    prices: "everything"
-}
-
-const DEFAULT_SORTING_PREFERENCES = {
-    type: "scores",
-    sorting: "highest_first"
-}
-
 const FILTER_OPTIONS = {}
-const SORTING_OPTIONS = {};
+const SORT_OPTIONS = {};
 
-const FILTER_SORTING_DATA = {};
+const FILTER_SORT_DATA = {};
 
 // Main Actions
 function _filter() {
-
+    const preferences = _getFilterPreferences();
 }
 
 function _sort() {
+    const preferences = _getSortPreferences();
 
 }
 
@@ -79,7 +68,7 @@ function _loadFilterOptions(force = false) {
 
     if (_shouldDisplayRegions()) {
         const regions = new Set(
-            Array.from(FILTER_SORTING_DATA[DESTINO.activeCategory].regions)
+            Array.from(FILTER_SORT_DATA[DESTINO.activeCategory].regions)
                 .map(r => r?.trim())
                 .filter(Boolean)
                 .sort((a, b) => a.localeCompare(b))
@@ -94,7 +83,7 @@ function _loadFilterOptions(force = false) {
 
     if (_shouldDisplayPrices()) {
         options.prices = {};
-        for (const price of FILTER_SORTING_DATA[DESTINO.activeCategory].prices) {
+        for (const price of FILTER_SORT_DATA[DESTINO.activeCategory].prices) {
             options.prices[price] = _getPriceLabel(price, f);
         }
     }
@@ -118,16 +107,16 @@ function _loadFilterOptions(force = false) {
 }
 
 function _loadSortingOptions(force = false) {
-    if (SORTING_OPTIONS[DESTINO.activeCategory] && !force) {
+    if (SORT_OPTIONS[DESTINO.activeCategory] && !force) {
         return;
     }
 
     const s = DESTINO.translations.sort;
     _loadTitles(s);
-    _loadFilterSortingData(SORTING_OPTIONS.titles);
+    _loadFilterSortingData(SORT_OPTIONS.titles);
 
-    SORTING_OPTIONS[DESTINO.activeCategory] = {};
-    const options = SORTING_OPTIONS[DESTINO.activeCategory];
+    SORT_OPTIONS[DESTINO.activeCategory] = {};
+    const options = SORT_OPTIONS[DESTINO.activeCategory];
 
     options.name = {
         ascending: s.name.ascending,
@@ -156,8 +145,8 @@ function _loadSortingOptions(force = false) {
     }
 
     function _loadTitles(s) {
-        if (!SORTING_OPTIONS.titles) {
-            SORTING_OPTIONS.titles = {
+        if (!SORT_OPTIONS.titles) {
+            SORT_OPTIONS.titles = {
                 name: s.name.title,
                 planned: s.planned.title,
                 scores: s.scores.title,
@@ -169,8 +158,8 @@ function _loadSortingOptions(force = false) {
 }
 
 function _loadFilterSortingData(titles) {
-    if (!FILTER_SORTING_DATA[DESTINO.activeCategory]) {
-        FILTER_SORTING_DATA[DESTINO.activeCategory] = {};
+    if (!FILTER_SORT_DATA[DESTINO.activeCategory]) {
+        FILTER_SORT_DATA[DESTINO.activeCategory] = {};
     }
     for (const title in titles) {
         let data;
@@ -188,72 +177,8 @@ function _loadFilterSortingData(titles) {
             case 'prices':
                 data = _getPrices();
         }
-        FILTER_SORTING_DATA[DESTINO.activeCategory][title] = data || new Set();
+        FILTER_SORT_DATA[DESTINO.activeCategory][title] = data || new Set();
     }
-}
-
-
-// User Actions
-function _openFilterDrawer() {
-    const title = getID('filter').innerText;
-    const innerHTML = _getFilterInnerHTML();
-    _openDrawer(title, innerHTML);
-}
-
-function _openSortDrawer() {
-    const title = getID('order').innerText;
-    const innerHTML = _getSortInnerHTML();
-    _openDrawer(title, innerHTML);
-}
-
-
-// Drawer
-function _openDrawer(titleText, innerHTML) {
-    const overlay = getID("overlay");
-    const drawer = getID("drawer");
-    const title = getID("drawerTitle");
-    const content = getID("drawerContent");
-
-    title.textContent = titleText;
-    content.innerHTML = innerHTML;
-
-    overlay.style.display = "block";
-    drawer.getBoundingClientRect();
-    drawer.classList.add("open");
-}
-
-function _closeDrawer() {
-    const overlay = getID("overlay");
-    const drawer = getID("drawer");
-    drawer.classList.remove("open");
-    setTimeout(() => {
-        overlay.style.display = "none";
-    }, 280);
-}
-
-// Preferences
-function _setFilteredPreferences(preferences) {
-    sessionStorage.setItem("destinos-filtered-preferences", preferences);
-}
-
-function _setSortedPreferences(preferences) {
-    sessionStorage.setItem("destinos-sorted-preferences", preferences);
-}
-
-function _getFilteredPreferences() {
-    const stored = sessionStorage.getItem("destinos-filtered-preferences");
-    if (stored) {
-        return JSON.parse(stored);
-    }
-    return DEFAULT_FILTER_PREFERENCES;
-}
-
-function _getSortedPreferences() {
-    sessionStorage.getItem("destinos-sorted-preferences");
-    if (stored) {
-        return JSON.parse(stored);
-    }
-    return DEFAULT_SORTING_PREFERENCES;
 }
 
 
@@ -280,8 +205,8 @@ function _shouldDisplayPrices() {
 }
 
 function _getPrices() {
-    if (FILTER_SORTING_DATA?.[DESTINO.activeCategory]?.prices) {
-        return FILTER_SORTING_DATA[DESTINO.activeCategory].prices;
+    if (FILTER_SORT_DATA?.[DESTINO.activeCategory]?.prices) {
+        return FILTER_SORT_DATA[DESTINO.activeCategory].prices;
     }
 
     const prices = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.valor));
@@ -321,19 +246,19 @@ function _getPrices() {
                 bucket: _getPriceBucket(p.value)
             }))
             .sort((a, b) =>
-                FILTER_SORTING_KEYS_ORDER.prices.indexOf(a.bucket) - FILTER_SORTING_KEYS_ORDER.prices.indexOf(b.bucket)
+                FILTER_SORT_KEYS_ORDER.prices.indexOf(a.bucket) - FILTER_SORT_KEYS_ORDER.prices.indexOf(b.bucket)
             );
     }
 }
 
 function _getSortedArray(arr, key) {
-    if (!FILTER_SORTING_KEYS_ORDER[key]) {
+    if (!FILTER_SORT_KEYS_ORDER[key]) {
         return arr;
     }
 
     const sorted = [...arr];
     sorted.sort((a, b) => {
-        const order = FILTER_SORTING_KEYS_ORDER[key];
+        const order = FILTER_SORT_KEYS_ORDER[key];
         return order.indexOf(a) - order.indexOf(b);
     });
     return sorted;
