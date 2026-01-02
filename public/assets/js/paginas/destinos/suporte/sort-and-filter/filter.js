@@ -5,8 +5,8 @@ function _filter(render = false) {
     const isPlannedEnabled = _shouldDisplayPlanned() && preferences.planned !== 'everything';
     const isPricesEnabled = _shouldDisplayPrices() && preferences.prices !== 'everything';
     const isScoresEnabled = _shouldDisplayScores() && preferences.scores !== 'everything';
-    const isRegionsEnabled = _shouldDisplayRegions() && preferences.regions !== 'everything' &&
-        FILTER_SORT_DATA[DESTINO.activeCategory].region.has(preferences.regions);
+    const isRegionsEnabled = _shouldDisplayRegions() && preferences.region !== 'everything' &&
+        FILTER_SORT_DATA[DESTINO.activeCategory].region.has(preferences.region);
 
     for (const item of CONTENT) {
         if ((isPlannedEnabled && _shouldFilterByPlanned(item)) ||
@@ -53,7 +53,7 @@ function _filter(render = false) {
         if (!value) {
             return true;
         }
-        return value !== preferences.regions;
+        return value !== preferences.region;
     }
 
     if (render) {
@@ -91,22 +91,28 @@ function _loadFilterOptions(force = false) {
 
     if (_shouldDisplayRegions()) {
         const regions = new Set(
-            Array.from(FILTER_SORT_DATA[DESTINO.activeCategory].regions)
+            Array.from(FILTER_SORT_DATA[DESTINO.activeCategory].region)
                 .map(r => r?.trim())
                 .filter(Boolean)
                 .sort((a, b) => a.localeCompare(b))
         );
-        options.regions = {
+        options.region = {
             none: f.region.none,
         }
         for (const region of regions) {
-            options.regions[region] = region;
+            options.region[region] = region;
         }
     }
 
     if (_shouldDisplayPrices()) {
         options.prices = {};
-        for (const price of _getPrices()) {
+        const prices = Array.from(_getPrices());
+
+        if (prices.length === 2 && prices[0] === '-' && ['$', '$$', '$$$'].includes(prices[1])) {
+            prices.pop();
+        }
+
+        for (const price of prices) {
             options.prices[price] = _getPriceLabel(price, f);
         }
     }

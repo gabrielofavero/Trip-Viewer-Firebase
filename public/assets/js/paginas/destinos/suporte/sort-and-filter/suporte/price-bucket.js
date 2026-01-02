@@ -22,12 +22,13 @@ function _getPriceBuckets() {
 }
 
 function _getPriceBucket(value) {
+    const range = DESTINO[DESTINO.activeCategory].valores_numericos;
     if (isNaN(value)) return "default";
     if (value === 0) return "-";
-    if (value >= 1 && value <= 25) return "$";
-    if (value >= 26 && value <= 50) return "$$";
-    if (value >= 51 && value <= 99) return "$$$";
-    if (value >= 100) return "$$$$";
+    if (value >= range['$'][0] && value <= range['$'][1]) return "$";
+    if (value >= range['$$'][0] && value <= range['$$'][0]) return "$$";
+    if (value >= range['$$$'][0] && value <= range['$$$'][0]) return "$$$";
+    if (value >= range['$$$$'][0]) return "$$$$";
     return "default";
 }
 

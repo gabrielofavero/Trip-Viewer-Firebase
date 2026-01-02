@@ -341,11 +341,11 @@
                 "not_planned": "Destinos fora do planejamento"
             },
             "scores": {
-                "title": "Avaliação do público",
-                "5": "Somente avaliações nota 5",
-                "4": "Avaliações a partir de 4",
-                "3": "Avaliações a partir de 3",
-                "2": "Avaliações a partir de 2"
+                "title": "Prioridade",
+                "5": "Somente altíssima prioridade",
+                "4": "A partir de alta prioridade",
+                "3": "A partir de prioridade normal",
+                "2": "A partir de baixa prioridade"
             },
             "region": {
                 "title": "Região",

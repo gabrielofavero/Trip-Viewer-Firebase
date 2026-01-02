@@ -33,7 +33,7 @@ function _loadFilterSortingData(titles) {
     for (const title in titles) {
         let data;
         switch (title) {
-            case 'regions':
+            case 'region':
                 data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.regiao));
                 data.delete('');
                 break;

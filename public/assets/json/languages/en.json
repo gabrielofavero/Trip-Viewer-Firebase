@@ -341,11 +341,11 @@
                 "not_planned": "Not planned destinations"
             },
             "scores": {
-                "title": "Scores",
-                "5": "Only 5-star ratings",
-                "4": "Ratings 4 and above",
-                "3": "Ratings 3 and above",
-                "2": "Ratings 2 and above"
+                "title": "Priority",
+                "5": "Only top priority",
+                "4": "High priority and above",
+                "3": "Normal priority and above",
+                "2": "Low priority and above"
             },
             "region": {
                 "title": "Region",

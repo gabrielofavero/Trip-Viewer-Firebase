@@ -114,10 +114,12 @@ function _loadDestinationsHTML(destino) {
 
 function _buildDestinoExport(destino, type) {
   const translatedType = CONFIG.destinos.translation[type] || type;
+  const moeda = destino.destinos.moeda;
   DESTINO_EXPORT[type] = {
     data: destino.destinos[type],
-    moeda: destino.destinos.moeda,
+    moeda,
     valores: _getDestinoValores(destino),
+    valores_numericos: CONFIG.moedas.escala_numerica[moeda],
     notas: CONFIG.language.destination.scores,
     categoria: type,
     titulo: translate(`destination.${translatedType}.title`)

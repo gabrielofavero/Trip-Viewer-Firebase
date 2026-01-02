@@ -1,7 +1,7 @@
 const FILTER_PREFERENCES = {
     planned: "everything",
     scores: "everything",
-    regions: "everything",
+    region: "everything",
     prices: "everything"
 }
 
