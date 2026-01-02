@@ -27,7 +27,6 @@ function _loadDestinosPage() {
   };
 
   if (DESTINO?.activeCategory && (DESTINO.activeCategory === 'mapa' || Object.keys(DESTINO[DESTINO.activeCategory]).length > 0)) {
-
     _loadDestinoCustomSelect()
     window.addEventListener("resize", () => {
       _applyDestinosMediaHeight();
@@ -56,8 +55,10 @@ function _loadDestinoByType(activeCategory) {
 
   const destino = DESTINO[activeCategory];
 
-  for (let j = 1; j <= destino.data.length; j++) {
-    const item = destino.data[j - 1];
+  const keys = Object.keys(destino.data);
+  for (let j = 1; j <= keys.length; j++) {
+    const key = keys[j-1];
+    const item = destino.data[key];
     const params = {
       j: j,
       item: item,
@@ -226,4 +227,8 @@ function _getPlannedHTML(planejado) {
   return `<div class="icon-container">
             <i class="iconify planejado" data-icon="fa-solid:check"></i>
           </div>`
+}
+
+function _getDataValues() {
+  return Object.values(DESTINO[DESTINO.activeCategory].data);
 }

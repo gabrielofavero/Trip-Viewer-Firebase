@@ -34,14 +34,14 @@ function _loadFilterSortingData(titles) {
         let data;
         switch (title) {
             case 'region':
-                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.regiao));
+                data = new Set(_getDataValues().map(item => item.regiao));
                 data.delete('');
                 break;
             case 'planned':
-                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.planejado || false));
+                data = new Set(_getDataValues().map(item => item.planejado || false));
                 break;
             case 'scores':
-                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.nota));
+                data = new Set(_getDataValues().map(item => item.nota));
                 break;
             case 'prices':
                 data = _getPriceBuckets();
@@ -52,18 +52,18 @@ function _loadFilterSortingData(titles) {
 
 // Helpers
 function _shouldDisplayRegions() {
-    const regioes = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.regiao));
+    const regioes = new Set(_getDataValues().map(item => item.regiao));
     regioes.delete('');
     return regioes.size > 1;
 }
 
 function _shouldDisplayPlanned() {
-    const planejado = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.planejado || false));
+    const planejado = new Set(_getDataValues().map(item => item.planejado || false));
     return planejado.size > 1;
 }
 
 function _shouldDisplayScores() {
-    const notas = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.nota));
+    const notas = new Set(_getDataValues().map(item => item.nota));
     return notas.size > 1;
 }
 

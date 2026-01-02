@@ -12,12 +12,7 @@ function _getPriceBuckets() {
         return FILTER_SORT_DATA[DESTINO.activeCategory].prices;
     }
 
-    const prices = Array.from(
-        new Set(
-            DESTINO[DESTINO.activeCategory].data.map(item => item.valor)
-        )
-    );
-
+    const prices = Array.from(new Set(_getDataValues().map(item => item.valor)));
     return _buildPriceBuckets(prices);
 }
 
