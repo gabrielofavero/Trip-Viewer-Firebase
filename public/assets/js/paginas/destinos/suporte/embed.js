@@ -1,14 +1,10 @@
 var MEDIA_HYPERLINKS = {};
 
 // Loader
-function _loadEmbed(link, isLineup, i) {
+function _loadEmbed(link, i) {
     let result = "";
 
-    if (isLineup) {
-        result = _getLineupEmbed(link);
-    } else {
-        result = _getEmbed(link);
-    }
+    result = _getEmbed(link);
 
     if (result) {
         MEDIA_HYPERLINKS[`midia-${i}`] = result;
@@ -45,14 +41,6 @@ function _unloadMedias(exclude) {
 
 
 // Support Functions
-function _getLineupEmbed(link) {
-    if (link.includes("open.spotify.com")) {
-        return {
-            tipo: "spotify",
-            conteudo: _getSpotifyEmbed(link)
-        }
-    } else return "";
-}
 
 function _getEmbed(link) {
     let tipo = "";

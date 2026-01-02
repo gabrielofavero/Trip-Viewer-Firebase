@@ -1,0 +1,73 @@
+const FILTER_SORT_KEYS_ORDER = {
+    planned: ['planned', 'not_planned'],
+    prices: ["-", "$", "$$", "$$$", "$$$$", 'default'],
+    scores: ["5", "4", "3", "2", "1", "default"]
+}
+
+const FILTER_SORT_DATA = {};
+
+// Loading Action
+function _loadSortAndFilter(force = false) {
+    _loadFilterOptions(force);
+    _loadSortOptions(force);
+    _loadSortAndFilterVisibility();
+    _sort();
+    _filter();
+}
+
+function _loadSortAndFilterLabels() {
+    getID('filter').querySelector('span').innerText = DESTINO.translations.filter.title;
+    getID('order').querySelector('span').innerText = DESTINO.translations.sort.title;
+}
+
+function _loadSortAndFilterVisibility() {
+    const anyOptions = (_shouldDisplayPlanned() || _shouldDisplayScores() || _shouldDisplayRegions() || _shouldDisplayPrices());
+    const display = anyOptions ? '' : 'none';
+    getID('filter').style.display = display;
+}
+
+function _loadFilterSortingData(titles) {
+    if (!FILTER_SORT_DATA[DESTINO.activeCategory]) {
+        FILTER_SORT_DATA[DESTINO.activeCategory] = {};
+    }
+    for (const title in titles) {
+        let data;
+        switch (title) {
+            case 'region':
+                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.regiao));
+                data.delete('');
+                break;
+            case 'planned':
+                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.planejado || false));
+                break;
+            case 'scores':
+                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.nota));
+                break;
+            case 'prices':
+                data = _getPriceBuckets();
+        }
+        FILTER_SORT_DATA[DESTINO.activeCategory][title] = data || new Set();
+    }
+}
+
+// Helpers
+function _shouldDisplayRegions() {
+    const regioes = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.regiao));
+    regioes.delete('');
+    return regioes.size > 1;
+}
+
+function _shouldDisplayPlanned() {
+    const planejado = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.planejado || false));
+    return planejado.size > 1;
+}
+
+function _shouldDisplayScores() {
+    const notas = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.nota));
+    return notas.size > 1;
+}
+
+function _shouldDisplayPrices() {
+    const precos = _getPrices();
+    return precos.size > 1;
+}

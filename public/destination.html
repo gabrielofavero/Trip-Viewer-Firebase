@@ -105,9 +105,14 @@
       <br><br><br><br>
       <div class="destinos-select" id="destinos-select">
       </div>
+      <div id="subtitulo-destinos"></div>
+    </div>
 
-      <div id="subtitulo-destinos">
-      </div>
+    <div class="section-buttons">
+      <button class="filter-sort" id="filter" onclick="_openFilterDrawer()"><i class="iconify"
+          data-icon="tdesign:filter"></i><span></span></button>
+      <button class="filter-sort" id="order" onclick="_openSortDrawer()"><i class="iconify"
+          data-icon="ant-design:sort-ascending-outlined"></i><span></span></button>
     </div>
 
     <div id="content"></div>
@@ -125,6 +130,17 @@
   </div>
 
   <div id="preloader" style="display: none"></div>
+
+  <div class="drawer-overlay" id="overlay" onclick="_closeDrawer()">
+    <div class="drawer" id="drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <span id="drawerTitle"></span>
+        <button class="close-btn" onclick="_closeDrawer()">✕</button>
+      </div>
+      <div class="drawer-body" id="drawerContent"></div>
+    </div>
+  </div>
+
 
   <!-- Firebase -->
   <script src="../index.js" type=text/JSX"></script>
@@ -155,6 +171,12 @@
   <script src="assets/js/paginas/destinos/categorias.js"></script>
   <script src="assets/js/paginas/destinos/destinos-box.js"></script>
   <script src="assets/js/suporte/componentes/custom-select.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/price-bucket.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/preferences.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/drawer.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/sort-and-filter/sort-and-filter.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/sort-and-filter/sort.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/sort-and-filter/filter.js"></script>
   <script src="assets/js/paginas/destinos/destinos.js"></script>
   <script src="assets/js/paginas/destinos/suporte/visibilidade.js"></script>
   <script src="assets/js/suporte/estilos/cores.js"></script>

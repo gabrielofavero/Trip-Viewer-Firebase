@@ -4,6 +4,10 @@ var THEME_COLOR_SECONDARY;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
 var CUSTOM_COLORS = false;
+var BOX_COLOR = {
+    claro: "#f1f1f1",
+    escuro: "#404040"
+}
 
 // Loaders
 function _loadLogoColors() {
@@ -65,6 +69,23 @@ function _getColorIndexFromOptions(i) {
         i = i % CONFIG.cores.opcoes.length;
     }
     return i;
+}
+
+function _getMixedColor(mainColor, mixColor, mixColorPercentage = 85) {
+    let [r1, g1, b1] = _hexToRgb(mainColor);
+    let [r2, g2, b2] = _hexToRgb(mixColor);
+
+    let r = Math.round((r1 * (100 - mixColorPercentage) + r2 * mixColorPercentage) / 100);
+    let g = Math.round((g1 * (100 - mixColorPercentage) + g2 * mixColorPercentage) / 100);
+    let b = Math.round((b1 * (100 - mixColorPercentage) + b2 * mixColorPercentage) / 100);
+
+    return _rgbToHex(r, g, b);
+}
+
+function _getSecondaryColor(type) {
+    const mainColor = type == 'claro' ? CLARO : ESCURO;
+    const mixColor = BOX_COLOR[type];
+    return _getMixedColor(mainColor, mixColor);
 }
 
 function _getColorNameFromOptions(i) {

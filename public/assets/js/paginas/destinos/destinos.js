@@ -1,11 +1,13 @@
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
-var CONTENT = {};
+var CONTENT = [];
 
 // Métodos Principais
 function _loadDestinosPage() {
   _startLoadingScreen();
   _loadVisibilityExternal();
+  _loadSortAndFilterLabels();
 
+  document.title = DESTINO.title || "TripViewer";
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {
     closeButton.onclick = function () {
@@ -41,7 +43,7 @@ function _loadDestinosPage() {
 function _loadDestinoByType(activeCategory) {
   const content = getID('content');
   content.innerHTML = "";
-  CONTENT = {};
+  CONTENT = [];
   MEDIA_HYPERLINKS = {};
 
   if (activeCategory === 'myMaps') {
@@ -53,16 +55,12 @@ function _loadDestinoByType(activeCategory) {
   }
 
   const destino = DESTINO[activeCategory];
-  const isLineup = false;
 
   for (let j = 1; j <= destino.data.length; j++) {
     const item = destino.data[j - 1];
-    const data = isLineup ? _getLineupData(item) : "";
-    const key = isLineup ? _getLineupKey(item) : "semData";
     const params = {
       j: j,
       item: item,
-      isLineup: isLineup,
       innerProgramacao: false,
       notas: destino.notas,
       valores: destino.valores,
@@ -104,10 +102,11 @@ function _loadDestinoByType(activeCategory) {
                               </div>
                           </div>
                       </div>`;
-    _loadEmbed(item?.midia, isLineup, j)
-    _setInnerContent(item, key, data, innerHTML);
+    _loadEmbed(item?.midia, j)
+    _setInnerContent(item, innerHTML);
   }
 
+  _loadSortAndFilter();
   _applyContent();
   _applyDestinosMediaHeight();
   _adjustInstagramMedia();
@@ -122,71 +121,41 @@ function _loadMapDestino(link) {
   getID('content').innerHTML = `<iframe class="map-iframe" src="https://www.google.com/maps/d/embed?mid=${mid}&ehbc=2E312F" width="640" height="480"></iframe>`
 }
 
-// Getters
-function _getLineupData(item) {
-  if (item.data) {
-    const dataSplit = item.data.split("-");
-    if (dataSplit.length === 3) {
-      const dia = dataSplit[0].length === 1 ? "0" + dataSplit[0] : dataSplit[0];
-      const mes = dataSplit[1].length === 1 ? "0" + dataSplit[1] : dataSplit[1];
-      const ano = dataSplit[2];
-      return `${dia}/${mes}/${ano}`;
-    }
-  }
-  return "";
-}
-
-function _getLineupKey(item) {
-  if (item.data) {
-    const filteredData = item.data.split("-").join("");
-    if (filteredData && !isNaN(filteredData)) return filteredData;
-  }
-  return 'semData';
-}
-
 
 // Setters
-function _setInnerContent(item, key, data, innerHTML) {
+function _setInnerContent(item, innerHTML) {
   const innerContent = {
     titulo: item.nome,
-    nota: item.nota || "?",
+    nota: item.nota || "default",
+    valor: item.valor || "default",
+    regiao: item.regiao,
+    planejado: item?.planejado === true,
     innerHTML: innerHTML
   }
 
-  if (!CONTENT[key]) {
-    CONTENT[key] = {
-      titulo: data,
-      innerContents: [innerContent]
-    };
-  } else {
-    CONTENT[key].innerContents.push(innerContent);
-  }
+  CONTENT.push(innerContent);
 }
 
 function _applyContent() {
   const div = getID("content");
-  const keys = Object.keys(CONTENT).sort((a, b) => a - b); // Ordem Crescente
-
-  div.innerHTML = "";
-  for (const key of keys) {
-    const titulo = CONTENT[key].titulo ? `<div class="data-lineup">${CONTENT[key].titulo}</div>` : "";
-    const innerHTMLs = _orderInnerHTMLs(CONTENT[key].innerContents);
-    div.innerHTML += titulo + innerHTMLs.join("")
+  div.innerHTML = '';
+  for (const item of CONTENT) {
+    if (item.filtered) {
+      continue;
+    }
+    div.innerHTML += item.innerHTML;
   }
 }
 
 function _orderInnerHTMLs(innerContents) {
   innerContents.sort((a, b) => {
-    // Verifica se uma das notas é '?', para priorizar as outras notas
     if (a.nota === '?') return 1;
     if (b.nota === '?') return -1;
 
-    // Ordena por nota em ordem decrescente (5, 4, 3, 2, 1)
     if (b.nota !== a.nota) {
       return b.nota - a.nota;
     }
 
-    // Se as notas são iguais, ordena por título em ordem crescente
     return a.titulo.localeCompare(b.titulo);
   });
 
@@ -194,9 +163,9 @@ function _orderInnerHTMLs(innerContents) {
 }
 
 
-
 // Actions
 function _processAccordion(j) {
+  _adjustDrawer();
   _toggleMedia(j);
   _unloadMedias(j);
   _closeAccordions(j);
@@ -236,7 +205,7 @@ function _loadDestinoCustomSelect() {
     const result = [];
     for (const categoryKey in DESTINO) {
       if (
-        categoryKey === 'activeCategory' ||
+        ['activeCategory', 'translations', 'title'].includes(categoryKey) ||
         (categoryKey !== 'myMaps' && DESTINO[categoryKey].data.length === 0)
       ) {
         continue;
@@ -247,8 +216,7 @@ function _loadDestinoCustomSelect() {
   }
 
   function _loadDestinoCustomSelectAction(value) {
-    const titulo = DESTINO[value].titulo;
-    document.title = titulo;
+    _adjustDrawer();
     _loadDestinoByType(value);
   }
 }

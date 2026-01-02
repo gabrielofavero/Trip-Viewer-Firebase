@@ -2,6 +2,7 @@ var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var DESTINOS = [];
 var DESTINO_EXPORT = {};
+var DESTINO_TRANSLATIONS = {};
 
 // ======= LOADERS =======
 function _loadDestinos() {
@@ -68,6 +69,12 @@ function _loadDestinationsHTML(destino) {
   let text = "";
 
   const types = CONFIG.destinos.categorias.geral;
+  
+  DESTINO_EXPORT = {};
+  DESTINO_EXPORT.title = destino.destinos.titulo;
+  DESTINO_EXPORT.translations = _getDestinosTranslations();
+  DESTINO_EXPORT.activeCategory = undefined;
+
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
     _buildDestinoExport(destino, type)
@@ -107,10 +114,12 @@ function _loadDestinationsHTML(destino) {
 
 function _buildDestinoExport(destino, type) {
   const translatedType = CONFIG.destinos.translation[type] || type;
+  const moeda = destino.destinos.moeda;
   DESTINO_EXPORT[type] = {
     data: destino.destinos[type],
-    moeda: destino.destinos.moeda,
+    moeda,
     valores: _getDestinoValores(destino),
+    valores_numericos: CONFIG.moedas.escala_numerica[moeda],
     notas: CONFIG.language.destination.scores,
     categoria: type,
     titulo: translate(`destination.${translatedType}.title`)
@@ -185,4 +194,14 @@ function _loadPlannedDestinations() {
       return;
     }
   }
+}
+
+function _getDestinosTranslations() {
+  if (Object.keys(DESTINO_TRANSLATIONS) == 0) {
+    DESTINO_TRANSLATIONS = {
+      filter: CONFIG.language.destination.filter,
+      sort: CONFIG.language.destination.sort
+    }
+  }
+  return DESTINO_TRANSLATIONS;
 }
