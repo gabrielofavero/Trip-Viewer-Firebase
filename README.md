@@ -14,7 +14,6 @@
 ### High Priority
 
 - ⚔️ **E038:** Expenses Overhaul
-  - *[🏆F117] Add filtering and sorting options to destinations page*
   - *[🏆F118] Add option to quickly edit destination on main page (if owner)*
   - *[🏆F119] Add option to quickly create destination on main page (if owner)*
 
@@ -25,6 +24,10 @@
 - 🐞 **B096:** Fix Gallery module
 
 ## Done
+
+### January 2026
+- ⚔️ **E038:** Expenses Overhaul
+  - *[🏆F117] Add filtering and sorting options to destinations page*
 
 ### December 2025
 
