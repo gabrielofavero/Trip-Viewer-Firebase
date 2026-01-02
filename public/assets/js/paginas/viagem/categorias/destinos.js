@@ -147,7 +147,7 @@ function _getDestinoValores(destino) {
 
 function _loadAndOpenDestino(code) {
   window.localStorage.setItem('PLANNED_DESTINATIONS', JSON.stringify(PLANNED_DESTINATIONS));
-  _openLightbox(`destination?type=${code}d=${DESTINO_ATIVO}`);
+  _openLightbox(`destination?type=${code}&d=${DESTINO_ATIVO}`);
 }
 
 function _getDestinationsBoxesIndex(i) {

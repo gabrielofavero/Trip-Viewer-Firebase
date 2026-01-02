@@ -113,11 +113,11 @@ function _loadFilterOptions(force = false) {
         }
 
         for (const price of prices) {
-            options.prices[price] = _getPriceLabel(price, f);
+            options.prices[price] = _getPriceLabel(price);
         }
     }
 
-    function _loadTitles(f) {
+    function _loadTitles() {
         if (!FILTER_OPTIONS.titles) {
             FILTER_OPTIONS.titles = {
                 planned: translate('destination.filter.planned.title'),

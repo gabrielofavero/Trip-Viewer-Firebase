@@ -25,7 +25,7 @@ async function _loadDestinosData() {
 
   PLANNED_DESTINATIONS = JSON.parse(window.localStorage.getItem('PLANNED_DESTINATIONS')) || {};
   FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
-  ACTIVE_CATEGORY = urlParams['active'] || _getFirstCategory();
+  ACTIVE_CATEGORY = urlParams['type'] || _getFirstCategory();
 }
 
 async function _loadDestinosPage() {
@@ -66,16 +66,20 @@ async function _loadDestinosPage() {
 
 function _loadDestinoByType(activeCategory) {
   const content = getID('content');
+  const filterSortContainer = getID('filter-sort-container');
+  
   content.innerHTML = "";
   CONTENT = [];
   MEDIA_HYPERLINKS = {};
 
   if (activeCategory === 'myMaps') {
     content.classList = "map-content";
-    _loadMapDestino(FIRESTORE_DESTINOS_DATA[activeCategory].myMaps);
+    _loadMapDestino(FIRESTORE_DESTINOS_DATA.myMaps);
+    filterSortContainer.style.display = "none";
     return
   } else {
     content.classList = "";
+    filterSortContainer.style.display = "";
   }
 
   const destino = FIRESTORE_DESTINOS_DATA[activeCategory];
@@ -234,7 +238,8 @@ function _loadDestinoCustomSelect() {
         continue;
       }
 
-      const label = CONFIG.destinos.translation[value];
+      const key = CONFIG.destinos.translation[value];
+      const label = translate(`destination.${key}.title`);
       result.push({ value, label });
     }
     return result;
@@ -265,6 +270,6 @@ function _isPlanned(id) {
 function _updateActiveCategory(category) {
   ACTIVE_CATEGORY = category;
   const url = new URL(window.location);
-  url.searchParams.set('active', category);
+  url.searchParams.set('type', category);
   window.history.replaceState({}, '', url);
 }

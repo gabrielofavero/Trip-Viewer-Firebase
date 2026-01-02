@@ -95,6 +95,13 @@
         </div>
       </a>
       <div class="icons-box" id="icons-box">
+        <div class="lang-selector">
+          <button class="lang-button">EN</button>
+          <div class="lang-options">
+            <button data-lang="en">EN</button>
+            <button data-lang="pt">PT</button>
+          </div>
+        </div>
         <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
@@ -108,14 +115,14 @@
       <div id="subtitulo-destinos"></div>
     </div>
 
-    <div class="section-buttons">
+    <div class="section-buttons" id="filter-sort-container">
       <button class="filter-sort" id="filter" onclick="_openFilterDrawer()">
         <i class="iconify" data-icon="tdesign:filter"></i>
         <span data-translate="destination.filter.title"></span>
       </button>
       <button class="filter-sort" id="order" onclick="_openSortDrawer()">
         <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
-        <<span data-translate="destination.sort.title"></span>
+        <span data-translate="destination.sort.title"></span>
       </button>
     </div>
 
@@ -148,8 +155,9 @@
 
   <!-- Firebase -->
   <script src="../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
   <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
   <!-- Vendor JS Files -->

@@ -94,10 +94,10 @@ function _normalizePriceBucket(value) {
     return bucket.bucket;
 }
 
-function _getPriceLabel(price, f) {
+function _getPriceLabel(price) {
     const translations = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
     const value = translations[price];
-    return ["-", 'default'].includes(price) ? value : `${f.price.up_to} ${value.split(' - ')[1]}`;
+    return ["-", 'default'].includes(price) ? value : `${translate('destination.filter.price.up_to')} ${value.split(' - ')[1]}`;
 }
 
 function _isPriceInBucketRange(bucket, value) {

@@ -53,7 +53,9 @@ function _getLinkOnClick(item, tipo) {
 function _getValorValue(item, valores, moeda) {
     switch (item.valor) {
         case "default":
+            return translate('destination.price.default');
         case "-":
+            return translate('destination.price.free');
         case "$":
         case "$$":
         case "$$$":
