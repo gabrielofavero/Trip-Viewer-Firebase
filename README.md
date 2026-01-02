@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 119   | 118       | 1       |
+| 🐞   | Bug         | B000 | 120   | 119       | 1       |
 | 🏆   | Feature     | F000 | 120   | 116       | 4       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 38        | 1       |
@@ -29,6 +29,7 @@
 
 ### January 2026
 
+- 🐞 **B120:** Fix destinos-select options order
 - ⚔️ **E038:** Add filtering and sorting options to destinations page
 
 ### December 2025

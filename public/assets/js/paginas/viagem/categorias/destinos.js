@@ -36,22 +36,53 @@ function _loadDestinationsCustomSelect() {
     return;
   }
 
-  const options = [];
-  for (const destino of DESTINOS) {
-    options.push({
-      value: destino.destinosID,
-      label: destino.destinos.titulo
-    });
-  }
+  const options = _getDestinationsCustomSelectOptions();
 
   const customSelect = {
     id: "destinos-select",
-    options, 
+    options,
     activeOption: options[0].value,
     action: _loadDestionationCustomSelectAction
   }
 
   _loadCustomSelect(customSelect);
+
+  function _getDestinationsCustomSelectOptions() {
+    const options = [];
+    const itineraryOrder = new Set(FIRESTORE_DATA.programacoes
+      .flatMap(item => (item.destinosIDs || []).map(d => d.destinosID))
+      .filter(Boolean));
+
+    for (const destino of DESTINOS) {
+      options.push({
+        value: destino.destinosID,
+        label: destino.destinos.titulo
+      });
+    }
+
+    if (itineraryOrder.size > 0) {
+      const ordered = [];
+      const remaining = [];
+
+      for (const option of options) {
+        if (itineraryOrder.has(option.value)) {
+          ordered.push(option);
+        } else {
+          remaining.push(option);
+        }
+      }
+
+      options.length = 0;
+      for (const id of itineraryOrder) {
+        const match = ordered.find(opt => opt.value === id);
+        if (match) options.push(match);
+      }
+
+      options.push(...remaining);
+    }
+
+    return options
+  }
 
   function _loadDestionationCustomSelectAction(value) {
     for (let i = 0; i < DESTINOS.length; i++) {
@@ -69,7 +100,7 @@ function _loadDestinationsHTML(destino) {
   let text = "";
 
   const types = CONFIG.destinos.categorias.geral;
-  
+
   DESTINO_EXPORT = {};
   DESTINO_EXPORT.title = destino.destinos.titulo;
   DESTINO_EXPORT.translations = _getDestinosTranslations();
