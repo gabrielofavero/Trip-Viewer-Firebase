@@ -7,7 +7,7 @@ var PROGRAMACAO_ATUAL_DATA = {
 var PROGRAMACAO_ATUAL = null;
 var INNER_PROGRAMACAO_ATUAL = [];
 var IS_TRAVELER_CUSTOM_SELECT_OPTION_EXCLUSIVE = false;
-// ======= LOADERS =======
+
 function _loadModalContentCalendar() {
     let titulo = PROGRAMACAO_ATUAL.titulo;
     const data = _getDateTitle(_convertFromDateObject(PROGRAMACAO_ATUAL.data));
@@ -50,7 +50,6 @@ function _loadModalContentCalendar() {
     }
 }
 
-// Modal
 function _openModalCalendar(programacao) {
     PROGRAMACAO_ATUAL = programacao;
     _loadModalContentCalendar();
@@ -192,26 +191,25 @@ function _getInnerProgramacaoHTML(item) {
         case 'destinos':
             container = 'destinos-container';
             if (FIRESTORE_DATA.modulos.destinos === true && item.local && item.categoria && item.id) {
-                let ids = DESTINOS.map(destino => destino.destinosID);
-                const i = ids.indexOf(item.local);
-                if (i > -1) {
-                    const destino = DESTINOS[i].destinos;
-                    const categoria = destino[item.categoria];
-                    if (categoria && Object.keys(categoria).length > 0) {
-                        const j = categoria.map(destino => destino.id).indexOf(item.id);
-                        if (j > -1) {
-                            index = j;
-                            innerProgramacao.titulo = _getTitulo(categoria[j]);
+                const destinosIDs = DESTINOS.map(destino => destino.destinosID);
+                index = destinosIDs.indexOf(item.local);
+                if (index > -1) {
+                    const destino = DESTINOS[index].destinos;
+                    const destinoItens = destino[item.categoria];
+                    if (destinoItens && Object.keys(destinoItens).length) {
+                        const destinoItem = destinoItens[item.id];                        
+                        if (destinoItem) {
+                            innerProgramacao.titulo = _getTitulo(destinoItem);
                             innerProgramacao.content = _getDestinosBoxHTML({
                                 j: 1,
-                                item: categoria[j],
+                                item: destinoItem,
                                 isLineup: false,
                                 innerProgramacao: true,
                                 notas: CONFIG.language.destination.scores,
-                                valores: _getDestinoValores(DESTINOS[i]),
+                                valores: _getDestinoValores(DESTINOS[index]),
                                 moeda: destino.moeda
                             });
-                            innerProgramacao.midia = categoria[j]?.midia;
+                            innerProgramacao.midia = destinoItem?.midia;
                         }
                     }
                 }
