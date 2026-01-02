@@ -13,7 +13,7 @@
 
 ### High Priority
 
-- ⚔️ **E039:** Expenses Overhaul
+- ⚔️ **E039:** Destinations Quick-Edit
   - *[🏆F117] Adjust destination object strucute (migration)*
   - *[🏆F118] Adjust destination object strucute (pages)*
   - *[🏆F119] Add option to quickly edit destination on main page (if owner)*
