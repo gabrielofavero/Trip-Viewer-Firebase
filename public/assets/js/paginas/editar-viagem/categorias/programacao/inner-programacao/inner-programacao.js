@@ -264,7 +264,7 @@ function _addInnerProgramacao(j, k, turno) {
             return;
         }
         const innerProgramacao = _buildInnerProgramacao(programacao);
-        _setInnerProgramacao(innerProgramacao, j, k, turno);     
+        _setInnerProgramacao(innerProgramacao, j, k, turno);
     }
 
     function _buildInnerProgramacao(programacao) {
@@ -434,18 +434,32 @@ async function _buildInnerProgramacaoDestinosData(id) {
     };
 
     const passeios = CONFIG.destinos.categorias.passeios;
-    let categorias = Object.keys(data)
-        .filter(key => passeios.includes(key) && data[key].length > 1)
+    const categorias = Object.keys(data)
+        .filter(key =>
+            passeios.includes(key) &&
+            data[key] &&
+            typeof data[key] === "object" &&
+            Object.keys(data[key]).length > 0
+        )
         .sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
 
-    const categoriaOptions = categorias.map(categoria => `<option value="${categoria}">${titulos[categoria]}</option>`).join('');
-    let passeioOptions = {};
+    const categoriaOptions = categorias
+        .map(categoria => `<option value="${categoria}">${titulos[categoria]}</option>`)
+        .join('');
+
+    const passeioOptions = {};
     for (const categoria of categorias) {
-        const passeios = data[categoria].sort((a, b) => a.nome.localeCompare(b.nome));
-        passeioOptions[categoria] = passeios.map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`).join('');
+        const passeiosArr = Object.entries(data[categoria]).map(([id, value]) => ({
+            id,
+            ...value
+        }));
+        passeiosArr.sort((a, b) => a.nome.localeCompare(b.nome));
+        passeioOptions[categoria] = passeiosArr
+            .map(passeio => `<option value="${passeio.id}">${passeio.nome}</option>`)
+            .join('');
     }
 
-    INNER_PROGRAMACAO_DETINOS_DATA[id] = { categoriaOptions, passeioOptions }
+    INNER_PROGRAMACAO_DETINOS_DATA[id] = { categoriaOptions, passeioOptions };
     return INNER_PROGRAMACAO_DETINOS_DATA[id];
 }
 
