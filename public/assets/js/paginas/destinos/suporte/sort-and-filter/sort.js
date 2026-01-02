@@ -99,9 +99,11 @@ function _loadSortOptions(force = false) {
     SORT_OPTIONS[DESTINO.activeCategory] = {};
     const options = SORT_OPTIONS[DESTINO.activeCategory];
 
-    options.name = {
-        ascending: s.name.ascending,
-        descending: s.name.descending
+    if (_shouldDisplayScores()) {
+        options.scores = {
+            highest_first: s.scores.highest_first,
+            lowest_first: s.scores.lowest_first
+        }
     }
 
     if (_shouldDisplayPlanned()) {
@@ -111,18 +113,16 @@ function _loadSortOptions(force = false) {
         }
     }
 
-    if (_shouldDisplayScores()) {
-        options.scores = {
-            highest_first: s.scores.highest_first,
-            lowest_first: s.scores.lowest_first
-        }
-    }
-
     if (_shouldDisplayPrices()) {
         options.prices = {
             lowest_first: s.price.lowest_first,
             highest_first: s.price.highest_first
         }
+    }
+
+    options.name = {
+        ascending: s.name.ascending,
+        descending: s.name.descending
     }
 
     function _loadTitles(s) {
