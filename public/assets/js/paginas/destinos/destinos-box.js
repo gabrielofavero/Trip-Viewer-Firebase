@@ -39,6 +39,9 @@ function _getDestinosBoxHTML({ j, item, isLineup, innerProgramacao, notas, valor
             ${_getDescricaoValue(item, isLineup)}
         </div>
         <div id="midia-${j}" class="midia-container"></div>
+        <div class="edit-container" style="display: none">
+            <button class="edit" id="edit-${j}">Editar</button>
+        </div>
     </div>
 </div>`
 }

@@ -1,9 +1,14 @@
 var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
 var CONTENT = [];
 
+window.addEventListener("load", async function () {
+  _startLoadingScreen();
+  _mainStart();
+  _stopLoadingScreen();
+});
+
 // Métodos Principais
 function _loadDestinosPage() {
-  _startLoadingScreen();
   _loadVisibilityExternal();
   _loadSortAndFilterLabels();
 
@@ -36,7 +41,6 @@ function _loadDestinosPage() {
   } else {
     console.error("O Código não foi localizado na base de dados");
   }
-  _stopLoadingScreen();
 }
 
 function _loadDestinoByType(activeCategory) {
@@ -57,7 +61,7 @@ function _loadDestinoByType(activeCategory) {
 
   const keys = Object.keys(destino.data);
   for (let j = 1; j <= keys.length; j++) {
-    const key = keys[j-1];
+    const key = keys[j - 1];
     const item = destino.data[key];
     const params = {
       j: j,
@@ -111,6 +115,7 @@ function _loadDestinoByType(activeCategory) {
   _applyContent();
   _applyDestinosMediaHeight();
   _adjustInstagramMedia();
+  _loadEditDestination();
 }
 
 function _loadMapDestino(link) {
