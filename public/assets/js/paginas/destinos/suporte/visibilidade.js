@@ -14,10 +14,10 @@ function _applyDestinosMediaHeight() {
     const firstDiv = getID('destinos-1');
     if (keys.length > 0 && firstDiv) {
         const width = firstDiv.offsetWidth - 40; // 20px padding em cada lado
-        
+
         const heightPortrait = (width * 16) / 9;
         const heightLandscape = (width * 9) / 16;
-        
+
         _setCSSRule('.youtube-embed', 'height', `${heightLandscape}px`);
 
         if (getID('content').offsetWidth <= 550) {
@@ -40,32 +40,19 @@ function _getDestinosTituloVisibility(item) {
     else return "none";
 }
 
-function _getLinksContainerVisibility(item, isLineup) {
-    if (!isLineup && (item.mapa || item.website || item.instagram)) return "flex";
+function _getLinksContainerVisibility(item) {
+    if ((item.mapa || item.website || item.instagram)) return "flex";
     else return "none";
 }
 
-function _getHeadlinerVisibility(item, isLineup) {
-    if (isLineup && item.headliner) return "block";
-    else return "none";
+function _getPalcoRegiaoVisibility(item) {
+    return item.regiao ? "block" : "none";
 }
 
-function _getGeneroVisibility(item, isLineup) {
-    if (isLineup) return "block";
-    else return item.genero ? "block" : "none";
+function _getValorVisibility(item) {
+    return item.valor ? "block" : "none";
 }
 
-function _getPalcoRegiaoVisibility(item, isLineup) {
-    if (isLineup) return item.palco ? "block" : "none";
-    else return item.regiao ? "block" : "none";
-}
-
-function _getValorVisibility(item, isLineup) {
-    if (isLineup) return "none";
-    else return item.valor ? "block" : "none";
-}
-
-function _getDescricaoVisibility(item, isLineup) {
-    if (isLineup) return "none";
-    else return _getDescricaoValue(item) ? "block" : "none";
+function _getDescricaoVisibility(item) {
+    return _getDescricaoValue(item) ? "block" : "none";
 }

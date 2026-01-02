@@ -1,6 +1,6 @@
 async function _loadEditDestination() {
     const uid = await _getUID();
-    if (DESTINO.owner != uid) {
+    if (FIRESTORE_DESTINOS_DATA.compartilhamento.dono != uid) {
         return;
     }
 

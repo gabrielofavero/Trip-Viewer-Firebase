@@ -1,3 +1,9 @@
+function _getFirstCategory() {
+    const categorias = CONFIG.destinos.categorias.geral;
+    const destinoCategorias = Object.keys(FIRESTORE_DESTINOS_DATA);
+    return destinoCategorias.find(cat => categorias.includes(cat)) || 'turismo';
+}
+
 // Título
 function _getTitulo(item) {
     if (item.nome && (item.emoji || item.headliner)) {
@@ -36,10 +42,6 @@ function _getNotaClass(item) {
     }
 }
 
-function _getNotaText(item, notas) {
-    return notas[item.nota] || notas['default'] || translate('destination.scores.default');
-}
-
 // Links
 function _getLinkOnClick(item, tipo) {
     if (item[tipo]) {
@@ -47,20 +49,8 @@ function _getLinkOnClick(item, tipo) {
     } else return "";
 }
 
-// Lineup
-function _getDisplayHorario(item, isLineup) {
-    if (isLineup) return item.horario ? "block" : "none";
-    else return "none";
-}
-
-function _getPalcoRegiaoValue(item, isLineup) {
-    if (isLineup) return item.palco || "";
-    else return item.regiao || "";
-}
-
 // Valor
-function _getValorValue(item, isLineup, valores, moeda) {
-    if (isLineup) return "";
+function _getValorValue(item, valores, moeda) {
     switch (item.valor) {
         case "default":
         case "-":
@@ -84,8 +74,7 @@ function _convertCustomValor(valor, moeda) {
 }
 
 // Descrição
-function _getDescricaoValue(item, isLineup) {
-    if (isLineup) return "";
+function _getDescricaoValue(item) {
     const lang = _getUserLanguage();
     return item.descricao[lang] || "";
 }

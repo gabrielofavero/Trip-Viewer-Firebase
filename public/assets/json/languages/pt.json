@@ -511,7 +511,8 @@
             "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
             "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
             "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
-            "unauthorized_access": "Acesso não autorizado para este documento"
+            "unauthorized_access": "Acesso não autorizado para este documento",
+            "missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando"
         },
         "too_early": {
             "title": "Você chegou muito cedo! 😅",

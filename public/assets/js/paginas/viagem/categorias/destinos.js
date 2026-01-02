@@ -1,8 +1,10 @@
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var DESTINOS = [];
+var DESTINO_ATIVO;
 var DESTINO_EXPORT = {};
 var DESTINO_TRANSLATIONS = {};
+var PLANNED_DESTINATIONS = {}
 
 // ======= LOADERS =======
 function _loadDestinos() {
@@ -87,6 +89,7 @@ function _loadDestinationsCustomSelect() {
   function _loadDestionationCustomSelectAction(value) {
     for (let i = 0; i < DESTINOS.length; i++) {
       if (DESTINOS[i].destinosID === value) {
+        DESTINO_ATIVO = DESTINOS[i].destinosID;
         _loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
         _adjustDestinationsHTML();
         break;
@@ -96,22 +99,13 @@ function _loadDestinationsCustomSelect() {
 }
 
 function _loadDestinationsHTML(destino) {
-  let div = getID("destinosBox");
   let text = "";
-
   const types = CONFIG.destinos.categorias.geral;
-
-  DESTINO_EXPORT = {};
-  DESTINO_EXPORT.title = destino.destinos.titulo;
-  DESTINO_EXPORT.translations = _getDestinosTranslations();
-  DESTINO_EXPORT.activeCategory = undefined;
-  DESTINO_EXPORT.owner = destino.destinos.compartilhamento.dono;
 
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
-    _buildDestinoExport(destino, type)
 
-    if (type != 'mapa' && destino.destinos[type].length === 0) {
+    if (type != 'mapa' && Object.keys(destino.destinos[type]).length === 0) {
       continue;
     }
 
@@ -139,23 +133,7 @@ function _loadDestinationsHTML(destino) {
     </div>`;
   }
 
-  div.innerHTML = text;
-  delete DESTINO_EXPORT.mapa;
-  DESTINO_EXPORT.myMaps = { titulo: translate('destination.map.title'), link: destino.destinos.myMaps };
-}
-
-function _buildDestinoExport(destino, type) {
-  const translatedType = CONFIG.destinos.translation[type] || type;
-  const moeda = destino.destinos.moeda;
-  DESTINO_EXPORT[type] = {
-    data: destino.destinos[type],
-    moeda,
-    valores: _getDestinoValores(destino),
-    valores_numericos: CONFIG.moedas.escala_numerica[moeda],
-    notas: CONFIG.language.destination.scores,
-    categoria: type,
-    titulo: translate(`destination.${translatedType}.title`)
-  }
+  getID("destinosBox").innerHTML = text;
 }
 
 function _getDestinoValores(destino) {
@@ -168,10 +146,8 @@ function _getDestinoValores(destino) {
 }
 
 function _loadAndOpenDestino(code) {
-  const exportFile = _cloneObject(DESTINO_EXPORT);
-  exportFile.activeCategory = code;
-  window.localStorage.setItem('DESTINO', JSON.stringify(exportFile));
-  _openLightbox('destination.html')
+  window.localStorage.setItem('PLANNED_DESTINATIONS', JSON.stringify(PLANNED_DESTINATIONS));
+  _openLightbox(`destination?type=${code}d=${DESTINO_ATIVO}`);
 }
 
 function _getDestinationsBoxesIndex(i) {
@@ -210,21 +186,15 @@ function _loadPlannedDestinations() {
   }
 
   function _addPlannedDestination(item) {
-    for (const destino of DESTINOS) {
-      if (destino.destinosID !== item.local) continue;
-
-      const categoriaLista = destino.destinos?.[item.categoria];
-      if (!Array.isArray(categoriaLista)) return;
-
-      for (const destinoItem of categoriaLista) {
-        if (destinoItem.id === item.id) {
-          destinoItem.planejado = true;
-          return;
-        }
-      }
-
-      return;
+    const destino = DESTINOS.find(d => d.destinosID === item.local);
+    if (!destino) return;
+    
+    if (!PLANNED_DESTINATIONS[destino.destinosID]) {
+      PLANNED_DESTINATIONS[destino.destinosID] = {};
     }
+    PLANNED_DESTINATIONS[destino.destinosID][item.id] = true;
+
+
   }
 }
 

@@ -83,55 +83,54 @@ function _sort(render = false) {
     }
 
     function plannedOf(item) {
-        return item.planejado === true ? 1 : 0;
+        return _isPlanned(item.id) ? 1 : 0;
     }
 }
 
 function _loadSortOptions(force = false) {
-    if (SORT_OPTIONS[DESTINO.activeCategory] && !force) {
+    if (SORT_OPTIONS[ACTIVE_CATEGORY] && !force) {
         return;
     }
 
-    const s = DESTINO.translations.sort;
-    _loadTitles(s);
+    _loadTitles();
     _loadFilterSortingData(SORT_OPTIONS.titles);
 
-    SORT_OPTIONS[DESTINO.activeCategory] = {};
-    const options = SORT_OPTIONS[DESTINO.activeCategory];
+    SORT_OPTIONS[ACTIVE_CATEGORY] = {};
+    const options = SORT_OPTIONS[ACTIVE_CATEGORY];
 
     if (_shouldDisplayScores()) {
         options.scores = {
-            highest_first: s.scores.highest_first,
-            lowest_first: s.scores.lowest_first
+            highest_first: translate('destination.sort.scores.highest_first'),
+            lowest_first: translate('destination.sort.scores.lowest_first')
         }
     }
 
     if (_shouldDisplayPlanned()) {
         options.planned = {
-            planned_first: s.planned.planned_first,
-            not_planned_first: s.planned.not_planned_first
+            planned_first: translate('destination.sort.planned.planned_first'),
+            not_planned_first: translate('destination.sort.planned.not_planned_first')
         }
     }
 
     if (_shouldDisplayPrices()) {
         options.prices = {
-            lowest_first: s.price.lowest_first,
-            highest_first: s.price.highest_first
+            lowest_first: translate('destination.sort.price.lowest_first'),
+            highest_first: translate('destination.sort.price.highest_first')
         }
     }
 
     options.name = {
-        ascending: s.name.ascending,
-        descending: s.name.descending
+        ascending: translate('destination.sort.name.ascending'),
+        descending: translate('destination.sort.name.descending')
     }
 
-    function _loadTitles(s) {
+    function _loadTitles() {
         if (!SORT_OPTIONS.titles) {
             SORT_OPTIONS.titles = {
-                name: s.name.title,
-                planned: s.planned.title,
-                scores: s.scores.title,
-                prices: s.price.title
+                name: translate('destination.sort.name.title'),
+                planned: translate('destination.sort.planned.title'),
+                scores: translate('destination.sort.scores.title'),
+                prices: translate('destination.sort.price.title')
             };
         }
     }

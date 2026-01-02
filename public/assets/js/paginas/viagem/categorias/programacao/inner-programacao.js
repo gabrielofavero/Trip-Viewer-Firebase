@@ -203,9 +203,7 @@ function _getInnerProgramacaoHTML(item) {
                             innerProgramacao.content = _getDestinosBoxHTML({
                                 j: 1,
                                 item: destinoItem,
-                                isLineup: false,
                                 innerProgramacao: true,
-                                notas: CONFIG.language.destination.scores,
                                 valores: _getDestinoValores(DESTINOS[index]),
                                 moeda: destino.moeda
                             });

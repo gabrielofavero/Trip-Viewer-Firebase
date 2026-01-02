@@ -1,18 +1,38 @@
-var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
+var PLANNED_DESTINATIONS;
+var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
+var ACTIVE_CATEGORY;
 
 window.addEventListener("load", async function () {
-  _startLoadingScreen();
-  _mainStart();
-  _stopLoadingScreen();
+  try {
+    _startLoadingScreen();
+    _main();
+    _stopLoadingScreen();
+  } catch (error) {
+    _displayError(error);
+    console.error(error);
+  }
 });
 
-// Métodos Principais
-function _loadDestinosPage() {
-  _loadVisibilityExternal();
-  _loadSortAndFilterLabels();
+async function _loadDestinosData() {
+  const urlParams = _getURLParams();
+  DOCUMENT_ID = urlParams['d'];
 
-  document.title = DESTINO.title || "TripViewer";
+  if (!DOCUMENT_ID) {
+    const error = translate('messages.error.missing_data');
+    throw error;
+  }
+
+  PLANNED_DESTINATIONS = JSON.parse(window.localStorage.getItem('PLANNED_DESTINATIONS')) || {};
+  FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
+  ACTIVE_CATEGORY = urlParams['active'] || _getFirstCategory();
+}
+
+async function _loadDestinosPage() {
+  await _loadDestinosData();
+  _loadVisibilityExternal();
+
+  document.title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {
     closeButton.onclick = function () {
@@ -31,7 +51,7 @@ function _loadDestinosPage() {
     }
   };
 
-  if (DESTINO?.activeCategory && (DESTINO.activeCategory === 'mapa' || Object.keys(DESTINO[DESTINO.activeCategory]).length > 0)) {
+  if (ACTIVE_CATEGORY && (ACTIVE_CATEGORY === 'mapa' || Object.keys(FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]).length > 0)) {
     _loadDestinoCustomSelect()
     window.addEventListener("resize", () => {
       _applyDestinosMediaHeight();
@@ -39,7 +59,8 @@ function _loadDestinosPage() {
     });
 
   } else {
-    console.error("O Código não foi localizado na base de dados");
+    const error = translate('messages.error.missing_data');
+    throw error;
   }
 }
 
@@ -51,25 +72,22 @@ function _loadDestinoByType(activeCategory) {
 
   if (activeCategory === 'myMaps') {
     content.classList = "map-content";
-    _loadMapDestino(DESTINO[activeCategory].link);
+    _loadMapDestino(FIRESTORE_DESTINOS_DATA[activeCategory].myMaps);
     return
   } else {
     content.classList = "";
   }
 
-  const destino = DESTINO[activeCategory];
+  const destino = FIRESTORE_DESTINOS_DATA[activeCategory];
 
-  const keys = Object.keys(destino.data);
+  const keys = Object.keys(destino);
   for (let j = 1; j <= keys.length; j++) {
     const key = keys[j - 1];
-    const item = destino.data[key];
+    const item = destino[key];
     const params = {
       j: j,
       item: item,
-      innerProgramacao: false,
-      notas: destino.notas,
-      valores: destino.valores,
-      moeda: destino.moeda
+      valores: CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda],
     }
 
     const innerHTML = `<div class="accordion-group" id='destinos-box-${j}'>
@@ -95,7 +113,7 @@ function _loadDestinoByType(activeCategory) {
                                               <path class="st0" d="M0-3.3h12v12H0V-3.3z" />
                                           </svg>
                                       </div>
-                                      ${_getPlannedHTML(item.planejado)}
+                                      ${_getPlannedHTML(_isPlanned(item.id))}
                                       <div class="icon-container" style="display: ${item.nota ? 'block' : 'none'}">
                                           <i class="iconify nota ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
                                       </div>
@@ -135,7 +153,7 @@ function _setInnerContent(item, innerHTML) {
     nota: item.nota || "default",
     valor: item.valor || "default",
     regiao: item.regiao,
-    planejado: item?.planejado === true,
+    planejado: _isPlanned(item.id),
     innerHTML: innerHTML
   }
 
@@ -200,7 +218,7 @@ function _loadDestinoCustomSelect() {
   const customSelect = {
     id: 'destinos-select',
     options: _getDestinoCustomSelectOptions(),
-    activeOption: DESTINO.activeCategory === 'mapa' ? 'myMaps' : DESTINO.activeCategory,
+    activeOption: ACTIVE_CATEGORY === 'mapa' ? 'myMaps' : ACTIVE_CATEGORY,
     action: _loadDestinoCustomSelectAction
   }
 
@@ -209,20 +227,22 @@ function _loadDestinoCustomSelect() {
 
   function _getDestinoCustomSelectOptions() {
     const result = [];
-    for (const categoryKey in DESTINO) {
-      if (
-        !['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', 'myMaps'].includes(categoryKey) ||
-        (categoryKey !== 'myMaps' && Object.keys(DESTINO[categoryKey].data).length === 0)
-      ) {
+    const values = CONFIG.destinos.categorias.ids;
+    for (const value in FIRESTORE_DESTINOS_DATA) {
+      if (!values.includes(value) ||
+        (value !== 'myMaps' && Object.keys(FIRESTORE_DESTINOS_DATA[value]).length === 0)) {
         continue;
       }
-      result.push({ value: categoryKey, label: DESTINO[categoryKey].titulo });
+
+      const label = CONFIG.destinos.translation[value];
+      result.push({ value, label });
     }
     return result;
   }
 
   function _loadDestinoCustomSelectAction(value) {
     _adjustDrawer();
+    _updateActiveCategory(value)
     _loadDestinoByType(value);
   }
 }
@@ -235,5 +255,16 @@ function _getPlannedHTML(planejado) {
 }
 
 function _getDataValues() {
-  return Object.values(DESTINO[DESTINO.activeCategory].data);
+  return Object.values(FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]);
+}
+
+function _isPlanned(id) {
+  return PLANNED_DESTINATIONS[id] === true;
+}
+
+function _updateActiveCategory(category) {
+  ACTIVE_CATEGORY = category;
+  const url = new URL(window.location);
+  url.searchParams.set('active', category);
+  window.history.replaceState({}, '', url);
 }

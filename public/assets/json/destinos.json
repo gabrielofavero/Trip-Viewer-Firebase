@@ -44,6 +44,14 @@
             "saidas",
             "turismo",
             "lojas"
+        ],
+        "ids": [
+            "restaurantes",
+            "lanches",
+            "saidas",
+            "turismo",
+            "lojas",
+            "myMaps"
         ]
     },
     "icons": {
@@ -64,6 +72,7 @@
         "turismo": "tourism",
         "lojas": "shopping",
         "mapa": "map",
+        "myMaps": "map",
         "lineup": "lineup",
         "tourismAndShopping": "tourismAndShopping",
         "comida": "food"

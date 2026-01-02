@@ -15,11 +15,6 @@ function _loadSortAndFilter(force = false) {
     _filter();
 }
 
-function _loadSortAndFilterLabels() {
-    getID('filter').querySelector('span').innerText = DESTINO.translations.filter.title;
-    getID('order').querySelector('span').innerText = DESTINO.translations.sort.title;
-}
-
 function _loadSortAndFilterVisibility() {
     const anyOptions = (_shouldDisplayPlanned() || _shouldDisplayScores() || _shouldDisplayRegions() || _shouldDisplayPrices());
     const display = anyOptions ? '' : 'none';
@@ -27,8 +22,8 @@ function _loadSortAndFilterVisibility() {
 }
 
 function _loadFilterSortingData(titles) {
-    if (!FILTER_SORT_DATA[DESTINO.activeCategory]) {
-        FILTER_SORT_DATA[DESTINO.activeCategory] = {};
+    if (!FILTER_SORT_DATA[ACTIVE_CATEGORY]) {
+        FILTER_SORT_DATA[ACTIVE_CATEGORY] = {};
     }
     for (const title in titles) {
         let data;
@@ -38,7 +33,7 @@ function _loadFilterSortingData(titles) {
                 data.delete('');
                 break;
             case 'planned':
-                data = new Set(_getDataValues().map(item => item.planejado || false));
+                data = new Set(_getDataValues().map(item => _isPlanned(item.id) || false));
                 break;
             case 'scores':
                 data = new Set(_getDataValues().map(item => item.nota));
@@ -46,7 +41,7 @@ function _loadFilterSortingData(titles) {
             case 'prices':
                 data = _getPriceBuckets();
         }
-        FILTER_SORT_DATA[DESTINO.activeCategory][title] = data || new Set();
+        FILTER_SORT_DATA[ACTIVE_CATEGORY][title] = data || new Set();
     }
 }
 
@@ -58,7 +53,7 @@ function _shouldDisplayRegions() {
 }
 
 function _shouldDisplayPlanned() {
-    const planejado = new Set(_getDataValues().map(item => item.planejado || false));
+    const planejado = new Set(_getDataValues().map(item => _isPlanned(item.id) || false));
     return planejado.size > 1;
 }
 

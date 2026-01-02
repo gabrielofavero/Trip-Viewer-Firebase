@@ -8,8 +8,8 @@ function _getPrices() {
 }
 
 function _getPriceBuckets() {
-    if (FILTER_SORT_DATA?.[DESTINO.activeCategory]?.prices) {
-        return FILTER_SORT_DATA[DESTINO.activeCategory].prices;
+    if (FILTER_SORT_DATA?.[ACTIVE_CATEGORY]?.prices) {
+        return FILTER_SORT_DATA[ACTIVE_CATEGORY].prices;
     }
 
     const prices = Array.from(new Set(_getDataValues().map(item => item.valor)));
@@ -17,7 +17,7 @@ function _getPriceBuckets() {
 }
 
 function _getPriceBucket(value) {
-    const range = DESTINO[DESTINO.activeCategory].valores_numericos;
+    const range = CONFIG.moedas.escala_numerica[FIRESTORE_DESTINOS_DATA.moeda];
     if (isNaN(value)) return "default";
     if (value === 0) return "-";
     if (value >= range['$'][0] && value <= range['$'][1]) return "$";
@@ -95,7 +95,7 @@ function _normalizePriceBucket(value) {
 }
 
 function _getPriceLabel(price, f) {
-    const translations = DESTINO[DESTINO.activeCategory].valores;
+    const translations = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
     const value = translations[price];
     return ["-", 'default'].includes(price) ? value : `${f.price.up_to} ${value.split(' - ')[1]}`;
 }

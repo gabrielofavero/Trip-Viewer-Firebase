@@ -6,7 +6,7 @@ function _filter(render = false) {
     const isPricesEnabled = _shouldDisplayPrices() && preferences.prices !== 'everything';
     const isScoresEnabled = _shouldDisplayScores() && preferences.scores !== 'everything';
     const isRegionsEnabled = _shouldDisplayRegions() && preferences.region !== 'everything' &&
-        FILTER_SORT_DATA[DESTINO.activeCategory].region.has(preferences.region);
+        FILTER_SORT_DATA[ACTIVE_CATEGORY].region.has(preferences.region);
 
     for (const item of CONTENT) {
         if ((isPlannedEnabled && _shouldFilterByPlanned(item)) ||
@@ -21,7 +21,8 @@ function _filter(render = false) {
     }
 
     function _shouldFilterByPlanned(item) {
-        return (item.planejado && preferences.planned === 'not_planned') || (!item.planejado && preferences.planned === 'planned');
+        const isPlanned = _isPlanned(item.id);
+        return (isPlanned && preferences.planned === 'not_planned') || (!isPlanned && preferences.planned === 'planned');
     }
 
     function _shouldFilterByPrices(item) {
@@ -45,7 +46,7 @@ function _filter(render = false) {
             return true;
         }
 
-        return Number(value) < Number(preferences.scores);   
+        return Number(value) < Number(preferences.scores);
     }
 
     function _shouldFilterByRegions(item) {
@@ -62,42 +63,41 @@ function _filter(render = false) {
 }
 
 function _loadFilterOptions(force = false) {
-    if (FILTER_OPTIONS[DESTINO.activeCategory] && !force) {
+    if (FILTER_OPTIONS[ACTIVE_CATEGORY] && !force) {
         return;
     }
 
-    const f = DESTINO.translations.filter;
-    _loadTitles(f);
+    _loadTitles();
     _loadFilterSortingData(FILTER_OPTIONS.titles);
 
-    FILTER_OPTIONS[DESTINO.activeCategory] = {};
-    const options = FILTER_OPTIONS[DESTINO.activeCategory];
+    FILTER_OPTIONS[ACTIVE_CATEGORY] = {};
+    const options = FILTER_OPTIONS[ACTIVE_CATEGORY];
 
     if (_shouldDisplayPlanned()) {
         options.planned = {
-            planned: f.planned.planned,
-            not_planned: f.planned.not_planned
+            planned: translate('destination.filter.planned.planned'),
+            not_planned: translate('destination.filter.planned.not_planned')
         }
     }
 
     if (_shouldDisplayScores()) {
         options.scores = {
-            "5": f.scores['5'],
-            "4": f.scores['4'],
-            "3": f.scores['3'],
-            "2": f.scores['2']
+            "5": translate('destination.filter.scores.5'),
+            "4": translate('destination.filter.scores.4'),
+            "3": translate('destination.filter.scores.3'),
+            "2": translate('destination.filter.scores.2')
         }
     }
 
     if (_shouldDisplayRegions()) {
         const regions = new Set(
-            Array.from(FILTER_SORT_DATA[DESTINO.activeCategory].region)
+            Array.from(FILTER_SORT_DATA[ACTIVE_CATEGORY].region)
                 .map(r => r?.trim())
                 .filter(Boolean)
                 .sort((a, b) => a.localeCompare(b))
         );
         options.region = {
-            none: f.region.none,
+            none: translate('destination.filter.region.none'),
         }
         for (const region of regions) {
             options.region[region] = region;
@@ -120,10 +120,10 @@ function _loadFilterOptions(force = false) {
     function _loadTitles(f) {
         if (!FILTER_OPTIONS.titles) {
             FILTER_OPTIONS.titles = {
-                planned: f.planned.title,
-                scores: f.scores.title,
-                region: f.region.title,
-                prices: f.price.title
+                planned: translate('destination.filter.planned.title'),
+                scores: translate('destination.filter.scores.title'),
+                region: translate('destination.filter.region.title'),
+                prices: translate('destination.filter.price.title')
             };
         }
     }

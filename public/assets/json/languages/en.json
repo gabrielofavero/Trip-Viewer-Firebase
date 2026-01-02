@@ -511,7 +511,8 @@
             "module_not_active": "Cannot load the page. The module {{module}} is not active",
             "no_data_on_module": "No data found for the module {{module}}",
             "loading_timeout": "The request took too long to respond. Please try again later",
-            "unauthorized_access": "You don't have permission to access this resource"
+            "unauthorized_access": "You don't have permission to access this resource",
+            "missing_data": "We weren't able to load this document. It looks like some required information is missing"
         },
         "too_early": {
             "title": "You're a bit early! 😅",
