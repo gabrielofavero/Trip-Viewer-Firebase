@@ -206,8 +206,8 @@ function _loadDestinoCustomSelect() {
     const result = [];
     for (const categoryKey in DESTINO) {
       if (
-        ['activeCategory', 'translations', 'title'].includes(categoryKey) ||
-        (categoryKey !== 'myMaps' && DESTINO[categoryKey].data.length === 0)
+        !['restaurantes', 'lanches', 'saidas', 'turismo', 'lojas', 'myMaps'].includes(categoryKey) ||
+        (categoryKey !== 'myMaps' && Object.keys(DESTINO[categoryKey].data).length === 0)
       ) {
         continue;
       }

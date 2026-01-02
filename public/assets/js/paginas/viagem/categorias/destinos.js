@@ -105,6 +105,7 @@ function _loadDestinationsHTML(destino) {
   DESTINO_EXPORT.title = destino.destinos.titulo;
   DESTINO_EXPORT.translations = _getDestinosTranslations();
   DESTINO_EXPORT.activeCategory = undefined;
+  DESTINO_EXPORT.owner = destino.destinos.compartilhamento.dono;
 
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
