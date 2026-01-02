@@ -90,6 +90,7 @@ function _loadEventListeners() {
   });
 
   getID('salvar').addEventListener('click', () => {
+    _startLoadingScreen();
     const type = 'destinos'
     const dataBuildingFunctions = [_buildDestinosObject, _updateTikTokLinks];
 

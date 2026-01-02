@@ -30,6 +30,11 @@ function _addRestaurantes() {
             <label>${translate('labels.id')}</label>
             <input id="restaurantes-id-${j}" type="text" disabled />
           </div>
+
+          <div class="nice-form-group" style="display: none">
+            <label>${translate('labels.created_date')}</label>
+            <input id="restaurantes-criadoEm-${j}" type="text" disabled />
+          </div>
   
           <div class="nice-form-group">
             <label>${translate('labels.name')}</label>
@@ -123,6 +128,7 @@ function _addRestaurantes() {
     </div>
     `);
 
+  _addCreatedDate(categoria, j);
   _addDestinosListeners(categoria, j);
   _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `restaurantes-regiao-select-${j}`, `restaurantes-regiao-${j}`);
@@ -157,6 +163,11 @@ function _addLanches() {
           <div class="nice-form-group" style="display: none">
             <label>${translate('labels.id')}</label>
             <input id="lanches-id-${j}" type="text" disabled />
+          </div>
+
+          <div class="nice-form-group" style="display: none">
+            <label>${translate('labels.created_date')}</label>
+            <input id="lanches-criadoEm-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
@@ -252,6 +263,7 @@ function _addLanches() {
     </div>
     `);
 
+  _addCreatedDate(categoria, j);
   _addDestinosListeners(categoria, j);
   _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
@@ -286,6 +298,11 @@ function _addSaidas() {
           <div class="nice-form-group" style="display: none">
             <label>${translate('labels.id')}</label>
             <input id="saidas-id-${j}" type="text" disabled />
+          </div>
+
+          <div class="nice-form-group" style="display: none">
+            <label>${translate('labels.created_date')}</label>
+            <input id="saidas-criadoEm-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
@@ -380,6 +397,7 @@ function _addSaidas() {
     </div>
     `);
 
+  _addCreatedDate(categoria, j);
   _addDestinosListeners(categoria, j);
   _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
@@ -414,6 +432,11 @@ function _addTurismo() {
           <div class="nice-form-group" style="display: none">
             <label>${translate('labels.id')}</label>
             <input id="turismo-id-${j}" type="text" disabled />
+          </div>
+
+          <div class="nice-form-group" style="display: none">
+            <label>${translate('labels.created_date')}</label>
+            <input id="turismo-criadoEm-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
@@ -508,6 +531,7 @@ function _addTurismo() {
     </div>
     `);
 
+  _addCreatedDate(categoria, j);
   _addDestinosListeners(categoria, j);
   _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
@@ -538,6 +562,11 @@ function _addLojas() {
           <div class="nice-form-group">
             <input type="checkbox" id="lojas-novo-${j}" class="switch" />
             <label for="lojas-novo-${j}">${translate('destination.recent')}</label>
+          </div>
+
+          <div class="nice-form-group" style="display: none">
+            <label>${translate('labels.created_date')}</label>
+            <input id="lojas-criadoEm-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group" style="display: none">
@@ -638,7 +667,12 @@ function _addLojas() {
     </div>
     `);
 
+  _addCreatedDate(categoria, j);
   _addDestinosListeners(categoria, j);
   _addListenerToRemoveDestino(categoria, j);
   _addSelectorDS('regiao', `lojas-regiao-select-${j}`, `lojas-regiao-${j}`);
+}
+
+function _addCreatedDate(categoria, j) {
+  getID(`${categoria}-criadoEm-${j}`).value = new Date().toISOString();
 }

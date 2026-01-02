@@ -8,7 +8,7 @@ function _loadDestinationsData() {
     _loadDestinoExistente('turismo');
     _loadDestinoExistente('lojas');
     _buildDS('regiao');
-    
+
     _loadMapaData();
     document.title = `${translate('labels.edit')} ${FIRESTORE_DESTINOS_DATA.titulo}`;
 
@@ -42,16 +42,25 @@ function _loadDestinoExistente(categoria) {
   getID(`habilitado-${categoria}-content`).style.display = habilitado ? 'block' : 'none';
   getID(`${categoria}-adicionar-box`).style.display = habilitado ? 'block' : 'none';
 
-  const size = FIRESTORE_DESTINOS_DATA[categoria].length;
-  if (size > 0) {
-    for (let j = 1; j <= size; j++) {
-      const i = j - 1;
-      const destino = FIRESTORE_DESTINOS_DATA[categoria][i];
-      _addDestino(categoria);
-      _addDestinoHTML(categoria, j, destino);
-      _setDescription(categoria, j, destino.descricao);
-      _updateDescriptionButtonLabel(categoria, j);
-    }
+  const destinosArr = Object
+    .entries(FIRESTORE_DESTINOS_DATA[categoria])
+    .map(([id, value]) => ({
+      id,
+      ...value
+    }))
+    .sort((a, b) => {
+      if (!a.criadoEm && !b.criadoEm) return 0;
+      if (!a.criadoEm) return 1;
+      if (!b.criadoEm) return -1;
+      return new Date(a.criadoEm) - new Date(b.criadoEm);
+    });
+
+  for (let j = 1; j <= destinosArr.length; j++) {
+    const destino = destinosArr[j - 1];
+    _addDestino(categoria);
+    _addDestinoHTML(categoria, j, destino);
+    _setDescription(categoria, j, destino.descricao);
+    _updateDescriptionButtonLabel(categoria, j);
   }
 }
 
@@ -80,6 +89,11 @@ function _addDestinoHTML(categoria, j, destino) {
     getID(`${categoria}-id-${j}`).value = id;
   }
 
+  const criadoEm = destino.criadoEm;
+  if (criadoEm) {
+    getID(`${categoria}-criadoEm-${j}`).value = criadoEm;
+  }
+  
   const novo = destino.novo || false;
   getID(`${categoria}-novo-${j}`).checked = novo;
   getID(`${categoria}-title-icon-${j}`).style.display = novo ? 'block' : 'none';

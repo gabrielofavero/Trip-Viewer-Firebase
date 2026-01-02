@@ -725,6 +725,7 @@
         "protected": "Protected",
         "unknown": "Unknown",
         "non_specified": "Non-specified",
-        "total": "Total"
+        "total": "Total",
+        "created_date": "Created date"
     }
 }
