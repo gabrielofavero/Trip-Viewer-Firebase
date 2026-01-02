@@ -11,8 +11,8 @@ function _adjustButtonsPositionDestinos() {
 
 function _applyDestinosMediaHeight() {
     const keys = Object.keys(MEDIA_HYPERLINKS);
-    if (keys.length > 0) {
-        const firstDiv = getID('destinos-1');
+    const firstDiv = getID('destinos-1');
+    if (keys.length > 0 && firstDiv) {
         const width = firstDiv.offsetWidth - 40; // 20px padding em cada lado
         
         const heightPortrait = (width * 16) / 9;

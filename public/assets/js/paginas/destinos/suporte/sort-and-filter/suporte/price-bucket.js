@@ -32,15 +32,25 @@ function _getPriceBucket(value) {
 }
 
 function _buildPriceBuckets(prices) {
+    const symbolicBuckets = new Set(["-", "$", "$$", "$$$", "$$$$", "default"]);
     return prices
-        .map(p => ({
-            raw: p,
-            value: _parsePriceNumber(p)
-        }))
-        .map(p => ({
-            ...p,
-            bucket: _getPriceBucket(p.value)
-        }))
+        .map(raw => {
+            if (symbolicBuckets.has(raw)) {
+                return {
+                    raw,
+                    value: 0,
+                    bucket: raw
+                };
+            }
+
+            const value = _parsePriceNumber(raw);
+
+            return {
+                raw,
+                value,
+                bucket: _getPriceBucket(value)
+            };
+        })
         .sort(
             (a, b) =>
                 FILTER_SORT_KEYS_ORDER.prices.indexOf(a.bucket) -
@@ -98,10 +108,10 @@ function _isPriceInBucketRange(bucket, value) {
     const order = ["-", "$", "$$", "$$$"];
 
     const bucketNorm = _normalizePriceBucket(bucket);
-    const valueNorm  = _normalizePriceBucket(value);
+    const valueNorm = _normalizePriceBucket(value);
 
     const bucketIndex = order.indexOf(bucketNorm);
-    const valueIndex  = order.indexOf(valueNorm);
+    const valueIndex = order.indexOf(valueNorm);
 
     if (bucketIndex === -1 || valueIndex === -1) {
         return false;

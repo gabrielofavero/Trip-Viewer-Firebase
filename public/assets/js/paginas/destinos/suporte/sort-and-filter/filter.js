@@ -27,11 +27,15 @@ function _filter(render = false) {
     function _shouldFilterByPrices(item) {
         const value = item.valor;
 
-        if (["default", "$$$$"].includes(value)) {
+        if (value === '$$$$') {
             return true;
         }
 
-        return !_isPriceInBucketRange(preferences.prices, value);
+        if (value != 'default' && preferences.prices != 'default') {
+            return !_isPriceInBucketRange(preferences.prices, value);
+        }
+
+        return value != preferences.prices;
     }
 
     function _shouldFilterByScores(item) {
