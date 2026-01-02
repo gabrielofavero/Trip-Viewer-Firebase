@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 120   | 119       | 1       |
-| 🏆   | Feature     | F000 | 120   | 116       | 4       |
+| 🏆   | Feature     | F000 | 120   | 117       | 3       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 38        | 1       |
 
@@ -14,7 +14,6 @@
 ### High Priority
 
 - ⚔️ **E039:** Destinations Quick-Edit
-  - *[🏆F117] Adjust destination object strucute (migration)*
   - *[🏆F118] Adjust destination object strucute (pages)*
   - *[🏆F119] Add option to quickly edit destination on main page (if owner)*
   - *[🏆F120] Add option to quickly create destination on main page (if owner)*
@@ -29,6 +28,8 @@
 
 ### January 2026
 
+- ⚔️ **E039:** Destinations Quick-Edit
+  - *[🏆F117] Adjust destination object strucute (migration)*
 - 🐞 **B120:** Fix destinos-select options order
 - ⚔️ **E038:** Add filtering and sorting options to destinations page
 
