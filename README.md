@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 119   | 118       | 1       |
-| 🏆   | Feature     | F000 | 118   | 116       | 2       |
+| 🏆   | Feature     | F000 | 120   | 116       | 4       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 38        | 1       |
 
@@ -14,8 +14,10 @@
 ### High Priority
 
 - ⚔️ **E039:** Expenses Overhaul
-  - *[🏆F117] Add option to quickly edit destination on main page (if owner)*
-  - *[🏆F118] Add option to quickly create destination on main page (if owner)*
+  - *[🏆F117] Adjust destination object strucute (migration)*
+  - *[🏆F118] Adjust destination object strucute (pages)*
+  - *[🏆F119] Add option to quickly edit destination on main page (if owner)*
+  - *[🏆F120] Add option to quickly create destination on main page (if owner)*
 
 ### Medium Priority
 
@@ -26,6 +28,7 @@
 ## Done
 
 ### January 2026
+
 - ⚔️ **E038:** Add filtering and sorting options to destinations page
 
 ### December 2025
