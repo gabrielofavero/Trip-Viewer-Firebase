@@ -106,10 +106,10 @@ function _loadDestinoByType(activeCategory) {
     _setInnerContent(item, innerHTML);
   }
 
+  _loadSortAndFilter();
   _applyContent();
   _applyDestinosMediaHeight();
   _adjustInstagramMedia();
-  _loadSortAndFilter();
 }
 
 function _loadMapDestino(link) {
@@ -138,9 +138,13 @@ function _setInnerContent(item, innerHTML) {
 
 function _applyContent() {
   const div = getID("content");
-  // const content = _getFilteredAndSortedDestinations(CONTENT);
-  // div.innerHTML = content.map(item => item.innerHTML).join("");
-  div.innerHTML = CONTENT.map(item => item.innerHTML).join("");
+  div.innerHTML = '';
+  for (const item of CONTENT) {
+    if (item.filtered) {
+      continue;
+    }
+    div.innerHTML += item.innerHTML;
+  }
 }
 
 function _orderInnerHTMLs(innerContents) {

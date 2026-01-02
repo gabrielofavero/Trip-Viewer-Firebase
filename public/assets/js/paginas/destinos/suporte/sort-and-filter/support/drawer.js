@@ -163,11 +163,13 @@ function _sortDrawerOptionLoadAction() {
 function _filterDrawerOptionClickAction(e) {
     const container = e.currentTarget.closest('.drawer-container');
     _handleDrawerOptionClick(e, container, _setFilterPreference);
+    _filter(true);
 }
 
 function _sortDrawerOptionClickAction(e) {
     const container = getID("drawerContent");
     _handleDrawerOptionClick(e, container, _setSortPreference);
+    _sort(true);
 }
 
 // Helpers
@@ -196,4 +198,17 @@ function _adjustDrawer() {
     if (_isDrawerOpen()) {
         _closeDrawer();
     }
+}
+
+function _getSortedArray(arr, key) {
+    if (!FILTER_SORT_KEYS_ORDER[key]) {
+        return arr;
+    }
+
+    const sorted = [...arr];
+    sorted.sort((a, b) => {
+        const order = FILTER_SORT_KEYS_ORDER[key];
+        return order.indexOf(a) - order.indexOf(b);
+    });
+    return sorted;
 }
