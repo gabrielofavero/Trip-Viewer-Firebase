@@ -23,15 +23,21 @@ export const migrate = functions.https.onRequest(async (req, res) => {
           .filter(Boolean);
 
         const newObject: Record<string, any> = {};
+        const baseTime = Date.now();
 
-        for (const item of category) {
+        for (const [index, item] of category.entries()) {
           const id = item.id || _getRandomID({ pool });
 
           if (!pool.includes(id)) pool.push(id);
 
           const { id: _discard, ...rest } = item;
 
-          newObject[id] = rest;
+          const criadoEm = new Date(baseTime + index * 1000).toISOString();
+
+          newObject[id] = {
+            ...rest,
+            criadoEm
+          };
         }
 
         newData[key] = newObject;
@@ -67,6 +73,6 @@ function _getRandomID(
   }
 
   return pool.includes(randomId)
-    ? _getRandomID({ idLength, pool }) // <-- fixed recursion target
+    ? _getRandomID({ idLength, pool })
     : randomId;
 }
