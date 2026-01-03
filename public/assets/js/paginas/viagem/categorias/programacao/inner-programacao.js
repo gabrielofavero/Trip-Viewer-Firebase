@@ -104,25 +104,7 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
 }
 
 function _loadInnerProgramacaoMidia(midia) {
-    if (!midia) return;
-    const video = translate('trip.itinerary.media_button.video');
-    const playlist = translate('trip.itinerary.media_button.playlist');
-
-    let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
-
-    if (midia.includes('youtube') || midia.includes('youtu.be')) {
-        buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
-    } else if (midia.includes('tiktok')) {
-        buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
-    } else if (midia.includes('spotify')) {
-        buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
-    } else if (midia.includes('instagram')) {
-        buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
-    }
-
-    getID('midia-1').innerHTML = `<div class="button-box">
-                                    <button class="btn btn-secondary btn-format" type="submit" onclick="window.open('${midia}', '_blank');">${buttonText}</button>
-                                  </div>`
+    getID('midia-1').innerHTML = _getLinkMediaButton(midia);
 }
 
 // Getters

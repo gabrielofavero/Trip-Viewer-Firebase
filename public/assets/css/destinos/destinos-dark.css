@@ -60,10 +60,6 @@ a:hover {
   color: var(--font-color);
 }
 
-.btn:hover {
-  color: #F2F2F2;
-}
-
 .card-header {
   background-color: var(--box-color);
 }
@@ -259,4 +255,11 @@ a:hover {
 
 .lang-options button:hover {
   background: #3b3b3b;
+}
+
+/* Messages */
+
+.message-container,
+.input-container {
+  background: #303030;
 }

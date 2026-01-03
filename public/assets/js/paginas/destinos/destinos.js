@@ -23,7 +23,7 @@ async function _loadDestinosData() {
     throw error;
   }
 
-  PLANNED_DESTINATIONS = JSON.parse(window.localStorage.getItem('PLANNED_DESTINATIONS')) || {};
+  PLANNED_DESTINATIONS = JSON.parse(window.localStorage.getItem('PLANNED_DESTINATIONS'))?.[DOCUMENT_ID] || {};
   FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
   ACTIVE_CATEGORY = urlParams['type'] || _getFirstCategory();
 }

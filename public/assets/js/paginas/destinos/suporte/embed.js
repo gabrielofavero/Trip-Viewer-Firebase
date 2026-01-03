@@ -1,4 +1,5 @@
 var MEDIA_HYPERLINKS = {};
+let _tiktokEmbedSeq = 0;
 
 // Loader
 function _loadEmbed(link, i) {
@@ -17,9 +18,11 @@ function _loadMedia(id) {
     const div = getID(id);
     if (div && MEDIA_HYPERLINKS[id] && MEDIA_HYPERLINKS[id].conteudo) {
         div.innerHTML = MEDIA_HYPERLINKS[id].conteudo;
+        _initMediaWatchdogs();
         if (MEDIA_HYPERLINKS[id].tipo === "instagram") {
             instgrm.Embeds.process();
             _adjustInstagramMedia();
+            _initInstagramWatchdogs();
         }
     }
 }
@@ -53,7 +56,7 @@ function _getEmbed(link) {
         conteudo = _getVideoEmbedYoutube(link);
     } else if (link.includes("tiktok")) {
         tipo = "tiktok";
-        conteudo = _getVideoEmbedTikTok(link);
+        conteudo = _getMediaEmbedTikTok(link);
     } else if (link.includes("instagram")) {
         tipo = "instagram";
         conteudo = _getVideoEmbedInstagramReels(link);
@@ -76,7 +79,7 @@ function _getVideoEmbedYoutube(videoLink) {
     }
     if (videoID) {
         let url = `https://www.youtube.com/embed/${videoID}`;
-        return _getIframe(url, "youtube-embed");
+        return _getIframe(url, "youtube-embed", "youtube");
     } else return "";
 }
 
@@ -85,11 +88,27 @@ function _getSpotifyEmbed(link) {
     return `<iframe class="spotify" style="border-radius:12px" src="https://open.spotify.com/embed/${typeAndID}?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
 }
 
-function _getIframe(url, iframeClass = "") {
-    if (url) {
-        const classItem = iframeClass ? `class="${iframeClass}"` : "";
-        return `<iframe ${classItem} src="${url}" scrolling="no" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-    } else return "";
+function _getIframe(url, iframeClass = "", provider = "generic") {
+  if (!url) return "";
+
+  const id = `embed-${provider}-${++_tiktokEmbedSeq}`;
+  const classItem = iframeClass ? `class="${iframeClass}"` : "";
+
+  return `
+    <div class="media-embed"
+         data-embed-url="${url}"
+         data-embed-provider="${provider}">
+      <iframe
+        id="${id}"
+        ${classItem}
+        src="${url}"
+        scrolling="no"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  `;
 }
 
 function _getInstagramBlockquote(id) {
@@ -185,14 +204,22 @@ function _getInstagramBlockquote(id) {
     </blockquote></div>`;
 }
 
-function _getVideoEmbedTikTok(link, version = 2) {
-    let videoID = "";
-    if (!link.includes("vm.")) {
+function _getMediaEmbedTikTok(link, version = 2) {
+    const type = link.includes("/video/") ? "video" : link.includes("/photo/") ? "photo" : "";
+    const linkError = `Cannot get TikTok video ID from '${link}'`;    
+
+    if (!type) {
+        console.error(linkError);
+        return "";
+    }
+
+    let id = "";
+    if (!link.includes("vm.") && !link.includes("vt.")) {
         try {
-            videoID = link.split("/video/")[1].split("?")[0];
-            return _getIframe(`https://www.tiktok.com/embed/v${version}/${videoID}`, `tiktok-embed-v${version}`);
+            id = link.split(`/${type}/`)[1].split("?")[0];
+            return _getIframe(`https://www.tiktok.com/embed/v${version}/${id}`, `tiktok-embed-v${version} ${type}`, "tiktok");
         } catch (e) {
-            console.error(`Cannot get TikTok video ID from '${link}'`);
+            console.error(linkError);
         }
     } else {
         console.error(`Short TikTok videos are not supported. Please fix the link for '${link}'`);
@@ -251,4 +278,79 @@ function _adjustInstagramMedia() {
         embed.style.marginLeft = marginLeft;
         embed.style.clipPath = `inset(57px ${clipPathRight} 166px 71px)`;
     }
+}
+
+// Watchdogs
+
+function _initMediaWatchdogs(timeout = 2500) {
+  const wrappers = document.querySelectorAll(".media-embed");
+
+  wrappers.forEach(wrapper => {
+    if (wrapper.dataset.embedInit === "1") return;
+    wrapper.dataset.embedInit = "1";
+
+    const url = wrapper.dataset.embedUrl;
+    const provider = wrapper.dataset.embedProvider;
+    const iframe = wrapper.querySelector("iframe");
+
+    let loaded = false;
+
+    iframe.addEventListener("load", () => {
+      loaded = true;
+
+      const zero =
+        iframe.offsetHeight === 0 ||
+        iframe.clientHeight === 0;
+
+      if (zero) {
+        console.warn(`[${provider}] Embed link blocked (zero height):`, url);
+        _watchdogFallback(wrapper, url, provider);
+      } else {
+        console.log(`[${provider}] Embed link loaded successfully:`, url);
+      }
+    });
+
+    setTimeout(() => {
+      if (!loaded) {
+        console.warn(`[${provider}] Embed link blocked (timeout):`, url);
+        _watchdogFallback(wrapper, url, provider);
+      }
+    }, timeout);
+  });
+}
+
+function _initInstagramWatchdogs(timeout = 2500) {
+  const blocks = document.querySelectorAll(".instagram-embed");
+
+  blocks.forEach(block => {
+    if (block.dataset.igInit === "1") return;
+    block.dataset.igInit = "1";
+
+    setTimeout(() => {
+      const iframe = block.querySelector("iframe");
+
+      if (!iframe) {
+        console.warn("[instagram] Embed link blocked (no iframe)");
+        _watchdogFallback(block, block.dataset.embedUrl, "instagram");
+        return;
+      }
+
+      const zero =
+        iframe.offsetHeight === 0 ||
+        iframe.clientHeight === 0;
+
+      if (zero) {
+        console.warn("[instagram] Embed link blocked (zero height)");
+        _watchdogFallback(block, block.dataset.embedUrl, "instagram");
+      } else {
+        console.log("[instagram] Embed link loaded successfully");
+      }
+    }, timeout);
+  });
+}
+
+function _watchdogFallback(element, link, provider) {
+    const parent = element.parentElement;
+    parent.innerHTML = _getLinkMediaButton(link, provider);
+    console.log(`[${provider}] Fallback link displayed:`, link);
 }

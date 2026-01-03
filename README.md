@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 120   | 119       | 1       |
-| 🏆   | Feature     | F000 | 121   | 119       | 2       |
+| 🏆   | Feature     | F000 | 122   | 120       | 2       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 38        | 1       |
 
@@ -13,9 +13,9 @@
 
 ### High Priority
 
-- ⚔️ **E039:** Destinations Quick-Edit
-  - *[🏆F120] Add option to quickly edit destination on main page (if owner)*
-  - *[🏆F121] Add option to quickly create destination on main page (if owner)*
+- ⚔️ **E039:** Destinations Overhaul
+  - *[🏆F121] Add option to quickly edit destination on main page (if owner)*
+  - *[🏆F122] Add option to quickly create destination on main page (if owner)*
 
 ### Medium Priority
 
@@ -27,10 +27,11 @@
 
 ### January 2026
 
-- ⚔️ **E039:** Destinations Quick-Edit
+- ⚔️ **E039:** Destinations Overhaul
   - *[🏆F117] Adjust destination object strucute (migration)*
   - *[🏆F118] Adjust destination object strucute (pages)*
   - *[🏆F119] Refactor destination page to fetch data from firestore / configs*
+  - *[🏆F120] Improve how embed is loaded + tiktok photo support + fallback for errors*
 - 🐞 **B120:** Fix destinos-select options order
 - ⚔️ **E038:** Add filtering and sorting options to destinations page
 
