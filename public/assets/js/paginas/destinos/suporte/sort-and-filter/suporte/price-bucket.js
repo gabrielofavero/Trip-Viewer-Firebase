@@ -96,9 +96,16 @@ function _normalizePriceBucket(value) {
 }
 
 function _getPriceLabel(price) {
-    const translations = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
-    const value = translations[price];
-    return ["-", 'default'].includes(price) ? value : `${translate('destination.filter.price.up_to')} ${value.split(' - ')[1]}`;
+    switch (price) {
+        case "default":
+            return translate('destination.price.default');
+        case "-":
+            return translate('destination.price.free');
+        default:
+            const moedas = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
+            const value = moedas[price];
+            return `${translate('destination.filter.price.up_to')} ${value.split(' - ')[1]}`;
+    }
 }
 
 function _isPriceInBucketRange(bucket, value) {

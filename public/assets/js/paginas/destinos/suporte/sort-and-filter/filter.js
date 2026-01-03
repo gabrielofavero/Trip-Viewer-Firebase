@@ -15,10 +15,14 @@ function _filter(render = false) {
             (isScoresEnabled && _shouldFilterByScores(item)) ||
             (isRegionsEnabled && _shouldFilterByRegions(item))
         ) {
-            item.filtered = true;
+            content.filtered = true;
             continue;
         }
-        item.filtered = false;
+        content.filtered = false;
+    }
+
+    if (render) {
+        _applyContent();
     }
 
     function _shouldFilterByPlanned(id) {
@@ -56,10 +60,6 @@ function _filter(render = false) {
             return true;
         }
         return value !== preferences.region;
-    }
-
-    if (render) {
-        _applyContent();
     }
 }
 
