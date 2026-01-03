@@ -751,7 +751,7 @@ section {
   background: var(--background-color);
 }
 
-/* Filter and Sort */
+/* Filter, Sort and Edit buttons */
 .section-buttons {
   display: flex;
   justify-content: center;
@@ -759,7 +759,15 @@ section {
   margin-bottom: 30px;
 }
 
-.filter-sort {
+.edit-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.filter-sort,
+.edit {
   padding: 0.6em 1.4em;
   border-radius: 999px;
   border: 1px solid var(--border-color);
@@ -773,7 +781,12 @@ section {
   transition: background 0.25s ease, border-color 0.25s ease;
 }
 
-.filter-sort:hover {
+.edit {
+  border-radius: 100px;
+}
+
+.filter-sort:hover,
+.edit:hover {
   background: var(--theme-color-secondary);
 }
 

@@ -56,7 +56,10 @@ function _getDestinosBoxHTML({ j, item, innerProgramacao, valores, moeda }) {
         </div>
         <div id="midia-${j}" class="midia-container"></div>
         <div class="edit-container" style="display: none">
-            <button class="edit" id="edit-${j}">Editar</button>
+            <button class="edit" id="edit-${j}">
+                <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
+                <span>${translate('labels.edit')}</span>
+            </button>
         </div>
     </div>
 </div>`
