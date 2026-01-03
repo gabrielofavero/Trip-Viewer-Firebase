@@ -8,8 +8,9 @@ function _filter(render = false) {
     const isRegionsEnabled = _shouldDisplayRegions() && preferences.region !== 'everything' &&
         FILTER_SORT_DATA[ACTIVE_CATEGORY].region.has(preferences.region);
 
-    for (const item of CONTENT) {
-        if ((isPlannedEnabled && _shouldFilterByPlanned(item)) ||
+    for (const content of CONTENT) {
+        const item = _getItem(content.id);
+        if ((isPlannedEnabled && _shouldFilterByPlanned(content.id)) ||
             (isPricesEnabled && _shouldFilterByPrices(item)) ||
             (isScoresEnabled && _shouldFilterByScores(item)) ||
             (isRegionsEnabled && _shouldFilterByRegions(item))
@@ -20,8 +21,8 @@ function _filter(render = false) {
         item.filtered = false;
     }
 
-    function _shouldFilterByPlanned(item) {
-        const isPlanned = _isPlanned(item);
+    function _shouldFilterByPlanned(id) {
+        const isPlanned = _isPlanned(id);
         return (isPlanned && preferences.planned === 'not_planned') || (!isPlanned && preferences.planned === 'planned');
     }
 

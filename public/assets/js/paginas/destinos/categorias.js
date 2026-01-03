@@ -1,13 +1,45 @@
-function _getFirstCategory() {
-    const categorias = CONFIG.destinos.categorias.geral;
-    const destinoCategorias = Object.keys(FIRESTORE_DESTINOS_DATA);
-    return destinoCategorias.find(cat => categorias.includes(cat)) || 'turismo';
+// Active Category
+function _loadActiveCategory(urlParams) {
+    let type = urlParams['type'];
+    const originals = CONFIG.destinos.original;
+
+    if (!type || !originals[type]) {
+        type = _getFirstCategory()
+    }
+
+    ACTIVE_CATEGORY = originals[type];
+
+    function _getFirstCategory() {
+        const types = CONFIG.destinos.categorias.ids;
+        const destinoIDs = Object.keys(FIRESTORE_DESTINOS_DATA);
+        for (const type of types) {
+            if (destinoIDs.includes(type)) {
+                return type;
+            }
+        }
+        throw translate('messages.error.missing_data');
+    }
+}
+
+function _updateActiveCategory(category) {
+    const urlParam = _getURLParams()?.['type'];
+    const translations = CONFIG.destinos.translation;
+    const param = translations[category];
+
+    if (urlParam === param) {
+        return;
+    }
+
+    ACTIVE_CATEGORY = category;
+    const url = new URL(window.location);
+    url.searchParams.set('type', param);
+    window.history.replaceState({}, '', url);
 }
 
 // Título
 function _getTitulo(item) {
-    if (item.nome && (item.emoji || item.headliner)) {
-        return `${item.nome} ${item.emoji || '⭐'}`;
+    if (item.nome && (item.emoji)) {
+        return `${item.nome} ${item.emoji}`;
     } else return item.nome;
 }
 

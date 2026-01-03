@@ -350,7 +350,9 @@ function _initInstagramWatchdogs(timeout = 2500) {
 }
 
 function _watchdogFallback(element, link, provider) {
+    if (!element) return;
     const parent = element.parentElement;
+    if (!parent) return;
     parent.innerHTML = _getLinkMediaButton(link, provider);
     console.log(`[${provider}] Fallback link displayed:`, link);
 }

@@ -29,14 +29,14 @@ function _loadFilterSortingData(titles) {
         let data;
         switch (title) {
             case 'region':
-                data = new Set(_getDataValues().map(item => item.regiao));
+                data = _getDataSet('regiao');
                 data.delete('');
                 break;
             case 'planned':
-                data = new Set(_getDataValues().map(item => _isPlanned(item)));
+                data = _getDataSet('planejado');
                 break;
             case 'scores':
-                data = new Set(_getDataValues().map(item => item.nota));
+                data = _getDataSet('nota');
                 break;
             case 'prices':
                 data = _getPriceBuckets();
@@ -47,18 +47,18 @@ function _loadFilterSortingData(titles) {
 
 // Helpers
 function _shouldDisplayRegions() {
-    const regioes = new Set(_getDataValues().map(item => item.regiao));
+    const regioes = _getDataSet('regiao');
     regioes.delete('');
     return regioes.size > 1;
 }
 
 function _shouldDisplayPlanned() {
-    const planejado = new Set(_getDataValues().map(item => _isPlanned(item)));
+    const planejado = _getDataSet('planejado');
     return planejado.size > 1;
 }
 
 function _shouldDisplayScores() {
-    const notas = new Set(_getDataValues().map(item => item.nota));
+    const notas = _getDataSet('nota');
     return notas.size > 1;
 }
 

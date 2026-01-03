@@ -12,7 +12,7 @@ function _getPriceBuckets() {
         return FILTER_SORT_DATA[ACTIVE_CATEGORY].prices;
     }
 
-    const prices = Array.from(new Set(_getDataValues().map(item => item.valor)));
+    const prices = _getDataSet('valor');
     return _buildPriceBuckets(prices);
 }
 
@@ -29,7 +29,8 @@ function _getPriceBucket(value) {
 
 function _buildPriceBuckets(prices) {
     const symbolicBuckets = new Set(["-", "$", "$$", "$$$", "$$$$", "default"]);
-    return prices
+    const pricesArray = Array.from(prices);
+    return pricesArray
         .map(raw => {
             if (symbolicBuckets.has(raw)) {
                 return {
