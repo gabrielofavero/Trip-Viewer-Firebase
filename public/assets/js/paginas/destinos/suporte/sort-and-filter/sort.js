@@ -5,20 +5,25 @@ function _sort(render = false) {
     const { type, value } = preferences || {};
 
     CONTENT.sort((a, b) => {
-        const primary = comparePrimary(a, b, type, value);
+        const A = _getItem(a.id) || {};
+        const B = _getItem(b.id) || {};
+
+        const primary = comparePrimary(A, B, type, value);
         if (primary !== 0) return primary;
 
         if (type !== "scores") {
-            const secondary = compareSecondaryScores(a, b);
+            const secondary = compareSecondaryScores(A, B);
             if (secondary !== 0) return secondary;
         }
 
-        return nameOf(a).localeCompare(nameOf(b));
+        return nameOf(A).localeCompare(nameOf(B));
     });
 
     if (render) {
-        _applyContent();
+            _applyContent();
     }
+
+    // --- Comparators ---
 
     function comparePrimary(a, b, type, value) {
         switch (type) {
@@ -28,7 +33,7 @@ function _sort(render = false) {
                 const sb = scoreOf(b);
 
                 if (value === "highest_first") return sb - sa;
-                if (value === "lowest_first") return sa - sb;
+                if (value === "lowest_first")  return sa - sb;
                 return 0;
             }
 
@@ -36,7 +41,7 @@ function _sort(render = false) {
                 const pa = priceRank(_normalizePriceBucket(a.valor));
                 const pb = priceRank(_normalizePriceBucket(b.valor));
 
-                if (value === "lowest_first") return pa - pb;
+                if (value === "lowest_first")  return pa - pb;
                 if (value === "highest_first") return pb - pa;
                 return 0;
             }
@@ -45,8 +50,8 @@ function _sort(render = false) {
                 const pa = plannedOf(a);
                 const pb = plannedOf(b);
 
-                if (value === "planned_first") return pb - pa;
-                if (value === "not_planned_first") return pa - pb;
+                if (value === "planned_first")      return pb - pa;
+                if (value === "not_planned_first")  return pa - pb;
                 return 0;
             }
 
@@ -54,7 +59,7 @@ function _sort(render = false) {
                 const na = nameOf(a);
                 const nb = nameOf(b);
 
-                if (value === "ascending") return na.localeCompare(nb);
+                if (value === "ascending")  return na.localeCompare(nb);
                 if (value === "descending") return nb.localeCompare(na);
                 return 0;
             }
@@ -67,6 +72,8 @@ function _sort(render = false) {
     function compareSecondaryScores(a, b) {
         return scoreOf(b) - scoreOf(a); // best → worst
     }
+
+    // --- Accessors ---
 
     function scoreOf(item) {
         const n = parseInt(item.nota, 10);
