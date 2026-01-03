@@ -1,5 +1,5 @@
 function _getDestinosHTML(j, id, item, valores) {
-    const params = { j, id, item, valores}
+    const params = { j, id, item, valores }
     return `
     <div class="accordion-group" id='destinos-box-${j}'>
         <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
@@ -12,7 +12,9 @@ function _getDestinosHTML(j, id, item, valores) {
                             <path class="st0" d="M0-3.3h12v12H0V-3.3z" />
                         </svg>
                     </div>
-                    ${_getPlannedHTML(_isPlanned(item))}
+                    <div class="icon-container" style="display: ${_isPlanned(id) ? 'block' : 'none'}">
+                        <i class="iconify planejado" data-icon="fa-solid:check"></i>
+                    </div>
                     <div class="icon-container" style="display: ${item.nota ? 'block' : 'none'}">
                         <i class="iconify nota ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
                     </div>

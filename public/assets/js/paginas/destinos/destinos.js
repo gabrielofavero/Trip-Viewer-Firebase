@@ -200,23 +200,17 @@ function _loadDestinoCustomSelect() {
   }
 }
 
-function _getPlannedHTML(planejado) {
-  if (!planejado) return '';
-  return `<div class="icon-container">
-            <i class="iconify planejado" data-icon="fa-solid:check"></i>
-          </div>`
-}
-
 function _getDataSet(key) {
   const category = ACTIVE_CATEGORY;
   if (!category) return new Set();
 
   if (key === 'planejado') {
-    const data = PLANNED_DESTINATION?.[category] ?? {};
-
+    const planned = PLANNED_DESTINATION?.[category] ?? {};
+    const firestore = FIRESTORE_DESTINOS_DATA?.[category] ?? {};
     return new Set(
-      Object.values(data)
-        .filter(v => v !== undefined && v !== null)
+      Object.keys(firestore).map(id =>
+        planned[id] ?? false
+      )
     );
   }
 
@@ -233,6 +227,10 @@ function _getItem(id) {
 }
 
 function _getItemValue(id, key) {
+  if (key === 'planejado') {
+    return PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[id];
+  }
+
   const item = _getItem(id);
   return item ? item[key] : null;
 }
