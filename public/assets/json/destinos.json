@@ -76,5 +76,14 @@
         "lineup": "lineup",
         "tourismAndShopping": "tourismAndShopping",
         "comida": "food"
+    },
+    "original": {
+        "restaurants": "restaurantes",
+        "snacks": "lanches",
+        "nightlife": "saidas",
+        "tourism": "turismo",
+        "shopping": "lojas",
+        "map": "mapa",
+        "myMaps": "myMaps"
     }
 }

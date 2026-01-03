@@ -146,8 +146,10 @@ function _getDestinoValores(destino) {
 }
 
 function _loadAndOpenDestino(code) {
+  const translation = CONFIG.destinos.translation;
   window.localStorage.setItem('PLANNED_DESTINATIONS', JSON.stringify(PLANNED_DESTINATIONS));
-  _openLightbox(`destination?type=${code}&d=${DESTINO_ATIVO}`);
+  const link = `destination?type=${translation[code]}&d=${DESTINO_ATIVO}`;
+  _openLightbox(link);
 }
 
 function _getDestinationsBoxesIndex(i) {
