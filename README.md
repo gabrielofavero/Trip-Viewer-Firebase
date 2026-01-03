@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 120   | 119       | 1       |
+| 🐞   | Bug         | B000 | 121   | 119       | 2       |
 | 🏆   | Feature     | F000 | 122   | 120       | 2       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 38        | 1       |
@@ -16,6 +16,7 @@
 - ⚔️ **E039:** Destinations Overhaul
   - *[🏆F121] Add option to quickly edit destination on main page (if owner)*
   - *[🏆F122] Add option to quickly create destination on main page (if owner)*
+- 🐞 **B121:** Fix timezone issues
 
 ### Medium Priority
 

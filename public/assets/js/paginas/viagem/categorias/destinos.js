@@ -190,13 +190,11 @@ function _loadPlannedDestinations() {
   function _addPlannedDestination(item) {
     const destino = DESTINOS.find(d => d.destinosID === item.local);
     if (!destino) return;
-    
-    if (!PLANNED_DESTINATIONS[destino.destinosID]) {
-      PLANNED_DESTINATIONS[destino.destinosID] = {};
-    }
-    PLANNED_DESTINATIONS[destino.destinosID][item.id] = true;
 
-
+    const id = destino.destinosID;
+    PLANNED_DESTINATIONS[id] ??= {};
+    PLANNED_DESTINATIONS[id][item.categoria] ??= {};
+    PLANNED_DESTINATIONS[id][item.categoria][item.id] = true;
   }
 }
 

@@ -1,4 +1,4 @@
-var PLANNED_DESTINATIONS;
+var PLANNED_DESTINATION;
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
 var ACTIVE_CATEGORY;
@@ -6,6 +6,7 @@ var ACTIVE_CATEGORY;
 window.addEventListener("load", async function () {
   try {
     _startLoadingScreen();
+    console.log(this.window.location.href)
     _main();
     _stopLoadingScreen();
   } catch (error) {
@@ -23,7 +24,7 @@ async function _loadDestinosData() {
     throw error;
   }
 
-  PLANNED_DESTINATIONS = JSON.parse(window.localStorage.getItem('PLANNED_DESTINATIONS'))?.[DOCUMENT_ID] || {};
+  PLANNED_DESTINATION = JSON.parse(window.localStorage.getItem('PLANNED_DESTINATIONS'))?.[DOCUMENT_ID] || {};
   FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
   const type = urlParams['type'];
   const originals = CONFIG.destinos.original;
@@ -90,6 +91,7 @@ function _loadDestinoByType(activeCategory) {
   for (let j = 1; j <= keys.length; j++) {
     const key = keys[j - 1];
     const item = destino[key];
+    item.id = key;
     const params = {
       j: j,
       item: item,
@@ -119,7 +121,7 @@ function _loadDestinoByType(activeCategory) {
                                               <path class="st0" d="M0-3.3h12v12H0V-3.3z" />
                                           </svg>
                                       </div>
-                                      ${_getPlannedHTML(_isPlanned(item.id))}
+                                      ${_getPlannedHTML(_isPlanned(item))}
                                       <div class="icon-container" style="display: ${item.nota ? 'block' : 'none'}">
                                           <i class="iconify nota ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
                                       </div>
@@ -155,11 +157,12 @@ function _loadMapDestino(link) {
 // Setters
 function _setInnerContent(item, innerHTML) {
   const innerContent = {
+    id: item.id,
     titulo: item.nome,
     nota: item.nota || "default",
     valor: item.valor || "default",
     regiao: item.regiao,
-    planejado: _isPlanned(item.id),
+    planejado: _isPlanned(item),
     innerHTML: innerHTML
   }
 
@@ -265,8 +268,8 @@ function _getDataValues() {
   return Object.values(FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]);
 }
 
-function _isPlanned(id) {
-  return PLANNED_DESTINATIONS[id] === true;
+function _isPlanned(item) {
+  return PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[item.id] === true;
 }
 
 function _updateActiveCategory(category) {

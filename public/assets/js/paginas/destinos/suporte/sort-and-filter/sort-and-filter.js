@@ -33,7 +33,7 @@ function _loadFilterSortingData(titles) {
                 data.delete('');
                 break;
             case 'planned':
-                data = new Set(_getDataValues().map(item => _isPlanned(item.id) || false));
+                data = new Set(_getDataValues().map(item => _isPlanned(item)));
                 break;
             case 'scores':
                 data = new Set(_getDataValues().map(item => item.nota));
@@ -53,7 +53,7 @@ function _shouldDisplayRegions() {
 }
 
 function _shouldDisplayPlanned() {
-    const planejado = new Set(_getDataValues().map(item => _isPlanned(item.id) || false));
+    const planejado = new Set(_getDataValues().map(item => _isPlanned(item)));
     return planejado.size > 1;
 }
 

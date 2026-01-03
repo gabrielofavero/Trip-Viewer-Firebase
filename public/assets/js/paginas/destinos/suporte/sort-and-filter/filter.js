@@ -21,7 +21,7 @@ function _filter(render = false) {
     }
 
     function _shouldFilterByPlanned(item) {
-        const isPlanned = _isPlanned(item.id);
+        const isPlanned = _isPlanned(item);
         return (isPlanned && preferences.planned === 'not_planned') || (!isPlanned && preferences.planned === 'planned');
     }
 
