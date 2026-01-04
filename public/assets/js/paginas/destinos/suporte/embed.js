@@ -282,7 +282,7 @@ function _adjustInstagramMedia() {
 
 // Watchdogs
 
-function _initMediaWatchdogs(timeout = 3500) {
+function _initMediaWatchdogs(timeout = 4000) {
   const wrappers = document.querySelectorAll(".media-embed");
 
   wrappers.forEach(wrapper => {
@@ -319,7 +319,7 @@ function _initMediaWatchdogs(timeout = 3500) {
   });
 }
 
-function _initInstagramWatchdogs(timeout = 3500) {
+function _initInstagramWatchdogs(timeout = 4000) {
   const blocks = document.querySelectorAll(".instagram-embed");
 
   blocks.forEach(block => {

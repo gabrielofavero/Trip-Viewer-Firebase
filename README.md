@@ -14,7 +14,7 @@
 ### High Priority
 
 - ⚔️ **E039:** Destinations Overhaul
-  - *[🏆F121] Add option to quickly edit destination on main page (if owner)*
+  - *[🏆F121] Add option to quickly edit / delete destination on main page (if owner)*
   - *[🏆F122] Add option to quickly create destination on main page (if owner)*
 - 🐞 **B121:** Fix timezone issues
 

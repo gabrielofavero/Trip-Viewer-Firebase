@@ -1,8 +1,8 @@
-function _getDestinosHTML(j, id, item, valores) {
-    const params = { j, id, item, valores }
+function _getDestinosHTML(j, id, item) {
+    const params = { j, id, item }
     return `
     <div class="accordion-group" id='destinos-box-${j}'>
-        <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
+        <div id="destinos-${j}" class="accordion-item" data-drag-listener="true" data-id="${id}">
             <h2 class="accordion-header" id="heading-destinos-${j}">
                 <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false" aria-controls="collapse-destinos-${j}" onclick="_processAccordion(${j})">
                     <span class="title-text" id="destinos-titulo-text-${j}">${_getTitulo(item)}</span>
@@ -28,39 +28,60 @@ function _getDestinosHTML(j, id, item, valores) {
 }
 
 function _getDestinosBoxHTML({ j, item, innerProgramacao, valores, moeda }) {
-    const identifiers = innerProgramacao ? '' : `class="accordion-body" id="accordion-body-${j}"`;
-    const valoresValue = valores || CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
-    const moedaValue = moeda || FIRESTORE_DESTINOS_DATA.moeda;
+    return `
+    <div ${innerProgramacao ? '' : `class="accordion-body" id="accordion-body-${j}"`}>
+        ${_getDestinosAccordionBodyHTML(j, item, valores, moeda)}
+    </div>`
+}
 
-    return `<div ${identifiers}>
-    <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
-        <div class="notas-box">
-            <i class="iconify nota-sem-margem ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
-            <span class="nota-texto">${translate(`destination.scores.${item.nota}`)}</span>
-        </div>
-        <div class="links-container" style="display: ${_getLinksContainerVisibility(item)}">
-            <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? 'block' : 'none'}"${_getLinkOnClick(item, 'mapa')}></i>
-            <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"${_getLinkOnClick(item, 'instagram')}></i>
-            <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? 'block' : 'none'}"${_getLinkOnClick(item, 'website')}></i>
-        </div>
-    </div>
-    <div class="destinos-text">
-        <div class="destinos-topicos-box" style="display: block">
-            <div class="destinos-topico" style="display: ${_getValorVisibility(item)}">
-                <i class="iconify color-icon" data-icon="bx:dollar"></i>
-                ${_getValorValue(item, valoresValue, moedaValue)}
+function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
+    if (!valores){
+        valores = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
+    }
+
+    if (!moeda) {
+        moeda = FIRESTORE_DESTINOS_DATA.moeda;
+    }
+
+    return `
+        <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
+            <div class="notas-box">
+                <i class="iconify nota-sem-margem ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
+                <span class="nota-texto">${translate(`destination.scores.${item.nota}`)}</span>
+            </div>
+            <div class="links-container" style="display: ${_getLinksContainerVisibility(item)}">
+                <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? 'block' : 'none'}"${_getLinkOnClick(item, 'mapa')}></i>
+                <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? 'block' : 'none'}"${_getLinkOnClick(item, 'instagram')}></i>
+                <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? 'block' : 'none'}"${_getLinkOnClick(item, 'website')}></i>
             </div>
         </div>
-        <div class="destinos-descricao" style="display: ${_getDescricaoVisibility(item)}">
-            ${_getDescricaoValue(item)}
+        <div class="destinos-text">
+            <div class="destinos-topicos-box" style="display: block">
+                <div class="destinos-topico" style="display: ${_getValorVisibility(item)}">
+                    <i class="iconify color-icon" data-icon="bx:dollar"></i>
+                    ${_getValorValue(item, valores, moeda)}
+                </div>
+            </div>
+            <div class="destinos-descricao" style="display: ${_getDescricaoVisibility(item)}">
+                ${_getDescricaoValue(item)}
+            </div>
+            <div id="midia-${j}" class="midia-container"></div>
+            <div class="edit-container" id="edit-container-${j}" style="display: none">
+                <button class="edit" id="edit-${j}" onclick="_edit(${j})">
+                    <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
+                    <span>${translate('labels.edit')}</span>
+                </button>
+            </div>
+        </div>`
+}
+
+function _getEditHTML(){
+    return `
+        <div class="edit-title-container">
+             <input required id="editar-nome" class="edit-input name" type="text" placeholder="${translate('labels.name')}" />
+             <input id="editar-emoji" class="edit-input emoji" type="text" placeholder="😁" />
         </div>
-        <div id="midia-${j}" class="midia-container"></div>
-        <div class="edit-container" style="display: none">
-            <button class="edit" id="edit-${j}">
-                <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
-                <span>${translate('labels.edit')}</span>
-            </button>
-        </div>
-    </div>
-</div>`
+    
+
+    `
 }

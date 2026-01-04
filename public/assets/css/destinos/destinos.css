@@ -782,7 +782,7 @@ section {
 }
 
 .edit {
-  border-radius: 100px;
+  border-radius: 8px;
 }
 
 .filter-sort:hover,
@@ -880,11 +880,11 @@ section {
   background: var(--theme-color-secondary);
 }
 
-.drawer-title{
+.drawer-title {
   font-weight: bold;
 }
 
-.drawer-container{
+.drawer-container {
   display: flex !important;
   flex-direction: column;
   gap: 8px;
@@ -980,5 +980,53 @@ section {
   .input-container {
     width: 90%;
     height: auto;
+  }
+}
+
+/* Editar */
+
+.edit-title-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 16px;
+  border-bottom: 0.5px solid #D9D9D9;
+}
+
+.edit-input {
+  padding: 8px 10px;
+  width: auto;
+  flex: 0 1 auto;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  transition: border .18s ease, box-shadow .18s ease;
+}
+
+.edit-input.name {
+  flex: 1 1 auto;
+  font-weight: bold;
+  min-width: 0;
+}
+
+.edit-input.emoji {
+  flex: 0 0 100px;
+  max-width: 100px;
+  text-align: center;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: var(--theme-color);
+}
+
+@media (max-width: 400px) {
+  .edit-input.emoji {
+    flex: 0 0 50px;
+    max-width: 50px;
+  }
+
+  .edit-input.name {
+    flex: 1 1 auto;
   }
 }

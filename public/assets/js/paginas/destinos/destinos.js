@@ -88,8 +88,7 @@ function _loadDestinoByType(activeCategory) {
   for (let j = 1; j <= keys.length; j++) {
     const id = keys[j - 1];
     const item = destino[id];
-    const valores = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
-    const innerHTML = _getDestinosHTML(j, id, item, valores);
+    const innerHTML = _getDestinosHTML(j, id, item);
     _loadEmbed(item?.midia, j)
     CONTENT.push({ id, innerHTML });
   }
@@ -98,7 +97,7 @@ function _loadDestinoByType(activeCategory) {
   _applyContent();
   _applyDestinosMediaHeight();
   _adjustInstagramMedia();
-  _loadEditDestination();
+  _adjustEditVisibility();
 }
 
 function _loadMapDestino(link) {
@@ -145,6 +144,7 @@ function _processAccordion(j) {
   _toggleMedia(j);
   _unloadMedias(j);
   _closeAccordions(j);
+  _adjustEditVisibility(j);
 }
 
 function _toggleMedia(j) {
