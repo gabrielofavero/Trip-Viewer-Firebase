@@ -2003,7 +2003,6 @@ details summary::-webkit-details-marker {
   word-break: break-word;
   white-space: normal;
   padding: 10px 40px 10px 10px;
-  /* Espaço extra para o botão de fechar */
 }
 
 #toast-text {

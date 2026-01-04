@@ -134,6 +134,18 @@ function _setEditListeners(j, item) {
         _editScoreLoadAction(e.target.value, j);
     }
 
+    getID(`editar-mapa-${j}`).onchange = (e) => {
+        _validateMapLink(e.target.id);
+    }
+
+    getID(`editar-instagram-${j}`).onchange = (e) => {
+        _validateInstagramLink(e.target.id);
+    }
+
+    getID(`editar-website-${j}`).onchange = (e) => {
+        _validateLink(e.target.id);
+    }
+
     getID(`editar-regiao-select-${j}`).onchange = (e) => {
         _editRegionLoadAction(e.target.value, j);
     }
@@ -144,6 +156,10 @@ function _setEditListeners(j, item) {
 
     getID(`editar-descricao-lang-${j}`).onchange = (e) => {
         _editDescriptionLoadAction(e.target.value, j);
+    }
+
+    getID(`editar-midia-${j}`).onchange = (e) => {
+        _validateMediaLink(e.target.id);
     }
 }
 

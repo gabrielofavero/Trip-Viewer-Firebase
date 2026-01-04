@@ -279,3 +279,8 @@ a:hover {
 .iconify.color-icon.edit {
   border: none;
 }
+
+/* Toast */
+#toast {
+  color: #303030;
+}
