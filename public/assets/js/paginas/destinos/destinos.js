@@ -56,7 +56,7 @@ async function _loadDestinosPage() {
     _loadDestinoCustomSelect()
     window.addEventListener("resize", () => {
       _applyDestinosMediaHeight();
-      _adjustInstagramMedia();
+      _adjustMediaEmbeds();
     });
 
   } else {

@@ -56,3 +56,7 @@ function _getValorVisibility(item) {
 function _getDescricaoVisibility(item) {
     return _getDescricaoValue(item) ? "block" : "none";
 }
+
+function _getSystemWidth() {
+    return window.innerWidth || document.documentElement.clientWidth;
+}
