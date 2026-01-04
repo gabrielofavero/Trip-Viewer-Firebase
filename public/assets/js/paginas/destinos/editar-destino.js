@@ -161,6 +161,14 @@ function _setEditListeners(j, item) {
     getID(`editar-midia-${j}`).onchange = (e) => {
         _validateMediaLink(e.target.id);
     }
+
+    getID(`editar-delete-${j}`).onclick = () => {
+        _promptDeleteEdit(j);
+    }
+
+    getID(`editar-save-${j}`).onclick = () => {
+        _saveEdit(j);
+    }
 }
 
 function _isEditing(j) {
@@ -177,4 +185,64 @@ function _restoreIfEditing(j) {
         const item = _getItemFromJ(j);
         _restoreAccordionBody(j, item);
     }
+}
+
+async function _saveEdit(j) {
+    _startLoadingScreen();
+    const id = _getDestinoID(j);
+    const originalItem = _getItem(id);
+    const item = {
+        criadoEm: originalItem.criadoEm,
+        descricao: {
+            en: getID(`editar-descricao-en-${j}`).value,
+            pt: getID(`editar-descricao-pt-${j}`).value
+        },
+        emoji: getID(`editar-emoji-${j}`).value,
+        instagram: getID(`editar-instagram-${j}`).value,
+        mapa: getID(`editar-mapa-${j}`).value,
+        midia: getID(`editar-midia-${j}`).value,
+        nome: getID(`editar-nome-${j}`).value,
+        nota: getID(`editar-nota-${j}`).value,
+        regiao: _getValue('regiao', j),
+        valor: _getValue('valor', j),
+        website: getID(`editar-website-${j}`).value
+    }
+
+    const docPath = `destinos/${DOCUMENT_ID}`;
+    await _update(docPath, { [`${ACTIVE_CATEGORY}.${id}`]: item });
+
+    await _refreshDestino();
+    _stopLoadingScreen();
+
+    function _getValue(type, j) {
+        const selectValue = getID(`editar-${type}-select-${j}`).value;
+        return selectValue != 'custom' ? selectValue : getID(`editar-${type}-input-${j}`).value;
+    }
+}
+
+function _promptDeleteEdit(j) {
+    const id = _getDestinoID(j);
+    const name = _getItem(id).nome;
+
+    const titulo = translate('destination.delete.title');
+    const conteudo = translate('destination.delete.message', { name });
+    const yesAction = `_deleteEdit('${id}')`;
+
+    _displayPrompt({ titulo, conteudo, yesAction })
+}
+
+async function _deleteEdit(id) {
+    _startLoadingScreen();
+
+    await _update(`destinos/${DOCUMENT_ID}`, {
+        [`${ACTIVE_CATEGORY}.${id}`]: firebase.firestore.FieldValue.delete()
+    });
+
+    await _refreshDestino();
+    _stopLoadingScreen();
+}
+
+async function _refreshDestino() {
+    FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
+    _loadDestinoByType(ACTIVE_CATEGORY);
 }

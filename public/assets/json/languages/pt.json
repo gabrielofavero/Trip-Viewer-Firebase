@@ -41,7 +41,7 @@
         "share": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
         "delete": {
             "title": "Excluir viagem",
-            "message": "Tem certeza que deseja excluir a viagem {{name}}? A ação não poderá ser desfeita"
+            "message": "Tem certeza que deseja excluir a viagem \"{{name}}\"? A ação não poderá ser desfeita"
         },
         "basic_information": {
             "subtitle": "Adicione aqui as principais informações da sua viagem",
@@ -195,7 +195,7 @@
         "location_placeholder": "São Paulo",
         "delete": {
             "title": "Excluir destino",
-            "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
+            "message": "Tem certeza que deseja excluir o destino \"{{name}}\"? A ação não poderá ser desfeita"
         },
         "tooltips": {
             "map": "Google Maps ou Apple Maps",

@@ -41,7 +41,7 @@
         "share": "Check out my trip {{name}} created on TripViewer, starting on {{start}} and ending on {{end}}",
         "delete": {
             "title": "Delete trip",
-            "message": "Are you sure you want to delete the trip {{name}}? This action cannot be undone"
+            "message": "Are you sure you want to delete the trip \"{{name}}\"? This action cannot be undone"
         },
         "basic_information": {
             "subtitle": "Add the main information about your trip here",
@@ -195,7 +195,7 @@
         "location_placeholder": "Chicago",
         "delete": {
             "title": "Delete destination",
-            "message": "Are you sure you want to delete the destination {{name}}? This action cannot be undone"
+            "message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"
         },
         "tooltips": {
             "map": "Google Maps or Apple Maps",

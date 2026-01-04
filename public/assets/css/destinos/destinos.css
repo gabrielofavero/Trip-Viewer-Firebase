@@ -224,6 +224,23 @@ section {
   color: #fff;
 }
 
+.button-box {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-theme {
+  background: var(--theme-color);
+  color: #fff;
+}
+
+.btn-theme:hover,
+.btn-theme:focus {
+  background: var(--theme-color-hover);
+  color: #fff;
+}
+
 .card-header {
   width: 425px;
   float: left;
