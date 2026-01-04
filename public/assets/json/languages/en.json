@@ -620,7 +620,8 @@
         "description": {
             "title": "Description",
             "edit": "Edit description",
-            "add": "Add description"
+            "add": "Add description",
+            "lang": "Description in {{lang}}"
         },
         "type": "Type",
         "try_again": "Try Again",

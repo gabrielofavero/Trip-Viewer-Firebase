@@ -140,6 +140,7 @@ function _orderInnerHTMLs(innerContents) {
 
 // Actions
 function _processAccordion(j) {
+  _restoreIfEditing(j);
   _adjustDrawer();
   _toggleMedia(j);
   _unloadMedias(j);
@@ -220,6 +221,16 @@ function _getDataSet(key) {
       .map(item => item?.[key])
       .filter(v => v !== undefined && v !== null)
   );
+}
+
+function _getDestinoID(j) {
+  const destino = getID(`destinos-${j}`)
+  return destino.getAttribute('data-id');
+}
+
+function _getItemFromJ(j) {
+  const id = _getDestinoID(j);
+  return _getItem(id);
 }
 
 function _getItem(id) {

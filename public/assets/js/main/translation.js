@@ -1,3 +1,6 @@
+const MISSING_TRANSLATIONS = new Set();
+const LANGUAGES = ['en', 'pt'];
+
 function translate(key, replacements = {}, strict = true) {
     if (!CONFIG?.language) return "";
     let result = _searchObject(CONFIG.language, key, strict);
@@ -64,7 +67,7 @@ function _getUserLanguage() {
 
 function _getLanguagePackName() {
     let language = _getUserLanguage();
-    if (["pt", 'en'].includes(language)) {
+    if (LANGUAGES.includes(language)) {
         return language;
     } else return "en"
 }

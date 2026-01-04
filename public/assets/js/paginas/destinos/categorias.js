@@ -44,8 +44,8 @@ function _getTitulo(item) {
 }
 
 // Nota
-function _getNotaIcon(item) {
-    switch (item.nota) {
+function _getNotaIcon(nota) {
+    switch (nota) {
         case "5":
             return "ph:number-five-bold";
         case "4":
@@ -61,14 +61,14 @@ function _getNotaIcon(item) {
     }
 }
 
-function _getNotaClass(item) {
-    switch (item.nota) {
+function _getNotaClass(nota) {
+    switch (nota) {
         case "5":
         case "4":
         case "3":
         case "2":
         case "1":
-            return `nota-${item.nota}`;
+            return `nota-${nota}`;
         default:
             return "nota-ausente"
     }

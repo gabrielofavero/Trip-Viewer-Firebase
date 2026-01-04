@@ -786,7 +786,7 @@ section {
 }
 
 .filter-sort:hover,
-.edit:hover {
+.edit-btn:hover {
   background: var(--theme-color-secondary);
 }
 

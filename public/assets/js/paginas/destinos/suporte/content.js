@@ -16,7 +16,7 @@ function _getDestinosHTML(j, id, item) {
                         <i class="iconify planejado" data-icon="fa-solid:check"></i>
                     </div>
                     <div class="icon-container" style="display: ${item.nota ? 'block' : 'none'}">
-                        <i class="iconify nota ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
+                        <i class="iconify nota ${_getNotaClass(item.nota)}" data-icon="${_getNotaIcon(item.nota)}"></i>
                     </div>
                 </button>
             </h2>
@@ -46,7 +46,7 @@ function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
     return `
         <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
             <div class="notas-box">
-                <i class="iconify nota-sem-margem ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
+                <i class="iconify nota-sem-margem ${_getNotaClass(item.nota)}" data-icon="${_getNotaIcon(item.nota)}"></i>
                 <span class="nota-texto">${translate(`destination.scores.${item.nota}`)}</span>
             </div>
             <div class="links-container" style="display: ${_getLinksContainerVisibility(item)}">
@@ -79,19 +79,21 @@ function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
         </div>`
 }
 
-function _getEditHTML(){
+function _getEditHTML(j){
     return `
         <div class="edit-close-container">
-            <button class="close-btn" onclick="">✕</button>
+            <button id="close-btn-${j}" class="close-btn">✕</button>
         </div>
         <div class="edit-title-container">
-             <input required id="editar-nome" class="edit-input name" type="text" placeholder="${translate('labels.name')}" />
-             <input id="editar-emoji" class="edit-input emoji" type="text" placeholder="😁" />
+             <input required id="editar-nome-${j}" class="edit-input name" type="text" placeholder="${translate('labels.name')}" />
+             <input id="editar-emoji-${j}" class="edit-input emoji" type="text" placeholder="😁" />
         </div>
         <div class="edit-column-container">
-            <div class="edit-double-container" id="editar-nota-container">
-                <i class="iconify nota-sem-margem nota-ausente" data-icon="ic:outline-question-mark"></i>
-                <select class="edit-input" id="editar-nota">
+            <div class="edit-double-container">
+                <div id="editar-nota-icon-${j}">
+                    <i class="iconify nota-sem-margem nota-ausente" data-icon="ic:outline-question-mark"></i>
+                </div>
+                <select class="edit-input" id="editar-nota-${j}">
                     <option value="Default">${translate(`destination.scores.default`)}</option>
                     <option value="5">${translate(`destination.scores.5`)}</option>
                     <option value="4">${translate(`destination.scores.4`)}</option>
@@ -103,58 +105,93 @@ function _getEditHTML(){
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="f7:map"></i>
                 <div class="edit-column-container">
-                    <input id="editar-mapa" class="edit-input" type="text" placeholder="${translate('labels.customization.links.map')} (${translate('labels.optional')})" />
+                    <input id="editar-mapa-${j}" class="edit-input" type="text" placeholder="${translate('labels.customization.links.map')} (${translate('labels.optional')})" />
                 </div>
             </div>
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="ri:instagram-line"></i>
                 <div class="edit-column-container">
-                    <input id="editar-instagram" class="edit-input" type="text" placeholder="${translate('labels.social.instagram')} (${translate('labels.optional')})" />
+                    <input id="editar-instagram-${j}" class="edit-input" type="text" placeholder="${translate('labels.social.instagram')} (${translate('labels.optional')})" />
                 </div>
             </div>
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="tabler:world"></i>
                 <div class="edit-column-container">
-                    <input id="editar-website" class="edit-input" type="text" placeholder="${translate('labels.social.website')} (${translate('labels.optional')})" />
+                    <input id="editar-website-${j}" class="edit-input" type="text" placeholder="${translate('labels.social.website')} (${translate('labels.optional')})" />
                 </div>
             </div>
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="mingcute:location-line"></i>
                 <div class="edit-column-container">
-                    <select class="edit-input" id="editar-regiao-select"></select>
-                    <input id="editar-regiao=input" class="edit-input" type="text" placeholder="${translate('labels.region')} (${translate('labels.optional')})" />
+                    <select class="edit-input" id="editar-regiao-select-${j}">
+                        <option value="">${translate('destination.filter.region.none')}</option>
+                        ${_getRegionOptionsHTML()}
+                        <option value="custom">${translate('labels.custom')}</option>
+                    </select>
+                    <input id="editar-regiao-input-${j}" style="display: none" class="edit-input" type="text" placeholder="${translate('labels.region')} (${translate('labels.optional')})" />
                 </div>
             </div>
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="bx:dollar"></i>
                 <div class="edit-column-container">
-                    <select class="edit-input" id="editar-valor-select"></select>
-                    <input id="editar-valor=input" class="edit-input" type="text" placeholder="${translate('labels.cost')} (${translate('labels.optional')})" />
+                    <select class="edit-input" id="editar-valor-select-${j}">
+                        <option value="default">${translate('destination.price.default')}</option>
+                        <option value="-">${translate('destination.price.free')}</option>
+                        ${_getValuesOptionsHTML()}
+                        <option value="custom">${translate('labels.custom')}</option>
+                    </select>
+                    <input id="editar-valor-input-${j}" style="display: none" class="edit-input" type="text" placeholder="${translate('labels.cost')} (${translate('labels.optional')})" />
                 </div>
             </div>
-            <div class="edit-double-container">
+            <div class="edit-double-container" id="editar-descricao-container-${j}">
                 <i class="iconify color-icon edit" data-icon="tabler:edit"></i>
                 <div class="edit-column-container">
-                    <select class="edit-input">
-                        <option value="en">EN</option>
-                        <option value="pt">PT</option>
+                    <select class="edit-input" id="editar-descricao-lang-${j}">
+                        ${_getDescriptionLanguageOptionsHTML()}
                     </select>
-                    <textarea id="editar-descricao" class="edit-input edit-textarea" type="text" placeholder="${translate('labels.description.title')} (${translate('labels.optional')})"></textarea>
+                    <textarea id="editar-descricao-en-${j}" class="edit-input edit-textarea" type="text" placeholder="${translate('labels.description.title')} (${translate('labels.optional')})"></textarea>
+                    <textarea id="editar-descricao-pt-${j}" class="edit-input edit-textarea" type="text" placeholder="${translate('labels.description.title')} (${translate('labels.optional')})"></textarea>
                 </div>
             </div>
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="lets-icons:video-fill"></i>
                 <div class="edit-column-container">
-                    <input id="editar-embed" class="edit-input" type="text" placeholder="${translate('labels.video')} (${translate('labels.optional')})" />
+                    <input id="editar-midia-${j}" class="edit-input" type="text" placeholder="${translate('labels.video')} (${translate('labels.optional')})" />
                 </div>
             </div>
             <div class="edit-button-container">
-                <button class="edit-btn" id="editar-delete">
+                <button class="edit-btn" id="editar-delete-${j}">
                     <i class="iconify color-icon edit" data-icon="material-symbols:delete-outline-rounded"></i>
                 </button>
-                <button class="edit-btn" id="editar-save">
+                <button class="edit-btn" id="editar-save-${j}">
                         <i class="iconify color-icon edit" data-icon="material-symbols:save-outline"></i>
                 </button>
             </div>
         </div>`
+}
+
+function _getRegionOptionsHTML() {
+    let optionsHTML = '';
+    for (const region of FILTER_SORT_DATA[ACTIVE_CATEGORY].region) {
+        optionsHTML += `<option value="${region}">${region}</option>`;
+    }
+    return optionsHTML;
+}
+
+function _getValuesOptionsHTML() {
+    const moedas = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
+    return `
+        <option value="$">${moedas['$']}</option>
+        <option value="$$">${moedas['$$']}</option>
+        <option value="$$$">${moedas['$$$']}</option>
+        <option value="$$$$">${translate('destination.price.max', { value: moedas['$$$$'] })}</option>`
+}
+
+function _getDescriptionLanguageOptionsHTML() {
+    let optionsHTML = '';
+    for (const key of LANGUAGES) {
+        const lang = translate(`labels.language.${key}`);
+        optionsHTML += `<option value="${key}">${translate('labels.description.lang', { lang })}</option>`;
+    }
+    return optionsHTML;
 }

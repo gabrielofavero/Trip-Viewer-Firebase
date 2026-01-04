@@ -620,7 +620,8 @@
         "description": {
             "title": "Descrição",
             "edit": "Editar descrição",
-            "add": "Adicionar descrição"
+            "add": "Adicionar descrição",
+            "lang": "Descrição em {{lang}}"
         },
         "type": "Tipo",
         "try_again": "Tentar novamente",
