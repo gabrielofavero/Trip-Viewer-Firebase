@@ -767,7 +767,7 @@ section {
 }
 
 .filter-sort,
-.edit {
+.edit-btn {
   padding: 0.6em 1.4em;
   border-radius: 999px;
   border: 1px solid var(--border-color);
@@ -781,7 +781,7 @@ section {
   transition: background 0.25s ease, border-color 0.25s ease;
 }
 
-.edit {
+.edit-btn {
   border-radius: 8px;
 }
 
@@ -985,13 +985,47 @@ section {
 
 /* Editar */
 
-.edit-title-container {
+.edit-close-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1em;
+}
+
+.edit-title-container,
+.edit-double-container,
+.edit-column-container {
   display: flex;
   gap: 8px;
+}
+
+.edit-double-container {
+  align-items: center;
+}
+
+.edit-title-container{
   align-items: center;
   padding-bottom: 20px;
   margin-bottom: 16px;
   border-bottom: 0.5px solid #D9D9D9;
+}
+
+.edit-column-container {
+  flex-direction: column;
+  gap: 1em;
+    flex: 1 1 auto;
+  min-width: 0;
+}
+
+.edit-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.edit-double-container input,
+.edit-double-container select{
+  flex: 1 1 auto;
 }
 
 .edit-input {
@@ -1001,6 +1035,8 @@ section {
   border-radius: 4px;
   border: 1px solid var(--border-color);
   transition: border .18s ease, box-shadow .18s ease;
+  background: var(--background-color);
+  color: var(--font-color);
 }
 
 .edit-input.name {
@@ -1018,6 +1054,23 @@ section {
 .edit-input:focus {
   outline: none;
   border-color: var(--theme-color);
+}
+
+@media (max-width: 400px) {
+  .edit-input.emoji {
+    flex: 0 0 50px;
+    max-width: 50px;
+  }
+
+  .edit-input.name {
+    flex: 1 1 auto;
+  }
+}
+
+.iconify.color-icon.edit {
+  margin-right: 2.5px;
+  margin-left: 2.5px;
+  border: none;
 }
 
 @media (max-width: 400px) {

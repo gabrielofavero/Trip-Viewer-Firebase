@@ -216,7 +216,7 @@ a:hover {
 }
 
 .filter-sort,
-.edit {
+.edit-btn {
   border: 1px solid var(--border-color-alt);
 }
 
@@ -263,4 +263,19 @@ a:hover {
 .message-container,
 .input-container {
   background: #303030;
+}
+
+/* Editar */
+
+.edit-title-container{
+  border-bottom: 0.5px solid #383838;
+}
+
+.edit-input {
+  border: 1px solid var(--border-color-alt);
+  background: var(--box-color);
+}
+
+.iconify.color-icon.edit {
+  border: none;
 }

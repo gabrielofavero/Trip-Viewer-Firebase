@@ -56,6 +56,10 @@ function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
             </div>
         </div>
         <div class="destinos-text">
+            <div class="destinos-topico" style="display: ${item.regiao ? 'block' : 'none'}">
+                <i class="iconify color-icon" data-icon="mingcute:location-line"></i>
+                ${item.regiao || ""}
+            </div>
             <div class="destinos-topicos-box" style="display: block">
                 <div class="destinos-topico" style="display: ${_getValorVisibility(item)}">
                     <i class="iconify color-icon" data-icon="bx:dollar"></i>
@@ -67,7 +71,7 @@ function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
             </div>
             <div id="midia-${j}" class="midia-container"></div>
             <div class="edit-container" id="edit-container-${j}" style="display: none">
-                <button class="edit" id="edit-${j}" onclick="_edit(${j})">
+                <button class="edit-btn" id="edit-${j}" onclick="_edit(${j})">
                     <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
                     <span>${translate('labels.edit')}</span>
                 </button>
@@ -77,11 +81,80 @@ function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
 
 function _getEditHTML(){
     return `
+        <div class="edit-close-container">
+            <button class="close-btn" onclick="">✕</button>
+        </div>
         <div class="edit-title-container">
              <input required id="editar-nome" class="edit-input name" type="text" placeholder="${translate('labels.name')}" />
              <input id="editar-emoji" class="edit-input emoji" type="text" placeholder="😁" />
         </div>
-    
-
-    `
+        <div class="edit-column-container">
+            <div class="edit-double-container" id="editar-nota-container">
+                <i class="iconify nota-sem-margem nota-ausente" data-icon="ic:outline-question-mark"></i>
+                <select class="edit-input" id="editar-nota">
+                    <option value="Default">${translate(`destination.scores.default`)}</option>
+                    <option value="5">${translate(`destination.scores.5`)}</option>
+                    <option value="4">${translate(`destination.scores.4`)}</option>
+                    <option value="3">${translate(`destination.scores.3`)}</option>
+                    <option value="2">${translate(`destination.scores.2`)}</option>
+                    <option value="1">${translate(`destination.scores.1`)}</option>
+                </select>
+            </div>
+            <div class="edit-double-container">
+                <i class="iconify color-icon edit" data-icon="f7:map"></i>
+                <div class="edit-column-container">
+                    <input id="editar-mapa" class="edit-input" type="text" placeholder="${translate('labels.customization.links.map')} (${translate('labels.optional')})" />
+                </div>
+            </div>
+            <div class="edit-double-container">
+                <i class="iconify color-icon edit" data-icon="ri:instagram-line"></i>
+                <div class="edit-column-container">
+                    <input id="editar-instagram" class="edit-input" type="text" placeholder="${translate('labels.social.instagram')} (${translate('labels.optional')})" />
+                </div>
+            </div>
+            <div class="edit-double-container">
+                <i class="iconify color-icon edit" data-icon="tabler:world"></i>
+                <div class="edit-column-container">
+                    <input id="editar-website" class="edit-input" type="text" placeholder="${translate('labels.social.website')} (${translate('labels.optional')})" />
+                </div>
+            </div>
+            <div class="edit-double-container">
+                <i class="iconify color-icon edit" data-icon="mingcute:location-line"></i>
+                <div class="edit-column-container">
+                    <select class="edit-input" id="editar-regiao-select"></select>
+                    <input id="editar-regiao=input" class="edit-input" type="text" placeholder="${translate('labels.region')} (${translate('labels.optional')})" />
+                </div>
+            </div>
+            <div class="edit-double-container">
+                <i class="iconify color-icon edit" data-icon="bx:dollar"></i>
+                <div class="edit-column-container">
+                    <select class="edit-input" id="editar-valor-select"></select>
+                    <input id="editar-valor=input" class="edit-input" type="text" placeholder="${translate('labels.cost')} (${translate('labels.optional')})" />
+                </div>
+            </div>
+            <div class="edit-double-container">
+                <i class="iconify color-icon edit" data-icon="tabler:edit"></i>
+                <div class="edit-column-container">
+                    <select class="edit-input">
+                        <option value="en">EN</option>
+                        <option value="pt">PT</option>
+                    </select>
+                    <textarea id="editar-descricao" class="edit-input edit-textarea" type="text" placeholder="${translate('labels.description.title')} (${translate('labels.optional')})"></textarea>
+                </div>
+            </div>
+            <div class="edit-double-container">
+                <i class="iconify color-icon edit" data-icon="lets-icons:video-fill"></i>
+                <div class="edit-column-container">
+                    <input id="editar-embed" class="edit-input" type="text" placeholder="${translate('labels.video')} (${translate('labels.optional')})" />
+                </div>
+            </div>
+            <div class="edit-button-container">
+                <button class="edit-btn" id="editar-delete">
+                    <i class="iconify color-icon edit" data-icon="material-symbols:delete-outline-rounded"></i>
+                </button>
+                <button class="edit-btn" id="editar-save">
+                        <i class="iconify color-icon edit" data-icon="material-symbols:save-outline"></i>
+                </button>
+            </div>
+        </div>`
 }
