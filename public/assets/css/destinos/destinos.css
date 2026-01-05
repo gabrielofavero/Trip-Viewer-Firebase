@@ -536,7 +536,8 @@ section {
   margin: 0 7px 0 7px;
 }
 
-.accordion-item {
+.accordion-item,
+.add-container {
   background-color: var(--background-color);
   color: var(--font-color);
   width: 500px;
@@ -546,7 +547,8 @@ section {
 }
 
 @media screen and (max-width: 550px) {
-  .accordion-item {
+  .accordion-item,
+  .add-container {
     width: 90%;
   }
 }
@@ -1100,6 +1102,12 @@ section {
     flex: 1 1 auto;
   }
 }
+
+.add-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
 
 /* Toast */
 

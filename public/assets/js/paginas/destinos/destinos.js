@@ -88,7 +88,7 @@ function _loadDestinoByType(activeCategory) {
   for (let j = 1; j <= keys.length; j++) {
     const id = keys[j - 1];
     const item = destino[id];
-    const innerHTML = _getDestinosHTML(j, id, item);
+    const innerHTML = _getDestinosHTML({ j, id, item });
     _loadEmbed(item?.midia, j)
     CONTENT.push({ id, innerHTML });
   }
@@ -248,4 +248,9 @@ function _getItemValue(id, key) {
 
 function _isPlanned(id) {
   return _getItemValue(id, 'planejado') === true;
+}
+
+async function _refreshDestino() {
+  FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
+  _loadDestinoByType(ACTIVE_CATEGORY);
 }

@@ -60,3 +60,46 @@ function _getDescricaoVisibility(item) {
 function _getSystemWidth() {
     return window.innerWidth || document.documentElement.clientWidth;
 }
+
+function _openDestinosAccordion(id) {
+    const num = String(id).match(/\d+$/)?.[0];
+    if (!num) return false;
+
+    const target = document.getElementById(`collapse-destinos-${num}`);
+    if (!target) return false;
+
+    for (const el of getID('content').children) {
+        const id = el.id;
+        if (_isDestinosAccordionOpen(id)) {
+            _closeDestinosAccordion(id);
+        }
+    }
+
+    const acc = bootstrap.Collapse.getOrCreateInstance(target, { toggle: false });
+    acc.show();
+
+    return true;
+}
+
+function _closeDestinosAccordion(id) {
+    const num = String(id).match(/\d+$/)?.[0];
+    if (!num) return false;
+
+    const target = document.getElementById(`collapse-destinos-${num}`);
+    if (!target) return false;
+
+    const acc = bootstrap.Collapse.getOrCreateInstance(target, { toggle: false });
+    acc.hide();
+
+    return true;
+}
+
+function _isDestinosAccordionOpen(id) {
+    const num = String(id).match(/\d+$/)?.[0];
+    if (!num) return false;
+
+    const target = document.getElementById(`collapse-destinos-${num}`);
+    if (!target) return false;
+
+    return target.classList.contains("show");
+}

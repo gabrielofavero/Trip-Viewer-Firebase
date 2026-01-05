@@ -32,6 +32,7 @@ function _openSortDrawer() {
 }
 
 function _openDrawer(titleText, innerHTML, actions) {
+    _closeAddedDestino();
     const overlay = getID("overlay");
     const drawer = getID("drawer");
     const title = getID("drawerTitle");

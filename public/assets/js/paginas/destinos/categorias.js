@@ -110,5 +110,5 @@ function _convertCustomValor(valor, moeda) {
 // Descrição
 function _getDescricaoValue(item) {
     const lang = _getUserLanguage();
-    return item.descricao[lang] || "";
+    return item.descricao?.[lang] || "";
 }

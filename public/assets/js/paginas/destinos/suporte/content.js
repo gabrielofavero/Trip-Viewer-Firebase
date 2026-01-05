@@ -1,10 +1,9 @@
-function _getDestinosHTML(j, id, item) {
-    const params = { j, id, item }
+function _getDestinosHTML({ j, id, item, closeAction = '_processAccordion' }) {
     return `
     <div class="accordion-group" id='destinos-box-${j}'>
         <div id="destinos-${j}" class="accordion-item" data-drag-listener="true" data-id="${id}">
             <h2 class="accordion-header" id="heading-destinos-${j}">
-                <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false" aria-controls="collapse-destinos-${j}" onclick="_processAccordion(${j})">
+                <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false" aria-controls="collapse-destinos-${j}" onclick="${closeAction}(${j})">
                     <span class="title-text" id="destinos-titulo-text-${j}">${_getTitulo(item)}</span>
                     <div class="icon-container new-box" style="display: ${item.novo ? 'block' : 'none'}">
                         <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3" style="enable-background:new 0 0 11.4 5.3;" xml:space="preserve" height="1em"> <style type="text/css"> .st0 { fill: none; }</style>
@@ -21,7 +20,7 @@ function _getDestinosHTML(j, id, item) {
                 </button>
             </h2>
             <div id="collapse-destinos-${j}" class="accordion-collapse collapse" aria-labelledby="heading-destinos-${j}" data-bs-parent="#destinos-box">
-                ${_getDestinosBoxHTML(params)}
+                ${_getDestinosBoxHTML({ j, id, item })}
             </div>
         </div>
     </div>`;
@@ -35,7 +34,7 @@ function _getDestinosBoxHTML({ j, item, innerProgramacao, valores, moeda }) {
 }
 
 function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
-    if (!valores){
+    if (!valores) {
         valores = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
     }
 
@@ -79,7 +78,7 @@ function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
         </div>`
 }
 
-function _getEditHTML(j){
+function _getEditHTML(j) {
     return `
         <div class="edit-close-container">
             <button id="close-btn-${j}" class="close-btn">✕</button>
@@ -94,7 +93,7 @@ function _getEditHTML(j){
                     <i class="iconify nota-sem-margem nota-ausente" data-icon="ic:outline-question-mark"></i>
                 </div>
                 <select class="edit-input" id="editar-nota-${j}">
-                    <option value="Default">${translate(`destination.scores.default`)}</option>
+                    <option value="default">${translate(`destination.scores.default`)}</option>
                     <option value="5">${translate(`destination.scores.5`)}</option>
                     <option value="4">${translate(`destination.scores.4`)}</option>
                     <option value="3">${translate(`destination.scores.3`)}</option>

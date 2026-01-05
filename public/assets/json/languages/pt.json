@@ -326,6 +326,7 @@
             "placeholder": "R$26 - R$50"
         },
         "errors": {
+            "missing_title": "Não foi possível atualizar o destino. O título está ausente",
             "tiktok": {
                 "not_found": "Não foi possível encontrar o link do TikTok",
                 "conversion": "Erro ao converter TikTok",

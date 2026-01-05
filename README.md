@@ -5,16 +5,14 @@
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 121   | 119       | 2       |
-| 🏆   | Feature     | F000 | 122   | 121       | 1       |
+| 🏆   | Feature     | F000 | 122   | 122       | 0       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
-| ⚔️   | Epic        | E000 | 39    | 38        | 1       |
+| ⚔️   | Epic        | E000 | 39    | 39        | 0       |
 
 ## Backlog
 
 ### High Priority
 
-- ⚔️ **E039:** Destinations Overhaul
-  - *[🏆F122] Add option to quickly create destination on main page (if owner)*
 - 🐞 **B121:** Fix timezone issues
 
 ### Medium Priority
@@ -33,6 +31,7 @@
   - *[🏆F119] Refactor destination page to fetch data from firestore / configs*
   - *[🏆F120] Improve how embed is loaded + tiktok photo support + fallback for errors*
   - *[🏆F121] Add option to quickly edit / delete destination on main page (if owner)*
+  - *[🏆F122] Add option to quickly create destination on main page (if owner)*
 - 🐞 **B120:** Fix destinos-select options order
 - ⚔️ **E038:** Add filtering and sorting options to destinations page
 

@@ -326,6 +326,7 @@
             "placeholder": "$26 - $50"
         },
         "errors": {
+            "missing_title": "Cannot update this destination data. Missing title information",
             "tiktok": {
                 "not_found": "TikTok link not found",
                 "conversion": "Conversion error: Tiktok",

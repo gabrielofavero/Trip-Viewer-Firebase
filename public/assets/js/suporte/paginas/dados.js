@@ -327,13 +327,16 @@ function _getJ(id) {
 }
 
 function _getJs(parentID) {
-  let result = [];
-  if (!getID(parentID)) return result;
-  for (const child of _getChildIDs(parentID)) {
-    const jSplit = child.split("-");
-    result.push(parseInt(jSplit[jSplit.length - 1]));
-  }
-  return result;
+  const parent = getID(parentID);
+  if (!parent) return [];
+
+  return Array.from(parent.querySelectorAll('[id]'))
+    .map(el => {
+      const id = el.id;
+      const dash = id.lastIndexOf('-');
+      return dash === -1 ? NaN : Number(id.slice(dash + 1));
+    })
+    .filter(Number.isFinite);
 }
 
 function _findJFromID(id, tipo) {
@@ -358,8 +361,8 @@ function _getLastJ(parentID) {
 }
 
 function _getLastUnorderedJ(parentID) {
-  const js = _getJs(parentID).sort((a, b) => a - b);
-  return js.length === 0 ? 0 : js[js.length - 1];
+  const js = _getJs(parentID);
+  return js.length === 0 ? 0 : Math.max(...js);
 }
 
 function _getNextJ(parentID) {
@@ -533,23 +536,23 @@ function _getOrderedDocumentByTitle(data) {
 }
 
 function _getLinkMediaButton(midia, tipo) {
-    if (!midia) return;
-    const video = translate('trip.itinerary.media_button.video');
-    const playlist = translate('trip.itinerary.media_button.playlist');
+  if (!midia) return;
+  const video = translate('trip.itinerary.media_button.video');
+  const playlist = translate('trip.itinerary.media_button.playlist');
 
-    let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
+  let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
 
-    if (tipo == 'youtube' || midia.includes('youtube') || midia.includes('youtu.be')) {
-        buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
-    } else if (tipo == 'tiktok' || midia.includes('tiktok')) {
-        buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
-    } else if (tipo == 'spotify' || midia.includes('spotify')) {
-        buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
-    } else if (tipo == 'instagram' || midia.includes('instagram')) {
-        buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
-    }
+  if (tipo == 'youtube' || midia.includes('youtube') || midia.includes('youtu.be')) {
+    buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
+  } else if (tipo == 'tiktok' || midia.includes('tiktok')) {
+    buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
+  } else if (tipo == 'spotify' || midia.includes('spotify')) {
+    buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
+  } else if (tipo == 'instagram' || midia.includes('instagram')) {
+    buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
+  }
 
-    return `<div class="button-box">
+  return `<div class="button-box">
               <button class="btn btn-secondary btn-format" type="submit" onclick="window.open('${midia}', '_blank');">${buttonText}</button>
             </div>`
 }
@@ -572,5 +575,33 @@ function _combineDatabaseResponses(responses) {
     message: message,
     success: success,
     data: responses
+  }
+}
+
+async function _normalizeTikTokLink(link) {
+  if (!link) return link;
+
+  const isMobile =
+    link.startsWith("https://vm.tiktok.com/") ||
+    link.startsWith("https://vt.tiktok.com/");
+
+  if (!isMobile) return link;
+
+  try {
+    const res = await fetch(
+      `https://www.tiktok.com/oembed?url=${link}`,
+      { method: "GET" }
+    );
+
+    const data = await res.json();
+
+    if (data.author_unique_id && data.embed_product_id) {
+      return `https://www.tiktok.com/@${data.author_unique_id}/video/${data.embed_product_id}`;
+    }
+
+    return link;
+
+  } catch (err) {
+    return link;
   }
 }
