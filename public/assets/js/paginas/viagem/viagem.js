@@ -357,10 +357,11 @@ function _loadModules() {
     };
 
     function _loadDestinosExclusive() {
-      DESTINOS = [{
-        destinosID: _getURLParam('d'),
-        destinos: FIRESTORE_DATA
-      }];
+      const destinosID = _getURLParam('d');
+      const destinos = FIRESTORE_DATA;
+      
+      DESTINOS = [{ destinosID, destinos}];
+      DESTINO_ATIVO = destinosID;
 
       getID("destinos-select").style.display = "none";
 

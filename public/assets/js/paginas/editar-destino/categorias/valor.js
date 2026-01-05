@@ -21,7 +21,7 @@ function _loadCurrencySelects() {
 }
 
 function _loadMoedaOptions() {
-    const categorias = Object.keys(CONFIG.moedas.valores);
+    const categorias = CONFIG.moedas.valores;
     const moeda = getID('moeda').value;
     VALOR_OPTIONS = '';
 

@@ -118,13 +118,7 @@ async function _adjustEditVisibility(j) {
 
 
 // Listeners
-function _setEditListeners(j, item) {
-    getID(`close-btn-${j}`).onclick = () => {
-        _restoreAccordionBody(j, item);
-        _processAccordion(j);
-        _closeEdit(j, item);
-    }
-
+function _setFieldListeners(j){
     getID(`editar-nota-${j}`).onchange = (e) => {
         _editScoreLoadAction(e.target.value, j);
     }
@@ -156,6 +150,14 @@ function _setEditListeners(j, item) {
     getID(`editar-midia-${j}`).onchange = (e) => {
         _validateMediaLink(e.target.id);
     }
+}
+
+
+function _setEditListeners(j, item) {
+    getID(`close-btn-${j}`).onclick = () => {
+        _restoreAccordionBody(j, item);
+        _processAccordion(j);
+    }
 
     getID(`editar-delete-${j}`).onclick = () => {
         _promptDeleteEdit(j);
@@ -164,6 +166,8 @@ function _setEditListeners(j, item) {
     getID(`editar-save-${j}`).onclick = () => {
         _saveEdit(j);
     }
+
+    _setFieldListeners(j);
 }
 
 function _setAddListeners() {
@@ -174,6 +178,8 @@ function _setAddListeners() {
     getID(`editar-save-${ADDED_J}`).onclick = () => {
         _saveEdit(ADDED_J, true);
     }
+
+    _setFieldListeners(ADDED_J);
 }
 
 
@@ -245,7 +251,7 @@ async function _saveEdit(j, isNew = false) {
         return;
     }
 
-    if (item.midia && item.midia.incudes('tiktok')) {
+    if (item.midia && item.midia.includes('tiktok')) {
         item.midia = await _normalizeTikTokLink(item.midia);
     }
 
