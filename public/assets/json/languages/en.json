@@ -41,7 +41,7 @@
         "share": "Check out my trip {{name}} created on TripViewer, starting on {{start}} and ending on {{end}}",
         "delete": {
             "title": "Delete trip",
-            "message": "Are you sure you want to delete the trip {{name}}? This action cannot be undone"
+            "message": "Are you sure you want to delete the trip \"{{name}}\"? This action cannot be undone"
         },
         "basic_information": {
             "subtitle": "Add the main information about your trip here",
@@ -195,7 +195,7 @@
         "location_placeholder": "Chicago",
         "delete": {
             "title": "Delete destination",
-            "message": "Are you sure you want to delete the destination {{name}}? This action cannot be undone"
+            "message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"
         },
         "tooltips": {
             "map": "Google Maps or Apple Maps",
@@ -326,6 +326,7 @@
             "placeholder": "$26 - $50"
         },
         "errors": {
+            "missing_title": "Cannot update this destination data. Missing title information",
             "tiktok": {
                 "not_found": "TikTok link not found",
                 "conversion": "Conversion error: Tiktok",
@@ -511,7 +512,8 @@
             "module_not_active": "Cannot load the page. The module {{module}} is not active",
             "no_data_on_module": "No data found for the module {{module}}",
             "loading_timeout": "The request took too long to respond. Please try again later",
-            "unauthorized_access": "You don't have permission to access this resource"
+            "unauthorized_access": "You don't have permission to access this resource",
+            "missing_data": "We weren't able to load this document. It looks like some required information is missing"
         },
         "too_early": {
             "title": "You're a bit early! 😅",
@@ -619,7 +621,8 @@
         "description": {
             "title": "Description",
             "edit": "Edit description",
-            "add": "Add description"
+            "add": "Add description",
+            "lang": "Description in {{lang}}"
         },
         "type": "Type",
         "try_again": "Try Again",
@@ -725,6 +728,7 @@
         "protected": "Protected",
         "unknown": "Unknown",
         "non_specified": "Non-specified",
-        "total": "Total"
+        "total": "Total",
+        "created_date": "Created date"
     }
 }

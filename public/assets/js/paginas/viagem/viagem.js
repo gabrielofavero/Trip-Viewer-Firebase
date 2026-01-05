@@ -17,6 +17,7 @@ var TRAVELERS;
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     _startLoadingTimer();
+    _mainView();
     _main();
   } catch (error) {
     _displayError(error);

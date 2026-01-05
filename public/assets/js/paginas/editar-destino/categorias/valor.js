@@ -1,4 +1,3 @@
-const VALORES_KEYS = ['default', '-', '$', '$$', '$$$', '$$$$'];
 var VALOR_OPTIONS = '';
 
 function _loadCurrencySelects() {
@@ -22,11 +21,12 @@ function _loadCurrencySelects() {
 }
 
 function _loadMoedaOptions() {
+    const categorias = Object.keys(CONFIG.moedas.valores);
     const moeda = getID('moeda').value;
     VALOR_OPTIONS = '';
 
     if (moeda != 'outra' && CONFIG.moedas.escala[moeda]) {
-        for (const categoria of VALORES_KEYS) {
+        for (const categoria of categorias) {
             const label = _getLabel(categoria);
             VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
         }

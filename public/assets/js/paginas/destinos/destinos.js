@@ -1,13 +1,39 @@
-var DESTINO = JSON.parse(window.localStorage.getItem('DESTINO'));
+var PLANNED_DESTINATION;
+var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
+var ACTIVE_CATEGORY;
 
-// Métodos Principais
-function _loadDestinosPage() {
-  _startLoadingScreen();
+window.addEventListener("load", async function () {
+  try {
+    _startLoadingScreen();
+    console.log(this.window.location.href)
+    _main();
+    _stopLoadingScreen();
+  } catch (error) {
+    _displayError(error);
+    console.error(error);
+  }
+});
+
+async function _loadDestinosData() {
+  const urlParams = _getURLParams();
+  DOCUMENT_ID = urlParams['d'];
+
+  if (!DOCUMENT_ID) {
+    const error = translate('messages.error.missing_data');
+    throw error;
+  }
+
+  PLANNED_DESTINATION = JSON.parse(window.localStorage.getItem('PLANNED_DESTINATIONS'))?.[DOCUMENT_ID] || {};
+  FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
+  _loadActiveCategory(urlParams);
+}
+
+async function _loadDestinosPage() {
+  await _loadDestinosData();
   _loadVisibilityExternal();
-  _loadSortAndFilterLabels();
 
-  document.title = DESTINO.title || "TripViewer";
+  document.title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {
     closeButton.onclick = function () {
@@ -26,90 +52,52 @@ function _loadDestinosPage() {
     }
   };
 
-  if (DESTINO?.activeCategory && (DESTINO.activeCategory === 'mapa' || Object.keys(DESTINO[DESTINO.activeCategory]).length > 0)) {
-
+  if (ACTIVE_CATEGORY && (ACTIVE_CATEGORY === 'mapa' || Object.keys(FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]).length > 0)) {
     _loadDestinoCustomSelect()
     window.addEventListener("resize", () => {
       _applyDestinosMediaHeight();
-      _adjustInstagramMedia();
+      _adjustMediaEmbeds();
     });
 
   } else {
-    console.error("O Código não foi localizado na base de dados");
+    const error = translate('messages.error.missing_data');
+    throw error;
   }
-  _stopLoadingScreen();
 }
 
 function _loadDestinoByType(activeCategory) {
   const content = getID('content');
+  const filterSortContainer = getID('filter-sort-container');
+
   content.innerHTML = "";
   CONTENT = [];
   MEDIA_HYPERLINKS = {};
 
   if (activeCategory === 'myMaps') {
     content.classList = "map-content";
-    _loadMapDestino(DESTINO[activeCategory].link);
+    _loadMapDestino(FIRESTORE_DESTINOS_DATA.myMaps);
+    filterSortContainer.style.display = "none";
     return
   } else {
     content.classList = "";
+    filterSortContainer.style.display = "";
   }
 
-  const destino = DESTINO[activeCategory];
-
-  for (let j = 1; j <= destino.data.length; j++) {
-    const item = destino.data[j - 1];
-    const params = {
-      j: j,
-      item: item,
-      innerProgramacao: false,
-      notas: destino.notas,
-      valores: destino.valores,
-      moeda: destino.moeda
-    }
-
-    const innerHTML = `<div class="accordion-group" id='destinos-box-${j}'>
-                          <div id="destinos-${j}" class="accordion-item"  data-drag-listener="true">
-                              <h2 class="accordion-header" id="heading-destinos-${j}">
-                                  <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button"
-                                      data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false"
-                                      aria-controls="collapse-destinos-${j}" onclick="_processAccordion(${j})">
-                                      <span class="title-text" id="destinos-titulo-text-${j}">${_getTitulo(item)}</span>
-                                      <div class="icon-container new-box" style="display: ${item.novo ? 'block' : 'none'}">
-                                          <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3"
-                                              style="enable-background:new 0 0 11.4 5.3;" xml:space="preserve" height="1em">
-                                              <style type="text/css">
-                                                  .st0 {
-                                                      fill: none;
-                                                  }
-                                              </style>
-                                              <path
-                                                  d="M11.4,4.8l-1.3-2.2l1.3-2.1c0.1-0.2,0-0.4-0.1-0.5c-0.1,0-0.1,0-0.2,0H0.7C0.3,0,0,0.3,0,0.7v4C0,5,0.3,5.3,0.7,5.3h10.4
-                                          c0.2,0,0.3-0.1,0.3-0.3C11.4,4.9,11.4,4.9,11.4,4.8 M3.5,3.7H3.1L2,2.3v1.5H1.7V1.7H2l1.1,1.5V1.7h0.4L3.5,3.7z M5.6,2H4.4v0.5h1.1
-                                          v0.3H4.4v0.5h1.2v0.3H4.1v-2h1.5L5.6,2z M8.4,3.7H8L7.5,2.2L7,3.7H6.6L5.9,1.7h0.4l0.4,1.5l0.5-1.5h0.4l0.5,1.5l0.4-1.5H9L8.4,3.7z" />
-                                              <path class="st0" d="M0-3.3h12v12H0V-3.3z" />
-                                          </svg>
-                                      </div>
-                                      ${_getPlannedHTML(item.planejado)}
-                                      <div class="icon-container" style="display: ${item.nota ? 'block' : 'none'}">
-                                          <i class="iconify nota ${_getNotaClass(item)}" data-icon="${_getNotaIcon(item)}"></i>
-                                      </div>
-                                  </button>
-                              </h2>
-                              <div id="collapse-destinos-${j}" class="accordion-collapse collapse"
-                                  aria-labelledby="heading-destinos-${j}" data-bs-parent="#destinos-box">
-                                  ${_getDestinosBoxHTML(params)}
-                              </div>
-                          </div>
-                      </div>`;
+  const destino = FIRESTORE_DESTINOS_DATA[activeCategory];
+  const keys = Object.keys(destino);
+  for (let j = 1; j <= keys.length; j++) {
+    const id = keys[j - 1];
+    const item = destino[id];
+    const innerHTML = _getDestinosHTML({ j, id, item });
     _loadEmbed(item?.midia, j)
-    _setInnerContent(item, innerHTML);
+    CONTENT.push({ id, innerHTML });
   }
 
   _loadSortAndFilter();
   _applyContent();
   _applyDestinosMediaHeight();
   _adjustInstagramMedia();
+  _adjustEditVisibility();
 }
 
 function _loadMapDestino(link) {
@@ -123,27 +111,14 @@ function _loadMapDestino(link) {
 
 
 // Setters
-function _setInnerContent(item, innerHTML) {
-  const innerContent = {
-    titulo: item.nome,
-    nota: item.nota || "default",
-    valor: item.valor || "default",
-    regiao: item.regiao,
-    planejado: item?.planejado === true,
-    innerHTML: innerHTML
-  }
-
-  CONTENT.push(innerContent);
-}
-
 function _applyContent() {
   const div = getID("content");
   div.innerHTML = '';
-  for (const item of CONTENT) {
-    if (item.filtered) {
+  for (const content of CONTENT) {
+    if (content.filtered) {
       continue;
     }
-    div.innerHTML += item.innerHTML;
+    div.innerHTML += content.innerHTML;
   }
 }
 
@@ -165,10 +140,12 @@ function _orderInnerHTMLs(innerContents) {
 
 // Actions
 function _processAccordion(j) {
+  _restoreIfEditing(j);
   _adjustDrawer();
   _toggleMedia(j);
   _unloadMedias(j);
   _closeAccordions(j);
+  _adjustEditVisibility(j);
 }
 
 function _toggleMedia(j) {
@@ -194,7 +171,7 @@ function _loadDestinoCustomSelect() {
   const customSelect = {
     id: 'destinos-select',
     options: _getDestinoCustomSelectOptions(),
-    activeOption: DESTINO.activeCategory === 'mapa' ? 'myMaps' : DESTINO.activeCategory,
+    activeOption: ACTIVE_CATEGORY === 'mapa' ? 'myMaps' : ACTIVE_CATEGORY,
     action: _loadDestinoCustomSelectAction
   }
 
@@ -203,27 +180,77 @@ function _loadDestinoCustomSelect() {
 
   function _getDestinoCustomSelectOptions() {
     const result = [];
-    for (const categoryKey in DESTINO) {
-      if (
-        ['activeCategory', 'translations', 'title'].includes(categoryKey) ||
-        (categoryKey !== 'myMaps' && DESTINO[categoryKey].data.length === 0)
-      ) {
+    const values = CONFIG.destinos.categorias.ids;
+    for (const value in FIRESTORE_DESTINOS_DATA) {
+      if (!values.includes(value) ||
+        (value !== 'myMaps' && Object.keys(FIRESTORE_DESTINOS_DATA[value]).length === 0)) {
         continue;
       }
-      result.push({ value: categoryKey, label: DESTINO[categoryKey].titulo });
+
+      const key = CONFIG.destinos.translation[value];
+      const label = translate(`destination.${key}.title`);
+      result.push({ value, label });
     }
     return result;
   }
 
   function _loadDestinoCustomSelectAction(value) {
     _adjustDrawer();
+    _updateActiveCategory(value);
     _loadDestinoByType(value);
   }
 }
 
-function _getPlannedHTML(planejado) {
-  if (!planejado) return '';
-  return `<div class="icon-container">
-            <i class="iconify planejado" data-icon="fa-solid:check"></i>
-          </div>`
+function _getDataSet(key) {
+  const category = ACTIVE_CATEGORY;
+  if (!category) return new Set();
+
+  if (key === 'planejado') {
+    const planned = PLANNED_DESTINATION?.[category] ?? {};
+    const firestore = FIRESTORE_DESTINOS_DATA?.[category] ?? {};
+    return new Set(
+      Object.keys(firestore).map(id =>
+        planned[id] ?? false
+      )
+    );
+  }
+
+  const data = FIRESTORE_DESTINOS_DATA?.[category] ?? {};
+  return new Set(
+    Object.values(data)
+      .map(item => item?.[key])
+      .filter(v => v !== undefined && v !== null)
+  );
+}
+
+function _getDestinoID(j) {
+  const destino = getID(`destinos-${j}`)
+  return destino.getAttribute('data-id');
+}
+
+function _getItemFromJ(j) {
+  const id = _getDestinoID(j);
+  return _getItem(id);
+}
+
+function _getItem(id) {
+  return FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY][id];
+}
+
+function _getItemValue(id, key) {
+  if (key === 'planejado') {
+    return PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[id];
+  }
+
+  const item = _getItem(id);
+  return item ? item[key] : null;
+}
+
+function _isPlanned(id) {
+  return _getItemValue(id, 'planejado') === true;
+}
+
+async function _refreshDestino() {
+  FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
+  _loadDestinoByType(ACTIVE_CATEGORY);
 }

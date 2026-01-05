@@ -7,7 +7,7 @@ var PROGRAMACAO_ATUAL_DATA = {
 var PROGRAMACAO_ATUAL = null;
 var INNER_PROGRAMACAO_ATUAL = [];
 var IS_TRAVELER_CUSTOM_SELECT_OPTION_EXCLUSIVE = false;
-// ======= LOADERS =======
+
 function _loadModalContentCalendar() {
     let titulo = PROGRAMACAO_ATUAL.titulo;
     const data = _getDateTitle(_convertFromDateObject(PROGRAMACAO_ATUAL.data));
@@ -50,7 +50,6 @@ function _loadModalContentCalendar() {
     }
 }
 
-// Modal
 function _openModalCalendar(programacao) {
     PROGRAMACAO_ATUAL = programacao;
     _loadModalContentCalendar();
@@ -105,25 +104,7 @@ function _displayInnerProgramacaoMessage(index, container = 'programacao-contain
 }
 
 function _loadInnerProgramacaoMidia(midia) {
-    if (!midia) return;
-    const video = translate('trip.itinerary.media_button.video');
-    const playlist = translate('trip.itinerary.media_button.playlist');
-
-    let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
-
-    if (midia.includes('youtube') || midia.includes('youtu.be')) {
-        buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
-    } else if (midia.includes('tiktok')) {
-        buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
-    } else if (midia.includes('spotify')) {
-        buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
-    } else if (midia.includes('instagram')) {
-        buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
-    }
-
-    getID('midia-1').innerHTML = `<div class="button-box">
-                                    <button class="btn btn-secondary btn-format" type="submit" onclick="window.open('${midia}', '_blank');">${buttonText}</button>
-                                  </div>`
+    getID('midia-1').innerHTML = _getLinkMediaButton(midia);
 }
 
 // Getters
@@ -192,26 +173,23 @@ function _getInnerProgramacaoHTML(item) {
         case 'destinos':
             container = 'destinos-container';
             if (FIRESTORE_DATA.modulos.destinos === true && item.local && item.categoria && item.id) {
-                let ids = DESTINOS.map(destino => destino.destinosID);
-                const i = ids.indexOf(item.local);
-                if (i > -1) {
-                    const destino = DESTINOS[i].destinos;
-                    const categoria = destino[item.categoria];
-                    if (categoria && Object.keys(categoria).length > 0) {
-                        const j = categoria.map(destino => destino.id).indexOf(item.id);
-                        if (j > -1) {
-                            index = j;
-                            innerProgramacao.titulo = _getTitulo(categoria[j]);
+                const destinosIDs = DESTINOS.map(destino => destino.destinosID);
+                index = destinosIDs.indexOf(item.local);
+                if (index > -1) {
+                    const destino = DESTINOS[index].destinos;
+                    const destinoItens = destino[item.categoria];
+                    if (destinoItens && Object.keys(destinoItens).length) {
+                        const destinoItem = destinoItens[item.id];                        
+                        if (destinoItem) {
+                            innerProgramacao.titulo = _getTitulo(destinoItem);
                             innerProgramacao.content = _getDestinosBoxHTML({
                                 j: 1,
-                                item: categoria[j],
-                                isLineup: false,
+                                item: destinoItem,
                                 innerProgramacao: true,
-                                notas: CONFIG.language.destination.scores,
-                                valores: _getDestinoValores(DESTINOS[i]),
+                                valores: _getDestinoValores(DESTINOS[index]),
                                 moeda: destino.moeda
                             });
-                            innerProgramacao.midia = categoria[j]?.midia;
+                            innerProgramacao.midia = destinoItem?.midia;
                         }
                     }
                 }

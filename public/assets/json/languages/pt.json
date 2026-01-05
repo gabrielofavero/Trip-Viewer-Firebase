@@ -41,7 +41,7 @@
         "share": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
         "delete": {
             "title": "Excluir viagem",
-            "message": "Tem certeza que deseja excluir a viagem {{name}}? A ação não poderá ser desfeita"
+            "message": "Tem certeza que deseja excluir a viagem \"{{name}}\"? A ação não poderá ser desfeita"
         },
         "basic_information": {
             "subtitle": "Adicione aqui as principais informações da sua viagem",
@@ -195,7 +195,7 @@
         "location_placeholder": "São Paulo",
         "delete": {
             "title": "Excluir destino",
-            "message": "Tem certeza que deseja excluir o destino {{name}}? A ação não poderá ser desfeita"
+            "message": "Tem certeza que deseja excluir o destino \"{{name}}\"? A ação não poderá ser desfeita"
         },
         "tooltips": {
             "map": "Google Maps ou Apple Maps",
@@ -326,6 +326,7 @@
             "placeholder": "R$26 - R$50"
         },
         "errors": {
+            "missing_title": "Não foi possível atualizar o destino. O título está ausente",
             "tiktok": {
                 "not_found": "Não foi possível encontrar o link do TikTok",
                 "conversion": "Erro ao converter TikTok",
@@ -511,7 +512,8 @@
             "module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
             "no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
             "loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
-            "unauthorized_access": "Acesso não autorizado para este documento"
+            "unauthorized_access": "Acesso não autorizado para este documento",
+            "missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando"
         },
         "too_early": {
             "title": "Você chegou muito cedo! 😅",
@@ -619,7 +621,8 @@
         "description": {
             "title": "Descrição",
             "edit": "Editar descrição",
-            "add": "Adicionar descrição"
+            "add": "Adicionar descrição",
+            "lang": "Descrição em {{lang}}"
         },
         "type": "Tipo",
         "try_again": "Tentar novamente",
@@ -725,6 +728,7 @@
         "protected": "Protegido",
         "unknown": "Desconhecido",
         "non_specified": "Não especificado",
-        "total": "Total"
+        "total": "Total",
+        "created_date": "Criado em"
     }
 }

@@ -8,21 +8,16 @@ function _getPrices() {
 }
 
 function _getPriceBuckets() {
-    if (FILTER_SORT_DATA?.[DESTINO.activeCategory]?.prices) {
-        return FILTER_SORT_DATA[DESTINO.activeCategory].prices;
+    if (FILTER_SORT_DATA?.[ACTIVE_CATEGORY]?.prices) {
+        return FILTER_SORT_DATA[ACTIVE_CATEGORY].prices;
     }
 
-    const prices = Array.from(
-        new Set(
-            DESTINO[DESTINO.activeCategory].data.map(item => item.valor)
-        )
-    );
-
+    const prices = _getDataSet('valor');
     return _buildPriceBuckets(prices);
 }
 
 function _getPriceBucket(value) {
-    const range = DESTINO[DESTINO.activeCategory].valores_numericos;
+    const range = CONFIG.moedas.escala_numerica[FIRESTORE_DESTINOS_DATA.moeda];
     if (isNaN(value)) return "default";
     if (value === 0) return "-";
     if (value >= range['$'][0] && value <= range['$'][1]) return "$";
@@ -34,7 +29,8 @@ function _getPriceBucket(value) {
 
 function _buildPriceBuckets(prices) {
     const symbolicBuckets = new Set(["-", "$", "$$", "$$$", "$$$$", "default"]);
-    return prices
+    const pricesArray = Array.from(prices);
+    return pricesArray
         .map(raw => {
             if (symbolicBuckets.has(raw)) {
                 return {
@@ -99,10 +95,17 @@ function _normalizePriceBucket(value) {
     return bucket.bucket;
 }
 
-function _getPriceLabel(price, f) {
-    const translations = DESTINO[DESTINO.activeCategory].valores;
-    const value = translations[price];
-    return ["-", 'default'].includes(price) ? value : `${f.price.up_to} ${value.split(' - ')[1]}`;
+function _getPriceLabel(price) {
+    switch (price) {
+        case "default":
+            return translate('destination.price.default');
+        case "-":
+            return translate('destination.price.free');
+        default:
+            const moedas = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
+            const value = moedas[price];
+            return `${translate('destination.filter.price.up_to')} ${value.split(' - ')[1]}`;
+    }
 }
 
 function _isPriceInBucketRange(bucket, value) {

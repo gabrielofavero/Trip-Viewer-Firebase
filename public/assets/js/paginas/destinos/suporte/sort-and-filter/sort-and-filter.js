@@ -15,11 +15,6 @@ function _loadSortAndFilter(force = false) {
     _filter();
 }
 
-function _loadSortAndFilterLabels() {
-    getID('filter').querySelector('span').innerText = DESTINO.translations.filter.title;
-    getID('order').querySelector('span').innerText = DESTINO.translations.sort.title;
-}
-
 function _loadSortAndFilterVisibility() {
     const anyOptions = (_shouldDisplayPlanned() || _shouldDisplayScores() || _shouldDisplayRegions() || _shouldDisplayPrices());
     const display = anyOptions ? '' : 'none';
@@ -27,43 +22,43 @@ function _loadSortAndFilterVisibility() {
 }
 
 function _loadFilterSortingData(titles) {
-    if (!FILTER_SORT_DATA[DESTINO.activeCategory]) {
-        FILTER_SORT_DATA[DESTINO.activeCategory] = {};
+    if (!FILTER_SORT_DATA[ACTIVE_CATEGORY]) {
+        FILTER_SORT_DATA[ACTIVE_CATEGORY] = {};
     }
     for (const title in titles) {
         let data;
         switch (title) {
             case 'region':
-                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.regiao));
+                data = _getDataSet('regiao');
                 data.delete('');
                 break;
             case 'planned':
-                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.planejado || false));
+                data = _getDataSet('planejado');
                 break;
             case 'scores':
-                data = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.nota));
+                data = _getDataSet('nota');
                 break;
             case 'prices':
                 data = _getPriceBuckets();
         }
-        FILTER_SORT_DATA[DESTINO.activeCategory][title] = data || new Set();
+        FILTER_SORT_DATA[ACTIVE_CATEGORY][title] = data || new Set();
     }
 }
 
 // Helpers
 function _shouldDisplayRegions() {
-    const regioes = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.regiao));
+    const regioes = _getDataSet('regiao');
     regioes.delete('');
     return regioes.size > 1;
 }
 
 function _shouldDisplayPlanned() {
-    const planejado = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.planejado || false));
+    const planejado = _getDataSet('planejado');
     return planejado.size > 1;
 }
 
 function _shouldDisplayScores() {
-    const notas = new Set(DESTINO[DESTINO.activeCategory].data.map(item => item.nota));
+    const notas = _getDataSet('nota');
     return notas.size > 1;
 }
 

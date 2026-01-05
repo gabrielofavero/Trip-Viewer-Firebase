@@ -60,10 +60,6 @@ a:hover {
   color: var(--font-color);
 }
 
-.btn:hover {
-  color: #F2F2F2;
-}
-
 .card-header {
   background-color: var(--box-color);
 }
@@ -219,7 +215,8 @@ a:hover {
   color: #aaaaaa;
 }
 
-.filter-sort {
+.filter-sort,
+.edit-btn {
   border: 1px solid var(--border-color-alt);
 }
 
@@ -235,4 +232,55 @@ a:hover {
 .option-btn:hover,
 .option-btn.active {
   background: var(--theme-color-secondary);
+}
+
+/* Language Selector */
+
+.lang-selector {
+  position: relative;
+}
+
+.lang-button {
+  color: #F2F2F2;
+}
+
+.lang-options {
+  background: #303030;
+  border: 1px solid #404040;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.lang-options button {
+  color: #F2F2F2;
+}
+
+.lang-options button:hover {
+  background: #3b3b3b;
+}
+
+/* Messages */
+
+.message-container,
+.input-container {
+  background: #303030;
+}
+
+/* Editar */
+
+.edit-title-container{
+  border-bottom: 0.5px solid #383838;
+}
+
+.edit-input {
+  border: 1px solid var(--border-color-alt);
+  background: var(--box-color);
+}
+
+.iconify.color-icon.edit {
+  border: none;
+}
+
+/* Toast */
+#toast {
+  color: #303030;
 }

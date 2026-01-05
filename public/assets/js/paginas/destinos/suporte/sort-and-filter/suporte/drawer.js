@@ -32,6 +32,7 @@ function _openSortDrawer() {
 }
 
 function _openDrawer(titleText, innerHTML, actions) {
+    _closeAddedDestino();
     const overlay = getID("overlay");
     const drawer = getID("drawer");
     const title = getID("drawerTitle");
@@ -64,7 +65,7 @@ function _closeDrawer() {
 // Inner HTML
 function _getFilterDrawerInnerHTML() {
     const titles = FILTER_OPTIONS.titles;
-    const types = FILTER_OPTIONS[DESTINO.activeCategory];
+    const types = FILTER_OPTIONS[ACTIVE_CATEGORY];
 
     let result = '';
     for (const typeKey in types) {
@@ -77,7 +78,7 @@ function _getFilterDrawerInnerHTML() {
         result += `
         <div class="drawer-container" data-type="${typeKey}">
             <div class="drawer-title">${titles[typeKey]}</div>
-            <button class="option-btn" data-value="everything">${DESTINO.translations.filter.show_everything}</button>
+            <button class="option-btn" data-value="everything">${translate('destination.filter.show_everything')}</button>
             ${optionsHTML}
         </div>
         `
@@ -87,7 +88,7 @@ function _getFilterDrawerInnerHTML() {
 
 function _getSortDrawerInnerHTML() {
     const titles = SORT_OPTIONS.titles;
-    const types = SORT_OPTIONS[DESTINO.activeCategory];
+    const types = SORT_OPTIONS[ACTIVE_CATEGORY];
 
     let result = '';
     for (const typeKey in types) {

@@ -333,3 +333,11 @@ function _getSelectOptionsHTML(object, selectedKey) {
     }
     return result;
 }
+
+function _removeEl(id) {
+    const el = document.getElementById(id);
+    if (!el) return false;
+
+    el.remove();
+    return true;
+}

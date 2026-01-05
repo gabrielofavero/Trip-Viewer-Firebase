@@ -1,3 +1,3 @@
 
-import * as migration from "./migrations/11-migrate-minimal-user-trip-modules"
+import * as migration from "./migrations/12-migrate-destination-object"
 export const migrate = migration.migrate

@@ -1,13 +1,51 @@
+// Active Category
+function _loadActiveCategory(urlParams) {
+    let type = urlParams['type'];
+    const originals = CONFIG.destinos.original;
+
+    if (!type || !originals[type]) {
+        type = _getFirstCategory()
+    }
+
+    ACTIVE_CATEGORY = originals[type];
+
+    function _getFirstCategory() {
+        const types = CONFIG.destinos.categorias.ids;
+        const destinoIDs = Object.keys(FIRESTORE_DESTINOS_DATA);
+        for (const type of types) {
+            if (destinoIDs.includes(type)) {
+                return type;
+            }
+        }
+        throw translate('messages.error.missing_data');
+    }
+}
+
+function _updateActiveCategory(category) {
+    const urlParam = _getURLParams()?.['type'];
+    const translations = CONFIG.destinos.translation;
+    const param = translations[category];
+
+    if (urlParam === param) {
+        return;
+    }
+
+    ACTIVE_CATEGORY = category;
+    const url = new URL(window.location);
+    url.searchParams.set('type', param);
+    window.history.replaceState({}, '', url);
+}
+
 // Título
 function _getTitulo(item) {
-    if (item.nome && (item.emoji || item.headliner)) {
-        return `${item.nome} ${item.emoji || '⭐'}`;
+    if (item.nome && (item.emoji)) {
+        return `${item.nome} ${item.emoji}`;
     } else return item.nome;
 }
 
 // Nota
-function _getNotaIcon(item) {
-    switch (item.nota) {
+function _getNotaIcon(nota) {
+    switch (nota) {
         case "5":
             return "ph:number-five-bold";
         case "4":
@@ -23,21 +61,17 @@ function _getNotaIcon(item) {
     }
 }
 
-function _getNotaClass(item) {
-    switch (item.nota) {
+function _getNotaClass(nota) {
+    switch (nota) {
         case "5":
         case "4":
         case "3":
         case "2":
         case "1":
-            return `nota-${item.nota}`;
+            return `nota-${nota}`;
         default:
             return "nota-ausente"
     }
-}
-
-function _getNotaText(item, notas) {
-    return notas[item.nota] || notas['default'] || translate('destination.scores.default');
 }
 
 // Links
@@ -47,23 +81,13 @@ function _getLinkOnClick(item, tipo) {
     } else return "";
 }
 
-// Lineup
-function _getDisplayHorario(item, isLineup) {
-    if (isLineup) return item.horario ? "block" : "none";
-    else return "none";
-}
-
-function _getPalcoRegiaoValue(item, isLineup) {
-    if (isLineup) return item.palco || "";
-    else return item.regiao || "";
-}
-
 // Valor
-function _getValorValue(item, isLineup, valores, moeda) {
-    if (isLineup) return "";
+function _getValorValue(item, valores, moeda) {
     switch (item.valor) {
         case "default":
+            return translate('destination.price.default');
         case "-":
+            return translate('destination.price.free');
         case "$":
         case "$$":
         case "$$$":
@@ -84,8 +108,7 @@ function _convertCustomValor(valor, moeda) {
 }
 
 // Descrição
-function _getDescricaoValue(item, isLineup) {
-    if (isLineup) return "";
+function _getDescricaoValue(item) {
     const lang = _getUserLanguage();
-    return item.descricao[lang] || "";
+    return item.descricao?.[lang] || "";
 }

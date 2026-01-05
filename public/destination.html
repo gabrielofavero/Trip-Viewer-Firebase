@@ -40,7 +40,7 @@
 
 </head>
 
-<body onload=_loadDestinosPage()>
+<body>
   <div class="loadable" style="display: none">
     <div class="top-bar">
       <a href="#" id="logo-link" class="logo-link">
@@ -95,6 +95,13 @@
         </div>
       </a>
       <div class="icons-box" id="icons-box">
+        <div class="lang-selector">
+          <button class="lang-button">EN</button>
+          <div class="lang-options">
+            <button data-lang="en">EN</button>
+            <button data-lang="pt">PT</button>
+          </div>
+        </div>
         <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
@@ -108,28 +115,38 @@
       <div id="subtitulo-destinos"></div>
     </div>
 
-    <div class="section-buttons">
-      <button class="filter-sort" id="filter" onclick="_openFilterDrawer()"><i class="iconify"
-          data-icon="tdesign:filter"></i><span></span></button>
-      <button class="filter-sort" id="order" onclick="_openSortDrawer()"><i class="iconify"
-          data-icon="ant-design:sort-ascending-outlined"></i><span></span></button>
+    <div class="section-buttons" id="filter-sort-container">
+      <button class="filter-sort" id="filter" onclick="_openFilterDrawer()">
+        <i class="iconify" data-icon="tdesign:filter"></i>
+        <span data-translate="destination.filter.title"></span>
+      </button>
+      <button class="filter-sort" id="order" onclick="_openSortDrawer()">
+        <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
+        <span data-translate="destination.sort.title"></span>
+      </button>
     </div>
 
     <div id="content"></div>
+
+    <div class="add-container" style="display: none">
+      <button class="edit-btn" id="adicionar" onclick="_add()">
+          <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
+          <span data-translate="labels.add"></span>
+      </button>
+    </div>
 
     <!-- ======= Footer ======= -->
     <footer id="footer">
       <div class="container">
         <div class="credits">
-          Desenvolvido por <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span
-            class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify" data-icon="ri:information-line"></i>
-            Atribuições</span>
+          <span data-translate="labels.developed_by"></span> <a
+            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
+            onclick="_openAtribuicoes()"><i class="bx bx-info-circle"></i>
+            <span data-translate="labels.credits"></span></span>
         </div>
       </div>
     </footer>
   </div>
-
-  <div id="preloader" style="display: none"></div>
 
   <div class="drawer-overlay" id="overlay" onclick="_closeDrawer()">
     <div class="drawer" id="drawer" onclick="event.stopPropagation()">
@@ -141,11 +158,20 @@
     </div>
   </div>
 
+  <div id="preloader" style="display: none"></div>
+
+  <div id="toast" style="display: none">
+    <span id="toast-text"></span>
+    <span class="toast-close" onclick="_closeToast()">
+      <i class="iconify" data-icon="material-symbols:close"></i>
+    </span>
+  </div>
 
   <!-- Firebase -->
   <script src="../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
   <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
   <!-- Vendor JS Files -->
@@ -162,14 +188,17 @@
   <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
 
   <!-- App JS Files -->
+  <script src="assets/js/main/translation.js"></script>
+  <script src="assets/js/suporte/firebase/database.js"></script>
   <script src="assets/js/main/main.js"></script>
+  <script src="assets/js/suporte/firebase/user.js"></script>
   <script src="assets/js/suporte/paginas/carregamento.js"></script>
   <script src="assets/js/suporte/estilos/animacoes.js"></script>
   <script src="assets/js/suporte/paginas/dados.js"></script>
   <script src="assets/js/suporte/estilos/svgs.js"></script>
   <script src="assets/js/paginas/destinos/suporte/embed.js"></script>
   <script src="assets/js/paginas/destinos/categorias.js"></script>
-  <script src="assets/js/paginas/destinos/destinos-box.js"></script>
+  <script src="assets/js/paginas/destinos/suporte/content.js"></script>
   <script src="assets/js/suporte/componentes/custom-select.js"></script>
   <script src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/price-bucket.js"></script>
   <script src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/preferences.js"></script>
@@ -177,6 +206,7 @@
   <script src="assets/js/paginas/destinos/suporte/sort-and-filter/sort-and-filter.js"></script>
   <script src="assets/js/paginas/destinos/suporte/sort-and-filter/sort.js"></script>
   <script src="assets/js/paginas/destinos/suporte/sort-and-filter/filter.js"></script>
+  <script src="assets/js/paginas/destinos/editar-destino.js"></script>
   <script src="assets/js/paginas/destinos/destinos.js"></script>
   <script src="assets/js/paginas/destinos/suporte/visibilidade.js"></script>
   <script src="assets/js/suporte/estilos/cores.js"></script>
@@ -185,6 +215,7 @@
   <script src="assets/js/suporte/paginas/dispositivos.js"></script>
   <script src="assets/js/suporte/paginas/datas.js"></script>
   <script src="assets/js/suporte/paginas/mensagens.js"></script>
+  <script src="assets/js/suporte/html/fields.js"></script>
   <script src="assets/js/suporte/paginas/atribuicoes.js"></script>
 
 </body>
