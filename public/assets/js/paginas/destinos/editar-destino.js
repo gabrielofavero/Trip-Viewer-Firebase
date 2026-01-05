@@ -275,6 +275,7 @@ function _promptDeleteEdit(j) {
 }
 
 async function _deleteEdit(id) {
+    _closeMessage();
     _startLoadingScreen();
 
     await _update(`destinos/${DOCUMENT_ID}`, {
