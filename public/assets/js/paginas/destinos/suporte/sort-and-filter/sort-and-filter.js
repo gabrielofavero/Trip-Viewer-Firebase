@@ -16,9 +16,14 @@ function _loadSortAndFilter(force = false) {
 }
 
 function _loadSortAndFilterVisibility() {
-    const anyOptions = (_shouldDisplayPlanned() || _shouldDisplayScores() || _shouldDisplayRegions() || _shouldDisplayPrices());
-    const display = anyOptions ? '' : 'none';
-    getID('filter').style.display = display;
+    const onlyOne = CONTENT.length === 1;
+
+    getID('sort').style.display = onlyOne ? 'none' : '';
+    getID('filter').style.display = onlyOne || _noFilters() ? 'none' : '';
+
+    function _noFilters() {
+        return !(_shouldDisplayPlanned() || _shouldDisplayScores() || _shouldDisplayRegions() || _shouldDisplayPrices());
+    }
 }
 
 function _loadFilterSortingData(titles) {
@@ -53,6 +58,10 @@ function _shouldDisplayRegions() {
 }
 
 function _shouldDisplayPlanned() {
+    const item = PLANNED_DESTINATION[ACTIVE_CATEGORY];
+    if (!item) {
+        return false;
+    }
     const planejado = Object.keys(PLANNED_DESTINATION[ACTIVE_CATEGORY]);
     return planejado.size > 0;
 }

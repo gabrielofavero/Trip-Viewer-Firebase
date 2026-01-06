@@ -104,7 +104,8 @@ function _add() {
 }
 
 async function _adjustEditVisibility(j) {
-    const display = _canEdit() ? '' : 'none';
+    const isMaps = ACTIVE_CATEGORY === 'myMaps';
+    const display = _canEdit() && !isMaps ? '' : 'none';
     document.querySelector('.add-container').style.display = display;
     if (j) {
         getID(`edit-container-${j}`).style.display = display;

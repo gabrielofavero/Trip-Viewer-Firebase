@@ -16,7 +16,7 @@ function _openFilterDrawer() {
 }
 
 function _openSortDrawer() {
-    const title = getID('order').innerText;
+    const title = getID('sort').innerText;
 
     if (_isDrawerOpen() && title === getID('drawerTitle').innerText) {
         _closeDrawer();
