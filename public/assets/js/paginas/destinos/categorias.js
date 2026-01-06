@@ -127,8 +127,8 @@ function _getPlanejadoValue(plannedItem) {
     const date = _convertFromDateObject(plannedItem.data);
     const weekday = _getWeekday(date.getDay());
     const day = plannedItem.data.day;
-    const month = _getMonth(plannedItem.data.month - 1);
-    const turno = _getTurno(plannedItem.turno)
+    const month = _getMonth(plannedItem.data.month - 1).toLowerCase();
+    const turno = _getTurno(plannedItem.turno).toLowerCase();
     const turnoLabel = turno ? ` (${turno})` : '';
     return `${translate('labels.planned')}: ${weekday}, ${translate('datetime.titles.day_month', { day, month })}${turnoLabel}`
 }
