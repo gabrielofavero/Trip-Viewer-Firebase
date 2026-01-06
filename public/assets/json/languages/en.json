@@ -729,6 +729,7 @@
         "unknown": "Unknown",
         "non_specified": "Non-specified",
         "total": "Total",
-        "created_date": "Created date"
+        "created_date": "Created date",
+        "planned": "Planned"
     }
 }

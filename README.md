@@ -4,8 +4,8 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 121   | 119       | 2       |
-| 🏆   | Feature     | F000 | 122   | 122       | 0       |
+| 🐞   | Bug         | B000 | 123   | 119       | 4       |
+| 🏆   | Feature     | F000 | 123   | 123       | 0       |
 | 📈   | Improvement | M000 | 125   | 125       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 39        | 0       |
 
@@ -14,6 +14,8 @@
 ### High Priority
 
 - 🐞 **B121:** Fix timezone issues
+- 🐞 **B122:** Fix forms issues in edit trip page
+- 🐞 **B123:** destination load for inner-itinerary (view)
 
 ### Medium Priority
 
@@ -25,6 +27,7 @@
 
 ### January 2026
 
+- 🏆 **F123:** Add planned date and time in destination
 - ⚔️ **E039:** Destinations Overhaul
   - *[🏆F117] Adjust destination object strucute (migration)*
   - *[🏆F118] Adjust destination object strucute (pages)*

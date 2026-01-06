@@ -112,3 +112,38 @@ function _getDescricaoValue(item) {
     const lang = _getUserLanguage();
     return item.descricao?.[lang] || "";
 }
+
+// Planejado
+function _getPlanejado(id) {
+    const plannedItem = PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[id];
+    return _getPlanejadoValue(plannedItem);
+}
+
+function _getPlanejadoValue(plannedItem) {
+    if (!plannedItem) {
+        return "";
+    }
+
+    const date = _convertFromDateObject(plannedItem.data);
+    const weekday = _getWeekday(date.getDay());
+    const day = plannedItem.data.day;
+    const month = _getMonth(plannedItem.data.month - 1);
+    const turno = _getTurno(plannedItem.turno)
+    const turnoLabel = turno ? ` (${turno})` : '';
+    return `${translate('labels.planned')}: ${weekday}, ${translate('datetime.titles.day_month', { day, month })}${turnoLabel}`
+}
+
+function _getTurno(turno) {
+    switch (turno) {
+        case 'madrugada':
+            return translate('datetime.time_of_day.early_hours');
+        case 'manha':
+            return translate('datetime.time_of_day.morning');
+        case 'tarde':
+            return translate('datetime.time_of_day.afternoon');
+        case 'noite':
+            return translate('datetime.time_of_day.evening');
+        default:
+            return undefined;
+    }
+}

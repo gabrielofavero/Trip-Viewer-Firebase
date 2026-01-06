@@ -174,6 +174,7 @@ function _adjustDestinationsHTML() {
 
 function _loadPlannedDestinations() {
   for (const dia of FIRESTORE_DATA.programacoes) {
+    const data = dia.data;
     for (const turno of ['madrugada', 'manha', 'tarde', 'noite']) {
       const programacoes = dia[turno];
       if (!programacoes) continue;
@@ -182,19 +183,19 @@ function _loadPlannedDestinations() {
         const item = programacao?.item;
         if (!item || item.tipo !== 'destinos') continue;
 
-        _addPlannedDestination(item);
+        _addPlannedDestination(item, data, turno);
       }
     }
   }
 
-  function _addPlannedDestination(item) {
+  function _addPlannedDestination(item, data, turno) {
     const destino = DESTINOS.find(d => d.destinosID === item.local);
     if (!destino) return;
 
     const id = destino.destinosID;
     PLANNED_DESTINATIONS[id] ??= {};
     PLANNED_DESTINATIONS[id][item.categoria] ??= {};
-    PLANNED_DESTINATIONS[id][item.categoria][item.id] = true;
+    PLANNED_DESTINATIONS[id][item.categoria][item.id] = { data, turno };
   }
 }
 

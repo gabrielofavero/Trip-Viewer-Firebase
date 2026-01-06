@@ -205,16 +205,6 @@ function _getDataSet(key) {
   const category = ACTIVE_CATEGORY;
   if (!category) return new Set();
 
-  if (key === 'planejado') {
-    const planned = PLANNED_DESTINATION?.[category] ?? {};
-    const firestore = FIRESTORE_DESTINOS_DATA?.[category] ?? {};
-    return new Set(
-      Object.keys(firestore).map(id =>
-        planned[id] ?? false
-      )
-    );
-  }
-
   const data = FIRESTORE_DESTINOS_DATA?.[category] ?? {};
   return new Set(
     Object.values(data)
@@ -238,16 +228,13 @@ function _getItem(id) {
 }
 
 function _getItemValue(id, key) {
-  if (key === 'planejado') {
-    return PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[id];
-  }
-
   const item = _getItem(id);
   return item ? item[key] : null;
 }
 
 function _isPlanned(id) {
-  return _getItemValue(id, 'planejado') === true;
+  const value = PLANNED_DESTINATION[ACTIVE_CATEGORY][id]
+  return value && Object.keys(value).length > 0;
 }
 
 async function _refreshDestino() {

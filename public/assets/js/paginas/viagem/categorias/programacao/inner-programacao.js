@@ -184,6 +184,7 @@ function _getInnerProgramacaoHTML(item) {
                             innerProgramacao.titulo = _getTitulo(destinoItem);
                             innerProgramacao.content = _getDestinosBoxHTML({
                                 j: 1,
+                                id: item.id,
                                 item: destinoItem,
                                 innerProgramacao: true,
                                 valores: _getDestinoValores(DESTINOS[index]),

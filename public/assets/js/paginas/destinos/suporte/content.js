@@ -1,4 +1,5 @@
 function _getDestinosHTML({ j, id, item, closeAction = '_processAccordion' }) {
+    const planejado = _getPlanejado(id);
     return `
     <div class="accordion-group" id='destinos-box-${j}'>
         <div id="destinos-${j}" class="accordion-item" data-drag-listener="true" data-id="${id}">
@@ -11,7 +12,7 @@ function _getDestinosHTML({ j, id, item, closeAction = '_processAccordion' }) {
                             <path class="st0" d="M0-3.3h12v12H0V-3.3z" />
                         </svg>
                     </div>
-                    <div class="icon-container" style="display: ${_isPlanned(id) ? 'block' : 'none'}">
+                    <div class="icon-container" style="display: ${planejado ? 'block' : 'none'}">
                         <i class="iconify planejado" data-icon="fa-solid:check"></i>
                     </div>
                     <div class="icon-container" style="display: ${item.nota ? 'block' : 'none'}">
@@ -20,20 +21,20 @@ function _getDestinosHTML({ j, id, item, closeAction = '_processAccordion' }) {
                 </button>
             </h2>
             <div id="collapse-destinos-${j}" class="accordion-collapse collapse" aria-labelledby="heading-destinos-${j}" data-bs-parent="#destinos-box">
-                ${_getDestinosBoxHTML({ j, id, item })}
+                ${_getDestinosBoxHTML({ j, id, item, planejado })}
             </div>
         </div>
     </div>`;
 }
 
-function _getDestinosBoxHTML({ j, item, innerProgramacao, valores, moeda }) {
+function _getDestinosBoxHTML({ j, item, innerProgramacao, valores, moeda, planejado }) {
     return `
     <div ${innerProgramacao ? '' : `class="accordion-body" id="accordion-body-${j}"`}>
-        ${_getDestinosAccordionBodyHTML(j, item, valores, moeda)}
+        ${_getDestinosAccordionBodyHTML({j, item, valores, moeda, planejado})}
     </div>`
 }
 
-function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
+function _getDestinosAccordionBodyHTML({j, item, valores, moeda, planejado}) {
     if (!valores) {
         valores = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
     }
@@ -55,6 +56,10 @@ function _getDestinosAccordionBodyHTML(j, item, valores, moeda) {
             </div>
         </div>
         <div class="destinos-text">
+            <div class="destinos-topico" style="display: ${planejado ? 'block' : 'none'}">
+                <i class="iconify color-icon" data-icon="fa-solid:check"></i>
+                ${planejado}
+            </div>
             <div class="destinos-topico" style="display: ${item.regiao ? 'block' : 'none'}">
                 <i class="iconify color-icon" data-icon="mingcute:location-line"></i>
                 ${item.regiao || ""}

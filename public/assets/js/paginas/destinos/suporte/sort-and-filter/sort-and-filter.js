@@ -53,8 +53,8 @@ function _shouldDisplayRegions() {
 }
 
 function _shouldDisplayPlanned() {
-    const planejado = _getDataSet('planejado');
-    return planejado.size > 1;
+    const planejado = Object.keys(PLANNED_DESTINATION[ACTIVE_CATEGORY]);
+    return planejado.size > 0;
 }
 
 function _shouldDisplayScores() {
