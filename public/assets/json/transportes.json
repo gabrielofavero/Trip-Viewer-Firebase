@@ -35,6 +35,9 @@
             "tap": "TAP Air Portugal",
             "united": "United Airlines",
             "vueling": "Vueling Airlines"
+        }, 
+        "trem-bala": {
+            "eurostar": "Eurostar"
         }
     },
     "icones": {
@@ -181,6 +184,12 @@
                 "claro": "assets/img/transportes/voo/vueling.svg",
                 "escuro": "assets/img/transportes/voo/vueling-dark.svg"
             }
+        },
+        "trem-bala": {
+            "eurostar": {
+                "claro": "assets/img/transportes/trem/eurostar.svg",
+                "escuro": "assets/img/transportes/trem/eurostar-dark.svg"
+            }
         }
     },
     "sites": {
@@ -220,6 +229,9 @@
             "tap": "https://www.flytap.com/",
             "united": "https://www.united.com/",
             "vueling": "https://www.vueling.com/"
+        },
+        "trem-bala": {
+            "eurostar": "https://www.eurostar.com/"
         }
     },
     "titulos": {

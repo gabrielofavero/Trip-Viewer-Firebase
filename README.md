@@ -4,9 +4,9 @@
 
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 123   | 119       | 4       |
+| 🐞   | Bug         | B000 | 125   | 121       | 4       |
 | 🏆   | Feature     | F000 | 123   | 123       | 0       |
-| 📈   | Improvement | M000 | 125   | 125       | 0       |
+| 📈   | Improvement | M000 | 126   | 126       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 39        | 0       |
 
 ## Backlog
@@ -27,6 +27,9 @@
 
 ### January 2026
 
+- 📈 **M126:** Add eurostar transportation
+- 🐞 **B125:** Sort button being shown when there is only 1 destination
+- 🐞 **B124:** Add button being show in destination page
 - 🏆 **F123:** Add planned date and time in destination
 - ⚔️ **E039:** Destinations Overhaul
   - *[🏆F117] Adjust destination object strucute (migration)*

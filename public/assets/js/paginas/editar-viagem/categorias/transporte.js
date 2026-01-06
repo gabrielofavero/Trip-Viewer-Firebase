@@ -81,7 +81,7 @@ function _getPessoa(i) {
 }
 
 function _loadTransporteVisibility(i) {
-    const transportes = CONFIG.transportes.empresas;
+    const empresas = CONFIG.transportes.empresas;
     const select = getID(`empresa-select-${i}`);
     const value = select.value;
     const empresa = getID(`empresa-${i}`);
@@ -90,10 +90,10 @@ function _loadTransporteVisibility(i) {
     let selectValid = false;
     let selectOptions = "";
 
-    if (['voo', 'carro', 'onibus'].includes(tipo.value)) {
+    if (Object.keys(empresas).includes(tipo.value)) {
         selectValid = true;
-        for (const value in transportes[tipo.value]) {
-            const label = transportes[tipo.value][value];
+        for (const value in empresas[tipo.value]) {
+            const label = empresas[tipo.value][value];
             selectOptions += `<option value="${value}">${label}</option>`;
         }
     }

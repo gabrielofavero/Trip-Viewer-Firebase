@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 async function _loadGastosPage() {
+    console.log(window.location.href);
     _loadVisibilityExternal();
 
     const closeButton = getID("closeButton");

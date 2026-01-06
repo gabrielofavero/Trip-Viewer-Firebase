@@ -6,7 +6,6 @@ var ACTIVE_CATEGORY;
 window.addEventListener("load", async function () {
   try {
     _startLoadingScreen();
-    console.log(this.window.location.href)
     _main();
     _stopLoadingScreen();
   } catch (error) {
@@ -30,6 +29,7 @@ async function _loadDestinosData() {
 }
 
 async function _loadDestinosPage() {
+  console.log(this.window.location.href);
   await _loadDestinosData();
   _loadVisibilityExternal();
 
