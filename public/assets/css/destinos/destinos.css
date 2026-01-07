@@ -73,7 +73,7 @@ section {
   padding-bottom: 30px;
 }
 
-.destinos-select {
+h1 {
   font-size: 32px;
   font-weight: bold;
   text-transform: uppercase;
@@ -87,7 +87,7 @@ section {
   user-select: none;
 }
 
-.destinos-select::before {
+h1::before {
   content: "";
   position: absolute;
   display: block;
@@ -98,7 +98,7 @@ section {
   left: calc(50% - 60px);
 }
 
-.destinos-select::after {
+h1::after {
   content: "";
   position: absolute;
   display: block;
@@ -107,6 +107,22 @@ section {
   background: var(--theme-color);
   bottom: 0;
   left: calc(50% - 20px);
+}
+
+.destinos-select-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.destinos-select {
+  font-size: 24px;
+  padding: 8px;
+  margin: none;
+  border-radius: 9999px;
+  margin-top: 1em;
+  color: var(--font-color);
+  align-items: center;
 }
 
 .destinos-select .container {
@@ -547,6 +563,7 @@ section {
 }
 
 @media screen and (max-width: 550px) {
+
   .accordion-item,
   .add-container {
     width: 90%;
@@ -1056,7 +1073,7 @@ section {
   align-items: center;
 }
 
-.edit-title-container{
+.edit-title-container {
   align-items: center;
   padding-bottom: 20px;
   margin-bottom: 16px;
@@ -1066,7 +1083,7 @@ section {
 .edit-column-container {
   flex-direction: column;
   gap: 1em;
-    flex: 1 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -1078,7 +1095,7 @@ section {
 }
 
 .edit-double-container input,
-.edit-double-container select{
+.edit-double-container select {
   flex: 1 1 auto;
 }
 

@@ -33,7 +33,9 @@ async function _loadDestinosPage() {
   await _loadDestinosData();
   _loadVisibilityExternal();
 
-  document.title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
+  const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
+  document.title = title;
+  getID('title').innerText = title;
   const closeButton = getID("closeButton");
   if (window.parent._closeLightbox) {
     closeButton.onclick = function () {
@@ -77,6 +79,7 @@ function _loadDestinoByType(activeCategory) {
     content.classList = "map-content";
     _loadMapDestino(FIRESTORE_DESTINOS_DATA.myMaps);
     filterSortContainer.style.display = "none";
+    document.querySelector('.add-container').style.display = 'none';
     return
   } else {
     content.classList = "";

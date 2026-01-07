@@ -22,15 +22,15 @@ a:hover {
   text-decoration: none;
 }
 
-.destinos-select  {
+h1  {
   color: #A6A6A6;
 }
 
-.destinos-select::before {
+h1::before {
   background: #A6A6A6;
 }
 
-.destinos-select::after {
+h1::after {
   background: var(--theme-color);
 }
 
