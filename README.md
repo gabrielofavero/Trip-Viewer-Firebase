@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Completed | Pending |
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 125   | 121       | 4       |
-| 🏆   | Feature     | F000 | 123   | 123       | 0       |
+| 🏆   | Feature     | F000 | 124   | 124       | 0       |
 | 📈   | Improvement | M000 | 126   | 126       | 0       |
 | ⚔️   | Epic        | E000 | 39    | 39        | 0       |
 
@@ -27,6 +27,7 @@
 
 ### January 2026
 
+- 🏆 **F124:** Add destination title to destination page
 - 📈 **M126:** Add eurostar transportation
 - 🐞 **B125:** Sort button being shown when there is only 1 destination
 - 🐞 **B124:** Add button being show in destination page
