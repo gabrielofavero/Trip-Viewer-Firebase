@@ -187,8 +187,8 @@
         },
         "trem-bala": {
             "eurostar": {
-                "claro": "assets/img/transportes/trem/eurostar.svg",
-                "escuro": "assets/img/transportes/trem/eurostar-dark.svg"
+                "claro": "assets/img/transportes/trem-bala/eurostar.svg",
+                "escuro": "assets/img/transportes/trem-bala/eurostar-dark.svg"
             }
         }
     },
