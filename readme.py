@@ -132,15 +132,16 @@ def calculate_version(tasks):
     
     major = 2
     minor = 0
+    patch = 0
     
     for task in done_tasks_reversed:
         if task['type'] == 'E':
-            major += 1
-            minor = 0
-        else:
             minor += 1
+            patch = 0
+        else:
+            patch += 1
     
-    return f"{major}.{minor}.0"
+    return f"{major}.{minor}.{patch}"
 
 
 def update_table(content, counts):

@@ -5,14 +5,14 @@
       "timestamp": "2026-01-08T12:23:11.201667",
       "version": {
         "firebase": "f1b15de7018c55f9",
-        "system": "26.9.0"
+        "system": "2.24.9"
       }
     },
     "trip-viewer-prd": {
       "timestamp": "2026-01-08T12:23:32.955680",
       "version": {
         "firebase": "f47867a820886a0b",
-        "system": "26.9.0"
+        "system": "2.24.9"
       }
     }
   }

@@ -131,20 +131,6 @@ function _openLinkInNewTab(url) {
 
 
 function _initializeApp() {
-  const isLocalhost = window.location.hostname === "localhost";
-  const isIP = /^\d{1,3}(\.\d{1,3}){3}$/.test(window.location.hostname);
-
   APP.projectId = firebase.app().options.projectId;
-  APP.version = isLocalhost || isIP ? new Date().getTime() : CONFIG.versoes[APP.projectId];
-
-  // Cache Busting
-  if (APP.version) {
-    const tags = document.querySelectorAll('script[src], link[rel="stylesheet"]');
-    tags.forEach(tag => {
-      const attr = tag.tagName === 'LINK' ? 'href' : 'src';
-      const url = new URL(tag.getAttribute(attr), window.location.origin);
-      url.searchParams.set('v', APP.version);
-      tag.setAttribute(attr, url.toString());
-    });
-  }
+  APP.version = CONFIG.versoes[APP.projectId]?.version?.system || 'Unknown';
 }
