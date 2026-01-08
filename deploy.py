@@ -169,7 +169,7 @@ def update_html_cache_busting(build_number):
     if edit_dir.exists():
         html_files.extend(edit_dir.glob("*.html"))
     
-    modified_files = []
+    modified_files = {}
     
     for html_file in html_files:
         content = html_file.read_text()
@@ -201,13 +201,31 @@ def update_html_cache_busting(build_number):
         
         if content != original_content:
             html_file.write_text(content)
-            modified_files.append(html_file)
+            modified_files[html_file] = original_content
             print(f"  {Colors.GREEN}✓{Colors.RESET} {html_file}")
     
     if not modified_files:
         print(f"  {Colors.YELLOW}No files with data-main attribute found.{Colors.RESET}")
     
     return modified_files
+
+
+# ============================================================
+# HTML Restoration
+# ============================================================
+
+def restore_html_files(modified_files):
+    """Restore HTML files to their original content."""
+    if not modified_files:
+        return
+    
+    print(f"\n{Colors.BOLD}{Colors.CYAN}Restoring HTML files...{Colors.RESET}")
+    
+    for html_file, original_content in modified_files.items():
+        html_file.write_text(original_content)
+        print(f"  {Colors.GREEN}✓{Colors.RESET} {html_file}")
+    
+    print(f"{Colors.GREEN}✓{Colors.RESET} Restored {len(modified_files)} file(s) to original state")
 
 
 # ============================================================
@@ -257,25 +275,28 @@ def main():
         version_data = load_version_json()
         build_number = increment_build_number(version_data)
         
-        update_html_cache_busting(build_number)
+        modified_files = update_html_cache_busting(build_number)
         
-        for project in target_projects:
-            if project != original_project:
-                print(f"\n{Colors.BOLD}{Colors.YELLOW}Switching to: {project}{Colors.RESET}")
-                switch_firebase_project(project)
-            else:
-                print(f"\n{Colors.BOLD}{Colors.CYAN}Using current project: {project}{Colors.RESET}")
+        try:
+            for project in target_projects:
+                if project != original_project:
+                    print(f"\n{Colors.BOLD}{Colors.YELLOW}Switching to: {project}{Colors.RESET}")
+                    switch_firebase_project(project)
+                else:
+                    print(f"\n{Colors.BOLD}{Colors.CYAN}Using current project: {project}{Colors.RESET}")
+                
+                firebase_version = deploy_firebase(project)
+                save_version_json(version_data, project, firebase_version)
             
-            firebase_version = deploy_firebase(project)
-            save_version_json(version_data, project, firebase_version)
+            current_project = get_firebase_project()
+            if current_project != original_project:
+                print(f"\n{Colors.BOLD}{Colors.YELLOW}Restoring original project: {original_project}{Colors.RESET}")
+                switch_firebase_project(original_project)
+            
+            print(f"\n{Colors.BOLD}{Colors.GREEN}✓ All deployments complete!{Colors.RESET} Build: {Colors.BOLD}{build_number}{Colors.RESET}\n")
         
-        # Only switch back if we're not already there
-        current_project = get_firebase_project()
-        if current_project != original_project:
-            print(f"\n{Colors.BOLD}{Colors.YELLOW}Restoring original project: {original_project}{Colors.RESET}")
-            switch_firebase_project(original_project)
-        
-        print(f"\n{Colors.BOLD}{Colors.GREEN}✓ All deployments complete!{Colors.RESET} Build: {Colors.BOLD}{build_number}{Colors.RESET}\n")
+        finally:
+            restore_html_files(modified_files)
         
     except KeyboardInterrupt:
         print(f"\n{Colors.YELLOW}Deployment cancelled by user.{Colors.RESET}")
