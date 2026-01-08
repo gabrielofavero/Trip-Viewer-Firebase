@@ -344,6 +344,20 @@ function _getMonth(month) {
     return months[month];
 }
 
+function _getNextCategoriaInicioFim(tipo, lastEndStructure) {
+    let inicio = getID('inicio').value;
+    let fim = getID('fim').value;
+
+    const js = _getJs(`${tipo}-box`);
+
+    if (js.length != 0) {
+        const lastJ = _getLastJ(`${tipo}-box`);
+        inicio = getID(`${lastEndStructure}-${lastJ}`).value;
+    }
+
+    return { inicio, fim };
+}
+
 function _getTimestamp() {
     const date = new Date();
 

@@ -13,7 +13,7 @@
 
 ### High Priority
 
-- 🐞 **B122:** Fix forms issues in edit trip page + test timezone
+- 🐞 **B122:** Fix forms issues in edit trip page
 - 🐞 **B123:** 
 
 ### Medium Priority

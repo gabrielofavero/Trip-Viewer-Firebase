@@ -169,7 +169,9 @@ function _loadCalendarItem(dataString) {
             if (day != 0) {
                 for (let i = 0; i < FIRESTORE_DATA.programacoes.length; i++) {
                     var currentDate = _convertFromDateObject(FIRESTORE_DATA.programacoes[i].data);
-                    if (currentDate.getDate() == day && currentDate.getMonth() == month - 1 && currentDate.getFullYear() == year) {
+                    if (  currentDate.getUTCDate() == day &&
+                    currentDate.getUTCMonth() == month - 1 &&
+                    currentDate.getUTCFullYear() == year) {
                         if (!PROGRAMACAO_ABERTA) {
                             PROGRAMACAO_ABERTA = true;
                             _openModalCalendar(FIRESTORE_DATA.programacoes[i]);
