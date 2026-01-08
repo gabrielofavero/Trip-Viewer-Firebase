@@ -441,13 +441,13 @@ function _getAndDestinationTitle(value, destinos) {
   return _getReadableArray([...destinos, translate('trip.transportation.return')]);
 }
 
-function _getInnerProgramacaoTitleHTML(dado, spanClass, isCustomTraveler = false) {
+function _getInnerProgramacaoTitleHTML(dado, spanClass) {
   const programacao = dado.programacao || '';
   const presentes = !dado.pessoas ? [] : dado.pessoas
     .filter(p => p.isPresent)
     .map(p => TRAVELERS.find(t => t.id === p.id)?.nome ?? '');
 
-  const pessoasTexto = (presentes.length === 0 || presentes.length === dado.pessoas.length || isCustomTraveler === true) ? '' : _getReadableArray(presentes);
+  const pessoasTexto = (presentes.length === 0 || presentes.length === TRAVELERS.length) ? '' : _getReadableArray(presentes);
 
   let horario = '';
   if (dado.inicio && dado.fim) {

@@ -243,7 +243,7 @@ a:hover {
   border: 0.5px solid var(--table-border);
 }
 
-#programacao-titulo,
+#programacao-titulo .titulo,
 #programacao-fechar {
   color: white;
 }
@@ -646,20 +646,6 @@ a:hover {
 
 .custom-select .dropdown .option:hover {
   background: #3b3b3b;
-}
-
-/* Custom Select: Travelers */
-.custom-select.travelers {
-  color: var(--font-color);
-  background: #474747;
-}
-
-.custom-select.travelers .dropdown {
-  background: #474747;
-}
-
-.custom-select.travelers .dropdown .option:hover {
-  background: #4d4d4d
 }
 
 /* Pin */
