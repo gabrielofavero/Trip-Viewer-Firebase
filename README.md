@@ -13,12 +13,12 @@
 
 ### High Priority
 
-- 📈 **M128:** Instead of pop-ups, scroll to item (if not destination)
-- 🐞 **B121:** Fix timezone issues
-- 🐞 **B122:** Fix forms issues in edit trip page
+- 🐞 **B122:** Fix forms issues in edit trip page + test timezone
 - 🐞 **B123:** 
 
 ### Medium Priority
+
+- 📈 **M128:** Instead of pop-ups, scroll to item (if not destination)
 
 ### Low Priority
 
@@ -28,6 +28,7 @@
 
 ### January 2026
 
+- 🐞 **B121:** Fix timezone issues
 - 📈 **M127:** Show traveler destinations as checkbox, not select
 - 🏆 **F124:** Add destination title to destination page
 - 📈 **M126:** Add eurostar transportation

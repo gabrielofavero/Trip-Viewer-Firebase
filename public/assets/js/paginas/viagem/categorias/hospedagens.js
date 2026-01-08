@@ -104,7 +104,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
                       <i class="bi bi-chevron-right color-icon"></i><strong>${translate('trip.accommodation.checkin')}:</strong> <span>${checkIn}</span> 
                     </div>
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate('trip.accommodation.checkin')}:</strong> <span>${checkOut}</span>
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate('trip.accommodation.checkout')}:</strong> <span>${checkOut}</span>
                     </div>
                   </div>
                 </div>

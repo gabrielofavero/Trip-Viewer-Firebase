@@ -21,10 +21,10 @@ function _loadCalendar() {
     CALENDAR.start = _convertFromDateObject(FIRESTORE_DATA.inicio);
     CALENDAR.end = _convertFromDateObject(FIRESTORE_DATA.fim);
 
-    CALENDAR.startMonth = CALENDAR.start.getMonth();
-    CALENDAR.startYear = CALENDAR.start.getFullYear();
-    CALENDAR.endMonth = CALENDAR.end.getMonth();
-    CALENDAR.endYear = CALENDAR.end.getFullYear();
+    CALENDAR.startMonth = CALENDAR.start.getUTCMonth();
+    CALENDAR.startYear  = CALENDAR.start.getUTCFullYear();
+    CALENDAR.endMonth   = CALENDAR.end.getUTCMonth();
+    CALENDAR.endYear    = CALENDAR.end.getUTCFullYear();
 
     CALENDAR.calendarTitle = getID("calendarTitle");
     CURRENT_CALENDAR.month = CALENDAR.startMonth;
@@ -77,8 +77,8 @@ function _calendarPrevious() {
 
 
 function _showCalendar(month, year) {
-    let firstDay = (new Date(year, month)).getDay();
-    let daysInMonth = 32 - new Date(year, month, 32).getDate();
+    let firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+    let daysInMonth = 32 - new Date(Date.UTC(year, month, 32)).getUTCDate();
 
     let tbl = getID("calendar-body");
 
@@ -101,7 +101,7 @@ function _showCalendar(month, year) {
             }
 
             else {
-                const currentDate = new Date(`${year}/${month + 1}/${day}`);
+                const currentDate = new Date(Date.UTC(year, month, day));
                 let cell = document.createElement("td");
                 let cellText = document.createTextNode(day);
 

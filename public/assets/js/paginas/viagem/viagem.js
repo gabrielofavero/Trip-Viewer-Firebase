@@ -108,10 +108,10 @@ function _prepareViewData() {
 
 function _loadInicioFim(data = FIRESTORE_DATA) {
   INICIO.date = _convertFromDateObject(data.inicio);
-  INICIO.text = `${INICIO.date.getDate()}/${INICIO.date.getMonth() + 1}`;
+  FIM.date    = _convertFromDateObject(data.fim);
 
-  FIM.date = _convertFromDateObject(data.fim);
-  FIM.text = `${FIM.date.getDate()}/${FIM.date.getMonth() + 1}`;
+  INICIO.text = `${data.inicio.day}/${data.inicio.month}`;
+  FIM.text    = `${data.fim.day}/${data.fim.month}`;
 }
 
 function _loadHeader() {

@@ -1,85 +1,184 @@
-// ======= Date JS =======
+// ======= Date JS (Timezone-Agnostic / UTC) =======
 
 var DATE_REGIONAL_FORMAT;
 
+
 // ======= GETTERS =======
+
 function _getCurrentHour() {
-    let now = new Date();
-    return now.getHours();
+    return new Date().getUTCHours();
 }
 
-// ======= CONVERTERS =======
-function _getDateTitle(date, format = "day_month") {
-    let replacements = {};
+function _getTodayDateObject() {
+    const now = new Date();
+    return {
+      year:   now.getUTCFullYear(),
+      month:  now.getUTCMonth() + 1,
+      day:    now.getUTCDate(),
+      hour:   0,
+      minute: 0,
+      second: 0
+    };
+  }
 
-    if (format == 'mini') {
-        const regionalFormat = _getDateRegionalFormat();
-        return `${_getWeekday(date.getDay())}, ${_getDateString(date, regionalFormat)}`;
-    }
 
-    if (format.includes('day')) {
-        replacements.day = date.getDate().toString().padStart(2, '0');
-    }
-
-    if (format.includes('month')) {
-        replacements.month = _getMonth(date.getMonth());
-    }
-
-    if (format.includes('weekday')) {
-        replacements.weekday = _getWeekday(date.getDay());
-    }
-
-    return translate(`datetime.titles.${format}`, replacements);
-}
-
-function _getWeekday(day) {
-    const weekdays = [
-        translate('datetime.weekdays.default.sunday'),
-        translate('datetime.weekdays.default.monday'),
-        translate('datetime.weekdays.default.tuesday'),
-        translate('datetime.weekdays.default.wednesday'),
-        translate('datetime.weekdays.default.thursday'),
-        translate('datetime.weekdays.default.friday'),
-        translate('datetime.weekdays.default.saturday')
-    ]
-    return weekdays[day];
-}
-
-function _getDateNoTime(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
+// ======= CORE UTC CONVERSION HELPERS =======
 
 function _convertFromDateObject(dateObject) {
-    return new Date(
+    return new Date(Date.UTC(
         dateObject.year,
         dateObject.month - 1,
         dateObject.day,
         dateObject.hour,
         dateObject.minute,
-        dateObject.second || 0
-    );
+        dateObject.second ?? 0
+    ));
 }
 
 function _convertToDateObject(date) {
     return {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-        hour: date.getHours(),
-        minute: date.getMinutes(),
-        second: date.getSeconds()
-    }
+        year: date.getUTCFullYear(),
+        month: date.getUTCMonth() + 1,
+        day: date.getUTCDate(),
+        hour: date.getUTCHours(),
+        minute: date.getUTCMinutes(),
+        second: date.getUTCSeconds()
+    };
 }
 
+
+// ======= SAFE UTC DATE NORMALIZATION =======
+
+function _getDateNoTime(date) {
+    return new Date(Date.UTC(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate()
+    ));
+}
+
+
+// ======= ADD / SUBTRACT DAYS (timezone-proof) =======
+
+function _addDaysUTC(date, days) {
+    return new Date(date.getTime() + days * 86400000);
+}
+
+
+// ======= CONVERTERS =======
+
+function _formattedDateToDate(formattedDate, time) {
+    const parts = formattedDate.split("-");
+    const y = Number(parts[0]);
+    const m = Number(parts[1]);
+    const d = Number(parts[2]);
+
+    if (!time) {
+        return new Date(Date.UTC(y, m - 1, d));
+    }
+
+    const [hh, mm] = time.split(":").map(Number);
+    return new Date(Date.UTC(y, m - 1, d, hh, mm));
+}
+
+function _formattedDateToDateObject(formattedDate, time) {
+    const date = _formattedDateToDate(formattedDate, time);
+    return _convertToDateObject(date);
+}
+
+function _inputDateToJsDate(inputDate) {
+    const [y, m, d] = inputDate.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d));
+}
+
+function _jsDateToInputDate(jsDate) {
+    return _getDateString(jsDate, 'yyyy-mm-dd');
+}
+
+
+// ======= DATE OBJECT ROUND TRIPS =======
+
+function _dateObjectToKey(dateObject) {
+    const jsDate = _convertFromDateObject(dateObject);
+    return _jsDateToKey(jsDate);
+}
+
+function _dateObjectToInputDate(dateObject) {
+    const jsDate = _convertFromDateObject(dateObject);
+    return _jsDateToInputDate(jsDate);
+}
+
+function _dateObjectToString(dateObject) {
+    const jsDate = _convertFromDateObject(dateObject);
+    return _getDateString(jsDate);
+}
+
+
+// ======= KEY <-> DATE CONVERSIONS =======
+
+function _jsDateToKey(jsDate) {
+    const inputDate = _getDateString(jsDate, 'yyyy-mm-dd');
+    return _inputDateToKey(inputDate);
+}
+
+function _inputDateToKey(inputDate) {
+    return inputDate.split("-").join("");
+}
+
+function _keyToInputDate(key) {
+    return `${key.substr(0, 4)}-${key.substr(4, 2)}-${key.substr(6, 2)}`;
+}
+
+function _keyToDateObject(key) {
+    const inputDate = _keyToInputDate(key);
+    return _formattedDateToDateObject(inputDate);
+}
+
+
+// ======= DATE ARRAY HELPERS (UTC-stable) =======
+
+function _getArrayOfDates(start, end) {
+    const dates = [];
+    let currentDate = start;
+
+    while (currentDate <= end) {
+        dates.push(currentDate);
+        currentDate = _addDaysUTC(currentDate, 1);
+    }
+
+    return dates;
+}
+
+
+// ======= INPUT DATE NAVIGATION =======
+
+function _getAdjustedInputDate(inputDate, days) {
+    const currentDate = _inputDateToJsDate(inputDate);
+    const adjustedDate = _addDaysUTC(currentDate, days);
+    return _jsDateToInputDate(adjustedDate);
+}
+
+function _getNextInputDay(inputDate) {
+    return _getAdjustedInputDate(inputDate, 1);
+}
+
+function _getPreviousInputDay(inputDate) {
+    return _getAdjustedInputDate(inputDate, -1);
+}
+
+
+// ======= DATE STRING FORMATTING (UTC) =======
+
 function _getDateString(date, format = "dd/mm/yyyy") {
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1;
+    const year = date.getUTCFullYear();
 
     const separator = format.includes("-") ? "-" : "/";
 
     let result = '';
     const formatParts = format.split(separator);
+
     for (let i = 0; i < formatParts.length; i++) {
         switch (formatParts[i]) {
             case "dd":
@@ -115,56 +214,63 @@ function _changeFormat(formattedDate, newFormat) {
     return _getDateString(_formattedDateToDate(formattedDate), newFormat);
 }
 
+
+// ======= TODAY / TOMORROW (UTC) =======
+
 function _getTodayFormatted(format = 'yyyy-mm-dd') {
-    return _getDateString(new Date(), format);
+    return _getDateString(_getDateNoTime(new Date()), format);
 }
 
 function _getTomorrowFormatted(format = 'yyyy-mm-dd') {
-    return _getDateString(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), format);
+    const tomorrow = _addDaysUTC(_getDateNoTime(new Date()), 1);
+    return _getDateString(tomorrow, format);
 }
 
-function _getAdjustedInputDate(inputDate, days) {
-    const currentDate = _inputDateToJsDate(inputDate);
-    const adjustedDate = new Date(currentDate.getTime() + days * 24 * 60 * 60 * 1000);
-    return _jsDateToInputDate(adjustedDate);
-}
 
-function _getNextInputDay(inputDate) {
-    return _getAdjustedInputDate(inputDate, 1);
-}
+// ======= HUMAN FRIENDLY DATE TITLES =======
 
-function _getPreviousInputDay(inputDate) {
-    return _getAdjustedInputDate(inputDate, -1);
-}
+function _getDateTitle(date, format = "day_month") {
+    let replacements = {};
 
-function _getArrayOfDates(start, end) {
-    const dates = [];
-    let currentDate = start;
-    while (currentDate <= end) {
-        dates.push(currentDate);
-        currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    if (format == 'mini') {
+        const regionalFormat = _getDateRegionalFormat();
+        return `${_getWeekday(date.getUTCDay())}, ${_getDateString(date, regionalFormat)}`;
     }
-    return dates;
-}
 
-function _formattedDateToDate(formattedDate, time) {
-    const parts = formattedDate.split("-");
-    if (!time) {
-        return new Date(parts[0], parts[1] - 1, parts[2]);
-    } else {
-        const timeParts = time.split(":");
-        return new Date(parts[0], parts[1] - 1, parts[2], timeParts[0], timeParts[1]);
+    if (format.includes('day')) {
+        replacements.day = date.getUTCDate().toString().padStart(2, '0');
     }
+
+    if (format.includes('month')) {
+        replacements.month = _getMonth(date.getUTCMonth());
+    }
+
+    if (format.includes('weekday')) {
+        replacements.weekday = _getWeekday(date.getUTCDay());
+    }
+
+    return translate(`datetime.titles.${format}`, replacements);
 }
 
-function _formattedDateToDateObject(formattedDate, time) {
-    const date = _formattedDateToDate(formattedDate, time);
-    return _convertToDateObject(date);
+function _getWeekday(day) {
+    const weekdays = [
+        translate('datetime.weekdays.default.sunday'),
+        translate('datetime.weekdays.default.monday'),
+        translate('datetime.weekdays.default.tuesday'),
+        translate('datetime.weekdays.default.wednesday'),
+        translate('datetime.weekdays.default.thursday'),
+        translate('datetime.weekdays.default.friday'),
+        translate('datetime.weekdays.default.saturday')
+    ];
+    return weekdays[day];
 }
+
+
+// ======= TIME FORMATTING (UTC) =======
 
 function _getTimeString(date, localize = false) {
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
+    let hours = date.getUTCHours();
+    let minutes = date.getUTCMinutes();
     let period = "";
 
     if (localize && _getLanguagePackName() == "en") {
@@ -178,20 +284,21 @@ function _getTimeString(date, localize = false) {
             period = "AM";
         }
     }
+
     hours = hours.toString().padStart(2, '0');
     minutes = minutes.toString().padStart(2, '0');
+
     return `${hours}:${minutes} ${period}`.trim();
 }
 
-function _removeSlashesFromDate(date) {
-    return date.replace(/\//g, "");
-}
+
+// ======= TIME HELPERS =======
 
 function _jsTimeToVisualTime(time) {
     let result = [];
     const parts = time.split(":");
-    const units = ['h', 'm', 's']
-    const searchSize = parts.length <= 3 ? parts.length : 3;
+    const units = ['h', 'm', 's'];
+    const searchSize = Math.min(parts.length, 3);
 
     for (let i = 0; i < searchSize; i++) {
         result.push(`${parts[i]}${units[i]}`);
@@ -202,13 +309,21 @@ function _jsTimeToVisualTime(time) {
 
 function _getTimeBetweenDates(startDate, endDate) {
     const diff = endDate.getTime() - startDate.getTime();
-    const hours = Math.floor(diff / 1000 / 60 / 60);
-    const minutes = Math.floor(diff / 1000 / 60) - (hours * 60);
+
+    const hours = Math.floor(diff / 3600000);
+    const minutes = Math.floor((diff / 60000) % 60);
 
     const formattedHours = hours < 10 ? `0${hours}` : hours;
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
     return `${formattedHours}:${formattedMinutes}`;
+}
+
+
+// ======= MISC =======
+
+function _removeSlashesFromDate(date) {
+    return date.replace(/\//g, "");
 }
 
 function _getMonth(month) {
@@ -229,70 +344,22 @@ function _getMonth(month) {
     return months[month];
 }
 
-function _dateObjectToKey(dateObject) {
-    const jsDate = _convertFromDateObject(dateObject);
-    return _jsDateToKey(jsDate);
-}
-
-function _dateObjectToInputDate(dateObject) {
-    const jsDate = _convertFromDateObject(dateObject);
-    return _jsDateToInputDate(jsDate);
-}
-
-function _dateObjectToString(dateObject) {
-    const jsDate = _convertFromDateObject(dateObject);
-    return _getDateString(jsDate);
-}
-
-function _jsDateToKey(jsDate) {
-    const inputDate = _getDateString(jsDate, 'yyyy-mm-dd');
-    return _inputDateToKey(inputDate);
-}
-
-function _inputDateToKey(inputDate) {
-    return inputDate.split("-").join("");
-}
-
-function _keyToInputDate(key) {
-    return `${key.substr(0, 4)}-${key.substr(4, 2)}-${key.substr(6, 2)}`;
-}
-
-function _keyToDateObject(key) {
-    const inputDate = _keyToInputDate(key);
-    return _formattedDateToDateObject(inputDate);
-}
-
-function _inputDateToJsDate(inputDate) {
-    const parts = inputDate.split("-");
-    return new Date(parts[0], parts[1] - 1, parts[2]);
-}
-
-function _jsDateToInputDate(jsDate) {
-    return _getDateString(jsDate, 'yyyy-mm-dd');
-}
-
-function _getNextCategoriaInicioFim(tipo, lastEndStructure) {
-    let inicio = getID('inicio').value;
-    let fim = getID('fim').value;
-
-    const js = _getJs(`${tipo}-box`);
-
-    if (js.length != 0) {
-        const lastJ = _getLastJ(`${tipo}-box`);
-        inicio = getID(`${lastEndStructure}-${lastJ}`).value;
-    }
-
-    return { inicio, fim };
-}
-
 function _getTimestamp() {
     const date = new Date();
-    return `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}`;
+
+    return `${date.getUTCFullYear()}${(date.getUTCMonth() + 1).toString().padStart(2, '0')
+        }${date.getUTCDate().toString().padStart(2, '0')
+        }${date.getUTCHours().toString().padStart(2, '0')
+        }${date.getUTCMinutes().toString().padStart(2, '0')
+        }${date.getUTCSeconds().toString().padStart(2, '0')
+        }`;
 }
 
 function _getDateRegionalFormat() {
     if (!DATE_REGIONAL_FORMAT) {
-        DATE_REGIONAL_FORMAT = (_getLanguagePackName() === "en") ? "mm/dd/yyyy" : "dd/mm/yyyy"
+        DATE_REGIONAL_FORMAT = (_getLanguagePackName() === "en")
+            ? "mm/dd/yyyy"
+            : "dd/mm/yyyy";
     }
     return DATE_REGIONAL_FORMAT;
 }

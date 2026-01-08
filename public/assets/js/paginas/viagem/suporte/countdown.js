@@ -5,7 +5,7 @@ var COUNTDOWN;
 // ======= Loaders =======
 COUNTDOWN = setInterval(function () {
   if (FIRESTORE_DATA && FIRESTORE_DATA.inicio) {
-    const now = new Date().getTime();
+    const now = new Date(Date.now());
     const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
     var distance = inicio - now;
 
