@@ -58,10 +58,10 @@ def parse_readme(content):
 def count_tasks(tasks):
     """Count tasks by type."""
     counts = {
-        'B': {'total': 0, 'completed': 0, 'pending': 0},
-        'F': {'total': 0, 'completed': 0, 'pending': 0},
-        'M': {'total': 0, 'completed': 0, 'pending': 0},
-        'E': {'total': 0, 'completed': 0, 'pending': 0}
+        'B': {'total': 0, 'done': 0, 'cancelled': 0, 'pending': 0},
+        'F': {'total': 0, 'done': 0, 'cancelled': 0, 'pending': 0},
+        'M': {'total': 0, 'done': 0, 'cancelled': 0, 'pending': 0},
+        'E': {'total': 0, 'done': 0, 'cancelled': 0, 'pending': 0}
     }
     
     for task in tasks['backlog']:
@@ -69,10 +69,15 @@ def count_tasks(tasks):
         counts[t]['total'] += 1
         counts[t]['pending'] += 1
     
-    for task in tasks['done'] + tasks['discarded']:
+    for task in tasks['done']:
         t = task['type']
         counts[t]['total'] += 1
-        counts[t]['completed'] += 1
+        counts[t]['done'] += 1
+    
+    for task in tasks['discarded']:
+        t = task['type']
+        counts[t]['total'] += 1
+        counts[t]['cancelled'] += 1
     
     return counts
 
@@ -154,15 +159,15 @@ def update_table(content, counts):
     table_end = content.find('\n\n', table_start)
     
     new_table_lines = [
-        '| Icon | Title       | Code | Total | Completed | Pending |',
-        '| ---- | ----------- | ---- | ----- | --------- | ------- |'
+        '| Icon | Title       | Code | Total | Done | Cancelled | Pending |',
+        '| ---- | ----------- | ---- | ----- | ---- | --------- | ------- |'
     ]
     
     for task_type in ['B', 'F', 'M', 'E']:
         icon, title, code = type_map[task_type]
         c = counts[task_type]
         new_table_lines.append(
-            f"| {icon}   | {title:<11} | {code} | {c['total']:<5} | {c['completed']:<9} | {c['pending']:<7} |"
+            f"| {icon}   | {title:<11} | {code} | {c['total']:<5} | {c['done']:<4} | {c['cancelled']:<9} | {c['pending']:<7} |"
         )
     
     new_table = '\n'.join(new_table_lines)
@@ -219,7 +224,8 @@ def main():
         emoji, name = type_data[task_type]
         c = counts[task_type]
         print(f"   {emoji}{Colors.BOLD}{name:<13}{Colors.RESET} Total: {Colors.BOLD}{c['total']:<3}{Colors.RESET} | "
-              f"Completed: {Colors.GREEN}{c['completed']:<3}{Colors.RESET} | "
+              f"Done: {Colors.GREEN}{c['done']:<3}{Colors.RESET} | "
+              f"Cancelled: {Colors.RED}{c['cancelled']:<3}{Colors.RESET} | "
               f"Pending: {Colors.YELLOW}{c['pending']}{Colors.RESET}")
     
     issues = check_inconsistencies(tasks)

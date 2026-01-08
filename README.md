@@ -2,12 +2,12 @@
 
 # Tasks
 
-| Icon | Title       | Code | Total | Completed | Pending |
-| ---- | ----------- | ---- | ----- | --------- | ------- |
-| 🐞   | Bug         | B000 | 118   | 115       | 3       |
-| 🏆   | Feature     | F000 | 97    | 97        | 0       |
-| 📈   | Improvement | M000 | 127   | 126       | 1       |
-| ⚔️   | Epic        | E000 | 36    | 36        | 0       |
+| Icon | Title       | Code | Total | Done | Cancelled | Pending |
+| ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
+| 🐞   | Bug         | B000 | 118   | 114  | 1         | 3       |
+| 🏆   | Feature     | F000 | 97    | 83   | 14        | 0       |
+| 📈   | Improvement | M000 | 127   | 97   | 29        | 1       |
+| ⚔️   | Epic        | E000 | 36    | 24   | 12        | 0       |
 
 ## Backlog
 
