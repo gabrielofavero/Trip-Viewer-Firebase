@@ -6,16 +6,17 @@
 | ---- | ----------- | ---- | ----- | --------- | ------- |
 | 🐞   | Bug         | B000 | 125   | 121       | 4       |
 | 🏆   | Feature     | F000 | 123   | 123       | 0       |
-| 📈   | Improvement | M000 | 127   | 127       | 0       |
+| 📈   | Improvement | M000 | 128   | 127       | 1       |
 | ⚔️   | Epic        | E000 | 39    | 39        | 0       |
 
 ## Backlog
 
 ### High Priority
 
+- 📈 **M128:** Instead of pop-ups, scroll to item (if not destination)
 - 🐞 **B121:** Fix timezone issues
 - 🐞 **B122:** Fix forms issues in edit trip page
-- 🐞 **B123:** destination load for inner-itinerary (view)
+- 🐞 **B123:** 
 
 ### Medium Priority
 
