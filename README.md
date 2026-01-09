@@ -4,9 +4,9 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 118   | 114  | 1         | 3       |
-| 🏆   | Feature     | F000 | 97    | 83   | 14        | 0       |
-| 📈   | Improvement | M000 | 127   | 97   | 29        | 1       |
+| 🐞   | Bug         | B000 | 120   | 114  | 1         | 5       |
+| 🏆   | Feature     | F000 | 99    | 83   | 14        | 2       |
+| 📈   | Improvement | M000 | 128   | 97   | 29        | 2       |
 | ⚔️   | Epic        | E000 | 36    | 24   | 12        | 0       |
 
 ## Backlog
@@ -14,14 +14,19 @@
 ### High Priority
 
 - 🐞 **B122:** Fix forms issues in edit trip page
-- 🐞 **B123:** document changes still not working (accepting everything)
+- 🐞 **B119:** Double filter selected on mobile destination drawer
+- 🐞 **B118:** Expenses tab clipping when on mobile
 
 ### Medium Priority
 
-- 📈 **M128:** Instead of pop-ups, scroll to item (if not destination)
+- 📈 **M123:** Improve secondary theme color (dark-mode)
+- 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
 
 ### Low Priority
 
+- 🏆 **F122:** Redirect destination to destination page, not view
+- 🏆 **F121:** Add share button to destination page (when not on lightbox)
+- 🐞 **B123:** document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
 
 ## Done
@@ -86,7 +91,7 @@
 - 🐞 **B100:** sensitive-box not animating when inside of accommodations
 - 🏆 **F107:** Disable image uploads / Firebase Storage (free plan limitation)
 - 📈 **M120:** Add Vueling company logo
-- 📈 **M126:** Make edit-trip transportation select to fetch from json file
+- 📈 **M124:** Make edit-trip transportation select to fetch from json file
 
 ### November 2025
 
@@ -235,13 +240,13 @@
 - 📈 **M0085:** Itinerary improvement
   - *Automate start and end times*
   - *Better display of associated item*
-- 🐞 **B057:** Slow load in index.html not showing elements correctly
+- 🐞 **B059:** Slow load in index.html not showing elements correctly
 
 ### September 2024
 
 - 📈 **M071:** Include reservation code in Accommodations
 - 📈 **M073:** If only one destination, rename view.html from "destinations" to destination name
-- 🐞 **B047:** Itinerary in view.html does not show start time if end is missing
+- 🐞 **B049:** Itinerary in view.html does not show start time if end is missing
 - 🏆 **F059:** Allow direct viewing of destinations (without listings)
 - 🏆 **F057:** Isolated destination view in trip page (rename trip page to view)
 - 📈 **M023:** Drag Accordions (Itinerary)
@@ -343,7 +348,7 @@
 - 📈 **M029:** Optimize destination.html to get only necessary data from localStorage
 - 🐞 **B030:** Fix errors in new trips in edit-trip.html
 - 🏆 **F049:** Dynamic Select for "Region" in edit-destination.html
-- 📈 **M029:** Improve: if user deletes all items in a category, it is automatically disabled
+- 📈 **M024:** Improve: if user deletes all items in a category, it is automatically disabled
 - ⚔️ **E020:** Create accommodation view box in view.html
 - 📈 **M032:** When a new category item is added, category accordions are closed
 - 🐞 **B032:** Fix edit pages not displaying/importing dynamic select data correctly
@@ -532,7 +537,7 @@
 ### Discarded (Most will be done on the 2.0 version)
 
 - 📈 **M098:** Change js functions/folder structures to EN-US
-- 🏆 **F046:** Firebase Firestore Rules in Front-End
+- 🏆 **F047:** Firebase Firestore Rules in Front-End
   - *Security risk exposing rules to user*
 - 🐞❔ **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
 - 📈 **M072:** Improve automatic date adjustment in edit trips

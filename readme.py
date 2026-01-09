@@ -185,7 +185,7 @@ def get_system_version():
     if not readme_path.exists():
         return "2.0.0"
     
-    content = readme_path.read_text()
+    content = readme_path.read_text(encoding="utf-8")
     tasks = parse_readme(content)
     return calculate_version(tasks)
 
@@ -198,7 +198,7 @@ def main():
         print(f"{Colors.RED}Error: README.md not found{Colors.RESET}")
         return
     
-    content = readme_path.read_text()
+    content = readme_path.read_text(encoding="utf-8")
     
     print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*60}{Colors.RESET}")
     print(f"{Colors.BOLD}{Colors.CYAN}README.md Analysis{Colors.RESET}")
@@ -242,7 +242,7 @@ def main():
     print(f"\n{Colors.BOLD}{Colors.MAGENTA}🏷️  Calculated Version: {version}{Colors.RESET}")
     
     updated_content = update_table(content, counts)
-    readme_path.write_text(updated_content)
+    readme_path.write_text(updated_content, encoding="utf-8")
     
     print(f"\n{Colors.GREEN}✓ README.md table updated successfully{Colors.RESET}\n")
 
