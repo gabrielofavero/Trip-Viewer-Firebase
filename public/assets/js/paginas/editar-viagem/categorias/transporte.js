@@ -80,40 +80,53 @@ function _getPessoa(i) {
     return select;
 }
 
-function _loadTransporteVisibility(i) {
-    const empresas = CONFIG.transportes.empresas;
-    const select = getID(`empresa-select-${i}`);
-    const value = select.value;
-    const empresa = getID(`empresa-${i}`);
-    const tipo = getID(`transporte-tipo-${i}`);
+function _loadTransporteVisibility(j) {
+    const empresasPorTipo = CONFIG.transportes.empresas;
 
-    let selectValid = false;
-    let selectOptions = "";
+    const empresaSelect = getID(`empresa-select-${j}`);
+    const empresaInput = getID(`empresa-${j}`);
+    const tipo = getID(`transporte-tipo-${j}`).value;
+    const previousValue = empresaSelect.value;
 
-    if (Object.keys(empresas).includes(tipo.value)) {
-        selectValid = true;
-        for (const value in empresas[tipo.value]) {
-            const label = empresas[tipo.value][value];
-            selectOptions += `<option value="${value}">${label}</option>`;
+    const empresas = empresasPorTipo[tipo];
+
+    if (!empresas) {
+        _showOnlyEmpresaInput(empresaSelect, empresaInput);
+        return;
+    }
+
+    _populateEmpresaSelect(empresaSelect, empresas);
+    _restorePreviousSelection(empresaSelect, previousValue);
+
+    empresaSelect.style.display = 'block';
+    empresaInput.style.display =
+        empresaSelect.value === 'outra' ? 'block' : 'none';
+
+    function _populateEmpresaSelect(select, empresas) {
+        let options = `<option value="selecione">${translate('labels.select')}</option>`;
+
+        for (const [value, label] of Object.entries(empresas)) {
+            options += `<option value="${value}">${label}</option>`;
+        }
+
+        options += `<option value="outra">${translate('labels.other')}</option>`;
+        select.innerHTML = options;
+    }
+
+    function _restorePreviousSelection(select, value) {
+        if (!value) return;
+
+        const exists = Array.from(select.options)
+            .some(option => option.value === value);
+
+        if (exists) {
+            select.value = value;
         }
     }
 
-    select.innerHTML = `
-    <option value="selecione">${translate('labels.select')}</option>
-    ${selectOptions}
-    <option value="outra">${translate('labels.other')}</option>
-    `;
-
-    if (value && select.innerHTML.includes(value)) {
-        select.value = value;
-    }
-
-    if (selectValid) {
-        select.style.display = 'block';
-        empresa.style.display = select.value == 'outra' ? 'block' : 'none';
-    } else {
+    function _showOnlyEmpresaInput(select, input) {
         select.style.display = 'none';
-        empresa.style.display = 'block';
+        input.style.display = 'block';
     }
 }
 

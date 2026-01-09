@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 122   | 115  | 1         | 6       |
+| 🐞   | Bug         | B000 | 122   | 117  | 1         | 4       |
 | 🏆   | Feature     | F000 | 99    | 83   | 14        | 2       |
 | 📈   | Improvement | M000 | 128   | 97   | 29        | 2       |
 | ⚔️   | Epic        | E000 | 36    | 24   | 12        | 0       |
@@ -13,9 +13,8 @@
 
 ### High Priority
 
-- 🐞 **B116:** Transportation select not loading existing data properly if option is not flight
-- 🐞 **B119:** Double filter selected on mobile destination drawer
 - 🐞 **B118:** Expenses tab clipping when on mobile
+- 🐞 **B119:** Double filter selected on mobile destination drawer
 
 ### Medium Priority
 
@@ -33,6 +32,7 @@
 
 ### January 2026
 
+- 🐞 **B116:** Transportation select not loading existing data properly if option is not flight
 - 🐞 **B113:** Function to reload itinerary breaking on edit trip page
 - 🐞 **B122:** Multiple values of same transportation/accommodation on edit trip itinerary select
 - 🏆 **F125:** Create readme script for formatting and utils

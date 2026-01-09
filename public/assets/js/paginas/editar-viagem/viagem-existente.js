@@ -133,6 +133,7 @@ async function _loadTransportesData() {
             getID(`chegada-horario-${j}`).value = _getTimeString(chegada);
         }
 
+        getID(`transporte-tipo-${j}`).value = transporte.transporte;
         const empresa = transporte.empresa;
         if (empresa) {
             _loadTransporteVisibility(j);
@@ -146,7 +147,6 @@ async function _loadTransportesData() {
         }
 
         getID(`transporte-id-${j}`).value = transporte.id;
-        getID(`transporte-tipo-${j}`).value = transporte.transporte;
         getID(`transporte-duracao-${j}`).value = transporte.duracao;
         getID(`reserva-transporte-${j}`).value = transporte.reserva;
         getID(`ponto-partida-${j}`).value = transporte.pontos.partida;
