@@ -398,7 +398,7 @@ h1::after {
 .nav-menu .active:focus,
 .nav-menu li:hover>a {
   color: #fff;
-  background: var(--theme-color);
+  background: var(--theme-color-secondary);
 }
 
 .nav-menu a:hover span,
