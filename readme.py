@@ -40,7 +40,11 @@ def parse_readme(content):
             current_section = 'discarded'
         
         if current_section:
-            match = re.match(r'- [🐞🏆📈⚔️❗️]+\s*\*\*([A-Z]\d+):\*\*', line)
+            common = re.search(r'\*\*([A-Z]\d+):\*\*', line)
+            linked = re.search(r'\[[🐞🏆📈⚔️❗️]*([A-Z]\d+)\]', line)
+            
+            match = common or linked
+            
             if match:
                 task_id = match.group(1)
                 task_type = task_id[0]
