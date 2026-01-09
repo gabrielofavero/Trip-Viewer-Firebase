@@ -215,7 +215,7 @@ function _getProgramacaoTitle(dataFormatada, titulo = '') {
 
 function _reloadProgramacao() {
     if (!getID('habilitado-programacao').checked) return;
-    const originalData = _buildProgramacaoObject();
+    const originalData = _getProgramacaoArray() || [];
     const originalDataInputs = originalData.map(data => _dateObjectToKey(data.data));
 
     _loadProgramacao();

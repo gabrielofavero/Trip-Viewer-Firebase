@@ -14,7 +14,6 @@
 ### High Priority
 
 - 🐞 **B116:** Transportation select not loading existing data properly if option is not flight
-- 🐞 **B113:** Function to reload itinerary breaking on edit trip page
 - 🐞 **B119:** Double filter selected on mobile destination drawer
 - 🐞 **B118:** Expenses tab clipping when on mobile
 
@@ -34,6 +33,7 @@
 
 ### January 2026
 
+- 🐞 **B113:** Function to reload itinerary breaking on edit trip page
 - 🐞 **B122:** Multiple values of same transportation/accommodation on edit trip itinerary select
 - 🏆 **F125:** Create readme script for formatting and utils
 - 📈 **M128:** Improve deploy management and cache busting
