@@ -19,7 +19,7 @@ async function _loadDestinosData() {
   DOCUMENT_ID = urlParams['d'];
 
   if (!DOCUMENT_ID) {
-    const error = translate('messages.error.missing_data');
+    const error = translate('messages.errors.missing_data');
     throw error;
   }
 
@@ -62,7 +62,7 @@ async function _loadDestinosPage() {
     });
 
   } else {
-    const error = translate('messages.error.missing_data');
+    const error = translate('messages.errors.missing_data');
     throw error;
   }
 }

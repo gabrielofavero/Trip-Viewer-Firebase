@@ -4,35 +4,35 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 122   | 117  | 1         | 4       |
-| 🏆   | Feature     | F000 | 99    | 83   | 14        | 2       |
-| 📈   | Improvement | M000 | 128   | 97   | 29        | 2       |
-| ⚔️   | Epic        | E000 | 36    | 24   | 12        | 0       |
+| 🐞   | Bug         | B000 | 129   | 122  | 2         | 5       |
+| 🏆   | Feature     | F000 | 126   | 103  | 22        | 1       |
+| 📈   | Improvement | M000 | 132   | 101  | 30        | 1       |
+| ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
 
-- 🐞 **B118:** Expenses tab clipping when on mobile
-- 🐞 **B119:** Double filter selected on mobile destination drawer
+- 🐞 **B129:** Expenses tab clipping when on mobile
+- 🐞 **B126:** Double filter selected on mobile destination drawer
 
 ### Medium Priority
 
-- 📈 **M123:** Improve secondary theme color (dark-mode)
-- 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
+- 📈 **M129:** Improve secondary theme color (dark-mode)
 
 ### Low Priority
 
-- 🏆 **F122:** Redirect destination to destination page, not view
 - 🏆 **F121:** Add share button to destination page (when not on lightbox)
-- 🐞 **B123:** document changes still not working (accepting everything)
+- 🐞 **B127:** document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
+- 🐞 **B123:** Main try catchs for pages are failing because main is not async
 
 ## Done
 
 ### January 2026
 
-- 🐞 **B116:** Transportation select not loading existing data properly if option is not flight
+- 🏆 **F122:** Redirect destination to destination page, not view
+- 🐞 **B128:** Transportation select not loading existing data properly if option is not flight
 - 🐞 **B113:** Function to reload itinerary breaking on edit trip page
 - 🐞 **B122:** Multiple values of same transportation/accommodation on edit trip itinerary select
 - 🏆 **F125:** Create readme script for formatting and utils
@@ -40,7 +40,7 @@
 - 🐞 **B121:** Fix timezone issues
 - 📈 **M127:** Show traveler destinations as checkbox, not select
 - 🏆 **F124:** Add destination title to destination page
-- 📈 **M126:** Add eurostar transportation
+- 📈 **M132:** Add eurostar transportation
 - 🐞 **B125:** Sort button being shown when there is only 1 destination
 - 🐞 **B124:** Add button being show in destination page
 - 🏆 **F123:** Add planned date and time in destination
@@ -49,8 +49,8 @@
   - *[🏆F118] Adjust destination object strucute (pages)*
   - *[🏆F119] Refactor destination page to fetch data from firestore / configs*
   - *[🏆F120] Improve how embed is loaded + tiktok photo support + fallback for errors*
-  - *[🏆F121] Add option to quickly edit / delete destination on main page (if owner)*
-  - *[🏆F122] Add option to quickly create destination on main page (if owner)*
+  - *[🏆F114] Add option to quickly edit / delete destination on main page (if owner)*
+  - *[🏆F126] Add option to quickly create destination on main page (if owner)*
 - 🐞 **B120:** Fix destinos-select options order
 - ⚔️ **E038:** Add filtering and sorting options to destinations page
 
@@ -80,7 +80,7 @@
 - ⚔️ **E037:** Reduce Firestore document calls
   - *[🏆F111] Create migration for adding document/trip/listing minimal data into user data*
   - *[📈M123] Reduce document calls for index*
-  - *[📈M124] Reduce document calls for edit pages*
+  - *[📈M130] Reduce document calls for edit pages*
   - *[🏆F113] Update set method to be in batches for Firestore (either updates everything or nothing)*
   - *[🏆F112] Adapt backup and restore functions with new user data structure*
 - 🐞 **B103:** When dragging transportations and accommodations, new transportation button glitches out
@@ -98,11 +98,11 @@
 ### November 2025
 
 - ⚔️ **E035:** Protect sensitive trip data (reservation codes)
-  - *[📈M118] Remove all mentions of editors and sharing options (legacy)*
+  - *[📈M131] Remove all mentions of editors and sharing options (legacy)*
   - *[🏆F100] Move HTML elements from expenses into general data (pin)*
   - *[🏆F101] Change how set system works so that it can record protected data*
   - *[🏆F102] Implement new "protected" document logic in js*
-  - *[📈M119] Remove can-edit logic*
+  - *[📈M126] Remove can-edit logic*
   - *[🐞B098] Fields validation and custom checks not working on sets (edit/\*.html)*
   - *[🏆F103] Create database migrations for new structures*
   - *[🐞B076] Import backup function not getting sensitive data*
@@ -541,7 +541,7 @@
 - 📈 **M098:** Change js functions/folder structures to EN-US
 - 🏆 **F047:** Firebase Firestore Rules in Front-End
   - *Security risk exposing rules to user*
-- 🐞❔ **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
+- 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
 - 📈 **M072:** Improve automatic date adjustment in edit trips
 - 📈 **M076:** Automate PRD to DEV data restore (weekly) + Manual Function
 - 📈 **M077:** Weekly PRD Backups + oldest backup exclusion (3 weeks only)
@@ -561,7 +561,7 @@
   - *Switch via function*
   - *Switch via tab*
   - *Lightbox persists (no reload)*
-- ⚔️🚦 **E018:** New Front-End: index.html
+- ⚔️ **E018:** New Front-End: index.html
   - *Waiting for Guilherme's template*
 - 📈 **M106:** Use require in js files
 - ⚔️ **E034:** Frontend code refactoring
@@ -601,9 +601,9 @@
   - *Order by update date in Destinations and Listings*
 - ⚔️ **E014:** Implementation: Wishlist
   - *Find a template online and apply (credit the source)*
-- ⚔️🚦 **E016:** New Front-End: destination.html
+- ⚔️ **E016:** New Front-End: destination.html
   - *Waiting for Guilherme to develop new template version*
-- ⚔️🚦**E017:** New Front-End: view.html
+- ⚔️**E027:** New Front-End: view.html
   - *Waiting for Guilherme's template*
 - 📈 **M104:** All external links should open via window.open
 - 📈 **M087:** Destination load loads everything immediately
@@ -638,3 +638,4 @@
 - 📈 **M114:** Make button / select outlines theme color (view.html)
 - 🐞 **B097:** Fix Image upload module
 - 🏆 **F116:** Destinations data refactoring
+- 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)

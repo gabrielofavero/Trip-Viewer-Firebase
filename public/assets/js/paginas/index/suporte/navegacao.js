@@ -19,7 +19,7 @@ function _destinosEditar(code) {
 }
 
 function _destinosVisualizar(code) {
-  window.open(`view.html?d=${code}`, '_blank');
+  window.open(`destination.html?d=${code}`, '_blank');
 }
 
 function _listagensEditar(code) {

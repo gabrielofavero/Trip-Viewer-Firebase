@@ -55,7 +55,7 @@ async function _registerIfUserNotPresent() {
 
     if (!user) {
         _signOut();
-        _displayError(translate('messages.error.unauthenticated'));
+        _displayError(translate('messages.errors.unauthenticated'));
         return;
     }
 

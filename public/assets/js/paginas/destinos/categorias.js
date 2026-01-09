@@ -11,13 +11,15 @@ function _loadActiveCategory(urlParams) {
 
     function _getFirstCategory() {
         const types = CONFIG.destinos.categorias.ids;
+        const translations = CONFIG.destinos.translation;
         const destinoIDs = Object.keys(FIRESTORE_DESTINOS_DATA);
         for (const type of types) {
-            if (destinoIDs.includes(type)) {
-                return type;
+            value = translations[type];
+            if (destinoIDs.includes(type) && value) {
+                return value;
             }
         }
-        throw translate('messages.error.missing_data');
+        throw translate('messages.errors.missing_data');
     }
 }
 
