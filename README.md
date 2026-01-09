@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 120   | 114  | 1         | 5       |
+| 🐞   | Bug         | B000 | 122   | 115  | 1         | 6       |
 | 🏆   | Feature     | F000 | 99    | 83   | 14        | 2       |
 | 📈   | Improvement | M000 | 128   | 97   | 29        | 2       |
 | ⚔️   | Epic        | E000 | 36    | 24   | 12        | 0       |
@@ -13,7 +13,8 @@
 
 ### High Priority
 
-- 🐞 **B122:** Fix forms issues in edit trip page
+- 🐞 **B116:** Transportation select not loading existing data properly if option is not flight
+- 🐞 **B113:** Function to reload itinerary breaking on edit trip page
 - 🐞 **B119:** Double filter selected on mobile destination drawer
 - 🐞 **B118:** Expenses tab clipping when on mobile
 
@@ -33,6 +34,7 @@
 
 ### January 2026
 
+- 🐞 **B122:** Multiple values of same transportation/accommodation on edit trip itinerary select
 - 🏆 **F125:** Create readme script for formatting and utils
 - 📈 **M128:** Improve deploy management and cache busting
 - 🐞 **B121:** Fix timezone issues

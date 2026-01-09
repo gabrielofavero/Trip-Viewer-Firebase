@@ -78,14 +78,13 @@ function _getInnerProgramacaoSelect(tipo) {
     let ativo = false;
     let options = '';
 
-    if (getID(`habilitado-${tipo}`).checked === true) {
-        for (const j of _getJs(`${tipo}-box`)) {
-            const label = getID(`${tipo}-title-${j}`).innerText;
-            const id = getID(`${tipo}-id-${j}`).value;
-            if (id && label) {
-                ativo = true;
-                options += `<option value="${id}">${label}</option>`;
-            }
+    for (const child of getID(`${tipo}-box`).children) {
+        const j = child.id.split('-')[3];
+        const label = getID(`${tipo}-title-${j}`).innerText;
+        const id = getID(`${tipo}-id-${j}`).value;
+        if (id && label) {
+            ativo = true;
+            options += `<option value="${id}">${label}</option>`;
         }
     }
 
