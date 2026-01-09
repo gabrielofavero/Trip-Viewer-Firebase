@@ -114,7 +114,7 @@ function _loadLightModeLite() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
      THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
-     THEME_COLOR_SECONDARY = _getSecondaryColor('escuro');
+     THEME_COLOR_SECONDARY = _getSecondaryColor('claro');
 
      _loadToggle();
 

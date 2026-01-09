@@ -4,21 +4,21 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 129   | 122  | 2         | 5       |
+| 🐞   | Bug         | B000 | 132   | 123  | 2         | 7       |
 | 🏆   | Feature     | F000 | 126   | 103  | 22        | 1       |
-| 📈   | Improvement | M000 | 132   | 101  | 30        | 1       |
+| 📈   | Improvement | M000 | 131   | 101  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
 
+- 🐞 **B132:** Wrong destination secondary color for default color
+- 🐞 **B131:** Cannot create new trip
 - 🐞 **B129:** Expenses tab clipping when on mobile
 - 🐞 **B126:** Double filter selected on mobile destination drawer
 
 ### Medium Priority
-
-- 📈 **M129:** Improve secondary theme color (dark-mode)
 
 ### Low Priority
 
@@ -31,6 +31,7 @@
 
 ### January 2026
 
+- 🐞 **B130:** Wrong theme color secondary being shown when on light mode for view page
 - 🏆 **F122:** Redirect destination to destination page, not view
 - 🐞 **B128:** Transportation select not loading existing data properly if option is not flight
 - 🐞 **B113:** Function to reload itinerary breaking on edit trip page
