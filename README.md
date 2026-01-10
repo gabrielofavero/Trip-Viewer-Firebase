@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 132   | 125  | 2         | 5       |
+| 🐞   | Bug         | B000 | 132   | 126  | 2         | 4       |
 | 🏆   | Feature     | F000 | 126   | 103  | 22        | 1       |
 | 📈   | Improvement | M000 | 132   | 102  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
@@ -13,7 +13,6 @@
 
 ### High Priority
 
-- 🐞 **B129:** Expenses tab clipping when on mobile
 - 🐞 **B126:** Double filter selected on mobile destination drawer
 
 ### Medium Priority
@@ -29,6 +28,7 @@
 
 ### January 2026
 
+- 🐞 **B129:** Expenses tab clipping when on mobile
 - 📈 **M129:** Improve expenses responsiviness for tablets
 - 🐞 **B131:** Cannot create new trip
 - 🐞 **B132:** Wrong destination secondary color for default color

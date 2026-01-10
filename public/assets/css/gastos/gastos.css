@@ -3,6 +3,9 @@
   --theme-color-hover: #505197;
   --theme-color-secondary: #D5D6E9;
   --subtitle: #4B5563;
+  --box-color: #f1f1f1;
+  --box-color-hover: rgb(236, 235, 235);
+  --border-color: #ccc;
 }
 
 @font-face {
@@ -265,9 +268,42 @@ input[id="radio-gastosViajantes"]:checked~.glider {
   width: 100px;
 }
 
-@media (max-width: 700px) {
-  .tabs {
-    transform: scale(0.6);
+@media (max-width: 630px) {
+  #tabs-container-gastos {
+    padding: 0rem 2rem;
+  }
+
+  #tab-gastos {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    background-color: none;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    transform: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  #tab-gastos .tab {
+    width: auto;
+    min-width: 120px;
+    height: 44px;
+    padding: 0 1rem;
+    border-radius: 99px;
+    background-color: var(--box-color);
+    border: 1px solid var(--border-color);
+    font-size: 0.8rem;
+  }
+
+  #tab-gastos input[type="radio"]:checked + label {
+    background-color: var(--theme-color-secondary);
+    font-weight: bold;
+  }
+
+  #tab-gastos .glider {
+    display: none;
   }
 }
 
@@ -330,16 +366,13 @@ section {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1.5rem;
-  padding-top: 0rem;
-  padding-right: 2rem;
-  padding-left: 2rem;
-  padding-bottom: 2rem;
+  padding: 0rem 2rem 2rem 2rem;
   width: 100%;
 }
 
 @media (max-width: 1025px) and (min-width: 600px){
   .gastos-container {
-    width: 600px;
+    width: 640px;
   }
 }
 
