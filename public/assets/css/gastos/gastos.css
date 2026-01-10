@@ -319,6 +319,13 @@ section {
   margin-bottom: 0;
 }
 
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .gastos-container {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -327,6 +334,13 @@ section {
   padding-right: 2rem;
   padding-left: 2rem;
   padding-bottom: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 1025px) and (min-width: 600px){
+  .gastos-container {
+    width: 600px;
+  }
 }
 
 #conversao {
@@ -338,7 +352,6 @@ section {
 }
 
 @media (min-width: 1300px) {
-
   .gastos-container,
   #conversao {
     padding-right: 10%;

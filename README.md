@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 132   | 125  | 2         | 5       |
 | 🏆   | Feature     | F000 | 126   | 103  | 22        | 1       |
-| 📈   | Improvement | M000 | 131   | 101  | 30        | 0       |
+| 📈   | Improvement | M000 | 132   | 102  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
 
 ## Backlog
@@ -29,6 +29,7 @@
 
 ### January 2026
 
+- 📈 **M129:** Improve expenses responsiviness for tablets
 - 🐞 **B131:** Cannot create new trip
 - 🐞 **B132:** Wrong destination secondary color for default color
 - 🐞 **B130:** Wrong theme color secondary being shown when on light mode for view page
