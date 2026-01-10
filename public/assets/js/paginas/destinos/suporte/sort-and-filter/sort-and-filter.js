@@ -50,6 +50,43 @@ function _loadFilterSortingData(titles) {
     }
 }
 
+// Drawer
+function _deactivateFilterSortContainerButtons() {
+    const container = getID('filter-sort-container');
+    if (!container) return;
+
+    container
+        .querySelectorAll('.filter-sort.active')
+        .forEach(btn => btn.classList.remove('active'));
+}
+
+function _activateFilterSortContainerButton(buttonEl) {
+    if (!buttonEl) return;
+
+    _deactivateFilterSortContainerButtons();
+    buttonEl.classList.add('active');
+}
+
+function _openFilterSortDrawer({ triggerId, getInnerHTML, clickAction, loadAction }) {
+    const trigger = getID(triggerId);
+    const title = trigger.innerText;
+
+    if (_isDrawerOpen() && title === getID('drawerTitle').innerText) {
+        _closeDrawer();
+        return;
+    }
+
+    const actions = {
+        beforeOpen: _closeAddedDestino,
+        click: clickAction,
+        load: loadAction,
+        close: _deactivateFilterSortContainerButtons
+    };
+
+    _openDrawer(title, getInnerHTML(), actions);
+    _activateFilterSortContainerButton(trigger);
+}
+
 // Helpers
 function _shouldDisplayRegions() {
     const regioes = _getDataSet('regiao');

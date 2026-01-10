@@ -1,6 +1,7 @@
 :root {
   --theme-color: #7f75b6;
   --theme-color-secondary: #494852;
+  --theme-color-secondary-hover: #434346;
   --font-color: #E2E2E2;
   --box-color: #404040;
   --box-color-hover: #444444;
@@ -227,11 +228,6 @@ h1::after {
 .option-btn {
   border: 1px solid var(--border-color-alt);
   background: var(--box-color);
-}
-
-.option-btn:hover,
-.option-btn.active {
-  background: var(--theme-color-secondary);
 }
 
 /* Language Selector */

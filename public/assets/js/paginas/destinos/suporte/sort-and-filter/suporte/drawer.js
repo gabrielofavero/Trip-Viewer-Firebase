@@ -1,42 +1,17 @@
+const DRAWER_STATE = {
+    actions: null
+};
+
 // Open and Close Actions
-function _openFilterDrawer() {
-    const title = getID('filter').innerText;
-
-    if (_isDrawerOpen() && title === getID('drawerTitle').innerText) {
-        _closeDrawer();
-        return;
-    }
-
-    const innerHTML = _getFilterDrawerInnerHTML();
-    const actions = {
-        click: _filterDrawerOptionClickAction,
-        load: _filterDrawerOptionLoadAction
-    }
-    _openDrawer(title, innerHTML, actions);
-}
-
-function _openSortDrawer() {
-    const title = getID('sort').innerText;
-
-    if (_isDrawerOpen() && title === getID('drawerTitle').innerText) {
-        _closeDrawer();
-        return;
-    }
-
-    const innerHTML = _getSortDrawerInnerHTML();
-    const actions = {
-        click: _sortDrawerOptionClickAction,
-        load: _sortDrawerOptionLoadAction
-    }
-    _openDrawer(title, innerHTML, actions);
-}
-
 function _openDrawer(titleText, innerHTML, actions) {
-    _closeAddedDestino();
+    actions.beforeOpen?.();
+
     const overlay = getID("overlay");
     const drawer = getID("drawer");
     const title = getID("drawerTitle");
     const content = getID("drawerContent");
+
+    DRAWER_STATE.actions = actions || null;
 
     title.textContent = titleText;
     content.innerHTML = innerHTML;
@@ -50,13 +25,18 @@ function _openDrawer(titleText, innerHTML, actions) {
         button.addEventListener("click", actions.click);
     });
 
-    actions.load();
+    actions.load?.();
 }
 
 function _closeDrawer() {
     const overlay = getID("overlay");
     const drawer = getID("drawer");
+
     drawer.classList.remove("open");
+
+    DRAWER_STATE.actions?.close?.();
+    DRAWER_STATE.actions = null;
+
     setTimeout(() => {
         overlay.style.display = "none";
     }, 280);

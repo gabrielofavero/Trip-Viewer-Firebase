@@ -1,5 +1,6 @@
 const SORT_OPTIONS = {};
 
+// Main Action
 function _sort(render = false) {
   const { type, value } = _getSortPreferences() || {};
 
@@ -8,8 +9,8 @@ function _sort(render = false) {
     const B = _getItem(b.id) || {};
 
     const r = (type === "planned") ?
-        _comparePlanned(a.id, b.id, A, B, value) :
-        _compare(A, B, type, value);
+      _comparePlanned(a.id, b.id, A, B, value) :
+      _compare(A, B, type, value);
 
     if (r !== 0) return r;
     return nameOf(A).localeCompare(nameOf(B));
@@ -78,53 +79,63 @@ function _sort(render = false) {
   }
 }
 
-
+// Options
 function _loadSortOptions(force = false) {
-    if (SORT_OPTIONS[ACTIVE_CATEGORY] && !force) {
-        return;
+  if (SORT_OPTIONS[ACTIVE_CATEGORY] && !force) {
+    return;
+  }
+
+  _loadTitles();
+  _loadFilterSortingData(SORT_OPTIONS.titles);
+
+  SORT_OPTIONS[ACTIVE_CATEGORY] = {};
+  const options = SORT_OPTIONS[ACTIVE_CATEGORY];
+
+  if (_shouldDisplayScores()) {
+    options.scores = {
+      highest_first: translate('destination.sort.scores.highest_first'),
+      lowest_first: translate('destination.sort.scores.lowest_first')
     }
+  }
 
-    _loadTitles();
-    _loadFilterSortingData(SORT_OPTIONS.titles);
-
-    SORT_OPTIONS[ACTIVE_CATEGORY] = {};
-    const options = SORT_OPTIONS[ACTIVE_CATEGORY];
-
-    if (_shouldDisplayScores()) {
-        options.scores = {
-            highest_first: translate('destination.sort.scores.highest_first'),
-            lowest_first: translate('destination.sort.scores.lowest_first')
-        }
+  if (_shouldDisplayPlanned()) {
+    options.planned = {
+      planned_first: translate('destination.sort.planned.planned_first'),
+      not_planned_first: translate('destination.sort.planned.not_planned_first')
     }
+  }
 
-    if (_shouldDisplayPlanned()) {
-        options.planned = {
-            planned_first: translate('destination.sort.planned.planned_first'),
-            not_planned_first: translate('destination.sort.planned.not_planned_first')
-        }
+  if (_shouldDisplayPrices()) {
+    options.prices = {
+      lowest_first: translate('destination.sort.price.lowest_first'),
+      highest_first: translate('destination.sort.price.highest_first')
     }
+  }
 
-    if (_shouldDisplayPrices()) {
-        options.prices = {
-            lowest_first: translate('destination.sort.price.lowest_first'),
-            highest_first: translate('destination.sort.price.highest_first')
-        }
+  options.name = {
+    ascending: translate('destination.sort.name.ascending'),
+    descending: translate('destination.sort.name.descending')
+  }
+
+  function _loadTitles() {
+    if (!SORT_OPTIONS.titles) {
+      SORT_OPTIONS.titles = {
+        name: translate('destination.sort.name.title'),
+        planned: translate('destination.sort.planned.title'),
+        scores: translate('destination.sort.scores.title'),
+        prices: translate('destination.sort.price.title')
+      };
     }
+  }
 
-    options.name = {
-        ascending: translate('destination.sort.name.ascending'),
-        descending: translate('destination.sort.name.descending')
-    }
+}
 
-    function _loadTitles() {
-        if (!SORT_OPTIONS.titles) {
-            SORT_OPTIONS.titles = {
-                name: translate('destination.sort.name.title'),
-                planned: translate('destination.sort.planned.title'),
-                scores: translate('destination.sort.scores.title'),
-                prices: translate('destination.sort.price.title')
-            };
-        }
-    }
-
+// Drawer
+function _openSortDrawer() {
+  _openFilterSortDrawer({
+    triggerId: 'sort',
+    getInnerHTML: _getSortDrawerInnerHTML,
+    clickAction: _sortDrawerOptionClickAction,
+    loadAction: _sortDrawerOptionLoadAction
+  });
 }

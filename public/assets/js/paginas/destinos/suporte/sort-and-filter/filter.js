@@ -1,5 +1,6 @@
 const FILTER_OPTIONS = {}
 
+// Main Action
 function _filter(render = false) {
     const preferences = _getFilterPreferences();
     const isPlannedEnabled = _shouldDisplayPlanned() && preferences.planned !== 'everything';
@@ -63,6 +64,7 @@ function _filter(render = false) {
     }
 }
 
+// Options
 function _loadFilterOptions(force = false) {
     if (FILTER_OPTIONS[ACTIVE_CATEGORY] && !force) {
         return;
@@ -129,3 +131,14 @@ function _loadFilterOptions(force = false) {
         }
     }
 }
+
+// Drawer
+function _openFilterDrawer() {
+    _openFilterSortDrawer({
+        triggerId: 'filter',
+        getInnerHTML: _getFilterDrawerInnerHTML,
+        clickAction: _filterDrawerOptionClickAction,
+        loadAction: _filterDrawerOptionLoadAction
+    });
+}
+

@@ -4,21 +4,18 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 132   | 126  | 2         | 4       |
+| 🐞   | Bug         | B000 | 132   | 127  | 2         | 3       |
 | 🏆   | Feature     | F000 | 126   | 104  | 22        | 0       |
-| 📈   | Improvement | M000 | 132   | 102  | 30        | 0       |
+| 📈   | Improvement | M000 | 133   | 103  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
 
-- 🐞 **B126:** Double filter selected on mobile destination drawer
-
 ### Medium Priority
 
 ### Low Priority
-
 
 - 🐞 **B127:** document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
@@ -28,6 +25,8 @@
 
 ### January 2026
 
+- 📈 **M133:** Add color indicators for when a filter-sort destination button is active
+- 🐞 **B126:** Double filter selected on mobile destination drawer
 - 🏆 **F121:** Add share button to destination page (when not on lightbox)
 - 🐞 **B129:** Expenses tab clipping when on mobile
 - 📈 **M129:** Improve expenses responsiviness for tablets

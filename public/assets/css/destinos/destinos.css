@@ -1,6 +1,7 @@
 :root {
   --theme-color: #5859a7;
   --theme-color-secondary: #D5D6E9;
+  --theme-color-secondary-hover: #E9E9ED;
   --font-color: #272829;
   --box-color: #f1f1f1;
   --box-color-hover: rgb(236, 235, 235);
@@ -946,9 +947,15 @@ h1::after {
   color: var(--font-color);
 }
 
-.option-btn:hover,
-.option-btn.active {
+.option-btn.active,
+.filter-sort.active {
   background: var(--theme-color-secondary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .option-btn:not(.active):hover {
+    background: var(--theme-color-secondary-hover);
+  }
 }
 
 .drawer-title {

@@ -1,6 +1,7 @@
 var THEME_COLOR;
 var THEME_COLOR_HOVER;
 var THEME_COLOR_SECONDARY;
+var THEME_COLOR_SECONDARY_HOVER;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
 var CUSTOM_COLORS = false;
@@ -85,7 +86,10 @@ function _getMixedColor(mainColor, mixColor, mixColorPercentage = 85) {
 function _getSecondaryColor(type) {
     const mainColor = type == 'claro' ? CLARO : ESCURO;
     const mixColor = BOX_COLOR[type];
-    return _getMixedColor(mainColor, mixColor);
+    return {
+        main: _getMixedColor(mainColor, mixColor),
+        hover: _getMixedColor(mainColor, mixColor, 95)
+    }
 }
 
 function _getColorNameFromOptions(i) {

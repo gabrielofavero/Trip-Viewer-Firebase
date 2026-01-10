@@ -68,7 +68,10 @@ function _loadDarkMode() {
      localStorage.setItem("darkMode", true);
      THEME_COLOR = ESCURO;
      THEME_COLOR_HOVER = _getDarkerColor(ESCURO, 10);
-     THEME_COLOR_SECONDARY = _getSecondaryColor('escuro');
+
+     const secondary = _getSecondaryColor('escuro');
+     THEME_COLOR_SECONDARY = secondary.main;
+     THEME_COLOR_SECONDARY_HOVER = secondary.hover;
 
      const name = _getHTMLpage();
      var link = document.createElement("link");
@@ -91,7 +94,10 @@ function _loadLightMode() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
      THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
-     THEME_COLOR_SECONDARY = _getSecondaryColor('claro');
+
+     const secondary = _getSecondaryColor('claro');
+     THEME_COLOR_SECONDARY = secondary.main;
+     THEME_COLOR_SECONDARY_HOVER = secondary.hover;
 
      const name = _getHTMLpage();
      var link = document.createElement("link");
@@ -114,7 +120,10 @@ function _loadLightModeLite() {
      localStorage.setItem("darkMode", false);
      THEME_COLOR = CLARO;
      THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
-     THEME_COLOR_SECONDARY = _getSecondaryColor('claro');
+
+     const secondary = _getSecondaryColor('claro');
+     THEME_COLOR_SECONDARY = secondary.main;
+     THEME_COLOR_SECONDARY_HOVER = secondary.hover;
 
      _loadToggle();
 
