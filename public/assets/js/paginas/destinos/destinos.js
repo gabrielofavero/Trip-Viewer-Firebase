@@ -44,6 +44,7 @@ async function _loadDestinosPage() {
     };
   } else {
     closeButton.style.display = "none";
+    getID('share').style.display = '';
   }
 
   getID("logo-link").onclick = function () {
@@ -243,4 +244,11 @@ function _isPlanned(id) {
 async function _refreshDestino() {
   FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
   _loadDestinoByType(ACTIVE_CATEGORY);
+}
+
+function _share() {
+  const title = FIRESTORE_DESTINOS_DATA.titulo || document.title;
+  const text = translate('destination.share', { name: FIRESTORE_DESTINOS_DATA.titulo });
+  const url = _getPageURL();
+  navigator.share({ title, text, url })
 }

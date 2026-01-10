@@ -108,10 +108,10 @@ function _prepareViewData() {
 
 function _loadInicioFim(data = FIRESTORE_DATA) {
   INICIO.date = _convertFromDateObject(data.inicio);
-  FIM.date    = _convertFromDateObject(data.fim);
+  FIM.date = _convertFromDateObject(data.fim);
 
   INICIO.text = `${data.inicio.day}/${data.inicio.month}`;
-  FIM.text    = `${data.fim.day}/${data.fim.month}`;
+  FIM.text = `${data.fim.day}/${data.fim.month}`;
 }
 
 function _loadHeader() {
@@ -251,14 +251,10 @@ function _loadModules() {
     }
 
     function _compartilhar() {
-      const link = window.location.href.includes('trip-viewer-prd.firebaseapp.com') ?
-        'https://trip-viewer.com' + window.location.pathname + window.location.search : window.location.href;
-
-      navigator.share({
-        title: FIRESTORE_DATA.titulo || document.title,
-        text: _getCompartilhamentoText(),
-        url: link,
-      })
+      const title = FIRESTORE_DATA.titulo || document.title
+      const text = _getCompartilhamentoText();
+      const url = _getPageURL();
+      navigator.share({ title, text, url })
     }
 
     function _getCompartilhamentoText() {
@@ -359,8 +355,8 @@ function _loadModules() {
     function _loadDestinosExclusive() {
       const destinosID = _getURLParam('d');
       const destinos = FIRESTORE_DATA;
-      
-      DESTINOS = [{ destinosID, destinos}];
+
+      DESTINOS = [{ destinosID, destinos }];
       DESTINO_ATIVO = destinosID;
 
       getID("destinos-select").style.display = "none";

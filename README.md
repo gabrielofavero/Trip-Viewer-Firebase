@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 132   | 126  | 2         | 4       |
-| 🏆   | Feature     | F000 | 126   | 103  | 22        | 1       |
+| 🏆   | Feature     | F000 | 126   | 104  | 22        | 0       |
 | 📈   | Improvement | M000 | 132   | 102  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
 
@@ -19,7 +19,7 @@
 
 ### Low Priority
 
-- 🏆 **F121:** Add share button to destination page (when not on lightbox)
+
 - 🐞 **B127:** document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
 - 🐞 **B123:** Main try catchs for pages are failing because main is not async
@@ -28,6 +28,7 @@
 
 ### January 2026
 
+- 🏆 **F121:** Add share button to destination page (when not on lightbox)
 - 🐞 **B129:** Expenses tab clipping when on mobile
 - 📈 **M129:** Improve expenses responsiviness for tablets
 - 🐞 **B131:** Cannot create new trip

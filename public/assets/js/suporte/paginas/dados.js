@@ -605,3 +605,8 @@ async function _normalizeTikTokLink(link) {
     return link;
   }
 }
+
+function _getPageURL() {
+  return window.location.href.includes('trip-viewer-prd.firebaseapp.com') ?
+        'https://trip-viewer.com' + window.location.pathname + window.location.search : window.location.href;
+}
