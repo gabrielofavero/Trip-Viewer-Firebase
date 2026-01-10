@@ -1,18 +1,18 @@
 {
-  "build": 4,
+  "build": 5,
   "projects": {
     "trip-viewer-dev": {
-      "timestamp": "2026-01-10T05:39:30.759183+00:00",
+      "timestamp": "2026-01-10T08:27:10.758167+00:00",
       "version": {
-        "firebase": "28d371928d48b0b7",
-        "system": "2.24.18"
+        "firebase": "8fb4337e67307ab4",
+        "system": "2.24.21"
       }
     },
     "trip-viewer-prd": {
-      "timestamp": "2026-01-10T05:39:49.171433+00:00",
+      "timestamp": "2026-01-10T08:27:30.496893+00:00",
       "version": {
-        "firebase": "045cbf7b6cb23257",
-        "system": "2.24.18"
+        "firebase": "26c874a3f889e6de",
+        "system": "2.24.21"
       }
     }
   }

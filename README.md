@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 132   | 127  | 2         | 3       |
+| 🐞   | Bug         | B000 | 133   | 128  | 2         | 3       |
 | 🏆   | Feature     | F000 | 126   | 104  | 22        | 0       |
 | 📈   | Improvement | M000 | 133   | 103  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
@@ -25,6 +25,7 @@
 
 ### January 2026
 
+- 🐞 **B133:** Single trip destination not loading
 - 📈 **M133:** Add color indicators for when a filter-sort destination button is active
 - 🐞 **B126:** Double filter selected on mobile destination drawer
 - 🏆 **F121:** Add share button to destination page (when not on lightbox)

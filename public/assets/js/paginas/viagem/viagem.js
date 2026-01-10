@@ -347,6 +347,7 @@ function _loadModules() {
 
       if (DESTINOS.length === 1) {
         _setUniqueDestinoText();
+        DESTINO_ATIVO = DESTINOS[0].destinosID;
       };
 
       CALL_SYNC.push(_loadDestinos);
