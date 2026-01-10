@@ -7,7 +7,7 @@ import json
 import re
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -140,7 +140,7 @@ def save_version_json(version_data, project, firebase_version=None):
         system_version = "Unknown"
     
     version_data["projects"][project] = {
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "version": {
             "firebase": firebase_version,
             "system": system_version
