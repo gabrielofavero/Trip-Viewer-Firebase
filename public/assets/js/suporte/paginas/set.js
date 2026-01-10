@@ -41,7 +41,7 @@ async function _setDocumento({ type, checks = [], dataBuildingFunctions = [], ba
     if (DOCUMENT_ID && documentData) {
         ops.update(`${type}/${DOCUMENT_ID}`, documentData);
     } else if (documentData) {
-        const id = ops.create(`${type}/${DOCUMENT_ID}`, documentData);
+        const id = ops.create(type, documentData);
         DOCUMENT_ID = id;
     }
 

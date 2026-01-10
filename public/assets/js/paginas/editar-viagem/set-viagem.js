@@ -121,7 +121,7 @@ function _getCoresObject() {
 async function _getCompartilhamentoObject() {
     return {
         ativo: true,
-        dono: FIRESTORE_DATA ? FIRESTORE_DATA.compartilhamento.dono : await _getUID(),
+        dono: FIRESTORE_DATA && Object.keys(FIRESTORE_DATA).length > 0 ? FIRESTORE_DATA.compartilhamento.dono : await _getUID(),
         editores: []
     }
 }
