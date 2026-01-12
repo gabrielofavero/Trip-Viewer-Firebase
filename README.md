@@ -5,13 +5,19 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 133   | 128  | 2         | 3       |
-| 🏆   | Feature     | F000 | 126   | 104  | 22        | 0       |
-| 📈   | Improvement | M000 | 133   | 103  | 30        | 0       |
-| ⚔️   | Epic        | E000 | 39    | 24   | 15        | 0       |
+| 🏆   | Feature     | F000 | 129   | 104  | 22        | 3       |
+| 📈   | Improvement | M000 | 134   | 103  | 30        | 1       |
+| ⚔️   | Epic        | E000 | 41    | 24   | 15        | 2       |
 
 ## Backlog
 
 ### High Priority
+- ⚔️ **E040:** Integrate Expenses page directly into view
+  - *[🏆F127] Add expenses category in view (+ lightbox)*
+  - *[📈M133] Modify css for view resolution*
+  - *[🏆F127] Pin back and forth for expenses lighbox*
+  - *[🏆F127] Visibility back forth for expenses lighbox*
+- ⚔️ **E041:** Add export page for itinerary
 
 ### Medium Priority
 
