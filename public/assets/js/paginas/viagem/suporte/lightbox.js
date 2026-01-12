@@ -18,6 +18,12 @@ function _openLightbox(link) {
   _refreshVisibility();
 }
 
+function _openCustomLightbox(lightboxID, link) {
+  const lightbox = getID(lightboxID);
+  const iframe = lightbox.querySelector('iframe');
+  iframe.src = link;
+}
+
 function _closeLightbox(redirectToHome = false) {
   _refreshVisibility();
   getID('lightbox').style.display = 'none';

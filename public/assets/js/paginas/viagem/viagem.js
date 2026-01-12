@@ -287,10 +287,11 @@ function _loadModules() {
     localStorage.setItem('gastos', JSON.stringify({ ativo, pin: FIRESTORE_DATA.pin || 'no-pin' }));
 
     if (ativo) {
-      getID('gastos-container').style.display = '';
-      getID('gastos').addEventListener('click', () => {
-        _openLightbox(`expenses.html?g=${_getURLParam('v')}`);
-      });
+      _openCustomLightbox('expenses-lightbox', `expenses.html?g=${_getURLParam('v')}`);
+    } else {
+      getID("expensesNav").innerHTML = "";
+      getID("expenses").innerHTML = "";
+      getID("expenses").style.display = "none";
     }
   }
 

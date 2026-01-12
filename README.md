@@ -6,20 +6,21 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 133   | 128  | 2         | 3       |
 | 🏆   | Feature     | F000 | 129   | 104  | 22        | 3       |
-| 📈   | Improvement | M000 | 134   | 103  | 30        | 1       |
+| 📈   | Improvement | M000 | 134   | 103  | 29        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 24   | 15        | 2       |
 
 ## Backlog
 
 ### High Priority
 - ⚔️ **E040:** Integrate Expenses page directly into view
-  - *[🏆F127] Add expenses category in view (+ lightbox)*
   - *[📈M133] Modify css for view resolution*
   - *[🏆F127] Pin back and forth for expenses lighbox*
   - *[🏆F127] Visibility back forth for expenses lighbox*
 - ⚔️ **E041:** Add export page for itinerary
 
 ### Medium Priority
+
+- 📈 **M098:** Change js folder structures to EN-US
 
 ### Low Priority
 
@@ -31,6 +32,8 @@
 
 ### January 2026
 
+- ⚔️ **E040:** Integrate Expenses page directly into view
+  - *[🏆F127] Add expenses category in view (+ lightbox)*
 - 🐞 **B133:** Single trip destination not loading
 - 📈 **M133:** Add color indicators for when a filter-sort destination button is active
 - 🐞 **B126:** Double filter selected on mobile destination drawer
@@ -547,7 +550,6 @@
 
 ### Discarded (Most will be done on the 2.0 version)
 
-- 📈 **M098:** Change js functions/folder structures to EN-US
 - 🏆 **F047:** Firebase Firestore Rules in Front-End
   - *Security risk exposing rules to user*
 - 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox
