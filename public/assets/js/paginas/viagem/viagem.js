@@ -287,7 +287,7 @@ function _loadModules() {
     localStorage.setItem('gastos', JSON.stringify({ ativo, pin: FIRESTORE_DATA.pin || 'no-pin' }));
 
     if (ativo) {
-      _openCustomLightbox('expenses-lightbox', `expenses.html?g=${_getURLParam('v')}`);
+      _openCustomLightbox('expenses-lightbox', `expenses.html?g=${_getURLParam('v')}&iframe=true`);
     } else {
       getID("expensesNav").innerHTML = "";
       getID("expenses").innerHTML = "";

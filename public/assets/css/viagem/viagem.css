@@ -2031,6 +2031,7 @@ iframe {
   height: 500px;
   border-radius: 8px;
   overflow: hidden;
+  transition: height 300ms ease;
 }
 
 #expenses-lightbox iframe {

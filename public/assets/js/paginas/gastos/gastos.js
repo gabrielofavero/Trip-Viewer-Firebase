@@ -6,6 +6,7 @@ var GASTOS_TOTAIS = {
     gastosDurante: {}
 };
 var GASTO_ATIVO = 'resumo';
+var CONTAINER_MODE = false;
 
 document.addEventListener('DOMContentLoaded', async function () {
     _startLoadingScreen();
@@ -34,7 +35,13 @@ async function _loadGastosPage() {
     };
 
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
-    let documentID = _getURLParam('g');
+    const params = _getURLParams();
+    const documentID = params.g;
+    CONTAINER_MODE = !!params.iframe
+
+    if (CONTAINER_MODE) {
+        _loadContainerMode()
+    }
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
@@ -111,6 +118,11 @@ async function _loadGastos() {
             _displayError(translate('messages.errors.unknown'));
         }
         _stopLoadingScreen();
+    }
+    if (CONTAINER_MODE) {
+        for (const card of document.querySelectorAll('.gastos-card')) {
+            card.classList.add('container-mode');
+        } 
     }
 }
 
@@ -197,4 +209,10 @@ function _setTabListeners() {
             }
         });
     });
+}
+
+function _loadContainerMode() {
+    document.querySelector('.top-bar').style.display = 'none' 
+    document.querySelector('.section-title').style.display = 'none'
+    document.querySelector('.footer').style.display = 'none';
 }

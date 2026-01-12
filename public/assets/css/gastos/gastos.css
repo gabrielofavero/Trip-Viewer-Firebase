@@ -407,6 +407,10 @@ section {
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
 }
 
+.gastos-card.container-mode {
+  box-shadow: 0 8px 24px rgba(110, 123, 131, 0.08);
+}
+
 .card-full-size {
   width: 100%;
 }
