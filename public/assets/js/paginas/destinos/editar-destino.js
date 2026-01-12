@@ -106,7 +106,7 @@ function _add() {
 async function _adjustEditVisibility(j) {
     document.querySelector('.add-container').style.display = '';
     if (j) {
-        getID(`edit-container-${j}`).style.display = display;
+        getID(`edit-container-${j}`).style.display = '';
         return;
     }
 

@@ -25,7 +25,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
 
                     <div class="nice-form-group side-by-side-fixed">
                         <label>
-                            ${translate('labels.start')}<br>
+                            ${translate('labels.end')}<br>
                             <span class="opcional">(${translate('labels.optional')})</span>
                         </label>
                         <input class="flex-input-50-50" id="inner-programacao-fim" type="time">

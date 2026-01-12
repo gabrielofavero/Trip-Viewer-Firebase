@@ -256,12 +256,9 @@ function _addInnerProgramacao(j, k, turno) {
         _replaceTimeIfEnabled();
     }
 
-    if (!programacao.value) {
+    if (!programacao.value || !_validateTravelersFieldset('inner-programacao-travelers')) {
         programacao.reportValidity();
     } else {
-        if (!_validateTravelersFieldset('inner-programacao-travelers')) {
-            return;
-        }
         const innerProgramacao = _buildInnerProgramacao(programacao);
         _setInnerProgramacao(innerProgramacao, j, k, turno);
     }
@@ -370,10 +367,10 @@ async function _loadInnerProgramacaoListeners(j) {
 
     getID(`inner-programacao-select-local`).addEventListener('change', () => _innerProgramacaoSelectLocalAction());
     getID(`inner-programacao-select-categoria`).addEventListener('change', () => _innerProgramacaoSelectCategoriaAction());
-    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTextReplacementCheckboxes());
+    getID('inner-programacao-select-passeio').addEventListener('change', () => _loadTextReplacementCheckboxes(j));
 
-    getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTextReplacementCheckboxes());
-    getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTextReplacementCheckboxes());
+    getID('inner-programacao-select-transporte').addEventListener('change', () => _loadTextReplacementCheckboxes(j));
+    getID('inner-programacao-select-hospedagens').addEventListener('change', () => _loadTextReplacementCheckboxes(j));
 
     getID('inner-programacao-select-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-turno'));
     getID('inner-programacao-select-troca-turno').addEventListener('change', () => _pairTurnos('inner-programacao-select-troca-turno'));

@@ -177,8 +177,12 @@ function _updateTravelersFieldset(id, checkedData = []) {
 }
 
 function _getCheckedTravelersIDs(containerID) {
+    const container = getID(containerID);
+    if (!container) {
+        return [];
+    }
     const result = [];
-    const fieldset = getID(containerID).querySelector('fieldset');
+    const fieldset = container.querySelector('fieldset');
 
     for (const checkBoxContainer of fieldset.children) {
         const label = checkBoxContainer.querySelector('label');
@@ -203,6 +207,10 @@ function _getCheckedTravelersIDs(containerID) {
 }
 
 function _validateTravelersFieldset(id) {
+    const mandatory = getID(`${id}-mandatory`);
+    if (!mandatory) {
+        return true;
+    }
     let isValid = false;
     let j = 1;
     while (getID(`${id}-${j}`)) {
@@ -214,7 +222,7 @@ function _validateTravelersFieldset(id) {
         j++;
     }
     if (!isValid) {
-        getID(`${id}-mandatory`).style.display = 'inline';
+        mandatory.style.display = 'inline';
     }
 
     return isValid;
