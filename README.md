@@ -5,13 +5,14 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 134   | 128  | 2         | 4       |
-| 🏆   | Feature     | F000 | 131   | 109  | 22        | 0       |
+| 🏆   | Feature     | F000 | 132   | 109  | 22        | 1       |
 | 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
 ## Backlog
 
 ### High Priority
+- 🏆 **F132:** Add pre-commit actions (formatting and read-me)
 - *[🐞B134] Fix visibility issues for expenses page*
 - ⚔️ **E041:** Add export page for itinerary
 

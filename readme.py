@@ -7,7 +7,9 @@ Updates task counts, checks for inconsistencies, and calculates version
 import re
 from pathlib import Path
 from collections import defaultdict
+import sys
 
+sys.stdout.reconfigure(encoding="utf-8")
 
 # ANSI color codes
 class Colors:
