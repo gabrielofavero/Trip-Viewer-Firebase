@@ -7,6 +7,25 @@
   resolved "https://registry.npmjs.org/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
+"@biomejs/biome@^2.3.11":
+  version "2.3.11"
+  resolved "https://registry.npmjs.org/@biomejs/biome/-/biome-2.3.11.tgz"
+  integrity sha512-/zt+6qazBWguPG6+eWmiELqO+9jRsMZ/DBU3lfuU2ngtIQYzymocHhKiZRyrbra4aCOoyTg/BmY+6WH5mv9xmQ==
+  optionalDependencies:
+    "@biomejs/cli-darwin-arm64" "2.3.11"
+    "@biomejs/cli-darwin-x64" "2.3.11"
+    "@biomejs/cli-linux-arm64" "2.3.11"
+    "@biomejs/cli-linux-arm64-musl" "2.3.11"
+    "@biomejs/cli-linux-x64" "2.3.11"
+    "@biomejs/cli-linux-x64-musl" "2.3.11"
+    "@biomejs/cli-win32-arm64" "2.3.11"
+    "@biomejs/cli-win32-x64" "2.3.11"
+
+"@biomejs/cli-win32-x64@2.3.11":
+  version "2.3.11"
+  resolved "https://registry.npmjs.org/@biomejs/cli-win32-x64/-/cli-win32-x64-2.3.11.tgz"
+  integrity sha512-43VrG813EW+b5+YbDbz31uUsheX+qFKCpXeY9kfdAx+ww3naKxeVkTD9zLIWxUPfJquANMHrmW3wbe/037G0Qg==
+
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz"

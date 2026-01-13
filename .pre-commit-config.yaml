@@ -1,0 +1,45 @@
+repos:
+  - repo: local
+    hooks:
+      # HTML
+      - id: biome-html
+        name: Format HTML
+        entry: npx biome format --write
+        language: system
+        files: ^public/(edit/)?[^/]+/.*\.html$|^public/.*\.html$
+
+      # JS
+      - id: biome-js
+        name: Format JS
+        entry: npx biome format --write
+        language: system
+        files: ^public/assets/js/.*\.js$
+
+      # JSON
+      - id: biome-json
+        name: Format JSON
+        entry: npx biome format --write
+        language: system
+        files: ^public/assets/json/.*\.json$
+
+      # CSS
+      - id: biome-css
+        name: Format CSS
+        entry: npx biome format --write
+        language: system
+        files: ^public/assets/css/.*\.css$
+
+      # TypeScript (Firebase functions)
+      - id: biome-ts
+        name: Format TypeScript
+        entry: npx biome format --write
+        language: system
+        files: ^functions/src/.*\.ts$
+
+  - repo: local
+    hooks:
+      - id: run-python-script
+        name: Formats README.md
+        entry: python readme.py
+        language: system
+        files: ^README\.md$

@@ -5,14 +5,14 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 134   | 129  | 2         | 3       |
-| 🏆   | Feature     | F000 | 138   | 109  | 22        | 7       |
+| 🏆   | Feature     | F000 | 138   | 111  | 22        | 5       |
 | 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
 ## Backlog
 
 ### High Priority
-- 🏆 **F132:** Add pre-commit actions (formatting and read-me)
+
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Read and format data from itinerary (main)*
@@ -34,6 +34,7 @@
 
 ### January 2026
 
+- 🏆 **F132:** Add pre-commit actions (formatting and read-me)
 - 🏆 **F133:** Add setup script
 - ⚔️ **E040:** Integrate Expenses page directly into view
   - *[🏆F127] Add expenses category in view (+ lightbox)*
