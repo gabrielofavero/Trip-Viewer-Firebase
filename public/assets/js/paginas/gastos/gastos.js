@@ -215,9 +215,9 @@ function _setTabListeners() {
 			const novo = radios.indexOf(radio);
 
 			if (novo > antigo) {
-				_fade([gastoAnterior], [GASTO_ATIVO], 150);
+				_fade([gastoAnterior], [GASTO_ATIVO], 150, false);
 			} else {
-				_fade([gastoAnterior], [GASTO_ATIVO], 150);
+				_fade([gastoAnterior], [GASTO_ATIVO], 150, false);
 			}
 
 			if (GASTOS_EMBED.enabled) {

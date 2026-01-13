@@ -7,6 +7,7 @@ repos:
         entry: npx biome format --write
         language: system
         files: ^public/(edit/)?[^/]+/.*\.html$|^public/.*\.html$
+        always_run: false
 
       # JS
       - id: biome-js
@@ -14,6 +15,7 @@ repos:
         entry: npx biome format --write
         language: system
         files: ^public/assets/js/.*\.js$
+        always_run: false
 
       # JSON
       - id: biome-json
@@ -21,6 +23,7 @@ repos:
         entry: npx biome format --write
         language: system
         files: ^public/assets/json/.*\.json$
+        always_run: false
 
       # CSS
       - id: biome-css
@@ -28,6 +31,7 @@ repos:
         entry: npx biome format --write
         language: system
         files: ^public/assets/css/.*\.css$
+        always_run: false
 
       # TypeScript (Firebase functions)
       - id: biome-ts
@@ -35,6 +39,7 @@ repos:
         entry: npx biome format --write
         language: system
         files: ^functions/src/.*\.ts$
+        always_run: false
 
   - repo: local
     hooks:

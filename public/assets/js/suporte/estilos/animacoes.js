@@ -1,40 +1,47 @@
-function _animate(fadeIn, fadeOut, from = 0, to = 0, horizontal = true) {
+function _animate(
+	fadeIn,
+	fadeOut,
+	from = 0,
+	to = 0,
+	horizontal = true,
+	isBlock = true,
+) {
 	const forward = horizontal ? "left" : "down";
 	const backwards = horizontal ? "right" : "up";
 
 	if (fadeIn && fadeOut) {
 		if (from == to) {
-			_fade(fadeOut, fadeIn);
+			_fade(fadeOut, fadeIn, isBlock);
 		} else if (from > to) {
-			_swipe(fadeOut, fadeIn, backwards);
+			_swipe(fadeOut, fadeIn, backwards, isBlock);
 		} else {
-			_swipe(fadeOut, fadeIn, forward);
+			_swipe(fadeOut, fadeIn, forward, isBlock);
 		}
 	} else if (fadeIn) {
 		if (from == to) {
-			_fadeIn(fadeIn);
+			_fadeIn(fadeIn, isBlock);
 		} else if (from > to) {
-			_swipeIn(fadeIn, backwards);
+			_swipeIn(fadeIn, backwards, isBlock);
 		} else {
-			_swipeIn(fadeIn, forward);
+			_swipeIn(fadeIn, forward, isBlock);
 		}
 	}
 }
 
-function _animateRight(fadeIn, fadeOut) {
-	_animate(fadeIn, fadeOut, 0, 1, true);
+function _animateRight(fadeIn, fadeOut, isBlock = true) {
+	_animate(fadeIn, fadeOut, 0, 1, true, isBlock);
 }
 
-function _animateLeft(fadeIn, fadeOut) {
-	_animate(fadeIn, fadeOut, 1, 0, true);
+function _animateLeft(fadeIn, fadeOut, isBlock = true) {
+	_animate(fadeIn, fadeOut, 1, 0, true, isBlock);
 }
 
-function _animateUp(fadeIn, fadeOut) {
-	_animate(fadeIn, fadeOut, 1, 0, false);
+function _animateUp(fadeIn, fadeOut, isBlock = true) {
+	_animate(fadeIn, fadeOut, 1, 0, false, isBlock);
 }
 
-function _animateDown(fadeIn, fadeOut) {
-	_animate(fadeIn, fadeOut, 0, 1, false);
+function _animateDown(fadeIn, fadeOut, isBlock = true) {
+	_animate(fadeIn, fadeOut, 0, 1, false, isBlock);
 }
 
 // Fade
@@ -53,12 +60,12 @@ function _fadeOut(elementIds, mili = 250) {
 	});
 }
 
-function _fadeIn(elementIds, mili = 250) {
+function _fadeIn(elementIds, mili = 250, isBlock = true) {
 	elementIds.forEach(function (id) {
 		var $element = $("#" + id);
 		$element
 			.css({
-				display: "",
+				display: isBlock ? "block" : "",
 				opacity: 0,
 			})
 			.animate(
@@ -70,10 +77,10 @@ function _fadeIn(elementIds, mili = 250) {
 	});
 }
 
-function _fade(fadeOutIds, fadeInIds, duration = 250) {
+function _fade(fadeOutIds, fadeInIds, duration = 250, isBlock = true) {
 	_fadeOut(fadeOutIds);
 	setTimeout(function () {
-		_fadeIn(fadeInIds);
+		_fadeIn(fadeInIds, isBlock);
 	}, duration);
 }
 
@@ -93,7 +100,7 @@ function _swipeOut(elementIds, direction) {
 	});
 }
 
-function _swipeIn(elementIds, direction) {
+function _swipeIn(elementIds, direction, isBlock = true) {
 	const transformInStart = _getSwipeDirection(direction, true);
 	const transformInEnd = "translateX(0) translateY(0)"; // Reset to original position
 
@@ -101,7 +108,7 @@ function _swipeIn(elementIds, direction) {
 		const $element = $("#" + id);
 		// Initially set to start position and invisible
 		$element.css({
-			display: "",
+			display: isBlock ? "block" : "",
 			transition: "none", // Disable transition for initial state
 			transform: transformInStart,
 			opacity: "0",
@@ -133,7 +140,7 @@ function _getSwipeDirection(direction, isEntering) {
 	}
 }
 
-function _swipe(swipeOutIds, swipeInIds, direction) {
+function _swipe(swipeOutIds, swipeInIds, direction, isBlock = true) {
 	_swipeOut(swipeOutIds, direction);
-	setTimeout(() => _swipeIn(swipeInIds, direction), 500);
+	setTimeout(() => _swipeIn(swipeInIds, direction, isBlock), 500);
 }

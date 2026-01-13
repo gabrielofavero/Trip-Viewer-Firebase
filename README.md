@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 134   | 129  | 2         | 3       |
 | 🏆   | Feature     | F000 | 138   | 111  | 22        | 5       |
-| 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
+| 📈   | Improvement | M000 | 134   | 104  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
 ## Backlog
@@ -21,8 +21,6 @@
   - *[🏆F138] Notes export*
 
 ### Medium Priority
-
-- 📈 **M098:** Change js folder structures to EN-US
 
 ### Low Priority
 
@@ -660,3 +658,4 @@
 - 🐞 **B097:** Fix Image upload module
 - 🏆 **F116:** Destinations data refactoring
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
+- 📈 **M098:** Change js folder structures to EN-US
