@@ -53,7 +53,7 @@ function _fadeIn(elementIds, mili = 250) {
     elementIds.forEach(function (id) {
         var $element = $('#' + id);
         $element.css({
-            'display': 'block',
+            'display': '',
             'opacity': 0
         }).animate({
             opacity: 1
@@ -92,7 +92,7 @@ function _swipeIn(elementIds, direction) {
         const $element = $('#' + id);
         // Initially set to start position and invisible
         $element.css({
-            'display': 'block',
+            'display': '',
             'transition': 'none', // Disable transition for initial state
             'transform': transformInStart,
             'opacity': '0'

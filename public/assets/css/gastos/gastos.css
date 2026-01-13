@@ -6,6 +6,7 @@
   --box-color: #f1f1f1;
   --box-color-hover: rgb(236, 235, 235);
   --border-color: #ccc;
+  --text-color: #272829;
 }
 
 @font-face {
@@ -15,7 +16,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  color: #272829;
+  color: var(--text-color);
   background: #fff;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;

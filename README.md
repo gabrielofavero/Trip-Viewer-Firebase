@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 134   | 128  | 2         | 4       |
+| 🐞   | Bug         | B000 | 134   | 129  | 2         | 3       |
 | 🏆   | Feature     | F000 | 138   | 109  | 22        | 7       |
 | 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
@@ -14,7 +14,6 @@
 ### High Priority
 - 🏆 **F132:** Add pre-commit actions (formatting and read-me)
 - 🏆 **F133:** Add setup script
-- *[🐞B134] Fix visibility issues for expenses page*
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Read and format data from itinerary (main)*
@@ -43,6 +42,7 @@
   - *[🏆F129] Adjust expenses iframe height according to content*
   - *[🏆F130] Pin back and forth for expenses lighbox*
   - *[🏆F131] Visibility back forth for expenses lighbox*
+  - *[🐞B134] Fix visibility issues for expenses page*
 - 🐞 **B133:** Single trip destination not loading
 - 📈 **M133:** Add color indicators for when a filter-sort destination button is active
 - 🐞 **B126:** Double filter selected on mobile destination drawer
