@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 134   | 128  | 2         | 4       |
-| 🏆   | Feature     | F000 | 132   | 109  | 22        | 1       |
+| 🏆   | Feature     | F000 | 138   | 109  | 22        | 7       |
 | 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
@@ -13,8 +13,14 @@
 
 ### High Priority
 - 🏆 **F132:** Add pre-commit actions (formatting and read-me)
+- 🏆 **F133:** Add setup script
 - *[🐞B134] Fix visibility issues for expenses page*
-- ⚔️ **E041:** Add export page for itinerary
+- ⚔️ **E041:** Full Itinerary page
+  - *[🏆F134] Create HTML and CSS*
+  - *[🏆F135] Read and format data from itinerary (main)*
+  - *[🏆F136] Read and format data from itinerary (associated)*
+  - *[🏆F137] Print / PDF Export*
+  - *[🏆F138] Notes export*
 
 ### Medium Priority
 
@@ -176,7 +182,7 @@
 ### June 2025
 
 - 🏆 **F072:** Multi-person tickets
-- 🏆 **F086:** [⚔️E030] Export All + Import all (Functions Only)
+- 🏆 **F086:** Account Export All + Import all (Functions Only)
 - ⚔️ **E033:** Create language system + EN-US
 
 ### May 2025
@@ -254,7 +260,7 @@
   - *Error loading sortable.min.js*
   - *Customization switches not loading correctly*
 - 🏆 **F064:** Disable zoom in webview
-- 📈 **M0085:** Itinerary improvement
+- 📈 **M085:** Itinerary improvement
   - *Automate start and end times*
   - *Better display of associated item*
 - 🐞 **B059:** Slow load in index.html not showing elements correctly
