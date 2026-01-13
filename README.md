@@ -13,7 +13,6 @@
 
 ### High Priority
 - 🏆 **F132:** Add pre-commit actions (formatting and read-me)
-- 🏆 **F133:** Add setup script
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Read and format data from itinerary (main)*
@@ -35,6 +34,7 @@
 
 ### January 2026
 
+- 🏆 **F133:** Add setup script
 - ⚔️ **E040:** Integrate Expenses page directly into view
   - *[🏆F127] Add expenses category in view (+ lightbox)*
   - *[📈M134] Modify css for view resolution*
