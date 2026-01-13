@@ -264,3 +264,22 @@ function _pinListenerAction(event) {
 function _removePinListener() {
   document.removeEventListener('keydown', _pinListenerAction);
 }
+
+function _setManualPin(pinString) {
+  if (!/^\d{4}$/.test(pinString)) return;
+
+  const inputs = document.querySelectorAll('.pin-wrapper [data-role="pin"]');
+  if (inputs.length !== 4) return;
+
+  pin = pinString;
+
+  inputs.forEach(input => {
+    input.value = '•';
+  });
+
+  if (typeof settings !== "undefined" && settings.onSuccess) {
+    settings.onSuccess();
+  } else {
+    document.querySelector('.pin').innerHTML = pin;
+  }
+}

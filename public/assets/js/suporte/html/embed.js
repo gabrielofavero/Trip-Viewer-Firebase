@@ -1,5 +1,11 @@
 function _loadEmbedListeners(action) {
-  window.addEventListener("message", (e) => _onEmbedMessage(e, action));
+  window.addEventListener("message", (e) => {
+    const current = _getOrigin().toUpperCase();
+    const eventType = e?.data?.type || 'unknown';
+    const origin = e?.data?.page || 'unknown';
+    console.log(`[${current}] Received "${eventType}" event from "${origin}" page`)
+    _onEmbedMessage(e, action)
+  });
 }
 
 function _openEmbed({ frameID, url, beforeOpen, onLoad, afterOpen, newTab = false }) {
@@ -32,19 +38,18 @@ function _onEmbedMessage(event, action) {
 }
 
 function _sendToParent(type, value) {
-  const page = window.location.pathname.replace('/', '');
+  const page = _getOrigin();
   window.parent.postMessage({ page, type, value }, window.location.origin);
 }
 
-function _sendToEmbed(type, value) {
-  const iframe = document.querySelector("#expenses-lightbox iframe");
-  if (!iframe || !iframe.contentWindow) return;
+function _sendToEmbed(frameID, type, value) {
+  const frame = getID(frameID);
+  if (!frame || !frame.contentWindow) return;
+  const page = _getOrigin();
 
-  iframe.contentWindow.postMessage(
-    {
-      type,
-      value
-    },
-    window.location.origin
-  );
+  frame.contentWindow.postMessage({ page, type, value }, window.location.origin);
+}
+
+function _getOrigin() {
+  return window.location.pathname.replace('/', '');
 }

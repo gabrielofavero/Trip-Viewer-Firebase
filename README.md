@@ -5,15 +5,13 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 133   | 128  | 2         | 3       |
-| 🏆   | Feature     | F000 | 129   | 104  | 22        | 3       |
-| 📈   | Improvement | M000 | 134   | 103  | 29        | 2       |
-| ⚔️   | Epic        | E000 | 41    | 24   | 15        | 2       |
+| 🏆   | Feature     | F000 | 131   | 108  | 22        | 1       |
+| 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
+| ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
 ## Backlog
 
 ### High Priority
-- ⚔️ **E040:** Integrate Expenses page directly into view
-  - *[🏆F130] Pin back and forth for expenses lighbox*
   - *[🏆F131] Visibility back forth for expenses lighbox*
 - ⚔️ **E041:** Add export page for itinerary
 
@@ -33,9 +31,10 @@
 
 - ⚔️ **E040:** Integrate Expenses page directly into view
   - *[🏆F127] Add expenses category in view (+ lightbox)*
-  - *[📈M133] Modify css for view resolution*
+  - *[📈M134] Modify css for view resolution*
   - *[🏆F128] Make embed (lightbox) logic generic*
   - *[🏆F129] Adjust expenses iframe height according to content*
+  - *[🏆F130] Pin back and forth for expenses lighbox*
 - 🐞 **B133:** Single trip destination not loading
 - 📈 **M133:** Add color indicators for when a filter-sort destination button is active
 - 🐞 **B126:** Double filter selected on mobile destination drawer

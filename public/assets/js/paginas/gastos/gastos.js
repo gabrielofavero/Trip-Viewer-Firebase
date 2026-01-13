@@ -107,6 +107,9 @@ async function _loadGastos() {
             getID('conversao').innerText = _getConversaoText();
             _setTabListeners();
             _stopLoadingScreen();
+            if (IS_EMBED) {
+                _embedAfterLoadAction(pin);
+            }
         }
     } catch (error) {
         if (error?.message == 'Missing or insufficient permissions.') {
@@ -117,9 +120,6 @@ async function _loadGastos() {
             _displayError(translate('messages.errors.unknown'));
         }
         _stopLoadingScreen();
-    }
-    if (IS_EMBED) {
-        _embedAfterLoadAction();
     }
 }
 

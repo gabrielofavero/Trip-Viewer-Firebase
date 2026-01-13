@@ -287,14 +287,8 @@ function _loadModules() {
     localStorage.setItem('gastos', JSON.stringify({ ativo, pin: FIRESTORE_DATA.pin || 'no-pin' }));
 
     if (ativo) {
-      _openEmbed({
-        frameID: 'expenses-embed-frame',
-        url: `expenses.html?visibility=${_getVisibility()}&embed=1&g=${_getURLParam('v')}`
-      })
-      const action = (data) => {
-        getID('expenses-embed').style.height = `${data.value}px`; 
-      }
-      _loadEmbedListeners(action);
+      _openExpensesEmbed();
+      _loadExpensesEmbed();
     } else {
       getID("expensesNav").innerHTML = "";
       getID("expenses").innerHTML = "";
@@ -432,40 +426,4 @@ function _loadProtectedData(firestoreData) {
   _loadHeaderImageAndLogo(firestoreData);
   _loadVisibility(firestoreData);
   _requestDocumentPin();
-}
-
-async function _protectedDataConfirmAction(afterAction = _setFirestoreData) {
-  PIN = getID('pin-code')?.innerText || '';
-  _closeMessage();
-  const adjustLoadables = false;
-  _startLoadingScreen({ adjustLoadables });
-  const invalido = true;
-
-  if (!PIN) {
-    _requestDocumentPin({ invalido });
-    return;
-  }
-
-  const path = `${TYPE}/protected/${PIN}/${_getURLParam(TYPE[0])}`;
-  const firestoreData = await _get(path);
-
-  if (!ERROR_FROM_GET_REQUEST && !firestoreData) {
-    _requestDocumentPin({ invalido });
-    return;
-  }
-
-  if (ERROR_FROM_GET_REQUEST) {
-    _displayError(_getErrorFromGetRequestMessage(), true);
-    const adjustLoadables = false;
-    _stopLoadingScreen({ adjustLoadables });
-    return;
-  }
-
-  afterAction(firestoreData);
-}
-
-function _requestDocumentPin({ invalido = false, confirmAction = `_protectedDataConfirmAction()` } = {}) {
-  const precontent = translate('messages.protected');
-  _stopLoadingScreen();
-  _requestPin({ confirmAction, precontent, invalido })
 }

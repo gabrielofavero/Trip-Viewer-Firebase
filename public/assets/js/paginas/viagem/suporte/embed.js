@@ -39,6 +39,27 @@ function _closeViewEmbed(redirectToHome = false) {
   }
 }
 
+function _loadExpensesEmbed() {
+  const action = (data) => {
+    switch (data.type) {
+      case 'height':
+        getID('expenses-embed').style.height = `${data.value}px`;
+        return;
+      case 'pin':
+        if (PIN || !data.value || data.value.length != 4) return;
+        _updateProtectedDataFromExternalPin(data.value);
+    }
+  }
+  _loadEmbedListeners(action);
+}
+
+function _openExpensesEmbed() {
+  _openEmbed({
+    frameID: 'expenses-embed-frame',
+    url: `expenses.html?visibility=${_getVisibility()}&embed=1&g=${_getURLParam('v')}`
+  })
+}
+
 function _loadImageLightbox(className) {
   GLightbox({
     selector: `.${className}`,
@@ -48,4 +69,8 @@ function _loadImageLightbox(className) {
     width: 'auto',
     height: 'auto'
   });
+}
+
+function _sendToExpenses(type, value) {
+  _sendToEmbed('expenses-embed-frame', type, value);
 }
