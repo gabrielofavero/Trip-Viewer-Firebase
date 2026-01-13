@@ -227,3 +227,9 @@ function _mainView() {
     })
   });
 }
+
+function _loadViagemCustomVisibilityRules() {
+  if (ACTIVE_EMBEDS['expenses'] === true) {
+    _sendToExpenses('visibility', _getVisibility());
+  }
+}

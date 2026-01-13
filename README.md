@@ -4,15 +4,15 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 133   | 128  | 2         | 3       |
-| 🏆   | Feature     | F000 | 131   | 108  | 22        | 1       |
+| 🐞   | Bug         | B000 | 134   | 128  | 2         | 4       |
+| 🏆   | Feature     | F000 | 131   | 109  | 22        | 0       |
 | 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
 ## Backlog
 
 ### High Priority
-  - *[🏆F131] Visibility back forth for expenses lighbox*
+- *[🐞B134] Fix visibility issues for expenses page*
 - ⚔️ **E041:** Add export page for itinerary
 
 ### Medium Priority
@@ -35,6 +35,7 @@
   - *[🏆F128] Make embed (lightbox) logic generic*
   - *[🏆F129] Adjust expenses iframe height according to content*
   - *[🏆F130] Pin back and forth for expenses lighbox*
+  - *[🏆F131] Visibility back forth for expenses lighbox*
 - 🐞 **B133:** Single trip destination not loading
 - 📈 **M133:** Add color indicators for when a filter-sort destination button is active
 - 🐞 **B126:** Double filter selected on mobile destination drawer

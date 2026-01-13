@@ -3,7 +3,6 @@ var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
 var LOGO_ESCURO = "";
 
-// 
 function _loadVisibility(data = FIRESTORE_DATA) {
      try {
           if (data && data.cores && data.cores.ativo) {
@@ -85,9 +84,7 @@ function _loadDarkMode() {
 
      _loadTripViewerLogo();
 
-     if (_isCustomColorsActive()) {
-          _applyCustomVisibilityRules();
-     }
+     _applyCustomVisibilityRules();
 }
 
 function _loadLightMode() {
@@ -111,9 +108,7 @@ function _loadLightMode() {
 
      _loadTripViewerLogo();
 
-     if (_isCustomColorsActive()) {
-          _applyCustomVisibilityRules();
-     }
+     _applyCustomVisibilityRules();
 }
 
 function _loadLightModeLite() {
@@ -129,9 +124,7 @@ function _loadLightModeLite() {
 
      _loadTripViewerLogo();
 
-     if (_isCustomColorsActive()) {
-          _applyCustomVisibilityRules();
-     }
+     _applyCustomVisibilityRules();
 }
 
 function _loadTripViewerLogo() {
@@ -206,24 +199,36 @@ function _autoVisibility() {
 
 function _applyCustomVisibilityRules() {
      const html = _getHTMLpage()
-     _clearCustomColors();
+
+     if (_isCustomColorsActive()) {
+          _applyCustomColorsVisibilityRules(html)
+     }
+
      switch (html) {
           case 'viagem':
-               _loadLogoColors();
-               _applyCustomColors();
-               _loadTransporteImagens();
-               break;
-          case 'destinos':
-               _loadLogoColors();
-               _applyAccordionArrowCustomColor();
-               _applyCustomColors();
-               break;
-          case 'gastos':
-               _loadLogoColors();
-               _applyCustomColors();
-               _changeChartsLabelsVisibility();
-               _loadMoedasTab();
-               break;
+               _loadViagemCustomVisibilityRules();
+     }
+
+     function _applyCustomColorsVisibilityRules(html) {
+          _clearCustomColors();
+          switch (html) {
+               case 'viagem':
+                    _loadLogoColors();
+                    _applyCustomColors();
+                    _loadTransporteImagens();
+                    break;
+               case 'destinos':
+                    _loadLogoColors();
+                    _applyAccordionArrowCustomColor();
+                    _applyCustomColors();
+                    break;
+               case 'gastos':
+                    _loadLogoColors();
+                    _applyCustomColors();
+                    _changeChartsLabelsVisibility();
+                    _loadMoedasTab();
+                    break;
+          }
      }
 }
 
@@ -247,7 +252,7 @@ function _hasCSSRule(selector, property) {
      let styleElement = document.getElementById('custom-styles');
 
      if (!styleElement) {
-          return false; // Nenhum estilo customizado foi encontrado
+          return false;
      }
 
      const styleSheet = styleElement.sheet;
@@ -386,11 +391,20 @@ function _getVisibility() {
      return _isOnDarkMode() ? 'dark' : 'light';
 }
 
-function _loadExternalVisibility(visibility) {
-     const isOnDarkMode = _isOnDarkMode();
-     if (visibility === 'dark' && !isOnDarkMode) {
+function _loadExternalVisibility(external, internal) {
+     internal = internal || _getVisibility();
+
+     if (!internal || !external || internal === external) {
+          return;
+     }
+
+     if (external == 'dark') {
           _loadDarkMode();
-     } else if (visibility === 'light' && isOnDarkMode) {
+          return;
+     }
+
+     if (external === 'light') {
           _loadLightMode();
+          return;
      }
 }

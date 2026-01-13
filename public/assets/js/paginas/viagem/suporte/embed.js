@@ -1,4 +1,5 @@
 var SAVED_SCROLL_POSITION = 0;
+const ACTIVE_EMBEDS = {};
 
 function _openViewEmbed(url) {
   const frameID = 'lightbox-iframe';
@@ -51,6 +52,7 @@ function _loadExpensesEmbed() {
     }
   }
   _loadEmbedListeners(action);
+  ACTIVE_EMBEDS['expenses'] = true;
 }
 
 function _openExpensesEmbed() {

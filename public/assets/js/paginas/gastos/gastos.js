@@ -36,9 +36,9 @@ async function _loadGastosPage() {
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
     const params = _getURLParams();
     const documentID = params.g;
-    IS_EMBED = params.embed === '1'
+    GASTOS_EMBED.enabled = params.embed === '1'
 
-    if (IS_EMBED) {
+    if (GASTOS_EMBED.enabled && !GASTOS_EMBED.applied) {
         _loadEmbedMode(params.visibility)
     }
 
@@ -107,7 +107,7 @@ async function _loadGastos() {
             getID('conversao').innerText = _getConversaoText();
             _setTabListeners();
             _stopLoadingScreen();
-            if (IS_EMBED) {
+            if (GASTOS_EMBED.enabled) {
                 _embedAfterLoadAction(pin);
             }
         }
@@ -205,7 +205,7 @@ function _setTabListeners() {
                 _fade([gastoAnterior], [GASTO_ATIVO], 150);
             }
 
-            if (IS_EMBED) {
+            if (GASTOS_EMBED.enabled) {
                 _sendHeightMessageToParent();
             }
         });
