@@ -4,22 +4,26 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 133   | 128  | 2         | 3       |
-| 🏆   | Feature     | F000 | 129   | 104  | 22        | 3       |
-| 📈   | Improvement | M000 | 134   | 103  | 30        | 1       |
-| ⚔️   | Epic        | E000 | 41    | 24   | 15        | 2       |
+| 🐞   | Bug         | B000 | 134   | 129  | 2         | 3       |
+| 🏆   | Feature     | F000 | 138   | 109  | 22        | 7       |
+| 📈   | Improvement | M000 | 134   | 104  | 29        | 1       |
+| ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
 ## Backlog
 
 ### High Priority
-- ⚔️ **E040:** Integrate Expenses page directly into view
-  - *[🏆F127] Add expenses category in view (+ lightbox)*
-  - *[📈M133] Modify css for view resolution*
-  - *[🏆F127] Pin back and forth for expenses lighbox*
-  - *[🏆F127] Visibility back forth for expenses lighbox*
-- ⚔️ **E041:** Add export page for itinerary
+- 🏆 **F132:** Add pre-commit actions (formatting and read-me)
+- 🏆 **F133:** Add setup script
+- ⚔️ **E041:** Full Itinerary page
+  - *[🏆F134] Create HTML and CSS*
+  - *[🏆F135] Read and format data from itinerary (main)*
+  - *[🏆F136] Read and format data from itinerary (associated)*
+  - *[🏆F137] Print / PDF Export*
+  - *[🏆F138] Notes export*
 
 ### Medium Priority
+
+- 📈 **M098:** Change js folder structures to EN-US
 
 ### Low Priority
 
@@ -31,6 +35,14 @@
 
 ### January 2026
 
+- ⚔️ **E040:** Integrate Expenses page directly into view
+  - *[🏆F127] Add expenses category in view (+ lightbox)*
+  - *[📈M134] Modify css for view resolution*
+  - *[🏆F128] Make embed (lightbox) logic generic*
+  - *[🏆F129] Adjust expenses iframe height according to content*
+  - *[🏆F130] Pin back and forth for expenses lighbox*
+  - *[🏆F131] Visibility back forth for expenses lighbox*
+  - *[🐞B134] Fix visibility issues for expenses page*
 - 🐞 **B133:** Single trip destination not loading
 - 📈 **M133:** Add color indicators for when a filter-sort destination button is active
 - 🐞 **B126:** Double filter selected on mobile destination drawer
@@ -170,7 +182,7 @@
 ### June 2025
 
 - 🏆 **F072:** Multi-person tickets
-- 🏆 **F086:** [⚔️E030] Export All + Import all (Functions Only)
+- 🏆 **F086:** Account Export All + Import all (Functions Only)
 - ⚔️ **E033:** Create language system + EN-US
 
 ### May 2025
@@ -248,7 +260,7 @@
   - *Error loading sortable.min.js*
   - *Customization switches not loading correctly*
 - 🏆 **F064:** Disable zoom in webview
-- 📈 **M0085:** Itinerary improvement
+- 📈 **M085:** Itinerary improvement
   - *Automate start and end times*
   - *Better display of associated item*
 - 🐞 **B059:** Slow load in index.html not showing elements correctly
@@ -547,7 +559,6 @@
 
 ### Discarded (Most will be done on the 2.0 version)
 
-- 📈 **M098:** Change js functions/folder structures to EN-US
 - 🏆 **F047:** Firebase Firestore Rules in Front-End
   - *Security risk exposing rules to user*
 - 🐞 **B031:** Fix gallery image from twitter opening with wrong proportions in GLightbox

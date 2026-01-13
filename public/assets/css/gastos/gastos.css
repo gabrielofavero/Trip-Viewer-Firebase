@@ -6,6 +6,7 @@
   --box-color: #f1f1f1;
   --box-color-hover: rgb(236, 235, 235);
   --border-color: #ccc;
+  --text-color: #272829;
 }
 
 @font-face {
@@ -15,7 +16,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  color: #272829;
+  color: var(--text-color);
   background: #fff;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
@@ -297,7 +298,7 @@ input[id="radio-gastosViajantes"]:checked~.glider {
     font-size: 0.8rem;
   }
 
-  #tab-gastos input[type="radio"]:checked + label {
+  #tab-gastos input[type="radio"]:checked+label {
     background-color: var(--theme-color-secondary);
     font-weight: bold;
   }
@@ -370,7 +371,7 @@ section {
   width: 100%;
 }
 
-@media (max-width: 1025px) and (min-width: 600px){
+@media (max-width: 1025px) and (min-width: 600px) {
   .gastos-container {
     width: 640px;
   }
@@ -385,6 +386,7 @@ section {
 }
 
 @media (min-width: 1300px) {
+
   .gastos-container,
   #conversao {
     padding-right: 10%;
@@ -405,6 +407,10 @@ section {
   border: 1px solid #D9D9D9;
   background-color: #fff;
   box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+}
+
+.gastos-card.container-mode {
+  box-shadow: 0 8px 24px rgba(110, 123, 131, 0.08);
 }
 
 .card-full-size {
@@ -435,6 +441,7 @@ section {
   .grafico {
     grid-column: span 4 / span 4;
   }
+
   .grafico-wide {
     grid-column: span 8 / span 8;
   }

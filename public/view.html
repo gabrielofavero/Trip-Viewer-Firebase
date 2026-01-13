@@ -121,43 +121,65 @@
       <nav id="navbar" class="navbar nav-menu">
         <ul>
 
-          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li>
+            <a href="#hero" class="nav-link scrollto active">
+              <i class="bx bx-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
 
-          <div id="keypointsNav">
-            <li><a href="#keypoints" class="nav-link scrollto"><i class="bx bx-dots-horizontal-rounded"></i>
-                <span data-translate="labels.highlights"></span></a></li>
-          </div>
+          <li id="keypointsNav">
+            <a href="#keypoints" class="nav-link scrollto">
+              <i class="bx bx-dots-horizontal-rounded"></i>
+              <span data-translate="labels.highlights"></span>
+            </a>
+          </li>
 
-          <div id="transportationNav">
-            <li><a href="#transportation" class="nav-link scrollto"><i id="transporte-nav" class="iconify"
-                  data-icon="mingcute:rocket-fill"></i>
-                <span data-translate="trip.transportation.title"></span></a></li>
-          </div>
+          <li id="expensesNav">
+            <a href="#expenses" class="nav-link scrollto">
+              <i class="iconify" data-icon="mdi:dollar"></i>
+              <span data-translate="trip.expenses.title"></span>
+            </a>
+          </li>
 
-          <div id="stayNav">
-            <li><a href="#stay" class="nav-link scrollto"><i class="bx bxs-hotel"></i>
-                <span data-translate="trip.accommodation.title"></span></a>
-            </li>
-          </div>
+          <li id="transportationNav">
+            <a href="#transportation" class="nav-link scrollto">
+              <i class="iconify" data-icon="mingcute:rocket-fill"></i>
+              <span data-translate="trip.transportation.title"></span>
+            </a>
+          </li>
 
-          <div id="scheduleCalendarNav">
-            <li><a href="#scheduleCalendar" class="nav-link scrollto"><i class="bx bx-calendar"></i>
-                <span data-translate="trip.itinerary.title"></span></a></li>
-          </div>
+          <li id="stayNav">
+            <a href="#stay" class="nav-link scrollto">
+              <i class="bx bxs-hotel"></i>
+              <span data-translate="trip.accommodation.title"></span>
+            </a>
+          </li>
 
-          <div id="destinosNav">
-            <li><a href="#destinos" class="nav-link scrollto"><i class="bx bx-map"></i>
-                <span id="destinosNavText" data-translate="destination.title"></span></a></li>
-          </div>
+          <li id="scheduleCalendarNav">
+            <a href="#scheduleCalendar" class="nav-link scrollto">
+              <i class="bx bx-calendar"></i>
+              <span data-translate="trip.itinerary.title"></span>
+            </a>
+          </li>
 
-          <div id="portfolioM">
-            <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-photo-album"></i>
-                <span data-translate="trip.gallery.title"></span></a>
-            </li>
-          </div>
+          <li id="destinosNav">
+            <a href="#destinos" class="nav-link scrollto">
+              <i class="bx bx-map"></i>
+              <span id="destinosNavText" data-translate="destination.title"></span>
+            </a>
+          </li>
+
+          <li id="portfolioM">
+            <a href="#portfolio" class="nav-link scrollto">
+              <i class="bx bx-photo-album"></i>
+              <span data-translate="trip.gallery.title"></span>
+            </a>
+          </li>
 
         </ul>
       </nav>
+
     </header>
 
     <!-- ======= Hero ======= -->
@@ -231,12 +253,18 @@
               </div>
             </div>
           </div>
+      </section>
 
-          <div id="gastos-container" class="button-box" style="margin-top: 25px; display: none;">
-            <button id="gastos" class="btn btn-theme btn-format"><span
-                data-translate="trip.expenses.full_title"></span></button>
+      <section id="expenses" class="about">
+        <div class="container" data-aos="fade-up">
+          <div class="section-title">
+            <h2 data-translate="trip.expenses.title"></h2>
           </div>
 
+          <div id="expenses-embed">
+            <iframe id="expenses-embed-frame"></iframe>
+          </div>
+        </div>
       </section>
 
       <!-- ======= Transportation ======= -->
@@ -491,7 +519,8 @@
   <script data-main src="assets/js/suporte/estilos/cores.js"></script>
   <script data-main src="assets/js/suporte/paginas/dispositivos.js"></script>
   <script data-main src="assets/js/suporte/paginas/pin.js"></script>
-  <script data-main src="assets/js/paginas/viagem/suporte/lightbox.js"></script>
+  <script data-main src="assets/js/suporte/html/embed.js"></script>
+  <script data-main src="assets/js/paginas/viagem/suporte/embed.js"></script>
   <script data-main src="assets/js/suporte/componentes/custom-select.js"></script>
   <script data-main src="assets/js/paginas/viagem/categorias/destinos.js"></script>
   <script data-main src="assets/js/paginas/viagem/suporte/countdown.js"></script>

@@ -17,24 +17,30 @@ async function _loadGastosPage() {
     _loadVisibilityExternal();
 
     const closeButton = getID("closeButton");
-    if (window.parent._closeLightbox) {
+    if (window.parent._closeViewEmbed) {
         closeButton.onclick = function () {
-            window.parent._closeLightbox();
+            window.parent._closeViewEmbed();
         };
     } else {
         closeButton.style.display = "none";
     }
 
     getID("logo-link").onclick = function () {
-        if (window.parent._closeLightbox) {
-            window.parent._closeLightbox(true);
+        if (window.parent._closeViewEmbed) {
+            window.parent._closeViewEmbed(true);
         } else {
             window.location.href = "index.html";
         }
     };
 
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
-    let documentID = _getURLParam('g');
+    const params = _getURLParams();
+    const documentID = params.g;
+    GASTOS_EMBED.enabled = params.embed === '1'
+
+    if (GASTOS_EMBED.enabled && !GASTOS_EMBED.applied) {
+        _loadEmbedMode(params.visibility)
+    }
 
     if (!gastosExport || !documentID) {
         const url = documentID ? `view.html?v=${documentID}` : 'index.html';
@@ -72,8 +78,8 @@ function _requestPinGastosInvalido() {
 }
 
 function _exitGastos() {
-    if (window.parent._closeLightbox) {
-        window.parent._closeLightbox();
+    if (window.parent._closeViewEmbed) {
+        window.parent._closeViewEmbed();
     } else if (_getURLParam('g')) {
         window.location.href = `view.html?v=${_getURLParam('g')}`;
     } else {
@@ -101,6 +107,9 @@ async function _loadGastos() {
             getID('conversao').innerText = _getConversaoText();
             _setTabListeners();
             _stopLoadingScreen();
+            if (GASTOS_EMBED.enabled) {
+                _embedAfterLoadAction(pin);
+            }
         }
     } catch (error) {
         if (error?.message == 'Missing or insufficient permissions.') {
@@ -194,6 +203,10 @@ function _setTabListeners() {
                 _fade([gastoAnterior], [GASTO_ATIVO], 150);
             } else {
                 _fade([gastoAnterior], [GASTO_ATIVO], 150);
+            }
+
+            if (GASTOS_EMBED.enabled) {
+                _sendHeightMessageToParent();
             }
         });
     });

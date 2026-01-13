@@ -6,10 +6,11 @@
   --box-color: #404040;
   --box-color-hover: #444444;
   --border-color: #383838;
+  --text-color: #E2E2E2;
 }
 
 body {
-  color: #E2E2E2;
+  color: var(--text-color);
   background: #303030;
 }
 
@@ -52,13 +53,17 @@ input[type="radio"]:checked+label>.notification {
 }
 
 #conversao {
-  color: var(--subtitle);	
+  color: var(--subtitle);
 }
 
 .gastos-card {
   border: 1px solid #414040;
   background-color: #3b3b3b;
   box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
+}
+
+.gastos-card.container-mode {
+  box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
 }
 
 .gastos-subtitulo,
@@ -101,9 +106,9 @@ input[type="radio"]:checked+label>.notification {
 }
 
 .pin-input {
-  border: 1px solid #414040;;
+  border: 1px solid #414040;
   background: #3b3b3b;
-  color: #E2E2E2;
+  color: var(--text-color);
 }
 
 .pin-input-invalid {
@@ -129,7 +134,7 @@ input[type="radio"]:checked+label>.notification {
 .lang-options {
   background: #303030;
   border: 1px solid #404040;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .lang-options button {

@@ -7,7 +7,16 @@ Updates task counts, checks for inconsistencies, and calculates version
 import re
 from pathlib import Path
 from collections import defaultdict
+import sys
 
+sys.stdout.reconfigure(encoding="utf-8")
+
+EMOJI_TYPE_MAP = {
+    '🐞': 'B',
+    '🏆': 'F',
+    '📈': 'M',
+    '⚔️': 'E'
+}
 
 # ANSI color codes
 class Colors:
@@ -87,44 +96,68 @@ def count_tasks(tasks):
 
 
 def check_inconsistencies(tasks):
-    """Check for missing IDs and other inconsistencies."""
     issues = []
-    
+
     all_tasks = tasks['backlog'] + tasks['done'] + tasks['discarded']
-    
+
     by_type = defaultdict(list)
+
     for task in all_tasks:
         by_type[task['type']].append(task['number'])
-    
+
+        task_id = task['id']
+        line = task['line']
+
+        # --- FORMAT VALIDATION (B001, F012, E123) ---
+        if not re.search(rf'\b{task["type"]}\d{{3}}\b', task_id):
+            issues.append(
+                f"{Colors.BOLD}Invalid ID format:{Colors.RESET} "
+                f"{task_id} → must be {task['type']}XXX (3 digits)"
+            )
+
+        # --- EMOJI ↔ TYPE VALIDATION ---
+        for emoji, expected_type in EMOJI_TYPE_MAP.items():
+            if emoji in line:
+                if expected_type != task["type"]:
+                    issues.append(
+                        f"{Colors.BOLD}Emoji mismatch:{Colors.RESET} "
+                        f"{task_id} uses {emoji} but is type {task['type']}"
+                    )
+
+    # --- MISSING & DUPLICATES ---
     type_names = {
         'B': ('🐞 ', 'Bugs'),
         'F': ('🏆 ', 'Features'),
         'M': ('📈 ', 'Improvements'),
         'E': ('⚔️ ', 'Epics')
     }
-    
+
     for task_type, numbers in by_type.items():
         numbers.sort()
-        
+
         if not numbers:
             continue
-        
+
         emoji, name = type_names.get(task_type, ('', task_type))
-        
+
         max_num = max(numbers)
         expected = set(range(1, max_num + 1))
         actual = set(numbers)
         missing = expected - actual
-        
+
         if missing:
-            missing_list = sorted(missing)
-            issues.append(f"{emoji}{Colors.BOLD}Missing {name}:{Colors.RESET} {', '.join(f'{task_type}{n:03d}' for n in missing_list)}")
-        
-        duplicates = [n for n in numbers if numbers.count(n) > 1]
+            issues.append(
+                f"{emoji}{Colors.BOLD}Missing {name}:{Colors.RESET} "
+                f"{', '.join(f'{task_type}{n:03d}' for n in sorted(missing))}"
+            )
+
+        duplicates = {n for n in numbers if numbers.count(n) > 1}
         if duplicates:
-            unique_dups = sorted(set(duplicates))
-            issues.append(f"{emoji}{Colors.BOLD}Duplicate {name}:{Colors.RESET} {', '.join(f'{task_type}{n:03d}' for n in unique_dups)}")
-    
+            issues.append(
+                f"{emoji}{Colors.BOLD}Duplicate {name}:{Colors.RESET} "
+                f"{', '.join(f'{task_type}{n:03d}' for n in sorted(duplicates))}"
+            )
+
     return issues
 
 

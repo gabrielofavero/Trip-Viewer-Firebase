@@ -125,3 +125,55 @@ function _loadSensitiveReservationAction(type, id) {
         wrapper.onclick = null;
     }
 }
+
+async function _protectedDataConfirmAction(afterAction = _setFirestoreData) {
+    PIN = getID('pin-code')?.innerText || '';
+    _closeMessage();
+    const adjustLoadables = false;
+    _startLoadingScreen({ adjustLoadables });
+    const invalido = true;
+
+    if (!PIN) {
+        _requestDocumentPin({ invalido });
+        return;
+    }
+
+    const path = `${TYPE}/protected/${PIN}/${_getURLParam(TYPE[0])}`;
+    const firestoreData = await _get(path);
+
+    if (!ERROR_FROM_GET_REQUEST && !firestoreData) {
+        _requestDocumentPin({ invalido });
+        return;
+    }
+
+    if (ERROR_FROM_GET_REQUEST) {
+        _displayError(_getErrorFromGetRequestMessage(), true);
+        const adjustLoadables = false;
+        _stopLoadingScreen({ adjustLoadables });
+        return;
+    }
+
+    if (FIRESTORE_DATA.modulos.gastos) {
+        _sendToExpenses("pin", PIN)
+    }
+
+    afterAction(firestoreData);
+}
+
+function _requestDocumentPin({ invalido = false, confirmAction = `_protectedDataConfirmAction()` } = {}) {
+    const precontent = translate('messages.protected');
+    _stopLoadingScreen();
+    _requestPin({ confirmAction, precontent, invalido })
+}
+
+async function _updateProtectedDataFromExternalPin(pin) {
+    const path = `${TYPE}/protected/${pin}/${_getURLParam(TYPE[0])}`;
+    const firestoreData = await _get(path);
+
+    if (!firestoreData || ERROR_FROM_GET_REQUEST) {
+        return;
+    }
+
+    PIN = pin;
+    _updateSensitiveReservations(firestoreData);
+}
