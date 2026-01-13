@@ -6,7 +6,6 @@ var GASTOS_TOTAIS = {
     gastosDurante: {}
 };
 var GASTO_ATIVO = 'resumo';
-var CONTAINER_MODE = false;
 
 document.addEventListener('DOMContentLoaded', async function () {
     _startLoadingScreen();
@@ -18,17 +17,17 @@ async function _loadGastosPage() {
     _loadVisibilityExternal();
 
     const closeButton = getID("closeButton");
-    if (window.parent._closeLightbox) {
+    if (window.parent._closeViewEmbed) {
         closeButton.onclick = function () {
-            window.parent._closeLightbox();
+            window.parent._closeViewEmbed();
         };
     } else {
         closeButton.style.display = "none";
     }
 
     getID("logo-link").onclick = function () {
-        if (window.parent._closeLightbox) {
-            window.parent._closeLightbox(true);
+        if (window.parent._closeViewEmbed) {
+            window.parent._closeViewEmbed(true);
         } else {
             window.location.href = "index.html";
         }
@@ -37,10 +36,10 @@ async function _loadGastosPage() {
     const gastosExport = localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : '';
     const params = _getURLParams();
     const documentID = params.g;
-    CONTAINER_MODE = !!params.iframe
+    IS_EMBED = params.embed === '1'
 
-    if (CONTAINER_MODE) {
-        _loadContainerMode()
+    if (IS_EMBED) {
+        _loadEmbedMode(params.visibility)
     }
 
     if (!gastosExport || !documentID) {
@@ -79,8 +78,8 @@ function _requestPinGastosInvalido() {
 }
 
 function _exitGastos() {
-    if (window.parent._closeLightbox) {
-        window.parent._closeLightbox();
+    if (window.parent._closeViewEmbed) {
+        window.parent._closeViewEmbed();
     } else if (_getURLParam('g')) {
         window.location.href = `view.html?v=${_getURLParam('g')}`;
     } else {
@@ -119,10 +118,8 @@ async function _loadGastos() {
         }
         _stopLoadingScreen();
     }
-    if (CONTAINER_MODE) {
-        for (const card of document.querySelectorAll('.gastos-card')) {
-            card.classList.add('container-mode');
-        } 
+    if (IS_EMBED) {
+        _embedAfterLoadAction();
     }
 }
 
@@ -207,12 +204,10 @@ function _setTabListeners() {
             } else {
                 _fade([gastoAnterior], [GASTO_ATIVO], 150);
             }
+
+            if (IS_EMBED) {
+                _sendHeightMessageToParent();
+            }
         });
     });
-}
-
-function _loadContainerMode() {
-    document.querySelector('.top-bar').style.display = 'none' 
-    document.querySelector('.section-title').style.display = 'none'
-    document.querySelector('.footer').style.display = 'none';
 }

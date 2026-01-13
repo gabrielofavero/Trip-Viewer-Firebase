@@ -381,3 +381,16 @@ function _visibilityAdd(type) {
           console.error(`${dynamicFunctionName} is not defined.`);
      }
 }
+
+function _getVisibility() {
+     return _isOnDarkMode() ? 'dark' : 'light';
+}
+
+function _loadExternalVisibility(visibility) {
+     const isOnDarkMode = _isOnDarkMode();
+     if (visibility === 'dark' && !isOnDarkMode) {
+          _loadDarkMode();
+     } else if (visibility === 'light' && isOnDarkMode) {
+          _loadLightMode();
+     }
+}

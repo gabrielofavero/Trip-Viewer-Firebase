@@ -13,8 +13,8 @@
 
 ### High Priority
 - ⚔️ **E040:** Integrate Expenses page directly into view
-  - *[🏆F127] Pin back and forth for expenses lighbox*
-  - *[🏆F127] Visibility back forth for expenses lighbox*
+  - *[🏆F130] Pin back and forth for expenses lighbox*
+  - *[🏆F131] Visibility back forth for expenses lighbox*
 - ⚔️ **E041:** Add export page for itinerary
 
 ### Medium Priority
@@ -34,6 +34,8 @@
 - ⚔️ **E040:** Integrate Expenses page directly into view
   - *[🏆F127] Add expenses category in view (+ lightbox)*
   - *[📈M133] Modify css for view resolution*
+  - *[🏆F128] Make embed (lightbox) logic generic*
+  - *[🏆F129] Adjust expenses iframe height according to content*
 - 🐞 **B133:** Single trip destination not loading
 - 📈 **M133:** Add color indicators for when a filter-sort destination button is active
 - 🐞 **B126:** Double filter selected on mobile destination drawer

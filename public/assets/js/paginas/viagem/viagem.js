@@ -287,7 +287,14 @@ function _loadModules() {
     localStorage.setItem('gastos', JSON.stringify({ ativo, pin: FIRESTORE_DATA.pin || 'no-pin' }));
 
     if (ativo) {
-      _openCustomLightbox('expenses-lightbox', `expenses.html?g=${_getURLParam('v')}&iframe=true`);
+      _openEmbed({
+        frameID: 'expenses-embed-frame',
+        url: `expenses.html?visibility=${_getVisibility()}&embed=1&g=${_getURLParam('v')}`
+      })
+      const action = (data) => {
+        getID('expenses-embed').style.height = `${data.value}px`; 
+      }
+      _loadEmbedListeners(action);
     } else {
       getID("expensesNav").innerHTML = "";
       getID("expenses").innerHTML = "";

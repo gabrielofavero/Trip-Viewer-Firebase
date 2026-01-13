@@ -297,7 +297,7 @@ input[id="radio-gastosViajantes"]:checked~.glider {
     font-size: 0.8rem;
   }
 
-  #tab-gastos input[type="radio"]:checked + label {
+  #tab-gastos input[type="radio"]:checked+label {
     background-color: var(--theme-color-secondary);
     font-weight: bold;
   }
@@ -370,7 +370,7 @@ section {
   width: 100%;
 }
 
-@media (max-width: 1025px) and (min-width: 600px){
+@media (max-width: 1025px) and (min-width: 600px) {
   .gastos-container {
     width: 640px;
   }
@@ -385,6 +385,7 @@ section {
 }
 
 @media (min-width: 1300px) {
+
   .gastos-container,
   #conversao {
     padding-right: 10%;
@@ -439,6 +440,7 @@ section {
   .grafico {
     grid-column: span 4 / span 4;
   }
+
   .grafico-wide {
     grid-column: span 8 / span 8;
   }
