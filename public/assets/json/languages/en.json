@@ -1,735 +1,735 @@
 {
-    "account": {
-        "settings": "Account settings",
-        "backup": {
-            "title": "Backup account",
-            "prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
-            "success": "The account backup was completed successfully",
-            "partial": {
-                "title": "Backup partially completed",
-                "message": "One or more documents could not be backed up. If a protected data was not found, it may be due to an incorrect PIN",
-                "reason": {
-                    "skipped": "The \"{{type}}\" was skipped because no access PIN was provided",
-                    "not_found": "Unable to find the \"{{type}}\"",
-                    "unknown": "Unknown Error for \"{{type}}\""
-                }
-            }
-        },
-        "restore": {
-            "title": "Restore account",
-            "error_title": "Account restoration failed",
-            "prompt": "Are you sure you want to restore your account from a backup? This will overwrite your current trip data. This action cannot be undone",
-            "invalid_file": "The selected file is not a valid backup file",
-            "incorrect_owner": "The selected backup file does not belong to the current user",
-            "success": "The account restoration was completed successfully"
-        },
-        "delete": {
-            "title": "Delete account",
-            "message": "Are you sure you want to delete your account? This action cannot be undone and all associated data will also be deleted as well"
-        }
-    },
-    "trip": {
-        "document": "Trip",
-        "protected": "Protected trip data",
-        "next": "Next trips",
-        "previous": "Previous trips",
-        "new": "New trip",
-        "current_single": "Current trip",
-        "current_multi_1": "Multiple trips happening now",
-        "current_multi_2": "Check \"Next trips\"",
-        "edit": "Edit trip",
-        "share": "Check out my trip {{name}} created on TripViewer, starting on {{start}} and ending on {{end}}",
-        "delete": {
-            "title": "Delete trip",
-            "message": "Are you sure you want to delete the trip \"{{name}}\"? This action cannot be undone"
-        },
-        "basic_information": {
-            "subtitle": "Add the main information about your trip here",
-            "title_placeholder": "Enter the trip title",
-            "security": {
-                "title": "Data protection",
-                "disabled": "Don't protect trip data",
-                "sensitive_only": "Protect only sensitive data (expenses and reservation codes)",
-                "all_data": "Protect all trip data"
-            },
-            "pin": {
-                "title": "Access PIN",
-                "request": "To access the expenses, enter the PIN set for this trip",
-                "new": "Set access PIN",
-                "change": "Change access PIN",
-                "invalid": "Invalid PIN. Please try again",
-                "insert": "Enter a 4-digit access PIN",
-                "again": "Enter the access PIN again",
-                "no_pin": "The trip document was configured with data protection, but no access PIN was set",
-                "trip_pin": {
-                    "optional": "Enter the access PINs for the trips below. If you leave any blank, the sensitive data for that trip will not be restored",
-                    "required": "Enter the access PINs for the trips below"
-                }
-            }
-        },
-        "visibility": {
-            "subtitle": "Determine who can view and edit your trip",
-            "public": "Anyone with the link can view your trip",
-            "editors": "Allow other users to edit your trip"
-        },
-        "customization": {
-            "subtitle": "Give your trip a personal touch",
-            "colors": "Choose your trip's theme and colors",
-            "links": "Add useful links to your trip"
-        },
-        "expenses": {
-            "document": "Trip expenses",
-            "protected": "Protected expenses data",
-            "title": "Expenses",
-            "full_title": "Trip expenses",
-            "subtitle": "Manage your expenses before and during the trip",
-            "pre_trip": "Pre-trip expenses",
-            "during_trip": "On-trip expenses",
-            "overview": "Expenses overview",
-            "personal": "Personal expenses",
-            "other": "Other expenses",
-            "daily": "Daily expenses",
-            "exchange_rate_api": "Exchange rate (API)",
-            "paid_by": "Paid by",
-            "min": {
-                "pre_trip": "Pre-trip",
-                "during_trip": "During Trip"
-            }
-        },
-        "transportation": {
-            "title": "Transportation",
-            "subtitle": "Add your main travel legs: departure, during the trip, and return",
-            "departure": "Departure",
-            "arrival": "Arrival",
-            "during": "While traveling",
-            "return": "Return",
-            "simple_view": "Simplified view",
-            "leg_view": "Group by leg",
-            "people_view": "Group by people",
-            "departure_location": {
-                "title": "Departure location",
-                "placeholder": "New York City"
-            },
-            "arrival_location": {
-                "title": "Arrival location",
-                "placeholder": "Las Vegas"
-            },
-            "type": {
-                "title": "Type of transport",
-                "flight": "Flight",
-                "flights": "Flights",
-                "car": "Car",
-                "rideshare": "Rideshare",
-                "bus": "Bus",
-                "train": "Train",
-                "cable_car": "Cable Car",
-                "helicopter": "Helicopter",
-                "ship": "Ship",
-                "cruise": "Cruise Ship",
-                "taxi": "Taxi",
-                "motocycle": "Motorcycle",
-                "bicycle": "Bicycle",
-                "bullet_train": "Bullet Train",
-                "subway": "Subway",
-                "other": "Other"
-            }
-        },
-        "accommodation": {
-            "title": "Accommodations",
-            "accommodation": "Accommodation",
-            "subtitle": "Add where you'll be staying during your trip",
-            "checkin": "Check-in",
-            "checkout": "Check-out",
-            "breakfast": "Breakfast",
-            "name_placeholder": "Hotel, Inn, Airbnb, etc.",
-            "address_placeholder": "Example Street, 123",
-            "description_placeholder": "Double room, sea view"
-        },
-        "itinerary": {
-            "title": "Itinerary",
-            "subtitle": "Add your day-to-day schedule here",
-            "placeholder": "Go to...",
-            "todays_itinerary": "Today's Itinerary",
-            "no_itinerary": "Nothing planned here! ☹️",
-            "instructions": "Select a date to view the itinerary",
-            "linked_item": "Linked item",
-            "link_item": "Link an item to the itinerary",
-            "linked_destination": "Destination data",
-            "media_button": {
-                "video": "Watch Video",
-                "playlist": "View Playlist"
-            },
-            "replace_title": "Replace the title \"{{old}}\" with \"{{new}}\"",
-            "set_title": "Set the title of the itinerary to \"{{title}}\"",
-            "travelers": {
-                "everything": "Full itinerary",
-                "together": "Group itinerary"
-            }
-        },
-        "gallery": {
-            "title": "Gallery",
-            "subtitle": "Upload relevant photos for your trip, such as maps, confirmations, event times, and more",
-            "description_placeholder": "Official event map"
-        },
-        "travelers": {
-            "title": "Travelers",
-            "info": "Travelers information",
-            "quantity": "Number of travelers",
-            "unique": "Traveler names must be unique",
-            "add": "Add travelers"
-        }
-    },
-    "destination": {
-        "document": "Destination",
-        "title": "Destinations",
-        "subtitle": "What to do during your trip? Where to eat? What to visit?",
-        "mine": "My destinations",
-        "new": "New destination",
-        "edit": "Edit destination",
-        "share": "Check out the destination {{name}} I created on TripViewer",
-        "all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
-        "nothing": "No destinations registred",
-        "basic_information": "Add the main information about your destination here",
-        "undefined": "Undefined destination",
-        "recent": "Recently added",
-        "location_placeholder": "Chicago",
-        "delete": {
-            "title": "Delete destination",
-            "message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"
-        },
-        "tooltips": {
-            "map": "Google Maps or Apple Maps",
-            "video": "YouTube, TikTok or Instagram Reels"
-        },
-        "restaurants": {
-            "title": "Restaurants",
-            "title_singular": "Restaurant",
-            "description": "Places that serve full meals. Perfect for lunch and dinner. Some may only open at night.",
-            "placeholders": {
-                "name": "Liberty Public Market",
-                "emoji": "🍽️",
-                "description": {
-                    "en": "A vibrant food hall with a variety of restaurants and vendors offering diverse cuisines",
-                    "pt": "Um vibrante mercado de comida com uma variedade de restaurantes e vendedores oferecendo diversas cozinhas"
-                },
-                "map": "https://maps.app.goo.gl/J4vLoJiyU7j6bkrs7",
-                "website": "https://libertypublicmarketsd.com/",
-                "instagram": "https://www.instagram.com/libertypublicmarket/",
-                "region": "Liberty Station",
-                "video": "https://www.tiktok.com/@jasminescocina/video/7334031192431398186"
-            }
-        },
-        "snacks": {
-            "title": "Snacks",
-            "title_singular": "Snack",
-            "description": "Quick-bite spots. Great for a snack, or light meal. Includes cafés, bakeries, and fast food places.",
-            "placeholders": {
-                "name": "Mr. Beef",
-                "emoji": "🥪",
-                "description": {
-                    "en": "A popular sandwich shop known for its delicious Italian beef sandwiches and other deli-style offerings",
-                    "pt": "Uma famosa lanchonete conhecida por seus deliciosos sanduíches de carne italiana e outras opções de estilo deli"
-                },
-                "map": "https://maps.app.goo.gl/xarQ4ASKDoeCRL2S9",
-                "website": "https://www.theoriginalmrbeef.com/",
-                "instagram": "https://www.instagram.com/mr.beefchicago/",
-                "region": "Downtown",
-                "video": "https://www.tiktok.com/@manthagregs/video/7351469042747706666"
-            }
-        },
-        "nightlife": {
-            "title": "Nightlife",
-            "title_singular": "Nightlife",
-            "description": "Bars, pubs, karaoke spots, clubs, or anything focused on drinks and entertainment.",
-            "placeholders": {
-                "name": "Rudy's Bar & Grill",
-                "emoji": "🍺🌭",
-                "description": {
-                    "en": "A classic dive bar known for its cheap drinks, hot dogs, and lively atmosphere. A great spot for a casual night out",
-                    "pt": "Um clássico bar de mergulho conhecido por suas bebidas baratas, cachorros-quentes e atmosfera animada. Um ótimo lugar para uma noite casual"
-                },
-                "map": "https://maps.app.goo.gl/EaaBp6QHF2ijZaKN6",
-                "website": "https://rudysbarnyc.com/",
-                "instagram": "https://www.instagram.com/rudysbar",
-                "region": "Hell's Kitchen",
-                "video": "https://www.tiktok.com/@kamilinhasalazar/video/7230944733118434566"
-            }
-        },
-        "tourism": {
-            "title": "Tourism",
-            "title_singular": "Tourist attraction",
-            "description": "Tourist attractions including neighborhoods, monuments, museums, squares, viewpoints, exhibitions, and more.",
-            "placeholders": {
-                "name": "The Sphere",
-                "emoji": "🔮",
-                "description": {
-                    "en": "A large spherical structure with a stunning light display. It serves as a venue for concerts and events",
-                    "pt": "Uma grande estrutura esférica com uma impressionante exibição de luzes. Serve como local para concertos e eventos"
-                },
-                "map": "https://maps.app.goo.gl/8JxQFp6acr2F2AuP6",
-                "website": "https://www.thespherevegas.com/",
-                "instagram": "https://www.instagram.com/SphereVegas",
-                "region": "Las Vegas Strip",
-                "video": "https://www.tiktok.com/@vegasstarfish/video/7292913838108773675"
-            }
-        },
-        "shopping": {
-            "title": "Shopping",
-            "title_singular": "Shopping",
-            "description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related.",
-            "placeholders": {
-                "name": "Amoeba Music",
-                "emoji": "💿",
-                "description": {
-                    "en": "A famous music store with a wide selection of vinyl records, CDs, and more. A must-visit for music lovers",
-                    "pt": "Uma famosa loja de música com uma ampla seleção de discos de vinil, CDs e mais. Uma visita obrigatória para os amantes da música"
-                },
-                "map": "https://goo.gl/maps/vR2rcyEFXKn3EftHA",
-                "website": "https://www.amoebamusic.com/",
-                "instagram": "https://www.instagram.com/amoebahollywood/",
-                "region": "Hollywood",
-                "video": "https://www.tiktok.com/@andaba_porahi/video/7191480149827734789?q=Amoeba%20Music%20los%20angeles&t=1685251352892"
-            }
-        },
-        "map": {
-            "title": "Map",
-            "description": "Interactive Google Map with highlights of the city: Restaurants, Snacks, Nightlife, Tourism, and Shopping",
-            "instructions": "Create a map for free at",
-            "my_maps": "My Maps"
-        },
-        "lineup": {
-            "title": "Lineup",
-            "description": "Event lineup — may include times, stages, artists, notes, and links to artists' Spotify profiles."
-        },
-        "tourismAndShopping": {
-            "title": "Tourism & Shopping",
-            "title_singular": "Tourism / Shopping",
-            "description": "A mix of tourist spots and shops: neighborhoods, monuments, museums, malls, and more."
-        },
-        "food": {
-            "title": "Food & Drinks",
-            "title_singular": "Food / Drink",
-            "description": "All kinds of places to eat and drink: restaurants, fast food, cafés, bars, pubs, and more."
-        },
-        "scores": {
-            "1": "No priority",
-            "2": "Low priority",
-            "3": "Normal priority",
-            "4": "High priority",
-            "5": "Top priority",
-            "default": "Priority not set"
-        },
-        "price": {
-            "default": "Unknown price",
-            "max": "More than {{value}}",
-            "free": "Free",
-            "placeholder": "$26 - $50"
-        },
-        "errors": {
-            "missing_title": "Cannot update this destination data. Missing title information",
-            "tiktok": {
-                "not_found": "TikTok link not found",
-                "conversion": "Conversion error: Tiktok",
-                "conversion_message": "The following links should be removed or replaced with the desktop version:"
-            }
-        },
-        "filter": {
-            "title": "Filter",
-            "show_everything": "Show everything",
-            "planned": {
-                "title": "Planning",
-                "planned": "Planned destinations",
-                "not_planned": "Not planned destinations"
-            },
-            "scores": {
-                "title": "Priority",
-                "5": "Only top priority",
-                "4": "High priority and above",
-                "3": "Normal priority and above",
-                "2": "Low priority and above"
-            },
-            "region": {
-                "title": "Region",
-                "none": "No region defined"
-            },
-            "price": {
-                "title": "Price",
-                "up_to": "Up to"
-            }
-        },
-        "sort": {
-            "title": "Sort by",
-            "name": {
-                "title": "Title",
-                "ascending": "Name (A → Z)",
-                "descending": "Name (Z → A)"
-            },
-            "planned": {
-                "title": "Planning",
-                "planned_first": "Planned first",
-                "not_planned_first": "Not planned first"
-            },
-            "scores": {
-                "title": "Rating",
-                "highest_first": "Highest ratings first",
-                "lowest_first": "Lowest ratings first"
-            },
-            "price": {
-                "title": "Price",
-                "lowest_first": "Lowest price first",
-                "highest_first": "Highest price first"
-            }
-        }
-    },
-    "listing": {
-        "document": "Destination list",
-        "title": "Destination lists",
-        "new": "New destination list",
-        "edit": "Edit destination List",
-        "share": "Check out the destination list {{name}} I created on TripViewer",
-        "basic_information": "Add the main information about your destination list here",
-        "last_update": {
-            "title": "Show last update date",
-            "description": "Shows the date when the listing or any destination was last updated"
-        },
-        "title_placeholder": "Best International Destinations",
-        "subtitle_placeholder": "Made by me :)",
-        "description_placeholder": "List of things to do in the best international destinations I've visited recently",
-        "visibility": {
-            "subtitle": "Determine who can view and edit your destination list",
-            "public": "Anyone with the link can view your destination list",
-            "editors": "Allow other users to edit your destination list"
-        },
-        "customization": {
-            "subtitle": "Give your destination list a personal touch",
-            "colors": "Choose your destination list's theme and colors",
-            "links": "Add useful links to your destination list"
-        }
-    },
-    "currency": {
-        "title": "Currency",
-        "type": {
-            "BRL": "Brazilian Real (R$)",
-            "USD": "US Dollar ($)",
-            "EUR": "Euro (€)",
-            "GBP": "British Pound (£)",
-            "JPY": "Japanese Yen / Chinese Yuan (¥)",
-            "INR": "Indian Rupee (₹)",
-            "RUB": "Russian Ruble (₽)",
-            "CAD": "Canadian Dollar (C$)",
-            "AUD": "Australian Dollar (A$)",
-            "CHF": "Swiss Franc (CHF)",
-            "SEK": "Swedish Krona (SEK)",
-            "NOK": "Norwegian Krone (NOK)",
-            "DKK": "Danish Krone (DKK)",
-            "NZD": "New Zealand Dollar (NZ$)",
-            "MXN": "Mexican Peso (MX$)",
-            "ZAR": "South African Rand (ZAR)",
-            "KRW": "South Korean Won (₩)",
-            "SGD": "Singapore Dollar (SGD)",
-            "HKD": "Hong Kong Dollar (HK$)",
-            "ILS": "Israeli New Shekel (₪)",
-            "PLN": "Polish Złoty (PLN)",
-            "HUF": "Hungarian Forint (HUF)",
-            "TWD": "Taiwan Dollar (NT$)",
-            "THB": "Thai Baht (฿)",
-            "other": "Other currency"
-        }
-    },
-    "datetime": {
-        "titles": {
-            "day_month": "{{month}} {{day}}",
-            "weekday_day_month": "{{weekday}}, {{month}} {{day}}",
-            "month_year": "{{month}} {{year}}"
-        },
-        "time_of_day": {
-            "title": "Time of day",
-            "morning": "Morning",
-            "afternoon": "Afternoon",
-            "evening": "Evening",
-            "early_hours": "Early hours"
-        },
-        "months": {
-            "january": "January",
-            "february": "February",
-            "march": "March",
-            "april": "April",
-            "may": "May",
-            "june": "June",
-            "july": "July",
-            "august": "August",
-            "september": "September",
-            "october": "October",
-            "november": "November",
-            "december": "December"
-        },
-        "weekdays": {
-            "default": {
-                "monday": "Monday",
-                "tuesday": "Tuesday",
-                "wednesday": "Wednesday",
-                "thursday": "Thursday",
-                "friday": "Friday",
-                "saturday": "Saturday",
-                "sunday": "Sunday"
-            },
-            "mini": {
-                "monday": "Mon",
-                "tuesday": "Tue",
-                "wednesday": "Wed",
-                "thursday": "Thu",
-                "friday": "Fri",
-                "saturday": "Sat",
-                "sunday": "Sun"
-            }
-        },
-        "countdown": {
-            "years": "y",
-            "months": "m",
-            "days": "d",
-            "hours": "h",
-            "minutes": "m",
-            "seconds": "s"
-        },
-        "select_date": "Select a date"
-    },
-    "messages": {
-        "text_copied": "Text copied to clipboard",
-        "no_data": "No data found 😔",
-        "share": "Check out what I've created on TripViewer",
-        "exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
-        "select_one": "Please select at least one item",
-        "protected": "To access this document, please enter the access PIN set for it",
-        "errors": {
-            "load_title": "Loading Error 🙁",
-            "unknown": "An unexpected error prevented the page from loading",
-            "contact_admin": "Please contact the system administrator",
-            "to_report": "to report the issue",
-            "unauthenticated": "Couldn't load the document because the user is not logged in",
-            "unknown_directory": "Unknown folder",
-            "no_upload_permission": "You don't have permission to upload files",
-            "upload_error": "Error uploading file(s)",
-            "module_not_active": "Cannot load the page. The module {{module}} is not active",
-            "no_data_on_module": "No data found for the module {{module}}",
-            "loading_timeout": "The request took too long to respond. Please try again later",
-            "unauthorized_access": "You don't have permission to access this resource",
-            "missing_data": "We weren't able to load this document. It looks like some required information is missing"
-        },
-        "too_early": {
-            "title": "You're a bit early! 😅",
-            "message": "Hi there! TripViewer isn't accepting new sign-ups just yet. We're working hard to launch our first public version. Stay tuned! 🚀"
-        },
-        "access_denied": {
-            "title": "Access Denied 🚫",
-            "message": "You don't have permission to access this page. Please check your credentials or contact the system administrator"
-        },
-        "documents": {
-            "get": {
-                "error": "Couldn't load the document",
-                "no_code": "There's no valid code in the URL."
-            },
-            "create": {
-                "success": "Document created successfully",
-                "error": "Failed to create document"
-            },
-            "update": {
-                "success": "Document updated successfully",
-                "error": "Failed to update document"
-            },
-            "replace": {
-                "success": "Document replaced successfully",
-                "error": "Failed to replace document"
-            },
-            "delete": {
-                "success": "Document deleted successfully",
-                "error": "Failed to delete document"
-            },
-            "save": {
-                "success": "Document saved successfully",
-                "error": "Your document cound't be saved due to an unknown error",
-                "no_new_data": "No new data was detected in the document",
-                "unknown": "An error occurred while checking the document for changes",
-                "main": "Main saving action",
-                "user": "User saving action",
-                "incomplete": "The document was partially saved. Some changes may not have been applied."
-            }
-        },
-        "operations": {
-            "success": "Operations completed successfully",
-            "error": "One or more operations failed"
-        },
-        "fields": {
-            "invalid": "The following required fields were not filled in:",
-            "link": {
-                "title": "Invalid Link {{icon}}",
-                "message": "Make sure it starts with \"http://\" or \"https://\""
-            },
-            "map_link": {
-                "title": "Invalid Map Link {{icon}}",
-                "message": "The provided map link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from Google Maps {{googleMapsIcon}} or Apple Maps {{appleMapsIcon}}"
-            },
-            "instagram_link": {
-                "title": "Invalid Instagram Link {{icon}}",
-                "message": "The provided Instagram link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from Instagram"
-            },
-            "twitter_link": {
-                "title": "Invalid Twitter Link {{icon}}",
-                "message": "The system does not support links from Twitter / {{xIcon}}. Please use links from other platforms"
-            },
-            "media_link": {
-                "title": "Invalid Media Link {{icon}}",
-                "message": "The provided media link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from YouTube {{youtubeIcon}}, TikTok {{tiktokIcon}} or Instagram Reels {{instagramIcon}}"
-            }
-        }
-    },
-    "labels": {
-        "auth": {
-            "sign_in": "Sign In",
-            "sign_out": "Sign Out",
-            "email": "E-mail",
-            "password": "Password"
-        },
-        "adapted": "Adapted",
-        "intro": "This is",
-        "greeting": "Hello",
-        "light_mode": "Light mode",
-        "dark_mode": "Dark mode",
-        "duration": "Duration",
-        "company": "Company",
-        "start": "Start",
-        "end": "End",
-        "reservation": {
-            "title": "Reservation",
-            "code": "Reservation code",
-            "link": "Reservation link"
-        },
-        "select": "Select",
-        "other": "Other",
-        "optional": "Optional",
-        "cancel": "Cancel",
-        "save": "Save",
-        "delete": "Delete",
-        "understood": "Understood",
-        "confirm": "Confirm",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "add": "Add",
-        "search": "Search",
-        "title": "Title",
-        "subtitle": "Subtitle",
-        "no_title": "Untitled",
-        "description": {
-            "title": "Description",
-            "edit": "Edit description",
-            "add": "Add description",
-            "lang": "Description in {{lang}}"
-        },
-        "type": "Type",
-        "try_again": "Try Again",
-        "all": "All",
-        "developed_by": "Developed by",
-        "credits": "Credits",
-        "last_updated_on": "Last updated on",
-        "unauthenticated": "Not authenticated",
-        "home": "Home",
-        "days": "Days",
-        "people": "People",
-        "person": "Person",
-        "highlights": "Highlights",
-        "overview": "Overview",
-        "view": "View",
-        "entrertainment": "Entertainment",
-        "gifts": "Gifts",
-        "forms": "Forms",
-        "calendar": "Calendar",
-        "accordion": "Accordion",
-        "dashboard": "Dashboard",
-        "tabs": "Tabs",
-        "wallpaper": "Wallpaper",
-        "logo": "Logo",
-        "edit": "Edit",
-        "basic_information": "Basic Information",
-        "visibility": "Visibility",
-        "public": "Public",
-        "customization": {
-            "title": "Customization",
-            "images": {
-                "title": "Custom images",
-                "subtitle": "Add a wallpaper and a logo",
-                "logo_light": "Logo: Light mode",
-                "logo_dark": "Logo: Dark mode"
-            },
-            "colors": {
-                "title": "Custom colors",
-                "themes": {
-                    "light_and_dark": "Show in Light and Dark mode",
-                    "light": "Show only in Light mode",
-                    "dark": "Show only in Dark mode"
-                }
-            },
-            "links": {
-                "title": "Custom links",
-                "attachment": "Generic attachment",
-                "google_drive": "Google Drive",
-                "map": "Map",
-                "pdf": "PDF",
-                "presentation": "Presentation (PowerPoint)",
-                "sheet": "Spreadsheet (Excel / Google Sheets)",
-                "vaccination": "Vaccination certificate"
-            }
-        },
-        "editors": {
-            "editor": "Editor",
-            "allow": "Allow editors",
-            "add": "Add editor"
-        },
-        "id": "ID",
-        "name": "Name",
-        "address": "Address",
-        "none": "None",
-        "date": "Date",
-        "set": "Set",
-        "replace": "Replace",
-        "and": "and",
-        "custom": "Custom",
-        "cost": "Cost",
-        "image": {
-            "title": "Image",
-            "title_plural": "Images",
-            "placeholder": "https://example.com/image.jpg",
-            "link": "Provide image link",
-            "upload": "Upload image",
-            "upload_limit": "Up to 1,5MB",
-            "background": "Background image",
-            "check": "Image verification",
-            "add_title": "Add images",
-            "add": "Add Image",
-            "edit": "Edit images",
-            "quantity_limit": "You can add up to 5 images",
-            "description": "Description"
-        },
-        "no_data": "No data",
-        "emoji": "Emoji(s)",
-        "social": {
-            "website": "Website",
-            "instagram": "Instagram"
-        },
-        "region": "Region",
-        "priority": "Priority",
-        "video": "Video",
-        "language": {
-            "title": "Language",
-            "pt": "Portuguese",
-            "en": "English"
-        },
-        "advanced": "Advanced",
-        "yes": "Yes",
-        "no": "No",
-        "protected": "Protected",
-        "unknown": "Unknown",
-        "non_specified": "Non-specified",
-        "total": "Total",
-        "created_date": "Created date",
-        "planned": "Planned"
-    }
+	"account": {
+		"settings": "Account settings",
+		"backup": {
+			"title": "Backup account",
+			"prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
+			"success": "The account backup was completed successfully",
+			"partial": {
+				"title": "Backup partially completed",
+				"message": "One or more documents could not be backed up. If a protected data was not found, it may be due to an incorrect PIN",
+				"reason": {
+					"skipped": "The \"{{type}}\" was skipped because no access PIN was provided",
+					"not_found": "Unable to find the \"{{type}}\"",
+					"unknown": "Unknown Error for \"{{type}}\""
+				}
+			}
+		},
+		"restore": {
+			"title": "Restore account",
+			"error_title": "Account restoration failed",
+			"prompt": "Are you sure you want to restore your account from a backup? This will overwrite your current trip data. This action cannot be undone",
+			"invalid_file": "The selected file is not a valid backup file",
+			"incorrect_owner": "The selected backup file does not belong to the current user",
+			"success": "The account restoration was completed successfully"
+		},
+		"delete": {
+			"title": "Delete account",
+			"message": "Are you sure you want to delete your account? This action cannot be undone and all associated data will also be deleted as well"
+		}
+	},
+	"trip": {
+		"document": "Trip",
+		"protected": "Protected trip data",
+		"next": "Next trips",
+		"previous": "Previous trips",
+		"new": "New trip",
+		"current_single": "Current trip",
+		"current_multi_1": "Multiple trips happening now",
+		"current_multi_2": "Check \"Next trips\"",
+		"edit": "Edit trip",
+		"share": "Check out my trip {{name}} created on TripViewer, starting on {{start}} and ending on {{end}}",
+		"delete": {
+			"title": "Delete trip",
+			"message": "Are you sure you want to delete the trip \"{{name}}\"? This action cannot be undone"
+		},
+		"basic_information": {
+			"subtitle": "Add the main information about your trip here",
+			"title_placeholder": "Enter the trip title",
+			"security": {
+				"title": "Data protection",
+				"disabled": "Don't protect trip data",
+				"sensitive_only": "Protect only sensitive data (expenses and reservation codes)",
+				"all_data": "Protect all trip data"
+			},
+			"pin": {
+				"title": "Access PIN",
+				"request": "To access the expenses, enter the PIN set for this trip",
+				"new": "Set access PIN",
+				"change": "Change access PIN",
+				"invalid": "Invalid PIN. Please try again",
+				"insert": "Enter a 4-digit access PIN",
+				"again": "Enter the access PIN again",
+				"no_pin": "The trip document was configured with data protection, but no access PIN was set",
+				"trip_pin": {
+					"optional": "Enter the access PINs for the trips below. If you leave any blank, the sensitive data for that trip will not be restored",
+					"required": "Enter the access PINs for the trips below"
+				}
+			}
+		},
+		"visibility": {
+			"subtitle": "Determine who can view and edit your trip",
+			"public": "Anyone with the link can view your trip",
+			"editors": "Allow other users to edit your trip"
+		},
+		"customization": {
+			"subtitle": "Give your trip a personal touch",
+			"colors": "Choose your trip's theme and colors",
+			"links": "Add useful links to your trip"
+		},
+		"expenses": {
+			"document": "Trip expenses",
+			"protected": "Protected expenses data",
+			"title": "Expenses",
+			"full_title": "Trip expenses",
+			"subtitle": "Manage your expenses before and during the trip",
+			"pre_trip": "Pre-trip expenses",
+			"during_trip": "On-trip expenses",
+			"overview": "Expenses overview",
+			"personal": "Personal expenses",
+			"other": "Other expenses",
+			"daily": "Daily expenses",
+			"exchange_rate_api": "Exchange rate (API)",
+			"paid_by": "Paid by",
+			"min": {
+				"pre_trip": "Pre-trip",
+				"during_trip": "During Trip"
+			}
+		},
+		"transportation": {
+			"title": "Transportation",
+			"subtitle": "Add your main travel legs: departure, during the trip, and return",
+			"departure": "Departure",
+			"arrival": "Arrival",
+			"during": "While traveling",
+			"return": "Return",
+			"simple_view": "Simplified view",
+			"leg_view": "Group by leg",
+			"people_view": "Group by people",
+			"departure_location": {
+				"title": "Departure location",
+				"placeholder": "New York City"
+			},
+			"arrival_location": {
+				"title": "Arrival location",
+				"placeholder": "Las Vegas"
+			},
+			"type": {
+				"title": "Type of transport",
+				"flight": "Flight",
+				"flights": "Flights",
+				"car": "Car",
+				"rideshare": "Rideshare",
+				"bus": "Bus",
+				"train": "Train",
+				"cable_car": "Cable Car",
+				"helicopter": "Helicopter",
+				"ship": "Ship",
+				"cruise": "Cruise Ship",
+				"taxi": "Taxi",
+				"motocycle": "Motorcycle",
+				"bicycle": "Bicycle",
+				"bullet_train": "Bullet Train",
+				"subway": "Subway",
+				"other": "Other"
+			}
+		},
+		"accommodation": {
+			"title": "Accommodations",
+			"accommodation": "Accommodation",
+			"subtitle": "Add where you'll be staying during your trip",
+			"checkin": "Check-in",
+			"checkout": "Check-out",
+			"breakfast": "Breakfast",
+			"name_placeholder": "Hotel, Inn, Airbnb, etc.",
+			"address_placeholder": "Example Street, 123",
+			"description_placeholder": "Double room, sea view"
+		},
+		"itinerary": {
+			"title": "Itinerary",
+			"subtitle": "Add your day-to-day schedule here",
+			"placeholder": "Go to...",
+			"todays_itinerary": "Today's Itinerary",
+			"no_itinerary": "Nothing planned here! ☹️",
+			"instructions": "Select a date to view the itinerary",
+			"linked_item": "Linked item",
+			"link_item": "Link an item to the itinerary",
+			"linked_destination": "Destination data",
+			"media_button": {
+				"video": "Watch Video",
+				"playlist": "View Playlist"
+			},
+			"replace_title": "Replace the title \"{{old}}\" with \"{{new}}\"",
+			"set_title": "Set the title of the itinerary to \"{{title}}\"",
+			"travelers": {
+				"everything": "Full itinerary",
+				"together": "Group itinerary"
+			}
+		},
+		"gallery": {
+			"title": "Gallery",
+			"subtitle": "Upload relevant photos for your trip, such as maps, confirmations, event times, and more",
+			"description_placeholder": "Official event map"
+		},
+		"travelers": {
+			"title": "Travelers",
+			"info": "Travelers information",
+			"quantity": "Number of travelers",
+			"unique": "Traveler names must be unique",
+			"add": "Add travelers"
+		}
+	},
+	"destination": {
+		"document": "Destination",
+		"title": "Destinations",
+		"subtitle": "What to do during your trip? Where to eat? What to visit?",
+		"mine": "My destinations",
+		"new": "New destination",
+		"edit": "Edit destination",
+		"share": "Check out the destination {{name}} I created on TripViewer",
+		"all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
+		"nothing": "No destinations registred",
+		"basic_information": "Add the main information about your destination here",
+		"undefined": "Undefined destination",
+		"recent": "Recently added",
+		"location_placeholder": "Chicago",
+		"delete": {
+			"title": "Delete destination",
+			"message": "Are you sure you want to delete the destination \"{{name}}\"? This action cannot be undone"
+		},
+		"tooltips": {
+			"map": "Google Maps or Apple Maps",
+			"video": "YouTube, TikTok or Instagram Reels"
+		},
+		"restaurants": {
+			"title": "Restaurants",
+			"title_singular": "Restaurant",
+			"description": "Places that serve full meals. Perfect for lunch and dinner. Some may only open at night.",
+			"placeholders": {
+				"name": "Liberty Public Market",
+				"emoji": "🍽️",
+				"description": {
+					"en": "A vibrant food hall with a variety of restaurants and vendors offering diverse cuisines",
+					"pt": "Um vibrante mercado de comida com uma variedade de restaurantes e vendedores oferecendo diversas cozinhas"
+				},
+				"map": "https://maps.app.goo.gl/J4vLoJiyU7j6bkrs7",
+				"website": "https://libertypublicmarketsd.com/",
+				"instagram": "https://www.instagram.com/libertypublicmarket/",
+				"region": "Liberty Station",
+				"video": "https://www.tiktok.com/@jasminescocina/video/7334031192431398186"
+			}
+		},
+		"snacks": {
+			"title": "Snacks",
+			"title_singular": "Snack",
+			"description": "Quick-bite spots. Great for a snack, or light meal. Includes cafés, bakeries, and fast food places.",
+			"placeholders": {
+				"name": "Mr. Beef",
+				"emoji": "🥪",
+				"description": {
+					"en": "A popular sandwich shop known for its delicious Italian beef sandwiches and other deli-style offerings",
+					"pt": "Uma famosa lanchonete conhecida por seus deliciosos sanduíches de carne italiana e outras opções de estilo deli"
+				},
+				"map": "https://maps.app.goo.gl/xarQ4ASKDoeCRL2S9",
+				"website": "https://www.theoriginalmrbeef.com/",
+				"instagram": "https://www.instagram.com/mr.beefchicago/",
+				"region": "Downtown",
+				"video": "https://www.tiktok.com/@manthagregs/video/7351469042747706666"
+			}
+		},
+		"nightlife": {
+			"title": "Nightlife",
+			"title_singular": "Nightlife",
+			"description": "Bars, pubs, karaoke spots, clubs, or anything focused on drinks and entertainment.",
+			"placeholders": {
+				"name": "Rudy's Bar & Grill",
+				"emoji": "🍺🌭",
+				"description": {
+					"en": "A classic dive bar known for its cheap drinks, hot dogs, and lively atmosphere. A great spot for a casual night out",
+					"pt": "Um clássico bar de mergulho conhecido por suas bebidas baratas, cachorros-quentes e atmosfera animada. Um ótimo lugar para uma noite casual"
+				},
+				"map": "https://maps.app.goo.gl/EaaBp6QHF2ijZaKN6",
+				"website": "https://rudysbarnyc.com/",
+				"instagram": "https://www.instagram.com/rudysbar",
+				"region": "Hell's Kitchen",
+				"video": "https://www.tiktok.com/@kamilinhasalazar/video/7230944733118434566"
+			}
+		},
+		"tourism": {
+			"title": "Tourism",
+			"title_singular": "Tourist attraction",
+			"description": "Tourist attractions including neighborhoods, monuments, museums, squares, viewpoints, exhibitions, and more.",
+			"placeholders": {
+				"name": "The Sphere",
+				"emoji": "🔮",
+				"description": {
+					"en": "A large spherical structure with a stunning light display. It serves as a venue for concerts and events",
+					"pt": "Uma grande estrutura esférica com uma impressionante exibição de luzes. Serve como local para concertos e eventos"
+				},
+				"map": "https://maps.app.goo.gl/8JxQFp6acr2F2AuP6",
+				"website": "https://www.thespherevegas.com/",
+				"instagram": "https://www.instagram.com/SphereVegas",
+				"region": "Las Vegas Strip",
+				"video": "https://www.tiktok.com/@vegasstarfish/video/7292913838108773675"
+			}
+		},
+		"shopping": {
+			"title": "Shopping",
+			"title_singular": "Shopping",
+			"description": "Malls, supermarkets, outlets, clothing stores, electronics shops. Everything shopping-related.",
+			"placeholders": {
+				"name": "Amoeba Music",
+				"emoji": "💿",
+				"description": {
+					"en": "A famous music store with a wide selection of vinyl records, CDs, and more. A must-visit for music lovers",
+					"pt": "Uma famosa loja de música com uma ampla seleção de discos de vinil, CDs e mais. Uma visita obrigatória para os amantes da música"
+				},
+				"map": "https://goo.gl/maps/vR2rcyEFXKn3EftHA",
+				"website": "https://www.amoebamusic.com/",
+				"instagram": "https://www.instagram.com/amoebahollywood/",
+				"region": "Hollywood",
+				"video": "https://www.tiktok.com/@andaba_porahi/video/7191480149827734789?q=Amoeba%20Music%20los%20angeles&t=1685251352892"
+			}
+		},
+		"map": {
+			"title": "Map",
+			"description": "Interactive Google Map with highlights of the city: Restaurants, Snacks, Nightlife, Tourism, and Shopping",
+			"instructions": "Create a map for free at",
+			"my_maps": "My Maps"
+		},
+		"lineup": {
+			"title": "Lineup",
+			"description": "Event lineup — may include times, stages, artists, notes, and links to artists' Spotify profiles."
+		},
+		"tourismAndShopping": {
+			"title": "Tourism & Shopping",
+			"title_singular": "Tourism / Shopping",
+			"description": "A mix of tourist spots and shops: neighborhoods, monuments, museums, malls, and more."
+		},
+		"food": {
+			"title": "Food & Drinks",
+			"title_singular": "Food / Drink",
+			"description": "All kinds of places to eat and drink: restaurants, fast food, cafés, bars, pubs, and more."
+		},
+		"scores": {
+			"1": "No priority",
+			"2": "Low priority",
+			"3": "Normal priority",
+			"4": "High priority",
+			"5": "Top priority",
+			"default": "Priority not set"
+		},
+		"price": {
+			"default": "Unknown price",
+			"max": "More than {{value}}",
+			"free": "Free",
+			"placeholder": "$26 - $50"
+		},
+		"errors": {
+			"missing_title": "Cannot update this destination data. Missing title information",
+			"tiktok": {
+				"not_found": "TikTok link not found",
+				"conversion": "Conversion error: Tiktok",
+				"conversion_message": "The following links should be removed or replaced with the desktop version:"
+			}
+		},
+		"filter": {
+			"title": "Filter",
+			"show_everything": "Show everything",
+			"planned": {
+				"title": "Planning",
+				"planned": "Planned destinations",
+				"not_planned": "Not planned destinations"
+			},
+			"scores": {
+				"title": "Priority",
+				"5": "Only top priority",
+				"4": "High priority and above",
+				"3": "Normal priority and above",
+				"2": "Low priority and above"
+			},
+			"region": {
+				"title": "Region",
+				"none": "No region defined"
+			},
+			"price": {
+				"title": "Price",
+				"up_to": "Up to"
+			}
+		},
+		"sort": {
+			"title": "Sort by",
+			"name": {
+				"title": "Title",
+				"ascending": "Name (A → Z)",
+				"descending": "Name (Z → A)"
+			},
+			"planned": {
+				"title": "Planning",
+				"planned_first": "Planned first",
+				"not_planned_first": "Not planned first"
+			},
+			"scores": {
+				"title": "Rating",
+				"highest_first": "Highest ratings first",
+				"lowest_first": "Lowest ratings first"
+			},
+			"price": {
+				"title": "Price",
+				"lowest_first": "Lowest price first",
+				"highest_first": "Highest price first"
+			}
+		}
+	},
+	"listing": {
+		"document": "Destination list",
+		"title": "Destination lists",
+		"new": "New destination list",
+		"edit": "Edit destination List",
+		"share": "Check out the destination list {{name}} I created on TripViewer",
+		"basic_information": "Add the main information about your destination list here",
+		"last_update": {
+			"title": "Show last update date",
+			"description": "Shows the date when the listing or any destination was last updated"
+		},
+		"title_placeholder": "Best International Destinations",
+		"subtitle_placeholder": "Made by me :)",
+		"description_placeholder": "List of things to do in the best international destinations I've visited recently",
+		"visibility": {
+			"subtitle": "Determine who can view and edit your destination list",
+			"public": "Anyone with the link can view your destination list",
+			"editors": "Allow other users to edit your destination list"
+		},
+		"customization": {
+			"subtitle": "Give your destination list a personal touch",
+			"colors": "Choose your destination list's theme and colors",
+			"links": "Add useful links to your destination list"
+		}
+	},
+	"currency": {
+		"title": "Currency",
+		"type": {
+			"BRL": "Brazilian Real (R$)",
+			"USD": "US Dollar ($)",
+			"EUR": "Euro (€)",
+			"GBP": "British Pound (£)",
+			"JPY": "Japanese Yen / Chinese Yuan (¥)",
+			"INR": "Indian Rupee (₹)",
+			"RUB": "Russian Ruble (₽)",
+			"CAD": "Canadian Dollar (C$)",
+			"AUD": "Australian Dollar (A$)",
+			"CHF": "Swiss Franc (CHF)",
+			"SEK": "Swedish Krona (SEK)",
+			"NOK": "Norwegian Krone (NOK)",
+			"DKK": "Danish Krone (DKK)",
+			"NZD": "New Zealand Dollar (NZ$)",
+			"MXN": "Mexican Peso (MX$)",
+			"ZAR": "South African Rand (ZAR)",
+			"KRW": "South Korean Won (₩)",
+			"SGD": "Singapore Dollar (SGD)",
+			"HKD": "Hong Kong Dollar (HK$)",
+			"ILS": "Israeli New Shekel (₪)",
+			"PLN": "Polish Złoty (PLN)",
+			"HUF": "Hungarian Forint (HUF)",
+			"TWD": "Taiwan Dollar (NT$)",
+			"THB": "Thai Baht (฿)",
+			"other": "Other currency"
+		}
+	},
+	"datetime": {
+		"titles": {
+			"day_month": "{{month}} {{day}}",
+			"weekday_day_month": "{{weekday}}, {{month}} {{day}}",
+			"month_year": "{{month}} {{year}}"
+		},
+		"time_of_day": {
+			"title": "Time of day",
+			"morning": "Morning",
+			"afternoon": "Afternoon",
+			"evening": "Evening",
+			"early_hours": "Early hours"
+		},
+		"months": {
+			"january": "January",
+			"february": "February",
+			"march": "March",
+			"april": "April",
+			"may": "May",
+			"june": "June",
+			"july": "July",
+			"august": "August",
+			"september": "September",
+			"october": "October",
+			"november": "November",
+			"december": "December"
+		},
+		"weekdays": {
+			"default": {
+				"monday": "Monday",
+				"tuesday": "Tuesday",
+				"wednesday": "Wednesday",
+				"thursday": "Thursday",
+				"friday": "Friday",
+				"saturday": "Saturday",
+				"sunday": "Sunday"
+			},
+			"mini": {
+				"monday": "Mon",
+				"tuesday": "Tue",
+				"wednesday": "Wed",
+				"thursday": "Thu",
+				"friday": "Fri",
+				"saturday": "Sat",
+				"sunday": "Sun"
+			}
+		},
+		"countdown": {
+			"years": "y",
+			"months": "m",
+			"days": "d",
+			"hours": "h",
+			"minutes": "m",
+			"seconds": "s"
+		},
+		"select_date": "Select a date"
+	},
+	"messages": {
+		"text_copied": "Text copied to clipboard",
+		"no_data": "No data found 😔",
+		"share": "Check out what I've created on TripViewer",
+		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
+		"select_one": "Please select at least one item",
+		"protected": "To access this document, please enter the access PIN set for it",
+		"errors": {
+			"load_title": "Loading Error 🙁",
+			"unknown": "An unexpected error prevented the page from loading",
+			"contact_admin": "Please contact the system administrator",
+			"to_report": "to report the issue",
+			"unauthenticated": "Couldn't load the document because the user is not logged in",
+			"unknown_directory": "Unknown folder",
+			"no_upload_permission": "You don't have permission to upload files",
+			"upload_error": "Error uploading file(s)",
+			"module_not_active": "Cannot load the page. The module {{module}} is not active",
+			"no_data_on_module": "No data found for the module {{module}}",
+			"loading_timeout": "The request took too long to respond. Please try again later",
+			"unauthorized_access": "You don't have permission to access this resource",
+			"missing_data": "We weren't able to load this document. It looks like some required information is missing"
+		},
+		"too_early": {
+			"title": "You're a bit early! 😅",
+			"message": "Hi there! TripViewer isn't accepting new sign-ups just yet. We're working hard to launch our first public version. Stay tuned! 🚀"
+		},
+		"access_denied": {
+			"title": "Access Denied 🚫",
+			"message": "You don't have permission to access this page. Please check your credentials or contact the system administrator"
+		},
+		"documents": {
+			"get": {
+				"error": "Couldn't load the document",
+				"no_code": "There's no valid code in the URL."
+			},
+			"create": {
+				"success": "Document created successfully",
+				"error": "Failed to create document"
+			},
+			"update": {
+				"success": "Document updated successfully",
+				"error": "Failed to update document"
+			},
+			"replace": {
+				"success": "Document replaced successfully",
+				"error": "Failed to replace document"
+			},
+			"delete": {
+				"success": "Document deleted successfully",
+				"error": "Failed to delete document"
+			},
+			"save": {
+				"success": "Document saved successfully",
+				"error": "Your document cound't be saved due to an unknown error",
+				"no_new_data": "No new data was detected in the document",
+				"unknown": "An error occurred while checking the document for changes",
+				"main": "Main saving action",
+				"user": "User saving action",
+				"incomplete": "The document was partially saved. Some changes may not have been applied."
+			}
+		},
+		"operations": {
+			"success": "Operations completed successfully",
+			"error": "One or more operations failed"
+		},
+		"fields": {
+			"invalid": "The following required fields were not filled in:",
+			"link": {
+				"title": "Invalid Link {{icon}}",
+				"message": "Make sure it starts with \"http://\" or \"https://\""
+			},
+			"map_link": {
+				"title": "Invalid Map Link {{icon}}",
+				"message": "The provided map link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from Google Maps {{googleMapsIcon}} or Apple Maps {{appleMapsIcon}}"
+			},
+			"instagram_link": {
+				"title": "Invalid Instagram Link {{icon}}",
+				"message": "The provided Instagram link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from Instagram"
+			},
+			"twitter_link": {
+				"title": "Invalid Twitter Link {{icon}}",
+				"message": "The system does not support links from Twitter / {{xIcon}}. Please use links from other platforms"
+			},
+			"media_link": {
+				"title": "Invalid Media Link {{icon}}",
+				"message": "The provided media link is not valid. Make sure the link starts with \"http://\" or \"https://\" and that it is from YouTube {{youtubeIcon}}, TikTok {{tiktokIcon}} or Instagram Reels {{instagramIcon}}"
+			}
+		}
+	},
+	"labels": {
+		"auth": {
+			"sign_in": "Sign In",
+			"sign_out": "Sign Out",
+			"email": "E-mail",
+			"password": "Password"
+		},
+		"adapted": "Adapted",
+		"intro": "This is",
+		"greeting": "Hello",
+		"light_mode": "Light mode",
+		"dark_mode": "Dark mode",
+		"duration": "Duration",
+		"company": "Company",
+		"start": "Start",
+		"end": "End",
+		"reservation": {
+			"title": "Reservation",
+			"code": "Reservation code",
+			"link": "Reservation link"
+		},
+		"select": "Select",
+		"other": "Other",
+		"optional": "Optional",
+		"cancel": "Cancel",
+		"save": "Save",
+		"delete": "Delete",
+		"understood": "Understood",
+		"confirm": "Confirm",
+		"enabled": "Enabled",
+		"disabled": "Disabled",
+		"add": "Add",
+		"search": "Search",
+		"title": "Title",
+		"subtitle": "Subtitle",
+		"no_title": "Untitled",
+		"description": {
+			"title": "Description",
+			"edit": "Edit description",
+			"add": "Add description",
+			"lang": "Description in {{lang}}"
+		},
+		"type": "Type",
+		"try_again": "Try Again",
+		"all": "All",
+		"developed_by": "Developed by",
+		"credits": "Credits",
+		"last_updated_on": "Last updated on",
+		"unauthenticated": "Not authenticated",
+		"home": "Home",
+		"days": "Days",
+		"people": "People",
+		"person": "Person",
+		"highlights": "Highlights",
+		"overview": "Overview",
+		"view": "View",
+		"entrertainment": "Entertainment",
+		"gifts": "Gifts",
+		"forms": "Forms",
+		"calendar": "Calendar",
+		"accordion": "Accordion",
+		"dashboard": "Dashboard",
+		"tabs": "Tabs",
+		"wallpaper": "Wallpaper",
+		"logo": "Logo",
+		"edit": "Edit",
+		"basic_information": "Basic Information",
+		"visibility": "Visibility",
+		"public": "Public",
+		"customization": {
+			"title": "Customization",
+			"images": {
+				"title": "Custom images",
+				"subtitle": "Add a wallpaper and a logo",
+				"logo_light": "Logo: Light mode",
+				"logo_dark": "Logo: Dark mode"
+			},
+			"colors": {
+				"title": "Custom colors",
+				"themes": {
+					"light_and_dark": "Show in Light and Dark mode",
+					"light": "Show only in Light mode",
+					"dark": "Show only in Dark mode"
+				}
+			},
+			"links": {
+				"title": "Custom links",
+				"attachment": "Generic attachment",
+				"google_drive": "Google Drive",
+				"map": "Map",
+				"pdf": "PDF",
+				"presentation": "Presentation (PowerPoint)",
+				"sheet": "Spreadsheet (Excel / Google Sheets)",
+				"vaccination": "Vaccination certificate"
+			}
+		},
+		"editors": {
+			"editor": "Editor",
+			"allow": "Allow editors",
+			"add": "Add editor"
+		},
+		"id": "ID",
+		"name": "Name",
+		"address": "Address",
+		"none": "None",
+		"date": "Date",
+		"set": "Set",
+		"replace": "Replace",
+		"and": "and",
+		"custom": "Custom",
+		"cost": "Cost",
+		"image": {
+			"title": "Image",
+			"title_plural": "Images",
+			"placeholder": "https://example.com/image.jpg",
+			"link": "Provide image link",
+			"upload": "Upload image",
+			"upload_limit": "Up to 1,5MB",
+			"background": "Background image",
+			"check": "Image verification",
+			"add_title": "Add images",
+			"add": "Add Image",
+			"edit": "Edit images",
+			"quantity_limit": "You can add up to 5 images",
+			"description": "Description"
+		},
+		"no_data": "No data",
+		"emoji": "Emoji(s)",
+		"social": {
+			"website": "Website",
+			"instagram": "Instagram"
+		},
+		"region": "Region",
+		"priority": "Priority",
+		"video": "Video",
+		"language": {
+			"title": "Language",
+			"pt": "Portuguese",
+			"en": "English"
+		},
+		"advanced": "Advanced",
+		"yes": "Yes",
+		"no": "No",
+		"protected": "Protected",
+		"unknown": "Unknown",
+		"non_specified": "Non-specified",
+		"total": "Total",
+		"created_date": "Created date",
+		"planned": "Planned"
+	}
 }

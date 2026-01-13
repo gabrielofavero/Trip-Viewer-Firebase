@@ -1,80 +1,82 @@
-var VALOR_OPTIONS = '';
+var VALOR_OPTIONS = "";
 
 function _loadCurrencySelects() {
-    _loadMoedaOptions();
+	_loadMoedaOptions();
 
-    for (const categoria of CONFIG.destinos.categorias.passeios) {
-        const childs = _getChildIDs(`${categoria}-box`);
-        for (const child of childs) {
-            const i = child.split('-').pop();
-            if (VALOR_OPTIONS) {
-                const select = getID(`${categoria}-valor-${i}`);
-                const value = select.value;
-                select.innerHTML = VALOR_OPTIONS;
-                select.value = value;
-            } else {
-                getID(`${categoria}-valor-${i}`).style.display = 'none';
-                getID(`${categoria}-outro-valor-${i}`).style.display = 'none';
-            }
-        }
-    }
+	for (const categoria of CONFIG.destinos.categorias.passeios) {
+		const childs = _getChildIDs(`${categoria}-box`);
+		for (const child of childs) {
+			const i = child.split("-").pop();
+			if (VALOR_OPTIONS) {
+				const select = getID(`${categoria}-valor-${i}`);
+				const value = select.value;
+				select.innerHTML = VALOR_OPTIONS;
+				select.value = value;
+			} else {
+				getID(`${categoria}-valor-${i}`).style.display = "none";
+				getID(`${categoria}-outro-valor-${i}`).style.display = "none";
+			}
+		}
+	}
 }
 
 function _loadMoedaOptions() {
-    const categorias = CONFIG.moedas.valores;
-    const moeda = getID('moeda').value;
-    VALOR_OPTIONS = '';
+	const categorias = CONFIG.moedas.valores;
+	const moeda = getID("moeda").value;
+	VALOR_OPTIONS = "";
 
-    if (moeda != 'outra' && CONFIG.moedas.escala[moeda]) {
-        for (const categoria of categorias) {
-            const label = _getLabel(categoria);
-            VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
-        }
-        if (VALOR_OPTIONS) {
-            VALOR_OPTIONS += `<option value="outro">${translate('labels.other')}</option>`;
-        }
-    }
+	if (moeda != "outra" && CONFIG.moedas.escala[moeda]) {
+		for (const categoria of categorias) {
+			const label = _getLabel(categoria);
+			VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
+		}
+		if (VALOR_OPTIONS) {
+			VALOR_OPTIONS += `<option value="outro">${translate("labels.other")}</option>`;
+		}
+	}
 
-    function _getLabel(categoria) {
-        switch (categoria) {
-            case "default":
-                return translate(`destination.price.default`);
-            case "-":
-            case "free":
-                return translate(`destination.price.free`);
-            case "$":
-            case "$$":
-            case "$$$":
-                return CONFIG.moedas.escala[moeda][categoria];
-            case "$$$$":
-                return translate(`destination.price.max`, { value: CONFIG.moedas.escala[moeda][categoria] });
-            default:
-                return translate('labels.other');
-        }
-    }
+	function _getLabel(categoria) {
+		switch (categoria) {
+			case "default":
+				return translate(`destination.price.default`);
+			case "-":
+			case "free":
+				return translate(`destination.price.free`);
+			case "$":
+			case "$$":
+			case "$$$":
+				return CONFIG.moedas.escala[moeda][categoria];
+			case "$$$$":
+				return translate(`destination.price.max`, {
+					value: CONFIG.moedas.escala[moeda][categoria],
+				});
+			default:
+				return translate("labels.other");
+		}
+	}
 }
 
 function _getOutroValorVisibility() {
-    if (VALOR_OPTIONS) return 'none';
-    else return 'block';
+	if (VALOR_OPTIONS) return "none";
+	else return "block";
 }
 
 function _loadMoedaValorAndVisibility(valor, categoria, i) {
-    const valorSelect = getID(`${categoria}-valor-${i}`);
-    const outroValorDiv = getID(`${categoria}-outro-valor-${i}`);
+	const valorSelect = getID(`${categoria}-valor-${i}`);
+	const outroValorDiv = getID(`${categoria}-outro-valor-${i}`);
 
-    const texts = Array.from(valorSelect.options).map(option => option.text);
-    const values = Array.from(valorSelect.options).map(option => option.value);
+	const texts = Array.from(valorSelect.options).map((option) => option.text);
+	const values = Array.from(valorSelect.options).map((option) => option.value);
 
-    if (VALOR_OPTIONS && values.includes(valor)) {
-        valorSelect.value = valor;
-        outroValorDiv.style.display = 'none';
-    } else if (VALOR_OPTIONS && texts.includes(valor)) {
-        valorSelect.value = values[texts.indexOf(valor)];
-        outroValorDiv.style.display = 'none';
-    } else {
-        valorSelect.value = 'outro';
-        outroValorDiv.style.display = 'block';
-        outroValorDiv.value = valor;
-    }
+	if (VALOR_OPTIONS && values.includes(valor)) {
+		valorSelect.value = valor;
+		outroValorDiv.style.display = "none";
+	} else if (VALOR_OPTIONS && texts.includes(valor)) {
+		valorSelect.value = values[texts.indexOf(valor)];
+		outroValorDiv.style.display = "none";
+	} else {
+		valorSelect.value = "outro";
+		outroValorDiv.style.display = "block";
+		outroValorDiv.value = valor;
+	}
 }

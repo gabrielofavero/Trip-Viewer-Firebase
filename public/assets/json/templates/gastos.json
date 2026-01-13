@@ -1,59 +1,59 @@
 {
-    "pin": {
-        "ativo": true,
-        "valor": "$2a$12$x2EwKfzcTlKULohC5W/L6.d5K60hrCNZlWbbgHlIOPDWMWqMOMYFy"
-    },
-    "moeda": "BRL",
-    "gastosPrevios": [
-        {
-            "nome": "Ingresso Adele (x2)",
-            "tipo": "Shows",
-            "valor": 15574.22,
-            "moeda": "BRL"
-        }, 
-        {
-            "nome": "Voo Ida (Azul)",
-            "tipo": "Transporte",
-            "valor": 14302.28,
-            "moeda": "BRL"
-        }, 
-        {
-            "nome": "Voo Volta (LATAM)",
-            "tipo": "Transporte",
-            "valor": 8331.6,
-            "moeda": "BRL"
-        }, 
-        {
-            "nome": "Caesars Palace (Las Vegas)",
-            "tipo": "Hospedagens",
-            "valor": 5514.65,
-            "moeda": "BRL"
-        },
-        {
-            "nome": "Pendry (San Diego)",
-            "tipo": "Hospedagens",
-            "valor": 9830.41,
-            "moeda": "BRL"
-        },
-        {
-            "nome": "Sheraton Universal Hotel (Los Angeles)",
-            "tipo": "Hospedagens",
-            "valor": 4872.9,
-            "moeda": "BRL"
-        },
-        {
-            "nome": "La Playa (Carmel / Monterey)",
-            "tipo": "Hospedagens",
-            "valor": 3270.52,
-            "moeda": "BRL"
-        }
-    ],
-    "gastosDurante": [
-        {
-            "nome": "Riu Plaza Fisherman's Wharf (San Francisco)",
-            "tipo": "Hospedagens",
-            "valor": 1080.32,
-            "moeda": "DLR"
-        }
-    ]
+	"pin": {
+		"ativo": true,
+		"valor": "$2a$12$x2EwKfzcTlKULohC5W/L6.d5K60hrCNZlWbbgHlIOPDWMWqMOMYFy"
+	},
+	"moeda": "BRL",
+	"gastosPrevios": [
+		{
+			"nome": "Ingresso Adele (x2)",
+			"tipo": "Shows",
+			"valor": 15574.22,
+			"moeda": "BRL"
+		},
+		{
+			"nome": "Voo Ida (Azul)",
+			"tipo": "Transporte",
+			"valor": 14302.28,
+			"moeda": "BRL"
+		},
+		{
+			"nome": "Voo Volta (LATAM)",
+			"tipo": "Transporte",
+			"valor": 8331.6,
+			"moeda": "BRL"
+		},
+		{
+			"nome": "Caesars Palace (Las Vegas)",
+			"tipo": "Hospedagens",
+			"valor": 5514.65,
+			"moeda": "BRL"
+		},
+		{
+			"nome": "Pendry (San Diego)",
+			"tipo": "Hospedagens",
+			"valor": 9830.41,
+			"moeda": "BRL"
+		},
+		{
+			"nome": "Sheraton Universal Hotel (Los Angeles)",
+			"tipo": "Hospedagens",
+			"valor": 4872.9,
+			"moeda": "BRL"
+		},
+		{
+			"nome": "La Playa (Carmel / Monterey)",
+			"tipo": "Hospedagens",
+			"valor": 3270.52,
+			"moeda": "BRL"
+		}
+	],
+	"gastosDurante": [
+		{
+			"nome": "Riu Plaza Fisherman's Wharf (San Francisco)",
+			"tipo": "Hospedagens",
+			"valor": 1080.32,
+			"moeda": "DLR"
+		}
+	]
 }

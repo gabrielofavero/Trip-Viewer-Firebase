@@ -1,143 +1,143 @@
 :root {
-  --theme-color: #7f75b6;
+	--theme-color: #7f75b6;
 }
 
 body {
-  color: #E2E2E2;
+	color: #e2e2e2;
 }
 
 strong {
-  color: #F2F2F2;
+	color: #f2f2f2;
 }
 
 #preloader {
-  background: #303030;
+	background: #303030;
 }
 
 #preloader:before {
-  border: 6px solid #7F75B9;
-  border-top-color: #404040;
-  border-bottom-color: #404040;
+	border: 6px solid #7f75b9;
+	border-top-color: #404040;
+	border-bottom-color: #404040;
 }
 
 #preloader:before {
-  border-top-color: #303030;
-  border-bottom-color: #303030;
+	border-top-color: #303030;
+	border-bottom-color: #303030;
 }
 
 .top-bar {
-  background-color: #303030;
-  border-bottom: 0.5px solid #383838;
+	background-color: #303030;
+	border-bottom: 0.5px solid #383838;
 }
 
 .notification-bar {
-  /* color: #303030; */
-  background-color: var(--theme-color);
+	/* color: #303030; */
+	background-color: var(--theme-color);
 }
 
 #trip-viewer-text {
-  color: #7f75b6;
+	color: #7f75b6;
 }
 
 #hero {
-  background: url("/assets/img/backgrounds/home-dark.jpg") top center no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
+	background: url("/assets/img/backgrounds/home-dark.jpg") top center no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
 }
 
 #hero h1 {
-  color: #E2E2E2;
+	color: #e2e2e2;
 }
 
 #hero p {
-  color: #E2E2E2;
+	color: #e2e2e2;
 }
 
 .typed {
-  color: #7f75b6;
+	color: #7f75b6;
 }
 
 #hero .social-links a {
-  color: #F2F2F2;
+	color: #f2f2f2;
 }
 
 #hero .social-links a:hover {
-  color: #7f75b6;
+	color: #7f75b6;
 }
 
 .section-title h2 {
-  color: #909090;
+	color: #909090;
 }
 
 .section-title h2::before {
-  background: #A6A6A6;
+	background: #a6a6a6;
 }
 
 .section-title h2::after {
-  background: #7f75b6;
+	background: #7f75b6;
 }
 
 #footer {
-  background: #404040;
-  color: #F2F2F2;
+	background: #404040;
+	color: #f2f2f2;
 }
 
 .atribuicoes:hover {
-  color: #d1d0d0;
+	color: #d1d0d0;
 }
 
 .message-container,
 .input-container {
-  background: #303030;
+	background: #303030;
 }
 
 .error-message {
-  color: #ADADAD;
+	color: #adadad;
 }
 
 .content-box {
-  background-color: rgba(48, 48, 48, 0.80);
-  color: #E2E2E2;
+	background-color: rgba(48, 48, 48, 0.8);
+	color: #e2e2e2;
 }
 
 .index-title {
-  color: #F2F2F2;
+	color: #f2f2f2;
 }
 
 .login-item {
-  color: #F2F2F2;
-  border: 0.5px solid #383838;
-  background: #404040;
+	color: #f2f2f2;
+	border: 0.5px solid #383838;
+	background: #404040;
 }
 
 .login-item:focus {
-  outline: rgb(68, 68, 68);
+	outline: rgb(68, 68, 68);
 }
 
 .content-list {
-  background: #404040;
-  border: 0.5px solid #383838;
+	background: #404040;
+	border: 0.5px solid #383838;
 }
 
 #settings-account {
-  background: #404040;
-  border: 0.5px solid #383838;
+	background: #404040;
+	border: 0.5px solid #383838;
 }
 
 #settings-account-picture {
-  border: 1px solid #383838;
-  background: #404040;
+	border: 1px solid #383838;
+	background: #404040;
 }
 
 #logged-menu {
-  background: #404040;
-  border: 0.5px solid #383838;
+	background: #404040;
+	border: 0.5px solid #383838;
 }
 
 #trip-view-input {
-  background: #404040;
-  border: 0.5px solid #383838;
-  color: #F2F2F2;
+	background: #404040;
+	border: 0.5px solid #383838;
+	color: #f2f2f2;
 }
 
 .user-data-icon:hover,
@@ -146,78 +146,78 @@ strong {
 .custom-nav-toggle:hover,
 .logged-menu-item:hover,
 .back:hover {
-  color: #c7c6c6;
+	color: #c7c6c6;
 }
 
 .user-data-item {
-  border-bottom: 0.5px solid #383838;
+	border-bottom: 0.5px solid #383838;
 }
 
 .user-data-item-date {
-  color: #767676;
+	color: #767676;
 }
 
 .modal {
-  background-color: rgba(48, 48, 48, 0.8);
+	background-color: rgba(48, 48, 48, 0.8);
 }
 
 .modal-content {
-  background-color: #303030;
+	background-color: #303030;
 }
 
 .btn-theme {
-  color: #fff;
-  background: #7f75b6;
+	color: #fff;
+	background: #7f75b6;
 }
 
 .btn-theme:hover {
-  color: #fff;
-  background: #7367b4;
+	color: #fff;
+	background: #7367b4;
 }
 
 /* Language Selector */
 
 .lang-selector {
-  position: relative;
+	position: relative;
 }
 
 .lang-button {
-  color: #F2F2F2;
+	color: #f2f2f2;
 }
 
 .lang-options {
-  background: #303030;
-  border: 1px solid #404040;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+	background: #303030;
+	border: 1px solid #404040;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .lang-options button {
-  color: #F2F2F2;
+	color: #f2f2f2;
 }
 
 .lang-options button:hover {
-  background: #3b3b3b;
+	background: #3b3b3b;
 }
 
 /* Nice Form Group (Mini) */
 .nice-form-group {
-  --nf-input-color: #E2E2E2;
-  --nf-input-border-color: #383838;
-  --nf-input-background: #404040;
-  --nf-input-placeholder: #a3a3a3;
+	--nf-input-color: #e2e2e2;
+	--nf-input-border-color: #383838;
+	--nf-input-background: #404040;
+	--nf-input-placeholder: #a3a3a3;
 }
 
 .nice-form-group > label {
-  color: #E2E2E2;
+	color: #e2e2e2;
 }
 
 /* Toast */
 
 #toast {
-  color: #303030;
+	color: #303030;
 }
 
 .partial-backup-scroll {
-  border: 0.5px solid #383838;
-  background: #404040;
+	border: 0.5px solid #383838;
+	background: #404040;
 }

@@ -1,42 +1,42 @@
 const SENSITIVE_RESERVATION_BOXES = {
-    transportes: {},
-    hospedagens: {},
+	transportes: {},
+	hospedagens: {},
 };
 const ACTIVE_SENSITIVE_RESERVATION = {
-    type: null,
-    id: null,
-}
+	type: null,
+	id: null,
+};
 const MASKED = "***";
-const MEASURE = document.createElement('span');
+const MEASURE = document.createElement("span");
 
 function _loadSensitiveReservations() {
-    const boxes = document.querySelectorAll('.sensitive-box');
-    MEASURE.style.position = 'absolute';
-    MEASURE.style.visibility = 'hidden';
-    MEASURE.style.whiteSpace = 'nowrap';
-    document.body.appendChild(MEASURE);
+	const boxes = document.querySelectorAll(".sensitive-box");
+	MEASURE.style.position = "absolute";
+	MEASURE.style.visibility = "hidden";
+	MEASURE.style.whiteSpace = "nowrap";
+	document.body.appendChild(MEASURE);
 
-    boxes.forEach(box => {
-        const wrapper = box.querySelector('.code-wrapper');
-        const textEl = box.querySelector('.code-text');
-        const type = box.dataset.type;
-        const id = box.dataset.id;
+	boxes.forEach((box) => {
+		const wrapper = box.querySelector(".code-wrapper");
+		const textEl = box.querySelector(".code-text");
+		const type = box.dataset.type;
+		const id = box.dataset.id;
 
-        SENSITIVE_RESERVATION_BOXES[type][id] = box;
-        wrapper.style.width = _getSensitiveReservationWidth(textEl, MASKED) + "px";
-        box.querySelector('.toggle-eye').onclick = () => _loadSensitiveReservation(type, id);
-    });
+		SENSITIVE_RESERVATION_BOXES[type][id] = box;
+		wrapper.style.width = _getSensitiveReservationWidth(textEl, MASKED) + "px";
+		box.querySelector(".toggle-eye").onclick = () =>
+			_loadSensitiveReservation(type, id);
+	});
 }
 
 function _getSensitiveReservationWidth(el, txt) {
-    MEASURE.style.font = getComputedStyle(el).font;
-    MEASURE.textContent = txt;
-    return MEASURE.getBoundingClientRect().width;
+	MEASURE.style.font = getComputedStyle(el).font;
+	MEASURE.textContent = txt;
+	return MEASURE.getBoundingClientRect().width;
 }
 
-
 function _getSensitiveReservationHTML(type, id) {
-    return `
+	return `
     <div class="sensitive-box" data-visible="false" data-type="${type}" data-id="${id}" data-reservation="" data-link="">
         <span class="code-wrapper"><a class="code-text masked" href="#" target="_blank">***</a></span>
         <button class="toggle-eye">
@@ -54,126 +54,131 @@ function _getSensitiveReservationHTML(type, id) {
 }
 
 function _loadSensitiveReservation(type, id) {
-    ACTIVE_SENSITIVE_RESERVATION.type = type;
-    ACTIVE_SENSITIVE_RESERVATION.id = id;
-    if (!PIN) {
-        const confirmAction = `_protectedDataConfirmAction(_updateSensitiveReservations)`;
-        const cancelAction = `_closeMessage()`;
-        _requestPin({ confirmAction, cancelAction });
-    } else {
-        _loadSensitiveReservationAction(type, id);
-    }
+	ACTIVE_SENSITIVE_RESERVATION.type = type;
+	ACTIVE_SENSITIVE_RESERVATION.id = id;
+	if (!PIN) {
+		const confirmAction = `_protectedDataConfirmAction(_updateSensitiveReservations)`;
+		const cancelAction = `_closeMessage()`;
+		_requestPin({ confirmAction, cancelAction });
+	} else {
+		_loadSensitiveReservationAction(type, id);
+	}
 }
 
 function _updateSensitiveReservations(firestoreData) {
-    for (const key in SENSITIVE_RESERVATION_BOXES) {
-        if (!Object.keys(firestoreData).includes(key)) {
-            continue;
-        }
-        for (const id in SENSITIVE_RESERVATION_BOXES[key]) {
-            const box = SENSITIVE_RESERVATION_BOXES[key][id];
-            const reserva = firestoreData[key][id].reserva || 'N/A';
-            box.dataset.reservation = reserva.charAt(0) === '#' ? reserva : `#${reserva}`;
-            box.dataset.link = firestoreData[key][id].link || '';
+	for (const key in SENSITIVE_RESERVATION_BOXES) {
+		if (!Object.keys(firestoreData).includes(key)) {
+			continue;
+		}
+		for (const id in SENSITIVE_RESERVATION_BOXES[key]) {
+			const box = SENSITIVE_RESERVATION_BOXES[key][id];
+			const reserva = firestoreData[key][id].reserva || "N/A";
+			box.dataset.reservation =
+				reserva.charAt(0) === "#" ? reserva : `#${reserva}`;
+			box.dataset.link = firestoreData[key][id].link || "";
 
-            if (!box.dataset.link) {
-                const wrapper = box.querySelector('.code-wrapper');
-                wrapper.innerHTML = `<span class="code-text masked">${MASKED}</span>`;
-            }
-        }
-    }
+			if (!box.dataset.link) {
+				const wrapper = box.querySelector(".code-wrapper");
+				wrapper.innerHTML = `<span class="code-text masked">${MASKED}</span>`;
+			}
+		}
+	}
 
-    const adjustLoadables = false;
-    _stopLoadingScreen({ adjustLoadables });
-    const { type, id } = ACTIVE_SENSITIVE_RESERVATION;
-    if (type && id) {
-        _loadSensitiveReservationAction(type, id);
-    }
+	const adjustLoadables = false;
+	_stopLoadingScreen({ adjustLoadables });
+	const { type, id } = ACTIVE_SENSITIVE_RESERVATION;
+	if (type && id) {
+		_loadSensitiveReservationAction(type, id);
+	}
 }
 
 function _loadSensitiveReservationAction(type, id) {
-    const box = SENSITIVE_RESERVATION_BOXES[type][id];
-    const show = box.dataset.visible !== "true";
-    const label = box.dataset.reservation;
-    const link = box.dataset.link;
-    const wrapper = box.querySelector('.code-wrapper');
-    const textEl = box.querySelector('.code-text');
-    const linkActive = show && link
+	const box = SENSITIVE_RESERVATION_BOXES[type][id];
+	const show = box.dataset.visible !== "true";
+	const label = box.dataset.reservation;
+	const link = box.dataset.link;
+	const wrapper = box.querySelector(".code-wrapper");
+	const textEl = box.querySelector(".code-text");
+	const linkActive = show && link;
 
-    box.dataset.visible = show;
+	box.dataset.visible = show;
 
-    textEl.textContent = show ? label : MASKED;
-    textEl.classList.toggle("masked", !show);
-    textEl.classList.toggle("link-active", linkActive);
+	textEl.textContent = show ? label : MASKED;
+	textEl.classList.toggle("masked", !show);
+	textEl.classList.toggle("link-active", linkActive);
 
-    if (linkActive) {
-        textEl.href = link;
-    }
+	if (linkActive) {
+		textEl.href = link;
+	}
 
-    wrapper.style.width = _getSensitiveReservationWidth(textEl, show ? label : MASKED) + "px";
+	wrapper.style.width =
+		_getSensitiveReservationWidth(textEl, show ? label : MASKED) + "px";
 
-    box.querySelector(".eye-closed").style.display = show ? "none" : "";
-    box.querySelector(".eye-open").style.display = show ? "" : "none";
+	box.querySelector(".eye-closed").style.display = show ? "none" : "";
+	box.querySelector(".eye-open").style.display = show ? "" : "none";
 
-    if (!link && show) {
-        wrapper.style.cursor = "copy";
-        wrapper.onclick = () => {
-            _copyToClipboard(label);
-        };
-    } else {
-        wrapper.style.cursor = "";
-        wrapper.onclick = null;
-    }
+	if (!link && show) {
+		wrapper.style.cursor = "copy";
+		wrapper.onclick = () => {
+			_copyToClipboard(label);
+		};
+	} else {
+		wrapper.style.cursor = "";
+		wrapper.onclick = null;
+	}
 }
 
 async function _protectedDataConfirmAction(afterAction = _setFirestoreData) {
-    PIN = getID('pin-code')?.innerText || '';
-    _closeMessage();
-    const adjustLoadables = false;
-    _startLoadingScreen({ adjustLoadables });
-    const invalido = true;
+	PIN = getID("pin-code")?.innerText || "";
+	_closeMessage();
+	const adjustLoadables = false;
+	_startLoadingScreen({ adjustLoadables });
+	const invalido = true;
 
-    if (!PIN) {
-        _requestDocumentPin({ invalido });
-        return;
-    }
+	if (!PIN) {
+		_requestDocumentPin({ invalido });
+		return;
+	}
 
-    const path = `${TYPE}/protected/${PIN}/${_getURLParam(TYPE[0])}`;
-    const firestoreData = await _get(path);
+	const path = `${TYPE}/protected/${PIN}/${_getURLParam(TYPE[0])}`;
+	const firestoreData = await _get(path);
 
-    if (!ERROR_FROM_GET_REQUEST && !firestoreData) {
-        _requestDocumentPin({ invalido });
-        return;
-    }
+	if (!ERROR_FROM_GET_REQUEST && !firestoreData) {
+		_requestDocumentPin({ invalido });
+		return;
+	}
 
-    if (ERROR_FROM_GET_REQUEST) {
-        _displayError(_getErrorFromGetRequestMessage(), true);
-        const adjustLoadables = false;
-        _stopLoadingScreen({ adjustLoadables });
-        return;
-    }
+	if (ERROR_FROM_GET_REQUEST) {
+		_displayError(_getErrorFromGetRequestMessage(), true);
+		const adjustLoadables = false;
+		_stopLoadingScreen({ adjustLoadables });
+		return;
+	}
 
-    if (FIRESTORE_DATA.modulos.gastos) {
-        _sendToExpenses("pin", PIN)
-    }
+	if (FIRESTORE_DATA.modulos.gastos) {
+		_sendToExpenses("pin", PIN);
+	}
 
-    afterAction(firestoreData);
+	afterAction(firestoreData);
 }
 
-function _requestDocumentPin({ invalido = false, confirmAction = `_protectedDataConfirmAction()` } = {}) {
-    const precontent = translate('messages.protected');
-    _stopLoadingScreen();
-    _requestPin({ confirmAction, precontent, invalido })
+function _requestDocumentPin({
+	invalido = false,
+	confirmAction = `_protectedDataConfirmAction()`,
+} = {}) {
+	const precontent = translate("messages.protected");
+	_stopLoadingScreen();
+	_requestPin({ confirmAction, precontent, invalido });
 }
 
 async function _updateProtectedDataFromExternalPin(pin) {
-    const path = `${TYPE}/protected/${pin}/${_getURLParam(TYPE[0])}`;
-    const firestoreData = await _get(path);
+	const path = `${TYPE}/protected/${pin}/${_getURLParam(TYPE[0])}`;
+	const firestoreData = await _get(path);
 
-    if (!firestoreData || ERROR_FROM_GET_REQUEST) {
-        return;
-    }
+	if (!firestoreData || ERROR_FROM_GET_REQUEST) {
+		return;
+	}
 
-    PIN = pin;
-    _updateSensitiveReservations(firestoreData);
+	PIN = pin;
+	_updateSensitiveReservations(firestoreData);
 }

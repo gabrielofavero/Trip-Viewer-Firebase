@@ -1,80 +1,80 @@
 {
-    "claro": [
-        "url(/public/assets/img/background.png)",
-        "#272829",
-        "#fff",
-        "#3A3838",
-        "#5B509E",
-        "#e6e9ec",
-        "#4F5051",
-        "#f2f3f5",
-        "#D9D9D9",
-        "#595959",
-        "rgba(255, 255, 255, 0.8)",
-        "#ddd",
-        "#011426",
-        "#F2F2F2",
-        "#F6F6F6",
-        "#6f757a",
-        "#f7f8f9",
-        "rgba(255, 255, 255, 0.7)",
-        "#111",
-        "#999",
-        "#eef7ff",
-        "#5859a7"
-    ],
-    "escuro": [
-        "url(/public/assets/img/background-dark.png)",
-        "#E2E2E2",
-        "#303030",
-        "#F2F2F2",
-        "#7F75B9",
-        "#404040",
-        "#F2F2F2",
-        "#303030",
-        "#414040",
-        "#BFBFBF",
-        "rgba(48, 48, 48, 0.8)",
-        "#A6A6A6",
-        "#011426",
-        "#a5a5a5",
-        "#3b3b3b",
-        "#E2E2E2",
-        "#404040",
-        "rgba(48, 48, 48, 0.7)",
-        "#E2E2E2",
-        "#A6A6A6",
-        "#303030",
-        "#7f75b6"
-    ],
-    "opcoes": [
-        {
-            "cor": "blue",
-            "hex": "#47aeff"
-        },
-        {
-            "cor": "yellow",
-            "hex": "#ffbb2c"
-        },
-        {
-            "cor": "pink",
-            "hex": "#e80368"
-        },
-        {
-            "cor": "green",
-            "hex": "#52B720"
-        },
-        {
-            "cor": "teal",
-            "hex": "#11dbcf"
-        },
-        {
-            "cor": "orange",
-            "hex": "#ffa76e"
-        },
-        {
-            "cor": "red",
-            "hex": "#ff5828"
-        }
-    ]
+	"claro": [
+		"url(/public/assets/img/background.png)",
+		"#272829",
+		"#fff",
+		"#3A3838",
+		"#5B509E",
+		"#e6e9ec",
+		"#4F5051",
+		"#f2f3f5",
+		"#D9D9D9",
+		"#595959",
+		"rgba(255, 255, 255, 0.8)",
+		"#ddd",
+		"#011426",
+		"#F2F2F2",
+		"#F6F6F6",
+		"#6f757a",
+		"#f7f8f9",
+		"rgba(255, 255, 255, 0.7)",
+		"#111",
+		"#999",
+		"#eef7ff",
+		"#5859a7"
+	],
+	"escuro": [
+		"url(/public/assets/img/background-dark.png)",
+		"#E2E2E2",
+		"#303030",
+		"#F2F2F2",
+		"#7F75B9",
+		"#404040",
+		"#F2F2F2",
+		"#303030",
+		"#414040",
+		"#BFBFBF",
+		"rgba(48, 48, 48, 0.8)",
+		"#A6A6A6",
+		"#011426",
+		"#a5a5a5",
+		"#3b3b3b",
+		"#E2E2E2",
+		"#404040",
+		"rgba(48, 48, 48, 0.7)",
+		"#E2E2E2",
+		"#A6A6A6",
+		"#303030",
+		"#7f75b6"
+	],
+	"opcoes": [
+		{
+			"cor": "blue",
+			"hex": "#47aeff"
+		},
+		{
+			"cor": "yellow",
+			"hex": "#ffbb2c"
+		},
+		{
+			"cor": "pink",
+			"hex": "#e80368"
+		},
+		{
+			"cor": "green",
+			"hex": "#52B720"
+		},
+		{
+			"cor": "teal",
+			"hex": "#11dbcf"
+		},
+		{
+			"cor": "orange",
+			"hex": "#ffa76e"
+		},
+		{
+			"cor": "red",
+			"hex": "#ff5828"
+		}
+	]
 }

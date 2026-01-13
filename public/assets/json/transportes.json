@@ -1,250 +1,250 @@
 {
-    "empresas": {
-        "carro": {
-            "99": "99",
-            "avis": "Avis",
-            "cabify": "Cabify",
-            "hertz": "Hertz",
-            "localiza": "Localiza",
-            "lyft": "Lyft",
-            "movida": "Movida",
-            "uber": "Uber",
-            "unidas": "Unidas"
-        },
-        "onibus": {
-            "aguiaBranca": "Águia Branca",
-            "buser": "Buser",
-            "cometa": "Cometa",
-            "gontijo": "Gontijo"
-        },
-        "voo": {
-            "aerLingus": "Aer Lingus",
-            "americanAirlines": "American Airlines",
-            "avianca": "Avianca",
-            "azul": "Azul",
-            "britishAirways": "British Airways",
-            "copa": "Copa Airlines",
-            "delta": "Delta Airlines",
-            "easyjet": "EasyJet",
-            "gol": "Gol",
-            "jetblue": "JetBlue",
-            "klm": "KLM",
-            "latam": "LATAM",
-            "lufthansa": "Lufthansa",
-            "qatar": "Qatar Airways",
-            "tap": "TAP Air Portugal",
-            "united": "United Airlines",
-            "vueling": "Vueling Airlines"
-        }, 
-        "trem-bala": {
-            "eurostar": "Eurostar"
-        }
-    },
-    "icones": {
-        "bicicleta": "mingcute:bike-fill",
-        "bondinho": "ph:cable-car-fill",
-        "carro": "fa-solid:car-side",
-        "helicoptero": "fa6-solid:helicopter",
-        "locomotiva": "cil:locomotive",
-        "metro": "mdi:metro",
-        "moto": "ri:motorbike-fill",
-        "navio": "icon-park-solid:sailboat-one",
-        "onibus": "mingcute:bus-2-fill",
-        "outro": "mingcute:rocket-fill",
-        "trem-bala": "mingcute:train-fill",
-        "voo": "fa-solid:plane"
-    },
-    "imagens": {
-        "carro": {
-            "99": {
-                "claro": "assets/img/transportes/carro/99.svg",
-                "escuro": "assets/img/transportes/carro/99-dark.svg"
-            },
-            "avis": {
-                "claro": "assets/img/transportes/carro/avis.svg",
-                "escuro": "assets/img/transportes/carro/avis-dark.svg"
-            },
-            "cabify": {
-                "claro": "assets/img/transportes/carro/cabify.svg",
-                "escuro": "assets/img/transportes/carro/cabify-dark.svg"
-            },
-            "hertz": {
-                "claro": "assets/img/transportes/carro/hertz.svg",
-                "escuro": "assets/img/transportes/carro/hertz-dark.svg"
-            },
-            "localiza": {
-                "claro": "assets/img/transportes/carro/localiza.svg",
-                "escuro": "assets/img/transportes/carro/localiza-dark.svg"
-            },
-            "lyft": {
-                "claro": "assets/img/transportes/carro/lyft.svg",
-                "escuro": "assets/img/transportes/carro/lyft-dark.svg"
-            },
-            "movida": {
-                "claro": "assets/img/transportes/carro/movida.svg",
-                "escuro": "assets/img/transportes/carro/movida-dark.svg"
-            },
-            "uber": {
-                "claro": "assets/img/transportes/carro/uber.svg",
-                "escuro": "assets/img/transportes/carro/uber-dark.svg"
-            },
-            "unidas": {
-                "claro": "assets/img/transportes/carro/unidas.svg",
-                "escuro": "assets/img/transportes/carro/unidas-dark.svg"
-            }
-        },
-        "onibus": {
-            "aguiaBranca": {
-                "claro": "assets/img/transportes/onibus/aguia-branca.svg",
-                "escuro": "assets/img/transportes/onibus/aguia-branca-dark.svg"
-            },
-            "buser": {
-                "claro": "assets/img/transportes/onibus/buser.svg",
-                "escuro": "assets/img/transportes/onibus/buser-dark.svg"
-            },
-            "cometa": {
-                "claro": "assets/img/transportes/onibus/cometa.png",
-                "escuro": "assets/img/transportes/onibus/cometa-dark.png"
-            },
-            "gontijo": {
-                "claro": "assets/img/transportes/onibus/gontijo.png",
-                "escuro": "assets/img/transportes/onibus/gontijo-dark.png"
-            }
-        },
-        "voo": {
-            "aerLingus": {
-                "claro": "assets/img/transportes/voo/aer-lingus.svg",
-                "escuro": "assets/img/transportes/voo/aer-lingus-dark.svg"
-            },
-            "americanAirlines": {
-                "claro": "assets/img/transportes/voo/american-airlines.svg",
-                "escuro": "assets/img/transportes/voo/american-airlines-dark.svg"
-            },
-            "avianca": {
-                "claro": "assets/img/transportes/voo/avianca.svg",
-                "escuro": "assets/img/transportes/voo/avianca-dark.svg"
-            },
-            "azul": {
-                "claro": "assets/img/transportes/voo/azul.svg",
-                "escuro": "assets/img/transportes/voo/azul-dark.svg"
-            },
-            "britishAirways": {
-                "claro": "assets/img/transportes/voo/british-airways.svg",
-                "escuro": "assets/img/transportes/voo/british-airways-dark.svg"
-            },
-            "copa": {
-                "claro": "assets/img/transportes/voo/copa.svg",
-                "escuro": "assets/img/transportes/voo/copa-dark.svg"
-            },
-            "delta": {
-                "claro": "assets/img/transportes/voo/copa.svg",
-                "escuro": "assets/img/transportes/voo/copa-dark.svg"
-            },
-            "easyjet": {
-                "claro": "assets/img/transportes/voo/easyjet.svg",
-                "escuro": "assets/img/transportes/voo/easyjet-dark.svg"
-            },
-            "gol": {
-                "claro": "assets/img/transportes/voo/gol.svg",
-                "escuro": "assets/img/transportes/voo/gol-dark.svg"
-            },
-            "jetblue": {
-                "claro": "assets/img/transportes/voo/jetblue.svg",
-                "escuro": "assets/img/transportes/voo/jetblue-dark.svg"
-            },
-            "klm": {
-                "claro": "assets/img/transportes/voo/klm.svg",
-                "escuro": "assets/img/transportes/voo/klm-dark.svg"
-            },
-            "latam": {
-                "claro": "assets/img/transportes/voo/latam.svg",
-                "escuro": "assets/img/transportes/voo/latam-dark.svg"
-            },
-            "lufthansa": {
-                "claro": "assets/img/transportes/voo/lufthansa.svg",
-                "escuro": "assets/img/transportes/voo/lufthansa-dark.svg"
-            },
-            "qatar": {
-                "claro": "assets/img/transportes/voo/qatar.svg",
-                "escuro": "assets/img/transportes/voo/qatar-dark.svg"
-            },
-            "ryanair": {
-                "claro": "assets/img/transportes/voo/ryanair.svg",
-                "escuro": "assets/img/transportes/voo/ryanair-dark.svg"
-            },
-            "tap": {
-                "claro": "assets/img/transportes/voo/tap.svg",
-                "escuro": "assets/img/transportes/voo/tap-dark.svg"
-            },
-            "united": {
-                "claro": "assets/img/transportes/voo/united.svg",
-                "escuro": "assets/img/transportes/voo/united-dark.svg"
-            },
-            "vueling": {
-                "claro": "assets/img/transportes/voo/vueling.svg",
-                "escuro": "assets/img/transportes/voo/vueling-dark.svg"
-            }
-        },
-        "trem-bala": {
-            "eurostar": {
-                "claro": "assets/img/transportes/trem-bala/eurostar.svg",
-                "escuro": "assets/img/transportes/trem-bala/eurostar-dark.svg"
-            }
-        }
-    },
-    "sites": {
-        "carro": {
-            "99": "https://99app.com/",
-            "avis": "https://www.avis.com/",
-            "cabify": "https://cabify.com/",
-            "hertz": "https://www.hertz.com/rentacar/reservation/",
-            "localiza": "https://www.localiza.com/",
-            "lyft": "https://www.lyft.com/",
-            "movida": "https://www.movida.com.br/",
-            "uber": "https://www.uber.com/",
-            "unidas": "https://www.unidas.com.br/"
-        },
-        "onibus": {
-            "aguiaBranca": "https://www.aguiabranca.com.br/",
-            "buser": "https://www.buser.com.br/",
-            "cometa": "https://www.viacaocometa.com.br/",
-            "gontijo": "https://www.gontijo.com.br/"
-        },
-        "voo": {
-            "aerLingus": "https://www.aerlingus.com/",
-            "americanAirlines": "https://www.aa.com/",
-            "avianca": "https://www.avianca.com/",
-            "azul": "https://www.voeazul.com.br/",
-            "britishAirways": "https://www.britishairways.com/",
-            "copa": "https://www.copaair.com/",
-            "delta": "https://delta.com/",
-            "easyjet": "https://www.easyjet.com/",
-            "gol": "https://www.voegol.com.br/",
-            "jetblue": "https://www.jetblue.com/",
-            "klm": "https://www.klm.com/",
-            "latam": "https://www.latamairlines.com/",
-            "lufthansa": "https://www.lufthansa.com/",
-            "qatar": "https://www.qatarairways.com/",
-            "ryanair": "https://www.ryanair.com/",
-            "tap": "https://www.flytap.com/",
-            "united": "https://www.united.com/",
-            "vueling": "https://www.vueling.com/"
-        },
-        "trem-bala": {
-            "eurostar": "https://www.eurostar.com/"
-        }
-    },
-    "titulos": {
-        "bondinho": "Bondinho",
-        "carro": "Carro",
-        "helicoptero": "Helicóptero",
-        "locomotiva": "Locomotiva",
-        "metro": "Metrô",
-        "moto": "Moto",
-        "navio": "Navio",
-        "onibus": "Ônibus",
-        "outro": "Transporte",
-        "trem-bala": "Trem-bala",
-        "voo": "Avião"
-    }
+	"empresas": {
+		"carro": {
+			"99": "99",
+			"avis": "Avis",
+			"cabify": "Cabify",
+			"hertz": "Hertz",
+			"localiza": "Localiza",
+			"lyft": "Lyft",
+			"movida": "Movida",
+			"uber": "Uber",
+			"unidas": "Unidas"
+		},
+		"onibus": {
+			"aguiaBranca": "Águia Branca",
+			"buser": "Buser",
+			"cometa": "Cometa",
+			"gontijo": "Gontijo"
+		},
+		"voo": {
+			"aerLingus": "Aer Lingus",
+			"americanAirlines": "American Airlines",
+			"avianca": "Avianca",
+			"azul": "Azul",
+			"britishAirways": "British Airways",
+			"copa": "Copa Airlines",
+			"delta": "Delta Airlines",
+			"easyjet": "EasyJet",
+			"gol": "Gol",
+			"jetblue": "JetBlue",
+			"klm": "KLM",
+			"latam": "LATAM",
+			"lufthansa": "Lufthansa",
+			"qatar": "Qatar Airways",
+			"tap": "TAP Air Portugal",
+			"united": "United Airlines",
+			"vueling": "Vueling Airlines"
+		},
+		"trem-bala": {
+			"eurostar": "Eurostar"
+		}
+	},
+	"icones": {
+		"bicicleta": "mingcute:bike-fill",
+		"bondinho": "ph:cable-car-fill",
+		"carro": "fa-solid:car-side",
+		"helicoptero": "fa6-solid:helicopter",
+		"locomotiva": "cil:locomotive",
+		"metro": "mdi:metro",
+		"moto": "ri:motorbike-fill",
+		"navio": "icon-park-solid:sailboat-one",
+		"onibus": "mingcute:bus-2-fill",
+		"outro": "mingcute:rocket-fill",
+		"trem-bala": "mingcute:train-fill",
+		"voo": "fa-solid:plane"
+	},
+	"imagens": {
+		"carro": {
+			"99": {
+				"claro": "assets/img/transportes/carro/99.svg",
+				"escuro": "assets/img/transportes/carro/99-dark.svg"
+			},
+			"avis": {
+				"claro": "assets/img/transportes/carro/avis.svg",
+				"escuro": "assets/img/transportes/carro/avis-dark.svg"
+			},
+			"cabify": {
+				"claro": "assets/img/transportes/carro/cabify.svg",
+				"escuro": "assets/img/transportes/carro/cabify-dark.svg"
+			},
+			"hertz": {
+				"claro": "assets/img/transportes/carro/hertz.svg",
+				"escuro": "assets/img/transportes/carro/hertz-dark.svg"
+			},
+			"localiza": {
+				"claro": "assets/img/transportes/carro/localiza.svg",
+				"escuro": "assets/img/transportes/carro/localiza-dark.svg"
+			},
+			"lyft": {
+				"claro": "assets/img/transportes/carro/lyft.svg",
+				"escuro": "assets/img/transportes/carro/lyft-dark.svg"
+			},
+			"movida": {
+				"claro": "assets/img/transportes/carro/movida.svg",
+				"escuro": "assets/img/transportes/carro/movida-dark.svg"
+			},
+			"uber": {
+				"claro": "assets/img/transportes/carro/uber.svg",
+				"escuro": "assets/img/transportes/carro/uber-dark.svg"
+			},
+			"unidas": {
+				"claro": "assets/img/transportes/carro/unidas.svg",
+				"escuro": "assets/img/transportes/carro/unidas-dark.svg"
+			}
+		},
+		"onibus": {
+			"aguiaBranca": {
+				"claro": "assets/img/transportes/onibus/aguia-branca.svg",
+				"escuro": "assets/img/transportes/onibus/aguia-branca-dark.svg"
+			},
+			"buser": {
+				"claro": "assets/img/transportes/onibus/buser.svg",
+				"escuro": "assets/img/transportes/onibus/buser-dark.svg"
+			},
+			"cometa": {
+				"claro": "assets/img/transportes/onibus/cometa.png",
+				"escuro": "assets/img/transportes/onibus/cometa-dark.png"
+			},
+			"gontijo": {
+				"claro": "assets/img/transportes/onibus/gontijo.png",
+				"escuro": "assets/img/transportes/onibus/gontijo-dark.png"
+			}
+		},
+		"voo": {
+			"aerLingus": {
+				"claro": "assets/img/transportes/voo/aer-lingus.svg",
+				"escuro": "assets/img/transportes/voo/aer-lingus-dark.svg"
+			},
+			"americanAirlines": {
+				"claro": "assets/img/transportes/voo/american-airlines.svg",
+				"escuro": "assets/img/transportes/voo/american-airlines-dark.svg"
+			},
+			"avianca": {
+				"claro": "assets/img/transportes/voo/avianca.svg",
+				"escuro": "assets/img/transportes/voo/avianca-dark.svg"
+			},
+			"azul": {
+				"claro": "assets/img/transportes/voo/azul.svg",
+				"escuro": "assets/img/transportes/voo/azul-dark.svg"
+			},
+			"britishAirways": {
+				"claro": "assets/img/transportes/voo/british-airways.svg",
+				"escuro": "assets/img/transportes/voo/british-airways-dark.svg"
+			},
+			"copa": {
+				"claro": "assets/img/transportes/voo/copa.svg",
+				"escuro": "assets/img/transportes/voo/copa-dark.svg"
+			},
+			"delta": {
+				"claro": "assets/img/transportes/voo/copa.svg",
+				"escuro": "assets/img/transportes/voo/copa-dark.svg"
+			},
+			"easyjet": {
+				"claro": "assets/img/transportes/voo/easyjet.svg",
+				"escuro": "assets/img/transportes/voo/easyjet-dark.svg"
+			},
+			"gol": {
+				"claro": "assets/img/transportes/voo/gol.svg",
+				"escuro": "assets/img/transportes/voo/gol-dark.svg"
+			},
+			"jetblue": {
+				"claro": "assets/img/transportes/voo/jetblue.svg",
+				"escuro": "assets/img/transportes/voo/jetblue-dark.svg"
+			},
+			"klm": {
+				"claro": "assets/img/transportes/voo/klm.svg",
+				"escuro": "assets/img/transportes/voo/klm-dark.svg"
+			},
+			"latam": {
+				"claro": "assets/img/transportes/voo/latam.svg",
+				"escuro": "assets/img/transportes/voo/latam-dark.svg"
+			},
+			"lufthansa": {
+				"claro": "assets/img/transportes/voo/lufthansa.svg",
+				"escuro": "assets/img/transportes/voo/lufthansa-dark.svg"
+			},
+			"qatar": {
+				"claro": "assets/img/transportes/voo/qatar.svg",
+				"escuro": "assets/img/transportes/voo/qatar-dark.svg"
+			},
+			"ryanair": {
+				"claro": "assets/img/transportes/voo/ryanair.svg",
+				"escuro": "assets/img/transportes/voo/ryanair-dark.svg"
+			},
+			"tap": {
+				"claro": "assets/img/transportes/voo/tap.svg",
+				"escuro": "assets/img/transportes/voo/tap-dark.svg"
+			},
+			"united": {
+				"claro": "assets/img/transportes/voo/united.svg",
+				"escuro": "assets/img/transportes/voo/united-dark.svg"
+			},
+			"vueling": {
+				"claro": "assets/img/transportes/voo/vueling.svg",
+				"escuro": "assets/img/transportes/voo/vueling-dark.svg"
+			}
+		},
+		"trem-bala": {
+			"eurostar": {
+				"claro": "assets/img/transportes/trem-bala/eurostar.svg",
+				"escuro": "assets/img/transportes/trem-bala/eurostar-dark.svg"
+			}
+		}
+	},
+	"sites": {
+		"carro": {
+			"99": "https://99app.com/",
+			"avis": "https://www.avis.com/",
+			"cabify": "https://cabify.com/",
+			"hertz": "https://www.hertz.com/rentacar/reservation/",
+			"localiza": "https://www.localiza.com/",
+			"lyft": "https://www.lyft.com/",
+			"movida": "https://www.movida.com.br/",
+			"uber": "https://www.uber.com/",
+			"unidas": "https://www.unidas.com.br/"
+		},
+		"onibus": {
+			"aguiaBranca": "https://www.aguiabranca.com.br/",
+			"buser": "https://www.buser.com.br/",
+			"cometa": "https://www.viacaocometa.com.br/",
+			"gontijo": "https://www.gontijo.com.br/"
+		},
+		"voo": {
+			"aerLingus": "https://www.aerlingus.com/",
+			"americanAirlines": "https://www.aa.com/",
+			"avianca": "https://www.avianca.com/",
+			"azul": "https://www.voeazul.com.br/",
+			"britishAirways": "https://www.britishairways.com/",
+			"copa": "https://www.copaair.com/",
+			"delta": "https://delta.com/",
+			"easyjet": "https://www.easyjet.com/",
+			"gol": "https://www.voegol.com.br/",
+			"jetblue": "https://www.jetblue.com/",
+			"klm": "https://www.klm.com/",
+			"latam": "https://www.latamairlines.com/",
+			"lufthansa": "https://www.lufthansa.com/",
+			"qatar": "https://www.qatarairways.com/",
+			"ryanair": "https://www.ryanair.com/",
+			"tap": "https://www.flytap.com/",
+			"united": "https://www.united.com/",
+			"vueling": "https://www.vueling.com/"
+		},
+		"trem-bala": {
+			"eurostar": "https://www.eurostar.com/"
+		}
+	},
+	"titulos": {
+		"bondinho": "Bondinho",
+		"carro": "Carro",
+		"helicoptero": "Helicóptero",
+		"locomotiva": "Locomotiva",
+		"metro": "Metrô",
+		"moto": "Moto",
+		"navio": "Navio",
+		"onibus": "Ônibus",
+		"outro": "Transporte",
+		"trem-bala": "Trem-bala",
+		"voo": "Avião"
+	}
 }
