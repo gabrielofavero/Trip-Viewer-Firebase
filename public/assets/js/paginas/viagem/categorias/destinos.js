@@ -157,7 +157,7 @@ function _loadAndOpenDestino(code) {
 		"PLANNED_DESTINATIONS",
 		JSON.stringify(PLANNED_DESTINATIONS),
 	);
-	const link = `destination?type=${translation[code]}&d=${DESTINO_ATIVO}`;
+	const link = `destination?type=${translation[code]}&linked=1&d=${DESTINO_ATIVO}`;
 	_openViewEmbed(link);
 }
 

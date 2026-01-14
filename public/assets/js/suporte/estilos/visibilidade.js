@@ -32,11 +32,13 @@ function _setManualVisibility() {
 	sessionStorage.setItem("forceDarkMode", _isOnDarkMode());
 }
 
-function _loadVisibilityExternal() {
-	const localColors = _getLocalColors();
-	if (localColors) {
-		CLARO = localColors.claro;
-		ESCURO = localColors.escuro;
+function _loadVisibilityExternal(fetchLocalColors = true) {
+	if (fetchLocalColors) {
+		const localColors = _getLocalColors();
+		if (localColors) {
+			CLARO = localColors.claro;
+			ESCURO = localColors.escuro;
+		}
 	}
 
 	if (_isOnDarkMode()) {

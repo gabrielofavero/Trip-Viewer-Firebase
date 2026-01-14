@@ -2,6 +2,7 @@ var PLANNED_DESTINATION;
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
 var ACTIVE_CATEGORY;
+var LINKED_TO_TRIP = false;
 
 window.addEventListener("load", async function () {
 	try {
@@ -17,16 +18,18 @@ window.addEventListener("load", async function () {
 async function _loadDestinosData() {
 	const urlParams = _getURLParams();
 	DOCUMENT_ID = urlParams["d"];
+	LINKED_TO_TRIP = urlParams["linked"] === "1";
 
 	if (!DOCUMENT_ID) {
 		const error = translate("messages.errors.missing_data");
 		throw error;
 	}
 
-	PLANNED_DESTINATION =
-		JSON.parse(window.localStorage.getItem("PLANNED_DESTINATIONS"))?.[
-			DOCUMENT_ID
-		] || {};
+	PLANNED_DESTINATION = LINKED_TO_TRIP
+		? JSON.parse(window.localStorage.getItem("PLANNED_DESTINATIONS"))?.[
+				DOCUMENT_ID
+			] || {}
+		: {};
 	FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
 	_loadActiveCategory(urlParams);
 }
@@ -34,7 +37,7 @@ async function _loadDestinosData() {
 async function _loadDestinosPage() {
 	console.log(this.window.location.href);
 	await _loadDestinosData();
-	_loadVisibilityExternal();
+	_loadVisibilityExternal(LINKED_TO_TRIP);
 
 	const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
 	document.title = title;
