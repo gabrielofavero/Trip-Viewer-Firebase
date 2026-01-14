@@ -4,7 +4,6 @@ var DESTINOS = [];
 var DESTINO_ATIVO;
 var DESTINO_EXPORT = {};
 var DESTINO_TRANSLATIONS = {};
-var PLANNED_DESTINATIONS = {};
 
 // ======= LOADERS =======
 function _loadDestinos() {
@@ -23,10 +22,6 @@ function _loadDestinos() {
 		_getChildIDs("destinosBox").length <= 1
 	) {
 		getID("destinosTitleContainer").style.display = "none";
-	}
-
-	if (FIRESTORE_DATA.modulos.programacao) {
-		_loadPlannedDestinations();
 	}
 
 	window.addEventListener("resize", function () {
@@ -153,11 +148,7 @@ function _getDestinoValores(destino) {
 
 function _loadAndOpenDestino(code) {
 	const translation = CONFIG.destinos.translation;
-	window.localStorage.setItem(
-		"PLANNED_DESTINATIONS",
-		JSON.stringify(PLANNED_DESTINATIONS),
-	);
-	const link = `destination?type=${translation[code]}&linked=1&d=${DESTINO_ATIVO}`;
+	const link = `destination?d=${DESTINO_ATIVO}&v=${DOCUMENT_ID}&type=${translation[code]}`;
 	_openViewEmbed(link);
 }
 
@@ -178,33 +169,6 @@ function _adjustDestinationsHTML() {
 
 	for (const el of elements) {
 		el.style.height = `${maxHeight}px`;
-	}
-}
-
-function _loadPlannedDestinations() {
-	for (const dia of FIRESTORE_DATA.programacoes) {
-		const data = dia.data;
-		for (const turno of ["madrugada", "manha", "tarde", "noite"]) {
-			const programacoes = dia[turno];
-			if (!programacoes) continue;
-
-			for (const programacao of programacoes) {
-				const item = programacao?.item;
-				if (!item || item.tipo !== "destinos") continue;
-
-				_addPlannedDestination(item, data, turno);
-			}
-		}
-	}
-
-	function _addPlannedDestination(item, data, turno) {
-		const destino = DESTINOS.find((d) => d.destinosID === item.local);
-		if (!destino) return;
-
-		const id = destino.destinosID;
-		PLANNED_DESTINATIONS[id] ??= {};
-		PLANNED_DESTINATIONS[id][item.categoria] ??= {};
-		PLANNED_DESTINATIONS[id][item.categoria][item.id] = { data, turno };
 	}
 }
 

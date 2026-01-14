@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 async function _loadViagemPage() {
 	const urlParams = _getURLParams();
 	TYPE = urlParams["l"] ? "listagens" : urlParams["d"] ? "destinos" : "viagens";
+	DOCUMENT_ID = urlParams["l"] || urlParams["d"] || urlParams["v"];
 
 	window.addEventListener("scroll", () => {
 		if (window.scrollY > 0) {

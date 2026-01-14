@@ -1,94 +1,88 @@
 {
-  "hosting": {
-    "public": "public",
-    "cleanUrls": true,
-    "headers": [
-      {
-        "source": "**/*.@(html|json)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          }
-        ]
-      },
-      {
-        "source": "**/*.@(js|css)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      }
-    ],
-    "redirects": [
-      {
-        "source": "/viagem*",
-        "destination": "/view",
-        "type": 301
-      },
-      {
-        "source": "/destinos*",
-        "destination": "/destination",
-        "type": 301
-      },
-      {
-        "source": "/gastos*",
-        "destination": "/expenses",
-        "type": 301
-      },
-      {
-        "source": "/editar-viagem*",
-        "destination": "/edit/trip",
-        "type": 301
-      },
-      {
-        "source": "/editar-destino*",
-        "destination": "/edit/destination",
-        "type": 301
-      },
-      {
-        "source": "/editar-listagem*",
-        "destination": "/edit/listing",
-        "type": 301
-      }
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ],
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  },
-  "emulators": {
-    "hosting": {
-      "port": 5000
-    },
-    "ui": {
-      "enabled": true
-    },
-    "singleProjectMode": true
-  },
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
-    }
-  ]
+	"hosting": {
+		"public": "public",
+		"cleanUrls": true,
+		"headers": [
+			{
+				"source": "**/*.@(html|json)",
+				"headers": [
+					{
+						"key": "Cache-Control",
+						"value": "no-cache, no-store, must-revalidate"
+					}
+				]
+			},
+			{
+				"source": "**/*.@(js|css)",
+				"headers": [
+					{
+						"key": "Cache-Control",
+						"value": "public, max-age=31536000, immutable"
+					}
+				]
+			}
+		],
+		"redirects": [
+			{
+				"source": "/viagem*",
+				"destination": "/view",
+				"type": 301
+			},
+			{
+				"source": "/destinos*",
+				"destination": "/destination",
+				"type": 301
+			},
+			{
+				"source": "/gastos*",
+				"destination": "/expenses",
+				"type": 301
+			},
+			{
+				"source": "/editar-viagem*",
+				"destination": "/edit/trip",
+				"type": 301
+			},
+			{
+				"source": "/editar-destino*",
+				"destination": "/edit/destination",
+				"type": 301
+			},
+			{
+				"source": "/editar-listagem*",
+				"destination": "/edit/listing",
+				"type": 301
+			}
+		],
+		"rewrites": [
+			{
+				"source": "**",
+				"destination": "/index.html"
+			}
+		],
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+	},
+	"emulators": {
+		"hosting": {
+			"port": 5000
+		},
+		"ui": {
+			"enabled": true
+		},
+		"singleProjectMode": true
+	},
+	"functions": [
+		{
+			"source": "functions",
+			"codebase": "default",
+			"ignore": [
+				"node_modules",
+				".git",
+				"firebase-debug.log",
+				"firebase-debug.*.log",
+				"*.local"
+			],
+			"predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"]
+		}
+	]
 }

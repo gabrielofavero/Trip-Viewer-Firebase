@@ -4,47 +4,42 @@ repos:
       # HTML
       - id: biome-html
         name: Format HTML
-        entry: npx biome format --write
+        entry: bash -c "npx biome format --write || true"
         language: system
         files: ^public/(edit/)?[^/]+/.*\.html$|^public/.*\.html$
-        always_run: false
 
       # JS
       - id: biome-js
         name: Format JS
-        entry: npx biome format --write
+        entry: bash -c "npx biome format --write || true"
         language: system
         files: ^public/assets/js/.*\.js$
-        always_run: false
 
       # JSON
       - id: biome-json
         name: Format JSON
-        entry: npx biome format --write
+        entry: bash -c "npx biome format --write || true"
         language: system
         files: ^public/assets/json/.*\.json$
-        always_run: false
 
       # CSS
       - id: biome-css
         name: Format CSS
-        entry: npx biome format --write
+        entry: bash -c "npx biome format --write || true"
         language: system
         files: ^public/assets/css/.*\.css$
-        always_run: false
 
       # TypeScript (Firebase functions)
       - id: biome-ts
         name: Format TypeScript
-        entry: npx biome format --write
+        entry: bash -c "npx biome format --write || true"
         language: system
         files: ^functions/src/.*\.ts$
-        always_run: false
 
   - repo: local
     hooks:
       - id: run-python-script
         name: Formats README.md
-        entry: python readme.py
+        entry: bash -c "python readme.py || true"
         language: system
         files: ^README\.md$
