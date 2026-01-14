@@ -106,11 +106,10 @@ function _shouldDisplayRegions() {
 
 function _shouldDisplayPlanned() {
 	const item = PLANNED_DESTINATION[ACTIVE_CATEGORY];
-	if (!item) {
+	if (!item || Object.keys(PLANNED_DESTINATION[ACTIVE_CATEGORY]) <= 1) {
 		return false;
 	}
-	const planejado = Object.keys(PLANNED_DESTINATION[ACTIVE_CATEGORY]);
-	return planejado.size > 0;
+	return true;
 }
 
 function _shouldDisplayScores() {

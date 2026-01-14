@@ -54,7 +54,7 @@ function _getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado }) {
         <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
             <div class="notas-box">
                 <i class="iconify nota-sem-margem ${_getNotaClass(item.nota)}" data-icon="${_getNotaIcon(item.nota)}"></i>
-                <span class="nota-texto">${translate(`destination.scores.${item.nota}`)}</span>
+                <span class="nota-texto">${_getNotaTranslation(item.nota)}</span>
             </div>
             <div class="links-container" style="display: ${_getLinksContainerVisibility(item)}">
                 <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? "block" : "none"}"${_getLinkOnClick(item, "mapa")}></i>

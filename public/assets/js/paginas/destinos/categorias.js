@@ -76,6 +76,19 @@ function _getNotaClass(nota) {
 	}
 }
 
+function _getNotaTranslation(nota) {
+	switch (nota) {
+		case "5":
+		case "4":
+		case "3":
+		case "2":
+		case "1":
+			return translate(`destination.scores.${nota}`);
+		default:
+			return translate(`destination.scores.default`);
+	}
+}
+
 // Links
 function _getLinkOnClick(item, tipo) {
 	if (item[tipo]) {

@@ -4,8 +4,8 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 135   | 129  | 2         | 4       |
-| 🏆   | Feature     | F000 | 139   | 112  | 22        | 5       |
+| 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
+| 🏆   | Feature     | F000 | 140   | 112  | 22        | 6       |
 | 📈   | Improvement | M000 | 134   | 104  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
@@ -13,7 +13,7 @@
 
 ### High Priority
 
-- 🐞 **B135:** Destination minor fixes
+- 🏆 **F140:** Plan destination from destination page
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Read and format data from itinerary (main)*
@@ -33,6 +33,7 @@
 
 ### January 2026
 
+- 🐞 **B135:** Destination minor fixes
 - 🏆 **F139:** Only display trip related info on destination if linked
 - 🏆 **F132:** Add pre-commit actions (formatting and read-me)
 - 🏆 **F133:** Add setup script
