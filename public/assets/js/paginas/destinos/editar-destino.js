@@ -25,6 +25,8 @@ function _edit(j) {
 		getID(`editar-nome-${j}`).value = item.nome || "";
 		getID(`editar-emoji-${j}`).value = item.emoji || "";
 
+		_populatePlannedDestinationEditField(id, j);
+
 		getID(`editar-mapa-${j}`).value = item.mapa || "";
 		getID(`editar-instagram-${j}`).value = item.instagram || "";
 		getID(`editar-website-${j}`).value = item.website || "";
@@ -257,9 +259,17 @@ async function _saveEdit(j, isNew = false) {
 	}
 
 	const docPath = `destinos/${DOCUMENT_ID}`;
-	await _update(docPath, { [`${ACTIVE_CATEGORY}.${id}`]: item });
+	const [, plannedResult] = await Promise.all([
+		_update(docPath, { [`${ACTIVE_CATEGORY}.${id}`]: item }),
+		_setPlannedDestination(id, j),
+	]);
+
+	if (plannedResult) {
+		await _refreshTripData();
+	}
 
 	await _refreshDestino();
+
 	_stopLoadingScreen();
 
 	function _getValue(type, j) {
@@ -298,6 +308,7 @@ async function _deleteEdit(id) {
 function _abortEdit(message) {
 	_displayMessage(translate("messages.errors.load_title"), translate(message));
 	_adjustEditVisibility();
+	ACTIVE_PLANNED_DESTINATION = [];
 }
 
 function _closeAddedDestino() {
@@ -307,6 +318,7 @@ function _closeAddedDestino() {
 	_removeEl(`destinos-box-${ADDED_J}`);
 	_adjustEditVisibility();
 	ADDED_J = null;
+	ACTIVE_PLANNED_DESTINATION = [];
 }
 
 function _restoreAccordionBody(j, item) {

@@ -730,6 +730,10 @@
 		"non_specified": "Non-specified",
 		"total": "Total",
 		"created_date": "Created date",
-		"planned": "Planned"
+		"planned": {
+			"title": "Planned",
+			"multiple": "Planned on multiple dates",
+			"not_planned": "Not planned"
+		}
 	}
 }

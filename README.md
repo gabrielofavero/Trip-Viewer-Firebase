@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
-| 🏆   | Feature     | F000 | 141   | 113  | 22        | 6       |
+| 🏆   | Feature     | F000 | 141   | 114  | 22        | 5       |
 | 📈   | Improvement | M000 | 134   | 104  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
 
@@ -13,7 +13,6 @@
 
 ### High Priority
 
-- 🏆 **F141:** Plan destination from destination page
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Read and format data from itinerary (main)*
@@ -33,6 +32,7 @@
 
 ### January 2026
 
+- 🏆 **F141:** Plan destination from destination page
 - 🏆 **F140:** Fetch trip data instead of relying on localhost for destination page
 - 🐞 **B135:** Destination minor fixes
 - 🏆 **F139:** Only display trip related info on destination if linked

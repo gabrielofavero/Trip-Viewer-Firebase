@@ -130,22 +130,27 @@ function _getDescricaoValue(item) {
 
 // Planejado
 function _getPlanejado(id) {
-	const plannedItem = PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[id];
-	return _getPlanejadoValue(plannedItem);
-}
+	const plannedItems = _getPlannedDestinations(id);
+	return _getPlanejadoValue(plannedItems);
 
-function _getPlanejadoValue(plannedItem) {
-	if (!plannedItem) {
-		return "";
+	function _getPlanejadoValue(plannedItems = []) {
+		if (plannedItems.length === 0) {
+			return "";
+		}
+
+		if (plannedItems.length > 1) {
+			return translate("labels.planned.multiple");
+		}
+
+		const plannedItem = plannedItems[0];
+		const date = _convertFromDateObject(plannedItem.data);
+		const weekday = _getWeekday(date.getUTCDay());
+		const day = plannedItem.data.day;
+		const month = _getMonth(plannedItem.data.month - 1).toLowerCase();
+		const turno = _getTurno(plannedItem.turno).toLowerCase();
+		const turnoLabel = turno ? ` (${turno})` : "";
+		return `${translate("labels.planned.title")}: ${weekday}, ${translate("datetime.titles.day_month", { day, month })}${turnoLabel}`;
 	}
-
-	const date = _convertFromDateObject(plannedItem.data);
-	const weekday = _getWeekday(date.getDay());
-	const day = plannedItem.data.day;
-	const month = _getMonth(plannedItem.data.month - 1).toLowerCase();
-	const turno = _getTurno(plannedItem.turno).toLowerCase();
-	const turnoLabel = turno ? ` (${turno})` : "";
-	return `${translate("labels.planned")}: ${weekday}, ${translate("datetime.titles.day_month", { day, month })}${turnoLabel}`;
 }
 
 function _getTurno(turno) {

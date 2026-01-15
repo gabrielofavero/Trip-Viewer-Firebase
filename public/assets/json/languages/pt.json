@@ -730,6 +730,10 @@
 		"non_specified": "Não especificado",
 		"total": "Total",
 		"created_date": "Criado em",
-		"planned": "Planejado"
+		"planned": {
+			"title": "Planejado",
+			"multiple": "Planejado em múltiplas datas",
+			"not_planned": "Não planejado"
+		}
 	}
 }

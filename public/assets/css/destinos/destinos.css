@@ -1074,8 +1074,12 @@ h1::after {
 	gap: 8px;
 }
 
-.edit-double-container {
+.edit-double-container.aligned {
 	align-items: center;
+}
+
+.edit-double-container .color-icon.edit {
+	margin-top: 10px;
 }
 
 .edit-title-container {

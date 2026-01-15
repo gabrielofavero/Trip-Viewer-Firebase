@@ -100,7 +100,7 @@ function _getEditHTML(j) {
              <input id="editar-emoji-${j}" class="edit-input emoji" type="text" placeholder="😁" />
         </div>
         <div class="edit-column-container">
-            <div class="edit-double-container">
+            <div class="edit-double-container aligned">
                 <div id="editar-nota-icon-${j}">
                     <i class="iconify nota-sem-margem nota-ausente" data-icon="ic:outline-question-mark"></i>
                 </div>
@@ -112,6 +112,18 @@ function _getEditHTML(j) {
                     <option value="2">${translate(`destination.scores.2`)}</option>
                     <option value="1">${translate(`destination.scores.1`)}</option>
                 </select>
+            </div>
+            <div class="edit-double-container" id="editar-planejado-container-${j}" style="display: none;"}>
+                <i class="iconify color-icon edit" data-icon="fa-solid:check"></i>
+                <div class="edit-column-container">
+                    <select class="edit-input" id="editar-planejado-select-data-${j}"></select>
+                    <select class="edit-input" id="editar-planejado-select-turno-${j}">
+                        <option value="madrugada">${_getTurno("madrugada")}</option>
+                        <option value="manha">${_getTurno("manha")}</option>
+                        <option value="tarde">${_getTurno("tarde")}</option>
+                        <option value="noite">${_getTurno("noite")}</option>
+                    </select>
+                </div>
             </div>
             <div class="edit-double-container">
                 <i class="iconify color-icon edit" data-icon="f7:map"></i>
