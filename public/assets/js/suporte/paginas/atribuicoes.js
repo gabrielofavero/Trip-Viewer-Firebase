@@ -11,6 +11,9 @@ function _openAtribuicoes() {
 	switch (page) {
 		case "index":
 			atribuicoes.push(_getBackground());
+			if (FIRESTORE_DATA?.modulos.gastos) {
+				_loadExpensesCredits();
+			}
 			break;
 		case "trip":
 		case "destination":
@@ -27,10 +30,7 @@ function _openAtribuicoes() {
 			atribuicoes.push(_getAccordion());
 			break;
 		case "expenses":
-			atribuicoes.push(_getPinStyle());
-			atribuicoes.push(_getTabs());
-			atribuicoes.push(_getDashboard());
-			atribuicoes.push(_getExchangeRateAPI());
+			_loadExpensesCredits();
 			break;
 	}
 
@@ -40,6 +40,13 @@ function _openAtribuicoes() {
 	propriedades.botoes = [];
 
 	_displayFullMessage(propriedades);
+
+	function _loadExpensesCredits() {
+		atribuicoes.push(_getPinStyle());
+		atribuicoes.push(_getTabs());
+		atribuicoes.push(_getDashboard());
+		atribuicoes.push(_getExchangeRateAPI());
+	}
 
 	function _getLogo() {
 		return `<strong>${translate("labels.logo")}: </strong> <a href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph" target="_blank">studiogstock</a> (${translate("labels.adapted")})`;

@@ -112,6 +112,8 @@ function _loadPage() {
 		case "editar-viagem":
 			_loadEditarViagemPage();
 			break;
+		case "itinerary":
+			return;
 		default:
 			_displayError(`Page "${_getHTMLpage()}" not found.`);
 			break;
@@ -136,7 +138,7 @@ function _getHTMLpage() {
 		case "/edit/trip":
 			return "editar-viagem";
 		default:
-			return result;
+			return result.slice(1);
 	}
 }
 

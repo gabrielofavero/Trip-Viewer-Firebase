@@ -42,7 +42,7 @@
 </head>
 
 <body>
-  <div id="expenses-content" class="loadable" style="display: none">
+  <div class="loadable" style="display: none">
     <div class="top-bar">
       <a href="#" id="logo-link" class="logo-link">
         <div class="logo-box">
@@ -103,93 +103,17 @@
             <button data-lang="pt">PT</button>
           </div>
         </div>
-        <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
 
     </div>
 
     <div class="section-title">
-      <br><br><br><br>
-      <h2 data-translate="trip.expenses.title"></h2>
-    </div>
-
-    <div id="gastos-container">
-      <div class="tabs-container">
-        <div class="tabs" id="tab-moedas" style="display: none;">
-        </div>
-      </div>
-      <div class="tabs-container" id="tabs-container-gastos">
-        <div class="tabs" id="tab-gastos" style="display: none;">
-          <input type="radio" style="display: none;" id="radio-resumo" name="tabs-gastos" checked />
-          <label class="tab" for="radio-resumo" data-translate="labels.overview"></label>
-          <input type="radio" style="display: none;" id="radio-gastosPrevios" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosPrevios" data-translate="trip.expenses.min.pre_trip"></label>
-          <input type="radio" style="display: none;" id="radio-gastosDurante" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosDurante" data-translate="trip.expenses.min.during_trip"></label>
-          <input type="radio" style="display: none;" id="radio-gastosViajantes" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosViajantes" data-translate="trip.travelers.title"></label>
-          <span class="glider"></span>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div id="conversao"></div>
-      <div id="resumo" class="main-container">
-        <div id="resumo-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="resumo-titulo" class="gastos-titulo" data-translate="labels.overview"></h2>
-            <div id="resumo-total" class="gastos-subtitulo"></div>
-            <canvas id="resumo-grafico" width="300" height="300"></canvas>
-          </div>
-
-          <div id="resumo-gastosPrevios" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosPrevios-titulo" data-translate="trip.expenses.pre_trip"></h2>
-            <table id="resumo-gastosPrevios-tabela" class="card-full-size">
-            </table>
-          </div>
-
-          <div id="resumo-gastosDurante" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosDurante-titulo" data-translate="trip.expenses.during_trip"></h2>
-            <table id="resumo-gastosDurante-tabela" class="card-full-size">
-            </table>
-          </div>
-
-          <div id="resumo-gastosViajantes" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosViajantes-titulo" data-translate="trip.travelers.title"></h2>
-            <table id="resumo-gastosViajantes-tabela" class="card-full-size">
-            </table>
-          </div>
-        </div>
-      </div>
-      <div id="gastosPrevios" class="main-container" style="display: none">
-        <div id="gastosPrevios-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="gastosPrevios-titulo" class="gastos-titulo" data-translate="trip.expenses.pre_trip"></h2>
-            <div id="gastosPrevios-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosPrevios-grafico" style="margin-top: 16px;" width="300" height="150"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="gastosDurante" class="main-container" style="display: none">
-        <div id="gastosDurante-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="gastosDurante-titulo" class="gastos-titulo" data-translate="trip.expenses.during_trip"></h2>
-            <div id="gastosDurante-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosDurante-grafico" style="margin-top: 16px;" width="150" height="75"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="gastosViajantes" class="main-container" style="display: none">
-        <div id="gastosViajantes-container" class="gastos-container">
-          <div class="gastos-card grafico">
-            <h2 id="gastosViajantes-titulo" class="gastos-titulo" data-translate="trip.travelers.title"></h2>
-            <div id="gastosViajantes-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosViajantes-grafico" style="margin-top: 16px;" width="300" height="150"></canvas>
-          </div>
-        </div>
-      </div>
+      <span>
+        <br><br><br><br>
+      </span>
+      <h1>Teste</h1>
+      <h2 data-translate="trip.itinerary.title"></h2>
     </div>
   </div>
 
@@ -238,22 +162,9 @@
   <script data-main src="assets/js/suporte/estilos/visibilidade.js"></script>
   <script data-main src="assets/js/suporte/paginas/mensagens.js"></script>
   <script data-main src="assets/js/suporte/paginas/carregamento.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/embed.js"></script>
-  <script data-main src="assets/js/paginas/destinos/categorias.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/content.js"></script>
-  <script data-main src="assets/js/paginas/destinos/destinos.js"></script>
   <script data-main src="assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dispositivos.js"></script>
-  <script data-main src="assets/js/suporte/paginas/datas.js"></script>
-  <script data-main src="assets/js/suporte/paginas/pin.js"></script>
-  <script data-main src="assets/js/paginas/gastos/suporte/moeda.js"></script>
-  <script data-main src="assets/js/paginas/gastos/suporte/dados.js"></script>
-  <script data-main src="assets/js/suporte/html/embed.js"></script>
-  <script data-main src="assets/js/paginas/gastos/suporte/embed.js"></script>
-  <script data-main src="assets/js/paginas/gastos/categorias.js"></script>
-  <script data-main src="assets/js/paginas/gastos/gastos-convertidos.js"></script>
-  <script data-main src="assets/js/paginas/gastos/gastos.js"></script>
   <script data-main src="assets/js/suporte/paginas/atribuicoes.js"></script>
+  <script data-main src="assets/js/paginas/itinerary/itinerary.js"></script>
 
 </body>
 
