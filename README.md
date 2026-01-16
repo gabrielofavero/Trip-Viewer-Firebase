@@ -5,20 +5,19 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
-| 🏆   | Feature     | F000 | 141   | 114  | 22        | 5       |
+| 🏆   | Feature     | F000 | 142   | 115  | 22        | 5       |
 | 📈   | Improvement | M000 | 134   | 104  | 30        | 0       |
-| ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
+| ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
 
-- ⚔️ **E041:** Full Itinerary page
-  - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Read and format data from itinerary (main)*
   - *[🏆F136] Read and format data from itinerary (associated)*
   - *[🏆F137] Print / PDF Export*
   - *[🏆F138] Notes export*
+  - *[🏆F139] Add same cards as from view inner itinerary*
 
 ### Medium Priority
 
@@ -29,6 +28,9 @@
 - 🐞 **B123:** Main try catchs for pages are failing because main is not async
 
 ## Done
+
+- ⚔️ **E041:** Full Itinerary page
+  - *[🏆F134] Create HTML and CSS*
 
 ### January 2026
 
