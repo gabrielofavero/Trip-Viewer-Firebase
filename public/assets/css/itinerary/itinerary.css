@@ -14,6 +14,13 @@
 	src: url("../../fonts/Chelos\ Free.ttf") format("truetype");
 }
 
+@media print {
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+}
+
 body {
 	font-family: "Open Sans", sans-serif;
 	color: var(--text-color);
@@ -170,12 +177,50 @@ h6 {
 # Main HTML elements
 --------------------------------------------------------------*/
 
+.content-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.content {
+	width: 1000px;
+}
+
+@media (max-width: 1050px) {
+	.content {
+		width: 90%;
+	}
+}
+
 .section-title {
 	text-align: center;
 }
 
 .section-title h1 {
 	padding-top: 100px;
+}
+
+.section-title h1::before {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 120px;
+	height: 1px;
+	background: #ddd;
+	bottom: 1px;
+	left: calc(50% - 60px);
+}
+
+.section-title h1::after {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 40px;
+	height: 3px;
+	background: var(--theme-color);
+	bottom: 0;
+	left: calc(50% - 20px);
 }
 
 h1 {
@@ -188,30 +233,42 @@ h1 {
 	color: #4f5051;
 }
 
-h1::before {
-	content: "";
-	position: absolute;
-	display: block;
-	width: 120px;
-	height: 1px;
-	background: #ddd;
-	bottom: 1px;
-	left: calc(50% - 60px);
-}
-
-h1::after {
-	content: "";
-	position: absolute;
-	display: block;
-	width: 40px;
-	height: 3px;
-	background: var(--theme-color);
-	bottom: 0;
-	left: calc(50% - 20px);
-}
-
 h1 span {
 	display: block;
+}
+
+h2 {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+@media print {
+	body {
+		padding: 15mm !important;
+		background: #fff !important;
+		color: #000 !important;
+	}
+
+	h1 {
+		color: #000 !important;
+	}
+
+	.top-bar,
+	footer {
+		display: none !important;
+	}
+
+	.content {
+		width: 100% !important;
+	}
+
+	.section-title h1 {
+		padding-top: 0 !important;
+	}
 }
 
 /*--------------------------------------------------------------
@@ -417,4 +474,42 @@ h1 span {
 
 .highlight {
 	font-weight: bold;
+}
+
+/*--------------------------------------------------------------
+# Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
+--------------------------------------------------------------*/
+.pin-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+
+.pin-input,
+.pin-input-invalid {
+	width: 44px;
+	height: 44px;
+	border: 1px solid #d7d7d7;
+	border-radius: 6px;
+	outline: none;
+	margin: 1px;
+	text-align: center;
+	margin: 0 5px;
+	background: #eeeeee;
+	font-size: 20px;
+}
+
+.pin-input-invalid {
+	color: #3a3838;
+	background: #eee0e0;
+	border-color: #dbbbbb;
+}
+
+.pin {
+	color: #ffffff;
+	font-size: 20px;
+	text-align: center;
+	display: none;
 }

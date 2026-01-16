@@ -113,6 +113,7 @@ function _loadPage() {
 			_loadEditarViagemPage();
 			break;
 		case "itinerary":
+			_loadItineraryPage();
 			return;
 		default:
 			_displayError(`Page "${_getHTMLpage()}" not found.`);
@@ -140,6 +141,14 @@ function _getHTMLpage() {
 		default:
 			return result.slice(1);
 	}
+}
+
+function _getPageURL() {
+	return window.location.href.includes("trip-viewer-prd.firebaseapp.com")
+		? "https://trip-viewer.com" +
+				window.location.pathname +
+				window.location.search
+		: window.location.href;
 }
 
 function _openLinkInNewTab(url) {

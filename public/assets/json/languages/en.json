@@ -499,7 +499,10 @@
 		"share": "Check out what I've created on TripViewer",
 		"exit_confirmation": "Are you sure you want to exit? You may lose unsaved changes",
 		"select_one": "Please select at least one item",
-		"protected": "To access this document, please enter the access PIN set for it",
+		"protected": {
+			"pin": "To access this document, please enter the access PIN set for it",
+			"prompt": "This trip contains protected data, such as reservation codes. Would you like to enter the PIN to view them?"
+		},
 		"errors": {
 			"load_title": "Loading Error 🙁",
 			"unknown": "An unexpected error prevented the page from loading",
@@ -526,7 +529,8 @@
 		"documents": {
 			"get": {
 				"error": "Couldn't load the document",
-				"no_code": "There's no valid code in the URL."
+				"no_code": "There's no valid code in the URL.",
+				"not_found": "Document not found"
 			},
 			"create": {
 				"success": "Document created successfully",

@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
-| 🏆   | Feature     | F000 | 142   | 115  | 22        | 5       |
+| 🏆   | Feature     | F000 | 142   | 116  | 22        | 4       |
 | 📈   | Improvement | M000 | 134   | 104  | 30        | 0       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
@@ -13,8 +13,7 @@
 
 ### High Priority
 
-  - *[🏆F135] Read and format data from itinerary (main)*
-  - *[🏆F136] Read and format data from itinerary (associated)*
+  - *[🏆F136] Read and format data from itinerary*
   - *[🏆F137] Print / PDF Export*
   - *[🏆F138] Notes export*
   - *[🏆F139] Add same cards as from view inner itinerary*
@@ -31,6 +30,7 @@
 
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
+  - *[🏆F135] Implement PIN logic*
 
 ### January 2026
 

@@ -499,7 +499,10 @@
 		"share": "Venha visualizar meus dados criados no TripViewer",
 		"exit_confirmation": "Você tem certeza que deseja sair? Todas as alterações não salvas serão perdidas",
 		"select_one": "Selecione pelo menos um item",
-		"protected": "Para visualizar os dados dessa viagem, insira o PIN de acesso",
+		"protected": {
+			"pin": "Para visualizar os dados dessa viagem, insira o PIN de acesso",
+			"prompt": "Esta viagem contém dados protegidos, como códigos de reserva. Deseja inserir o PIN para visualizá-los?"
+		},
 		"errors": {
 			"load_title": "Erro no Carregamento 🙁",
 			"unknown": "Um erro inesperado impediu o carregamento da página",
@@ -526,7 +529,8 @@
 		"documents": {
 			"get": {
 				"error": "Não foi possível carregar o documento",
-				"no_code": "Não há um código válido na URL"
+				"no_code": "Não há um código válido na URL",
+				"not_found": "Documento não encontrado"
 			},
 			"create": {
 				"success": "Documento criado com sucesso",

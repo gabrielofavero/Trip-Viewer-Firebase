@@ -39,11 +39,11 @@ input[type="radio"]:checked + label > .notification {
 	color: #fff;
 }
 
-.section-title h2 {
+h1 {
 	color: #909090;
 }
 
-.section-title h2::before {
+.section-title h1::before {
 	background: #a6a6a6;
 }
 
@@ -93,4 +93,20 @@ input[type="radio"]:checked + label > .notification {
 
 .lang-options button:hover {
 	background: #3b3b3b;
+}
+
+.pin-input {
+	border: 1px solid #414040;
+	background: #3b3b3b;
+	color: var(--text-color);
+}
+
+.pin-input-invalid {
+	color: #ffffff;
+	background: #463838;
+	border-color: #403434;
+}
+
+.pin {
+	color: #ffffff;
 }
