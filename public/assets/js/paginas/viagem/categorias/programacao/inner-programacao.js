@@ -289,7 +289,7 @@ function _getInnerProgramacao(item, destinos) {
 	}
 }
 
-function _getProgramacaoTitulo(titulo, destinos) {
+function _getProgramacaoTitulo(titulo, destinos, placeholder = true) {
 	if (!titulo?.valor) {
 		return titulo || translate("trip.itinerary.title");
 	}
@@ -302,7 +302,11 @@ function _getProgramacaoTitulo(titulo, destinos) {
 		return translate(`trip.transportation.${titulo.valor}`);
 	}
 
-	return translate("trip.itinerary.title");
+	if (placeholder) {
+		return translate("trip.itinerary.title");
+	}
+
+	return "";
 }
 
 // Setters

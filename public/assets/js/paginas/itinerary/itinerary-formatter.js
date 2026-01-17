@@ -154,7 +154,7 @@ async function _getItineraryData() {
 			programacao.destinosIDs.length > 0
 				? programacao.destinosIDs.map((d) => d.titulo)
 				: [];
-		const title = _getProgramacaoTitulo(programacao.titulo, destinos);
+		const title = _getProgramacaoTitulo(programacao.titulo, destinos, false);
 
 		return title ? `${title}: ${dateTitle}` : dateTitle;
 	}
