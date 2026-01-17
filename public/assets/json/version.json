@@ -1,10 +1,10 @@
 {
-	"build": 10,
+	"build": 12,
 	"projects": {
 		"trip-viewer-dev": {
-			"timestamp": "2026-01-17T11:14:33.387263+00:00",
+			"timestamp": "2026-01-17T11:28:36.830064+00:00",
 			"version": {
-				"firebase": "b612541a876608cd",
+				"firebase": "634d4304d2f58407",
 				"system": "2.26.0"
 			}
 		},

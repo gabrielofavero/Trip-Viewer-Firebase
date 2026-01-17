@@ -232,6 +232,15 @@ h6 {
 	color: var(--subtitle);
 }
 
+.content h2:not(:first-of-type) {
+	margin-top: 48px; /* agressivo */
+}
+
+.content h3 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+}
+
 @media (max-width: 1200px) {
 	.content {
 		width: 80vw;

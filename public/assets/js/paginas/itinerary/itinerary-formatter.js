@@ -28,7 +28,7 @@ async function _getItineraryContent(type) {
 			for (const innerItinerary of timeOfDayData) {
 				_loadInnerItinerary(innerItinerary, type);
 			}
-			if (type != "text") {
+			if (type == "notes") {
 				content.push("<br>");
 			}
 		}
@@ -93,9 +93,12 @@ async function _getItineraryContent(type) {
 
 		function _loadHTMLInnerItinerary(innerItinerary, type) {
 			const texts = innerItinerary.subItem?.texts ?? [];
+			const complement = type == "notes" ? "☐ " : "";
 
 			if (texts.length === 0) {
-				content.push(`<li>${_getTextContent(innerItinerary, type)}</li>`);
+				content.push(
+					`<li>${complement}${_getTextContent(innerItinerary, type)}</li>`,
+				);
 				return;
 			}
 
