@@ -219,7 +219,7 @@ h6 {
 	padding: 3em;
 	border-radius: 16px;
 	min-height: 500px;
-	overflow: hidden;
+	overflow: visible !important;
 }
 
 .content ul {
@@ -232,13 +232,25 @@ h6 {
 	color: var(--subtitle);
 }
 
+.content > li {
+	margin-bottom: 1rem;
+}
+
+.content > li:last-child {
+	margin-bottom: 0;
+}
+
+.content li ul > li {
+	margin-bottom: 0;
+}
+
 .content h2:not(:first-of-type) {
-	margin-top: 48px; /* agressivo */
+	margin-top: 3rem;
 }
 
 .content h3 {
-	margin-top: 24px;
-	margin-bottom: 16px;
+	margin-top: 2rem;
+	margin-bottom: 1rem;
 }
 
 @media (max-width: 1200px) {
