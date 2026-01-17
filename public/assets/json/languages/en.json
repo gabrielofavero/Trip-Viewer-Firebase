@@ -106,6 +106,7 @@
 			"simple_view": "Simplified view",
 			"leg_view": "Group by leg",
 			"people_view": "Group by people",
+			"time_window": "Time window",
 			"departure_location": {
 				"title": "Departure location",
 				"placeholder": "New York City"

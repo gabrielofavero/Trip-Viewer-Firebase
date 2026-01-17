@@ -103,16 +103,20 @@
             <button data-lang="pt">PT</button>
           </div>
         </div>
+        <i id="export" class="iconify icon-buttons" data-icon="ph:export-bold"></i>
+        <i id="print" class="iconify icon-buttons" data-icon="lucide:printer"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
 
     </div>
 
     <div class="section-title">
-      <h1>
-        <span>Programação</span>
-        <span>Viagem 01</span>
-      </h1>
+      <h1 id="title"></h1>
+    </div>
+
+    <div class="content-container">
+      <div class="content" id="content">
+      </div>
     </div>
   </div>
 
@@ -130,6 +134,13 @@
 
   <!-- ======= Support: Preloader ======= -->
   <div id="preloader"></div>
+
+  <div id="toast" style="display: none">
+    <span id="toast-text"></span>
+    <span class="toast-close" onclick="_closeToast()">
+      <i class="iconify" data-icon="material-symbols:close"></i>
+    </span>
+  </div>
 
   <!-- Firebase -->
   <script data-main src="../../index.js" type=text/JSX"></script>
@@ -156,6 +167,7 @@
   <script data-main src="assets/js/suporte/firebase/database.js"></script>
   <script data-main src="assets/js/suporte/estilos/animacoes.js"></script>
   <script data-main src="assets/js/suporte/paginas/dados.js"></script>
+  <script data-main src="assets/js/suporte/paginas/datas.js"></script>
   <script data-main src="assets/js/suporte/estilos/svgs.js"></script>
   <script data-main src="assets/js/suporte/estilos/cores.js"></script>
   <script data-main src="assets/js/suporte/estilos/visibilidade.js"></script>
@@ -163,6 +175,15 @@
   <script data-main src="assets/js/suporte/paginas/carregamento.js"></script>
   <script data-main src="assets/js/suporte/estilos/stylesheets.js"></script>
   <script data-main src="assets/js/suporte/paginas/atribuicoes.js"></script>
+  <script data-main src="assets/js/suporte/paginas/pin.js"></script>
+  <script data-main src="assets/js/paginas/viagem/suporte/sensitive-reservation.js"></script>
+  <script data-main src="assets/js/paginas/destinos/suporte/content.js"></script>
+  <script data-main src="assets/js/paginas/destinos/suporte/visibilidade.js"></script>
+  <script data-main src="assets/js/paginas/viagem/categorias/programacao/inner-programacao.js"></script>
+  <script data-main src="assets/js/paginas/viagem/categorias/transportes.js"></script>
+  <script data-main src="assets/js/paginas/viagem/categorias/hospedagens.js"></script>
+  <script data-main src="assets/js/paginas/destinos/categorias.js"></script>
+  <script data-main src="assets/js/paginas/itinerary/itinerary-formatter.js"></script>
   <script data-main src="assets/js/paginas/itinerary/itinerary.js"></script>
 
 </body>

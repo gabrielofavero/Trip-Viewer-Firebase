@@ -38,13 +38,6 @@ function _updateActiveCategory(category) {
 	window.history.replaceState({}, "", url);
 }
 
-// Título
-function _getTitulo(item) {
-	if (item.nome && item.emoji) {
-		return `${item.nome} ${item.emoji}`;
-	} else return item.nome;
-}
-
 // Nota
 function _getNotaIcon(nota) {
 	switch (nota) {

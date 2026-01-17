@@ -41,11 +41,11 @@ async function _loadItineraryPage() {
 			_displaySensitiveItineraryPrompt();
 			return;
 		default:
-			_loadItinerary();
+			await _loadItinerary();
 	}
 }
 
-function _loadItinerary() {
+async function _loadItinerary() {
 	if (
 		document.querySelector(".input-container") ||
 		document.querySelector(".message-container")
@@ -54,20 +54,7 @@ function _loadItinerary() {
 		_removePinListener();
 	}
 
-	getID("content").innerHTML = `
-	<h2>Quarta, 12/09</h2>
-    <h3>Manhã</h3>
-
-        <ul>
-          <li>Voo: BH - SP
-            <ul>
-              <li>De Y até Z</li>
-            </ul>
-          </li>
-          <li>Item 2</li>
-        </ul>
-	`;
-
+	getID("content").innerHTML = await _getItineraryContent("page");
 	getID("print").addEventListener("click", () => print());
 	getID("export").addEventListener("click", () => _export());
 }
@@ -135,21 +122,8 @@ async function _loadProtectedItinerary(mandatory = false) {
 }
 
 async function _export() {
-	const html = `
-	  <h1>Teste</h1>
-	  <h2>Hoje</h2>
-	  <h3>Manhã</h3>
-	  <ul>
-		<li>
-		  Voo: BH - SP
-		  <ul>
-			<li>De Y até Z</li>
-		  </ul>
-		</li>
-	  </ul>
-	`;
-
-	const plainText = `TESTE\nHoje\nManhã\n- Voo: BH - SP\n- De Y até Z`;
+	const html = await _getItineraryContent("notes");
+	const plainText = await _getItineraryContent("text");
 
 	await navigator.clipboard.write([
 		new ClipboardItem({

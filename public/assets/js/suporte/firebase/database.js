@@ -1,5 +1,5 @@
 var DOCUMENT_ID;
-var ERROR_FROM_GET_REQUEST = "";
+var ERROR_FROM_GET_REQUEST = {};
 
 const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
 const DATABASE_EDITABLE_DOCUMENTS = [
@@ -459,4 +459,9 @@ async function _getDestination(id, containerID) {
 			_stopLoadingScreen();
 		}
 	}
+}
+
+// Helpers (Not database related)
+function _haveErrorFromGetRequest() {
+	return Object.keys(ERROR_FROM_GET_REQUEST).length > 0;
 }

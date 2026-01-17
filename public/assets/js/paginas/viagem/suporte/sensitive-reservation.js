@@ -143,12 +143,12 @@ async function _protectedDataConfirmAction(afterAction = _setFirestoreData) {
 	const path = `${TYPE}/protected/${PIN}/${_getURLParam(TYPE[0])}`;
 	const firestoreData = await _get(path);
 
-	if (!ERROR_FROM_GET_REQUEST && !firestoreData) {
+	if (!_haveErrorFromGetRequest() && !firestoreData) {
 		_requestDocumentPin({ invalido });
 		return;
 	}
 
-	if (ERROR_FROM_GET_REQUEST) {
+	if (_haveErrorFromGetRequest()) {
 		_displayError(_getErrorFromGetRequestMessage(), true);
 		const adjustLoadables = false;
 		_stopLoadingScreen({ adjustLoadables });
@@ -166,7 +166,7 @@ function _requestDocumentPin({
 	invalido = false,
 	confirmAction = `_protectedDataConfirmAction()`,
 } = {}) {
-	const precontent = translate("messages.protected");
+	const precontent = translate("messages.protected.pin");
 	_stopLoadingScreen();
 	_requestPin({ confirmAction, precontent, invalido });
 }
@@ -175,7 +175,7 @@ async function _updateProtectedDataFromExternalPin(pin) {
 	const path = `${TYPE}/protected/${pin}/${_getURLParam(TYPE[0])}`;
 	const firestoreData = await _get(path);
 
-	if (!firestoreData || ERROR_FROM_GET_REQUEST) {
+	if (!firestoreData || _haveErrorFromGetRequest()) {
 		return;
 	}
 

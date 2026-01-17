@@ -95,7 +95,7 @@ async function _loadExpensesData() {
 
 	FIRESTORE_GASTOS_DATA = await _get(getPath, true, true);
 
-	if (ERROR_FROM_GET_REQUEST) {
+	if (_haveErrorFromGetRequest()) {
 		_displayError(ERROR_FROM_GET_REQUEST);
 		return;
 	}

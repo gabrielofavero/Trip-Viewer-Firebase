@@ -106,6 +106,7 @@
 			"simple_view": "Visualização simplificada",
 			"leg_view": "Agrupar por trajeto",
 			"people_view": "Agrupar por pessoas",
+			"time_window": "Horário",
 			"departure_location": {
 				"title": "Local de partida",
 				"placeholder": "Belo Horizonte"

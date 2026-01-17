@@ -140,15 +140,12 @@ function _reloadModalCalendar(programacao) {
 	}, 300);
 }
 
-function _displayInnerProgramacaoMessage(
-	index,
-	container = "programacao-container",
-) {
+function _displayInnerProgramacaoMessage(index) {
 	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 	propriedades.titulo = INNER_PROGRAMACAO_ATUAL[index].titulo;
 	propriedades.conteudo = INNER_PROGRAMACAO_ATUAL[index].content;
 	propriedades.botoes = [];
-	propriedades.containers.principal = container;
+	propriedades.containers.principal = INNER_PROGRAMACAO_ATUAL[index].container;
 
 	_displayFullMessage(propriedades);
 
@@ -212,13 +209,25 @@ function _loadCalendarItem(dataString) {
 }
 
 function _getInnerProgramacaoHTML(item) {
+	const innerProgramacao = _getInnerProgramacao(item);
+	if (innerProgramacao.content) {
+		INNER_PROGRAMACAO_ATUAL.push(innerProgramacao);
+		return `<i class="iconify external-link" data-icon="tabler:external-link" onclick="_displayInnerProgramacaoMessage(${INNER_PROGRAMACAO_ATUAL.length - 1})"></i>`;
+	}
+	return "";
+}
+
+function _getInnerProgramacao(item, destinos) {
 	const innerProgramacao = {
 		tipo: item?.tipo,
 		titulo: "",
 		content: "",
 		midia: "",
+		container:
+			item?.tipo === "destinos"
+				? "destinos-container"
+				: "programacao-container",
 	};
-	let container = "programacao-container";
 	let index = -1;
 	switch (item?.tipo) {
 		case "transporte":
@@ -249,43 +258,51 @@ function _getInnerProgramacaoHTML(item) {
 			}
 			break;
 		case "destinos":
-			container = "destinos-container";
 			if (
 				FIRESTORE_DATA.modulos.destinos === true &&
 				item.local &&
 				item.categoria &&
 				item.id
 			) {
-				const destinosIDs = DESTINOS.map((destino) => destino.destinosID);
-				index = destinosIDs.indexOf(item.local);
-				if (index > -1) {
-					const destino = DESTINOS[index].destinos;
-					const destinoItens = destino[item.categoria];
-					if (destinoItens && Object.keys(destinoItens).length) {
-						const destinoItem = destinoItens[item.id];
-						if (destinoItem) {
-							innerProgramacao.titulo = _getTitulo(destinoItem);
-							innerProgramacao.content = _getDestinosBoxHTML({
-								j: 1,
-								id: item.id,
-								item: destinoItem,
-								innerProgramacao: true,
-								valores: _getDestinoValores(DESTINOS[index]),
-								moeda: destino.moeda,
-							});
-							innerProgramacao.midia = destinoItem?.midia;
-						}
+				if (!destinos) {
+					const destinosIDs = DESTINOS.map((destino) => destino.destinosID);
+					index = destinosIDs.indexOf(item.local);
+					destinos = DESTINOS?.[index]?.destinos;
+				}
+
+				if (!destinos) {
+					return;
+				}
+
+				const destino = destinos[item.categoria];
+				if (destino && Object.keys(destino).length) {
+					const destinoItem = destino[item.id];
+					if (destinoItem) {
+						innerProgramacao.titulo = _getDestinationTitle(destinoItem);
+						innerProgramacao.content = _getDestinosBoxHTML({
+							j: 1,
+							id: item.id,
+							item: destinoItem,
+							innerProgramacao: true,
+							valores: _getDestinoValores(destinos.moeda),
+							moeda: destinos.moeda,
+						});
+						innerProgramacao.midia = destinoItem?.midia;
 					}
 				}
 			}
 	}
 
-	if (index >= 0) {
-		INNER_PROGRAMACAO_ATUAL.push(innerProgramacao);
-		return `<i class="iconify external-link" data-icon="tabler:external-link" onclick="_displayInnerProgramacaoMessage(${INNER_PROGRAMACAO_ATUAL.length - 1}, '${container}')"></i>`;
-	}
+	return innerProgramacao;
 
-	return "";
+	function _getDestinoValores(destinosMoeda) {
+		const moeda = _cloneObject(CONFIG.moedas.escala[destinosMoeda]);
+		const max = translate("destination.price.max", { value: moeda["$$$$"] });
+		moeda["-"] = translate("destination.price.free");
+		moeda["default"] = translate("destination.price.default");
+		moeda["$$$$"] = max;
+		return moeda;
+	}
 }
 
 // Setters

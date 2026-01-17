@@ -137,15 +137,6 @@ function _loadDestinationsHTML(destino) {
 	getID("destinosBox").innerHTML = text;
 }
 
-function _getDestinoValores(destino) {
-	const moeda = _cloneObject(CONFIG.moedas.escala[destino.destinos.moeda]);
-	const max = translate("destination.price.max", { value: moeda["$$$$"] });
-	moeda["-"] = translate("destination.price.free");
-	moeda["default"] = translate("destination.price.default");
-	moeda["$$$$"] = max;
-	return moeda;
-}
-
 function _loadAndOpenDestino(code) {
 	const translation = CONFIG.destinos.translation;
 	const link = `destination?d=${DESTINO_ATIVO}&v=${DOCUMENT_ID}&type=${translation[code]}`;

@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
 | 🏆   | Feature     | F000 | 142   | 116  | 22        | 4       |
-| 📈   | Improvement | M000 | 134   | 104  | 30        | 0       |
+| 📈   | Improvement | M000 | 135   | 104  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
@@ -20,6 +20,8 @@
 
 ### Medium Priority
 
+- 📈 **M135:** Refactor "dados.js" to shared dir
+
 ### Low Priority
 
 - 🐞 **B127:** document changes still not working (accepting everything)
@@ -28,12 +30,11 @@
 
 ## Done
 
+### January 2026
+
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Implement PIN logic*
-
-### January 2026
-
 - 🏆 **F141:** Plan destination from destination page
 - 🏆 **F140:** Fetch trip data instead of relying on localhost for destination page
 - 🐞 **B135:** Destination minor fixes
