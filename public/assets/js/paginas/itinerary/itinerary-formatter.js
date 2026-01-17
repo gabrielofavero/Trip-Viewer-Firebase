@@ -150,12 +150,11 @@ async function _getItineraryData() {
 		const date = _convertFromDateObject(programacao.data);
 		const dateTitle = _getDateTitle(date, "weekday_day_month");
 
-		const destinos =
-			programacao.destinosIDs.length > 0
-				? programacao.destinosIDs.map((d) => d.titulo)
-				: [];
-		const title = _getProgramacaoTitulo(programacao.titulo, destinos, false);
-
+		const title = _getProgramacaoTitulo(
+			programacao.titulo,
+			programacao.destinosIDs,
+			false,
+		);
 		return title ? `${title}: ${dateTitle}` : dateTitle;
 	}
 

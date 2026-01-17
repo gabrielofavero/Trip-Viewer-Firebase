@@ -10,22 +10,9 @@ var INNER_PROGRAMACAO_ATUAL = [];
 function _loadModalContentCalendar() {
 	let titulo = PROGRAMACAO_ATUAL.titulo;
 	const data = _getDateTitle(_convertFromDateObject(PROGRAMACAO_ATUAL.data));
-	let programacaoDestinos = [];
-
-	if (FIRESTORE_DATA.modulos.destinos && DESTINOS && DESTINOS.length > 0) {
-		const destinosIDs = DESTINOS.map((destino) => destino.destinosID);
-		for (const destinoID of PROGRAMACAO_ATUAL.destinosIDs) {
-			programacaoDestinos.push(destinoID.titulo);
-		}
-
-		const index = destinosIDs.indexOf(titulo?.valor || titulo);
-		if (index >= 0) {
-			titulo = DESTINOS[index].destinos.titulo;
-		}
-	}
 
 	getID("programacao-titulo").querySelector(".titulo").innerText =
-		_getProgramacaoTitulo(titulo, programacaoDestinos);
+		_getProgramacaoTitulo(titulo, PROGRAMACAO_ATUAL.destinosIDs);
 	getID("programacao-data").innerText = data;
 
 	INNER_PROGRAMACAO_ATUAL = [];
@@ -295,7 +282,7 @@ function _getProgramacaoTitulo(titulo, destinos, placeholder = true) {
 	}
 
 	if (titulo.destinos) {
-		return _getAndDestinationTitle(titulo.valor, destinos);
+		return _getAndDestinationTitle(titulo.valor, destinos, placeholder);
 	}
 
 	if (titulo.traduzir) {

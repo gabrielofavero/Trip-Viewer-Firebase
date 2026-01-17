@@ -458,17 +458,30 @@ function _getOrderedDocumentByTitle(data) {
 }
 
 // Destination
-function _getAndDestinationTitle(value, destinos) {
+function _getAndDestinationTitle(value, destinos = [], placeholder = true) {
+	if (!destinos || destinos.length === 0) {
+		const placeholderValue = placeholder
+			? translate("trip.itinerary.title")
+			: "";
+		return value || placeholderValue;
+	}
+
+	const titles = destinos.map((d) => d.titulo);
 	if (value.includes("departure")) {
 		return _getReadableArray([
 			translate("trip.transportation.departure"),
-			...destinos,
+			...titles,
 		]);
 	}
-	return _getReadableArray([
-		...destinos,
-		translate("trip.transportation.return"),
-	]);
+
+	if (value.includes("return")) {
+		return _getReadableArray([
+			...titles,
+			translate("trip.transportation.return"),
+		]);
+	}
+
+	return _getReadableArray([titles]);
 }
 
 async function _normalizeTikTokLink(link) {
