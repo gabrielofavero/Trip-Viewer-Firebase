@@ -93,12 +93,9 @@ async function _getItineraryContent(type) {
 
 		function _loadHTMLInnerItinerary(innerItinerary, type) {
 			const texts = innerItinerary.subItem?.texts ?? [];
-			const complement = type == "notes" ? "☐ " : "";
 
 			if (texts.length === 0) {
-				content.push(
-					`<li>${complement}${_getTextContent(innerItinerary, type)}</li>`,
-				);
+				content.push(`<li>${_getTextContent(innerItinerary, type)}</li>`);
 				return;
 			}
 
