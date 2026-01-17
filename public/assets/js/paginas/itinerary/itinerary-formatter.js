@@ -60,7 +60,7 @@ async function _getItineraryContent(type) {
 				content.push(`<h2>${value}</h2>`);
 				break;
 			case "notes":
-				content.push(`<h2>${value}</h2><br>`);
+				content.push(`<h3>${value}</h3><br>`);
 				break;
 			default:
 				return content.push(`\n*${value}*`);
@@ -71,8 +71,10 @@ async function _getItineraryContent(type) {
 		const timeOfDay = _getTurno(timeOfDayKey);
 		switch (type) {
 			case "page":
-			case "notes":
 				content.push(`<h3>${timeOfDay}</h3>`);
+				break;
+			case "notes":
+				content.push(`<h4>${timeOfDay}</h4>`);
 				break;
 			default:
 				return content.push(`\n_${timeOfDay}_`);
@@ -90,16 +92,20 @@ async function _getItineraryContent(type) {
 		}
 
 		function _loadHTMLInnerItinerary(innerItinerary, type) {
-			const texts = innerItinerary.subItem.texts;
+			const texts = innerItinerary.subItem?.texts ?? [];
+
 			if (texts.length === 0) {
 				content.push(`<li>${_getTextContent(innerItinerary, type)}</li>`);
 				return;
 			}
+
 			content.push(`<li>${_getTextContent(innerItinerary, type)}<ul>`);
+
 			for (const text of texts) {
 				content.push(`<li>${_getTextContent(text, type)}</li>`);
 			}
-			content.push("</ul></li>");
+
+			content.push(`</ul></li>`);
 		}
 
 		function _loadDefaultInnerItinerary(innerItinerary) {
