@@ -33,22 +33,6 @@ function _loadModalContentCalendar() {
 	_loadInnerProgramacaoHTML();
 
 	// Helpers
-	function _getProgramacaoTitulo(titulo, destinos) {
-		if (!titulo?.valor) {
-			return titulo || translate("trip.itinerary.title");
-		}
-
-		if (titulo.destinos) {
-			return _getAndDestinationTitle(titulo.valor, destinos);
-		}
-
-		if (titulo.traduzir) {
-			return translate(`trip.transportation.${titulo.valor}`);
-		}
-
-		return translate("trip.itinerary.title");
-	}
-
 	function _loadInnerProgramacaoHTML() {
 		const shouldShowCheckbox = _shouldShowCheckbox();
 		getID("innner-programacao-travelers-checkboxes").style.display =
@@ -303,6 +287,22 @@ function _getInnerProgramacao(item, destinos) {
 		moeda["$$$$"] = max;
 		return moeda;
 	}
+}
+
+function _getProgramacaoTitulo(titulo, destinos) {
+	if (!titulo?.valor) {
+		return titulo || translate("trip.itinerary.title");
+	}
+
+	if (titulo.destinos) {
+		return _getAndDestinationTitle(titulo.valor, destinos);
+	}
+
+	if (titulo.traduzir) {
+		return translate(`trip.transportation.${titulo.valor}`);
+	}
+
+	return translate("trip.itinerary.title");
 }
 
 // Setters

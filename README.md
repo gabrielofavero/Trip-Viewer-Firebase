@@ -5,18 +5,13 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
-| 🏆   | Feature     | F000 | 142   | 116  | 22        | 4       |
+| 🏆   | Feature     | F000 | 141   | 119  | 22        | 0       |
 | 📈   | Improvement | M000 | 135   | 104  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
-
-  - *[🏆F136] Read and format data from itinerary*
-  - *[🏆F137] Print / PDF Export*
-  - *[🏆F138] Notes export*
-  - *[🏆F139] Add same cards as from view inner itinerary*
 
 ### Medium Priority
 
@@ -35,6 +30,9 @@
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Implement PIN logic*
+  - *[🏆F136] Read and format data from itinerary*
+  - *[🏆F137] Print / PDF Export*
+  - *[🏆F138] Notes export*
 - 🏆 **F141:** Plan destination from destination page
 - 🏆 **F140:** Fetch trip data instead of relying on localhost for destination page
 - 🐞 **B135:** Destination minor fixes

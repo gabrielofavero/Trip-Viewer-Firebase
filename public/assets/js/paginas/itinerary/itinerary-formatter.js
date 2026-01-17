@@ -3,6 +3,7 @@ const ITINERARY_HTML = {};
 var DESTINOS = {};
 
 async function _getItineraryContent(type) {
+	_startLoadingScreen();
 	const notPages = type != "pages";
 	if (notPages && ITINERARY_HTML[type]) {
 		return ITINERARY_HTML[type];
@@ -19,18 +20,25 @@ async function _getItineraryContent(type) {
 		content.push(title);
 	}
 
-	for (const timeOfDay of ["madrugada", "manha", "tarde", "noite"]) {
-		content.push(_getTimeOfDay(timeOfDay, type));
-		for (const innerItinerary of ITINERARY[timeOfDay]) {
-			content.push(_getInnerItinerary(innerItinerary, type));
+	for (const itinerary of ITINERARY) {
+		_loadItineararyTitle(itinerary.title, type);
+		for (const timeOfDay of ["madrugada", "manha", "tarde", "noite"]) {
+			const timeOfDayData = itinerary[timeOfDay];
+			if (timeOfDayData.length === 0) continue;
+			_loadTimeOfDay(timeOfDay);
+			for (const innerItinerary of timeOfDayData) {
+				_loadInnerItinerary(innerItinerary, type);
+			}
 		}
 	}
 
-	const result = content.join(type == "text" ? "\n" : undefined);
+	const result = content.join("\n");
 
 	if (notPages) {
 		ITINERARY_HTML[type] = result;
 	}
+
+	_stopLoadingScreen();
 	return result;
 
 	// Helpers
@@ -45,77 +53,72 @@ async function _getItineraryContent(type) {
 		}
 	}
 
-	function _getTimeOfDay(value, type) {
+	function _loadItineararyTitle(value, type) {
 		switch (type) {
 			case "page":
 			case "notes":
-				return `<h2>${value}</h2>`;
+				content.push(`<h2>${value}</h2>`);
+				break;
 			default:
-				return `\n*${value}*`;
+				return content.push(`\n*${value}*`);
 		}
 	}
 
-	function _getInnerItinerary(innerItinerary, type) {
+	function _loadTimeOfDay(timeOfDayKey) {
+		const timeOfDay = _getTurno(timeOfDayKey);
 		switch (type) {
 			case "page":
-				return _getPageInnerItinerary(innerItinerary);
 			case "notes":
-				return _getNotesInnerItinerary(innerItinerary);
+				content.push(`<h3>${timeOfDay}</h3>`);
+				break;
 			default:
-				return _getDefaultInnerItinerary(innerItinerary);
+				return content.push(`\n_${timeOfDay}*`);
+		}
+	}
+
+	function _loadInnerItinerary(innerItinerary, type) {
+		switch (type) {
+			case "page":
+			case "notes":
+				_loadHTMLInnerItinerary(innerItinerary, type);
+				break;
+			default:
+				_loadDefaultInnerItinerary(innerItinerary);
 		}
 
-		function _getPageInnerItinerary(innerItinerary) {
-			let content = `<li>${_getTextContent(innerItinerary, type)}</li>`;
-			const card = innerItinerary.subItem.card;
-			if (card) {
-				content += `<div class = "${card.container}">${card.content}</div>`;
+		function _loadHTMLInnerItinerary(innerItinerary, type) {
+			const texts = innerItinerary.subItem.texts;
+			if (texts.length === 0) {
+				content.push(`<li>${_getTextContent(innerItinerary, type)}</li>`);
+				return;
 			}
-
-			return content;
+			content.push(`<li>${_getTextContent(innerItinerary, type)}<ul>`);
+			for (const text of texts) {
+				content.push(`<li>${_getTextContent(text, type)}</li>`);
+			}
+			content.push("</ul></li>");
 		}
 
-		function _getNotesInnerItinerary(innerItinerary) {
-			const type = "notes";
-			if (innerItinerary.subItems.length === 0) {
-				return `<li>${_getTextContent(innerItinerary, type)}</li>`;
-			}
-			let content = `<li>${_getTextContent(innerItinerary, type)}<ul>`;
-			for (const subItem of _getSubItemTextContents(data, type)) {
-				content += `<li>${subItem}</li>`;
-			}
-			content += "</ul></li>";
-			return content;
-		}
-
-		function _getDefaultInnerItinerary(innerItinerary) {
-			let content = `- ${_getTextContent(innerItinerary)}`;
-			for (const subItem of innerItinerary.subItems) {
-				content += `> ${_getSubItemTextContents(subItem)}`;
+		function _loadDefaultInnerItinerary(innerItinerary) {
+			content.push(`- ${_getTextContent(innerItinerary)}`);
+			for (const text of innerItinerary.subItem.texts) {
+				content.push(`> ${_getTextContent(text)}`);
 			}
 		}
 
 		// Helpers
-		function _getTextContent(data, type = "text") {
+		function _getTextContent(textObj, type = "text") {
 			switch (type) {
 				case "page":
 				case "notes":
-					return data.title
-						? `<b>${innerItinerary.title}:<b> ${innerItinerary.content}`
-						: innerItinerary.content;
+					return textObj.title
+						? `<b>${textObj.title}:</b> ${textObj.content}`
+						: textObj.content;
 				default:
-					return data.title
-						? `*${innerItinerary.title}:* ${innerItinerary.content}`
-						: innerItinerary.content;
+					return textObj.title
+						? `*${textObj.title}:* ${textObj.content}`
+						: textObj.content;
 			}
-		}
-
-		function _getSubItemTextContents(data, type) {
-			const result = [];
-			for (const text of data.texts) {
-				result.push(_getTextContent(text, type));
-			}
-			return result;
 		}
 	}
 }
@@ -123,41 +126,28 @@ async function _getItineraryContent(type) {
 async function _getItineraryData() {
 	ITINERARY = [];
 	for (const programacao of FIRESTORE_DATA.programacoes) {
-		const title = await _getTitle(programacao);
+		const title = _getItineraryTitle(programacao);
 		const madrugada = await _getInnerItineraries(programacao.madrugada);
 		const manha = await _getInnerItineraries(programacao.manha);
 		const tarde = await _getInnerItineraries(programacao.tarde);
 		const noite = await _getInnerItineraries(programacao.noite);
+
 		ITINERARY.push({ title, madrugada, manha, tarde, noite });
 	}
 
-	async function _getTitle(programacao) {
+	return ITINERARY;
+
+	function _getItineraryTitle(programacao) {
 		const date = _convertFromDateObject(programacao.data);
-		const dateTitle = _getDateTitle(date);
-		const destinosIDs = FIRESTORE_DATA.destinos.map(
-			(destino) => destino.destinosID,
-		);
-		const progTitle = await _getProgTitle(programacao.titulo);
-		return `${progTitle}, ${dateTitle}`;
+		const dateTitle = _getDateTitle(date, "weekday_day_month");
 
-		async function _getProgTitle(titulo) {
-			if (typeof titulo === "string") {
-				return titulo;
-			}
+		const destinos =
+			programacao.destinosIDs.length > 0
+				? programacao.destinosIDs.map((d) => d.titulo)
+				: [];
+		const title = _getProgramacaoTitulo(programacao.titulo, destinos);
 
-			if (titulo.destinos && destinosIDs.includes(titulo.valor)) {
-				const destino = await _getDestination(titulo.valor);
-				return destino.titulo;
-			}
-
-			if (!titulo.valor) {
-				return "";
-			}
-
-			return titulo.traduzir
-				? translate(p.titulo.valor, {}, false)
-				: titulo.titulo.valor;
-		}
+		return title ? `${title}: ${dateTitle}` : dateTitle;
 	}
 
 	async function _getInnerItineraries(data) {
