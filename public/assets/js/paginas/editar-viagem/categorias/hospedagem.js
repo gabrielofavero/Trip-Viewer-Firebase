@@ -70,7 +70,8 @@ function _loadHospeagemCheck(chave, checkTipo, hospedagem, j) {
 	const data = _convertFromDateObject(hospedagem.datas[chave]);
 	if (data) {
 		getID(`check-${checkTipo}-${j}`).value = _getDateString(data, "yyyy-mm-dd");
-		getID(`check-${checkTipo}-horario-${j}`).value = _getTimeString(data);
+		getID(`check-${checkTipo}-horario-${j}`).value =
+			_getTimeStringFromDate(data);
 	}
 }
 

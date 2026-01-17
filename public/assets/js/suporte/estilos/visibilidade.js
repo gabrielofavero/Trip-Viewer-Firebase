@@ -229,6 +229,9 @@ function _applyCustomVisibilityRules() {
 				_changeChartsLabelsVisibility();
 				_loadMoedasTab();
 				break;
+			case "itinerary":
+				_loadLogoColors();
+				_applyCustomColors();
 		}
 	}
 }

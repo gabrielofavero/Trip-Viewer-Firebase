@@ -3,7 +3,6 @@ const ITINERARY_HTML = {};
 var DESTINOS = {};
 
 async function _getItineraryContent(type) {
-	_startLoadingScreen();
 	const notPages = type != "pages";
 	if (notPages && ITINERARY_HTML[type]) {
 		return ITINERARY_HTML[type];
@@ -29,6 +28,9 @@ async function _getItineraryContent(type) {
 			for (const innerItinerary of timeOfDayData) {
 				_loadInnerItinerary(innerItinerary, type);
 			}
+			if (type != "text") {
+				content.push("<br>");
+			}
 		}
 	}
 
@@ -38,7 +40,6 @@ async function _getItineraryContent(type) {
 		ITINERARY_HTML[type] = result;
 	}
 
-	_stopLoadingScreen();
 	return result;
 
 	// Helpers
@@ -47,7 +48,7 @@ async function _getItineraryContent(type) {
 			case "page":
 				return "";
 			case "notes":
-				return `<h1>${FIRESTORE_DATA.titulo}</h1>`;
+				return `<h1>${FIRESTORE_DATA.titulo}</h1><br>`;
 			default:
 				return `*${FIRESTORE_DATA.titulo.toUpperCase()}*`;
 		}
@@ -56,8 +57,10 @@ async function _getItineraryContent(type) {
 	function _loadItineararyTitle(value, type) {
 		switch (type) {
 			case "page":
-			case "notes":
 				content.push(`<h2>${value}</h2>`);
+				break;
+			case "notes":
+				content.push(`<h2>${value}</h2><br>`);
 				break;
 			default:
 				return content.push(`\n*${value}*`);
@@ -72,7 +75,7 @@ async function _getItineraryContent(type) {
 				content.push(`<h3>${timeOfDay}</h3>`);
 				break;
 			default:
-				return content.push(`\n_${timeOfDay}*`);
+				return content.push(`\n_${timeOfDay}_`);
 		}
 	}
 
@@ -206,7 +209,7 @@ async function _getItineraryData() {
 				const chegada = transporte?.datas?.chegada;
 				const horario =
 					partida && chegada
-						? `${partida.hour}:${partida.minute} - ${chegada.hour}:${chegada.minute}`
+						? `${_getTimeStringFromDateObj(partida)} - ${_getTimeStringFromDateObj(chegada)}`
 						: "";
 				const empresa =
 					CONFIG.transportes.empresas?.[transporte.transporte]?.[
@@ -229,10 +232,10 @@ async function _getItineraryData() {
 					FIRESTORE_PROTECTED_DATA?.hospedagens?.[item.id];
 
 				const checkin = hospedagem?.datas.checkin
-					? `${hospedagem.datas.checkin.hour}:${hospedagem.datas.checkin.minute}`
+					? `${_getTimeStringFromDateObj(hospedagem.datas.checkin)}`
 					: "";
 				const checkout = hospedagem?.datas.checkout
-					? `${hospedagem.datas.checkout.hour}:${hospedagem.datas.checkout.minute}`
+					? `${_getTimeStringFromDateObj(hospedagem.datas.checkout)}`
 					: "";
 				_loadTextObj("trip.accommodation.accommodation", hospedagem.nome);
 				_loadTextObj("trip.accommodation.checkin", checkin);
@@ -248,16 +251,12 @@ async function _getItineraryData() {
 				const destino = destinos?.[item?.categoria]?.[item.id];
 				if (!destino) return;
 
-				const titulo = destino.emoji
-					? `${destino.nome} ${destino.emoji}`
-					: destino.nome;
 				const nota = _getNotaTranslation(destino.nota);
 				const valor = _getValorValue(
 					destino,
 					CONFIG.moedas.escala[destinos.moeda],
 					CONFIG.moedas.simbolos[destinos.moeda],
 				);
-				_loadTextObj("destination.document", titulo);
 				_loadTextObj("labels.priority", nota);
 				_loadTextObj("labels.cost", valor);
 			}

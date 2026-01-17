@@ -17,20 +17,6 @@ async function _refreshTripData() {
 	_loadPlannedDestination();
 }
 
-function _getTripColors() {
-	if (
-		!FIRESTORE_DATA ||
-		!FIRESTORE_DATA?.cores?.claro ||
-		!FIRESTORE_DATA?.cores?.escuro
-	) {
-		return {};
-	}
-	return {
-		claro: FIRESTORE_DATA.cores.claro,
-		escuro: FIRESTORE_DATA.cores.escuro,
-	};
-}
-
 // Planned Destination
 function _loadPlannedDestination() {
 	for (const dia of FIRESTORE_DATA.programacoes) {

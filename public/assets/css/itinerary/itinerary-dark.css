@@ -3,7 +3,7 @@
 	--theme-color-hover: #7367b4;
 	--theme-color-secondary: #494852;
 	--subtitle: #e3ecf8;
-	--box-color: #404040;
+	--box-color: #343434;
 	--box-color-hover: #444444;
 	--border-color: #383838;
 	--text-color: #e2e2e2;
@@ -109,4 +109,8 @@ h1 {
 
 .pin {
 	color: #ffffff;
+}
+
+#toast {
+	color: #303030;
 }

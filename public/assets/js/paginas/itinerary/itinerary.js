@@ -55,6 +55,7 @@ async function _loadItinerary() {
 	}
 
 	getID("content").innerHTML = await _getItineraryContent("page");
+
 	getID("print").addEventListener("click", () => print());
 	getID("export").addEventListener("click", () => _export());
 }
@@ -132,5 +133,5 @@ async function _export() {
 		}),
 	]);
 
-	_openToast("test");
+	_openToast(translate("messages.itinerary_copied"));
 }

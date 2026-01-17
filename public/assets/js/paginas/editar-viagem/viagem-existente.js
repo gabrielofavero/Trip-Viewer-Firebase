@@ -134,12 +134,12 @@ async function _loadTransportesData() {
 
 		if (partida) {
 			getID(`partida-${j}`).value = _getDateString(partida, "yyyy-mm-dd");
-			getID(`partida-horario-${j}`).value = _getTimeString(partida);
+			getID(`partida-horario-${j}`).value = _getTimeStringFromDate(partida);
 		}
 
 		if (chegada) {
 			getID(`chegada-${j}`).value = _getDateString(chegada, "yyyy-mm-dd");
-			getID(`chegada-horario-${j}`).value = _getTimeString(chegada);
+			getID(`chegada-horario-${j}`).value = _getTimeStringFromDate(chegada);
 		}
 
 		getID(`transporte-tipo-${j}`).value = transporte.transporte;
