@@ -4,24 +4,29 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
+| 🐞   | Bug         | B000 | 138   | 130  | 2         | 6       |
 | 🏆   | Feature     | F000 | 141   | 119  | 22        | 0       |
-| 📈   | Improvement | M000 | 135   | 104  | 30        | 1       |
+| 📈   | Improvement | M000 | 136   | 104  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
 
+- 🐞 **B136:** Destination edit modules showing every time
+- 🐞 **B137:** Destination should only stop loading when content is loaded
+- 🐞 **B138:** Itinerary should only stop loading when content is loaded
+
 ### Medium Priority
 
-- 📈 **M135:** Refactor "dados.js" to shared dir
+- 📈 **M136:** Improve Notes export for itinerary
 
 ### Low Priority
 
-- 🐞 **B127:** document changes still not working (accepting everything)
+- 🐞 **B127:** Document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
 - 🐞 **B123:** Main try catchs for pages are failing because main is not async
+- 📈 **M135:** Refactor "dados.js" to shared dir
 
 ## Done
 
