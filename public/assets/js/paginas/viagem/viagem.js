@@ -96,7 +96,6 @@ function _prepareViewData() {
 
 	// Visibilidade
 	_loadVisibility();
-	_loadToggle();
 	_adjustCardsHeightsListener();
 	_loadCloseCustomSelectListeners();
 

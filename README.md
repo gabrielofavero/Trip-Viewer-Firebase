@@ -4,9 +4,9 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 139   | 131  | 2         | 6       |
+| 🐞   | Bug         | B000 | 139   | 132  | 2         | 5       |
 | 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
-| 📈   | Improvement | M000 | 137   | 104  | 30        | 3       |
+| 📈   | Improvement | M000 | 138   | 106  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
@@ -14,13 +14,11 @@
 ### High Priority
 
 - 🐞 **B136:** Destination edit modules showing every time
-- 🐞 **B139:** Destination custom colors not working when detached but with trip id
 - 🐞 **B138:** Itinerary should only stop loading when content is loaded
 
 ### Medium Priority
 
 - 📈 **M136:** Improve Notes export for itinerary
-- 📈 **M137:** Improve dark mode detection
 
 ### Low Priority
 
@@ -33,6 +31,9 @@
 
 ### January 2026
 
+- 📈 **M138:** Improve dark mode loading time
+- 📈 **M137:** Improve dark mode detection
+- 🐞 **B139:** Destination custom colors not working when detached but with trip id
 - 🐞 **B137:** Destination should only stop loading when content is loaded
 - 🏆 **F142:** Link full itinerary with button in view
 - ⚔️ **E041:** Full Itinerary page

@@ -35,8 +35,10 @@ async function _loadDestinosData() {
 
 async function _loadDestinosPage() {
 	console.log(this.window.location.href);
+
 	await _loadDestinosData();
-	_loadVisibilityExternal(_getTripColors());
+
+	_loadVisibility();
 
 	const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
 	document.title = title;

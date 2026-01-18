@@ -3,148 +3,50 @@ var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
 var LOGO_ESCURO = "";
 
-function _loadVisibility(data = FIRESTORE_DATA) {
-	try {
-		if (data && data.cores && data.cores.ativo) {
-			CUSTOM_COLORS = true;
-			localStorage.setItem("customColors", true);
-			CLARO = data.cores.claro;
-			ESCURO = data.cores.escuro;
-		} else {
-			CUSTOM_COLORS = false;
-			localStorage.setItem("customColors", false);
-		}
-	} catch (e) {
-		CUSTOM_COLORS = false;
-		localStorage.setItem("customColors", false);
+function _loadVisibility(cores = FIRESTORE_DATA?.cores) {
+	if (cores?.claro && cores?.escuro) {
+		CLARO = cores.claro;
+		ESCURO = cores.escuro;
 	}
 
 	_saveLocalColors();
 	_loadUserVisibility();
 
-	getID("night-mode").onclick = function () {
-		_setManualVisibility();
+	const button = getID("night-mode");
+	button.style.display = "block";
+	button.onclick = function () {
 		_switchVisibility();
 	};
-}
-
-function _setManualVisibility() {
-	sessionStorage.setItem("forceDarkMode", _isOnDarkMode());
-}
-
-function _loadVisibilityExternal(externalColors = {}) {
-	const colors =
-		Object.keys(externalColors) > 0 ? externalColors : _getLocalColors();
-	if (colors) {
-		CLARO = colors.claro;
-		ESCURO = colors.escuro;
-	}
-
-	if (_isOnDarkMode()) {
-		_loadDarkMode();
-	} else {
-		_loadLightMode();
-	}
-
-	getID("night-mode").style.display = "block";
-	getID("night-mode").onclick = function () {
-		_switchVisibility();
-	};
-}
-
-function _loadToggle() {
-	var element = getID("night-mode");
-	var darkMode = _isOnDarkMode();
-	if (darkMode && element.classList.contains("bx-moon")) {
-		element.classList.remove("bx-moon");
-		element.classList.add("bx-sun");
-	} else if (!darkMode && element.classList.contains("bx-sun")) {
-		element.classList.remove("bx-sun");
-		element.classList.add("bx-moon");
-	}
 }
 
 function _loadDarkMode() {
-	localStorage.setItem("darkMode", true);
-	THEME_COLOR = ESCURO;
-	THEME_COLOR_HOVER = _getDarkerColor(ESCURO, 10);
-
-	const secondary = _getSecondaryColor("escuro");
-	THEME_COLOR_SECONDARY = secondary.main;
-	THEME_COLOR_SECONDARY_HOVER = secondary.hover;
-
-	const name = _getHTMLpage();
-	var link = document.createElement("link");
-	link.href = _getCssHref(name, true) + "?version=" + new Date().getTime(); // Adiciona um timestamp como parâmetro de consulta
-	link.type = "text/css";
-	link.rel = "stylesheet";
-	document.getElementsByTagName("head")[0].appendChild(link);
-
-	_loadToggle();
-	_ChangeBarColorIOS("#303030");
-
-	_loadTripViewerLogo();
-
-	_applyCustomVisibilityRules();
+	_applyMode({
+		isDark: true,
+		loadCss: true,
+		barColor: "#303030",
+		hoverFn: _getDarkerColor,
+		secondaryKey: "escuro",
+	});
 }
 
 function _loadLightMode() {
-	localStorage.setItem("darkMode", false);
-	THEME_COLOR = CLARO;
-	THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
-
-	const secondary = _getSecondaryColor("claro");
-	THEME_COLOR_SECONDARY = secondary.main;
-	THEME_COLOR_SECONDARY_HOVER = secondary.hover;
-
-	const name = _getHTMLpage();
-	var link = document.createElement("link");
-	link.href = _getCssHref(name, false);
-	link.type = "text/css";
-	link.rel = "stylesheet";
-	document.getElementsByTagName("head")[0].appendChild(link);
-
-	_loadToggle();
-	_ChangeBarColorIOS("#fff");
-
-	_loadTripViewerLogo();
-
-	_applyCustomVisibilityRules();
+	_applyMode({
+		isDark: false,
+		loadCss: true,
+		barColor: "#fff",
+		hoverFn: _getLighterColor,
+		secondaryKey: "claro",
+	});
 }
 
 function _loadLightModeLite() {
-	localStorage.setItem("darkMode", false);
-	THEME_COLOR = CLARO;
-	THEME_COLOR_HOVER = _getLighterColor(CLARO, 10);
-
-	const secondary = _getSecondaryColor("claro");
-	THEME_COLOR_SECONDARY = secondary.main;
-	THEME_COLOR_SECONDARY_HOVER = secondary.hover;
-
-	_loadToggle();
-
-	_loadTripViewerLogo();
-
-	_applyCustomVisibilityRules();
-}
-
-function _loadTripViewerLogo() {
-	const header2 = getID("header2");
-	const logoLight = getID("logo-light");
-	const logoDark = getID("logo-dark");
-	if (_isOnDarkMode()) {
-		logoLight.style.display = "none";
-		logoDark.style.display = "block";
-		if (header2 && LOGO_ESCURO) {
-			header2.src = LOGO_ESCURO;
-		}
-	} else {
-		logoLight.style.display = "block";
-		logoDark.style.display = "none";
-		if (header2 && LOGO_CLARO) {
-			header2.src = LOGO_CLARO;
-		}
-	}
+	_applyMode({
+		isDark: false,
+		loadCss: false,
+		barColor: "#fff",
+		hoverFn: _getLighterColor,
+		secondaryKey: "claro",
+	});
 }
 
 // ======= GETTERS =======
@@ -161,7 +63,7 @@ function _getCssHref(name, dark = false) {
 
 // ======= SETTERS =======
 function _loadUserVisibility() {
-	switch (sessionStorage.getItem("forceDarkMode")) {
+	switch (sessionStorage.getItem("darkMode")) {
 		case "true":
 			_loadDarkMode();
 			break;
@@ -173,19 +75,87 @@ function _loadUserVisibility() {
 	}
 }
 
+function _applyMode({
+	isDark,
+	loadCss = true,
+	barColor,
+	hoverFn,
+	secondaryKey,
+}) {
+	sessionStorage.setItem("darkMode", String(isDark));
+
+	const base = isDark ? ESCURO : CLARO;
+
+	THEME_COLOR = base;
+	THEME_COLOR_HOVER = hoverFn(base, 10);
+
+	const secondary = _getSecondaryColor(secondaryKey);
+	THEME_COLOR_SECONDARY = secondary.main;
+	THEME_COLOR_SECONDARY_HOVER = secondary.hover;
+
+	if (loadCss) {
+		_appendCss(_getHTMLpage(), isDark);
+	}
+
+	_loadToggle();
+	_changeBarColorIOS(barColor);
+
+	_loadTripViewerLogo();
+	_loadLogoColors();
+	_loadThemeColors();
+
+	_applyCustomVisibilityRules();
+
+	// Helpers
+	function _appendCss(page, isDark) {
+		const link = document.createElement("link");
+		link.rel = "stylesheet";
+		link.type = "text/css";
+		link.href =
+			_getCssHref(page, isDark) + (isDark ? "?version=" + Date.now() : "");
+		document.head.appendChild(link);
+	}
+
+	function _loadTripViewerLogo() {
+		const isDark = _isOnDarkMode();
+		getID("logo-light").style.display = isDark ? "none" : "block";
+		getID("logo-dark").style.display = isDark ? "block" : "none";
+
+		const header2 = getID("header2");
+		if (header2) {
+			header2.src = isDark
+				? LOGO_ESCURO || header2.src
+				: LOGO_CLARO || header2.src;
+		}
+	}
+
+	function _loadToggle() {
+		const el = getID("night-mode");
+		el.classList.toggle("bx-moon", !_isOnDarkMode());
+		el.classList.toggle("bx-sun", _isOnDarkMode());
+	}
+
+	function _applyCustomVisibilityRules() {
+		switch (_getHTMLpage()) {
+			case "viagem":
+				_loadTransporteImagens();
+				_loadViagemCustomVisibilityRules();
+				break;
+			case "destinos":
+				_applyAccordionArrowCustomColor();
+				break;
+			case "gastos":
+				_changeChartsLabelsVisibility();
+				_loadMoedasTab();
+		}
+	}
+}
+
 function _switchVisibility() {
 	if (_isOnDarkMode()) {
 		_loadLightMode();
 	} else {
 		_loadDarkMode();
-	}
-}
-
-function _refreshVisibility() {
-	if (_isOnDarkMode()) {
-		_loadDarkMode();
-	} else {
-		_loadLightMode();
 	}
 }
 
@@ -196,50 +166,6 @@ function _autoVisibility() {
 	} else {
 		_loadLightModeLite();
 	}
-}
-
-function _applyCustomVisibilityRules() {
-	const html = _getHTMLpage();
-
-	if (_isCustomColorsActive()) {
-		_applyCustomColorsVisibilityRules(html);
-	}
-
-	switch (html) {
-		case "viagem":
-			_loadViagemCustomVisibilityRules();
-	}
-
-	function _applyCustomColorsVisibilityRules(html) {
-		_clearCustomColors();
-		switch (html) {
-			case "viagem":
-				_loadLogoColors();
-				_applyCustomColors();
-				_loadTransporteImagens();
-				break;
-			case "destinos":
-				_loadLogoColors();
-				_applyAccordionArrowCustomColor();
-				_applyCustomColors();
-				break;
-			case "gastos":
-				_loadLogoColors();
-				_applyCustomColors();
-				_changeChartsLabelsVisibility();
-				_loadMoedasTab();
-				break;
-			case "itinerary":
-				_loadLogoColors();
-				_applyCustomColors();
-		}
-	}
-}
-
-function _applyCustomColors() {
-	_setCSSVariable("theme-color", THEME_COLOR);
-	_setCSSVariable("theme-color-hover", THEME_COLOR_HOVER);
-	_setCSSVariable("theme-color-secondary", THEME_COLOR_SECONDARY);
 }
 
 function _disableScroll() {
@@ -272,7 +198,7 @@ function _hasCSSRule(selector, property) {
 }
 
 function _isOnDarkMode() {
-	return localStorage.getItem("darkMode") === "true";
+	return sessionStorage.getItem("darkMode") === "true";
 }
 
 // ======= Modal Functions =======

@@ -4,7 +4,6 @@ var THEME_COLOR_SECONDARY;
 var THEME_COLOR_SECONDARY_HOVER;
 var CLARO = "#5859a7";
 var ESCURO = "#7f75b6";
-var CUSTOM_COLORS = false;
 var BOX_COLOR = {
 	claro: "#f1f1f1",
 	escuro: "#404040",
@@ -23,12 +22,18 @@ function _loadLogoColors() {
 	darkColor2.style.fill = ESCURO;
 }
 
+function _loadThemeColors() {
+	_setCSSVariable("theme-color", THEME_COLOR);
+	_setCSSVariable("theme-color-hover", THEME_COLOR_HOVER);
+	_setCSSVariable("theme-color-secondary", THEME_COLOR_SECONDARY);
+}
+
 // Getters
 function _getLocalColors() {
 	try {
-		return JSON.parse(localStorage.getItem("localColors"));
-	} catch (e) {
-		return null;
+		return JSON.parse(sessionStorage.getItem("localColors")) || {};
+	} catch {
+		return {};
 	}
 }
 
@@ -111,20 +116,6 @@ function _getThemeColorBoxShadow(cor = THEME_COLOR_SECONDARY) {
 	return `0 0 1px 0 ${rgba}, 0 6px 12px 0 ${rgba};`;
 }
 
-function _getTripColors() {
-	if (
-		!FIRESTORE_DATA ||
-		!FIRESTORE_DATA?.cores?.claro ||
-		!FIRESTORE_DATA?.cores?.escuro
-	) {
-		return {};
-	}
-	return {
-		claro: FIRESTORE_DATA.cores.claro,
-		escuro: FIRESTORE_DATA.cores.escuro,
-	};
-}
-
 // Setters
 function _changeFillColorSVGs(className, color) {
 	const svgElements = document.querySelectorAll(`.${className}`);
@@ -146,7 +137,7 @@ function _clearCustomColors() {
 	}
 }
 
-function _ChangeBarColorIOS(color) {
+function _changeBarColorIOS(color) {
 	let metaThemeColor = document.querySelector("meta[name=theme-color]");
 	metaThemeColor.setAttribute("content", color);
 }
@@ -156,7 +147,7 @@ function _saveLocalColors() {
 		claro: CLARO,
 		escuro: ESCURO,
 	};
-	localStorage.setItem("localColors", JSON.stringify(localColors));
+	sessionStorage.setItem("localColors", JSON.stringify(localColors));
 }
 
 // Converters
@@ -189,14 +180,4 @@ function _rgbToText(r, g, b, a) {
 function _hexToRgbText(hex, a) {
 	let [r, g, b] = _hexToRgb(hex);
 	return _rgbToText(r, g, b, a);
-}
-
-// Checkers
-function _isCustomColorsActive() {
-	const html = _getHTMLpage();
-	if (html === "destinos" || html === "gastos") {
-		return localStorage.getItem("customColors") === "true";
-	} else {
-		return CUSTOM_COLORS;
-	}
 }
