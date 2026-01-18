@@ -255,9 +255,7 @@ function _getWeekday(day) {
 
 // ======= TIME FORMATTING (UTC) =======
 
-function _getTimeString(date, localize = false) {
-	let hours = date.getUTCHours();
-	let minutes = date.getUTCMinutes();
+function _getTimeString(hours, minutes, localize = false) {
 	let period = "";
 
 	if (localize && _getLanguagePackName() == "en") {
@@ -276,6 +274,16 @@ function _getTimeString(date, localize = false) {
 	minutes = minutes.toString().padStart(2, "0");
 
 	return `${hours}:${minutes} ${period}`.trim();
+}
+
+function _getTimeStringFromDate(date, localize = false) {
+	let hours = date.getUTCHours();
+	let minutes = date.getUTCMinutes();
+	return _getTimeString(hours, minutes, localize);
+}
+
+function _getTimeStringFromDateObj(dateObj, localize = false) {
+	return _getTimeString(dateObj.hour, dateObj.minute, localize);
 }
 
 // ======= TIME HELPERS =======

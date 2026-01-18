@@ -225,9 +225,12 @@ function _loadPin() {
 function _requestPin({
 	confirmAction,
 	cancelAction,
-	precontent = "",
+	precontent,
 	invalido = false,
 }) {
+	if (precontent === undefined) {
+		precontent = translate("trip.basic_information.pin.request");
+	}
 	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 	const classComplement = invalido ? "-invalid" : "";
 	propriedades.titulo = translate("trip.basic_information.pin.title");
@@ -258,6 +261,14 @@ function _requestPin({
 	_loadPin();
 
 	document.addEventListener("keydown", _pinListenerAction);
+}
+
+function _requestInvalidPin({ confirmAction, cancelAction, precontent }) {
+	const invalido = true;
+	if (precontent === undefined) {
+		precontent = translate("trip.basic_information.pin.invalid");
+	}
+	_requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
 function _pinListenerAction(event) {

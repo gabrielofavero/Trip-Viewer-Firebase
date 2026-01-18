@@ -4,34 +4,40 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 135   | 130  | 2         | 3       |
-| 🏆   | Feature     | F000 | 141   | 114  | 22        | 5       |
-| 📈   | Improvement | M000 | 134   | 104  | 30        | 0       |
-| ⚔️   | Epic        | E000 | 41    | 25   | 15        | 1       |
+| 🐞   | Bug         | B000 | 138   | 130  | 2         | 6       |
+| 🏆   | Feature     | F000 | 141   | 119  | 22        | 0       |
+| 📈   | Improvement | M000 | 136   | 104  | 30        | 2       |
+| ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
 
-- ⚔️ **E041:** Full Itinerary page
-  - *[🏆F134] Create HTML and CSS*
-  - *[🏆F135] Read and format data from itinerary (main)*
-  - *[🏆F136] Read and format data from itinerary (associated)*
-  - *[🏆F137] Print / PDF Export*
-  - *[🏆F138] Notes export*
+- 🐞 **B136:** Destination edit modules showing every time
+- 🐞 **B137:** Destination should only stop loading when content is loaded
+- 🐞 **B138:** Itinerary should only stop loading when content is loaded
 
 ### Medium Priority
 
+- 📈 **M136:** Improve Notes export for itinerary
+
 ### Low Priority
 
-- 🐞 **B127:** document changes still not working (accepting everything)
+- 🐞 **B127:** Document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
 - 🐞 **B123:** Main try catchs for pages are failing because main is not async
+- 📈 **M135:** Refactor "dados.js" to shared dir
 
 ## Done
 
 ### January 2026
 
+- ⚔️ **E041:** Full Itinerary page
+  - *[🏆F134] Create HTML and CSS*
+  - *[🏆F135] Implement PIN logic*
+  - *[🏆F136] Read and format data from itinerary*
+  - *[🏆F137] Print / PDF Export*
+  - *[🏆F138] Notes export*
 - 🏆 **F141:** Plan destination from destination page
 - 🏆 **F140:** Fetch trip data instead of relying on localhost for destination page
 - 🐞 **B135:** Destination minor fixes

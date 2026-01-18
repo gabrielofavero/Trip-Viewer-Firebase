@@ -420,58 +420,6 @@ function _getNewDataDocument(tipo) {
 	}
 }
 
-function _getAndDestinationTitle(value, destinos) {
-	if (value.includes("departure")) {
-		return _getReadableArray([
-			translate("trip.transportation.departure"),
-			...destinos,
-		]);
-	}
-	return _getReadableArray([
-		...destinos,
-		translate("trip.transportation.return"),
-	]);
-}
-
-function _getInnerProgramacaoTitleHTML(dado, spanClass) {
-	const programacao = dado.programacao || "";
-	const presentes = !dado.pessoas
-		? []
-		: dado.pessoas
-				.filter((p) => p.isPresent)
-				.map((p) => TRAVELERS.find((t) => t.id === p.id)?.nome ?? "");
-
-	const pessoasTexto =
-		presentes.length === 0 || presentes.length === TRAVELERS.length
-			? ""
-			: _getReadableArray(presentes);
-
-	let horario = "";
-	if (dado.inicio && dado.fim) {
-		horario = `${dado.inicio} - ${dado.fim}`;
-	} else if (dado.inicio) {
-		horario = dado.inicio;
-	}
-
-	if (pessoasTexto && horario && programacao) {
-		return `${_highlight(`${horario} (${pessoasTexto})`)}: ${programacao}`;
-	}
-
-	if (pessoasTexto && programacao) {
-		return `${_highlight(`${pessoasTexto}`)}: ${programacao}`;
-	}
-
-	if (horario && programacao) {
-		return `${_highlight(`${horario}:`)} ${programacao}`;
-	}
-
-	return programacao;
-
-	function _highlight(text) {
-		return `<span class="${spanClass}">${text}</span>`;
-	}
-}
-
 function _getTranslatedDocumentLabel(type) {
 	switch (type) {
 		case "viagens":
@@ -493,6 +441,265 @@ function _getTranslatedDocumentLabel(type) {
 	}
 }
 
+function _getOrderedDocumentByUpdateDate(data) {
+	return Object.entries(data)
+		.map(([id, v]) => ({ id, ...v }))
+		.sort(
+			(a, b) =>
+				new Date(b.versao.ultimaAtualizacao) -
+				new Date(a.versao.ultimaAtualizacao),
+		);
+}
+
+function _getOrderedDocumentByTitle(data) {
+	return Object.entries(data)
+		.map(([id, v]) => ({ id, ...v }))
+		.sort((a, b) => a.titulo.localeCompare(b.titulo));
+}
+
+// Destination
+function _getAndDestinationTitle(value, destinos = [], placeholder = true) {
+	if (!destinos || destinos.length === 0) {
+		const placeholderValue = placeholder
+			? translate("trip.itinerary.title")
+			: "";
+		return value || placeholderValue;
+	}
+
+	const titles = destinos.map((d) => d.titulo);
+	if (value.includes("departure")) {
+		return _getReadableArray([
+			translate("trip.transportation.departure"),
+			...titles,
+		]);
+	}
+
+	if (value.includes("return")) {
+		return _getReadableArray([
+			...titles,
+			translate("trip.transportation.return"),
+		]);
+	}
+
+	return _getReadableArray([titles]);
+}
+
+async function _normalizeTikTokLink(link) {
+	if (!link) return link;
+
+	const isMobile =
+		link.startsWith("https://vm.tiktok.com/") ||
+		link.startsWith("https://vt.tiktok.com/");
+
+	if (!isMobile) return link;
+
+	try {
+		const res = await fetch(`https://www.tiktok.com/oembed?url=${link}`, {
+			method: "GET",
+		});
+
+		const data = await res.json();
+
+		if (data.author_unique_id && data.embed_product_id) {
+			return `https://www.tiktok.com/@${data.author_unique_id}/video/${data.embed_product_id}`;
+		}
+
+		return link;
+	} catch (err) {
+		return link;
+	}
+}
+
+function _getDestinationTitle(item) {
+	if (item.nome && item.emoji) {
+		return `${item.nome} ${item.emoji}`;
+	} else return item.nome;
+}
+
+function _getDestinosBoxHTML({
+	j,
+	item,
+	innerProgramacao,
+	valores,
+	moeda,
+	planejado,
+}) {
+	return `
+    <div ${innerProgramacao ? "" : `class="accordion-body" id="accordion-body-${j}"`}>
+        ${_getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado })}
+    </div>`;
+}
+
+// Itinerary
+function _getInnerProgramacaoTitle(dado, viajantes = TRAVELERS) {
+	const programacao = dado.programacao || "";
+	const presentes = !dado.pessoas
+		? []
+		: dado.pessoas
+				.filter((p) => p.isPresent)
+				.map((p) => viajantes.find((t) => t.id === p.id)?.nome ?? "");
+
+	const pessoasTexto =
+		presentes.length === 0 || presentes.length === viajantes.length
+			? ""
+			: _getReadableArray(presentes);
+
+	let horario = "";
+	if (dado.inicio && dado.fim) {
+		horario = `${dado.inicio} - ${dado.fim}`;
+	} else if (dado.inicio) {
+		horario = dado.inicio;
+	}
+
+	if (pessoasTexto && horario && programacao) {
+		return {
+			title: `${horario} (${pessoasTexto})`,
+			content: programacao,
+		};
+	}
+
+	if (pessoasTexto && programacao) {
+		return {
+			title: pessoasTexto,
+			content: programacao,
+		};
+	}
+
+	if (horario && programacao) {
+		return {
+			title: horario,
+			content: programacao,
+		};
+	}
+
+	return {
+		title: "",
+		content: programacao,
+	};
+}
+
+function _getInnerProgramacaoTitleHTML(dado, spanClass) {
+	const titleObj = _getInnerProgramacaoTitle(dado);
+	return titleObj.title
+		? `<span class="${spanClass}">${titleObj.title}:</span> ${titleObj.content}`
+		: titleObj.content;
+}
+
+function _getInnerProgramacao(item, destinos) {
+	const innerProgramacao = {
+		tipo: item?.tipo,
+		titulo: "",
+		content: "",
+		midia: "",
+		container:
+			item?.tipo === "destinos"
+				? "destinos-container"
+				: "programacao-container",
+	};
+	let index = -1;
+	switch (item?.tipo) {
+		case "transporte":
+			if (FIRESTORE_DATA.modulos.transportes === true && item.id) {
+				index = FIRESTORE_DATA.transportes.dados
+					.map((programacao) => programacao.id)
+					.indexOf(item.id);
+				if (index >= 0) {
+					const transporte = FIRESTORE_DATA.transportes.dados[index];
+					innerProgramacao.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
+					innerProgramacao.content = _getFlightBoxHTML(
+						index + 1,
+						"inner-programacao",
+						true,
+					);
+				}
+			}
+			break;
+		case "hospedagens":
+			if (FIRESTORE_DATA.modulos.hospedagens === true && item.id) {
+				index = FIRESTORE_DATA.hospedagens
+					.map((hospedagem) => hospedagem.id)
+					.indexOf(item.id);
+				if (index >= 0) {
+					innerProgramacao.titulo = "";
+					innerProgramacao.content = _getHospedagensHTML(index, true);
+				}
+			}
+			break;
+		case "destinos":
+			if (
+				FIRESTORE_DATA.modulos.destinos === true &&
+				item.local &&
+				item.categoria &&
+				item.id
+			) {
+				if (!destinos) {
+					const destinosIDs = DESTINOS.map((destino) => destino.destinosID);
+					index = destinosIDs.indexOf(item.local);
+					destinos = DESTINOS?.[index]?.destinos;
+				}
+
+				if (!destinos) {
+					return;
+				}
+
+				const destino = destinos[item.categoria];
+				if (destino && Object.keys(destino).length) {
+					const destinoItem = destino[item.id];
+					if (destinoItem) {
+						innerProgramacao.titulo = _getDestinationTitle(destinoItem);
+						innerProgramacao.content = _getDestinosBoxHTML({
+							j: 1,
+							id: item.id,
+							item: destinoItem,
+							innerProgramacao: true,
+							valores: _getDestinoValores(DESTINOS[index]),
+							moeda: destinos.moeda,
+						});
+						innerProgramacao.midia = destinoItem?.midia;
+					}
+				}
+			}
+	}
+
+	return innerProgramacao;
+
+	function _getDestinoValores(destino) {
+		const moeda = _cloneObject(CONFIG.moedas.escala[destino.destinos.moeda]);
+		const max = translate("destination.price.max", { value: moeda["$$$$"] });
+		moeda["-"] = translate("destination.price.free");
+		moeda["default"] = translate("destination.price.default");
+		moeda["$$$$"] = max;
+		return moeda;
+	}
+}
+
+function _getLinkMediaButton(midia, tipo) {
+	if (!midia) return;
+	const video = translate("trip.itinerary.media_button.video");
+	const playlist = translate("trip.itinerary.media_button.playlist");
+
+	let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
+
+	if (
+		tipo == "youtube" ||
+		midia.includes("youtube") ||
+		midia.includes("youtu.be")
+	) {
+		buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
+	} else if (tipo == "tiktok" || midia.includes("tiktok")) {
+		buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
+	} else if (tipo == "spotify" || midia.includes("spotify")) {
+		buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
+	} else if (tipo == "instagram" || midia.includes("instagram")) {
+		buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
+	}
+
+	return `<div class="button-box">
+              <button class="btn btn-secondary btn-format" type="submit" onclick="window.open('${midia}', '_blank');">${buttonText}</button>
+            </div>`;
+}
+
+// Trips
 function _getCurrentTrips(data) {
 	const today = new Date();
 	return Object.entries(data)
@@ -525,46 +732,32 @@ function _getNextTrips(data) {
 		);
 }
 
-function _getOrderedDocumentByUpdateDate(data) {
-	return Object.entries(data)
-		.map(([id, v]) => ({ id, ...v }))
-		.sort(
-			(a, b) =>
-				new Date(b.versao.ultimaAtualizacao) -
-				new Date(a.versao.ultimaAtualizacao),
-		);
-}
+// Accommodation
+function _getHospedagensHTML(i, innerProgramacao = false) {
+	const original = FIRESTORE_DATA.hospedagens[i];
+	const hospedagem = {
+		id: original.id,
+		cafe: original.cafe,
+		checkIn: _getHospedagensData(original.datas.checkin),
+		checkOut: _getHospedagensData(original.datas.checkout),
+		reserva: original.reserva,
+		descricao: original.descricao,
+		endereco: original.endereco,
+		imagens: original.imagens,
+		link: original.link,
+		nome: original.nome,
+	};
 
-function _getOrderedDocumentByTitle(data) {
-	return Object.entries(data)
-		.map(([id, v]) => ({ id, ...v }))
-		.sort((a, b) => a.titulo.localeCompare(b.titulo));
-}
-
-function _getLinkMediaButton(midia, tipo) {
-	if (!midia) return;
-	const video = translate("trip.itinerary.media_button.video");
-	const playlist = translate("trip.itinerary.media_button.playlist");
-
-	let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
-
-	if (
-		tipo == "youtube" ||
-		midia.includes("youtube") ||
-		midia.includes("youtu.be")
-	) {
-		buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
-	} else if (tipo == "tiktok" || midia.includes("tiktok")) {
-		buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
-	} else if (tipo == "spotify" || midia.includes("spotify")) {
-		buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
-	} else if (tipo == "instagram" || midia.includes("instagram")) {
-		buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
+	if (innerProgramacao) {
+		return _getHotelBoxHTML(hospedagem, "inner-programacao", true);
 	}
 
-	return `<div class="button-box">
-              <button class="btn btn-secondary btn-format" type="submit" onclick="window.open('${midia}', '_blank');">${buttonText}</button>
-            </div>`;
+	const j = i + 1;
+	return `<div class="swiper-slide" id="hospedagens-slide-${j}">
+            <div class="testimonial-item">
+              ${_getHotelBoxHTML(hospedagem, j)}
+            </div>
+          </div>`;
 }
 
 // Request Utils
@@ -591,38 +784,4 @@ function _combineDatabaseResponses(responses) {
 		success: success,
 		data: responses,
 	};
-}
-
-async function _normalizeTikTokLink(link) {
-	if (!link) return link;
-
-	const isMobile =
-		link.startsWith("https://vm.tiktok.com/") ||
-		link.startsWith("https://vt.tiktok.com/");
-
-	if (!isMobile) return link;
-
-	try {
-		const res = await fetch(`https://www.tiktok.com/oembed?url=${link}`, {
-			method: "GET",
-		});
-
-		const data = await res.json();
-
-		if (data.author_unique_id && data.embed_product_id) {
-			return `https://www.tiktok.com/@${data.author_unique_id}/video/${data.embed_product_id}`;
-		}
-
-		return link;
-	} catch (err) {
-		return link;
-	}
-}
-
-function _getPageURL() {
-	return window.location.href.includes("trip-viewer-prd.firebaseapp.com")
-		? "https://trip-viewer.com" +
-				window.location.pathname +
-				window.location.search
-		: window.location.href;
 }

@@ -36,11 +36,14 @@ function _getProgramacaoArray() {
 			"departure_and_destinations",
 			"return_and_destinations",
 		].includes(tituloSelectValue);
-		innerResult.titulo.destinos = [
-			"departure_and_destinations",
-			"return_and_destinations",
-			"all_destinations",
-		].includes(tituloSelectValue);
+
+		innerResult.titulo.destinos =
+			[
+				"departure_and_destinations",
+				"return_and_destinations",
+				"all_destinations",
+			].includes(tituloSelectValue) ||
+			DESTINOS.map((d) => d.id).includes(tituloSelectValue);
 
 		if (
 			DATAS[j - 1] &&

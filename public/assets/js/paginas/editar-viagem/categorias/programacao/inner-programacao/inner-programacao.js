@@ -42,7 +42,7 @@ async function _openInnerProgramacao(j, k, turno) {
 	const isNew = !k && !turno;
 
 	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-	propriedades.titulo = _getInnerProgramacaoTitle(j);
+	propriedades.titulo = _getInnerProgramacaoMessageTitle(j);
 	propriedades.containers = _getContainersInput();
 	propriedades.conteudo = _getInnerProgramacaoContent(
 		j,
@@ -258,7 +258,7 @@ function _closeInnerProgramacao(j) {
 			itemAssociado.innerText = translate("trip.itinerary.link_item");
 		}
 
-		getID("message-title").innerText = _getInnerProgramacaoTitle(j);
+		getID("message-title").innerText = _getInnerProgramacaoMessageTitle(j);
 		getID("back-icon").style.visibility = "hidden";
 
 		_replaceTextIfEnabled();
@@ -270,7 +270,7 @@ function _closeInnerProgramacao(j) {
 			["inner-programacao-item-selecionar"],
 		);
 	} else if (getID("inner-programacao-item-trocar").style.display === "block") {
-		getID("message-title").innerText = _getInnerProgramacaoTitle(j);
+		getID("message-title").innerText = _getInnerProgramacaoMessageTitle(j);
 		getID("back-icon").style.visibility = "hidden";
 
 		_animate(
@@ -280,7 +280,7 @@ function _closeInnerProgramacao(j) {
 	}
 }
 
-function _getInnerProgramacaoTitle(j) {
+function _getInnerProgramacaoMessageTitle(j) {
 	const newJ = _getMostRecentJ(j);
 	return _getDateTitle(DATAS[newJ - 1], "mini");
 }

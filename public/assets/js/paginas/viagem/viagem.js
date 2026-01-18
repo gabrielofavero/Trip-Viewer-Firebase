@@ -43,13 +43,13 @@ async function _loadViagemPage() {
 
 	const firestoreData = await _getSingleData(TYPE);
 
-	if (ERROR_FROM_GET_REQUEST) {
+	if (_haveErrorFromGetRequest()) {
 		_displayError(_getErrorFromGetRequestMessage(), true);
 		_stopLoadingScreen();
 		return;
 	}
 
-	if (!ERROR_FROM_GET_REQUEST) {
+	if (!_haveErrorFromGetRequest()) {
 		if (firestoreData.pin === "all-data") {
 			_loadProtectedData(firestoreData);
 		} else {

@@ -118,7 +118,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
 
 function _getHospedagensData(dataFirestore) {
 	const date = _convertFromDateObject(dataFirestore);
-	return `${_getDateString(date)}, ${_getTimeString(date)}`;
+	return `${_getDateString(date)}, ${_getTimeStringFromDate(date)}`;
 }
 
 function _getHospedagemReservationHTML(hospedagem) {

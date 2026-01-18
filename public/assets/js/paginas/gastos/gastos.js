@@ -75,16 +75,13 @@ async function _loadGastosPage() {
 function _requestPinGastos() {
 	const cancelAction = `_exitGastos()`;
 	const confirmAction = "_loadGastos()";
-	const precontent = translate("trip.basic_information.pin.request");
-	_requestPin({ confirmAction, cancelAction, precontent });
+	_requestPin({ confirmAction, cancelAction });
 }
 
 function _requestPinGastosInvalido() {
 	const cancelAction = `_exitGastos()`;
 	const confirmAction = "_loadGastos()";
-	const precontent = translate("trip.basic_information.pin.invalid");
-	const invalido = true;
-	_requestPin({ confirmAction, cancelAction, precontent, invalido });
+	_requestInvalidPin({ confirmAction, cancelAction });
 }
 
 function _exitGastos() {

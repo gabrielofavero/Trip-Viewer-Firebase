@@ -9,6 +9,7 @@
   <title>TripViewer</title>
   <meta content="Your Travel Planner" name="description">
   <meta property="og:description" content="Your Travel Planner">
+  <meta content="" name="keywords">
 
   <!-- Favicons -->
   <link href="favicon.ico" rel="icon">
@@ -36,7 +37,7 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS Files -->
-  <link data-main href="assets/css/destinos/destinos.css" rel="stylesheet">
+  <link data-main href="assets/css/itinerary/itinerary.css" rel="stylesheet">
 
 </head>
 
@@ -102,64 +103,37 @@
             <button data-lang="pt">PT</button>
           </div>
         </div>
-        <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
-        <i id="share" style="display: none;" onclick="_share()" class="bx bx-share-alt icon-buttons"></i>
+        <i id="export" class="iconify icon-buttons" data-icon="ph:export-bold"></i>
+        <i id="print" class="iconify icon-buttons" data-icon="lucide:printer"></i>
         <i id="night-mode" class="bx bx-moon icon-buttons"></i>
       </div>
 
     </div>
 
     <div class="section-title">
-      <br><br><br><br>
       <h1 id="title"></h1>
-      <div class="destinos-select" id="destinos-select"></div>
-      <div id="subtitulo-destinos"></div>
     </div>
 
-    <div class="section-buttons" id="filter-sort-container">
-      <button class="filter-sort" id="filter" onclick="_openFilterDrawer()">
-        <i class="iconify" data-icon="tdesign:filter"></i>
-        <span data-translate="destination.filter.title"></span>
-      </button>
-      <button class="filter-sort" id="sort" onclick="_openSortDrawer()">
-        <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
-        <span data-translate="destination.sort.title"></span>
-      </button>
-    </div>
-
-    <div id="content"></div>
-
-    <div class="add-container" style="display: none">
-      <button class="edit-btn" id="adicionar" onclick="_add()">
-          <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
-          <span data-translate="labels.add"></span>
-      </button>
-    </div>
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
-      <div class="container">
-        <div class="credits">
-          <span data-translate="labels.developed_by"></span> <a
-            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
-            onclick="_openAtribuicoes()"><i class="bx bx-info-circle"></i>
-            <span data-translate="labels.credits"></span></span>
-        </div>
+    <div class="content-container">
+      <div class="content" id="content">
       </div>
-    </footer>
-  </div>
-
-  <div class="drawer-overlay" id="overlay" onclick="_closeDrawer()">
-    <div class="drawer" id="drawer" onclick="event.stopPropagation()">
-      <div class="drawer-header">
-        <span id="drawerTitle"></span>
-        <button class="close-btn" onclick="_closeDrawer()">✕</button>
-      </div>
-      <div class="drawer-body" id="drawerContent"></div>
     </div>
   </div>
 
-  <div id="preloader" style="display: none"></div>
+  <!-- ======= Footer ======= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="credits">
+        <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel
+          Fávero</a>. <span class="atribuicoes" onclick="_openAtribuicoes()"><i class="iconify"
+            data-icon="ri:information-line"></i>
+          <span data-translate="labels.credits"></span></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======= Support: Preloader ======= -->
+  <div id="preloader"></div>
 
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
@@ -169,7 +143,7 @@
   </div>
 
   <!-- Firebase -->
-  <script data-main src="../index.js" type=text/JSX"></script>
+  <script data-main src="../../index.js" type=text/JSX"></script>
   <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
   <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
   <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
@@ -184,41 +158,33 @@
   <script src="assets/vendor/typed.js/typed.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script async src="https://www.tiktok.com/embed.js"></script>
-  <script async src="//www.instagram.com/embed.js"></script>
   <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 
   <!-- Main JS Files -->
   <script data-main src="assets/js/main/translation.js"></script>
-  <script data-main src="assets/js/suporte/firebase/database.js"></script>
   <script data-main src="assets/js/main/main.js"></script>
-  <script data-main src="assets/js/suporte/firebase/user.js"></script>
-  <script data-main src="assets/js/suporte/paginas/carregamento.js"></script>
+  <script data-main src="assets/js/suporte/firebase/database.js"></script>
   <script data-main src="assets/js/suporte/estilos/animacoes.js"></script>
   <script data-main src="assets/js/suporte/paginas/dados.js"></script>
-  <script data-main src="assets/js/suporte/estilos/svgs.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/embed.js"></script>
-  <script data-main src="assets/js/paginas/destinos/categorias.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/content.js"></script>
-  <script data-main src="assets/js/suporte/componentes/custom-select.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/price-bucket.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/preferences.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/sort-and-filter/suporte/drawer.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/sort-and-filter/sort-and-filter.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/sort-and-filter/sort.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/sort-and-filter/filter.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/trip.js"></script>
-  <script data-main src="assets/js/paginas/destinos/editar-destino.js"></script>
-  <script data-main src="assets/js/paginas/destinos/destinos.js"></script>
-  <script data-main src="assets/js/suporte/estilos/cores.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/visibilidade.js"></script>
-  <script data-main src="assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="assets/js/suporte/estilos/visibilidade.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dispositivos.js"></script>
   <script data-main src="assets/js/suporte/paginas/datas.js"></script>
+  <script data-main src="assets/js/suporte/estilos/svgs.js"></script>
+  <script data-main src="assets/js/suporte/estilos/cores.js"></script>
+  <script data-main src="assets/js/suporte/estilos/visibilidade.js"></script>
   <script data-main src="assets/js/suporte/paginas/mensagens.js"></script>
-  <script data-main src="assets/js/suporte/html/fields.js"></script>
+  <script data-main src="assets/js/suporte/paginas/carregamento.js"></script>
+  <script data-main src="assets/js/suporte/estilos/stylesheets.js"></script>
   <script data-main src="assets/js/suporte/paginas/atribuicoes.js"></script>
+  <script data-main src="assets/js/suporte/paginas/pin.js"></script>
+  <script data-main src="assets/js/paginas/viagem/suporte/sensitive-reservation.js"></script>
+  <script data-main src="assets/js/paginas/destinos/suporte/content.js"></script>
+  <script data-main src="assets/js/paginas/destinos/suporte/visibilidade.js"></script>
+  <script data-main src="assets/js/paginas/viagem/categorias/programacao/inner-programacao.js"></script>
+  <script data-main src="assets/js/paginas/viagem/categorias/transportes.js"></script>
+  <script data-main src="assets/js/paginas/viagem/categorias/hospedagens.js"></script>
+  <script data-main src="assets/js/paginas/destinos/categorias.js"></script>
+  <script data-main src="assets/js/paginas/itinerary/itinerary-formatter.js"></script>
+  <script data-main src="assets/js/paginas/itinerary/itinerary.js"></script>
 
 </body>
 

@@ -140,7 +140,7 @@ function _getPartidaChegadaHTML(j, tipo) {
 	const flightTimeSuffix = _getLanguagePackName() == "en" ? "-en" : "";
 
 	let result = `<div class="flight-date">${_getDateString(data, "dd/mm")}</div>
-                <div class="flight-time${flightTimeSuffix}">${_getTimeString(data)}</div>`;
+                <div class="flight-time${flightTimeSuffix}">${_getTimeStringFromDate(data)}</div>`;
 
 	if (local) result += `<div class="flight-location">${local}</div>`;
 	return result;
