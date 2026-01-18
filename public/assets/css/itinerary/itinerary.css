@@ -321,7 +321,7 @@ h3 {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-#preloader {
+.preloader {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -331,11 +331,11 @@ h3 {
 	overflow: hidden;
 }
 
-#preloader {
+.preloader {
 	background: #fff;
 }
 
-#preloader:before {
+.preloader:before {
 	content: "";
 	position: fixed;
 	top: calc(50% - 30px);
@@ -350,7 +350,7 @@ h3 {
 	animation: animate-preloader 1s linear infinite;
 }
 
-#preloader:before {
+.preloader:before {
 	border-top-color: #fff;
 	border-bottom-color: #fff;
 }

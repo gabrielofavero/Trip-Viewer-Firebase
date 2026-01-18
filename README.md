@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 139   | 133  | 2         | 4       |
+| 🐞   | Bug         | B000 | 139   | 134  | 2         | 3       |
 | 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
 | 📈   | Improvement | M000 | 138   | 106  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
@@ -12,8 +12,6 @@
 ## Backlog
 
 ### High Priority
-
-- 🐞 **B138:** Itinerary should only stop loading when content is loaded
 
 ### Medium Priority
 
@@ -30,6 +28,7 @@
 
 ### January 2026
 
+- 🐞 **B138:** Itinerary should only stop loading when content is loaded
 - 🐞 **B136:** Destination edit modules showing every time
 - 📈 **M138:** Improve dark mode loading time
 - 📈 **M137:** Improve dark mode detection

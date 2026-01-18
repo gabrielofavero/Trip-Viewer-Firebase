@@ -47,11 +47,11 @@ h1 {
 	background: #a6a6a6;
 }
 
-#preloader {
+.preloader {
 	background: #303030;
 }
 
-#preloader:before {
+.preloader:before {
 	border: 6px solid var(--theme-color);
 	border-top-color: #303030;
 	border-bottom-color: #303030;
