@@ -24,7 +24,7 @@ function _startLoadingScreen({
 
 function _stopLoadingScreen({ adjustLoadables = true } = {}) {
 	_stopLoadingTimer();
-	localStorage.setItem("firstLoad", "true");
+	sessionStorage.setItem("firstLoad", "true");
 	if (!MESSAGE_MODAL_OPEN) {
 		const preloader = getID("preloader");
 		if (preloader) {
@@ -50,15 +50,15 @@ function _startLoadingTimer() {
 	if (LOADING_TIMER == null && MESSAGE_MODAL_OPEN == false) {
 		LOADING_SECONDS = 0;
 		LOADING_TIMER = setInterval(() => {
-			const firstLoad = localStorage.getItem("firstLoad");
+			const firstLoad = sessionStorage.getItem("firstLoad");
 			LOADING_SECONDS++;
 			if (LOADING_SECONDS >= 10 && (firstLoad == "true" || firstLoad == null)) {
 				_stopLoadingTimer();
-				localStorage.setItem("firstLoad", "false");
+				sessionStorage.setItem("firstLoad", "false");
 				window.location.reload();
 			} else if (LOADING_SECONDS >= 10 && firstLoad == "false") {
 				_stopLoadingTimer();
-				localStorage.setItem("firstLoad", "true");
+				sessionStorage.setItem("firstLoad", "true");
 				const error = new Error(translate("messages.errors.loading_timeout"));
 				_displayError(error, true);
 			}

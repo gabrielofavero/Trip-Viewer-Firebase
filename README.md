@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 138   | 130  | 2         | 6       |
+| 🐞   | Bug         | B000 | 139   | 131  | 2         | 6       |
 | 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
 | 📈   | Improvement | M000 | 137   | 104  | 30        | 3       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
@@ -14,7 +14,7 @@
 ### High Priority
 
 - 🐞 **B136:** Destination edit modules showing every time
-- 🐞 **B137:** Destination should only stop loading when content is loaded
+- 🐞 **B139:** Destination custom colors not working when detached but with trip id
 - 🐞 **B138:** Itinerary should only stop loading when content is loaded
 
 ### Medium Priority
@@ -33,6 +33,7 @@
 
 ### January 2026
 
+- 🐞 **B137:** Destination should only stop loading when content is loaded
 - 🏆 **F142:** Link full itinerary with button in view
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
