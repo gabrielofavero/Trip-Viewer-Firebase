@@ -2226,13 +2226,13 @@ iframe {
 
 .btn-theme {
 	background: var(--theme-color);
-	color: #fff;
+	color: var(--background-color);
 }
 
 .btn-theme:hover,
 .btn-theme:active {
 	background: var(--theme-color-hover);
-	color: #fff;
+	color: var(--background-color);
 }
 
 #dDescription {

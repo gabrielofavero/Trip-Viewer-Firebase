@@ -28,6 +28,21 @@
 
 	h1 {
 		color: #000 !important;
+		font-size: 24px !important;
+	}
+
+	.content h2 {
+		font-size: 16px !important;
+	}
+
+	.content h3 {
+		font-size: 14px !important;
+		margin-top: 1rem !important;
+		margin-bottom: 0.5rem !important;
+	}
+
+	.content li {
+		font-size: 12px !important;
 	}
 
 	.top-bar,
