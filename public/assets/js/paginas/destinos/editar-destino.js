@@ -1,9 +1,10 @@
 let ADDED_J;
 
 // Main Functions
-function _edit(j) {
-	if (!_canEdit()) {
-		_abortEdit("messages.errors.unauthorized_access");
+async function _edit(j) {
+	const canEdit = await _canEdit();
+	if (!canEdit) {
+		_editForbidden();
 		return;
 	}
 
@@ -12,7 +13,7 @@ function _edit(j) {
 	const accordionBody = getID(`accordion-body-${j}`);
 
 	if (!item || !accordionBody) {
-		_abortEdit("messages.errors.unknown");
+		_editError();
 		return;
 	}
 
@@ -70,10 +71,11 @@ function _edit(j) {
 	}
 }
 
-function _add() {
+async function _add() {
 	document.querySelector(".add-container").style.display = "none";
-	if (!_canEdit()) {
-		_abortEdit("messages.errors.unauthorized_access");
+	const canEdit = await _canEdit();
+	if (!canEdit) {
+		_editForbidden();
 		return;
 	}
 
@@ -96,7 +98,7 @@ function _add() {
 
 	const accordionBody = getID(`accordion-body-${j}`);
 	if (!accordionBody) {
-		_abortEdit("messages.errors.unknown");
+		_editError();
 		return;
 	}
 
@@ -109,15 +111,18 @@ function _add() {
 	_setAddListeners();
 }
 
+// Visibility
 async function _adjustEditVisibility(j) {
-	document.querySelector(".add-container").style.display = "";
+	const canEdit = await _canEdit();
+	const display = canEdit ? "" : "none";
+	document.querySelector(".add-container").style.display = display;
 	if (j) {
-		getID(`edit-container-${j}`).style.display = "";
+		getID(`edit-container-${j}`).style.display = display;
 		return;
 	}
 
 	for (const container of document.querySelectorAll(".edit-container")) {
-		container.style.display = "";
+		container.style.display = display;
 	}
 }
 
@@ -305,10 +310,18 @@ async function _deleteEdit(id) {
 }
 
 // Cancel Actions
-function _abortEdit(message) {
-	_displayMessage(translate("messages.errors.load_title"), translate(message));
+function _abortEdit(title, message) {
+	_displayMessage(translate(title), translate(message));
 	_adjustEditVisibility();
 	ACTIVE_PLANNED_DESTINATION = [];
+}
+
+function _editError(message = "messages.errors.unknown") {
+	_abortEdit("messages.errors.load_title", message);
+}
+
+function _editForbidden(message = "messages.access_denied.message.edit") {
+	_abortEdit("messages.access_denied.title", message);
 }
 
 function _closeAddedDestino() {
@@ -347,5 +360,8 @@ function _isEditing(j) {
 
 async function _canEdit() {
 	const uid = await _getUID();
-	return FIRESTORE_DESTINOS_DATA.compartilhamento.dono == uid;
+	if (!uid) {
+		return false;
+	}
+	return FIRESTORE_DESTINOS_DATA.compartilhamento.dono === uid;
 }

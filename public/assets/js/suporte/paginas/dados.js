@@ -765,7 +765,7 @@ function _getErrorFromGetRequestMessage() {
 	return ERROR_FROM_GET_REQUEST.message.includes(
 		"Missing or insufficient permissions",
 	)
-		? translate("messages.errors.unauthorized_access")
+		? translate("messages.access_denied.message.default")
 		: ERROR_FROM_GET_REQUEST;
 }
 

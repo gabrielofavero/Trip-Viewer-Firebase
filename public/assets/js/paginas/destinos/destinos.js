@@ -39,6 +39,7 @@ async function _loadDestinosPage() {
 	await _loadDestinosData();
 
 	_loadVisibility();
+	await _adjustEditVisibility();
 
 	const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
 	document.title = title;

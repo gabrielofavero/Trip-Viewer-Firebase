@@ -518,7 +518,6 @@
 			"module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
 			"no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
 			"loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
-			"unauthorized_access": "Acesso não autorizado para este documento",
 			"missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando"
 		},
 		"too_early": {
@@ -527,7 +526,11 @@
 		},
 		"access_denied": {
 			"title": "Acesso Negado 🚫",
-			"message": "Você não tem permissão para acessar esta página. Por favor, verifique suas credenciais ou entre em contato com o administrador do sistema"
+			"message": {
+				"access": "Você não tem permissão para acessar esta página. Por favor, verifique suas credenciais",
+				"edit": "Você não tem permissão para editar esta página. Por favor, verifique suas credenciais",
+				"default": "Acesso não autorizado para este documento"
+			}
 		},
 		"documents": {
 			"get": {

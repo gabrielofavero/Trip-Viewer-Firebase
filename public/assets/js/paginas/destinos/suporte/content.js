@@ -67,7 +67,7 @@ function _getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado }) {
                 ${_getDescricaoValue(item)}
             </div>
             <div id="midia-${j}" class="midia-container"></div>
-            <div class="edit-container" id="edit-container-${j}" style="display: none">
+            <div class="edit-container" id="edit-container-${j}">
                 <button class="edit-btn" id="edit-${j}" onclick="_edit(${j})">
                     <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
                     <span>${translate("labels.edit")}</span>
