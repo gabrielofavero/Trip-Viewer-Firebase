@@ -48,7 +48,7 @@ async function _getItineraryContent(type) {
 			case "page":
 				return "";
 			case "notes":
-				return `<h1>${FIRESTORE_DATA.titulo}</h1><br>`;
+				return `<div style="font-size: 28px; font-weight: bold;">${FIRESTORE_DATA.titulo}</div><br>`;
 			default:
 				return `*${FIRESTORE_DATA.titulo.toUpperCase()}*`;
 		}
@@ -60,7 +60,9 @@ async function _getItineraryContent(type) {
 				content.push(`<h2>${value}</h2>`);
 				break;
 			case "notes":
-				content.push(`<h3>${value}</h3><br>`);
+				content.push(
+					`<div style="font-size: 20px; font-weight: bold;">${value}</div><br>`,
+				);
 				break;
 			default:
 				return content.push(`\n*${value}*`);
@@ -74,7 +76,7 @@ async function _getItineraryContent(type) {
 				content.push(`<h3>${timeOfDay}</h3>`);
 				break;
 			case "notes":
-				content.push(`<h4>${timeOfDay}</h4>`);
+				content.push(`<b>${timeOfDay}</b>`);
 				break;
 			default:
 				return content.push(`\n_${timeOfDay}_`);
@@ -84,14 +86,16 @@ async function _getItineraryContent(type) {
 	function _loadInnerItinerary(innerItinerary, type) {
 		switch (type) {
 			case "page":
+				_loadHTMLInnerItineraryPage(innerItinerary, type);
+				break;
 			case "notes":
-				_loadHTMLInnerItinerary(innerItinerary, type);
+				_loadHTMLInnerItineraryNotes(innerItinerary, type);
 				break;
 			default:
 				_loadDefaultInnerItinerary(innerItinerary);
 		}
 
-		function _loadHTMLInnerItinerary(innerItinerary, type) {
+		function _loadHTMLInnerItineraryPage(innerItinerary, type) {
 			const texts = innerItinerary.subItem?.texts ?? [];
 
 			if (texts.length === 0) {
@@ -106,6 +110,27 @@ async function _getItineraryContent(type) {
 			}
 
 			content.push(`</ul></li>`);
+		}
+
+		function _loadHTMLInnerItineraryNotes(innerItinerary, type) {
+			content.push(
+				`<ul><li><div style="margin-left: 20px;">${_getTextContent(innerItinerary, type)}</li></ul>`,
+			);
+
+			const texts = innerItinerary.subItem?.texts ?? [];
+			if (texts.length === 0) {
+				return;
+			}
+
+			content.push(`<div>`);
+
+			for (const text of texts) {
+				content.push(
+					`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;○  ${_getTextContent(text, type)}<br>`,
+				);
+			}
+
+			content.push(`</div>`);
 		}
 
 		function _loadDefaultInnerItinerary(innerItinerary) {
