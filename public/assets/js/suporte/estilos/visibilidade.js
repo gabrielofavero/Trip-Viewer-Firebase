@@ -97,7 +97,7 @@ function _applyMode({
 		_appendCss(_getHTMLpage(), isDark);
 	}
 
-	_loadToggle();
+	_loadToggle(isDark);
 	_changeBarColorIOS(barColor);
 
 	_loadTripViewerLogo();
@@ -108,12 +108,16 @@ function _applyMode({
 
 	// Helpers
 	function _appendCss(page, isDark) {
-		const link = document.createElement("link");
-		link.rel = "stylesheet";
-		link.type = "text/css";
-		link.href =
-			_getCssHref(page, isDark) + (isDark ? "?version=" + Date.now() : "");
-		document.head.appendChild(link);
+		let link = document.getElementById("theme-css");
+
+		if (!link) {
+			link = document.createElement("link");
+			link.id = "theme-css";
+			link.rel = "stylesheet";
+			document.head.appendChild(link);
+		}
+
+		link.href = _getCssHref(page, isDark);
 	}
 
 	function _loadTripViewerLogo() {
@@ -129,10 +133,10 @@ function _applyMode({
 		}
 	}
 
-	function _loadToggle() {
+	function _loadToggle(isDark = _isOnDarkMode()) {
 		const el = getID("night-mode");
-		el.classList.toggle("bx-moon", !_isOnDarkMode());
-		el.classList.toggle("bx-sun", _isOnDarkMode());
+		el.classList.toggle("bx-moon", !isDark);
+		el.classList.toggle("bx-sun", isDark);
 	}
 
 	function _applyCustomVisibilityRules() {
