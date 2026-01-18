@@ -7,6 +7,8 @@ function _loadProgramacao() {
 	_loadCalendar();
 	_loadProgramacaoPills();
 	_loadProgramacaoHojeButton();
+
+	getID("full-itinerary").addEventListener("click", _openFullItinerary);
 }
 
 function _loadProgramacaoDestinos() {
@@ -174,4 +176,9 @@ function _loadProgramacaoHojeButton() {
 			getID("tabela").scrollIntoView({ behavior: "smooth" });
 		});
 	}
+}
+
+// Programação Completa
+function _openFullItinerary() {
+	window.open(`itinerary?v=${DOCUMENT_ID}`, "_blank");
 }

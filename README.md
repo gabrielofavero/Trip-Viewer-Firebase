@@ -5,8 +5,8 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 138   | 130  | 2         | 6       |
-| 🏆   | Feature     | F000 | 141   | 119  | 22        | 0       |
-| 📈   | Improvement | M000 | 136   | 104  | 30        | 2       |
+| 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
+| 📈   | Improvement | M000 | 137   | 104  | 30        | 3       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
@@ -20,6 +20,7 @@
 ### Medium Priority
 
 - 📈 **M136:** Improve Notes export for itinerary
+- 📈 **M137:** Improve dark mode detection
 
 ### Low Priority
 
@@ -32,6 +33,7 @@
 
 ### January 2026
 
+- 🏆 **F142:** Link full itinerary with button in view
 - ⚔️ **E041:** Full Itinerary page
   - *[🏆F134] Create HTML and CSS*
   - *[🏆F135] Implement PIN logic*
