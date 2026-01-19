@@ -257,6 +257,7 @@ function _getInnerProgramacao(item, destinos) {
 							innerProgramacao: true,
 							valores: _getDestinoValores(destinos.moeda),
 							moeda: destinos.moeda,
+							editBtn: false,
 						});
 						innerProgramacao.midia = destinoItem?.midia;
 					}

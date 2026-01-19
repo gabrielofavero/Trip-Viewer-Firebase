@@ -337,10 +337,12 @@ function _closeAddedDestino() {
 function _restoreAccordionBody(j, item) {
 	const id = _getDestinoID(j);
 	const planejado = _getPlanejado(id);
+	const editBtn = true;
 	getID(`accordion-body-${j}`).innerHTML = _getDestinosAccordionBodyHTML({
 		j,
 		item,
 		planejado,
+		editBtn,
 	});
 }
 

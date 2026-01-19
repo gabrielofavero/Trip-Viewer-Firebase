@@ -1,5 +1,6 @@
 function _getDestinosHTML({ j, id, item, closeAction = "_processAccordion" }) {
 	const planejado = _getPlanejado(id);
+	const editBtn = true;
 	return `
     <div class="accordion-group" id='destinos-box-${j}'>
         <div id="destinos-${j}" class="accordion-item" data-drag-listener="true" data-id="${id}">
@@ -21,13 +22,20 @@ function _getDestinosHTML({ j, id, item, closeAction = "_processAccordion" }) {
                 </button>
             </h2>
             <div id="collapse-destinos-${j}" class="accordion-collapse collapse" aria-labelledby="heading-destinos-${j}" data-bs-parent="#destinos-box">
-                ${_getDestinosBoxHTML({ j, id, item, planejado })}
+                ${_getDestinosBoxHTML({ j, id, item, planejado, editBtn })}
             </div>
         </div>
     </div>`;
 }
 
-function _getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado }) {
+function _getDestinosAccordionBodyHTML({
+	j,
+	item,
+	valores,
+	moeda,
+	planejado,
+	editBtn = true,
+}) {
 	if (!valores) {
 		valores = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
 	}
@@ -35,6 +43,15 @@ function _getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado }) {
 	if (!moeda) {
 		moeda = FIRESTORE_DESTINOS_DATA.moeda;
 	}
+
+	const ediText = editBtn
+		? `<div class="edit-container" id="edit-container-${j}">
+    <button class="edit-btn" id="edit-${j}" onclick="_edit(${j})">
+        <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
+        <span>${translate("labels.edit")}</span>
+    </button>
+</div>`
+		: "";
 
 	return `
         <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
@@ -67,12 +84,7 @@ function _getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado }) {
                 ${_getDescricaoValue(item)}
             </div>
             <div id="midia-${j}" class="midia-container"></div>
-            <div class="edit-container" id="edit-container-${j}">
-                <button class="edit-btn" id="edit-${j}" onclick="_edit(${j})">
-                    <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
-                    <span>${translate("labels.edit")}</span>
-                </button>
-            </div>
+            ${ediText}
         </div>`;
 }
 

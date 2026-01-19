@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 139   | 134  | 2         | 3       |
+| 🐞   | Bug         | B000 | 140   | 135  | 2         | 3       |
 | 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
 | 📈   | Improvement | M000 | 140   | 109  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
@@ -26,6 +26,7 @@
 
 ### January 2026
 
+- 🐞 **B140:** Edit button being shown on view page
 - 📈 **M140:** If no itinerary, do not show title on export
 - 📈 **M136:** Improve Notes export for itinerary
 - 📈 **M137:** Improve print export for itinerary

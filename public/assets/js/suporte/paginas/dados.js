@@ -523,10 +523,11 @@ function _getDestinosBoxHTML({
 	valores,
 	moeda,
 	planejado,
+	editBtn,
 }) {
 	return `
     <div ${innerProgramacao ? "" : `class="accordion-body" id="accordion-body-${j}"`}>
-        ${_getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado })}
+        ${_getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado, editBtn })}
     </div>`;
 }
 
