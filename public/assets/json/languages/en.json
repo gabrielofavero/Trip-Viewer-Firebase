@@ -38,7 +38,7 @@
 		"current_multi_1": "Multiple trips happening now",
 		"current_multi_2": "Check \"Next trips\"",
 		"edit": "Edit trip",
-		"share": "Check out my trip {{name}} created on TripViewer, starting on {{start}} and ending on {{end}}",
+		"share": "Check out my trip \"{{name}}\" created on TripViewer, starting on {{start}} and ending on {{end}}",
 		"delete": {
 			"title": "Delete trip",
 			"message": "Are you sure you want to delete the trip \"{{name}}\"? This action cannot be undone"
@@ -188,7 +188,7 @@
 		"mine": "My destinations",
 		"new": "New destination",
 		"edit": "Edit destination",
-		"share": "Check out the destination {{name}} I created on TripViewer",
+		"share": "Check out the destination \"{{name}}\" created on TripViewer",
 		"all_used": "Cannot add new destinations. All destinations registered in this account have already been used",
 		"nothing": "No destinations registred",
 		"basic_information": "Add the main information about your destination here",
@@ -388,7 +388,7 @@
 		"title": "Destination lists",
 		"new": "New destination list",
 		"edit": "Edit destination List",
-		"share": "Check out the destination list {{name}} I created on TripViewer",
+		"share": "Check out the destination list \"{{name}}\" created on TripViewer",
 		"basic_information": "Add the main information about your destination list here",
 		"last_update": {
 			"title": "Show last update date",

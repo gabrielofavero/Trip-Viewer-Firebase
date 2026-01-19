@@ -64,11 +64,6 @@ def get_firebase_project():
     return result.stdout.strip()
 
 
-def switch_firebase_project(project_name):
-    """Switch to a specific Firebase project."""
-    print(f"Switching to Firebase project: {project_name}")
-    run_command(f"firebase use {project_name}", capture_output=False)
-
 
 def select_deployment_targets():
     """Display menu and return selected deployment target(s)."""
@@ -235,28 +230,35 @@ def restore_html_files(modified_files):
 def deploy_firebase(project):
     """Deploy to Firebase for a specific project and return Firebase version."""
     print(f"\n{Colors.BOLD}{Colors.MAGENTA}Deploying to {project}...{Colors.RESET}\n")
-    
-    # Run deployment and show logs in real-time
-    result = run_command("firebase deploy --only hosting", capture_output=False, check=False)
-    
+
+    # Explicitly bind deploy to project
+    result = run_command(
+        f"firebase deploy --only hosting --project {project}",
+        capture_output=False,
+        check=False
+    )
+
     if result.returncode != 0:
         print(f"\n{Colors.RED}✗ Deployment failed for {project}{Colors.RESET}", file=sys.stderr)
         sys.exit(result.returncode)
-    
-    # Get version from Firebase hosting
-    version_result = run_command("firebase deploy --only hosting --json", check=False)
+
+    # Fetch deploy info deterministically
+    version_result = run_command(
+        f"firebase deploy --only hosting --project {project} --json",
+        check=False
+    )
+
     firebase_version = None
-    
+
     try:
         deploy_data = json.loads(version_result.stdout)
-        if deploy_data.get("status") == "success" and deploy_data.get("result"):
-            hosting = deploy_data["result"].get("hosting")
+        if deploy_data.get("status") == "success":
+            hosting = deploy_data.get("result", {}).get("hosting")
             if hosting:
-                parts = hosting.split("/")
-                firebase_version = parts[-1] if len(parts) > 0 else None
-    except (json.JSONDecodeError, KeyError, IndexError):
+                firebase_version = hosting.split("/")[-1]
+    except Exception:
         pass
-    
+
     print(f"\n{Colors.GREEN}✓{Colors.RESET} Firebase version: {Colors.BOLD}{firebase_version}{Colors.RESET}")
     return firebase_version
 
@@ -270,34 +272,27 @@ def main():
     try:
         original_project = get_firebase_project()
         print(f"{Colors.CYAN}Current Firebase project:{Colors.RESET} {Colors.BOLD}{original_project}{Colors.RESET}")
-        
+
         target_projects = select_deployment_targets()
+
         version_data = load_version_json()
         build_number = increment_build_number(version_data)
-        
+
         modified_files = update_html_cache_busting(build_number)
-        
+
         try:
             for project in target_projects:
-                if project != original_project:
-                    print(f"\n{Colors.BOLD}{Colors.YELLOW}Switching to: {project}{Colors.RESET}")
-                    switch_firebase_project(project)
-                else:
-                    print(f"\n{Colors.BOLD}{Colors.CYAN}Using current project: {project}{Colors.RESET}")
-                
                 firebase_version = deploy_firebase(project)
                 save_version_json(version_data, project, firebase_version)
-            
-            current_project = get_firebase_project()
-            if current_project != original_project:
-                print(f"\n{Colors.BOLD}{Colors.YELLOW}Restoring original project: {original_project}{Colors.RESET}")
-                switch_firebase_project(original_project)
-            
-            print(f"\n{Colors.BOLD}{Colors.GREEN}✓ All deployments complete!{Colors.RESET} Build: {Colors.BOLD}{build_number}{Colors.RESET}\n")
-        
+
+            print(
+                f"\n{Colors.BOLD}{Colors.GREEN}✓ All deployments complete!{Colors.RESET} "
+                f"Build: {Colors.BOLD}{build_number}{Colors.RESET}\n"
+            )
+
         finally:
             restore_html_files(modified_files)
-        
+
     except KeyboardInterrupt:
         print(f"\n{Colors.YELLOW}Deployment cancelled by user.{Colors.RESET}")
         sys.exit(0)

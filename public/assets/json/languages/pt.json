@@ -38,7 +38,7 @@
 		"current_multi_1": "Múltiplas viagens em andamento",
 		"current_multi_2": "Confira em \"Próximas viagens\"",
 		"edit": "Editar viagem",
-		"share": "Venha visualizar minha viagem {{name}} criada no TripViewer, com início em {{start}} e fim em {{end}}",
+		"share": "Venha visualizar minha viagem \"{{name}}\" criada no TripViewer, com início em {{start}} e fim em {{end}}",
 		"delete": {
 			"title": "Excluir viagem",
 			"message": "Tem certeza que deseja excluir a viagem \"{{name}}\"? A ação não poderá ser desfeita"
@@ -188,7 +188,7 @@
 		"mine": "Meus Destinos",
 		"new": "Novo destino",
 		"edit": "Editar Destino",
-		"share": "Venha visualizar o destino {{name}} criado no TripViewer",
+		"share": "Venha visualizar o destino \"{{name}}\" criado no TripViewer",
 		"all_used": "Não é possível adicionar novos destinos. Todos os destinos cadastrados nessa conta já foram utilizados",
 		"nothing": "Sem destinos cadastrados",
 		"basic_information": "Adicione aqui as principais informações do seu destino",
@@ -388,7 +388,7 @@
 		"title": "Listas de destinos",
 		"new": "Nova lista de destinos",
 		"edit": "Editar lista de destinos",
-		"share": "Venha visualizar a lista de destinos {{name}} criada no TripViewer",
+		"share": "Venha visualizar a lista de destinos \"{{name}}\" criada no TripViewer",
 		"basic_information": "Adicione aqui as principais informações da sua lista de destinos",
 		"last_update": {
 			"title": "Exibir data da última atualização",
