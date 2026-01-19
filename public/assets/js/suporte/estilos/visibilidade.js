@@ -63,16 +63,27 @@ function _getCssHref(name, dark = false) {
 
 // ======= SETTERS =======
 function _loadUserVisibility() {
-	switch (sessionStorage.getItem("darkMode")) {
-		case "true":
-			_loadDarkMode();
-			break;
-		case "false":
-			_loadLightMode();
-			break;
-		default:
-			_autoVisibility();
+	const param = _getURLParam("visibility");
+
+	if (param === "dark") {
+		return _loadDarkMode();
 	}
+
+	if (param === "light") {
+		return _loadLightMode();
+	}
+
+	const stored = sessionStorage.getItem("darkMode");
+
+	if (stored === "true") {
+		return _loadDarkMode();
+	}
+
+	if (stored === "false") {
+		return _loadLightMode();
+	}
+
+	_autoVisibility();
 }
 
 function _applyMode({
@@ -83,6 +94,7 @@ function _applyMode({
 	secondaryKey,
 }) {
 	sessionStorage.setItem("darkMode", String(isDark));
+	_setURLParam("visibility", _getVisibility(isDark));
 
 	const base = isDark ? ESCURO : CLARO;
 
@@ -322,8 +334,8 @@ function _visibilityAdd(type) {
 	}
 }
 
-function _getVisibility() {
-	return _isOnDarkMode() ? "dark" : "light";
+function _getVisibility(isDark = _isOnDarkMode()) {
+	return isDark ? "dark" : "light";
 }
 
 function _loadExternalVisibility(external, internal) {

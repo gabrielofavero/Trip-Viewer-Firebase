@@ -12,7 +12,7 @@ window.addEventListener("load", async function () {
 });
 
 async function _loadItineraryPage() {
-	DOCUMENT_ID = _getURLParams().v;
+	DOCUMENT_ID = _getURLParam("v");
 	document.title = translate("trip.itinerary.title");
 
 	if (!DOCUMENT_ID) {

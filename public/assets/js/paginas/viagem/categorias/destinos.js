@@ -139,7 +139,7 @@ function _loadDestinationsHTML(destino) {
 
 function _loadAndOpenDestino(code) {
 	const translation = CONFIG.destinos.translation;
-	const link = `destination?d=${DESTINO_ATIVO}&v=${DOCUMENT_ID}&type=${translation[code]}`;
+	const link = `destination?d=${DESTINO_ATIVO}&v=${DOCUMENT_ID}&type=${translation[code]}&visibility=${_getVisibility()}`;
 	_openViewEmbed(link);
 }
 

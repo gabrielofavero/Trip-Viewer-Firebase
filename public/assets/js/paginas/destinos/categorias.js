@@ -24,7 +24,7 @@ function _loadActiveCategory(urlParams) {
 }
 
 function _updateActiveCategory(category) {
-	const urlParam = _getURLParams()?.["type"];
+	const urlParam = _getURLParam("type");
 	const translations = CONFIG.destinos.translation;
 	const param = translations[category];
 
@@ -33,9 +33,7 @@ function _updateActiveCategory(category) {
 	}
 
 	ACTIVE_CATEGORY = category;
-	const url = new URL(window.location);
-	url.searchParams.set("type", param);
-	window.history.replaceState({}, "", url);
+	_setURLParam("type", param);
 }
 
 // Nota

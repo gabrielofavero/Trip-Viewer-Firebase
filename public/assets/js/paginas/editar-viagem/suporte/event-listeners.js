@@ -141,7 +141,10 @@ function _fimListenerAction() {
 
 function _visualizarListenerAction() {
 	if (DOCUMENT_ID) {
-		window.open(`../view.html?v=${DOCUMENT_ID}`, "_blank");
+		window.open(
+			`../view.html?v=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
+			"_blank",
+		);
 	} else {
 		window.location.href = "../index.html";
 	}

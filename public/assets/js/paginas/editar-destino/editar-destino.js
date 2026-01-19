@@ -102,18 +102,21 @@ function _loadEventListeners() {
 	});
 
 	getID("cancelar").addEventListener("click", () => {
-		window.location.href = "../index.html";
+		window.location.href = `../index?visibility=${_getVisibility()}`;
 	});
 
 	getID("home").addEventListener("click", () => {
-		window.location.href = "../index.html";
+		window.location.href = `../index?visibility=${_getVisibility()}`;
 	});
 
 	getID("visualizar").addEventListener("click", () => {
 		if (DOCUMENT_ID) {
-			window.open(`../destination.html?d=${DOCUMENT_ID}`, "_blank");
+			window.open(
+				`../destination?d=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
+				"_blank",
+			);
 		} else {
-			window.location.href = "../index.html";
+			window.location.href = `../index?visibility=${_getVisibility()}`;
 		}
 	});
 
@@ -363,7 +366,7 @@ function _deleteDestino() {
 async function _deleteDestinoAction() {
 	if (DOCUMENT_ID) {
 		await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
-		window.location.href = "../index.html";
+		window.location.href = `../index?visibility=${_getVisibility()}`;
 	}
 }
 

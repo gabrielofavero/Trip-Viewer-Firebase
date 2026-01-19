@@ -383,8 +383,8 @@ function _getOrCreateCategoriaID(tipo, j) {
 function _getURLParams() {
 	const urlParams = new URLSearchParams(window.location.search);
 	const params = {};
-	for (const [key, value] of urlParams) {
-		params[key] = value;
+	for (const [internalKey, value] of urlParams) {
+		params[internalKey] = value;
 	}
 	return params;
 }
@@ -392,6 +392,12 @@ function _getURLParams() {
 function _getURLParam(param) {
 	const urlParams = new URLSearchParams(window.location.search);
 	return urlParams.get(param);
+}
+
+function _setURLParam(key, value) {
+	const url = new URL(window.location.href);
+	url.searchParams.set(key, value);
+	window.history.replaceState({}, "", url);
 }
 
 // Document Utils

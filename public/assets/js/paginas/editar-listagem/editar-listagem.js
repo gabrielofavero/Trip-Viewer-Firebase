@@ -62,7 +62,10 @@ function _loadEventListeners() {
 
 	getID("visualizar").addEventListener("click", () => {
 		if (DOCUMENT_ID) {
-			window.open(`../view.html?l=${DOCUMENT_ID}`, "_blank");
+			window.open(
+				`../view?l=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
+				"_blank",
+			);
 		} else {
 			window.location.href = "../index.html";
 		}

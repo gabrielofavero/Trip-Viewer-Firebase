@@ -18,13 +18,11 @@ function _openViewEmbed(url) {
 		_stopLoadingScreen();
 		_disableScroll();
 	};
-	const afterOpen = _switchVisibility;
 
-	_openEmbed({ frameID, url, beforeOpen, onLoad, afterOpen, newTab });
+	_openEmbed({ frameID, url, beforeOpen, onLoad, newTab });
 }
 
 function _closeViewEmbed(redirectToHome = false) {
-	_switchVisibility();
 	getID("lightbox").style.display = "none";
 	getID("night-mode").style.display = "block";
 	getID("menu").style.display = "block";

@@ -180,5 +180,8 @@ function _loadProgramacaoHojeButton() {
 
 // Programação Completa
 function _openFullItinerary() {
-	window.open(`itinerary?v=${DOCUMENT_ID}`, "_blank");
+	window.open(
+		`itinerary?v=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
+		"_blank",
+	);
 }
