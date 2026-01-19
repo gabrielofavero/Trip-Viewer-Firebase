@@ -54,7 +54,7 @@ function _loadModalContentCalendar() {
 	function _shouldShowCheckbox() {
 		if (!PROGRAMACAO_ATUAL || !TRAVELERS?.length) return false;
 
-		const periods = ["madrugada", "manha", "tarde", "noite"];
+		const periods = CONFIG.itinerary.timeofday;
 		const combinations = new Set();
 
 		for (const period of periods) {

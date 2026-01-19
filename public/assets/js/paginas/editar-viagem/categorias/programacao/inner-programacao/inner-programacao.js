@@ -1,4 +1,3 @@
-const TURNOS = ["madrugada", "manha", "tarde", "noite"];
 var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};
 var LAST_OPENED_TURNO = {};
@@ -660,7 +659,7 @@ function _getNewTurno(j) {
 	if (LAST_OPENED_TURNO[j]) {
 		return LAST_OPENED_TURNO[j];
 	} else {
-		for (const turno of TURNOS) {
+		for (const turno of CONFIG.itinerary.timeofday) {
 			const element = getID(`inner-programacao-${turno}-${j}`);
 			if (element && !element.innerText) {
 				return turno;

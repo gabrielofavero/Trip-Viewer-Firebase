@@ -49,8 +49,8 @@ function _main() {
 		$.getJSON("/assets/json/destinos.json").then(
 			(data) => (config.destinos = data),
 		),
-		$.getJSON("/assets/json/information.json").then(
-			(data) => (config.information = data),
+		$.getJSON("/assets/json/itinerary.json").then(
+			(data) => (config.itinerary = data),
 		),
 		$.getJSON("/assets/json/moedas.json").then(
 			(data) => (config.moedas = data),

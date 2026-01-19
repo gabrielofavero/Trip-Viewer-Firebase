@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 139   | 134  | 2         | 3       |
 | 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
-| 📈   | Improvement | M000 | 140   | 108  | 30        | 2       |
+| 📈   | Improvement | M000 | 140   | 109  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
@@ -14,8 +14,6 @@
 ### High Priority
 
 ### Medium Priority
-
-- 📈 **M140:** If no itinerary, do not show title on export
 
 ### Low Priority
 
@@ -28,6 +26,7 @@
 
 ### January 2026
 
+- 📈 **M140:** If no itinerary, do not show title on export
 - 📈 **M136:** Improve Notes export for itinerary
 - 📈 **M137:** Improve print export for itinerary
 - 🐞 **B138:** Itinerary should only stop loading when content is loaded

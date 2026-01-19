@@ -21,7 +21,7 @@ async function _getItineraryContent(type) {
 
 	for (const itinerary of ITINERARY) {
 		_loadItineararyTitle(itinerary.title, type);
-		for (const timeOfDay of ["madrugada", "manha", "tarde", "noite"]) {
+		for (const timeOfDay of CONFIG.itinerary.timeofday) {
 			const timeOfDayData = itinerary[timeOfDay];
 			if (timeOfDayData.length === 0) continue;
 			_loadTimeOfDay(timeOfDay);
@@ -55,6 +55,9 @@ async function _getItineraryContent(type) {
 	}
 
 	function _loadItineararyTitle(value, type) {
+		if (!value) {
+			return;
+		}
 		switch (type) {
 			case "page":
 				content.push(`<h2>${value}</h2>`);
@@ -172,6 +175,15 @@ async function _getItineraryData() {
 	return ITINERARY;
 
 	function _getItineraryTitle(programacao) {
+		let size = 0;
+		for (const timeofday of CONFIG.itinerary.timeofday) {
+			size += programacao[timeofday].length;
+		}
+
+		if (!size) {
+			return "";
+		}
+
 		const date = _convertFromDateObject(programacao.data);
 		const dateTitle = _getDateTitle(date, "weekday_day_month");
 
