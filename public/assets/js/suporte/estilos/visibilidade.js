@@ -3,10 +3,10 @@ var CHANGED_SVGS = [];
 var LOGO_CLARO = "";
 var LOGO_ESCURO = "";
 
-function _loadVisibility(cores = FIRESTORE_DATA?.cores) {
-	if (cores?.claro && cores?.escuro) {
-		CLARO = cores.claro;
-		ESCURO = cores.escuro;
+function _loadVisibility(colors = FIRESTORE_DATA?.cores) {
+	if (colors?.claro && colors?.escuro) {
+		CLARO = colors.claro;
+		ESCURO = colors.escuro;
 	}
 
 	_saveLocalColors();
@@ -214,6 +214,10 @@ function _hasCSSRule(selector, property) {
 }
 
 function _isOnDarkMode() {
+	const visibility = _getURLParam("visibility");
+	if (visibility) {
+		return visibility === "dark";
+	}
 	return sessionStorage.getItem("darkMode") === "true";
 }
 

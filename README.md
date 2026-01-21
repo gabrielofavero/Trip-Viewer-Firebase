@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 141   | 136  | 2         | 3       |
+| 🐞   | Bug         | B000 | 142   | 137  | 2         | 3       |
 | 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
 | 📈   | Improvement | M000 | 140   | 109  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
@@ -26,6 +26,7 @@
 
 ### January 2026
 
+- 🐞 **B142:** View visibility not auto-switching on embed destination visibility change
 - 🐞 **B141:** Custom itinerary title not showing
 - 🐞 **B140:** Edit button being shown on view page
 - 📈 **M140:** If no itinerary, do not show title on export

@@ -1,6 +1,12 @@
 var SAVED_SCROLL_POSITION = 0;
 const ACTIVE_EMBEDS = {};
 
+function _loadViewEmbed() {
+	if (FIRESTORE_DATA.modulos?.gastos === true) {
+		_loadViewEmbedAction();
+	}
+}
+
 function _openViewEmbed(url) {
 	const frameID = "lightbox-iframe";
 	const newTab = true;
@@ -22,7 +28,7 @@ function _openViewEmbed(url) {
 	_openEmbed({ frameID, url, beforeOpen, onLoad, newTab });
 }
 
-function _closeViewEmbed(redirectToHome = false) {
+function _closeViewEmbed(redirectToHome = false, visibility) {
 	getID("lightbox").style.display = "none";
 	getID("night-mode").style.display = "block";
 	getID("menu").style.display = "block";
@@ -30,28 +36,17 @@ function _closeViewEmbed(redirectToHome = false) {
 	_enableScroll();
 
 	if (redirectToHome) {
-		window.location.href = "/";
+		window.location.href = `index?visibility=${visibility || _getVisibility()}`;
 	} else {
 		window.scrollTo({
 			top: SAVED_SCROLL_POSITION,
 			behavior: "instant",
 		});
 	}
-}
 
-function _loadExpensesEmbed() {
-	const action = (data) => {
-		switch (data.type) {
-			case "height":
-				getID("expenses-embed").style.height = `${data.value}px`;
-				return;
-			case "pin":
-				if (PIN || !data.value || data.value.length != 4) return;
-				_updateProtectedDataFromExternalPin(data.value);
-		}
-	};
-	_loadEmbedListeners(action);
-	ACTIVE_EMBEDS["expenses"] = true;
+	if (visibility) {
+		_loadExternalVisibility(visibility);
+	}
 }
 
 function _openExpensesEmbed() {
@@ -74,4 +69,22 @@ function _loadImageLightbox(className) {
 
 function _sendToExpenses(type, value) {
 	_sendToEmbed("expenses-embed-frame", type, value);
+}
+
+function _loadViewEmbedAction(data) {
+	switch (data?.page) {
+		case "expenses":
+			_loadExpensesEmbedAction(data);
+	}
+
+	function _loadExpensesEmbedAction(data) {
+		switch (data.type) {
+			case "height":
+				getID("expenses-embed").style.height = `${data.value}px`;
+				return;
+			case "pin":
+				if (PIN || !data.value || data.value.length != 4) return;
+				_updateProtectedDataFromExternalPin(data.value);
+		}
+	}
 }

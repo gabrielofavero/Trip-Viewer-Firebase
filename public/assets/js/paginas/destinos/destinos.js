@@ -38,30 +38,13 @@ async function _loadDestinosPage() {
 
 	await _loadDestinosData();
 
-	_loadVisibility();
-	await _adjustEditVisibility();
-
 	const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
 	document.title = title;
 	getID("title").innerText = title;
-	const closeButton = getID("closeButton");
-	if (window.parent._closeViewEmbed) {
-		closeButton.onclick = function () {
-			_unloadMedias();
-			window.parent._closeViewEmbed();
-		};
-	} else {
-		closeButton.style.display = "none";
-		getID("share").style.display = "";
-	}
 
-	getID("logo-link").onclick = function () {
-		if (window.parent._closeViewEmbed) {
-			window.parent._closeViewEmbed(true);
-		} else {
-			window.location.href = "index.html";
-		}
-	};
+	_loadVisibility();
+	_loadEmbedVisibility();
+	await _adjustEditVisibility();
 
 	if (
 		ACTIVE_CATEGORY &&

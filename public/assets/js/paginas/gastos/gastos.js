@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 async function _loadGastosPage() {
 	console.log(window.location.href);
 
-	const localColors = _getLocalColors();
-	_loadVisibility(localColors);
+	const colors = _getLocalColors();
+	_loadVisibility(colors);
 
 	const closeButton = getID("closeButton");
 	if (window.parent._closeViewEmbed) {

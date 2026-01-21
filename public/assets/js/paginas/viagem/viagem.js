@@ -89,21 +89,17 @@ async function _syncModules() {
 }
 
 function _prepareViewData() {
-	// Dados Básicos
 	if (FIRESTORE_DATA.inicio && FIRESTORE_DATA.fim) {
 		_loadInicioFim();
 	}
 
-	// Visibilidade
 	_loadVisibility();
 	_adjustCardsHeightsListener();
 	_loadCloseCustomSelectListeners();
 
-	// Cabeçalho
 	_loadHeader();
-
-	// Módulos
 	_loadModules();
+	_loadViewEmbed();
 }
 
 function _loadInicioFim(data = FIRESTORE_DATA) {
@@ -298,7 +294,7 @@ function _loadModules() {
 
 		if (ativo) {
 			_openExpensesEmbed();
-			_loadExpensesEmbed();
+			ACTIVE_EMBEDS["expenses"] = true;
 		} else {
 			getID("expensesNav").innerHTML = "";
 			getID("expenses").innerHTML = "";
@@ -437,6 +433,6 @@ function _loadProtectedData(firestoreData) {
 	_loadTitle(firestoreData);
 	_loadInicioFim(firestoreData);
 	_loadHeaderImageAndLogo(firestoreData);
-	_loadVisibility(firestoreData);
+	_loadVisibility(firestoreData.cores);
 	_requestDocumentPin();
 }
