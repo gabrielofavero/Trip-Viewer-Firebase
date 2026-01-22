@@ -9,7 +9,10 @@ var INNER_PROGRAMACAO_ATUAL = [];
 
 function _loadModalContentCalendar() {
 	let titulo = PROGRAMACAO_ATUAL.titulo;
-	const data = _getDateTitle(_convertFromDateObject(PROGRAMACAO_ATUAL.data));
+	const data = _getDateTitle(
+		_convertFromDateObject(PROGRAMACAO_ATUAL.data),
+		"weekday_day_month",
+	);
 
 	getID("programacao-titulo").querySelector(".titulo").innerText =
 		_getProgramacaoTitulo(titulo, PROGRAMACAO_ATUAL.destinosIDs);
