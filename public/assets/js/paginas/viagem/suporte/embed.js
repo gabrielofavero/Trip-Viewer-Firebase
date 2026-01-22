@@ -3,7 +3,7 @@ const ACTIVE_EMBEDS = {};
 
 function _loadViewEmbed() {
 	if (FIRESTORE_DATA.modulos?.gastos === true) {
-		_loadViewEmbedAction();
+		_loadEmbedListeners(_loadViewEmbedAction);
 	}
 }
 
