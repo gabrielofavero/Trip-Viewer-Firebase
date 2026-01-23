@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 142   | 137  | 2         | 3       |
-| 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
+| 🏆   | Feature     | F000 | 143   | 121  | 22        | 0       |
 | 📈   | Improvement | M000 | 142   | 111  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
@@ -26,6 +26,7 @@
 
 ### January 2026
 
+- 🏆 **F143:** Add keyboard navigation for message modal actions
 - 📈 **M142:** Increase EMBED_TIMEOUT from 4000 to 10000 milliseconds
 - 📈 **M141:** Refactor _getPageURL to remove visibility parameter
 - 🐞 **B142:** View visibility not auto-switching on embed destination visibility change

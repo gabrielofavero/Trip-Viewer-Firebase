@@ -67,6 +67,7 @@ function _displayFullMessage(
 	}
 
 	MESSAGE_MODAL_OPEN = true;
+	document.addEventListener("keydown", _handleMessageKeydown);
 	_disableScroll();
 
 	// Container
@@ -197,6 +198,7 @@ function _closeMessage() {
 			preloader.style.background = "";
 		}
 		MESSAGE_MODAL_OPEN = false;
+		document.removeEventListener("keydown", _handleMessageKeydown);
 		if (typeof _stopLoadingScreen === "function") _stopLoadingScreen();
 	} else {
 		console.warn("Cannot close an unopened message modal.");
@@ -414,5 +416,33 @@ function _openToast(text) {
 function _closeToast() {
 	if (getID("toast").style.display != "none") {
 		_fadeOut(["toast"]);
+	}
+}
+
+function _handleMessageKeydown(e) {
+	if (!MESSAGE_MODAL_OPEN) return;
+
+	if (e.key === "Enter") {
+		const confirm = getID("message-confirm");
+		if (confirm) {
+			e.preventDefault();
+			confirm.click();
+		}
+	}
+
+	if (e.key === "Escape") {
+		const close = getID("message-close");
+		if (close) {
+			e.preventDefault();
+			close.click();
+			return;
+		}
+
+		// fallback: close icon (only if not critical)
+		const container = document.querySelector(".message-container");
+		if (container && !container.classList.contains("critical-message")) {
+			e.preventDefault();
+			_closeMessage();
+		}
 	}
 }
