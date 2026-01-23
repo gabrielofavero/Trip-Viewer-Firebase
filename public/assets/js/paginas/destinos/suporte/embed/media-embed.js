@@ -1,5 +1,5 @@
 var MEDIA_HYPERLINKS = {};
-const EMBED_TIMEOUT = 4000;
+const EMBED_TIMEOUT = 10000;
 
 // Loader
 function _loadEmbed(link, i) {

@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 142   | 137  | 2         | 3       |
 | 🏆   | Feature     | F000 | 142   | 120  | 22        | 0       |
-| 📈   | Improvement | M000 | 141   | 110  | 30        | 1       |
+| 📈   | Improvement | M000 | 142   | 111  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
@@ -26,6 +26,7 @@
 
 ### January 2026
 
+- 📈 **M142:** Increase EMBED_TIMEOUT from 4000 to 10000 milliseconds
 - 📈 **M141:** Refactor _getPageURL to remove visibility parameter
 - 🐞 **B142:** View visibility not auto-switching on embed destination visibility change
 - 🐞 **B141:** Custom itinerary title not showing
