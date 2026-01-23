@@ -144,11 +144,16 @@ function _getHTMLpage() {
 }
 
 function _getPageURL() {
-	return window.location.href.includes("trip-viewer-prd.firebaseapp.com")
-		? "https://trip-viewer.com" +
-				window.location.pathname +
-				window.location.search
-		: window.location.href;
+	const isAltPrd =
+		window.location.hostname === "trip-viewer-prd.firebaseapp.com";
+
+	const base = isAltPrd ? "https://trip-viewer.com" : window.location.origin;
+
+	const url = new URL(window.location.pathname + window.location.search, base);
+
+	url.searchParams.delete("visibility");
+
+	return url.toString();
 }
 
 function _openLinkInNewTab(url) {
