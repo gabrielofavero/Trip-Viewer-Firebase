@@ -295,6 +295,10 @@ function _innerProgramacaoConfirmAction(j, k, turno) {
 		_addInnerProgramacao(j);
 	}
 
+	if (!getID("inner-programacao")?.value) {
+		return;
+	}
+
 	_closeMessage();
 }
 
