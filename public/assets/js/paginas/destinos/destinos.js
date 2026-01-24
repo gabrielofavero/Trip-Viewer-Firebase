@@ -234,7 +234,7 @@ function _getItemValue(id, key) {
 }
 
 function _isPlanned(id) {
-	const value = PLANNED_DESTINATION[ACTIVE_CATEGORY][id];
+	const value = PLANNED_DESTINATION?.[ACTIVE_CATEGORY]?.[id];
 	return value && Object.keys(value).length > 0;
 }
 
