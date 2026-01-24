@@ -40,7 +40,7 @@ async function _edit(j) {
 		_populateDescriptionFields(item.descricao || {}, j);
 
 		function _populateScoresField(nota, j) {
-			getID(`editar-nota-${j}`).value = nota || "";
+			getID(`editar-nota-${j}`).value = nota === "?" ? "default" : nota || "";
 			_editScoreLoadAction(nota, j);
 		}
 
