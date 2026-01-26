@@ -51,7 +51,6 @@ async function _loadItinerary() {
 		document.querySelector(".message-container")
 	) {
 		_closeMessage();
-		_removePinListener();
 	}
 
 	getID("content").innerHTML = await _getItineraryContent("page");
@@ -90,7 +89,6 @@ async function _loadProtectedItinerary(mandatory = false) {
 	const pin = getID("pin-code")?.innerText || "";
 	const pinType = FIRESTORE_DATA.pin;
 	_closeMessage();
-	_removePinListener();
 	_startLoadingScreen();
 
 	try {

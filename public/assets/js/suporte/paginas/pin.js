@@ -259,8 +259,6 @@ function _requestPin({
 
 	_displayFullMessage(propriedades);
 	_loadPin();
-
-	document.addEventListener("keydown", _pinListenerAction);
 }
 
 function _requestInvalidPin({ confirmAction, cancelAction, precontent }) {
@@ -269,16 +267,6 @@ function _requestInvalidPin({ confirmAction, cancelAction, precontent }) {
 		precontent = translate("trip.basic_information.pin.invalid");
 	}
 	_requestPin({ confirmAction, cancelAction, precontent, invalido });
-}
-
-function _pinListenerAction(event) {
-	if (event.key === "Enter") {
-		getID("message-confirm").click();
-	}
-}
-
-function _removePinListener() {
-	document.removeEventListener("keydown", _pinListenerAction);
 }
 
 function _setManualPin(pinString) {

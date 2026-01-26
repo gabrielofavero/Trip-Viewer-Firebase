@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 143   | 138  | 2         | 3       |
+| 🐞   | Bug         | B000 | 144   | 139  | 2         | 3       |
 | 🏆   | Feature     | F000 | 144   | 122  | 22        | 0       |
 | 📈   | Improvement | M000 | 142   | 111  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
@@ -26,6 +26,7 @@
 
 ### January 2026
 
+- 🐞 **B144:** Duplicated pin keydown functionality causing crashes
 - 🏆 **F144:** Add git sync script (master/develop branches)
 - 🐞 **B143:** Inner itinerary message for edit page closes on confirm if no data
 - 🏆 **F143:** Add keyboard navigation for message modal actions

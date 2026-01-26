@@ -100,7 +100,6 @@ async function _loadGastos() {
 	const documentID = _getURLParam("g");
 	const pin = getID("pin-code")?.innerText || "";
 	_closeMessage();
-	_removePinListener();
 	_startLoadingScreen();
 	try {
 		if (pin) {
