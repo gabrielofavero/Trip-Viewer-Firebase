@@ -64,9 +64,7 @@ async function _edit(j) {
 		function _populateDescriptionFields(descricao, j) {
 			getID(`editar-descricao-en-${j}`).value = descricao.en || "";
 			getID(`editar-descricao-pt-${j}`).value = descricao.pt || "";
-			const lang = _getLanguagePackName();
-			getID(`editar-descricao-lang-${j}`).value = lang;
-			_editDescriptionLoadAction(lang, j);
+			_applyDescriptionLanguage(j);
 		}
 	}
 }
@@ -107,7 +105,7 @@ async function _add() {
 	getID(`editar-delete-${ADDED_J}`).style.visibility = "hidden";
 
 	_openDestinosAccordion(ADDED_J);
-
+	_applyDescriptionLanguage(ADDED_J);
 	_setAddListeners();
 }
 
@@ -155,6 +153,12 @@ function _setFieldListeners(j) {
 	getID(`editar-descricao-lang-${j}`).onchange = (e) => {
 		_editDescriptionLoadAction(e.target.value, j);
 	};
+
+	document.querySelectorAll(".description-textarea").forEach((textarea) => {
+		textarea.onchange = (e) => {
+			e.target.value = e.target.value.trim();
+		};
+	});
 
 	getID(`editar-midia-${j}`).onchange = (e) => {
 		_validateMediaLink(e.target.id);
@@ -225,6 +229,12 @@ function _editDescriptionLoadAction(value, j) {
 		const id = `editar-descricao-${lang}-${j}`;
 		getID(id).style.display = display;
 	}
+}
+
+function _applyDescriptionLanguage(j) {
+	const lang = _getLanguagePackName();
+	getID(`editar-descricao-lang-${j}`).value = lang;
+	_editDescriptionLoadAction(lang, j);
 }
 
 // Save Action

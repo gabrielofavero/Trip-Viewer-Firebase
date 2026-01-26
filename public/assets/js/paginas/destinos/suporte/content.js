@@ -170,8 +170,8 @@ function _getEditHTML(j) {
                     <select class="edit-input" id="editar-descricao-lang-${j}">
                         ${_getDescriptionLanguageOptionsHTML()}
                     </select>
-                    <textarea id="editar-descricao-en-${j}" class="edit-input edit-textarea" type="text" placeholder="${translate("labels.description.title")} (${translate("labels.optional")})"></textarea>
-                    <textarea id="editar-descricao-pt-${j}" class="edit-input edit-textarea" type="text" placeholder="${translate("labels.description.title")} (${translate("labels.optional")})"></textarea>
+                    <textarea id="editar-descricao-en-${j}" class="edit-input edit-textarea description-textarea" type="text" placeholder="${translate("labels.description.title")} (${translate("labels.optional")})"></textarea>
+                    <textarea id="editar-descricao-pt-${j}" class="edit-input edit-textarea description-textarea" type="text" placeholder="${translate("labels.description.title")} (${translate("labels.optional")})"></textarea>
                 </div>
             </div>
             <div class="edit-double-container">
