@@ -89,17 +89,7 @@ function _addTransporte() {
             <div class="nice-form-group">
               <label>Meio de Transporte</label>
               <select class="editar-select" required id="transporte-tipo-${j}">
-                <option value="voo">${translate("trip.transportation.type.flight")}</option>
-                <option value="carro">${translate("trip.transportation.type.car")}</option>
-                <option value="onibus">${translate("trip.transportation.type.bus")}</option>
-                <option value="bondinho">${translate("trip.transportation.type.cable_car")}</option>
-                <option value="helicoptero">${translate("trip.transportation.type.helicopter")}</option>
-                <option value="locomotiva">${translate("trip.transportation.type.train")}</option>
-                <option value="metro">${translate("trip.transportation.type.subway")}</option>
-                <option value="moto">${translate("trip.transportation.type.motocycle")}</option>
-                <option value="navio">${translate("trip.transportation.type.ship")}</option>
-                <option value="trem-bala">${translate("trip.transportation.type.bullet_train")}</option>
-                <option value="outro">${translate("labels.other")}</option>
+                ${_getTypeOptions()}
               </select>
             </div>
 
@@ -166,6 +156,16 @@ function _addTransporte() {
 		`transporte-pessoa-${j}`,
 		`_updateTransporteTitle(${j})`,
 	);
+
+	function _getTypeOptions() {
+		let result = "";
+		for (const tipo of CONFIG.transportes.tipos) {
+			const titulo = CONFIG.transportes.titulos[tipo];
+			if (!titulo) continue;
+			result += `<option value="${tipo}">${translate(titulo)}</option>`;
+		}
+		return result;
+	}
 }
 
 function _addHospedagens() {

@@ -244,25 +244,42 @@ async function _getItineraryData() {
 					(obj) => obj.id === item.id,
 				);
 				if (!transporte) return;
-				const transporteProtegido =
-					FIRESTORE_PROTECTED_DATA?.transportes?.[item.id];
+				_loadTextObj(
+					"trip.transportation.type.title",
+					_getTransportationType(),
+				);
+				_loadTextObj("trip.transportation.time_window", _getTimeWindow());
+				_loadTextObj("labels.reservation.title", _getReservation());
+				_loadTextObj("labels.company", _getCompany());
 
-				const partida = transporte?.datas?.partida;
-				const chegada = transporte?.datas?.chegada;
-				const horario =
-					partida && chegada
+				function _getTransportationType() {
+					const tipo = transporte.transporte;
+					if (!tipo) return;
+					const titulo = CONFIG.transportes.titulos[tipo];
+					return titulo ? translate(titulo) : tipo;
+				}
+
+				function _getTimeWindow() {
+					const partida = transporte?.datas?.partida;
+					const chegada = transporte?.datas?.chegada;
+					return partida && chegada
 						? `${_getTimeStringFromDateObj(partida)} - ${_getTimeStringFromDateObj(chegada)}`
 						: "";
-				const empresa =
-					CONFIG.transportes.empresas?.[transporte.transporte]?.[
-						transporte?.empresa
-					] || transporte?.empresa;
-				_loadTextObj("trip.transportation.time_window", horario);
-				_loadTextObj(
-					"labels.reservation.title",
-					transporte?.reserva || transporteProtegido?.reserva,
-				);
-				_loadTextObj("labels.company", empresa);
+				}
+
+				function _getReservation() {
+					const transporteProtegido =
+						FIRESTORE_PROTECTED_DATA?.transportes?.[item.id];
+					return transporte?.reserva || transporteProtegido?.reserva;
+				}
+
+				function _getCompany() {
+					return (
+						CONFIG.transportes.empresas?.[transporte.transporte]?.[
+							transporte?.empresa
+						] || transporte?.empresa
+					);
+				}
 			}
 
 			function _loadHospedagem() {

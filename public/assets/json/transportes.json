@@ -234,17 +234,30 @@
 			"eurostar": "https://www.eurostar.com/"
 		}
 	},
+	"tipos": [
+		"voo",
+		"carro",
+		"onibus",
+		"bondinho",
+		"helicoptero",
+		"locomotiva",
+		"metro",
+		"moto",
+		"navio",
+		"trem-bala",
+		"outro"
+	],
 	"titulos": {
-		"bondinho": "Bondinho",
-		"carro": "Carro",
-		"helicoptero": "Helicóptero",
-		"locomotiva": "Locomotiva",
-		"metro": "Metrô",
-		"moto": "Moto",
-		"navio": "Navio",
-		"onibus": "Ônibus",
-		"outro": "Transporte",
-		"trem-bala": "Trem-bala",
-		"voo": "Avião"
+		"voo": "trip.transportation.type.flight",
+		"carro": "trip.transportation.type.car",
+		"onibus": "trip.transportation.type.bus",
+		"bondinho": "trip.transportation.type.cable_car",
+		"helicoptero": "trip.transportation.type.helicopter",
+		"locomotiva": "trip.transportation.type.train",
+		"metro": "trip.transportation.type.subway",
+		"moto": "trip.transportation.type.motocycle",
+		"navio": "trip.transportation.type.ship",
+		"trem-bala": "trip.transportation.type.bullet_train",
+		"outro": "labels.other"
 	}
 }
