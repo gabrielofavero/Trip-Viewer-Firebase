@@ -65,3 +65,33 @@ function _sendToEmbed(frameID, type, value) {
 function _getOrigin() {
 	return window.location.pathname.replace("/", "");
 }
+
+function _loadEmbedVisibility(closeButtonAction) {
+	const closeButton = getID("closeButton");
+	const logoLink = getID("logo-link");
+
+	if (_isEmbed()) {
+		closeButton.onclick = () => {
+			closeButtonAction?.();
+			window.parent._closeViewEmbed(false, _getVisibility());
+		};
+
+		logoLink.onclick = () => {
+			window.parent._closeViewEmbed(true, _getVisibility());
+		};
+	} else {
+		closeButton.style.display = "none";
+		const share = getID("share");
+		if (share) {
+			share.style.display = "";
+		}
+
+		logoLink.onclick = () => {
+			window.location.href = "index.html";
+		};
+	}
+}
+
+function _isEmbed() {
+	return window.parent != window;
+}

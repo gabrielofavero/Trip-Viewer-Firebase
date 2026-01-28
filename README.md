@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 146   | 141  | 2         | 3       |
-| 🏆   | Feature     | F000 | 147   | 123  | 22        | 2       |
+| 🏆   | Feature     | F000 | 147   | 124  | 22        | 1       |
 | 📈   | Improvement | M000 | 142   | 111  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
@@ -15,7 +15,6 @@
 
 ### Medium Priority
 
-- 🏆 **F145:** Make itinerary page embed to view page
 - 🏆 **F146:** Add drawer for itinerary page when on mobile
 
 ### Low Priority
@@ -29,6 +28,7 @@
 
 ### January 2026
 
+- 🏆 **F145:** Make itinerary page embed to view page
 - 🏆 **F147:** Add company name for transportation in itinerary page
 - 🐞 **B146:** Destination description not trimming on edit
 - 🐞 **B145:** Destination description language not loading properly on add

@@ -43,7 +43,7 @@ async function _loadDestinosPage() {
 	getID("title").innerText = title;
 
 	_loadVisibility();
-	_loadEmbedVisibility();
+	_loadEmbedVisibility(_unloadMedias);
 	await _adjustEditVisibility();
 
 	if (

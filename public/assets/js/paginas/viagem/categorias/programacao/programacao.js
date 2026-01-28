@@ -180,8 +180,6 @@ function _loadProgramacaoHojeButton() {
 
 // Programação Completa
 function _openFullItinerary() {
-	window.open(
-		`itinerary?v=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
-		"_blank",
-	);
+	const url = `itinerary?v=${DOCUMENT_ID}&visibility=${_getVisibility()}`;
+	_openViewEmbed(url);
 }

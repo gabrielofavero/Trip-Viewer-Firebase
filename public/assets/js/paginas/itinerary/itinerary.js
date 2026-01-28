@@ -29,6 +29,7 @@ async function _loadItineraryPage() {
 	}
 
 	_loadVisibility();
+	_loadEmbedVisibility();
 	getID("title").innerText = FIRESTORE_DATA.titulo;
 
 	switch (FIRESTORE_DATA.pin) {
