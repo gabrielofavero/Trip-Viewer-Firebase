@@ -28,20 +28,26 @@ function _snapshotFormState(root = document) {
 }
 
 function _hasUnsavedChanges(root = document) {
-	if (!DOCUMENT_ID) {
-		return true;
-	}
-	for (const [el, original] of ORIGINAL_STATE.entries()) {
-		// ignore elements that no longer exist in the DOM
-		if (!root.contains(el)) continue;
+if (!DOCUMENT_ID) {
+return true;
+}
+for (const [el, original] of ORIGINAL_STATE.entries()) {
+// ignore elements that no longer exist in the DOM
+if (!root.contains(el)) continue;
 
-		const current =
-			el.type === "checkbox" || el.type === "radio" ? el.checked : el.value;
+let current;
+if (el.type === "checkbox" || el.type === "radio") {
+current = el.checked;
+} else if (el.type === "submit") {
+current = el.innerText;
+} else {
+current = el.value;
+}
 
-		if (current !== original) return true;
-	}
+if (current !== original) return true;
+}
 
-	return false;
+return false;
 }
 
 // Required Fields
