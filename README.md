@@ -18,13 +18,13 @@
 ### Low Priority
 
 - 🐞 **B096:** Fix Gallery module
-- 🐞 **B123:** Main try catchs for pages are failing because main is not async
 - 📈 **M135:** Refactor "dados.js" to shared dir
 
 ## Done
 
 ### January 2026
 
+- 🐞 **B123:** Main try catchs for pages are failing because main is not async
 - 🐞 **B127:** Document changes still not working (accepting everything)
 - 🏆 **F146:** Add drawer for itinerary page when on mobile
 - 🏆 **F145:** Make itinerary page embed to view page
