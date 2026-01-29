@@ -55,14 +55,62 @@ async function _loadItinerary() {
 
 	getID("content").innerHTML = await _getItineraryContent("page");
 
-	getID("print").addEventListener("click", () => print());
-	getID("export").addEventListener("click", () => _export());
+  getID("print").addEventListener("click", () => print());
+  getID("export").addEventListener("click", () => _export());
+  
+  _initializeMobileMenu();
+}
+
+// Mobile Menu
+function _initializeMobileMenu() {
+  // Mobile nav toggle
+  on("click", ".mobile-nav-toggle", function (e) {
+    select("body").classList.toggle("mobile-nav-active");
+    this.classList.toggle("bi-list");
+    this.classList.toggle("bi-x");
+  });
+
+  // Mobile menu item handlers
+  getID("mobile-night-mode")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    _switchVisibility();
+    _closeMobileMenu();
+	_loadNightModeButtonLabel();
+  });
+
+  getID("mobile-export")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    _export();
+    _closeMobileMenu();
+  });
+
+  getID("mobile-print")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    print();
+    _closeMobileMenu();
+  });
+}
+
+function _closeMobileMenu() {
+  let body = select("body");
+  if (body.classList.contains("mobile-nav-active")) {
+    body.classList.remove("mobile-nav-active");
+    let navbarToggle = select(".mobile-nav-toggle");
+    navbarToggle.classList.toggle("bi-list");
+    navbarToggle.classList.toggle("bi-x");
+  }
 }
 
 // Visibility
 function _loadItineraryVisibility() {
 	_loadVisibility();
 	_loadEmbedVisibility();
+	_loadNightModeButtonLabel();
+}
+
+function _loadNightModeButtonLabel() {
+	const label = _isOnDarkMode() ? translate('labels.light_mode') : translate('labels.dark_mode');
+	getID("mobile-night-mode-label").innerText = label;
 }
 
 // Messages

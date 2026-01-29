@@ -104,12 +104,39 @@
           </div>
         </div>
         <i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>
-        <i id="export" class="iconify icon-buttons" data-icon="ph:export-bold"></i>
-        <i id="print" class="iconify icon-buttons" data-icon="lucide:printer"></i>
-        <i id="night-mode" class="bx bx-moon icon-buttons"></i>
+        <i id="export" class="iconify icon-buttons d-none d-xl-block" data-icon="ph:export-bold"></i>
+        <i id="print" class="iconify icon-buttons d-none d-xl-block" data-icon="lucide:printer"></i>
+        <i id="night-mode" class="bx bx-moon icon-buttons d-none d-xl-block"></i>
+        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>
       </div>
 
     </div>
+
+    <!-- ======= Mobile Drawer ======= -->
+    <header id="header" class="d-flex flex-column justify-content-center">
+      <nav id="navbar" class="navbar nav-menu">
+        <ul>
+          <li>
+            <a href="#" class="nav-link" id="mobile-night-mode">
+              <i class="bx bx-moon"></i>
+              <span data-translate="labels.dark_mode" id="mobile-night-mode-label"></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" id="mobile-export">
+              <i class="iconify" data-icon="ph:export-bold"></i>
+              <span data-translate="labels.export"></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" id="mobile-print">
+              <i class="iconify" data-icon="lucide:printer"></i>
+              <span data-translate="labels.print"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
     <div class="section-title">
       <h1 id="title"></h1>

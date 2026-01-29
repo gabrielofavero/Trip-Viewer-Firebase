@@ -15,8 +15,6 @@
 
 ### Medium Priority
 
-- 🏆 **F146:** Add drawer for itinerary page when on mobile
-
 ### Low Priority
 
 - 🐞 **B127:** Document changes still not working (accepting everything)
@@ -28,6 +26,7 @@
 
 ### January 2026
 
+- 🏆 **F146:** Add drawer for itinerary page when on mobile
 - 🏆 **F145:** Make itinerary page embed to view page
 - 🏆 **F147:** Add company name for transportation in itinerary page
 - 🐞 **B146:** Destination description not trimming on edit
