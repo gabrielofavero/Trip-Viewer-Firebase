@@ -28,8 +28,7 @@ async function _loadItineraryPage() {
 		);
 	}
 
-	_loadVisibility();
-	_loadEmbedVisibility();
+	_loadItineraryVisibility();
 	getID("title").innerText = FIRESTORE_DATA.titulo;
 
 	switch (FIRESTORE_DATA.pin) {
@@ -58,6 +57,12 @@ async function _loadItinerary() {
 
 	getID("print").addEventListener("click", () => print());
 	getID("export").addEventListener("click", () => _export());
+}
+
+// Visibility
+function _loadItineraryVisibility() {
+	_loadVisibility();
+	_loadEmbedVisibility();
 }
 
 // Messages

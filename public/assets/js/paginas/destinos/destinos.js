@@ -42,9 +42,7 @@ async function _loadDestinosPage() {
 	document.title = title;
 	getID("title").innerText = title;
 
-	_loadVisibility();
-	_loadEmbedVisibility(_unloadMedias);
-	await _adjustEditVisibility();
+	await _loadDestinationVisibility();
 
 	if (
 		ACTIVE_CATEGORY &&

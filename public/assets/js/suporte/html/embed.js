@@ -66,13 +66,18 @@ function _getOrigin() {
 	return window.location.pathname.replace("/", "");
 }
 
-function _loadEmbedVisibility(closeButtonAction) {
+function _loadEmbedVisibility({
+	closeAction,
+	embedAction,
+	notEmbedAction,
+} = {}) {
 	const closeButton = getID("closeButton");
 	const logoLink = getID("logo-link");
 
 	if (_isEmbed()) {
+		embedAction?.();
 		closeButton.onclick = () => {
-			closeButtonAction?.();
+			closeAction?.();
 			window.parent._closeViewEmbed(false, _getVisibility());
 		};
 
@@ -80,6 +85,7 @@ function _loadEmbedVisibility(closeButtonAction) {
 			window.parent._closeViewEmbed(true, _getVisibility());
 		};
 	} else {
+		notEmbedAction?.();
 		closeButton.style.display = "none";
 		const share = getID("share");
 		if (share) {

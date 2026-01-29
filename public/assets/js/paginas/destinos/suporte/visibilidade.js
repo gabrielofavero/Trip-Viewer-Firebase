@@ -1,3 +1,10 @@
+async function _loadDestinationVisibility() {
+	_loadVisibility();
+	const closeAction = _unloadMedias;
+	_loadEmbedVisibility({ closeAction });
+	await _adjustEditVisibility();
+}
+
 function _adjustButtonsPositionDestinos() {
 	const first = "10px";
 	const second = "50px";
