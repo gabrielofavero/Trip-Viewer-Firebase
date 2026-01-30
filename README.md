@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 146   | 143  | 2         | 1       |
+| 🐞   | Bug         | B000 | 146   | 142  | 2         | 2       |
 | 🏆   | Feature     | F000 | 147   | 125  | 22        | 0       |
 | 📈   | Improvement | M000 | 142   | 111  | 30        | 1       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
@@ -17,6 +17,7 @@
 
 ### Low Priority
 
+- 🐞 **B127:** Document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
 - 📈 **M135:** Refactor "dados.js" to shared dir
 
@@ -25,7 +26,6 @@
 ### January 2026
 
 - 🐞 **B123:** Main try catchs for pages are failing because main is not async
-- 🐞 **B127:** Document changes still not working (accepting everything)
 - 🏆 **F146:** Add drawer for itinerary page when on mobile
 - 🏆 **F145:** Make itinerary page embed to view page
 - 🏆 **F147:** Add company name for transportation in itinerary page
