@@ -592,16 +592,16 @@
 			}
 		}
 	},
-"labels": {
-"auth": {
-"sign_in": "Sign In",
-"sign_out": "Sign Out",
-"email": "E-mail",
-"password": "Password"
-},
-"export": "Export",
-"print": "Print",
-"adapted": "Adapted",
+	"labels": {
+		"auth": {
+			"sign_in": "Sign In",
+			"sign_out": "Sign Out",
+			"email": "E-mail",
+			"password": "Password"
+		},
+		"export": "Export",
+		"print": "Print",
+		"adapted": "Adapted",
 		"intro": "This is",
 		"greeting": "Hello",
 		"light_mode": "Light mode",

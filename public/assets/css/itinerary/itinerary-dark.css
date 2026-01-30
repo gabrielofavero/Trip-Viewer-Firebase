@@ -112,7 +112,7 @@ h1 {
 }
 
 #toast {
-color: #303030;
+	color: #303030;
 }
 
 /*--------------------------------------------------------------
@@ -120,53 +120,53 @@ color: #303030;
 --------------------------------------------------------------*/
 
 #header {
-background: #303030;
-border-right: 1px solid #404040;
+	background: #303030;
+	border-right: 1px solid #404040;
 }
 
 .nav-menu a,
 .nav-menu a:focus {
-color: #f2f2f2;
-background: #3b3b3b;
+	color: #f2f2f2;
+	background: #3b3b3b;
 }
 
 .nav-menu a span,
 .nav-menu a:focus span {
-color: #f2f2f2;
+	color: #f2f2f2;
 }
 
 .nav-menu a:hover,
 .nav-menu .active,
 .nav-menu .active:focus,
 .nav-menu li:hover > a {
-color: #303030;
-background: var(--theme-color);
+	color: #303030;
+	background: var(--theme-color);
 }
 
 .nav-menu a:hover span,
 .nav-menu .active span,
 .nav-menu .active:focus span,
 .nav-menu li:hover > a span {
-color: #303030;
+	color: #303030;
 }
 
 .mobile-nav-toggle i {
-color: #f2f2f2;
+	color: #f2f2f2;
 }
 
 .mobile-nav-active .mobile-nav-toggle {
-background-color: var(--theme-color);
-color: #303030;
+	background-color: var(--theme-color);
+	color: #303030;
 }
 
 .mobile-nav-toggle:hover {
-color: #aaaaaa;
+	color: #aaaaaa;
 }
 
 #trip-viewer-text {
-color: var(--theme-color);
+	color: var(--theme-color);
 }
 
 #menu {
-color: var(--text-color);
+	color: var(--text-color);
 }

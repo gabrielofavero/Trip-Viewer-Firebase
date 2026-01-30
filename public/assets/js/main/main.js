@@ -162,19 +162,23 @@ function _openLinkInNewTab(url) {
 }
 
 function _initializeApp() {
-APP.projectId = firebase.app().options.projectId;
-APP.version = CONFIG.versoes[APP.projectId]?.version?.system || "Unknown";
+	APP.projectId = firebase.app().options.projectId;
+	APP.version = CONFIG.versoes[APP.projectId]?.version?.system || "Unknown";
 }
 
 // Global error handlers - catches all unhandled errors
-window.addEventListener('unhandledrejection', function(event) {
-console.error('Unhandled promise rejection:', event.reason);
-_displayError(event.reason?.message || event.reason || 'An unexpected error occurred');
-event.preventDefault(); // Prevent default browser error handling
+window.addEventListener("unhandledrejection", function (event) {
+	console.error("Unhandled promise rejection:", event.reason);
+	_displayError(
+		event.reason?.message || event.reason || "An unexpected error occurred",
+	);
+	event.preventDefault(); // Prevent default browser error handling
 });
 
-window.addEventListener('error', function(event) {
-console.error('Global error:', event.error || event.message);
-_displayError(event.error?.message || event.message || 'An unexpected error occurred');
-event.preventDefault(); // Prevent default browser error handling
+window.addEventListener("error", function (event) {
+	console.error("Global error:", event.error || event.message);
+	_displayError(
+		event.error?.message || event.message || "An unexpected error occurred",
+	);
+	event.preventDefault(); // Prevent default browser error handling
 });

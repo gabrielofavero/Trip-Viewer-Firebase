@@ -592,16 +592,16 @@
 			}
 		}
 	},
-"labels": {
-"auth": {
-"sign_in": "Entrar",
-"sign_out": "Sair da Conta",
-"email": "E-mail",
-"password": "Senha"
-},
-"export": "Exportar",
-"print": "Imprimir",
-"adapted": "Adaptado",
+	"labels": {
+		"auth": {
+			"sign_in": "Entrar",
+			"sign_out": "Sair da Conta",
+			"email": "E-mail",
+			"password": "Senha"
+		},
+		"export": "Exportar",
+		"print": "Imprimir",
+		"adapted": "Adaptado",
 		"intro": "Isso é ",
 		"greeting": "Olá",
 		"light_mode": "Tema claro",
