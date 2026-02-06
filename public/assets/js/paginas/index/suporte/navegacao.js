@@ -39,8 +39,8 @@ function _listagensNovo() {
 	window.open(`edit/listing?visibility=${_getVisibility()}`, "_blank");
 }
 
-function goToCurrentTrip() {
-	if (VIAGENS.viagensEmAndamento.length == 1) {
-		_viagensVisualizar(VIAGENS.viagensEmAndamento[0].code);
+function _goToCurrentTrip() {
+	if (CURRENT_TRIPS?.length == 1) {
+		_viagensVisualizar(CURRENT_TRIPS[0].id);
 	}
 }

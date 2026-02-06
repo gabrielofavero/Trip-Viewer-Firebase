@@ -4,24 +4,34 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 146   | 142  | 2         | 2       |
+| 🐞   | Bug         | B000 | 150   | 143  | 2         | 5       |
 | 🏆   | Feature     | F000 | 147   | 125  | 22        | 0       |
-| 📈   | Improvement | M000 | 142   | 111  | 30        | 1       |
+| 📈   | Improvement | M000 | 143   | 111  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
 
+- 🐞 **B149:** View page for destinations not working
+- 🐞 **B150:** View page for listing not working
+- 🐞 **B127:** Document changes still not working (accepting everything)
+
 ### Medium Priority
+
+- 🐞 **B148:** Full itinerary page giving multiple blank pages
+- 📈 **M143:** Improve spacing for full itineray
 
 ### Low Priority
 
-- 🐞 **B127:** Document changes still not working (accepting everything)
 - 🐞 **B096:** Fix Gallery module
 - 📈 **M135:** Refactor "dados.js" to shared dir
 
 ## Done
+
+### February 2026
+
+- 🐞 **B147:** Index notification bar not showing for active trip and not opening current
 
 ### January 2026
 
