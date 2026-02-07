@@ -19,7 +19,8 @@ async function _refreshTripData() {
 
 // Planned Destination
 function _loadPlannedDestination() {
-	for (const dia of FIRESTORE_DATA.programacoes) {
+	const programacoes = FIRESTORE_DATA?.programacoes || [];
+	for (const dia of programacoes) {
 		const data = dia.data;
 		for (const turno of CONFIG.itinerary.timeofday) {
 			const programacoes = dia[turno];

@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 150   | 143  | 2         | 5       |
+| 🐞   | Bug         | B000 | 150   | 144  | 2         | 4       |
 | 🏆   | Feature     | F000 | 147   | 125  | 22        | 0       |
 | 📈   | Improvement | M000 | 143   | 111  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
@@ -13,7 +13,6 @@
 
 ### High Priority
 
-- 🐞 **B149:** View page for destinations not working
 - 🐞 **B150:** View page for listing not working
 - 🐞 **B127:** Document changes still not working (accepting everything)
 
@@ -31,6 +30,7 @@
 
 ### February 2026
 
+- 🐞 **B149:** View page for destinations not working
 - 🐞 **B147:** Index notification bar not showing for active trip and not opening current
 
 ### January 2026

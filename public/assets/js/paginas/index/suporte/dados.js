@@ -29,12 +29,12 @@ async function _loadUserIndex() {
 					listagens: USER_DATA.listagens,
 				};
 
-CURRENT_TRIPS = _getCurrentTrips(INDEX_DATA.viagens);
-PREVIOUS_TRIPS = _getPreviousTrips(INDEX_DATA.viagens);
-NEXT_TRIPS = _getNextTrips(INDEX_DATA.viagens);
+				CURRENT_TRIPS = _getCurrentTrips(INDEX_DATA.viagens);
+				PREVIOUS_TRIPS = _getPreviousTrips(INDEX_DATA.viagens);
+				NEXT_TRIPS = _getNextTrips(INDEX_DATA.viagens);
 
-_loadNotificationBar();
-_loadIndexDataHTML(USER_DATA);
+				_loadNotificationBar();
+				_loadIndexDataHTML(USER_DATA);
 			} else {
 				_openIndexPage("unlogged");
 			}
