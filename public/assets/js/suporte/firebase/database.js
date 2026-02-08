@@ -246,7 +246,11 @@ async function _getSingleData(type) {
 				`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
 			);
 		}
-		if (type === "viagens" && data?.destinos && data.destinos.length > 0) {
+		if (
+			["viagens", "listagens"].includes(type) &&
+			data?.destinos &&
+			data.destinos.length > 0
+		) {
 			data = await _getTripDataWithDestinos(data);
 		}
 	} catch (error) {

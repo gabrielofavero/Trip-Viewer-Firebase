@@ -50,11 +50,15 @@ function _loadDestinationsCustomSelect() {
 
 	function _getDestinationsCustomSelectOptions() {
 		const options = [];
-		const itineraryOrder = new Set(
-			FIRESTORE_DATA.programacoes
-				.flatMap((item) => (item.destinosIDs || []).map((d) => d.destinosID))
-				.filter(Boolean),
-		);
+		const itineraryOrder = FIRESTORE_DATA.programacoes
+			? new Set(
+					FIRESTORE_DATA.programacoes
+						.flatMap((item) =>
+							(item.destinosIDs || []).map((d) => d.destinosID),
+						)
+						.filter(Boolean),
+				)
+			: [];
 
 		for (const destino of DESTINOS) {
 			options.push({
