@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 150   | 145  | 2         | 3       |
 | 🏆   | Feature     | F000 | 147   | 125  | 22        | 0       |
-| 📈   | Improvement | M000 | 144   | 111  | 30        | 3       |
+| 📈   | Improvement | M000 | 144   | 112  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
@@ -24,12 +24,12 @@
 
 - 🐞 **B096:** Fix Gallery module
 - 📈 **M135:** Refactor "dados.js" to shared dir
-- 📈 **M144:** Minor visibility improvements for view page
 
 ## Done
 
 ### February 2026
 
+- 📈 **M144:** Minor visibility improvements for view page
 - 🐞 **B150:** View page for listing not working
 - 🐞 **B149:** View page for destinations not working
 - 🐞 **B147:** Index notification bar not showing for active trip and not opening current

@@ -113,9 +113,10 @@ function _showCalendar(month, year) {
 
 				if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
 					cell.classList.add("calendarTrip");
+					cell.id = `calendarTrip-${day}-${month + 1}-${year}`;
 					cell.setAttribute(
 						"onclick",
-						"_loadCalendarItem('" + day + "/" + (month + 1) + "/" + year + "')",
+						`_loadCalendarItem(${day}, ${month + 1}, ${year})`,
 					);
 
 					const formattedMonth = String(month + 1).padStart(2, "0");

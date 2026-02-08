@@ -139,46 +139,50 @@ function _loadInnerProgramacaoMidia(midia) {
 }
 
 // Getters
-function _loadCalendarItem(dataString) {
-	if (dataString) {
-		const day = parseInt(dataString.split("/")[0]);
-		const month = parseInt(dataString.split("/")[1]);
-		const year = parseInt(dataString.split("/")[2]);
+function _loadCalendarItem(day, month, year) {
+	if (!day || !month || !year) {
+		console.warn("No data string provided to load calendar item.");
+		return;
+	}
 
-		if (
-			day != 0 &&
-			day == PROGRAMACAO_ATUAL_DATA.dia &&
-			month == PROGRAMACAO_ATUAL_DATA.mes &&
-			year == PROGRAMACAO_ATUAL_DATA.ano
-		) {
-			_closeModalCalendar();
-		} else {
-			PROGRAMACAO_ATUAL_DATA.dia = day;
-			PROGRAMACAO_ATUAL_DATA.mes = month;
-			PROGRAMACAO_ATUAL_DATA.ano = year;
-			if (day != 0) {
-				for (let i = 0; i < FIRESTORE_DATA.programacoes.length; i++) {
-					var currentDate = _convertFromDateObject(
-						FIRESTORE_DATA.programacoes[i].data,
-					);
-					if (
-						currentDate.getUTCDate() == day &&
-						currentDate.getUTCMonth() == month - 1 &&
-						currentDate.getUTCFullYear() == year
-					) {
-						if (!PROGRAMACAO_ABERTA) {
-							PROGRAMACAO_ABERTA = true;
-							_openModalCalendar(FIRESTORE_DATA.programacoes[i]);
-						} else {
-							_reloadModalCalendar(FIRESTORE_DATA.programacoes[i]);
-						}
-						break;
-					}
+	for (const el of document.querySelectorAll(".calendarTrip")) {
+		el.classList.remove("active");
+	}
+
+	const calendarTrip = getID(`calendarTrip-${day}-${month}-${year}`);
+
+	if (
+		day == PROGRAMACAO_ATUAL_DATA.dia &&
+		month == PROGRAMACAO_ATUAL_DATA.mes &&
+		year == PROGRAMACAO_ATUAL_DATA.ano
+	) {
+		_closeModalCalendar();
+		return;
+	}
+
+	calendarTrip.classList.add("active");
+	PROGRAMACAO_ATUAL_DATA.dia = day;
+	PROGRAMACAO_ATUAL_DATA.mes = month;
+	PROGRAMACAO_ATUAL_DATA.ano = year;
+	if (day != 0) {
+		for (let i = 0; i < FIRESTORE_DATA.programacoes.length; i++) {
+			var currentDate = _convertFromDateObject(
+				FIRESTORE_DATA.programacoes[i].data,
+			);
+			if (
+				currentDate.getUTCDate() == day &&
+				currentDate.getUTCMonth() == month - 1 &&
+				currentDate.getUTCFullYear() == year
+			) {
+				if (!PROGRAMACAO_ABERTA) {
+					PROGRAMACAO_ABERTA = true;
+					_openModalCalendar(FIRESTORE_DATA.programacoes[i]);
+				} else {
+					_reloadModalCalendar(FIRESTORE_DATA.programacoes[i]);
 				}
+				break;
 			}
 		}
-	} else {
-		console.warn("No data string provided to load calendar item.");
 	}
 }
 

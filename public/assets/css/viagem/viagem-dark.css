@@ -81,7 +81,7 @@ a:hover {
 .nav-menu a,
 .nav-menu a:focus {
 	color: #f2f2f2;
-	background: #303030;
+	background: #3b3b3b;
 }
 
 .nav-menu a span,
@@ -477,7 +477,8 @@ a:hover {
 }
 
 .calendarTrip:hover,
-.calendarTrip:active {
+.calendarTrip:active,
+.calendarTrip.active {
 	background-color: var(--theme-color) !important;
 	color: #303030;
 }
