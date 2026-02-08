@@ -99,6 +99,7 @@ function _closeModalCalendar() {
 	PROGRAMACAO_ATUAL_DATA.mes = 0;
 	PROGRAMACAO_ATUAL_DATA.ano = 0;
 
+	_unloadCalendarTripActive();
 	getID("programacao-box").classList.toggle("show");
 	setTimeout(() => {
 		$("#programacao-box").hide();
@@ -138,16 +139,13 @@ function _loadInnerProgramacaoMidia(midia) {
 	getID("midia-1").innerHTML = _getLinkMediaButton(midia);
 }
 
-// Getters
 function _loadCalendarItem(day, month, year) {
 	if (!day || !month || !year) {
 		console.warn("No data string provided to load calendar item.");
 		return;
 	}
 
-	for (const el of document.querySelectorAll(".calendarTrip")) {
-		el.classList.remove("active");
-	}
+	_unloadCalendarTripActive();
 
 	const calendarTrip = getID(`calendarTrip-${day}-${month}-${year}`);
 
@@ -186,6 +184,13 @@ function _loadCalendarItem(day, month, year) {
 	}
 }
 
+function _unloadCalendarTripActive() {
+	for (const el of document.querySelectorAll(".calendarTrip")) {
+		el.classList.remove("active");
+	}
+}
+
+// Getters
 function _getInnerProgramacaoHTML(item) {
 	const innerProgramacao = _getInnerProgramacao(item);
 	if (innerProgramacao.content) {
