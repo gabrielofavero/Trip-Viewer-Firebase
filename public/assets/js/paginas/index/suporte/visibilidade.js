@@ -10,7 +10,6 @@ function _loadVisibilityIndex() {
 
 	getID("night-mode").onclick = function () {
 		_switchVisibility();
-		_setManualVisibility();
 
 		if (notificationBar.changed) {
 			_applyNotificationBarColor();
