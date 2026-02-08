@@ -2,49 +2,64 @@ var ORIGINAL_STATE = new Map();
 
 // Detect Changes
 function _snapshotFormState(root = document) {
-	if (!DOCUMENT_ID) {
-		return;
-	}
+	if (!DOCUMENT_ID) return;
+
 	ORIGINAL_STATE.clear();
 
 	const fields = root.querySelectorAll("input, textarea, select, .input-botao");
 
 	fields.forEach((el) => {
-		const value = _getElValue(el);
-		ORIGINAL_STATE.set(el, value);
+		ORIGINAL_STATE.set(el, {
+			value: _getElValue(el),
+			position: _getElPosition(el),
+		});
 	});
+}
 
-	function _getElValue(el) {
-		switch (el.type) {
-			case "checkbox":
-			case "radio":
-				return el.checked;
-			case "submit":
-				return el.innerText;
-			default:
-				return el.value;
-		}
+function _getElValue(el) {
+	switch (el.type) {
+		case "checkbox":
+		case "radio":
+			return el.checked;
+		case "submit":
+			return el.innerText;
+		default:
+			return el.value;
 	}
 }
 
+function _getElPosition(el) {
+	const parent = el.parentNode;
+	if (!parent) return null;
+
+	const siblings = Array.from(parent.children).filter((child) =>
+		child.matches?.("input, textarea, select, .input-botao"),
+	);
+
+	return {
+		parent,
+		index: siblings.indexOf(el),
+	};
+}
+
 function _hasUnsavedChanges(root = document) {
-	if (!DOCUMENT_ID) {
-		return true;
-	}
+	if (!DOCUMENT_ID) return true;
+
 	for (const [el, original] of ORIGINAL_STATE.entries()) {
-		// ignore elements that no longer exist in the DOM
-		if (!root.contains(el)) continue;
+		if (!root.contains(el)) return true;
 
-		let current;
-		if (el.type === "checkbox" || el.type === "radio") {
-			current = el.checked;
-		} else if (el.type === "submit") {
-			current = el.innerText;
-		} else {
-			current = el.value;
+		const currentValue = _getElValue(el);
+		if (currentValue !== original.value) return true;
+
+		const currentPosition = _getElPosition(el);
+		if (!currentPosition || !original.position) return true;
+
+		if (
+			currentPosition.parent !== original.position.parent ||
+			currentPosition.index !== original.position.index
+		) {
+			return true;
 		}
-
-		if (current !== original) return true;
 	}
 
 	return false;
