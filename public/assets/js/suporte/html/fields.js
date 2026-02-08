@@ -45,16 +45,23 @@ function _getElPosition(el) {
 function _hasUnsavedChanges(root = document) {
 	if (!DOCUMENT_ID) return true;
 
+	const currentFields = root.querySelectorAll(
+		"input, textarea, select, .input-botao",
+	);
+
+	for (const el of currentFields) {
+		if (!ORIGINAL_STATE.has(el)) return true;
+	}
+
 	for (const [el, original] of ORIGINAL_STATE.entries()) {
 		if (!root.contains(el)) return true;
 
-		const currentValue = _getElValue(el);
-		if (currentValue !== original.value) return true;
+		if (_getElValue(el) !== original.value) return true;
 
 		const currentPosition = _getElPosition(el);
-		if (!currentPosition || !original.position) return true;
-
 		if (
+			!currentPosition ||
+			!original.position ||
 			currentPosition.parent !== original.position.parent ||
 			currentPosition.index !== original.position.index
 		) {
