@@ -39,7 +39,7 @@ async function _loadDestinosPage() {
 	await _loadDestinosData();
 
 	const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
-	document.title = title;
+	_setPageName(title);
 	getID("title").innerText = title;
 
 	await _loadDestinationVisibility();

@@ -5,7 +5,7 @@ async function _loadListData(FIRESTORE_DATA) {
 		_loadCustomizacaoData(FIRESTORE_DATA);
 		_loadDestinosData();
 
-		document.title = `${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`;
+		_setPageName(`${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`);
 	} catch (error) {
 		_displayError(error);
 		throw error;

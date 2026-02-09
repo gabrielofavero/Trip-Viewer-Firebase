@@ -188,7 +188,7 @@ function _loadHeader() {
 }
 
 function _loadTitle(data = FIRESTORE_DATA) {
-	document.title = data.titulo;
+	_setPageName(data.titulo);
 	getID("header1").innerHTML = data.titulo;
 	getID("header2").style.display = "none";
 

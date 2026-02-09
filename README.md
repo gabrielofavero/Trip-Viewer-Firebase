@@ -5,7 +5,7 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 151   | 147  | 2         | 2       |
-| 🏆   | Feature     | F000 | 147   | 125  | 22        | 0       |
+| 🏆   | Feature     | F000 | 148   | 126  | 22        | 0       |
 | 📈   | Improvement | M000 | 144   | 112  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
@@ -27,6 +27,7 @@
 
 ### February 2026
 
+- 🏆 **F148:** Add environment tag on page title if running locally
 - 🐞 **B151:** Visibility change causing exception for index
 - 🐞 **B127:** Document changes not working
 - 📈 **M144:** Minor visibility improvements for view page

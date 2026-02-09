@@ -90,6 +90,7 @@ async function _loadTranslationLite() {
 }
 
 function _loadPage() {
+	_setPageName();
 	switch (_getHTMLpage()) {
 		case "index":
 			_loadIndexPage();
@@ -164,6 +165,22 @@ function _openLinkInNewTab(url) {
 function _initializeApp() {
 	APP.projectId = firebase.app().options.projectId;
 	APP.version = CONFIG.versoes[APP.projectId]?.version?.system || "Unknown";
+}
+
+function _setPageName(pageName) {
+	const isDev = APP.version === "trip-viewer-dev";
+	const tag = isDev ? "[DEV]" : "[PRD]";
+
+	const resolvedPageName = pageName ?? document.title.replace(tag, "").trim();
+
+	const host = location.hostname;
+	const isLocal = host === "localhost" || !Number.isNaN(Number(host));
+
+	const newTitle = isLocal ? `${tag} ${resolvedPageName}` : resolvedPageName;
+
+	if (document.title !== newTitle) {
+		document.title = newTitle;
+	}
 }
 
 // Global error handlers - catches all unhandled errors
