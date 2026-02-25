@@ -4,14 +4,19 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 151   | 147  | 2         | 2       |
-| 🏆   | Feature     | F000 | 148   | 126  | 22        | 0       |
+| 🐞   | Bug         | B000 | 153   | 147  | 2         | 5       |
+| 🏆   | Feature     | F000 | 151   | 126  | 22        | 3       |
 | 📈   | Improvement | M000 | 144   | 112  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
 
 ## Backlog
 
 ### High Priority
+- 🐞 **B152:** Todays itinerary button not opening calendar item
+- 🐞 **B153:** Today itinerary button should go to calendar item, not calendar
+- 🏆 **F149:** During a trip, if multiple transportations, page should load on closest next one instead of first
+- 🏆 **F150:** During a trip, if multiple accommodations, page should load on closest next one instead of first
+- 🏆 **F151:** During a trip, if multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first
 
 ### Medium Priority
 
