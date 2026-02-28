@@ -4,29 +4,36 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 153   | 147  | 2         | 5       |
+| 🐞   | Bug         | B000 | 155   | 147  | 2         | 10      |
 | 🏆   | Feature     | F000 | 151   | 126  | 22        | 3       |
 | 📈   | Improvement | M000 | 144   | 112  | 30        | 2       |
-| ⚔️   | Epic        | E000 | 41    | 26   | 15        | 0       |
+| ⚔️   | Epic        | E000 | 43    | 26   | 15        | 2       |
 
 ## Backlog
 
 ### High Priority
-- 🐞 **B152:** Todays itinerary button not opening calendar item
-- 🐞 **B153:** Today itinerary button should go to calendar item, not calendar
-- 🏆 **F149:** During a trip, if multiple transportations, page should load on closest next one instead of first
-- 🏆 **F150:** During a trip, if multiple accommodations, page should load on closest next one instead of first
-- 🏆 **F151:** During a trip, if multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first
+
+- ⚔️ **E042:** During Trip Automations
+  - *[🐞B152] Todays itinerary button not opening calendar item*
+  - *[🐞B153] Today itinerary button should go to calendar item, not calendar*
+  - *[🏆F149] If multiple transportations, page should load on closest next one instead of first*
+  - *[🏆F150] If multiple accommodations, page should load on closest next one instead of first*
+  - *[🏆F151] If multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first*
 
 ### Medium Priority
 
-- 🐞 **B148:** Full itinerary page giving multiple blank pages
-- 📈 **M143:** Improve spacing for full itineray
+- ⚔️ **E043:** Offline Mode
+  - *[🏆F152] Create Button and visual adaptations*
+  - *[🏆F153] Create .zip script on deploy*
+  - *[🏆F154] Export user data to JSON (trip + destination)*
+  - *[🏆F155] Adapt data display when on offline mode *
 
 ### Low Priority
 
 - 🐞 **B096:** Fix Gallery module
 - 📈 **M135:** Refactor "dados.js" to shared dir
+- 🐞 **B148:** Full itinerary page giving multiple blank pages
+- 📈 **M143:** Improve spacing for full itineray
 
 ## Done
 
