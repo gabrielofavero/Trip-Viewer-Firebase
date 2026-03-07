@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 156   | 147  | 2         | 11      |
+| 🐞   | Bug         | B000 | 157   | 147  | 2         | 11      |
 | 🏆   | Feature     | F000 | 151   | 126  | 22        | 3       |
 | 📈   | Improvement | M000 | 144   | 112  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 43    | 26   | 15        | 2       |
@@ -13,6 +13,7 @@
 
 ### High Priority
 
+- 🐞 **B157:** Trip being considereda as finished on last day (index only)
 - 🐞 **B156:** Reservation being copied with # in it
 - ⚔️ **E042:** During Trip Automations
   - *[🐞B152] Todays itinerary button not opening calendar item*
