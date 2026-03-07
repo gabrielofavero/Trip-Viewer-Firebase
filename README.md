@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 157   | 147  | 2         | 11      |
+| 🐞   | Bug         | B000 | 158   | 147  | 2         | 11      |
 | 🏆   | Feature     | F000 | 151   | 126  | 22        | 3       |
 | 📈   | Improvement | M000 | 145   | 112  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 43    | 26   | 15        | 2       |
@@ -13,6 +13,7 @@
 
 ### High Priority
 
+- 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
 - 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
 - 🐞 **B157:** Trip being considereda as finished on last day (index only)
 - 🐞 **B156:** Reservation being copied with # in it
