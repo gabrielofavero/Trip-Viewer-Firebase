@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 158   | 147  | 2         | 11      |
+| 🐞   | Bug         | B000 | 159   | 148  | 2         | 11      |
 | 🏆   | Feature     | F000 | 151   | 126  | 22        | 3       |
 | 📈   | Improvement | M000 | 145   | 112  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 43    | 26   | 15        | 2       |
@@ -40,6 +40,9 @@
 - 📈 **M143:** Improve spacing for full itineray
 
 ## Done
+
+### May 2026
+- 🐞 **B159:** Fix travelers saving action
 
 ### February 2026
 

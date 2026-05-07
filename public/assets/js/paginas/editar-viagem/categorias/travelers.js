@@ -101,7 +101,9 @@ function _saveTravelersInfo() {
 	TRAVELERS = travelers;
 	_closeMessage();
 	_updateTravelersButtonLabel();
-	_loadProgramacaoData();
+	if (DOCUMENT_ID) {
+		_loadProgramacaoData();
+	}
 }
 
 function _getTravelersFieldset(id) {
