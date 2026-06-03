@@ -5,9 +5,9 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 157   | 149  | 2         | 6       |
-| 🏆   | Feature     | F000 | 155   | 126  | 22        | 7       |
+| 🏆   | Feature     | F000 | 165   | 126  | 22        | 17      |
 | 📈   | Improvement | M000 | 145   | 113  | 30        | 2       |
-| ⚔️   | Epic        | E000 | 43    | 26   | 15        | 2       |
+| ⚔️   | Epic        | E000 | 43    | 26   | 14        | 3       |
 
 ## Backlog
 
@@ -24,11 +24,22 @@
 
 ### Medium Priority
 
-- ⚔️ **E043:** Offline Mode
-  - *[🏆F152] Create Button and visual adaptations*
-  - *[🏆F153] Create .zip script on deploy*
-  - *[🏆F154] Export user data to JSON (trip + destination)*
-  - *[🏆F155] Adapt data display when on offline mode *
+- ⚔️ **E043:** Offline Mode (Developer only POC)
+  - *[🏆F152] Export script — Firestore→JSON + image download + offline HTML generation*
+  - *[🏆F153] Zip packaging + validation + deploy integration*
+  - *[🏆F154] offline-data.js — local JSON data loader (replaces database.js)*
+  - *[🏆F155] main-offline.js + page JS adaptation (Firebase-free)*
+  - *[🏆F156] Service Worker + PWA manifest for iOS home-screen support*
+  - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
+  - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
+  - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
+- ⚔️ **E026:** Google Maps Places API Integration
+  - *[🏆F160] Local proxy server (Python HTTP proxy → Places API)*
+  - *[🏆F161] API key config (.env gitignored) with setup docs*
+  - *[🏆F162] Place ID extraction from URL + Find Place fallback*
+  - *[🏆F163] Data normalization (Places API response → destination format)*
+  - *[🏆F164] Import button + auto-fill in edit form (localhost-only)*
+  - *[🏆F165] Emoji suggestion from Places API types*
 
 ### Low Priority
 
@@ -689,7 +700,6 @@
 - 📈 **M087:** Destination load loads everything immediately
 - ⚔️ **E019:** Implement Sonarqube
 - 🏆 **F070:** Add to calendar component
-- ⚔️ **E026:** Import data from Google Maps
 - 📈 **M100:** Storage size limit for document (10MB)
 - 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
 - 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
