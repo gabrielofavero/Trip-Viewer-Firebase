@@ -1,5 +1,6 @@
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;
+var LOADING_TIMEOUT_TRIGGERED = false;
 
 // Loading Screen
 
@@ -23,6 +24,7 @@ function _startLoadingScreen({
 }
 
 function _stopLoadingScreen({ adjustLoadables = true } = {}) {
+	const wasTimeoutTriggered = LOADING_TIMEOUT_TRIGGERED;
 	_stopLoadingTimer();
 	sessionStorage.setItem("firstLoad", "true");
 	if (!MESSAGE_MODAL_OPEN) {
@@ -36,6 +38,12 @@ function _stopLoadingScreen({ adjustLoadables = true } = {}) {
 			preloader.style.display = "none";
 			_enableScroll();
 		}
+	} else if (wasTimeoutTriggered) {
+		// Timeout error was shown but loading has since completed.
+		// Dismiss the timeout dialog automatically so the user is not stuck.
+		_closeMessage();
+		// _closeMessage already calls _stopLoadingScreen recursively;
+		// the recursive call will take the !MESSAGE_MODAL_OPEN branch above.
 	} else {
 		console.warn("Cannot stop loading in error mode");
 	}
@@ -61,6 +69,7 @@ function _startLoadingTimer() {
 				sessionStorage.setItem("firstLoad", "true");
 				const error = new Error(translate("messages.errors.loading_timeout"));
 				_displayError(error, true);
+				LOADING_TIMEOUT_TRIGGERED = true;
 			}
 		}, 1000);
 	}
@@ -71,4 +80,5 @@ function _stopLoadingTimer() {
 		clearInterval(LOADING_TIMER);
 		LOADING_TIMER = null;
 	}
+	LOADING_TIMEOUT_TRIGGERED = false;
 }
