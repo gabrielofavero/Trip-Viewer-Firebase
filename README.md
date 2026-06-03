@@ -13,7 +13,6 @@
 
 ### High Priority
 
-- 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
 - 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
 - 🐞 **B157:** Trip being considereda as finished on last day (index only)
 - 🐞 **B156:** Reservation being copied with # in it
@@ -40,6 +39,9 @@
 - 📈 **M143:** Improve spacing for full itineray
 
 ## Done
+
+### June 2026
+- 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

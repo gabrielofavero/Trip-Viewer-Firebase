@@ -11,7 +11,7 @@ function _animate(
 
 	if (fadeIn && fadeOut) {
 		if (from == to) {
-			_fade(fadeOut, fadeIn, isBlock);
+			_fade(fadeOut, fadeIn, 250, isBlock);
 		} else if (from > to) {
 			_swipe(fadeOut, fadeIn, backwards, isBlock);
 		} else {
@@ -19,7 +19,7 @@ function _animate(
 		}
 	} else if (fadeIn) {
 		if (from == to) {
-			_fadeIn(fadeIn, isBlock);
+			_fadeIn(fadeIn, 250, isBlock);
 		} else if (from > to) {
 			_swipeIn(fadeIn, backwards, isBlock);
 		} else {
@@ -80,7 +80,7 @@ function _fadeIn(elementIds, mili = 250, isBlock = true) {
 function _fade(fadeOutIds, fadeInIds, duration = 250, isBlock = true) {
 	_fadeOut(fadeOutIds);
 	setTimeout(function () {
-		_fadeIn(fadeInIds, isBlock);
+		_fadeIn(fadeInIds, duration, isBlock);
 	}, duration);
 }
 
