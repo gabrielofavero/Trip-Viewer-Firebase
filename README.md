@@ -4,16 +4,15 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 159   | 148  | 2         | 11      |
-| 🏆   | Feature     | F000 | 151   | 126  | 22        | 3       |
-| 📈   | Improvement | M000 | 145   | 112  | 30        | 2       |
+| 🐞   | Bug         | B000 | 157   | 149  | 2         | 6       |
+| 🏆   | Feature     | F000 | 155   | 126  | 22        | 7       |
+| 📈   | Improvement | M000 | 145   | 113  | 30        | 2       |
 | ⚔️   | Epic        | E000 | 43    | 26   | 15        | 2       |
 
 ## Backlog
 
 ### High Priority
 
-- 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
 - 🐞 **B157:** Trip being considereda as finished on last day (index only)
 - 🐞 **B156:** Reservation being copied with # in it
 - ⚔️ **E042:** During Trip Automations
@@ -42,6 +41,7 @@
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
+- 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
