@@ -79,6 +79,8 @@ def count_tasks(tasks):
         'M': {'total': 0, 'done': 0, 'cancelled': 0, 'pending': 0},
         'E': {'total': 0, 'done': 0, 'cancelled': 0, 'pending': 0}
     }
+
+    backlog_epic_numbers = {t['number'] for t in tasks['backlog'] if t['type'] == 'E'}
     
     for task in tasks['backlog']:
         t = task['type']
@@ -87,6 +89,9 @@ def count_tasks(tasks):
     
     for task in tasks['done']:
         t = task['type']
+        # Skip Epics that also exist in backlog (keep only the backlog occurrence)
+        if t == 'E' and task['number'] in backlog_epic_numbers:
+            continue
         counts[t]['total'] += 1
         counts[t]['done'] += 1
     
@@ -104,6 +109,11 @@ def check_inconsistencies(tasks):
     all_tasks = tasks['backlog'] + tasks['done'] + tasks['discarded']
 
     by_type = defaultdict(list)
+
+    # Identify Epic numbers that appear in both backlog and done
+    backlog_epic_numbers = {t['number'] for t in tasks['backlog'] if t['type'] == 'E'}
+    done_epic_numbers = {t['number'] for t in tasks['done'] if t['type'] == 'E'}
+    epic_in_both = backlog_epic_numbers & done_epic_numbers
 
     for task in all_tasks:
         by_type[task['type']].append(task['number'])
@@ -155,6 +165,9 @@ def check_inconsistencies(tasks):
             )
 
         duplicates = {n for n in numbers if numbers.count(n) > 1}
+        # Ignore Epic duplicates that appear in both backlog and done
+        if task_type == 'E':
+            duplicates = duplicates - epic_in_both
         if duplicates:
             issues.append(
                 f"{emoji}{Colors.BOLD}Duplicate {name}:{Colors.RESET} "
@@ -167,7 +180,9 @@ def check_inconsistencies(tasks):
 def calculate_version(tasks):
     """Calculate semantic version based on completed tasks (chronological order)."""
     done_tasks = tasks['done']
-    
+
+    backlog_epic_numbers = {t['number'] for t in tasks['backlog'] if t['type'] == 'E'}
+
     done_tasks_reversed = list(reversed(done_tasks))
     
     major = 2
@@ -175,6 +190,9 @@ def calculate_version(tasks):
     patch = 0
     
     for task in done_tasks_reversed:
+        # Skip Epics that also exist in backlog (they weren't truly completed)
+        if task['type'] == 'E' and task['number'] in backlog_epic_numbers:
+            continue
         if task['type'] == 'E':
             minor += 1
             patch = 0

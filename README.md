@@ -4,10 +4,10 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 159   | 155  | 3         | 1       |
-| 🏆   | Feature     | F000 | 166   | 133  | 22        | 11      |
-| 📈   | Improvement | M000 | 145   | 114  | 31        | 0       |
-| ⚔️   | Epic        | E000 | 44    | 28   | 14        | 2       |
+| 🐞   | Bug         | B000 | 160   | 156  | 3         | 1       |
+| 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
+| 📈   | Improvement | M000 | 146   | 115  | 31        | 0       |
+| ⚔️   | Epic        | E000 | 43    | 28   | 14        | 1       |
 
 ## Backlog
 
@@ -24,10 +24,6 @@
   - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
   - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
-- ⚔️ **E026:** Google Maps partial integration (Dev Only, POC)
-  - *[🏆F161] Map conversion layer*
-  - *[🏆F163] Map emoji conversion (Pleper Extension)*
-  - *[🏆F164] Python Script*
 
 ### Low Priority
 
@@ -51,9 +47,14 @@
 - 🐞 **B155:** Incorrect translation key in gallery causing exception (translation module should handle without errors)
 - 🏆 **F166:** Disable image uploads in edit trip page
 - 🏆 **F165:** Refactor folder structure for scripts and pocs
+- 📈 **M146:** Improve epic detections on readme script
 - ⚔️ **E026:** Google Maps (Places API) partial implementation (Dev Only, POC)
   - *[🏆F160] Add example files (Places API, Pleper Extension)*
-  - *[🏆F162] Map emoji conversion (Places API)*
+  - *[🏆F161] Map emoji conversion layers*
+  - *[🏆F162] Python Script*
+  - *[🏆F163] edit/destination.html functions for import*
+  - *[🏆F164] destination.html single function for import*
+- 🐞 **B160:** Fix page tag for local envs
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

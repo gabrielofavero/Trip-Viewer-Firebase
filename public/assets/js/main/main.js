@@ -168,7 +168,7 @@ function _initializeApp() {
 }
 
 function _setPageName(pageName) {
-	const isDev = APP.version === "trip-viewer-dev";
+	const isDev = APP.projectId === "trip-viewer-dev";
 	const tag = isDev ? "[DEV]" : "[PRD]";
 
 	const resolvedPageName = pageName ?? document.title.replace(tag, "").trim();
