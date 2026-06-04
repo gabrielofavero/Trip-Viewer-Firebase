@@ -13,6 +13,8 @@ function _loadHospedagens() {
 	for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
 		_loadImageLightbox(`hospedagens-galeria-${j}`);
 	}
+
+	_autoNavigateHospedagens();
 }
 
 function _getHospedagensHTML(i, innerProgramacao = false) {
@@ -153,4 +155,64 @@ function _buildHospedagensSwiper(swiperData) {
                                         </div>`;
 	ADJUST_HEIGHT_CARDS.push("hospedagens");
 	_initSwiper("hospedagens");
+}
+
+function _autoNavigateHospedagens() {
+	const hoje = _getDateNoTime(_convertFromDateObject(_getTodayDateObject()));
+	const dados = FIRESTORE_DATA.hospedagens;
+	if (!dados || dados.length === 0) return;
+
+	let targetIndex;
+
+	// Outside trip dates → show first element
+	if (INICIO?.date && FIM?.date) {
+		if (
+			hoje < _getDateNoTime(INICIO.date) ||
+			hoje > _getDateNoTime(FIM.date)
+		) {
+			targetIndex = 0;
+		}
+	}
+
+	// Inside trip → find which accommodation covers now
+	if (targetIndex === undefined) {
+		const now = new Date();
+		let found = false;
+
+		for (let i = 0; i < dados.length; i++) {
+			const checkin = _convertFromDateObject(dados[i].datas.checkin);
+			const checkout = _convertFromDateObject(dados[i].datas.checkout);
+
+			if (now >= checkin && now <= checkout) {
+				targetIndex = i;
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			// Uncovered period → find closest future checkin
+			let closestDiff = Infinity;
+			for (let i = 0; i < dados.length; i++) {
+				const checkin = _convertFromDateObject(dados[i].datas.checkin);
+				const diff = checkin.getTime() - now.getTime();
+				if (diff > 0 && diff < closestDiff) {
+					closestDiff = diff;
+					targetIndex = i;
+				}
+			}
+
+			// All in the past → show first element
+			if (targetIndex === undefined) {
+				targetIndex = 0;
+			}
+		}
+	}
+
+	if (targetIndex === undefined || targetIndex < 0) return;
+
+	const swiperEl = getID("hospedagens-swiper");
+	if (swiperEl?.swiper) {
+		swiperEl.swiper.slideTo(targetIndex, 600);
+	}
 }

@@ -4,21 +4,14 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 157   | 149  | 2         | 6       |
-| 🏆   | Feature     | F000 | 165   | 126  | 22        | 17      |
-| 📈   | Improvement | M000 | 145   | 113  | 30        | 2       |
-| ⚔️   | Epic        | E000 | 43    | 26   | 14        | 3       |
+| 🐞   | Bug         | B000 | 158   | 154  | 2         | 2       |
+| 🏆   | Feature     | F000 | 165   | 129  | 22        | 14      |
+| 📈   | Improvement | M000 | 145   | 113  | 31        | 1       |
+| ⚔️   | Epic        | E000 | 43    | 27   | 14        | 2       |
 
 ## Backlog
 
 ### High Priority
-
-- ⚔️ **E042:** During Trip Automations
-  - *[🐞B152] Todays itinerary button not opening calendar item*
-  - *[🐞B153] Today itinerary button should go to calendar item, not calendar*
-  - *[🏆F149] If multiple transportations, page should load on closest next one instead of first*
-  - *[🏆F150] If multiple accommodations, page should load on closest next one instead of first*
-  - *[🏆F151] If multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first*
 
 ### Medium Priority
 
@@ -42,7 +35,6 @@
 ### Low Priority
 
 - 🐞 **B096:** Fix Gallery module
-- 📈 **M135:** Refactor "dados.js" to shared dir
 - 🐞 **B148:** Full itinerary page giving multiple blank pages
 - 📈 **M143:** Improve spacing for full itineray
 
@@ -53,6 +45,13 @@
 - 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
 - 🐞 **B157:** Trip being considered as finished on last day (index only)
 - 🐞 **B156:** Reservation being copied with # in it
+- 🐞 **B154:** Itinerary title showing as "[object object]" on newer trips
+- ⚔️ **E042:** During Trip Automations
+  - *[🐞B152] Todays itinerary button not opening calendar item*
+  - *[🐞B153] Today itinerary button should go to calendar item, not calendar*
+  - *[🏆F149] If multiple transportations, page should load on closest next one instead of first*
+  - *[🏆F150] If multiple accommodations, page should load on closest next one instead of first*
+  - *[🏆F151] If multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first*
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
@@ -730,3 +729,4 @@
 - 🏆 **F116:** Destinations data refactoring
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
 - 📈 **M098:** Change js folder structures to EN-US
+- 📈 **M135:** Refactor "dados.js" to shared dir

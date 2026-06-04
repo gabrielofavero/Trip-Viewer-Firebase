@@ -10,6 +10,7 @@ function _loadTransporte() {
 	_resetSwiperVisibility();
 
 	_observeFlightBoxes();
+	_autoNavigateTransporte();
 }
 
 function _getSwiperData() {
@@ -399,4 +400,115 @@ function _resetSwiperVisibility() {
 function _customTransporteSelectAction(value) {
 	_fade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${value}`]);
 	TRANSPORTE_ATIVO = value;
+}
+
+function _autoNavigateTransporte() {
+	const hoje = _getDateNoTime(_convertFromDateObject(_getTodayDateObject()));
+	const dados = FIRESTORE_DATA.transportes.dados;
+	if (!dados || dados.length === 0) return;
+
+	let targetIndex;
+
+	// Outside trip dates → show first element
+	if (INICIO?.date && FIM?.date) {
+		if (
+			hoje < _getDateNoTime(INICIO.date) ||
+			hoje > _getDateNoTime(FIM.date)
+		) {
+			targetIndex = 0;
+		}
+	}
+
+	// Inside trip → find most relevant transport
+	if (targetIndex === undefined) {
+		const todayIndices = [];
+		for (let i = 0; i < dados.length; i++) {
+			const partida = _getDateNoTime(
+				_convertFromDateObject(dados[i].datas.partida),
+			);
+			if (partida.getTime() === hoje.getTime()) {
+				todayIndices.push(i);
+			}
+		}
+
+		if (todayIndices.length > 0) {
+			// Sort today's transports by partida time
+			todayIndices.sort(
+				(a, b) =>
+					_convertFromDateObject(dados[a].datas.partida).getTime() -
+					_convertFromDateObject(dados[b].datas.partida).getTime(),
+			);
+
+			const now = new Date();
+
+			for (const idx of todayIndices) {
+				const chegada = _convertFromDateObject(dados[idx].datas.chegada);
+				if (now <= chegada) {
+					targetIndex = idx;
+					break;
+				}
+			}
+
+			// After the last transport's chegada → keep on the last one of today
+			if (targetIndex === undefined) {
+				targetIndex = todayIndices[todayIndices.length - 1];
+			}
+		} else {
+			// No transport today → find closest future
+			let closestDiff = Infinity;
+			for (let i = 0; i < dados.length; i++) {
+				const partida = _getDateNoTime(
+					_convertFromDateObject(dados[i].datas.partida),
+				);
+				const diff = partida.getTime() - hoje.getTime();
+				if (diff > 0 && diff < closestDiff) {
+					closestDiff = diff;
+					targetIndex = i;
+				}
+			}
+		}
+	}
+
+	if (targetIndex === undefined || targetIndex < 0) return;
+
+	const visualizacao = FIRESTORE_DATA.transportes.visualizacao || "simple-view";
+
+	if (visualizacao === "simple-view") {
+		const swiperEl = getID("transporte-ida-swiper");
+		if (swiperEl?.swiper) {
+			swiperEl.swiper.slideTo(targetIndex, 600);
+		}
+	} else if (visualizacao === "leg-view") {
+		const key = "idaVolta";
+		const targetGroup = dados[targetIndex][key];
+
+		const radio = getID(`radio-${targetGroup}`);
+		if (radio) radio.click();
+
+		let slideIndex = 0;
+		for (let i = 0; i < targetIndex; i++) {
+			if (dados[i][key] === targetGroup) slideIndex++;
+		}
+
+		const swiperEl = getID(`transporte-${targetGroup}-swiper`);
+		if (swiperEl?.swiper) {
+			swiperEl.swiper.slideTo(slideIndex, 600);
+		}
+	} else if (visualizacao === "people-view") {
+		const key = "pessoa";
+		const targetGroup = dados[targetIndex][key];
+		const groupId = `custom-${_codifyText(targetGroup)}`;
+
+		_customTransporteSelectAction(groupId);
+
+		let slideIndex = 0;
+		for (let i = 0; i < targetIndex; i++) {
+			if (dados[i][key] === targetGroup) slideIndex++;
+		}
+
+		const swiperEl = getID(`transporte-${groupId}-swiper`);
+		if (swiperEl?.swiper) {
+			swiperEl.swiper.slideTo(slideIndex, 600);
+		}
+	}
 }

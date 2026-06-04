@@ -27,6 +27,30 @@ function _loadDestinos() {
 	window.addEventListener("resize", function () {
 		_adjustDestinationsHTML();
 	});
+
+	_autoNavigateDestinos();
+}
+
+function _autoNavigateDestinos() {
+	if (DESTINOS.length <= 1) return;
+	if (!INICIO?.date || !FIM?.date) return;
+
+	const hoje = _convertFromDateObject(_getTodayDateObject());
+	if (hoje < INICIO.date || hoje > FIM.date) return;
+
+	const hojeKey = _jsDateToKey(hoje);
+	const hojeDestinos = PROGRAMACAO_DESTINOS[hojeKey];
+	if (!hojeDestinos || hojeDestinos.length === 0) return;
+
+	const targetDestinosID = hojeDestinos[0].destinosID;
+	if (!targetDestinosID) return;
+
+	const option = CUSTOM_SELECTS["destinos-select"]?.options.find(
+		(opt) => opt.value === targetDestinosID,
+	);
+	if (!option) return;
+
+	_loadCustomSelectAction("destinos-select", targetDestinosID, option.label);
 }
 
 function _loadDestinationsCustomSelect() {
