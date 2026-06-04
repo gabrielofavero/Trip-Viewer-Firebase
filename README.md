@@ -13,7 +13,6 @@
 
 ### High Priority
 
-- 🐞 **B157:** Trip being considereda as finished on last day (index only)
 - 🐞 **B156:** Reservation being copied with # in it
 - ⚔️ **E042:** During Trip Automations
   - *[🐞B152] Todays itinerary button not opening calendar item*
@@ -53,6 +52,7 @@
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
 - 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
+- 🐞 **B157:** Trip being considered as finished on last day (index only)
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

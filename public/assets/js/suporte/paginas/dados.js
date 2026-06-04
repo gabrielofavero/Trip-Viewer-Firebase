@@ -708,7 +708,7 @@ function _getLinkMediaButton(midia, tipo) {
 
 // Trips
 function _getCurrentTrips(data) {
-	const today = new Date();
+	const today = _convertFromDateObject(_getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]) => {
 			const start = _convertFromDateObject(v.inicio);
@@ -719,7 +719,7 @@ function _getCurrentTrips(data) {
 }
 
 function _getPreviousTrips(data) {
-	const today = new Date();
+	const today = _convertFromDateObject(_getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]) => _convertFromDateObject(v.fim) < today)
 		.map(([id, v]) => ({ id, ...v }))
@@ -729,7 +729,7 @@ function _getPreviousTrips(data) {
 }
 
 function _getNextTrips(data) {
-	const today = new Date();
+	const today = _convertFromDateObject(_getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]) => _convertFromDateObject(v.fim) >= today)
 		.map(([id, v]) => ({ id, ...v }))
