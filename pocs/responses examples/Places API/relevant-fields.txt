@@ -1,0 +1,11 @@
+id -> id
+primaryType
+types
+displayName.text
+googleMapsUri
+rating
+websiteUri
+priceLevel
+primaryTypeDisplayName.text
+priceRange
+reviewSummary.text.text

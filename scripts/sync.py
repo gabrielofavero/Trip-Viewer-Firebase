@@ -48,7 +48,7 @@ def run_command(cmd, capture_output=True, check=True):
 # ============================================================
 
 def main():
-    repo_dir = Path(__file__).resolve().parent
+    repo_dir = Path(__file__).resolve().parent.parent
     print(f"{Colors.CYAN}Repository:{Colors.RESET} {Colors.BOLD}{repo_dir}{Colors.RESET}")
 
     print(
@@ -65,16 +65,16 @@ def main():
         sys.exit(0)
 
     print(f"\n{Colors.CYAN}Fetching latest refs...{Colors.RESET}")
-    run_command("git fetch")
+    run_command(f"git -C {repo_dir} fetch")
 
     print(f"{Colors.CYAN}Switching to master...{Colors.RESET}")
-    run_command("git checkout master")
+    run_command(f"git -C {repo_dir} checkout master")
 
     print(f"{Colors.CYAN}Force syncing develop → master...{Colors.RESET}")
-    run_command("git reset --hard origin/develop")
+    run_command(f"git -C {repo_dir} reset --hard origin/develop")
 
     print(f"{Colors.CYAN}Switching back to develop...{Colors.RESET}")
-    run_command("git checkout develop")
+    run_command(f"git -C {repo_dir} checkout develop")
 
     print(f"\n{Colors.GREEN}✓{Colors.RESET} "
           f"{Colors.BOLD}master is now identical to develop{Colors.RESET}")

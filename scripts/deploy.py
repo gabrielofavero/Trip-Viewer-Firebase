@@ -10,6 +10,9 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Repository root (two levels up from scripts/)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # ============================================================
 # Colors
@@ -95,7 +98,7 @@ def select_deployment_targets():
 
 def load_version_json():
     """Load version.json and return current build number and data."""
-    version_json_path = Path("public/assets/json/version.json")
+    version_json_path = BASE_DIR / "public" / "assets" / "json" / "version.json"
     
     if not version_json_path.exists():
         print(f"version.json does not exist. Creating new file at {version_json_path}")
@@ -124,11 +127,11 @@ def increment_build_number(version_data):
 
 def save_version_json(version_data, project, firebase_version=None):
     """Save updated version.json with deployment info."""
-    version_json_path = Path("public/assets/json/version.json")
+    version_json_path = BASE_DIR / "public" / "assets" / "json" / "version.json"
     
     try:
         import sys
-        sys.path.insert(0, str(Path.cwd()))
+        sys.path.insert(0, str(BASE_DIR / "scripts"))
         from readme import get_system_version
         system_version = get_system_version()
     except Exception:
@@ -154,7 +157,7 @@ def update_html_cache_busting(build_number):
     """Add cache busting parameters to HTML files with data-main attribute."""
     print(f"\n{Colors.BOLD}{Colors.CYAN}Cache Busting{Colors.RESET} (b={build_number})")
     
-    public_dir = Path("public")
+    public_dir = BASE_DIR / "public"
     html_files = []
     
     if public_dir.exists():

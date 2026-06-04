@@ -15,7 +15,7 @@
 
 ### Medium Priority
 
-- ⚔️ **E043:** Offline Mode (Developer only POC)
+- ⚔️ **E043:** Offline Mode (Dev Only, POC)
   - *[🏆F152] Export script — Firestore→JSON + image download + offline HTML generation*
   - *[🏆F153] Zip packaging + validation + deploy integration*
   - *[🏆F154] offline-data.js — local JSON data loader (replaces database.js)*
@@ -24,13 +24,11 @@
   - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
   - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
-- ⚔️ **E026:** Google Maps Places API Integration
-  - *[🏆F160] Local proxy server (Python HTTP proxy → Places API)*
-  - *[🏆F161] API key config (.env gitignored) with setup docs*
-  - *[🏆F162] Place ID extraction from URL + Find Place fallback*
-  - *[🏆F163] Data normalization (Places API response → destination format)*
-  - *[🏆F164] Import button + auto-fill in edit form (localhost-only)*
-  - *[🏆F165] Emoji suggestion from Places API types*
+- ⚔️ **E026:** Google Maps partial integration (Dev Only, POC)
+  - *[🏆F161] Map conversion layer*
+  - *[🏆F162] Map emoji conversion (Places API)*
+  - *[🏆F163] Map emoji conversion (Pleper Extension)*
+  - *[🏆F164] Python Script*
 
 ### Low Priority
 
@@ -53,6 +51,9 @@
 - 📈 **M143:** Improve spacing for full itineray
 - 🐞 **B155:** Incorrect translation key in gallery causing exception (translation module should handle without errors)
 - 🏆 **F166:** Disable image uploads in edit trip page
+- 🏆 **F165:** Refactor folder structure for scripts and pocs
+- ⚔️ **E026:** Google Maps (Places API) partial implementation (Dev Only, POC)
+  - *[🏆F160] Add example files (Places API, Pleper Extension)*
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

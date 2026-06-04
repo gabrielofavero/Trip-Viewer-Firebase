@@ -11,6 +11,9 @@ import sys
 
 sys.stdout.reconfigure(encoding="utf-8")
 
+# Repository root (two levels up from scripts/)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 EMOJI_TYPE_MAP = {
     '🐞': 'B',
     '🏆': 'F',
@@ -217,7 +220,7 @@ def update_table(content, counts):
 
 def get_system_version():
     """Get current system version from README without full analysis."""
-    readme_path = Path('README.md')
+    readme_path = BASE_DIR / 'README.md'
     
     if not readme_path.exists():
         return "2.0.0"
@@ -229,7 +232,7 @@ def get_system_version():
 
 def main():
     """Main script execution."""
-    readme_path = Path('README.md')
+    readme_path = BASE_DIR / 'README.md'
     
     if not readme_path.exists():
         print(f"{Colors.RED}Error: README.md not found{Colors.RESET}")
