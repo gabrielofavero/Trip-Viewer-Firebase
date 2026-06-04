@@ -169,14 +169,17 @@ function _initializeApp() {
 
 function _setPageName(pageName) {
 	const isDev = APP.projectId === "trip-viewer-dev";
-	const tag = isDev ? "[DEV]" : "[PRD]";
-
-	const resolvedPageName = pageName ?? document.title.replace(tag, "").trim();
-
 	const host = location.hostname;
 	const isLocal = host === "localhost" || !Number.isNaN(Number(host));
+	const tag = isLocal ? (isDev ? "[LOCAL DEV]" : "[LOCAL PRD]") : isDev ? "[DEV]" : "";
+	const cleanTitle = document.title
+		.replace(/\[LOCAL (DEV|PRD)\]\s*/g, "")
+		.replace(/\[DEV\]\s*/g, "")
+		.replace(/\[PRD\]\s*/g, "")
+		.trim();
 
-	const newTitle = isLocal ? `${tag} ${resolvedPageName}` : resolvedPageName;
+	const resolvedPageName = pageName ?? cleanTitle;
+	const newTitle = tag ? `${tag} ${resolvedPageName}` : resolvedPageName;
 
 	if (document.title !== newTitle) {
 		document.title = newTitle;
