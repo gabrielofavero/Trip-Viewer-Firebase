@@ -120,7 +120,7 @@ function _loadSensitiveReservationAction(type, id) {
 	if (!link && show) {
 		wrapper.style.cursor = "copy";
 		wrapper.onclick = () => {
-			_copyToClipboard(label);
+			_copyToClipboard(label.replace(/^#/, ""));
 		};
 	} else {
 		wrapper.style.cursor = "";
