@@ -5,9 +5,9 @@
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 159   | 155  | 3         | 1       |
-| 🏆   | Feature     | F000 | 166   | 130  | 22        | 14      |
+| 🏆   | Feature     | F000 | 166   | 133  | 22        | 11      |
 | 📈   | Improvement | M000 | 145   | 114  | 31        | 0       |
-| ⚔️   | Epic        | E000 | 43    | 27   | 14        | 2       |
+| ⚔️   | Epic        | E000 | 44    | 28   | 14        | 2       |
 
 ## Backlog
 
@@ -26,7 +26,6 @@
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
 - ⚔️ **E026:** Google Maps partial integration (Dev Only, POC)
   - *[🏆F161] Map conversion layer*
-  - *[🏆F162] Map emoji conversion (Places API)*
   - *[🏆F163] Map emoji conversion (Pleper Extension)*
   - *[🏆F164] Python Script*
 
@@ -54,6 +53,7 @@
 - 🏆 **F165:** Refactor folder structure for scripts and pocs
 - ⚔️ **E026:** Google Maps (Places API) partial implementation (Dev Only, POC)
   - *[🏆F160] Add example files (Places API, Pleper Extension)*
+  - *[🏆F162] Map emoji conversion (Places API)*
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
