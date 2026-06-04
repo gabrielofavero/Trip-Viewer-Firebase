@@ -5,6 +5,7 @@ var IMAGE_UPLOAD_STATUS = {
 
 var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
 var PERMISSOES;
+var IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-enable image uploads
 
 async function _uploadImage(path, file) {
 	let result = {
@@ -151,7 +152,7 @@ function _loadImageSelector(type) {
 	const link = getID(`link-${type}`);
 	const upload = getID(`upload-${type}`);
 
-	if (PERMISSOES && PERMISSOES["upload"] === true) {
+	if (IMAGE_UPLOAD_ENABLED && PERMISSOES && PERMISSOES["upload"] === true) {
 		if (checkboxLink.checked) {
 			link.style.display = "block";
 			upload.style.display = "none";
@@ -225,7 +226,7 @@ function _loadLogoSelector() {
 	const linkDark = getID(`link-logo-dark`);
 	const uploadDark = getID(`upload-logo-dark`);
 
-	if (PERMISSOES && PERMISSOES["upload"] === true) {
+	if (IMAGE_UPLOAD_ENABLED && PERMISSOES && PERMISSOES["upload"] === true) {
 		if (checkboxLink.checked) {
 			linkLight.style.display = "block";
 			linkDark.style.display = "block";
