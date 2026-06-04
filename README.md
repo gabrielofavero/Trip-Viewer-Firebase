@@ -6,7 +6,7 @@
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 160   | 156  | 3         | 1       |
 | 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
-| 📈   | Improvement | M000 | 147   | 116  | 31        | 0       |
+| 📈   | Improvement | M000 | 148   | 117  | 31        | 0       |
 | ⚔️   | Epic        | E000 | 43    | 28   | 14        | 1       |
 
 ## Backlog
@@ -56,6 +56,7 @@
   - *[🏆F164] destination.html single function for import*
 - 🐞 **B160:** Fix page tag for local envs
 - 📈 **M147:** Improve tags
+- 📈 **M148:** Improve trip categories in index.html
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

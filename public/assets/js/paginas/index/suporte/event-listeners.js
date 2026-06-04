@@ -3,12 +3,20 @@ function _loadListenersIndex() {
 		_signInWithEmailAndPassword();
 	});
 
+	getID("viagensAtuais").addEventListener("click", function () {
+		_openIndexPage("viagensAtuais", 0, 1);
+	});
+
 	getID("proximasViagens").addEventListener("click", function () {
 		_openIndexPage("proximasViagens", 0, 1);
 	});
 
 	getID("viagensAnteriores").addEventListener("click", function () {
 		_openIndexPage("viagensAnteriores", 0, 1);
+	});
+
+	getID("semViagens").addEventListener("click", function () {
+		_viagensNovo();
 	});
 
 	getID("destinosCadastrados").addEventListener("click", function () {
@@ -25,6 +33,10 @@ function _loadListenersIndex() {
 
 	getID("ajustesDaConta").addEventListener("click", function () {
 		_openIndexPage("settings", 0, 1);
+	});
+
+	getID("nova-viagem-0").addEventListener("click", function () {
+		_viagensNovo();
 	});
 
 	getID("nova-viagem-1").addEventListener("click", function () {

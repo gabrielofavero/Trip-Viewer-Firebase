@@ -33,6 +33,7 @@
 		"protected": "Protected trip data",
 		"next": "Next trips",
 		"previous": "Previous trips",
+		"current": "Current trips",
 		"new": "New trip",
 		"current_single": "Current trip",
 		"current_multi_1": "Multiple trips happening now",

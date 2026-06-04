@@ -37,6 +37,7 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
 			fadeOut = [
 				"index-unlogged-title",
 				"login-box",
+				"viagensAtuais-box",
 				"proximasViagens-box",
 				"viagensAnteriores-box",
 				"destinos-box",
@@ -59,6 +60,7 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
 				"index-logged-title",
 				"logged-menu",
 				"profile-icon",
+				"viagensAtuais-box",
 				"proximasViagens-box",
 				"viagensAnteriores-box",
 				"destinos-box",
@@ -74,11 +76,28 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
 				"index-logged-title",
 				"login-box",
 				"tripViewer",
+				"viagensAtuais-box",
 				"proximasViagens-box",
 				"viagensAnteriores-box",
 				"destinos-box",
 				"listagens-box",
 				"logged-menu",
+			];
+			fadeInNoDirection = ["back"];
+			break;
+		case "viagensAtuais":
+			fadeIn = ["viagensAtuais-box"];
+			fadeOut = [
+				"index-unlogged-title",
+				"index-logged-title",
+				"login-box",
+				"logged-menu",
+				"tripViewer",
+				"destinos-box",
+				"settings-box",
+				"listagens-box",
+				"proximasViagens-box",
+				"viagensAnteriores-box",
 			];
 			fadeInNoDirection = ["back"];
 			break;
@@ -93,6 +112,7 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
 				"destinos-box",
 				"settings-box",
 				"listagens-box",
+				"viagensAtuais-box",
 				"viagensAnteriores-box",
 			];
 			fadeInNoDirection = ["back"];
@@ -108,6 +128,7 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
 				"destinos-box",
 				"settings-box",
 				"listagens-box",
+				"viagensAtuais-box",
 				"proximasViagens-box",
 			];
 			fadeInNoDirection = ["back"];
@@ -120,6 +141,7 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
 				"login-box",
 				"logged-menu",
 				"tripViewer",
+				"viagensAtuais-box",
 				"proximasViagens-box",
 				"viagensAnteriores-box",
 				"settings-box",
@@ -135,6 +157,7 @@ function _openIndexPage(id, from = 0, to = 0, horizontal = true) {
 				"login-box",
 				"logged-menu",
 				"tripViewer",
+				"viagensAtuais-box",
 				"proximasViagens-box",
 				"viagensAnteriores-box",
 				"settings-box",

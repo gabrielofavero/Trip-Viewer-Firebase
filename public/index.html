@@ -146,6 +146,10 @@
       </div>
 
       <div class="logged-menu" id="logged-menu" style="display: none" style="display: none">
+        <div class="logged-menu-item" id="viagensAtuais"><i class="iconify index-buttons logged-menu-buttons"
+            data-icon="tabler:plane-departure"></i>
+          <div class="logged-menu-text" data-translate="trip.current"></div>
+        </div>
         <div class="logged-menu-item" id="proximasViagens"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="material-symbols-light:trip"></i>
           <div class="logged-menu-text" data-translate="trip.next"></div>
@@ -153,6 +157,10 @@
         <div class="logged-menu-item" id="viagensAnteriores"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="wpf:past"></i>
           <div class="logged-menu-text" data-translate="trip.previous"></div>
+        </div>
+        <div class="logged-menu-item" id="semViagens" style="display: none"><i class="iconify index-buttons logged-menu-buttons"
+            data-icon="gridicons:add-outline"></i>
+          <div class="logged-menu-text" data-translate="trip.new"></div>
         </div>
         <div class="logged-menu-item" id="destinosCadastrados"><i class="iconify index-buttons logged-menu-buttons"
             data-icon="bx:trip"></i>
@@ -166,6 +174,13 @@
             data-icon="material-symbols:settings"></i>
           <div class="logged-menu-text" data-translate="account.settings"></div>
         </div>
+      </div>
+
+      <div class="userList-box" id="viagensAtuais-box" style="display: none">
+        <h4 data-translate="trip.current"></h4>
+        <div class="content-list"></div>
+        <button id="nova-viagem-0" class="btn btn-theme" type="button"><i class="iconify add"
+            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
       </div>
 
       <div class="userList-box" id="proximasViagens-box" style="display: none">

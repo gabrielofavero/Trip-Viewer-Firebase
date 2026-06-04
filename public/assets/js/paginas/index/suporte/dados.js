@@ -52,6 +52,13 @@ function _loadIndexDataHTML() {
 	const listagens = _getOrderedDocumentByUpdateDate(INDEX_DATA.listagens);
 
 	_loadDataHTML(
+		"viagensAtuais-box",
+		CURRENT_TRIPS,
+		"_viagensEditar",
+		"_viagensVisualizar",
+		true,
+	);
+	_loadDataHTML(
 		"proximasViagens-box",
 		NEXT_TRIPS,
 		"_viagensEditar",
@@ -77,6 +84,8 @@ function _loadIndexDataHTML() {
 		"_listagensEditar",
 		"_listagensVisualizar",
 	);
+
+	_updateTripMenuVisibility();
 
 	function _loadDataHTML(
 		boxID,
@@ -113,4 +122,16 @@ function _loadIndexDataHTML() {
 		}
 		contentList.innerHTML = innerHTML;
 	}
+}
+
+function _updateTripMenuVisibility() {
+	const hasCurrent = CURRENT_TRIPS.length > 0;
+	const hasNext = NEXT_TRIPS.length > 0;
+	const hasPrevious = PREVIOUS_TRIPS.length > 0;
+	const hasAnyTrip = hasCurrent || hasNext || hasPrevious;
+
+	getID("viagensAtuais").style.display = hasCurrent ? "flex" : "none";
+	getID("proximasViagens").style.display = hasNext ? "flex" : "none";
+	getID("viagensAnteriores").style.display = hasPrevious ? "flex" : "none";
+	getID("semViagens").style.display = hasAnyTrip ? "none" : "flex";
 }

@@ -731,7 +731,7 @@ function _getPreviousTrips(data) {
 function _getNextTrips(data) {
 	const today = _convertFromDateObject(_getTodayDateObject());
 	return Object.entries(data)
-		.filter(([_, v]) => _convertFromDateObject(v.fim) >= today)
+		.filter(([_, v]) => _convertFromDateObject(v.inicio) > today)
 		.map(([id, v]) => ({ id, ...v }))
 		.sort(
 			(a, b) =>
