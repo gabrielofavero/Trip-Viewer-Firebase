@@ -4,7 +4,7 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 158   | 154  | 3         | 1       |
+| 🐞   | Bug         | B000 | 159   | 155  | 3         | 1       |
 | 🏆   | Feature     | F000 | 165   | 129  | 22        | 14      |
 | 📈   | Improvement | M000 | 145   | 114  | 31        | 0       |
 | ⚔️   | Epic        | E000 | 43    | 27   | 14        | 2       |
@@ -40,6 +40,7 @@
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens
+- 📈 **M146:** Hard block image uploads in edit pages (IMAGE_UPLOAD_ENABLED flag)
 - 📈 **M145:** If "long loading" pop up shows, close it if loading finishes
 - 🐞 **B157:** Trip being considered as finished on last day (index only)
 - 🐞 **B156:** Reservation being copied with # in it
@@ -51,6 +52,7 @@
   - *[🏆F150] If multiple accommodations, page should load on closest next one instead of first*
   - *[🏆F151] If multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first*
 - 📈 **M143:** Improve spacing for full itineray
+- 🐞 **B155:** Incorrect translation key in gallery causing exception (translation module should handle without errors)
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action

@@ -37,7 +37,7 @@ function translate(key, replacements = {}, strict = true) {
 		let result = obj;
 
 		for (const k of keys) {
-			if (result && k in result) {
+			if (result != null && typeof result === "object" && k in result) {
 				result = result[k];
 			} else {
 				return strict ? null : key;

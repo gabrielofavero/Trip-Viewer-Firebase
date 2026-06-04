@@ -424,7 +424,7 @@ function _addGaleria() {
           </div>
     
           <div class="nice-form-group">
-            <label>${translate("labels.description.title.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
+            <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="galeria-descricao-${j}" type="text" placeholder="${translate("trip.gallery.description_placeholder")}" />
           </div>
     
