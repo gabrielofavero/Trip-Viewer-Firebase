@@ -4,9 +4,9 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 158   | 154  | 2         | 2       |
+| 🐞   | Bug         | B000 | 158   | 154  | 3         | 1       |
 | 🏆   | Feature     | F000 | 165   | 129  | 22        | 14      |
-| 📈   | Improvement | M000 | 145   | 113  | 31        | 1       |
+| 📈   | Improvement | M000 | 145   | 114  | 31        | 0       |
 | ⚔️   | Epic        | E000 | 43    | 27   | 14        | 2       |
 
 ## Backlog
@@ -35,8 +35,6 @@
 ### Low Priority
 
 - 🐞 **B096:** Fix Gallery module
-- 🐞 **B148:** Full itinerary page giving multiple blank pages
-- 📈 **M143:** Improve spacing for full itineray
 
 ## Done
 
@@ -52,6 +50,7 @@
   - *[🏆F149] If multiple transportations, page should load on closest next one instead of first*
   - *[🏆F150] If multiple accommodations, page should load on closest next one instead of first*
   - *[🏆F151] If multiple destinations and itinerary is set with destinations, page should load on closest next one instead of first*
+- 📈 **M143:** Improve spacing for full itineray
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
@@ -730,3 +729,4 @@
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
 - 📈 **M098:** Change js folder structures to EN-US
 - 📈 **M135:** Refactor "dados.js" to shared dir
+- 🐞 **B148:** Full itinerary page giving multiple blank pages

@@ -372,7 +372,7 @@ h6 {
 }
 
 .content > li {
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 }
 
 .content > li:last-child {
@@ -384,12 +384,12 @@ h6 {
 }
 
 .content h2:not(:first-of-type) {
-	margin-top: 3rem;
+	margin-top: 4rem;
 }
 
 .content h3 {
-	margin-top: 2rem;
-	margin-bottom: 1rem;
+	margin-top: 1.2rem;
+	margin-bottom: 0.5rem;
 }
 
 @media (max-width: 1200px) {
