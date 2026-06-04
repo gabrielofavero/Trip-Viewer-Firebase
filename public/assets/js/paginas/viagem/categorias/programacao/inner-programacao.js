@@ -83,13 +83,25 @@ function _loadModalContentCalendar() {
 	}
 }
 
-function _openModalCalendar(programacao) {
+function _openModalCalendar(programacao, instant = false) {
 	PROGRAMACAO_ATUAL = programacao;
 	_loadModalContentCalendar();
-	$("#programacao-box").show();
-	setTimeout(() => {
-		getID("programacao-box").classList.toggle("show");
-	}, 100);
+
+	if (instant) {
+		const box = getID("programacao-box");
+		box.style.transition = "none";
+		box.style.display = "block";
+		box.classList.add("show");
+		box.style.opacity = "1";
+		requestAnimationFrame(() => {
+			box.style.transition = "";
+		});
+	} else {
+		$("#programacao-box").show();
+		setTimeout(() => {
+			getID("programacao-box").classList.toggle("show");
+		}, 100);
+	}
 }
 
 function _closeModalCalendar() {
@@ -139,7 +151,7 @@ function _loadInnerProgramacaoMidia(midia) {
 	getID("midia-1").innerHTML = _getLinkMediaButton(midia);
 }
 
-function _loadCalendarItem(day, month, year) {
+function _loadCalendarItem(day, month, year, instant = false) {
 	if (!day || !month || !year) {
 		console.warn("No data string provided to load calendar item.");
 		return;
@@ -174,7 +186,7 @@ function _loadCalendarItem(day, month, year) {
 			) {
 				if (!PROGRAMACAO_ABERTA) {
 					PROGRAMACAO_ABERTA = true;
-					_openModalCalendar(FIRESTORE_DATA.programacoes[i]);
+					_openModalCalendar(FIRESTORE_DATA.programacoes[i], instant);
 				} else {
 					_reloadModalCalendar(FIRESTORE_DATA.programacoes[i]);
 				}
@@ -290,11 +302,17 @@ function _getInnerProgramacao(item, destinos) {
 }
 
 function _getProgramacaoTitulo(titulo, destinos, placeholder = true) {
-	if (!titulo || typeof titulo === "string" || !titulo?.valor) {
+	if (!titulo || typeof titulo === "string") {
 		const placeholderValue = placeholder
 			? translate("trip.itinerary.title")
 			: "";
 		return titulo || placeholderValue;
+	}
+
+	if (!titulo.valor) {
+		return placeholder
+			? translate("trip.itinerary.title")
+			: "";
 	}
 
 	if (titulo.destinos) {

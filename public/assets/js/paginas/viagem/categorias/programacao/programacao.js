@@ -170,10 +170,15 @@ function _loadProgramacaoHojeButton() {
 				!PROGRAMACAO_ABERTA ||
 				(PROGRAMACAO_ABERTA && hojeText != programacaoText)
 			) {
-				_loadCalendarItem(_getDateString(hoje, "dd/mm/yyyy"));
+				_loadCalendarItem(
+					hoje.getUTCDate(),
+					hoje.getUTCMonth() + 1,
+					hoje.getUTCFullYear(),
+					true,
+				);
 			}
 
-			getID("tabela").scrollIntoView({ behavior: "smooth" });
+			getID("programacao-box").scrollIntoView({ behavior: "smooth" });
 		});
 	}
 }
