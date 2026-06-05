@@ -49,6 +49,11 @@ function build() {
   console.log("[build] Copying public/ → dist/ ...");
   copyRecursive(PUBLIC_DIR, DIST_DIR);
 
+  // 2b. Inject shared HTML partials into dist/ HTML files
+  console.log("[build] Injecting HTML partials...");
+  const { inject } = require("./inject-partials.js");
+  inject();
+
   // 3. Copy firebase.json and firebase-config.js to dist/
   console.log("[build] Copying Firebase config files...");
   const firebaseJson = path.join(ROOT, "firebase.json");
@@ -66,7 +71,7 @@ function build() {
     console.warn("[build] WARNING: firebase-config.js not found at project root.");
   }
 
-  // 4. Transpile ES module JS files to IIFE format (strips export/import)
+  // 5. Transpile ES module JS files to IIFE format (strips export/import)
   //    so they work with regular <script> tags during migration phases P9-P11.
   console.log("[build] Transpiling ES modules to IIFE...");
   transpileESModules();

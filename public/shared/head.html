@@ -1,0 +1,46 @@
+<!--
+  Shared <head> partial — included at build time by scripts/inject-partials.js
+  Placeholders:
+    {{PAGE_TITLE}}   — page-specific <title>
+    {{ASSET_PREFIX}} — empty for root pages, "../" for edit/ pages
+-->
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+
+<title>{{PAGE_TITLE}}</title>
+<meta content="Your Travel Planner" name="description">
+<meta property="og:description" content="Your Travel Planner">
+<meta content="" name="keywords">
+
+<!-- Apple Data -->
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-title" content="TripViewer" />
+<meta name="theme-color" content="#fff">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ASSET_PREFIX}}apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ASSET_PREFIX}}favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ASSET_PREFIX}}favicon-16x16.png">
+<link rel="manifest" href="{{ASSET_PREFIX}}site.webmanifest">
+<link rel="mask-icon" href="{{ASSET_PREFIX}}safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="{{ASSET_PREFIX}}favicon.ico">
+<meta name="msapplication-TileColor" content="#e4ebdb">
+<meta name="msapplication-config" content="{{ASSET_PREFIX}}browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Inter:300,400,500,600,700,800,900|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+  rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="{{ASSET_PREFIX}}assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="{{ASSET_PREFIX}}assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{ASSET_PREFIX}}assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="{{ASSET_PREFIX}}assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="{{ASSET_PREFIX}}assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="{{ASSET_PREFIX}}assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">

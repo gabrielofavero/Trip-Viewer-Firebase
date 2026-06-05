@@ -1,0 +1,32 @@
+<!--
+  Shared vendor scripts — included at build time by scripts/inject-partials.js
+  Placeholders:
+    {{ASSET_PREFIX}} — empty for root pages, "../" for edit/ pages
+
+  NOTE: Firebase SDK version standardized to 10.12.2 across all pages.
+  Pages that need additional vendor scripts (Chart.js, TikTok embed, etc.)
+  should include them AFTER this partial.
+-->
+
+<!-- Firebase SDK (compat / namespaced) -->
+<script data-main src="{{ASSET_PREFIX}}../index.js" type=text/JSX"></script>
+<script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
+<script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
+<script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>
+<script defer src="/__/firebase/10.12.2/firebase-functions-compat.js"></script>
+<script defer src="/__/firebase/10.12.2/firebase-storage-compat.js"></script>
+<script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+<!-- Vendor JS Files (common to all pages) -->
+<script src="{{ASSET_PREFIX}}assets/vendor/aos/aos.js"></script>
+<script src="{{ASSET_PREFIX}}assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="{{ASSET_PREFIX}}assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="{{ASSET_PREFIX}}assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="{{ASSET_PREFIX}}assets/vendor/php-email-form/validate.js"></script>
+<script src="{{ASSET_PREFIX}}assets/vendor/typed.js/typed.min.js"></script>
+<script src="{{ASSET_PREFIX}}assets/vendor/waypoints/noframework.waypoints.js"></script>
+<script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+<script src="{{ASSET_PREFIX}}assets/vendor/jquery/jquery.min.js"></script>
+
+<!-- Google API (used by most pages: index, view, all edit pages) -->
+<script src="https://apis.google.com/js/api.js"></script>

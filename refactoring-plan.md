@@ -1192,7 +1192,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P13 | Extract Business Logic into Models          | ✅ Done    |
 | P14 | Create Clean Service Layer                  | ✅ Done    |
 | P15 | Remove CONFIG Global, Use Config Module     | ✅ Done    |
-| P16 | Shared HTML Partials & Build-Time Injection | ☐ Pending |
+| P16 | Shared HTML Partials & Build-Time Injection | ✅ Done    |
 | P17 | Rename All Functions/Variables to EN-US     | ☐ Pending |
 | P18 | Final Validation & Cleanup                  | ☐ Pending |
 
