@@ -1,8 +1,9 @@
 <!--
   Shared top-bar component — included at build time by scripts/inject-partials.js
   Placeholders:
-    {{ASSET_PREFIX}}  — empty for root pages, "../" for edit/ pages
-    {{HOME_HREF}}      — "index.html" for root pages, "../index.html" for edit/ pages
+    {{ASSET_PREFIX}}       — empty for root pages, "../" for edit/ pages
+    {{HOME_HREF}}           — "index.html" for root pages, "../index.html" for edit/ pages
+    Back icon / extra icons — computed per page by inject-partials.js
 
   NOTE: The SVG logos in this partial use the "index.html style" (#00b6ea stroke).
   Some pages (view, destination, expenses, itinerary) use a different style
@@ -62,7 +63,7 @@
     </div>
   </a>
   <div class="icons-box" id="icons-box">
-    <i id="back" class="bx bx-arrow-back icon-buttons" style="display: none;"></i>
+    {{BACK_ICON}}
     <div class="lang-selector">
       <button class="lang-button">EN</button>
       <div class="lang-options">
@@ -70,7 +71,7 @@
         <button data-lang="pt">PT</button>
       </div>
     </div>
-    <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-    <i id="profile-icon" class="icon-buttons" style="display: none;"></i>
+    <i id="night-mode" class="bx bx-moon icon-buttons{{NIGHT_MODE_CLASSES}}"></i>
+    {{EXTRA_ICONS}}
   </div>
 </div>

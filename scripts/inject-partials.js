@@ -85,6 +85,85 @@ const PAGES = [
 ];
 
 // ---------------------------------------------------------------------------
+// Per-page icon configuration for the top-bar partial
+// ---------------------------------------------------------------------------
+
+/**
+ * Each entry defines the icons that vary per page in the top-bar.
+ *   backIcon          — left-side navigation icon (back button or closeButton)
+ *   nightModeClasses  — extra CSS classes for the night-mode toggle
+ *   extraIcons        — additional icons after night-mode (share, export, print, menu, profile)
+ */
+const TOP_BAR_ICONS = {
+  "index.html": {
+    backIcon: '<i id="back" class="bx bx-arrow-back icon-buttons" style="display: none;"></i>',
+    nightModeClasses: "",
+    extraIcons: '<i id="profile-icon" class="icon-buttons" style="display: none;"></i>',
+  },
+  "view.html": {
+    backIcon: "",
+    nightModeClasses: "",
+    extraIcons:
+      '        <i id="share" class="bx bx-share-alt icon-buttons"></i>\n' +
+      '        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>',
+  },
+  "destination.html": {
+    backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
+    nightModeClasses: "",
+    extraIcons:
+      '        <i id="share" style="display: none;" onclick="_share()" class="bx bx-share-alt icon-buttons"></i>',
+  },
+  "expenses.html": {
+    backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
+    nightModeClasses: "",
+    extraIcons: "",
+  },
+  "itinerary.html": {
+    backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
+    nightModeClasses: " d-none d-xl-block",
+    extraIcons:
+      '        <i id="export" class="iconify icon-buttons d-none d-xl-block" data-icon="ph:export-bold"></i>\n' +
+      '        <i id="print" class="iconify icon-buttons d-none d-xl-block" data-icon="lucide:printer"></i>\n' +
+      '        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>',
+  },
+  // Edit pages — all share the same icon layout
+  "edit/trip.html": {
+    backIcon:
+      '<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
+    nightModeClasses: "",
+    extraIcons: "",
+  },
+  "edit/destination.html": {
+    backIcon:
+      '<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
+    nightModeClasses: "",
+    extraIcons: "",
+  },
+  "edit/listing.html": {
+    backIcon:
+      '<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
+    nightModeClasses: "",
+    extraIcons: "",
+  },
+};
+
+/**
+ * Get top-bar icon replacements for a given page source.
+ */
+function getTopBarIcons(source) {
+  const config = TOP_BAR_ICONS[source];
+  if (!config) {
+    console.warn(`[inject] WARNING: No top-bar icon config for: ${source}`);
+    return { BACK_ICON: "", NIGHT_MODE_CLASSES: "", EXTRA_ICONS: "" };
+  }
+  return {
+    BACK_ICON: config.backIcon,
+    NIGHT_MODE_CLASSES: config.nightModeClasses,
+    EXTRA_ICONS: config.extraIcons,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
@@ -160,11 +239,15 @@ function inject() {
     // Compute placeholders
     const assetPrefix = getAssetPrefix(page.source);
     const homeHref = getHomeHref(page.source);
+    // Get top-bar icon configuration for this page
+    const topBarIcons = getTopBarIcons(page.source);
+
     const replacements = {
       PAGE_TITLE: page.title,
       ASSET_PREFIX: assetPrefix,
       ENTRY_POINT: page.entry,
       HOME_HREF: homeHref,
+      ...topBarIcons,
     };
 
     // Replace includes
