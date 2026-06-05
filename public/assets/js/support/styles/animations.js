@@ -145,16 +145,4 @@ export function swipe(swipeOutIds, swipeInIds, direction, isBlock = true) {
 	setTimeout(() => swipeIn(swipeInIds, direction, isBlock), 500);
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.animate = animate;
-window.animateRight = animateRight;
-window.animateLeft = animateLeft;
-window.animateUp = animateUp;
-window.animateDown = animateDown;
-window.fadeOut = fadeOut;
-window.fadeIn = fadeIn;
-window.fade = fade;
-window.swipeOut = swipeOut;
-window.swipeIn = swipeIn;
-window.getSwipeDirection = getSwipeDirection;
-window.swipe = swipe;
+

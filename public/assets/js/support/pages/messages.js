@@ -446,27 +446,3 @@ export function handleMessageKeydown(e) {
 		}
 	}
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.displayMessage = displayMessage;
-window.displayPrompt = displayPrompt;
-window.displayFullMessage = displayFullMessage;
-window.displayError = displayError;
-window.getErrorMessage = getErrorMessage;
-window.displayForbidden = displayForbidden;
-window.closeMessage = closeMessage;
-window.getContainersInput = getContainersInput;
-window.getIconsBox = getIconsBox;
-window.getErrorElement = getErrorElement;
-window.getButton = getButton;
-window.getHomeButton = getHomeButton;
-window.getBackButton = getBackButton;
-window.getTryAgainButton = getTryAgainButton;
-window.getCloseButton = getCloseButton;
-window.getConfirmButton = getConfirmButton;
-window.getDeleteButton = getDeleteButton;
-window.getDeleteButtonBasic = getDeleteButtonBasic;
-window.openToast = openToast;
-window.closeToast = closeToast;
-window.handleMessageKeydown = handleMessageKeydown;
-window.MESSAGE_MODAL_OPEN = MESSAGE_MODAL_OPEN;

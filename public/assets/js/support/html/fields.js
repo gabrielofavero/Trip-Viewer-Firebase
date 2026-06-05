@@ -396,29 +396,3 @@ export function removeEl(id) {
 	el.remove();
 	return true;
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.snapshotFormState = snapshotFormState;
-window.getElValue = getElValue;
-window.getElPosition = getElPosition;
-window.hasUnsavedChanges = hasUnsavedChanges;
-window.validateRequiredFields = validateRequiredFields;
-window.getInvalidFieldsText = getInvalidFieldsText;
-window.reEdit = reEdit;
-window.getInnerText = getInnerText;
-window.notifyFieldIfAbsent = notifyFieldIfAbsent;
-window.getFieldValueOrNotify = getFieldValueOrNotify;
-window.closeAllSelects = closeAllSelects;
-window.getSelectCurrentLabel = getSelectCurrentLabel;
-window.addValueToSelectIfExists = addValueToSelectIfExists;
-window.getAllValuesFromSelect = getAllValuesFromSelect;
-window.selectHasValue = selectHasValue;
-window.isHttp = isHttp;
-window.validateLink = validateLink;
-window.validateMapLink = validateMapLink;
-window.validateInstagramLink = validateInstagramLink;
-window.validateMediaLink = validateMediaLink;
-window.validateImageLink = validateImageLink;
-window.getSelectOptionsHTML = getSelectOptionsHTML;
-window.removeEl = removeEl;
-window.ORIGINAL_STATE = ORIGINAL_STATE;

@@ -116,15 +116,3 @@ export function hideActiveOption(id) {
 export function getCustomSelectActiveOption(id) {
 	return CUSTOM_SELECTS[id]?.activeOption || null;
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.loadCloseCustomSelectListeners = loadCloseCustomSelectListeners;
-window.loadCustomSelect = loadCustomSelect;
-window.getCustomSelectHTML = getCustomSelectHTML;
-window.loadCustomSelectListeners = loadCustomSelectListeners;
-window.closeCustomSelects = closeCustomSelects;
-window.closeCustomSelect = closeCustomSelect;
-window.loadCustomSelectAction = loadCustomSelectAction;
-window.hideActiveOption = hideActiveOption;
-window.getCustomSelectActiveOption = getCustomSelectActiveOption;
-window.CUSTOM_SELECTS = CUSTOM_SELECTS;

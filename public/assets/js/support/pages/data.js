@@ -786,65 +786,59 @@ export function combineDatabaseResponses(responses) {
 	};
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.CALL_SYNC = [];
-window.FIRESTORE_DATA = undefined;
-window.SHEET_DATA = undefined;
-window.P_DATA = undefined;
-window.HYPERLINK = undefined;
-window.firstCharToUpperCase = firstCharToUpperCase;
-window.codifyText = codifyText;
-window.uncodifyText = uncodifyText;
-window.getRandomID = getRandomID;
-window.getEmptyChar = getEmptyChar;
-window.getLastUpdatedOnText = getLastUpdatedOnText;
-window.isObject = isObject;
-window.objectExistsAndHasKeys = objectExistsAndHasKeys;
-window.getIdFromObjectDB = getIdFromObjectDB;
-window.printObjectHTML = printObjectHTML;
-window.cloneObject = cloneObject;
-window.getLocalJSON = getLocalJSON;
-window.areObjectsEqual = areObjectsEqual;
-window.getObjectDiff = getObjectDiff;
-window.collectObjectDiffs = collectObjectDiffs;
-window.getReadableArray = getReadableArray;
-window.getChildIDs = getChildIDs;
-window.setRequired = setRequired;
-window.removeRequired = removeRequired;
-window.getOptionsFromSelect = getOptionsFromSelect;
-window.removeChild = removeChild;
-window.removeChildWithValidation = removeChildWithValidation;
-window.hideParentIfNoChildren = hideParentIfNoChildren;
-window.removeEmptyChild = removeEmptyChild;
-window.getIDs = getIDs;
-window.getJ = getJ;
-window.getJs = getJs;
-window.findJFromID = findJFromID;
-window.getFirstJ = getFirstJ;
-window.getLastJ = getLastJ;
-window.getLastUnorderedJ = getLastUnorderedJ;
-window.getNextJ = getNextJ;
-window.getCategoryID = getCategoryID;
-window.getOrCreateCategoryID = getOrCreateCategoryID;
-window.getURLParams = getURLParams;
-window.getURLParam = getURLParam;
-window.setURLParam = setURLParam;
-window.getDataDocument = getDataDocument;
-window.getNewDataDocument = getNewDataDocument;
-window.getTranslatedDocumentLabel = getTranslatedDocumentLabel;
-window.getOrderedDocumentByUpdateDate = getOrderedDocumentByUpdateDate;
-window.getOrderedDocumentByTitle = getOrderedDocumentByTitle;
-window.getAndDestinationTitle = getAndDestinationTitle;
-window.normalizeTikTokLink = normalizeTikTokLink;
-window.getDestinationTitle = getDestinationTitle;
-window.getDestinationsBoxHTML = getDestinationsBoxHTML;
-window.getInnerItineraryTitle = getInnerItineraryTitle;
-window.getInnerItineraryTitleHTML = getInnerItineraryTitleHTML;
-window.getInnerItinerary = getInnerItinerary;
-window.getLinkMediaButton = getLinkMediaButton;
-window.getCurrentTrips = getCurrentTrips;
-window.getPreviousTrips = getPreviousTrips;
-window.getNextTrips = getNextTrips;
-window.getAccommodationsHTML = getAccommodationsHTML;
-window.getErrorFromGetRequestMessage = getErrorFromGetRequestMessage;
-window.combineDatabaseResponses = combineDatabaseResponses;
+let CALL_SYNC = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

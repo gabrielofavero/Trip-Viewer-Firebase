@@ -18,14 +18,7 @@ var MOEDAS = {
 	gastosDurante: [],
 };
 
-// BACKWARD COMPAT: attach to window during migration
-window.filterCurrencies = filterCurrencies;
-window.sortCurrencies = sortCurrencies;
-window.convertCurrency = convertCurrency;
-window.canConvert = canConvert;
-window.getCurrencySymbol = getCurrencySymbol;
-window.formatCurrency = formatCurrency;
-window.loadCurrenciesObject = loadCurrenciesObject;
+
 
 async function loadCurrencies() {
 	DEFAULT_CURRENCY = GASTOS.moeda;

@@ -472,27 +472,3 @@ export async function getDestination(id, containerID) {
 export function haveErrorFromGetRequest() {
 	return Object.keys(ERROR_FROM_GET_REQUEST).length > 0;
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.DOCUMENT_ID = DOCUMENT_ID;
-window.ERROR_FROM_GET_REQUEST = ERROR_FROM_GET_REQUEST;
-window.buildDatabaseObject = buildDatabaseObject;
-window.get = get;
-window.hasReadPermission = hasReadPermission;
-window.create = create;
-window.deepCreate = deepCreate;
-window.update = update;
-window.override = override;
-window.deleteDocument = deleteDocument;
-window.createBatchOps = createBatchOps;
-window.getSingleData = getSingleData;
-window.getTripDataWithDestinations = getTripDataWithDestinations;
-window.getSystemData = getSystemData;
-window.deleteUserObjectDB = deleteUserObjectDB;
-window.deleteAccount = deleteAccount;
-window.deleteAccountDocuments = deleteAccountDocuments;
-window.addToUserArray = addToUserArray;
-window.newUserObjectDB = newUserObjectDB;
-window.getPermissoes = getPermissoes;
-window.getDestination = getDestination;
-window.haveErrorFromGetRequest = haveErrorFromGetRequest;

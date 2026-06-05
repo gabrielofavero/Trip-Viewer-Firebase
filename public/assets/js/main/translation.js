@@ -136,10 +136,4 @@ export function loadLangSelectorSelect() {
 	}
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.translate = translate;
-window.getUserLanguage = getUserLanguage;
-window.getLanguagePackName = getLanguagePackName;
-window.updateUserLanguage = updateUserLanguage;
-window.translatePage = translatePage;
-window.loadLangSelectorSelect = loadLangSelectorSelect;
+

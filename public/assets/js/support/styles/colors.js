@@ -186,31 +186,7 @@ export function hexToRgbText(hex, a) {
 	return rgbToText(r, g, b, a);
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.THEME_COLOR = THEME_COLOR;
-window.THEME_COLOR_HOVER = THEME_COLOR_HOVER;
-window.THEME_COLOR_SECONDARY = THEME_COLOR_SECONDARY;
-window.THEME_COLOR_SECONDARY_HOVER = THEME_COLOR_SECONDARY_HOVER;
-window.LIGHT_COLOR = LIGHT_COLOR;
-window.DARK_COLOR = DARK_COLOR;
-window.BOX_COLOR = BOX_COLOR;
-window.loadLogoColors = loadLogoColors;
-window.loadThemeColors = loadThemeColors;
-window.getLocalColors = getLocalColors;
-window.getEquivalentColorAndPosition = getEquivalentColorAndPosition;
-window.getLighterColor = getLighterColor;
-window.getDarkerColor = getDarkerColor;
-window.getColorIndexFromOptions = getColorIndexFromOptions;
-window.getMixedColor = getMixedColor;
-window.getSecondaryColor = getSecondaryColor;
-window.getColorNameFromOptions = getColorNameFromOptions;
-window.getColorHexFromOptions = getColorHexFromOptions;
-window.getThemeColorBoxShadow = getThemeColorBoxShadow;
-window.changeFillColorSVGs = changeFillColorSVGs;
-window.clearCustomColors = clearCustomColors;
-window.changeBarColorIOS = changeBarColorIOS;
-window.saveLocalColors = saveLocalColors;
-window.hexToRgb = hexToRgb;
-window.rgbToHex = rgbToHex;
-window.rgbToText = rgbToText;
-window.hexToRgbText = hexToRgbText;
+
+
+
+

@@ -324,23 +324,3 @@ export async function getAllImageUrls(path) {
 		return [];
 	}
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.IMAGE_UPLOAD_STATUS = IMAGE_UPLOAD_STATUS;
-window.UPLOAD_SIZE = UPLOAD_SIZE;
-window.PERMISSOES = PERMISSOES;
-window.IMAGE_UPLOAD_ENABLED = IMAGE_UPLOAD_ENABLED;
-window.uploadImage = uploadImage;
-window.uploadImages = uploadImages;
-window.deleteUnusedImages = deleteUnusedImages;
-window.deleteImage = deleteImage;
-window.deleteImageByLink = deleteImageByLink;
-window.getImagePathFromLink = getImagePathFromLink;
-window.deleteUserObjectStorage = deleteUserObjectStorage;
-window.checkFileSize = checkFileSize;
-window.loadImageSelector = loadImageSelector;
-window.removeImageSelectorListeners = removeImageSelectorListeners;
-window.loadLogoSelector = loadLogoSelector;
-window.getLastDir = getLastDir;
-window.getStorageErrorMessage = getStorageErrorMessage;
-window.getAllImageUrls = getAllImageUrls;

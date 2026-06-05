@@ -11,14 +11,7 @@ import {
 	isPriceInBucketRange,
 } from '../../../../../models/destination.js';
 
-// BACKWARD COMPAT: attach to window during migration
-window.getPriceBucket = getPriceBucket;
-window.buildPriceBuckets = buildPriceBuckets;
-window.findPriceBucket = findPriceBucket;
-window.parsePriceNumber = parsePriceNumber;
-window.normalizePriceBucket = normalizePriceBucket;
-window.getPriceLabel = getPriceLabel;
-window.isPriceInBucketRange = isPriceInBucketRange;
+
 
 function getPrices() {
 	const buckets = getPriceBuckets();

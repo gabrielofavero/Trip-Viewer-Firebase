@@ -70,10 +70,4 @@ export async function deleteExpenses(tripId) {
 	return await deleteDocument(`gastos/${tripId}`, true);
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.getExpenses = getExpenses;
-window.getProtectedExpenses = getProtectedExpenses;
-window.updateExpenses = updateExpenses;
-window.replaceExpenses = replaceExpenses;
-window.setProtectedExpenses = setProtectedExpenses;
-window.deleteExpenses = deleteExpenses;
+

@@ -107,11 +107,4 @@ export async function deleteAccountService() {
 	return await deleteAccount();
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.login = login;
-window.logout = logout;
-window.getCurrentUser = getCurrentUser;
-window.getCurrentUID = getCurrentUID;
-window.registerIfNeeded = registerIfNeeded;
-window.getCurrentUserData = getCurreServicentUserData;
-window.deleteAccount = deleteAccount;
+

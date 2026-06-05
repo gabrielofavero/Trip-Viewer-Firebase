@@ -9,11 +9,7 @@ import {
 } from '../../models/destination.js';
 import { getDestinos } from '../../core/config.js';
 
-// BACKWARD COMPAT: attach to window during migration
-window.getNotaTranslation = getNotaTranslation;
-window.getValorValue = getValorValue;
-window.convertCustomValor = convertCustomValor;
-window.getDescricaoValue = getDescricaoValue;
+
 
 // Active Category
 function loadActiveCategory(urlParams) {

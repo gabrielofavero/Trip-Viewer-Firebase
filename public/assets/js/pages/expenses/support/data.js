@@ -7,11 +7,7 @@ import {
 
 var GASTOS_CHARTS = {};
 
-// BACKWARD COMPAT: attach to window during migration
-window.getChartData = getChartData;
-window.getChartConfig = getChartConfig;
-window.getChartColorsRGB = getChartColorsRGB;
-window.getArrayRGBA = getArrayRGBA;
+
 
 // Tabelas
 function setTable(id, itens, total) {

@@ -11,10 +11,7 @@ var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
 let TRAVELER_SELECT_OPTIONS = "";
 
-// BACKWARD COMPAT: attach to window during migration
-window.getNewTravelerID = getNewTravelerID;
-window.validateTravelersObject = validateTravelersObject;
-window.hasDuplicateTravelerNames = hasDuplicateTravelerNames;
+
 
 function openTravelersInfo() {
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);

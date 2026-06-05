@@ -68,6 +68,15 @@ function importGetLastJ(categoria) {
 	return getLastJ(`${categoria}-box`);
 }
 
+// ─── Add-function lookup (replaces dynamic window._addXxx calls) ──────────────
+const ADD_FUNCTIONS = {
+	restaurantes: addRestaurantes,
+	lanches: addLanches,
+	saidas: addSaidas,
+	turismo: addTurismo,
+	lojas: addLojas,
+};
+
 // ─── 1. importNewDestination ──────────────────────────────────────────────────
 /**
  * Click the "add" button for the given type, then fill the new item.
@@ -81,9 +90,9 @@ function importNewDestination(type, data, force = false) {
 		return;
 	}
 
-	const addFn = window[`_add${type.charAt(0).toUpperCase() + type.slice(1)}`];
+	const addFn = ADD_FUNCTIONS[type];
 	if (typeof addFn !== "function") {
-		console.error(`Add function _add${type.charAt(0).toUpperCase() + type.slice(1)} not found.`);
+		console.error(`Add function for "${type}" not found.`);
 		return;
 	}
 

@@ -128,14 +128,3 @@ export function removeSelectorDS(type, selectID) {
 	removeValueDS(type, value);
 	delete DYNAMIC_SELECT[type].selectors[selectID];
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.DYNAMIC_SELECT = DYNAMIC_SELECT;
-window.newDynamicSelect = newDynamicSelect;
-window.addSelectorDS = addSelectorDS;
-window.removeValueDS = removeValueDS;
-window.updateValueDS = updateValueDS;
-window.buildDS = buildDS;
-window.addEventListenersDS = addEventListenersDS;
-window.addRemoveChildListenerDS = addRemoveChildListenerDS;
-window.removeSelectorDS = removeSelectorDS;

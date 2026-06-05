@@ -101,13 +101,3 @@ export function loadEmbedVisibility({
 export function isEmbed() {
 	return window.parent != window;
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.loadEmbedListeners = loadEmbedListeners;
-window.openEmbed = openEmbed;
-window.onEmbedMessage = onEmbedMessage;
-window.sendToParent = sendToParent;
-window.sendToEmbed = sendToEmbed;
-window.getOrigin = getOrigin;
-window.loadEmbedVisibility = loadEmbedVisibility;
-window.isEmbed = isEmbed;

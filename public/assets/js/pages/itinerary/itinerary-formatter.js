@@ -11,11 +11,6 @@ var ITINERARY;
 const ITINERARY_HTML = {};
 var DESTINOS = {};
 
-// BACKWARD COMPAT: attach to window during migration
-window.getItineraryContent = getItineraryContent;
-window.getItineraryData = getItineraryData;
-window.getDestination = getDestination;
-
 async function getDestination(id) {
 	if (!Object.keys(DESTINOS).includes(id)) {
 		DESTINOS[id] = await get(`destinos/${id}`);

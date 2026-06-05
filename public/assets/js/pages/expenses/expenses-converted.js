@@ -12,9 +12,4 @@ import {
 
 var GASTOS_CONVERTIDOS = {};
 
-// BACKWARD COMPAT: attach to window during migration
-window.loadConvertedExpenses = loadConvertedExpenses;
-window.processConvertedExpenses = processConvertedExpenses;
-window.processConvertedTravelerExpenses = processConvertedTravelerExpenses;
-window.calculateConvertedExpenses = calculateConvertedExpenses;
-window.getConversionText = getConversionText;
+

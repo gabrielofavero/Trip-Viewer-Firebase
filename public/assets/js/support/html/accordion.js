@@ -57,11 +57,3 @@ export function onAccordionOpen(actions = []) {
 export function onAccordionClose(actions = []) {
 	onAccordionAction("hide.bs.collapse", actions);
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.closeAccordions = closeAccordions;
-window.openLastAccordion = openLastAccordion;
-window.areThereOpenedAccordions = areThereOpenedAccordions;
-window.onAccordionAction = onAccordionAction;
-window.onAccordionOpen = onAccordionOpen;
-window.onAccordionClose = onAccordionClose;

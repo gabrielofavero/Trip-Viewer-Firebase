@@ -86,10 +86,4 @@ export async function deleteTrip(tripId) {
 	return await deleteUserObjectDB(tripId, "viagens");
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.getTrip = getTrip;
-window.getTripRaw = getTripRaw;
-window.createTrip = createTrip;
-window.updateTrip = updateTrip;
-window.replaceTrip = replaceTrip;
-window.deleteTrip = deleteTrip;
+

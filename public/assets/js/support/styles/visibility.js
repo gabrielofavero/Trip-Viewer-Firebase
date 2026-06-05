@@ -2,6 +2,7 @@ import { getURLParam, setURLParam, firstCharToUpperCase, removeEmptyChild } from
 import { getCurrentHour } from "../pages/dates.js";
 
 // ======= Visibility JS =======
+const _exports = {};
 export let CHANGED_SVGS = [];
 export let LOGO_LIGHT = "";
 export let LOGO_DARK = "";
@@ -315,8 +316,8 @@ export function searchDestinationsListenerAction() {
 
 export function visibilityAdd(type) {
 	const dynamicFunctionName = `_add${type}`;
-	if (typeof window[dynamicFunctionName] === "function") {
-		window[dynamicFunctionName]();
+	if (typeof _exports[dynamicFunctionName] === "function") {
+		_exports[dynamicFunctionName]();
 	} else {
 		console.error(`${dynamicFunctionName} is not defined.`);
 	}
@@ -344,33 +345,33 @@ export function loadExternalVisibility(external, internal) {
 	}
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.loadVisibility = loadVisibility;
-window.loadDarkMode = loadDarkMode;
-window.loadLightMode = loadLightMode;
-window.loadLightModeLite = loadLightModeLite;
-window.applyThemeAttribute = applyThemeAttribute;
-window.loadUserVisibility = loadUserVisibility;
-window.applyMode = applyMode;
-window.switchVisibility = switchVisibility;
-window.autoVisibility = autoVisibility;
-window.disableScroll = disableScroll;
-window.enableScroll = enableScroll;
-window.hasCSSRule = hasCSSRule;
-window.isOnDarkMode = isOnDarkMode;
-window.openModal = openModal;
-window.closeModal = closeModal;
-window.isModalOpen = isModalOpen;
-window.loadEditModule = loadEditModule;
-window.loadListener = loadListener;
-window.showContent = showContent;
-window.hideContent = hideContent;
-window.addRemoveChildListener = addRemoveChildListener;
-window.toggleFadingVisibility = toggleFadingVisibility;
-window.searchDestinationsListenerAction = searchDestinationsListenerAction;
-window.visibilityAdd = visibilityAdd;
-window.getVisibility = getVisibility;
-window.loadExternalVisibility = loadExternalVisibility;
-window.CHANGED_SVGS = CHANGED_SVGS;
-window.LOGO_LIGHT = LOGO_LIGHT;
-window.LOGO_DARK = LOGO_DARK;
+// Module-level exports lookup (replaces window.* backward compat)
+_exports.loadVisibility = loadVisibility;
+_exports.loadDarkMode = loadDarkMode;
+_exports.loadLightMode = loadLightMode;
+_exports.loadLightModeLite = loadLightModeLite;
+_exports.applyThemeAttribute = applyThemeAttribute;
+_exports.loadUserVisibility = loadUserVisibility;
+_exports.applyMode = applyMode;
+_exports.switchVisibility = switchVisibility;
+_exports.autoVisibility = autoVisibility;
+_exports.disableScroll = disableScroll;
+_exports.enableScroll = enableScroll;
+_exports.hasCSSRule = hasCSSRule;
+_exports.isOnDarkMode = isOnDarkMode;
+_exports.openModal = openModal;
+_exports.closeModal = closeModal;
+_exports.isModalOpen = isModalOpen;
+_exports.loadEditModule = loadEditModule;
+_exports.loadListener = loadListener;
+_exports.showContent = showContent;
+_exports.hideContent = hideContent;
+_exports.addRemoveChildListener = addRemoveChildListener;
+_exports.toggleFadingVisibility = toggleFadingVisibility;
+_exports.searchDestinationsListenerAction = searchDestinationsListenerAction;
+_exports.visibilityAdd = visibilityAdd;
+_exports.getVisibility = getVisibility;
+_exports.loadExternalVisibility = loadExternalVisibility;
+_exports.CHANGED_SVGS = CHANGED_SVGS;
+_exports.LOGO_LIGHT = LOGO_LIGHT;
+_exports.LOGO_DARK = LOGO_DARK;

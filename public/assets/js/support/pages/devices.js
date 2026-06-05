@@ -18,7 +18,3 @@ export function isIOSDevice() {
 export function isViewHTML() {
 	return getHTMLpage() === "view";
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.isIOSDevice = isIOSDevice;
-window.isViewHTML = isViewHTML;

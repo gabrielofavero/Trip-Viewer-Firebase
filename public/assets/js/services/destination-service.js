@@ -75,10 +75,4 @@ export async function deleteDestination(destId) {
 	return await deleteUserObjectDB(destId, "destinos");
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.getDestination = getDestination;
-window.getDestinationRaw = getDestinationRaw;
-window.createDestination = createDestination;
-window.updateDestination = updateDestination;
-window.replaceDestination = replaceDestination;
-window.deleteDestination = deleteDestination;
+

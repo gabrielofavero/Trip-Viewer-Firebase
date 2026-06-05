@@ -166,14 +166,4 @@ export function removeCSSVariable(variable) {
 	document.documentElement.style.removeProperty(`--${variable}`);
 }
 
-// BACKWARD COMPAT: attach to window during migration
-window.setCSSRule = setCSSRule;
-window.removeCSSRule = removeCSSRule;
-window.setCSSRuleBatch = setCSSRuleBatch;
-window.removeCSSRuleBatch = removeCSSRuleBatch;
-window.setCSSMediaRule = setCSSMediaRule;
-window.removeCSSMediaRule = removeCSSMediaRule;
-window.setCSSMediaRuleBatch = setCSSMediaRuleBatch;
-window.removeCSSMediaRuleBatch = removeCSSMediaRuleBatch;
-window.setCSSVariable = setCSSVariable;
-window.removeCSSVariable = removeCSSVariable;
+

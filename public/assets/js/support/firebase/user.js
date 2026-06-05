@@ -133,15 +133,3 @@ export async function getUser() {
 		);
 	});
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.USER_DATA = USER_DATA;
-window.UID = UID;
-window.getUserData = getUserData;
-window.unloadPageUserFunctions = unloadPageUserFunctions;
-window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-window.signOut = signOut;
-window.registerIfUserNotPresent = registerIfUserNotPresent;
-window.getUID = getUID;
-window.getFirebaseIdToken = getFirebaseIdToken;
-window.getUser = getUser;

@@ -102,8 +102,3 @@ export function loadDraggablesWithAccordions(items = []) {
 		changeDragIconVisibility(collapseElement, headerButton, false);
 	}
 }
-
-// BACKWARD COMPAT: attach to window during migration
-window.initializeSortableForGroup = initializeSortableForGroup;
-window.loadDraggablesWithAccordions = loadDraggablesWithAccordions;
-window.SORTABLE_SKIP_NEXT_ACTION = SORTABLE_SKIP_NEXT_ACTION;
