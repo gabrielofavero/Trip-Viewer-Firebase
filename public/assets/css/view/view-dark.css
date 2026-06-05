@@ -113,16 +113,7 @@ a:hover {
 	color: var(--theme-color);
 }
 
-.logo-link {
-	text-decoration: none;
-	color: inherit;
-	display: flex;
-	align-items: center;
-}
-
-#trip-viewer-text {
-	color: var(--theme-color);
-}
+/* REMOVED: .logo-link — was identical to base/layout.css (not a dark override) */
 
 .mobile-nav-toggle i,
 .custom-nav-toggle i {

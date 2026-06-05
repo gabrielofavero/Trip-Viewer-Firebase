@@ -139,10 +139,6 @@ details .toggle-code:hover {
 	background: #303030;
 }
 
-.message-container {
-	background: #303030;
-}
-
 .error-message {
 	color: #adadad;
 }
@@ -163,12 +159,6 @@ details .toggle-code:hover {
 .btn-basic-secondary {
 	border-color: #ced1d4;
 	color: #ced1d4;
-}
-
-.btn-basic:hover,
-.btn-basic:focus {
-	background: #ced1d4;
-	color: #404040;
 }
 
 .btn-theme {

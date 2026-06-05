@@ -18,10 +18,7 @@
 	justify-content: center;
 }
 
-.left-items {
-	align-items: flex-start;
-	justify-content: flex-start;
-}
+/* UNUSED: .left-items — not found in any HTML file */
 
 .tabs {
 	display: flex;
@@ -43,8 +40,8 @@ input[type="radio"] {
 	display: none;
 }
 
-.tab,
-.tab-mini {
+/* UNUSED: .tab-mini — not found in any HTML file; keeping .tab only */
+.tab {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -55,10 +52,6 @@ input[type="radio"] {
 	border-radius: 99px;
 	cursor: pointer;
 	transition: color 0.15s ease-in;
-}
-
-.tab-mini {
-	width: 100px;
 }
 
 input[type="radio"]:checked + label {
@@ -86,8 +79,8 @@ input[id="radio-gastosViajantes"]:checked ~ .glider {
 	transform: translateX(300%);
 }
 
-.glider,
-.glider-mini {
+/* UNUSED: .glider-mini — not found in any HTML file; keeping .glider only */
+.glider {
 	position: absolute;
 	display: flex;
 	height: 54px;
@@ -96,10 +89,6 @@ input[id="radio-gastosViajantes"]:checked ~ .glider {
 	z-index: 1;
 	border-radius: 99px;
 	transition: 0.25s ease-out;
-}
-
-.glider-mini {
-	width: 100px;
 }
 
 @media (max-width: 630px) {

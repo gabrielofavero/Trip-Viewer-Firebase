@@ -1,22 +1,22 @@
 # 🔄 E034: Frontend Code Refactoring — Master Plan
 
-> **Status:** Planning  
-> **Last updated:** 2026-06-04 (P3 complete)  
+> **Status:** Planning
+> **Last updated:** 2026-06-04 (P3 complete)
 > **Goal:** Transform a legacy jQuery/Bootstrap vanilla-JS app into a maintainable, modular frontend with clear separation of concerns — while keeping everything as static HTML+JS+CSS (no React/Angular/Vue).
 
 ---
 
 ## 📋 Current State Summary
 
-| Problem | Impact |
-|---------|--------|
-| 50+ `<script>` tags per HTML with implicit load order | Fragile, hard to debug, cannot tree-shake |
-| All functions/variables in global scope (`CONFIG`, `CALL_SYNC`, `FIRESTORE_DATA`, etc.) | Name collisions, no encapsulation |
-| Portuguese folder/file names (`paginas/`, `viagem/`, `programacao/`) | Confusing for contributors, inconsistent with EN-US goal |
-| CSS duplicated per page (preloader, fonts, general styles in every file) | Redundancy, inconsistency, hard to maintain |
-| Firebase/database calls interleaved with DOM manipulation | Impossible to test, tight coupling |
-| Vendor scripts loaded per-page (duplicated across 7 HTML files) | Inconsistent versions, maintenance burden |
-| No build step / no bundler | No minification, no cache-busting hash, no static analysis |
+| Problem                                                                                       | Impact                                                     |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| 50+`<script>` tags per HTML with implicit load order                                        | Fragile, hard to debug, cannot tree-shake                  |
+| All functions/variables in global scope (`CONFIG`, `CALL_SYNC`, `FIRESTORE_DATA`, etc.) | Name collisions, no encapsulation                          |
+| Portuguese folder/file names (`paginas/`, `viagem/`, `programacao/`)                    | Confusing for contributors, inconsistent with EN-US goal   |
+| CSS duplicated per page (preloader, fonts, general styles in every file)                      | Redundancy, inconsistency, hard to maintain                |
+| Firebase/database calls interleaved with DOM manipulation                                     | Impossible to test, tight coupling                         |
+| Vendor scripts loaded per-page (duplicated across 7 HTML files)                               | Inconsistent versions, maintenance burden                  |
+| No build step / no bundler                                                                    | No minification, no cache-busting hash, no static analysis |
 
 ---
 
@@ -119,14 +119,14 @@ public/
 
 ## 🗺️ Phase Overview
 
-| Phase | Prompts | What It Does | Risk |
-|-------|---------|-------------|------|
-| **Phase 0** | P0 | Establish build step (bundler) and shared entrypoint | Low — adds tooling, doesn't change runtime |
-| **Phase 1** | P1–P4 | Rename folders/files to EN-US, restructure JS/CSS | Medium — file moves only, logic unchanged |
-| **Phase 2** | P5–P8 | Extract shared CSS, remove duplication, clean unused | Medium — visual regression possible |
-| **Phase 3** | P9–P12 | Convert to ES modules, single entrypoint per HTML, remove CONFIG global | High — changes how code loads |
-| **Phase 4** | P13–P16 | Separate concerns: services/models/components/utils | High — deep refactor |
-| **Phase 5** | P17–P18 | Final polish, validation, documentation | Low |
+| Phase             | Prompts  | What It Does                                                            | Risk                                        |
+| ----------------- | -------- | ----------------------------------------------------------------------- | ------------------------------------------- |
+| **Phase 0** | P0       | Establish build step (bundler) and shared entrypoint                    | Low — adds tooling, doesn't change runtime |
+| **Phase 1** | P1–P4   | Rename folders/files to EN-US, restructure JS/CSS                       | Medium — file moves only, logic unchanged  |
+| **Phase 2** | P5–P8   | Extract shared CSS, remove duplication, clean unused                    | Medium — visual regression possible        |
+| **Phase 3** | P9–P12  | Convert to ES modules, single entrypoint per HTML, remove CONFIG global | High — changes how code loads              |
+| **Phase 4** | P13–P16 | Separate concerns: services/models/components/utils                     | High — deep refactor                       |
+| **Phase 5** | P17–P18 | Final polish, validation, documentation                                 | Low                                         |
 
 ---
 
@@ -1172,40 +1172,40 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 
 ## 📊 Progress Tracker
 
-| # | Prompt | Status |
-|---|--------|--------|
-| P0 | Set Up Bundler & Build Pipeline | ✅ Done |
-| P1 | Rename JS Folders/Files to EN-US | ✅ Done |
-| P2 | Rename CSS Folders to EN-US | ✅ Done |
-| P3 | Update Script/CSS Paths in HTML | ✅ Done |
-| P4 | Rename CSS Files Themselves | ✅ Done |
-| P5 | Extract Shared CSS into base/ | ✅ Done |
-| P6 | Extract Shared Component CSS | ✅ Done |
-| P7 | Clean Unused CSS Properties | ☐ Pending |
-| P8 | Single Dark Mode System | ☐ Pending |
-| P9 | Convert Utility Files to ES Modules | ☐ Pending |
-| P10 | Convert Component Files to ES Modules | ☐ Pending |
-| P11 | Convert Firebase Services to ES Modules | ☐ Pending |
-| P12 | Single JS Entry Point Per HTML | ☐ Pending |
-| P13 | Extract Business Logic into Models | ☐ Pending |
-| P14 | Create Clean Service Layer | ☐ Pending |
-| P15 | Remove CONFIG Global, Use Config Module | ☐ Pending |
+| #   | Prompt                                      | Status     |
+| --- | ------------------------------------------- | ---------- |
+| P0  | Set Up Bundler & Build Pipeline             | ✅ Done    |
+| P1  | Rename JS Folders/Files to EN-US            | ✅ Done    |
+| P2  | Rename CSS Folders to EN-US                 | ✅ Done    |
+| P3  | Update Script/CSS Paths in HTML             | ✅ Done    |
+| P4  | Rename CSS Files Themselves                 | ✅ Done    |
+| P5  | Extract Shared CSS into base/               | ✅ Done    |
+| P6  | Extract Shared Component CSS                | ✅ Done    |
+| P7  | Clean Unused CSS Properties                 | ✅ Done    |
+| P8  | Single Dark Mode System                     | ☐ Pending |
+| P9  | Convert Utility Files to ES Modules         | ☐ Pending |
+| P10 | Convert Component Files to ES Modules       | ☐ Pending |
+| P11 | Convert Firebase Services to ES Modules     | ☐ Pending |
+| P12 | Single JS Entry Point Per HTML              | ☐ Pending |
+| P13 | Extract Business Logic into Models          | ☐ Pending |
+| P14 | Create Clean Service Layer                  | ☐ Pending |
+| P15 | Remove CONFIG Global, Use Config Module     | ☐ Pending |
 | P16 | Shared HTML Partials & Build-Time Injection | ☐ Pending |
-| P17 | Rename All Functions/Variables to EN-US | ☐ Pending |
-| P18 | Final Validation & Cleanup | ☐ Pending |
+| P17 | Rename All Functions/Variables to EN-US     | ☐ Pending |
+| P18 | Final Validation & Cleanup                  | ☐ Pending |
 
 ---
 
 ## 🔗 Related Epics
 
-| Epic | Description | Dependency |
-|------|-------------|------------|
-| E016 | New Front-End: destination.html | Blocks until Phase 2 complete |
-| E027 | New Front-End: view.html | Blocks until Phase 2 complete |
-| E044 | New Front-End: edit pages | Blocks until Phase 2 complete |
-| E045 | New Front-End: itinerary.html | Blocks until Phase 2 complete |
-| E046 | New Front-End: expenses.html | Blocks until Phase 2 complete |
-| E043 | Offline Mode | Independent, but easier after E034 |
+| Epic | Description                     | Dependency                         |
+| ---- | ------------------------------- | ---------------------------------- |
+| E016 | New Front-End: destination.html | Blocks until Phase 2 complete      |
+| E027 | New Front-End: view.html        | Blocks until Phase 2 complete      |
+| E044 | New Front-End: edit pages       | Blocks until Phase 2 complete      |
+| E045 | New Front-End: itinerary.html   | Blocks until Phase 2 complete      |
+| E046 | New Front-End: expenses.html    | Blocks until Phase 2 complete      |
+| E043 | Offline Mode                    | Independent, but easier after E034 |
 
 ---
 

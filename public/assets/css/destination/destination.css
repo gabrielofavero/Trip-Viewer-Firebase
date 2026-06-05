@@ -57,7 +57,7 @@ h1::after {
 .destinos-select {
 	font-size: 24px;
 	padding: 8px;
-	margin: none;
+	margin: 0;
 	border-radius: 9999px;
 	margin-top: 1em;
 	color: var(--font-color);
@@ -296,7 +296,6 @@ h1::after {
 	color: #4f5051;
 	padding: 10px 18px;
 	margin-bottom: 8px;
-	transition: 0.3s;
 	font-size: 15px;
 	border-radius: 50px;
 	background: #f2f3f5;
@@ -542,8 +541,9 @@ h1::after {
 	background-color: #ead1dc;
 }
 
+/* NOTE: .planejado background-color was 'none' (invalid); changed to transparent */
 .planejado {
-	background-color: none;
+	background-color: transparent;
 }
 
 .accordion-body {
@@ -656,55 +656,7 @@ h1::after {
 	}
 }
 
-/*--------------------------------------------------------------
-# Preloader
---------------------------------------------------------------*/
-
-#preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 9999;
-	overflow: hidden;
-	background: var(--background-color);
-}
-
-#preloader:before {
-	content: "";
-	position: fixed;
-	top: calc(50% - 30px);
-	left: calc(50% - 30px);
-	border: 6px solid var(--theme-color);
-	border-top-color: var(--background-color);
-	border-bottom-color: var(--background-color);
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
-	-webkit-animation: animate-preloader 1s linear infinite;
-	animation: animate-preloader 1s linear infinite;
-}
-
-@-webkit-keyframes animate-preloader {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-@keyframes animate-preloader {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
+/* DUPLICATE: #preloader already defined in base/preloader.css — kept for backward compat during migration */
 
 /* Filter, Sort and Edit buttons */
 .section-buttons {
