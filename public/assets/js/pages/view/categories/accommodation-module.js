@@ -1,29 +1,29 @@
-function _loadHospedagens() {
+function loadAccommodations() {
 	let swiperData = [];
 
 	for (let i = 0; i < FIRESTORE_DATA.hospedagens.length; i++) {
-		const htmlContent = _getHospedagensHTML(i);
+		const htmlContent = getAccommodationsHTML(i);
 		swiperData.push(htmlContent);
 	}
 
 	if (swiperData.length === 0) return;
 
-	_buildHospedagensSwiper(swiperData);
+	buildHospedagensSwiper(swiperData);
 
 	for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
-		_loadImageLightbox(`hospedagens-galeria-${j}`);
+		loadImageLightbox(`hospedagens-galeria-${j}`);
 	}
 
-	_autoNavigateHospedagens();
+	autoNavigateHospedagens();
 }
 
-function _getHospedagensHTML(i, innerProgramacao = false) {
+function getAccommodationsHTML(i, innerItinerary = false) {
 	const original = FIRESTORE_DATA.hospedagens[i];
 	const hospedagem = {
 		id: original.id,
 		cafe: original.cafe,
-		checkIn: _getHospedagensData(original.datas.checkin),
-		checkOut: _getHospedagensData(original.datas.checkout),
+		checkIn: getHospedagensData(original.datas.checkin),
+		checkOut: getHospedagensData(original.datas.checkout),
 		reserva: original.reserva,
 		descricao: original.descricao,
 		endereco: original.endereco,
@@ -32,23 +32,23 @@ function _getHospedagensHTML(i, innerProgramacao = false) {
 		nome: original.nome,
 	};
 
-	if (innerProgramacao) {
-		return _getHotelBoxHTML(hospedagem, "inner-programacao", true);
+	if (innerItinerary) {
+		return getHotelBoxHTML(hospedagem, "inner-programacao", true);
 	}
 
 	const j = i + 1;
 	return `<div class="swiper-slide" id="hospedagens-slide-${j}">
             <div class="testimonial-item">
-              ${_getHotelBoxHTML(hospedagem, j)}
+              ${getHotelBoxHTML(hospedagem, j)}
             </div>
           </div>`;
 }
 
-function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
+function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
 	const imagens = hospedagem.imagens;
 	const checkIn = hospedagem.checkIn;
 	const checkOut = hospedagem.checkOut;
-	const galeriaId = innerProgramacao
+	const galeriaId = innerItinerary
 		? "programacao-galeria"
 		: `hospedagens-galeria-${j}`;
 	const isSensitive = FIRESTORE_DATA.pin === "sensitive-only";
@@ -65,7 +65,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
 		galeriaItems += `<a href="${imagem.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${imagem.descricao}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ""}</a>`;
 	}
 
-	return `<div class="hotel-box${innerProgramacao ? "-inner inner-programacao-item" : ""}" id="hospedagens-box-${j}${innerProgramacao ? "-inner" : ""}">
+	return `<div class="hotel-box${innerItinerary ? "-inner inner-programacao-item" : ""}" id="hospedagens-box-${j}${innerItinerary ? "-inner" : ""}">
             <div class="portfolio-wrap" style="display: ${imagens.length > 0 ? "block" : "none"};">
               <div class="hotel-img" style="background-image: url('${imagens?.[0]?.link}');">
                 <div class="portfolio-info">
@@ -99,7 +99,7 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
               <div class="hotel-text">
               <div class="${reservationClass}" style="display: ${reservationVisibility}">
                 <i class="bx bxs-file color-icon"></i>
-                ${_getHospedagemReservationHTML(hospedagem)} 
+                ${getAccommodationReservationHTML(hospedagem)} 
               </div>
                 <div class="hotel-description" style="display: ${hospedagem.descricao ? "block" : "none"}">
                   <i class="bx bxs-hotel color-icon"></i> 
@@ -118,14 +118,14 @@ function _getHotelBoxHTML(hospedagem, j, innerProgramacao = false) {
             </div>`;
 }
 
-function _getHospedagensData(dataFirestore) {
-	const date = _convertFromDateObject(dataFirestore);
-	return `${_getDateString(date)}, ${_getTimeStringFromDate(date)}`;
+function getHospedagensData(dataFirestore) {
+	const date = convertFromDateObject(dataFirestore);
+	return `${getDateString(date)}, ${getTimeStringFromDate(date)}`;
 }
 
-function _getHospedagemReservationHTML(hospedagem) {
+function getAccommodationReservationHTML(hospedagem) {
 	if (FIRESTORE_DATA.pin === "sensitive-only") {
-		return _getSensitiveReservationHTML("hospedagens", hospedagem.id);
+		return getSensitiveReservationHTML("hospedagens", hospedagem.id);
 	}
 	// remove # if first char is #
 	if (hospedagem.reserva && hospedagem.reserva.charAt(0) === "#") {
@@ -139,7 +139,7 @@ function _getHospedagemReservationHTML(hospedagem) {
 	return `${translate("labels.reservation.title")} #${hospedagem.reserva}`;
 }
 
-function _buildHospedagensSwiper(swiperData) {
+function buildHospedagensSwiper(swiperData) {
 	const swiperButtonStyle =
 		swiperData.length > 1 ? "" : `style="display: none"`;
 	getID(`hospedagens-box`).innerHTML =
@@ -154,11 +154,11 @@ function _buildHospedagensSwiper(swiperData) {
                                           </div>
                                         </div>`;
 	ADJUST_HEIGHT_CARDS.push("hospedagens");
-	_initSwiper("hospedagens");
+	initSwiper("hospedagens");
 }
 
-function _autoNavigateHospedagens() {
-	const hoje = _getDateNoTime(_convertFromDateObject(_getTodayDateObject()));
+function autoNavigateHospedagens() {
+	const hoje = getDateNoTime(convertFromDateObject(getTodayDateObject()));
 	const dados = FIRESTORE_DATA.hospedagens;
 	if (!dados || dados.length === 0) return;
 
@@ -167,8 +167,8 @@ function _autoNavigateHospedagens() {
 	// Outside trip dates → show first element
 	if (INICIO?.date && FIM?.date) {
 		if (
-			hoje < _getDateNoTime(INICIO.date) ||
-			hoje > _getDateNoTime(FIM.date)
+			hoje < getDateNoTime(START_DATE.date) ||
+			hoje > getDateNoTime(END_DATE.date)
 		) {
 			targetIndex = 0;
 		}
@@ -180,8 +180,8 @@ function _autoNavigateHospedagens() {
 		let found = false;
 
 		for (let i = 0; i < dados.length; i++) {
-			const checkin = _convertFromDateObject(dados[i].datas.checkin);
-			const checkout = _convertFromDateObject(dados[i].datas.checkout);
+			const checkin = convertFromDateObject(dados[i].datas.checkin);
+			const checkout = convertFromDateObject(dados[i].datas.checkout);
 
 			if (now >= checkin && now <= checkout) {
 				targetIndex = i;
@@ -194,7 +194,7 @@ function _autoNavigateHospedagens() {
 			// Uncovered period → find closest future checkin
 			let closestDiff = Infinity;
 			for (let i = 0; i < dados.length; i++) {
-				const checkin = _convertFromDateObject(dados[i].datas.checkin);
+				const checkin = convertFromDateObject(dados[i].datas.checkin);
 				const diff = checkin.getTime() - now.getTime();
 				if (diff > 0 && diff < closestDiff) {
 					closestDiff = diff;

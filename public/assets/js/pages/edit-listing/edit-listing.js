@@ -4,54 +4,54 @@ var FIRESTORE_NEW_DATA = {};
 
 var SUCCESSFUL_SAVE = false;
 
-_startLoadingScreen();
+startLoadingScreen();
 
 document.addEventListener("DOMContentLoaded", async function () {
 	try {
-		_main();
+		main();
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 	}
 });
 
-async function _loadEditarListagemPage() {
-	DOCUMENT_ID = _getURLParam("l");
-	PERMISSOES = await _getPermissoes();
+async function loadEditListingPage() {
+	DOCUMENT_ID = getURLParam("l");
+	PERMISSOES = await getPermissoes();
 
-	_loadVisibilityIndex();
-	_loadHabilitados();
+	loadVisibilityIndex();
+	loadHabilitados();
 
-	USER_DATA = await _getUserData();
-	DESTINOS = _getOrderedDocumentByTitle(USER_DATA.destinos);
+	USER_DATA = await getUserData();
+	DESTINOS = getOrderedDocumentByTitle(USER_DATA.destinos);
 
 	if (DOCUMENT_ID) {
-		await _carregarListagem();
+		await carregarListagem();
 	} else {
-		_loadDestinos();
+		loadDestinations();
 	}
 
-	_loadImageSelector("background");
-	_loadLogoSelector();
+	loadImageSelector("background");
+	loadLogoSelector();
 
-	_loadEventListeners();
-	_stopLoadingScreen();
-	_snapshotFormState();
+	loadEventListeners();
+	stopLoadingScreen();
+	snapshotFormState();
 
 	$("body").css("overflow", "auto");
 }
 
-function _loadHabilitados() {
-	_loadEditModule("imagens");
-	_loadEditModule("cores");
-	_loadEditModule("links");
+function loadHabilitados() {
+	loadEditModule("imagens");
+	loadEditModule("cores");
+	loadEditModule("links");
 }
 
-function _loadUploadSelectors() {
-	_loadUploadSelector("background");
-	_loadUploadSelector("logo");
+function loadUploadSelectors() {
+	loadUploadSelector("background");
+	loadUploadSelector("logo");
 }
 
-function _loadEventListeners() {
+function loadEventListeners() {
 	getID("cancelar").addEventListener("click", () => {
 		window.location.href = "../index.html";
 	});
@@ -63,7 +63,7 @@ function _loadEventListeners() {
 	getID("visualizar").addEventListener("click", () => {
 		if (DOCUMENT_ID) {
 			window.open(
-				`../view?l=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
+				`../view?l=${DOCUMENT_ID}&visibility=${getVisibility()}`,
 				"_blank",
 			);
 		} else {
@@ -72,11 +72,11 @@ function _loadEventListeners() {
 	});
 
 	getID("salvar").addEventListener("click", () => {
-		_setListagem();
+		setListagem();
 	});
 
 	getID("re-editar").addEventListener("click", () => {
-		_reEdit("listagens", SUCCESSFUL_SAVE);
+		reEdit("listagens", SUCCESSFUL_SAVE);
 	});
 
 	getID("home").addEventListener("click", () => {
@@ -84,40 +84,40 @@ function _loadEventListeners() {
 	});
 
 	getID("destinos-search").addEventListener("input", () =>
-		_searchDestinosListenerAction(),
+		searchDestinationsListenerAction(),
 	);
 
 	window.addEventListener("beforeunload", (event) => {
-		if (_hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
+		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
 			event.preventDefault();
 			event.returnValue = translate("messages.exit_confirmation");
 		}
 	});
-	getID("claro").addEventListener("change", () => _autoFillDarkColor());
+	getID("claro").addEventListener("change", () => autoFillDarkColor());
 }
 
-async function _carregarListagem() {
+async function carregarListagem() {
 	getID("delete-text").style.display = "block";
-	_startLoadingScreen();
+	startLoadingScreen();
 
-	FIRESTORE_DATA = await _getSingleData("listagens");
+	FIRESTORE_DATA = await getSingleData("listagens");
 
-	await _loadListData(FIRESTORE_DATA);
-	_stopLoadingScreen();
+	await loadListData(FIRESTORE_DATA);
+	stopLoadingScreen();
 }
 
-async function _buildListObject() {
+async function buildListObject() {
 	FIRESTORE_NEW_DATA = {
-		compartilhamento: await _buildCompartilhamentoObject(),
+		compartilhamento: await buildCompartilhamentoObject(),
 		cores: {
 			ativo: getID("habilitado-cores").checked,
 			claro: getID("claro").value,
 			escuro: getID("escuro").value,
 		},
 		descricao: getID(`descricao`).value,
-		destinos: _buildDestinosArray(),
-		imagem: _buildImagemObject(),
-		links: _buildLinksObject(),
+		destinos: buildDestinosArray(),
+		imagem: buildImagemObject(),
+		links: buildLinksObject(),
 		subtitulo: getID(`subtitulo`).value,
 		titulo: getID(`titulo`).value,
 		versao: {
@@ -127,7 +127,7 @@ async function _buildListObject() {
 	};
 }
 
-function _getIgnoredPathDestinos() {
+function getIgnoredPathDestinos() {
 	if (!FIRESTORE_DATA) return [];
 	let result = [];
 	for (let i = 0; i < FIRESTORE_DATA.destinos.length; i++) {
@@ -136,22 +136,22 @@ function _getIgnoredPathDestinos() {
 	return result;
 }
 
-async function _setListagem() {
-	for (const child of _getChildIDs("com-destinos")) {
+async function setListagem() {
+	for (const child of getChildIDs("com-destinos")) {
 		const i = parseInt(child.split("-")[2]);
-		_setRequired(`select-destinos-${i}`);
+		setRequired(`select-destinos-${i}`);
 	}
 
 	const type = "listagens";
-	const dataBuildingFunctions = [_buildListObject];
-	await _setDocumento({ type, dataBuildingFunctions });
+	const dataBuildingFunctions = [buildListObject];
+	await setDocumento({ type, dataBuildingFunctions });
 }
 
-function _deleteListagem() {
+function deleteListagem() {
 	let listagem = getID("titulo").value;
 	listagem = listagem ? ` "${listagem}"` : "";
 
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = "Apagar Listagem";
 	propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da listagem${listagem}? A ação não poderá ser desfeita.`;
 	propriedades.botoes = [
@@ -160,17 +160,17 @@ function _deleteListagem() {
 		},
 		{
 			tipo: "confirmar",
-			acao: "_deleteListagemAction()",
+			acao: "deleteListagemAction()",
 		},
 	];
 
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 }
 
-async function _deleteListagemAction() {
+async function deleteListagemAction() {
 	if (DOCUMENT_ID) {
-		await _deleteUserObjectDB(DOCUMENT_ID, "listagens");
-		await _deleteUserObjectStorage();
+		await deleteUserObjectDB(DOCUMENT_ID, "listagens");
+		await deleteUserObjectStorage();
 		window.location.href = "../index.html";
 	}
 }

@@ -1,23 +1,23 @@
 // Text Utils
-import { getMoedas } from '../../core/config.js';
+import { getCurrencies } from '../../core/config.js';
 
-export function _firstCharToUpperCase(str) {
+export function firstCharToUpperCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function _codifyText(inputString) {
+export function codifyText(inputString) {
 	let lowercaseString = inputString.toLowerCase();
 	let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, "");
 	return validFolderName;
 }
 
-export function _uncodifyText(inputString) {
+export function uncodifyText(inputString) {
 	return inputString
 		.replace(/_/g, " ")
 		.replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
-export function _getRandomID({ idLength = 5, pool = [] } = {}) {
+export function getRandomID({ idLength = 5, pool = [] } = {}) {
 	const characters =
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	const array = new Uint32Array(idLength);
@@ -29,31 +29,31 @@ export function _getRandomID({ idLength = 5, pool = [] } = {}) {
 	}
 
 	// avoid collision
-	return pool.includes(randomId) ? _getRandomID({ idLength, pool }) : randomId;
+	return pool.includes(randomId) ? getRandomID({ idLength, pool }) : randomId;
 }
 
-export function _getEmptyChar() {
+export function getEmptyChar() {
 	return "\u200B";
 }
 
-export function _getLastUpdatedOnText(date) {
+export function getLastUpdatedOnText(date) {
 	if (typeof date === "string") {
 		date = new Date(date);
 	}
-	const dateString = _getDateString(date, _getDateRegionalFormat());
+	const dateString = getDateString(date, getDateRegionalFormat());
 	return `${translate("labels.last_updated_on")} ${dateString}`;
 }
 
 // Object Utils
-export function _isObject(obj) {
+export function isObject(obj) {
 	return obj === Object(obj);
 }
 
-export function _objectExistsAndHasKeys(obj) {
-	return _isObject(obj) && obj && Object.keys(obj).length > 0;
+export function objectExistsAndHasKeys(obj) {
+	return isObject(obj) && obj && Object.keys(obj).length > 0;
 }
 
-export function _getIdFromObjectDB(dbObject) {
+export function getIdFromObjectDB(dbObject) {
 	try {
 		const segments = dbObject.data._delegate._key.path.segments;
 		return segments[segments.length - 1];
@@ -63,22 +63,22 @@ export function _getIdFromObjectDB(dbObject) {
 	}
 }
 
-export function _printObjectHTML(obj) {
+export function printObjectHTML(obj) {
 	var str = "<br>";
 	for (var key in obj) {
 		if (obj.hasOwnProperty(key)) {
-			const formattedKey = _uncodifyText(key);
+			const formattedKey = uncodifyText(key);
 			str += `<br><strong>${formattedKey}:</strong> ${obj[key]}`;
 		}
 	}
 	return str;
 }
 
-export function _cloneObject(object) {
+export function cloneObject(object) {
 	return JSON.parse(JSON.stringify(object));
 }
 
-export function _getLocalJSON() {
+export function getLocalJSON() {
 	return new Promise((resolve, reject) => {
 		const input = document.createElement("input");
 		input.type = "file";
@@ -109,10 +109,10 @@ export function _getLocalJSON() {
 	});
 }
 
-export function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
-	return _deepObjectsEqual(obj1, obj2, "", new Set(ignoredPaths));
+export function areObjectsEqual(obj1, obj2, ignoredPaths = []) {
+	return deepObjectsEqual(obj1, obj2, "", new Set(ignoredPaths));
 
-	function _deepObjectsEqual(val1, val2, path, ignored) {
+	function deepObjectsEqual(val1, val2, path, ignored) {
 		if (ignored.has(path)) return true;
 
 		if (val1 === val2) return true;
@@ -130,7 +130,7 @@ export function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
 
 		for (const key of keys) {
 			const nextPath = path ? `${path}.${key}` : key;
-			if (!_deepObjectsEqual(val1[key], val2[key], nextPath, ignored)) {
+			if (!deepObjectsEqual(val1[key], val2[key], nextPath, ignored)) {
 				return false;
 			}
 		}
@@ -139,11 +139,11 @@ export function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
 	}
 }
 
-export function _getObjectDiff({ obj1, obj2, ignoredPaths = [], name = "Object" }) {
+export function getObjectDiff({ obj1, obj2, ignoredPaths = [], name = "Object" }) {
 	const differences = [];
 	const ignored = new Set(ignoredPaths);
 
-	_collectObjectDiffs(obj1, obj2, "", ignored, differences);
+	collectObjectDiffs(obj1, obj2, "", ignored, differences);
 
 	return {
 		name,
@@ -152,7 +152,7 @@ export function _getObjectDiff({ obj1, obj2, ignoredPaths = [], name = "Object" 
 	};
 }
 
-export function _collectObjectDiffs(val1, val2, path, ignored, diffs) {
+export function collectObjectDiffs(val1, val2, path, ignored, diffs) {
 	if (ignored.has(path)) return;
 
 	if (val1 === val2) return;
@@ -175,12 +175,12 @@ export function _collectObjectDiffs(val1, val2, path, ignored, diffs) {
 
 	for (const key of keys) {
 		const nextPath = path ? `${path}.${key}` : key;
-		_collectObjectDiffs(val1[key], val2[key], nextPath, ignored, diffs);
+		collectObjectDiffs(val1[key], val2[key], nextPath, ignored, diffs);
 	}
 }
 
 // Array Utils
-export function _getReadableArray(arr) {
+export function getReadableArray(arr) {
 	if (arr.length <= 1) return arr[0] ?? "";
 	const andLabel = translate("labels.and");
 	const last = arr.pop();
@@ -188,7 +188,7 @@ export function _getReadableArray(arr) {
 }
 
 // Element Utils
-export function _getChildIDs(parentId) {
+export function getChildIDs(parentId) {
 	var parentElement = getID(parentId);
 
 	if (parentElement) {
@@ -208,21 +208,21 @@ export function _getChildIDs(parentId) {
 	}
 }
 
-export function _setRequired(id) {
+export function setRequired(id) {
 	const div = getID(id);
 	if (div) {
 		div.setAttribute("required", "");
 	}
 }
 
-export function _removeRequired(id) {
+export function removeRequired(id) {
 	const div = getID(id);
 	if (div) {
 		div.removeAttribute("required");
 	}
 }
 
-export function _getOptionsFromSelect(id) {
+export function getOptionsFromSelect(id) {
 	const selectElement = getID(id);
 	let optionValues = [];
 
@@ -232,27 +232,27 @@ export function _getOptionsFromSelect(id) {
 	return optionValues;
 }
 
-export function _removeChild(tipo) {
+export function removeChild(tipo) {
 	const div = getID(tipo);
 	div.parentNode.removeChild(div);
 }
 
-export function _removeChildWithValidation(categoria, j) {
+export function removeChildWithValidation(categoria, j) {
 	const id = getID(`${categoria}-inner-box-${j}`)
 		? `${categoria}-inner-box-${j}`
 		: `${categoria}-${j}`;
-	_removeChild(id);
-	_hideParentIfNoChildren(categoria);
+	removeChild(id);
+	hideParentIfNoChildren(categoria);
 }
 
-export function _hideParentIfNoChildren(categoria) {
-	if (_getChildIDs(`${categoria}-box`).length === 0) {
+export function hideParentIfNoChildren(categoria) {
+	if (getChildIDs(`${categoria}-box`).length === 0) {
 		getID(`habilitado-${categoria}`).checked = false;
-		_hideContent(categoria);
+		hideContent(categoria);
 	}
 }
 
-export function _removeEmptyChild(categoria) {
+export function removeEmptyChild(categoria) {
 	let itens = [];
 
 	switch (categoria) {
@@ -276,13 +276,13 @@ export function _removeEmptyChild(categoria) {
 	}
 
 	if (itens.length > 0) {
-		const j = _getFirstJ(`${categoria}-box`);
-		if (j && !_hasUserData(itens, j)) {
-			_removeChild(`${categoria}-${j}`);
+		const j = getFirstJ(`${categoria}-box`);
+		if (j && !hasUserData(itens, j)) {
+			removeChild(`${categoria}-${j}`);
 		}
 	}
 
-	function _hasUserData(itens, j) {
+	function hasUserData(itens, j) {
 		for (const item of itens) {
 			if (getID(`${item}-${j}`).value) {
 				return true;
@@ -292,7 +292,7 @@ export function _removeEmptyChild(categoria) {
 	}
 }
 
-export function _getIDs(divID) {
+export function getIDs(divID) {
 	const ids = [];
 	for (const item of divID.split("-")) {
 		if (!isNaN(item)) {
@@ -302,12 +302,12 @@ export function _getIDs(divID) {
 	return ids.join("-");
 }
 
-export function _getJ(id) {
+export function getJ(id) {
 	const jSplit = id.split("-");
 	return parseInt(jSplit[jSplit.length - 1]);
 }
 
-export function _getJs(parentID) {
+export function getJs(parentID) {
 	const parent = getID(parentID);
 	if (!parent) return [];
 
@@ -320,8 +320,8 @@ export function _getJs(parentID) {
 		.filter(Number.isFinite);
 }
 
-export function _findJFromID(id, tipo) {
-	const js = _getJs(`${tipo}-box`);
+export function findJFromID(id, tipo) {
+	const js = getJs(`${tipo}-box`);
 	for (const j of js) {
 		const result = getID(`${tipo}-id-${j}`).value;
 		if (result === id) {
@@ -331,27 +331,27 @@ export function _findJFromID(id, tipo) {
 	return 0;
 }
 
-export function _getFirstJ(parentID) {
-	const js = _getJs(parentID);
+export function getFirstJ(parentID) {
+	const js = getJs(parentID);
 	return js[0];
 }
 
-export function _getLastJ(parentID) {
-	const js = _getJs(parentID);
+export function getLastJ(parentID) {
+	const js = getJs(parentID);
 	return js.length === 0 ? 0 : js[js.length - 1];
 }
 
-export function _getLastUnorderedJ(parentID) {
-	const js = _getJs(parentID);
+export function getLastUnorderedJ(parentID) {
+	const js = getJs(parentID);
 	return js.length === 0 ? 0 : Math.max(...js);
 }
 
-export function _getNextJ(parentID) {
-	return _getLastUnorderedJ(parentID) + 1;
+export function getNextJ(parentID) {
+	return getLastUnorderedJ(parentID) + 1;
 }
 
-export function _getCategoriaID(tipo, j) {
-	const js = _getJs(`${tipo}-box`);
+export function getCategoryID(tipo, j) {
+	const js = getJs(`${tipo}-box`);
 	let ids = [];
 
 	for (const innerJ of js) {
@@ -364,16 +364,16 @@ export function _getCategoriaID(tipo, j) {
 		return currentID;
 	}
 
-	return _getRandomID({ pool: ids });
+	return getRandomID({ pool: ids });
 }
 
-export function _getOrCreateCategoriaID(tipo, j) {
+export function getOrCreateCategoryID(tipo, j) {
 	const currentID = getID(`${tipo}-id-${j}`).value;
-	return currentID ? currentID : _getCategoriaID(tipo, j);
+	return currentID ? currentID : getCategoryID(tipo, j);
 }
 
 // URL Utils
-export function _getURLParams() {
+export function getURLParams() {
 	const urlParams = new URLSearchParams(window.location.search);
 	const params = {};
 	for (const [internalKey, value] of urlParams) {
@@ -382,12 +382,12 @@ export function _getURLParams() {
 	return params;
 }
 
-export function _getURLParam(param) {
+export function getURLParam(param) {
 	const urlParams = new URLSearchParams(window.location.search);
 	return urlParams.get(param);
 }
 
-export function _setURLParam(key, value) {
+export function setURLParam(key, value) {
 	const url = new URL(window.location.href);
 	url.searchParams.set(key, value);
 	window.history.replaceState({}, "", url);
@@ -395,7 +395,7 @@ export function _setURLParam(key, value) {
 
 // Document Utils
 
-export function _getDataDocument(tipo) {
+export function getDataDocument(tipo) {
 	switch (tipo) {
 		case "viagens":
 		case "listagens":
@@ -407,7 +407,7 @@ export function _getDataDocument(tipo) {
 	}
 }
 
-export function _getNewDataDocument(tipo) {
+export function getNewDataDocument(tipo) {
 	switch (tipo) {
 		case "viagens":
 		case "listagens":
@@ -419,7 +419,7 @@ export function _getNewDataDocument(tipo) {
 	}
 }
 
-export function _getTranslatedDocumentLabel(type) {
+export function getTranslatedDocumentLabel(type) {
 	switch (type) {
 		case "viagens":
 			return translate("trip.document");
@@ -440,7 +440,7 @@ export function _getTranslatedDocumentLabel(type) {
 	}
 }
 
-export function _getOrderedDocumentByUpdateDate(data) {
+export function getOrderedDocumentByUpdateDate(data) {
 	return Object.entries(data)
 		.map(([id, v]) => ({ id, ...v }))
 		.sort(
@@ -450,14 +450,14 @@ export function _getOrderedDocumentByUpdateDate(data) {
 		);
 }
 
-export function _getOrderedDocumentByTitle(data) {
+export function getOrderedDocumentByTitle(data) {
 	return Object.entries(data)
 		.map(([id, v]) => ({ id, ...v }))
 		.sort((a, b) => a.titulo.localeCompare(b.titulo));
 }
 
 // Destination
-export function _getAndDestinationTitle(value, destinos = [], placeholder = true) {
+export function getAndDestinationTitle(value, destinos = [], placeholder = true) {
 	if (!destinos || destinos.length === 0) {
 		const placeholderValue = placeholder
 			? translate("trip.itinerary.title")
@@ -467,23 +467,23 @@ export function _getAndDestinationTitle(value, destinos = [], placeholder = true
 
 	const titles = destinos.map((d) => d.titulo);
 	if (value.includes("departure")) {
-		return _getReadableArray([
+		return getReadableArray([
 			translate("trip.transportation.departure"),
 			...titles,
 		]);
 	}
 
 	if (value.includes("return")) {
-		return _getReadableArray([
+		return getReadableArray([
 			...titles,
 			translate("trip.transportation.return"),
 		]);
 	}
 
-	return _getReadableArray([titles]);
+	return getReadableArray([titles]);
 }
 
-export async function _normalizeTikTokLink(link) {
+export async function normalizeTikTokLink(link) {
 	if (!link) return link;
 
 	const isMobile =
@@ -509,29 +509,29 @@ export async function _normalizeTikTokLink(link) {
 	}
 }
 
-export function _getDestinationTitle(item) {
+export function getDestinationTitle(item) {
 	if (item.nome && item.emoji) {
 		return `${item.nome} ${item.emoji}`;
 	} else return item.nome;
 }
 
-export function _getDestinosBoxHTML({
+export function getDestinationsBoxHTML({
 	j,
 	item,
-	innerProgramacao,
+	innerItinerary,
 	valores,
 	moeda,
 	planejado,
 	editBtn,
 }) {
 	return `
-    <div ${innerProgramacao ? "" : `class="accordion-body" id="accordion-body-${j}"`}>
-        ${_getDestinosAccordionBodyHTML({ j, item, valores, moeda, planejado, editBtn })}
+    <div ${innerItinerary ? "" : `class="accordion-body" id="accordion-body-${j}"`}>
+        ${getDestinationsAccordionBodyHTML({ j, item, valores, moeda, planejado, editBtn })}
     </div>`;
 }
 
 // Itinerary
-export function _getInnerProgramacaoTitle(dado, viajantes = TRAVELERS) {
+export function getInnerItineraryTitle(dado, viajantes = TRAVELERS) {
 	const programacao = dado.programacao || "";
 	const presentes = !dado.pessoas
 		? []
@@ -542,7 +542,7 @@ export function _getInnerProgramacaoTitle(dado, viajantes = TRAVELERS) {
 	const pessoasTexto =
 		presentes.length === 0 || presentes.length === viajantes.length
 			? ""
-			: _getReadableArray(presentes);
+			: getReadableArray(presentes);
 
 	let horario = "";
 	if (dado.inicio && dado.fim) {
@@ -578,15 +578,15 @@ export function _getInnerProgramacaoTitle(dado, viajantes = TRAVELERS) {
 	};
 }
 
-export function _getInnerProgramacaoTitleHTML(dado, spanClass) {
-	const titleObj = _getInnerProgramacaoTitle(dado);
+export function getInnerItineraryTitleHTML(dado, spanClass) {
+	const titleObj = getInnerItineraryTitle(dado);
 	return titleObj.title
 		? `<span class="${spanClass}">${titleObj.title}:</span> ${titleObj.content}`
 		: titleObj.content;
 }
 
-export function _getInnerProgramacao(item, destinos) {
-	const innerProgramacao = {
+export function getInnerItinerary(item, destinos) {
+	const innerItinerary = {
 		tipo: item?.tipo,
 		titulo: "",
 		content: "",
@@ -605,8 +605,8 @@ export function _getInnerProgramacao(item, destinos) {
 					.indexOf(item.id);
 				if (index >= 0) {
 					const transporte = FIRESTORE_DATA.transportes.dados[index];
-					innerProgramacao.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
-					innerProgramacao.content = _getFlightBoxHTML(
+					innerItinerary.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
+					innerItinerary.content = getFlightBoxHTML(
 						index + 1,
 						"inner-programacao",
 						true,
@@ -620,8 +620,8 @@ export function _getInnerProgramacao(item, destinos) {
 					.map((hospedagem) => hospedagem.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					innerProgramacao.titulo = "";
-					innerProgramacao.content = _getHospedagensHTML(index, true);
+					innerItinerary.titulo = "";
+					innerItinerary.content = getAccommodationsHTML(index, true);
 				}
 			}
 			break;
@@ -646,25 +646,25 @@ export function _getInnerProgramacao(item, destinos) {
 				if (destino && Object.keys(destino).length) {
 					const destinoItem = destino[item.id];
 					if (destinoItem) {
-						innerProgramacao.titulo = _getDestinationTitle(destinoItem);
-						innerProgramacao.content = _getDestinosBoxHTML({
+						innerItinerary.titulo = getDestinationTitle(destinoItem);
+						innerItinerary.content = getDestinationsBoxHTML({
 							j: 1,
 							id: item.id,
 							item: destinoItem,
-							innerProgramacao: true,
-							valores: _getDestinoValores(DESTINOS[index]),
+							innerItinerary: true,
+							valores: getDestinationValues(DESTINOS[index]),
 							moeda: destinos.moeda,
 						});
-						innerProgramacao.midia = destinoItem?.midia;
+						innerItinerary.midia = destinoItem?.midia;
 					}
 				}
 			}
 	}
 
-	return innerProgramacao;
+	return innerItinerary;
 
-	function _getDestinoValores(destino) {
-		const moeda = _cloneObject(getMoedas().escala[destino.destinos.moeda]);
+	function getDestinationValues(destino) {
+		const moeda = cloneObject(getCurrencies().escala[destino.destinos.moeda]);
 		const max = translate("destination.price.max", { value: moeda["$$$$"] });
 		moeda["-"] = translate("destination.price.free");
 		moeda["default"] = translate("destination.price.default");
@@ -673,7 +673,7 @@ export function _getInnerProgramacao(item, destinos) {
 	}
 }
 
-export function _getLinkMediaButton(midia, tipo) {
+export function getLinkMediaButton(midia, tipo) {
 	if (!midia) return;
 	const video = translate("trip.itinerary.media_button.video");
 	const playlist = translate("trip.itinerary.media_button.playlist");
@@ -700,46 +700,46 @@ export function _getLinkMediaButton(midia, tipo) {
 }
 
 // Trips
-export function _getCurrentTrips(data) {
-	const today = _convertFromDateObject(_getTodayDateObject());
+export function getCurrentTrips(data) {
+	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]) => {
-			const start = _convertFromDateObject(v.inicio);
-			const end = _convertFromDateObject(v.fim);
+			const start = convertFromDateObject(v.inicio);
+			const end = convertFromDateObject(v.fim);
 			return start <= today && today <= end;
 		})
 		.map(([id, v]) => ({ id, ...v }));
 }
 
-export function _getPreviousTrips(data) {
-	const today = _convertFromDateObject(_getTodayDateObject());
+export function getPreviousTrips(data) {
+	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
-		.filter(([_, v]) => _convertFromDateObject(v.fim) < today)
+		.filter(([_, v]) => convertFromDateObject(v.fim) < today)
 		.map(([id, v]) => ({ id, ...v }))
 		.sort(
-			(a, b) => _convertFromDateObject(b.fim) - _convertFromDateObject(a.fim),
+			(a, b) => convertFromDateObject(b.fim) - convertFromDateObject(a.fim),
 		);
 }
 
-export function _getNextTrips(data) {
-	const today = _convertFromDateObject(_getTodayDateObject());
+export function getNextTrips(data) {
+	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
-		.filter(([_, v]) => _convertFromDateObject(v.inicio) > today)
+		.filter(([_, v]) => convertFromDateObject(v.inicio) > today)
 		.map(([id, v]) => ({ id, ...v }))
 		.sort(
 			(a, b) =>
-				_convertFromDateObject(a.inicio) - _convertFromDateObject(b.inicio),
+				convertFromDateObject(a.inicio) - convertFromDateObject(b.inicio),
 		);
 }
 
 // Accommodation
-export function _getHospedagensHTML(i, innerProgramacao = false) {
+export function getAccommodationsHTML(i, innerItinerary = false) {
 	const original = FIRESTORE_DATA.hospedagens[i];
 	const hospedagem = {
 		id: original.id,
 		cafe: original.cafe,
-		checkIn: _getHospedagensData(original.datas.checkin),
-		checkOut: _getHospedagensData(original.datas.checkout),
+		checkIn: getHospedagensData(original.datas.checkin),
+		checkOut: getHospedagensData(original.datas.checkout),
 		reserva: original.reserva,
 		descricao: original.descricao,
 		endereco: original.endereco,
@@ -748,20 +748,20 @@ export function _getHospedagensHTML(i, innerProgramacao = false) {
 		nome: original.nome,
 	};
 
-	if (innerProgramacao) {
-		return _getHotelBoxHTML(hospedagem, "inner-programacao", true);
+	if (innerItinerary) {
+		return getHotelBoxHTML(hospedagem, "inner-programacao", true);
 	}
 
 	const j = i + 1;
 	return `<div class="swiper-slide" id="hospedagens-slide-${j}">
             <div class="testimonial-item">
-              ${_getHotelBoxHTML(hospedagem, j)}
+              ${getHotelBoxHTML(hospedagem, j)}
             </div>
           </div>`;
 }
 
 // Request Utils
-export function _getErrorFromGetRequestMessage() {
+export function getErrorFromGetRequestMessage() {
 	return ERROR_FROM_GET_REQUEST.message.includes(
 		"Missing or insufficient permissions",
 	)
@@ -769,7 +769,7 @@ export function _getErrorFromGetRequestMessage() {
 		: ERROR_FROM_GET_REQUEST;
 }
 
-export function _combineDatabaseResponses(responses) {
+export function combineDatabaseResponses(responses) {
 	if (responses.length === 1) {
 		return responses[0];
 	}
@@ -792,59 +792,59 @@ window.FIRESTORE_DATA = undefined;
 window.SHEET_DATA = undefined;
 window.P_DATA = undefined;
 window.HYPERLINK = undefined;
-window._firstCharToUpperCase = _firstCharToUpperCase;
-window._codifyText = _codifyText;
-window._uncodifyText = _uncodifyText;
-window._getRandomID = _getRandomID;
-window._getEmptyChar = _getEmptyChar;
-window._getLastUpdatedOnText = _getLastUpdatedOnText;
-window._isObject = _isObject;
-window._objectExistsAndHasKeys = _objectExistsAndHasKeys;
-window._getIdFromObjectDB = _getIdFromObjectDB;
-window._printObjectHTML = _printObjectHTML;
-window._cloneObject = _cloneObject;
-window._getLocalJSON = _getLocalJSON;
-window._areObjectsEqual = _areObjectsEqual;
-window._getObjectDiff = _getObjectDiff;
-window._collectObjectDiffs = _collectObjectDiffs;
-window._getReadableArray = _getReadableArray;
-window._getChildIDs = _getChildIDs;
-window._setRequired = _setRequired;
-window._removeRequired = _removeRequired;
-window._getOptionsFromSelect = _getOptionsFromSelect;
-window._removeChild = _removeChild;
-window._removeChildWithValidation = _removeChildWithValidation;
-window._hideParentIfNoChildren = _hideParentIfNoChildren;
-window._removeEmptyChild = _removeEmptyChild;
-window._getIDs = _getIDs;
-window._getJ = _getJ;
-window._getJs = _getJs;
-window._findJFromID = _findJFromID;
-window._getFirstJ = _getFirstJ;
-window._getLastJ = _getLastJ;
-window._getLastUnorderedJ = _getLastUnorderedJ;
-window._getNextJ = _getNextJ;
-window._getCategoriaID = _getCategoriaID;
-window._getOrCreateCategoriaID = _getOrCreateCategoriaID;
-window._getURLParams = _getURLParams;
-window._getURLParam = _getURLParam;
-window._setURLParam = _setURLParam;
-window._getDataDocument = _getDataDocument;
-window._getNewDataDocument = _getNewDataDocument;
-window._getTranslatedDocumentLabel = _getTranslatedDocumentLabel;
-window._getOrderedDocumentByUpdateDate = _getOrderedDocumentByUpdateDate;
-window._getOrderedDocumentByTitle = _getOrderedDocumentByTitle;
-window._getAndDestinationTitle = _getAndDestinationTitle;
-window._normalizeTikTokLink = _normalizeTikTokLink;
-window._getDestinationTitle = _getDestinationTitle;
-window._getDestinosBoxHTML = _getDestinosBoxHTML;
-window._getInnerProgramacaoTitle = _getInnerProgramacaoTitle;
-window._getInnerProgramacaoTitleHTML = _getInnerProgramacaoTitleHTML;
-window._getInnerProgramacao = _getInnerProgramacao;
-window._getLinkMediaButton = _getLinkMediaButton;
-window._getCurrentTrips = _getCurrentTrips;
-window._getPreviousTrips = _getPreviousTrips;
-window._getNextTrips = _getNextTrips;
-window._getHospedagensHTML = _getHospedagensHTML;
-window._getErrorFromGetRequestMessage = _getErrorFromGetRequestMessage;
-window._combineDatabaseResponses = _combineDatabaseResponses;
+window.firstCharToUpperCase = firstCharToUpperCase;
+window.codifyText = codifyText;
+window.uncodifyText = uncodifyText;
+window.getRandomID = getRandomID;
+window.getEmptyChar = getEmptyChar;
+window.getLastUpdatedOnText = getLastUpdatedOnText;
+window.isObject = isObject;
+window.objectExistsAndHasKeys = objectExistsAndHasKeys;
+window.getIdFromObjectDB = getIdFromObjectDB;
+window.printObjectHTML = printObjectHTML;
+window.cloneObject = cloneObject;
+window.getLocalJSON = getLocalJSON;
+window.areObjectsEqual = areObjectsEqual;
+window.getObjectDiff = getObjectDiff;
+window.collectObjectDiffs = collectObjectDiffs;
+window.getReadableArray = getReadableArray;
+window.getChildIDs = getChildIDs;
+window.setRequired = setRequired;
+window.removeRequired = removeRequired;
+window.getOptionsFromSelect = getOptionsFromSelect;
+window.removeChild = removeChild;
+window.removeChildWithValidation = removeChildWithValidation;
+window.hideParentIfNoChildren = hideParentIfNoChildren;
+window.removeEmptyChild = removeEmptyChild;
+window.getIDs = getIDs;
+window.getJ = getJ;
+window.getJs = getJs;
+window.findJFromID = findJFromID;
+window.getFirstJ = getFirstJ;
+window.getLastJ = getLastJ;
+window.getLastUnorderedJ = getLastUnorderedJ;
+window.getNextJ = getNextJ;
+window.getCategoryID = getCategoryID;
+window.getOrCreateCategoryID = getOrCreateCategoryID;
+window.getURLParams = getURLParams;
+window.getURLParam = getURLParam;
+window.setURLParam = setURLParam;
+window.getDataDocument = getDataDocument;
+window.getNewDataDocument = getNewDataDocument;
+window.getTranslatedDocumentLabel = getTranslatedDocumentLabel;
+window.getOrderedDocumentByUpdateDate = getOrderedDocumentByUpdateDate;
+window.getOrderedDocumentByTitle = getOrderedDocumentByTitle;
+window.getAndDestinationTitle = getAndDestinationTitle;
+window.normalizeTikTokLink = normalizeTikTokLink;
+window.getDestinationTitle = getDestinationTitle;
+window.getDestinationsBoxHTML = getDestinationsBoxHTML;
+window.getInnerItineraryTitle = getInnerItineraryTitle;
+window.getInnerItineraryTitleHTML = getInnerItineraryTitleHTML;
+window.getInnerItinerary = getInnerItinerary;
+window.getLinkMediaButton = getLinkMediaButton;
+window.getCurrentTrips = getCurrentTrips;
+window.getPreviousTrips = getPreviousTrips;
+window.getNextTrips = getNextTrips;
+window.getAccommodationsHTML = getAccommodationsHTML;
+window.getErrorFromGetRequestMessage = getErrorFromGetRequestMessage;
+window.combineDatabaseResponses = combineDatabaseResponses;

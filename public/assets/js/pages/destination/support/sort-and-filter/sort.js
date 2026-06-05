@@ -1,27 +1,27 @@
 const SORT_OPTIONS = {};
 
 // Main Action
-function _sort(render = false) {
-	const { type, value } = _getSortPreferences() || {};
+function sort(render = false) {
+	const { type, value } = getSortPreferences() || {};
 
 	CONTENT.sort((a, b) => {
-		const A = _getItem(a.id) || {};
-		const B = _getItem(b.id) || {};
+		const A = getItem(a.id) || {};
+		const B = getItem(b.id) || {};
 
 		const r =
 			type === "planned"
-				? _comparePlanned(a.id, b.id, A, B, value)
-				: _compare(A, B, type, value);
+				? comparePlanned(a.id, b.id, A, B, value)
+				: compare(A, B, type, value);
 
 		if (r !== 0) return r;
 		return nameOf(A).localeCompare(nameOf(B));
 	});
 
-	if (render) _applyContent();
+	if (render) applyContent();
 
 	// ---- Comparators ----
 
-	function _compare(a, b, type, value) {
+	function compare(a, b, type, value) {
 		switch (type) {
 			case "scores": {
 				const sa = scoreOf(a);
@@ -30,8 +30,8 @@ function _sort(render = false) {
 			}
 
 			case "prices": {
-				const pa = priceRank(_normalizePriceBucket(a.valor));
-				const pb = priceRank(_normalizePriceBucket(b.valor));
+				const pa = priceRank(normalizePriceBucket(a.valor));
+				const pb = priceRank(normalizePriceBucket(b.valor));
 				return value === "lowest_first" ? pa - pb : pb - pa;
 			}
 
@@ -48,9 +48,9 @@ function _sort(render = false) {
 		}
 	}
 
-	function _comparePlanned(idA, idB, a, b, value) {
-		const pa = _isPlanned(idA) ? 1 : 0;
-		const pb = _isPlanned(idB) ? 1 : 0;
+	function comparePlanned(idA, idB, a, b, value) {
+		const pa = isPlanned(idA) ? 1 : 0;
+		const pb = isPlanned(idB) ? 1 : 0;
 
 		const plannedCmp = value === "not_planned_first" ? pa - pb : pb - pa;
 
@@ -80,25 +80,25 @@ function _sort(render = false) {
 }
 
 // Options
-function _loadSortOptions(force = false) {
+function loadSortOptions(force = false) {
 	if (SORT_OPTIONS[ACTIVE_CATEGORY] && !force) {
 		return;
 	}
 
-	_loadTitles();
-	_loadFilterSortingData(SORT_OPTIONS.titles);
+	loadTitles();
+	loadFilterSortingData(SORT_OPTIONS.titles);
 
 	SORT_OPTIONS[ACTIVE_CATEGORY] = {};
 	const options = SORT_OPTIONS[ACTIVE_CATEGORY];
 
-	if (_shouldDisplayScores()) {
+	if (shouldDisplayScores()) {
 		options.scores = {
 			highest_first: translate("destination.sort.scores.highest_first"),
 			lowest_first: translate("destination.sort.scores.lowest_first"),
 		};
 	}
 
-	if (_shouldDisplayPlanned()) {
+	if (shouldDisplayPlanned()) {
 		options.planned = {
 			planned_first: translate("destination.sort.planned.planned_first"),
 			not_planned_first: translate(
@@ -107,7 +107,7 @@ function _loadSortOptions(force = false) {
 		};
 	}
 
-	if (_shouldDisplayPrices()) {
+	if (shouldDisplayPrices()) {
 		options.prices = {
 			lowest_first: translate("destination.sort.price.lowest_first"),
 			highest_first: translate("destination.sort.price.highest_first"),
@@ -119,7 +119,7 @@ function _loadSortOptions(force = false) {
 		descending: translate("destination.sort.name.descending"),
 	};
 
-	function _loadTitles() {
+	function loadTitles() {
 		if (!SORT_OPTIONS.titles) {
 			SORT_OPTIONS.titles = {
 				name: translate("destination.sort.name.title"),
@@ -132,11 +132,11 @@ function _loadSortOptions(force = false) {
 }
 
 // Drawer
-function _openSortDrawer() {
-	_openFilterSortDrawer({
+function openSortDrawer() {
+	openFilterSortDrawer({
 		triggerId: "sort",
-		getInnerHTML: _getSortDrawerInnerHTML,
-		clickAction: _sortDrawerOptionClickAction,
-		loadAction: _sortDrawerOptionLoadAction,
+		getInnerHTML: getSortDrawerInnerHTML,
+		clickAction: sortDrawerOptionClickAction,
+		loadAction: sortDrawerOptionLoadAction,
 	});
 }

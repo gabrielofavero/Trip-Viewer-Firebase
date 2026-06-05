@@ -1,26 +1,26 @@
 // Destino Existente
-function _loadDestinationsData() {
+function loadDestinationsData() {
 	try {
-		_loadDadosBasicosDestinosData();
-		_loadDestinoExistente("restaurantes");
-		_loadDestinoExistente("lanches");
-		_loadDestinoExistente("saidas");
-		_loadDestinoExistente("turismo");
-		_loadDestinoExistente("lojas");
-		_buildDS("regiao");
+		loadDadosBasicosDestinosData();
+		loadDestinoExistente("restaurantes");
+		loadDestinoExistente("lanches");
+		loadDestinoExistente("saidas");
+		loadDestinoExistente("turismo");
+		loadDestinoExistente("lojas");
+		buildDS("regiao");
 
-		_loadMapaData();
-		_setPageName(
+		loadMapaData();
+		setPageName(
 			`${translate("labels.edit")} ${FIRESTORE_DESTINOS_DATA.titulo}`,
 		);
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		throw error;
 	}
 }
 
 // Módulos: Passeio Existente
-function _loadDadosBasicosDestinosData() {
+function loadDadosBasicosDestinosData() {
 	getID("titulo").value = FIRESTORE_DESTINOS_DATA.titulo;
 
 	const moedaValue = FIRESTORE_DESTINOS_DATA.moeda;
@@ -34,10 +34,10 @@ function _loadDadosBasicosDestinosData() {
 		moedaDiv.value = "outra";
 	}
 
-	_loadMoedaOptions();
+	loadMoedaOptions();
 }
 
-function _loadDestinoExistente(categoria) {
+function loadDestinoExistente(categoria) {
 	const habilitado = FIRESTORE_DESTINOS_DATA.modulos[categoria] === true;
 	getID(`habilitado-${categoria}`).checked = habilitado;
 	getID(`habilitado-${categoria}-content`).style.display = habilitado
@@ -61,33 +61,33 @@ function _loadDestinoExistente(categoria) {
 
 	for (let j = 1; j <= destinosArr.length; j++) {
 		const destino = destinosArr[j - 1];
-		_addDestino(categoria);
-		_addDestinoHTML(categoria, j, destino);
-		_setDescription(categoria, j, destino.descricao);
-		_updateDescriptionButtonLabel(categoria, j);
+		addDestino(categoria);
+		addDestinoHTML(categoria, j, destino);
+		setDescription(categoria, j, destino.descricao);
+		updateDescriptionButtonLabel(categoria, j);
 	}
 }
 
-function _addDestino(categoria) {
+function addDestino(categoria) {
 	switch (categoria) {
 		case "restaurantes":
-			_addRestaurantes();
+			addRestaurantes();
 			break;
 		case "lanches":
-			_addLanches();
+			addLanches();
 			break;
 		case "saidas":
-			_addSaidas();
+			addSaidas();
 			break;
 		case "turismo":
-			_addTurismo();
+			addTurismo();
 			break;
 		case "lojas":
-			_addLojas();
+			addLojas();
 	}
 }
 
-function _addDestinoHTML(categoria, j, destino) {
+function addDestinoHTML(categoria, j, destino) {
 	const id = destino.id;
 	if (id) {
 		getID(`${categoria}-id-${j}`).value = id;
@@ -110,20 +110,20 @@ function _addDestinoHTML(categoria, j, destino) {
 	getID(`${categoria}-emoji-${j}`).value = emoji;
 	getID(`${categoria}-title-text-${j}`).innerText += ` ${emoji}`;
 
-	_updateDescriptionButtonLabel(categoria, j);
+	updateDescriptionButtonLabel(categoria, j);
 	getID(`${categoria}-website-${j}`).value = destino.website || "";
 	getID(`${categoria}-mapa-${j}`).value = destino.mapa || "";
 	getID(`${categoria}-instagram-${j}`).value = destino.instagram || "";
 	getID(`${categoria}-regiao-${j}`).value = destino.regiao || "";
 
-	_updateValueDS("regiao", destino.regiao, `${categoria}-regiao-select-${j}`);
-	_loadMoedaValorAndVisibility(destino.valor || "", categoria, j);
+	updateValueDS("regiao", destino.regiao, `${categoria}-regiao-select-${j}`);
+	loadMoedaValorAndVisibility(destino.valor || "", categoria, j);
 
 	getID(`${categoria}-midia-${j}`).value = destino.midia || "";
 	getID(`${categoria}-nota-${j}`).value = destino.nota || "";
 }
 
-function _loadMapaData() {
+function loadMapaData() {
 	const mapaLink = getID("mapa-link");
 
 	if (FIRESTORE_DESTINOS_DATA.modulos.mapa === true) {

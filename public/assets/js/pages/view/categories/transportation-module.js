@@ -1,21 +1,21 @@
-import { getTransportes } from '../../../core/config.js';
+import { getTransportations } from '../../../core/config.js';
 
 var TRANSPORTE_ICONES = [];
-var TRANSPORTE_ATIVO;
+var ACTIVE_TRANSPORTATION;
 var TRANSPORTES_ATIVOS = [];
 var TRANSPORTES_ATIVOS_TITULOS = [];
 
-function _loadTransporte() {
-	const swiperData = _getSwiperData();
+function loadTransportation() {
+	const swiperData = getSwiperData();
 
-	_buildTransporteSwiper(swiperData);
-	_resetSwiperVisibility();
+	buildTransportationSwiper(swiperData);
+	resetSwiperVisibility();
 
-	_observeFlightBoxes();
-	_autoNavigateTransporte();
+	observeFlightBoxes();
+	autoNavigateTransportation();
 }
 
-function _getSwiperData() {
+function getSwiperData() {
 	const swiperData = {};
 
 	const visualizacao = FIRESTORE_DATA.transportes.visualizacao || "simple-view";
@@ -25,14 +25,14 @@ function _getSwiperData() {
 	TRANSPORTES_ATIVOS = [
 		...new Set(
 			FIRESTORE_DATA.transportes.dados.map(
-				(item) => `${complement}${_codifyText(item[key])}`,
+				(item) => `${complement}${codifyText(item[key])}`,
 			),
 		),
 	];
 	TRANSPORTES_ATIVOS_TITULOS = [
 		...new Set(FIRESTORE_DATA.transportes.dados.map((item) => item[key])),
 	];
-	TRANSPORTE_ATIVO =
+	ACTIVE_TRANSPORTATION =
 		visualizacao === "people-view" ? TRANSPORTES_ATIVOS[0] : "ida";
 
 	for (const transporteAtivo of TRANSPORTES_ATIVOS) {
@@ -40,53 +40,53 @@ function _getSwiperData() {
 	}
 
 	for (let i = 0; i < FIRESTORE_DATA.transportes.dados.length; i++) {
-		const identifier = `${complement}${_codifyText(FIRESTORE_DATA.transportes.dados[i][key])}`;
-		const htmlContent = _getTransporteHTML(i + 1, identifier);
+		const identifier = `${complement}${codifyText(FIRESTORE_DATA.transportes.dados[i][key])}`;
+		const htmlContent = getTransportationHTML(i + 1, identifier);
 		swiperData[identifier].push(htmlContent);
 	}
 
 	return swiperData;
 }
 
-function _getTransporteHTML(j, identifier) {
+function getTransportationHTML(j, identifier) {
 	return `<div class="swiper-slide" id="transporte-slide-${j}">
             <div class="testimonial-item">
-                ${_getFlightBoxHTML(j, identifier)}
+                ${getFlightBoxHTML(j, identifier)}
               </div>
             </div>`;
 }
 
-function _getFlightBoxHTML(j, identifier, innerProgramacao = false) {
-	const empresa = _getEmpresaObj(j);
-	return `<div class="flight-box${innerProgramacao ? " inner-programacao-item" : ""}" id="transporte-${identifier}-box-${j}">
+function getFlightBoxHTML(j, identifier, innerItinerary = false) {
+	const empresa = getEmpresaObj(j);
+	return `<div class="flight-box${innerItinerary ? " inner-programacao-item" : ""}" id="transporte-${identifier}-box-${j}">
             <div class="flight-diagram">
               <div class="flight-title">
-                ${_getImagemHTML(j, empresa)}
-                ${_getReservaHTML(j, empresa)}
+                ${getImagemHTML(j, empresa)}
+                ${getReservaHTML(j, empresa)}
               </div>
               <div class="flight-text">
                 <div class="left-text">
-                  ${_getPartidaChegadaHTML(j, "partida")}
+                  ${getPartidaChegadaHTML(j, "partida")}
                 </div>
                 <div class="center-text">
-                  <i class="flight-line" ${_adjustFlightLine(j)}">_________</i>
-                  <i class="iconify flight-icon" data-icon="${_getTransporteIcon(j)}"></i>
-                  ${_getDuracaoHTML(j)}
+                  <i class="flight-line" ${adjustFlightLine(j)}">_________</i>
+                  <i class="iconify flight-icon" data-icon="${getTransportationIcon(j)}"></i>
+                  ${getDuracaoHTML(j)}
                 </div>
                 <div class="right-text">
-                  ${_getPartidaChegadaHTML(j, "chegada")}
+                  ${getPartidaChegadaHTML(j, "chegada")}
                 </div>
               </div>
             </div>
           </div>`;
 }
 
-function _getEmpresaObj(j) {
+function getEmpresaObj(j) {
 	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
 	const tipo = transporte.transporte;
 	const titulo = transporte.empresa;
 
-	const transportes = getTransportes();
+	const transportes = getTransportations();
 	const tituloConfig = transportes?.empresas?.[tipo]?.[titulo];
 	const siteConfig = transportes?.sites?.[tipo]?.[titulo];
 	const imagemConfig = transportes?.imagens?.[tipo]?.[titulo];
@@ -99,14 +99,14 @@ function _getEmpresaObj(j) {
 	};
 }
 
-function _getImagemHTML(j, empresa) {
+function getImagemHTML(j, empresa) {
 	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
 	if (!empresa.isCustom) {
 		return `<a href="${empresa.site}">
               <img class="flight-img" id="flight-img-claro-${j}" src="${empresa.imagens.claro}"
-                style="display: ${_isOnDarkMode() ? "none" : "block"};">
+                style="display: ${isOnDarkMode() ? "none" : "block"};">
               <img class="flight-img" id="flight-img-escuro-${j}" src="${empresa.imagens.escuro}"
-                style="display: ${_isOnDarkMode() ? "block" : "none"};">
+                style="display: ${isOnDarkMode() ? "block" : "none"};">
             </a>`;
 	} else if (empresa.titulo) {
 		return `<div class="flight-title-text">${empresa.titulo}</div>`;
@@ -115,13 +115,13 @@ function _getImagemHTML(j, empresa) {
 	}
 }
 
-function _getReservaHTML(j, empresa) {
+function getReservaHTML(j, empresa) {
 	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
 	let reserva = transporte.reserva;
 	let link = empresa.site || "";
 
 	if (FIRESTORE_DATA.pin === "sensitive-only") {
-		return _getSensitiveReservationHTML("transportes", transporte.id);
+		return getSensitiveReservationHTML("transportes", transporte.id);
 	}
 
 	if (transporte.link) {
@@ -133,49 +133,49 @@ function _getReservaHTML(j, empresa) {
 	const reservation = link
 		? `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>`
 		: `<div class="flight-code">#${reserva}</div>`;
-	const icon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="_copyToClipboard('${reserva}')"></i>`;
+	const icon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="copyToClipboard('${reserva}')"></i>`;
 	return `${reservation} ${icon}`;
 }
 
-function _getPartidaChegadaHTML(j, tipo) {
+function getPartidaChegadaHTML(j, tipo) {
 	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
-	const data = _convertFromDateObject(transporte.datas[tipo]);
+	const data = convertFromDateObject(transporte.datas[tipo]);
 	const local = transporte.pontos[tipo];
-	const flightTimeSuffix = _getLanguagePackName() == "en" ? "-en" : "";
+	const flightTimeSuffix = getLanguagePackName() == "en" ? "-en" : "";
 
-	let result = `<div class="flight-date">${_getDateString(data, "dd/mm")}</div>
-                <div class="flight-time${flightTimeSuffix}">${_getTimeStringFromDate(data)}</div>`;
+	let result = `<div class="flight-date">${getDateString(data, "dd/mm")}</div>
+                <div class="flight-time${flightTimeSuffix}">${getTimeStringFromDate(data)}</div>`;
 
 	if (local) result += `<div class="flight-location">${local}</div>`;
 	return result;
 }
 
-function _getTransporteIcon(j) {
+function getTransportationIcon(j) {
 	const tipo = FIRESTORE_DATA.transportes.dados[j - 1].transporte;
 	const icone =
-		getTransportes().icones[tipo] || getTransportes().icones.outro;
+		getTransportations().icones[tipo] || getTransportations().icones.outro;
 	TRANSPORTE_ICONES.push(icone);
 	return icone;
 }
 
-function _getDuracaoHTML(j) {
+function getDuracaoHTML(j) {
 	const duracao = FIRESTORE_DATA.transportes.dados[j - 1].duracao;
 	if (!duracao) return "";
 	else
-		return `<div class="flight-duration">${_jsTimeToVisualTime(duracao)}</div>`;
+		return `<div class="flight-duration">${jsTimeToVisualTime(duracao)}</div>`;
 }
 
-function _adjustFlightLine(j) {
+function adjustFlightLine(j) {
 	const duracao = FIRESTORE_DATA.transportes.dados[j - 1].duracao;
 	if (!duracao) return "style='transform: translateY(-33.75%);'";
 	else return "";
 }
 
-function _buildTransporteSwiper(swiperData) {
+function buildTransportationSwiper(swiperData) {
 	const visualizacao = FIRESTORE_DATA.transportes.visualizacao;
 	const keys = [];
 
-	_loadSwiperPreActions(visualizacao, keys);
+	loadSwiperPreActions(visualizacao, keys);
 
 	for (const key of keys) {
 		const content = getID(`transporte-${key}-content`);
@@ -206,7 +206,7 @@ function _buildTransporteSwiper(swiperData) {
                       </div>`;
 
 			ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
-			_initSwiper(`transporte-${key}`);
+			initSwiper(`transporte-${key}`);
 
 			if (FIRESTORE_DATA.transportes.visualizacao == "leg-view") {
 				getID(`transporte-${key}`).style.visibility = "hidden";
@@ -214,53 +214,53 @@ function _buildTransporteSwiper(swiperData) {
 		}
 	}
 
-	function _loadSwiperPreActions(visualizacao, keys) {
+	function loadSwiperPreActions(visualizacao, keys) {
 		switch (visualizacao) {
 			case "simple-view":
 				keys.push("ida");
 				break;
 			case "leg-view":
 				keys.push("ida", "durante", "volta");
-				_loadAbasTransportes();
+				loadTransportationTabs();
 				break;
 			case "people-view":
 				keys.push(...TRANSPORTES_ATIVOS);
-				_loadCustomSelectTransportes();
-				_loadCustomTransportesDivs();
+				loadCustomTransportationSelect();
+				loadCustomTransportationDivs();
 				break;
 		}
 		return keys;
 	}
 }
 
-function _loadTransporteImagens() {
+function loadTransportationImages() {
 	let j = 1;
 	while (getID(`transporte-slide-${j}`)) {
 		const claro = getID(`flight-img-claro-${j}`);
 		const escuro = getID(`flight-img-escuro-${j}`);
 
 		if (claro && escuro) {
-			claro.style.display = _isOnDarkMode() ? "none" : "block";
-			escuro.style.display = _isOnDarkMode() ? "block" : "none";
+			claro.style.display = isOnDarkMode() ? "none" : "block";
+			escuro.style.display = isOnDarkMode() ? "block" : "none";
 		}
 
 		j++;
 	}
 }
 
-function _loadIconeGeralTransporte() {
+function loadGeneralTransportationIcon() {
 	const unique = [...new Set(TRANSPORTE_ICONES)];
 	if (unique.length == 1) {
 		getID("transporte-nav").setAttribute("data-icon", unique[0]);
 	}
 }
 
-function _copyToClipboard(text) {
+function copyToClipboard(text) {
 	navigator.clipboard.writeText(text);
-	_openToast(translate("messages.text_copied"));
+	openToast(translate("messages.text_copied"));
 }
 
-function _loadCustomSelectTransportes() {
+function loadCustomTransportationSelect() {
 	if (TRANSPORTES_ATIVOS.length <= 1) return;
 	getID("transporte-select").style.display = "";
 	const options = [];
@@ -274,14 +274,14 @@ function _loadCustomSelectTransportes() {
 	const customSelect = {
 		id: "transporte-select",
 		options: options,
-		activeOption: TRANSPORTE_ATIVO,
-		action: _customTransporteSelectAction,
+		activeOption: ACTIVE_TRANSPORTATION,
+		action: customTransportationSelectAction,
 	};
 
-	_loadCustomSelect(customSelect);
+	loadCustomSelect(customSelect);
 }
 
-function _loadCustomTransportesDivs() {
+function loadCustomTransportationDivs() {
 	const container = getID("transporte-custom-container");
 	container.innerHTML = "";
 
@@ -294,8 +294,8 @@ function _loadCustomTransportesDivs() {
 	}
 }
 
-function _loadAbasTransportes() {
-	_loadAbasTransportesHTML();
+function loadTransportationTabs() {
+	loadTransportationTabsHTML();
 
 	getID("tabs-container-transportes").style.display = "";
 
@@ -305,10 +305,10 @@ function _loadAbasTransportes() {
 		div.style.marginTop = "2em";
 	}
 
-	_setTransporteAbasListeners();
+	setTransportationTabListeners();
 }
 
-function _loadAbasTransportesHTML() {
+function loadTransportationTabsHTML() {
 	const tab = getID("tab-transporte");
 	const itemMap = {
 		ida: "departure",
@@ -326,9 +326,9 @@ function _loadAbasTransportesHTML() {
 
 	tab.innerHTML += '<span class="glider"></span>';
 
-	const childs = _getChildIDs("tab-transporte");
+	const childs = getChildIDs("tab-transporte");
 	for (let i = 0; i < childs.length; i++) {
-		_setCSSRule(
+		setCSSRule(
 			`.tabs-container input[id="${childs[i]}"]:checked~.glider`,
 			"transform",
 			`translateX(${i * 100}%)`,
@@ -336,28 +336,28 @@ function _loadAbasTransportesHTML() {
 	}
 }
 
-function _setTransporteAbasListeners() {
+function setTransportationTabListeners() {
 	TRANSPORTES_ATIVOS.forEach((transporte) => {
 		const radio = `radio-${transporte}`;
 		getID(radio).addEventListener("click", function () {
 			const transporte = radio.replace("radio-", "");
-			if (TRANSPORTE_ATIVO === transporte) return;
+			if (ACTIVE_TRANSPORTATION === transporte) return;
 
-			const transporteAnterior = TRANSPORTE_ATIVO;
-			TRANSPORTE_ATIVO = transporte;
+			const transporteAnterior = ACTIVE_TRANSPORTATION;
+			ACTIVE_TRANSPORTATION = transporte;
 
 			const anterior = `transporte-${transporteAnterior}`;
-			const atual = `transporte-${TRANSPORTE_ATIVO}`;
+			const atual = `transporte-${ACTIVE_TRANSPORTATION}`;
 
 			getID(atual).style.visibility = "";
 			getID(anterior).style.visibility = "";
 
-			_fade([anterior], [atual]);
+			fade([anterior], [atual]);
 		});
 	});
 }
 
-function _observeFlightBoxes() {
+function observeFlightBoxes() {
 	const flightBoxes = document.querySelectorAll(".flight-box");
 	if (flightBoxes.length === 0) return;
 
@@ -368,7 +368,7 @@ function _observeFlightBoxes() {
 		timeoutId = setTimeout(() => {
 			flightBoxes.forEach((box) => {
 				if (box.offsetHeight < 5) {
-					_adjustCardsHeights("transporte");
+					adjustCardsHeights("transporte");
 				}
 			});
 		}, 200);
@@ -379,7 +379,7 @@ function _observeFlightBoxes() {
 	});
 }
 
-function _adjustTransporteBoxContainerHeight() {
+function adjustTransportationBoxContainerHeight() {
 	const elements = document.querySelectorAll(".flight-box");
 	const heights = Array.from(elements, (el) => el.offsetHeight);
 	heights.push(250);
@@ -387,26 +387,26 @@ function _adjustTransporteBoxContainerHeight() {
 	container.style.height = `${Math.max(...heights)}px`;
 }
 
-function _resetSwiperVisibility() {
+function resetSwiperVisibility() {
 	const visualizacao = FIRESTORE_DATA.transportes.visualizacao || "simple-view";
 
 	switch (visualizacao) {
 		case "leg-view":
-			_adjustTransporteBoxContainerHeight();
+			adjustTransportationBoxContainerHeight();
 			getID("transporte-ida").style.visibility = "";
 			break;
 		case "people-view":
-			_adjustTransporteBoxContainerHeight();
+			adjustTransportationBoxContainerHeight();
 	}
 }
 
-function _customTransporteSelectAction(value) {
-	_fade([`transporte-${TRANSPORTE_ATIVO}`], [`transporte-${value}`]);
-	TRANSPORTE_ATIVO = value;
+function customTransportationSelectAction(value) {
+	fade([`transporte-${ACTIVE_TRANSPORTATION}`], [`transporte-${value}`]);
+	ACTIVE_TRANSPORTATION = value;
 }
 
-function _autoNavigateTransporte() {
-	const hoje = _getDateNoTime(_convertFromDateObject(_getTodayDateObject()));
+function autoNavigateTransportation() {
+	const hoje = getDateNoTime(convertFromDateObject(getTodayDateObject()));
 	const dados = FIRESTORE_DATA.transportes.dados;
 	if (!dados || dados.length === 0) return;
 
@@ -415,8 +415,8 @@ function _autoNavigateTransporte() {
 	// Outside trip dates → show first element
 	if (INICIO?.date && FIM?.date) {
 		if (
-			hoje < _getDateNoTime(INICIO.date) ||
-			hoje > _getDateNoTime(FIM.date)
+			hoje < getDateNoTime(START_DATE.date) ||
+			hoje > getDateNoTime(END_DATE.date)
 		) {
 			targetIndex = 0;
 		}
@@ -426,8 +426,8 @@ function _autoNavigateTransporte() {
 	if (targetIndex === undefined) {
 		const todayIndices = [];
 		for (let i = 0; i < dados.length; i++) {
-			const partida = _getDateNoTime(
-				_convertFromDateObject(dados[i].datas.partida),
+			const partida = getDateNoTime(
+				convertFromDateObject(dados[i].datas.partida),
 			);
 			if (partida.getTime() === hoje.getTime()) {
 				todayIndices.push(i);
@@ -438,14 +438,14 @@ function _autoNavigateTransporte() {
 			// Sort today's transports by partida time
 			todayIndices.sort(
 				(a, b) =>
-					_convertFromDateObject(dados[a].datas.partida).getTime() -
-					_convertFromDateObject(dados[b].datas.partida).getTime(),
+					convertFromDateObject(dados[a].datas.partida).getTime() -
+					convertFromDateObject(dados[b].datas.partida).getTime(),
 			);
 
 			const now = new Date();
 
 			for (const idx of todayIndices) {
-				const chegada = _convertFromDateObject(dados[idx].datas.chegada);
+				const chegada = convertFromDateObject(dados[idx].datas.chegada);
 				if (now <= chegada) {
 					targetIndex = idx;
 					break;
@@ -460,8 +460,8 @@ function _autoNavigateTransporte() {
 			// No transport today → find closest future
 			let closestDiff = Infinity;
 			for (let i = 0; i < dados.length; i++) {
-				const partida = _getDateNoTime(
-					_convertFromDateObject(dados[i].datas.partida),
+				const partida = getDateNoTime(
+					convertFromDateObject(dados[i].datas.partida),
 				);
 				const diff = partida.getTime() - hoje.getTime();
 				if (diff > 0 && diff < closestDiff) {
@@ -500,9 +500,9 @@ function _autoNavigateTransporte() {
 	} else if (visualizacao === "people-view") {
 		const key = "pessoa";
 		const targetGroup = dados[targetIndex][key];
-		const groupId = `custom-${_codifyText(targetGroup)}`;
+		const groupId = `custom-${codifyText(targetGroup)}`;
 
-		_customTransporteSelectAction(groupId);
+		customTransportationSelectAction(groupId);
 
 		let slideIndex = 0;
 		for (let i = 0; i < targetIndex; i++) {

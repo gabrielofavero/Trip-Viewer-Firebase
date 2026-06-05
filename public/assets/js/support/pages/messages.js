@@ -1,5 +1,5 @@
 let MESSAGE_MODAL_OPEN = false;
-const MENSAGEM_PROPRIEDADES = {
+const MESSAGE_PROPERTIES = {
 	titulo: "",
 	conteudo: "",
 	critico: false,
@@ -19,22 +19,22 @@ const MENSAGEM_PROPRIEDADES = {
 };
 
 // Mensagem Genérica
-export function _displayMessage(titulo, conteudo) {
-	const properties = _cloneObject(MENSAGEM_PROPRIEDADES);
+export function displayMessage(titulo, conteudo) {
+	const properties = cloneObject(MESSAGE_PROPERTIES);
 	if (titulo) properties.titulo = titulo;
 	if (conteudo) properties.conteudo = conteudo;
-	_displayFullMessage(properties);
+	displayFullMessage(properties);
 }
 
 // Prompt (Sim / Não)
-export function _displayPrompt({
+export function displayPrompt({
 	titulo,
 	conteudo,
 	yesAction,
-	noAction = "_closeMessage()",
+	noAction = "closeMessage()",
 	critico = false,
 } = {}) {
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = titulo;
 	propriedades.conteudo = conteudo;
 	propriedades.critico = critico;
@@ -48,17 +48,17 @@ export function _displayPrompt({
 			acao: yesAction,
 		},
 	];
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 }
 
-export function _displayFullMessage(
-	propriedades = _cloneObject(MENSAGEM_PROPRIEDADES),
+export function displayFullMessage(
+	propriedades = cloneObject(MESSAGE_PROPERTIES),
 ) {
 	const preloader = getID("preloader");
 	const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
 	if (typeof _stopLoadingTimer === "function") {
-		_stopLoadingTimer();
+		stopLoadingTimer();
 	}
 
 	if (!preloader) {
@@ -67,8 +67,8 @@ export function _displayFullMessage(
 	}
 
 	MESSAGE_MODAL_OPEN = true;
-	document.addEventListener("keydown", _handleMessageKeydown);
-	_disableScroll();
+	document.addEventListener("keydown", handleMessageKeydown);
+	disableScroll();
 
 	// Container
 	const container = document.createElement("div");
@@ -80,7 +80,7 @@ export function _displayFullMessage(
 
 	// Criticidade
 	if (!propriedades.critico) {
-		const buttonsBox = _getIconsBox(propriedades.icones);
+		const buttonsBox = getIconsBox(propriedades.icones);
 		textDiv.appendChild(buttonsBox);
 	}
 
@@ -100,7 +100,7 @@ export function _displayFullMessage(
 
 	// Mensagem de Erro
 	if (isErrorMessage) {
-		const errorElement = _getErrorElement(propriedades.erro, textDiv);
+		const errorElement = getErrorElement(propriedades.erro, textDiv);
 		textDiv.appendChild(errorElement);
 	}
 
@@ -112,7 +112,7 @@ export function _displayFullMessage(
 		buttonBox.style.marginTop = "25px";
 
 		for (const buttonType of propriedades.botoes) {
-			const button = _getButton(buttonType);
+			const button = getButton(buttonType);
 			buttonBox.appendChild(button);
 		}
 
@@ -140,23 +140,23 @@ export function _displayFullMessage(
 }
 
 // Mensagem de Erro
-export function _displayError(erro, tentarNovamente = false) {
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+export function displayError(erro, tryAgain = false) {
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 
 	propriedades.titulo = translate("messages.errors.load_title");
 	propriedades.critico = true;
-	propriedades.conteudo = _getErrorMessage(erro);
+	propriedades.conteudo = getErrorMessage(erro);
 	propriedades.localizacao = false; // Desabilitado. Não faz sentido mostrar ao usuário.
 
-	const botoes = tentarNovamente ? [{ tipo: "tente-novamente" }] : [];
+	const botoes = tryAgain ? [{ tipo: "tente-novamente" }] : [];
 	if (!window.location.href.includes("index.html")) {
 		botoes.push({ tipo: "home" });
 	}
 	propriedades.botoes = botoes;
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 }
 
-export function _getErrorMessage(erro) {
+export function getErrorMessage(erro) {
 	const isError = erro && erro instanceof Error;
 	const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate("messages.errors.contact_admin")}</a> ${translate("messages.errors.to_report")}`;
 
@@ -174,8 +174,8 @@ export function _getErrorMessage(erro) {
 }
 
 // Mensagem de Não Autorizado
-export function _displayForbidden(conteudo, redirectTo = "view.html") {
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+export function displayForbidden(conteudo, redirectTo = "view.html") {
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = translate("messages.access_denied.title");
 	propriedades.conteudo =
 		conteudo || translate("messages.access_denied.message");
@@ -186,11 +186,11 @@ export function _displayForbidden(conteudo, redirectTo = "view.html") {
 			acao: redirectTo,
 		},
 	];
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 }
 
 // Fechar Mensagem
-export function _closeMessage() {
+export function closeMessage() {
 	if (MESSAGE_MODAL_OPEN) {
 		const preloader = getID("preloader");
 		if (preloader) {
@@ -198,22 +198,22 @@ export function _closeMessage() {
 			preloader.style.background = "";
 		}
 		MESSAGE_MODAL_OPEN = false;
-		document.removeEventListener("keydown", _handleMessageKeydown);
-		if (typeof _stopLoadingScreen === "function") _stopLoadingScreen();
+		document.removeEventListener("keydown", handleMessageKeydown);
+		if (typeof _stopLoadingScreen === "function") stopLoadingScreen();
 	} else {
 		console.warn("Cannot close an unopened message modal.");
 	}
 }
 
 // Funções de Suporte
-export function _getContainersInput() {
+export function getContainersInput() {
 	return {
 		principal: "input-container",
 		botoes: "button-box-right",
 	};
 }
 
-export function _getIconsBox(icones) {
+export function getIconsBox(icones) {
 	const iconContainer = document.createElement("div");
 	iconContainer.className = "icon-container";
 	iconContainer.style.textAlign = "right";
@@ -233,7 +233,7 @@ export function _getIconsBox(icones) {
 	cancelIcon.id = "cancel-icon";
 	cancelIcon.className = "iconify";
 	cancelIcon.setAttribute("data-icon", "material-symbols-light:close");
-	cancelIcon.setAttribute("onclick", "_closeMessage()");
+	cancelIcon.setAttribute("onclick", "closeMessage()");
 	cancelIcon.style.cursor = "pointer";
 
 	iconContainer.appendChild(cancelIcon);
@@ -241,7 +241,7 @@ export function _getIconsBox(icones) {
 	return iconContainer;
 }
 
-export function _getErrorElement(erro) {
+export function getErrorElement(erro) {
 	let location = "";
 	if (erro?.showLocation) {
 		const stackTrace = erro.error ? erro.error.stack : new Error().stack;
@@ -273,39 +273,39 @@ export function _getErrorElement(erro) {
 }
 
 // Botões
-export function _getButton(botao) {
+export function getButton(botao) {
 	switch (botao.tipo) {
 		case "tente-novamente":
-			return _getTryAgainButton();
+			return getTryAgainButton();
 		case "home":
-			return _getHomeButton();
+			return getHomeButton();
 		case "voltar":
-			return _getBackButton(botao.acao);
+			return getBackButton(botao.acao);
 		case "fechar":
-			return _getCloseButton();
+			return getCloseButton();
 		case "cancelar":
-			return _getCloseButton("labels.cancel", botao.acao);
+			return getCloseButton("labels.cancel", botao.acao);
 		case "confirmar":
-			return _getConfirmButton(botao.acao);
+			return getConfirmButton(botao.acao);
 		case "apagar":
-			return _getDeleteButton(botao.acao);
+			return getDeleteButton(botao.acao);
 		case "apagar-basico":
-			return _getDeleteButtonBasic(botao.acao);
+			return getDeleteButtonBasic(botao.acao);
 		case "sim":
-			return _getConfirmButton(botao.acao, "labels.yes");
+			return getConfirmButton(botao.acao, "labels.yes");
 		case "nao":
-			return _getCloseButton("labels.no", botao.acao);
+			return getCloseButton("labels.no", botao.acao);
 		default:
-			return _getCloseButton("labels.understood");
+			return getCloseButton("labels.understood");
 	}
 }
 
-export function _getHomeButton() {
+export function getHomeButton() {
 	const homeButton = [
 		"edit-trip",
 		"edit-destination",
 		"edit-listing",
-	].includes(_getHTMLpage())
+	].includes(getHTMLpage())
 		? "../index.html"
 		: "index.html";
 	const button = document.createElement("button");
@@ -324,7 +324,7 @@ export function _getHomeButton() {
 	return button;
 }
 
-export function _getBackButton(redirectTo = "index.html") {
+export function getBackButton(redirectTo = "index.html") {
 	const button = document.createElement("button");
 	button.className = "btn btn-secondary btn-format";
 	button.type = "submit";
@@ -341,7 +341,7 @@ export function _getBackButton(redirectTo = "index.html") {
 	return button;
 }
 
-export function _getTryAgainButton() {
+export function getTryAgainButton() {
 	const button = document.createElement("button");
 	button.className = "btn btn-secondary btn-format";
 	button.type = "submit";
@@ -358,20 +358,20 @@ export function _getTryAgainButton() {
 	return button;
 }
 
-export function _getCloseButton(label, onclick) {
+export function getCloseButton(label, onclick) {
 	label = label ? label : translate("labels.understood");
 	const button = document.createElement("button");
 	button.className = "btn btn-secondary btn-format";
 	button.type = "submit";
-	button.setAttribute("onclick", onclick ? onclick : "_closeMessage();");
+	button.setAttribute("onclick", onclick ? onclick : "closeMessage();");
 	button.id = "message-close";
 
 	button.innerHTML = translate(label);
 	return button;
 }
 
-export function _getConfirmButton(
-	onclick = "_closeMessage();",
+export function getConfirmButton(
+	onclick = "closeMessage();",
 	label = "labels.confirm",
 ) {
 	const button = document.createElement("button");
@@ -384,7 +384,7 @@ export function _getConfirmButton(
 	return button;
 }
 
-export function _getDeleteButton(onclick, buttonClass = "btn-secondary") {
+export function getDeleteButton(onclick, buttonClass = "btn-secondary") {
 	const button = document.createElement("button");
 	button.className = `btn ${buttonClass} btn-format`;
 	button.type = "submit";
@@ -401,25 +401,25 @@ export function _getDeleteButton(onclick, buttonClass = "btn-secondary") {
 	return button;
 }
 
-export function _getDeleteButtonBasic(onclick) {
-	return _getDeleteButton(onclick, "btn-basic");
+export function getDeleteButtonBasic(onclick) {
+	return getDeleteButton(onclick, "btn-basic");
 }
 
-export function _openToast(text) {
+export function openToast(text) {
 	getID("toast-text").innerHTML = text;
-	_fadeIn(["toast"]);
+	fadeIn(["toast"]);
 	setTimeout(() => {
-		_closeToast();
+		closeToast();
 	}, 10000);
 }
 
-export function _closeToast() {
+export function closeToast() {
 	if (getID("toast").style.display != "none") {
-		_fadeOut(["toast"]);
+		fadeOut(["toast"]);
 	}
 }
 
-export function _handleMessageKeydown(e) {
+export function handleMessageKeydown(e) {
 	if (!MESSAGE_MODAL_OPEN) return;
 
 	if (e.key === "Enter") {
@@ -442,31 +442,31 @@ export function _handleMessageKeydown(e) {
 		const container = document.querySelector(".message-container");
 		if (container && !container.classList.contains("critical-message")) {
 			e.preventDefault();
-			_closeMessage();
+			closeMessage();
 		}
 	}
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._displayMessage = _displayMessage;
-window._displayPrompt = _displayPrompt;
-window._displayFullMessage = _displayFullMessage;
-window._displayError = _displayError;
-window._getErrorMessage = _getErrorMessage;
-window._displayForbidden = _displayForbidden;
-window._closeMessage = _closeMessage;
-window._getContainersInput = _getContainersInput;
-window._getIconsBox = _getIconsBox;
-window._getErrorElement = _getErrorElement;
-window._getButton = _getButton;
-window._getHomeButton = _getHomeButton;
-window._getBackButton = _getBackButton;
-window._getTryAgainButton = _getTryAgainButton;
-window._getCloseButton = _getCloseButton;
-window._getConfirmButton = _getConfirmButton;
-window._getDeleteButton = _getDeleteButton;
-window._getDeleteButtonBasic = _getDeleteButtonBasic;
-window._openToast = _openToast;
-window._closeToast = _closeToast;
-window._handleMessageKeydown = _handleMessageKeydown;
+window.displayMessage = displayMessage;
+window.displayPrompt = displayPrompt;
+window.displayFullMessage = displayFullMessage;
+window.displayError = displayError;
+window.getErrorMessage = getErrorMessage;
+window.displayForbidden = displayForbidden;
+window.closeMessage = closeMessage;
+window.getContainersInput = getContainersInput;
+window.getIconsBox = getIconsBox;
+window.getErrorElement = getErrorElement;
+window.getButton = getButton;
+window.getHomeButton = getHomeButton;
+window.getBackButton = getBackButton;
+window.getTryAgainButton = getTryAgainButton;
+window.getCloseButton = getCloseButton;
+window.getConfirmButton = getConfirmButton;
+window.getDeleteButton = getDeleteButton;
+window.getDeleteButtonBasic = getDeleteButtonBasic;
+window.openToast = openToast;
+window.closeToast = closeToast;
+window.handleMessageKeydown = handleMessageKeydown;
 window.MESSAGE_MODAL_OPEN = MESSAGE_MODAL_OPEN;

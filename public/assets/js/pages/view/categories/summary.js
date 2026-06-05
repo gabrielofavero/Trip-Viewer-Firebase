@@ -1,18 +1,18 @@
 var TRAVELERS = [];
 
-function _loadResumo() {
+function loadSummary() {
 	TRAVELERS = FIRESTORE_DATA.pessoas;
-	const dias = Math.ceil((FIM.date - INICIO.date) / (1000 * 60 * 60 * 24)) + 1;
+	const dias = Math.ceil((END_DATE.date - START_DATE.date) / (1000 * 60 * 60 * 24)) + 1;
 	const pessoas = FIRESTORE_DATA.pessoas.length || 1;
 
 	// Dado 1
 	getID("dado1").innerHTML = `<i class="bx bxs-plane-take-off"></i>
-                                                <span>${INICIO.text}</span>
+                                                <span>${START_DATE.text}</span>
                                                 <p>${translate("trip.transportation.departure")}</p>`;
 
 	// Dado 2
 	getID("dado2").innerHTML = `<i class="bx bxs-plane-land"></i>
-                                                <span>${FIM.text}</span>
+                                                <span>${END_DATE.text}</span>
                                                 <p>${translate("trip.transportation.return")}</p>`;
 
 	// Dado 3

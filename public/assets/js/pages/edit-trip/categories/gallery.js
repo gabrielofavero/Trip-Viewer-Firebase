@@ -1,4 +1,4 @@
-function _getGaleriaObject() {
+function getGaleriaObject() {
 	let result = {
 		descricoes: [],
 		categorias: [],
@@ -6,9 +6,9 @@ function _getGaleriaObject() {
 		titulos: [],
 	};
 
-	const childIDs = _getChildIDs("galeria-box");
+	const childIDs = getChildIDs("galeria-box");
 	for (var i = 0; i < childIDs.length; i++) {
-		const j = _getJ(childIDs[i]);
+		const j = getJ(childIDs[i]);
 
 		const descricao = getID(`galeria-descricao-${j}`).value || "";
 		result.descricoes.push(descricao);
@@ -30,15 +30,15 @@ function _getGaleriaObject() {
 	return result;
 }
 
-function _deleteGaleria(i) {
+function deleteGaleria(i) {
 	const id = `galeria-${i}`;
-	_removeImageSelectorListeners(id);
+	removeImageSelectorListeners(id);
 	const div = getID(id);
 	div.parentNode.removeChild(div);
 }
 
 // Listeners
-function _loadGaleriaListeners(j) {
+function loadGaleriaListeners(j) {
 	// Dynamic Title
 	getID(`galeria-titulo-${j}`).addEventListener(
 		"change",
@@ -50,23 +50,23 @@ function _loadGaleriaListeners(j) {
 
 	// Validação de Link
 	getID(`link-galeria-${j}`).addEventListener("change", () =>
-		_validateImageLink(`link-galeria-${j}`),
+		validateImageLink(`link-galeria-${j}`),
 	);
 }
 
-function _galeriaAdicionarListenerAction() {
-	_closeAccordions("galeria");
-	_addGaleria();
-	_openLastAccordion("galeria");
-	_buildDS("galeria-categoria");
+function galeriaAdicionarListenerAction() {
+	closeAccordions("galeria");
+	addGaleria();
+	openLastAccordion("galeria");
+	buildDS("galeria-categoria");
 }
 
-async function _uploadAndSetGaleriaImages() {
+async function uploadAndSetGaleriaImages() {
 	if (IMAGE_UPLOAD_STATUS.hasErrors || CUSTOM_UPLOADS.galeria.length === 0) {
 		return;
 	}
 	const galeriaFiles = CUSTOM_UPLOADS.galeria.map((file) => file.file);
-	const galeriaResult = await _uploadImages("viagens", galeriaFiles);
+	const galeriaResult = await uploadImages("viagens", galeriaFiles);
 
 	if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
 		for (let i = 0; i < galeriaResult.length; i++) {

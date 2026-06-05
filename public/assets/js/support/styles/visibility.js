@@ -3,57 +3,57 @@ import { _getCurrentHour } from "../pages/dates.js";
 
 // ======= Visibility JS =======
 export let CHANGED_SVGS = [];
-export let LOGO_CLARO = "";
-export let LOGO_ESCURO = "";
+export let LOGO_LIGHT = "";
+export let LOGO_DARK = "";
 
-export function _loadVisibility(colors = FIRESTORE_DATA?.cores) {
+export function loadVisibility(colors = FIRESTORE_DATA?.cores) {
 	if (colors?.claro && colors?.escuro) {
-		CLARO = colors.claro;
-		ESCURO = colors.escuro;
+		LIGHT_COLOR = colors.claro;
+		DARK_COLOR = colors.escuro;
 	}
 
-	_saveLocalColors();
-	_loadUserVisibility();
+	saveLocalColors();
+	loadUserVisibility();
 
 	const button = getID("night-mode");
 	button.style.display = "block";
 	button.onclick = function () {
-		_switchVisibility();
+		switchVisibility();
 	};
 }
 
-export function _loadDarkMode() {
-	_applyMode({
+export function loadDarkMode() {
+	applyMode({
 		isDark: true,
 		loadCss: true,
 		barColor: "#303030",
-		hoverFn: _getDarkerColor,
+		hoverFn: getDarkerColor,
 		secondaryKey: "escuro",
 	});
 }
 
-export function _loadLightMode() {
-	_applyMode({
+export function loadLightMode() {
+	applyMode({
 		isDark: false,
 		loadCss: true,
 		barColor: "#fff",
-		hoverFn: _getLighterColor,
+		hoverFn: getLighterColor,
 		secondaryKey: "claro",
 	});
 }
 
-export function _loadLightModeLite() {
-	_applyMode({
+export function loadLightModeLite() {
+	applyMode({
 		isDark: false,
 		loadCss: false,
 		barColor: "#fff",
-		hoverFn: _getLighterColor,
+		hoverFn: getLighterColor,
 		secondaryKey: "claro",
 	});
 }
 
 // ======= DATA-THEME TOGGLE =======
-export function _applyThemeAttribute(isDark) {
+export function applyThemeAttribute(isDark) {
 	document.documentElement.setAttribute(
 		"data-theme",
 		isDark ? "dark" : "light",
@@ -61,31 +61,31 @@ export function _applyThemeAttribute(isDark) {
 }
 
 // ======= SETTERS =======
-export function _loadUserVisibility() {
-	const param = _getURLParam("visibility");
+export function loadUserVisibility() {
+	const param = getURLParam("visibility");
 
 	if (param === "dark") {
-		return _loadDarkMode();
+		return loadDarkMode();
 	}
 
 	if (param === "light") {
-		return _loadLightMode();
+		return loadLightMode();
 	}
 
 	const stored = sessionStorage.getItem("darkMode");
 
 	if (stored === "true") {
-		return _loadDarkMode();
+		return loadDarkMode();
 	}
 
 	if (stored === "false") {
-		return _loadLightMode();
+		return loadLightMode();
 	}
 
-	_autoVisibility();
+	autoVisibility();
 }
 
-export function _applyMode({
+export function applyMode({
 	isDark,
 	loadCss = true,
 	barColor,
@@ -93,91 +93,91 @@ export function _applyMode({
 	secondaryKey,
 }) {
 	sessionStorage.setItem("darkMode", String(isDark));
-	_setURLParam("visibility", _getVisibility(isDark));
+	setURLParam("visibility", getVisibility(isDark));
 
-	const base = isDark ? ESCURO : CLARO;
+	const base = isDark ? DARK_COLOR : LIGHT_COLOR;
 
 	THEME_COLOR = base;
 	THEME_COLOR_HOVER = hoverFn(base, 10);
 
-	const secondary = _getSecondaryColor(secondaryKey);
+	const secondary = getSecondaryColor(secondaryKey);
 	THEME_COLOR_SECONDARY = secondary.main;
 	THEME_COLOR_SECONDARY_HOVER = secondary.hover;
 
-	_applyThemeAttribute(isDark);
+	applyThemeAttribute(isDark);
 
-	_loadToggle(isDark);
-	_changeBarColorIOS(barColor);
+	loadToggle(isDark);
+	changeBarColorIOS(barColor);
 
-	_loadTripViewerLogo();
-	_loadLogoColors();
-	_loadThemeColors();
+	loadTripViewerLogo();
+	loadLogoColors();
+	loadThemeColors();
 
-	_applyCustomVisibilityRules();
+	applyCustomVisibilityRules();
 
 	// Helpers
-	function _loadTripViewerLogo() {
-		const isDark = _isOnDarkMode();
+	function loadTripViewerLogo() {
+		const isDark = isOnDarkMode();
 		getID("logo-light").style.display = isDark ? "none" : "block";
 		getID("logo-dark").style.display = isDark ? "block" : "none";
 
 		const header2 = getID("header2");
 		if (header2) {
 			header2.src = isDark
-				? LOGO_ESCURO || header2.src
-				: LOGO_CLARO || header2.src;
+				? LOGO_DARK || header2.src
+				: LOGO_LIGHT || header2.src;
 		}
 	}
 
-	function _loadToggle(isDark = _isOnDarkMode()) {
+	function loadToggle(isDark = isOnDarkMode()) {
 		const el = getID("night-mode");
 		el.classList.toggle("bx-moon", !isDark);
 		el.classList.toggle("bx-sun", isDark);
 	}
 
-	function _applyCustomVisibilityRules() {
-		switch (_getHTMLpage()) {
+	function applyCustomVisibilityRules() {
+		switch (getHTMLpage()) {
 			case "view":
-				_loadTransporteImagens();
-				_loadViagemCustomVisibilityRules();
+				loadTransportationImages();
+				loadViewCustomVisibilityRules();
 				break;
 			case "destination":
-				_applyAccordionArrowCustomColor();
+				applyAccordionArrowCustomColor();
 				break;
 			case "expenses":
-				_changeChartsLabelsVisibility();
-				_loadMoedasTab();
+				changeChartsLabelsVisibility();
+				loadCurrenciesTab();
 		}
 	}
 }
 
-export function _switchVisibility() {
-	if (_isOnDarkMode()) {
-		_loadLightMode();
+export function switchVisibility() {
+	if (isOnDarkMode()) {
+		loadLightMode();
 	} else {
-		_loadDarkMode();
+		loadDarkMode();
 	}
 }
 
-export function _autoVisibility() {
-	let now = _getCurrentHour();
+export function autoVisibility() {
+	let now = getCurrentHour();
 	if (now >= 18 || now < 6) {
-		_loadDarkMode();
+		loadDarkMode();
 	} else {
-		_loadLightModeLite();
+		loadLightModeLite();
 	}
 }
 
-export function _disableScroll() {
+export function disableScroll() {
 	document.body.style.overflow = "hidden";
 }
 
-export function _enableScroll() {
+export function enableScroll() {
 	document.body.style.overflow = "auto";
 }
 
 // ======= CHECKERS =======
-export function _hasCSSRule(selector, property) {
+export function hasCSSRule(selector, property) {
 	let styleElement = document.getElementById("custom-styles");
 
 	if (!styleElement) {
@@ -197,8 +197,8 @@ export function _hasCSSRule(selector, property) {
 	return false;
 }
 
-export function _isOnDarkMode() {
-	const visibility = _getURLParam("visibility");
+export function isOnDarkMode() {
+	const visibility = getURLParam("visibility");
 	if (visibility) {
 		return visibility === "dark";
 	}
@@ -206,37 +206,37 @@ export function _isOnDarkMode() {
 }
 
 // ======= Modal Functions =======
-export function _openModal(modalID = "modal") {
-	_fadeIn([modalID]);
+export function openModal(modalID = "modal") {
+	fadeIn([modalID]);
 }
 
-export function _closeModal(modalID = "modal") {
-	_fadeOut([modalID], "down");
+export function closeModal(modalID = "modal") {
+	fadeOut([modalID], "down");
 }
 
-export function _isModalOpen(modalID = "modal") {
+export function isModalOpen(modalID = "modal") {
 	return getID(modalID).style.display === "block";
 }
 
 // ======= Páginas de Editar =======
-export function _loadEditModule(categoria) {
+export function loadEditModule(categoria) {
 	const habilitado = getID(`habilitado-${categoria}`);
 	if (habilitado.checked) {
-		_showContent(categoria);
+		showContent(categoria);
 		if (!getID(`habilitado-${categoria}-content`).innerText) {
-			_visibilityAdd(_firstCharToUpperCase(categoria).trim());
+			visibilityAdd(firstCharToUpperCase(categoria).trim());
 		}
 	} else {
-		_hideContent(categoria);
+		hideContent(categoria);
 	}
-	_loadListener(categoria);
+	loadListener(categoria);
 }
 
-export function _loadListener(categoria) {
+export function loadListener(categoria) {
 	const habilitado = getID(`habilitado-${categoria}`);
 	habilitado.addEventListener("change", function () {
 		if (habilitado.checked) {
-			_showContent(categoria);
+			showContent(categoria);
 			const box = getID(`${categoria}-box`);
 			const habilitadoContent = getID(`habilitado-${categoria}-content`);
 
@@ -244,16 +244,16 @@ export function _loadListener(categoria) {
 				(box && !box.innerText) ||
 				(habilitadoContent && !habilitadoContent.innerText)
 			) {
-				_visibilityAdd(_firstCharToUpperCase(categoria).trim());
+				visibilityAdd(firstCharToUpperCase(categoria).trim());
 			}
 		} else {
-			_removeEmptyChild(categoria);
-			_hideContent(categoria);
+			removeEmptyChild(categoria);
+			hideContent(categoria);
 		}
 	});
 }
 
-export function _showContent(type) {
+export function showContent(type) {
 	const habilitadoContent = getID(`habilitado-${type}-content`);
 	habilitadoContent.style.display = "block";
 
@@ -272,7 +272,7 @@ export function _showContent(type) {
 	}
 }
 
-export function _hideContent(type) {
+export function hideContent(type) {
 	const habilitadoContent = getID(`habilitado-${type}-content`);
 	habilitadoContent.style.display = "none";
 
@@ -282,16 +282,16 @@ export function _hideContent(type) {
 	}
 }
 
-export function _addRemoveChildListener(categoria, j, customFunction = null) {
+export function addRemoveChildListener(categoria, j, customFunction = null) {
 	getID(`remove-${categoria}-${j}`).addEventListener("click", function () {
-		_removeChildWithValidation(categoria, j);
+		removeChildWithValidation(categoria, j);
 		if (customFunction) {
 			eval(customFunction);
 		}
 	});
 }
 
-export function _toggleFadingVisibility(id = "copy-msg") {
+export function toggleFadingVisibility(id = "copy-msg") {
 	var div = getID(id);
 	div.classList.toggle("visible");
 	div.classList.toggle("hidden");
@@ -304,16 +304,16 @@ export function _toggleFadingVisibility(id = "copy-msg") {
 	}
 }
 
-export function _searchDestinosListenerAction() {
+export function searchDestinationsListenerAction() {
 	const search = getID("destinos-search").value.toLowerCase();
 
-	for (const j of _getJs("destinos-checkboxes")) {
+	for (const j of getJs("destinos-checkboxes")) {
 		const label = getID(`check-destinos-label-${j}`).innerText.toLowerCase();
 		getID(`checkbox-${j}`).style.display = label.includes(search) ? "" : "none";
 	}
 }
 
-export function _visibilityAdd(type) {
+export function visibilityAdd(type) {
 	const dynamicFunctionName = `_add${type}`;
 	if (typeof window[dynamicFunctionName] === "function") {
 		window[dynamicFunctionName]();
@@ -322,55 +322,55 @@ export function _visibilityAdd(type) {
 	}
 }
 
-export function _getVisibility(isDark = _isOnDarkMode()) {
+export function getVisibility(isDark = isOnDarkMode()) {
 	return isDark ? "dark" : "light";
 }
 
-export function _loadExternalVisibility(external, internal) {
-	internal = internal || _getVisibility();
+export function loadExternalVisibility(external, internal) {
+	internal = internal || getVisibility();
 
 	if (!internal || !external || internal === external) {
 		return;
 	}
 
 	if (external == "dark") {
-		_loadDarkMode();
+		loadDarkMode();
 		return;
 	}
 
 	if (external === "light") {
-		_loadLightMode();
+		loadLightMode();
 		return;
 	}
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._loadVisibility = _loadVisibility;
-window._loadDarkMode = _loadDarkMode;
-window._loadLightMode = _loadLightMode;
-window._loadLightModeLite = _loadLightModeLite;
-window._applyThemeAttribute = _applyThemeAttribute;
-window._loadUserVisibility = _loadUserVisibility;
-window._applyMode = _applyMode;
-window._switchVisibility = _switchVisibility;
-window._autoVisibility = _autoVisibility;
-window._disableScroll = _disableScroll;
-window._enableScroll = _enableScroll;
-window._hasCSSRule = _hasCSSRule;
-window._isOnDarkMode = _isOnDarkMode;
-window._openModal = _openModal;
-window._closeModal = _closeModal;
-window._isModalOpen = _isModalOpen;
-window._loadEditModule = _loadEditModule;
-window._loadListener = _loadListener;
-window._showContent = _showContent;
-window._hideContent = _hideContent;
-window._addRemoveChildListener = _addRemoveChildListener;
-window._toggleFadingVisibility = _toggleFadingVisibility;
-window._searchDestinosListenerAction = _searchDestinosListenerAction;
-window._visibilityAdd = _visibilityAdd;
-window._getVisibility = _getVisibility;
-window._loadExternalVisibility = _loadExternalVisibility;
+window.loadVisibility = loadVisibility;
+window.loadDarkMode = loadDarkMode;
+window.loadLightMode = loadLightMode;
+window.loadLightModeLite = loadLightModeLite;
+window.applyThemeAttribute = applyThemeAttribute;
+window.loadUserVisibility = loadUserVisibility;
+window.applyMode = applyMode;
+window.switchVisibility = switchVisibility;
+window.autoVisibility = autoVisibility;
+window.disableScroll = disableScroll;
+window.enableScroll = enableScroll;
+window.hasCSSRule = hasCSSRule;
+window.isOnDarkMode = isOnDarkMode;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.isModalOpen = isModalOpen;
+window.loadEditModule = loadEditModule;
+window.loadListener = loadListener;
+window.showContent = showContent;
+window.hideContent = hideContent;
+window.addRemoveChildListener = addRemoveChildListener;
+window.toggleFadingVisibility = toggleFadingVisibility;
+window.searchDestinationsListenerAction = searchDestinationsListenerAction;
+window.visibilityAdd = visibilityAdd;
+window.getVisibility = getVisibility;
+window.loadExternalVisibility = loadExternalVisibility;
 window.CHANGED_SVGS = CHANGED_SVGS;
-window.LOGO_CLARO = LOGO_CLARO;
-window.LOGO_ESCURO = LOGO_ESCURO;
+window.LOGO_LIGHT = LOGO_LIGHT;
+window.LOGO_DARK = LOGO_DARK;

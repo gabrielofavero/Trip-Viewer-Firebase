@@ -3,12 +3,12 @@ import { getDestinos, getLanguage } from '../../../core/config.js';
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var DESTINOS = [];
-var DESTINO_ATIVO;
+var ACTIVE_DESTINATION;
 var DESTINO_EXPORT = {};
 var DESTINO_TRANSLATIONS = {};
 
 // ======= LOADERS =======
-function _loadDestinos() {
+function loadDestinations() {
 	for (let i = 0; i < DESTINOS.length; i++) {
 		P_RESULT[DESTINOS[i].destinos.destinosID] = DESTINOS[i].destinos;
 	}
@@ -21,27 +21,27 @@ function _loadDestinos() {
 	if (
 		DESTINOS.length === 1 &&
 		getID("destinos-select").style.display === "none" &&
-		_getChildIDs("destinosBox").length <= 1
+		getChildIDs("destinosBox").length <= 1
 	) {
 		getID("destinosTitleContainer").style.display = "none";
 	}
 
 	window.addEventListener("resize", function () {
-		_adjustDestinationsHTML();
+		adjustDestinationsHTML();
 	});
 
-	_autoNavigateDestinos();
+	autoNavigateDestinos();
 }
 
-function _autoNavigateDestinos() {
+function autoNavigateDestinos() {
 	if (DESTINOS.length <= 1) return;
 	if (!INICIO?.date || !FIM?.date) return;
 
-	const hoje = _convertFromDateObject(_getTodayDateObject());
-	if (hoje < INICIO.date || hoje > FIM.date) return;
+	const hoje = convertFromDateObject(getTodayDateObject());
+	if (hoje < START_DATE.date || hoje > END_DATE.date) return;
 
-	const hojeKey = _jsDateToKey(hoje);
-	const hojeDestinos = PROGRAMACAO_DESTINOS[hojeKey];
+	const hojeKey = jsDateToKey(hoje);
+	const hojeDestinos = SCHEDULE_DESTINATIONS[hojeKey];
 	if (!hojeDestinos || hojeDestinos.length === 0) return;
 
 	const targetDestinosID = hojeDestinos[0].destinosID;
@@ -52,10 +52,10 @@ function _autoNavigateDestinos() {
 	);
 	if (!option) return;
 
-	_loadCustomSelectAction("destinos-select", targetDestinosID, option.label);
+	loadCustomSelectAction("destinos-select", targetDestinosID, option.label);
 }
 
-function _loadDestinationsCustomSelect() {
+function loadDestinationsCustomSelect() {
 	DESTINOS = FIRESTORE_DATA.destinos;
 
 	if (DESTINOS.length <= 1) {
@@ -63,18 +63,18 @@ function _loadDestinationsCustomSelect() {
 		return;
 	}
 
-	const options = _getDestinationsCustomSelectOptions();
+	const options = getDestinationsCustomSelectOptions();
 
 	const customSelect = {
 		id: "destinos-select",
 		options,
 		activeOption: options[0].value,
-		action: _loadDestionationCustomSelectAction,
+		action: loadDestionationCustomSelectAction,
 	};
 
-	_loadCustomSelect(customSelect);
+	loadCustomSelect(customSelect);
 
-	function _getDestinationsCustomSelectOptions() {
+	function getDestinationsCustomSelectOptions() {
 		const options = [];
 		const itineraryOrder = FIRESTORE_DATA.programacoes
 			? new Set(
@@ -117,19 +117,19 @@ function _loadDestinationsCustomSelect() {
 		return options;
 	}
 
-	function _loadDestionationCustomSelectAction(value) {
+	function loadDestionationCustomSelectAction(value) {
 		for (let i = 0; i < DESTINOS.length; i++) {
 			if (DESTINOS[i].destinosID === value) {
-				DESTINO_ATIVO = DESTINOS[i].destinosID;
-				_loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
-				_adjustDestinationsHTML();
+				ACTIVE_DESTINATION = DESTINOS[i].destinosID;
+				loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
+				adjustDestinationsHTML();
 				break;
 			}
 		}
 	}
 }
 
-function _loadDestinationsHTML(destino) {
+function loadDestinationsHTML(destino) {
 	let text = "";
 	const destinos = getDestinos();
 	const types = destinos.categorias.geral;
@@ -143,14 +143,14 @@ function _loadDestinationsHTML(destino) {
 
 		const translatedType = destinos.translation[type] || type;
 		const j = i + 1;
-		const box = destinos.boxes[_getDestinationsBoxesIndex(i)];
+		const box = destinos.boxes[getDestinationsBoxesIndex(i)];
 		const title = translate(`destination.${translatedType}.title`);
 		const description = translate(`destination.${translatedType}.description`);
 		const icon = destinos.icons[type];
 
 		text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
-    <a href="#" onclick="_loadAndOpenDestino('${type}')" id="ba${j}">
+    <a href="#" onclick="loadAndOpenDestino('${type}')" id="ba${j}">
         <div class="icon-box iconbox-${box.color}" id="ib${j}">
           <div class="icon">
             <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -168,20 +168,20 @@ function _loadDestinationsHTML(destino) {
 	getID("destinosBox").innerHTML = text;
 }
 
-function _loadAndOpenDestino(code) {
+function loadAndOpenDestino(code) {
 	const translation = getDestinos().translation;
-	const link = `destination?d=${DESTINO_ATIVO}&v=${DOCUMENT_ID}&type=${translation[code]}&visibility=${_getVisibility()}`;
-	_openViewEmbed(link);
+	const link = `destination?d=${ACTIVE_DESTINATION}&v=${DOCUMENT_ID}&type=${translation[code]}&visibility=${getVisibility()}`;
+	openViewEmbed(link);
 }
 
-function _getDestinationsBoxesIndex(i) {
+function getDestinationsBoxesIndex(i) {
 	const boxes = getDestinos().boxes;
 	if (i > boxes.length - 1) {
 		return i % boxes.length;
 	} else return i;
 }
 
-function _adjustDestinationsHTML() {
+function adjustDestinationsHTML() {
 	const elements = Array.from(document.querySelectorAll(".bd"));
 
 	for (const el of elements) {
@@ -195,7 +195,7 @@ function _adjustDestinationsHTML() {
 	}
 }
 
-function _getDestinosTranslations() {
+function getDestinationsTranslations() {
 	if (Object.keys(DESTINO_TRANSLATIONS) == 0) {
 		const language = getLanguage();
 		DESTINO_TRANSLATIONS = {

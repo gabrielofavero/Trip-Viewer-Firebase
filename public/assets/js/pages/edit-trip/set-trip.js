@@ -4,35 +4,35 @@ var FIRESTORE_PROTECTED_NEW_DATA = {};
 var FIRESTORE_GASTOS_NEW_DATA = {};
 var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
 
-async function _buildTripObject() {
-	switch (_getCurrentPreferencePIN()) {
+async function buildTripObject() {
+	switch (getCurrentPreferencePIN()) {
 		case "all-data":
-			FIRESTORE_NEW_DATA = await _getUnprotectedTripObject();
-			FIRESTORE_PROTECTED_NEW_DATA = await _getTripObjectFull(false);
+			FIRESTORE_NEW_DATA = await getUnprotectedTripObject();
+			FIRESTORE_PROTECTED_NEW_DATA = await getTripObjectFull(false);
 			break;
 		case "sensitive-only":
-			FIRESTORE_NEW_DATA = await _getTripObjectFull(true);
-			FIRESTORE_PROTECTED_NEW_DATA = _getSensitiveTripObject();
+			FIRESTORE_NEW_DATA = await getTripObjectFull(true);
+			FIRESTORE_PROTECTED_NEW_DATA = getSensitiveTripObject();
 			break;
 		default:
-			FIRESTORE_NEW_DATA = await _getTripObjectFull(false);
+			FIRESTORE_NEW_DATA = await getTripObjectFull(false);
 			FIRESTORE_PROTECTED_NEW_DATA = {};
 	}
 }
 
-async function _getUnprotectedTripObject() {
+async function getUnprotectedTripObject() {
 	return {
-		destinos: _getDestinosArray(),
-		compartilhamento: await _getCompartilhamentoObject(),
-		cores: _getCoresObject(),
+		destinos: getDestinationsArray(),
+		compartilhamento: await getSharingObject(),
+		cores: getCoresObject(),
 		fim: getID(`fim`).value
-			? _formattedDateToDateObject(getID(`fim`).value)
+			? formattedDateToDateObject(getID(`fim`).value)
 			: "",
 		galeria: {},
 		hospedagens: [],
-		imagem: _getImagemObject(),
+		imagem: getImagemObject(),
 		inicio: getID(`inicio`).value
-			? _formattedDateToDateObject(getID(`inicio`).value)
+			? formattedDateToDateObject(getID(`inicio`).value)
 			: "",
 		links: {},
 		modulos: {},
@@ -40,18 +40,18 @@ async function _getUnprotectedTripObject() {
 		programacoes: {},
 		pessoas: {},
 		titulo: getID(`titulo`).value,
-		transportes: _getVisibilidadeObject(),
+		transportes: getVisibilidadeObject(),
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
 		},
 		visibilidade: {},
-		pin: _getCurrentPreferencePIN(),
+		pin: getCurrentPreferencePIN(),
 	};
 }
 
-function _getSensitiveTripObject() {
-	const hospedagens = _getProtectedHospedagemObject();
-	const transportes = _getProtectedTransporteObject();
+function getSensitiveTripObject() {
+	const hospedagens = getProtectedAccommodationObject();
+	const transportes = getProtectedTransportationObject();
 
 	if (
 		Object.keys(hospedagens).length === 0 &&
@@ -63,53 +63,53 @@ function _getSensitiveTripObject() {
 	return {
 		hospedagens: hospedagens,
 		transportes: transportes,
-		pin: _getCurrentPreferencePIN(),
+		pin: getCurrentPreferencePIN(),
 	};
 }
 
-async function _getTripObjectFull(protectedReservationCodes = false) {
+async function getTripObjectFull(protectedReservationCodes = false) {
 	return {
-		destinos: _getDestinosArray(),
-		compartilhamento: await _getCompartilhamentoObject(),
-		cores: _getCoresObject(),
+		destinos: getDestinationsArray(),
+		compartilhamento: await getSharingObject(),
+		cores: getCoresObject(),
 		fim: getID(`fim`).value
-			? _formattedDateToDateObject(getID(`fim`).value)
+			? formattedDateToDateObject(getID(`fim`).value)
 			: "",
-		galeria: _getGaleriaObject(),
-		hospedagens: _getHospedagemArray(protectedReservationCodes),
-		imagem: _getImagemObject(),
+		galeria: getGaleriaObject(),
+		hospedagens: getAccommodationArray(protectedReservationCodes),
+		imagem: getImagemObject(),
 		inicio: getID(`inicio`).value
-			? _formattedDateToDateObject(getID(`inicio`).value)
+			? formattedDateToDateObject(getID(`inicio`).value)
 			: "",
-		links: _getLinksObject(),
-		modulos: _getModulosObject(),
+		links: getLinksObject(),
+		modulos: getModulosObject(),
 		moeda: getID(`moeda`).value,
-		programacoes: _getProgramacaoArray(),
+		programacoes: getItineraryArray(),
 		pessoas: TRAVELERS,
 		titulo: getID(`titulo`).value,
-		transportes: _getTransporteObject(protectedReservationCodes),
+		transportes: getTransportationObject(protectedReservationCodes),
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
 		},
-		visibilidade: _getVisibilidadeObject(),
-		pin: _getCurrentPreferencePIN(),
+		visibilidade: getVisibilidadeObject(),
+		pin: getCurrentPreferencePIN(),
 	};
 }
 
-async function _buildGastosObject() {
-	switch (_getCurrentPreferencePIN()) {
+async function buildExpensesObject() {
+	switch (getCurrentPreferencePIN()) {
 		case "all-data":
 		case "sensitive-only":
-			FIRESTORE_GASTOS_PROTECTED_NEW_DATA = await _getGastosObject();
+			FIRESTORE_GASTOS_PROTECTED_NEW_DATA = await getExpensesObject();
 			FIRESTORE_GASTOS_NEW_DATA = {};
 			break;
 		default:
-			FIRESTORE_GASTOS_NEW_DATA = await _getGastosObject(false);
+			FIRESTORE_GASTOS_NEW_DATA = await getExpensesObject(false);
 			FIRESTORE_PROTECTED_NEW_DATA = {};
 	}
 }
 
-function _getModulosObject() {
+function getModulosObject() {
 	return {
 		hospedagens: getID("habilitado-hospedagens").checked,
 		destinos: getID("habilitado-destinos").checked,
@@ -121,7 +121,7 @@ function _getModulosObject() {
 	};
 }
 
-function _getCoresObject() {
+function getCoresObject() {
 	return {
 		ativo: getID("habilitado-cores").checked,
 		claro: getID("claro").value,
@@ -129,18 +129,18 @@ function _getCoresObject() {
 	};
 }
 
-async function _getCompartilhamentoObject() {
+async function getSharingObject() {
 	return {
 		ativo: true,
 		dono:
 			FIRESTORE_DATA && Object.keys(FIRESTORE_DATA).length > 0
 				? FIRESTORE_DATA.compartilhamento.dono
-				: await _getUID(),
+				: await getUID(),
 		editores: [],
 	};
 }
 
-function _getImagemObject() {
+function getImagemObject() {
 	return {
 		ativo: getID("habilitado-imagens").checked,
 		background: getID("link-background").value || "",
@@ -149,7 +149,7 @@ function _getImagemObject() {
 	};
 }
 
-function _getLinksObject() {
+function getLinksObject() {
 	return {
 		ativo: getID("habilitado-links").checked,
 		attachments: getID("link-attachments").value || "",
@@ -162,14 +162,14 @@ function _getLinksObject() {
 	};
 }
 
-function _getVisibilidadeObject() {
+function getVisibilidadeObject() {
 	return {
 		claro: getID("dark-and-light").checked || getID("light-exclusive").checked,
 		escuro: getID("dark-and-light").checked || getID("dark-exclusive").checked,
 	};
 }
 
-function _verifyImageUploads(type) {
+function verifyImageUploads(type) {
 	if (DOCUMENT_ID && !IMAGE_UPLOAD_STATUS.hasErrors) {
 		const path = `${type}/${DOCUMENT_ID}`;
 
@@ -189,7 +189,7 @@ function _verifyImageUploads(type) {
 
 		if (type == "viagens") {
 			const data =
-				_getCurrentPreferencePIN() === "all-data"
+				getCurrentPreferencePIN() === "all-data"
 					? FIRESTORE_PROTECTED_NEW_DATA
 					: FIRESTORE_NEW_DATA;
 			const hospedagens = data.hospedagens || [];
@@ -204,27 +204,27 @@ function _verifyImageUploads(type) {
 			documentLinks.push(...imagens);
 		}
 
-		_deleteUnusedImages(path, documentLinks);
+		deleteUnusedImages(path, documentLinks);
 	}
 
-	_addSetResponse(
+	addSetResponse(
 		translate("labels.image.check"),
 		!IMAGE_UPLOAD_STATUS.hasErrors,
 	);
 }
 
-async function _setViagem() {
+async function setTripData() {
 	if (getID("habilitado-destinos").checked) {
-		for (const child of _getChildIDs("com-destinos")) {
+		for (const child of getChildIDs("com-destinos")) {
 			const i = parseInt(child.split("-")[2]);
-			_setRequired(`select-destinos-${i}`);
+			setRequired(`select-destinos-${i}`);
 		}
 	}
 
 	const type = "viagens";
-	const checks = [_validatePinField];
+	const checks = [validatePinField];
 	const dataBuildingFunctions = [_buildTripObject, _buildGastosObject];
-	const batchFunctions = [_setProtectedDataAndExpenses];
+	const batchFunctions = [setProtectedDataAndExpenses];
 
-	await _setDocumento({ type, checks, dataBuildingFunctions, batchFunctions });
+	await setDocumento({ type, checks, dataBuildingFunctions, batchFunctions });
 }

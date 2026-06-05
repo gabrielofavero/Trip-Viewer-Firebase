@@ -1,16 +1,16 @@
-export function _loadEmbedListeners(action) {
+export function loadEmbedListeners(action) {
 	window.addEventListener("message", (e) => {
-		const current = _getOrigin().toUpperCase();
+		const current = getOrigin().toUpperCase();
 		const eventType = e?.data?.type || "unknown";
 		const origin = e?.data?.page || "unknown";
 		console.log(
 			`[${current}] Received "${eventType}" event from "${origin}" page`,
 		);
-		_onEmbedMessage(e, action);
+		onEmbedMessage(e, action);
 	});
 }
 
-export function _openEmbed({
+export function openEmbed({
 	frameID,
 	url,
 	beforeOpen,
@@ -35,7 +35,7 @@ export function _openEmbed({
 	afterOpen?.();
 }
 
-export function _onEmbedMessage(event, action) {
+export function onEmbedMessage(event, action) {
 	const allowedOrigin = window.location.origin;
 	if (event.origin !== allowedOrigin) return;
 
@@ -46,15 +46,15 @@ export function _onEmbedMessage(event, action) {
 	action(data);
 }
 
-export function _sendToParent(type, value) {
-	const page = _getOrigin();
+export function sendToParent(type, value) {
+	const page = getOrigin();
 	window.parent.postMessage({ page, type, value }, window.location.origin);
 }
 
-export function _sendToEmbed(frameID, type, value) {
+export function sendToEmbed(frameID, type, value) {
 	const frame = getID(frameID);
 	if (!frame || !frame.contentWindow) return;
-	const page = _getOrigin();
+	const page = getOrigin();
 
 	frame.contentWindow.postMessage(
 		{ page, type, value },
@@ -62,11 +62,11 @@ export function _sendToEmbed(frameID, type, value) {
 	);
 }
 
-export function _getOrigin() {
+export function getOrigin() {
 	return window.location.pathname.replace("/", "");
 }
 
-export function _loadEmbedVisibility({
+export function loadEmbedVisibility({
 	closeAction,
 	embedAction,
 	notEmbedAction,
@@ -74,15 +74,15 @@ export function _loadEmbedVisibility({
 	const closeButton = getID("closeButton");
 	const logoLink = getID("logo-link");
 
-	if (_isEmbed()) {
+	if (isEmbed()) {
 		embedAction?.();
 		closeButton.onclick = () => {
 			closeAction?.();
-			window.parent._closeViewEmbed(false, _getVisibility());
+			window.parent.closeViewEmbed(false, getVisibility());
 		};
 
 		logoLink.onclick = () => {
-			window.parent._closeViewEmbed(true, _getVisibility());
+			window.parent.closeViewEmbed(true, getVisibility());
 		};
 	} else {
 		notEmbedAction?.();
@@ -98,16 +98,16 @@ export function _loadEmbedVisibility({
 	}
 }
 
-export function _isEmbed() {
+export function isEmbed() {
 	return window.parent != window;
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._loadEmbedListeners = _loadEmbedListeners;
-window._openEmbed = _openEmbed;
-window._onEmbedMessage = _onEmbedMessage;
-window._sendToParent = _sendToParent;
-window._sendToEmbed = _sendToEmbed;
-window._getOrigin = _getOrigin;
-window._loadEmbedVisibility = _loadEmbedVisibility;
-window._isEmbed = _isEmbed;
+window.loadEmbedListeners = loadEmbedListeners;
+window.openEmbed = openEmbed;
+window.onEmbedMessage = onEmbedMessage;
+window.sendToParent = sendToParent;
+window.sendToEmbed = sendToEmbed;
+window.getOrigin = getOrigin;
+window.loadEmbedVisibility = loadEmbedVisibility;
+window.isEmbed = isEmbed;

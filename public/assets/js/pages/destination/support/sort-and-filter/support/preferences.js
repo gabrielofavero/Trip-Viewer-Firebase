@@ -11,7 +11,7 @@ const SORT_PREFERENCES = {
 };
 
 // Getters
-function _getFilterPreferences() {
+function getFilterPreferences() {
 	const filter = sessionStorage.getItem("destinos-filtered-preferences");
 	if (filter) {
 		return JSON.parse(filter);
@@ -19,7 +19,7 @@ function _getFilterPreferences() {
 	return FILTER_PREFERENCES;
 }
 
-function _getSortPreferences() {
+function getSortPreferences() {
 	const sort = sessionStorage.getItem("destinos-sorted-preferences");
 	if (sort) {
 		return JSON.parse(sort);
@@ -28,30 +28,30 @@ function _getSortPreferences() {
 }
 
 // Setters
-function _setFilterPreferences() {
+function setFilterPreferences() {
 	sessionStorage.setItem(
 		"destinos-filtered-preferences",
 		JSON.stringify(FILTER_PREFERENCES),
 	);
 }
 
-function _setSortPreferences() {
+function setSortPreferences() {
 	sessionStorage.setItem(
 		"destinos-sorted-preferences",
 		JSON.stringify(SORT_PREFERENCES),
 	);
 }
 
-function _setFilterPreference(type, value) {
+function setFilterPreference(type, value) {
 	if (!(type in FILTER_PREFERENCES)) {
 		return;
 	}
 	FILTER_PREFERENCES[type] = value;
-	_setFilterPreferences();
+	setFilterPreferences();
 }
 
-function _setSortPreference(type, value) {
+function setSortPreference(type, value) {
 	SORT_PREFERENCES.type = type;
 	SORT_PREFERENCES.value = value;
-	_setSortPreferences();
+	setSortPreferences();
 }

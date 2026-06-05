@@ -1,18 +1,18 @@
 // Listagem Existente
-async function _loadListData(FIRESTORE_DATA) {
+async function loadListData(FIRESTORE_DATA) {
 	try {
-		_loadDadosBasicosListagemData(FIRESTORE_DATA);
-		_loadCustomizacaoData(FIRESTORE_DATA);
-		_loadDestinosData();
+		loadDadosBasicosListagemData(FIRESTORE_DATA);
+		loadCustomizacaoData(FIRESTORE_DATA);
+		loadDestinationsData();
 
-		_setPageName(`${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`);
+		setPageName(`${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`);
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		throw error;
 	}
 }
 
-function _loadDadosBasicosListagemData(FIRESTORE_DATA) {
+function loadDadosBasicosListagemData(FIRESTORE_DATA) {
 	getID("titulo").value = FIRESTORE_DATA.titulo;
 	getID("subtitulo").value = FIRESTORE_DATA.subtitulo;
 	getID("descricao").value = FIRESTORE_DATA.descricao;

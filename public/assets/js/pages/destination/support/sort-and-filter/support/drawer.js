@@ -3,7 +3,7 @@ const DRAWER_STATE = {
 };
 
 // Open and Close Actions
-function _openDrawer(titleText, innerHTML, actions) {
+function openDrawer(titleText, innerHTML, actions) {
 	actions.beforeOpen?.();
 
 	const overlay = getID("overlay");
@@ -28,7 +28,7 @@ function _openDrawer(titleText, innerHTML, actions) {
 	actions.load?.();
 }
 
-function _closeDrawer() {
+function closeDrawer() {
 	const overlay = getID("overlay");
 	const drawer = getID("drawer");
 
@@ -43,7 +43,7 @@ function _closeDrawer() {
 }
 
 // Inner HTML
-function _getFilterDrawerInnerHTML() {
+function getFilterDrawerInnerHTML() {
 	const titles = FILTER_OPTIONS.titles;
 	const types = FILTER_OPTIONS[ACTIVE_CATEGORY];
 
@@ -51,7 +51,7 @@ function _getFilterDrawerInnerHTML() {
 	for (const typeKey in types) {
 		let optionsHTML = "";
 		const options = types[typeKey];
-		const optionKeys = _getSortedArray(Object.keys(options), typeKey);
+		const optionKeys = getSortedArray(Object.keys(options), typeKey);
 		for (const optionKey of optionKeys) {
 			optionsHTML += `<button class="option-btn" data-value="${optionKey}">${options[optionKey]}</button>`;
 		}
@@ -66,7 +66,7 @@ function _getFilterDrawerInnerHTML() {
 	return result;
 }
 
-function _getSortDrawerInnerHTML() {
+function getSortDrawerInnerHTML() {
 	const titles = SORT_OPTIONS.titles;
 	const types = SORT_OPTIONS[ACTIVE_CATEGORY];
 
@@ -88,8 +88,8 @@ function _getSortDrawerInnerHTML() {
 }
 
 // Load Actions
-function _filterDrawerOptionLoadAction() {
-	const preferences = _getFilterPreferences();
+function filterDrawerOptionLoadAction() {
+	const preferences = getFilterPreferences();
 	const content = getID("drawerContent");
 	const containers = content.querySelectorAll(".drawer-container");
 
@@ -118,8 +118,8 @@ function _filterDrawerOptionLoadAction() {
 	}
 }
 
-function _sortDrawerOptionLoadAction() {
-	const preferences = _getSortPreferences();
+function sortDrawerOptionLoadAction() {
+	const preferences = getSortPreferences();
 	const content = getID("drawerContent");
 	const containers = content.querySelectorAll(".drawer-container");
 
@@ -144,20 +144,20 @@ function _sortDrawerOptionLoadAction() {
 }
 
 // Click Actions
-function _filterDrawerOptionClickAction(e) {
+function filterDrawerOptionClickAction(e) {
 	const container = e.currentTarget.closest(".drawer-container");
-	_handleDrawerOptionClick(e, container, _setFilterPreference);
-	_filter(true);
+	handleDrawerOptionClick(e, container, setFilterPreference);
+	filter(true);
 }
 
-function _sortDrawerOptionClickAction(e) {
+function sortDrawerOptionClickAction(e) {
 	const container = getID("drawerContent");
-	_handleDrawerOptionClick(e, container, _setSortPreference);
-	_sort(true);
+	handleDrawerOptionClick(e, container, setSortPreference);
+	sort(true);
 }
 
 // Helpers
-function _handleDrawerOptionClick(e, container, applyPreference) {
+function handleDrawerOptionClick(e, container, applyPreference) {
 	const target = e.currentTarget;
 	target.classList.add("active");
 
@@ -174,17 +174,17 @@ function _handleDrawerOptionClick(e, container, applyPreference) {
 	applyPreference(type, value);
 }
 
-function _isDrawerOpen() {
+function isDrawerOpen() {
 	return getID("drawer").classList.contains("open");
 }
 
-function _adjustDrawer() {
-	if (_isDrawerOpen()) {
-		_closeDrawer();
+function adjustDrawer() {
+	if (isDrawerOpen()) {
+		closeDrawer();
 	}
 }
 
-function _getSortedArray(arr, key) {
+function getSortedArray(arr, key) {
 	if (!FILTER_SORT_KEYS_ORDER[key]) {
 		return arr;
 	}

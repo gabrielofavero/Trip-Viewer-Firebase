@@ -1,38 +1,38 @@
-var INNER_GASTOS = {
+var INNER_EXPENSES = {
 	gastosPrevios: [],
 	gastosDurante: [],
 };
 
-var LAST_INNER_GASTO_TIPO = "";
+var LAST_INNER_EXPENSE_TYPE = "";
 
-function _loadGastos(data = FIRESTORE_GASTOS_DATA) {
-	_pushGasto("gastosPrevios", data);
-	_pushGasto("gastosDurante", data);
-	_loadGastosHTML();
+function loadExpenses(data = FIRESTORE_GASTOS_DATA) {
+	pushExpense("gastosPrevios", data);
+	pushExpense("gastosDurante", data);
+	loadExpensesHTML();
 }
 
-async function _getGastosObject() {
-	const gastosDurante = _getGastos("gastosDurante");
-	const gastosPrevios = _getGastos("gastosPrevios");
+async function getExpensesObject() {
+	const gastosDurante = getExpenses("gastosDurante");
+	const gastosPrevios = getExpenses("gastosPrevios");
 
 	if (gastosDurante.length === 0 && gastosPrevios.length === 0) {
 		return {};
 	}
 
 	return {
-		compartilhamento: await _getCompartilhamentoObject(),
+		compartilhamento: await getSharingObject(),
 		gastosDurante,
 		gastosPrevios,
 		moeda: getID(`moeda`).value,
-		pessoas: _getTravelersObject(),
+		pessoas: getTravelersObject(),
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
 		},
 	};
 
-	function _getGastos(categoria) {
+	function getExpenses(categoria) {
 		let result = [];
-		for (const tipoObj of INNER_GASTOS[categoria]) {
+		for (const tipoObj of INNER_EXPENSES[categoria]) {
 			result = [...result, ...tipoObj.gastos];
 		}
 		return result;
@@ -40,35 +40,35 @@ async function _getGastosObject() {
 }
 
 // Gastos e Inner Gastos
-function _pushGasto(tipo, data) {
+function pushExpense(tipo, data) {
 	data = data || {};
 	if (!data[tipo]) {
 		data[tipo] = [];
 	}
 
 	for (const gasto of data[tipo]) {
-		const tipos = INNER_GASTOS[tipo].map((gasto) => gasto.tipo);
+		const tipos = INNER_EXPENSES[tipo].map((gasto) => gasto.tipo);
 		const index = tipos.indexOf(gasto.tipo);
 		if (index === -1) {
-			INNER_GASTOS[tipo].push({
+			INNER_EXPENSES[tipo].push({
 				tipo: gasto.tipo,
 				gastos: [gasto],
 			});
 		} else {
-			INNER_GASTOS[tipo][index].gastos.push(gasto);
+			INNER_EXPENSES[tipo][index].gastos.push(gasto);
 		}
 	}
 }
 
-function _loadGastosHTML() {
-	for (const categoria in INNER_GASTOS) {
+function loadExpensesHTML() {
+	for (const categoria in INNER_EXPENSES) {
 		getID(categoria).innerHTML = "";
-		for (const innerGasto of INNER_GASTOS[categoria]) {
-			_buildInnerGasto(categoria, innerGasto);
+		for (const innerGasto of INNER_EXPENSES[categoria]) {
+			buildInnerGasto(categoria, innerGasto);
 		}
 	}
 
-	function _buildInnerGasto(categoria, innerGasto) {
+	function buildInnerGasto(categoria, innerGasto) {
 		const div = document.createElement("div");
 		const id = `${categoria}-${innerGasto.tipo}`;
 		div.className = "gastos-item draggable-area";
@@ -87,9 +87,9 @@ function _loadGastosHTML() {
 			const button = document.createElement("button");
 			button.className = "btn input-botao draggable";
 			button.innerHTML = gasto.pessoa
-				? `<span class="highlight">${_getTravelerName(gasto.pessoa)}:</span> ${gasto.nome}`
+				? `<span class="highlight">${getTravelerName(gasto.pessoa)}:</span> ${gasto.nome}`
 				: gasto.nome;
-			button.onclick = () => _openInnerGasto(categoria, innerGasto.tipo, i);
+			button.onclick = () => openInnerExpense(categoria, innerGasto.tipo, i);
 			container.appendChild(button);
 
 			const icon = document.createElement("i");
@@ -101,43 +101,43 @@ function _loadGastosHTML() {
 		}
 
 		getID(categoria).appendChild(div);
-		_initializeSortableForGroup(id, { onEnd: _afterDragInnerGasto });
+		initializeSortableForGroup(id, { onEnd: _afterDragInnerGasto });
 	}
 }
 
-function _openInnerGasto(categoria, tipo = "", index = -1) {
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+function openInnerExpense(categoria, tipo = "", index = -1) {
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = tipo
 		? translate("labels.edit")
 		: translate("labels.add");
-	propriedades.conteudo = _getInnerGastoContent(categoria, tipo, index);
+	propriedades.conteudo = getInnerExpenseContent(categoria, tipo, index);
 	propriedades.icones = [{ tipo: "voltar", acao: "" }];
-	propriedades.containers = _getContainersInput();
+	propriedades.containers = getContainersInput();
 	propriedades.botoes = [
 		{
 			tipo: "cancelar",
 		},
 		{
 			tipo: "confirmar",
-			acao: `_saveInnerGasto('${categoria}', '${tipo}', ${index})`,
+			acao: `saveInnerExpense('${categoria}', '${tipo}', ${index})`,
 		},
 	];
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 
 	if (tipo && index >= 0) {
-		const gasto = INNER_GASTOS[categoria].find(
+		const gasto = INNER_EXPENSES[categoria].find(
 			(tipoObj) => tipoObj.tipo === tipo,
 		).gastos[index];
 		getID("gasto-nome").value = gasto.nome;
 		getID("gasto-pessoa").value = gasto.pessoa || "";
 		getID("gasto-moeda").value = gasto.moeda;
 		getID("gasto-valor").value = gasto.valor;
-		_applyGastoInnerTipo(gasto.tipo);
+		applyExpenseInnerType(gasto.tipo);
 	} else {
 		getID("gasto-deletar").style.display = "none";
 		getID("gasto-moeda").value = getID("moeda").value;
-		if (LAST_INNER_GASTO_TIPO) {
-			_applyGastoInnerTipo(LAST_INNER_GASTO_TIPO);
+		if (LAST_INNER_EXPENSE_TYPE) {
+			applyExpenseInnerType(LAST_INNER_EXPENSE_TYPE);
 		}
 	}
 
@@ -158,11 +158,11 @@ function _openInnerGasto(categoria, tipo = "", index = -1) {
 	});
 
 	getID("gasto-tipo-input").addEventListener("change", (e) => {
-		e.target.value = _firstCharToUpperCase(e.target.value.trim());
+		e.target.value = firstCharToUpperCase(e.target.value.trim());
 	});
 }
 
-function _applyGastoInnerTipo(tipo) {
+function applyExpenseInnerType(tipo) {
 	const values = Array.from(getID("gasto-tipo-select").options).map(
 		(option) => option.value,
 	);
@@ -175,7 +175,7 @@ function _applyGastoInnerTipo(tipo) {
 	}
 }
 
-function _getInnerGastoContent(categoria, tipo, index) {
+function getInnerExpenseContent(categoria, tipo, index) {
 	return `<div id='inner-gasto-box'>
                 <div class="nice-form-group">
                     <label>${translate("labels.name")}</label>
@@ -200,7 +200,7 @@ function _getInnerGastoContent(categoria, tipo, index) {
                     <label>${translate("trip.expenses.paid_by")}</label>
                         <select id="gasto-pessoa" class="editar-select" name="pessoa">
                         <option value="">${translate("labels.non_specified")}</option>
-                        ${_getTravelersSelectOptionsHTML()}
+                        ${getTravelersSelectOptionsHTML()}
                     </select>
                 </div>
                 <div class="nice-form-group">
@@ -237,7 +237,7 @@ function _getInnerGastoContent(categoria, tipo, index) {
                     <input required class="input-full" id="gasto-valor" type="number" placeholder="0.00" step="0.01">
                 </div>
                 <div class="button-box-right" id="gasto-deletar" style="margin-top: 8px; margin-bottom: 8px;">
-                        <button onclick="_deleteInnerGasto('${categoria}', '${tipo}', ${index})" class="btn btn-basic btn-format">
+                        <button onclick="deleteInnerGasto('${categoria}', '${tipo}', ${index})" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
                             </svg>
@@ -246,80 +246,80 @@ function _getInnerGastoContent(categoria, tipo, index) {
             </div>`;
 }
 
-function _saveInnerGasto(categoria, tipo, index = -1) {
-	const valor = _getFieldValueOrNotify("gasto-valor");
+function saveInnerExpense(categoria, tipo, index = -1) {
+	const valor = getFieldValueOrNotify("gasto-valor");
 	const newGasto = {
-		nome: _getFieldValueOrNotify("gasto-nome"),
+		nome: getFieldValueOrNotify("gasto-nome"),
 		tipo:
 			getID("gasto-tipo-select").value === "custom"
-				? _getFieldValueOrNotify("gasto-tipo-input")
+				? getFieldValueOrNotify("gasto-tipo-input")
 				: getID("gasto-tipo-select").value,
 		pessoa: getID("gasto-pessoa").value || "",
-		moeda: _getFieldValueOrNotify("gasto-moeda"),
+		moeda: getFieldValueOrNotify("gasto-moeda"),
 		valor: valor ? parseFloat(parseFloat(valor).toFixed(2)) : null,
 	};
 
 	if (!newGasto.nome || !newGasto.tipo || !newGasto.moeda || !newGasto.valor)
 		return;
 
-	LAST_INNER_GASTO_TIPO = newGasto.tipo;
+	LAST_INNER_EXPENSE_TYPE = newGasto.tipo;
 
 	if (tipo && index >= 0) {
 		if (tipo == newGasto.tipo) {
-			INNER_GASTOS[categoria].find((tipoObj) => tipoObj.tipo === tipo).gastos[
+			INNER_EXPENSES[categoria].find((tipoObj) => tipoObj.tipo === tipo).gastos[
 				index
 			] = newGasto;
 		} else {
-			INNER_GASTOS[categoria]
+			INNER_EXPENSES[categoria]
 				.find((tipoObj) => tipoObj.tipo === tipo)
 				.gastos.splice(index, 1);
-			let tipoObj = INNER_GASTOS[categoria].find(
+			let tipoObj = INNER_EXPENSES[categoria].find(
 				(tipoObj) => tipoObj.tipo === newGasto.tipo,
 			);
 			if (tipoObj) {
 				tipoObj.gastos.push(newGasto);
 			} else {
-				INNER_GASTOS[categoria].push({
+				INNER_EXPENSES[categoria].push({
 					tipo: newGasto.tipo,
 					gastos: [newGasto],
 				});
 			}
 		}
 	} else {
-		const tipos = INNER_GASTOS[categoria].map((tipoObj) => tipoObj.tipo);
+		const tipos = INNER_EXPENSES[categoria].map((tipoObj) => tipoObj.tipo);
 		if (tipos.includes(newGasto.tipo)) {
-			INNER_GASTOS[categoria]
+			INNER_EXPENSES[categoria]
 				.find((tipoObj) => tipoObj.tipo === newGasto.tipo)
 				.gastos.push(newGasto);
 		} else {
-			INNER_GASTOS[categoria].push({ tipo: newGasto.tipo, gastos: [newGasto] });
+			INNER_EXPENSES[categoria].push({ tipo: newGasto.tipo, gastos: [newGasto] });
 		}
 	}
-	_updateInnerGastos();
-	_loadGastosHTML();
-	_closeMessage();
+	updateInnerGastos();
+	loadExpensesHTML();
+	closeMessage();
 }
 
-function _updateInnerGastos() {
-	for (const categoria in INNER_GASTOS) {
-		for (let i = 0; i < INNER_GASTOS[categoria].length; i++) {
-			const tipoObj = INNER_GASTOS[categoria][i];
+function updateInnerGastos() {
+	for (const categoria in INNER_EXPENSES) {
+		for (let i = 0; i < INNER_EXPENSES[categoria].length; i++) {
+			const tipoObj = INNER_EXPENSES[categoria][i];
 			if (tipoObj.gastos.length === 0) {
-				INNER_GASTOS[categoria].splice(i, 1);
+				INNER_EXPENSES[categoria].splice(i, 1);
 			}
 		}
 	}
 }
 
-function _deleteInnerGasto(categoria, tipo, index) {
-	INNER_GASTOS[categoria]
+function deleteInnerGasto(categoria, tipo, index) {
+	INNER_EXPENSES[categoria]
 		.find((tipoObj) => tipoObj.tipo === tipo)
 		.gastos.splice(index, 1);
-	_loadGastosHTML();
-	_closeMessage();
+	loadExpensesHTML();
+	closeMessage();
 }
 
-function _afterDragInnerGasto(evt) {
+function afterDragInnerGasto(evt) {
 	const id = evt.from.getAttribute("data-group");
 	const split = id.split("-");
 
@@ -327,7 +327,7 @@ function _afterDragInnerGasto(evt) {
 	const from = evt.oldIndex - 1;
 	const to = evt.newIndex - 1;
 
-	const grupos = INNER_GASTOS[categoria];
+	const grupos = INNER_EXPENSES[categoria];
 	if (!grupos) return;
 
 	const tipo = split.slice(1).join("-");
@@ -345,10 +345,10 @@ function _afterDragInnerGasto(evt) {
 	const [moved] = gastos.splice(from, 1);
 	gastos.splice(to, 0, moved);
 
-	INNER_GASTOS[categoria][subgroupIndex] = {
+	INNER_EXPENSES[categoria][subgroupIndex] = {
 		...subgroup,
 		gastos,
 	};
 
-	_loadGastosHTML();
+	loadExpensesHTML();
 }

@@ -1,19 +1,19 @@
 var SAVED_SCROLL_POSITION = 0;
 const ACTIVE_EMBEDS = {};
 
-function _loadViewEmbed() {
+function loadViewEmbed() {
 	if (FIRESTORE_DATA.modulos?.gastos === true) {
-		_loadEmbedListeners(_loadViewEmbedAction);
+		loadEmbedListeners(_loadViewEmbedAction);
 	}
 }
 
-function _openViewEmbed(url) {
+function openViewEmbed(url) {
 	const frameID = "lightbox-iframe";
 	const newTab = true;
 	const beforeOpen = () => {
 		SAVED_SCROLL_POSITION =
 			window.pageYOffset || document.documentElement.scrollTop;
-		_startLoadingScreen();
+		startLoadingScreen();
 		window.scrollTo(0, 0);
 	};
 	const onLoad = () => {
@@ -21,22 +21,22 @@ function _openViewEmbed(url) {
 		getID("night-mode").style.display = "none";
 		getID("menu").style.display = "none";
 		getID("navbar").style.display = "none";
-		_stopLoadingScreen();
-		_disableScroll();
+		stopLoadingScreen();
+		disableScroll();
 	};
 
-	_openEmbed({ frameID, url, beforeOpen, onLoad, newTab });
+	openEmbed({ frameID, url, beforeOpen, onLoad, newTab });
 }
 
-function _closeViewEmbed(redirectToHome = false, visibility) {
+function closeViewEmbed(redirectToHome = false, visibility) {
 	getID("lightbox").style.display = "none";
 	getID("night-mode").style.display = "block";
 	getID("menu").style.display = "block";
 	getID("navbar").style.display = "block";
-	_enableScroll();
+	enableScroll();
 
 	if (redirectToHome) {
-		window.location.href = `index?visibility=${visibility || _getVisibility()}`;
+		window.location.href = `index?visibility=${visibility || getVisibility()}`;
 	} else {
 		window.scrollTo({
 			top: SAVED_SCROLL_POSITION,
@@ -45,18 +45,18 @@ function _closeViewEmbed(redirectToHome = false, visibility) {
 	}
 
 	if (visibility) {
-		_loadExternalVisibility(visibility);
+		loadExternalVisibility(visibility);
 	}
 }
 
-function _openExpensesEmbed() {
-	_openEmbed({
+function openExpensesEmbed() {
+	openEmbed({
 		frameID: "expenses-embed-frame",
-		url: `expenses.html?visibility=${_getVisibility()}&embed=1&g=${_getURLParam("v")}`,
+		url: `expenses.html?visibility=${getVisibility()}&embed=1&g=${getURLParam("v")}`,
 	});
 }
 
-function _loadImageLightbox(className) {
+function loadImageLightbox(className) {
 	GLightbox({
 		selector: `.${className}`,
 		autofocusVideos: false,
@@ -67,24 +67,24 @@ function _loadImageLightbox(className) {
 	});
 }
 
-function _sendToExpenses(type, value) {
-	_sendToEmbed("expenses-embed-frame", type, value);
+function sendToExpenses(type, value) {
+	sendToEmbed("expenses-embed-frame", type, value);
 }
 
-function _loadViewEmbedAction(data) {
+function loadViewEmbedAction(data) {
 	switch (data?.page) {
 		case "expenses":
-			_loadExpensesEmbedAction(data);
+			loadExpensesEmbedAction(data);
 	}
 
-	function _loadExpensesEmbedAction(data) {
+	function loadExpensesEmbedAction(data) {
 		switch (data.type) {
 			case "height":
 				getID("expenses-embed").style.height = `${data.value}px`;
 				return;
 			case "pin":
 				if (PIN || !data.value || data.value.length != 4) return;
-				_updateProtectedDataFromExternalPin(data.value);
+				updateProtectedDataFromExternalPin(data.value);
 		}
 	}
 }

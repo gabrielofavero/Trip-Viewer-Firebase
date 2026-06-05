@@ -2,10 +2,10 @@ var MEDIA_HYPERLINKS = {};
 const EMBED_TIMEOUT = 10000;
 
 // Loader
-function _loadEmbed(link, i) {
+function loadEmbed(link, i) {
 	let result = "";
 
-	result = _getEmbed(link);
+	result = getEmbed(link);
 
 	if (result) {
 		MEDIA_HYPERLINKS[`midia-${i}`] = result;
@@ -13,43 +13,43 @@ function _loadEmbed(link, i) {
 }
 
 // Actions
-function _loadMedia(id) {
+function loadMedia(id) {
 	const div = getID(id);
 	if (div && MEDIA_HYPERLINKS[id] && MEDIA_HYPERLINKS[id].conteudo) {
 		div.innerHTML = MEDIA_HYPERLINKS[id].conteudo;
 
-		if (_getSystemWidth() < 400) {
-			_setMediaButton(id);
+		if (getSystemWidth() < 400) {
+			setMediaButton(id);
 			return;
 		}
 
-		_initMediaWatchdogs();
+		initMediaWatchdogs();
 		if (MEDIA_HYPERLINKS[id].tipo === "instagram") {
 			instgrm.Embeds.process();
-			_adjustInstagramMedia();
-			_initInstagramWatchdogs();
+			adjustInstagramMedia();
+			initInstagramWatchdogs();
 		}
 	}
 }
 
-function _unloadMedia(id) {
+function unloadMedia(id) {
 	div = getID(id);
 	if (div) {
 		div.innerHTML = "";
 	}
 }
 
-function _unloadMedias(exclude) {
-	for (const j of _getJs("content")) {
+function unloadMedias(exclude) {
+	for (const j of getJs("content")) {
 		if (j !== exclude) {
-			_unloadMedia(`midia-${j}`);
+			unloadMedia(`midia-${j}`);
 		}
 	}
 }
 
 // Support Functions
 
-function _getEmbed(link) {
+function getEmbed(link) {
 	let tipo = "";
 	let conteudo = "";
 
@@ -60,25 +60,25 @@ function _getEmbed(link) {
 		!link.includes("/shorts/")
 	) {
 		tipo = "youtube";
-		conteudo = _getVideoEmbedYoutube(link);
+		conteudo = getVideoEmbedYoutube(link);
 	} else if (link.includes("tiktok")) {
 		tipo = "tiktok";
-		conteudo = _getMediaEmbedTikTok(link);
+		conteudo = getMediaEmbedTikTok(link);
 	} else if (link.includes("instagram")) {
 		tipo = "instagram";
-		conteudo = _getVideoEmbedInstagramReels(link);
+		conteudo = getVideoEmbedInstagramReels(link);
 	}
 
 	if (conteudo) {
 		return {
 			tipo: tipo,
 			conteudo: conteudo,
-			botao: _getLinkMediaButton(link, tipo),
+			botao: getLinkMediaButton(link, tipo),
 		};
 	} else return "";
 }
 
-function _getVideoEmbedYoutube(videoLink) {
+function getVideoEmbedYoutube(videoLink) {
 	let videoID = "";
 	if (videoLink && videoLink.includes("youtu.be/")) {
 		videoID = videoLink.split("youtu.be/")[1].split("&")[0];
@@ -87,16 +87,16 @@ function _getVideoEmbedYoutube(videoLink) {
 	}
 	if (videoID) {
 		let url = `https://www.youtube.com/embed/${videoID}`;
-		return _getIframe(url, "youtube-embed", "youtube");
+		return getIframe(url, "youtube-embed", "youtube");
 	} else return "";
 }
 
-function _getSpotifyEmbed(link) {
+function getSpotifyEmbed(link) {
 	let typeAndID = link.split("spotify.com/")[1].split("?")[0];
 	return `<iframe class="spotify" style="border-radius:12px" src="https://open.spotify.com/embed/${typeAndID}?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
 }
 
-function _getIframe(url, iframeClass = "", provider = "generic") {
+function getIframe(url, iframeClass = "", provider = "generic") {
 	if (!url) return "";
 
 	const classItem = iframeClass ? `class="${iframeClass}"` : "";
@@ -117,7 +117,7 @@ function _getIframe(url, iframeClass = "", provider = "generic") {
   `;
 }
 
-function _getInstagramBlockquote(id) {
+function getInstagramBlockquote(id) {
 	return `<div class="instagram-embed"><blockquote class="instagram-media"
         data-instgrm-permalink="https://www.instagram.com/reel/${id}/?utm_source=ig_embed&amp;utm_campaign=loading"
         data-instgrm-version="14"
@@ -210,7 +210,7 @@ function _getInstagramBlockquote(id) {
     </blockquote></div>`;
 }
 
-function _getMediaEmbedTikTok(link, version = 2) {
+function getMediaEmbedTikTok(link, version = 2) {
 	const type = link.includes("/video/")
 		? "video"
 		: link.includes("/photo/")
@@ -227,7 +227,7 @@ function _getMediaEmbedTikTok(link, version = 2) {
 	if (!link.includes("vm.") && !link.includes("vt.")) {
 		try {
 			id = link.split(`/${type}/`)[1].split("?")[0];
-			return _getIframe(
+			return getIframe(
 				`https://www.tiktok.com/embed/v${version}/${id}`,
 				`tiktok-embed-v${version} ${type}`,
 				"tiktok",
@@ -244,7 +244,7 @@ function _getMediaEmbedTikTok(link, version = 2) {
 	return "";
 }
 
-function _getVideoEmbedInstagramReels(link) {
+function getVideoEmbedInstagramReels(link) {
 	const treatedLink = link.split("?")[0].replace("https://", "");
 	const split = treatedLink.split("/");
 
@@ -252,7 +252,7 @@ function _getVideoEmbedInstagramReels(link) {
 
 	if (split[2] && ["reel", "reels", "p"].includes(split[1])) {
 		videoID = split[2];
-		return _getInstagramBlockquote(videoID);
+		return getInstagramBlockquote(videoID);
 	} else {
 		console.error(`Cannot get Instagram Reels video ID from '${link}'`);
 	}
@@ -260,19 +260,19 @@ function _getVideoEmbedInstagramReels(link) {
 	return "";
 }
 
-function _adjustMediaEmbeds() {
-	if (_getSystemWidth() >= 400) {
-		_adjustInstagramMedia();
+function adjustMediaEmbeds() {
+	if (getSystemWidth() >= 400) {
+		adjustInstagramMedia();
 		return;
 	}
 
 	for (const container of document.querySelectorAll(".midia-container")) {
 		const id = container.id;
-		_setMediaButton(id);
+		setMediaButton(id);
 	}
 }
 
-function _adjustInstagramMedia() {
+function adjustInstagramMedia() {
 	const maxMarginLeft = -53;
 	const minMarginLeft = -170;
 
@@ -281,7 +281,7 @@ function _adjustInstagramMedia() {
 
 	const minWidth = 410;
 	const maxWidth = 550;
-	const systemWidth = _getSystemWidth();
+	const systemWidth = getSystemWidth();
 
 	let marginLeft = "";
 	let clipPathRight = "";
@@ -310,7 +310,7 @@ function _adjustInstagramMedia() {
 
 // Watchdogs
 
-function _initMediaWatchdogs(timeout = EMBED_TIMEOUT) {
+function initMediaWatchdogs(timeout = EMBED_TIMEOUT) {
 	const wrappers = document.querySelectorAll(".media-embed");
 
 	wrappers.forEach((wrapper) => {
@@ -331,7 +331,7 @@ function _initMediaWatchdogs(timeout = EMBED_TIMEOUT) {
 
 			if (zero) {
 				console.warn(`[${provider}] Embed link blocked (zero height):`, url);
-				_watchdogFallback(id, url, provider);
+				watchdogFallback(id, url, provider);
 			} else {
 				console.log(`[${provider}] Embed link loaded successfully:`, url);
 			}
@@ -340,13 +340,13 @@ function _initMediaWatchdogs(timeout = EMBED_TIMEOUT) {
 		setTimeout(() => {
 			if (!loaded) {
 				console.warn(`[${provider}] Embed link blocked (timeout):`, url);
-				_watchdogFallback(id, url, provider);
+				watchdogFallback(id, url, provider);
 			}
 		}, timeout);
 	});
 }
 
-function _initInstagramWatchdogs(timeout = EMBED_TIMEOUT) {
+function initInstagramWatchdogs(timeout = EMBED_TIMEOUT) {
 	const blocks = document.querySelectorAll(".instagram-embed");
 
 	blocks.forEach((block) => {
@@ -359,7 +359,7 @@ function _initInstagramWatchdogs(timeout = EMBED_TIMEOUT) {
 
 			if (!iframe) {
 				console.warn("[instagram] Embed link blocked (no iframe)");
-				_watchdogFallback(block, id, block.dataset.embedUrl, "instagram");
+				watchdogFallback(block, id, block.dataset.embedUrl, "instagram");
 				return;
 			}
 
@@ -367,7 +367,7 @@ function _initInstagramWatchdogs(timeout = EMBED_TIMEOUT) {
 
 			if (zero) {
 				console.warn("[instagram] Embed link blocked (zero height)");
-				_watchdogFallback(id, block.dataset.embedUrl, "instagram");
+				watchdogFallback(id, block.dataset.embedUrl, "instagram");
 			} else {
 				console.log("[instagram] Embed link loaded successfully");
 			}
@@ -375,14 +375,14 @@ function _initInstagramWatchdogs(timeout = EMBED_TIMEOUT) {
 	});
 }
 
-function _setMediaButton(id) {
+function setMediaButton(id) {
 	const mediaEmbed = getID(id);
 	if (!mediaEmbed) return;
 	if (!MEDIA_HYPERLINKS[id]) return;
 	mediaEmbed.innerHTML = MEDIA_HYPERLINKS[id].botao;
 }
 
-function _watchdogFallback(id, link, provider) {
-	_setMediaButton(id);
+function watchdogFallback(id, link, provider) {
+	setMediaButton(id);
 	console.log(`[${provider}] Fallback link displayed:`, link);
 }

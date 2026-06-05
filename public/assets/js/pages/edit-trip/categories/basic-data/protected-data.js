@@ -3,9 +3,9 @@ var PIN = {
 	new: "",
 };
 
-async function _loadPinData() {
+async function loadPinData() {
 	// This data can only be fetch by the owner of the document
-	const pinObject = await _get(`protegido/${DOCUMENT_ID}`, true, true);
+	const pinObject = await get(`protegido/${DOCUMENT_ID}`, true, true);
 
 	if (!pinObject || !pinObject.pin) {
 		return;
@@ -14,17 +14,17 @@ async function _loadPinData() {
 	PIN.current = pinObject.pin;
 }
 
-function _getNewPinObject() {
+function getNewPinObject() {
 	return PIN.new
 		? { pin: PIN.new, compartilhamento: FIRESTORE_NEW_DATA.compartilhamento }
 		: {};
 }
 
-function _isDataUnprotected() {
-	return _getCurrentPreferencePIN() === "no-pin";
+function isDataUnprotected() {
+	return getCurrentPreferencePIN() === "no-pin";
 }
 
-function _hasCurrentProtectedViagens() {
+function hasCurrentProtectedViagens() {
 	return (
 		(FIRESTORE_DATA.transportes?.dados ?? []).some(
 			(t) => t.reserva || t.link,
@@ -32,7 +32,7 @@ function _hasCurrentProtectedViagens() {
 	);
 }
 
-function _getCurrentPreferencePIN() {
+function getCurrentPreferencePIN() {
 	if (getID("pin-sensitive-only").checked) {
 		return "sensitive-only";
 	} else if (getID("pin-all-data").checked) {
@@ -43,65 +43,65 @@ function _getCurrentPreferencePIN() {
 }
 
 // Pin
-function _switchPin() {
+function switchPin() {
 	PIN.new = getID("pin-disabled").checked ? "" : PIN.current || PIN.new;
-	_switchPinVisibility();
-	_switchPinLabel();
+	switchPinVisibility();
+	switchPinLabel();
 }
 
-function _switchPinVisibility() {
+function switchPinVisibility() {
 	getID("pin-container").style.display = getID("pin-disabled").checked
 		? "none"
 		: "block";
 }
 
-function _switchPinLabel() {
+function switchPinLabel() {
 	getID("request-pin").innerText =
 		PIN.current || PIN.new
 			? translate("trip.basic_information.pin.change")
 			: translate("trip.basic_information.pin.new");
 }
 
-function _requestPinEditarGastos(invalido = false) {
-	const confirmAction = "_reconfirmPin()";
-	const cancelAction = `_closeMessage()`;
+function requestPinEditarGastos(invalido = false) {
+	const confirmAction = "reconfirmPin()";
+	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.insert");
-	_requestPin({ confirmAction, cancelAction, precontent, invalido });
+	requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
-function _reconfirmPin() {
+function reconfirmPin() {
 	const atual = getID("pin-code").innerText;
 	if (!atual || atual.length < 4) {
-		_requestPinEditarGastos(true);
+		requestPinEditarGastos(true);
 	} else {
-		const confirmAction = `_validatePin('${atual}')`;
-		const cancelAction = `_closeMessage()`;
+		const confirmAction = `validatePin('${atual}')`;
+		const cancelAction = `closeMessage()`;
 		const precontent = translate("trip.basic_information.pin.again");
-		_requestPin({ confirmAction, cancelAction, precontent });
+		requestPin({ confirmAction, cancelAction, precontent });
 	}
 }
 
-function _validatePin(pin) {
+function validatePin(pin) {
 	if (getID("pin-code").innerText === pin) {
 		PIN.new = pin;
-		_closeMessage();
+		closeMessage();
 		getID("request-pin").innerText = translate(
 			"trip.basic_information.pin.change",
 		);
 	} else {
-		_invalidPin();
+		invalidPin();
 	}
 }
 
-function _invalidPin() {
-	const confirmAction = "_reconfirmPin()";
-	const cancelAction = `_closeMessage()`;
+function invalidPin() {
+	const confirmAction = "reconfirmPin()";
+	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.invalid");
 	const invalido = true;
-	_requestPin({ confirmAction, cancelAction, precontent, invalido });
+	requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
-function _validatePinField() {
+function validatePinField() {
 	if (
 		(getID("pin-all-data").checked || getID("pin-sensitive-only").checked) &&
 		!PIN.current &&
@@ -111,7 +111,7 @@ function _validatePinField() {
 			"trip.basic_information.pin.no_pin",
 		);
 		SUCCESSFUL_SAVE = false;
-		_stopLoadingScreen();
-		_openModal();
+		stopLoadingScreen();
+		openModal();
 	}
 }

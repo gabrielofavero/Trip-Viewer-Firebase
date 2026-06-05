@@ -2,26 +2,26 @@
 // Price bucket functions moved to models/destination.js — imported here for backward compat
 
 import {
-	_getPriceBucket,
-	_buildPriceBuckets,
-	_findPriceBucket,
-	_parsePriceNumber,
-	_normalizePriceBucket,
-	_getPriceLabel,
-	_isPriceInBucketRange,
+	getPriceBucket,
+	buildPriceBuckets,
+	findPriceBucket,
+	parsePriceNumber,
+	normalizePriceBucket,
+	getPriceLabel,
+	isPriceInBucketRange,
 } from '../../../../../models/destination.js';
 
 // BACKWARD COMPAT: attach to window during migration
-window._getPriceBucket = _getPriceBucket;
-window._buildPriceBuckets = _buildPriceBuckets;
-window._findPriceBucket = _findPriceBucket;
-window._parsePriceNumber = _parsePriceNumber;
-window._normalizePriceBucket = _normalizePriceBucket;
-window._getPriceLabel = _getPriceLabel;
-window._isPriceInBucketRange = _isPriceInBucketRange;
+window.getPriceBucket = getPriceBucket;
+window.buildPriceBuckets = buildPriceBuckets;
+window.findPriceBucket = findPriceBucket;
+window.parsePriceNumber = parsePriceNumber;
+window.normalizePriceBucket = normalizePriceBucket;
+window.getPriceLabel = getPriceLabel;
+window.isPriceInBucketRange = isPriceInBucketRange;
 
-function _getPrices() {
-	const buckets = _getPriceBuckets();
+function getPrices() {
+	const buckets = getPriceBuckets();
 	return new Set(
 		buckets
 			.map((p) => p.bucket)
@@ -29,11 +29,11 @@ function _getPrices() {
 	);
 }
 
-function _getPriceBuckets() {
+function getPriceBuckets() {
 	if (FILTER_SORT_DATA?.[ACTIVE_CATEGORY]?.prices) {
 		return FILTER_SORT_DATA[ACTIVE_CATEGORY].prices;
 	}
 
-	const prices = _getDataSet("valor");
-	return _buildPriceBuckets(prices);
+	const prices = getDataSet("valor");
+	return buildPriceBuckets(prices);
 }

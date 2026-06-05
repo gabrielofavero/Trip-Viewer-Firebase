@@ -16,7 +16,7 @@ const _cache = {};
 
 // ======= Async Loaders (used at startup) =======
 
-async function _loadJSON(path) {
+async function loadJSON(path) {
 	if (_cache[path]) return _cache[path];
 	const response = await fetch(path);
 	if (!response.ok) throw new Error(`Failed to load ${path}: ${response.status}`);
@@ -26,31 +26,31 @@ async function _loadJSON(path) {
 }
 
 export async function loadCores() {
-	return _loadJSON('/assets/json/cores.json');
+	return loadJSON('/assets/json/cores.json');
 }
 
 export async function loadDestinos() {
-	return _loadJSON('/assets/json/destinos.json');
+	return loadJSON('/assets/json/destinos.json');
 }
 
 export async function loadItinerary() {
-	return _loadJSON('/assets/json/itinerary.json');
+	return loadJSON('/assets/json/itinerary.json');
 }
 
-export async function loadMoedas() {
-	return _loadJSON('/assets/json/moedas.json');
+export async function loadCurrencies() {
+	return loadJSON('/assets/json/moedas.json');
 }
 
-export async function loadTransportes() {
-	return _loadJSON('/assets/json/transportes.json');
+export async function loadTransportations() {
+	return loadJSON('/assets/json/transportes.json');
 }
 
 export async function loadIcons() {
-	return _loadJSON('/assets/json/icons.json');
+	return loadJSON('/assets/json/icons.json');
 }
 
 export async function loadVersoes() {
-	return _loadJSON('/assets/json/version.json');
+	return loadJSON('/assets/json/version.json');
 }
 
 export async function loadLanguage(packName) {
@@ -73,8 +73,8 @@ export async function loadAllConfigs(languagePackName) {
 			loadCores(),
 			loadDestinos(),
 			loadItinerary(),
-			loadMoedas(),
-			loadTransportes(),
+			loadCurrencies(),
+			loadTransportations(),
 			loadIcons(),
 			loadVersoes(),
 			loadLanguage(languagePackName),
@@ -96,11 +96,11 @@ export function getItinerary() {
 	return _cache['/assets/json/itinerary.json'];
 }
 
-export function getMoedas() {
+export function getCurrencies() {
 	return _cache['/assets/json/moedas.json'];
 }
 
-export function getTransportes() {
+export function getTransportations() {
 	return _cache['/assets/json/transportes.json'];
 }
 

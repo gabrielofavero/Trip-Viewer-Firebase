@@ -1,40 +1,40 @@
-async function _loadTripData() {
+async function loadTripData() {
 	try {
-		_loadDadosBasicosViagemData();
-		_loadCustomizacaoData();
-		await _loadExpensesData();
-		_loadTransportesData();
-		_loadHospedagemData();
-		await _loadDestinosData();
-		_loadProgramacaoData();
-		_loadGaleriaData();
+		loadBasicTripData();
+		loadCustomizacaoData();
+		await loadExpensesData();
+		loadTransportationData();
+		loadAccommodationData();
+		await loadDestinationsData();
+		loadItineraryData();
+		loadGaleriaData();
 
-		_setPageName(`${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`);
+		setPageName(`${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`);
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		throw error;
 	}
 }
 
-function _loadDadosBasicosViagemData() {
+function loadBasicTripData() {
 	getID("titulo").value = FIRESTORE_DATA.titulo;
 	getID("moeda").value = FIRESTORE_DATA.moeda;
 
-	const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
-	const fim = _convertFromDateObject(FIRESTORE_DATA.fim);
+	const inicio = convertFromDateObject(FIRESTORE_DATA.inicio);
+	const fim = convertFromDateObject(FIRESTORE_DATA.fim);
 
-	getID("inicio").value = _getDateString(inicio, "yyyy-mm-dd");
-	getID("fim").value = _getDateString(fim, "yyyy-mm-dd");
+	getID("inicio").value = getDateString(inicio, "yyyy-mm-dd");
+	getID("fim").value = getDateString(fim, "yyyy-mm-dd");
 
-	TRAVELERS = _cloneObject(FIRESTORE_DATA.pessoas);
-	_validateTravelersObject();
-	_updateTravelersButtonLabel();
-	_setCurrentPreferencePIN(FIRESTORE_DATA.pin);
-	_switchPinVisibility();
-	_switchPinLabel();
+	TRAVELERS = cloneObject(FIRESTORE_DATA.pessoas);
+	validateTravelersObject();
+	updateTravelersButtonLabel();
+	setCurrentPreferencePIN(FIRESTORE_DATA.pin);
+	switchPinVisibility();
+	switchPinLabel();
 }
 
-function _loadCustomizacaoData() {
+function loadCustomizacaoData() {
 	// Imagens
 	const background = FIRESTORE_DATA.imagem.background;
 	const logoClaro = FIRESTORE_DATA.imagem.claro;
@@ -45,9 +45,9 @@ function _loadCustomizacaoData() {
 		getID("habilitado-imagens-content").style.display = "block";
 	}
 
-	_loadCustomizacaoImageData(background, "link-background");
-	_loadCustomizacaoImageData(logoClaro, "link-logo-light");
-	_loadCustomizacaoImageData(logoEscuro, "link-logo-dark");
+	loadCustomizacaoImageData(background, "link-background");
+	loadCustomizacaoImageData(logoClaro, "link-logo-light");
+	loadCustomizacaoImageData(logoEscuro, "link-logo-dark");
 
 	// Cores
 	const claro = getID("claro");
@@ -64,7 +64,7 @@ function _loadCustomizacaoData() {
 	// Visibilidade
 	const visibilidade = FIRESTORE_DATA.visibilidade;
 	if (visibilidade) {
-		_visibilityListenerAction(visibilidade);
+		visibilityListenerAction(visibilidade);
 		getID("dark-and-light").checked = visibilidade.claro && visibilidade.escuro;
 		getID("light-exclusive").checked =
 			visibilidade.claro && !visibilidade.escuro;
@@ -83,7 +83,7 @@ function _loadCustomizacaoData() {
 	getID("link-vacina").value = FIRESTORE_DATA.links.vacina;
 }
 
-async function _loadExpensesData() {
+async function loadExpensesData() {
 	if (FIRESTORE_DATA.modulos.gastos === true) {
 		getID("habilitado-gastos").checked = true;
 		getID("habilitado-gastos-content").style.display = "block";
@@ -93,17 +93,17 @@ async function _loadExpensesData() {
 		? `gastos/protected/${PIN.current}/${DOCUMENT_ID}`
 		: `gastos/${DOCUMENT_ID}`;
 
-	FIRESTORE_GASTOS_DATA = await _get(getPath, true, true);
+	FIRESTORE_GASTOS_DATA = await get(getPath, true, true);
 
-	if (_haveErrorFromGetRequest()) {
-		_displayError(ERROR_FROM_GET_REQUEST);
+	if (haveErrorFromGetRequest()) {
+		displayError(ERROR_FROM_GET_REQUEST);
 		return;
 	}
 
-	_loadGastos();
+	loadExpensesData();
 }
 
-async function _loadTransportesData() {
+async function loadTransportationData() {
 	if (FIRESTORE_DATA.modulos.transportes === true) {
 		getID("habilitado-transporte").checked = true;
 		getID("habilitado-transporte-content").style.display = "block";
@@ -113,7 +113,7 @@ async function _loadTransportesData() {
 		true;
 
 	for (let j = 1; j <= FIRESTORE_DATA.transportes.dados.length; j++) {
-		_addTransporte();
+		addTransportation();
 		const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
 
 		getID(`${transporte.idaVolta}-${j}`).checked = true;
@@ -121,37 +121,37 @@ async function _loadTransportesData() {
 		const pessoa = transporte.pessoa;
 		if (pessoa) {
 			getID(`transporte-pessoa-${j}`).value = pessoa;
-			_updateValueDS(
+			updateValueDS(
 				"transporte-pessoa",
 				pessoa,
 				`transporte-pessoa-select-${j}`,
 			);
-			_buildDS("transporte-pessoa");
+			buildDS("transporte-pessoa");
 		}
 
-		const partida = _convertFromDateObject(transporte.datas.partida);
-		const chegada = _convertFromDateObject(transporte.datas.chegada);
+		const partida = convertFromDateObject(transporte.datas.partida);
+		const chegada = convertFromDateObject(transporte.datas.chegada);
 
 		if (partida) {
-			getID(`partida-${j}`).value = _getDateString(partida, "yyyy-mm-dd");
-			getID(`partida-horario-${j}`).value = _getTimeStringFromDate(partida);
+			getID(`partida-${j}`).value = getDateString(partida, "yyyy-mm-dd");
+			getID(`partida-horario-${j}`).value = getTimeStringFromDate(partida);
 		}
 
 		if (chegada) {
-			getID(`chegada-${j}`).value = _getDateString(chegada, "yyyy-mm-dd");
-			getID(`chegada-horario-${j}`).value = _getTimeStringFromDate(chegada);
+			getID(`chegada-${j}`).value = getDateString(chegada, "yyyy-mm-dd");
+			getID(`chegada-horario-${j}`).value = getTimeStringFromDate(chegada);
 		}
 
 		getID(`transporte-tipo-${j}`).value = transporte.transporte;
 		const empresa = transporte.empresa;
 		if (empresa) {
-			_loadTransporteVisibility(j);
-			if (_getOptionsFromSelect(`empresa-select-${j}`).includes(empresa)) {
+			loadTransportationVisibility(j);
+			if (getOptionsFromSelect(`empresa-select-${j}`).includes(empresa)) {
 				getID(`empresa-select-${j}`).value = empresa;
 			} else {
 				getID(`empresa-select-${j}`).value = "outra";
 				getID(`empresa-${j}`).value = empresa;
-				_loadTransporteVisibility(j);
+				loadTransportationVisibility(j);
 			}
 		}
 
@@ -162,12 +162,12 @@ async function _loadTransportesData() {
 		getID(`ponto-chegada-${j}`).value = transporte.pontos.chegada;
 		getID(`transporte-link-${j}`).value = transporte.link;
 
-		_updateTransporteTitle(j);
+		updateTransportationTitle(j);
 	}
-	_applyTransportationTypeVisualization();
+	applyTransportationTypeVisualization();
 }
 
-function _loadHospedagemData() {
+function loadAccommodationData() {
 	if (FIRESTORE_DATA.modulos.hospedagens === true) {
 		getID("habilitado-hospedagens").checked = true;
 		getID("habilitado-hospedagens-content").style.display = "block";
@@ -175,9 +175,9 @@ function _loadHospedagemData() {
 	}
 
 	for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
-		_addHospedagens();
+		addHospedagens();
 		const hospedagem = FIRESTORE_DATA.hospedagens[j - 1];
-		HOSPEDAGEM_IMAGENS[j] = hospedagem.imagens || [];
+		ACCOMMODATION_IMAGES[j] = hospedagem.imagens || [];
 
 		getID(`hospedagens-id-${j}`).value = hospedagem.id;
 		getID(`hospedagens-cafe-${j}`).checked = hospedagem.cafe;
@@ -189,15 +189,15 @@ function _loadHospedagemData() {
 		getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
 		getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
 
-		_setImagemButtonLabel(j);
-		_loadCheckIn(hospedagem, j);
-		_loadCheckOut(hospedagem, j);
+		setImagemButtonLabel(j);
+		loadCheckIn(hospedagem, j);
+		loadCheckOut(hospedagem, j);
 	}
 }
 
-async function _loadDestinosData() {
+async function loadDestinationsData() {
 	if (
-		_getHTMLpage() === "edit-listing" ||
+		getHTMLpage() === "edit-listing" ||
 		FIRESTORE_DATA.modulos.destinos === true
 	) {
 		if (getID("habilitado-destinos")) {
@@ -211,7 +211,7 @@ async function _loadDestinosData() {
 		getID("com-destinos").style.display = "none";
 	}
 
-	_loadDestinos();
+	loadDestinations();
 	const checkboxes = document.querySelectorAll(
 		'#destinos-checkboxes input[type="checkbox"]',
 	);
@@ -224,30 +224,30 @@ async function _loadDestinosData() {
 			}
 		}
 	}
-	await _loadDestinosAtivos();
+	await loadDestinosAtivos();
 }
 
-function _loadProgramacaoData() {
+function loadItineraryData() {
 	if (FIRESTORE_DATA.modulos.programacao === true) {
 		getID("habilitado-programacao").checked = true;
 		getID("habilitado-programacao-content").style.display = "block";
 	}
 
-	_loadProgramacao();
+	loadItinerarySchedule();
 
 	let j = 1;
 	while (getID(`programacao-title-${j}`)) {
 		const dados = FIRESTORE_DATA.programacoes[j - 1];
 		if (dados?.data) {
-			_applyLoadedProgramacaoData(j, dados);
+			applyLoadedItineraryData(j, dados);
 		}
 		j++;
 	}
-	_updateDestinosAtivosCheckboxHTML("programacao");
-	FIRESTORE_PROGRAMACAO_DATA = _cloneObject(FIRESTORE_DATA.programacoes);
+	updateDestinosAtivosCheckboxHTML("programacao");
+	FIRESTORE_PROGRAMACAO_DATA = cloneObject(FIRESTORE_DATA.programacoes);
 }
 
-function _loadGaleriaData() {
+function loadGaleriaData() {
 	if (FIRESTORE_DATA.modulos.galeria === true) {
 		getID("habilitado-galeria").checked = true;
 		getID("habilitado-galeria-content").style.display = "block";
@@ -258,7 +258,7 @@ function _loadGaleriaData() {
 	if (galeriaSize > 0) {
 		for (let j = 1; j <= galeriaSize; j++) {
 			const i = j - 1;
-			_addGaleria();
+			addGaleria();
 
 			const titulo = FIRESTORE_DATA.galeria.titulos[i];
 			if (titulo) {
@@ -269,12 +269,12 @@ function _loadGaleriaData() {
 			const categoria = FIRESTORE_DATA.galeria.categorias[i];
 			if (categoria) {
 				getID(`galeria-categoria-${j}`).value = categoria;
-				_updateValueDS(
+				updateValueDS(
 					"galeria-categoria",
 					categoria,
 					`galeria-categoria-select-${j}`,
 				);
-				_buildDS("galeria-categoria");
+				buildDS("galeria-categoria");
 			}
 
 			const descricao = FIRESTORE_DATA.galeria.descricoes[i];

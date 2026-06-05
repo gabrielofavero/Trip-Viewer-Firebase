@@ -2,7 +2,7 @@ var DESTINOS = [];
 var DESTINOS_DATA = {};
 var DESTINOS_ATIVOS = [];
 
-function _getDestinosArray() {
+function getDestinationsArray() {
 	const result = [];
 	for (const destino of DESTINOS_ATIVOS) {
 		const destinosID = destino.destinosID;
@@ -12,7 +12,7 @@ function _getDestinosArray() {
 }
 
 // Destinos Ativos
-async function _loadDestinosAtivos(firstBoot = true) {
+async function loadDestinosAtivos(firstBoot = true) {
 	DESTINOS_ATIVOS = [];
 	const habilidadoDestinos = getID("habilitado-destinos");
 	if (habilidadoDestinos && !habilidadoDestinos.checked) return;
@@ -31,21 +31,21 @@ async function _loadDestinosAtivos(firstBoot = true) {
 
 	DESTINOS_ATIVOS = result;
 	if (firstBoot) {
-		_reorganizeDestinosCheckbox();
+		reorganizeDestinosCheckbox();
 		const offsetHeight = getID("destinos-checkboxes").offsetHeight;
 		getID("destinos-checkboxes").style.height = `${offsetHeight}px`;
 	}
 }
 
-async function _updateDestinosAtivosHTMLs() {
-	await _loadDestinosAtivos(false);
+async function updateDestinosAtivosHTMLs() {
+	await loadDestinosAtivos(false);
 
-	if (_getHTMLpage() === "editar-viagem") {
-		_updateDestinosAtivosCheckboxHTML("programacao");
+	if (getHTMLpage() === "editar-viagem") {
+		updateDestinosAtivosCheckboxHTML("programacao");
 	}
 }
 
-function _getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
+function getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
 	let result = `<option value="">${translate("destination.undefined")}</option>`;
 	for (const destino of destinosAtivos) {
 		result += `<option value="${destino.destinosID}">${destino.titulo}</option>`;
@@ -53,18 +53,18 @@ function _getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
 	return result;
 }
 
-function _getDestinosAtivosSelectVisibility() {
+function getActiveDestinationsSelectVisibility() {
 	return DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 }
 
 // Destinos Checkbox (Para Destinos e Programação)
-function _updateDestinosAtivosCheckboxHTML(tipo, j) {
+function updateDestinosAtivosCheckboxHTML(tipo, j) {
 	const visibility = DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 	const values = DESTINOS_ATIVOS.map((destino) => destino.destinosID);
 
-	function _write(tipo, j) {
+	function write(tipo, j) {
 		const id = `${tipo}-local-${j}`;
-		const childs = _getChildIDs(id);
+		const childs = getChildIDs(id);
 		const div = getID(id);
 
 		getID(`${tipo}-local-box-${j}`).style.display = visibility;
@@ -78,7 +78,7 @@ function _updateDestinosAtivosCheckboxHTML(tipo, j) {
 			}
 		}
 
-		div.innerHTML = _getDestinosAtivosCheckboxOptions(tipo, j);
+		div.innerHTML = getActiveDestinationsCheckboxOptions(tipo, j);
 
 		if (originalValues.length > 0) {
 			for (const child of childs) {
@@ -89,21 +89,21 @@ function _updateDestinosAtivosCheckboxHTML(tipo, j) {
 				}
 			}
 		}
-		_loadDestinosCheckboxListeners(tipo, j);
+		loadDestinosCheckboxListeners(tipo, j);
 	}
 
 	if (j) {
-		_write(tipo, j);
+		write(tipo, j);
 	} else {
-		const childs = _getChildIDs(`${tipo}-box`);
+		const childs = getChildIDs(`${tipo}-box`);
 		for (const child of childs) {
-			const innerJ = _getJ(child);
-			_write(tipo, innerJ);
+			const innerJ = getJ(child);
+			write(tipo, innerJ);
 		}
 	}
 }
 
-function _getDestinosAtivosCheckboxOptions(
+function getActiveDestinationsCheckboxOptions(
 	tipo,
 	j,
 	destinosAtivos = DESTINOS_ATIVOS,
@@ -112,20 +112,20 @@ function _getDestinosAtivosCheckboxOptions(
 	for (let k = 1; k <= destinosAtivos.length; k++) {
 		const destino = destinosAtivos[k - 1];
 		items.push(
-			_getDestinosItemCheckbox(j, destino.destinosID, destino.titulo, tipo, k),
+			getDestinationsItemCheckbox(j, destino.destinosID, destino.titulo, tipo, k),
 		);
 	}
 	return items.join("");
 }
 
-function _getDestinosAtivosCheckboxOptionWithID(checkboxOption, tipo) {
+function getDestinosAtivosCheckboxOptionWithID(checkboxOption, tipo) {
 	return checkboxOption.replace(/check-destinos/g, `check-${tipo}`);
 }
 
-function _addValuesForDestinosAtivosCheckbox(tipo, j, values) {
+function addValuesForDestinosAtivosCheckbox(tipo, j, values) {
 	const fieldsetID = `${tipo}-local-${j}`;
-	for (const containerID of _getChildIDs(fieldsetID)) {
-		const ids = _getIDs(containerID);
+	for (const containerID of getChildIDs(fieldsetID)) {
+		const ids = getIDs(containerID);
 		const checkbox = getID(`check-${tipo}-${ids}`);
 		if (values.includes(checkbox.value)) {
 			checkbox.checked = true;
@@ -133,9 +133,9 @@ function _addValuesForDestinosAtivosCheckbox(tipo, j, values) {
 	}
 }
 
-function _getDestinosItemCheckbox(j, destinosID, titulo, tipo = "destinos", k) {
+function getDestinationsItemCheckbox(j, destinosID, titulo, tipo = "destinos", k) {
 	if (!j) {
-		console.error("Error in _getDestinosItemCheckbox: j is undefined or null.");
+		console.error("Error in _getDestinationsItemCheckbox: j is undefined or null.");
 	}
 	const ids = k ? `${j}-${k}` : j;
 	return `<div class="nice-form-group" id="checkbox-${ids}">
@@ -144,16 +144,16 @@ function _getDestinosItemCheckbox(j, destinosID, titulo, tipo = "destinos", k) {
             </div>`;
 }
 
-function _loadDestinosCheckboxListeners(tipo, j) {
+function loadDestinosCheckboxListeners(tipo, j) {
 	switch (tipo) {
 		case "programacao":
-			_loadProgramacaoListeners(j);
+			loadItineraryListeners(j);
 	}
 }
 
-function _getDestinosFromCheckbox(tipo, j) {
+function getDestinosFromCheckbox(tipo, j) {
 	result = [];
-	for (const child of _getChildIDs(`${tipo}-local-${j}`)) {
+	for (const child of getChildIDs(`${tipo}-local-${j}`)) {
 		const k = child.split("-")[2];
 		const checkbox = getID(`check-${tipo}-${j}-${k}`);
 		if (checkbox.checked) {
@@ -166,7 +166,7 @@ function _getDestinosFromCheckbox(tipo, j) {
 	return result;
 }
 
-function _reorganizeDestinosCheckbox() {
+function reorganizeDestinosCheckbox() {
 	const fieldset = document.getElementById("destinos-checkboxes");
 	const checkboxes = Array.from(fieldset.querySelectorAll(".nice-form-group"));
 
@@ -199,7 +199,7 @@ function _reorganizeDestinosCheckbox() {
 }
 
 // Outros (Genérico)
-function _getDestinoTitle(destinoID) {
+function getDestinoTitle(destinoID) {
 	if (!destinoID) return "";
 	for (const destino of DESTINOS) {
 		if (destino.id === destinoID) {

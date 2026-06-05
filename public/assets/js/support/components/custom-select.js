@@ -1,12 +1,12 @@
 let CUSTOM_SELECTS = {};
 
-export function _loadCloseCustomSelectListeners() {
+export function loadCloseCustomSelectListeners() {
 	document.addEventListener("click", function (e) {
-		_closeCustomSelects();
+		closeCustomSelects();
 	});
 }
 
-export function _loadCustomSelect({
+export function loadCustomSelect({
 	id,
 	options = [],
 	activeOption,
@@ -15,8 +15,8 @@ export function _loadCustomSelect({
 }) {
 	CUSTOM_SELECTS[id] = { options, activeOption, action, onAction: false };
 	const customSelect = getID(id);
-	customSelect.innerHTML = _getCustomSelectHTML(id);
-	_hideActiveOption(id);
+	customSelect.innerHTML = getCustomSelectHTML(id);
+	hideActiveOption(id);
 	const label =
 		options.find((option) => option.value === activeOption)?.label ||
 		options[0].label;
@@ -26,10 +26,10 @@ export function _loadCustomSelect({
 		action(activeOption);
 	}
 
-	_loadCustomSelectListeners(id);
+	loadCustomSelectListeners(id);
 }
 
-export function _getCustomSelectHTML(id) {
+export function getCustomSelectHTML(id) {
 	let optionsHTML = "";
 	for (const option of CUSTOM_SELECTS[id].options) {
 		optionsHTML += `<div class="option" data-value="${option.value}">${option.label}</div>`;
@@ -47,7 +47,7 @@ export function _getCustomSelectHTML(id) {
   </div>`;
 }
 
-export function _loadCustomSelectListeners(id) {
+export function loadCustomSelectListeners(id) {
 	const customSelect = getID(id);
 	const container = customSelect.querySelector(".container");
 	const dropdown = customSelect.querySelector(".dropdown");
@@ -69,8 +69,8 @@ export function _loadCustomSelectListeners(id) {
 
 	customSelect.querySelectorAll(".option").forEach((option) => {
 		option.addEventListener("click", function (e) {
-			_closeCustomSelects();
-			_loadCustomSelectAction(
+			closeCustomSelects();
+			loadCustomSelectAction(
 				id,
 				this.getAttribute("data-value"),
 				this.innerText,
@@ -79,13 +79,13 @@ export function _loadCustomSelectListeners(id) {
 	});
 }
 
-export function _closeCustomSelects() {
+export function closeCustomSelects() {
 	for (const id in CUSTOM_SELECTS) {
-		_closeCustomSelect(id);
+		closeCustomSelect(id);
 	}
 }
 
-export function _closeCustomSelect(id) {
+export function closeCustomSelect(id) {
 	const customSelect = getID(id);
 	const dropdown = customSelect.querySelector(".dropdown");
 	if (dropdown.style.display === "block") {
@@ -94,15 +94,15 @@ export function _closeCustomSelect(id) {
 	}
 }
 
-export function _loadCustomSelectAction(id, value, label) {
+export function loadCustomSelectAction(id, value, label) {
 	CUSTOM_SELECTS[id].onAction = true;
 	CUSTOM_SELECTS[id].activeOption = value;
 	getID(id).querySelector(".title").innerText = label;
 	CUSTOM_SELECTS[id].action(value);
-	_hideActiveOption(id);
+	hideActiveOption(id);
 }
 
-export function _hideActiveOption(id) {
+export function hideActiveOption(id) {
 	const customSelect = getID(id);
 	customSelect.querySelectorAll(".option").forEach((option) => {
 		if (option.getAttribute("data-value") === CUSTOM_SELECTS[id].activeOption) {
@@ -113,18 +113,18 @@ export function _hideActiveOption(id) {
 	});
 }
 
-export function _getCustomSelectActiveOption(id) {
+export function getCustomSelectActiveOption(id) {
 	return CUSTOM_SELECTS[id]?.activeOption || null;
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._loadCloseCustomSelectListeners = _loadCloseCustomSelectListeners;
-window._loadCustomSelect = _loadCustomSelect;
-window._getCustomSelectHTML = _getCustomSelectHTML;
-window._loadCustomSelectListeners = _loadCustomSelectListeners;
-window._closeCustomSelects = _closeCustomSelects;
-window._closeCustomSelect = _closeCustomSelect;
-window._loadCustomSelectAction = _loadCustomSelectAction;
-window._hideActiveOption = _hideActiveOption;
-window._getCustomSelectActiveOption = _getCustomSelectActiveOption;
+window.loadCloseCustomSelectListeners = loadCloseCustomSelectListeners;
+window.loadCustomSelect = loadCustomSelect;
+window.getCustomSelectHTML = getCustomSelectHTML;
+window.loadCustomSelectListeners = loadCustomSelectListeners;
+window.closeCustomSelects = closeCustomSelects;
+window.closeCustomSelect = closeCustomSelect;
+window.loadCustomSelectAction = loadCustomSelectAction;
+window.hideActiveOption = hideActiveOption;
+window.getCustomSelectActiveOption = getCustomSelectActiveOption;
 window.CUSTOM_SELECTS = CUSTOM_SELECTS;

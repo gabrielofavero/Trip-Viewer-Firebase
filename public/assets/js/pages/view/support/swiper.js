@@ -1,4 +1,4 @@
-function _initSwiper(id) {
+function initSwiper(id) {
 	const swiper = getID(`${id}-swiper`);
 
 	swiper.style.setProperty("--swiper-navigation-color", THEME_COLOR);
@@ -20,7 +20,7 @@ function _initSwiper(id) {
 	});
 }
 
-function _loadSwiperHTML(id, itensHTML) {
+function loadSwiperHTML(id, itensHTML) {
 	const swiper = getID(id);
 	let text = "";
 

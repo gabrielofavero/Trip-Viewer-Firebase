@@ -1,35 +1,35 @@
 var GASTOS;
-var GASTOS_QUANTIDADE = 0;
-var GASTOS_TOTAIS = {
+var EXPENSES_COUNT = 0;
+var TOTAL_EXPENSES = {
 	resumo: {},
 	gastosPrevios: {},
 	gastosDurante: {},
 };
-var GASTO_ATIVO = "resumo";
+var ACTIVE_EXPENSE_TAB = "resumo";
 
 document.addEventListener("DOMContentLoaded", async function () {
-	_startLoadingScreen();
-	_main();
+	startLoadingScreen();
+	main();
 });
 
-async function _loadGastosPage() {
+async function loadExpensesPage() {
 	console.log(window.location.href);
 
-	const colors = _getLocalColors();
-	_loadVisibility(colors);
+	const colors = getLocalColors();
+	loadVisibility(colors);
 
 	const closeButton = getID("closeButton");
-	if (window.parent._closeViewEmbed) {
+	if (window.parent.closeViewEmbed) {
 		closeButton.onclick = function () {
-			window.parent._closeViewEmbed();
+			window.parent.closeViewEmbed();
 		};
 	} else {
 		closeButton.style.display = "none";
 	}
 
 	getID("logo-link").onclick = function () {
-		if (window.parent._closeViewEmbed) {
-			window.parent._closeViewEmbed(true);
+		if (window.parent.closeViewEmbed) {
+			window.parent.closeViewEmbed(true);
 		} else {
 			window.location.href = "index.html";
 		}
@@ -38,17 +38,17 @@ async function _loadGastosPage() {
 	const gastosExport = localStorage.getItem("gastos")
 		? JSON.parse(localStorage.getItem("gastos"))
 		: "";
-	const params = _getURLParams();
+	const params = getURLParams();
 	const documentID = params.g;
 	GASTOS_EMBED.enabled = params.embed === "1";
 
 	if (GASTOS_EMBED.enabled && !GASTOS_EMBED.applied) {
-		_loadEmbedMode(params.visibility);
+		loadEmbedMode(params.visibility);
 	}
 
 	if (!gastosExport || !documentID) {
 		const url = documentID ? `view.html?v=${documentID}` : "index.html";
-		_displayForbidden(
+		displayForbidden(
 			`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
 			url,
 		);
@@ -56,7 +56,7 @@ async function _loadGastosPage() {
 	}
 
 	if (!gastosExport?.ativo) {
-		_displayForbidden(
+		displayForbidden(
 			translate("messages.errors.module_not_active", {
 				module: translate("trip.expenses.title"),
 			}),
@@ -66,72 +66,72 @@ async function _loadGastosPage() {
 	}
 
 	if (gastosExport?.pin == "no-pin") {
-		_loadGastos();
+		loadExpenses();
 	} else {
-		_stopLoadingScreen();
-		_requestPinGastos();
+		stopLoadingScreen();
+		requestPinExpenses();
 	}
-	_stopLoadingScreen();
+	stopLoadingScreen();
 }
 
-function _requestPinGastos() {
-	const cancelAction = `_exitGastos()`;
-	const confirmAction = "_loadGastos()";
-	_requestPin({ confirmAction, cancelAction });
+function requestPinExpenses() {
+	const cancelAction = `exitExpenses()`;
+	const confirmAction = "loadExpenses()";
+	requestPin({ confirmAction, cancelAction });
 }
 
-function _requestPinGastosInvalido() {
-	const cancelAction = `_exitGastos()`;
-	const confirmAction = "_loadGastos()";
-	_requestInvalidPin({ confirmAction, cancelAction });
+function requestPinExpensesInvalid() {
+	const cancelAction = `exitExpenses()`;
+	const confirmAction = "loadExpenses()";
+	requestInvalidPin({ confirmAction, cancelAction });
 }
 
-function _exitGastos() {
-	if (window.parent._closeViewEmbed) {
-		window.parent._closeViewEmbed();
-	} else if (_getURLParam("g")) {
-		window.location.href = `view.html?v=${_getURLParam("g")}`;
+function exitExpenses() {
+	if (window.parent.closeViewEmbed) {
+		window.parent.closeViewEmbed();
+	} else if (getURLParam("g")) {
+		window.location.href = `view.html?v=${getURLParam("g")}`;
 	} else {
 		window.location.href = "index.html";
 	}
 }
 
-async function _loadGastos() {
-	const documentID = _getURLParam("g");
+async function loadExpenses() {
+	const documentID = getURLParam("g");
 	const pin = getID("pin-code")?.innerText || "";
-	_closeMessage();
-	_startLoadingScreen();
+	closeMessage();
+	startLoadingScreen();
 	try {
 		if (pin) {
-			GASTOS = await _get(`gastos/protected/${pin}/${documentID}`, false);
+			GASTOS = await get(`gastos/protected/${pin}/${documentID}`, false);
 		} else {
-			GASTOS = await _get(`gastos/${documentID}`, false);
+			GASTOS = await get(`gastos/${documentID}`, false);
 		}
 
 		if (GASTOS) {
-			await _loadMoedas();
-			_loadGastosConvertidos();
-			_applyGastos();
-			getID("conversao").innerText = _getConversaoText();
-			_setTabListeners();
-			_stopLoadingScreen();
+			await loadCurrencies();
+			loadConvertedExpenses();
+			applyExpenses();
+			getID("conversao").innerText = getConversionText();
+			setTabListeners();
+			stopLoadingScreen();
 			if (GASTOS_EMBED.enabled) {
-				_embedAfterLoadAction(pin);
+				embedAfterLoadAction(pin);
 			}
 		}
 	} catch (error) {
 		if (error?.message == "Missing or insufficient permissions.") {
 			console.warn(error.message);
-			_requestPinGastosInvalido();
+			requestPinExpensesInvalid();
 		} else {
 			console.error(error);
-			_displayError(translate("messages.errors.unknown"));
+			displayError(translate("messages.errors.unknown"));
 		}
-		_stopLoadingScreen();
+		stopLoadingScreen();
 	}
 }
 
-function _applyGastos() {
+function applyExpenses() {
 	const hasGastosPrevios = GASTOS.gastosPrevios.length > 0;
 	const hasGastosDurante = GASTOS.gastosDurante.length > 0;
 
@@ -141,12 +141,12 @@ function _applyGastos() {
 		getID("radio-gastosPrevios").style.display = "";
 		getID("radio-gastosDurante").style.display = "";
 
-		_loadResumo();
-		_loadGastosPrevios();
-		_loadGastosDurante();
-		_loadGastosViajantes();
+		loadSummary();
+		loadPreTripExpenses();
+		loadDuringTripExpenses();
+		loadTravelerExpenses();
 
-		_applyAndLoadGastosViajantes();
+		applyAndLoadTravelerExpenses();
 		return;
 	}
 
@@ -155,9 +155,9 @@ function _applyGastos() {
 		getID("resumo").style.display = "none";
 		getID("gastosPrevios").style.display = "";
 
-		_loadGastosPrevios();
+		loadPreTripExpenses();
 
-		_applyAndLoadGastosViajantes();
+		applyAndLoadTravelerExpenses();
 		return;
 	}
 
@@ -165,36 +165,36 @@ function _applyGastos() {
 		getID("radio-gastosDurante").style.display = "";
 		getID("resumo").style.display = "none";
 		getID("gastosDurante").style.display = "";
-		_applyGastosViajantes();
+		applyTravelerExpenses();
 
-		_loadGastosDurante();
+		loadDuringTripExpenses();
 
-		_applyAndLoadGastosViajantes();
+		applyAndLoadTravelerExpenses();
 		return;
 	}
 
-	_displayError(
+	displayError(
 		translate("messages.errors.no_data_on_module", {
 			module: translate("trip.expenses.title"),
 		}),
 	);
 
-	function _applyAndLoadGastosViajantes() {
-		if (!_hasGastosViajantes()) {
+	function applyAndLoadTravelerExpenses() {
+		if (!hasTravelerExpenses()) {
 			return;
 		}
 		getID("radio-gastosPrevios").style.display = "";
-		_loadGastosViajantes();
+		loadTravelerExpenses();
 	}
 
-	function _hasGastosViajantes() {
+	function hasTravelerExpenses() {
 		const hasPessoaDurante = GASTOS.gastosDurante.some((i) => i.pessoa);
 		const hasPessoaPrevios = GASTOS.gastosPrevios.some((i) => i.pessoa);
 		return GASTOS.pessoas && (hasPessoaDurante || hasPessoaPrevios);
 	}
 }
 
-function _setTabListeners() {
+function setTabListeners() {
 	const radios = [
 		"radio-resumo",
 		"radio-gastosPrevios",
@@ -204,22 +204,22 @@ function _setTabListeners() {
 	radios.forEach((radio) => {
 		getID(radio).addEventListener("click", function () {
 			const gasto = radio.replace("radio-", "");
-			if (GASTO_ATIVO === gasto) return;
+			if (ACTIVE_EXPENSE_TAB === gasto) return;
 
-			const gastoAnterior = GASTO_ATIVO;
-			GASTO_ATIVO = gasto;
+			const gastoAnterior = ACTIVE_EXPENSE_TAB;
+			ACTIVE_EXPENSE_TAB = gasto;
 
 			const antigo = radios.indexOf(`radio-${gastoAnterior}`);
 			const novo = radios.indexOf(radio);
 
 			if (novo > antigo) {
-				_fade([gastoAnterior], [GASTO_ATIVO], 150, false);
+				fade([gastoAnterior], [ACTIVE_EXPENSE_TAB], 150, false);
 			} else {
-				_fade([gastoAnterior], [GASTO_ATIVO], 150, false);
+				fade([gastoAnterior], [ACTIVE_EXPENSE_TAB], 150, false);
 			}
 
 			if (GASTOS_EMBED.enabled) {
-				_sendHeightMessageToParent();
+				sendHeightMessageToParent();
 			}
 		});
 	});

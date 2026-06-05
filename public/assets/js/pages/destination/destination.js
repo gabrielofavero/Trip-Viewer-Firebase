@@ -6,16 +6,16 @@ var ACTIVE_CATEGORY;
 
 window.addEventListener("load", async function () {
 	try {
-		_startLoadingScreen();
-		_main();
+		startLoadingScreen();
+		main();
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		console.error(error);
 	}
 });
 
-async function _loadDestinosData() {
-	const urlParams = _getURLParams();
+async function loadDestinationsData() {
+	const urlParams = getURLParams();
 	DOCUMENT_ID = urlParams["d"];
 
 	if (!DOCUMENT_ID) {
@@ -24,37 +24,37 @@ async function _loadDestinosData() {
 	}
 
 	const [tripData, destinosData] = await Promise.all([
-		_getTripData(urlParams["v"]),
-		_get(`destinos/${DOCUMENT_ID}`),
+		getTripData(urlParams["v"]),
+		get(`destinos/${DOCUMENT_ID}`),
 	]);
 
 	FIRESTORE_DESTINOS_DATA = destinosData;
 	FIRESTORE_DATA = tripData;
 
-	_loadPlannedDestination();
-	_loadActiveCategory(urlParams);
+	loadPlannedDestination();
+	loadActiveCategory(urlParams);
 }
 
-async function _loadDestinosPage() {
+async function loadDestinationPage() {
 	console.log(this.window.location.href);
 
-	await _loadDestinosData();
+	await loadDestinationsData();
 
 	const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
-	_setPageName(title);
+	setPageName(title);
 	getID("title").innerText = title;
 
-	await _loadDestinationVisibility();
+	await loadDestinationVisibility();
 
 	if (
 		ACTIVE_CATEGORY &&
 		(ACTIVE_CATEGORY === "mapa" ||
 			Object.keys(FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]).length > 0)
 	) {
-		_loadDestinoCustomSelect();
+		loadDestinationCustomSelect();
 		window.addEventListener("resize", () => {
-			_applyDestinosMediaHeight();
-			_adjustMediaEmbeds();
+			applyDestinationsMediaHeight();
+			adjustMediaEmbeds();
 		});
 	} else {
 		const error = translate("messages.errors.missing_data");
@@ -62,7 +62,7 @@ async function _loadDestinosPage() {
 	}
 }
 
-function _loadDestinoByType(activeCategory) {
+function loadDestinationByType(activeCategory) {
 	const content = getID("content");
 	const filterSortContainer = getID("filter-sort-container");
 
@@ -72,7 +72,7 @@ function _loadDestinoByType(activeCategory) {
 
 	if (activeCategory === "myMaps") {
 		content.classList = "map-content";
-		_loadMapDestino(FIRESTORE_DESTINOS_DATA.myMaps);
+		loadMapDestination(FIRESTORE_DESTINOS_DATA.myMaps);
 		filterSortContainer.style.display = "none";
 		document.querySelector(".add-container").style.display = "none";
 		return;
@@ -86,20 +86,20 @@ function _loadDestinoByType(activeCategory) {
 	for (let j = 1; j <= keys.length; j++) {
 		const id = keys[j - 1];
 		const item = destino[id];
-		const innerHTML = _getDestinosHTML({ j, id, item });
-		_loadEmbed(item?.midia, j);
+		const innerHTML = getDestinationsHTML({ j, id, item });
+		loadEmbed(item?.midia, j);
 		CONTENT.push({ id, innerHTML });
 	}
 
-	_loadSortAndFilter();
-	_applyContent();
-	_applyDestinosMediaHeight();
-	_adjustInstagramMedia();
-	_adjustEditVisibility();
-	_stopLoadingScreen();
+	loadSortAndFilter();
+	applyContent();
+	applyDestinationsMediaHeight();
+	adjustInstagramMedia();
+	adjustEditVisibility();
+	stopLoadingScreen();
 }
 
-function _loadMapDestino(link) {
+function loadMapDestination(link) {
 	if (!link || !link.includes("mid=")) {
 		console.error("Link do My Maps inválido.");
 		return;
@@ -110,7 +110,7 @@ function _loadMapDestino(link) {
 }
 
 // Setters
-function _applyContent() {
+function applyContent() {
 	const div = getID("content");
 	div.innerHTML = "";
 	for (const content of CONTENT) {
@@ -121,7 +121,7 @@ function _applyContent() {
 	}
 }
 
-function _orderInnerHTMLs(innerContents) {
+function orderInnerHTMLs(innerContents) {
 	innerContents.sort((a, b) => {
 		if (a.nota === "?") return 1;
 		if (b.nota === "?") return -1;
@@ -137,46 +137,46 @@ function _orderInnerHTMLs(innerContents) {
 }
 
 // Actions
-function _processAccordion(j) {
-	_restoreIfEditing(j);
-	_adjustDrawer();
-	_toggleMedia(j);
-	_unloadMedias(j);
-	_closeAccordions(j);
-	_adjustEditVisibility(j);
+function processAccordion(j) {
+	restoreIfEditing(j);
+	adjustDrawer();
+	toggleMedia(j);
+	unloadMedias(j);
+	closeAccordions(j);
+	adjustEditVisibility(j);
 }
 
-function _toggleMedia(j) {
+function toggleMedia(j) {
 	const button = getID(`destinos-titulo-${j}`);
 	const midia = `midia-${j}`;
 	if (button.classList.contains("collapsed")) {
-		_unloadMedia(midia);
+		unloadMedia(midia);
 	} else {
-		_loadMedia(midia);
-		_applyDestinosMediaHeight();
+		loadMedia(midia);
+		applyDestinationsMediaHeight();
 	}
 }
 
-function _closeAccordions(exclude) {
-	for (const j of _getJs("content")) {
+function closeAccordions(exclude) {
+	for (const j of getJs("content")) {
 		if (j !== exclude) {
 			$(`#collapse-destinos-${j}`).collapse("hide");
 		}
 	}
 }
 
-function _loadDestinoCustomSelect() {
+function loadDestinationCustomSelect() {
 	const customSelect = {
 		id: "destinos-select",
-		options: _getDestinoCustomSelectOptions(),
+		options: getDestinationCustomSelectOptions(),
 		activeOption: ACTIVE_CATEGORY === "mapa" ? "myMaps" : ACTIVE_CATEGORY,
-		action: _loadDestinoCustomSelectAction,
+		action: loadDestinationCustomSelectAction,
 	};
 
-	_loadCustomSelect(customSelect);
-	_loadCloseCustomSelectListeners();
+	loadCustomSelect(customSelect);
+	loadCloseCustomSelectListeners();
 
-	function _getDestinoCustomSelectOptions() {
+	function getDestinationCustomSelectOptions() {
 		const result = [];
 		const destinos = getDestinos();
 		const values = destinos.categorias.ids;
@@ -196,14 +196,14 @@ function _loadDestinoCustomSelect() {
 		return result;
 	}
 
-	function _loadDestinoCustomSelectAction(value) {
-		_adjustDrawer();
-		_updateActiveCategory(value);
-		_loadDestinoByType(value);
+	function loadDestinationCustomSelectAction(value) {
+		adjustDrawer();
+		updateActiveCategory(value);
+		loadDestinationByType(value);
 	}
 }
 
-function _getDataSet(key) {
+function getDataSet(key) {
 	const category = ACTIVE_CATEGORY;
 	if (!category) return new Set();
 
@@ -215,40 +215,40 @@ function _getDataSet(key) {
 	);
 }
 
-function _getDestinoID(j) {
+function getDestinationID(j) {
 	const destino = getID(`destinos-${j}`);
 	return destino.getAttribute("data-id");
 }
 
-function _getItemFromJ(j) {
-	const id = _getDestinoID(j);
-	return _getItem(id);
+function getItemFromJ(j) {
+	const id = getDestinationID(j);
+	return getItem(id);
 }
 
-function _getItem(id) {
+function getItem(id) {
 	return FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY][id];
 }
 
-function _getItemValue(id, key) {
-	const item = _getItem(id);
+function getItemValue(id, key) {
+	const item = getItem(id);
 	return item ? item[key] : null;
 }
 
-function _isPlanned(id) {
+function isPlanned(id) {
 	const value = PLANNED_DESTINATION?.[ACTIVE_CATEGORY]?.[id];
 	return value && Object.keys(value).length > 0;
 }
 
-async function _refreshDestino() {
-	FIRESTORE_DESTINOS_DATA = await _get(`destinos/${DOCUMENT_ID}`);
-	_loadDestinoByType(ACTIVE_CATEGORY);
+async function refreshDestination() {
+	FIRESTORE_DESTINOS_DATA = await get(`destinos/${DOCUMENT_ID}`);
+	loadDestinationByType(ACTIVE_CATEGORY);
 }
 
-function _share() {
+function share() {
 	const title = FIRESTORE_DESTINOS_DATA.titulo || document.title;
 	const text = translate("destination.share", {
 		name: FIRESTORE_DESTINOS_DATA.titulo,
 	});
-	const url = _getPageURL();
+	const url = getPageURL();
 	navigator.share({ title, text, url });
 }

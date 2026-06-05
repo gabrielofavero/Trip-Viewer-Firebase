@@ -44,60 +44,60 @@ const getID = (id) => {
 
 import { loadAllConfigs, setLanguage, getVersoes } from '../core/config.js';
 
-async function _main() {
+async function main() {
 	try {
-		await loadAllConfigs(_getLanguagePackName());
-		_translatePage();
-		_initializeApp();
-		_loadLangSelectorSelect();
-		_loadPage();
+		await loadAllConfigs(getLanguagePackName());
+		translatePage();
+		initializeApp();
+		loadLangSelectorSelect();
+		loadPage();
 	} catch (error) {
-		_displayError("Initialization Error:" + error.message);
+		displayError("Initialization Error:" + error.message);
 	}
 }
 
-async function _loadTranslationLite() {
-	await setLanguage(_getLanguagePackName());
-	_translatePage();
+async function loadTranslationLite() {
+	await setLanguage(getLanguagePackName());
+	translatePage();
 	if (document.querySelector(".lang-button")) {
-		_loadLangSelectorSelect();
+		loadLangSelectorSelect();
 	}
 }
 
-function _loadPage() {
-	_setPageName();
-	switch (_getHTMLpage()) {
+function loadPage() {
+	setPageName();
+	switch (getHTMLpage()) {
 		case "index":
-			_loadIndexPage();
+			loadIndexPage();
 			break;
 		case "view":
-			_loadViagemPage();
+			loadViewPage();
 			break;
 		case "destination":
-			_loadDestinosPage();
+			loadDestinationPage();
 			break;
 		case "expenses":
-			_loadGastosPage();
+			loadExpensesPage();
 			break;
 		case "edit-listing":
-			_loadEditarListagemPage();
+			loadEditListingPage();
 			break;
 		case "edit-destination":
-			_loadEditarDestinoPage();
+			loadEditDestinationPage();
 			break;
 		case "edit-trip":
-			_loadEditarViagemPage();
+			loadEditTripPage();
 			break;
 		case "itinerary":
-			_loadItineraryPage();
+			loadItineraryPage();
 			return;
 		default:
-			_displayError(`Page "${_getHTMLpage()}" not found.`);
+			displayError(`Page "${getHTMLpage()}" not found.`);
 			break;
 	}
 }
 
-function _getHTMLpage() {
+function getHTMLpage() {
 	let result = window.location.pathname.replace(".html", "");
 	switch (result) {
 		case "/":
@@ -119,7 +119,7 @@ function _getHTMLpage() {
 	}
 }
 
-function _getPageURL() {
+function getPageURL() {
 	const isAltPrd =
 		window.location.hostname === "trip-viewer-prd.firebaseapp.com";
 
@@ -132,18 +132,18 @@ function _getPageURL() {
 	return url.toString();
 }
 
-function _openLinkInNewTab(url) {
+function openLinkInNewTab(url) {
 	var win = window.open(url, "_blank");
 	win.focus();
 }
 
-function _initializeApp() {
+function initializeApp() {
 	APP.projectId = firebase.app().options.projectId;
 	const versoes = getVersoes();
 	APP.version = versoes[APP.projectId]?.version?.system || "Unknown";
 }
 
-function _setPageName(pageName) {
+function setPageName(pageName) {
 	const isDev = APP.projectId === "trip-viewer-dev";
 	const host = location.hostname;
 	const isLocal = host === "localhost" || !Number.isNaN(Number(host));
@@ -165,7 +165,7 @@ function _setPageName(pageName) {
 // Global error handlers - catches all unhandled errors
 window.addEventListener("unhandledrejection", function (event) {
 	console.error("Unhandled promise rejection:", event.reason);
-	_displayError(
+	displayError(
 		event.reason?.message || event.reason || "An unexpected error occurred",
 	);
 	event.preventDefault(); // Prevent default browser error handling
@@ -173,7 +173,7 @@ window.addEventListener("unhandledrejection", function (event) {
 
 window.addEventListener("error", function (event) {
 	console.error("Global error:", event.error || event.message);
-	_displayError(
+	displayError(
 		event.error?.message || event.message || "An unexpected error occurred",
 	);
 	event.preventDefault(); // Prevent default browser error handling

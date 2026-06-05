@@ -1,34 +1,34 @@
-import { getMoedas } from '../../core/config.js';
+import { getCurrencies } from '../../core/config.js';
 
 let ADDED_J;
 
 // Main Functions
-async function _edit(j) {
-	const canEdit = await _canEdit();
+async function edit(j) {
+	const canEdit = await canEdit();
 	if (!canEdit) {
-		_editForbidden();
+		editForbidden();
 		return;
 	}
 
-	const id = _getDestinoID(j);
+	const id = getDestinationID(j);
 	const item = FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]?.[id];
 	const accordionBody = getID(`accordion-body-${j}`);
 
 	if (!item || !accordionBody) {
-		_editError();
+		editError();
 		return;
 	}
 
-	accordionBody.innerHTML = _getEditHTML(j);
+	accordionBody.innerHTML = getEditHTML(j);
 
-	_populateEditFields(j, item);
-	_setEditListeners(j, item);
+	populateEditFields(j, item);
+	setEditListeners(j, item);
 
-	function _populateEditFields(j, item) {
+	function populateEditFields(j, item) {
 		getID(`editar-nome-${j}`).value = item.nome || "";
 		getID(`editar-emoji-${j}`).value = item.emoji || "";
 
-		_populatePlannedDestinationEditField(id, j);
+		populatePlannedDestinationEditField(id, j);
 
 		getID(`editar-mapa-${j}`).value = item.mapa || "";
 		getID(`editar-instagram-${j}`).value = item.instagram || "";
@@ -36,46 +36,46 @@ async function _edit(j) {
 
 		getID(`editar-midia-${j}`).value = item.midia || "";
 
-		_populateScoresField(item.nota, j);
-		_populateRegionField(item.regiao, j);
-		_populateValueField(item.valor, j);
-		_populateDescriptionFields(item.descricao || {}, j);
+		populateScoresField(item.nota, j);
+		populateRegionField(item.regiao, j);
+		populateValueField(item.valor, j);
+		populateDescriptionFields(item.descricao || {}, j);
 
-		function _populateScoresField(nota, j) {
+		function populateScoresField(nota, j) {
 			getID(`editar-nota-${j}`).value = nota === "?" ? "default" : nota || "";
-			_editScoreLoadAction(nota, j);
+			editScoreLoadAction(nota, j);
 		}
 
-		function _populateRegionField(regiao, j) {
+		function populateRegionField(regiao, j) {
 			const regionSelect = getID(`editar-regiao-select-${j}`);
 			regionSelect.value = regiao || "";
 		}
 
-		function _populateValueField(valor, j) {
-			const valores = getMoedas().valores;
+		function populateValueField(valor, j) {
+			const valores = getCurrencies().valores;
 			const valueSelect = getID(`editar-valor-select-${j}`);
 			if (valores.includes(valor)) {
 				valueSelect.value = valor;
 			} else {
 				valueSelect.value = "custom";
-				_editValueLoadAction("custom", j);
+				editValueLoadAction("custom", j);
 				getID(`editar-valor-input-${j}`).value = valor || "";
 			}
 		}
 
-		function _populateDescriptionFields(descricao, j) {
+		function populateDescriptionFields(descricao, j) {
 			getID(`editar-descricao-en-${j}`).value = descricao.en || "";
 			getID(`editar-descricao-pt-${j}`).value = descricao.pt || "";
-			_applyDescriptionLanguage(j);
+			applyDescriptionLanguage(j);
 		}
 	}
 }
 
-async function _add() {
+async function add() {
 	document.querySelector(".add-container").style.display = "none";
-	const canEdit = await _canEdit();
+	const canEdit = await canEdit();
 	if (!canEdit) {
-		_editForbidden();
+		editForbidden();
 		return;
 	}
 
@@ -86,34 +86,34 @@ async function _add() {
 		.map((el) => el.getAttribute("data-id"))
 		.filter((id) => id !== null);
 
-	const id = _getRandomID({ pool });
-	const j = _getLastUnorderedJ("content") + 1;
+	const id = getRandomID({ pool });
+	const j = getLastUnorderedJ("content") + 1;
 	const item = {
 		nome: translate("destination.new"),
 		nota: "default",
 		novo: true,
 	};
-	const closeAction = "_closeAddedDestino";
-	getID("content").innerHTML += _getDestinosHTML({ j, id, item, closeAction });
+	const closeAction = "_closeAddedDestination";
+	getID("content").innerHTML += getDestinationsHTML({ j, id, item, closeAction });
 
 	const accordionBody = getID(`accordion-body-${j}`);
 	if (!accordionBody) {
-		_editError();
+		editError();
 		return;
 	}
 
 	ADDED_J = j;
-	accordionBody.innerHTML = _getEditHTML(ADDED_J);
+	accordionBody.innerHTML = getEditHTML(ADDED_J);
 	getID(`editar-delete-${ADDED_J}`).style.visibility = "hidden";
 
-	_openDestinosAccordion(ADDED_J);
-	_applyDescriptionLanguage(ADDED_J);
-	_setAddListeners();
+	openDestinationsAccordion(ADDED_J);
+	applyDescriptionLanguage(ADDED_J);
+	setAddListeners();
 }
 
 // Visibility
-async function _adjustEditVisibility(j) {
-	const canEdit = await _canEdit();
+async function adjustEditVisibility(j) {
+	const canEdit = await canEdit();
 	const display = canEdit ? "" : "none";
 	document.querySelector(".add-container").style.display = display;
 	if (j) {
@@ -127,33 +127,33 @@ async function _adjustEditVisibility(j) {
 }
 
 // Listeners
-function _setFieldListeners(j) {
+function setFieldListeners(j) {
 	getID(`editar-nota-${j}`).onchange = (e) => {
-		_editScoreLoadAction(e.target.value, j);
+		editScoreLoadAction(e.target.value, j);
 	};
 
 	getID(`editar-mapa-${j}`).onchange = (e) => {
-		_validateMapLink(e.target.id);
+		validateMapLink(e.target.id);
 	};
 
 	getID(`editar-instagram-${j}`).onchange = (e) => {
-		_validateInstagramLink(e.target.id);
+		validateInstagramLink(e.target.id);
 	};
 
 	getID(`editar-website-${j}`).onchange = (e) => {
-		_validateLink(e.target.id);
+		validateLink(e.target.id);
 	};
 
 	getID(`editar-regiao-select-${j}`).onchange = (e) => {
-		_editRegionLoadAction(e.target.value, j);
+		editRegionLoadAction(e.target.value, j);
 	};
 
 	getID(`editar-valor-select-${j}`).onchange = (e) => {
-		_editValueLoadAction(e.target.value, j);
+		editValueLoadAction(e.target.value, j);
 	};
 
 	getID(`editar-descricao-lang-${j}`).onchange = (e) => {
-		_editDescriptionLoadAction(e.target.value, j);
+		editDescriptionLoadAction(e.target.value, j);
 	};
 
 	document.querySelectorAll(".description-textarea").forEach((textarea) => {
@@ -163,46 +163,46 @@ function _setFieldListeners(j) {
 	});
 
 	getID(`editar-midia-${j}`).onchange = (e) => {
-		_validateMediaLink(e.target.id);
+		validateMediaLink(e.target.id);
 	};
 }
 
-function _setEditListeners(j, item) {
+function setEditListeners(j, item) {
 	getID(`close-btn-${j}`).onclick = () => {
-		_restoreAccordionBody(j, item);
-		_processAccordion(j);
+		restoreAccordionBody(j, item);
+		processAccordion(j);
 	};
 
 	getID(`editar-delete-${j}`).onclick = () => {
-		_promptDeleteEdit(j);
+		promptDeleteEdit(j);
 	};
 
 	getID(`editar-save-${j}`).onclick = () => {
-		_saveEdit(j);
+		saveEdit(j);
 	};
 
-	_setFieldListeners(j);
+	setFieldListeners(j);
 }
 
-function _setAddListeners() {
+function setAddListeners() {
 	getID(`close-btn-${ADDED_J}`).onclick = () => {
-		_closeAddedDestino();
+		closeAddedDestination();
 	};
 
 	getID(`editar-save-${ADDED_J}`).onclick = () => {
-		_saveEdit(ADDED_J, true);
+		saveEdit(ADDED_J, true);
 	};
 
-	_setFieldListeners(ADDED_J);
+	setFieldListeners(ADDED_J);
 }
 
 // Load Actions
-function _editScoreLoadAction(value, j) {
+function editScoreLoadAction(value, j) {
 	const icon = getID(`editar-nota-icon-${j}`);
-	icon.innerHTML = `<i class="iconify nota-sem-margem ${_getNotaClass(value)}" data-icon="${_getNotaIcon(value)}"></i>`;
+	icon.innerHTML = `<i class="iconify nota-sem-margem ${getNotaClass(value)}" data-icon="${getNotaIcon(value)}"></i>`;
 }
 
-function _editRegionLoadAction(value, j) {
+function editRegionLoadAction(value, j) {
 	const select = getID(`editar-regiao-select-${j}`);
 	const input = getID(`editar-regiao-input-${j}`);
 	if (value == "custom") {
@@ -213,7 +213,7 @@ function _editRegionLoadAction(value, j) {
 	}
 }
 
-function _editValueLoadAction(value, j) {
+function editValueLoadAction(value, j) {
 	const select = getID(`editar-valor-select-${j}`);
 	const input = getID(`editar-valor-input-${j}`);
 
@@ -225,7 +225,7 @@ function _editValueLoadAction(value, j) {
 	}
 }
 
-function _editDescriptionLoadAction(value, j) {
+function editDescriptionLoadAction(value, j) {
 	for (const lang of LANGUAGES) {
 		const display = lang == value ? "" : "none";
 		const id = `editar-descricao-${lang}-${j}`;
@@ -233,17 +233,17 @@ function _editDescriptionLoadAction(value, j) {
 	}
 }
 
-function _applyDescriptionLanguage(j) {
-	const lang = _getLanguagePackName();
+function applyDescriptionLanguage(j) {
+	const lang = getLanguagePackName();
 	getID(`editar-descricao-lang-${j}`).value = lang;
-	_editDescriptionLoadAction(lang, j);
+	editDescriptionLoadAction(lang, j);
 }
 
 // Save Action
-async function _saveEdit(j, isNew = false) {
-	_startLoadingScreen();
-	const id = _getDestinoID(j);
-	const originalItem = isNew ? {} : _getItem(id);
+async function saveEdit(j, isNew = false) {
+	startLoadingScreen();
+	const id = getDestinationID(j);
+	const originalItem = isNew ? {} : getItem(id);
 	const item = {
 		criadoEm: originalItem?.criadoEm || new Date().toISOString(),
 		descricao: {
@@ -257,14 +257,14 @@ async function _saveEdit(j, isNew = false) {
 		nome: getID(`editar-nome-${j}`).value,
 		nota: getID(`editar-nota-${j}`).value,
 		novo: isNew ? true : originalItem.novo,
-		regiao: _getValue("regiao", j),
-		valor: _getValue("valor", j),
+		regiao: getValue("regiao", j),
+		valor: getValue("valor", j),
 		website: getID(`editar-website-${j}`).value,
 	};
 
 	if (!item.nome) {
-		_stopLoadingScreen();
-		_displayMessage(
+		stopLoadingScreen();
+		displayMessage(
 			translate("destination.edit"),
 			translate("destination.errors.missing_title"),
 		);
@@ -272,24 +272,24 @@ async function _saveEdit(j, isNew = false) {
 	}
 
 	if (item.midia && item.midia.includes("tiktok")) {
-		item.midia = await _normalizeTikTokLink(item.midia);
+		item.midia = await normalizeTikTokLink(item.midia);
 	}
 
 	const docPath = `destinos/${DOCUMENT_ID}`;
 	const [, plannedResult] = await Promise.all([
-		_update(docPath, { [`${ACTIVE_CATEGORY}.${id}`]: item }),
-		_setPlannedDestination(id, j),
+		update(docPath, { [`${ACTIVE_CATEGORY}.${id}`]: item }),
+		setPlannedDestination(id, j),
 	]);
 
 	if (plannedResult) {
-		await _refreshTripData();
+		await refreshTripData();
 	}
 
-	await _refreshDestino();
+	await refreshDestination();
 
-	_stopLoadingScreen();
+	stopLoadingScreen();
 
-	function _getValue(type, j) {
+	function getValue(type, j) {
 		const selectValue = getID(`editar-${type}-select-${j}`).value;
 		return selectValue != "custom"
 			? selectValue
@@ -298,59 +298,59 @@ async function _saveEdit(j, isNew = false) {
 }
 
 // Delete Actions
-function _promptDeleteEdit(j) {
-	const id = _getDestinoID(j);
-	const name = _getItem(id).nome;
+function promptDeleteEdit(j) {
+	const id = getDestinationID(j);
+	const name = getItem(id).nome;
 
 	const titulo = translate("destination.delete.title");
 	const conteudo = translate("destination.delete.message", { name });
-	const yesAction = `_deleteEdit('${id}')`;
+	const yesAction = `deleteEdit('${id}')`;
 
-	_displayPrompt({ titulo, conteudo, yesAction });
+	displayPrompt({ titulo, conteudo, yesAction });
 }
 
-async function _deleteEdit(id) {
-	_closeMessage();
-	_startLoadingScreen();
+async function deleteEdit(id) {
+	closeMessage();
+	startLoadingScreen();
 
-	await _update(`destinos/${DOCUMENT_ID}`, {
+	await update(`destinos/${DOCUMENT_ID}`, {
 		[`${ACTIVE_CATEGORY}.${id}`]: firebase.firestore.FieldValue.delete(),
 	});
 
-	await _refreshDestino();
-	_stopLoadingScreen();
+	await refreshDestination();
+	stopLoadingScreen();
 }
 
 // Cancel Actions
-function _abortEdit(title, message) {
-	_displayMessage(translate(title), translate(message));
-	_adjustEditVisibility();
+function abortEdit(title, message) {
+	displayMessage(translate(title), translate(message));
+	adjustEditVisibility();
 	ACTIVE_PLANNED_DESTINATION = [];
 }
 
-function _editError(message = "messages.errors.unknown") {
-	_abortEdit("messages.errors.load_title", message);
+function editError(message = "messages.errors.unknown") {
+	abortEdit("messages.errors.load_title", message);
 }
 
-function _editForbidden(message = "messages.access_denied.message.edit") {
-	_abortEdit("messages.access_denied.title", message);
+function editForbidden(message = "messages.access_denied.message.edit") {
+	abortEdit("messages.access_denied.title", message);
 }
 
-function _closeAddedDestino() {
+function closeAddedDestination() {
 	if (!ADDED_J) {
 		return;
 	}
-	_removeEl(`destinos-box-${ADDED_J}`);
-	_adjustEditVisibility();
+	removeEl(`destinos-box-${ADDED_J}`);
+	adjustEditVisibility();
 	ADDED_J = null;
 	ACTIVE_PLANNED_DESTINATION = [];
 }
 
-function _restoreAccordionBody(j, item) {
-	const id = _getDestinoID(j);
-	const planejado = _getPlanejado(id);
+function restoreAccordionBody(j, item) {
+	const id = getDestinationID(j);
+	const planejado = getPlanejado(id);
 	const editBtn = true;
-	getID(`accordion-body-${j}`).innerHTML = _getDestinosAccordionBodyHTML({
+	getID(`accordion-body-${j}`).innerHTML = getDestinationsAccordionBodyHTML({
 		j,
 		item,
 		planejado,
@@ -358,22 +358,22 @@ function _restoreAccordionBody(j, item) {
 	});
 }
 
-function _restoreIfEditing(j) {
-	if (_isEditing(j)) {
-		const item = _getItemFromJ(j);
+function restoreIfEditing(j) {
+	if (isEditing(j)) {
+		const item = getItemFromJ(j);
 		if (!item) return;
-		_restoreAccordionBody(j, item);
+		restoreAccordionBody(j, item);
 	}
 }
 
 // Checkers
-function _isEditing(j) {
+function isEditing(j) {
 	const accordionBody = getID(`accordion-body-${j}`);
 	return accordionBody.querySelector(".edit-title-container") != undefined;
 }
 
-async function _canEdit() {
-	const uid = await _getUID();
+async function canEdit() {
+	const uid = await getUID();
 	if (!uid) {
 		return false;
 	}

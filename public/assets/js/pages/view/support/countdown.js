@@ -6,13 +6,13 @@ var COUNTDOWN;
 COUNTDOWN = setInterval(function () {
 	if (FIRESTORE_DATA && FIRESTORE_DATA.inicio) {
 		const now = new Date(Date.now());
-		const inicio = _convertFromDateObject(FIRESTORE_DATA.inicio);
+		const inicio = convertFromDateObject(FIRESTORE_DATA.inicio);
 		var distance = inicio - now;
 
 		if (now > inicio || distance < 0) {
 			clearInterval(COUNTDOWN);
 			getID("countdown").innerHTML = "";
-			_hideCountdown();
+			hideCountdown();
 		} else {
 			var years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
 			distance -= years * (1000 * 60 * 60 * 24 * 365);
@@ -58,23 +58,23 @@ COUNTDOWN = setInterval(function () {
 
 			getID("countdown").innerHTML = countdownText;
 
-			if (!_isCountdownVisible()) {
-				_showCountdown();
+			if (!isCountdownVisible()) {
+				showCountdown();
 			}
 		}
 	}
 }, 1000);
 
 // ======= SETTERS =======
-function _hideCountdown() {
+function hideCountdown() {
 	getID("countdown").style.display = "none";
 }
 
-function _showCountdown() {
+function showCountdown() {
 	getID("countdown").style.display = "block";
 }
 
 // ======= CHECKERS =======
-function _isCountdownVisible() {
+function isCountdownVisible() {
 	return getID("countdown").style.display == "block";
 }

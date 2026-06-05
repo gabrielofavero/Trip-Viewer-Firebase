@@ -5,8 +5,8 @@ var INNER_PROGRAMACAO_DETINOS_DATA = {};
 var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
-function _loadInnerProgramacaoHTML(j) {
-	const key = _jsDateToKey(DATAS[j - 1]);
+function loadInnerItineraryHTML(j) {
+	const key = jsDateToKey(DATAS[j - 1]);
 	if (Object.keys(INNER_PROGRAMACAO).length == 0 || !INNER_PROGRAMACAO[key])
 		return;
 
@@ -23,8 +23,8 @@ function _loadInnerProgramacaoHTML(j) {
 
 			if (dado.programacao) {
 				div.innerHTML += `<div class="input-botao-container">
-                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" onclick="_openInnerProgramacao(${j}, ${k}, '${turno}')">
-                                        ${_getInnerProgramacaoTitleHTML(dado, "inner-programacao-highlight")}
+                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" onclick="openInnerItinerary(${j}, ${k}, '${turno}')">
+                                        ${getInnerItineraryTitleHTML(dado, "inner-programacao-highlight")}
                                     </button>
                                     <i class="iconify drag-icon" data-icon="mdi:drag"></i>
                                 </div>`;
@@ -38,14 +38,14 @@ function _loadInnerProgramacaoHTML(j) {
 }
 
 // Carregamento Interno (Modal)
-async function _openInnerProgramacao(j, k, turno) {
-	const selects = _getInnerProgramacaoSelects(j);
+async function openInnerItinerary(j, k, turno) {
+	const selects = getInnerItinerarySelects(j);
 	const isNew = !k && !turno;
 
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
-	propriedades.titulo = _getInnerProgramacaoMessageTitle(j);
-	propriedades.containers = _getContainersInput();
-	propriedades.conteudo = _getInnerProgramacaoContent(
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
+	propriedades.titulo = getInnerProgramacaoMessageTitle(j);
+	propriedades.containers = getContainersInput();
+	propriedades.conteudo = getInnerProgramacaoContent(
 		j,
 		k,
 		turno,
@@ -53,7 +53,7 @@ async function _openInnerProgramacao(j, k, turno) {
 		isNew,
 	);
 	propriedades.icones = [
-		{ tipo: "voltar", acao: `_closeInnerProgramacao(${j})` },
+		{ tipo: "voltar", acao: `closeInnerProgramacao(${j})` },
 	];
 	propriedades.botoes = [
 		{
@@ -61,36 +61,36 @@ async function _openInnerProgramacao(j, k, turno) {
 		},
 		{
 			tipo: "confirmar",
-			acao: `_innerProgramacaoConfirmAction(${j}, ${k}, '${turno}')`,
+			acao: `innerProgramacaoConfirmAction(${j}, ${k}, '${turno}')`,
 		},
 	];
 
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 
-	const activeDestinations = _getActiveDestinations(j);
+	const activeDestinations = getActiveDestinations(j);
 	if (activeDestinations.length === 1) {
 		getID("inner-programacao-item-destinos-local").style.display = "none";
 		getID("inner-programacao-item-destinos-radio-label").innerText =
-			_getSelectCurrentLabel(getID(`inner-programacao-select-local`));
+			getSelectCurrentLabel(getID(`inner-programacao-select-local`));
 	}
 
-	await _loadInnerProgramacaoListeners(j);
-	_enableAllTravelersFieldset("inner-programacao-travelers");
-	await _loadInnerProgramacaoCurrentData(j, k, turno, isNew);
-	_loadInnerProgramacaoEventListeners();
+	await loadInnerProgramacaoListeners(j);
+	enableAllTravelersFieldset("inner-programacao-travelers");
+	await loadInnerItineraryCurrentData(j, k, turno, isNew);
+	loadInnerProgramacaoEventListeners();
 }
 
 // Selects
-function _getInnerProgramacaoSelects(j) {
+function getInnerItinerarySelects(j) {
 	return {
-		transporte: _getInnerProgramacaoSelect("transporte"),
-		hospedagens: _getInnerProgramacaoSelect("hospedagens"),
-		destinos: _getInnerProgramacaoSelectsDestinos(j),
-		datas: _getDataSelectOptions(j),
+		transporte: getInnerItinerarySelect("transporte"),
+		hospedagens: getInnerItinerarySelect("hospedagens"),
+		destinos: getInnerItinerarySelectsDestinos(j),
+		datas: getDataSelectOptions(j),
 	};
 }
 
-function _getInnerProgramacaoSelect(tipo) {
+function getInnerItinerarySelect(tipo) {
 	let ativo = false;
 	let options = "";
 
@@ -110,14 +110,14 @@ function _getInnerProgramacaoSelect(tipo) {
 	};
 }
 
-function _getInnerProgramacaoSelectsDestinos(j) {
+function getInnerItinerarySelectsDestinos(j) {
 	if (
 		getID("habilitado-destinos").checked === false ||
 		DESTINOS_ATIVOS.length === 0
 	)
-		_returnFalse();
-	const destinations = _getDestinosFromCheckbox("programacao", j);
-	if (destinations.length === 0) _returnFalse();
+		returnFalse();
+	const destinations = getDestinosFromCheckbox("programacao", j);
+	if (destinations.length === 0) returnFalse();
 
 	let options = "";
 	let ativo = false;
@@ -129,21 +129,21 @@ function _getInnerProgramacaoSelectsDestinos(j) {
 	}
 
 	return { ativo, options };
-	function _returnFalse() {
+	function returnFalse() {
 		const ativo = false;
 		return { ativo };
 	}
 }
 
 // Carrega dados atuais no Modal
-async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
+async function loadInnerItineraryCurrentData(j, k, turno, isNew) {
 	if (turno) {
 		getID("inner-programacao-select-turno").value = turno;
 		getID("inner-programacao-select-troca-turno").value = turno;
 		LAST_OPENED_TURNO[j] = turno;
 	}
 
-	const key = _jsDateToKey(DATAS[j - 1]);
+	const key = jsDateToKey(DATAS[j - 1]);
 	if (
 		!isNew &&
 		INNER_PROGRAMACAO &&
@@ -157,7 +157,7 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
 		getID(`inner-programacao`).value = dados.programacao;
 		getID(`inner-programacao-inicio`).value = dados.inicio;
 		getID(`inner-programacao-fim`).value = dados.fim;
-		_updateTravelersFieldset(
+		updateTravelersFieldset(
 			"inner-programacao-travelers",
 			dados.pessoas || [],
 		);
@@ -167,7 +167,7 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
 				getID(`inner-programacao-item-transporte-radio`).checked = true;
 				getID(`inner-programacao-item-transporte`).style.display = "block";
 				getID(`inner-programacao-select-transporte`).value = dados.item.id;
-				itemAssociado.innerText = _getSelectCurrentLabel(
+				itemAssociado.innerText = getSelectCurrentLabel(
 					getID(`inner-programacao-select-transporte`),
 				);
 				break;
@@ -175,7 +175,7 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
 				getID(`inner-programacao-item-hospedagens-radio`).checked = true;
 				getID(`inner-programacao-item-hospedagens`).style.display = "block";
 				getID(`inner-programacao-select-hospedagens`).value = dados.item.id;
-				itemAssociado.innerText = _getSelectCurrentLabel(
+				itemAssociado.innerText = getSelectCurrentLabel(
 					getID(`inner-programacao-select-hospedagens`),
 				);
 				break;
@@ -184,11 +184,11 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
 				getID("inner-programacao-item-destinos").style.display = "block";
 
 				getID(`inner-programacao-select-local`).value = dados.item.local;
-				await _innerProgramacaoSelectLocalAction();
+				await innerProgramacaoSelectLocalAction();
 
 				getID(`inner-programacao-select-categoria`).value =
 					dados.item.categoria;
-				await _innerProgramacaoSelectCategoriaAction();
+				await innerProgramacaoSelectCategoriaAction();
 
 				const passeio = dados.item.id;
 				if (passeio) {
@@ -203,13 +203,13 @@ async function _loadInnerProgramacaoCurrentData(j, k, turno, isNew) {
 		}
 	} else if (isNew) {
 		const selectTurno = getID("inner-programacao-select-turno");
-		selectTurno.value = _getNewTurno(j);
+		selectTurno.value = getNewTurno(j);
 		LAST_OPENED_TURNO[j] = selectTurno.value;
 	}
 }
 
 // Navegação do Modal
-async function _openInnerProgramacaoItem(j) {
+async function openInnerItineraryItem(j) {
 	const height = getID("inner-programacao-tela-principal").offsetHeight;
 	const itemSelecionar = getID("inner-programacao-item-selecionar");
 	itemSelecionar.style.minHeight = `${height}px`;
@@ -218,112 +218,112 @@ async function _openInnerProgramacaoItem(j) {
 		getID("message-title").innerText = translate("trip.itinerary.link_item");
 	}
 
-	_animate(
+	animate(
 		["inner-programacao-item-selecionar"],
 		["inner-programacao-tela-principal"],
 	);
 	getID("back-icon").style.visibility = "visible";
-	_loadTextReplacementCheckboxes(j);
+	loadTextReplacementCheckboxes(j);
 	TEXT_REPLACEMENT_APPLIED = false;
 }
 
-function _openInnerProgramacaoTroca() {
+function openInnerItinerarySwap() {
 	const height = getID("inner-programacao-tela-principal").offsetHeight;
 	const itemTrocar = getID("inner-programacao-item-trocar");
 	itemTrocar.style.minHeight = `${height}px`;
 
 	getID("message-title").innerText = "Trocar Programação";
-	_animate(
+	animate(
 		["inner-programacao-item-trocar"],
 		["inner-programacao-tela-principal"],
 	);
 	getID("back-icon").style.visibility = "visible";
 }
 
-function _closeInnerProgramacao(j) {
+function closeInnerProgramacao(j) {
 	if (getID("inner-programacao-item-selecionar").style.display === "block") {
 		const itemAssociado = getID("inner-programacao-item-associado");
 		if (getID("inner-programacao-item-transporte-radio").checked) {
-			itemAssociado.innerText = _getSelectCurrentLabel(
+			itemAssociado.innerText = getSelectCurrentLabel(
 				getID(`inner-programacao-select-transporte`),
 			);
 		} else if (getID("inner-programacao-item-hospedagens-radio").checked) {
-			itemAssociado.innerText = _getSelectCurrentLabel(
+			itemAssociado.innerText = getSelectCurrentLabel(
 				getID(`inner-programacao-select-hospedagens`),
 			);
 		} else if (getID("inner-programacao-item-destinos-radio").checked) {
-			itemAssociado.innerText = _getSelectCurrentLabel(
+			itemAssociado.innerText = getSelectCurrentLabel(
 				getID(`inner-programacao-select-passeio`),
 			);
 		} else {
 			itemAssociado.innerText = translate("trip.itinerary.link_item");
 		}
 
-		getID("message-title").innerText = _getInnerProgramacaoMessageTitle(j);
+		getID("message-title").innerText = getInnerProgramacaoMessageTitle(j);
 		getID("back-icon").style.visibility = "hidden";
 
-		_replaceTextIfEnabled();
-		_replaceTimeIfEnabled();
+		replaceTextIfEnabled();
+		replaceTimeIfEnabled();
 		TEXT_REPLACEMENT_APPLIED = true;
 
-		_animate(
+		animate(
 			["inner-programacao-tela-principal"],
 			["inner-programacao-item-selecionar"],
 		);
 	} else if (getID("inner-programacao-item-trocar").style.display === "block") {
-		getID("message-title").innerText = _getInnerProgramacaoMessageTitle(j);
+		getID("message-title").innerText = getInnerProgramacaoMessageTitle(j);
 		getID("back-icon").style.visibility = "hidden";
 
-		_animate(
+		animate(
 			["inner-programacao-tela-principal"],
 			["inner-programacao-item-trocar"],
 		);
 	}
 }
 
-function _getInnerProgramacaoMessageTitle(j) {
-	const newJ = _getMostRecentJ(j);
-	return _getDateTitle(DATAS[newJ - 1], "mini");
+function getInnerProgramacaoMessageTitle(j) {
+	const newJ = getMostRecentJ(j);
+	return getDateTitle(DATAS[newJ - 1], "mini");
 }
 
-function _innerProgramacaoConfirmAction(j, k, turno) {
+function innerProgramacaoConfirmAction(j, k, turno) {
 	if (getID("inner-programacao-item-selecionar").style.display === "block") {
-		_closeInnerProgramacao(j);
+		closeInnerProgramacao(j);
 		return;
 	}
 	if (turno && turno != "undefined") {
-		_addInnerProgramacao(j, k, turno);
+		addInnerProgramacao(j, k, turno);
 	} else {
-		_addInnerProgramacao(j);
+		addInnerProgramacao(j);
 	}
 
 	if (!getID("inner-programacao")?.value) {
 		return;
 	}
 
-	_closeMessage();
+	closeMessage();
 }
 
 // Salvar Inner Programação
-function _addInnerProgramacao(j, k, turno) {
+function addInnerProgramacao(j, k, turno) {
 	const programacao = getID(`inner-programacao`);
 
 	if (!TEXT_REPLACEMENT_APPLIED) {
-		_replaceTextIfEnabled();
-		_replaceTimeIfEnabled();
+		replaceTextIfEnabled();
+		replaceTimeIfEnabled();
 	}
 
 	if (
 		!programacao.value ||
-		!_validateTravelersFieldset("inner-programacao-travelers")
+		!validateTravelersFieldset("inner-programacao-travelers")
 	) {
 		programacao.reportValidity();
 	} else {
-		const innerProgramacao = _buildInnerProgramacao(programacao);
-		_setInnerProgramacao(innerProgramacao, j, k, turno);
+		const innerItinerary = buildInnerProgramacao(programacao);
+		setInnerProgramacao(innerItinerary, j, k, turno);
 	}
 
-	function _buildInnerProgramacao(programacao) {
+	function buildInnerProgramacao(programacao) {
 		let item = {
 			tipo: "",
 			id: "",
@@ -355,57 +355,57 @@ function _addInnerProgramacao(j, k, turno) {
 
 		return {
 			programacao: programacao.value,
-			pessoas: _getCheckedTravelersIDs("inner-programacao-travelers"),
+			pessoas: getCheckedTravelersIDs("inner-programacao-travelers"),
 			inicio: getID(`inner-programacao-inicio`).value,
 			fim: getID(`inner-programacao-fim`).value,
 			item: item,
 		};
 	}
 
-	function _setInnerProgramacao(innerProgramacao, j, k, turno) {
-		const key = _jsDateToKey(DATAS[j - 1]);
+	function setInnerProgramacao(innerItinerary, j, k, turno) {
+		const key = jsDateToKey(DATAS[j - 1]);
 		const isNew = !k && !turno;
 		const newTurno = getID(`inner-programacao-select-turno`).value;
 
 		if (isNew) {
 			// Nova Inner Programação (Apenas Adição)
-			INNER_PROGRAMACAO[key][newTurno].push(innerProgramacao);
+			INNER_PROGRAMACAO[key][newTurno].push(innerItinerary);
 			LAST_OPENED_TURNO[j] = newTurno;
 		} else {
 			// Inner Programacao Existente (Substituição)
-			const newJ = _getMostRecentJ(j);
+			const newJ = getMostRecentJ(j);
 			if (turno == newTurno && newJ == j) {
 				// Substituição Simples
-				INNER_PROGRAMACAO[key][turno][k - 1] = innerProgramacao;
+				INNER_PROGRAMACAO[key][turno][k - 1] = innerItinerary;
 			} else {
 				// Substituição Composta
-				const newKey = _jsDateToKey(DATAS[newJ - 1]);
-				INNER_PROGRAMACAO[newKey][newTurno].push(innerProgramacao);
+				const newKey = jsDateToKey(DATAS[newJ - 1]);
+				INNER_PROGRAMACAO[newKey][newTurno].push(innerItinerary);
 				INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
 				LAST_OPENED_TURNO[newJ] = newTurno;
-				_loadInnerProgramacaoHTML(newJ);
+				loadInnerItineraryHTML(newJ);
 			}
 		}
-		_loadInnerProgramacaoHTML(j);
+		loadInnerItineraryHTML(j);
 	}
 }
 
 // Deletar Inner Programação
-function _deleteInnerProgramacao(j, k, turno) {
+function deleteInnerProgramacao(j, k, turno) {
 	const isNew = !k && !turno;
 	if (isNew) {
-		_closeMessage();
+		closeMessage();
 		return;
 	} else {
-		const key = _jsDateToKey(DATAS[j - 1]);
+		const key = jsDateToKey(DATAS[j - 1]);
 		INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
-		_loadInnerProgramacaoHTML(j);
-		_closeMessage();
+		loadInnerItineraryHTML(j);
+		closeMessage();
 	}
 }
 
 // Listeners
-async function _loadInnerProgramacaoListeners(j) {
+async function loadInnerProgramacaoListeners(j) {
 	const itemTransporte = getID(`inner-programacao-item-transporte`);
 	const itemHospedagens = getID(`inner-programacao-item-hospedagens`);
 	const itemDestinos = getID(`inner-programacao-item-destinos`);
@@ -416,7 +416,7 @@ async function _loadInnerProgramacaoListeners(j) {
 			itemTransporte.style.display = "block";
 			itemHospedagens.style.display = "none";
 			itemDestinos.style.display = "none";
-			_loadTextReplacementCheckboxes(j);
+			loadTextReplacementCheckboxes(j);
 		},
 	);
 
@@ -426,7 +426,7 @@ async function _loadInnerProgramacaoListeners(j) {
 			itemTransporte.style.display = "none";
 			itemHospedagens.style.display = "block";
 			itemDestinos.style.display = "none";
-			_loadTextReplacementCheckboxes(j);
+			loadTextReplacementCheckboxes(j);
 		},
 	);
 
@@ -436,7 +436,7 @@ async function _loadInnerProgramacaoListeners(j) {
 			itemTransporte.style.display = "none";
 			itemHospedagens.style.display = "none";
 			itemDestinos.style.display = "block";
-			_loadTextReplacementCheckboxes(j);
+			loadTextReplacementCheckboxes(j);
 		},
 	);
 
@@ -446,36 +446,36 @@ async function _loadInnerProgramacaoListeners(j) {
 			itemTransporte.style.display = "none";
 			itemHospedagens.style.display = "none";
 			itemDestinos.style.display = "none";
-			_loadTextReplacementCheckboxes(j);
+			loadTextReplacementCheckboxes(j);
 		},
 	);
 
 	getID(`inner-programacao-select-local`).addEventListener("change", () =>
-		_innerProgramacaoSelectLocalAction(),
+		innerProgramacaoSelectLocalAction(),
 	);
 	getID(`inner-programacao-select-categoria`).addEventListener("change", () =>
-		_innerProgramacaoSelectCategoriaAction(),
+		innerProgramacaoSelectCategoriaAction(),
 	);
 	getID("inner-programacao-select-passeio").addEventListener("change", () =>
-		_loadTextReplacementCheckboxes(j),
+		loadTextReplacementCheckboxes(j),
 	);
 
 	getID("inner-programacao-select-transporte").addEventListener("change", () =>
-		_loadTextReplacementCheckboxes(j),
+		loadTextReplacementCheckboxes(j),
 	);
 	getID("inner-programacao-select-hospedagens").addEventListener("change", () =>
-		_loadTextReplacementCheckboxes(j),
+		loadTextReplacementCheckboxes(j),
 	);
 
 	getID("inner-programacao-select-turno").addEventListener("change", () =>
-		_pairTurnos("inner-programacao-select-turno"),
+		pairTurnos("inner-programacao-select-turno"),
 	);
 	getID("inner-programacao-select-troca-turno").addEventListener("change", () =>
-		_pairTurnos("inner-programacao-select-troca-turno"),
+		pairTurnos("inner-programacao-select-troca-turno"),
 	);
 }
 
-async function _innerProgramacaoSelectLocalAction() {
+async function innerProgramacaoSelectLocalAction() {
 	const selectLocal = getID("inner-programacao-select-local");
 	const selectCategoria = getID("inner-programacao-select-categoria");
 	const selectPasseio = getID("inner-programacao-select-passeio");
@@ -483,7 +483,7 @@ async function _innerProgramacaoSelectLocalAction() {
 	const id = selectLocal.value;
 	const locais =
 		INNER_PROGRAMACAO_DETINOS_DATA[id] ||
-		(await _buildInnerProgramacaoDestinosData(id));
+		(await buildInnerProgramacaoDestinosData(id));
 
 	if (locais) {
 		selectCategoria.innerHTML =
@@ -495,11 +495,11 @@ async function _innerProgramacaoSelectLocalAction() {
 	}
 
 	selectCategoria.addEventListener("change", () => {
-		_innerProgramacaoSelectCategoriaAction();
+		innerProgramacaoSelectCategoriaAction();
 	});
 }
 
-async function _innerProgramacaoSelectCategoriaAction() {
+async function innerProgramacaoSelectCategoriaAction() {
 	const selectLocal = getID("inner-programacao-select-local");
 	const selectCategoria = getID("inner-programacao-select-categoria");
 	const selectPasseio = getID("inner-programacao-select-passeio");
@@ -507,7 +507,7 @@ async function _innerProgramacaoSelectCategoriaAction() {
 	const id = selectLocal.value;
 	const locais =
 		INNER_PROGRAMACAO_DETINOS_DATA[id] ||
-		(await _buildInnerProgramacaoDestinosData(id));
+		(await buildInnerProgramacaoDestinosData(id));
 
 	if (
 		selectLocal.value &&
@@ -522,13 +522,13 @@ async function _innerProgramacaoSelectCategoriaAction() {
 	}
 }
 
-async function _buildInnerProgramacaoDestinosData(id) {
+async function buildInnerProgramacaoDestinosData(id) {
 	if (INNER_PROGRAMACAO_DETINOS_DATA[id]) {
 		return INNER_PROGRAMACAO_DETINOS_DATA[id];
 	}
 
 	if (!DESTINOS_DATA[id]) {
-		DESTINOS_DATA[id] = await _getDestination(id);
+		DESTINOS_DATA[id] = await getDestination(id);
 	}
 
 	const data = DESTINOS_DATA[id];
@@ -576,13 +576,13 @@ async function _buildInnerProgramacaoDestinosData(id) {
 	return INNER_PROGRAMACAO_DETINOS_DATA[id];
 }
 
-function _loadInnerProgramacaoEventListeners() {
+function loadInnerProgramacaoEventListeners() {
 	getID("inner-programacao-inicio").addEventListener(
 		"change",
 		function (event) {
 			const inicioValue = event.target.value;
 			const inicioHora = parseInt(inicioValue.split(":")[0]);
-			getID("inner-programacao-select-turno").value = _getTurno(inicioHora);
+			getID("inner-programacao-select-turno").value = getTurno(inicioHora);
 		},
 	);
 
@@ -607,12 +607,12 @@ function _loadInnerProgramacaoEventListeners() {
 	getID("inner-programacao-item-destinos-radio").addEventListener(
 		"click",
 		function () {
-			_innerProgramacaoSelectLocalAction();
+			innerProgramacaoSelectLocalAction();
 		},
 	);
 }
 
-function _getTurno(inicioHora) {
+function getTurno(inicioHora) {
 	if (inicioHora < 6) {
 		return "madrugada";
 	} else if (inicioHora < 12) {
@@ -624,7 +624,7 @@ function _getTurno(inicioHora) {
 	}
 }
 
-function _pairTurnos(callerID) {
+function pairTurnos(callerID) {
 	const id1 = "inner-programacao-select-turno";
 	const id2 = "inner-programacao-select-troca-turno";
 
@@ -640,11 +640,11 @@ function _pairTurnos(callerID) {
 	}
 }
 
-function _getMostRecentJ(j) {
+function getMostRecentJ(j) {
 	const nova = getID("inner-programacao-select-troca-data")?.value;
 
 	if (nova) {
-		const keys = DATAS.map((data) => _jsDateToKey(data));
+		const keys = DATAS.map((data) => jsDateToKey(data));
 		const atual = keys[j - 1];
 		if (atual != nova) {
 			const turno = getID("inner-programacao-select-troca-turno").value;
@@ -661,7 +661,7 @@ function _getMostRecentJ(j) {
 	return j;
 }
 
-function _getNewTurno(j) {
+function getNewTurno(j) {
 	if (LAST_OPENED_TURNO[j]) {
 		return LAST_OPENED_TURNO[j];
 	} else {
@@ -675,12 +675,12 @@ function _getNewTurno(j) {
 	return "noite";
 }
 
-function _afterDragInnerProgramacao(evt) {
+function afterDragInnerItinerary(evt) {
 	const turnoInicial = evt.from.id.split("-")[2];
 	const turnoFinal = evt.to.id.split("-")[2];
 
 	const j = evt.item.children[0].id.split("-")[3];
-	const key = _jsDateToKey(DATAS[j - 1]);
+	const key = jsDateToKey(DATAS[j - 1]);
 
 	const element = INNER_PROGRAMACAO[key][turnoInicial].splice(
 		evt.oldIndex,
@@ -689,5 +689,5 @@ function _afterDragInnerProgramacao(evt) {
 	INNER_PROGRAMACAO[key][turnoFinal].splice(evt.newIndex, 0, element); // Last
 	LAST_OPENED_TURNO[j] = turnoFinal;
 
-	_loadInnerProgramacaoHTML(j);
+	loadInnerItineraryHTML(j);
 }

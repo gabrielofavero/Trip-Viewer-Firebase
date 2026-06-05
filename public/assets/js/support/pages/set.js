@@ -5,19 +5,19 @@ var CUSTOM_UPLOADS = {
 var SET_RESPONSES = [];
 var UPLOAD_AFTER_SET = false;
 
-async function _setDocumento({
+async function setDocumento({
 	type,
 	checks = [],
 	dataBuildingFunctions = [],
 	batchFunctions = [],
 }) {
 	try {
-		const uid = await _getUID();
-		const ops = _createBatchOps();
+		const uid = await getUID();
+		const ops = createBatchOps();
 		let response = translate("messages.documents.save.success");
 
 		if (!uid || !type) {
-			_throwSetError(
+			throwSetError(
 				!uid
 					? translate("labels.unauthenticated")
 					: translate("messages.documents.save.error"),
@@ -25,27 +25,27 @@ async function _setDocumento({
 			return;
 		}
 
-		_startLoadingScreen();
+		startLoadingScreen();
 
 		for (const check of checks) {
 			await check();
 		}
 
-		if (_isModalOpen()) return;
+		if (isModalOpen()) return;
 
-		_validateRequiredFields();
-		if (_isModalOpen()) return;
+		validateRequiredFields();
+		if (isModalOpen()) return;
 
 		for (const build of dataBuildingFunctions) {
 			await build();
 		}
 
-		if (!_hasUnsavedChanges()) {
-			_throwSetError(`${translate("messages.documents.save.no_new_data")}`);
+		if (!hasUnsavedChanges()) {
+			throwSetError(`${translate("messages.documents.save.no_new_data")}`);
 			return;
 		}
 
-		const documentData = _getNewDataDocument(type);
+		const documentData = getNewDataDocument(type);
 
 		if (DOCUMENT_ID && documentData) {
 			ops.update(`${type}/${DOCUMENT_ID}`, documentData);
@@ -54,7 +54,7 @@ async function _setDocumento({
 			DOCUMENT_ID = id;
 		}
 
-		_setUserData(ops, uid, type, documentData);
+		setUserData(ops, uid, type, documentData);
 
 		for (const batch of batchFunctions) {
 			await batch(ops);
@@ -63,31 +63,31 @@ async function _setDocumento({
 		const result = await ops.commit();
 
 		if (!result.success) {
-			_throwSetError(translate("messages.documents.save.error"));
+			throwSetError(translate("messages.documents.save.error"));
 			return;
 		}
 
 		SUCCESSFUL_SAVE = true;
 		getID("modal-inner-text").innerHTML = response;
-		_stopLoadingScreen();
-		_openModal("modal");
+		stopLoadingScreen();
+		openModal("modal");
 	} catch (e) {
 		console.log(e);
-		_throwSetError(translate("messages.documents.save.error"));
+		throwSetError(translate("messages.documents.save.error"));
 	}
 }
 
-function _throwSetError(message) {
+function throwSetError(message) {
 	SUCCESSFUL_SAVE = false;
 	getID("modal-inner-text").innerHTML = message;
-	_stopLoadingScreen();
-	_openModal("modal");
+	stopLoadingScreen();
+	openModal("modal");
 }
 
-function _setUserData(ops, uid, type, documentData) {
-	const newData = _getSingleUserData(type, documentData);
+function setUserData(ops, uid, type, documentData) {
+	const newData = getSingleUserData(type, documentData);
 	if (Object.keys(newData) === 0) {
-		_throwSetError("Error while fetching user data");
+		throwSetError("Error while fetching user data");
 		return;
 	}
 
@@ -95,7 +95,7 @@ function _setUserData(ops, uid, type, documentData) {
 		[`${type}.${DOCUMENT_ID}`]: newData,
 	});
 
-	function _getSingleUserData(type, data) {
+	function getSingleUserData(type, data) {
 		switch (type) {
 			case "destinos":
 				return {

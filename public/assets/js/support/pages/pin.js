@@ -209,7 +209,7 @@ Two callback functions are provided - onSuccess and onFailure
 	};
 })(jQuery);
 
-function _loadPin() {
+function loadPin() {
 	$(".pin-wrapper").validatePin({
 		numericKeyboardOnMobile: true,
 		blurOnSuccess: true,
@@ -222,7 +222,7 @@ function _loadPin() {
 	});
 }
 
-function _requestPin({
+function requestPin({
 	confirmAction,
 	cancelAction,
 	precontent,
@@ -231,7 +231,7 @@ function _requestPin({
 	if (precontent === undefined) {
 		precontent = translate("trip.basic_information.pin.request");
 	}
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	const classComplement = invalido ? "-invalid" : "";
 	propriedades.titulo = translate("trip.basic_information.pin.title");
 	propriedades.conteudo = `${precontent}<div class="pin-wrapper">
@@ -242,7 +242,7 @@ function _requestPin({
                               </div>
                               <div id="pin-code" class="pin"></div>`;
 	propriedades.critico = true;
-	propriedades.containers = _getContainersInput();
+	propriedades.containers = getContainersInput();
 	propriedades.botoes = [];
 
 	if (cancelAction) {
@@ -257,19 +257,19 @@ function _requestPin({
 		acao: confirmAction,
 	});
 
-	_displayFullMessage(propriedades);
-	_loadPin();
+	displayFullMessage(propriedades);
+	loadPin();
 }
 
-function _requestInvalidPin({ confirmAction, cancelAction, precontent }) {
+function requestInvalidPin({ confirmAction, cancelAction, precontent }) {
 	const invalido = true;
 	if (precontent === undefined) {
 		precontent = translate("trip.basic_information.pin.invalid");
 	}
-	_requestPin({ confirmAction, cancelAction, precontent, invalido });
+	requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
-function _setManualPin(pinString) {
+function setManualPin(pinString) {
 	if (!/^\d{4}$/.test(pinString)) return;
 
 	const inputs = document.querySelectorAll('.pin-wrapper [data-role="pin"]');

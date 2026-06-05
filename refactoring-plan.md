@@ -1,7 +1,7 @@
 # 🔄 E034: Frontend Code Refactoring — Master Plan
 
 > **Status:** In Progress
-> **Last updated:** 2026-06-05 (P15 complete)
+> **Last updated:** 2026-06-05 (P17 complete)
 > **Goal:** Transform a legacy jQuery/Bootstrap vanilla-JS app into a maintainable, modular frontend with clear separation of concerns — while keeping everything as static HTML+JS+CSS (no React/Angular/Vue).
 
 ---
@@ -1193,7 +1193,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P14 | Create Clean Service Layer                  | ✅ Done    |
 | P15 | Remove CONFIG Global, Use Config Module     | ✅ Done    |
 | P16 | Shared HTML Partials & Build-Time Injection | ✅ Done    |
-| P17 | Rename All Functions/Variables to EN-US     | ☐ Pending |
+| P17 | Rename All Functions/Variables to EN-US     | ✅ Done    |
 | P18 | Final Validation & Cleanup                  | ☐ Pending |
 
 ---

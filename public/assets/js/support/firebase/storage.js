@@ -9,7 +9,7 @@ export let UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
 export let PERMISSOES;
 export let IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-enable image uploads
 
-export async function _uploadImage(path, file) {
+export async function uploadImage(path, file) {
 	let result = {
 		nome: null,
 		link: null,
@@ -35,18 +35,18 @@ export async function _uploadImage(path, file) {
 			IMAGE_UPLOAD_STATUS.hasErrors = true;
 			console.error("Error while uploading image:", error.message || error);
 
-			const key = _codifyText(_getLastDir(path));
-			IMAGE_UPLOAD_STATUS.messages[key] = _getStorageErrorMessage(error);
+			const key = codifyText(getLastDir(path));
+			IMAGE_UPLOAD_STATUS.messages[key] = getStorageErrorMessage(error);
 		}
 	}
 
 	return result;
 }
 
-export async function _uploadImages(type, files) {
+export async function uploadImages(type, files) {
 	const results = [];
 	for (const file of files) {
-		const upload = await _uploadImage(`${type}/${DOCUMENT_ID}`, file);
+		const upload = await uploadImage(`${type}/${DOCUMENT_ID}`, file);
 		if (upload.link) {
 			results.push(upload);
 		}
@@ -54,16 +54,16 @@ export async function _uploadImages(type, files) {
 	return results;
 }
 
-export async function _deleteUnusedImages(path, documentLinks) {
-	const storageLinks = await _getAllImageUrls(path);
+export async function deleteUnusedImages(path, documentLinks) {
+	const storageLinks = await getAllImageUrls(path);
 	for (const link of storageLinks) {
 		if (!documentLinks.includes(link)) {
-			_deleteImageByLink(link); // No need to await this, as we don't need to wait for the deletion to finish
+			deleteImageByLink(link); // No need to await this, as we don't need to wait for the deletion to finish
 		}
 	}
 }
 
-export async function _deleteImage(path) {
+export async function deleteImage(path) {
 	try {
 		if (!path) return;
 		const storageRef = firebase.storage().ref();
@@ -76,8 +76,8 @@ export async function _deleteImage(path) {
 	}
 }
 
-export async function _deleteImageByLink(link) {
-	const path = _getImagePathFromLink(link);
+export async function deleteImageByLink(link) {
+	const path = getImagePathFromLink(link);
 	if (!path) {
 		console.error("URL path could not be extracted from the link:", link);
 		return;
@@ -92,7 +92,7 @@ export async function _deleteImageByLink(link) {
 	}
 }
 
-export function _getImagePathFromLink(link) {
+export function getImagePathFromLink(link) {
 	try {
 		const match = link.match(/\/o\/(.*?)\?/);
 		if (!match || !match[1]) return null;
@@ -103,7 +103,7 @@ export function _getImagePathFromLink(link) {
 	}
 }
 
-export async function _deleteUserObjectStorage() {
+export async function deleteUserObjectStorage() {
 	const paths = [];
 	const addPathIfExists = (path) => {
 		if (path) {
@@ -127,12 +127,12 @@ export async function _deleteUserObjectStorage() {
 		}
 
 		for (const caminho of paths) {
-			await _deleteImage(caminho);
+			await deleteImage(caminho);
 		}
 	}
 }
 
-export function _checkFileSize(fileInput, type) {
+export function checkFileSize(fileInput, type) {
 	const file = fileInput.files[0];
 
 	if (
@@ -146,7 +146,7 @@ export function _checkFileSize(fileInput, type) {
 	}
 }
 
-export function _loadImageSelector(type) {
+export function loadImageSelector(type) {
 	const checkboxLink = getID(`enable-link-${type}`);
 	const checkboxUpload = getID(`enable-upload-${type}`);
 	const checkboxGroup = getID(`upload-checkbox-${type}`);
@@ -182,7 +182,7 @@ export function _loadImageSelector(type) {
 			}
 		});
 		upload.addEventListener("change", function () {
-			_checkFileSize(upload, type);
+			checkFileSize(upload, type);
 		});
 	} else {
 		link.style.display = "block";
@@ -191,7 +191,7 @@ export function _loadImageSelector(type) {
 	}
 }
 
-export function _removeImageSelectorListeners(type) {
+export function removeImageSelectorListeners(type) {
 	const checkboxLink = getID(`enable-link-${type}`);
 	const checkboxUpload = getID(`enable-upload-${type}`);
 
@@ -213,12 +213,12 @@ export function _removeImageSelectorListeners(type) {
 			upload.style.display = "none";
 		}
 		upload.removeEventListener("change", function () {
-			_checkFileSize(upload, type);
+			checkFileSize(upload, type);
 		});
 	});
 }
 
-export function _loadLogoSelector() {
+export function loadLogoSelector() {
 	const checkboxLink = getID(`enable-link-logo`);
 	const checkboxUpload = getID(`enable-upload-logo`);
 
@@ -275,11 +275,11 @@ export function _loadLogoSelector() {
 		});
 
 		uploadLight.addEventListener("change", function () {
-			_checkFileSize(uploadLight, "logo-light");
+			checkFileSize(uploadLight, "logo-light");
 		});
 
 		uploadDark.addEventListener("change", function () {
-			_checkFileSize(uploadDark, "logo-dark");
+			checkFileSize(uploadDark, "logo-dark");
 		});
 	} else {
 		linkLight.style.display = "block";
@@ -289,7 +289,7 @@ export function _loadLogoSelector() {
 	}
 }
 
-export function _getLastDir(path) {
+export function getLastDir(path) {
 	if (path && typeof path === "string") {
 		const splitPath = path.split("/");
 		if (splitPath.length > 0) {
@@ -299,7 +299,7 @@ export function _getLastDir(path) {
 	return translate("messages.errors.unknown_directory");
 }
 
-export function _getStorageErrorMessage(error) {
+export function getStorageErrorMessage(error) {
 	if (error.code == "storage/unauthorized") {
 		return translate("messages.errors.no_upload_permission");
 	} else {
@@ -307,7 +307,7 @@ export function _getStorageErrorMessage(error) {
 	}
 }
 
-export async function _getAllImageUrls(path) {
+export async function getAllImageUrls(path) {
 	const storageRef = firebase.storage().ref(path);
 
 	try {
@@ -330,17 +330,17 @@ window.IMAGE_UPLOAD_STATUS = IMAGE_UPLOAD_STATUS;
 window.UPLOAD_SIZE = UPLOAD_SIZE;
 window.PERMISSOES = PERMISSOES;
 window.IMAGE_UPLOAD_ENABLED = IMAGE_UPLOAD_ENABLED;
-window._uploadImage = _uploadImage;
-window._uploadImages = _uploadImages;
-window._deleteUnusedImages = _deleteUnusedImages;
-window._deleteImage = _deleteImage;
-window._deleteImageByLink = _deleteImageByLink;
-window._getImagePathFromLink = _getImagePathFromLink;
-window._deleteUserObjectStorage = _deleteUserObjectStorage;
-window._checkFileSize = _checkFileSize;
-window._loadImageSelector = _loadImageSelector;
-window._removeImageSelectorListeners = _removeImageSelectorListeners;
-window._loadLogoSelector = _loadLogoSelector;
-window._getLastDir = _getLastDir;
-window._getStorageErrorMessage = _getStorageErrorMessage;
-window._getAllImageUrls = _getAllImageUrls;
+window.uploadImage = uploadImage;
+window.uploadImages = uploadImages;
+window.deleteUnusedImages = deleteUnusedImages;
+window.deleteImage = deleteImage;
+window.deleteImageByLink = deleteImageByLink;
+window.getImagePathFromLink = getImagePathFromLink;
+window.deleteUserObjectStorage = deleteUserObjectStorage;
+window.checkFileSize = checkFileSize;
+window.loadImageSelector = loadImageSelector;
+window.removeImageSelectorListeners = removeImageSelectorListeners;
+window.loadLogoSelector = loadLogoSelector;
+window.getLastDir = getLastDir;
+window.getStorageErrorMessage = getStorageErrorMessage;
+window.getAllImageUrls = getAllImageUrls;

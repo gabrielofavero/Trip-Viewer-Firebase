@@ -3,18 +3,18 @@
 // Functions moved to models/expense.js — imported here for backward compat
 
 import {
-	_loadGastosConvertidos,
-	_processGastosConvertidos,
-	_processGastosConvertidosViajantes,
-	_calculateGastosConvertidos,
-	_getConversaoText,
+	loadConvertedExpenses,
+	processConvertedExpenses,
+	processConvertedTravelerExpenses,
+	calculateConvertedExpenses,
+	getConversionText,
 } from '../../models/expense.js';
 
 var GASTOS_CONVERTIDOS = {};
 
 // BACKWARD COMPAT: attach to window during migration
-window._loadGastosConvertidos = _loadGastosConvertidos;
-window._processGastosConvertidos = _processGastosConvertidos;
-window._processGastosConvertidosViajantes = _processGastosConvertidosViajantes;
-window._calculateGastosConvertidos = _calculateGastosConvertidos;
-window._getConversaoText = _getConversaoText;
+window.loadConvertedExpenses = loadConvertedExpenses;
+window.processConvertedExpenses = processConvertedExpenses;
+window.processConvertedTravelerExpenses = processConvertedTravelerExpenses;
+window.calculateConvertedExpenses = calculateConvertedExpenses;
+window.getConversionText = getConversionText;

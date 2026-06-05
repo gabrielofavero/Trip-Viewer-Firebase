@@ -12,7 +12,7 @@
 const IMPORT_TYPES = ["restaurantes", "lanches", "saidas", "turismo", "lojas"];
 
 // ─── Core: Fill a destination's fields ────────────────────────────────────────
-function _importFillDestination(categoria, j, data, force) {
+function importFillDestination(categoria, j, data, force) {
 	const entries = [
 		{ key: "nome", field: "nome", type: "value" },
 		{ key: "emoji", field: "emoji", type: "value" },
@@ -44,28 +44,28 @@ function _importFillDestination(categoria, j, data, force) {
 
 	// regiao (uses dynamic select + input)
 	if (force || (data.regiao !== undefined && data.regiao !== null && data.regiao !== "")) {
-		_updateValueDS("regiao", data.regiao || "", `${categoria}-regiao-select-${j}`);
-		_buildDS("regiao");
+		updateValueDS("regiao", data.regiao || "", `${categoria}-regiao-select-${j}`);
+		buildDS("regiao");
 	}
 
 	// valor (uses _loadMoedaValorAndVisibility)
 	if (force || (data.valor !== undefined && data.valor !== null && data.valor !== "")) {
-		_loadMoedaValorAndVisibility(data.valor || "", categoria, j);
+		loadMoedaValorAndVisibility(data.valor || "", categoria, j);
 	}
 
 	// descricao
 	if (data.descricao && (force || Object.values(data.descricao).some(v => v))) {
-		_setDescription(categoria, j, data.descricao);
+		setDescription(categoria, j, data.descricao);
 	}
 
 	// update title & description button
-	_updateDestinosTitle(j, categoria);
-	_updateDescriptionButtonLabel(categoria, j);
+	updateDestinationsTitle(j, categoria);
+	updateDescriptionButtonLabel(categoria, j);
 }
 
 // ─── Helper: get last J (index) in a category box ─────────────────────────────
-function _importGetLastJ(categoria) {
-	return _getLastJ(`${categoria}-box`);
+function importGetLastJ(categoria) {
+	return getLastJ(`${categoria}-box`);
 }
 
 // ─── 1. importNewDestination ──────────────────────────────────────────────────
@@ -88,13 +88,13 @@ function importNewDestination(type, data, force = false) {
 	}
 
 	// Close others, trigger add, open the new one
-	_closeAccordions(type);
+	closeAccordions(type);
 	addFn();
-	const j = _importGetLastJ(type);
-	_openLastAccordion(type);
-	_buildDS("regiao");
+	const j = importGetLastJ(type);
+	openLastAccordion(type);
+	buildDS("regiao");
 
-	_importFillDestination(type, j, data, force);
+	importFillDestination(type, j, data, force);
 	console.log(`✅ Imported new "${type}" at index ${j}: ${data.nome || "(unnamed)"}`);
 }
 
@@ -118,7 +118,7 @@ function importDestinationByJ(type, j, data, force = false) {
 		return;
 	}
 
-	_importFillDestination(type, j, data, force);
+	importFillDestination(type, j, data, force);
 	console.log(`✅ Imported "${type}" at index ${j}: ${data.nome || "(unnamed)"}`);
 }
 
@@ -141,7 +141,7 @@ function importDestinationByName(name, data, type, force = false) {
 	const matches = [];
 
 	for (const cat of typesToSearch) {
-		const js = [...new Set(_getJs(`${cat}-box`))];
+		const js = [...new Set(getJs(`${cat}-box`))];
 		for (const j of js) {
 			const nameEl = document.getElementById(`${cat}-nome-${j}`);
 			if (nameEl && nameEl.value.trim().toLowerCase() === name.trim().toLowerCase()) {

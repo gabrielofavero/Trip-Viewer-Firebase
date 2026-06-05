@@ -3,17 +3,17 @@
 // Wraps Firebase database calls — pages should use this instead of calling database.js directly.
 
 import {
-	_get,
-	_getSingleData,
-	_getTripDataWithDestinos,
-	_update,
-	_override,
-	_delete,
-	_create,
-	_newUserObjectDB,
-	_deleteUserObjectDB,
-	_addToUserArray,
-	_createBatchOps,
+	get,
+	getSingleData,
+	getTripDataWithDestinations,
+	update,
+	override,
+	delete,
+	create,
+	newUserObjectDB,
+	deleteUserObjectDB,
+	addToUserArray,
+	createBatchOps,
 } from "../support/firebase/database.js";
 
 // Side-effect import: ensures storage functions are attached to window
@@ -21,17 +21,17 @@ import "../support/firebase/storage.js";
 
 // Re-export raw database functions that trip pages may still use during transition
 export {
-	_get,
-	_getSingleData,
-	_getTripDataWithDestinos,
-	_update,
-	_override,
-	_delete,
-	_create,
-	_newUserObjectDB,
-	_deleteUserObjectDB,
-	_addToUserArray,
-	_createBatchOps,
+	get,
+	getSingleData,
+	getTripDataWithDestinations,
+	update,
+	override,
+	delete,
+	create,
+	newUserObjectDB,
+	deleteUserObjectDB,
+	addToUserArray,
+	createBatchOps,
 };
 
 // ── Trip-specific wrappers ──
@@ -42,11 +42,11 @@ export {
  */
 export async function getTrip(tripId) {
 	if (!tripId) {
-		return await _getSingleData("viagens");
+		return await getSingleData("viagens");
 	}
-	const tripData = await _get(`viagens/${tripId}`);
+	const tripData = await get(`viagens/${tripId}`);
 	if (tripData?.destinos?.length > 0) {
-		return await _getTripDataWithDestinos(tripData);
+		return await getTripDataWithDestinations(tripData);
 	}
 	return tripData;
 }
@@ -55,35 +55,35 @@ export async function getTrip(tripId) {
  * Get a trip by explicit ID without auto-loading destinations.
  */
 export async function getTripRaw(tripId) {
-	return await _get(`viagens/${tripId}`);
+	return await get(`viagens/${tripId}`);
 }
 
 /**
  * Create a new trip and register it to the current user.
  */
 export async function createTrip(tripData) {
-	return await _newUserObjectDB(tripData, "viagens");
+	return await newUserObjectDB(tripData, "viagens");
 }
 
 /**
  * Update an existing trip (shallow merge).
  */
 export async function updateTrip(tripId, data) {
-	return await _update(`viagens/${tripId}`, data);
+	return await update(`viagens/${tripId}`, data);
 }
 
 /**
  * Replace an entire trip document (no merge).
  */
 export async function replaceTrip(tripId, data) {
-	return await _override(`viagens/${tripId}`, data);
+	return await override(`viagens/${tripId}`, data);
 }
 
 /**
  * Delete a trip and remove it from the user's trip list.
  */
 export async function deleteTrip(tripId) {
-	return await _deleteUserObjectDB(tripId, "viagens");
+	return await deleteUserObjectDB(tripId, "viagens");
 }
 
 // BACKWARD COMPAT: attach to window during migration

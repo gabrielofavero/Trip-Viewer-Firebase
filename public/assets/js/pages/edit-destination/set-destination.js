@@ -2,13 +2,13 @@ import { getDestinos } from '../../core/config.js';
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 
-async function _buildDestinosObject() {
+async function buildDestinosObject() {
 	FIRESTORE_DESTINOS_NEW_DATA = {
-		lanches: _buildDestinoCategoryObject("lanches"),
-		lojas: _buildDestinoCategoryObject("lojas"),
-		restaurantes: _buildDestinoCategoryObject("restaurantes"),
-		saidas: _buildDestinoCategoryObject("saidas"),
-		turismo: _buildDestinoCategoryObject("turismo"),
+		lanches: buildDestinoCategoryObject("lanches"),
+		lojas: buildDestinoCategoryObject("lojas"),
+		restaurantes: buildDestinoCategoryObject("restaurantes"),
+		saidas: buildDestinoCategoryObject("saidas"),
+		turismo: buildDestinoCategoryObject("turismo"),
 		titulo: getID(`titulo`).value,
 		moeda:
 			getID(`moeda`).value == "outra"
@@ -26,7 +26,7 @@ async function _buildDestinosObject() {
 		compartilhamento: {
 			ativo: true,
 			dono:
-				FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || (await _getUID()),
+				FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || (await getUID()),
 		},
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
@@ -34,21 +34,21 @@ async function _buildDestinosObject() {
 	};
 }
 
-function _buildDestinoCategoryObject(categoria) {
-	const childIDs = _getChildIDs(`${categoria}-box`);
+function buildDestinoCategoryObject(categoria) {
+	const childIDs = getChildIDs(`${categoria}-box`);
 
 	let result = {};
 
 	for (let i = 0; i < childIDs.length; i++) {
 		const item = {};
-		const j = _getJ(childIDs[i]);
+		const j = getJ(childIDs[i]);
 
-		const id = _getOrCreateCategoriaID(categoria, j);
+		const id = getOrCreateCategoryID(categoria, j);
 		item.novo = getID(`${categoria}-novo-${j}`).checked;
 		item.criadoEm = getID(`${categoria}-criadoEm-${j}`).value;
 		item.nome = getID(`${categoria}-nome-${j}`).value;
 		item.emoji = getID(`${categoria}-emoji-${j}`).value;
-		item.descricao = _getDescription(categoria, j);
+		item.descricao = getDescription(categoria, j);
 		item.website = getID(`${categoria}-website-${j}`).value;
 		item.instagram = getID(`${categoria}-instagram-${j}`).value;
 		item.regiao = getID(`${categoria}-regiao-select-${j}`).value;
@@ -68,7 +68,7 @@ function _buildDestinoCategoryObject(categoria) {
 	return result;
 }
 
-async function _updateTikTokLinks() {
+async function updateTikTokLinks() {
 	let toUpdate = false;
 	const urls = {};
 
@@ -83,7 +83,7 @@ async function _updateTikTokLinks() {
 		if (
 			!toUpdate &&
 			midias.length > 0 &&
-			midias.some((m) => m.midia && _isMobileLink(m.midia))
+			midias.some((m) => m.midia && isMobileLink(m.midia))
 		) {
 			toUpdate = true;
 		}
@@ -128,7 +128,7 @@ async function _updateTikTokLinks() {
 				tasks.push(async () => {
 					let newURL = midia;
 
-					if (midia && _isMobileLink(midia)) {
+					if (midia && isMobileLink(midia)) {
 						try {
 							const res = await fetch(
 								`https://www.tiktok.com/oembed?url=${midia}`,
@@ -157,7 +157,7 @@ async function _updateTikTokLinks() {
 		}
 
 		if (Object.keys(unableToConvert).length > 0) {
-			_displayTikTokError(unableToConvert);
+			displayTikTokError(unableToConvert);
 			return;
 		}
 
@@ -172,22 +172,22 @@ async function _updateTikTokLinks() {
 			}
 		}
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		console.error(error);
 	}
 
-	function _isMobileLink(link) {
+	function isMobileLink(link) {
 		return (
 			link.startsWith("https://vm.tiktok.com/") ||
 			link.startsWith("https://vt.tiktok.com/")
 		);
 	}
 
-	function _displayTikTokError(unableToConvert) {
+	function displayTikTokError(unableToConvert) {
 		const titulo = `${translate("destination.errors.tiktok.conversion")} <i class="iconify" data-icon="mdi:instagram"></i>`;
 		let conteudo = `${translate("destination.errors.tiktok.conversion_message")}<br><br>`;
 		for (const categoria in unableToConvert) {
-			const categoriaTitle = _firstCharToUpperCase(categoria);
+			const categoriaTitle = firstCharToUpperCase(categoria);
 			conteudo += `<strong>${categoriaTitle}:</strong><br>`;
 			for (const index of unableToConvert[categoria]) {
 				const item =
@@ -196,6 +196,6 @@ async function _updateTikTokLinks() {
 				conteudo += `${item}<br>`;
 			}
 		}
-		_displayMessage(titulo, conteudo);
+		displayMessage(titulo, conteudo);
 	}
 }

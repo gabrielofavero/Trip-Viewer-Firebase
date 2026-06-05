@@ -1,4 +1,4 @@
-function _getNewSvg(id = "") {
+function getNewSvg(id = "") {
 	const idValue = id ? `id="${id}"` : "";
 	return `<svg ${idValue} class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3"
@@ -16,6 +16,6 @@ function _getNewSvg(id = "") {
             </svg>`;
 }
 
-function _getAccordionArrow(fill = "235859a7") {
+function getAccordionArrow(fill = "235859a7") {
 	return `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' class='teste' viewBox='0 0 16 16' fill='%${fill}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>`;
 }

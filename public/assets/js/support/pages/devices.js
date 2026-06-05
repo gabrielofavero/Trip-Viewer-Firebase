@@ -1,7 +1,7 @@
 // ======= Device JS =======
 
 // ======= CHECKERS =======
-export function _isIOSDevice() {
+export function isIOSDevice() {
 	return (
 		[
 			"iPad Simulator",
@@ -15,10 +15,10 @@ export function _isIOSDevice() {
 	);
 }
 
-export function _isViagemHTML() {
-	return _getHTMLpage() === "view";
+export function isViewHTML() {
+	return getHTMLpage() === "view";
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._isIOSDevice = _isIOSDevice;
-window._isViagemHTML = _isViagemHTML;
+window.isIOSDevice = isIOSDevice;
+window.isViewHTML = isViewHTML;

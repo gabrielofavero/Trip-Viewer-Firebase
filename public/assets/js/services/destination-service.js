@@ -3,30 +3,30 @@
 // Wraps Firebase database calls — pages should use this instead of calling database.js directly.
 
 import {
-	_get,
-	_getDestination,
-	_create,
-	_update,
-	_override,
-	_delete,
-	_newUserObjectDB,
-	_deleteUserObjectDB,
-	_addToUserArray,
-	_createBatchOps,
+	get,
+	getDestination,
+	create,
+	update,
+	override,
+	delete,
+	newUserObjectDB,
+	deleteUserObjectDB,
+	addToUserArray,
+	createBatchOps,
 } from "../support/firebase/database.js";
 
 // Re-export raw database functions that destination pages may still use during transition
 export {
-	_get,
-	_getDestination,
-	_create,
-	_update,
-	_override,
-	_delete,
-	_newUserObjectDB,
-	_deleteUserObjectDB,
-	_addToUserArray,
-	_createBatchOps,
+	get,
+	getDestination,
+	create,
+	update,
+	override,
+	delete,
+	newUserObjectDB,
+	deleteUserObjectDB,
+	addToUserArray,
+	createBatchOps,
 };
 
 // ── Destination-specific wrappers ──
@@ -37,42 +37,42 @@ export {
  * @param {string} [containerID] - Optional container element ID for loading UI
  */
 export async function getDestination(destId, containerID) {
-	return await _getDestination(destId, containerID);
+	return await getDestination(destId, containerID);
 }
 
 /**
  * Get a destination without loading UI (raw fetch).
  */
 export async function getDestinationRaw(destId) {
-	return await _get(`destinos/${destId}`, false);
+	return await get(`destinos/${destId}`, false);
 }
 
 /**
  * Create a new destination and register it to the current user.
  */
 export async function createDestination(destData) {
-	return await _newUserObjectDB(destData, "destinos");
+	return await newUserObjectDB(destData, "destinos");
 }
 
 /**
  * Update an existing destination (shallow merge).
  */
 export async function updateDestination(destId, data) {
-	return await _update(`destinos/${destId}`, data);
+	return await update(`destinos/${destId}`, data);
 }
 
 /**
  * Replace an entire destination document (no merge).
  */
 export async function replaceDestination(destId, data) {
-	return await _override(`destinos/${destId}`, data);
+	return await override(`destinos/${destId}`, data);
 }
 
 /**
  * Delete a destination and remove it from the user's destination list.
  */
 export async function deleteDestination(destId) {
-	return await _deleteUserObjectDB(destId, "destinos");
+	return await deleteUserObjectDB(destId, "destinos");
 }
 
 // BACKWARD COMPAT: attach to window during migration

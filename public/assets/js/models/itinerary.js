@@ -2,35 +2,35 @@
 // Data transformation functions for itinerary (grouping by date/time-of-day, multi-format output)
 // Extracted from: itinerary-formatter.js
 
-import { getItinerary, getTransportes, getMoedas } from '../core/config.js';
+import { getItinerary, getTransportations, getCurrencies } from '../core/config.js';
 
 // ======= Itinerary Content Generator (Multi-format) =======
 
-export async function _getItineraryContent(type) {
+export async function getItineraryContent(type) {
 	const notPages = type != "pages";
 	if (notPages && ITINERARY_HTML[type]) {
 		return ITINERARY_HTML[type];
 	}
 
 	if (!ITINERARY) {
-		ITINERARY = await _getItineraryData();
+		ITINERARY = await getItineraryData();
 	}
 
 	const content = [];
-	const title = _getTitle(type);
+	const title = getTitle(type);
 
 	if (title) {
 		content.push(title);
 	}
 
 	for (const itinerary of ITINERARY) {
-		_loadItineararyTitle(itinerary.title, type);
+		loadItineararyTitle(itinerary.title, type);
 		for (const timeOfDay of getItinerary().timeofday) {
 			const timeOfDayData = itinerary[timeOfDay];
 			if (timeOfDayData.length === 0) continue;
-			_loadTimeOfDay(timeOfDay);
+			loadTimeOfDay(timeOfDay);
 			for (const innerItinerary of timeOfDayData) {
-				_loadInnerItinerary(innerItinerary, type);
+				loadInnerItinerary(innerItinerary, type);
 			}
 			if (type == "notes") {
 				content.push("<br>");
@@ -47,7 +47,7 @@ export async function _getItineraryContent(type) {
 	return result;
 
 	// Helpers
-	function _getTitle(type) {
+	function getTitle(type) {
 		switch (type) {
 			case "page":
 				return "";
@@ -58,7 +58,7 @@ export async function _getItineraryContent(type) {
 		}
 	}
 
-	function _loadItineararyTitle(value, type) {
+	function loadItineararyTitle(value, type) {
 		if (!value) {
 			return;
 		}
@@ -76,8 +76,8 @@ export async function _getItineraryContent(type) {
 		}
 	}
 
-	function _loadTimeOfDay(timeOfDayKey) {
-		const timeOfDay = _getTurno(timeOfDayKey);
+	function loadTimeOfDay(timeOfDayKey) {
+		const timeOfDay = getTurno(timeOfDayKey);
 		switch (type) {
 			case "page":
 				content.push(`<h3>${timeOfDay}</h3>`);
@@ -90,38 +90,38 @@ export async function _getItineraryContent(type) {
 		}
 	}
 
-	function _loadInnerItinerary(innerItinerary, type) {
+	function loadInnerItinerary(innerItinerary, type) {
 		switch (type) {
 			case "page":
-				_loadHTMLInnerItineraryPage(innerItinerary, type);
+				loadHTMLInnerItineraryPage(innerItinerary, type);
 				break;
 			case "notes":
-				_loadHTMLInnerItineraryNotes(innerItinerary, type);
+				loadHTMLInnerItineraryNotes(innerItinerary, type);
 				break;
 			default:
-				_loadDefaultInnerItinerary(innerItinerary);
+				loadDefaultInnerItinerary(innerItinerary);
 		}
 
-		function _loadHTMLInnerItineraryPage(innerItinerary, type) {
+		function loadHTMLInnerItineraryPage(innerItinerary, type) {
 			const texts = innerItinerary.subItem?.texts ?? [];
 
 			if (texts.length === 0) {
-				content.push(`<li>${_getTextContent(innerItinerary, type)}</li>`);
+				content.push(`<li>${getTextContent(innerItinerary, type)}</li>`);
 				return;
 			}
 
-			content.push(`<li>${_getTextContent(innerItinerary, type)}<ul>`);
+			content.push(`<li>${getTextContent(innerItinerary, type)}<ul>`);
 
 			for (const text of texts) {
-				content.push(`<li>${_getTextContent(text, type)}</li>`);
+				content.push(`<li>${getTextContent(text, type)}</li>`);
 			}
 
 			content.push(`</ul></li>`);
 		}
 
-		function _loadHTMLInnerItineraryNotes(innerItinerary, type) {
+		function loadHTMLInnerItineraryNotes(innerItinerary, type) {
 			content.push(
-				`<ul><li><div style="margin-left: 20px;">${_getTextContent(innerItinerary, type)}</li></ul>`,
+				`<ul><li><div style="margin-left: 20px;">${getTextContent(innerItinerary, type)}</li></ul>`,
 			);
 
 			const texts = innerItinerary.subItem?.texts ?? [];
@@ -133,22 +133,22 @@ export async function _getItineraryContent(type) {
 
 			for (const text of texts) {
 				content.push(
-					`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;○  ${_getTextContent(text, type)}<br>`,
+					`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;○  ${getTextContent(text, type)}<br>`,
 				);
 			}
 
 			content.push(`</div>`);
 		}
 
-		function _loadDefaultInnerItinerary(innerItinerary) {
-			content.push(`- ${_getTextContent(innerItinerary)}`);
+		function loadDefaultInnerItinerary(innerItinerary) {
+			content.push(`- ${getTextContent(innerItinerary)}`);
 			for (const text of innerItinerary.subItem.texts) {
-				content.push(`> ${_getTextContent(text)}`);
+				content.push(`> ${getTextContent(text)}`);
 			}
 		}
 
 		// Helpers
-		function _getTextContent(textObj, type = "text") {
+		function getTextContent(textObj, type = "text") {
 			switch (type) {
 				case "page":
 				case "notes":
@@ -166,21 +166,21 @@ export async function _getItineraryContent(type) {
 
 // ======= Itinerary Data Transformation =======
 
-export async function _getItineraryData() {
+export async function getItineraryData() {
 	ITINERARY = [];
 	for (const programacao of FIRESTORE_DATA.programacoes) {
-		const title = _getItineraryTitle(programacao);
-		const madrugada = await _getInnerItineraries(programacao.madrugada);
-		const manha = await _getInnerItineraries(programacao.manha);
-		const tarde = await _getInnerItineraries(programacao.tarde);
-		const noite = await _getInnerItineraries(programacao.noite);
+		const title = getItineraryTitle(programacao);
+		const madrugada = await getInnerItineraries(programacao.madrugada);
+		const manha = await getInnerItineraries(programacao.manha);
+		const tarde = await getInnerItineraries(programacao.tarde);
+		const noite = await getInnerItineraries(programacao.noite);
 
 		ITINERARY.push({ title, madrugada, manha, tarde, noite });
 	}
 
 	return ITINERARY;
 
-	function _getItineraryTitle(programacao) {
+	function getItineraryTitle(programacao) {
 		let size = 0;
 		for (const timeofday of getItinerary().timeofday) {
 			size += programacao[timeofday].length;
@@ -190,10 +190,10 @@ export async function _getItineraryData() {
 			return "";
 		}
 
-		const date = _convertFromDateObject(programacao.data);
-		const dateTitle = _getDateTitle(date, "weekday_day_month");
+		const date = convertFromDateObject(programacao.data);
+		const dateTitle = getDateTitle(date, "weekday_day_month");
 
-		const title = _getProgramacaoTitulo(
+		const title = getScheduleTitle(
 			programacao.titulo,
 			programacao.destinosIDs,
 			false,
@@ -201,17 +201,17 @@ export async function _getItineraryData() {
 		return title ? `${title}: ${dateTitle}` : dateTitle;
 	}
 
-	async function _getInnerItineraries(data) {
+	async function getInnerItineraries(data) {
 		if (data.length === 0) {
 			return [];
 		}
 		const innerItineraries = [];
 		for (const rawData of data) {
-			const title = _getInnerProgramacaoTitle(
+			const title = getInnerItineraryTitle(
 				rawData,
 				FIRESTORE_DATA.pessoas || [],
 			);
-			const subItem = await _getSubItem(rawData.item);
+			const subItem = await getSubItem(rawData.item);
 			innerItineraries.push({
 				...title,
 				subItem,
@@ -219,76 +219,76 @@ export async function _getItineraryData() {
 		}
 		return innerItineraries;
 
-		async function _getSubItem(item) {
+		async function getSubItem(item) {
 			let destinos;
 			if (item.tipo == "destinos") {
-				destinos = await _getDestination(item.local);
+				destinos = await getDestination(item.local);
 			}
-			const card = _getInnerProgramacao(item, destinos);
-			const texts = await _getInnerProgramacaoAssociatedTexts(item);
+			const card = getInnerItinerary(item, destinos);
+			const texts = await getInnerItineraryAssociatedTexts(item);
 			return { card, texts };
 		}
 
-		async function _getInnerProgramacaoAssociatedTexts(item) {
+		async function getInnerItineraryAssociatedTexts(item) {
 			const texts = [];
 
 			switch (item.tipo) {
 				case "transporte":
-					_loadTransporte();
+					loadTransportation();
 					break;
 				case "hospedagens":
-					_loadHospedagem();
+					loadAccommodationDetail();
 					break;
 				case "destinos":
-					await _loadDestino();
+					await loadDestinationDetail();
 			}
 
 			return texts;
 
-			function _loadTransporte() {
+			function loadTransportation() {
 				const transporte = FIRESTORE_DATA.transportes.dados.find(
 					(obj) => obj.id === item.id,
 				);
 				if (!transporte) return;
-				_loadTextObj(
+				loadTextObj(
 					"trip.transportation.type.title",
-					_getTransportationType(),
+					getTransportationType(),
 				);
-				_loadTextObj("trip.transportation.time_window", _getTimeWindow());
-				_loadTextObj("labels.reservation.title", _getReservation());
-				_loadTextObj("labels.company", _getCompany());
+				loadTextObj("trip.transportation.time_window", getTimeWindow());
+				loadTextObj("labels.reservation.title", getReservation());
+				loadTextObj("labels.company", getCompany());
 
-				function _getTransportationType() {
+				function getTransportationType() {
 					const tipo = transporte.transporte;
 					if (!tipo) return;
-			const titulo = getTransportes().titulos[tipo];
+			const titulo = getTransportations().titulos[tipo];
 					return titulo ? translate(titulo) : tipo;
 				}
 
-				function _getTimeWindow() {
+				function getTimeWindow() {
 					const partida = transporte?.datas?.partida;
 					const chegada = transporte?.datas?.chegada;
 					return partida && chegada
-						? `${_getTimeStringFromDateObj(partida)} - ${_getTimeStringFromDateObj(chegada)}`
+						? `${getTimeStringFromDateObj(partida)} - ${getTimeStringFromDateObj(chegada)}`
 						: "";
 				}
 
-				function _getReservation() {
+				function getReservation() {
 					const transporteProtegido =
 						FIRESTORE_PROTECTED_DATA?.transportes?.[item.id];
 					return transporte?.reserva || transporteProtegido?.reserva;
 				}
 
-				function _getCompany() {
+				function getCompany() {
 					return (
-						getTransportes().empresas?.[transporte.transporte]?.[
+						getTransportations().empresas?.[transporte.transporte]?.[
 							transporte?.empresa
 						] || transporte?.empresa
 					);
 				}
 			}
 
-			function _loadHospedagem() {
+			function loadAccommodationDetail() {
 				const hospedagem = FIRESTORE_DATA.hospedagens.find(
 					(obj) => obj.id === item.id,
 				);
@@ -297,37 +297,37 @@ export async function _getItineraryData() {
 					FIRESTORE_PROTECTED_DATA?.hospedagens?.[item.id];
 
 				const checkin = hospedagem?.datas.checkin
-					? `${_getTimeStringFromDateObj(hospedagem.datas.checkin)}`
+					? `${getTimeStringFromDateObj(hospedagem.datas.checkin)}`
 					: "";
 				const checkout = hospedagem?.datas.checkout
-					? `${_getTimeStringFromDateObj(hospedagem.datas.checkout)}`
+					? `${getTimeStringFromDateObj(hospedagem.datas.checkout)}`
 					: "";
-				_loadTextObj("trip.accommodation.accommodation", hospedagem.nome);
-				_loadTextObj("trip.accommodation.checkin", checkin);
-				_loadTextObj("trip.accommodation.checkout", checkout);
-				_loadTextObj(
+				loadTextObj("trip.accommodation.accommodation", hospedagem.nome);
+				loadTextObj("trip.accommodation.checkin", checkin);
+				loadTextObj("trip.accommodation.checkout", checkout);
+				loadTextObj(
 					"labels.reservation.title",
 					hospedagem?.reserva || hospedagemProtegida?.reserva,
 				);
 			}
 
-			async function _loadDestino() {
-				const destinos = await _getDestination(item.local);
+			async function loadDestinationDetail() {
+				const destinos = await getDestination(item.local);
 				const destino = destinos?.[item?.categoria]?.[item.id];
 				if (!destino) return;
 
-				const nota = _getNotaTranslation(destino.nota);
-				const moedas = getMoedas();
-				const valor = _getValorValue(
+				const nota = getNotaTranslation(destino.nota);
+				const moedas = getCurrencies();
+				const valor = getValorValue(
 					destino,
 					moedas.escala[destinos.moeda],
 					moedas.simbolos[destinos.moeda],
 				);
-				_loadTextObj("labels.priority", nota);
-				_loadTextObj("labels.cost", valor);
+				loadTextObj("labels.priority", nota);
+				loadTextObj("labels.cost", valor);
 			}
 
-			function _loadTextObj(titleKey, content) {
+			function loadTextObj(titleKey, content) {
 				if (!content) return;
 				const title = translate(titleKey);
 				texts.push({ title, content });

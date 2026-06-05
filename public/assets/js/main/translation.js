@@ -6,7 +6,7 @@ const LANGUAGES = ["en", "pt"];
 export function translate(key, replacements = {}, strict = true) {
 	const language = getLanguage();
 	if (!language) return "";
-	let result = _searchObject(language, key, strict);
+	let result = searchObject(language, key, strict);
 
 	if (result == null) {
 		if (strict) {
@@ -35,7 +35,7 @@ export function translate(key, replacements = {}, strict = true) {
 
 	return result;
 
-	function _searchObject(obj, key, strict = true) {
+	function searchObject(obj, key, strict = true) {
 		const keys = key.split(".");
 		let result = obj;
 
@@ -59,7 +59,7 @@ export function translate(key, replacements = {}, strict = true) {
 	}
 }
 
-export function _getUserLanguage() {
+export function getUserLanguage() {
 	let language = localStorage.getItem("userLanguage");
 	if (!language) {
 		language = navigator.language || navigator.userLanguage;
@@ -69,14 +69,14 @@ export function _getUserLanguage() {
 	return language;
 }
 
-export function _getLanguagePackName() {
-	let language = _getUserLanguage();
+export function getLanguagePackName() {
+	let language = getUserLanguage();
 	if (LANGUAGES.includes(language)) {
 		return language;
 	} else return "en";
 }
 
-export function _updateUserLanguage(language) {
+export function updateUserLanguage(language) {
 	const previousLang = localStorage.getItem("userLanguage");
 	localStorage.setItem("userLanguage", language);
 
@@ -85,7 +85,7 @@ export function _updateUserLanguage(language) {
 	}
 }
 
-export function _translatePage() {
+export function translatePage() {
 	const elements = document.querySelectorAll("[data-translate]");
 	for (const element of elements) {
 		const key = element.getAttribute("data-translate");
@@ -100,7 +100,7 @@ export function _translatePage() {
 	}
 }
 
-export function _loadLangSelectorSelect() {
+export function loadLangSelectorSelect() {
 	const langButton = document.querySelector(".lang-button");
 
 	if (!langButton) {
@@ -109,7 +109,7 @@ export function _loadLangSelectorSelect() {
 
 	const langOptions = document.querySelector(".lang-options");
 
-	_setLanguage(_getLanguagePackName());
+	setLanguage(getLanguagePackName());
 
 	langButton.addEventListener("click", () => {
 		langOptions.style.display =
@@ -119,7 +119,7 @@ export function _loadLangSelectorSelect() {
 	langOptions.addEventListener("click", (e) => {
 		if (e.target.tagName === "BUTTON") {
 			const lang = e.target.dataset.lang;
-			_setLanguage(lang);
+			setLanguage(lang);
 			langOptions.style.display = "none";
 		}
 	});
@@ -130,16 +130,16 @@ export function _loadLangSelectorSelect() {
 		}
 	});
 
-	function _setLanguage(lang) {
+	function setLanguage(lang) {
 		langButton.textContent = lang.toUpperCase();
-		_updateUserLanguage(lang);
+		updateUserLanguage(lang);
 	}
 }
 
 // BACKWARD COMPAT: attach to window during migration
 window.translate = translate;
-window._getUserLanguage = _getUserLanguage;
-window._getLanguagePackName = _getLanguagePackName;
-window._updateUserLanguage = _updateUserLanguage;
-window._translatePage = _translatePage;
-window._loadLangSelectorSelect = _loadLangSelectorSelect;
+window.getUserLanguage = getUserLanguage;
+window.getLanguagePackName = getLanguagePackName;
+window.updateUserLanguage = updateUserLanguage;
+window.translatePage = translatePage;
+window.loadLangSelectorSelect = loadLangSelectorSelect;

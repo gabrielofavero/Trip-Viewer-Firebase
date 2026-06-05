@@ -1,20 +1,20 @@
 import {
-	_getChartData,
-	_getChartConfig,
-	_getChartColorsRGB,
-	_getArrayRGBA,
+	getChartData,
+	getChartConfig,
+	getChartColorsRGB,
+	getArrayRGBA,
 } from '../../../models/expense.js';
 
 var GASTOS_CHARTS = {};
 
 // BACKWARD COMPAT: attach to window during migration
-window._getChartData = _getChartData;
-window._getChartConfig = _getChartConfig;
-window._getChartColorsRGB = _getChartColorsRGB;
-window._getArrayRGBA = _getArrayRGBA;
+window.getChartData = getChartData;
+window.getChartConfig = getChartConfig;
+window.getChartColorsRGB = getChartColorsRGB;
+window.getArrayRGBA = getArrayRGBA;
 
 // Tabelas
-function _setTable(id, itens, total) {
+function setTable(id, itens, total) {
 	if (!itens || itens.length === 0) {
 		return;
 	}
@@ -52,7 +52,7 @@ function _setTable(id, itens, total) {
 
 		const td2 = document.createElement("td");
 		td2.className = `tabela-texto-direita`;
-		td2.innerText = _formatMoeda(item.valor, true);
+		td2.innerText = formatCurrency(item.valor, true);
 		tr.appendChild(td2);
 
 		return tr;
@@ -69,7 +69,7 @@ function _setTable(id, itens, total) {
 
 		const td2 = document.createElement("td");
 		td2.className = "tabela-texto-direita total";
-		td2.innerText = _formatMoeda(total, true);
+		td2.innerText = formatCurrency(total, true);
 		tr.appendChild(td2);
 
 		tFoot.appendChild(tr);
@@ -77,7 +77,7 @@ function _setTable(id, itens, total) {
 	}
 }
 
-function _setChart(tipo, id, labels, valores) {
+function setChart(tipo, id, labels, valores) {
 	const div = getID(id);
 
 	if (GASTOS_CHARTS[id]) {
@@ -85,14 +85,14 @@ function _setChart(tipo, id, labels, valores) {
 		GASTOS_CHARTS[id].update();
 		return;
 	}
-	const coresRGB = _getChartColorsRGB(labels.length);
-	const dados = _getChartData(labels, valores, coresRGB);
-	const config = _getChartConfig(tipo, dados);
+	const coresRGB = getChartColorsRGB(labels.length);
+	const dados = getChartData(labels, valores, coresRGB);
+	const config = getChartConfig(tipo, dados);
 	GASTOS_CHARTS[id] = new Chart(div, config);
 }
 
-function _changeChartsLabelsVisibility() {
-	const cor = _isOnDarkMode()
+function changeChartsLabelsVisibility() {
+	const cor = isOnDarkMode()
 		? "rgba(227, 236, 248, 1)"
 		: "rgba(75, 85, 99, 1)";
 	for (const chart in GASTOS_CHARTS) {

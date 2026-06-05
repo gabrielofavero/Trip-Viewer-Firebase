@@ -1,11 +1,11 @@
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
-function _getProgramacaoArray() {
+function getItineraryArray() {
 	let result = [];
 
 	for (let j = 1; j <= DATAS.length; j++) {
 		const innerResult = {
-			data: _convertToDateObject(DATAS[j - 1]),
+			data: convertToDateObject(DATAS[j - 1]),
 			destinosIDs: [],
 			titulo: {
 				valor: "",
@@ -18,7 +18,7 @@ function _getProgramacaoArray() {
 			noite: [],
 		};
 
-		innerResult.destinosIDs = _getDestinosFromCheckbox("programacao", j);
+		innerResult.destinosIDs = getDestinosFromCheckbox("programacao", j);
 
 		const tituloSelectValue = getID(
 			`programacao-inner-title-select-${j}`,
@@ -48,9 +48,9 @@ function _getProgramacaoArray() {
 		if (
 			DATAS[j - 1] &&
 			DATAS[j - 1] &&
-			INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])]
+			INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])]
 		) {
-			const turnos = INNER_PROGRAMACAO[_jsDateToKey(DATAS[j - 1])];
+			const turnos = INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])];
 			innerResult.madrugada = turnos.madrugada;
 			innerResult.manha = turnos.manha;
 			innerResult.tarde = turnos.tarde;
@@ -62,22 +62,22 @@ function _getProgramacaoArray() {
 	return result;
 }
 
-function _applyLoadedProgramacaoData(j, dados) {
-	const jsDate = _convertFromDateObject(dados.data);
+function applyLoadedItineraryData(j, dados) {
+	const jsDate = convertFromDateObject(dados.data);
 
 	const destinosIDsObject = dados.destinosIDs;
 	let destinosIDs = [];
 	if (destinosIDsObject && destinosIDsObject.length > 0) {
 		destinosIDs = destinosIDsObject.map((destino) => destino.destinosID);
-		_addValuesForDestinosAtivosCheckbox("programacao", j, destinosIDs);
+		addValuesForDestinosAtivosCheckbox("programacao", j, destinosIDs);
 	}
 
 	getID(`programacao-inner-title-select-${j}`).innerHTML =
-		_getProgramacaoTitleSelectOptions(j);
+		getItineraryTitleSelectOptions(j);
 
 	let titulo = dados.titulo?.valor ?? dados.titulo;
 	if (titulo) {
-		const selectValues = _getAllValuesFromSelect(
+		const selectValues = getAllValuesFromSelect(
 			getID(`programacao-inner-title-select-${j}`),
 		);
 		if (destinosIDs && destinosIDs.includes(titulo)) {
@@ -95,21 +95,21 @@ function _applyLoadedProgramacaoData(j, dados) {
 		}
 	}
 
-	INNER_PROGRAMACAO[_jsDateToKey(jsDate)] = {
+	INNER_PROGRAMACAO[jsDateToKey(jsDate)] = {
 		madrugada: dados.madrugada || [],
 		manha: dados.manha || [],
 		tarde: dados.tarde || [],
 		noite: dados.noite || [],
 	};
 
-	_updateProgramacaoTitle(j);
-	_loadInnerProgramacaoHTML(j);
-	_initializeSortableForGroup(`programacao-${j}`, {
-		onEnd: _afterDragInnerProgramacao,
+	updateItineraryTitle(j);
+	loadInnerItineraryHTML(j);
+	initializeSortableForGroup(`programacao-${j}`, {
+		onEnd: afterDragInnerItinerary,
 	});
 }
 
-function _updateProgramacaoTitle(j) {
+function updateItineraryTitle(j) {
 	const div = getID(`programacao-title-${j}`);
 	const tituloInput = getID(`programacao-inner-title-${j}`);
 	const tituloSelect = getID(`programacao-inner-title-select-${j}`);
@@ -132,26 +132,26 @@ function _updateProgramacaoTitle(j) {
 			tituloInput.style.display = "none";
 			break;
 		default:
-			titulo = _getDestinationProgramacaoTitle(value, j);
+			titulo = getDestinationItineraryTitle(value, j);
 			tituloInput.style.display = "none";
 	}
 
 	const data = DATAS[j - 1];
-	const dataFormatada = _getDateTitle(data, "weekday_day_month");
-	div.innerText = _getProgramacaoTitle(dataFormatada, titulo);
+	const dataFormatada = getDateTitle(data, "weekday_day_month");
+	div.innerText = getItineraryTitle(dataFormatada, titulo);
 }
 
-function _getDestinationProgramacaoTitle(value, j) {
-	const activeDestinations = _getActiveDestinations(j);
+function getDestinationItineraryTitle(value, j) {
+	const activeDestinations = getActiveDestinations(j);
 	const destinosTitulos = activeDestinations.map((destino) => destino.label);
 	const destinosIDs = activeDestinations.map((destino) => destino.value);
 
 	if (value === "all_destinations") {
-		return _getReadableArray(destinosTitulos);
+		return getReadableArray(destinosTitulos);
 	}
 
 	if (value.includes("_and_destinations")) {
-		return _getAndDestinationTitle(value, destinosTitulos);
+		return getAndDestinationTitle(value, destinosTitulos);
 	}
 
 	if (destinosIDs.includes(value)) {
@@ -162,7 +162,7 @@ function _getDestinationProgramacaoTitle(value, j) {
 	return "";
 }
 
-function _getActiveDestinations(j) {
+function getActiveDestinations(j) {
 	const result = [];
 	const fieldSet = getID(`programacao-local-${j}`);
 	if (!fieldSet) return result;
@@ -177,7 +177,7 @@ function _getActiveDestinations(j) {
 	return result;
 }
 
-function _getProgramacaoTitleSelectOptions(j = null) {
+function getItineraryTitleSelectOptions(j = null) {
 	const semTitulo = `<option value="">${translate("labels.no_title")}</option>`;
 	let destino = "";
 	let idaVoltaDestino = "";
@@ -186,8 +186,8 @@ function _getProgramacaoTitleSelectOptions(j = null) {
 		let labels = [];
 		let values = [];
 
-		for (const child of _getChildIDs(`programacao-local-${j}`)) {
-			const ids = _getIDs(child);
+		for (const child of getChildIDs(`programacao-local-${j}`)) {
+			const ids = getIDs(child);
 			const checkbox = getID(`check-programacao-${ids}`);
 			if (checkbox.checked) {
 				labels.push(getID(`check-programacao-label-${ids}`).innerText);
@@ -200,15 +200,15 @@ function _getProgramacaoTitleSelectOptions(j = null) {
 				destino += `<option value="${values[i]}">${labels[i]}</option>`;
 			}
 			if (labels.length > 1) {
-				const text = _getReadableArray(labels);
+				const text = getReadableArray(labels);
 				destino += `<option value="all_destinations">${text}</option>`;
 			}
 			const idaArray = [translate("trip.transportation.departure"), ...labels];
-			const idaText = _getReadableArray(idaArray);
+			const idaText = getReadableArray(idaArray);
 			idaVoltaDestino += `<option value="departure_and_destinations">${idaText}</option>`;
 
 			const voltaArray = [...labels, translate("trip.transportation.return")];
-			const voltaText = _getReadableArray(voltaArray);
+			const voltaText = getReadableArray(voltaArray);
 			idaVoltaDestino += `<option value="return_and_destinations">${voltaText}</option>`;
 		}
 	}
@@ -223,49 +223,49 @@ function _getProgramacaoTitleSelectOptions(j = null) {
             <option value="outro">${translate("labels.other")}</option>`;
 }
 
-function _updateProgramacaoTitleSelect(j) {
+function updateItineraryTitleSelect(j) {
 	const select = getID(`programacao-inner-title-select-${j}`);
 	const value = select.value;
-	select.innerHTML = _getProgramacaoTitleSelectOptions(j);
+	select.innerHTML = getItineraryTitleSelectOptions(j);
 	if (value) {
-		_addValueToSelectIfExists(value, select);
+		addValueToSelectIfExists(value, select);
 	}
-	_updateProgramacaoTitle(j);
+	updateItineraryTitle(j);
 }
 
-function _getProgramacaoTitle(dataFormatada, titulo = "") {
+function getItineraryTitle(dataFormatada, titulo = "") {
 	if (titulo) return `${titulo}: ${dataFormatada}`;
 	else return dataFormatada;
 }
 
-function _reloadProgramacao() {
+function reloadItinerary() {
 	if (!getID("habilitado-programacao").checked) return;
-	const originalData = _getProgramacaoArray() || [];
+	const originalData = getItineraryArray() || [];
 	const originalDataInputs = originalData.map((data) =>
-		_dateObjectToKey(data.data),
+		dateObjectToKey(data.data),
 	);
 
-	_loadProgramacao();
+	loadItinerarySchedule();
 	let j = 1;
-	for (const data of DATAS.map((data) => _jsDateToKey(data))) {
+	for (const data of DATAS.map((data) => jsDateToKey(data))) {
 		if (originalDataInputs.includes(data)) {
 			const index = originalDataInputs.indexOf(data);
 			const dados = originalData[index];
-			_applyLoadedProgramacaoData(j, dados);
+			applyLoadedItineraryData(j, dados);
 		}
 		j++;
 	}
-	_updateDestinosAtivosCheckboxHTML("programacao");
+	updateDestinosAtivosCheckboxHTML("programacao");
 }
 
 // Listeners
-function _loadProgramacaoListeners(j) {
+function loadItineraryListeners(j) {
 	// Checkbox Local
 	const fieldsetID = `programacao-local-${j}`;
-	for (const containerID of _getChildIDs(fieldsetID)) {
-		const ids = _getIDs(containerID);
+	for (const containerID of getChildIDs(fieldsetID)) {
+		const ids = getIDs(containerID);
 		getID(`check-programacao-${ids}`).addEventListener("change", () =>
-			_updateProgramacaoTitleSelect(j),
+			updateItineraryTitleSelect(j),
 		);
 	}
 }

@@ -14,7 +14,7 @@ const DATABASE_EDITABLE_DOCUMENTS = [
 ];
 
 // Constructors
-export function _buildDatabaseObject(success, message = "", data = {}) {
+export function buildDatabaseObject(success, message = "", data = {}) {
 	return {
 		success: success,
 		data: data,
@@ -23,7 +23,7 @@ export function _buildDatabaseObject(success, message = "", data = {}) {
 }
 
 // Generic Methods
-export async function _get(path, treatError = true, hideWarn = false) {
+export async function get(path, treatError = true, hideWarn = false) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
@@ -44,7 +44,7 @@ export async function _get(path, treatError = true, hideWarn = false) {
 	}
 }
 
-export async function _hasReadPermission(path) {
+export async function hasReadPermission(path) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
@@ -61,7 +61,7 @@ export async function _hasReadPermission(path) {
 	}
 }
 
-export async function _create(collection, data, docName = "") {
+export async function create(collection, data, docName = "") {
 	try {
 		let docRef = "";
 		if (!docName) {
@@ -73,21 +73,21 @@ export async function _create(collection, data, docName = "") {
 				.doc(docName)
 				.set(data);
 		}
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			true,
 			translate("messages.documents.create.success"),
 			docRef,
 		);
 	} catch (error) {
 		console.error(error.message);
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			false,
 			`${translate("messages.documents.create.error")}: ${error.message}`,
 		);
 	}
 }
 
-export async function _deepCreate(path, data, docId = "") {
+export async function deepCreate(path, data, docId = "") {
 	try {
 		let docRef;
 
@@ -100,73 +100,73 @@ export async function _deepCreate(path, data, docId = "") {
 			await docRef.set(data);
 		}
 
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			true,
 			translate("messages.documents.create.success"),
 			docRef,
 		);
 	} catch (error) {
 		console.error(error.message);
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			false,
 			`${translate("messages.documents.create.error")}: ${error.message}`,
 		);
 	}
 }
 
-export async function _update(path, newData) {
+export async function update(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const update = await docRef.update(newData);
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			true,
 			translate("messages.documents.update.success"),
 			update,
 		);
 	} catch (error) {
 		console.error(error.message);
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			false,
 			`${translate("messages.documents.update.error")}: ${error.message}`,
 		);
 	}
 }
 
-export async function _override(path, newData) {
+export async function override(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		await docRef.set(newData, { merge: false });
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			true,
 			translate("messages.documents.replace.success"),
 		);
 	} catch (error) {
 		console.error(error.message);
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			false,
 			`${translate("messages.documents.replace.error")}: ${error.message}`,
 		);
 	}
 }
 
-export async function _delete(path, ignoreError = false) {
+export async function delete(path, ignoreError = false) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const deleteObj = await docRef.delete();
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			true,
 			translate("messages.documents.delete.success"),
 			deleteObj,
 		);
 	} catch (error) {
 		if (ignoreError) {
-			_buildDatabaseObject(
+			buildDatabaseObject(
 				true,
 				translate("messages.documents.delete.success"),
 			);
 		}
 		console.error(error.message);
-		return _buildDatabaseObject(
+		return buildDatabaseObject(
 			false,
 			`${translate("messages.documents.delete.error")}: ${error.message}`,
 		);
@@ -174,7 +174,7 @@ export async function _delete(path, ignoreError = false) {
 }
 
 // Business logic functions
-export function _createBatchOps() {
+export function createBatchOps() {
 	const db = firebase.firestore();
 	const batch = db.batch();
 	const ops = [];
@@ -240,12 +240,12 @@ export function _createBatchOps() {
 	};
 }
 
-export async function _getSingleData(type) {
+export async function getSingleData(type) {
 	let data;
 	try {
-		data = await _get(`${type}/${_getURLParam(type[0])}`);
+		data = await get(`${type}/${getURLParam(type[0])}`);
 		if (!data) {
-			_displayError(
+			displayError(
 				`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
 			);
 		}
@@ -254,7 +254,7 @@ export async function _getSingleData(type) {
 			data?.destinos &&
 			data.destinos.length > 0
 		) {
-			data = await _getTripDataWithDestinos(data);
+			data = await getTripDataWithDestinations(data);
 		}
 	} catch (error) {
 		console.error("Error fetching data from Firestore:", error.message);
@@ -263,11 +263,11 @@ export async function _getSingleData(type) {
 	return data;
 }
 
-export async function _getTripDataWithDestinos(tripData) {
+export async function getTripDataWithDestinations(tripData) {
 	for (let i = 0; i < tripData?.destinos?.length; i++) {
 		let place;
 		try {
-			place = await _get(`destinos/${tripData.destinos[i].destinosID}`, false);
+			place = await get(`destinos/${tripData.destinos[i].destinosID}`, false);
 			tripData.destinos[i].destinos = place;
 		} catch (e) {
 			console.warn(
@@ -279,39 +279,39 @@ export async function _getTripDataWithDestinos(tripData) {
 	return tripData;
 }
 
-export async function _getSystemData() {
-	const systemData = await _get("config/system");
+export async function getSystemData() {
+	const systemData = await get("config/system");
 	return systemData;
 }
 
-export async function _deleteUserObjectDB(id, type) {
-	const uid = await _getUID();
+export async function deleteUserObjectDB(id, type) {
+	const uid = await getUID();
 	if (uid) {
-		const userData = await _getUserData(uid);
+		const userData = await getUserData(uid);
 		let dataArray = userData[type];
 		dataArray = dataArray.filter((item) => item !== id);
 
 		let result = {};
 		result[type] = dataArray;
 
-		_update(`usuarios/${uid}/`, result);
+		update(`usuarios/${uid}/`, result);
 
-		return await _delete(`${type}/${id}`);
+		return await delete(`${type}/${id}`);
 	}
 }
 
-export async function _deleteAccount() {
-	const uid = await _getUID();
+export async function deleteAccount() {
+	const uid = await getUID();
 	if (uid) {
-		await _deleteAccountDocuments();
-		await _delete(`usuarios/${uid}`);
+		await deleteAccountDocuments();
+		await delete(`usuarios/${uid}`);
 		await firebase.auth().currentUser.delete();
 	}
 }
 
-export async function _deleteAccountDocuments() {
-	const uid = await _getUID();
-	const userData = await _getUserData(uid);
+export async function deleteAccountDocuments() {
+	const uid = await getUID();
+	const userData = await getUserData(uid);
 
 	const deleteOps = [];
 
@@ -395,10 +395,10 @@ export async function _deleteAccountDocuments() {
 	await Promise.allSettled(deleteOps);
 }
 
-export async function _addToUserArray(type, value) {
-	const uid = await _getUID();
+export async function addToUserArray(type, value) {
+	const uid = await getUID();
 	if (uid) {
-		const userDoc = await _get(`usuarios/${uid}`);
+		const userDoc = await get(`usuarios/${uid}`);
 		if (userDoc) {
 			let list = userDoc[type];
 			if (!list) {
@@ -406,7 +406,7 @@ export async function _addToUserArray(type, value) {
 			}
 			if (!list.includes(value)) {
 				list.push(value);
-				await _update(`usuarios/${uid}`, {
+				await update(`usuarios/${uid}`, {
 					[type]: list,
 				});
 			}
@@ -415,29 +415,29 @@ export async function _addToUserArray(type, value) {
 	}
 }
 
-export async function _newUserObjectDB(object, type) {
-	if (await _getUID()) {
-		const result = await _create(type, object);
+export async function newUserObjectDB(object, type) {
+	if (await getUID()) {
+		const result = await create(type, object);
 		console.log(`Document created in ${type}:`);
 		console.log(result);
 		if (result.data) {
-			const id = _getIdFromObjectDB(result);
-			_addToUserArray(type, id);
+			const id = getIdFromObjectDB(result);
+			addToUserArray(type, id);
 			return result;
 		}
 	} else return translate("messages.unauthenticated");
 }
 
-export async function _getPermissoes() {
+export async function getPermissoes() {
 	// Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
-	const uid = await _getUID();
+	const uid = await getUID();
 	if (uid) {
-		const userData = await _getUserData(uid);
+		const userData = await getUserData(uid);
 		return userData?.permissoes;
 	}
 }
 
-export async function _getDestination(id, containerID) {
+export async function getDestination(id, containerID) {
 	if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
 
 	let content, preloader, isAlreadyLoading;
@@ -449,50 +449,50 @@ export async function _getDestination(id, containerID) {
 		content.style.display = "none";
 		preloader.style.display = "block";
 	} else {
-		isAlreadyLoading = _isAlreadyLoading();
+		isAlreadyLoading = isAlreadyLoading();
 		if (!isAlreadyLoading) {
-			_startLoadingScreen();
+			startLoadingScreen();
 		}
 	}
 
 	try {
-		DESTINOS_ATIVOS[id] = await _get(`destinos/${id}`);
+		DESTINOS_ATIVOS[id] = await get(`destinos/${id}`);
 		return DESTINOS_ATIVOS[id];
 	} finally {
 		if (containerID) {
 			content.style.display = "block";
 			preloader.style.display = "none";
 		} else if (!isAlreadyLoading) {
-			_stopLoadingScreen();
+			stopLoadingScreen();
 		}
 	}
 }
 
 // Helpers (Not database related)
-export function _haveErrorFromGetRequest() {
+export function haveErrorFromGetRequest() {
 	return Object.keys(ERROR_FROM_GET_REQUEST).length > 0;
 }
 
 // BACKWARD COMPAT: attach to window during migration
 window.DOCUMENT_ID = DOCUMENT_ID;
 window.ERROR_FROM_GET_REQUEST = ERROR_FROM_GET_REQUEST;
-window._buildDatabaseObject = _buildDatabaseObject;
-window._get = _get;
-window._hasReadPermission = _hasReadPermission;
-window._create = _create;
-window._deepCreate = _deepCreate;
-window._update = _update;
-window._override = _override;
-window._delete = _delete;
-window._createBatchOps = _createBatchOps;
-window._getSingleData = _getSingleData;
-window._getTripDataWithDestinos = _getTripDataWithDestinos;
-window._getSystemData = _getSystemData;
-window._deleteUserObjectDB = _deleteUserObjectDB;
-window._deleteAccount = _deleteAccount;
-window._deleteAccountDocuments = _deleteAccountDocuments;
-window._addToUserArray = _addToUserArray;
-window._newUserObjectDB = _newUserObjectDB;
-window._getPermissoes = _getPermissoes;
-window._getDestination = _getDestination;
-window._haveErrorFromGetRequest = _haveErrorFromGetRequest;
+window.buildDatabaseObject = buildDatabaseObject;
+window.get = get;
+window.hasReadPermission = hasReadPermission;
+window.create = create;
+window.deepCreate = deepCreate;
+window.update = update;
+window.override = override;
+window.delete = delete;
+window.createBatchOps = createBatchOps;
+window.getSingleData = getSingleData;
+window.getTripDataWithDestinations = getTripDataWithDestinations;
+window.getSystemData = getSystemData;
+window.deleteUserObjectDB = deleteUserObjectDB;
+window.deleteAccount = deleteAccount;
+window.deleteAccountDocuments = deleteAccountDocuments;
+window.addToUserArray = addToUserArray;
+window.newUserObjectDB = newUserObjectDB;
+window.getPermissoes = getPermissoes;
+window.getDestination = getDestination;
+window.haveErrorFromGetRequest = haveErrorFromGetRequest;

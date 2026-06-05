@@ -1,11 +1,11 @@
-async function _restoreOnClickAction() {
+async function restoreOnClickAction() {
 	const titulo = translate("account.restore.title");
 	const conteudo = translate("account.restore.prompt");
-	const yesAction = "_openRestoreFilePicker()";
-	_displayPrompt({ titulo, conteudo, yesAction });
+	const yesAction = "openRestoreFilePicker()";
+	displayPrompt({ titulo, conteudo, yesAction });
 }
 
-function _restoreOnFileSelectionAction(event) {
+function restoreOnFileSelectionAction(event) {
 	const file = event.target.files[0];
 	if (!file) return;
 
@@ -13,34 +13,34 @@ function _restoreOnFileSelectionAction(event) {
 	reader.onload = function (e) {
 		try {
 			const jsonData = JSON.parse(e.target.result);
-			_restoreAccountData(jsonData);
+			restoreAccountData(jsonData);
 		} catch (err) {
-			_stopLoadingScreen();
-			_displayError(translate("messages.documents.get.error"));
+			stopLoadingScreen();
+			displayError(translate("messages.documents.get.error"));
 			console.error(err);
 		}
 	};
 	reader.readAsText(file);
 }
 
-function _openRestoreFilePicker() {
+function openRestoreFilePicker() {
 	document.getElementById("restore-account-input").click();
 }
 
-async function _restoreAccountData(restore) {
-	_closeMessage();
-	_startLoadingScreen();
+async function restoreAccountData(restore) {
+	closeMessage();
+	startLoadingScreen();
 
-	if (!_isRestoreValid(restore)) {
-		_displayMessage(
+	if (!isRestoreValid(restore)) {
+		displayMessage(
 			translate("account.restore.error_title"),
 			translate("account.restore.invalid_file"),
 		);
 		return;
 	}
 
-	if (!(await _isRestoreOwnerValid(restore))) {
-		_displayMessage(
+	if (!(await isRestoreOwnerValid(restore))) {
+		displayMessage(
 			translate("account.restore.error_title"),
 			translate("account.restore.incorrect_owner"),
 		);
@@ -48,21 +48,21 @@ async function _restoreAccountData(restore) {
 	}
 
 	try {
-		await _restoreAccount(restore);
-		_openToast(translate("account.restore.success"));
+		await restoreAccount(restore);
+		openToast(translate("account.restore.success"));
 
 		setTimeout(() => {
 			location.reload();
 		}, 5000);
 	} catch (err) {
 		console.error("Restoration failed:", err);
-		_displayError(err.message || translate("account.restore.error_title"));
+		displayError(err.message || translate("account.restore.error_title"));
 	} finally {
-		_stopLoadingScreen();
+		stopLoadingScreen();
 	}
 }
 
-function _isRestoreValid(restore) {
+function isRestoreValid(restore) {
 	const REQUIRED_KEYS = [
 		"destinos",
 		"gastos",
@@ -86,7 +86,7 @@ function _isRestoreValid(restore) {
 	return true;
 }
 
-async function _isRestoreOwnerValid(restore) {
+async function isRestoreOwnerValid(restore) {
 	const REQUIRED_KEYS = [
 		"destinos",
 		"gastos",
@@ -94,7 +94,7 @@ async function _isRestoreOwnerValid(restore) {
 		"protegido",
 		"viagens",
 	];
-	const uid = await _getUID();
+	const uid = await getUID();
 
 	// --- Iterate through all document groups ---
 	for (const key of REQUIRED_KEYS) {
@@ -132,15 +132,15 @@ async function _isRestoreOwnerValid(restore) {
 	}
 }
 
-async function _restoreAccount(restore) {
-	const uid = await _getUID();
+async function restoreAccount(restore) {
+	const uid = await getUID();
 
 	console.log("Preparing delete operations...");
-	const deleteOps = await _collectDeleteOps(uid);
+	const deleteOps = await collectDeleteOps(uid);
 	console.log(`${deleteOps.length} delete operations.`);
 
 	console.log("Executing delete batches...");
-	await _commitInChunks(deleteOps);
+	await commitInChunks(deleteOps);
 	console.log("Deletions complete");
 
 	console.log("Preparing create operations...");
@@ -148,19 +148,19 @@ async function _restoreAccount(restore) {
 	console.log(`${createOps.length} create operations.`);
 
 	console.log("Executing create batches...");
-	await _commitInChunks(createOps);
+	await commitInChunks(createOps);
 	console.log("Restoration complete");
 
 	console.log("Preparing user update...");
 	const userUpdateOp = collectUserUpdateOp(restore, uid);
 
 	console.log("Executing user update...");
-	await _commitInChunks([userUpdateOp]);
+	await commitInChunks([userUpdateOp]);
 	console.log("User update complete");
 
 	console.log("All operations finished successfully");
 
-	async function _commitInChunks(ops, chunkSize = 450) {
+	async function commitInChunks(ops, chunkSize = 450) {
 		for (let i = 0; i < ops.length; i += chunkSize) {
 			const batch = firebase.firestore().batch();
 			const slice = ops.slice(i, i + chunkSize);
@@ -177,8 +177,8 @@ async function _restoreAccount(restore) {
 		}
 	}
 
-	async function _collectDeleteOps(uid) {
-		const userData = _cloneObject(USER_DATA);
+	async function collectDeleteOps(uid) {
+		const userData = cloneObject(USER_DATA);
 		const ops = [];
 
 		const pushDelete = (ref) => ops.push({ type: "delete", ref });

@@ -1,22 +1,22 @@
-import { getTransportes } from '../../core/config.js';
+import { getTransportations } from '../../core/config.js';
 
 var DATAS = [];
 
-function _loadNewTrip() {
-	_loadDadosBasicosNewTrip();
-	_loadProgramacao();
-	_loadDestinos();
+function loadNewTrip() {
+	loadDadosBasicosNewTrip();
+	loadItinerarySchedule();
+	loadDestinations();
 }
 
-function _loadDadosBasicosNewTrip() {
+function loadDadosBasicosNewTrip() {
 	getID("inicio").value = TODAY;
 	getID("fim").value = TOMORROW;
 
 	getID("moeda").value = "BRL";
 }
 
-function _addTransporte() {
-	const j = _getNextJ("transporte-box");
+function addTransportation() {
+	const j = getNextJ("transporte-box");
 
 	$("#transporte-box").append(`
   <div id="transporte-inner-box-${j}" class="inner-box draggable">
@@ -91,7 +91,7 @@ function _addTransporte() {
             <div class="nice-form-group">
               <label>Meio de Transporte</label>
               <select class="editar-select" required id="transporte-tipo-${j}">
-                ${_getTypeOptions()}
+                ${getTypeOptions()}
               </select>
             </div>
 
@@ -135,7 +135,7 @@ function _addTransporte() {
     </div>
       `);
 
-	getID(`transporte-id-${j}`).value = _getCategoriaID("transporte", j);
+	getID(`transporte-id-${j}`).value = getCategoryID("transporte", j);
 	getID(`ponto-partida-${j}`).value =
 		j == 1 ? "" : getID(`ponto-chegada-${j - 1}`).value;
 	getID(`ponto-chegada-${j}`).value =
@@ -148,20 +148,20 @@ function _addTransporte() {
 				: getID(`chegada-${j - 1}`).value;
 	getID(`chegada-${j}`).value = getID(`partida-${j}`).value;
 
-	_loadTransporteListeners(j);
-	_loadTransporteVisibility(j);
-	_applyTransportationTypeVisualization(j);
-	_addRemoveTransporteListener(j);
-	_addSelectorDS(
+	loadTransportationListeners(j);
+	loadTransportationVisibility(j);
+	applyTransportationTypeVisualization(j);
+	addRemoveTransportationListener(j);
+	addSelectorDS(
 		"transporte-pessoa",
 		`transporte-pessoa-select-${j}`,
 		`transporte-pessoa-${j}`,
-		`_updateTransporteTitle(${j})`,
+		`updateTransportationTitle(${j})`,
 	);
 
-	function _getTypeOptions() {
+	function getTypeOptions() {
 		let result = "";
-		const transportes = getTransportes();
+		const transportes = getTransportations();
 		for (const tipo of transportes.tipos) {
 			const titulo = transportes.titulos[tipo];
 			if (!titulo) continue;
@@ -171,9 +171,9 @@ function _addTransporte() {
 	}
 }
 
-function _addHospedagens() {
-	const inicioFim = _getNextCategoriaInicioFim("hospedagens", "check-out");
-	const j = _getNextJ("hospedagens-box");
+function addHospedagens() {
+	const inicioFim = getNextCategoryStartEnd("hospedagens", "check-out");
+	const j = getNextJ("hospedagens-box");
 	$("#hospedagens-box").append(`
       <div id="hospedagens-inner-box-${j}" class="inner-box draggable">
         <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens accordion-draggable" >
@@ -246,7 +246,7 @@ function _addHospedagens() {
 
             <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
               <label>${translate("labels.image.title_plural")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-              <button id="imagens-hospedagem-button-${j}" onclick="_openImagensHospedagem(${j})" class="btn input-botao" style="margin-top:0px">${translate("labels.image.add_title")}</button>
+              <button id="imagens-hospedagem-button-${j}" onclick="openAccommodationImages(${j})" class="btn input-botao" style="margin-top:0px">${translate("labels.image.add_title")}</button>
             </div>
               
           </div>
@@ -267,13 +267,13 @@ function _addHospedagens() {
       </div>
       `);
 
-	getID(`hospedagens-id-${j}`).value = _getCategoriaID("hospedagens", j);
-	_addRemoveChildListener("hospedagens", j, `_removeHospedagemImagens(${j})`);
-	_loadHospedagemListeners(j);
-	HOSPEDAGEM_IMAGENS[j] = [];
+	getID(`hospedagens-id-${j}`).value = getCategoryID("hospedagens", j);
+	addRemoveChildListener("hospedagens", j, `removeAccommodationImages(${j})`);
+	loadAccommodationListeners(j);
+	ACCOMMODATION_IMAGES[j] = [];
 }
 
-function _loadDestinos() {
+function loadDestinations() {
 	if (!DESTINOS || DESTINOS.length === 0) return;
 
 	let destinos = DESTINOS;
@@ -285,7 +285,7 @@ function _loadDestinos() {
 	fieldset.innerHTML = "";
 	for (let j = 1; j <= destinos.length; j++) {
 		const i = j - 1;
-		fieldset.innerHTML += _getDestinosItemCheckbox(
+		fieldset.innerHTML += getDestinationsItemCheckbox(
 			j,
 			destinos[i].id,
 			destinos[i].titulo,
@@ -293,22 +293,22 @@ function _loadDestinos() {
 	}
 
 	getID("habilitado-destinos")?.addEventListener("change", () =>
-		_updateDestinosAtivosHTMLs(),
+		updateDestinosAtivosHTMLs(),
 	);
-	for (const child of _getChildIDs("destinos-checkboxes")) {
-		getID(`check-destinos-${_getJ(child)}`).addEventListener("change", () =>
-			_updateDestinosAtivosHTMLs(),
+	for (const child of getChildIDs("destinos-checkboxes")) {
+		getID(`check-destinos-${getJ(child)}`).addEventListener("change", () =>
+			updateDestinosAtivosHTMLs(),
 		);
 	}
 }
 
-function _loadProgramacao() {
+function loadItinerarySchedule() {
 	const inicio = getID("inicio").value;
 	const fim = getID("fim").value;
 
-	DATAS = _getArrayOfDates(
-		_formattedDateToDate(inicio),
-		_formattedDateToDate(fim),
+	DATAS = getArrayOfDates(
+		formattedDateToDate(inicio),
+		formattedDateToDate(fim),
 	);
 
 	const programacaoBox = getID("programacao-box");
@@ -316,7 +316,7 @@ function _loadProgramacao() {
 
 	for (let j = 1; j <= DATAS.length; j++) {
 		const data = DATAS[j - 1];
-		let dataFormatada = _getDateTitle(data, "weekday_day_month");
+		let dataFormatada = getDateTitle(data, "weekday_day_month");
 
 		programacaoBox.innerHTML += `
       <div id="programacao-${j}" class="accordion-item accordion-programacao" >
@@ -331,17 +331,17 @@ function _loadProgramacao() {
         aria-labelledby="heading-programacao-${j}" data-bs-parent="#programacao-box">
         <div class="accordion-body">
 
-          <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${_getDestinosAtivosSelectVisibility()}">
+          <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${getActiveDestinationsSelectVisibility()}">
             <label>${translate("destination.title")}<span class="opcional"> (${translate("labels.optional")})</span></label>
             <fieldset class="nice-form-group destinos-checkboxes" id="programacao-local-${j}">
-              ${_getDestinosAtivosCheckboxOptions("programacao", j)}
+              ${getActiveDestinationsCheckboxOptions("programacao", j)}
             </fieldset>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.title")}<span class="opcional"> (${translate("labels.optional")})</span></label>
               <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
-                ${_getProgramacaoTitleSelectOptions()}
+                ${getItineraryTitleSelectOptions()}
               </select>  
             <input class="nice-form-group" id="programacao-inner-title-${j}" maxlength="25" type="text" placeholder="São Paulo" style="display: none;">
           </div>
@@ -367,7 +367,7 @@ function _loadProgramacao() {
           </div>
 
           <div class="button-box-right-formatted" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
-            <button id="programacao-adicionar-${j}" class="btn btn-theme" onclick="_openInnerProgramacao(${j})">
+            <button id="programacao-adicionar-${j}" class="btn btn-theme" onclick="openInnerItinerary(${j})">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12Zm10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16Z">
@@ -385,25 +385,25 @@ function _loadProgramacao() {
     </div>`;
 	}
 
-	for (const child of _getChildIDs("programacao-box")) {
-		const j = _getJ(child);
+	for (const child of getChildIDs("programacao-box")) {
+		const j = getJ(child);
 		getID(`programacao-inner-title-select-${j}`).addEventListener(
 			"change",
-			() => _updateProgramacaoTitle(j),
+			() => updateItineraryTitle(j),
 		);
 		getID(`programacao-inner-title-${j}`).addEventListener("change", () =>
-			_updateProgramacaoTitle(j),
+			updateItineraryTitle(j),
 		);
-		_loadProgramacaoListeners(j);
+		loadItineraryListeners(j);
 	}
 
 	getID("habilitado-programacao").addEventListener("change", () =>
-		_reloadProgramacao(),
+		reloadItinerary(),
 	);
 }
 
-function _addGaleria() {
-	const j = _getNextJ("galeria-box");
+function addGaleria() {
+	const j = getNextJ("galeria-box");
 	$("#galeria-box").append(`
       <div id="galeria-${j}" class="accordion-item accordion-galeria" >
       <h2 class="accordion-header" id="heading-galeria-${j}">
@@ -470,10 +470,10 @@ function _addGaleria() {
     </div>
       `);
 
-	_loadImageSelector(`galeria-${j}`);
-	_loadGaleriaListeners(j);
-	_addRemoveGaleriaListener(j);
-	_addSelectorDS(
+	loadImageSelector(`galeria-${j}`);
+	loadGaleriaListeners(j);
+	addRemoveGaleriaListener(j);
+	addSelectorDS(
 		"galeria-categoria",
 		`galeria-categoria-select-${j}`,
 		`galeria-categoria-${j}`,

@@ -1,25 +1,25 @@
-var HOSPEDAGEM_IMAGENS = {};
+var ACCOMMODATION_IMAGES = {};
 
-function _getHospedagemArray(protectedReservationCodes = false) {
+function getAccommodationArray(protectedReservationCodes = false) {
 	let result = [];
-	for (const id of _getChildIDs("hospedagens-box")) {
-		const j = _getJ(id);
+	for (const id of getChildIDs("hospedagens-box")) {
+		const j = getJ(id);
 		result.push({
 			cafe: getID(`hospedagens-cafe-${j}`).checked,
 			datas: {
-				checkin: _formattedDateToDateObject(
+				checkin: formattedDateToDateObject(
 					getID(`check-in-${j}`).value,
 					getID(`check-in-horario-${j}`).value,
 				),
-				checkout: _formattedDateToDateObject(
+				checkout: formattedDateToDateObject(
 					getID(`check-out-${j}`).value,
 					getID(`check-out-horario-${j}`).value,
 				),
 			},
 			descricao: getID(`hospedagens-descricao-${j}`).value,
 			endereco: getID(`hospedagens-endereco-${j}`).value,
-			id: _getOrCreateCategoriaID("hospedagens", j),
-			imagens: _getHospedagemImages(j),
+			id: getOrCreateCategoryID("hospedagens", j),
+			imagens: getAccommodationImages(j),
 			reserva: protectedReservationCodes
 				? ""
 				: getID(`reserva-hospedagens-${j}`).value,
@@ -32,10 +32,10 @@ function _getHospedagemArray(protectedReservationCodes = false) {
 	return result;
 }
 
-function _getProtectedHospedagemObject() {
+function getProtectedAccommodationObject() {
 	let result = {};
-	for (const childID of _getChildIDs("hospedagens-box")) {
-		const j = _getJ(childID);
+	for (const childID of getChildIDs("hospedagens-box")) {
+		const j = getJ(childID);
 		const id = getID(`hospedagens-id-${j}`).value;
 		const reserva = getID(`reserva-hospedagens-${j}`).value;
 		const link = getID(`reserva-hospedagens-link-${j}`).value;
@@ -44,9 +44,9 @@ function _getProtectedHospedagemObject() {
 	return result;
 }
 
-function _getHospedagemImages(j) {
+function getAccommodationImages(j) {
 	const result = [];
-	for (const imagem of HOSPEDAGEM_IMAGENS[j]) {
+	for (const imagem of ACCOMMODATION_IMAGES[j]) {
 		if (imagem.file) {
 			CUSTOM_UPLOADS.hospedagens.push(imagem);
 		}
@@ -58,28 +58,28 @@ function _getHospedagemImages(j) {
 	return result;
 }
 
-function _loadCheckIn(hospedagem, j) {
-	_loadHospeagemCheck("checkin", "in", hospedagem, j);
+function loadCheckIn(hospedagem, j) {
+	loadAccommodationCheck("checkin", "in", hospedagem, j);
 }
 
-function _loadCheckOut(hospedagem, j) {
-	_loadHospeagemCheck("checkout", "out", hospedagem, j);
+function loadCheckOut(hospedagem, j) {
+	loadAccommodationCheck("checkout", "out", hospedagem, j);
 }
 
-function _loadHospeagemCheck(chave, checkTipo, hospedagem, j) {
-	const data = _convertFromDateObject(hospedagem.datas[chave]);
+function loadAccommodationCheck(chave, checkTipo, hospedagem, j) {
+	const data = convertFromDateObject(hospedagem.datas[chave]);
 	if (data) {
-		getID(`check-${checkTipo}-${j}`).value = _getDateString(data, "yyyy-mm-dd");
+		getID(`check-${checkTipo}-${j}`).value = getDateString(data, "yyyy-mm-dd");
 		getID(`check-${checkTipo}-horario-${j}`).value =
-			_getTimeStringFromDate(data);
+			getTimeStringFromDate(data);
 	}
 }
 
 // Listener
-function _loadHospedagemListeners(j) {
+function loadAccommodationListeners(j) {
 	// Validação de Link
 	getID(`reserva-hospedagens-link-${j}`).addEventListener("change", () =>
-		_validateLink(`reserva-hospedagens-link-${j}`),
+		validateLink(`reserva-hospedagens-link-${j}`),
 	);
 
 	// Nome
@@ -92,22 +92,22 @@ function _loadHospedagemListeners(j) {
 	});
 }
 
-function _hospedagensAdicionarListenerAction() {
-	_closeAccordions("hospedagens");
-	_addHospedagens();
-	_openLastAccordion("hospedagens");
+function accommodationsAddListenerAction() {
+	closeAccordions("hospedagens");
+	addHospedagens();
+	openLastAccordion("hospedagens");
 }
 
 // Carregamento Interno (Modal)
-function _openImagensHospedagem(j) {
+function openAccommodationImages(j) {
 	const size = 5;
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 
 	propriedades.titulo = translate("labels.image.add_title");
-	propriedades.containers = _getContainersInput();
-	propriedades.conteudo = _getImagemHospedagemContent(size);
+	propriedades.containers = getContainersInput();
+	propriedades.conteudo = getAccommodationImageContent(size);
 	propriedades.icones = [
-		{ tipo: "voltar", acao: `_closeInnerImagemHospedagem()` },
+		{ tipo: "voltar", acao: `closeInnerAccommodationImage()` },
 	];
 	propriedades.botoes = [
 		{
@@ -115,15 +115,15 @@ function _openImagensHospedagem(j) {
 		},
 		{
 			tipo: "confirmar",
-			acao: `_confirmImagensHospedagem(${j})`,
+			acao: `confirmAccommodationImages(${j})`,
 		},
 	];
 
-	_displayFullMessage(propriedades);
-	_initializeSortableForGroup(`imagem-hospedagens`, { onEnd: "" });
+	displayFullMessage(propriedades);
+	initializeSortableForGroup(`imagem-hospedagens`, { onEnd: "" });
 
 	for (let k = 1; k <= size; k++) {
-		const imagem = HOSPEDAGEM_IMAGENS[j][k - 1];
+		const imagem = ACCOMMODATION_IMAGES[j][k - 1];
 		if (imagem) {
 			getID(`hospedagens-imagem-descricao-${k}`).value = imagem.descricao;
 			getID(`link-hospedagens-${k}`).value = imagem.link;
@@ -131,20 +131,20 @@ function _openImagensHospedagem(j) {
 				imagem.descricao || `${translate("labels.image.title")} ${k}`;
 		}
 
-		_loadImageSelector(`hospedagens-${k}`);
+		loadImageSelector(`hospedagens-${k}`);
 		getID(`link-hospedagens-${k}`).addEventListener("change", () =>
-			_validateImageLink(`link-hospedagens-${k}`),
+			validateImageLink(`link-hospedagens-${k}`),
 		);
 	}
 }
 
-function _getImagemHospedagemContent(size = 5) {
+function getAccommodationImageContent(size = 5) {
 	let botoes = "";
 	let inner = "";
 	for (let k = 1; k <= size; k++) {
 		botoes += `
         <div class="input-botao-container" id="input-botao-container-${k}">
-            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" onclick="_openInnerImagemHospedagem(${k})" style="margin-top:1em">${translate("labels.image.add")}</button>
+            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" onclick="openInnerAccommodationImage(${k})" style="margin-top:1em">${translate("labels.image.add")}</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
         </div>`;
 
@@ -192,33 +192,33 @@ function _getImagemHospedagemContent(size = 5) {
     `;
 }
 
-function _openInnerImagemHospedagem(k) {
-	_fade([`imagem-hospedagens-botoes`], [`hospedagens-imagem-${k}`]);
+function openInnerAccommodationImage(k) {
+	fade([`imagem-hospedagens-botoes`], [`hospedagens-imagem-${k}`]);
 	getID("back-icon").style.visibility = "visible";
 }
 
-function _closeInnerImagemHospedagem() {
-	for (const orderId of _getChildIDs("inner-hospedagens-imagem")) {
-		const k = _getJ(orderId);
+function closeInnerAccommodationImage() {
+	for (const orderId of getChildIDs("inner-hospedagens-imagem")) {
+		const k = getJ(orderId);
 		const id = `hospedagens-imagem-${k}`;
 		if (getID(id).style.display == "block") {
 			let titulo = translate("labels.image.add");
 
-			if (_hasInnerImagemHospedagem(k)) {
+			if (hasInnerAccommodationImage(k)) {
 				titulo =
 					getID(`hospedagens-imagem-descricao-${k}`).value ||
 					`${translate("labels.image.title")} ${k}`;
 			}
 
 			getID(`hospedagens-imagem-botao-${k}`).innerText = titulo;
-			_fade([`hospedagens-imagem-${k}`], [`imagem-hospedagens-botoes`]);
+			fade([`hospedagens-imagem-${k}`], [`imagem-hospedagens-botoes`]);
 			break;
 		}
 	}
 	getID("back-icon").style.visibility = "hidden";
 }
 
-function _hasInnerImagemHospedagem(k) {
+function hasInnerAccommodationImage(k) {
 	return (
 		(getID(`enable-link-hospedagens-${k}`).checked &&
 			getID(`link-hospedagens-${k}`).value) ||
@@ -227,28 +227,28 @@ function _hasInnerImagemHospedagem(k) {
 	);
 }
 
-function _confirmImagensHospedagem(j) {
+function confirmAccommodationImages(j) {
 	const isEditing = getID(`hospedagens-imagem-${j}`).style.display === "block";
 	if (isEditing) {
-		_closeInnerImagemHospedagem();
+		closeInnerAccommodationImage();
 	} else {
-		_saveImagensHospedagem(j);
-		_setImagemButtonLabel(j);
+		saveAccommodationImages(j);
+		setImagemButtonLabel(j);
 	}
 }
 
-function _setImagemButtonLabel(j) {
+function setImagemButtonLabel(j) {
 	getID(`imagens-hospedagem-button-${j}`).innerText =
-		HOSPEDAGEM_IMAGENS[j].length > 0
+		ACCOMMODATION_IMAGES[j].length > 0
 			? translate("labels.image.edit")
 			: translate("labels.image.add");
 }
 
-function _saveImagensHospedagem(j) {
+function saveAccommodationImages(j) {
 	const result = [];
-	for (const id of _getChildIDs("imagem-hospedagens-botoes")) {
-		const k = _getJ(id);
-		if (_hasInnerImagemHospedagem(k)) {
+	for (const id of getChildIDs("imagem-hospedagens-botoes")) {
+		const k = getJ(id);
+		if (hasInnerAccommodationImage(k)) {
 			result.push({
 				descricao: getID(`hospedagens-imagem-descricao-${k}`).value,
 				link: getID(`enable-link-hospedagens-${k}`).checked
@@ -262,15 +262,15 @@ function _saveImagensHospedagem(j) {
 		}
 	}
 
-	HOSPEDAGEM_IMAGENS[j] = result;
-	_closeMessage();
+	ACCOMMODATION_IMAGES[j] = result;
+	closeMessage();
 }
 
-function _removeHospedagemImagens(j) {
-	HOSPEDAGEM_IMAGENS[j] = [];
+function removeAccommodationImages(j) {
+	ACCOMMODATION_IMAGES[j] = [];
 }
 
-async function _uploadAndSetHospedagemImages() {
+async function uploadAndSetAccommodationImages() {
 	if (
 		IMAGE_UPLOAD_STATUS.hasErrors ||
 		CUSTOM_UPLOADS.hospedagens.length === 0
@@ -279,7 +279,7 @@ async function _uploadAndSetHospedagemImages() {
 	}
 
 	const hospedagensFiles = CUSTOM_UPLOADS.hospedagens.map((file) => file.file);
-	const hospedagemResult = await _uploadImages("viagens", hospedagensFiles);
+	const hospedagemResult = await uploadImages("viagens", hospedagensFiles);
 
 	if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
 		for (let i = 0; i < hospedagemResult.length; i++) {

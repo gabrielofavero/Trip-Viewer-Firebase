@@ -8,7 +8,7 @@
  */
 
 // ─── Helper: find the J of the currently open edit form ───────────────────────
-function _importGetEditingJ() {
+function importGetEditingJ() {
 	const container = document.querySelector(".edit-title-container");
 	if (!container) return null;
 	const input = container.querySelector("[id^='editar-'][id*='-']");
@@ -19,7 +19,7 @@ function _importGetEditingJ() {
 }
 
 // ─── Helper: set a select-or-input field (regiao / valor) ────────────────────
-function _importSetSelectOrInput(prefix, j, value) {
+function importSetSelectOrInput(prefix, j, value) {
 	const select = document.getElementById(`editar-${prefix}-select-${j}`);
 	const input = document.getElementById(`editar-${prefix}-input-${j}`);
 	if (!select) return;
@@ -38,7 +38,7 @@ function _importSetSelectOrInput(prefix, j, value) {
 }
 
 // ─── Core fill function ───────────────────────────────────────────────────────
-function _importFillEditFields(j, data, force) {
+function importFillEditFields(j, data, force) {
 	const setValue = (id, val) => {
 		const el = document.getElementById(id);
 		if (!el) return;
@@ -64,12 +64,12 @@ function _importFillEditFields(j, data, force) {
 
 	// regiao (select + optional custom input)
 	if (force || (data.regiao !== undefined && data.regiao !== null && data.regiao !== "")) {
-		_importSetSelectOrInput("regiao", j, data.regiao || "");
+		importSetSelectOrInput("regiao", j, data.regiao || "");
 	}
 
 	// valor (select + optional custom input)
 	if (force || (data.valor !== undefined && data.valor !== null && data.valor !== "")) {
-		_importSetSelectOrInput("valor", j, data.valor || "");
+		importSetSelectOrInput("valor", j, data.valor || "");
 	}
 
 	// descricao
@@ -90,14 +90,14 @@ function _importFillEditFields(j, data, force) {
  *   importDestination(data, true)
  */
 async function importDestination(data, force = false) {
-	const j = _importGetEditingJ();
+	const j = importGetEditingJ();
 
 	if (j == null) {
 		console.error("❌ No edit form is open. Click the edit button on an item first.");
 		return;
 	}
 
-	_importFillEditFields(j, data, force);
+	importFillEditFields(j, data, force);
 	console.log(`✅ Imported data into item at index ${j}: ${data.nome || "(unnamed)"}`);
 }
 

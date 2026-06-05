@@ -2,12 +2,12 @@ var REFRESHED = false;
 var TYPE = "viagens";
 var PIN = null;
 
-var INICIO = {
+var START_DATE = {
 	date: null,
 	text: "",
 };
 
-var FIM = {
+var END_DATE = {
 	date: null,
 	text: "",
 };
@@ -16,24 +16,24 @@ var TRAVELERS;
 
 document.addEventListener("DOMContentLoaded", async function () {
 	try {
-		_startLoadingTimer();
-		_mainView();
-		_main();
+		startLoadingTimer();
+		mainView();
+		main();
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		throw error;
 	}
 });
 
-async function _loadViagemPage() {
-	const urlParams = _getURLParams();
+async function loadViewPage() {
+	const urlParams = getURLParams();
 	TYPE = urlParams["l"] ? "listagens" : urlParams["d"] ? "destinos" : "viagens";
 	DOCUMENT_ID = urlParams["l"] || urlParams["d"] || urlParams["v"];
 
 	window.addEventListener("scroll", () => {
 		if (window.scrollY > 0) {
 			if (!REFRESHED) {
-				_refreshCategorias();
+				refreshCategorias();
 				REFRESHED = true;
 			}
 		} else {
@@ -41,32 +41,32 @@ async function _loadViagemPage() {
 		}
 	});
 
-	const firestoreData = await _getSingleData(TYPE);
+	const firestoreData = await getSingleData(TYPE);
 
-	if (_haveErrorFromGetRequest()) {
-		_displayError(_getErrorFromGetRequestMessage(), true);
-		_stopLoadingScreen();
+	if (haveErrorFromGetRequest()) {
+		displayError(getErrorFromGetRequestMessage(), true);
+		stopLoadingScreen();
 		return;
 	}
 
-	if (!_haveErrorFromGetRequest()) {
+	if (!haveErrorFromGetRequest()) {
 		if (firestoreData.pin === "all-data") {
-			_loadProtectedData(firestoreData);
+			loadProtectedData(firestoreData);
 		} else {
-			_setFirestoreData(firestoreData);
+			setFirestoreData(firestoreData);
 		}
 	}
 }
 
-async function _syncModules() {
+async function syncModules() {
 	try {
 		if (CALL_SYNC.length > 0) {
 			const callSyncOrder = [
-				_loadResumo,
-				_loadTransporte,
-				_loadHospedagens,
-				_loadDestinos,
-				_loadGaleria,
+				_loadSummary,
+				_loadTransportation,
+				_loadAccommodations,
+				_loadDestinations,
+				_loadGallery,
 			];
 			CALL_SYNC.sort((a, b) => {
 				const indexA = callSyncOrder.indexOf(a.name);
@@ -74,47 +74,47 @@ async function _syncModules() {
 				return indexA - indexB;
 			});
 			for (let _function of CALL_SYNC) {
-				_function();
+				function();
 			}
 		} else {
 			console.warn("No functions to sync");
 		}
 		// Loading Screen
-		_stopLoadingScreen();
-		_adjustDestinationsHTML();
+		stopLoadingScreen();
+		adjustDestinationsHTML();
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		throw error;
 	}
 }
 
-function _prepareViewData() {
+function prepareViewData() {
 	if (FIRESTORE_DATA.inicio && FIRESTORE_DATA.fim) {
-		_loadInicioFim();
+		loadInicioFim();
 	}
 
-	_loadVisibility();
-	_adjustCardsHeightsListener();
-	_loadCloseCustomSelectListeners();
+	loadVisibility();
+	adjustCardsHeightsListener();
+	loadCloseCustomSelectListeners();
 
-	_loadHeader();
-	_loadModules();
-	_loadViewEmbed();
+	loadHeader();
+	loadModules();
+	loadViewEmbed();
 }
 
-function _loadInicioFim(data = FIRESTORE_DATA) {
-	INICIO.date = _convertFromDateObject(data.inicio);
-	FIM.date = _convertFromDateObject(data.fim);
+function loadInicioFim(data = FIRESTORE_DATA) {
+	START_DATE.date = convertFromDateObject(data.inicio);
+	END_DATE.date = convertFromDateObject(data.fim);
 
-	INICIO.text = `${data.inicio.day}/${data.inicio.month}`;
-	FIM.text = `${data.fim.day}/${data.fim.month}`;
+	START_DATE.text = `${data.inicio.day}/${data.inicio.month}`;
+	END_DATE.text = `${data.fim.day}/${data.fim.month}`;
 }
 
-function _loadHeader() {
-	_loadTitle();
+function loadHeader() {
+	loadTitle();
 
 	if (TYPE == "destinos" && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
-		getID("subtitulo").innerHTML = _getLastUpdatedOnText(
+		getID("subtitulo").innerHTML = getLastUpdatedOnText(
 			FIRESTORE_DATA.versao.ultimaAtualizacao,
 		);
 	}
@@ -130,7 +130,7 @@ function _loadHeader() {
 		}
 
 		const mostRecentDate = datas.reduce((a, b) => (a > b ? a : b));
-		getID("dUpdate").innerHTML = _getLastUpdatedOnText(mostRecentDate);
+		getID("dUpdate").innerHTML = getLastUpdatedOnText(mostRecentDate);
 	}
 
 	if (FIRESTORE_DATA.descricao) {
@@ -184,11 +184,11 @@ function _loadHeader() {
 		}
 	}
 
-	_loadHeaderImageAndLogo();
+	loadHeaderImageAndLogo();
 }
 
-function _loadTitle(data = FIRESTORE_DATA) {
-	_setPageName(data.titulo);
+function loadTitle(data = FIRESTORE_DATA) {
+	setPageName(data.titulo);
 	getID("header1").innerHTML = data.titulo;
 	getID("header2").style.display = "none";
 
@@ -197,7 +197,7 @@ function _loadTitle(data = FIRESTORE_DATA) {
 	}
 }
 
-function _loadHeaderImageAndLogo(data = FIRESTORE_DATA) {
+function loadHeaderImageAndLogo(data = FIRESTORE_DATA) {
 	if (data.imagem?.ativo) {
 		const background = data.imagem.background;
 		const claro = data.imagem.claro;
@@ -210,14 +210,14 @@ function _loadHeaderImageAndLogo(data = FIRESTORE_DATA) {
 		}
 
 		if (claro) {
-			LOGO_CLARO = claro;
+			LOGO_LIGHT = claro;
 			if (escuro) {
-				LOGO_ESCURO = escuro;
+				LOGO_DARK = escuro;
 			} else {
-				LOGO_ESCURO = LOGO_CLARO;
+				LOGO_DARK = LOGO_LIGHT;
 			}
 
-			getID("header2").src = _isOnDarkMode() ? LOGO_ESCURO : LOGO_CLARO;
+			getID("header2").src = isOnDarkMode() ? LOGO_DARK : LOGO_LIGHT;
 			getID("header1").style.display = "none";
 			getID("header2").style.display = "block";
 			document.querySelectorAll(".header-text").forEach((element) => {
@@ -227,34 +227,34 @@ function _loadHeaderImageAndLogo(data = FIRESTORE_DATA) {
 	}
 }
 
-function _loadModules() {
-	_loadCompartilhamentoModule();
-	_loadResumoModule();
-	_loadGastosModule();
-	_loadTransportesModule();
-	_loadHospedagensModule();
-	_loadProgramacaoModule();
-	_loadDestinosModule();
-	_loadGaleriaModule();
+function loadModules() {
+	loadSharingModule();
+	loadSummaryModule();
+	loadExpensesModule();
+	loadTransportationModule();
+	loadAccommodationsModule();
+	loadItineraryScheduleModule();
+	loadDestinationsModule();
+	loadGalleryModule();
 
-	function _loadCompartilhamentoModule() {
+	function loadSharingModule() {
 		const share = getID("share");
 		if (navigator.share && window.location.hostname != "localhost") {
 			share.addEventListener("click", () => {
-				_compartilhar();
+				shareTrip();
 			});
 		} else {
 			share.style.display = "none";
 		}
 
-		function _compartilhar() {
+		function shareTrip() {
 			const title = FIRESTORE_DATA.titulo || document.title;
-			const text = _getCompartilhamentoText();
-			const url = _getPageURL();
+			const text = getSharingText();
+			const url = getPageURL();
 			navigator.share({ title, text, url });
 		}
 
-		function _getCompartilhamentoText() {
+		function getSharingText() {
 			switch (TYPE) {
 				case "listagens":
 					return translate("listing.share", { name: FIRESTORE_DATA.titulo });
@@ -266,8 +266,8 @@ function _loadModules() {
 				case "viagens":
 					return translate("trip.share", {
 						name: FIRESTORE_DATA.titulo,
-						start: INICIO.text,
-						end: FIM.text,
+						start: START_DATE.text,
+						end: END_DATE.text,
 					});
 				default:
 					return translate("messages.share");
@@ -275,9 +275,9 @@ function _loadModules() {
 		}
 	}
 
-	function _loadResumoModule() {
+	function loadSummaryModule() {
 		if (FIRESTORE_DATA.modulos?.resumo === true) {
-			CALL_SYNC.push(_loadResumo);
+			CALL_SYNC.push(_loadSummary);
 		} else {
 			getID("keypointsNav").innerHTML = "";
 			getID("keypoints").innerHTML = "";
@@ -285,7 +285,7 @@ function _loadModules() {
 		}
 	}
 
-	function _loadGastosModule() {
+	function loadExpensesModule() {
 		const ativo = FIRESTORE_DATA.modulos?.gastos === true;
 		localStorage.setItem(
 			"gastos",
@@ -293,7 +293,7 @@ function _loadModules() {
 		);
 
 		if (ativo) {
-			_openExpensesEmbed();
+			openExpensesEmbed();
 			ACTIVE_EMBEDS["expenses"] = true;
 		} else {
 			getID("expensesNav").innerHTML = "";
@@ -302,9 +302,9 @@ function _loadModules() {
 		}
 	}
 
-	function _loadTransportesModule() {
+	function loadTransportationModule() {
 		if (FIRESTORE_DATA.modulos?.transportes === true) {
-			CALL_SYNC.push(_loadTransporte);
+			CALL_SYNC.push(_loadTransportation);
 		} else {
 			getID("transportationNav").innerHTML = "";
 			getID("transportation").innerHTML = "";
@@ -312,9 +312,9 @@ function _loadModules() {
 		}
 	}
 
-	function _loadHospedagensModule() {
+	function loadAccommodationsModule() {
 		if (FIRESTORE_DATA.modulos?.hospedagens === true) {
-			CALL_SYNC.push(_loadHospedagens);
+			CALL_SYNC.push(_loadAccommodations);
 		} else {
 			getID("stayNav").innerHTML = "";
 			getID("stay").innerHTML = "";
@@ -322,9 +322,9 @@ function _loadModules() {
 		}
 	}
 
-	function _loadProgramacaoModule() {
+	function loadItineraryScheduleModule() {
 		if (FIRESTORE_DATA.modulos?.programacao === true) {
-			CALL_SYNC.push(_loadProgramacao);
+			CALL_SYNC.push(_loadItinerarySchedule);
 		} else {
 			getID("scheduleCalendarNav").innerHTML = "";
 			getID("scheduleCalendar").innerHTML = "";
@@ -332,68 +332,68 @@ function _loadModules() {
 		}
 	}
 
-	function _loadDestinosModule() {
+	function loadDestinationsModule() {
 		switch (TYPE) {
 			case "viagens":
 				if (
 					FIRESTORE_DATA.modulos?.destinos === true &&
 					FIRESTORE_DATA.destinos?.length > 0
 				) {
-					_loadDestinosDefault();
+					loadDestinationsDefault();
 				} else {
-					_disableDestinos();
+					disableDestinations();
 				}
 				break;
 			case "listagens":
-				_loadDestinosDefault();
+				loadDestinationsDefault();
 				break;
 			case "destinos":
-				_loadDestinosExclusive();
+				loadDestinationsExclusive();
 				break;
 		}
 
-		function _loadDestinosDefault() {
-			_loadDestinationsCustomSelect();
-			_loadDestinationsHTML(DESTINOS[0]);
+		function loadDestinationsDefault() {
+			loadDestinationsCustomSelect();
+			loadDestinationsHTML(DESTINOS[0]);
 
 			if (DESTINOS.length === 1) {
-				_setUniqueDestinoText();
-				DESTINO_ATIVO = DESTINOS[0].destinosID;
+				setUniqueDestinationText();
+				ACTIVE_DESTINATION = DESTINOS[0].destinosID;
 			}
 
-			CALL_SYNC.push(_loadDestinos);
+			CALL_SYNC.push(_loadDestinations);
 		}
 
-		function _loadDestinosExclusive() {
-			const destinosID = _getURLParam("d");
+		function loadDestinationsExclusive() {
+			const destinosID = getURLParam("d");
 			const destinos = FIRESTORE_DATA;
 
 			DESTINOS = [{ destinosID, destinos }];
-			DESTINO_ATIVO = destinosID;
+			ACTIVE_DESTINATION = destinosID;
 
 			getID("destinos-select").style.display = "none";
 
-			_setUniqueDestinoText();
-			_loadDestinationsHTML(DESTINOS[0]);
+			setUniqueDestinationText();
+			loadDestinationsHTML(DESTINOS[0]);
 
-			CALL_SYNC.push(_loadDestinos);
+			CALL_SYNC.push(_loadDestinations);
 		}
 
-		function _disableDestinos() {
+		function disableDestinations() {
 			getID("destinos").style.display = "none";
 			getID("destinosNav").innerHTML = "";
 		}
 
-		function _setUniqueDestinoText() {
+		function setUniqueDestinationText() {
 			const titulo = DESTINOS[0].destinos.titulo;
 			getID("dTitle").innerHTML = titulo;
 			getID("destinosNavText").innerHTML = titulo;
 		}
 	}
 
-	function _loadGaleriaModule() {
+	function loadGalleryModule() {
 		if (FIRESTORE_DATA.modulos?.galeria === true) {
-			CALL_SYNC.push(_loadGaleria);
+			CALL_SYNC.push(_loadGallery);
 		} else {
 			getID("portfolioM").innerHTML = "";
 			getID("portfolio").style.display = "none";
@@ -401,38 +401,38 @@ function _loadModules() {
 	}
 }
 
-function _setFirestoreData(firestoreData) {
+function setFirestoreData(firestoreData) {
 	FIRESTORE_DATA = firestoreData;
 	console.log("Firestore Database data loaded successfully");
-	_loadDocumentData();
+	loadDocumentData();
 }
 
-function _loadDocumentData() {
-	_prepareViewData();
-	_syncModules();
-	_loadViagemVisibility();
-	_adjustPortfolioHeight();
-	_refreshCategorias();
+function loadDocumentData() {
+	prepareViewData();
+	syncModules();
+	loadViewVisibility();
+	adjustPortfolioHeight();
+	refreshCategorias();
 
 	if (FIRESTORE_DATA.pin == "sensitive-only") {
-		_loadSensitiveReservations();
+		loadSensitiveReservations();
 	}
 
 	$("body").css("overflow", "auto");
 
 	if (!MESSAGE_MODAL_OPEN) {
 		setTimeout(() => {
-			_adjustCardsHeights();
-			_adjustPortfolioHeight();
-			_refreshCategorias();
+			adjustCardsHeights();
+			adjustPortfolioHeight();
+			refreshCategorias();
 		}, 1000);
 	}
 }
 
-function _loadProtectedData(firestoreData) {
-	_loadTitle(firestoreData);
-	_loadInicioFim(firestoreData);
-	_loadHeaderImageAndLogo(firestoreData);
-	_loadVisibility(firestoreData.cores);
-	_requestDocumentPin();
+function loadProtectedData(firestoreData) {
+	loadTitle(firestoreData);
+	loadInicioFim(firestoreData);
+	loadHeaderImageAndLogo(firestoreData);
+	loadVisibility(firestoreData.cores);
+	requestDocumentPin();
 }

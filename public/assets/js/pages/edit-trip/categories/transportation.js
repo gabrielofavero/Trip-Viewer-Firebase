@@ -1,6 +1,6 @@
-import { getTransportes } from '../../../core/config.js';
+import { getTransportations } from '../../../core/config.js';
 
-function _getTransporteObject(protectedReservationCodes = false) {
+function getTransportationObject(protectedReservationCodes = false) {
 	const result = {
 		dados: [],
 		visualizacao: getID("people-view").checked
@@ -9,22 +9,22 @@ function _getTransporteObject(protectedReservationCodes = false) {
 				? "leg-view"
 				: "simple-view",
 	};
-	for (const child of _getChildIDs("transporte-box")) {
-		const j = _getJ(child);
+	for (const child of getChildIDs("transporte-box")) {
+		const j = getJ(child);
 		result.dados.push({
 			datas: {
-				chegada: _formattedDateToDateObject(
+				chegada: formattedDateToDateObject(
 					getID(`chegada-${j}`).value,
 					getID(`chegada-horario-${j}`).value,
 				),
-				partida: _formattedDateToDateObject(
+				partida: formattedDateToDateObject(
 					getID(`partida-${j}`).value,
 					getID(`partida-horario-${j}`).value,
 				),
 			},
 			duracao: getID(`transporte-duracao-${j}`).value,
-			empresa: _getValueEmpresa(j),
-			id: _getOrCreateCategoriaID("transporte", j),
+			empresa: getCompanyValue(j),
+			id: getOrCreateCategoryID("transporte", j),
 			idaVolta: getID(`ida-${j}`).checked
 				? "ida"
 				: getID(`volta-${j}`).checked
@@ -47,10 +47,10 @@ function _getTransporteObject(protectedReservationCodes = false) {
 	return result;
 }
 
-function _getProtectedTransporteObject() {
+function getProtectedTransportationObject() {
 	const result = {};
-	for (const childID of _getChildIDs("transporte-box")) {
-		const j = _getJ(childID);
+	for (const childID of getChildIDs("transporte-box")) {
+		const j = getJ(childID);
 		const id = getID(`transporte-id-${j}`).value;
 		const reserva = getID(`reserva-transporte-${j}`).value;
 		const link = getID(`transporte-link-${j}`).value;
@@ -59,7 +59,7 @@ function _getProtectedTransporteObject() {
 	return result;
 }
 
-function _updateTransporteTitle(i) {
+function updateTransportationTitle(i) {
 	const partida = getID(`ponto-partida-${i}`).value;
 	const chegada = getID(`ponto-chegada-${i}`).value;
 
@@ -70,9 +70,9 @@ function _updateTransporteTitle(i) {
 	let texto = `${partida} → ${chegada}`;
 
 	if (getID("leg-view").checked) {
-		texto = `${_getTransporteTipo(i)}: ${texto}`;
+		texto = `${getTransportationType(i)}: ${texto}`;
 	} else {
-		const pessoa = _getPessoa(i);
+		const pessoa = getPerson(i);
 		if (getID("people-view").checked && pessoa) {
 			texto = `${pessoa}: ${texto}`;
 		}
@@ -81,7 +81,7 @@ function _updateTransporteTitle(i) {
 	getID(`transporte-title-${i}`).innerText = texto;
 }
 
-function _getTransporteTipo(i) {
+function getTransportationType(i) {
 	const ida = getID(`ida-${i}`).checked
 		? translate("trip.transportation.departure")
 		: "";
@@ -95,7 +95,7 @@ function _getTransporteTipo(i) {
 	return ida || durante || volta;
 }
 
-function _getPessoa(i) {
+function getPerson(i) {
 	const select = getID(`transporte-pessoa-select-${i}`).value;
 	const input = getID(`transporte-pessoa-${i}`).value;
 
@@ -106,8 +106,8 @@ function _getPessoa(i) {
 	return select;
 }
 
-function _loadTransporteVisibility(j) {
-	const empresasPorTipo = getTransportes().empresas;
+function loadTransportationVisibility(j) {
+	const empresasPorTipo = getTransportations().empresas;
 
 	const empresaSelect = getID(`empresa-select-${j}`);
 	const empresaInput = getID(`empresa-${j}`);
@@ -117,18 +117,18 @@ function _loadTransporteVisibility(j) {
 	const empresas = empresasPorTipo[tipo];
 
 	if (!empresas) {
-		_showOnlyEmpresaInput(empresaSelect, empresaInput);
+		showOnlyEmpresaInput(empresaSelect, empresaInput);
 		return;
 	}
 
-	_populateEmpresaSelect(empresaSelect, empresas);
-	_restorePreviousSelection(empresaSelect, previousValue);
+	populateEmpresaSelect(empresaSelect, empresas);
+	restorePreviousSelection(empresaSelect, previousValue);
 
 	empresaSelect.style.display = "block";
 	empresaInput.style.display =
 		empresaSelect.value === "outra" ? "block" : "none";
 
-	function _populateEmpresaSelect(select, empresas) {
+	function populateEmpresaSelect(select, empresas) {
 		let options = `<option value="selecione">${translate("labels.select")}</option>`;
 
 		for (const [value, label] of Object.entries(empresas)) {
@@ -139,7 +139,7 @@ function _loadTransporteVisibility(j) {
 		select.innerHTML = options;
 	}
 
-	function _restorePreviousSelection(select, value) {
+	function restorePreviousSelection(select, value) {
 		if (!value) return;
 
 		const exists = Array.from(select.options).some(
@@ -151,24 +151,24 @@ function _loadTransporteVisibility(j) {
 		}
 	}
 
-	function _showOnlyEmpresaInput(select, input) {
+	function showOnlyEmpresaInput(select, input) {
 		select.style.display = "none";
 		input.style.display = "block";
 	}
 }
 
-function _applyTransportationTypeVisualization(i) {
+function applyTransportationTypeVisualization(i) {
 	if (i) {
-		_apply(i);
+		apply(i);
 		return;
 	}
 
-	for (const child of _getChildIDs("transporte-box")) {
-		_apply(_getJ(child));
+	for (const child of getChildIDs("transporte-box")) {
+		apply(getJ(child));
 	}
 
-	function _apply(j) {
-		_updateTransporteTitle(j);
+	function apply(j) {
+		updateTransportationTitle(j);
 		getID(`idaVolta-box-${j}`).style.display = getID("leg-view").checked
 			? "block"
 			: "none";
@@ -177,14 +177,14 @@ function _applyTransportationTypeVisualization(i) {
 			: "none";
 
 		if (getID("people-view").checked) {
-			_setRequired(`transporte-pessoa-select-${j}`);
+			setRequired(`transporte-pessoa-select-${j}`);
 		} else {
-			_removeRequired(`transporte-pessoa-select-${j}`);
+			removeRequired(`transporte-pessoa-select-${j}`);
 		}
 	}
 }
 
-function _loadAutoDuration(i) {
+function loadAutoDuration(i) {
 	const div = getID(`transporte-duracao-${i}`);
 
 	const startDate = getID(`partida-${i}`).value;
@@ -196,12 +196,12 @@ function _loadAutoDuration(i) {
 	if (startDate != "" && startTime != "" && endDate != "" && endTime != "") {
 		const start = new Date(`${startDate}T${startTime}`);
 		const end = new Date(`${endDate}T${endTime}`);
-		div.value = _getTimeBetweenDates(start, end);
+		div.value = getTimeBetweenDates(start, end);
 	}
 }
 
 // Set Viagem
-function _getValueEmpresa(j) {
+function getCompanyValue(j) {
 	const divSelect = getID(`empresa-select-${j}`);
 	const divEmpresa = getID(`empresa-${j}`);
 
@@ -217,49 +217,49 @@ function _getValueEmpresa(j) {
 }
 
 // Listeners
-function _loadTransporteListeners(j) {
+function loadTransportationListeners(j) {
 	// Selects Dinâmicos
 	getID(`empresa-select-${j}`).addEventListener("change", () =>
-		_loadTransporteVisibility(j),
+		loadTransportationVisibility(j),
 	);
 	getID(`transporte-tipo-${j}`).addEventListener("change", () =>
-		_loadTransporteVisibility(j),
+		loadTransportationVisibility(j),
 	);
 
 	// Título Dinâmico
 	getID(`ponto-partida-${j}`).addEventListener("change", () =>
-		_updateTransporteTitle(j),
+		updateTransportationTitle(j),
 	);
 	getID(`ponto-chegada-${j}`).addEventListener("change", () =>
-		_updateTransporteTitle(j),
+		updateTransportationTitle(j),
 	);
-	getID(`ida-${j}`).addEventListener("change", () => _updateTransporteTitle(j));
+	getID(`ida-${j}`).addEventListener("change", () => updateTransportationTitle(j));
 	getID(`durante-${j}`).addEventListener("change", () =>
-		_updateTransporteTitle(j),
+		updateTransportationTitle(j),
 	);
 	getID(`volta-${j}`).addEventListener("change", () =>
-		_updateTransporteTitle(j),
+		updateTransportationTitle(j),
 	);
 
 	// Cálculo Automático da Duração do Trajeto
-	getID(`partida-${j}`).addEventListener("change", () => _loadAutoDuration(j));
+	getID(`partida-${j}`).addEventListener("change", () => loadAutoDuration(j));
 	getID(`partida-horario-${j}`).addEventListener("change", () =>
-		_loadAutoDuration(j),
+		loadAutoDuration(j),
 	);
-	getID(`chegada-${j}`).addEventListener("change", () => _loadAutoDuration(j));
+	getID(`chegada-${j}`).addEventListener("change", () => loadAutoDuration(j));
 	getID(`chegada-horario-${j}`).addEventListener("change", () =>
-		_loadAutoDuration(j),
+		loadAutoDuration(j),
 	);
 
 	// Validação de Link
 	getID(`transporte-link-${j}`).addEventListener("change", () =>
-		_validateLink(`transporte-link-${j}`),
+		validateLink(`transporte-link-${j}`),
 	);
 }
 
-function _transporteAdicionarListenerAction() {
-	_closeAccordions("transporte");
-	_addTransporte();
-	_openLastAccordion("transporte");
-	_buildDS("transporte-pessoa");
+function transportationAddListenerAction() {
+	closeAccordions("transporte");
+	addTransportation();
+	openLastAccordion("transporte");
+	buildDS("transporte-pessoa");
 }

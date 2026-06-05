@@ -1,16 +1,16 @@
 import {
-	_filterMoedas,
-	_sortMoedas,
-	_convertMoeda,
-	_canConvert,
-	_getMoedaSymbol,
-	_formatMoeda,
-	_loadMoedasObject,
+	filterCurrencies,
+	sortCurrencies,
+	convertCurrency,
+	canConvert,
+	getCurrencySymbol,
+	formatCurrency,
+	loadCurrenciesObject,
 } from '../../../models/expense.js';
 
-var MOEDA_PADRAO;
+var DEFAULT_CURRENCY;
 var MOEDA_CONVERSAO = {};
-var MOEDA_ATUAL;
+var CURRENT_CURRENCY;
 
 var MOEDAS = {
 	resumo: [],
@@ -19,51 +19,51 @@ var MOEDAS = {
 };
 
 // BACKWARD COMPAT: attach to window during migration
-window._filterMoedas = _filterMoedas;
-window._sortMoedas = _sortMoedas;
-window._convertMoeda = _convertMoeda;
-window._canConvert = _canConvert;
-window._getMoedaSymbol = _getMoedaSymbol;
-window._formatMoeda = _formatMoeda;
-window._loadMoedasObject = _loadMoedasObject;
+window.filterCurrencies = filterCurrencies;
+window.sortCurrencies = sortCurrencies;
+window.convertCurrency = convertCurrency;
+window.canConvert = canConvert;
+window.getCurrencySymbol = getCurrencySymbol;
+window.formatCurrency = formatCurrency;
+window.loadCurrenciesObject = loadCurrenciesObject;
 
-async function _loadMoedas() {
-	MOEDA_PADRAO = GASTOS.moeda;
+async function loadCurrencies() {
+	DEFAULT_CURRENCY = GASTOS.moeda;
 
-	_loadMoedasObject();
+	loadCurrenciesObject();
 
 	switch (MOEDAS.resumo.length) {
 		case 0:
-			MOEDA_ATUAL = MOEDAS.resumo.includes(MOEDA_PADRAO)
-				? MOEDA_PADRAO
+			CURRENT_CURRENCY = MOEDAS.resumo.includes(DEFAULT_CURRENCY)
+				? DEFAULT_CURRENCY
 				: MOEDAS.resumo[0];
 			getID("tab-moedas").style.display = "none";
 			break;
 		case 1:
-			MOEDA_ATUAL = MOEDAS.resumo[0];
+			CURRENT_CURRENCY = MOEDAS.resumo[0];
 		default:
-			MOEDA_ATUAL = MOEDAS.resumo.includes(MOEDA_PADRAO)
-				? MOEDA_PADRAO
+			CURRENT_CURRENCY = MOEDAS.resumo.includes(DEFAULT_CURRENCY)
+				? DEFAULT_CURRENCY
 				: MOEDAS.resumo[0];
-			await _loadMoedaConversao();
-			_loadMoedasTab();
+			await loadCurrencyConversion();
+			loadCurrenciesTab();
 	}
 }
 
-async function _loadMoedaConversao() {
+async function loadCurrencyConversion() {
 	const comparacoes = [];
 	const chaves = [];
 	for (const moeda of MOEDAS.resumo) {
-		if (moeda !== MOEDA_PADRAO) {
-			comparacoes.push(`${moeda}-${MOEDA_PADRAO}`);
-			chaves.push(moeda + MOEDA_PADRAO);
+		if (moeda !== DEFAULT_CURRENCY) {
+			comparacoes.push(`${moeda}-${DEFAULT_CURRENCY}`);
+			chaves.push(moeda + DEFAULT_CURRENCY);
 		}
 	}
 	if (comparacoes.length === 0) {
 		return;
 	}
 	const url = `https://economia.awesomeapi.com.br/last/${comparacoes.join(",")}`;
-	const data = await _fetchConversoes(url);
+	const data = await fetchConversoes(url);
 	if (data) {
 		for (const chave of chaves) {
 			MOEDA_CONVERSAO[chave] = data[chave].bid;
@@ -71,7 +71,7 @@ async function _loadMoedaConversao() {
 	}
 }
 
-async function _fetchConversoes(url) {
+async function fetchConversoes(url) {
 	try {
 		const response = await fetch(url);
 		if (!response.ok) {
@@ -79,32 +79,32 @@ async function _fetchConversoes(url) {
 				`Network issue while trying to fetch currency information:`,
 			);
 			console.error(response);
-			console.warn(`Using default currency ${MOEDA_PADRAO}`);
+			console.warn(`Using default currency ${DEFAULT_CURRENCY}`);
 		}
 		const data = await response.json();
 		return data;
 	} catch (error) {
 		console.error(error);
-		console.warn(`Using default currency ${MOEDA_PADRAO}`);
+		console.warn(`Using default currency ${DEFAULT_CURRENCY}`);
 	}
 }
 
-function _loadMoedasTab() {
+function loadCurrenciesTab() {
 	const moedasTab = getID("tab-moedas");
 	moedasTab.innerHTML = "";
 	moedasTab.style.display = MOEDAS.resumo.length > 1 ? "" : "none";
 
 	for (let j = 1; j <= MOEDAS.resumo.length; j++) {
-		const checked = MOEDAS.resumo[j - 1] === MOEDA_ATUAL ? "checked" : "";
+		const checked = MOEDAS.resumo[j - 1] === CURRENT_CURRENCY ? "checked" : "";
 		moedasTab.innerHTML += `<input type="radio" id="radio-moeda-${j}" name="tabs-moedas" ${checked} />`;
 		moedasTab.innerHTML += `<label class="tab-mini" for="radio-moeda-${j}">${MOEDAS.resumo[j - 1]}</label>`;
 	}
 
 	moedasTab.innerHTML += '<span class="glider-mini"></span>';
 
-	const childs = _getChildIDs("tab-moedas");
+	const childs = getChildIDs("tab-moedas");
 	for (let i = 0; i < childs.length; i++) {
-		_setCSSRule(
+		setCSSRule(
 			`input[id="${childs[i]}"]:checked~.glider-mini`,
 			"transform",
 			`translateX(${i * 100}%)`,
@@ -113,9 +113,9 @@ function _loadMoedasTab() {
 		const radio = getID(`radio-moeda-${i + 1}`);
 		radio.addEventListener("change", () => {
 			if (radio.checked) {
-				MOEDA_ATUAL = MOEDAS.resumo[i];
-				_applyGastos();
-				_setTabListeners();
+				CURRENT_CURRENCY = MOEDAS.resumo[i];
+				applyExpenses();
+				setTabListeners();
 			}
 		});
 	}

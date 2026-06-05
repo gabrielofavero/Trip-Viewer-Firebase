@@ -4,12 +4,12 @@ var LOADING_TIMEOUT_TRIGGERED = false;
 
 // Loading Screen
 
-function _startLoadingScreen({
+function startLoadingScreen({
 	useTimer = false,
 	adjustLoadables = true,
 } = {}) {
 	if (useTimer) {
-		_startLoadingTimer();
+		startLoadingTimer();
 	}
 	const preloader = getID("preloader");
 	if (preloader) {
@@ -19,13 +19,13 @@ function _startLoadingScreen({
 			});
 		}
 		preloader.style.display = "block";
-		_disableScroll();
+		disableScroll();
 	}
 }
 
-function _stopLoadingScreen({ adjustLoadables = true } = {}) {
+function stopLoadingScreen({ adjustLoadables = true } = {}) {
 	const wasTimeoutTriggered = LOADING_TIMEOUT_TRIGGERED;
-	_stopLoadingTimer();
+	stopLoadingTimer();
 	sessionStorage.setItem("firstLoad", "true");
 	if (!MESSAGE_MODAL_OPEN) {
 		const preloader = getID("preloader");
@@ -36,12 +36,12 @@ function _stopLoadingScreen({ adjustLoadables = true } = {}) {
 				});
 			}
 			preloader.style.display = "none";
-			_enableScroll();
+			enableScroll();
 		}
 	} else if (wasTimeoutTriggered) {
 		// Timeout error was shown but loading has since completed.
 		// Dismiss the timeout dialog automatically so the user is not stuck.
-		_closeMessage();
+		closeMessage();
 		// _closeMessage already calls _stopLoadingScreen recursively;
 		// the recursive call will take the !MESSAGE_MODAL_OPEN branch above.
 	} else {
@@ -49,33 +49,33 @@ function _stopLoadingScreen({ adjustLoadables = true } = {}) {
 	}
 }
 
-function _isAlreadyLoading() {
+function isAlreadyLoading() {
 	return getID("preloader").style.display === "block";
 }
 
 // Loading Timer
-function _startLoadingTimer() {
+function startLoadingTimer() {
 	if (LOADING_TIMER == null && MESSAGE_MODAL_OPEN == false) {
 		LOADING_SECONDS = 0;
 		LOADING_TIMER = setInterval(() => {
 			const firstLoad = sessionStorage.getItem("firstLoad");
 			LOADING_SECONDS++;
 			if (LOADING_SECONDS >= 10 && (firstLoad == "true" || firstLoad == null)) {
-				_stopLoadingTimer();
+				stopLoadingTimer();
 				sessionStorage.setItem("firstLoad", "false");
 				window.location.reload();
 			} else if (LOADING_SECONDS >= 10 && firstLoad == "false") {
-				_stopLoadingTimer();
+				stopLoadingTimer();
 				sessionStorage.setItem("firstLoad", "true");
 				const error = new Error(translate("messages.errors.loading_timeout"));
-				_displayError(error, true);
+				displayError(error, true);
 				LOADING_TIMEOUT_TRIGGERED = true;
 			}
 		}, 1000);
 	}
 }
 
-function _stopLoadingTimer() {
+function stopLoadingTimer() {
 	if (LOADING_TIMER) {
 		clearInterval(LOADING_TIMER);
 		LOADING_TIMER = null;

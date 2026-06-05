@@ -1,27 +1,27 @@
-var PROGRAMACAO_DESTINOS = {};
+var SCHEDULE_DESTINATIONS = {};
 var PILLS_ACTIONS = {};
 var PILLS_INDEX = {};
 
-function _loadProgramacao() {
-	_loadProgramacaoDestinos();
-	_loadCalendar();
-	_loadProgramacaoPills();
-	_loadProgramacaoHojeButton();
+function loadItinerarySchedule() {
+	loadScheduleDestinations();
+	loadCalendar();
+	loadSchedulePills();
+	loadScheduleTodayButton();
 
-	getID("full-itinerary").addEventListener("click", _openFullItinerary);
+	getID("full-itinerary").addEventListener("click", openFullItinerary);
 }
 
-function _loadProgramacaoDestinos() {
+function loadScheduleDestinations() {
 	for (const programacao of FIRESTORE_DATA.programacoes) {
-		const key = _dateObjectToKey(programacao.data);
-		PROGRAMACAO_DESTINOS[key] = programacao.destinosIDs;
+		const key = dateObjectToKey(programacao.data);
+		SCHEDULE_DESTINATIONS[key] = programacao.destinosIDs;
 	}
 }
 
-function _getUniqueDestinosFromProgramacao() {
+function getUniqueDestinationsFromSchedule() {
 	const result = [];
-	for (const key in PROGRAMACAO_DESTINOS) {
-		const destinos = PROGRAMACAO_DESTINOS[key];
+	for (const key in SCHEDULE_DESTINATIONS) {
+		const destinos = SCHEDULE_DESTINATIONS[key];
 		for (const destino of destinos) {
 			if (!result.includes(destino.destinosID)) {
 				result.push(destino.destinosID);
@@ -32,8 +32,8 @@ function _getUniqueDestinosFromProgramacao() {
 }
 
 // Pills
-function _loadProgramacaoPills(multipleColors = true) {
-	const destinos = _getUniqueDestinosFromProgramacao();
+function loadSchedulePills(multipleColors = true) {
+	const destinos = getUniqueDestinationsFromSchedule();
 	if (destinos.length > 1) {
 		const pillBox = getID("pill-box");
 		pillBox.style.display = "";
@@ -48,7 +48,7 @@ function _loadProgramacaoPills(multipleColors = true) {
 			if (!destino) continue;
 
 			const circleClass = multipleColors
-				? `pill-circle pill-circle-${_getColorNameFromOptions(i)}`
+				? `pill-circle pill-circle-${getColorNameFromOptions(i)}`
 				: `pill-circle pill-circle-default`;
 			innerHTML += `<div class="pill" id="pill-${destinoID}">
                             <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destino.destinos.titulo}</span>
@@ -59,26 +59,26 @@ function _loadProgramacaoPills(multipleColors = true) {
 
 		for (let i = 0; i < destinos.length; i++) {
 			const colorIndex = multipleColors ? i : -1;
-			_addPillListeners(destinos[i], colorIndex);
+			addPillListeners(destinos[i], colorIndex);
 			PILLS_INDEX[destinos[i]] = colorIndex;
 		}
 	}
 }
 
-function _loadPill(destinoID, action, colorIndex = -1) {
+function loadPill(destinoID, action, colorIndex = -1) {
 	const lastAction = PILLS_ACTIONS[destinoID];
 	if (!lastAction) {
 		if (action === "click" || action === "mouseenter") {
 			PILLS_ACTIONS[destinoID] = action;
-			_activatePill(destinoID, colorIndex);
+			activatePill(destinoID, colorIndex);
 		}
 	} else if (lastAction === "click") {
 		if (action === "click") {
-			_deactivatePill(destinoID, colorIndex);
+			deactivatePill(destinoID, colorIndex);
 		}
 	} else if (lastAction === "mouseenter") {
 		if (action === "mouseleave") {
-			_deactivatePill(destinoID, colorIndex);
+			deactivatePill(destinoID, colorIndex);
 		}
 		if (action === "click") {
 			PILLS_ACTIONS[destinoID] = action;
@@ -86,22 +86,22 @@ function _loadPill(destinoID, action, colorIndex = -1) {
 	} else if (lastAction === "mouseleave") {
 		if (action === "click" || action === "mouseenter") {
 			PILLS_ACTIONS[destinoID] = action;
-			_activatePill();
+			activatePill();
 		}
 	}
 }
 
-function _refreshPills() {
+function refreshPills() {
 	for (const destinoID in PILLS_ACTIONS) {
 		const action = PILLS_ACTIONS[destinoID];
 		const index = PILLS_INDEX[destinoID];
-		_deactivatePill(destinoID, index);
-		_loadPill(destinoID, action, index);
+		deactivatePill(destinoID, index);
+		loadPill(destinoID, action, index);
 	}
 }
 
-function _activatePill(destinoID, colorIndex = -1) {
-	const pillClasses = _getPillClasses(colorIndex);
+function activatePill(destinoID, colorIndex = -1) {
+	const pillClasses = getPillClasses(colorIndex);
 	getID(`pill-${destinoID}`).classList.add("active-pill");
 	getID(`pill-circle-${destinoID}`).classList.add(pillClasses.activeCircle);
 	for (const calendarDay of document.getElementsByClassName(
@@ -111,8 +111,8 @@ function _activatePill(destinoID, colorIndex = -1) {
 	}
 }
 
-function _deactivatePill(destinoID, colorIndex = -1) {
-	const pillClasses = _getPillClasses(colorIndex);
+function deactivatePill(destinoID, colorIndex = -1) {
+	const pillClasses = getPillClasses(colorIndex);
 	getID(`pill-${destinoID}`).classList.remove("active-pill");
 	getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.pillCircle);
 	getID(`pill-circle-${destinoID}`).classList.remove(pillClasses.activeCircle);
@@ -124,26 +124,26 @@ function _deactivatePill(destinoID, colorIndex = -1) {
 	delete PILLS_ACTIONS[destinoID];
 }
 
-function _addPillListeners(destinoID, colorIndex) {
+function addPillListeners(destinoID, colorIndex) {
 	getID(`pill-${destinoID}`).addEventListener("mouseenter", function () {
-		_loadPill(destinoID, "mouseenter", colorIndex);
+		loadPill(destinoID, "mouseenter", colorIndex);
 	});
 
 	getID(`pill-${destinoID}`).addEventListener("mouseleave", function () {
-		_loadPill(destinoID, "mouseleave", colorIndex);
+		loadPill(destinoID, "mouseleave", colorIndex);
 	});
 
 	getID(`pill-${destinoID}`).addEventListener("click", function () {
-		_loadPill(destinoID, "click", colorIndex);
+		loadPill(destinoID, "click", colorIndex);
 	});
 }
 
-function _getPillClasses(colorIndex) {
+function getPillClasses(colorIndex) {
 	let activeCircle = "active-circle";
 	let activeCalendar = "active-calendar";
 
 	if (colorIndex >= 0) {
-		const colorName = _getColorNameFromOptions(colorIndex);
+		const colorName = getColorNameFromOptions(colorIndex);
 		pillCircle = `pill-circle-${colorName}`;
 		activeCircle = `active-circle-${colorName}`;
 		activeCalendar = `active-calendar-${colorName}`;
@@ -152,25 +152,25 @@ function _getPillClasses(colorIndex) {
 }
 
 // Programação de Hoje
-function _loadProgramacaoHojeButton() {
-	const hoje = _convertFromDateObject(_getTodayDateObject());
+function loadScheduleTodayButton() {
+	const hoje = convertFromDateObject(getTodayDateObject());
 
-	if (hoje >= INICIO.date && hoje <= FIM.date) {
+	if (hoje >= START_DATE.date && hoje <= END_DATE.date) {
 		getID("programacao-hoje").style.display = "";
 		getID("programacao-hoje").addEventListener("click", function () {
-			const hojeText = _getDateString(hoje, "dd/mm/yyyy");
+			const hojeText = getDateString(hoje, "dd/mm/yyyy");
 			const programacaoText =
-				PROGRAMACAO_ATUAL_DATA.dia.toString().padStart(2, "0") +
+				CURRENT_SCHEDULE_DATE.dia.toString().padStart(2, "0") +
 				"/" +
-				PROGRAMACAO_ATUAL_DATA.mes.toString().padStart(2, "0") +
+				CURRENT_SCHEDULE_DATE.mes.toString().padStart(2, "0") +
 				"/" +
-				PROGRAMACAO_ATUAL_DATA.ano;
+				CURRENT_SCHEDULE_DATE.ano;
 
 			if (
-				!PROGRAMACAO_ABERTA ||
-				(PROGRAMACAO_ABERTA && hojeText != programacaoText)
+				!SCHEDULE_OPEN ||
+				(SCHEDULE_OPEN && hojeText != programacaoText)
 			) {
-				_loadCalendarItem(
+				loadCalendarItem(
 					hoje.getUTCDate(),
 					hoje.getUTCMonth() + 1,
 					hoje.getUTCFullYear(),
@@ -184,7 +184,7 @@ function _loadProgramacaoHojeButton() {
 }
 
 // Programação Completa
-function _openFullItinerary() {
-	const url = `itinerary?v=${DOCUMENT_ID}&visibility=${_getVisibility()}`;
-	_openViewEmbed(url);
+function openFullItinerary() {
+	const url = `itinerary?v=${DOCUMENT_ID}&visibility=${getVisibility()}`;
+	openViewEmbed(url);
 }

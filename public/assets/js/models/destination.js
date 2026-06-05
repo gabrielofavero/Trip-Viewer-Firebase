@@ -2,11 +2,11 @@
 // Pure data transformation functions for destination data
 // Extracted from: destination/categories.js, destination/support/sort-and-filter/
 
-import { getMoedas } from '../core/config.js';
+import { getCurrencies } from '../core/config.js';
 
 // ======= Destination Value Formatting =======
 
-export function _getNotaTranslation(nota) {
+export function getNotaTranslation(nota) {
 	switch (nota) {
 		case "5":
 		case "4":
@@ -19,7 +19,7 @@ export function _getNotaTranslation(nota) {
 	}
 }
 
-export function _getValorValue(item, valores, moeda) {
+export function getValorValue(item, valores, moeda) {
 	switch (item.valor) {
 		case "default":
 			return translate("destination.price.default");
@@ -32,27 +32,27 @@ export function _getValorValue(item, valores, moeda) {
 			return valores[item.valor];
 		default:
 			if (item.valor) {
-				return _convertCustomValor(item.valor, moeda);
+				return convertCustomValor(item.valor, moeda);
 			}
 			return translate("destination.price.default");
 	}
 }
 
-export function _convertCustomValor(valor, moeda) {
+export function convertCustomValor(valor, moeda) {
 	if (isNaN(valor) || (!isNaN(valor) && !moeda)) {
 		return valor;
 	} else return `${moeda}${valor}`;
 }
 
-export function _getDescricaoValue(item) {
-	const lang = _getUserLanguage();
+export function getDescricaoValue(item) {
+	const lang = getUserLanguage();
 	return item.descricao?.[lang] || "";
 }
 
 // ======= Price Bucket Logic =======
 
-export function _getPriceBucket(value) {
-	const moedas = getMoedas();
+export function getPriceBucket(value) {
+	const moedas = getCurrencies();
 	const range = moedas.escala_numerica[FIRESTORE_DESTINOS_DATA.moeda];
 	if (isNaN(value)) return "default";
 	if (value === 0) return "-";
@@ -63,7 +63,7 @@ export function _getPriceBucket(value) {
 	return "default";
 }
 
-export function _parsePriceNumber(str) {
+export function parsePriceNumber(str) {
 	if (!str) return NaN;
 	if (String(str).trim() === "-") return 0;
 
@@ -75,18 +75,18 @@ export function _parsePriceNumber(str) {
 	return Number(cleaned);
 }
 
-export function _normalizePriceBucket(value) {
+export function normalizePriceBucket(value) {
 	const bucketValues = new Set(["-", "$", "$$", "$$$", "$$$$", "default"]);
 
 	if (bucketValues.has(value)) {
 		return value;
 	}
 
-	const bucket = _findPriceBucket(value);
+	const bucket = findPriceBucket(value);
 	return bucket.bucket;
 }
 
-export function _buildPriceBuckets(prices) {
+export function buildPriceBuckets(prices) {
 	const symbolicBuckets = new Set(["-", "$", "$$", "$$$", "$$$$", "default"]);
 	const pricesArray = Array.from(prices);
 	return pricesArray
@@ -99,12 +99,12 @@ export function _buildPriceBuckets(prices) {
 				};
 			}
 
-			const value = _parsePriceNumber(raw);
+			const value = parsePriceNumber(raw);
 
 			return {
 				raw,
 				value,
-				bucket: _getPriceBucket(value),
+				bucket: getPriceBucket(value),
 			};
 		})
 		.sort(
@@ -114,22 +114,22 @@ export function _buildPriceBuckets(prices) {
 		);
 }
 
-export function _findPriceBucket(raw) {
-	const buckets = _getPriceBuckets();
+export function findPriceBucket(raw) {
+	const buckets = getPriceBuckets();
 
 	const found = buckets.find((b) => b.raw === raw);
 	if (found) return found;
 
-	const value = _parsePriceNumber(raw);
+	const value = parsePriceNumber(raw);
 
 	return {
 		raw,
 		value,
-		bucket: _getPriceBucket(value),
+		bucket: getPriceBucket(value),
 	};
 }
 
-export function _getPriceLabel(price) {
+export function getPriceLabel(price) {
 	switch (price) {
 		case "default":
 			return translate("destination.price.default");
@@ -140,8 +140,8 @@ export function _getPriceLabel(price) {
 	}
 }
 
-export function _isPriceInBucketRange(filter, raw) {
-	const rawBucket = _normalizePriceBucket(raw);
+export function isPriceInBucketRange(filter, raw) {
+	const rawBucket = normalizePriceBucket(raw);
 	if (rawBucket === "default") return true;
 
 	const rawRank = FILTER_SORT_KEYS_ORDER.prices.indexOf(rawBucket);

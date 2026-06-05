@@ -1,7 +1,7 @@
-function _loadListenersIndex() {
+function loadListenersIndex() {
 	// Login
 	getID("login-button").addEventListener("click", function () {
-		_signInWithEmailAndPassword();
+		signInWithEmailAndPassword();
 	});
 
 	// Category tabs
@@ -32,30 +32,30 @@ function _loadListenersIndex() {
 	});
 
 	// New item buttons
-	getID("new-trip-btn").addEventListener("click", function () { _viagensNovo(); });
-	getID("new-dest-btn").addEventListener("click", function () { _destinosNovo(); });
-	getID("new-list-btn").addEventListener("click", function () { _listagensNovo(); });
+	getID("new-trip-btn").addEventListener("click", function () { viagensNovo(); });
+	getID("new-dest-btn").addEventListener("click", function () { destinosNovo(); });
+	getID("new-list-btn").addEventListener("click", function () { listagensNovo(); });
 
 	// Delete account
 	getID("apagar").addEventListener("click", async function () {
-		_startLoadingScreen();
-		await _deleteAccount();
-		_closeModal();
-		_signOut();
-		_stopLoadingScreen();
+		startLoadingScreen();
+		await deleteAccount();
+		closeModal();
+		signOut();
+		stopLoadingScreen();
 	});
 
 	// Restore file input
 	document.getElementById("restore-account-input")
 		.addEventListener("change", function (event) {
-			_restoreOnFileSelectionAction(event);
+			restoreOnFileSelectionAction(event);
 		});
 }
 
-function _openModal() {
+function openModal() {
 	getID("modal").style.display = "flex";
 }
 
-function _closeModal() {
+function closeModal() {
 	getID("modal").style.display = "none";
 }

@@ -1,35 +1,35 @@
 var ADJUST_HEIGHT_CARDS = [];
 
-function _adjustCardsHeightsListener() {
+function adjustCardsHeightsListener() {
 	window.addEventListener("resize", function () {
-		_adjustCardsHeights();
+		adjustCardsHeights();
 
 		const visualizacao = FIRESTORE_DATA?.transportes?.visualizacao;
 		if (visualizacao && visualizacao != "simple-view") {
-			_adjustTransporteBoxContainerHeight();
+			adjustTransportationBoxContainerHeight();
 		}
 	});
 }
 
-function _adjustCardsHeights(type) {
+function adjustCardsHeights(type) {
 	const cards = type
 		? ADJUST_HEIGHT_CARDS.filter((card) => card.includes(type))
 		: ADJUST_HEIGHT_CARDS;
 	if (cards.length > 0) {
 		for (const card of cards) {
-			_adjustSingleCardsHeights(card);
+			adjustSingleCardsHeights(card);
 		}
 	}
 }
 
-function _adjustSingleCardsHeights(tipo, second = false) {
+function adjustSingleCardsHeights(tipo, second = false) {
 	let innerID = tipo === "hospedagens" && !second ? "nome" : "box";
 
-	const sliders = _getChildIDs(`${tipo}-wrapper`);
+	const sliders = getChildIDs(`${tipo}-wrapper`);
 	let maxHeight = 0;
 
 	for (const slider of sliders) {
-		const j = _getJ(slider);
+		const j = getJ(slider);
 		const box = getID(`${tipo}-${innerID}-${j}`);
 
 		if (box) {
@@ -42,7 +42,7 @@ function _adjustSingleCardsHeights(tipo, second = false) {
 	}
 
 	for (const slider of sliders) {
-		const j = _getJ(slider);
+		const j = getJ(slider);
 		const div = getID(`${tipo}-${innerID}-${j}`);
 		if (div) {
 			div.style.height = `${maxHeight}px`;
@@ -50,25 +50,25 @@ function _adjustSingleCardsHeights(tipo, second = false) {
 	}
 
 	if (tipo === "hospedagens" && !second) {
-		_adjustSingleCardsHeights("hospedagens", true);
+		adjustSingleCardsHeights("hospedagens", true);
 	}
 }
 
-function _loadViagemVisibility() {
+function loadViewVisibility() {
 	if (FIRESTORE_DATA.visibilidade) {
 		const nightMode = getID("night-mode");
 
 		if (!FIRESTORE_DATA.visibilidade.claro) {
 			nightMode.style.display = "none";
-			_loadDarkMode();
+			loadDarkMode();
 		} else if (!FIRESTORE_DATA.visibilidade.escuro) {
 			nightMode.style.display = "none";
-			_loadLightMode();
+			loadLightMode();
 		}
 	}
 }
 
-function _mainView() {
+function mainView() {
 	"use strict";
 	$("body").css("overflow", "hidden");
 
@@ -241,8 +241,8 @@ function _mainView() {
 	});
 }
 
-function _loadViagemCustomVisibilityRules() {
+function loadViewCustomVisibilityRules() {
 	if (ACTIVE_EMBEDS["expenses"] === true) {
-		_sendToExpenses("visibility", _getVisibility());
+		sendToExpenses("visibility", getVisibility());
 	}
 }

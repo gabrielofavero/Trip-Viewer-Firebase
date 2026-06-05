@@ -2,21 +2,21 @@
 // Pure data transformation functions for expenses (currency conversion, aggregation, chart data)
 // Extracted from: expenses-converted.js, support/currency.js, support/data.js
 
-import { getMoedas, getCores } from '../core/config.js';
+import { getCurrencies, getCores } from '../core/config.js';
 
 // ======= Currency Filtering & Sorting =======
 
-export function _filterMoedas(arr) {
+export function filterCurrencies(arr) {
 	return arr.filter(
 		(moeda, index, self) => self.indexOf(moeda) === index && moeda,
 	);
 }
 
-export function _sortMoedas(arr) {
+export function sortCurrencies(arr) {
 	return arr.sort((a, b) => {
-		if (a === MOEDA_PADRAO) {
+		if (a === DEFAULT_CURRENCY) {
 			return -1;
-		} else if (b === MOEDA_PADRAO) {
+		} else if (b === DEFAULT_CURRENCY) {
 			return 1;
 		} else {
 			return 0;
@@ -26,7 +26,7 @@ export function _sortMoedas(arr) {
 
 // ======= Currency Conversion =======
 
-export function _convertMoeda(from, to, valor) {
+export function convertCurrency(from, to, valor) {
 	if (from === to) {
 		return valor;
 	}
@@ -39,11 +39,11 @@ export function _convertMoeda(from, to, valor) {
 		return valor / MOEDA_CONVERSAO[to + from];
 	} else {
 		console.error(`Conversion error: from ${valor} ${from} to ? ${to}`);
-		_displayError(translate("messages.errors.unknown"));
+		displayError(translate("messages.errors.unknown"));
 	}
 }
 
-export function _canConvert(moedas) {
+export function canConvert(moedas) {
 	if (moedas.length == 1) {
 		return true;
 	}
@@ -61,8 +61,8 @@ export function _canConvert(moedas) {
 	return true;
 }
 
-export function _getMoedaSymbol(moeda) {
-	const moedas = getMoedas();
+export function getCurrencySymbol(moeda) {
+	const moedas = getCurrencies();
 	if (moedas.simbolos[moeda]) {
 		return moedas.simbolos[moeda];
 	} else {
@@ -70,32 +70,32 @@ export function _getMoedaSymbol(moeda) {
 	}
 }
 
-export function _formatMoeda(moedaFloat, includeSymbol = false) {
+export function formatCurrency(moedaFloat, includeSymbol = false) {
 	const result = new Intl.NumberFormat("pt-BR", {
 		style: "decimal",
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
 	}).format(moedaFloat);
 
-	return includeSymbol ? `${_getMoedaSymbol(MOEDA_ATUAL)} ${result}` : result;
+	return includeSymbol ? `${getCurrencySymbol(CURRENT_CURRENCY)} ${result}` : result;
 }
 
 // ======= Currency Loading =======
 
-export function _loadMoedasObject() {
+export function loadCurrenciesObject() {
 	if (GASTOS.gastosPrevios.length > 0 || GASTOS.gastosDurante.length > 0) {
 		let moedasPrevias = [];
 		let moedasDurante = [];
 
 		if (GASTOS.gastosPrevios.length > 0) {
-			moedasPrevias = _filterMoedas(
+			moedasPrevias = filterCurrencies(
 				GASTOS.gastosPrevios.map((gasto) => gasto.moeda),
 			);
 			MOEDAS.gastosPrevios = moedasPrevias;
 		}
 
 		if (GASTOS.gastosDurante.length > 0) {
-			moedasDurante = _filterMoedas(
+			moedasDurante = filterCurrencies(
 				GASTOS.gastosDurante.map((gasto) => gasto.moeda),
 			);
 			MOEDAS.gastosDurante = moedasDurante;
@@ -103,33 +103,33 @@ export function _loadMoedasObject() {
 
 		MOEDAS.resumo = [...new Set([...moedasPrevias, ...moedasDurante])];
 
-		MOEDAS.resumo = _sortMoedas(MOEDAS.resumo);
-		MOEDAS.gastosPrevios = _sortMoedas(MOEDAS.gastosPrevios);
-		MOEDAS.gastosDurante = _sortMoedas(MOEDAS.gastosDurante);
+		MOEDAS.resumo = sortCurrencies(MOEDAS.resumo);
+		MOEDAS.gastosPrevios = sortCurrencies(MOEDAS.gastosPrevios);
+		MOEDAS.gastosDurante = sortCurrencies(MOEDAS.gastosDurante);
 	}
 }
 
 // ======= Expense Conversion =======
 
-export function _loadGastosConvertidos() {
-	_processGastosConvertidos("gastosDurante");
-	_processGastosConvertidos("gastosPrevios");
-	_processGastosConvertidosViajantes();
+export function loadConvertedExpenses() {
+	processConvertedExpenses("gastosDurante");
+	processConvertedExpenses("gastosPrevios");
+	processConvertedTravelerExpenses();
 }
 
-export function _processGastosConvertidos(tipoGasto) {
+export function processConvertedExpenses(tipoGasto) {
 	for (const moeda of MOEDAS.resumo) {
 		if (!GASTOS_CONVERTIDOS[moeda]) {
 			GASTOS_CONVERTIDOS[moeda] = {};
 		}
-		GASTOS_CONVERTIDOS[moeda][tipoGasto] = _calculateGastosConvertidos(
+		GASTOS_CONVERTIDOS[moeda][tipoGasto] = calculateConvertedExpenses(
 			tipoGasto,
 			moeda,
 		);
 	}
 }
 
-export function _processGastosConvertidosViajantes() {
+export function processConvertedTravelerExpenses() {
 	const tipos = {
 		gastosPrevios: "trip.expenses.pre_trip",
 		gastosDurante: "trip.expenses.during_trip",
@@ -213,8 +213,8 @@ export function _processGastosConvertidosViajantes() {
 	}
 }
 
-export function _calculateGastosConvertidos(tipo, moeda) {
-	function _updateResumo(resumo, tipoGasto, valor) {
+export function calculateConvertedExpenses(tipo, moeda) {
+	function updateSummary(resumo, tipoGasto, valor) {
 		const resumoNomes = resumo.itens.map((item) => item.nome);
 		const resumoIndex = resumoNomes.indexOf(tipoGasto);
 		if (resumoIndex >= 0) {
@@ -227,7 +227,7 @@ export function _calculateGastosConvertidos(tipo, moeda) {
 		}
 	}
 
-	function _updateItens(itens, gasto, valor) {
+	function updateItens(itens, gasto, valor) {
 		const nome = gasto.nome;
 		const tipo = gasto.tipo;
 		const pessoa = gasto.pessoa;
@@ -264,8 +264,8 @@ export function _calculateGastosConvertidos(tipo, moeda) {
 		let include = true;
 
 		if (gasto.moeda != moeda) {
-			if (_canConvert([gasto.moeda, moeda])) {
-				valor = _convertMoeda(gasto.moeda, moeda, gasto.valor);
+			if (canConvert([gasto.moeda, moeda])) {
+				valor = convertCurrency(gasto.moeda, moeda, gasto.valor);
 			} else {
 				include = false;
 			}
@@ -275,8 +275,8 @@ export function _calculateGastosConvertidos(tipo, moeda) {
 			resumo.total += valor;
 			valor = parseFloat(valor.toFixed(2));
 
-			_updateResumo(resumo, gasto.tipo, valor);
-			_updateItens(itens, gasto, valor);
+			updateSummary(resumo, gasto.tipo, valor);
+			updateItens(itens, gasto, valor);
 		}
 	}
 
@@ -284,17 +284,17 @@ export function _calculateGastosConvertidos(tipo, moeda) {
 	return { resumo, itens };
 }
 
-export function _getConversaoText() {
+export function getConversionText() {
 	if (MOEDAS.resumo.length == 1) {
-		return _getEmptyChar();
+		return getEmptyChar();
 	}
-	const conversoes = [`1 ${MOEDA_PADRAO}`];
+	const conversoes = [`1 ${DEFAULT_CURRENCY}`];
 	for (const moeda of MOEDAS.resumo) {
-		if (moeda == MOEDA_PADRAO) {
+		if (moeda == DEFAULT_CURRENCY) {
 			continue;
 		}
 		conversoes.push(
-			`${_convertMoeda(moeda, MOEDA_PADRAO, 1).toFixed(2)} ${moeda}`,
+			`${convertCurrency(moeda, DEFAULT_CURRENCY, 1).toFixed(2)} ${moeda}`,
 		);
 	}
 	return conversoes.join(" = ");
@@ -302,22 +302,22 @@ export function _getConversaoText() {
 
 // ======= Chart Data (Pure) =======
 
-export function _getChartData(labels, valores, coresRGB) {
+export function getChartData(labels, valores, coresRGB) {
 	return {
 		labels: labels,
 		datasets: [
 			{
 				label: "",
 				data: valores,
-				backgroundColor: _getArrayRGBA(coresRGB, 0.5),
-				borderColor: _getArrayRGBA(coresRGB, 1),
+				backgroundColor: getArrayRGBA(coresRGB, 0.5),
+				borderColor: getArrayRGBA(coresRGB, 1),
 				borderWidth: 1,
 			},
 		],
 	};
 }
 
-export function _getChartConfig(tipo, dados) {
+export function getChartConfig(tipo, dados) {
 	let legenda = {
 		display: false,
 	};
@@ -326,7 +326,7 @@ export function _getChartConfig(tipo, dados) {
 		legenda.display = true;
 		legenda.position = "right";
 		legenda.labels = {
-			color: _isOnDarkMode() ? "rgba(227, 236, 248, 1)" : "rgba(75, 85, 99, 1)",
+			color: isOnDarkMode() ? "rgba(227, 236, 248, 1)" : "rgba(75, 85, 99, 1)",
 		};
 	}
 
@@ -359,10 +359,10 @@ export function _getChartConfig(tipo, dados) {
 	return result;
 }
 
-export function _getChartColorsRGB(size) {
+export function getChartColorsRGB(size) {
 	const result = [];
 	const coresHex = getCores().opcoes.map((cor) => cor.hex);
-	const coresRGB = coresHex.map((cor) => _hexToRgb(cor));
+	const coresRGB = coresHex.map((cor) => hexToRgb(cor));
 
 	for (let i = 0; i < size; i++) {
 		const index = i % coresRGB.length;
@@ -372,11 +372,11 @@ export function _getChartColorsRGB(size) {
 	return result;
 }
 
-export function _getArrayRGBA(coresRGB, a) {
+export function getArrayRGBA(coresRGB, a) {
 	const result = [];
 
 	for (const rgb of coresRGB) {
-		result.push(_rgbToText(rgb[0], rgb[1], rgb[2], a));
+		result.push(rgbToText(rgb[0], rgb[1], rgb[2], a));
 	}
 
 	return result;

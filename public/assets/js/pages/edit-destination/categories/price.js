@@ -1,13 +1,13 @@
-import { getDestinos, getMoedas } from '../../../core/config.js';
+import { getDestinos, getCurrencies } from '../../../core/config.js';
 
 var VALOR_OPTIONS = "";
 
-function _loadCurrencySelects() {
-	_loadMoedaOptions();
+function loadCurrencySelects() {
+	loadMoedaOptions();
 
 	const destinos = getDestinos();
 	for (const categoria of destinos.categorias.passeios) {
-		const childs = _getChildIDs(`${categoria}-box`);
+		const childs = getChildIDs(`${categoria}-box`);
 		for (const child of childs) {
 			const i = child.split("-").pop();
 			if (VALOR_OPTIONS) {
@@ -23,15 +23,15 @@ function _loadCurrencySelects() {
 	}
 }
 
-function _loadMoedaOptions() {
-	const moedas = getMoedas();
+function loadMoedaOptions() {
+	const moedas = getCurrencies();
 	const categorias = moedas.valores;
 	const moeda = getID("moeda").value;
 	VALOR_OPTIONS = "";
 
 	if (moeda != "outra" && moedas.escala[moeda]) {
 		for (const categoria of categorias) {
-			const label = _getLabel(categoria);
+			const label = getLabel(categoria);
 			VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
 		}
 		if (VALOR_OPTIONS) {
@@ -39,7 +39,7 @@ function _loadMoedaOptions() {
 		}
 	}
 
-	function _getLabel(categoria) {
+	function getLabel(categoria) {
 		switch (categoria) {
 			case "default":
 				return translate(`destination.price.default`);
@@ -60,12 +60,12 @@ function _loadMoedaOptions() {
 	}
 }
 
-function _getOutroValorVisibility() {
+function getOutroValorVisibility() {
 	if (VALOR_OPTIONS) return "none";
 	else return "block";
 }
 
-function _loadMoedaValorAndVisibility(valor, categoria, i) {
+function loadMoedaValorAndVisibility(valor, categoria, i) {
 	const valorSelect = getID(`${categoria}-valor-${i}`);
 	const outroValorDiv = getID(`${categoria}-outro-valor-${i}`);
 

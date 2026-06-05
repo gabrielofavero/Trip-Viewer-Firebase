@@ -1,11 +1,11 @@
 // Adicionar
-function _addRestaurantes() {
+function addRestaurantes() {
 	if (!VALOR_OPTIONS) {
-		_loadCurrencySelects();
+		loadCurrencySelects();
 	}
 
 	const categoria = "restaurantes";
-	const j = _getNextJ("restaurantes-box");
+	const j = getNextJ("restaurantes-box");
 
 	$("#restaurantes-box").append(`
     <div id="restaurantes-${j}" class="accordion-item accordion-restaurantes" >
@@ -14,7 +14,7 @@ function _addRestaurantes() {
           data-bs-target="#collapse-restaurantes-${j}" aria-expanded="true"
           aria-controls="collapse-restaurantes-${j}">
           <span class="title-text" id="restaurantes-title-text-${j}">${translate("destination.restaurants.title_singular")} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`restaurantes-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`restaurantes-title-icon-${j}`)}</div>
         </button>
       </h2>
       <div id="collapse-restaurantes-${j}" class="accordion-collapse collapse"
@@ -46,11 +46,11 @@ function _addRestaurantes() {
             <input id="restaurantes-emoji-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.emoji")}" />
           </div>
 
-          ${_getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(categoria, j)}
 
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="restaurantes-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="restaurantes-descricao-button-${j}" onclick="openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
@@ -83,7 +83,7 @@ function _addRestaurantes() {
             <select class="editar-select" id="restaurantes-valor-${j}">
             ${VALOR_OPTIONS}
           </select>
-            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="restaurantes-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="restaurantes-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
@@ -108,7 +108,7 @@ function _addRestaurantes() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
+          <button onclick="openMoveDestinationModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -128,23 +128,23 @@ function _addRestaurantes() {
     </div>
     `);
 
-	_addCreatedDate(categoria, j);
-	_addDestinosListeners(categoria, j);
-	_addListenerToRemoveDestino(categoria, j);
-	_addSelectorDS(
+	addCreatedDate(categoria, j);
+	addDestinationsListeners(categoria, j);
+	addListenerToRemoveDestination(categoria, j);
+	addSelectorDS(
 		"regiao",
 		`restaurantes-regiao-select-${j}`,
 		`restaurantes-regiao-${j}`,
 	);
 }
 
-function _addLanches() {
+function addLanches() {
 	if (!VALOR_OPTIONS) {
-		_loadCurrencySelects();
+		loadCurrencySelects();
 	}
 
 	const categoria = "lanches";
-	const j = _getNextJ("lanches-box");
+	const j = getNextJ("lanches-box");
 
 	$("#lanches-box").append(`
     <div id="lanches-${j}" class="accordion-item accordion-lanches" >
@@ -152,7 +152,7 @@ function _addLanches() {
         <button id="lanches-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lanches-${j}" aria-expanded="true" aria-controls="collapse-lanches-${j}">
           <span class="title-text" id="lanches-title-text-${j}">${translate("destination.snacks.title_singular")} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`lanches-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`lanches-title-icon-${j}`)}</div>
         </button>
       </h2>
       <div id="collapse-lanches-${j}" class="accordion-collapse collapse" aria-labelledby="heading-lanches-${j}"
@@ -184,11 +184,11 @@ function _addLanches() {
             <input id="lanches-emoji-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.emoji")}" />
           </div>
 
-          ${_getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="lanches-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="lanches-descricao-button-${j}" onclick="openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
@@ -221,7 +221,7 @@ function _addLanches() {
             <select class="editar-select" id="lanches-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
-            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lanches-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="lanches-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
@@ -247,7 +247,7 @@ function _addLanches() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
+          <button onclick="openMoveDestinationModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -267,19 +267,19 @@ function _addLanches() {
     </div>
     `);
 
-	_addCreatedDate(categoria, j);
-	_addDestinosListeners(categoria, j);
-	_addListenerToRemoveDestino(categoria, j);
-	_addSelectorDS("regiao", `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
+	addCreatedDate(categoria, j);
+	addDestinationsListeners(categoria, j);
+	addListenerToRemoveDestination(categoria, j);
+	addSelectorDS("regiao", `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
 }
 
-function _addSaidas() {
+function addSaidas() {
 	if (!VALOR_OPTIONS) {
-		_loadCurrencySelects();
+		loadCurrencySelects();
 	}
 
 	const categoria = "saidas";
-	const j = _getNextJ("saidas-box");
+	const j = getNextJ("saidas-box");
 
 	$("#saidas-box").append(`
     <div id="saidas-${j}" class="accordion-item accordion-saidas" >
@@ -287,7 +287,7 @@ function _addSaidas() {
         <button id="saidas-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-saidas-${j}" aria-expanded="true" aria-controls="collapse-saidas-${j}">
           <span class="title-text" id="saidas-title-text-${j}">${translate("destination.nightlife.title_singular")} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`saidas-title-icon-${j}`)}</i></div>
+          <div class="icon-container">${getNewSvg(`saidas-title-icon-${j}`)}</i></div>
         </button>
       </h2>
       <div id="collapse-saidas-${j}" class="accordion-collapse collapse" aria-labelledby="heading-saidas-${j}"
@@ -319,11 +319,11 @@ function _addSaidas() {
             <input id="saidas-emoji-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.emoji")}" />
           </div>
 
-          ${_getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="saidas-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="saidas-descricao-button-${j}" onclick="openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
@@ -356,7 +356,7 @@ function _addSaidas() {
             <select class="editar-select" id="saidas-valor-${j}">
             ${VALOR_OPTIONS}
           </select>
-            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="saidas-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="saidas-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
@@ -381,7 +381,7 @@ function _addSaidas() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
+          <button onclick="openMoveDestinationModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -401,19 +401,19 @@ function _addSaidas() {
     </div>
     `);
 
-	_addCreatedDate(categoria, j);
-	_addDestinosListeners(categoria, j);
-	_addListenerToRemoveDestino(categoria, j);
-	_addSelectorDS("regiao", `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
+	addCreatedDate(categoria, j);
+	addDestinationsListeners(categoria, j);
+	addListenerToRemoveDestination(categoria, j);
+	addSelectorDS("regiao", `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
 }
 
-function _addTurismo() {
+function addTurismo() {
 	if (!VALOR_OPTIONS) {
-		_loadCurrencySelects();
+		loadCurrencySelects();
 	}
 
 	const categoria = "turismo";
-	const j = _getNextJ("turismo-box");
+	const j = getNextJ("turismo-box");
 
 	$("#turismo-box").append(`
     <div id="turismo-${j}" class="accordion-item accordion-turismo" >
@@ -421,7 +421,7 @@ function _addTurismo() {
         <button id="turismo-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-turismo-${j}" aria-expanded="true" aria-controls="collapse-turismo-${j}">
           <span class="title-text" id="turismo-title-text-${j}">${translate("destination.tourism.title_singular")} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`turismo-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`turismo-title-icon-${j}`)}</div>
         </button>
       </h2>
       <div id="collapse-turismo-${j}" class="accordion-collapse collapse" aria-labelledby="heading-turismo-${j}"
@@ -453,11 +453,11 @@ function _addTurismo() {
             <input id="turismo-emoji-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.emoji")}" />
           </div>
 
-          ${_getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="turismo-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="turismo-descricao-button-${j}" onclick="openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
@@ -490,7 +490,7 @@ function _addTurismo() {
             <select class="editar-select" id="turismo-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
-            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="turismo-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="turismo-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
@@ -515,7 +515,7 @@ function _addTurismo() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
+          <button onclick="openMoveDestinationModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -535,19 +535,19 @@ function _addTurismo() {
     </div>
     `);
 
-	_addCreatedDate(categoria, j);
-	_addDestinosListeners(categoria, j);
-	_addListenerToRemoveDestino(categoria, j);
-	_addSelectorDS("regiao", `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
+	addCreatedDate(categoria, j);
+	addDestinationsListeners(categoria, j);
+	addListenerToRemoveDestination(categoria, j);
+	addSelectorDS("regiao", `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
 }
 
-function _addLojas() {
+function addLojas() {
 	if (!VALOR_OPTIONS) {
-		_loadCurrencySelects();
+		loadCurrencySelects();
 	}
 
 	const categoria = "lojas";
-	const j = _getNextJ("lojas-box");
+	const j = getNextJ("lojas-box");
 
 	$("#lojas-box").append(`
     <div id="lojas-${j}" class="accordion-item accordion-lojas" >
@@ -555,7 +555,7 @@ function _addLojas() {
         <button id="lojas-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-lojas-${j}" aria-expanded="true" aria-controls="collapse-lojas-${j}">
           <span class="title-text" id="lojas-title-text-${j}">${translate("destination.shopping.title_singular")} ${j}</span> 
-          <div class="icon-container">${_getNewSvg(`lojas-title-icon-${j}`)}</div>
+          <div class="icon-container">${getNewSvg(`lojas-title-icon-${j}`)}</div>
         </button>
       </h2>
 
@@ -588,11 +588,11 @@ function _addLojas() {
             <input id="lojas-emoji-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.emoji")}" />
           </div>
 
-          ${_getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(categoria, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="lojas-descricao-button-${j}" onclick="_openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="lojas-descricao-button-${j}" onclick="openDescriptionModal('${categoria}', ${j})" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
@@ -626,7 +626,7 @@ function _addLojas() {
             <select class="editar-select" id="lojas-valor-${j}">
               ${VALOR_OPTIONS}
             </select>
-            <input style="display: ${_getOutroValorVisibility()}" class="nice-form-group" id="lojas-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="lojas-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
@@ -651,7 +651,7 @@ function _addLojas() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button onclick="_openMoveDestinoModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
+          <button onclick="openMoveDestinationModal(${j}, '${categoria}')" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -671,12 +671,12 @@ function _addLojas() {
     </div>
     `);
 
-	_addCreatedDate(categoria, j);
-	_addDestinosListeners(categoria, j);
-	_addListenerToRemoveDestino(categoria, j);
-	_addSelectorDS("regiao", `lojas-regiao-select-${j}`, `lojas-regiao-${j}`);
+	addCreatedDate(categoria, j);
+	addDestinationsListeners(categoria, j);
+	addListenerToRemoveDestination(categoria, j);
+	addSelectorDS("regiao", `lojas-regiao-select-${j}`, `lojas-regiao-${j}`);
 }
 
-function _addCreatedDate(categoria, j) {
+function addCreatedDate(categoria, j) {
 	getID(`${categoria}-criadoEm-${j}`).value = new Date().toISOString();
 }

@@ -3,8 +3,8 @@
 // Core functions moved to models/itinerary.js — imported here for backward compat
 
 import {
-	_getItineraryContent,
-	_getItineraryData,
+	getItineraryContent,
+	getItineraryData,
 } from '../../models/itinerary.js';
 
 var ITINERARY;
@@ -12,13 +12,13 @@ const ITINERARY_HTML = {};
 var DESTINOS = {};
 
 // BACKWARD COMPAT: attach to window during migration
-window._getItineraryContent = _getItineraryContent;
-window._getItineraryData = _getItineraryData;
-window._getDestination = _getDestination;
+window.getItineraryContent = getItineraryContent;
+window.getItineraryData = getItineraryData;
+window.getDestination = getDestination;
 
-async function _getDestination(id) {
+async function getDestination(id) {
 	if (!Object.keys(DESTINOS).includes(id)) {
-		DESTINOS[id] = await _get(`destinos/${id}`);
+		DESTINOS[id] = await get(`destinos/${id}`);
 	}
 	return DESTINOS[id];
 }

@@ -2,7 +2,7 @@ import { _removeChildWithValidation } from "../pages/data.js";
 
 let DYNAMIC_SELECT = {};
 
-export function _newDynamicSelect(type) {
+export function newDynamicSelect(type) {
 	DYNAMIC_SELECT[type] = {
 		selectors: {},
 		values: {},
@@ -10,15 +10,15 @@ export function _newDynamicSelect(type) {
 	};
 }
 
-export function _addSelectorDS(type, selectID, inputID, customFunction = "") {
+export function addSelectorDS(type, selectID, inputID, customFunction = "") {
 	DYNAMIC_SELECT[type].selectors[selectID] = {
 		inputID: inputID,
 		value: "",
 	};
-	_addEventListenersDS(type, selectID, inputID, customFunction);
+	addEventListenersDS(type, selectID, inputID, customFunction);
 }
 
-export function _removeValueDS(type, value) {
+export function removeValueDS(type, value) {
 	if (value) {
 		DYNAMIC_SELECT[type].values[value]--;
 		if (DYNAMIC_SELECT[type].values[value] === 0) {
@@ -27,22 +27,22 @@ export function _removeValueDS(type, value) {
 	}
 }
 
-export function _updateValueDS(type, value, selectID) {
+export function updateValueDS(type, value, selectID) {
 	const lastValue = DYNAMIC_SELECT[type].selectors[selectID].value;
-	_removeValueDS(type, lastValue);
+	removeValueDS(type, lastValue);
 	DYNAMIC_SELECT[type].selectors[selectID].value = "";
 
 	if (value) {
 		DYNAMIC_SELECT[type].selectors[selectID].value = value;
 
-		_addValueDS(type, value);
+		addValueDS(type, value);
 
 		getID(DYNAMIC_SELECT[type].selectors[selectID].inputID).value = "";
 		getID(selectID).value = value;
 	}
 
 	// Função Privada
-	function _addValueDS(type, value) {
+	function addValueDS(type, value) {
 		if (!DYNAMIC_SELECT[type].values[value]) {
 			DYNAMIC_SELECT[type].values[value] = 1;
 		} else {
@@ -51,11 +51,11 @@ export function _updateValueDS(type, value, selectID) {
 	}
 }
 
-export function _buildDS(type) {
-	_buildSelectDS(type);
-	_applySelectDS(type);
+export function buildDS(type) {
+	buildSelectDS(type);
+	applySelectDS(type);
 
-	function _buildSelectDS(type) {
+	function buildSelectDS(type) {
 		let selectInnerHTML = `<option value="">${translate("labels.select")}</option>`;
 		const values = Object.keys(DYNAMIC_SELECT[type].values).sort();
 
@@ -67,7 +67,7 @@ export function _buildDS(type) {
 		DYNAMIC_SELECT[type].selectInnerHTML = selectInnerHTML;
 	}
 
-	function _applySelectDS(type) {
+	function applySelectDS(type) {
 		for (const selectID in DYNAMIC_SELECT[type].selectors) {
 			const select = getID(selectID);
 			const input = getID(DYNAMIC_SELECT[type].selectors[selectID].inputID);
@@ -85,7 +85,7 @@ export function _buildDS(type) {
 	}
 }
 
-export function _addEventListenersDS(type, selectID, inputID, customFunction = "") {
+export function addEventListenersDS(type, selectID, inputID, customFunction = "") {
 	const select = getID(selectID);
 	const input = getID(inputID);
 
@@ -95,47 +95,47 @@ export function _addEventListenersDS(type, selectID, inputID, customFunction = "
 			input.style.display = "block";
 		} else {
 			input.style.display = "none";
-			_updateValueDS(type, value, selectID);
-			_buildDS(type);
+			updateValueDS(type, value, selectID);
+			buildDS(type);
 		}
 	});
 
 	input.addEventListener("change", () => {
-		_updateValueDS(type, input.value, selectID);
-		_buildDS(type);
+		updateValueDS(type, input.value, selectID);
+		buildDS(type);
 		if (customFunction) {
 			eval(customFunction);
 		}
 	});
 }
 
-export function _addRemoveChildListenerDS(categoria, j, dynamicSelects = []) {
+export function addRemoveChildListenerDS(categoria, j, dynamicSelects = []) {
 	getID(`remove-${categoria}-${j}`).addEventListener("click", function () {
 		for (const dynamicSelect of dynamicSelects) {
-			_removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
+			removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
 		}
 
-		_removeChildWithValidation(categoria, j);
+		removeChildWithValidation(categoria, j);
 
 		for (const dynamicSelect of dynamicSelects) {
-			_buildDS(dynamicSelect.type);
+			buildDS(dynamicSelect.type);
 		}
 	});
 }
 
-export function _removeSelectorDS(type, selectID) {
+export function removeSelectorDS(type, selectID) {
 	const value = DYNAMIC_SELECT[type].selectors[selectID].value;
-	_removeValueDS(type, value);
+	removeValueDS(type, value);
 	delete DYNAMIC_SELECT[type].selectors[selectID];
 }
 
 // BACKWARD COMPAT: attach to window during migration
 window.DYNAMIC_SELECT = DYNAMIC_SELECT;
-window._newDynamicSelect = _newDynamicSelect;
-window._addSelectorDS = _addSelectorDS;
-window._removeValueDS = _removeValueDS;
-window._updateValueDS = _updateValueDS;
-window._buildDS = _buildDS;
-window._addEventListenersDS = _addEventListenersDS;
-window._addRemoveChildListenerDS = _addRemoveChildListenerDS;
-window._removeSelectorDS = _removeSelectorDS;
+window.newDynamicSelect = newDynamicSelect;
+window.addSelectorDS = addSelectorDS;
+window.removeValueDS = removeValueDS;
+window.updateValueDS = updateValueDS;
+window.buildDS = buildDS;
+window.addEventListenersDS = addEventListenersDS;
+window.addRemoveChildListenerDS = addRemoveChildListenerDS;
+window.removeSelectorDS = removeSelectorDS;

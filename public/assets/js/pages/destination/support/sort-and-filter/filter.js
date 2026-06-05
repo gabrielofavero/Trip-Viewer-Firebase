@@ -1,26 +1,26 @@
 const FILTER_OPTIONS = {};
 
 // Main Action
-function _filter(render = false) {
-	const preferences = _getFilterPreferences();
+function filter(render = false) {
+	const preferences = getFilterPreferences();
 	const isPlannedEnabled =
-		_shouldDisplayPlanned() && preferences.planned !== "everything";
+		shouldDisplayPlanned() && preferences.planned !== "everything";
 	const isPricesEnabled =
-		_shouldDisplayPrices() && preferences.prices !== "everything";
+		shouldDisplayPrices() && preferences.prices !== "everything";
 	const isScoresEnabled =
-		_shouldDisplayScores() && preferences.scores !== "everything";
+		shouldDisplayScores() && preferences.scores !== "everything";
 	const isRegionsEnabled =
-		_shouldDisplayRegions() &&
+		shouldDisplayRegions() &&
 		preferences.region !== "everything" &&
 		FILTER_SORT_DATA[ACTIVE_CATEGORY].region.has(preferences.region);
 
 	for (const content of CONTENT) {
-		const item = _getItem(content.id);
+		const item = getItem(content.id);
 		if (
-			(isPlannedEnabled && _shouldFilterByPlanned(content.id)) ||
-			(isPricesEnabled && _shouldFilterByPrices(item)) ||
-			(isScoresEnabled && _shouldFilterByScores(item)) ||
-			(isRegionsEnabled && _shouldFilterByRegions(item))
+			(isPlannedEnabled && shouldFilterByPlanned(content.id)) ||
+			(isPricesEnabled && shouldFilterByPrices(item)) ||
+			(isScoresEnabled && shouldFilterByScores(item)) ||
+			(isRegionsEnabled && shouldFilterByRegions(item))
 		) {
 			content.filtered = true;
 			continue;
@@ -29,18 +29,18 @@ function _filter(render = false) {
 	}
 
 	if (render) {
-		_applyContent();
+		applyContent();
 	}
 
-	function _shouldFilterByPlanned(id) {
-		const isPlanned = _isPlanned(id);
+	function shouldFilterByPlanned(id) {
+		const isPlanned = isPlanned(id);
 		return (
 			(isPlanned && preferences.planned === "not_planned") ||
 			(!isPlanned && preferences.planned === "planned")
 		);
 	}
 
-	function _shouldFilterByPrices(item) {
+	function shouldFilterByPrices(item) {
 		const value = item.valor;
 
 		if (value === "$$$$") {
@@ -48,13 +48,13 @@ function _filter(render = false) {
 		}
 
 		if (value != "default" && preferences.prices != "default") {
-			return !_isPriceInBucketRange(preferences.prices, value);
+			return !isPriceInBucketRange(preferences.prices, value);
 		}
 
 		return value != preferences.prices;
 	}
 
-	function _shouldFilterByScores(item) {
+	function shouldFilterByScores(item) {
 		const value = item.nota;
 
 		if (["default", "1"].includes(value)) {
@@ -64,7 +64,7 @@ function _filter(render = false) {
 		return Number(value) < Number(preferences.scores);
 	}
 
-	function _shouldFilterByRegions(item) {
+	function shouldFilterByRegions(item) {
 		const value = item.regiao;
 		if (!value) {
 			return true;
@@ -74,25 +74,25 @@ function _filter(render = false) {
 }
 
 // Options
-function _loadFilterOptions(force = false) {
+function loadFilterOptions(force = false) {
 	if (FILTER_OPTIONS[ACTIVE_CATEGORY] && !force) {
 		return;
 	}
 
-	_loadTitles();
-	_loadFilterSortingData(FILTER_OPTIONS.titles);
+	loadTitles();
+	loadFilterSortingData(FILTER_OPTIONS.titles);
 
 	FILTER_OPTIONS[ACTIVE_CATEGORY] = {};
 	const options = FILTER_OPTIONS[ACTIVE_CATEGORY];
 
-	if (_shouldDisplayPlanned()) {
+	if (shouldDisplayPlanned()) {
 		options.planned = {
 			planned: translate("destination.filter.planned.planned"),
 			not_planned: translate("destination.filter.planned.not_planned"),
 		};
 	}
 
-	if (_shouldDisplayScores()) {
+	if (shouldDisplayScores()) {
 		options.scores = {
 			5: translate("destination.filter.scores.5"),
 			4: translate("destination.filter.scores.4"),
@@ -101,7 +101,7 @@ function _loadFilterOptions(force = false) {
 		};
 	}
 
-	if (_shouldDisplayRegions()) {
+	if (shouldDisplayRegions()) {
 		const regions = new Set(
 			Array.from(FILTER_SORT_DATA[ACTIVE_CATEGORY].region)
 				.map((r) => r?.trim())
@@ -116,9 +116,9 @@ function _loadFilterOptions(force = false) {
 		}
 	}
 
-	if (_shouldDisplayPrices()) {
+	if (shouldDisplayPrices()) {
 		options.prices = {};
-		const prices = Array.from(_getPrices());
+		const prices = Array.from(getPrices());
 
 		if (
 			prices.length === 2 &&
@@ -129,11 +129,11 @@ function _loadFilterOptions(force = false) {
 		}
 
 		for (const price of prices) {
-			options.prices[price] = _getPriceLabel(price);
+			options.prices[price] = getPriceLabel(price);
 		}
 	}
 
-	function _loadTitles() {
+	function loadTitles() {
 		if (!FILTER_OPTIONS.titles) {
 			FILTER_OPTIONS.titles = {
 				planned: translate("destination.filter.planned.title"),
@@ -146,11 +146,11 @@ function _loadFilterOptions(force = false) {
 }
 
 // Drawer
-function _openFilterDrawer() {
-	_openFilterSortDrawer({
+function openFilterDrawer() {
+	openFilterSortDrawer({
 		triggerId: "filter",
-		getInnerHTML: _getFilterDrawerInnerHTML,
-		clickAction: _filterDrawerOptionClickAction,
-		loadAction: _filterDrawerOptionLoadAction,
+		getInnerHTML: getFilterDrawerInnerHTML,
+		clickAction: filterDrawerOptionClickAction,
+		loadAction: filterDrawerOptionLoadAction,
 	});
 }

@@ -5,22 +5,22 @@ var TRIP_ID;
 var PLANNED_DESTINATION = {};
 var ACTIVE_PLANNED_DESTINATION = [];
 
-async function _getTripData(tripID) {
+async function getTripData(tripID) {
 	if (!tripID) return;
 	TRIP_ID = tripID;
-	return await _get(`viagens/${tripID}`);
+	return await get(`viagens/${tripID}`);
 }
 
-async function _refreshTripData() {
+async function refreshTripData() {
 	if (!TRIP_ID) return;
 	ACTIVE_PLANNED_DESTINATION = [];
 	PLANNED_DESTINATION = {};
-	FIRESTORE_DATA = await _get(`viagens/${TRIP_ID}`);
-	_loadPlannedDestination();
+	FIRESTORE_DATA = await get(`viagens/${TRIP_ID}`);
+	loadPlannedDestination();
 }
 
 // Planned Destination
-function _loadPlannedDestination() {
+function loadPlannedDestination() {
 	const programacoes = FIRESTORE_DATA?.programacoes || [];
 	for (const dia of programacoes) {
 		const data = dia.data;
@@ -31,12 +31,12 @@ function _loadPlannedDestination() {
 			for (const programacao of programacoes) {
 				const item = programacao?.item;
 				if (!item || item.tipo !== "destinos") continue;
-				_addPlannedDestination(item, data, turno);
+				addPlannedDestination(item, data, turno);
 			}
 		}
 	}
 
-	function _addPlannedDestination(item, data, turno) {
+	function addPlannedDestination(item, data, turno) {
 		const destino = FIRESTORE_DATA.destinos.find(
 			(d) => d.destinosID === item.local,
 		);
@@ -48,19 +48,19 @@ function _loadPlannedDestination() {
 	}
 }
 
-function _getPlannedDestinations(id) {
+function getPlannedDestinations(id) {
 	return PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[id] || [];
 }
 
-function _populatePlannedDestinationEditField(id, j) {
+function populatePlannedDestinationEditField(id, j) {
 	if (!TRIP_ID) {
 		return;
 	}
-	ACTIVE_PLANNED_DESTINATION = _getPlannedDestinations(id);
-	_loadPlannedDestinationEditFieldHTML(j);
+	ACTIVE_PLANNED_DESTINATION = getPlannedDestinations(id);
+	loadPlannedDestinationEditFieldHTML(j);
 }
 
-function _loadPlannedDestinationEditFieldHTML(j) {
+function loadPlannedDestinationEditFieldHTML(j) {
 	const container = getID(`editar-planejado-container-${j}`);
 	const dataSelect = getID(`editar-planejado-select-data-${j}`);
 	const turnoSelect = getID(`editar-planejado-select-turno-${j}`);
@@ -69,42 +69,42 @@ function _loadPlannedDestinationEditFieldHTML(j) {
 
 	switch (ACTIVE_PLANNED_DESTINATION.length) {
 		case 0:
-			_loadNoPD();
+			loadNoPD();
 			break;
 		case 1:
-			_loadSinglePD();
+			loadSinglePD();
 			break;
 		default:
-			_loadMultiPD();
+			loadMultiPD();
 	}
 
 	container.style.display = "";
 
-	function _loadNoPD() {
-		_loadAllOptions();
+	function loadNoPD() {
+		loadAllOptions();
 		dataSelect.innerHTML = options;
 		dataSelect.value = "";
 		turnoSelect.style.display = "none";
-		_addSelectListener();
+		addSelectListener();
 	}
 
-	function _loadSinglePD() {
-		_loadAllOptions();
+	function loadSinglePD() {
+		loadAllOptions();
 		const item = ACTIVE_PLANNED_DESTINATION[0];
 		dataSelect.innerHTML = options;
-		dataSelect.value = _dateObjectToInputDate(item.data);
+		dataSelect.value = dateObjectToInputDate(item.data);
 		turnoSelect.value = item.turno;
-		_addSelectListener();
+		addSelectListener();
 	}
 
-	function _loadMultiPD() {
+	function loadMultiPD() {
 		options += `<option value="multi">${translate("labels.planned.multiple")}</option>`;
 		dataSelect.innerHTML = options;
 		dataSelect.value = "multi";
 		turnoSelect.style.display = "none";
 	}
 
-	function _loadAllOptions() {
+	function loadAllOptions() {
 		for (const programacao of FIRESTORE_DATA.programacoes) {
 			const ids = programacao.destinosIDs.map((destino) => destino.destinosID);
 
@@ -113,20 +113,20 @@ function _loadPlannedDestinationEditFieldHTML(j) {
 			}
 
 			const date = programacao.data;
-			const jsDate = _convertFromDateObject(date);
-			const label = _getDateTitle(jsDate, "weekday_day_month");
-			options += `<option value="${_jsDateToInputDate(jsDate)}">${label}</option>`;
+			const jsDate = convertFromDateObject(date);
+			const label = getDateTitle(jsDate, "weekday_day_month");
+			options += `<option value="${jsDateToInputDate(jsDate)}">${label}</option>`;
 		}
 	}
 
-	function _addSelectListener() {
+	function addSelectListener() {
 		dataSelect.onchange = (e) => {
 			turnoSelect.style.display = e.target.value ? "" : "none";
 		};
 	}
 }
 
-async function _setPlannedDestination(id, j) {
+async function setPlannedDestination(id, j) {
 	const newData = getID(`editar-planejado-select-data-${j}`).value;
 	const newTurno = getID(`editar-planejado-select-turno-${j}`).value;
 
@@ -138,7 +138,7 @@ async function _setPlannedDestination(id, j) {
 
 	const currentData = ACTIVE_PLANNED_DESTINATION[0]?.data;
 	const currentInputDate = currentData
-		? _dateObjectToInputDate(currentData)
+		? dateObjectToInputDate(currentData)
 		: null;
 	const currentTurno = ACTIVE_PLANNED_DESTINATION[0]?.turno;
 
@@ -150,24 +150,24 @@ async function _setPlannedDestination(id, j) {
 		return false;
 	}
 
-	const updatedProgramacoes = _getUpdatedProgramacoes();
-	await _update(`viagens/${TRIP_ID}`, {
+	const updatedProgramacoes = getUpdatedProgramacoes();
+	await update(`viagens/${TRIP_ID}`, {
 		programacoes: updatedProgramacoes,
 	});
 
 	return true;
 
-	function _getUpdatedProgramacoes() {
+	function getUpdatedProgramacoes() {
 		if (!newData && currentData) {
-			return _removeDestinationReferences();
+			return removeDestinationReferences();
 		}
 
 		if (newData && !currentData) {
-			return _addToLastPosition();
+			return addToLastPosition();
 		}
 
 		if (newData !== currentInputDate || newTurno !== currentTurno) {
-			return _changeOrder();
+			return changeOrder();
 		}
 
 		return FIRESTORE_DATA.programacoes;
@@ -175,8 +175,8 @@ async function _setPlannedDestination(id, j) {
 
 	// ---------- helpers ----------
 
-	function _removeDestinationReferences() {
-		const programacoes = _cloneObject(FIRESTORE_DATA.programacoes);
+	function removeDestinationReferences() {
+		const programacoes = cloneObject(FIRESTORE_DATA.programacoes);
 
 		for (const day of programacoes) {
 			for (const period of ["manha", "tarde", "noite", "madrugada"]) {
@@ -195,40 +195,40 @@ async function _setPlannedDestination(id, j) {
 		return programacoes;
 	}
 
-	function _addToLastPosition() {
-		const programacoes = _cloneObject(FIRESTORE_DATA.programacoes);
+	function addToLastPosition() {
+		const programacoes = cloneObject(FIRESTORE_DATA.programacoes);
 
 		const targetDay = programacoes.find(
-			(p) => _dateObjectToInputDate(p.data) === newData,
+			(p) => dateObjectToInputDate(p.data) === newData,
 		);
 
 		if (!targetDay) {
 			return programacoes;
 		}
 
-		targetDay[newTurno].push(_buildPlannedDestination());
+		targetDay[newTurno].push(buildPlannedDestination());
 
 		return programacoes;
 	}
 
-	function _changeOrder() {
-		let programacoes = _removeDestinationReferences();
+	function changeOrder() {
+		let programacoes = removeDestinationReferences();
 
 		const targetDay = programacoes.find(
-			(p) => _dateObjectToInputDate(p.data) === newData,
+			(p) => dateObjectToInputDate(p.data) === newData,
 		);
 
 		if (!targetDay) {
 			return programacoes;
 		}
 
-		targetDay[newTurno].push(_buildPlannedDestination());
+		targetDay[newTurno].push(buildPlannedDestination());
 
 		return programacoes;
 	}
 
-	function _buildPlannedDestination() {
-		const pessoas = _cloneObject(FIRESTORE_DATA.pessoas);
+	function buildPlannedDestination() {
+		const pessoas = cloneObject(FIRESTORE_DATA.pessoas);
 		for (const pessoa of pessoas) {
 			pessoa.isPresent = true;
 		}

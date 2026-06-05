@@ -17,9 +17,9 @@ CALENDAR = {
 	calendarTitle: null,
 };
 
-function _loadCalendar() {
-	CALENDAR.start = _convertFromDateObject(FIRESTORE_DATA.inicio);
-	CALENDAR.end = _convertFromDateObject(FIRESTORE_DATA.fim);
+function loadCalendar() {
+	CALENDAR.start = convertFromDateObject(FIRESTORE_DATA.inicio);
+	CALENDAR.end = convertFromDateObject(FIRESTORE_DATA.fim);
 
 	CALENDAR.startMonth = CALENDAR.start.getUTCMonth();
 	CALENDAR.startYear = CALENDAR.start.getUTCFullYear();
@@ -29,10 +29,10 @@ function _loadCalendar() {
 	CALENDAR.calendarTitle = getID("calendarTitle");
 	CURRENT_CALENDAR.month = CALENDAR.startMonth;
 	CURRENT_CALENDAR.year = CALENDAR.startYear;
-	_showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
+	showCalendar(CALENDAR.startMonth, CALENDAR.startYear);
 }
 
-function _changeCalendarMonth(direction) {
+function changeCalendarMonth(direction) {
 	const result = { month: CURRENT_CALENDAR.month, year: CURRENT_CALENDAR.year };
 
 	if (direction === "next") {
@@ -64,21 +64,21 @@ function _changeCalendarMonth(direction) {
 
 	CURRENT_CALENDAR.month = result.month;
 	CURRENT_CALENDAR.year = result.year;
-	_showCalendar(CURRENT_CALENDAR.month, CURRENT_CALENDAR.year);
-	_loadMonthNavigatorVisibility();
+	showCalendar(CURRENT_CALENDAR.month, CURRENT_CALENDAR.year);
+	loadMonthNavigatorVisibility();
 }
 
-function _calendarNext() {
-	_changeCalendarMonth("next");
-	_refreshPills();
+function calendarNext() {
+	changeCalendarMonth("next");
+	refreshPills();
 }
 
-function _calendarPrevious() {
-	_changeCalendarMonth("previous");
-	_refreshPills();
+function calendarPrevious() {
+	changeCalendarMonth("previous");
+	refreshPills();
 }
 
-function _showCalendar(month, year) {
+function showCalendar(month, year) {
 	let firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
 	let daysInMonth = 32 - new Date(Date.UTC(year, month, 32)).getUTCDate();
 
@@ -86,7 +86,7 @@ function _showCalendar(month, year) {
 
 	tbl.innerHTML = "";
 	CALENDAR.calendarTitle.innerHTML = translate("datetime.titles.month_year", {
-		month: _getMonth(month),
+		month: getMonth(month),
 		year,
 	});
 
@@ -107,22 +107,22 @@ function _showCalendar(month, year) {
 				let cell = document.createElement("td");
 				let cellText = document.createTextNode(day);
 
-				const currentNoTime = _getDateNoTime(currentDate);
-				const startNoTime = _getDateNoTime(CALENDAR.start);
-				const endNoTime = _getDateNoTime(CALENDAR.end);
+				const currentNoTime = getDateNoTime(currentDate);
+				const startNoTime = getDateNoTime(CALENDAR.start);
+				const endNoTime = getDateNoTime(CALENDAR.end);
 
 				if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
 					cell.classList.add("calendarTrip");
 					cell.id = `calendarTrip-${day}-${month + 1}-${year}`;
 					cell.setAttribute(
 						"onclick",
-						`_loadCalendarItem(${day}, ${month + 1}, ${year})`,
+						`loadCalendarItem(${day}, ${month + 1}, ${year})`,
 					);
 
 					const formattedMonth = String(month + 1).padStart(2, "0");
 					const formattedDay = String(day).padStart(2, "0");
 					const key = `${year}${formattedMonth}${formattedDay}`;
-					const destinos = PROGRAMACAO_DESTINOS[key];
+					const destinos = SCHEDULE_DESTINATIONS[key];
 					if (destinos && destinos.length > 0) {
 						for (const destino of destinos) {
 							cell.classList.add(`pill-${destino.destinosID}`);
@@ -140,17 +140,17 @@ function _showCalendar(month, year) {
 		tbl.appendChild(row);
 	}
 
-	if (_isCalendarMultiMonth()) {
-		_loadMonthSelector();
+	if (isCalendarMultiMonth()) {
+		loadMonthSelector();
 	}
 }
 
-function _loadMonthSelector() {
-	_loadMonthNavigatorVisibility();
+function loadMonthSelector() {
+	loadMonthNavigatorVisibility();
 	getID("calendarMonthSelector").style.display = "block";
 }
 
-function _loadMonthNavigatorVisibility() {
+function loadMonthNavigatorVisibility() {
 	const previous = getID("previous");
 	const next = getID("next");
 
@@ -173,7 +173,7 @@ function _loadMonthNavigatorVisibility() {
 	}
 }
 
-function _isCalendarMultiMonth() {
+function isCalendarMultiMonth() {
 	if (!IS_CALENDAR_MULTI_MONTH) {
 		IS_CALENDAR_MULTI_MONTH =
 			CALENDAR.startMonth != CALENDAR.endMonth ||

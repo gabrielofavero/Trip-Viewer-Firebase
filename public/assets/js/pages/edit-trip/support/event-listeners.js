@@ -1,16 +1,16 @@
 // Loader
-function _loadEventListeners() {
+function loadEventListeners() {
 	// Inputs
-	getID("inicio").addEventListener("change", () => _inicioListenerAction());
-	getID("fim").addEventListener("change", () => _fimListenerAction());
+	getID("inicio").addEventListener("change", () => inicioListenerAction());
+	getID("fim").addEventListener("change", () => fimListenerAction());
 
 	// Botões
-	getID("salvar").addEventListener("click", () => _setViagem());
+	getID("salvar").addEventListener("click", () => setTripData());
 	getID("re-editar").addEventListener("click", () =>
-		_reEdit("viagens", SUCCESSFUL_SAVE),
+		reEdit("viagens", SUCCESSFUL_SAVE),
 	);
 	getID("visualizar").addEventListener("click", () =>
-		_visualizarListenerAction(),
+		visualizarListenerAction(),
 	);
 	getID("home").addEventListener(
 		"click",
@@ -25,78 +25,78 @@ function _loadEventListeners() {
 		() => (window.location.href = "../index.html"),
 	);
 	getID("transporte-adicionar").addEventListener("click", () =>
-		_transporteAdicionarListenerAction(),
+		transportationAddListenerAction(),
 	);
 	getID("hospedagens-adicionar").addEventListener("click", () =>
-		_hospedagensAdicionarListenerAction(),
+		accommodationsAddListenerAction(),
 	);
 	getID("galeria-adicionar").addEventListener("click", () =>
-		_galeriaAdicionarListenerAction(),
+		galeriaAdicionarListenerAction(),
 	);
-	getID("pin-disabled").addEventListener("click", _switchPin);
-	getID("pin-sensitive-only").addEventListener("click", _switchPin);
-	getID("pin-all-data").addEventListener("click", _switchPin);
-	getID("claro").addEventListener("change", () => _autoFillDarkColor());
+	getID("pin-disabled").addEventListener("click", switchPin);
+	getID("pin-sensitive-only").addEventListener("click", switchPin);
+	getID("pin-all-data").addEventListener("click", switchPin);
+	getID("claro").addEventListener("change", () => autoFillDarkColor());
 
 	// Visibilidade do Ida e Volta (Transporte)
 	getID("simple-view").addEventListener("change", () =>
-		_applyTransportationTypeVisualization(),
+		applyTransportationTypeVisualization(),
 	);
 	getID("leg-view").addEventListener("change", () =>
-		_applyTransportationTypeVisualization(),
+		applyTransportationTypeVisualization(),
 	);
 	getID("people-view").addEventListener("change", () =>
-		_applyTransportationTypeVisualization(),
+		applyTransportationTypeVisualization(),
 	);
 
 	// Validação de Imagens no módulo de Customização
 	getID("link-background").addEventListener("change", () =>
-		_validateImageLink("link-background"),
+		validateImageLink("link-background"),
 	);
 	getID("link-logo-light").addEventListener("change", () =>
-		_validateImageLink("link-logo-light"),
+		validateImageLink("link-logo-light"),
 	);
 	getID("link-logo-dark").addEventListener("change", () =>
-		_validateImageLink("link-logo-dark"),
+		validateImageLink("link-logo-dark"),
 	);
 
 	// Validação de Links no módulo de Customização
 	getID("link-attachments").addEventListener("change", () =>
-		_validateLink("link-attachments"),
+		validateLink("link-attachments"),
 	);
 	getID("link-drive").addEventListener("change", () =>
-		_validateLink("link-drive"),
+		validateLink("link-drive"),
 	);
 	getID("link-maps").addEventListener("change", () =>
-		_validateLink("link-maps"),
+		validateLink("link-maps"),
 	);
-	getID("link-pdf").addEventListener("change", () => _validateLink("link-pdf"));
-	getID("link-ppt").addEventListener("change", () => _validateLink("link-ppt"));
+	getID("link-pdf").addEventListener("change", () => validateLink("link-pdf"));
+	getID("link-ppt").addEventListener("change", () => validateLink("link-ppt"));
 	getID("link-sheet").addEventListener("change", () =>
-		_validateLink("link-sheet"),
+		validateLink("link-sheet"),
 	);
 	getID("link-vacina").addEventListener("change", () =>
-		_validateLink("link-vacina"),
+		validateLink("link-vacina"),
 	);
 
 	// Barra de pesquisa em destinos
 	getID("destinos-search").addEventListener("input", () =>
-		_searchDestinosListenerAction(),
+		searchDestinationsListenerAction(),
 	);
 
 	// Radios
 	getID("dark-and-light").addEventListener("change", () =>
-		_visibilityListenerAction(),
+		visibilityListenerAction(),
 	);
 	getID("light-exclusive").addEventListener("change", () =>
-		_visibilityListenerAction(),
+		visibilityListenerAction(),
 	);
 	getID("dark-exclusive").addEventListener("change", () =>
-		_visibilityListenerAction(),
+		visibilityListenerAction(),
 	);
 
 	window.addEventListener("beforeunload", (event) => {
-		if (_hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
+		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
 			event.preventDefault();
 			event.returnValue = translate("messages.exit_confirmation");
 		}
@@ -104,7 +104,7 @@ function _loadEventListeners() {
 }
 
 // Actions
-function _inicioListenerAction() {
+function inicioListenerAction() {
 	const inicioDiv = getID("inicio");
 	const fimDiv = getID("fim");
 
@@ -114,15 +114,15 @@ function _inicioListenerAction() {
 	if (
 		NEW_TRIP ||
 		!fim ||
-		_inputDateToJsDate(fim).getTime() < _inputDateToJsDate(inicio).getTime()
+		inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()
 	) {
-		fimDiv.value = _getNextInputDay(inicio);
+		fimDiv.value = getNextInputDay(inicio);
 	}
 
-	_reloadProgramacao();
+	reloadItinerary();
 }
 
-function _fimListenerAction() {
+function fimListenerAction() {
 	const inicioDiv = getID("inicio");
 	const fimDiv = getID("fim");
 
@@ -131,18 +131,18 @@ function _fimListenerAction() {
 
 	if (
 		!inicio ||
-		_inputDateToJsDate(fim).getTime() < _inputDateToJsDate(inicio).getTime()
+		inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()
 	) {
-		inicioDiv.value = _getPreviousInputDay(fim);
+		inicioDiv.value = getPreviousInputDay(fim);
 	}
 
-	_reloadProgramacao();
+	reloadItinerary();
 }
 
-function _visualizarListenerAction() {
+function visualizarListenerAction() {
 	if (DOCUMENT_ID) {
 		window.open(
-			`../view.html?v=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
+			`../view.html?v=${DOCUMENT_ID}&visibility=${getVisibility()}`,
 			"_blank",
 		);
 	} else {
@@ -150,29 +150,29 @@ function _visualizarListenerAction() {
 	}
 }
 
-function _addRemoveTransporteListener(j) {
+function addRemoveTransportationListener(j) {
 	const dynamicSelects = [
 		{
 			type: "transporte-pessoa",
 			selectID: `transporte-pessoa-select-${j}`,
 		},
 	];
-	_addRemoveChildListenerDS("transporte", j, dynamicSelects);
+	addRemoveChildListenerDS("transporte", j, dynamicSelects);
 }
 
-function _addRemoveGaleriaListener(j) {
+function addRemoveGaleriaListener(j) {
 	const dynamicSelects = [
 		{
 			type: "galeria-categoria",
 			selectID: `galeria-categoria-select-${j}`,
 		},
 	];
-	_addRemoveChildListenerDS("galeria", j, dynamicSelects);
+	addRemoveChildListenerDS("galeria", j, dynamicSelects);
 }
 
-function _visibilityListenerAction(visibilidade) {
+function visibilityListenerAction(visibilidade) {
 	if (!visibilidade) {
-		visibilidade = _buildVisibilidadeObject();
+		visibilidade = buildVisibilidadeObject();
 	}
 
 	getID("tema-claro").style.display = visibilidade.claro ? "block" : "none";

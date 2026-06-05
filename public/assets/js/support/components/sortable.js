@@ -2,8 +2,8 @@ import { _onAccordionOpen, _onAccordionClose, _areThereOpenedAccordions } from "
 
 let SORTABLE_SKIP_NEXT_ACTION = false;
 
-export function _initializeSortableForGroup(groupName, properties) {
-	function _initializeSortable(groupName) {
+export function initializeSortableForGroup(groupName, properties) {
+	function initializeSortable(groupName) {
 		const containers = document.querySelectorAll(
 			`.draggable-area[data-group="${groupName}"]`,
 		);
@@ -32,14 +32,14 @@ export function _initializeSortableForGroup(groupName, properties) {
 		});
 	}
 
-	_initializeSortable(groupName);
+	initializeSortable(groupName);
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
 				if (node.nodeType === 1 && node.classList.contains("draggable-area")) {
 					if (node.dataset.group === groupName) {
-						_initializeSortable(groupName);
+						initializeSortable(groupName);
 					}
 				}
 			});
@@ -54,22 +54,22 @@ export function _initializeSortableForGroup(groupName, properties) {
 	return observer; // Return the observer instance in case you want to disconnect it later (observer.disconnect())
 }
 
-export function _loadDraggablesWithAccordions(items = []) {
+export function loadDraggablesWithAccordions(items = []) {
 	for (const item of items) {
-		_initializeSortableForGroup(item);
+		initializeSortableForGroup(item);
 	}
 
-	_onAccordionOpen([_hideDragIcon]);
-	_onAccordionClose([_showDragIcon]);
+	onAccordionOpen([hideDragIcon]);
+	onAccordionClose([showDragIcon]);
 
-	function _changeDragIconVisibility(collapseElement, headerButton, toShow) {
+	function changeDragIconVisibility(collapseElement, headerButton, toShow) {
 		const type = headerButton.id.split("-")[0];
 
 		if (!items.includes(type)) {
 			return;
 		}
 
-		if (!toShow && _areThereOpenedAccordions(type)) {
+		if (!toShow && areThereOpenedAccordions(type)) {
 			SORTABLE_SKIP_NEXT_ACTION = true;
 			return;
 		}
@@ -94,16 +94,16 @@ export function _loadDraggablesWithAccordions(items = []) {
 		}
 	}
 
-	function _showDragIcon(collapseElement, headerButton) {
-		_changeDragIconVisibility(collapseElement, headerButton, true);
+	function showDragIcon(collapseElement, headerButton) {
+		changeDragIconVisibility(collapseElement, headerButton, true);
 	}
 
-	function _hideDragIcon(collapseElement, headerButton) {
-		_changeDragIconVisibility(collapseElement, headerButton, false);
+	function hideDragIcon(collapseElement, headerButton) {
+		changeDragIconVisibility(collapseElement, headerButton, false);
 	}
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._initializeSortableForGroup = _initializeSortableForGroup;
-window._loadDraggablesWithAccordions = _loadDraggablesWithAccordions;
+window.initializeSortableForGroup = initializeSortableForGroup;
+window.loadDraggablesWithAccordions = loadDraggablesWithAccordions;
 window.SORTABLE_SKIP_NEXT_ACTION = SORTABLE_SKIP_NEXT_ACTION;

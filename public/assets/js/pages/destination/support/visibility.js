@@ -1,11 +1,11 @@
-async function _loadDestinationVisibility() {
-	_loadVisibility();
+async function loadDestinationVisibility() {
+	loadVisibility();
 	const closeAction = _unloadMedias;
-	_loadEmbedVisibility({ closeAction });
-	await _adjustEditVisibility();
+	loadEmbedVisibility({ closeAction });
+	await adjustEditVisibility();
 }
 
-function _adjustButtonsPositionDestinos() {
+function adjustButtonsPositionDestinations() {
 	const first = "10px";
 	const second = "50px";
 
@@ -16,7 +16,7 @@ function _adjustButtonsPositionDestinos() {
 	nightMode.style.right = second;
 }
 
-function _applyDestinosMediaHeight() {
+function applyDestinationsMediaHeight() {
 	const keys = Object.keys(MEDIA_HYPERLINKS);
 	const firstDiv = getID("destinos-1");
 	if (keys.length > 0 && firstDiv) {
@@ -25,53 +25,53 @@ function _applyDestinosMediaHeight() {
 		const heightPortrait = (width * 16) / 9;
 		const heightLandscape = (width * 9) / 16;
 
-		_setCSSRule(".youtube-embed", "height", `${heightLandscape}px`);
+		setCSSRule(".youtube-embed", "height", `${heightLandscape}px`);
 
 		if (getID("content").offsetWidth <= 550) {
-			_setCSSRule(".tiktok-embed-v3", "height", `${heightPortrait}px`);
+			setCSSRule(".tiktok-embed-v3", "height", `${heightPortrait}px`);
 		} else {
-			_setCSSRule(".tiktok-embed-v3", "height", `533px`);
+			setCSSRule(".tiktok-embed-v3", "height", `533px`);
 		}
 	}
 }
 
-function _applyAccordionArrowCustomColor() {
+function applyAccordionArrowCustomColor() {
 	const color = THEME_COLOR.replace("#", "%23");
 	const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='${color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>`;
-	_setCSSRule(
+	setCSSRule(
 		".accordion-button::after",
 		"background-image",
 		`url("data:image/svg+xml,${svg}") !important`,
 	);
 }
 
-function _getDestinosTituloVisibility(item) {
+function getDestinationsTitleVisibility(item) {
 	if (item.nota || item.mapa || item.website || item.instagram) return "flex";
 	else return "none";
 }
 
-function _getLinksContainerVisibility(item) {
+function getLinksContainerVisibility(item) {
 	if (item.mapa || item.website || item.instagram) return "flex";
 	else return "none";
 }
 
-function _getPalcoRegiaoVisibility(item) {
+function getPalcoRegiaoVisibility(item) {
 	return item.regiao ? "block" : "none";
 }
 
-function _getValorVisibility(item) {
+function getValorVisibility(item) {
 	return item.valor ? "block" : "none";
 }
 
-function _getDescricaoVisibility(item) {
-	return _getDescricaoValue(item) ? "block" : "none";
+function getDescricaoVisibility(item) {
+	return getDescricaoValue(item) ? "block" : "none";
 }
 
-function _getSystemWidth() {
+function getSystemWidth() {
 	return window.innerWidth || document.documentElement.clientWidth;
 }
 
-function _openDestinosAccordion(id) {
+function openDestinationsAccordion(id) {
 	const num = String(id).match(/\d+$/)?.[0];
 	if (!num) return false;
 
@@ -80,8 +80,8 @@ function _openDestinosAccordion(id) {
 
 	for (const el of getID("content").children) {
 		const id = el.id;
-		if (_isDestinosAccordionOpen(id)) {
-			_closeDestinosAccordion(id);
+		if (isDestinationsAccordionOpen(id)) {
+			closeDestinationsAccordion(id);
 		}
 	}
 
@@ -91,7 +91,7 @@ function _openDestinosAccordion(id) {
 	return true;
 }
 
-function _closeDestinosAccordion(id) {
+function closeDestinationsAccordion(id) {
 	const num = String(id).match(/\d+$/)?.[0];
 	if (!num) return false;
 
@@ -104,7 +104,7 @@ function _closeDestinosAccordion(id) {
 	return true;
 }
 
-function _isDestinosAccordionOpen(id) {
+function isDestinationsAccordionOpen(id) {
 	const num = String(id).match(/\d+$/)?.[0];
 	if (!num) return false;
 

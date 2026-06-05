@@ -6,17 +6,17 @@
  * Generates a new unique traveler ID
  * @returns {string} Unique random ID
  */
-export function _getNewTravelerID() {
-	return _getRandomID({ pool: TRAVELERS.map((t) => t.id) });
+export function getNewTravelerID() {
+	return getRandomID({ pool: TRAVELERS.map((t) => t.id) });
 }
 
 /**
  * Validates and ensures all travelers have unique IDs
  */
-export function _validateTravelersObject() {
+export function validateTravelersObject() {
 	for (const traveler of TRAVELERS) {
 		if (!traveler.id) {
-			traveler.id = _getNewTravelerID();
+			traveler.id = getNewTravelerID();
 		}
 	}
 }
@@ -26,7 +26,7 @@ export function _validateTravelersObject() {
  * @param {Array} travelers - Array of traveler objects with nome property
  * @returns {boolean} True if there are duplicate non-empty names
  */
-export function _hasDuplicateTravelerNames(travelers) {
+export function hasDuplicateTravelerNames(travelers) {
 	const nomes = travelers.map((t) => t.nome);
 	return nomes.some((nome, index) => {
 		return nomes.indexOf(nome) !== index && nome !== "";

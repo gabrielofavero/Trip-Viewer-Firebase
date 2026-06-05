@@ -4,11 +4,11 @@ let DATE_REGIONAL_FORMAT;
 
 // ======= GETTERS =======
 
-export function _getCurrentHour() {
+export function getCurrentHour() {
 	return new Date().getUTCHours();
 }
 
-export function _getTodayDateObject() {
+export function getTodayDateObject() {
 	const now = new Date();
 	return {
 		year: now.getUTCFullYear(),
@@ -22,7 +22,7 @@ export function _getTodayDateObject() {
 
 // ======= CORE UTC CONVERSION HELPERS =======
 
-export function _convertFromDateObject(dateObject) {
+export function convertFromDateObject(dateObject) {
 	return new Date(
 		Date.UTC(
 			dateObject.year,
@@ -35,7 +35,7 @@ export function _convertFromDateObject(dateObject) {
 	);
 }
 
-export function _convertToDateObject(date) {
+export function convertToDateObject(date) {
 	return {
 		year: date.getUTCFullYear(),
 		month: date.getUTCMonth() + 1,
@@ -48,7 +48,7 @@ export function _convertToDateObject(date) {
 
 // ======= SAFE UTC DATE NORMALIZATION =======
 
-export function _getDateNoTime(date) {
+export function getDateNoTime(date) {
 	return new Date(
 		Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
 	);
@@ -56,13 +56,13 @@ export function _getDateNoTime(date) {
 
 // ======= ADD / SUBTRACT DAYS (timezone-proof) =======
 
-export function _addDaysUTC(date, days) {
+export function addDaysUTC(date, days) {
 	return new Date(date.getTime() + days * 86400000);
 }
 
 // ======= CONVERTERS =======
 
-export function _formattedDateToDate(formattedDate, time) {
+export function formattedDateToDate(formattedDate, time) {
 	const parts = formattedDate.split("-");
 	const y = Number(parts[0]);
 	const m = Number(parts[1]);
@@ -76,66 +76,66 @@ export function _formattedDateToDate(formattedDate, time) {
 	return new Date(Date.UTC(y, m - 1, d, hh, mm));
 }
 
-export function _formattedDateToDateObject(formattedDate, time) {
-	const date = _formattedDateToDate(formattedDate, time);
-	return _convertToDateObject(date);
+export function formattedDateToDateObject(formattedDate, time) {
+	const date = formattedDateToDate(formattedDate, time);
+	return convertToDateObject(date);
 }
 
-export function _inputDateToJsDate(inputDate) {
+export function inputDateToJsDate(inputDate) {
 	const [y, m, d] = inputDate.split("-").map(Number);
 	return new Date(Date.UTC(y, m - 1, d));
 }
 
-export function _jsDateToInputDate(jsDate) {
-	return _getDateString(jsDate, "yyyy-mm-dd");
+export function jsDateToInputDate(jsDate) {
+	return getDateString(jsDate, "yyyy-mm-dd");
 }
 
 // ======= DATE OBJECT ROUND TRIPS =======
 
-export function _dateObjectToKey(dateObject) {
-	const jsDate = _convertFromDateObject(dateObject);
-	return _jsDateToKey(jsDate);
+export function dateObjectToKey(dateObject) {
+	const jsDate = convertFromDateObject(dateObject);
+	return jsDateToKey(jsDate);
 }
 
-export function _dateObjectToInputDate(dateObject) {
-	const jsDate = _convertFromDateObject(dateObject);
-	return _jsDateToInputDate(jsDate);
+export function dateObjectToInputDate(dateObject) {
+	const jsDate = convertFromDateObject(dateObject);
+	return jsDateToInputDate(jsDate);
 }
 
-export function _dateObjectToString(dateObject) {
-	const jsDate = _convertFromDateObject(dateObject);
-	return _getDateString(jsDate);
+export function dateObjectToString(dateObject) {
+	const jsDate = convertFromDateObject(dateObject);
+	return getDateString(jsDate);
 }
 
 // ======= KEY <-> DATE CONVERSIONS =======
 
-export function _jsDateToKey(jsDate) {
-	const inputDate = _getDateString(jsDate, "yyyy-mm-dd");
-	return _inputDateToKey(inputDate);
+export function jsDateToKey(jsDate) {
+	const inputDate = getDateString(jsDate, "yyyy-mm-dd");
+	return inputDateToKey(inputDate);
 }
 
-export function _inputDateToKey(inputDate) {
+export function inputDateToKey(inputDate) {
 	return inputDate.split("-").join("");
 }
 
-export function _keyToInputDate(key) {
+export function keyToInputDate(key) {
 	return `${key.substr(0, 4)}-${key.substr(4, 2)}-${key.substr(6, 2)}`;
 }
 
-export function _keyToDateObject(key) {
-	const inputDate = _keyToInputDate(key);
-	return _formattedDateToDateObject(inputDate);
+export function keyToDateObject(key) {
+	const inputDate = keyToInputDate(key);
+	return formattedDateToDateObject(inputDate);
 }
 
 // ======= DATE ARRAY HELPERS (UTC-stable) =======
 
-export function _getArrayOfDates(start, end) {
+export function getArrayOfDates(start, end) {
 	const dates = [];
 	let currentDate = start;
 
 	while (currentDate <= end) {
 		dates.push(currentDate);
-		currentDate = _addDaysUTC(currentDate, 1);
+		currentDate = addDaysUTC(currentDate, 1);
 	}
 
 	return dates;
@@ -143,23 +143,23 @@ export function _getArrayOfDates(start, end) {
 
 // ======= INPUT DATE NAVIGATION =======
 
-export function _getAdjustedInputDate(inputDate, days) {
-	const currentDate = _inputDateToJsDate(inputDate);
-	const adjustedDate = _addDaysUTC(currentDate, days);
-	return _jsDateToInputDate(adjustedDate);
+export function getAdjustedInputDate(inputDate, days) {
+	const currentDate = inputDateToJsDate(inputDate);
+	const adjustedDate = addDaysUTC(currentDate, days);
+	return jsDateToInputDate(adjustedDate);
 }
 
-export function _getNextInputDay(inputDate) {
-	return _getAdjustedInputDate(inputDate, 1);
+export function getNextInputDay(inputDate) {
+	return getAdjustedInputDate(inputDate, 1);
 }
 
-export function _getPreviousInputDay(inputDate) {
-	return _getAdjustedInputDate(inputDate, -1);
+export function getPreviousInputDay(inputDate) {
+	return getAdjustedInputDate(inputDate, -1);
 }
 
 // ======= DATE STRING FORMATTING (UTC) =======
 
-export function _getDateString(date, format = "dd/mm/yyyy") {
+export function getDateString(date, format = "dd/mm/yyyy") {
 	const day = date.getUTCDate();
 	const month = date.getUTCMonth() + 1;
 	const year = date.getUTCFullYear();
@@ -200,29 +200,29 @@ export function _getDateString(date, format = "dd/mm/yyyy") {
 	return result;
 }
 
-export function _changeFormat(formattedDate, newFormat) {
-	return _getDateString(_formattedDateToDate(formattedDate), newFormat);
+export function changeFormat(formattedDate, newFormat) {
+	return getDateString(formattedDateToDate(formattedDate), newFormat);
 }
 
 // ======= TODAY / TOMORROW (UTC) =======
 
-export function _getTodayFormatted(format = "yyyy-mm-dd") {
-	return _getDateString(_getDateNoTime(new Date()), format);
+export function getTodayFormatted(format = "yyyy-mm-dd") {
+	return getDateString(getDateNoTime(new Date()), format);
 }
 
-export function _getTomorrowFormatted(format = "yyyy-mm-dd") {
-	const tomorrow = _addDaysUTC(_getDateNoTime(new Date()), 1);
-	return _getDateString(tomorrow, format);
+export function getTomorrowFormatted(format = "yyyy-mm-dd") {
+	const tomorrow = addDaysUTC(getDateNoTime(new Date()), 1);
+	return getDateString(tomorrow, format);
 }
 
 // ======= HUMAN FRIENDLY DATE TITLES =======
 
-export function _getDateTitle(date, format = "day_month") {
+export function getDateTitle(date, format = "day_month") {
 	let replacements = {};
 
 	if (format == "mini") {
-		const regionalFormat = _getDateRegionalFormat();
-		return `${_getWeekday(date.getUTCDay())}, ${_getDateString(date, regionalFormat)}`;
+		const regionalFormat = getDateRegionalFormat();
+		return `${getWeekday(date.getUTCDay())}, ${getDateString(date, regionalFormat)}`;
 	}
 
 	if (format.includes("day")) {
@@ -230,17 +230,17 @@ export function _getDateTitle(date, format = "day_month") {
 	}
 
 	if (format.includes("month")) {
-		replacements.month = _getMonth(date.getUTCMonth());
+		replacements.month = getMonth(date.getUTCMonth());
 	}
 
 	if (format.includes("weekday")) {
-		replacements.weekday = _getWeekday(date.getUTCDay());
+		replacements.weekday = getWeekday(date.getUTCDay());
 	}
 
 	return translate(`datetime.titles.${format}`, replacements);
 }
 
-export function _getWeekday(day) {
+export function getWeekday(day) {
 	const weekdays = [
 		translate("datetime.weekdays.default.sunday"),
 		translate("datetime.weekdays.default.monday"),
@@ -255,10 +255,10 @@ export function _getWeekday(day) {
 
 // ======= TIME FORMATTING (UTC) =======
 
-export function _getTimeString(hours, minutes, localize = false) {
+export function getTimeString(hours, minutes, localize = false) {
 	let period = "";
 
-	if (localize && _getLanguagePackName() == "en") {
+	if (localize && getLanguagePackName() == "en") {
 		if (hours > 12) {
 			hours -= 12;
 			period = "PM";
@@ -276,19 +276,19 @@ export function _getTimeString(hours, minutes, localize = false) {
 	return `${hours}:${minutes} ${period}`.trim();
 }
 
-export function _getTimeStringFromDate(date, localize = false) {
+export function getTimeStringFromDate(date, localize = false) {
 	let hours = date.getUTCHours();
 	let minutes = date.getUTCMinutes();
-	return _getTimeString(hours, minutes, localize);
+	return getTimeString(hours, minutes, localize);
 }
 
-export function _getTimeStringFromDateObj(dateObj, localize = false) {
-	return _getTimeString(dateObj.hour, dateObj.minute, localize);
+export function getTimeStringFromDateObj(dateObj, localize = false) {
+	return getTimeString(dateObj.hour, dateObj.minute, localize);
 }
 
 // ======= TIME HELPERS =======
 
-export function _jsTimeToVisualTime(time) {
+export function jsTimeToVisualTime(time) {
 	let result = [];
 	const parts = time.split(":");
 	const units = ["h", "m", "s"];
@@ -301,7 +301,7 @@ export function _jsTimeToVisualTime(time) {
 	return result.join(" ");
 }
 
-export function _getTimeBetweenDates(startDate, endDate) {
+export function getTimeBetweenDates(startDate, endDate) {
 	const diff = endDate.getTime() - startDate.getTime();
 
 	const hours = Math.floor(diff / 3600000);
@@ -315,11 +315,11 @@ export function _getTimeBetweenDates(startDate, endDate) {
 
 // ======= MISC =======
 
-export function _removeSlashesFromDate(date) {
+export function removeSlashesFromDate(date) {
 	return date.replace(/\//g, "");
 }
 
-export function _getMonth(month) {
+export function getMonth(month) {
 	const months = [
 		translate("datetime.months.january"),
 		translate("datetime.months.february"),
@@ -337,21 +337,21 @@ export function _getMonth(month) {
 	return months[month];
 }
 
-export function _getNextCategoriaInicioFim(tipo, lastEndStructure) {
+export function getNextCategoryStartEnd(tipo, lastEndStructure) {
 	let inicio = getID("inicio").value;
 	let fim = getID("fim").value;
 
-	const js = _getJs(`${tipo}-box`);
+	const js = getJs(`${tipo}-box`);
 
 	if (js.length != 0) {
-		const lastJ = _getLastJ(`${tipo}-box`);
+		const lastJ = getLastJ(`${tipo}-box`);
 		inicio = getID(`${lastEndStructure}-${lastJ}`).value;
 	}
 
 	return { inicio, fim };
 }
 
-export function _getTimestamp() {
+export function getTimestamp() {
 	const date = new Date();
 
 	return `${date.getUTCFullYear()}${(date.getUTCMonth() + 1)
@@ -365,50 +365,50 @@ export function _getTimestamp() {
 		.padStart(2, "0")}`;
 }
 
-export function _getDateRegionalFormat() {
+export function getDateRegionalFormat() {
 	if (!DATE_REGIONAL_FORMAT) {
 		DATE_REGIONAL_FORMAT =
-			_getLanguagePackName() === "en" ? "mm/dd/yyyy" : "dd/mm/yyyy";
+			getLanguagePackName() === "en" ? "mm/dd/yyyy" : "dd/mm/yyyy";
 	}
 	return DATE_REGIONAL_FORMAT;
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._getCurrentHour = _getCurrentHour;
-window._getTodayDateObject = _getTodayDateObject;
-window._convertFromDateObject = _convertFromDateObject;
-window._convertToDateObject = _convertToDateObject;
-window._getDateNoTime = _getDateNoTime;
-window._addDaysUTC = _addDaysUTC;
-window._formattedDateToDate = _formattedDateToDate;
-window._formattedDateToDateObject = _formattedDateToDateObject;
-window._inputDateToJsDate = _inputDateToJsDate;
-window._jsDateToInputDate = _jsDateToInputDate;
-window._dateObjectToKey = _dateObjectToKey;
-window._dateObjectToInputDate = _dateObjectToInputDate;
-window._dateObjectToString = _dateObjectToString;
-window._jsDateToKey = _jsDateToKey;
-window._inputDateToKey = _inputDateToKey;
-window._keyToInputDate = _keyToInputDate;
-window._keyToDateObject = _keyToDateObject;
-window._getArrayOfDates = _getArrayOfDates;
-window._getAdjustedInputDate = _getAdjustedInputDate;
-window._getNextInputDay = _getNextInputDay;
-window._getPreviousInputDay = _getPreviousInputDay;
-window._getDateString = _getDateString;
-window._changeFormat = _changeFormat;
-window._getTodayFormatted = _getTodayFormatted;
-window._getTomorrowFormatted = _getTomorrowFormatted;
-window._getDateTitle = _getDateTitle;
-window._getWeekday = _getWeekday;
-window._getTimeString = _getTimeString;
-window._getTimeStringFromDate = _getTimeStringFromDate;
-window._getTimeStringFromDateObj = _getTimeStringFromDateObj;
-window._jsTimeToVisualTime = _jsTimeToVisualTime;
-window._getTimeBetweenDates = _getTimeBetweenDates;
-window._removeSlashesFromDate = _removeSlashesFromDate;
-window._getMonth = _getMonth;
-window._getNextCategoriaInicioFim = _getNextCategoriaInicioFim;
-window._getTimestamp = _getTimestamp;
-window._getDateRegionalFormat = _getDateRegionalFormat;
+window.getCurrentHour = getCurrentHour;
+window.getTodayDateObject = getTodayDateObject;
+window.convertFromDateObject = convertFromDateObject;
+window.convertToDateObject = convertToDateObject;
+window.getDateNoTime = getDateNoTime;
+window.addDaysUTC = addDaysUTC;
+window.formattedDateToDate = formattedDateToDate;
+window.formattedDateToDateObject = formattedDateToDateObject;
+window.inputDateToJsDate = inputDateToJsDate;
+window.jsDateToInputDate = jsDateToInputDate;
+window.dateObjectToKey = dateObjectToKey;
+window.dateObjectToInputDate = dateObjectToInputDate;
+window.dateObjectToString = dateObjectToString;
+window.jsDateToKey = jsDateToKey;
+window.inputDateToKey = inputDateToKey;
+window.keyToInputDate = keyToInputDate;
+window.keyToDateObject = keyToDateObject;
+window.getArrayOfDates = getArrayOfDates;
+window.getAdjustedInputDate = getAdjustedInputDate;
+window.getNextInputDay = getNextInputDay;
+window.getPreviousInputDay = getPreviousInputDay;
+window.getDateString = getDateString;
+window.changeFormat = changeFormat;
+window.getTodayFormatted = getTodayFormatted;
+window.getTomorrowFormatted = getTomorrowFormatted;
+window.getDateTitle = getDateTitle;
+window.getWeekday = getWeekday;
+window.getTimeString = getTimeString;
+window.getTimeStringFromDate = getTimeStringFromDate;
+window.getTimeStringFromDateObj = getTimeStringFromDateObj;
+window.jsTimeToVisualTime = jsTimeToVisualTime;
+window.getTimeBetweenDates = getTimeBetweenDates;
+window.removeSlashesFromDate = removeSlashesFromDate;
+window.getMonth = getMonth;
+window.getNextCategoryStartEnd = getNextCategoryStartEnd;
+window.getTimestamp = getTimestamp;
+window.getDateRegionalFormat = getDateRegionalFormat;
 window.DATE_REGIONAL_FORMAT = DATE_REGIONAL_FORMAT;

@@ -7,31 +7,31 @@ const FILTER_SORT_KEYS_ORDER = {
 const FILTER_SORT_DATA = {};
 
 // Loading Action
-function _loadSortAndFilter(force = false) {
-	_loadFilterOptions(force);
-	_loadSortOptions(force);
-	_loadSortAndFilterVisibility();
-	_sort();
-	_filter();
+function loadSortAndFilter(force = false) {
+	loadFilterOptions(force);
+	loadSortOptions(force);
+	loadSortAndFilterVisibility();
+	sort();
+	filter();
 }
 
-function _loadSortAndFilterVisibility() {
+function loadSortAndFilterVisibility() {
 	const onlyOne = CONTENT.length === 1;
 
 	getID("sort").style.display = onlyOne ? "none" : "";
-	getID("filter").style.display = onlyOne || _noFilters() ? "none" : "";
+	getID("filter").style.display = onlyOne || noFilters() ? "none" : "";
 
-	function _noFilters() {
+	function noFilters() {
 		return !(
-			_shouldDisplayPlanned() ||
-			_shouldDisplayScores() ||
-			_shouldDisplayRegions() ||
-			_shouldDisplayPrices()
+			shouldDisplayPlanned() ||
+			shouldDisplayScores() ||
+			shouldDisplayRegions() ||
+			shouldDisplayPrices()
 		);
 	}
 }
 
-function _loadFilterSortingData(titles) {
+function loadFilterSortingData(titles) {
 	if (!FILTER_SORT_DATA[ACTIVE_CATEGORY]) {
 		FILTER_SORT_DATA[ACTIVE_CATEGORY] = {};
 	}
@@ -39,24 +39,24 @@ function _loadFilterSortingData(titles) {
 		let data;
 		switch (title) {
 			case "region":
-				data = _getDataSet("regiao");
+				data = getDataSet("regiao");
 				data.delete("");
 				break;
 			case "planned":
-				data = _getDataSet("planejado");
+				data = getDataSet("planejado");
 				break;
 			case "scores":
-				data = _getDataSet("nota");
+				data = getDataSet("nota");
 				break;
 			case "prices":
-				data = _getPriceBuckets();
+				data = getPriceBuckets();
 		}
 		FILTER_SORT_DATA[ACTIVE_CATEGORY][title] = data || new Set();
 	}
 }
 
 // Drawer
-function _deactivateFilterSortContainerButtons() {
+function deactivateFilterSortContainerButtons() {
 	const container = getID("filter-sort-container");
 	if (!container) return;
 
@@ -65,14 +65,14 @@ function _deactivateFilterSortContainerButtons() {
 		.forEach((btn) => btn.classList.remove("active"));
 }
 
-function _activateFilterSortContainerButton(buttonEl) {
+function activateFilterSortContainerButton(buttonEl) {
 	if (!buttonEl) return;
 
-	_deactivateFilterSortContainerButtons();
+	deactivateFilterSortContainerButtons();
 	buttonEl.classList.add("active");
 }
 
-function _openFilterSortDrawer({
+function openFilterSortDrawer({
 	triggerId,
 	getInnerHTML,
 	clickAction,
@@ -81,30 +81,30 @@ function _openFilterSortDrawer({
 	const trigger = getID(triggerId);
 	const title = trigger.innerText;
 
-	if (_isDrawerOpen() && title === getID("drawerTitle").innerText) {
-		_closeDrawer();
+	if (isDrawerOpen() && title === getID("drawerTitle").innerText) {
+		closeDrawer();
 		return;
 	}
 
 	const actions = {
-		beforeOpen: _closeAddedDestino,
+		beforeOpen: closeAddedDestination,
 		click: clickAction,
 		load: loadAction,
-		close: _deactivateFilterSortContainerButtons,
+		close: deactivateFilterSortContainerButtons,
 	};
 
-	_openDrawer(title, getInnerHTML(), actions);
-	_activateFilterSortContainerButton(trigger);
+	openDrawer(title, getInnerHTML(), actions);
+	activateFilterSortContainerButton(trigger);
 }
 
 // Helpers
-function _shouldDisplayRegions() {
-	const regioes = _getDataSet("regiao");
-	regioes.delete("");
-	return regioes.size > 1;
+function shouldDisplayRegions() {
+	const REGIONS = getDataSet("regiao");
+	REGIONS.delete("");
+	return REGIONS.size > 1;
 }
 
-function _shouldDisplayPlanned() {
+function shouldDisplayPlanned() {
 	const item = PLANNED_DESTINATION[ACTIVE_CATEGORY];
 	if (!item || Object.keys(PLANNED_DESTINATION[ACTIVE_CATEGORY]) <= 1) {
 		return false;
@@ -112,12 +112,12 @@ function _shouldDisplayPlanned() {
 	return true;
 }
 
-function _shouldDisplayScores() {
-	const notas = _getDataSet("nota");
+function shouldDisplayScores() {
+	const notas = getDataSet("nota");
 	return notas.size > 1;
 }
 
-function _shouldDisplayPrices() {
-	const precos = _getPrices();
+function shouldDisplayPrices() {
+	const precos = getPrices();
 	return precos.size > 1;
 }

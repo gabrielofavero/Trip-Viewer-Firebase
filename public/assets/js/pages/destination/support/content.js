@@ -1,14 +1,14 @@
-import { getMoedas } from '../../../core/config.js';
+import { getCurrencies } from '../../../core/config.js';
 
-function _getDestinosHTML({ j, id, item, closeAction = "_processAccordion" }) {
-	const planejado = _getPlanejado(id);
+function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" }) {
+	const planejado = getPlanejado(id);
 	const editBtn = true;
 	return `
     <div class="accordion-group" id='destinos-box-${j}'>
         <div id="destinos-${j}" class="accordion-item" data-drag-listener="true" data-id="${id}">
             <h2 class="accordion-header" id="heading-destinos-${j}">
                 <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false" aria-controls="collapse-destinos-${j}" onclick="${closeAction}(${j})">
-                    <span class="title-text" id="destinos-titulo-text-${j}">${_getDestinationTitle(item)}</span>
+                    <span class="title-text" id="destinos-titulo-text-${j}">${getDestinationTitle(item)}</span>
                     <div class="icon-container new-box" style="display: ${item.novo ? "block" : "none"}">
                         <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3" style="enable-background:new 0 0 11.4 5.3;" xml:space="preserve" height="1em"> <style type="text/css"> .st0 { fill: none; }</style>
                             <path d="M11.4,4.8l-1.3-2.2l1.3-2.1c0.1-0.2,0-0.4-0.1-0.5c-0.1,0-0.1,0-0.2,0H0.7C0.3,0,0,0.3,0,0.7v4C0,5,0.3,5.3,0.7,5.3h10.4 c0.2,0,0.3-0.1,0.3-0.3C11.4,4.9,11.4,4.9,11.4,4.8 M3.5,3.7H3.1L2,2.3v1.5H1.7V1.7H2l1.1,1.5V1.7h0.4L3.5,3.7z M5.6,2H4.4v0.5h1.1 v0.3H4.4v0.5h1.2v0.3H4.1v-2h1.5L5.6,2z M8.4,3.7H8L7.5,2.2L7,3.7H6.6L5.9,1.7h0.4l0.4,1.5l0.5-1.5h0.4l0.5,1.5l0.4-1.5H9L8.4,3.7z" />
@@ -19,18 +19,18 @@ function _getDestinosHTML({ j, id, item, closeAction = "_processAccordion" }) {
                         <i class="iconify planejado" data-icon="fa-solid:check"></i>
                     </div>
                     <div class="icon-container" style="display: ${item.nota ? "block" : "none"}">
-                        <i class="iconify nota ${_getNotaClass(item.nota)}" data-icon="${_getNotaIcon(item.nota)}"></i>
+                        <i class="iconify nota ${getNotaClass(item.nota)}" data-icon="${getNotaIcon(item.nota)}"></i>
                     </div>
                 </button>
             </h2>
             <div id="collapse-destinos-${j}" class="accordion-collapse collapse" aria-labelledby="heading-destinos-${j}" data-bs-parent="#destinos-box">
-                ${_getDestinosBoxHTML({ j, id, item, planejado, editBtn })}
+                ${getDestinationsBoxHTML({ j, id, item, planejado, editBtn })}
             </div>
         </div>
     </div>`;
 }
 
-function _getDestinosAccordionBodyHTML({
+function getDestinationsAccordionBodyHTML({
 	j,
 	item,
 	valores,
@@ -39,7 +39,7 @@ function _getDestinosAccordionBodyHTML({
 	editBtn = true,
 }) {
 	if (!valores) {
-		valores = getMoedas().escala[FIRESTORE_DESTINOS_DATA.moeda];
+		valores = getCurrencies().escala[FIRESTORE_DESTINOS_DATA.moeda];
 	}
 
 	if (!moeda) {
@@ -48,7 +48,7 @@ function _getDestinosAccordionBodyHTML({
 
 	const ediText = editBtn
 		? `<div class="edit-container" id="edit-container-${j}">
-    <button class="edit-btn" id="edit-${j}" onclick="_edit(${j})">
+    <button class="edit-btn" id="edit-${j}" onclick="edit(${j})">
         <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
         <span>${translate("labels.edit")}</span>
     </button>
@@ -56,15 +56,15 @@ function _getDestinosAccordionBodyHTML({
 		: "";
 
 	return `
-        <div class="destinos-titulo" style="display: ${_getDestinosTituloVisibility(item)}">
+        <div class="destinos-titulo" style="display: ${getDestinationsTitleVisibility(item)}">
             <div class="notas-box">
-                <i class="iconify nota-sem-margem ${_getNotaClass(item.nota)}" data-icon="${_getNotaIcon(item.nota)}"></i>
-                <span class="nota-texto">${_getNotaTranslation(item.nota)}</span>
+                <i class="iconify nota-sem-margem ${getNotaClass(item.nota)}" data-icon="${getNotaIcon(item.nota)}"></i>
+                <span class="nota-texto">${getNotaTranslation(item.nota)}</span>
             </div>
-            <div class="links-container" style="display: ${_getLinksContainerVisibility(item)}">
-                <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? "block" : "none"}"${_getLinkOnClick(item, "mapa")}></i>
-                <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? "block" : "none"}"${_getLinkOnClick(item, "instagram")}></i>
-                <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? "block" : "none"}"${_getLinkOnClick(item, "website")}></i>
+            <div class="links-container" style="display: ${getLinksContainerVisibility(item)}">
+                <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? "block" : "none"}"${getLinkOnClick(item, "mapa")}></i>
+                <i class="iconify link" data-icon="ri:instagram-line" style="display: ${item.instagram ? "block" : "none"}"${getLinkOnClick(item, "instagram")}></i>
+                <i class="iconify link" data-icon="tabler:world" style="display: ${item.website ? "block" : "none"}"${getLinkOnClick(item, "website")}></i>
             </div>
         </div>
         <div class="destinos-text">
@@ -77,20 +77,20 @@ function _getDestinosAccordionBodyHTML({
                 ${item.regiao || ""}
             </div>
             <div class="destinos-topicos-box" style="display: block">
-                <div class="destinos-topico" style="display: ${_getValorVisibility(item)}">
+                <div class="destinos-topico" style="display: ${getValorVisibility(item)}">
                     <i class="iconify color-icon" data-icon="bx:dollar"></i>
-                    ${_getValorValue(item, valores, moeda)}
+                    ${getValorValue(item, valores, moeda)}
                 </div>
             </div>
-            <div class="destinos-descricao" style="display: ${_getDescricaoVisibility(item)}">
-                ${_getDescricaoValue(item)}
+            <div class="destinos-descricao" style="display: ${getDescricaoVisibility(item)}">
+                ${getDescricaoValue(item)}
             </div>
             <div id="midia-${j}" class="midia-container"></div>
             ${ediText}
         </div>`;
 }
 
-function _getEditHTML(j) {
+function getEditHTML(j) {
 	return `
         <div class="edit-close-container">
             <button id="close-btn-${j}" class="close-btn">✕</button>
@@ -118,10 +118,10 @@ function _getEditHTML(j) {
                 <div class="edit-column-container">
                     <select class="edit-input" id="editar-planejado-select-data-${j}"></select>
                     <select class="edit-input" id="editar-planejado-select-turno-${j}">
-                        <option value="madrugada">${_getTurno("madrugada")}</option>
-                        <option value="manha">${_getTurno("manha")}</option>
-                        <option value="tarde">${_getTurno("tarde")}</option>
-                        <option value="noite">${_getTurno("noite")}</option>
+                        <option value="madrugada">${getTurno("madrugada")}</option>
+                        <option value="manha">${getTurno("manha")}</option>
+                        <option value="tarde">${getTurno("tarde")}</option>
+                        <option value="noite">${getTurno("noite")}</option>
                     </select>
                 </div>
             </div>
@@ -148,7 +148,7 @@ function _getEditHTML(j) {
                 <div class="edit-column-container">
                     <select class="edit-input" id="editar-regiao-select-${j}">
                         <option value="">${translate("destination.filter.region.none")}</option>
-                        ${_getRegionOptionsHTML()}
+                        ${getRegionOptionsHTML()}
                         <option value="custom">${translate("labels.custom")}</option>
                     </select>
                     <input id="editar-regiao-input-${j}" style="display: none" class="edit-input" type="text" placeholder="${translate("labels.region")} (${translate("labels.optional")})" />
@@ -160,7 +160,7 @@ function _getEditHTML(j) {
                     <select class="edit-input" id="editar-valor-select-${j}">
                         <option value="default">${translate("destination.price.default")}</option>
                         <option value="-">${translate("destination.price.free")}</option>
-                        ${_getValuesOptionsHTML()}
+                        ${getValuesOptionsHTML()}
                         <option value="custom">${translate("labels.custom")}</option>
                     </select>
                     <input id="editar-valor-input-${j}" style="display: none" class="edit-input" type="text" placeholder="${translate("labels.cost")} (${translate("labels.optional")})" />
@@ -170,7 +170,7 @@ function _getEditHTML(j) {
                 <i class="iconify color-icon edit" data-icon="tabler:edit"></i>
                 <div class="edit-column-container">
                     <select class="edit-input" id="editar-descricao-lang-${j}">
-                        ${_getDescriptionLanguageOptionsHTML()}
+                        ${getDescriptionLanguageOptionsHTML()}
                     </select>
                     <textarea id="editar-descricao-en-${j}" class="edit-input edit-textarea description-textarea" type="text" placeholder="${translate("labels.description.title")} (${translate("labels.optional")})"></textarea>
                     <textarea id="editar-descricao-pt-${j}" class="edit-input edit-textarea description-textarea" type="text" placeholder="${translate("labels.description.title")} (${translate("labels.optional")})"></textarea>
@@ -193,7 +193,7 @@ function _getEditHTML(j) {
         </div>`;
 }
 
-function _getRegionOptionsHTML() {
+function getRegionOptionsHTML() {
 	let optionsHTML = "";
 	for (const region of FILTER_SORT_DATA[ACTIVE_CATEGORY].region) {
 		optionsHTML += `<option value="${region}">${region}</option>`;
@@ -201,8 +201,8 @@ function _getRegionOptionsHTML() {
 	return optionsHTML;
 }
 
-function _getValuesOptionsHTML() {
-	const moedas = getMoedas().escala[FIRESTORE_DESTINOS_DATA.moeda];
+function getValuesOptionsHTML() {
+	const moedas = getCurrencies().escala[FIRESTORE_DESTINOS_DATA.moeda];
 	return `
         <option value="$">${moedas["$"]}</option>
         <option value="$$">${moedas["$$"]}</option>
@@ -210,7 +210,7 @@ function _getValuesOptionsHTML() {
         <option value="$$$$">${translate("destination.price.max", { value: moedas["$$$$"] })}</option>`;
 }
 
-function _getDescriptionLanguageOptionsHTML() {
+function getDescriptionLanguageOptionsHTML() {
 	let optionsHTML = "";
 	for (const key of LANGUAGES) {
 		const lang = translate(`labels.language.${key}`);

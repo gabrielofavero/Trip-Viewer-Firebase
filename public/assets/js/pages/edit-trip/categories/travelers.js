@@ -2,9 +2,9 @@
 // Traveler functions moved to models/traveler.js — imported here for backward compat
 
 import {
-	_getNewTravelerID,
-	_validateTravelersObject,
-	_hasDuplicateTravelerNames,
+	getNewTravelerID,
+	validateTravelersObject,
+	hasDuplicateTravelerNames,
 } from '../../../models/traveler.js';
 
 var TRAVELERS = [];
@@ -12,39 +12,39 @@ const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the f
 let TRAVELER_SELECT_OPTIONS = "";
 
 // BACKWARD COMPAT: attach to window during migration
-window._getNewTravelerID = _getNewTravelerID;
-window._validateTravelersObject = _validateTravelersObject;
-window._hasDuplicateTravelerNames = _hasDuplicateTravelerNames;
+window.getNewTravelerID = getNewTravelerID;
+window.validateTravelersObject = validateTravelersObject;
+window.hasDuplicateTravelerNames = hasDuplicateTravelerNames;
 
-function _openTravelersInfo() {
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+function openTravelersInfo() {
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = translate("trip.travelers.info");
-	propriedades.containers = _getContainersInput();
-	propriedades.conteudo = _getTravelersInfoContent();
+	propriedades.containers = getContainersInput();
+	propriedades.conteudo = getTravelersInfoContent();
 	propriedades.botoes = [
 		{
 			tipo: "cancelar",
 		},
 		{
 			tipo: "confirmar",
-			acao: `_saveTravelersInfo()`,
+			acao: `saveTravelersInfo()`,
 		},
 	];
 
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 	getID("quantidadePessoas").addEventListener("change", function () {
-		getID("travelers-names-container").innerHTML = _getTravelersNameContent();
+		getID("travelers-names-container").innerHTML = getTravelersNameContent();
 	});
 }
 
-function _getTravelersInfoContent() {
+function getTravelersInfoContent() {
 	return `
     <div class="nice-form-group">
         <label>${translate("trip.travelers.quantity")}</label>
         <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" min="1" max="10" value="${TRAVELERS.length || 1}" />
     </div>
     <div id="travelers-names-container">
-        ${_getTravelersNameContent()}
+        ${getTravelersNameContent()}
     </div>
     <div class="nice-form-group" id="travelers-names-unique" style="display: none">
         <span class="red">${translate("trip.travelers.unique")}</span>
@@ -53,7 +53,7 @@ function _getTravelersInfoContent() {
     `;
 }
 
-function _getTravelersNameContent() {
+function getTravelersNameContent() {
 	const properties = [];
 	const nameLabel = translate("labels.name");
 	const quantidadePessoas = getID("quantidadePessoas");
@@ -64,7 +64,7 @@ function _getTravelersNameContent() {
 	for (let j = 1; j <= quantity; j++) {
 		const traveler = TRAVELERS[j - 1];
 		const id =
-			getID(`traveler-id-${j}`)?.value || traveler?.id || _getNewTravelerID();
+			getID(`traveler-id-${j}`)?.value || traveler?.id || getNewTravelerID();
 		const name = getID(`traveler-name-${j}`)?.value || traveler?.nome || "";
 
 		properties.push(`
@@ -79,7 +79,7 @@ function _getTravelersNameContent() {
 	return properties.join("");
 }
 
-function _saveTravelersInfo() {
+function saveTravelersInfo() {
 	let j = 1;
 	const travelers = [];
 	while (getID(`traveler-name-${j}`)) {
@@ -101,14 +101,14 @@ function _saveTravelersInfo() {
 	}
 
 	TRAVELERS = travelers;
-	_closeMessage();
-	_updateTravelersButtonLabel();
+	closeMessage();
+	updateTravelersButtonLabel();
 	if (DOCUMENT_ID) {
-		_loadProgramacaoData();
+		loadItineraryData();
 	}
 }
 
-function _getTravelersFieldset(id) {
+function getTravelersFieldset(id) {
 	const result = document.createElement("div");
 	result.className = "nice-form-group";
 
@@ -168,15 +168,15 @@ function _getTravelersFieldset(id) {
 	return travelers > 1 ? result.outerHTML : "";
 }
 
-function _enableAllTravelersFieldset(id) {
+function enableAllTravelersFieldset(id) {
 	const checkedData = [];
 	for (const traveler of TRAVELERS) {
 		checkedData.push({ id: traveler.id, nome: traveler.nome, isPresent: true });
 	}
-	_updateTravelersFieldset(id, checkedData);
+	updateTravelersFieldset(id, checkedData);
 }
 
-function _updateTravelersFieldset(id, checkedData = []) {
+function updateTravelersFieldset(id, checkedData = []) {
 	let j = 1;
 	while (getID(`${id}-${j}`)) {
 		const checkbox = getID(`${id}-${j}`);
@@ -191,7 +191,7 @@ function _updateTravelersFieldset(id, checkedData = []) {
 	}
 }
 
-function _getCheckedTravelersIDs(containerID) {
+function getCheckedTravelersIDs(containerID) {
 	const container = getID(containerID);
 	if (!container) {
 		return [];
@@ -223,7 +223,7 @@ function _getCheckedTravelersIDs(containerID) {
 	return result;
 }
 
-function _validateTravelersFieldset(id) {
+function validateTravelersFieldset(id) {
 	const mandatory = getID(`${id}-mandatory`);
 	if (!mandatory) {
 		return true;
@@ -245,7 +245,7 @@ function _validateTravelersFieldset(id) {
 	return isValid;
 }
 
-function _updateTravelersButtonLabel() {
+function updateTravelersButtonLabel() {
 	const el = getID("travelers-info");
 
 	if (TRAVELERS.length === 0) {
@@ -254,10 +254,10 @@ function _updateTravelersButtonLabel() {
 	}
 
 	const names = TRAVELERS.map((t) => t.nome).filter((n) => n);
-	el.textContent = _getReadableArray(names);
+	el.textContent = getReadableArray(names);
 }
 
-function _getTravelersSelectOptionsHTML() {
+function getTravelersSelectOptionsHTML() {
 	if (!TRAVELER_SELECT_OPTIONS) {
 		for (const traveler of TRAVELERS) {
 			if (!traveler.nome) {
@@ -269,12 +269,12 @@ function _getTravelersSelectOptionsHTML() {
 	return TRAVELER_SELECT_OPTIONS;
 }
 
-function _getTravelerName(id) {
+function getTravelerName(id) {
 	const traveler = TRAVELERS.find((t) => t.id === id);
 	return traveler ? traveler.nome : "";
 }
 
-function _getTravelersObject() {
+function getTravelersObject() {
 	const result = {};
 	for (const traveler of TRAVELERS) {
 		result[traveler.id] = traveler.nome;

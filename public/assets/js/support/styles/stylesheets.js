@@ -1,5 +1,5 @@
 // ======= CSS RULES =======
-export function _setCSSRule(selector, property, value) {
+export function setCSSRule(selector, property, value) {
 	const rule = `${property}: ${value};`;
 	let styleElement = document.getElementById("custom-styles");
 
@@ -35,7 +35,7 @@ export function _setCSSRule(selector, property, value) {
 	}
 }
 
-export function _removeCSSRule(selector, property) {
+export function removeCSSRule(selector, property) {
 	let styleElement = document.getElementById("custom-styles");
 	if (!styleElement) {
 		return;
@@ -54,20 +54,20 @@ export function _removeCSSRule(selector, property) {
 	}
 }
 
-export function _setCSSRuleBatch(selector, properties) {
+export function setCSSRuleBatch(selector, properties) {
 	for (const property in properties) {
-		_setCSSRule(selector, property, properties[property]);
+		setCSSRule(selector, property, properties[property]);
 	}
 }
 
-export function _removeCSSRuleBatch(selector, properties) {
+export function removeCSSRuleBatch(selector, properties) {
 	for (const property in properties) {
-		_removeCSSRule(selector, properties[property]);
+		removeCSSRule(selector, properties[property]);
 	}
 }
 
 // ======= CSS MEDIA RULES =======
-export function _setCSSMediaRule(media, selector, property, value) {
+export function setCSSMediaRule(media, selector, property, value) {
 	const rule = `${selector} { ${property}: ${value}; }`;
 	const mediaRule = `@media (${media}) { ${rule} }`;
 	let styleElement = document.getElementById("custom-media-styles");
@@ -116,7 +116,7 @@ export function _setCSSMediaRule(media, selector, property, value) {
 	}
 }
 
-export function _removeCSSMediaRule(media, selector, property) {
+export function removeCSSMediaRule(media, selector, property) {
 	let styleElement = document.getElementById("custom-media-styles");
 	if (!styleElement) {
 		return;
@@ -145,35 +145,35 @@ export function _removeCSSMediaRule(media, selector, property) {
 	}
 }
 
-export function _setCSSMediaRuleBatch(media, selector, properties) {
+export function setCSSMediaRuleBatch(media, selector, properties) {
 	for (const property in properties) {
-		_setCSSMediaRule(media, selector, property, properties[property]);
+		setCSSMediaRule(media, selector, property, properties[property]);
 	}
 }
 
-export function _removeCSSMediaRuleBatch(media, selector, properties) {
+export function removeCSSMediaRuleBatch(media, selector, properties) {
 	for (const property in properties) {
-		_removeCSSMediaRule(media, selector, properties[property]);
+		removeCSSMediaRule(media, selector, properties[property]);
 	}
 }
 
 // ======= CSS VARIABLES =======
-export function _setCSSVariable(variable, value) {
+export function setCSSVariable(variable, value) {
 	document.documentElement.style.setProperty(`--${variable}`, value);
 }
 
-export function _removeCSSVariable(variable) {
+export function removeCSSVariable(variable) {
 	document.documentElement.style.removeProperty(`--${variable}`);
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._setCSSRule = _setCSSRule;
-window._removeCSSRule = _removeCSSRule;
-window._setCSSRuleBatch = _setCSSRuleBatch;
-window._removeCSSRuleBatch = _removeCSSRuleBatch;
-window._setCSSMediaRule = _setCSSMediaRule;
-window._removeCSSMediaRule = _removeCSSMediaRule;
-window._setCSSMediaRuleBatch = _setCSSMediaRuleBatch;
-window._removeCSSMediaRuleBatch = _removeCSSMediaRuleBatch;
-window._setCSSVariable = _setCSSVariable;
-window._removeCSSVariable = _removeCSSVariable;
+window.setCSSRule = setCSSRule;
+window.removeCSSRule = removeCSSRule;
+window.setCSSRuleBatch = setCSSRuleBatch;
+window.removeCSSRuleBatch = removeCSSRuleBatch;
+window.setCSSMediaRule = setCSSMediaRule;
+window.removeCSSMediaRule = removeCSSMediaRule;
+window.setCSSMediaRuleBatch = setCSSMediaRuleBatch;
+window.removeCSSMediaRuleBatch = removeCSSMediaRuleBatch;
+window.setCSSVariable = setCSSVariable;
+window.removeCSSVariable = removeCSSVariable;

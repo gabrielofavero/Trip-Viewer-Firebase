@@ -1,4 +1,4 @@
-export function _animate(
+export function animate(
 	fadeIn,
 	fadeOut,
 	from = 0,
@@ -11,41 +11,41 @@ export function _animate(
 
 	if (fadeIn && fadeOut) {
 		if (from == to) {
-			_fade(fadeOut, fadeIn, 250, isBlock);
+			fade(fadeOut, fadeIn, 250, isBlock);
 		} else if (from > to) {
-			_swipe(fadeOut, fadeIn, backwards, isBlock);
+			swipe(fadeOut, fadeIn, backwards, isBlock);
 		} else {
-			_swipe(fadeOut, fadeIn, forward, isBlock);
+			swipe(fadeOut, fadeIn, forward, isBlock);
 		}
 	} else if (fadeIn) {
 		if (from == to) {
-			_fadeIn(fadeIn, 250, isBlock);
+			fadeIn(fadeIn, 250, isBlock);
 		} else if (from > to) {
-			_swipeIn(fadeIn, backwards, isBlock);
+			swipeIn(fadeIn, backwards, isBlock);
 		} else {
-			_swipeIn(fadeIn, forward, isBlock);
+			swipeIn(fadeIn, forward, isBlock);
 		}
 	}
 }
 
-export function _animateRight(fadeIn, fadeOut, isBlock = true) {
-	_animate(fadeIn, fadeOut, 0, 1, true, isBlock);
+export function animateRight(fadeIn, fadeOut, isBlock = true) {
+	animate(fadeIn, fadeOut, 0, 1, true, isBlock);
 }
 
-export function _animateLeft(fadeIn, fadeOut, isBlock = true) {
-	_animate(fadeIn, fadeOut, 1, 0, true, isBlock);
+export function animateLeft(fadeIn, fadeOut, isBlock = true) {
+	animate(fadeIn, fadeOut, 1, 0, true, isBlock);
 }
 
-export function _animateUp(fadeIn, fadeOut, isBlock = true) {
-	_animate(fadeIn, fadeOut, 1, 0, false, isBlock);
+export function animateUp(fadeIn, fadeOut, isBlock = true) {
+	animate(fadeIn, fadeOut, 1, 0, false, isBlock);
 }
 
-export function _animateDown(fadeIn, fadeOut, isBlock = true) {
-	_animate(fadeIn, fadeOut, 0, 1, false, isBlock);
+export function animateDown(fadeIn, fadeOut, isBlock = true) {
+	animate(fadeIn, fadeOut, 0, 1, false, isBlock);
 }
 
 // Fade
-export function _fadeOut(elementIds, mili = 250) {
+export function fadeOut(elementIds, mili = 250) {
 	elementIds.forEach(function (id) {
 		var $element = $("#" + id);
 		$element.animate(
@@ -60,7 +60,7 @@ export function _fadeOut(elementIds, mili = 250) {
 	});
 }
 
-export function _fadeIn(elementIds, mili = 250, isBlock = true) {
+export function fadeIn(elementIds, mili = 250, isBlock = true) {
 	elementIds.forEach(function (id) {
 		var $element = $("#" + id);
 		$element
@@ -77,16 +77,16 @@ export function _fadeIn(elementIds, mili = 250, isBlock = true) {
 	});
 }
 
-export function _fade(fadeOutIds, fadeInIds, duration = 250, isBlock = true) {
-	_fadeOut(fadeOutIds);
+export function fade(fadeOutIds, fadeInIds, duration = 250, isBlock = true) {
+	fadeOut(fadeOutIds);
 	setTimeout(function () {
-		_fadeIn(fadeInIds, duration, isBlock);
+		fadeIn(fadeInIds, duration, isBlock);
 	}, duration);
 }
 
 // Swipe
-export function _swipeOut(elementIds, direction) {
-	const transformOut = _getSwipeDirection(direction, false);
+export function swipeOut(elementIds, direction) {
+	const transformOut = getSwipeDirection(direction, false);
 	elementIds.forEach((id) => {
 		const $element = $("#" + id);
 		$element.css({
@@ -100,8 +100,8 @@ export function _swipeOut(elementIds, direction) {
 	});
 }
 
-export function _swipeIn(elementIds, direction, isBlock = true) {
-	const transformInStart = _getSwipeDirection(direction, true);
+export function swipeIn(elementIds, direction, isBlock = true) {
+	const transformInStart = getSwipeDirection(direction, true);
 	const transformInEnd = "translateX(0) translateY(0)"; // Reset to original position
 
 	elementIds.forEach((id) => {
@@ -125,7 +125,7 @@ export function _swipeIn(elementIds, direction, isBlock = true) {
 	});
 }
 
-export function _getSwipeDirection(direction, isEntering) {
+export function getSwipeDirection(direction, isEntering) {
 	switch (direction) {
 		case "up":
 			return isEntering ? "translateY(100%)" : "translateY(-100%)";
@@ -140,21 +140,21 @@ export function _getSwipeDirection(direction, isEntering) {
 	}
 }
 
-export function _swipe(swipeOutIds, swipeInIds, direction, isBlock = true) {
-	_swipeOut(swipeOutIds, direction);
-	setTimeout(() => _swipeIn(swipeInIds, direction, isBlock), 500);
+export function swipe(swipeOutIds, swipeInIds, direction, isBlock = true) {
+	swipeOut(swipeOutIds, direction);
+	setTimeout(() => swipeIn(swipeInIds, direction, isBlock), 500);
 }
 
 // BACKWARD COMPAT: attach to window during migration
-window._animate = _animate;
-window._animateRight = _animateRight;
-window._animateLeft = _animateLeft;
-window._animateUp = _animateUp;
-window._animateDown = _animateDown;
-window._fadeOut = _fadeOut;
-window._fadeIn = _fadeIn;
-window._fade = _fade;
-window._swipeOut = _swipeOut;
-window._swipeIn = _swipeIn;
-window._getSwipeDirection = _getSwipeDirection;
-window._swipe = _swipe;
+window.animate = animate;
+window.animateRight = animateRight;
+window.animateLeft = animateLeft;
+window.animateUp = animateUp;
+window.animateDown = animateDown;
+window.fadeOut = fadeOut;
+window.fadeIn = fadeIn;
+window.fade = fade;
+window.swipeOut = swipeOut;
+window.swipeIn = swipeIn;
+window.getSwipeDirection = getSwipeDirection;
+window.swipe = swipe;

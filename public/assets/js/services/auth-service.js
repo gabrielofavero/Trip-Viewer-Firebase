@@ -5,14 +5,14 @@
 import {
 	USER_DATA,
 	UID,
-	_getUserData,
-	_unloadPageUserFunctions,
-	_signInWithEmailAndPassword,
-	_signOut,
-	_registerIfUserNotPresent,
-	_getUID,
-	_getFirebaseIdToken,
-	_getUser,
+	getUserData,
+	unloadPageUserFunctions,
+	signInWithEmailAndPassword,
+	signOut,
+	registerIfUserNotPresent,
+	getUID,
+	getFirebaseIdToken,
+	getUser,
 } from "../support/firebase/user.js";
 
 import { _getSystemData, _deleteAccount, _deleteAccountDocuments } from "../support/firebase/database.js";
@@ -21,17 +21,17 @@ import { _getSystemData, _deleteAccount, _deleteAccountDocuments } from "../supp
 export {
 	USER_DATA,
 	UID,
-	_getUserData,
-	_unloadPageUserFunctions,
-	_signInWithEmailAndPassword,
-	_signOut,
-	_registerIfUserNotPresent,
-	_getUID,
-	_getFirebaseIdToken,
-	_getUser,
-	_getSystemData,
-	_deleteAccount,
-	_deleteAccountDocuments,
+	getUserData,
+	unloadPageUserFunctions,
+	signInWithEmailAndPassword,
+	signOut,
+	registerIfUserNotPresent,
+	getUID,
+	getFirebaseIdToken,
+	getUser,
+	getSystemData,
+	deleteAccount,
+	deleteAccountDocuments,
 };
 
 // ── Auth-specific wrappers ──
@@ -47,7 +47,7 @@ export async function login(email, password) {
 	if (emailEl && passwordEl) {
 		emailEl.value = email;
 		passwordEl.value = password;
-		return await _signInWithEmailAndPassword();
+		return await signInWithEmailAndPassword();
 	}
 
 	// Fallback: direct Firebase auth call (bypasses the DOM-based function)
@@ -66,7 +66,7 @@ export async function login(email, password) {
  * Sign out the current user.
  */
 export function logout() {
-	_signOut();
+	signOut();
 }
 
 /**
@@ -74,7 +74,7 @@ export function logout() {
  * @returns {Promise<firebase.User|undefined>}
  */
 export async function getCurrentUser() {
-	return await _getUser();
+	return await getUser();
 }
 
 /**
@@ -82,7 +82,7 @@ export async function getCurrentUser() {
  * @returns {Promise<string|null>}
  */
 export async function getCurrentUID() {
-	return await _getUID();
+	return await getUID();
 }
 
 /**
@@ -90,21 +90,21 @@ export async function getCurrentUID() {
  * Also checks if registration is open.
  */
 export async function registerIfNeeded() {
-	return await _registerIfUserNotPresent();
+	return await registerIfUserNotPresent();
 }
 
 /**
  * Get the cached user data document from Firestore.
  */
 export async function getCurrentUserData(uid) {
-	return await _getUserData(uid);
+	return await getUserData(uid);
 }
 
 /**
  * Delete the current user's account and all associated data.
  */
 export async function deleteAccount() {
-	return await _deleteAccount();
+	return await deleteAccount();
 }
 
 // BACKWARD COMPAT: attach to window during migration

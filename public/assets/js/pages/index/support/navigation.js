@@ -1,46 +1,46 @@
-function _viagensEditar(code) {
-	window.open(`edit/trip?v=${code}&visibility=${_getVisibility()}`, "_blank");
+function viagensEditar(code) {
+	window.open(`edit/trip?v=${code}&visibility=${getVisibility()}`, "_blank");
 }
-function _viagensVisualizar(code) {
-	window.open(`view.html?v=${code}&visibility=${_getVisibility()}`, "_blank");
-}
-
-function _viagensNovo() {
-	window.open(`edit/trip?visibility=${_getVisibility()}`, "_blank");
+function viagensVisualizar(code) {
+	window.open(`view.html?v=${code}&visibility=${getVisibility()}`, "_blank");
 }
 
-function _destinosNovo() {
-	window.open(`edit/destination?visibility=${_getVisibility()}`, "_blank");
+function viagensNovo() {
+	window.open(`edit/trip?visibility=${getVisibility()}`, "_blank");
 }
 
-function _destinosEditar(code) {
+function destinosNovo() {
+	window.open(`edit/destination?visibility=${getVisibility()}`, "_blank");
+}
+
+function destinosEditar(code) {
 	window.open(
-		`edit/destination?d=${code}&visibility=${_getVisibility()}`,
+		`edit/destination?d=${code}&visibility=${getVisibility()}`,
 		"_blank",
 	);
 }
 
-function _destinosVisualizar(code) {
-	window.open(`destination?d=${code}&visibility=${_getVisibility()}`, "_blank");
+function destinosVisualizar(code) {
+	window.open(`destination?d=${code}&visibility=${getVisibility()}`, "_blank");
 }
 
-function _listagensEditar(code) {
+function listagensEditar(code) {
 	window.open(
-		`edit/listing?l=${code}&visibility=${_getVisibility()}`,
+		`edit/listing?l=${code}&visibility=${getVisibility()}`,
 		"_blank",
 	);
 }
 
-function _listagensVisualizar(code) {
-	window.open(`view?l=${code}&visibility=${_getVisibility()}`, "_blank");
+function listagensVisualizar(code) {
+	window.open(`view?l=${code}&visibility=${getVisibility()}`, "_blank");
 }
 
-function _listagensNovo() {
-	window.open(`edit/listing?visibility=${_getVisibility()}`, "_blank");
+function listagensNovo() {
+	window.open(`edit/listing?visibility=${getVisibility()}`, "_blank");
 }
 
-function _goToCurrentTrip() {
+function goToCurrentTrip() {
 	if (CURRENT_TRIPS?.length == 1) {
-		_viagensVisualizar(CURRENT_TRIPS[0].id);
+		viagensVisualizar(CURRENT_TRIPS[0].id);
 	}
 }

@@ -16,15 +16,15 @@ const TIME_REPLACEMENT = {
 
 var TEXT_REPLACEMENT_APPLIED = false;
 
-function _loadTextReplacementCheckboxes(j) {
-	_loadTitleReplacementCheckbox(j);
-	_loadTimeReplacementCheckbox();
+function loadTextReplacementCheckboxes(j) {
+	loadTitleReplacementCheckbox(j);
+	loadTimeReplacementCheckbox();
 }
 
-function _loadTitleReplacementCheckbox(j) {
+function loadTitleReplacementCheckbox(j) {
 	const container = getID("title-replacement-container");
 	TITLE_REPLACEMENT.current = getID("inner-programacao").value;
-	TITLE_REPLACEMENT.replacement = _getTitleReplacement(j);
+	TITLE_REPLACEMENT.replacement = getTitleReplacement(j);
 
 	if (
 		TITLE_REPLACEMENT.replacement &&
@@ -52,7 +52,7 @@ function _loadTitleReplacementCheckbox(j) {
 	}
 }
 
-function _getTitleReplacement(j) {
+function getTitleReplacement(j) {
 	const selected = Array.from(
 		document.getElementsByName("inner-programacao-item-radio"),
 	).find((r) => r.checked);
@@ -68,16 +68,16 @@ function _getTitleReplacement(j) {
 	};
 
 	const select = getID(idToSelectMap[selected.id]);
-	const labelValue = select?.value && _getSelectCurrentLabel(select);
+	const labelValue = select?.value && getSelectCurrentLabel(select);
 
 	if (!labelValue) return "";
 
 	return selected.id.includes("hospedagens")
-		? _processAccomodationReplacement(labelValue, j)
+		? processAccomodationReplacement(labelValue, j)
 		: labelValue;
 }
 
-function _replaceTextIfEnabled() {
+function replaceTextIfEnabled() {
 	const checkbox = getID("title-replacement-checkbox");
 	if (checkbox.checked && TITLE_REPLACEMENT.replacement) {
 		getID("inner-programacao").value = TITLE_REPLACEMENT.replacement;
@@ -88,13 +88,13 @@ function _replaceTextIfEnabled() {
 	getID("title-replacement-container").style.display = "none";
 }
 
-function _loadTimeReplacementCheckbox() {
+function loadTimeReplacementCheckbox() {
 	TIME_REPLACEMENT.current.inicio = getID("inner-programacao-inicio").value;
 	TIME_REPLACEMENT.current.fim = getID("inner-programacao-fim").value;
 	const value = getID("inner-programacao-select-transporte").value;
 
 	if (getID("inner-programacao-item-transporte-radio").checked && value) {
-		const j = _findJFromID(value, "transporte");
+		const j = findJFromID(value, "transporte");
 
 		TIME_REPLACEMENT.replacement.inicio = getID(`partida-horario-${j}`).value;
 		TIME_REPLACEMENT.replacement.fim = getID(`chegada-horario-${j}`).value;
@@ -143,7 +143,7 @@ function _loadTimeReplacementCheckbox() {
 	}
 }
 
-function _replaceTimeIfEnabled() {
+function replaceTimeIfEnabled() {
 	if (getID("time-replacement-checkbox").checked) {
 		getID("inner-programacao-inicio").value =
 			TIME_REPLACEMENT.replacement.inicio;
@@ -153,7 +153,7 @@ function _replaceTimeIfEnabled() {
 			const inicioHora = parseInt(
 				TIME_REPLACEMENT.replacement.inicio.split(":")[0],
 			);
-			getID("inner-programacao-select-turno").value = _getTurno(inicioHora);
+			getID("inner-programacao-select-turno").value = getTurno(inicioHora);
 		}
 	}
 	TIME_REPLACEMENT.current.inicio = "";
@@ -164,13 +164,13 @@ function _replaceTimeIfEnabled() {
 	getID("time-replacement-container").style.display = "none";
 }
 
-function _processAccomodationReplacement(labelValue, itineraryJ) {
+function processAccomodationReplacement(labelValue, itineraryJ) {
 	const date = DATAS[itineraryJ - 1];
-	const inputDate = _jsDateToInputDate(date);
+	const inputDate = jsDateToInputDate(date);
 	const value = getID("inner-programacao-select-hospedagens").value;
 	if (!inputDate || !value) return labelValue;
 
-	const j = _findJFromID(value, "hospedagens");
+	const j = findJFromID(value, "hospedagens");
 	const checkInValue = getID(`check-in-${j}`).value;
 	const checkOutValue = getID(`check-out-${j}`).value;
 
@@ -184,7 +184,7 @@ function _processAccomodationReplacement(labelValue, itineraryJ) {
 		: "trip.accommodation.checkout";
 	const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
 
-	const itineraries = INNER_PROGRAMACAO[_inputDateToKey(inputDate)];
+	const itineraries = INNER_PROGRAMACAO[inputDateToKey(inputDate)];
 	const allEntries = Object.values(itineraries).flat();
 	const hasTreatedLabel = allEntries.some(
 		(entry) => entry.programacao === treatedLabel,

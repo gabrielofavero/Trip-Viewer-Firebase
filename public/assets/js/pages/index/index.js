@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", async function () {
-	_startLoadingScreen();
+	startLoadingScreen();
 	try {
-		_main();
+		main();
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 		throw error;
 	}
-	_stopLoadingScreen();
+	stopLoadingScreen();
 });
 
-async function _loadIndexPage() {
-	_loadVisibilityIndex();
-	_loadListenersIndex();
-	_loadUserIndex();
+async function loadIndexPage() {
+	loadVisibilityIndex();
+	loadListenersIndex();
+	loadUserIndex();
 }

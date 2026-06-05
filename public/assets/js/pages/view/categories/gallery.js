@@ -1,16 +1,16 @@
 var FILTER_MAP = new BiMap();
 
 // Carregamento
-function _loadGaleria() {
-	_loadGaleriaCategorias(
+function loadGallery() {
+	loadGaleriaCategorias(
 		FIRESTORE_DATA.galeria.categorias || FIRESTORE_DATA.galeria.filtros,
 	);
-	_loadGaleriaBody(FIRESTORE_DATA.galeria);
-	_adjustPortfolioHeight();
-	_refreshCategorias();
+	loadGaleriaBody(FIRESTORE_DATA.galeria);
+	adjustPortfolioHeight();
+	refreshCategorias();
 }
 
-function _loadGaleriaCategorias(filters) {
+function loadGaleriaCategorias(filters) {
 	let result = "";
 	let filtersDiv = getID("portfolio-flters");
 
@@ -24,7 +24,7 @@ function _loadGaleriaCategorias(filters) {
 
 	if (filters.length > 0) {
 		filters.forEach((filter) => {
-			const filterClass = _loadFilterClass(filter);
+			const filterClass = loadFilterClass(filter);
 			result += `<li data-filter=".${filterClass}">${filter}</li>`;
 		});
 		filtersDiv.innerHTML += result;
@@ -33,13 +33,13 @@ function _loadGaleriaCategorias(filters) {
 	}
 }
 
-function _loadGaleriaBody(galeria) {
+function loadGaleriaBody(galeria) {
 	let result = "";
 	for (let i = 0; i < galeria.titulos.length; i++) {
-		const titulo = _getGaleriaTitulo(galeria, i);
-		const descricao = _getGaleriaDescricoes(galeria, i);
-		const link = _getGaleriaLink(galeria.imagens[i]);
-		const categoria = _getGaleriaCategoria(galeria, i);
+		const titulo = getGaleriaTitulo(galeria, i);
+		const descricao = getGaleriaDescricoes(galeria, i);
+		const link = getGaleriaLink(galeria.imagens[i]);
+		const categoria = getGaleriaCategoria(galeria, i);
 
 		result += `
         <div class="col-lg-4 col-md-6 portfolio-item ${categoria}">
@@ -57,11 +57,11 @@ function _loadGaleriaBody(galeria) {
 	}
 
 	getID("portfolio-container").innerHTML = result;
-	_loadImageLightbox("galeria");
+	loadImageLightbox("galeria");
 }
 
-function _loadFilterClass(filter) {
-	let filterName = "filter-" + _codifyText(filter);
+function loadFilterClass(filter) {
+	let filterName = "filter-" + codifyText(filter);
 
 	if (FILTER_MAP[filterName]) {
 		filterName += "-" + Object.keys(FILTER_MAP).length;
@@ -72,7 +72,7 @@ function _loadFilterClass(filter) {
 }
 
 // Getters
-function _getGaleriaTitulo(galeria, i) {
+function getGaleriaTitulo(galeria, i) {
 	let titulo = "";
 	if (galeria.titulos && galeria.titulos[i]) {
 		// Implementação Atual
@@ -88,7 +88,7 @@ function _getGaleriaTitulo(galeria, i) {
 	return titulo || "";
 }
 
-function _getGaleriaDescricoes(galeria, i) {
+function getGaleriaDescricoes(galeria, i) {
 	let descricao = "";
 	if (galeria.descricoes && galeria.descricoes[i]) {
 		// Implementação Atual
@@ -104,7 +104,7 @@ function _getGaleriaDescricoes(galeria, i) {
 	return descricao || "";
 }
 
-function _getGaleriaCategoria(galeria, i) {
+function getGaleriaCategoria(galeria, i) {
 	let categoria = "";
 	if (galeria.categorias && galeria.categorias[i]) {
 		// Implementação Atual
@@ -120,8 +120,8 @@ function _getGaleriaCategoria(galeria, i) {
 	return categoria || "";
 }
 
-function _getGaleriaLink(imagem) {
-	if (_isObject(imagem)) {
+function getGaleriaLink(imagem) {
+	if (isObject(imagem)) {
 		return imagem.link;
 	} else {
 		return imagem;
@@ -129,7 +129,7 @@ function _getGaleriaLink(imagem) {
 }
 
 // Visibility
-function _adjustPortfolioHeight() {
+function adjustPortfolioHeight() {
 	const container = getID("portfolio-container");
 
 	if (!container) return;
@@ -146,7 +146,7 @@ function _adjustPortfolioHeight() {
 	container.style.height = `${totalHeight}px`;
 }
 
-function _refreshCategorias() {
+function refreshCategorias() {
 	let portfolioContainer = select(".portfolio-container");
 	if (portfolioContainer) {
 		let portfolioIsotope = new Isotope(portfolioContainer, {

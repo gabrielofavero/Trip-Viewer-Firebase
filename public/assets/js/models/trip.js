@@ -10,7 +10,7 @@
  * @param {Date} fim - End date
  * @returns {number} Number of days
  */
-export function _computeTripDuration(inicio, fim) {
+export function computeTripDuration(inicio, fim) {
 	return Math.ceil((fim - inicio) / (1000 * 60 * 60 * 24)) + 1;
 }
 
@@ -19,7 +19,7 @@ export function _computeTripDuration(inicio, fim) {
  * @param {Array} pessoas - Array of traveler objects
  * @returns {number} Number of travelers (minimum 1)
  */
-export function _computeTravelerCount(pessoas) {
+export function computeTravelerCount(pessoas) {
 	return pessoas?.length || 1;
 }
 
@@ -30,18 +30,18 @@ export function _computeTravelerCount(pessoas) {
  * @param {Object} firestoreData - Raw Firestore trip data
  * @returns {{inicio: {date: Date, text: string}, fim: {date: Date, text: string}}}
  */
-export function _loadInicioFim(firestoreData) {
-	const inicio = _convertFromDateObject(firestoreData.inicio);
-	const fim = _convertFromDateObject(firestoreData.fim);
+export function loadInicioFim(firestoreData) {
+	const inicio = convertFromDateObject(firestoreData.inicio);
+	const fim = convertFromDateObject(firestoreData.fim);
 
 	return {
 		inicio: {
 			date: inicio,
-			text: _getFormattedDate(inicio),
+			text: getFormattedDate(inicio),
 		},
 		fim: {
 			date: fim,
-			text: _getFormattedDate(fim),
+			text: getFormattedDate(fim),
 		},
 	};
 }

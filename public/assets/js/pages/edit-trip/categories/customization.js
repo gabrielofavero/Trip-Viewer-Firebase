@@ -1,6 +1,6 @@
 var CURRENT_LIGHT;
 
-function _loadCustomizacaoImageData(value, id) {
+function loadCustomizacaoImageData(value, id) {
 	if (value && typeof value === "string") {
 		getID(id).value = value;
 	} else if (value && value.link) {
@@ -8,7 +8,7 @@ function _loadCustomizacaoImageData(value, id) {
 	}
 }
 
-function _imageDataIncludes(value, includes) {
+function imageDataIncludes(value, includes) {
 	if (value && typeof value === "string") {
 		return value.includes(includes);
 	} else if (value && value.url) {
@@ -17,13 +17,13 @@ function _imageDataIncludes(value, includes) {
 	return false;
 }
 
-function _autoFillDarkColor() {
-	const escuro = getID("escuro");
+function autoFillDarkColor() {
+	const DARK_COLOR = getID("escuro");
 	if (
-		escuro.value == "#7f75b6" ||
-		(CURRENT_LIGHT && escuro.value == CURRENT_LIGHT)
+		DARK_COLOR.value == "#7f75b6" ||
+		(CURRENT_LIGHT && DARK_COLOR.value == CURRENT_LIGHT)
 	) {
-		escuro.value = getID("claro").value;
+		DARK_COLOR.value = getID("claro").value;
 	}
 	CURRENT_LIGHT = getID("claro").value;
 }

@@ -1,10 +1,10 @@
 // Conteúdo do Modal (HTML)
-function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
+function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
 	return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some((item) => item.ativo) ? "block" : "none"}">
                         <label style="margin-bottom: 0px;">${translate("trip.itinerary.linked_item")} <span class="opcional">(${translate("labels.optional")})</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="_openInnerProgramacaoItem(${j})" style="margin-top: 8px;">${translate("trip.itinerary.link_item")}</button>
+                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" onclick="openInnerItineraryItem(${j})" style="margin-top: 8px;">${translate("trip.itinerary.link_item")}</button>
                     </div>
 
                     <div class="nice-form-group">
@@ -12,7 +12,7 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                         <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="${translate("trip.itinerary.placeholder")}" maxlength="50" autocomplete="off" />
                     </div>
 
-                    ${_getTravelersFieldset("inner-programacao-travelers", [])}
+                    ${getTravelersFieldset("inner-programacao-travelers", [])}
 
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">
@@ -43,14 +43,14 @@ function _getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
                     </div>
                     
                     <div class="button-box-right" style="margin-top: 8px; margin-bottom: 8px; display: ${isNew ? "none" : "block"}">
-                        <button onclick="_openInnerProgramacaoTroca()" class="btn btn-basic-secondary btn-format">
+                        <button onclick="openInnerItinerarySwap()" class="btn btn-basic-secondary btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                                     <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
                                 </g>
                             </svg>
                         </button>
-                        <button onclick="_deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
+                        <button onclick="deleteInnerProgramacao(${j}, ${k}, '${turno}')" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
                             </svg>

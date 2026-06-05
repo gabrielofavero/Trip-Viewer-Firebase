@@ -2,121 +2,121 @@ var FIRESTORE_DESTINOS_DATA;
 
 SUCCESSFUL_SAVE = false;
 
-const TODAY = _getTodayFormatted();
-const TOMORROW = _getTomorrowFormatted();
+const TODAY = getTodayFormatted();
+const TOMORROW = getTomorrowFormatted();
 
-var PROGRAMACAO = {};
+var SCHEDULE = {};
 
-var REGIOES = [];
+var REGIONS = [];
 
 document.addEventListener("DOMContentLoaded", async function () {
-	_startLoadingScreen();
+	startLoadingScreen();
 	try {
-		_main();
+		main();
 	} catch (error) {
-		_displayError(error);
+		displayError(error);
 	}
 });
 
-async function _loadEditarDestinoPage() {
-	DOCUMENT_ID = _getURLParam("d");
+async function loadEditDestinationPage() {
+	DOCUMENT_ID = getURLParam("d");
 
-	_loadVisibilityIndex();
-	_loadHabilitados();
-	_newDynamicSelect("regiao");
+	loadVisibilityIndex();
+	loadHabilitados();
+	newDynamicSelect("regiao");
 
 	if (DOCUMENT_ID) {
-		await _loadDestinos();
+		await loadDestinations();
 	}
 
-	_loadEventListeners();
-	_stopLoadingScreen();
-	_snapshotFormState();
+	loadEventListeners();
+	stopLoadingScreen();
+	snapshotFormState();
 	$("body").css("overflow", "auto");
 }
 
-function _loadHabilitados() {
-	_loadEditModule("restaurantes");
-	_loadEditModule("lanches");
-	_loadEditModule("saidas");
-	_loadEditModule("turismo");
-	_loadEditModule("lojas");
-	_loadEditModule("mapa");
+function loadHabilitados() {
+	loadEditModule("restaurantes");
+	loadEditModule("lanches");
+	loadEditModule("saidas");
+	loadEditModule("turismo");
+	loadEditModule("lojas");
+	loadEditModule("mapa");
 
 	const mapa = getID("habilitado-mapa");
 	mapa.addEventListener("change", function () {
 		if (mapa.checked) {
-			_setRequired("mapa-link");
+			setRequired("mapa-link");
 		} else {
-			_removeRequired("mapa-link");
+			removeRequired("mapa-link");
 		}
 	});
 }
 
-function _loadEventListeners() {
+function loadEventListeners() {
 	getID("restaurantes-adicionar").addEventListener("click", () => {
-		_closeAccordions("restaurantes");
-		_addRestaurantes();
-		_openLastAccordion("restaurantes");
-		_buildDS("regiao");
+		closeAccordions("restaurantes");
+		addRestaurantes();
+		openLastAccordion("restaurantes");
+		buildDS("regiao");
 	});
 
 	getID("lanches-adicionar").addEventListener("click", () => {
-		_closeAccordions("lanches");
-		_addLanches();
-		_openLastAccordion("lanches");
-		_buildDS("regiao");
+		closeAccordions("lanches");
+		addLanches();
+		openLastAccordion("lanches");
+		buildDS("regiao");
 	});
 
 	getID("saidas-adicionar").addEventListener("click", () => {
-		_closeAccordions("saidas");
-		_addSaidas();
-		_openLastAccordion("saidas");
-		_buildDS("regiao");
+		closeAccordions("saidas");
+		addSaidas();
+		openLastAccordion("saidas");
+		buildDS("regiao");
 	});
 
 	getID("turismo-adicionar").addEventListener("click", () => {
-		_closeAccordions("turismo");
-		_addTurismo();
-		_openLastAccordion("turismo");
-		_buildDS("regiao");
+		closeAccordions("turismo");
+		addTurismo();
+		openLastAccordion("turismo");
+		buildDS("regiao");
 	});
 
 	getID("lojas-adicionar").addEventListener("click", () => {
-		_closeAccordions("lojas");
-		_addLojas();
-		_openLastAccordion("lojas");
-		_buildDS("regiao");
+		closeAccordions("lojas");
+		addLojas();
+		openLastAccordion("lojas");
+		buildDS("regiao");
 	});
 
 	getID("salvar").addEventListener("click", () => {
-		_startLoadingScreen();
+		startLoadingScreen();
 		const type = "destinos";
 		const dataBuildingFunctions = [_buildDestinosObject, _updateTikTokLinks];
 
-		_setDocumento({ type, dataBuildingFunctions });
+		setDocumento({ type, dataBuildingFunctions });
 	});
 
 	getID("re-editar").addEventListener("click", () => {
-		_reEdit("destinos", SUCCESSFUL_SAVE);
+		reEdit("destinos", SUCCESSFUL_SAVE);
 	});
 
 	getID("cancelar").addEventListener("click", () => {
-		window.location.href = `../index?visibility=${_getVisibility()}`;
+		window.location.href = `../index?visibility=${getVisibility()}`;
 	});
 
 	getID("home").addEventListener("click", () => {
-		window.location.href = `../index?visibility=${_getVisibility()}`;
+		window.location.href = `../index?visibility=${getVisibility()}`;
 	});
 
 	getID("visualizar").addEventListener("click", () => {
 		if (DOCUMENT_ID) {
 			window.open(
-				`../destination?d=${DOCUMENT_ID}&visibility=${_getVisibility()}`,
+				`../destination?d=${DOCUMENT_ID}&visibility=${getVisibility()}`,
 				"_blank",
 			);
 		} else {
-			window.location.href = `../index?visibility=${_getVisibility()}`;
+			window.location.href = `../index?visibility=${getVisibility()}`;
 		}
 	});
 
@@ -126,82 +126,82 @@ function _loadEventListeners() {
 		} else {
 			getID("outra-moeda").style.display = "none";
 		}
-		_loadCurrencySelects();
+		loadCurrencySelects();
 	});
 
 	getID("outra-moeda").addEventListener("change", () => {
-		_loadCurrencySelects();
+		loadCurrencySelects();
 	});
 
 	window.addEventListener("beforeunload", (event) => {
-		if (_hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
+		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
 			event.preventDefault();
 			event.returnValue = translate("messages.exit_confirmation");
 		}
 	});
 }
 
-function _addListenerToRemoveDestino(categoria, j) {
+function addListenerToRemoveDestination(categoria, j) {
 	const dynamicSelects = [
 		{
 			type: "regiao",
 			selectID: `${categoria}-regiao-select-${j}`,
 		},
 	];
-	_addRemoveChildListenerDS(categoria, j, dynamicSelects);
+	addRemoveChildListenerDS(categoria, j, dynamicSelects);
 }
 
-async function _loadDestinos() {
+async function loadDestinations() {
 	getID("delete-text").style.display = "block";
-	_startLoadingScreen();
+	startLoadingScreen();
 
-	FIRESTORE_DESTINOS_DATA = await _getSingleData("destinos");
+	FIRESTORE_DESTINOS_DATA = await getSingleData("destinos");
 
-	_loadDestinationsData(FIRESTORE_DESTINOS_DATA);
-	_stopLoadingScreen();
+	loadDestinationsData(FIRESTORE_DESTINOS_DATA);
+	stopLoadingScreen();
 }
 
 // Listeners
-function _addDestinosListeners(categoria, j) {
+function addDestinationsListeners(categoria, j) {
 	// Título Interativo
 	getID(`${categoria}-nome-${j}`).addEventListener("change", () =>
-		_updateDestinosTitle(j, categoria),
+		updateDestinationsTitle(j, categoria),
 	);
 	getID(`${categoria}-emoji-${j}`).addEventListener("change", () =>
-		_updateDestinosTitle(j, categoria),
+		updateDestinationsTitle(j, categoria),
 	);
 	getID(`${categoria}-novo-${j}`).addEventListener("click", () =>
-		_updateDestinosTitle(j, categoria),
+		updateDestinationsTitle(j, categoria),
 	);
 
 	// Validação de Emoji
 	getID(`${categoria}-emoji-${j}`).addEventListener("input", () =>
-		_emojisOnInputAction(j, categoria),
+		emojisOnInputAction(j, categoria),
 	);
 
 	// Valor
 	getID(`${categoria}-valor-${j}`).addEventListener("change", () =>
-		_valorListenerAction(j, categoria),
+		valorListenerAction(j, categoria),
 	);
 
 	// Região
 
 	// Links
 	getID(`${categoria}-website-${j}`).addEventListener("change", () =>
-		_validateLink(`${categoria}-website-${j}`),
+		validateLink(`${categoria}-website-${j}`),
 	);
 	getID(`${categoria}-mapa-${j}`).addEventListener("change", () =>
-		_validateMapLink(`${categoria}-mapa-${j}`),
+		validateMapLink(`${categoria}-mapa-${j}`),
 	);
 	getID(`${categoria}-instagram-${j}`).addEventListener("change", () =>
-		_validateInstagramLink(`${categoria}-instagram-${j}`),
+		validateInstagramLink(`${categoria}-instagram-${j}`),
 	);
 	getID(`${categoria}-midia-${j}`).addEventListener("change", () =>
-		_validateMediaLink(`${categoria}-midia-${j}`),
+		validateMediaLink(`${categoria}-midia-${j}`),
 	);
 }
 
-function _valorListenerAction(j, categoria) {
+function valorListenerAction(j, categoria) {
 	const valor = getID(`${categoria}-valor-${j}`);
 	const outroValor = getID(`${categoria}-outro-valor-${j}`);
 
@@ -214,7 +214,7 @@ function _valorListenerAction(j, categoria) {
 	}
 }
 
-function _updateDestinosTitle(j, categoria) {
+function updateDestinationsTitle(j, categoria) {
 	const titleDiv = getID(`${categoria}-title-text-${j}`);
 	const emojiDiv = getID(`${categoria}-emoji-${j}`);
 
@@ -236,7 +236,7 @@ function _updateDestinosTitle(j, categoria) {
 		: "none";
 }
 
-function _emojisOnInputAction(j, categoria) {
+function emojisOnInputAction(j, categoria) {
 	const emojiDiv = getID(`${categoria}-emoji-${j}`);
 	const emojiUntreated = emojiDiv.value;
 	const emojiTreated = emojiUntreated
@@ -251,20 +251,20 @@ function _emojisOnInputAction(j, categoria) {
 	}
 }
 
-function _openMoveDestinoModal(j, categoria) {
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+function openMoveDestinationModal(j, categoria) {
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 
 	propriedades.titulo =
 		getID(`${categoria}-nome-${j}`).value ||
-		`Mover - ${_firstCharToUpperCase(categoria)}`;
-	propriedades.containers = _getContainersInput();
+		`Mover - ${firstCharToUpperCase(categoria)}`;
+	propriedades.containers = getContainersInput();
 	propriedades.botoes = [
 		{
 			tipo: "cancelar",
 		},
 		{
 			tipo: "confirmar",
-			acao: `_moveDestino(${j}, '${categoria}')`,
+			acao: `moveDestination(${j}, '${categoria}')`,
 		},
 	];
 
@@ -292,12 +292,12 @@ function _openMoveDestinoModal(j, categoria) {
       </select>
   </div>`;
 
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 }
 
-function _moveDestino(j, categoria) {
+function moveDestination(j, categoria) {
 	const newCategoria = getID("move-select").value;
-	const description = _getDescription(categoria, j);
+	const description = getDescription(categoria, j);
 
 	if (categoria != newCategoria) {
 		const destino = {
@@ -313,41 +313,41 @@ function _moveDestino(j, categoria) {
 			nota: getID(`${categoria}-nota-${j}`).value,
 		};
 
-		const newJ = _getLastJ(`${newCategoria}-box`) + 1;
+		const newJ = getLastJ(`${newCategoria}-box`) + 1;
 
-		_addDestino(newCategoria);
-		_addDestinoHTML(newCategoria, newJ, destino);
-		_setDescription(newCategoria, newJ, description);
-		_removeChildWithValidation(categoria, j);
+		addDestino(newCategoria);
+		addDestinoHTML(newCategoria, newJ, destino);
+		setDescription(newCategoria, newJ, description);
+		removeChildWithValidation(categoria, j);
 
-		_removeSelectorDS("regiao", `${categoria}-regiao-select-${j}`);
-		_updateValueDS(
+		removeSelectorDS("regiao", `${categoria}-regiao-select-${j}`);
+		updateValueDS(
 			"regiao",
 			destino.regiao,
 			`${newCategoria}-regiao-select-${newJ}`,
 		);
-		_buildDS("regiao");
+		buildDS("regiao");
 
-		_updateDescriptionButtonLabel(newCategoria, newJ);
+		updateDescriptionButtonLabel(newCategoria, newJ);
 
 		if (getID(`habilitado-${newCategoria}-content`).children.length === 1) {
 			getID(`habilitado-${newCategoria}`).checked = true;
-			_showContent(newCategoria);
+			showContent(newCategoria);
 		}
 
 		if (getID(`habilitado-${categoria}-content`).children.length === 0) {
 			getID(`habilitado-${categoria}`).checked = false;
-			_hideContent(categoria);
+			hideContent(categoria);
 		}
 	}
 
-	_closeMessage();
+	closeMessage();
 }
 
-function _deleteDestino() {
+function deleteDestino() {
 	const name = getID("titulo").value;
 
-	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
+	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = translate("destination.delete.title");
 	propriedades.conteudo = translate("destination.delete.message", { name });
 	propriedades.botoes = [
@@ -356,20 +356,20 @@ function _deleteDestino() {
 		},
 		{
 			tipo: "confirmar",
-			acao: "_deleteDestinoAction()",
+			acao: "deleteDestinoAction()",
 		},
 	];
 
-	_displayFullMessage(propriedades);
+	displayFullMessage(propriedades);
 }
 
-async function _deleteDestinoAction() {
+async function deleteDestinoAction() {
 	if (DOCUMENT_ID) {
-		await _deleteUserObjectDB(DOCUMENT_ID, "destinos");
-		window.location.href = `../index?visibility=${_getVisibility()}`;
+		await deleteUserObjectDB(DOCUMENT_ID, "destinos");
+		window.location.href = `../index?visibility=${getVisibility()}`;
 	}
 }
 
-function _getID(categoria, j) {
+function getID(categoria, j) {
 	return getID(`${categoria}-id-${j}`).value;
 }

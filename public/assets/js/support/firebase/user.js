@@ -3,24 +3,24 @@ import { _displayError, _displayMessage } from "../pages/messages.js";
 export let USER_DATA;
 export let UID;
 
-export async function _getUserData(uid) {
+export async function getUserData(uid) {
 	if (USER_DATA) {
 		return USER_DATA;
 	}
 	if (!uid) {
-		uid = await _getUID();
+		uid = await getUID();
 	}
-	return await _get(`usuarios/${uid}`);
+	return await get(`usuarios/${uid}`);
 }
 
-export function _unloadPageUserFunctions() {
-	const html = _getHTMLpage();
+export function unloadPageUserFunctions() {
+	const html = getHTMLpage();
 	if (html == "index") {
-		_openIndexPage("unlogged", 0, 1);
+		openIndexPage("unlogged", 0, 1);
 	}
 }
 
-export async function _signInWithEmailAndPassword() {
+export async function signInWithEmailAndPassword() {
 	const email = getID("login-email").value;
 	const password = getID("login-password").value;
 
@@ -40,44 +40,44 @@ export async function _signInWithEmailAndPassword() {
 		return user; // Optionally return the user for further use
 	} catch (error) {
 		console.error("Error signing in:", error.message);
-		_displayError(error);
+		displayError(error);
 	}
 }
 
-export function _signOut() {
+export function signOut() {
 	UID = null;
 	firebase.auth().signOut();
 	if (window.location.href.includes("index.html")) {
-		_openIndexPage("unlogged", 0, 1);
+		openIndexPage("unlogged", 0, 1);
 	} else {
 		window.location.href = "index.html";
 	}
 }
 
-export async function _registerIfUserNotPresent() {
+export async function registerIfUserNotPresent() {
 	const user = firebase.auth().currentUser;
 
 	if (!user) {
-		_signOut();
-		_displayError(translate("messages.errors.unauthenticated"));
+		signOut();
+		displayError(translate("messages.errors.unauthenticated"));
 		return;
 	}
 
-	const userDoc = await _get(`usuarios/${user.uid}`);
-	const systemData = await _getSystemData();
+	const userDoc = await get(`usuarios/${user.uid}`);
+	const systemData = await getSystemData();
 	const registrationOpen = systemData?.registrationOpen == true;
 
 	if (!userDoc && !registrationOpen) {
-		_signOut();
+		signOut();
 		const title = "Você chegou muito cedo! 😅";
 		const content =
 			"Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀";
-		_displayMessage(title, content);
+		displayMessage(title, content);
 		return;
 	}
 
 	if (!userDoc && registrationOpen) {
-		await _create(
+		await create(
 			`usuarios`,
 			{
 				listagens: [],
@@ -90,7 +90,7 @@ export async function _registerIfUserNotPresent() {
 	}
 }
 
-export async function _getUID() {
+export async function getUID() {
 	if (UID) {
 		return UID;
 	}
@@ -103,7 +103,7 @@ export async function _getUID() {
 	});
 }
 
-export async function _getFirebaseIdToken(user) {
+export async function getFirebaseIdToken(user) {
 	if (!user) {
 		user = firebase.auth().currentUser;
 	}
@@ -114,7 +114,7 @@ export async function _getFirebaseIdToken(user) {
 	}
 }
 
-export async function _getUser() {
+export async function getUser() {
 	return new Promise((resolve, reject) => {
 		const auth = firebase.auth();
 		const unsubscribe = auth.onAuthStateChanged(
@@ -137,11 +137,11 @@ export async function _getUser() {
 // BACKWARD COMPAT: attach to window during migration
 window.USER_DATA = USER_DATA;
 window.UID = UID;
-window._getUserData = _getUserData;
-window._unloadPageUserFunctions = _unloadPageUserFunctions;
-window._signInWithEmailAndPassword = _signInWithEmailAndPassword;
-window._signOut = _signOut;
-window._registerIfUserNotPresent = _registerIfUserNotPresent;
-window._getUID = _getUID;
-window._getFirebaseIdToken = _getFirebaseIdToken;
-window._getUser = _getUser;
+window.getUserData = getUserData;
+window.unloadPageUserFunctions = unloadPageUserFunctions;
+window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+window.signOut = signOut;
+window.registerIfUserNotPresent = registerIfUserNotPresent;
+window.getUID = getUID;
+window.getFirebaseIdToken = getFirebaseIdToken;
+window.getUser = getUser;
