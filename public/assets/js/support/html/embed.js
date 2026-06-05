@@ -1,4 +1,4 @@
-function _loadEmbedListeners(action) {
+export function _loadEmbedListeners(action) {
 	window.addEventListener("message", (e) => {
 		const current = _getOrigin().toUpperCase();
 		const eventType = e?.data?.type || "unknown";
@@ -10,7 +10,7 @@ function _loadEmbedListeners(action) {
 	});
 }
 
-function _openEmbed({
+export function _openEmbed({
 	frameID,
 	url,
 	beforeOpen,
@@ -35,7 +35,7 @@ function _openEmbed({
 	afterOpen?.();
 }
 
-function _onEmbedMessage(event, action) {
+export function _onEmbedMessage(event, action) {
 	const allowedOrigin = window.location.origin;
 	if (event.origin !== allowedOrigin) return;
 
@@ -46,12 +46,12 @@ function _onEmbedMessage(event, action) {
 	action(data);
 }
 
-function _sendToParent(type, value) {
+export function _sendToParent(type, value) {
 	const page = _getOrigin();
 	window.parent.postMessage({ page, type, value }, window.location.origin);
 }
 
-function _sendToEmbed(frameID, type, value) {
+export function _sendToEmbed(frameID, type, value) {
 	const frame = getID(frameID);
 	if (!frame || !frame.contentWindow) return;
 	const page = _getOrigin();
@@ -62,11 +62,11 @@ function _sendToEmbed(frameID, type, value) {
 	);
 }
 
-function _getOrigin() {
+export function _getOrigin() {
 	return window.location.pathname.replace("/", "");
 }
 
-function _loadEmbedVisibility({
+export function _loadEmbedVisibility({
 	closeAction,
 	embedAction,
 	notEmbedAction,
@@ -98,6 +98,16 @@ function _loadEmbedVisibility({
 	}
 }
 
-function _isEmbed() {
+export function _isEmbed() {
 	return window.parent != window;
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._loadEmbedListeners = _loadEmbedListeners;
+window._openEmbed = _openEmbed;
+window._onEmbedMessage = _onEmbedMessage;
+window._sendToParent = _sendToParent;
+window._sendToEmbed = _sendToEmbed;
+window._getOrigin = _getOrigin;
+window._loadEmbedVisibility = _loadEmbedVisibility;
+window._isEmbed = _isEmbed;

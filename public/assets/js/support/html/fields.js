@@ -1,7 +1,9 @@
-var ORIGINAL_STATE = new Map();
+import { _firstCharToUpperCase } from "../pages/data.js";
+
+let ORIGINAL_STATE = new Map();
 
 // Detect Changes
-function _snapshotFormState(root = document) {
+export function _snapshotFormState(root = document) {
 	if (!DOCUMENT_ID) return;
 
 	ORIGINAL_STATE.clear();
@@ -16,7 +18,7 @@ function _snapshotFormState(root = document) {
 	});
 }
 
-function _getElValue(el) {
+export function _getElValue(el) {
 	switch (el.type) {
 		case "checkbox":
 		case "radio":
@@ -28,7 +30,7 @@ function _getElValue(el) {
 	}
 }
 
-function _getElPosition(el) {
+export function _getElPosition(el) {
 	const parent = el.parentNode;
 	if (!parent) return null;
 
@@ -42,7 +44,7 @@ function _getElPosition(el) {
 	};
 }
 
-function _hasUnsavedChanges(root = document) {
+export function _hasUnsavedChanges(root = document) {
 	if (!DOCUMENT_ID) return true;
 
 	const currentFields = root.querySelectorAll(
@@ -73,7 +75,7 @@ function _hasUnsavedChanges(root = document) {
 }
 
 // Required Fields
-function _validateRequiredFields() {
+export function _validateRequiredFields() {
 	var invalidFields = [];
 
 	var inputs = document.querySelectorAll("input[required]");
@@ -95,7 +97,7 @@ function _validateRequiredFields() {
 	}
 }
 
-function _getInvalidFieldsText(invalidFields) {
+export function _getInvalidFieldsText(invalidFields) {
 	const dadosBasicos = ["titulo", "moeda"];
 
 	let intro = `${translate("messages.fields.invalid")}<br>`;
@@ -161,7 +163,7 @@ function _getInvalidFieldsText(invalidFields) {
 	return result;
 }
 
-function _reEdit(type, SUCCESSFUL_SAVE = true) {
+export function _reEdit(type, SUCCESSFUL_SAVE = true) {
 	let param;
 	let url;
 
@@ -185,7 +187,7 @@ function _reEdit(type, SUCCESSFUL_SAVE = true) {
 	}
 }
 
-function _getInnerText(idSplit) {
+export function _getInnerText(idSplit) {
 	let innerText = "";
 	for (let i = 1; i < idSplit.length; i++) {
 		innerText += _firstCharToUpperCase(idSplit[i]) + " ";
@@ -193,14 +195,14 @@ function _getInnerText(idSplit) {
 	return innerText.trim();
 }
 
-function _notifyFieldIfAbsent(id) {
+export function _notifyFieldIfAbsent(id) {
 	const field = getID(id);
 	if (!field.value) {
 		field.reportValidity();
 	}
 }
 
-function _getFieldValueOrNotify(id) {
+export function _getFieldValueOrNotify(id) {
 	const field = getID(id);
 	if (!field.value) {
 		field.reportValidity();
@@ -210,7 +212,7 @@ function _getFieldValueOrNotify(id) {
 }
 
 // Selects
-function _closeAllSelects(excludeElement) {
+export function _closeAllSelects(excludeElement) {
 	var selectElements = document.getElementsByTagName("select");
 	for (var i = 0; i < selectElements.length; i++) {
 		var select = selectElements[i];
@@ -220,11 +222,11 @@ function _closeAllSelects(excludeElement) {
 	}
 }
 
-function _getSelectCurrentLabel(select) {
+export function _getSelectCurrentLabel(select) {
 	return select.options[select.selectedIndex].innerText;
 }
 
-function _addValueToSelectIfExists(value, select) {
+export function _addValueToSelectIfExists(value, select) {
 	if (!select) return;
 	for (var i = 0; i < select.options.length; i++) {
 		if (select.options[i].value === value) {
@@ -233,7 +235,7 @@ function _addValueToSelectIfExists(value, select) {
 	}
 }
 
-function _getAllValuesFromSelect(select) {
+export function _getAllValuesFromSelect(select) {
 	var values = [];
 	for (var i = 0; i < select.options.length; i++) {
 		values.push(select.options[i].value);
@@ -241,16 +243,16 @@ function _getAllValuesFromSelect(select) {
 	return values;
 }
 
-function _selectHasValue(select, value) {
+export function _selectHasValue(select, value) {
 	return Array.from(select.options).some((opt) => opt.value === value);
 }
 
 // Validação de links
-function _isHttp(link) {
+export function _isHttp(link) {
 	return link.startsWith("http://") || link.startsWith("https://");
 }
 
-function _validateLink(id) {
+export function _validateLink(id) {
 	const div = getID(id);
 	const link = div.value;
 
@@ -267,7 +269,7 @@ function _validateLink(id) {
 	_openToast(`${title}: ${content}`);
 }
 
-function _validateMapLink(id) {
+export function _validateMapLink(id) {
 	const div = getID(id);
 	const link = div.value;
 
@@ -296,7 +298,7 @@ function _validateMapLink(id) {
 	_openToast(`${title}: ${content}`);
 }
 
-function _validateInstagramLink(id) {
+export function _validateInstagramLink(id) {
 	const div = getID(id);
 	const link = div.value;
 
@@ -312,7 +314,7 @@ function _validateInstagramLink(id) {
 	_openToast(`${title}: ${content}`);
 }
 
-function _validateMediaLink(id) {
+export function _validateMediaLink(id) {
 	const div = getID(id);
 	const link = div.value;
 
@@ -348,7 +350,7 @@ function _validateMediaLink(id) {
 	}
 }
 
-function _validateImageLink(id) {
+export function _validateImageLink(id) {
 	const div = getID(id);
 	const imageLink = div.value;
 
@@ -378,7 +380,7 @@ function _validateImageLink(id) {
 	_openToast(`${title}: ${content}`);
 }
 
-function _getSelectOptionsHTML(object, selectedKey) {
+export function _getSelectOptionsHTML(object, selectedKey) {
 	let result = "";
 	for (const key in object) {
 		const selected = key == selectedKey ? "selected" : "";
@@ -387,10 +389,36 @@ function _getSelectOptionsHTML(object, selectedKey) {
 	return result;
 }
 
-function _removeEl(id) {
+export function _removeEl(id) {
 	const el = document.getElementById(id);
 	if (!el) return false;
 
 	el.remove();
 	return true;
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._snapshotFormState = _snapshotFormState;
+window._getElValue = _getElValue;
+window._getElPosition = _getElPosition;
+window._hasUnsavedChanges = _hasUnsavedChanges;
+window._validateRequiredFields = _validateRequiredFields;
+window._getInvalidFieldsText = _getInvalidFieldsText;
+window._reEdit = _reEdit;
+window._getInnerText = _getInnerText;
+window._notifyFieldIfAbsent = _notifyFieldIfAbsent;
+window._getFieldValueOrNotify = _getFieldValueOrNotify;
+window._closeAllSelects = _closeAllSelects;
+window._getSelectCurrentLabel = _getSelectCurrentLabel;
+window._addValueToSelectIfExists = _addValueToSelectIfExists;
+window._getAllValuesFromSelect = _getAllValuesFromSelect;
+window._selectHasValue = _selectHasValue;
+window._isHttp = _isHttp;
+window._validateLink = _validateLink;
+window._validateMapLink = _validateMapLink;
+window._validateInstagramLink = _validateInstagramLink;
+window._validateMediaLink = _validateMediaLink;
+window._validateImageLink = _validateImageLink;
+window._getSelectOptionsHTML = _getSelectOptionsHTML;
+window._removeEl = _removeEl;
+window.ORIGINAL_STATE = ORIGINAL_STATE;

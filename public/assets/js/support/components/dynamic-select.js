@@ -1,6 +1,8 @@
-var DYNAMIC_SELECT = {};
+import { _removeChildWithValidation } from "../pages/data.js";
 
-function _newDynamicSelect(type) {
+let DYNAMIC_SELECT = {};
+
+export function _newDynamicSelect(type) {
 	DYNAMIC_SELECT[type] = {
 		selectors: {},
 		values: {},
@@ -8,7 +10,7 @@ function _newDynamicSelect(type) {
 	};
 }
 
-function _addSelectorDS(type, selectID, inputID, customFunction = "") {
+export function _addSelectorDS(type, selectID, inputID, customFunction = "") {
 	DYNAMIC_SELECT[type].selectors[selectID] = {
 		inputID: inputID,
 		value: "",
@@ -16,7 +18,7 @@ function _addSelectorDS(type, selectID, inputID, customFunction = "") {
 	_addEventListenersDS(type, selectID, inputID, customFunction);
 }
 
-function _removeValueDS(type, value) {
+export function _removeValueDS(type, value) {
 	if (value) {
 		DYNAMIC_SELECT[type].values[value]--;
 		if (DYNAMIC_SELECT[type].values[value] === 0) {
@@ -25,7 +27,7 @@ function _removeValueDS(type, value) {
 	}
 }
 
-function _updateValueDS(type, value, selectID) {
+export function _updateValueDS(type, value, selectID) {
 	const lastValue = DYNAMIC_SELECT[type].selectors[selectID].value;
 	_removeValueDS(type, lastValue);
 	DYNAMIC_SELECT[type].selectors[selectID].value = "";
@@ -49,7 +51,7 @@ function _updateValueDS(type, value, selectID) {
 	}
 }
 
-function _buildDS(type) {
+export function _buildDS(type) {
 	_buildSelectDS(type);
 	_applySelectDS(type);
 
@@ -83,7 +85,7 @@ function _buildDS(type) {
 	}
 }
 
-function _addEventListenersDS(type, selectID, inputID, customFunction = "") {
+export function _addEventListenersDS(type, selectID, inputID, customFunction = "") {
 	const select = getID(selectID);
 	const input = getID(inputID);
 
@@ -107,7 +109,7 @@ function _addEventListenersDS(type, selectID, inputID, customFunction = "") {
 	});
 }
 
-function _addRemoveChildListenerDS(categoria, j, dynamicSelects = []) {
+export function _addRemoveChildListenerDS(categoria, j, dynamicSelects = []) {
 	getID(`remove-${categoria}-${j}`).addEventListener("click", function () {
 		for (const dynamicSelect of dynamicSelects) {
 			_removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
@@ -121,8 +123,19 @@ function _addRemoveChildListenerDS(categoria, j, dynamicSelects = []) {
 	});
 }
 
-function _removeSelectorDS(type, selectID) {
+export function _removeSelectorDS(type, selectID) {
 	const value = DYNAMIC_SELECT[type].selectors[selectID].value;
 	_removeValueDS(type, value);
 	delete DYNAMIC_SELECT[type].selectors[selectID];
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window.DYNAMIC_SELECT = DYNAMIC_SELECT;
+window._newDynamicSelect = _newDynamicSelect;
+window._addSelectorDS = _addSelectorDS;
+window._removeValueDS = _removeValueDS;
+window._updateValueDS = _updateValueDS;
+window._buildDS = _buildDS;
+window._addEventListenersDS = _addEventListenersDS;
+window._addRemoveChildListenerDS = _addRemoveChildListenerDS;
+window._removeSelectorDS = _removeSelectorDS;

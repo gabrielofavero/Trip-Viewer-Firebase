@@ -1,6 +1,8 @@
+import { _onAccordionOpen, _onAccordionClose, _areThereOpenedAccordions } from "../html/accordion.js";
+
 let SORTABLE_SKIP_NEXT_ACTION = false;
 
-function _initializeSortableForGroup(groupName, properties) {
+export function _initializeSortableForGroup(groupName, properties) {
 	function _initializeSortable(groupName) {
 		const containers = document.querySelectorAll(
 			`.draggable-area[data-group="${groupName}"]`,
@@ -52,7 +54,7 @@ function _initializeSortableForGroup(groupName, properties) {
 	return observer; // Return the observer instance in case you want to disconnect it later (observer.disconnect())
 }
 
-function _loadDraggablesWithAccordions(items = []) {
+export function _loadDraggablesWithAccordions(items = []) {
 	for (const item of items) {
 		_initializeSortableForGroup(item);
 	}
@@ -100,3 +102,8 @@ function _loadDraggablesWithAccordions(items = []) {
 		_changeDragIconVisibility(collapseElement, headerButton, false);
 	}
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._initializeSortableForGroup = _initializeSortableForGroup;
+window._loadDraggablesWithAccordions = _loadDraggablesWithAccordions;
+window.SORTABLE_SKIP_NEXT_ACTION = SORTABLE_SKIP_NEXT_ACTION;

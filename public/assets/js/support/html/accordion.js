@@ -1,5 +1,7 @@
+import { _getChildIDs } from "../pages/data.js";
+
 // Accordion Open - Close
-function _closeAccordions(categoria) {
+export function _closeAccordions(categoria) {
 	const childs = _getChildIDs(`${categoria}-box`);
 
 	for (const child of childs) {
@@ -12,7 +14,7 @@ function _closeAccordions(categoria) {
 	}
 }
 
-function _openLastAccordion(categoria) {
+export function _openLastAccordion(categoria) {
 	const childs = _getChildIDs(`${categoria}-box`);
 	const lastChild = childs[childs.length - 1];
 	const i = lastChild.split("-").pop();
@@ -21,7 +23,7 @@ function _openLastAccordion(categoria) {
 	$(`#${accordionID}`).collapse("show");
 }
 
-function _areThereOpenedAccordions(categoria) {
+export function _areThereOpenedAccordions(categoria) {
 	const childs = _getChildIDs(`${categoria}-box`);
 
 	for (const child of childs) {
@@ -36,7 +38,7 @@ function _areThereOpenedAccordions(categoria) {
 	return false;
 }
 
-function _onAccordionAction(type, actions = []) {
+export function _onAccordionAction(type, actions = []) {
 	document.addEventListener(type, function (event) {
 		const collapseElement = event.target;
 		const headerButton =
@@ -48,10 +50,18 @@ function _onAccordionAction(type, actions = []) {
 	});
 }
 
-function _onAccordionOpen(actions = []) {
+export function _onAccordionOpen(actions = []) {
 	_onAccordionAction("show.bs.collapse", actions);
 }
 
-function _onAccordionClose(actions = []) {
+export function _onAccordionClose(actions = []) {
 	_onAccordionAction("hide.bs.collapse", actions);
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._closeAccordions = _closeAccordions;
+window._openLastAccordion = _openLastAccordion;
+window._areThereOpenedAccordions = _areThereOpenedAccordions;
+window._onAccordionAction = _onAccordionAction;
+window._onAccordionOpen = _onAccordionOpen;
+window._onAccordionClose = _onAccordionClose;

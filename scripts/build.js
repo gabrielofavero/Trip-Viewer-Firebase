@@ -79,6 +79,9 @@ function build() {
  * Transpile all .js files in dist/ that contain ES module syntax (export/import)
  * into IIFE format so they work with regular <script> tags.
  *
+ * Uses esbuild.buildSync with bundle:true to resolve imports between modules.
+ * Each file becomes a self-contained IIFE with all its dependencies inlined.
+ *
  * During migration phases P9-P11, source files use ES module syntax but
  * HTML files still use plain <script> tags. This bridge keeps things working.
  */
@@ -87,6 +90,16 @@ function transpileESModules() {
   let count = 0;
 
   for (const file of jsFiles) {
+    // Skip vendor files, Firebase config, and barrel files
+    const relPath = path.relative(DIST_DIR, file).replace(/\\/g, "/");
+    if (
+      relPath.startsWith("assets/vendor/") ||
+      relPath === "firebase-config.js" ||
+      relPath.startsWith("assets/js/utils/")
+    ) {
+      continue;
+    }
+
     const content = fs.readFileSync(file, "utf8");
 
     // Only transpile files that contain ES module syntax
@@ -95,12 +108,16 @@ function transpileESModules() {
     }
 
     try {
-      const result = esbuild.transformSync(content, {
-        loader: "js",
+      const result = esbuild.buildSync({
+        entryPoints: [file],
+        bundle: true,
         format: "iife",
         target: "es2020",
+        write: false,
       });
-      fs.writeFileSync(file, result.code, "utf8");
+      // buildSync with write:false returns { outputFiles: [{ path, text }] }
+      const outText = result.outputFiles[0].text;
+      fs.writeFileSync(file, outText, "utf8");
       count++;
     } catch (err) {
       console.error(`[build] ERROR transpiling ${path.relative(ROOT, file)}: ${err.message}`);

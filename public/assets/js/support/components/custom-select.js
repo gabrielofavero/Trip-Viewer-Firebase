@@ -1,12 +1,12 @@
 let CUSTOM_SELECTS = {};
 
-function _loadCloseCustomSelectListeners() {
+export function _loadCloseCustomSelectListeners() {
 	document.addEventListener("click", function (e) {
 		_closeCustomSelects();
 	});
 }
 
-function _loadCustomSelect({
+export function _loadCustomSelect({
 	id,
 	options = [],
 	activeOption,
@@ -29,7 +29,7 @@ function _loadCustomSelect({
 	_loadCustomSelectListeners(id);
 }
 
-function _getCustomSelectHTML(id) {
+export function _getCustomSelectHTML(id) {
 	let optionsHTML = "";
 	for (const option of CUSTOM_SELECTS[id].options) {
 		optionsHTML += `<div class="option" data-value="${option.value}">${option.label}</div>`;
@@ -47,7 +47,7 @@ function _getCustomSelectHTML(id) {
   </div>`;
 }
 
-function _loadCustomSelectListeners(id) {
+export function _loadCustomSelectListeners(id) {
 	const customSelect = getID(id);
 	const container = customSelect.querySelector(".container");
 	const dropdown = customSelect.querySelector(".dropdown");
@@ -79,13 +79,13 @@ function _loadCustomSelectListeners(id) {
 	});
 }
 
-function _closeCustomSelects() {
+export function _closeCustomSelects() {
 	for (const id in CUSTOM_SELECTS) {
 		_closeCustomSelect(id);
 	}
 }
 
-function _closeCustomSelect(id) {
+export function _closeCustomSelect(id) {
 	const customSelect = getID(id);
 	const dropdown = customSelect.querySelector(".dropdown");
 	if (dropdown.style.display === "block") {
@@ -94,7 +94,7 @@ function _closeCustomSelect(id) {
 	}
 }
 
-function _loadCustomSelectAction(id, value, label) {
+export function _loadCustomSelectAction(id, value, label) {
 	CUSTOM_SELECTS[id].onAction = true;
 	CUSTOM_SELECTS[id].activeOption = value;
 	getID(id).querySelector(".title").innerText = label;
@@ -102,7 +102,7 @@ function _loadCustomSelectAction(id, value, label) {
 	_hideActiveOption(id);
 }
 
-function _hideActiveOption(id) {
+export function _hideActiveOption(id) {
 	const customSelect = getID(id);
 	customSelect.querySelectorAll(".option").forEach((option) => {
 		if (option.getAttribute("data-value") === CUSTOM_SELECTS[id].activeOption) {
@@ -113,6 +113,18 @@ function _hideActiveOption(id) {
 	});
 }
 
-function _getCustomSelectActiveOption(id) {
+export function _getCustomSelectActiveOption(id) {
 	return CUSTOM_SELECTS[id]?.activeOption || null;
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._loadCloseCustomSelectListeners = _loadCloseCustomSelectListeners;
+window._loadCustomSelect = _loadCustomSelect;
+window._getCustomSelectHTML = _getCustomSelectHTML;
+window._loadCustomSelectListeners = _loadCustomSelectListeners;
+window._closeCustomSelects = _closeCustomSelects;
+window._closeCustomSelect = _closeCustomSelect;
+window._loadCustomSelectAction = _loadCustomSelectAction;
+window._hideActiveOption = _hideActiveOption;
+window._getCustomSelectActiveOption = _getCustomSelectActiveOption;
+window.CUSTOM_SELECTS = CUSTOM_SELECTS;

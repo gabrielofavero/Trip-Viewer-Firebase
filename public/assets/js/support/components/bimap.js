@@ -1,4 +1,4 @@
-class BiMap {
+export class BiMap {
 	constructor() {
 		this.keyToValue = new Map();
 		this.valueToKey = new Map();
@@ -29,3 +29,6 @@ class BiMap {
 		this.keyToValue.delete(key);
 	}
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window.BiMap = BiMap;

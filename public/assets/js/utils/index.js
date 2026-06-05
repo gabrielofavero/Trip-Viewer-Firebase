@@ -125,3 +125,81 @@ export {
 	_closeToast,
 	_handleMessageKeydown,
 } from "../support/pages/messages.js";
+
+// ======= Components =======
+
+export { BiMap } from "../support/components/bimap.js";
+
+export {
+	_loadCloseCustomSelectListeners,
+	_loadCustomSelect,
+	_getCustomSelectHTML,
+	_loadCustomSelectListeners,
+	_closeCustomSelects,
+	_closeCustomSelect,
+	_loadCustomSelectAction,
+	_hideActiveOption,
+	_getCustomSelectActiveOption,
+} from "../support/components/custom-select.js";
+
+export {
+	_newDynamicSelect,
+	_addSelectorDS,
+	_removeValueDS,
+	_updateValueDS,
+	_buildDS,
+	_addEventListenersDS,
+	_addRemoveChildListenerDS,
+	_removeSelectorDS,
+} from "../support/components/dynamic-select.js";
+
+export {
+	_initializeSortableForGroup,
+	_loadDraggablesWithAccordions,
+} from "../support/components/sortable.js";
+
+export {
+	_closeAccordions,
+	_openLastAccordion,
+	_areThereOpenedAccordions,
+	_onAccordionAction,
+	_onAccordionOpen,
+	_onAccordionClose,
+} from "../support/html/accordion.js";
+
+export {
+	_loadEmbedListeners,
+	_openEmbed,
+	_onEmbedMessage,
+	_sendToParent,
+	_sendToEmbed,
+	_getOrigin,
+	_loadEmbedVisibility,
+	_isEmbed,
+} from "../support/html/embed.js";
+
+export {
+	_snapshotFormState,
+	_getElValue,
+	_getElPosition,
+	_hasUnsavedChanges,
+	_validateRequiredFields,
+	_getInvalidFieldsText,
+	_reEdit,
+	_getInnerText,
+	_notifyFieldIfAbsent,
+	_getFieldValueOrNotify,
+	_closeAllSelects,
+	_getSelectCurrentLabel,
+	_addValueToSelectIfExists,
+	_getAllValuesFromSelect,
+	_selectHasValue,
+	_isHttp,
+	_validateLink,
+	_validateMapLink,
+	_validateInstagramLink,
+	_validateMediaLink,
+	_validateImageLink,
+	_getSelectOptionsHTML,
+	_removeEl,
+} from "../support/html/fields.js";

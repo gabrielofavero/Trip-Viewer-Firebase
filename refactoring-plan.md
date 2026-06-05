@@ -1186,7 +1186,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P7  | Clean Unused CSS Properties                 | ✅ Done    |
 | P8  | Single Dark Mode System                     | ✅ Done    |
 | P9  | Convert Utility Files to ES Modules         | ✅ Done    |
-| P10 | Convert Component Files to ES Modules       | ☐ Pending |
+| P10 | Convert Component Files to ES Modules       | ✅ Done |
 | P11 | Convert Firebase Services to ES Modules     | ☐ Pending |
 | P12 | Single JS Entry Point Per HTML              | ☐ Pending |
 | P13 | Extract Business Logic into Models          | ☐ Pending |
