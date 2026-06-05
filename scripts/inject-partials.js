@@ -36,13 +36,13 @@ const PAGES = [
   {
     source: "index.html",
     title: "TripViewer",
-    entry: "assets/js/pages/index/index-entry.js",
+    entry: "assets/js/pages/home/index-entry.js",
     useTopBar: true,
   },
   {
     source: "view.html",
     title: "TripViewer",
-    entry: "assets/js/pages/view/view-entry.js",
+    entry: "assets/js/pages/trip-detail/view-entry.js",
     useTopBar: true,
   },
   {

@@ -3,7 +3,7 @@ import {
 	getChartConfig,
 	getChartColorsRGB,
 	getArrayRGBA,
-} from '../../../models/expense.js';
+} from '../../../models/expense.model.js';
 
 var GASTOS_CHARTS = {};
 

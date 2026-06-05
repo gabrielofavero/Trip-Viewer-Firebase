@@ -58,10 +58,10 @@
             </a>
           </li>
 
-          <li id="destinosNav">
-            <a href="#destinos" class="nav-link scrollto">
+          <li id="destinationsNav">
+            <a href="#destinations" class="nav-link scrollto">
               <i class="bx bx-map"></i>
-              <span id="destinosNavText" data-translate="destination.title"></span>
+              <span id="destinationsNavText" data-translate="destination.title"></span>
             </a>
           </li>
 
@@ -82,7 +82,7 @@
       <div class="container" data-aos="zoom-in" data-aos-delay="100">
         <h1 id="header1"></h1>
         <img id="header2">
-        <h2 class="header-text" id="subtitulo"></h2>
+        <h2 class="header-text" id="hero-subtitle"></h2>
         <h2 class="header-text" id="countdown"></h2>
         <div class="social-links" id="social-links" style="display: none">
           <a id="attachmentsLink" href="" target="_blank" class="documents"><i class="iconify"
@@ -100,7 +100,7 @@
           <a id="vaccineLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="tabler:vaccine"
               style="display:none"></i></a>
         </div>
-        <button id="programacao-hoje" style="display: none"><span
+        <button id="todays-itinerary-btn" style="display: none"><span
             data-translate="trip.itinerary.todays_itinerary"></span></button>
       </div>
     </section>
@@ -115,9 +115,9 @@
           </div>
           <div class="col-lg-4" id="googleMaps"></div>
 
-          <div class="row" id="dados">
+          <div class="row" id="keypoints-grid">
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado1">
+              <div class="count-box" id="keypoint1">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -125,7 +125,7 @@
             </div>
 
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado2">
+              <div class="count-box" id="keypoint2">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -133,7 +133,7 @@
             </div>
 
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado3">
+              <div class="count-box" id="keypoint3">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -141,7 +141,7 @@
             </div>
 
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado4">
+              <div class="count-box" id="keypoint4">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -167,30 +167,30 @@
         <div class="container" data-aos="fade-up">
 
           <div class="section-title">
-            <h2 id="transporte-titulo" data-translate="trip.transportation.title"></h2>
+            <h2 id="transportation-title" data-translate="trip.transportation.title"></h2>
           </div>
 
-          <div class="custom-select" id="transporte-select" style="display: none;"></div>
+          <div class="custom-select" id="transportation-select" style="display: none;"></div>
 
-          <div class="tabs-container" id="tabs-container-transportes" style="display: none">
-            <div class="tabs" id="tab-transporte">
+          <div class="tabs-container" id="tabs-container-transportation" style="display: none">
+            <div class="tabs" id="tab-transportation">
             </div>
           </div>
 
-          <div id="transporte-box-container">
-            <div class='transporte-box' id="transporte-ida">
-              <div id="transporte-ida-content"></div>
+          <div id="transportation-box-container">
+            <div class='transporte-box' id="transportation-outbound">
+              <div id="transportation-outbound-content"></div>
             </div>
 
-            <div class='transporte-box' id="transporte-durante" style="display: none;">
-              <div id="transporte-durante-content"></div>
+            <div class='transporte-box' id="transportation-internal" style="display: none;">
+              <div id="transportation-internal-content"></div>
             </div>
 
-            <div class='transporte-box' id="transporte-volta" style="display: none;">
-              <div id="transporte-volta-content"></div>
+            <div class='transporte-box' id="transportation-return" style="display: none;">
+              <div id="transportation-return-content"></div>
             </div>
 
-            <div id="transporte-custom-container"></div>
+            <div id="transportation-custom-container"></div>
           </div>
 
         </div>
@@ -202,31 +202,31 @@
 
           <div class="section-title">
             <h2 data-translate="trip.accommodation.title"></h2>
-            <div id="sobre"></div>
+            <div id="accommodation-about"></div>
           </div>
 
-          <div id="hospedagens-box"></div>
+          <div id="accommodations-box"></div>
 
         </div>
       </section>
 
-      <!-- ======= Schedule: Calendar ======= -->
-      <section id="scheduleCalendar" class="resume">
+      <!-- ======= Itinerary Calendar ======= -->
+      <section id="scheduleCalendar" class="itinerary resume">
         <div class="container" data-aos="fade-up">
 
           <div class="section-title">
             <h2 data-translate="trip.itinerary.title"></h2>
-            <div id="progDescription" data-translate="trip.itinerary.instructions"></div>
-            <div id="pTotal"></div>
-            <div id="pAjuste"></div>
-            <div class="backup" id="dadosBackup"></div>
+            <div id="itinerary-description" data-translate="trip.itinerary.instructions"></div>
+            <div id="itinerary-total"></div>
+            <div id="itinerary-adjustment"></div>
+            <div class="backup" id="backupData"></div>
 
             <div id="pill-box" class="pill-box" style="display: none;"></div>
 
-            <div class="card" id="tabela">
+            <div class="card" id="calendar-table-card">
               <h3 class="card-header" id="calendarTitle"></h3>
               <table class="table table-bordered table-responsive-sm" id="calendar">
-                <thead id="tabHeader">
+                <thead id="calendar-table-header">
                   <tr>
                     <th data-translate="datetime.weekdays.mini.sunday"></th>
                     <th data-translate="datetime.weekdays.mini.monday"></th>
@@ -306,25 +306,25 @@
       </section>
 
       <!-- ======= Destinations ======= -->
-      <section id="destinos" class="services">
+      <section id="destinations" class="services">
         <div class="container" data-aos="fade-up">
 
-          <div class="section-title" id="destinosTitleContainer">
-            <h2 id="dTitle" data-translate="destination.title"></h2>
-            <div id="dUpdate"></div>
+          <div class="section-title" id="destinationsTitleContainer">
+            <h2 id="destinations-title" data-translate="destination.title"></h2>
+            <div id="destinations-update"></div>
           </div>
 
-          <div id="dDescription"></div>
+          <div id="destinations-description"></div>
 
-          <div id="destinos-select" class="custom-select"></div>
+          <div id="destinations-select" class="custom-select"></div>
           </select>
 
-          <div class="row" id="destinosBox"></div>
+          <div class="row" id="destinationsBox"></div>
 
         </div>
       </section>
 
-      <!-- ======= Galeria Section ======= -->
+      <!-- ======= Gallery Section ======= -->
       <section id="portfolio" class="portfolio section-bg">
         <div class="container" data-aos="fade-up">
 
@@ -343,7 +343,7 @@
           <div class="row portfolio-container" id="portfolio-container" data-aos="fade-up" data-aos-delay="200"></div>
 
         </div>
-      </section><!-- End Portfolio Section -->
+      </section><!-- End Gallery Section -->
 
       <!-- ======= Support: LightBox ======= -->
       <div id="lightbox" class="lightbox">
@@ -359,8 +359,8 @@
       <div class="container">
         <div class="credits">
           <span data-translate="labels.developed_by"></span> <a
-            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
-            onclick="_openAtribuicoes()"><i class="bx bx-info-circle"></i>
+            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="attributions"
+            onclick="_openAttributions()"><i class="bx bx-info-circle"></i>
             <span data-translate="labels.credits"></span></span>
         </div>
       </div>

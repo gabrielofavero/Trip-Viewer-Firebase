@@ -52,7 +52,7 @@ function loadUploadSelectors() {
 }
 
 function loadEventListeners() {
-	getID("cancelar").addEventListener("click", () => {
+	getID("cancel-btn").addEventListener("click", () => {
 		window.location.href = "../index.html";
 	});
 
@@ -71,7 +71,7 @@ function loadEventListeners() {
 		}
 	});
 
-	getID("salvar").addEventListener("click", () => {
+	getID("save-btn").addEventListener("click", () => {
 		setListagem();
 	});
 

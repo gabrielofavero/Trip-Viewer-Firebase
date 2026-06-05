@@ -6,7 +6,7 @@ import {
 	getCurrencySymbol,
 	formatCurrency,
 	loadCurrenciesObject,
-} from '../../../models/expense.js';
+} from '../../../models/expense.model.js';
 
 var DEFAULT_CURRENCY;
 var MOEDA_CONVERSAO = {};

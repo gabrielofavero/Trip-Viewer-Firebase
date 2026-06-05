@@ -2,21 +2,21 @@
 // Single entry point replacing all <script data-main> tags in itinerary.html
 // Import order MUST match the original script tag order exactly
 
-import '../../main/translation.js';
-import '../../main/main.js';
-import '../../services/trip-service.js';
-import '../../support/styles/animations.js';
-import '../../support/pages/data.js';
-import '../../support/pages/dates.js';
-import '../../support/styles/svgs.js';
-import '../../support/styles/colors.js';
-import '../../support/styles/visibility.js';
-import '../../support/pages/messages.js';
-import '../../support/pages/loading.js';
-import '../../components/embed.js';
-import '../../support/styles/stylesheets.js';
-import '../../support/pages/attributions.js';
-import '../../support/pages/pin.js';
+import '../../i18n/translation.js';
+import '../../app/main.js';
+import '../../data/services/trip.service.js';
+import '../../theme/animations.js';
+import '../../utils/dom.js';
+import '../../utils/dates.js';
+import '../../theme/icons.js';
+import '../../theme/colors.js';
+import '../../theme/visibility.js';
+import '../../utils/messages.js';
+import '../../utils/loading.js';
+import '../../ui/embed.js';
+import '../../theme/stylesheets.js';
+import '../../utils/attributions.js';
+import '../../utils/pin.js';
 import '../view/support/sensitive-reservation.js';
 import '../destination/support/content.js';
 import '../destination/support/visibility.js';

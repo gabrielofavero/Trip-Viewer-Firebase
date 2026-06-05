@@ -1,11 +1,11 @@
 // ======= Travelers =======
-// Traveler functions moved to models/traveler.js — imported here for backward compat
+// Traveler functions moved to models/traveler.model.js — imported here for backward compat
 
 import {
 	getNewTravelerID,
 	validateTravelersObject,
 	hasDuplicateTravelerNames,
-} from '../../../models/traveler.js';
+} from '../../../models/traveler.model.js';
 
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset

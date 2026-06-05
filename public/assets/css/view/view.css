@@ -759,6 +759,7 @@ section {
 	margin-bottom: 25px;
 }
 
+.itinerary .resume-title,
 .resume .resume-title {
 	font-size: 26px;
 	font-weight: 700;
@@ -767,6 +768,7 @@ section {
 	color: #4f5051;
 }
 
+.itinerary .resume-item,
 .resume .resume-item {
 	padding: 0 0 20px 20px;
 	margin-top: -2px;
@@ -774,6 +776,7 @@ section {
 	position: relative;
 }
 
+.itinerary .resume-item h4,
 .resume .resume-item h4 {
 	line-height: 18px;
 	font-size: 18px;
@@ -784,6 +787,7 @@ section {
 	margin-bottom: 10px;
 }
 
+.itinerary .resume-item h5,
 .resume .resume-item h5 {
 	font-size: 16px;
 	background: #f7f8f9;
@@ -793,18 +797,22 @@ section {
 	margin-bottom: 10px;
 }
 
+.itinerary .resume-item ul,
 .resume .resume-item ul {
 	padding-left: 20px;
 }
 
+.itinerary .resume-item ul li,
 .resume .resume-item ul li {
 	padding-bottom: 10px;
 }
 
+.itinerary .resume-item:last-child,
 .resume .resume-item:last-child {
 	padding-bottom: 0;
 }
 
+.itinerary .resume-item::before,
 .resume .resume-item::before {
 	content: "";
 	position: absolute;
@@ -1680,14 +1688,17 @@ section {
 	padding: 10px 0px 20px 0px;
 }
 
+.attributions,
 .atribuicoes {
 	cursor: pointer;
 }
 
+.attributions:hover,
 .atribuicoes:hover {
 	color: #666768;
 }
 
+.attributions-icon,
 .atribuicoes-icon {
 	font-size: 10px;
 }

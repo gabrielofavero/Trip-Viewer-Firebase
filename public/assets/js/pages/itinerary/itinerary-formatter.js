@@ -1,11 +1,11 @@
 // ======= Itinerary Formatter =======
 // Itinerary data transformation and multi-format output
-// Core functions moved to models/itinerary.js — imported here for backward compat
+// Core functions moved to models/itinerary.model.js — imported here for backward compat
 
 import {
 	getItineraryContent,
 	getItineraryData,
-} from '../../models/itinerary.js';
+} from '../../models/itinerary.model.js';
 
 var ITINERARY;
 const ITINERARY_HTML = {};

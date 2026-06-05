@@ -1,4 +1,4 @@
-import { getTransportations } from '../../core/config.js';
+import { getTransportations } from '../../app/config.js';
 
 var DATAS = [];
 
@@ -156,7 +156,7 @@ function addTransportation() {
 		"transporte-pessoa",
 		`transporte-pessoa-select-${j}`,
 		`transporte-pessoa-${j}`,
-		`updateTransportationTitle(${j})`,
+		() => updateTransportationTitle(j),
 	);
 
 	function getTypeOptions() {
@@ -268,7 +268,7 @@ function addHospedagens() {
       `);
 
 	getID(`hospedagens-id-${j}`).value = getCategoryID("hospedagens", j);
-	addRemoveChildListener("hospedagens", j, `removeAccommodationImages(${j})`);
+	addRemoveChildListener("hospedagens", j, () => removeAccommodationImages(j));
 	loadAccommodationListeners(j);
 	ACCOMMODATION_IMAGES[j] = [];
 }

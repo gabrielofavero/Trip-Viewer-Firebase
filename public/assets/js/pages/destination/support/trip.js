@@ -1,4 +1,4 @@
-import { getItinerary } from '../../../core/config.js';
+import { getItinerary } from '../../../app/config.js';
 
 var FIRESTORE_DATA;
 var TRIP_ID;

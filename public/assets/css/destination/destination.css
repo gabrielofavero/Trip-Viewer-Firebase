@@ -369,14 +369,17 @@ h1::after {
 	padding: 20px 0;
 }
 
+.attributions,
 .atribuicoes {
 	cursor: pointer;
 }
 
+.attributions:hover,
 .atribuicoes:hover {
 	color: #666768;
 }
 
+.attributions-icon,
 .atribuicoes-icon {
 	font-size: 10px;
 }

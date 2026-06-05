@@ -1,4 +1,4 @@
-import { getDestinos } from '../../core/config.js';
+import { getDestinos } from '../../app/config.js';
 
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
@@ -167,7 +167,7 @@ function closeAccordions(exclude) {
 
 function loadDestinationCustomSelect() {
 	const customSelect = {
-		id: "destinos-select",
+		id: "destinations-select",
 		options: getDestinationCustomSelectOptions(),
 		activeOption: ACTIVE_CATEGORY === "mapa" ? "myMaps" : ACTIVE_CATEGORY,
 		action: loadDestinationCustomSelectAction,

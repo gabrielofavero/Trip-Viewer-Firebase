@@ -226,6 +226,7 @@
 	background: rgba(28,28,30,0.5);
 }
 
+[data-theme="dark"] .attributions:hover,
 [data-theme="dark"] .atribuicoes:hover {
 	color: #d1d0d0;
 }

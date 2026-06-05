@@ -1,13 +1,13 @@
 // ======= Destination Categories =======
-// Destination formatting functions moved to models/destination.js — imported here for backward compat
+// Destination formatting functions moved to models/destination.model.js — imported here for backward compat
 
 import {
 	getNotaTranslation,
 	getValorValue,
 	convertCustomValor,
 	getDescricaoValue,
-} from '../../models/destination.js';
-import { getDestinos } from '../../core/config.js';
+} from '../../models/destination.model.js';
+import { getDestinos } from '../../app/config.js';
 
 
 

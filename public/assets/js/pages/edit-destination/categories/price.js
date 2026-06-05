@@ -1,4 +1,4 @@
-import { getDestinos, getCurrencies } from '../../../core/config.js';
+import { getDestinos, getCurrencies } from '../../../app/config.js';
 
 var VALOR_OPTIONS = "";
 

@@ -5,7 +5,7 @@ function loadEventListeners() {
 	getID("fim").addEventListener("change", () => fimListenerAction());
 
 	// Botões
-	getID("salvar").addEventListener("click", () => setTripData());
+	getID("save-btn").addEventListener("click", () => setTripData());
 	getID("re-editar").addEventListener("click", () =>
 		reEdit("viagens", SUCCESSFUL_SAVE),
 	);
@@ -20,7 +20,7 @@ function loadEventListeners() {
 		"click",
 		() => (window.location.href = "../index.html"),
 	);
-	getID("cancelar").addEventListener(
+	getID("cancel-btn").addEventListener(
 		"click",
 		() => (window.location.href = "../index.html"),
 	);

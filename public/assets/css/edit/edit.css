@@ -1181,14 +1181,17 @@ details summary::-webkit-details-marker {
 	margin-bottom: 32px;
 }
 
+.attributions,
 .atribuicoes {
 	cursor: pointer;
 }
 
+.attributions:hover,
 .atribuicoes:hover {
 	color: #666768;
 }
 
+.attributions-icon,
 .atribuicoes-icon {
 	font-size: 10px;
 }

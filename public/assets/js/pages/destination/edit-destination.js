@@ -1,4 +1,4 @@
-import { getCurrencies } from '../../core/config.js';
+import { getCurrencies } from '../../app/config.js';
 
 let ADDED_J;
 

@@ -89,7 +89,7 @@ function loadEventListeners() {
 		buildDS("regiao");
 	});
 
-	getID("salvar").addEventListener("click", () => {
+	getID("save-btn").addEventListener("click", () => {
 		startLoadingScreen();
 		const type = "destinos";
 		const dataBuildingFunctions = [_buildDestinosObject, _updateTikTokLinks];
@@ -101,7 +101,7 @@ function loadEventListeners() {
 		reEdit("destinos", SUCCESSFUL_SAVE);
 	});
 
-	getID("cancelar").addEventListener("click", () => {
+	getID("cancel-btn").addEventListener("click", () => {
 		window.location.href = `../index?visibility=${getVisibility()}`;
 	});
 

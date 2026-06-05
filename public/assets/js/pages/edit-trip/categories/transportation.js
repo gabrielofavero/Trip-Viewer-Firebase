@@ -1,4 +1,4 @@
-import { getTransportations } from '../../../core/config.js';
+import { getTransportations } from '../../../app/config.js';
 
 function getTransportationObject(protectedReservationCodes = false) {
 	const result = {

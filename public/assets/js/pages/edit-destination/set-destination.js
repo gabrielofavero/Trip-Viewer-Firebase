@@ -1,4 +1,4 @@
-import { getDestinos } from '../../core/config.js';
+import { getDestinos } from '../../app/config.js';
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 

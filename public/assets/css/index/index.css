@@ -472,7 +472,9 @@ body.dialog-open { overflow: hidden; }
 	text-align: center; padding: 16px 0 24px; z-index: 1;
 	position: relative;
 }
+.attributions,
 .atribuicoes { cursor: pointer; transition: color var(--transition-fast); }
+.attributions:hover,
 .atribuicoes:hover { color: var(--text-primary); }
 
 /*--------------------------------------------------------------

@@ -1,5 +1,5 @@
 // ======= Price Bucket =======
-// Price bucket functions moved to models/destination.js — imported here for backward compat
+// Price bucket functions moved to models/destination.model.js — imported here for backward compat
 
 import {
 	getPriceBucket,
@@ -9,7 +9,7 @@ import {
 	normalizePriceBucket,
 	getPriceLabel,
 	isPriceInBucketRange,
-} from '../../../../../models/destination.js';
+} from '../../../../../models/destination.model.js';
 
 
 

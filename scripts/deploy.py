@@ -270,6 +270,13 @@ def deploy_firebase(project):
 # Main Workflow
 # ============================================================
 
+def run_build():
+    """Run the npm build step (copies public/ → dist/, injects partials)."""
+    print(f"\n{Colors.BOLD}{Colors.CYAN}Running npm build...{Colors.RESET}")
+    run_command("npm run build", capture_output=False, check=True)
+    print(f"{Colors.GREEN}✓ Build complete.{Colors.RESET}\n")
+
+
 def main():
     """Main deployment workflow."""
     try:
@@ -277,6 +284,8 @@ def main():
         print(f"{Colors.CYAN}Current Firebase project:{Colors.RESET} {Colors.BOLD}{original_project}{Colors.RESET}")
 
         target_projects = select_deployment_targets()
+
+        run_build()
 
         version_data = load_version_json()
         build_number = increment_build_number(version_data)

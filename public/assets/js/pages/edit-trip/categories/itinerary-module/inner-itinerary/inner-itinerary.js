@@ -1,4 +1,4 @@
-import { getDestinos, getItinerary } from '../../../../../core/config.js';
+import { getDestinos, getItinerary } from '../../../../../app/config.js';
 
 var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};

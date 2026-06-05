@@ -1,9 +1,8 @@
 /**
  * Build script for Trip-Viewer-Firebase.
  *
- * Phase 0: Copies static assets from public/ to dist/.
- * Phase 9+: Transpiles ES module JS files (with export/import) to IIFE format
- *           so they work with regular <script> tags during the migration.
+ * Copies static assets from public/ to dist/, injects HTML partials,
+ * and copies Firebase config files.
  *
  * Usage:
  *   node scripts/build.js          — one-shot build
@@ -12,7 +11,6 @@
 
 const fs = require("fs");
 const path = require("path");
-const esbuild = require("esbuild");
 
 const ROOT = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
@@ -71,108 +69,8 @@ function build() {
     console.warn("[build] WARNING: firebase-config.js not found at project root.");
   }
 
-  // 5. Transpile ES module JS files to IIFE format (strips export/import)
-  //    so they work with regular <script> tags during migration phases P9-P11.
-  console.log("[build] Transpiling ES modules to IIFE...");
-  transpileESModules();
-
   const elapsed = Date.now() - start;
   console.log(`[build] Done in ${elapsed}ms.`);
-}
-
-/**
- * Transpile all .js source files in public/ that contain ES module syntax
- * into IIFE format, outputting to dist/.
- *
- * - Files WITHOUT imports: transformSync strips `export` keywords.
- * - Files WITH imports: buildSync with bundle:true resolves and inlines deps.
- *
- * Source files in public/ are never modified — only dist/ is written.
- * This ensures imports always resolve against the original source.
- *
- * During migration phases P9-P11, source files use ES module syntax but
- * HTML files still use plain <script> tags. This bridge keeps things working.
- */
-function transpileESModules() {
-  const jsFiles = findJSFiles(PUBLIC_DIR);
-  let count = 0;
-
-  for (const srcFile of jsFiles) {
-    // Compute relative path and corresponding dist path
-    const relPath = path.relative(PUBLIC_DIR, srcFile).replace(/\\/g, "/");
-
-    // Skip vendor files, Firebase config, and barrel files
-    if (
-      relPath.startsWith("assets/vendor/") ||
-      relPath === "firebase-config.js" ||
-      relPath.startsWith("assets/js/utils/") ||
-      relPath.startsWith("assets/js/services/") ||
-      relPath.startsWith("assets/js/styles/")
-    ) {
-      continue;
-    }
-
-    const content = fs.readFileSync(srcFile, "utf8");
-
-    // Only transpile files that contain ES module syntax
-    if (!/\bexport\b/.test(content) && !/\bimport\b/.test(content)) {
-      continue;
-    }
-
-    const distFile = path.join(DIST_DIR, relPath);
-    const hasImports = /\bimport\b/.test(content);
-
-    try {
-      if (hasImports) {
-        // Use buildSync to resolve imports, outputting bundled IIFE
-        const result = esbuild.buildSync({
-          entryPoints: [srcFile],
-          bundle: true,
-          format: "iife",
-          target: "es2020",
-          write: false,
-          absWorkingDir: PUBLIC_DIR,
-        });
-        fs.writeFileSync(distFile, result.outputFiles[0].text, "utf8");
-      } else {
-        // Use transformSync to just strip export keywords
-        const result = esbuild.transformSync(content, {
-          loader: "js",
-          format: "iife",
-          target: "es2020",
-        });
-        fs.writeFileSync(distFile, result.code, "utf8");
-      }
-      count++;
-    } catch (err) {
-      console.error(`[build] ERROR transpiling ${relPath}: ${err.message}`);
-    }
-  }
-
-  if (count > 0) {
-    console.log(`[build] Transpiled ${count} ES module file(s) to IIFE.`);
-  }
-}
-
-/**
- * Recursively find all .js files in a directory.
- */
-function findJSFiles(dir) {
-  const results = [];
-  try {
-    for (const entry of fs.readdirSync(dir)) {
-      const fullPath = path.join(dir, entry);
-      const stat = fs.statSync(fullPath);
-      if (stat.isDirectory()) {
-        results.push(...findJSFiles(fullPath));
-      } else if (entry.endsWith(".js")) {
-        results.push(fullPath);
-      }
-    }
-  } catch {
-    // Directory may not exist yet — ignore
-  }
-  return results;
 }
 
 // --- Watch mode ---
