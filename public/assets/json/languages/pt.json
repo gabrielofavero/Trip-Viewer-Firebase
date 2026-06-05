@@ -748,5 +748,23 @@
 			"multiple": "Planejado em múltiplas datas",
 			"not_planned": "Não planejado"
 		}
+	},
+	"index": {
+		"welcome_back": "Pronto para explorar suas viagens?",
+		"my_trips": "Minhas Viagens",
+		"my_destinations": "Meus Destinos",
+		"my_lists": "Minhas Listas",
+		"no_trips": "Nenhuma viagem ainda. Crie sua primeira viagem!",
+		"no_destinations": "Nenhum destino cadastrado ainda",
+		"no_lists": "Nenhuma lista criada ainda",
+		"active": "Ativa",
+		"upcoming": "Futura",
+		"past": "Passada",
+		"days": "dias",
+		"day": "dia",
+		"modules_active": "Módulos ativos",
+		"trip_destinations": "Destinos da Viagem",
+		"view_trip": "Ver Viagem",
+		"edit_trip": "Editar Viagem"
 	}
 }

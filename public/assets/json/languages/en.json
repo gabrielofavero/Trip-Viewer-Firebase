@@ -748,5 +748,23 @@
 			"multiple": "Planned on multiple dates",
 			"not_planned": "Not planned"
 		}
+	},
+	"index": {
+		"welcome_back": "Ready to explore your trips?",
+		"my_trips": "My Trips",
+		"my_destinations": "My Destinations",
+		"my_lists": "My Lists",
+		"no_trips": "No trips yet. Create your first trip!",
+		"no_destinations": "No destinations registered yet",
+		"no_lists": "No lists created yet",
+		"active": "Active",
+		"upcoming": "Upcoming",
+		"past": "Past",
+		"days": "days",
+		"day": "day",
+		"modules_active": "Active modules",
+		"trip_destinations": "Trip Destinations",
+		"view_trip": "View Trip",
+		"edit_trip": "Edit Trip"
 	}
 }

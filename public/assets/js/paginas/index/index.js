@@ -13,5 +13,4 @@ async function _loadIndexPage() {
 	_loadVisibilityIndex();
 	_loadListenersIndex();
 	_loadUserIndex();
-	$("body").css("overflow", "auto");
 }

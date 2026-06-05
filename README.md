@@ -4,16 +4,35 @@
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 160   | 156  | 3         | 1       |
+| 🐞   | Bug         | B000 | 160   | 157  | 3         | 0       |
 | 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
-| 📈   | Improvement | M000 | 148   | 117  | 31        | 0       |
-| ⚔️   | Epic        | E000 | 43    | 28   | 14        | 1       |
+| 📈   | Improvement | M000 | 150   | 119  | 23        | 8       |
+| ⚔️   | Epic        | E000 | 46    | 29   | 10        | 7       |
 
 ## Backlog
 
 ### High Priority
 
+
+- ⚔️ **E034:** Frontend code refactoring
+  - *[📈M106] Use require in js files + single entrypoint for scripts in html files*
+  - *[📈M098] Change js folder structures to EN-US*
+  - *[📈M135] Refactor "dados.js" to shared dir*
+  - *[📈M105] Remove CONFIG and reduce use of global variables*
+  - *[📈M058] Modularize CSS files to reduce redundancy*
+  - *[📈M046] Clean unused properties in application CSS*
+  - *[📈M149] Better file/folder architecture + separation of concerns (visuals, bussiness, api calls, crud etc)*
+  - *[📈M150] All functions and variables in EN-US*
+
 ### Medium Priority
+
+- ⚔️ **E016:** New Front-End: destination.html
+- ⚔️ **E027:** New Front-End: view.html
+- ⚔️ **E044:** New Front-End: edit pages
+- ⚔️ **E045:** New Front-End: itinerary.html
+- ⚔️ **E046:** New Front-End: expenses.html
+
+### Low Priority
 
 - ⚔️ **E043:** Offline Mode (Dev Only, POC)
   - *[🏆F152] Export script — Firestore→JSON + image download + offline HTML generation*
@@ -24,10 +43,6 @@
   - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
   - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
-
-### Low Priority
-
-- 🐞 **B096:** Fix Gallery module
 
 ## Done
 
@@ -56,7 +71,10 @@
   - *[🏆F164] destination.html single function for import*
 - 🐞 **B160:** Fix page tag for local envs
 - 📈 **M147:** Improve tags
+- 🐞 **B096:** Fix Gallery module
 - 📈 **M148:** Improve trip categories in index.html
+- ⚔️ **E018:** New Front-End: index.html
+  - *[📈M021] Improve "My Trips / Destinations / Listings" in index.html*
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
@@ -491,6 +509,7 @@
 - 📈 **M053:** Allow more than one location for same itinerary day
 - 🏆 **F054:** Implement ID system for transportation and accommodation, to be used as reference in itinerary
 - 📈 **M036:** Improve destination CSS so table does not break at zooms below 100%
+- 📈 **M108:** Change USER_DATA in index to only get necessary data
 
 ### April 2024
 
@@ -656,12 +675,6 @@
   - *Switch via function*
   - *Switch via tab*
   - *Lightbox persists (no reload)*
-- ⚔️ **E018:** New Front-End: index.html
-  - *Waiting for Guilherme's template*
-- 📈 **M106:** Use require in js files
-- ⚔️ **E034:** Frontend code refactoring
-  - *Use require*
-  - *Convert to ts*
 - ⚔️ **E028:** Places API Text Search
 - ⚔️ **E017:** Optimize firebase operations usage (reads, cloud functions)
 - 📈 **M096:** Mobile and webview adjustments
@@ -690,16 +703,8 @@
 - 🏆 **F046:** Create reordering options for destinations
   - *On edit and trip pages*
   - *Order by rating and by name (↑↓)*
-- 📈 **M021:** Improve "My Trips / Destinations / Listings" in index.html
-  - *Order by date (ascending) in trips*
-  - *Add previous trips in trips*
-  - *Order by update date in Destinations and Listings*
 - ⚔️ **E014:** Implementation: Wishlist
   - *Find a template online and apply (credit the source)*
-- ⚔️ **E016:** New Front-End: destination.html
-  - *Waiting for Guilherme to develop new template version*
-- ⚔️**E027:** New Front-End: view.html
-  - *Waiting for Guilherme's template*
 - 📈 **M104:** All external links should open via window.open
 - 📈 **M087:** Destination load loads everything immediately
 - ⚔️ **E019:** Implement Sonarqube
@@ -707,7 +712,6 @@
 - 📈 **M100:** Storage size limit for document (10MB)
 - 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
 - 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
-- 📈 **M108:** Change USER_DATA in index to only get necessary data
 - ⚔️ **E024:** Migrate project to React OR Angular
 - ⚔️ **E025:** iOS and Android implementation
 - 🏆 **F043:** Create customizable keypoints
@@ -719,20 +723,14 @@
 - 📈 **M045:** Show rating inside edit-destinations accordion and order by Rating + title
 - 📈 **M054:** Improve getJs functions for more scenarios
 - 🏆 **F055:** Implement getKs function + Rename functions for clarity
-- 📈 **M046:** Clean unused properties in application CSS
 - 📈 **M055:** Improve all dark mode changes to be applied via js
-- 📈 **M058:** Modularize CSS files to reduce redundancy
-  -*Will also need to change dark mode calculation function*
 - 📈 **M069:** Loading timer disabled by default
 - 📈 **M047:** Change modal messages to bottomsheet messages
 - 📈 **M089:** Replace color values with environment variables in CSS
 - 🏆 **F067:** OneDrive integration
 - 🏆 **F081:** Embed map when there is no video in the destination
-- 📈 **M105:** Remove CONFIG ~~and reduce use of global variables~~
 - 📈 **M114:** Make button / select outlines theme color (view.html)
 - 🐞 **B097:** Fix Image upload module
 - 🏆 **F116:** Destinations data refactoring
 - 📈 **M119:** Instead of pop-ups, scroll to item (if not destination)
-- 📈 **M098:** Change js folder structures to EN-US
-- 📈 **M135:** Refactor "dados.js" to shared dir
 - 🐞 **B148:** Full itinerary page giving multiple blank pages

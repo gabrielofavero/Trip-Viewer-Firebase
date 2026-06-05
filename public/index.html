@@ -32,7 +32,7 @@
 
   <!-- Google Fonts -->
   <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i"
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Inter:300,400,500,600,700,800,900"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
@@ -49,6 +49,7 @@
 </head>
 
 <body>
+  <!-- ======= Top Bar ======= -->
   <div class="top-bar loadable" id="top-bar" style="display: none">
     <a href="index.html" class="logo-link">
       <div class="logo-box">
@@ -114,186 +115,286 @@
       <i id="profile-icon" class="icon-buttons" style="display: none;"></i>
     </div>
   </div>
-  <div class="notification-bar loadable" id="notification-bar" style="display: none">
-    <span class="notification-text" id="notification-text"></span>
-    <span class="notification-link" id="notification-link" onclick="_goToCurrentTrip()"><i class="iconify external-link"
-        data-icon="tabler:external-link"></i></span>
-    <span class="notification-close" onclick="closeNotification()"><i class="iconify"
-        data-icon="material-symbols:close"></i></span>
-  </div>
 
-  <!-- ======= Hero ======= -->
+  <!-- ======= Notification Bar (removed - no longer needed) ======= -->
+  <!-- ======= Notification Bar (removed) ======= -->
+
+  <!-- ======= Main Content ======= -->
   <section id="hero" class="loadable" style="display: none">
-    <div class="content-box">
-      <div id="index-unlogged-title" class="index-title" style="display: none">
-        <p>
-          <span data-translate="labels.intro"></span>
-          <span class="typed" data-typed-items="Las Vegas, New York, São Paulo, TripViewer"></span>
-        </p>
-      </div>
-      <div id="index-logged-title" class="index-title" style="display: none">
-        <p><span data-translate="labels.greeting"></span>, <span class="typed" id="title-name"></span></p>
-      </div>
+    <div class="content-box" id="content-box">
 
-      <div class="login-box" id="login-box" style="display: none">
-        <div class="login-input">
-          <input type="email" id="login-email" class="login-item" data-translate="labels.auth.email" required>
+      <!-- Unlogged State -->
+      <div id="unlogged-view" class="view-panel" style="display: none">
+        <div class="hero-brand">
+          <div class="hero-wordmark">TripViewer</div>
         </div>
-        <div class="login-input">
-          <input type="password" id="login-password" class="login-item" data-translate="labels.auth.password" required>
-        </div>
-        <button id="login-button" class="btn btn-theme" type="button" data-translate="labels.auth.sign_in"></button>
-      </div>
-
-      <div class="logged-menu" id="logged-menu" style="display: none" style="display: none">
-        <div class="logged-menu-item" id="viagensAtuais"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="tabler:plane-departure"></i>
-          <div class="logged-menu-text" data-translate="trip.current"></div>
-        </div>
-        <div class="logged-menu-item" id="proximasViagens"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="material-symbols-light:trip"></i>
-          <div class="logged-menu-text" data-translate="trip.next"></div>
-        </div>
-        <div class="logged-menu-item" id="viagensAnteriores"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="wpf:past"></i>
-          <div class="logged-menu-text" data-translate="trip.previous"></div>
-        </div>
-        <div class="logged-menu-item" id="semViagens" style="display: none"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="gridicons:add-outline"></i>
-          <div class="logged-menu-text" data-translate="trip.new"></div>
-        </div>
-        <div class="logged-menu-item" id="destinosCadastrados"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="bx:trip"></i>
-          <div class="logged-menu-text" data-translate="destination.mine"></div>
-        </div>
-        <div class="logged-menu-item" id="listasDeDestinos"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="fluent:list-28-filled"></i>
-          <div class="logged-menu-text" data-translate="listing.title"></div>
-        </div>
-        <div class="logged-menu-item" id="ajustesDaConta"><i class="iconify index-buttons logged-menu-buttons"
-            data-icon="material-symbols:settings"></i>
-          <div class="logged-menu-text" data-translate="account.settings"></div>
+        <div class="login-box" id="login-box">
+          <div class="login-input">
+            <input type="email" id="login-email" class="login-item" data-translate="labels.auth.email" required>
+          </div>
+          <div class="login-input">
+            <input type="password" id="login-password" class="login-item" data-translate="labels.auth.password" required>
+          </div>
+          <button id="login-button" class="btn btn-primary-theme" type="button" data-translate="labels.auth.sign_in"></button>
         </div>
       </div>
 
-      <div class="userList-box" id="viagensAtuais-box" style="display: none">
-        <h4 data-translate="trip.current"></h4>
-        <div class="content-list"></div>
-        <button id="nova-viagem-0" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
-      </div>
+      <!-- Logged State: Dashboard -->
+      <div id="logged-view" class="view-panel" style="display: none">
+        <!-- Greeting -->
+        <div class="greeting-section">
+          <div class="greeting-avatar" id="greeting-avatar"></div>
+          <div class="greeting-text">
+            <h2 class="greeting-title"><span data-translate="labels.greeting"></span>, <span id="title-name"></span>!</h2>
+            <p class="greeting-subtitle" data-translate="index.welcome_back"></p>
+          </div>
+        </div>
 
-      <div class="userList-box" id="proximasViagens-box" style="display: none">
-        <h4 data-translate="trip.next"></h4>
-        <div class="content-list"></div>
-        <button id="nova-viagem-1" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
-      </div>
+        <!-- Category Tabs -->
+        <div class="category-tabs" id="category-tabs">
+          <button class="category-tab active" data-tab="trips">
+            <i class="iconify" data-icon="tabler:plane-departure"></i>
+            <span data-translate="index.my_trips"></span>
+          </button>
+          <button class="category-tab" data-tab="destinations">
+            <i class="iconify" data-icon="bx:trip"></i>
+            <span data-translate="index.my_destinations"></span>
+          </button>
+          <button class="category-tab" data-tab="lists">
+            <i class="iconify" data-icon="fluent:list-28-filled"></i>
+            <span data-translate="index.my_lists"></span>
+          </button>
+          <button class="category-tab" data-tab="settings">
+            <i class="iconify" data-icon="material-symbols:settings"></i>
+            <span data-translate="account.settings"></span>
+          </button>
+        </div>
 
-      <div class="userList-box" id="viagensAnteriores-box" style="display: none">
-        <h4 data-translate="trip.previous"></h4>
-        <div class="content-list"></div>
-        <button id="nova-viagem-2" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="trip.new"></span></button>
-      </div>
+        <!-- Tab Content: Trips -->
+        <div class="tab-content active" id="tab-trips">
+          <div class="tab-header">
+            <span class="tab-header-count" id="trips-count"></span>
+            <button id="new-trip-btn" class="btn btn-primary-theme btn-sm">
+              <i class="iconify" data-icon="gridicons:add-outline"></i>
+              <span data-translate="trip.new"></span>
+            </button>
+          </div>
+          <div class="trip-grid" id="trip-grid">
+            <!-- Trip cards rendered by JS -->
+          </div>
+          <div class="empty-state" id="trips-empty" style="display:none">
+            <i class="iconify empty-icon" data-icon="tabler:plane-off"></i>
+            <p data-translate="index.no_trips"></p>
+          </div>
+        </div>
 
-      <div class="userList-box" id="destinos-box" style="display: none">
-        <h4 data-translate="destination.mine"></h4>
-        <div class="content-list"></div>
-        <button id="new-destino" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline"></i><span data-translate="destination.new"></button>
-      </div>
+        <!-- Tab Content: Destinations -->
+        <div class="tab-content" id="tab-destinations">
+          <div class="tab-header">
+            <span class="tab-header-count" id="dests-count"></span>
+            <button id="new-dest-btn" class="btn btn-primary-theme btn-sm">
+              <i class="iconify" data-icon="gridicons:add-outline"></i>
+              <span data-translate="destination.new"></span>
+            </button>
+          </div>
+          <div class="dest-grid" id="dest-grid">
+            <!-- Destination cards rendered by JS -->
+          </div>
+          <div class="empty-state" id="dest-empty" style="display:none">
+            <i class="iconify empty-icon" data-icon="material-symbols:location-off"></i>
+            <p data-translate="index.no_destinations"></p>
+          </div>
+        </div>
 
-      <div class="userList-box" id="listagens-box" style="display: none">
-        <h4 data-translate="listing.title"></h4>
-        <div class="content-list"></div>
-        <button id="new-listagem" class="btn btn-theme" type="button"><i class="iconify add"
-            data-icon="gridicons:add-outline" data-translate=""></i><span data-translate="listing.new"></span></button>
-      </div>
+        <!-- Tab Content: Lists -->
+        <div class="tab-content" id="tab-lists">
+          <div class="tab-header">
+            <span class="tab-header-count" id="lists-count"></span>
+            <button id="new-list-btn" class="btn btn-primary-theme btn-sm">
+              <i class="iconify" data-icon="gridicons:add-outline"></i>
+              <span data-translate="listing.new"></span>
+            </button>
+          </div>
+          <div class="list-grid" id="list-grid">
+            <!-- List cards rendered by JS -->
+          </div>
+          <div class="empty-state" id="lists-empty" style="display:none">
+            <i class="iconify empty-icon" data-icon="fluent:list-28-regular"></i>
+            <p data-translate="index.no_lists"></p>
+          </div>
+        </div>
 
-      <div class="settings-box" id="settings-box" style="display: none">
-        <div class="general-settings">
-          <div id="settings-account-container">
-            <div id="settings-account" class="settings-account-item">
-              <div id="settings-account-picture"></div>
-              <div id="settings-account-text">
-                <div id="settings-account-name"></div>
+        <!-- Tab Content: Settings -->
+        <div class="tab-content" id="tab-settings">
+          <div class="settings-panel">
+            <!-- Profile Card -->
+            <div class="settings-card" id="settings-account-card">
+              <div class="settings-avatar" id="settings-avatar"></div>
+              <div class="settings-user-info">
+                <div class="settings-user-name" id="settings-user-name"></div>
+              </div>
+              <button class="btn btn-outline-theme" onclick="_signOut()">
+                <i class="iconify" data-icon="material-symbols:logout"></i>
+                <span data-translate="labels.auth.sign_out"></span>
+              </button>
+            </div>
+
+            <!-- Advanced Settings -->
+            <div class="settings-section">
+              <h3 class="settings-section-title" data-translate="labels.advanced"></h3>
+              <div class="settings-actions">
+                <button class="btn btn-secondary-theme settings-action-btn" onclick="_backupOnClickAction()">
+                  <i class="iconify" data-icon="material-symbols:cloud-download"></i>
+                  <span data-translate="account.backup.title"></span>
+                </button>
+                <button class="btn btn-secondary-theme settings-action-btn" onclick="_restoreOnClickAction()">
+                  <i class="iconify" data-icon="material-symbols:cloud-upload"></i>
+                  <span data-translate="account.restore.title"></span>
+                </button>
+                <input type="file" id="restore-account-input" accept="application/json" style="display:none">
+              </div>
+              <div class="settings-danger">
+                <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="account.delete.title"></a>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <a id="settings-sign-out" href="#" onclick="_signOut()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z">
-                </path>
-              </svg>
-              <span data-translate="labels.auth.sign_out"></span>
+      <!-- Delete Account Modal -->
+      <div id="modal" class="modal-overlay">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h4 id="modal-text-title" data-translate="account.delete.title"></h4>
+            <a onclick="_closeModal()" class="modal-close-btn">
+              <i class="iconify" data-icon="material-symbols:close"></i>
             </a>
           </div>
-        </div>
-
-        <div class="advanced-settings">
-          <span class="title" data-translate="labels.advanced"></span>
-          <div class="options">
-            <button id="settings-backup-account" class="btn btn-theme" onclick="_backupOnClickAction()" type="button"
-              data-translate="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M12 15.575q-.2 0-.375-.062T11.3 15.3l-3.6-3.6q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L11 12.15V5q0-.425.288-.712T12 4t.713.288T13 5v7.15l1.875-1.875q.3-.3.713-.288t.712.313q.275.3.288.7t-.288.7l-3.6 3.6q-.15.15-.325.213t-.375.062M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20z" />
-              </svg>
-              <span data-translate="account.backup.title"></span>
-            </button>
-            <button id="settings-restore-account" class="btn btn-theme" onclick="_restoreOnClickAction()" type="button"
-              data-translate="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20zm5-12.15L9.125 9.725q-.3.3-.712.288T7.7 9.7q-.275-.3-.288-.7t.288-.7l3.6-3.6q.15-.15.325-.212T12 4.425t.375.063t.325.212l3.6 3.6q.3.3.288.7t-.288.7q-.3.3-.712.313t-.713-.288L13 7.85V15q0 .425-.288.713T12 16t-.712-.288T11 15z" />
-              </svg>
-              <span data-translate="account.restore.title"></span>
-            </button>
-            <input type="file" id="restore-account-input" accept="application/json" style="display:none">
-            <div id="delete-account-container">
-              <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="account.delete.title"></a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="modal" class="modal">
-        <div class="modal-content">
-          <div class="modal-text">
-            <div id="cancel-icon" style="text-align: right;">
-              <a onclick="_closeModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
-                  </path>
-                </svg>
-              </a>
-            </div>
-            <h4 id="modal-text-title" data-translate="account.delete.title"></h4>
-            <p data-translate="account.delete.message"></p>
-          </div>
-          <div class="button-box">
-            <button id="cancelar" class="btn btn-secondary" type="button" onclick="_closeModal()" data-translate="">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M19 5.41L17.59 4L12 9.59L6.41 4L5 5.41L10.59 11L5 16.59L6.41 18L12 12.41L17.59 18L19 16.59L13.41 11L19 5.41Z">
-                </path>
-              </svg>
+          <p class="modal-body" data-translate="account.delete.message"></p>
+          <div class="modal-actions">
+            <button id="cancelar" class="btn btn-outline-theme" type="button" onclick="_closeModal()">
               <span data-translate="labels.cancel"></span>
-              <button id="apagar" class="btn btn-theme" type="submit" data-translate="">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="currentColor" fill-rule="evenodd"
-                    d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span data-translate="labels.delete"></span>
-              </button>
+            </button>
+            <button id="apagar" class="btn btn-danger" type="submit">
+              <span data-translate="labels.delete"></span>
+            </button>
           </div>
         </div>
       </div>
+
+      <!-- Trip Detail Dialog -->
+      <div id="trip-dialog" class="dialog-overlay" style="display:none">
+        <div class="dialog-card">
+          <div class="dialog-image" id="trip-dialog-image"></div>
+          <a class="dialog-close" onclick="_closeTripDialog()">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </a>
+          <div class="dialog-body">
+            <div class="dialog-header">
+              <h2 class="dialog-title" id="trip-dialog-title"></h2>
+              <span class="dialog-badge" id="trip-dialog-badge"></span>
+            </div>
+            <div class="dialog-meta">
+              <div class="dialog-meta-item">
+                <i class="iconify" data-icon="material-symbols:calendar-month"></i>
+                <span id="trip-dialog-dates"></span>
+              </div>
+              <div class="dialog-meta-item" id="trip-dialog-duration-row">
+                <i class="iconify" data-icon="material-symbols:schedule"></i>
+                <span id="trip-dialog-duration"></span>
+              </div>
+              <div class="dialog-meta-item" id="trip-dialog-dest-row">
+                <i class="iconify" data-icon="material-symbols:location-on"></i>
+                <span id="trip-dialog-dests"></span>
+              </div>
+            </div>
+            <div class="dialog-modules" id="trip-dialog-modules"></div>
+            <div class="dialog-actions">
+              <button class="btn btn-primary-theme dialog-action-btn" id="trip-dialog-view">
+                <i class="iconify" data-icon="fluent:eye-16-regular"></i>
+                <span data-translate="labels.view"></span>
+              </button>
+              <button class="btn btn-outline-theme dialog-action-btn" id="trip-dialog-edit">
+                <i class="iconify" data-icon="tabler:edit"></i>
+                <span data-translate="labels.edit"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Destination Detail Dialog -->
+      <div id="dest-dialog" class="dialog-overlay" style="display:none">
+        <div class="dialog-card">
+          <div class="dialog-image no-image">
+            <i class="iconify dialog-image-icon" data-icon="material-symbols:location-on"></i>
+          </div>
+          <a class="dialog-close" onclick="_closeDestDialog()">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </a>
+          <div class="dialog-body">
+            <div class="dialog-header">
+              <h2 class="dialog-title" id="dest-dialog-title"></h2>
+            </div>
+            <div class="dialog-meta">
+              <div class="dialog-meta-item" id="dest-dialog-currency-row">
+                <i class="iconify" data-icon="material-symbols:payments"></i>
+                <span id="dest-dialog-currency"></span>
+              </div>
+              <div class="dialog-meta-item">
+                <i class="iconify" data-icon="material-symbols:schedule"></i>
+                <span id="dest-dialog-updated"></span>
+              </div>
+            </div>
+            <div class="dialog-actions">
+              <button class="btn btn-primary-theme dialog-action-btn" id="dest-dialog-view">
+                <i class="iconify" data-icon="fluent:eye-16-regular"></i>
+                <span data-translate="labels.view"></span>
+              </button>
+              <button class="btn btn-outline-theme dialog-action-btn" id="dest-dialog-edit">
+                <i class="iconify" data-icon="tabler:edit"></i>
+                <span data-translate="labels.edit"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- List Detail Dialog -->
+      <div id="list-dialog" class="dialog-overlay" style="display:none">
+        <div class="dialog-card">
+          <div class="dialog-image" id="list-dialog-image"></div>
+          <a class="dialog-close" onclick="_closeListDialog()">
+            <i class="iconify" data-icon="material-symbols:close"></i>
+          </a>
+          <div class="dialog-body">
+            <div class="dialog-header">
+              <h2 class="dialog-title" id="list-dialog-title"></h2>
+            </div>
+            <div class="dialog-meta">
+              <div class="dialog-meta-item" id="list-dialog-subtitle-row">
+                <i class="iconify" data-icon="material-symbols:info"></i>
+                <span id="list-dialog-subtitle"></span>
+              </div>
+              <div class="dialog-meta-item">
+                <i class="iconify" data-icon="material-symbols:schedule"></i>
+                <span id="list-dialog-updated"></span>
+              </div>
+            </div>
+            <div class="dialog-actions">
+              <button class="btn btn-primary-theme dialog-action-btn" id="list-dialog-view">
+                <i class="iconify" data-icon="fluent:eye-16-regular"></i>
+                <span data-translate="labels.view"></span>
+              </button>
+              <button class="btn btn-outline-theme dialog-action-btn" id="list-dialog-edit">
+                <i class="iconify" data-icon="tabler:edit"></i>
+                <span data-translate="labels.edit"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ======= Footer ======= -->
@@ -306,11 +407,12 @@
           <span data-translate="labels.credits"></span></span>
       </div>
     </div>
-  </footer><!-- End Footer -->
+  </footer>
 
-  <!-- ======= Support: Preloader ======= -->
+  <!-- ======= Preloader ======= -->
   <div id="preloader"></div>
 
+  <!-- ======= Toast ======= -->
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
     <span class="toast-close" onclick="_closeToast()">

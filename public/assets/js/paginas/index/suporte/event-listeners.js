@@ -1,77 +1,42 @@
 function _loadListenersIndex() {
+	// Login
 	getID("login-button").addEventListener("click", function () {
 		_signInWithEmailAndPassword();
 	});
 
-	getID("viagensAtuais").addEventListener("click", function () {
-		_openIndexPage("viagensAtuais", 0, 1);
+	// Category tabs
+	const tabs = document.querySelectorAll(".category-tab");
+	tabs.forEach(tab => {
+		tab.addEventListener("click", function () {
+			const target = this.getAttribute("data-tab");
+
+			// Update active tab
+			tabs.forEach(t => t.classList.remove("active"));
+			this.classList.add("active");
+
+			// Show target content
+			document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+			const content = document.getElementById("tab-" + target);
+			if (content) content.classList.add("active");
+		});
 	});
 
-	getID("proximasViagens").addEventListener("click", function () {
-		_openIndexPage("proximasViagens", 0, 1);
-	});
-
-	getID("viagensAnteriores").addEventListener("click", function () {
-		_openIndexPage("viagensAnteriores", 0, 1);
-	});
-
-	getID("semViagens").addEventListener("click", function () {
-		_viagensNovo();
-	});
-
-	getID("destinosCadastrados").addEventListener("click", function () {
-		_openIndexPage("destinos", 0, 1);
-	});
-
+	// Profile icon → settings tab
 	getID("profile-icon").addEventListener("click", function () {
-		if (getID("settings-box").style.display === "none") {
-			back.classList.remove("bx-arrow-back");
-			back.classList.add("bx-up-arrow-alt");
-			_openIndexPage("settings", 0, 1, false);
-		}
+		tabs.forEach(t => t.classList.remove("active"));
+		document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+		const settingsTab = document.querySelector('.category-tab[data-tab="settings"]');
+		if (settingsTab) settingsTab.classList.add("active");
+		const settingsContent = document.getElementById("tab-settings");
+		if (settingsContent) settingsContent.classList.add("active");
 	});
 
-	getID("ajustesDaConta").addEventListener("click", function () {
-		_openIndexPage("settings", 0, 1);
-	});
+	// New item buttons
+	getID("new-trip-btn").addEventListener("click", function () { _viagensNovo(); });
+	getID("new-dest-btn").addEventListener("click", function () { _destinosNovo(); });
+	getID("new-list-btn").addEventListener("click", function () { _listagensNovo(); });
 
-	getID("nova-viagem-0").addEventListener("click", function () {
-		_viagensNovo();
-	});
-
-	getID("nova-viagem-1").addEventListener("click", function () {
-		_viagensNovo();
-	});
-
-	getID("nova-viagem-2").addEventListener("click", function () {
-		_viagensNovo();
-	});
-
-	getID("new-destino").addEventListener("click", function () {
-		_destinosNovo();
-	});
-
-	getID("new-listagem").addEventListener("click", function () {
-		_listagensNovo();
-	});
-
-	getID("back").addEventListener("click", function () {
-		const back = select("#back");
-		if (back.classList.contains("bx-up-arrow-alt")) {
-			_openIndexPage("logged", 1, 0, false);
-			setTimeout(() => {
-				back.classList.remove("bx-up-arrow-alt");
-				back.classList.add("bx-arrow-back");
-			}, 300);
-		} else {
-			_openIndexPage("logged", 1, 0);
-		}
-	});
-
-	getID("listasDeDestinos").addEventListener("click", function () {
-		_openIndexPage("listagens", 0, 1);
-	});
-
+	// Delete account
 	getID("apagar").addEventListener("click", async function () {
 		_startLoadingScreen();
 		await _deleteAccount();
@@ -80,9 +45,17 @@ function _loadListenersIndex() {
 		_stopLoadingScreen();
 	});
 
-	document
-		.getElementById("restore-account-input")
+	// Restore file input
+	document.getElementById("restore-account-input")
 		.addEventListener("change", function (event) {
 			_restoreOnFileSelectionAction(event);
 		});
+}
+
+function _openModal() {
+	getID("modal").style.display = "flex";
+}
+
+function _closeModal() {
+	getID("modal").style.display = "none";
 }
