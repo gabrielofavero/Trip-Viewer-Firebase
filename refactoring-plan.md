@@ -1,7 +1,7 @@
 # 🔄 E034: Frontend Code Refactoring — Master Plan
 
 > **Status:** Planning  
-> **Last updated:** 2026-06-04  
+> **Last updated:** 2026-06-04 (P3 complete)  
 > **Goal:** Transform a legacy jQuery/Bootstrap vanilla-JS app into a maintainable, modular frontend with clear separation of concerns — while keeping everything as static HTML+JS+CSS (no React/Angular/Vue).
 
 ---
@@ -1177,7 +1177,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P0 | Set Up Bundler & Build Pipeline | ✅ Done |
 | P1 | Rename JS Folders/Files to EN-US | ✅ Done |
 | P2 | Rename CSS Folders to EN-US | ✅ Done |
-| P3 | Update Script/CSS Paths in HTML | ☐ Pending |
+| P3 | Update Script/CSS Paths in HTML | ✅ Done |
 | P4 | Rename CSS Files Themselves | ☐ Pending |
 | P5 | Extract Shared CSS into base/ | ☐ Pending |
 | P6 | Extract Shared Component CSS | ☐ Pending |
