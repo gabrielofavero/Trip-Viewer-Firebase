@@ -1,14 +1,20 @@
+// ======= Travelers =======
+// Traveler functions moved to models/traveler.js — imported here for backward compat
+
+import {
+	_getNewTravelerID,
+	_validateTravelersObject,
+	_hasDuplicateTravelerNames,
+} from '../../../models/traveler.js';
+
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
 let TRAVELER_SELECT_OPTIONS = "";
 
-function _validateTravelersObject() {
-	for (const traveler of TRAVELERS) {
-		if (!traveler.id) {
-			traveler.id = _getNewTravelerID();
-		}
-	}
-}
+// BACKWARD COMPAT: attach to window during migration
+window._getNewTravelerID = _getNewTravelerID;
+window._validateTravelersObject = _validateTravelersObject;
+window._hasDuplicateTravelerNames = _hasDuplicateTravelerNames;
 
 function _openTravelersInfo() {
 	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
@@ -71,10 +77,6 @@ function _getTravelersNameContent() {
 	}
 
 	return properties.join("");
-}
-
-function _getNewTravelerID() {
-	return _getRandomID({ pool: TRAVELERS.map((t) => t.id) });
 }
 
 function _saveTravelersInfo() {

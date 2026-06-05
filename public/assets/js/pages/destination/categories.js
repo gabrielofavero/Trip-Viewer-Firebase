@@ -1,3 +1,19 @@
+// ======= Destination Categories =======
+// Destination formatting functions moved to models/destination.js — imported here for backward compat
+
+import {
+	_getNotaTranslation,
+	_getValorValue,
+	_convertCustomValor,
+	_getDescricaoValue,
+} from '../../models/destination.js';
+
+// BACKWARD COMPAT: attach to window during migration
+window._getNotaTranslation = _getNotaTranslation;
+window._getValorValue = _getValorValue;
+window._convertCustomValor = _convertCustomValor;
+window._getDescricaoValue = _getDescricaoValue;
+
 // Active Category
 function _loadActiveCategory(urlParams) {
 	let type = urlParams["type"];
@@ -67,56 +83,11 @@ function _getNotaClass(nota) {
 	}
 }
 
-function _getNotaTranslation(nota) {
-	switch (nota) {
-		case "5":
-		case "4":
-		case "3":
-		case "2":
-		case "1":
-			return translate(`destination.scores.${nota}`);
-		default:
-			return translate(`destination.scores.default`);
-	}
-}
-
 // Links
 function _getLinkOnClick(item, tipo) {
 	if (item[tipo]) {
 		return ` onclick="_openLinkInNewTab('${item[tipo]}')"`;
 	} else return "";
-}
-
-// Valor
-function _getValorValue(item, valores, moeda) {
-	switch (item.valor) {
-		case "default":
-			return translate("destination.price.default");
-		case "-":
-			return translate("destination.price.free");
-		case "$":
-		case "$$":
-		case "$$$":
-		case "$$$$":
-			return valores[item.valor];
-		default:
-			if (item.valor) {
-				return _convertCustomValor(item.valor, moeda);
-			}
-			return translate("destination.price.default");
-	}
-}
-
-function _convertCustomValor(valor, moeda) {
-	if (isNaN(valor) || (!isNaN(valor) && !moeda)) {
-		return valor;
-	} else return `${moeda}${valor}`;
-}
-
-// Descrição
-function _getDescricaoValue(item) {
-	const lang = _getUserLanguage();
-	return item.descricao?.[lang] || "";
 }
 
 // Planejado

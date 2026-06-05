@@ -1188,8 +1188,8 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P9  | Convert Utility Files to ES Modules         | ✅ Done    |
 | P10 | Convert Component Files to ES Modules       | ✅ Done    |
 | P11 | Convert Firebase Services to ES Modules     | ✅ Done    |
-| P12 | Single JS Entry Point Per HTML              | ✅ Done (backward-compat deferred) |
-| P13 | Extract Business Logic into Models          | ☐ Pending |
+| P12 | Single JS Entry Point Per HTML              | ✅ Done    |
+| P13 | Extract Business Logic into Models          | ✅ Done    |
 | P14 | Create Clean Service Layer                  | ☐ Pending |
 | P15 | Remove CONFIG Global, Use Config Module     | ☐ Pending |
 | P16 | Shared HTML Partials & Build-Time Injection | ☐ Pending |

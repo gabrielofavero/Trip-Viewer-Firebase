@@ -1,4 +1,17 @@
+import {
+	_getChartData,
+	_getChartConfig,
+	_getChartColorsRGB,
+	_getArrayRGBA,
+} from '../../../models/expense.js';
+
 var GASTOS_CHARTS = {};
+
+// BACKWARD COMPAT: attach to window during migration
+window._getChartData = _getChartData;
+window._getChartConfig = _getChartConfig;
+window._getChartColorsRGB = _getChartColorsRGB;
+window._getArrayRGBA = _getArrayRGBA;
 
 // Tabelas
 function _setTable(id, itens, total) {
@@ -76,87 +89,6 @@ function _setChart(tipo, id, labels, valores) {
 	const dados = _getChartData(labels, valores, coresRGB);
 	const config = _getChartConfig(tipo, dados);
 	GASTOS_CHARTS[id] = new Chart(div, config);
-}
-
-// Gráficos
-function _getChartConfig(tipo, dados) {
-	let legenda = {
-		display: false,
-	};
-
-	if (tipo === "doughnut" || tipo === "pie") {
-		legenda.display = true;
-		legenda.position = "right";
-		legenda.labels = {
-			color: _isOnDarkMode() ? "rgba(227, 236, 248, 1)" : "rgba(75, 85, 99, 1)",
-		};
-	}
-
-	let result = {
-		type: tipo,
-		data: dados,
-		options: {
-			plugins: {
-				legend: legenda,
-			},
-		},
-	};
-
-	if (tipo === "bar") {
-		const scales = {
-			x: {
-				grid: {
-					display: false,
-				},
-			},
-			y: {
-				grid: {
-					display: false,
-				},
-			},
-		};
-		result.options.scales = scales;
-	}
-
-	return result;
-}
-
-function _getChartData(labels, valores, coresRGB) {
-	return {
-		labels: labels,
-		datasets: [
-			{
-				label: "",
-				data: valores,
-				backgroundColor: _getArrayRGBA(coresRGB, 0.5),
-				borderColor: _getArrayRGBA(coresRGB, 1),
-				borderWidth: 1,
-			},
-		],
-	};
-}
-
-function _getChartColorsRGB(size) {
-	const result = [];
-	const coresHex = CONFIG.cores.opcoes.map((cor) => cor.hex);
-	const coresRGB = coresHex.map((cor) => _hexToRgb(cor));
-
-	for (let i = 0; i < size; i++) {
-		const index = i % coresRGB.length;
-		result.push(coresRGB[index]);
-	}
-
-	return result;
-}
-
-function _getArrayRGBA(coresRGB, a) {
-	const result = [];
-
-	for (const rgb of coresRGB) {
-		result.push(_rgbToText(rgb[0], rgb[1], rgb[2], a));
-	}
-
-	return result;
 }
 
 function _changeChartsLabelsVisibility() {
