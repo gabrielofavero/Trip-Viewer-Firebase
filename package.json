@@ -1,6 +1,20 @@
 {
+	"name": "trip-viewer-firebase",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Trip Viewer — Firebase-hosted static frontend",
+	"scripts": {
+		"build": "node scripts/build.js",
+		"watch": "node scripts/build.js --watch",
+		"clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); console.log('dist/ cleaned.');\"",
+		"serve": "firebase serve --only hosting --port 5000",
+		"dev": "concurrently -k -n watch,serve,reload -c blue,green,yellow \"npm run watch\" \"npm run serve\" \"browser-sync start --proxy localhost:5000 --port 3000 --files dist/**/* --no-open\""
+	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.11",
+		"browser-sync": "^3.0.4",
+		"concurrently": "^10.0.3",
+		"esbuild": "^0.25.0",
 		"eslint": "^8.54.0",
 		"prettier": "^3.1.0"
 	}

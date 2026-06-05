@@ -1174,7 +1174,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 
 | # | Prompt | Status |
 |---|--------|--------|
-| P0 | Set Up Bundler & Build Pipeline | ☐ Pending |
+| P0 | Set Up Bundler & Build Pipeline | ✅ Done |
 | P1 | Rename JS Folders/Files to EN-US | ☐ Pending |
 | P2 | Rename CSS Folders to EN-US | ☐ Pending |
 | P3 | Update Script/CSS Paths in HTML | ☐ Pending |

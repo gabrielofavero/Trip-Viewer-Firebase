@@ -17,7 +17,7 @@
 - ⚔️ **E034:** Frontend code refactoring
   - *[📈M106] Use require in js files + single entrypoint for scripts in html files*
   - *[📈M098] Change js folder structures to EN-US*
-  - *[📈M135] Refactor "dados.js" to shared dir*
+  - *[📈M135] Proper separation of shared elements*
   - *[📈M105] Remove CONFIG and reduce use of global variables*
   - *[📈M058] Modularize CSS files to reduce redundancy*
   - *[📈M046] Clean unused properties in application CSS*
