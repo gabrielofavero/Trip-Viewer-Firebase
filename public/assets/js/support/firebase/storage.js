@@ -1,4 +1,4 @@
-import { _codifyText } from "../pages/data.js";
+import { codifyText } from "../pages/data.js";
 
 export let IMAGE_UPLOAD_STATUS = {
 	hasErrors: false,

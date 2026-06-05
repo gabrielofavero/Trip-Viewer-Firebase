@@ -15,7 +15,7 @@ import {
 	getUser,
 } from "../support/firebase/user.js";
 
-import { _getSystemData, _deleteAccount, _deleteAccountDocuments } from "../support/firebase/database.js";
+import { getSystemData, deleteAccount, deleteAccountDocuments } from "../support/firebase/database.js";
 
 // Re-export raw user functions that pages may still use during transition
 export {
@@ -30,7 +30,6 @@ export {
 	getFirebaseIdToken,
 	getUser,
 	getSystemData,
-	deleteAccount,
 	deleteAccountDocuments,
 };
 
@@ -102,8 +101,9 @@ export async function getCurrentUserData(uid) {
 
 /**
  * Delete the current user's account and all associated data.
+ * Delegates to the database-level deleteAccount function.
  */
-export async function deleteAccount() {
+export async function deleteAccountService() {
 	return await deleteAccount();
 }
 
@@ -113,5 +113,5 @@ window.logout = logout;
 window.getCurrentUser = getCurrentUser;
 window.getCurrentUID = getCurrentUID;
 window.registerIfNeeded = registerIfNeeded;
-window.getCurrentUserData = getCurrentUserData;
+window.getCurrentUserData = getCurreServicentUserData;
 window.deleteAccount = deleteAccount;

@@ -1,4 +1,4 @@
-import { getIcons } from '../../../core/config.js';
+import { getIcons } from '../../core/config.js';
 
 // Resumo
 function loadSummary() {

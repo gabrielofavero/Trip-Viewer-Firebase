@@ -1,5 +1,5 @@
-import { _getURLParam, _setURLParam, _firstCharToUpperCase, _removeEmptyChild } from "../pages/data.js";
-import { _getCurrentHour } from "../pages/dates.js";
+import { getURLParam, setURLParam, firstCharToUpperCase, removeEmptyChild } from "../pages/data.js";
+import { getCurrentHour } from "../pages/dates.js";
 
 // ======= Visibility JS =======
 export let CHANGED_SVGS = [];

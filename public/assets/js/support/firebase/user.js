@@ -1,4 +1,4 @@
-import { _displayError, _displayMessage } from "../pages/messages.js";
+import { displayError, displayMessage } from "../pages/messages.js";
 
 export let USER_DATA;
 export let UID;

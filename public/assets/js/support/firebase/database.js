@@ -1,5 +1,5 @@
-import { _getIdFromObjectDB, _getURLParam } from "../pages/data.js";
-import { _displayError } from "../pages/messages.js";
+import { getIdFromObjectDB, getURLParams } from "../pages/data.js";
+import { displayError } from "../pages/messages.js";
 
 export let DOCUMENT_ID;
 export let ERROR_FROM_GET_REQUEST = {};
@@ -149,7 +149,7 @@ export async function override(path, newData) {
 	}
 }
 
-export async function delete(path, ignoreError = false) {
+export async function deleteDocument(path, ignoreError = false) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const deleteObj = await docRef.delete();
@@ -296,7 +296,7 @@ export async function deleteUserObjectDB(id, type) {
 
 		update(`usuarios/${uid}/`, result);
 
-		return await delete(`${type}/${id}`);
+		return await deleteDocument(`${type}/${id}`);
 	}
 }
 
@@ -304,7 +304,7 @@ export async function deleteAccount() {
 	const uid = await getUID();
 	if (uid) {
 		await deleteAccountDocuments();
-		await delete(`usuarios/${uid}`);
+		await deleteDocument(`usuarios/${uid}`);
 		await firebase.auth().currentUser.delete();
 	}
 }
@@ -483,7 +483,7 @@ window.create = create;
 window.deepCreate = deepCreate;
 window.update = update;
 window.override = override;
-window.delete = delete;
+window.deleteDocument = deleteDocument;
 window.createBatchOps = createBatchOps;
 window.getSingleData = getSingleData;
 window.getTripDataWithDestinations = getTripDataWithDestinations;

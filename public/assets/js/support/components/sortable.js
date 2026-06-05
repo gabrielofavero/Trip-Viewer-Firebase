@@ -1,4 +1,4 @@
-import { _onAccordionOpen, _onAccordionClose, _areThereOpenedAccordions } from "../html/accordion.js";
+import { onAccordionOpen, onAccordionClose, areThereOpenedAccordions } from "../html/accordion.js";
 
 let SORTABLE_SKIP_NEXT_ACTION = false;
 

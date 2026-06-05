@@ -9,20 +9,100 @@
 | 📈   | Improvement | M000 | 150   | 119  | 23        | 8       |
 | ⚔️   | Epic        | E000 | 46    | 29   | 10        | 7       |
 
+## Project Structure
+
+```
+public/                           # Source files (authored code)
+├── index.html                    # Single entrypoint per page
+├── view.html
+├── destination.html
+├── expenses.html
+├── itinerary.html
+├── edit/
+│   ├── trip.html
+│   ├── destination.html
+│   └── listing.html
+├── shared/                       # HTML partials (injected at build time)
+│   ├── head.html
+│   ├── scripts-core.html
+│   ├── scripts-vendor.html
+│   └── top-bar.html
+└── assets/
+    ├── css/
+    │   ├── base/                 # Shared: variables, reset, fonts, preloader, layout, dark-mode
+    │   ├── components/           # Shared UI: accordion, modal, toast, custom-select, etc.
+    │   ├── index/ view/ destination/ expenses/ itinerary/ edit/  # Page-specific styles
+    │   └── main.css              # Imports base + components
+    ├── js/
+    │   ├── core/                 # App boot, config, error handling
+    │   ├── services/             # Firebase, auth, translation (data layer)
+    │   ├── models/               # Business logic / data transformation
+    │   ├── components/           # Reusable UI widgets
+    │   ├── utils/                # Pure utility functions
+    │   ├── styles/               # Runtime style management (colors, visibility, animations)
+    │   ├── main/                 # App initialization + translation
+    │   ├── support/              # Internal support modules (firebase, html, pages, styles, components)
+    │   └── pages/                # Page-specific orchestration
+    │       ├── index/
+    │       ├── view/
+    │       ├── destination/
+    │       ├── expenses/
+    │       ├── itinerary/
+    │       ├── edit-trip/
+    │       ├── edit-destination/
+    │       └── edit-listing/
+    ├── json/                     # Static config files (icons, colors, currencies, etc.)
+    └── vendor/                   # Third-party libraries
+
+dist/                             # Build output (deployed to Firebase Hosting)
+scripts/                          # Build scripts & tooling
+dev/                              # Firebase Functions backend
+firebase.json                     # Firebase Hosting config (public: "dist")
+```
+
+## Build Instructions
+
+```bash
+# Install dependencies
+npm install
+
+# One-shot build (copies public/ → dist/, injects HTML partials, transpiles ES modules)
+npm run build
+
+# Watch mode (rebuilds on file changes)
+npm run watch
+
+# Clean build output
+npm run clean
+
+# Serve locally (requires Firebase CLI)
+npm run serve
+
+# Full dev mode (build + serve + live reload on port 3000)
+npm run dev
+```
+
+**How it works:**
+1. `npm run build` copies all files from `public/` to `dist/`
+2. HTML partials from `shared/` are injected into the HTML files
+3. ES module JS files are transpiled to IIFE format (compatible with plain `<script>` tags)
+4. Firebase config files are copied to `dist/`
+5. Firebase Hosting deploys from `dist/` (configured in `firebase.json`)
+
 ## Backlog
 
 ### High Priority
 
 
-- ⚔️ **E034:** Frontend code refactoring
-  - *[📈M106] Use require in js files + single entrypoint for scripts in html files*
-  - *[📈M098] Change js folder structures to EN-US*
-  - *[📈M135] Proper separation of shared elements*
-  - *[📈M105] Remove CONFIG and reduce use of global variables*
-  - *[📈M058] Modularize CSS files to reduce redundancy*
-  - *[📈M046] Clean unused properties in application CSS*
-  - *[📈M149] Better file/folder architecture + separation of concerns (visuals, bussiness, api calls, crud etc)*
-  - *[📈M150] All functions and variables in EN-US*
+- ⚔️ **E034:** Frontend code refactoring ✅ *(Completed June 2026)*
+  - *[📈M106] Use require in js files + single entrypoint for scripts in html files* ✅
+  - *[📈M098] Change js folder structures to EN-US* ✅
+  - *[📈M135] Proper separation of shared elements* ✅
+  - *[📈M105] Remove CONFIG and reduce use of global variables* ✅
+  - *[📈M058] Modularize CSS files to reduce redundancy* ✅
+  - *[📈M046] Clean unused properties in application CSS* ✅
+  - *[📈M149] Better file/folder architecture + separation of concerns* ✅
+  - *[📈M150] All functions and variables in EN-US* ✅
 
 ### Medium Priority
 

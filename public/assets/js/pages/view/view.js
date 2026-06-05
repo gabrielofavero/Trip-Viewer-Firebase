@@ -73,8 +73,8 @@ async function syncModules() {
 				const indexB = callSyncOrder.indexOf(b.name);
 				return indexA - indexB;
 			});
-			for (let _function of CALL_SYNC) {
-				function();
+			for (let fn of CALL_SYNC) {
+				fn();
 			}
 		} else {
 			console.warn("No functions to sync");

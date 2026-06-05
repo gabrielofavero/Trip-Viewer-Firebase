@@ -21,8 +21,6 @@ function onViewMessage(data) {
 		case "pin":
 			loadExternalPin(data.value);
 			return;
-		case "visibility":
-			loadViewVisibility(data.value);
 	}
 }
 

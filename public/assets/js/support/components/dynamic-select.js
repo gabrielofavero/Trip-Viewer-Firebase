@@ -1,4 +1,4 @@
-import { _removeChildWithValidation } from "../pages/data.js";
+import { removeChildWithValidation } from "../pages/data.js";
 
 let DYNAMIC_SELECT = {};
 

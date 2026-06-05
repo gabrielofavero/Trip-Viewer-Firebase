@@ -8,7 +8,7 @@ import {
 	deepCreate,
 	update,
 	override,
-	delete,
+	deleteDocument,
 	createBatchOps,
 } from "../support/firebase/database.js";
 
@@ -19,7 +19,7 @@ export {
 	deepCreate,
 	update,
 	override,
-	delete,
+	deleteDocument,
 	createBatchOps,
 };
 
@@ -67,7 +67,7 @@ export async function setProtectedExpenses(pin, tripId, data) {
  * Delete expenses for a trip (used during account deletion).
  */
 export async function deleteExpenses(tripId) {
-	return await delete(`gastos/${tripId}`, true);
+	return await deleteDocument(`gastos/${tripId}`, true);
 }
 
 // BACKWARD COMPAT: attach to window during migration

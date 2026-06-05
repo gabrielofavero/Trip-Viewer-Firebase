@@ -25,10 +25,6 @@ function openAtribuicoes() {
 			atribuicoes.push(getBackground());
 			atribuicoes.push(getCalendar());
 			break;
-		case "destination":
-			atribuicoes.push(getBackground());
-			atribuicoes.push(getAccordion());
-			break;
 		case "expenses":
 			loadExpensesCredits();
 			break;

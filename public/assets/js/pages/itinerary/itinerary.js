@@ -56,7 +56,7 @@ async function loadItinerary() {
 	getID("content").innerHTML = await getItineraryContent("page");
 
 	getID("print").addEventListener("click", () => print());
-	getID("export").addEventListener("click", () => export());
+	getID("export").addEventListener("click", () => exportItinerary());
 
 	initializeMobileMenu();
 }
@@ -80,7 +80,7 @@ function initializeMobileMenu() {
 
 	getID("mobile-export")?.addEventListener("click", (e) => {
 		e.preventDefault();
-		export();
+		exportItinerary();
 		closeMobileMenu();
 	});
 
@@ -176,7 +176,7 @@ async function loadProtectedItinerary(mandatory = false) {
 	stopLoadingScreen();
 }
 
-async function export() {
+async function exportItinerary() {
 	const html = await getItineraryContent("notes");
 	const plainText = await getItineraryContent("text");
 

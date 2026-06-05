@@ -1,4 +1,4 @@
-import { _firstCharToUpperCase } from "../pages/data.js";
+import { firstCharToUpperCase } from "../pages/data.js";
 
 let ORIGINAL_STATE = new Map();
 

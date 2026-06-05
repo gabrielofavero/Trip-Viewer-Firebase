@@ -1,8 +1,33 @@
 # 🔄 E034: Frontend Code Refactoring — Master Plan
 
-> **Status:** In Progress
-> **Last updated:** 2026-06-05 (P17 complete)
+> **Status:** ✅ Complete
+> **Last updated:** 2026-06-05 (P18 complete)
 > **Goal:** Transform a legacy jQuery/Bootstrap vanilla-JS app into a maintainable, modular frontend with clear separation of concerns — while keeping everything as static HTML+JS+CSS (no React/Angular/Vue).
+
+---
+
+## 📝 Lessons Learned
+
+### What Went Well
+- **Incremental approach**: Splitting the refactoring into 18 small, validated steps made a massive refactor manageable. Each phase had a clear scope and validation checkpoint.
+- **ESBuild transpilation bridge**: Using esbuild to transpile ES modules back to IIFE during migration (P9-P12) allowed us to convert files one by one without breaking the app at any point.
+- **CSS extraction order**: Extracting base styles first (P5), then components (P6), then cleaning up (P7) was the right sequence. Doing it in reverse would have caused more churn.
+- **Barrel files**: Creating `index.js` barrel re-exports for services, utils, and components simplified imports across the codebase.
+- **Build-time HTML partial injection**: Using a simple Node.js script to inject shared HTML partials at build time kept the app fully static while eliminating duplication.
+
+### What Was Tricky
+- **Reserved word collisions after P17**: Stripping the `_` prefix from function names like `_delete`, `_export`, `_function` caused them to collide with JavaScript reserved words (`delete`, `export`, `function`). These needed manual renaming to `deleteDocument`, `exportItinerary`, `fn`.
+- **Import path resolution**: After folder restructuring (P1-P4), many import paths became incorrect and needed case-by-case fixing during P18 build validation.
+- **CONFIG global removal (P15)**: This was the most invasive change. Many functions relied on `CONFIG.xxx` as a global. Converting to async config getters required touching nearly every file.
+- **Underscore-prefixed imports**: During P17, function names were renamed (dropping `_` prefix) but several import statements weren't updated, causing build failures that needed systematic fixing in P18.
+
+### What Would Be Done Differently
+- **Run a full build after every phase**: Some import errors from P15/P17 were only caught during P18 validation. Running `npm run build` as a gate after each phase would have caught them earlier.
+- **Use a codemod for P17 renaming**: Manual find-and-replace for stripping `_` prefixes missed edge cases. A jscodeshift codemod would have been more thorough.
+- **Add a CI/build check earlier**: The `npm run build` command should have been part of the validation for every prompt, not just P18.
+- **Track import dependencies more explicitly**: A dependency graph would have helped predict which files would break when renaming exports.
+
+---
 
 ---
 
@@ -1194,7 +1219,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P15 | Remove CONFIG Global, Use Config Module     | ✅ Done    |
 | P16 | Shared HTML Partials & Build-Time Injection | ✅ Done    |
 | P17 | Rename All Functions/Variables to EN-US     | ✅ Done    |
-| P18 | Final Validation & Cleanup                  | ☐ Pending |
+| P18 | Final Validation & Cleanup                  | ✅ Done    |
 
 ---
 
