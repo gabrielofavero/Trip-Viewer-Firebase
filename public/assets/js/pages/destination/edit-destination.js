@@ -1,3 +1,5 @@
+import { getMoedas } from '../../core/config.js';
+
 let ADDED_J;
 
 // Main Functions
@@ -50,7 +52,7 @@ async function _edit(j) {
 		}
 
 		function _populateValueField(valor, j) {
-			const valores = CONFIG.moedas.valores;
+			const valores = getMoedas().valores;
 			const valueSelect = getID(`editar-valor-select-${j}`);
 			if (valores.includes(valor)) {
 				valueSelect.value = valor;

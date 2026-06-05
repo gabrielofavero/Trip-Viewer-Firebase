@@ -1,3 +1,5 @@
+import { getCores } from '../../core/config.js';
+
 export let THEME_COLOR;
 export let THEME_COLOR_HOVER;
 export let THEME_COLOR_SECONDARY;
@@ -38,8 +40,9 @@ export function _getLocalColors() {
 }
 
 export function _getEquivalentColorAndPosition(claro) {
-	const claroObj = CONFIG.cores.claro;
-	const escuroObj = CONFIG.cores.escuro;
+	const cores = getCores();
+	const claroObj = cores.claro;
+	const escuroObj = cores.escuro;
 
 	for (let i = 0; i < claroObj.length; i++) {
 		if (claroObj[i] === claro) {
@@ -71,8 +74,9 @@ export function _getDarkerColor(hex, percentage = 75) {
 }
 
 export function _getColorIndexFromOptions(i) {
-	if (i >= CONFIG.cores.opcoes.length) {
-		i = i % CONFIG.cores.opcoes.length;
+	const cores = getCores();
+	if (i >= cores.opcoes.length) {
+		i = i % cores.opcoes.length;
 	}
 	return i;
 }
@@ -104,11 +108,11 @@ export function _getSecondaryColor(type) {
 }
 
 export function _getColorNameFromOptions(i) {
-	return CONFIG.cores.opcoes[_getColorIndexFromOptions(i)].cor;
+	return getCores().opcoes[_getColorIndexFromOptions(i)].cor;
 }
 
 export function _getColorHexFromOptions(i) {
-	return CONFIG.cores.opcoes[_getColorIndexFromOptions(i)].hex;
+	return getCores().opcoes[_getColorIndexFromOptions(i)].hex;
 }
 
 export function _getThemeColorBoxShadow(cor = THEME_COLOR_SECONDARY) {

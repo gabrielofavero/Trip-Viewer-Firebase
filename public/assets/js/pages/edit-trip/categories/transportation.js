@@ -1,3 +1,5 @@
+import { getTransportes } from '../../../core/config.js';
+
 function _getTransporteObject(protectedReservationCodes = false) {
 	const result = {
 		dados: [],
@@ -105,7 +107,7 @@ function _getPessoa(i) {
 }
 
 function _loadTransporteVisibility(j) {
-	const empresasPorTipo = CONFIG.transportes.empresas;
+	const empresasPorTipo = getTransportes().empresas;
 
 	const empresaSelect = getID(`empresa-select-${j}`);
 	const empresaInput = getID(`empresa-${j}`);

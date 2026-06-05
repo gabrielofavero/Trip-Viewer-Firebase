@@ -1,3 +1,5 @@
+import { getDestinos, getLanguage } from '../../../core/config.js';
+
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var DESTINOS = [];
@@ -129,7 +131,8 @@ function _loadDestinationsCustomSelect() {
 
 function _loadDestinationsHTML(destino) {
 	let text = "";
-	const types = CONFIG.destinos.categorias.geral;
+	const destinos = getDestinos();
+	const types = destinos.categorias.geral;
 
 	for (let i = 0; i < types.length; i++) {
 		const type = types[i];
@@ -138,12 +141,12 @@ function _loadDestinationsHTML(destino) {
 			continue;
 		}
 
-		const translatedType = CONFIG.destinos.translation[type] || type;
+		const translatedType = destinos.translation[type] || type;
 		const j = i + 1;
-		const box = CONFIG.destinos.boxes[_getDestinationsBoxesIndex(i)];
+		const box = destinos.boxes[_getDestinationsBoxesIndex(i)];
 		const title = translate(`destination.${translatedType}.title`);
 		const description = translate(`destination.${translatedType}.description`);
-		const icon = CONFIG.destinos.icons[type];
+		const icon = destinos.icons[type];
 
 		text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">
@@ -166,14 +169,15 @@ function _loadDestinationsHTML(destino) {
 }
 
 function _loadAndOpenDestino(code) {
-	const translation = CONFIG.destinos.translation;
+	const translation = getDestinos().translation;
 	const link = `destination?d=${DESTINO_ATIVO}&v=${DOCUMENT_ID}&type=${translation[code]}&visibility=${_getVisibility()}`;
 	_openViewEmbed(link);
 }
 
 function _getDestinationsBoxesIndex(i) {
-	if (i > CONFIG.destinos.boxes.length - 1) {
-		return i % CONFIG.destinos.boxes.length;
+	const boxes = getDestinos().boxes;
+	if (i > boxes.length - 1) {
+		return i % boxes.length;
 	} else return i;
 }
 
@@ -193,9 +197,10 @@ function _adjustDestinationsHTML() {
 
 function _getDestinosTranslations() {
 	if (Object.keys(DESTINO_TRANSLATIONS) == 0) {
+		const language = getLanguage();
 		DESTINO_TRANSLATIONS = {
-			filter: CONFIG.language.destination.filter,
-			sort: CONFIG.language.destination.sort,
+			filter: language.destination.filter,
+			sort: language.destination.sort,
 		};
 	}
 	return DESTINO_TRANSLATIONS;

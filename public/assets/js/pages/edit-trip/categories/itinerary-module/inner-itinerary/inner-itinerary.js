@@ -1,3 +1,5 @@
+import { getDestinos, getItinerary } from '../../../../../core/config.js';
+
 var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};
 var LAST_OPENED_TURNO = {};
@@ -538,7 +540,7 @@ async function _buildInnerProgramacaoDestinosData(id) {
 		lojas: translate("destination.shopping.title"),
 	};
 
-	const passeios = CONFIG.destinos.categorias.passeios;
+	const passeios = getDestinos().categorias.passeios;
 	const categorias = Object.keys(data)
 		.filter(
 			(key) =>
@@ -663,7 +665,7 @@ function _getNewTurno(j) {
 	if (LAST_OPENED_TURNO[j]) {
 		return LAST_OPENED_TURNO[j];
 	} else {
-		for (const turno of CONFIG.itinerary.timeofday) {
+		for (const turno of getItinerary().timeofday) {
 			const element = getID(`inner-programacao-${turno}-${j}`);
 			if (element && !element.innerText) {
 				return turno;

@@ -1,3 +1,5 @@
+import { getMoedas } from '../../../core/config.js';
+
 function _getDestinosHTML({ j, id, item, closeAction = "_processAccordion" }) {
 	const planejado = _getPlanejado(id);
 	const editBtn = true;
@@ -37,7 +39,7 @@ function _getDestinosAccordionBodyHTML({
 	editBtn = true,
 }) {
 	if (!valores) {
-		valores = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
+		valores = getMoedas().escala[FIRESTORE_DESTINOS_DATA.moeda];
 	}
 
 	if (!moeda) {
@@ -200,7 +202,7 @@ function _getRegionOptionsHTML() {
 }
 
 function _getValuesOptionsHTML() {
-	const moedas = CONFIG.moedas.escala[FIRESTORE_DESTINOS_DATA.moeda];
+	const moedas = getMoedas().escala[FIRESTORE_DESTINOS_DATA.moeda];
 	return `
         <option value="$">${moedas["$"]}</option>
         <option value="$$">${moedas["$$"]}</option>

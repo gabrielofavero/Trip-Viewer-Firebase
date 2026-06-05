@@ -1,3 +1,5 @@
+import { getItinerary, getMoedas } from '../../../../core/config.js';
+
 var PROGRAMACAO_ABERTA = false;
 var PROGRAMACAO_ATUAL_DATA = {
 	dia: 0,
@@ -57,7 +59,7 @@ function _loadModalContentCalendar() {
 	function _shouldShowCheckbox() {
 		if (!PROGRAMACAO_ATUAL || !TRAVELERS?.length) return false;
 
-		const periods = CONFIG.itinerary.timeofday;
+		const periods = getItinerary().timeofday;
 		const combinations = new Set();
 
 		for (const period of periods) {
@@ -292,7 +294,7 @@ function _getInnerProgramacao(item, destinos) {
 	return innerProgramacao;
 
 	function _getDestinoValores(destinosMoeda) {
-		const moeda = _cloneObject(CONFIG.moedas.escala[destinosMoeda]);
+		const moeda = _cloneObject(getMoedas().escala[destinosMoeda]);
 		const max = translate("destination.price.max", { value: moeda["$$$$"] });
 		moeda["-"] = translate("destination.price.free");
 		moeda["default"] = translate("destination.price.default");

@@ -42,47 +42,22 @@ const getID = (id) => {
 	return document.getElementById(id);
 };
 
-function _main() {
-	const config = {};
-	return Promise.all([
-		$.getJSON("/assets/json/cores.json").then((data) => (config.cores = data)),
-		$.getJSON("/assets/json/destinos.json").then(
-			(data) => (config.destinos = data),
-		),
-		$.getJSON("/assets/json/itinerary.json").then(
-			(data) => (config.itinerary = data),
-		),
-		$.getJSON("/assets/json/moedas.json").then(
-			(data) => (config.moedas = data),
-		),
-		$.getJSON("/assets/json/transportes.json").then(
-			(data) => (config.transportes = data),
-		),
-		$.getJSON("/assets/json/icons.json").then((data) => (config.icons = data)),
-		$.getJSON("/assets/json/version.json").then(
-			(data) => (config.versoes = data),
-		),
-		$.getJSON(`/assets/json/languages/${_getLanguagePackName()}.json`).then(
-			(data) => (config.language = data),
-		),
-	])
-		.then(() => {
-			CONFIG = config;
-			_translatePage();
-			_initializeApp();
-			_loadLangSelectorSelect();
-			_loadPage();
-		})
-		.catch((error) => {
-			_displayError("Initialization Error:" + error.message);
-		});
+import { loadAllConfigs, setLanguage, getVersoes } from '../core/config.js';
+
+async function _main() {
+	try {
+		await loadAllConfigs(_getLanguagePackName());
+		_translatePage();
+		_initializeApp();
+		_loadLangSelectorSelect();
+		_loadPage();
+	} catch (error) {
+		_displayError("Initialization Error:" + error.message);
+	}
 }
 
 async function _loadTranslationLite() {
-	const language = await $.getJSON(
-		`/assets/json/languages/${_getLanguagePackName()}.json`,
-	);
-	CONFIG = { language };
+	await setLanguage(_getLanguagePackName());
 	_translatePage();
 	if (document.querySelector(".lang-button")) {
 		_loadLangSelectorSelect();
@@ -164,7 +139,8 @@ function _openLinkInNewTab(url) {
 
 function _initializeApp() {
 	APP.projectId = firebase.app().options.projectId;
-	APP.version = CONFIG.versoes[APP.projectId]?.version?.system || "Unknown";
+	const versoes = getVersoes();
+	APP.version = versoes[APP.projectId]?.version?.system || "Unknown";
 }
 
 function _setPageName(pageName) {

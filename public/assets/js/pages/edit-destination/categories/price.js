@@ -1,9 +1,12 @@
+import { getDestinos, getMoedas } from '../../../core/config.js';
+
 var VALOR_OPTIONS = "";
 
 function _loadCurrencySelects() {
 	_loadMoedaOptions();
 
-	for (const categoria of CONFIG.destinos.categorias.passeios) {
+	const destinos = getDestinos();
+	for (const categoria of destinos.categorias.passeios) {
 		const childs = _getChildIDs(`${categoria}-box`);
 		for (const child of childs) {
 			const i = child.split("-").pop();
@@ -21,11 +24,12 @@ function _loadCurrencySelects() {
 }
 
 function _loadMoedaOptions() {
-	const categorias = CONFIG.moedas.valores;
+	const moedas = getMoedas();
+	const categorias = moedas.valores;
 	const moeda = getID("moeda").value;
 	VALOR_OPTIONS = "";
 
-	if (moeda != "outra" && CONFIG.moedas.escala[moeda]) {
+	if (moeda != "outra" && moedas.escala[moeda]) {
 		for (const categoria of categorias) {
 			const label = _getLabel(categoria);
 			VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
@@ -45,10 +49,10 @@ function _loadMoedaOptions() {
 			case "$":
 			case "$$":
 			case "$$$":
-				return CONFIG.moedas.escala[moeda][categoria];
+				return moedas.escala[moeda][categoria];
 			case "$$$$":
 				return translate(`destination.price.max`, {
-					value: CONFIG.moedas.escala[moeda][categoria],
+					value: moedas.escala[moeda][categoria],
 				});
 			default:
 				return translate("labels.other");

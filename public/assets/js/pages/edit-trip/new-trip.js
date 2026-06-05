@@ -1,3 +1,5 @@
+import { getTransportes } from '../../core/config.js';
+
 var DATAS = [];
 
 function _loadNewTrip() {
@@ -159,8 +161,9 @@ function _addTransporte() {
 
 	function _getTypeOptions() {
 		let result = "";
-		for (const tipo of CONFIG.transportes.tipos) {
-			const titulo = CONFIG.transportes.titulos[tipo];
+		const transportes = getTransportes();
+		for (const tipo of transportes.tipos) {
+			const titulo = transportes.titulos[tipo];
 			if (!titulo) continue;
 			result += `<option value="${tipo}">${translate(titulo)}</option>`;
 		}

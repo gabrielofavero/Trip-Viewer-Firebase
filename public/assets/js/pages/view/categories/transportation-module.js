@@ -1,3 +1,5 @@
+import { getTransportes } from '../../../core/config.js';
+
 var TRANSPORTE_ICONES = [];
 var TRANSPORTE_ATIVO;
 var TRANSPORTES_ATIVOS = [];
@@ -84,9 +86,10 @@ function _getEmpresaObj(j) {
 	const tipo = transporte.transporte;
 	const titulo = transporte.empresa;
 
-	const tituloConfig = CONFIG?.transportes?.empresas?.[tipo]?.[titulo];
-	const siteConfig = CONFIG?.transportes?.sites?.[tipo]?.[titulo];
-	const imagemConfig = CONFIG?.transportes?.imagens?.[tipo]?.[titulo];
+	const transportes = getTransportes();
+	const tituloConfig = transportes?.empresas?.[tipo]?.[titulo];
+	const siteConfig = transportes?.sites?.[tipo]?.[titulo];
+	const imagemConfig = transportes?.imagens?.[tipo]?.[titulo];
 
 	return {
 		titulo: tituloConfig || titulo,
@@ -150,7 +153,7 @@ function _getPartidaChegadaHTML(j, tipo) {
 function _getTransporteIcon(j) {
 	const tipo = FIRESTORE_DATA.transportes.dados[j - 1].transporte;
 	const icone =
-		CONFIG.transportes.icones[tipo] || CONFIG.transportes.icones.outro;
+		getTransportes().icones[tipo] || getTransportes().icones.outro;
 	TRANSPORTE_ICONES.push(icone);
 	return icone;
 }

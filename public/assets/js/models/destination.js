@@ -2,6 +2,8 @@
 // Pure data transformation functions for destination data
 // Extracted from: destination/categories.js, destination/support/sort-and-filter/
 
+import { getMoedas } from '../core/config.js';
+
 // ======= Destination Value Formatting =======
 
 export function _getNotaTranslation(nota) {
@@ -50,7 +52,8 @@ export function _getDescricaoValue(item) {
 // ======= Price Bucket Logic =======
 
 export function _getPriceBucket(value) {
-	const range = CONFIG.moedas.escala_numerica[FIRESTORE_DESTINOS_DATA.moeda];
+	const moedas = getMoedas();
+	const range = moedas.escala_numerica[FIRESTORE_DESTINOS_DATA.moeda];
 	if (isNaN(value)) return "default";
 	if (value === 0) return "-";
 	if (value >= range["$"][0] && value <= range["$"][1]) return "$";

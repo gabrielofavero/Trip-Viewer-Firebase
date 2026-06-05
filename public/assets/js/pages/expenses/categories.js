@@ -1,3 +1,5 @@
+import { getIcons } from '../../../core/config.js';
+
 // Resumo
 function _loadResumo() {
 	_loadChartResumo();
@@ -123,5 +125,6 @@ function _unsetTableCategoria(tipo) {
 
 function _getTitleWithIcon(titlePath, backupIconPath) {
 	const title = translate(titlePath, {}, false);
-	return `<i class="iconify" data-icon="${CONFIG.icons[titlePath] || CONFIG.icons[backupIconPath] || CONFIG.icons["trip.expenses.title"]}"></i> ${title}`;
+	const icons = getIcons();
+	return `<i class="iconify" data-icon="${icons[titlePath] || icons[backupIconPath] || icons["trip.expenses.title"]}"></i> ${title}`;
 }

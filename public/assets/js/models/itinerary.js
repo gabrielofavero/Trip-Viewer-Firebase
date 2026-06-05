@@ -2,6 +2,8 @@
 // Data transformation functions for itinerary (grouping by date/time-of-day, multi-format output)
 // Extracted from: itinerary-formatter.js
 
+import { getItinerary, getTransportes, getMoedas } from '../core/config.js';
+
 // ======= Itinerary Content Generator (Multi-format) =======
 
 export async function _getItineraryContent(type) {
@@ -23,7 +25,7 @@ export async function _getItineraryContent(type) {
 
 	for (const itinerary of ITINERARY) {
 		_loadItineararyTitle(itinerary.title, type);
-		for (const timeOfDay of CONFIG.itinerary.timeofday) {
+		for (const timeOfDay of getItinerary().timeofday) {
 			const timeOfDayData = itinerary[timeOfDay];
 			if (timeOfDayData.length === 0) continue;
 			_loadTimeOfDay(timeOfDay);
@@ -180,7 +182,7 @@ export async function _getItineraryData() {
 
 	function _getItineraryTitle(programacao) {
 		let size = 0;
-		for (const timeofday of CONFIG.itinerary.timeofday) {
+		for (const timeofday of getItinerary().timeofday) {
 			size += programacao[timeofday].length;
 		}
 
@@ -259,7 +261,7 @@ export async function _getItineraryData() {
 				function _getTransportationType() {
 					const tipo = transporte.transporte;
 					if (!tipo) return;
-					const titulo = CONFIG.transportes.titulos[tipo];
+			const titulo = getTransportes().titulos[tipo];
 					return titulo ? translate(titulo) : tipo;
 				}
 
@@ -279,7 +281,7 @@ export async function _getItineraryData() {
 
 				function _getCompany() {
 					return (
-						CONFIG.transportes.empresas?.[transporte.transporte]?.[
+						getTransportes().empresas?.[transporte.transporte]?.[
 							transporte?.empresa
 						] || transporte?.empresa
 					);
@@ -315,10 +317,11 @@ export async function _getItineraryData() {
 				if (!destino) return;
 
 				const nota = _getNotaTranslation(destino.nota);
+				const moedas = getMoedas();
 				const valor = _getValorValue(
 					destino,
-					CONFIG.moedas.escala[destinos.moeda],
-					CONFIG.moedas.simbolos[destinos.moeda],
+					moedas.escala[destinos.moeda],
+					moedas.simbolos[destinos.moeda],
 				);
 				_loadTextObj("labels.priority", nota);
 				_loadTextObj("labels.cost", valor);

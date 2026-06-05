@@ -2,6 +2,8 @@
 // Pure data transformation functions for expenses (currency conversion, aggregation, chart data)
 // Extracted from: expenses-converted.js, support/currency.js, support/data.js
 
+import { getMoedas, getCores } from '../core/config.js';
+
 // ======= Currency Filtering & Sorting =======
 
 export function _filterMoedas(arr) {
@@ -60,8 +62,9 @@ export function _canConvert(moedas) {
 }
 
 export function _getMoedaSymbol(moeda) {
-	if (CONFIG.moedas.simbolos[moeda]) {
-		return CONFIG.moedas.simbolos[moeda];
+	const moedas = getMoedas();
+	if (moedas.simbolos[moeda]) {
+		return moedas.simbolos[moeda];
 	} else {
 		return moeda;
 	}
@@ -358,7 +361,7 @@ export function _getChartConfig(tipo, dados) {
 
 export function _getChartColorsRGB(size) {
 	const result = [];
-	const coresHex = CONFIG.cores.opcoes.map((cor) => cor.hex);
+	const coresHex = getCores().opcoes.map((cor) => cor.hex);
 	const coresRGB = coresHex.map((cor) => _hexToRgb(cor));
 
 	for (let i = 0; i < size; i++) {

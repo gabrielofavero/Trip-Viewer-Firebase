@@ -1,9 +1,12 @@
+import { getLanguage } from '../core/config.js';
+
 const MISSING_TRANSLATIONS = new Set();
 const LANGUAGES = ["en", "pt"];
 
 export function translate(key, replacements = {}, strict = true) {
-	if (!CONFIG?.language) return "";
-	let result = _searchObject(CONFIG.language, key, strict);
+	const language = getLanguage();
+	if (!language) return "";
+	let result = _searchObject(language, key, strict);
 
 	if (result == null) {
 		if (strict) {

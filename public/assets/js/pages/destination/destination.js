@@ -1,3 +1,5 @@
+import { getDestinos } from '../../core/config.js';
+
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
 var ACTIVE_CATEGORY;
@@ -176,7 +178,8 @@ function _loadDestinoCustomSelect() {
 
 	function _getDestinoCustomSelectOptions() {
 		const result = [];
-		const values = CONFIG.destinos.categorias.ids;
+		const destinos = getDestinos();
+		const values = destinos.categorias.ids;
 		for (const value in FIRESTORE_DESTINOS_DATA) {
 			if (
 				!values.includes(value) ||
@@ -186,7 +189,7 @@ function _loadDestinoCustomSelect() {
 				continue;
 			}
 
-			const key = CONFIG.destinos.translation[value];
+			const key = destinos.translation[value];
 			const label = translate(`destination.${key}.title`);
 			result.push({ value, label });
 		}

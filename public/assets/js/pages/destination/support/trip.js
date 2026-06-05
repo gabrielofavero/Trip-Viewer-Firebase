@@ -1,3 +1,5 @@
+import { getItinerary } from '../../../core/config.js';
+
 var FIRESTORE_DATA;
 var TRIP_ID;
 var PLANNED_DESTINATION = {};
@@ -22,7 +24,7 @@ function _loadPlannedDestination() {
 	const programacoes = FIRESTORE_DATA?.programacoes || [];
 	for (const dia of programacoes) {
 		const data = dia.data;
-		for (const turno of CONFIG.itinerary.timeofday) {
+		for (const turno of getItinerary().timeofday) {
 			const programacoes = dia[turno];
 			if (!programacoes) continue;
 

@@ -7,6 +7,7 @@ import {
 	_convertCustomValor,
 	_getDescricaoValue,
 } from '../../models/destination.js';
+import { getDestinos } from '../../core/config.js';
 
 // BACKWARD COMPAT: attach to window during migration
 window._getNotaTranslation = _getNotaTranslation;
@@ -17,7 +18,8 @@ window._getDescricaoValue = _getDescricaoValue;
 // Active Category
 function _loadActiveCategory(urlParams) {
 	let type = urlParams["type"];
-	const originals = CONFIG.destinos.original;
+	const destinos = getDestinos();
+	const originals = destinos.original;
 
 	if (!type || !originals[type]) {
 		type = _getFirstCategory();
@@ -26,8 +28,9 @@ function _loadActiveCategory(urlParams) {
 	ACTIVE_CATEGORY = originals[type];
 
 	function _getFirstCategory() {
-		const types = CONFIG.destinos.categorias.ids;
-		const translations = CONFIG.destinos.translation;
+		const destinos = getDestinos();
+		const types = destinos.categorias.ids;
+		const translations = destinos.translation;
 		const destinoIDs = Object.keys(FIRESTORE_DESTINOS_DATA);
 		for (const type of types) {
 			value = translations[type];
@@ -41,7 +44,7 @@ function _loadActiveCategory(urlParams) {
 
 function _updateActiveCategory(category) {
 	const urlParam = _getURLParam("type");
-	const translations = CONFIG.destinos.translation;
+	const translations = getDestinos().translation;
 	const param = translations[category];
 
 	if (urlParam === param) {

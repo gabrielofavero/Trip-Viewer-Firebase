@@ -1,3 +1,5 @@
+import { getDestinos } from '../../../core/config.js';
+
 function _getDescriptionHTML(categoria, j) {
 	let content = "";
 
@@ -89,7 +91,7 @@ function _openDescriptionModal(categoria, j) {
 
 function _getDescriptionContent(categoria) {
 	const selectedLanguage = _getUserLanguage();
-	const translation = CONFIG.destinos.translation[categoria];
+	const translation = getDestinos().translation[categoria];
 	const placeholders = {};
 	const languages = {};
 
@@ -162,7 +164,8 @@ function _descriptionSelectChangeAction() {
 
 function _getAllDescriptions() {
 	const result = {};
-	for (const categoria of CONFIG.destinos.categorias.passeios) {
+	const destinos = getDestinos();
+	for (const categoria of destinos.categorias.passeios) {
 		result[categoria] = {};
 		for (const childID of _getChildIDs(`${categoria}-box`)) {
 			const j = _getJ(childID);
@@ -179,7 +182,8 @@ function _getAllDescriptions() {
 }
 
 function _updateAllDescriptions(data) {
-	for (const categoria of CONFIG.destinos.categorias.passeios) {
+	const destinos = getDestinos();
+	for (const categoria of destinos.categorias.passeios) {
 		for (const childID of _getChildIDs(`${categoria}-box`)) {
 			const j = _getJ(childID);
 			const id = getID(`${categoria}-id-${j}`).value;

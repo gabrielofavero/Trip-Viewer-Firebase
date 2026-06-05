@@ -1,4 +1,6 @@
 // Text Utils
+import { getMoedas } from '../../core/config.js';
+
 export function _firstCharToUpperCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -662,7 +664,7 @@ export function _getInnerProgramacao(item, destinos) {
 	return innerProgramacao;
 
 	function _getDestinoValores(destino) {
-		const moeda = _cloneObject(CONFIG.moedas.escala[destino.destinos.moeda]);
+		const moeda = _cloneObject(getMoedas().escala[destino.destinos.moeda]);
 		const max = translate("destination.price.max", { value: moeda["$$$$"] });
 		moeda["-"] = translate("destination.price.free");
 		moeda["default"] = translate("destination.price.default");
@@ -790,7 +792,6 @@ window.FIRESTORE_DATA = undefined;
 window.SHEET_DATA = undefined;
 window.P_DATA = undefined;
 window.HYPERLINK = undefined;
-window.CONFIG = undefined;
 window._firstCharToUpperCase = _firstCharToUpperCase;
 window._codifyText = _codifyText;
 window._uncodifyText = _uncodifyText;

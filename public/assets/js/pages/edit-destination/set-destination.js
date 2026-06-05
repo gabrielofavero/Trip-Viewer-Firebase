@@ -1,3 +1,5 @@
+import { getDestinos } from '../../core/config.js';
+
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 
 async function _buildDestinosObject() {
@@ -70,7 +72,8 @@ async function _updateTikTokLinks() {
 	let toUpdate = false;
 	const urls = {};
 
-	for (const categoria of CONFIG.destinos.categorias.passeios) {
+	const destinos = getDestinos();
+	for (const categoria of destinos.categorias.passeios) {
 		const entries = Object.entries(FIRESTORE_DESTINOS_NEW_DATA[categoria]);
 		const midias = entries.map(([id, item]) => ({
 			id,
@@ -158,7 +161,8 @@ async function _updateTikTokLinks() {
 			return;
 		}
 
-		for (const categoria of CONFIG.destinos.categorias.passeios) {
+		const destinos = getDestinos();
+		for (const categoria of destinos.categorias.passeios) {
 			for (const [id, item] of Object.entries(
 				FIRESTORE_DESTINOS_NEW_DATA[categoria],
 			)) {
