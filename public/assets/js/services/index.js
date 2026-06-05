@@ -1,31 +1,73 @@
 // ======= Services Barrel File =======
-// Re-exports all Firebase service and translation functions
+// Re-exports all service functions — pages should import from here, not from support/firebase/
 
+// ── Auth service ──
 export {
-	DOCUMENT_ID,
-	ERROR_FROM_GET_REQUEST,
-	_buildDatabaseObject,
+	USER_DATA,
+	UID,
+	_getUserData,
+	_unloadPageUserFunctions,
+	_signInWithEmailAndPassword,
+	_signOut,
+	_registerIfUserNotPresent,
+	_getUID,
+	_getFirebaseIdToken,
+	_getUser,
+	_getSystemData,
+	_deleteAccount,
+	_deleteAccountDocuments,
+	login,
+	logout,
+	getCurrentUser,
+	getCurrentUID,
+	registerIfNeeded,
+	getCurrentUserData,
+} from "./auth-service.js";
+
+// ── Trip service ──
+export {
 	_get,
-	_hasReadPermission,
-	_create,
-	_deepCreate,
+	_getSingleData,
+	_getTripDataWithDestinos,
 	_update,
 	_override,
 	_delete,
-	_createBatchOps,
-	_getSingleData,
-	_getTripDataWithDestinos,
-	_getSystemData,
-	_deleteUserObjectDB,
-	_deleteAccount,
-	_deleteAccountDocuments,
-	_addToUserArray,
+	_create,
 	_newUserObjectDB,
-	_getPermissoes,
-	_getDestination,
-	_haveErrorFromGetRequest,
-} from "../support/firebase/database.js";
+	_deleteUserObjectDB,
+	_addToUserArray,
+	_createBatchOps,
+	getTrip,
+	getTripRaw,
+	createTrip,
+	updateTrip,
+	replaceTrip,
+	deleteTrip,
+} from "./trip-service.js";
 
+// ── Destination service ──
+export {
+	_getDestination,
+	getDestination,
+	getDestinationRaw,
+	createDestination,
+	updateDestination,
+	replaceDestination,
+	deleteDestination,
+} from "./destination-service.js";
+
+// ── Expense service ──
+export {
+	_deepCreate,
+	getExpenses,
+	getProtectedExpenses,
+	updateExpenses,
+	replaceExpenses,
+	setProtectedExpenses,
+	deleteExpenses,
+} from "./expense-service.js";
+
+// ── Storage service (raw re-exports) ──
 export {
 	IMAGE_UPLOAD_STATUS,
 	UPLOAD_SIZE,
@@ -47,19 +89,7 @@ export {
 	_getAllImageUrls,
 } from "../support/firebase/storage.js";
 
-export {
-	USER_DATA,
-	UID,
-	_getUserData,
-	_unloadPageUserFunctions,
-	_signInWithEmailAndPassword,
-	_signOut,
-	_registerIfUserNotPresent,
-	_getUID,
-	_getFirebaseIdToken,
-	_getUser,
-} from "../support/firebase/user.js";
-
+// ── Translation ──
 export {
 	translate,
 	_getUserLanguage,

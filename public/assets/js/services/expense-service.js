@@ -1,0 +1,79 @@
+// ======= Expense Service =======
+// Domain service for expense-related operations.
+// Wraps Firebase database calls — pages should use this instead of calling database.js directly.
+
+import {
+	_get,
+	_create,
+	_deepCreate,
+	_update,
+	_override,
+	_delete,
+	_createBatchOps,
+} from "../support/firebase/database.js";
+
+// Re-export raw database functions that expense pages may still use during transition
+export {
+	_get,
+	_create,
+	_deepCreate,
+	_update,
+	_override,
+	_delete,
+	_createBatchOps,
+};
+
+// ── Expense-specific wrappers ──
+
+/**
+ * Get expenses for a specific trip.
+ * @param {string} tripId - The trip document ID
+ */
+export async function getExpenses(tripId) {
+	return await _get(`gastos/${tripId}`, true, true);
+}
+
+/**
+ * Get protected expenses (PIN-locked) for a trip.
+ * @param {string} pin - The trip PIN
+ * @param {string} tripId - The trip document ID
+ */
+export async function getProtectedExpenses(pin, tripId) {
+	return await _get(`gastos/protected/${pin}/${tripId}`, false);
+}
+
+/**
+ * Update expenses for a trip (shallow merge).
+ */
+export async function updateExpenses(tripId, data) {
+	return await _update(`gastos/${tripId}`, data);
+}
+
+/**
+ * Replace all expenses for a trip (no merge).
+ */
+export async function replaceExpenses(tripId, data) {
+	return await _override(`gastos/${tripId}`, data);
+}
+
+/**
+ * Create or overwrite protected expenses for a trip.
+ */
+export async function setProtectedExpenses(pin, tripId, data) {
+	return await _deepCreate(`gastos/protected/${pin}`, data, tripId);
+}
+
+/**
+ * Delete expenses for a trip (used during account deletion).
+ */
+export async function deleteExpenses(tripId) {
+	return await _delete(`gastos/${tripId}`, true);
+}
+
+// BACKWARD COMPAT: attach to window during migration
+window.getExpenses = getExpenses;
+window.getProtectedExpenses = getProtectedExpenses;
+window.updateExpenses = updateExpenses;
+window.replaceExpenses = replaceExpenses;
+window.setProtectedExpenses = setProtectedExpenses;
+window.deleteExpenses = deleteExpenses;

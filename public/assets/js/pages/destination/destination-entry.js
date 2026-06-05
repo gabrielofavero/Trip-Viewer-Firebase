@@ -3,9 +3,9 @@
 // Import order MUST match the original script tag order exactly
 
 import '../../main/translation.js';
-import '../../support/firebase/database.js';
+import '../../services/trip-service.js';
 import '../../main/main.js';
-import '../../support/firebase/user.js';
+import '../../services/auth-service.js';
 import '../../support/pages/loading.js';
 import '../../support/styles/animations.js';
 import '../../support/pages/data.js';

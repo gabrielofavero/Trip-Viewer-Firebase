@@ -4,7 +4,7 @@
 
 import '../../main/translation.js';
 import '../../main/main.js';
-import '../../support/firebase/database.js';
+import '../../services/trip-service.js';
 import '../../support/styles/animations.js';
 import '../../support/pages/data.js';
 import '../../support/pages/dates.js';
