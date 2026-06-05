@@ -18,7 +18,7 @@ const MESSAGE_PROPERTIES = {
 	},
 };
 
-// Mensagem Genérica
+// Generic Message
 export function displayMessage(titulo, conteudo) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	if (titulo) properties.titulo = titulo;
@@ -26,7 +26,7 @@ export function displayMessage(titulo, conteudo) {
 	displayFullMessage(properties);
 }
 
-// Prompt (Sim / Não)
+// Prompt (Yes / No)
 export function displayPrompt({
 	titulo,
 	conteudo,
@@ -84,14 +84,14 @@ export function displayFullMessage(
 		textDiv.appendChild(buttonsBox);
 	}
 
-	// Título
+	// Title
 	const titleDiv = document.createElement("div");
 	titleDiv.className = "message-title";
 	titleDiv.id = "message-title";
 	titleDiv.innerHTML = propriedades.titulo;
 	textDiv.appendChild(titleDiv);
 
-	// Descrição
+	// Description
 	const descriptionDiv = document.createElement("div");
 	descriptionDiv.className = "message-description";
 	descriptionDiv.id = "message-description";
@@ -104,7 +104,7 @@ export function displayFullMessage(
 		textDiv.appendChild(errorElement);
 	}
 
-	// Botões
+	// Buttons
 	if (propriedades.botoes && propriedades.botoes.length > 0) {
 		const buttonBox = document.createElement("div");
 		buttonBox.className = propriedades.containers?.botoes || "button-box";
@@ -146,7 +146,7 @@ export function displayError(erro, tryAgain = false) {
 	propriedades.titulo = translate("messages.errors.load_title");
 	propriedades.critico = true;
 	propriedades.conteudo = getErrorMessage(erro);
-	propriedades.localizacao = false; // Desabilitado. Não faz sentido mostrar ao usuário.
+	propriedades.localizacao = false; // Disabled. No point in showing to the user.
 
 	const botoes = tryAgain ? [{ tipo: "tente-novamente" }] : [];
 	if (!window.location.href.includes("index.html")) {
@@ -173,7 +173,7 @@ export function getErrorMessage(erro) {
 	}
 }
 
-// Mensagem de Não Autorizado
+// Unauthorized Message
 export function displayForbidden(conteudo, redirectTo = "view.html") {
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = translate("messages.access_denied.title");
@@ -205,7 +205,7 @@ export function closeMessage() {
 	}
 }
 
-// Funções de Suporte
+// Support Functions
 export function getContainersInput() {
 	return {
 		principal: "input-container",
@@ -272,7 +272,7 @@ export function getErrorElement(erro) {
 	return errorElement;
 }
 
-// Botões
+// Buttons
 export function getButton(botao) {
 	switch (botao.tipo) {
 		case "tente-novamente":

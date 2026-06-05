@@ -2,7 +2,7 @@
 // Pure data transformation functions for expenses (currency conversion, aggregation, chart data)
 // Extracted from: expenses-converted.js, support/currency.js, support/data.js
 
-import { getCurrencies, getCores } from '../core/config.js';
+import { getCurrencies, getColors } from '../core/config.js';
 
 // ======= Currency Filtering & Sorting =======
 
@@ -361,7 +361,7 @@ export function getChartConfig(tipo, dados) {
 
 export function getChartColorsRGB(size) {
 	const result = [];
-	const coresHex = getCores().opcoes.map((cor) => cor.hex);
+	const coresHex = getColors().opcoes.map((cor) => cor.hex);
 	const coresRGB = coresHex.map((cor) => hexToRgb(cor));
 
 	for (let i = 0; i < size; i++) {

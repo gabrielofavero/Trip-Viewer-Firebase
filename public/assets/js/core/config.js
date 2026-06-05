@@ -3,14 +3,14 @@
 // Replaces the global CONFIG variable with proper ES module imports.
 //
 // Usage:
-//   import { loadAllConfigs, getCores, getLanguage, setLanguage } from '../core/config.js';
+//   import { loadAllConfigs, getColors, getLanguage, setLanguage } from '../core/config.js';
 //
 //   // At startup (in main.js):
 //   await loadAllConfigs();
 //
 //   // Anywhere else (synchronous, config must be loaded first):
-//   import { getCores } from '../../core/config.js';
-//   const cores = getCores();
+//   import { getColors } from '../../core/config.js';
+//   const cores = getColors();
 
 const _cache = {};
 
@@ -25,7 +25,7 @@ async function loadJSON(path) {
 	return data;
 }
 
-export async function loadCores() {
+export async function loadColors() {
 	return loadJSON('/assets/json/cores.json');
 }
 
@@ -70,7 +70,7 @@ export async function loadLanguage(packName) {
 export async function loadAllConfigs(languagePackName) {
 	const [cores, destinos, itinerary, moedas, transportes, icons, versoes, language] =
 		await Promise.all([
-			loadCores(),
+			loadColors(),
 			loadDestinos(),
 			loadItinerary(),
 			loadCurrencies(),
@@ -84,7 +84,7 @@ export async function loadAllConfigs(languagePackName) {
 
 // ======= Synchronous Getters (for use after configs are loaded) =======
 
-export function getCores() {
+export function getColors() {
 	return _cache['/assets/json/cores.json'];
 }
 

@@ -1,4 +1,4 @@
-import { getCores } from '../../core/config.js';
+import { getColors } from '../../core/config.js';
 
 export let THEME_COLOR;
 export let THEME_COLOR_HOVER;
@@ -40,7 +40,7 @@ export function getLocalColors() {
 }
 
 export function getEquivalentColorAndPosition(lightColor) {
-	const colors = getCores();
+	const colors = getColors();
 	const lightObj = colors.claro;
 	const darkObj = colors.escuro;
 
@@ -74,7 +74,7 @@ export function getDarkerColor(hex, percentage = 75) {
 }
 
 export function getColorIndexFromOptions(i) {
-	const colors = getCores();
+	const colors = getColors();
 	if (i >= colors.opcoes.length) {
 		i = i % colors.opcoes.length;
 	}
@@ -108,11 +108,11 @@ export function getSecondaryColor(type) {
 }
 
 export function getColorNameFromOptions(i) {
-	return getCores().opcoes[getColorIndexFromOptions(i)].cor;
+	return getColors().opcoes[getColorIndexFromOptions(i)].cor;
 }
 
 export function getColorHexFromOptions(i) {
-	return getCores().opcoes[getColorIndexFromOptions(i)].hex;
+	return getColors().opcoes[getColorIndexFromOptions(i)].hex;
 }
 
 export function getThemeColorBoxShadow(cor = THEME_COLOR_SECONDARY) {

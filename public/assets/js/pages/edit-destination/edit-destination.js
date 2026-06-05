@@ -163,7 +163,7 @@ async function loadDestinations() {
 
 // Listeners
 function addDestinationsListeners(categoria, j) {
-	// Título Interativo
+	// Interactive Title
 	getID(`${categoria}-nome-${j}`).addEventListener("change", () =>
 		updateDestinationsTitle(j, categoria),
 	);
@@ -174,7 +174,7 @@ function addDestinationsListeners(categoria, j) {
 		updateDestinationsTitle(j, categoria),
 	);
 
-	// Validação de Emoji
+	// Emoji Validation
 	getID(`${categoria}-emoji-${j}`).addEventListener("input", () =>
 		emojisOnInputAction(j, categoria),
 	);
@@ -184,7 +184,7 @@ function addDestinationsListeners(categoria, j) {
 		valorListenerAction(j, categoria),
 	);
 
-	// Região
+	// Region
 
 	// Links
 	getID(`${categoria}-website-${j}`).addEventListener("change", () =>

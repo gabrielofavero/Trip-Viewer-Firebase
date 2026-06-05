@@ -41,7 +41,7 @@ export function updateValueDS(type, value, selectID) {
 		getID(selectID).value = value;
 	}
 
-	// Função Privada
+	// Private Function
 	function addValueDS(type, value) {
 		if (!DYNAMIC_SELECT[type].values[value]) {
 			DYNAMIC_SELECT[type].values[value] = 1;

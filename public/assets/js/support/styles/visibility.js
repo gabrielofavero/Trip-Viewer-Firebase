@@ -219,7 +219,7 @@ export function isModalOpen(modalID = "modal") {
 	return getID(modalID).style.display === "block";
 }
 
-// ======= Páginas de Editar =======
+// ======= Edit Pages =======
 export function loadEditModule(categoria) {
 	const habilitado = getID(`habilitado-${categoria}`);
 	if (habilitado.checked) {

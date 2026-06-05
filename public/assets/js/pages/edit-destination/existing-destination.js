@@ -19,7 +19,7 @@ function loadDestinationsData() {
 	}
 }
 
-// Módulos: Passeio Existente
+// Modules: Existing Tour
 function loadDadosBasicosDestinosData() {
 	getID("titulo").value = FIRESTORE_DESTINOS_DATA.titulo;
 

@@ -151,7 +151,7 @@ function getPillClasses(colorIndex) {
 	return { pillCircle, activeCircle, activeCalendar };
 }
 
-// Programação de Hoje
+// Today's Schedule
 function loadScheduleTodayButton() {
 	const hoje = convertFromDateObject(getTodayDateObject());
 
@@ -183,7 +183,7 @@ function loadScheduleTodayButton() {
 	}
 }
 
-// Programação Completa
+// Full Schedule
 function openFullItinerary() {
 	const url = `itinerary?v=${DOCUMENT_ID}&visibility=${getVisibility()}`;
 	openViewEmbed(url);

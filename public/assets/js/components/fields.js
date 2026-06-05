@@ -247,7 +247,7 @@ export function selectHasValue(select, value) {
 	return Array.from(select.options).some((opt) => opt.value === value);
 }
 
-// Validação de links
+// Link Validation
 export function isHttp(link) {
 	return link.startsWith("http://") || link.startsWith("https://");
 }

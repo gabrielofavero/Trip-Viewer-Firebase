@@ -75,14 +75,14 @@ function loadFilterClass(filter) {
 function getGaleriaTitulo(galeria, i) {
 	let titulo = "";
 	if (galeria.titulos && galeria.titulos[i]) {
-		// Implementação Atual
+		// Current Implementation
 		titulo = galeria.titulos[i];
 	} else if (
 		galeria.imagens &&
 		galeria.imagens[i] &&
 		galeria.imagens[i].titulo
 	) {
-		// Implementação Antiga
+		// Old Implementation
 		titulo = galeria.imagens[i].titulo;
 	}
 	return titulo || "";
@@ -91,7 +91,7 @@ function getGaleriaTitulo(galeria, i) {
 function getGaleriaDescricoes(galeria, i) {
 	let descricao = "";
 	if (galeria.descricoes && galeria.descricoes[i]) {
-		// Implementação Atual
+		// Current Implementation
 		descricao = galeria.descricoes[i];
 	} else if (
 		galeria.imagens &&

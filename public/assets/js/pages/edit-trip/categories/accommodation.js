@@ -98,7 +98,7 @@ function accommodationsAddListenerAction() {
 	openLastAccordion("hospedagens");
 }
 
-// Carregamento Interno (Modal)
+// Internal Loading (Modal)
 function openAccommodationImages(j) {
 	const size = 5;
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);

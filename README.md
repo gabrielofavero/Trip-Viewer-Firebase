@@ -1,66 +1,6 @@
 ![alt text](https://i.imgur.com/vejNzOv.png)
 
-# Tasks
-
-| Icon | Title       | Code | Total | Done | Cancelled | Pending |
-| ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 160   | 157  | 3         | 0       |
-| 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
-| 📈   | Improvement | M000 | 150   | 119  | 23        | 8       |
-| ⚔️   | Epic        | E000 | 46    | 29   | 10        | 7       |
-
-## Project Structure
-
-```
-public/                           # Source files (authored code)
-├── index.html                    # Single entrypoint per page
-├── view.html
-├── destination.html
-├── expenses.html
-├── itinerary.html
-├── edit/
-│   ├── trip.html
-│   ├── destination.html
-│   └── listing.html
-├── shared/                       # HTML partials (injected at build time)
-│   ├── head.html
-│   ├── scripts-core.html
-│   ├── scripts-vendor.html
-│   └── top-bar.html
-└── assets/
-    ├── css/
-    │   ├── base/                 # Shared: variables, reset, fonts, preloader, layout, dark-mode
-    │   ├── components/           # Shared UI: accordion, modal, toast, custom-select, etc.
-    │   ├── index/ view/ destination/ expenses/ itinerary/ edit/  # Page-specific styles
-    │   └── main.css              # Imports base + components
-    ├── js/
-    │   ├── core/                 # App boot, config, error handling
-    │   ├── services/             # Firebase, auth, translation (data layer)
-    │   ├── models/               # Business logic / data transformation
-    │   ├── components/           # Reusable UI widgets
-    │   ├── utils/                # Pure utility functions
-    │   ├── styles/               # Runtime style management (colors, visibility, animations)
-    │   ├── main/                 # App initialization + translation
-    │   ├── support/              # Internal support modules (firebase, html, pages, styles, components)
-    │   └── pages/                # Page-specific orchestration
-    │       ├── index/
-    │       ├── view/
-    │       ├── destination/
-    │       ├── expenses/
-    │       ├── itinerary/
-    │       ├── edit-trip/
-    │       ├── edit-destination/
-    │       └── edit-listing/
-    ├── json/                     # Static config files (icons, colors, currencies, etc.)
-    └── vendor/                   # Third-party libraries
-
-dist/                             # Build output (deployed to Firebase Hosting)
-scripts/                          # Build scripts & tooling
-dev/                              # Firebase Functions backend
-firebase.json                     # Firebase Hosting config (public: "dist")
-```
-
-## Build Instructions
+# Build Instructions
 
 ```bash
 # Install dependencies
@@ -81,6 +21,15 @@ npm run serve
 # Full dev mode (build + serve + live reload on port 3000)
 npm run dev
 ```
+
+# Tasks
+
+| Icon | Title       | Code | Total | Done | Cancelled | Pending |
+| ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
+| 🐞   | Bug         | B000 | 160   | 157  | 3         | 0       |
+| 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
+| 📈   | Improvement | M000 | 150   | 119  | 23        | 8       |
+| ⚔️   | Epic        | E000 | 46    | 29   | 10        | 7       |
 
 **How it works:**
 1. `npm run build` copies all files from `public/` to `dist/`
