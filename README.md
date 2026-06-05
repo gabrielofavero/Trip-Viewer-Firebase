@@ -113,7 +113,7 @@ npm run dev
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 160   | 157  | 3         | 0       |
 | 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
-| 📈   | Improvement | M000 | 150   | 127  | 23        | 0       |
+| 📈   | Improvement | M000 | 152   | 129  | 23        | 0       |
 | ⚔️   | Epic        | E000 | 47    | 30   | 8         | 9       |
 
 ## Backlog
@@ -184,6 +184,8 @@ npm run dev
   - *[📈M046] Clean unused properties in application CSS*
   - *[📈M149] Better file/folder architecture + separation of concerns*
   - *[📈M150] All functions and variables in EN-US*
+  - *[📈M151] Better folder structure for js files*
+  - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
