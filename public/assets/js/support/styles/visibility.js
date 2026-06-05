@@ -137,14 +137,14 @@ export function _applyMode({
 
 	function _applyCustomVisibilityRules() {
 		switch (_getHTMLpage()) {
-			case "viagem":
+			case "view":
 				_loadTransporteImagens();
 				_loadViagemCustomVisibilityRules();
 				break;
-			case "destinos":
+			case "destination":
 				_applyAccordionArrowCustomColor();
 				break;
-			case "gastos":
+			case "expenses":
 				_changeChartsLabelsVisibility();
 				_loadMoedasTab();
 		}

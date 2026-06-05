@@ -1,7 +1,7 @@
 # 🔄 E034: Frontend Code Refactoring — Master Plan
 
-> **Status:** Planning
-> **Last updated:** 2026-06-04 (P8 complete)
+> **Status:** In Progress
+> **Last updated:** 2026-06-05 (P12 complete)
 > **Goal:** Transform a legacy jQuery/Bootstrap vanilla-JS app into a maintainable, modular frontend with clear separation of concerns — while keeping everything as static HTML+JS+CSS (no React/Angular/Vue).
 
 ---
@@ -1188,7 +1188,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P9  | Convert Utility Files to ES Modules         | ✅ Done    |
 | P10 | Convert Component Files to ES Modules       | ✅ Done    |
 | P11 | Convert Firebase Services to ES Modules     | ✅ Done    |
-| P12 | Single JS Entry Point Per HTML              | ☐ Pending |
+| P12 | Single JS Entry Point Per HTML              | ✅ Done (backward-compat deferred) |
 | P13 | Extract Business Logic into Models          | ☐ Pending |
 | P14 | Create Clean Service Layer                  | ☐ Pending |
 | P15 | Remove CONFIG Global, Use Config Module     | ☐ Pending |

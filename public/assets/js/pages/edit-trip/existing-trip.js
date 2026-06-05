@@ -197,7 +197,7 @@ function _loadHospedagemData() {
 
 async function _loadDestinosData() {
 	if (
-		_getHTMLpage() === "editar-listagem" ||
+		_getHTMLpage() === "edit-listing" ||
 		FIRESTORE_DATA.modulos.destinos === true
 	) {
 		if (getID("habilitado-destinos")) {

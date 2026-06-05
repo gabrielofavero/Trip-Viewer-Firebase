@@ -95,22 +95,22 @@ function _loadPage() {
 		case "index":
 			_loadIndexPage();
 			break;
-		case "viagem":
+		case "view":
 			_loadViagemPage();
 			break;
-		case "destinos":
+		case "destination":
 			_loadDestinosPage();
 			break;
-		case "gastos":
+		case "expenses":
 			_loadGastosPage();
 			break;
-		case "editar-listagem":
+		case "edit-listing":
 			_loadEditarListagemPage();
 			break;
-		case "editar-destino":
+		case "edit-destination":
 			_loadEditarDestinoPage();
 			break;
-		case "editar-viagem":
+		case "edit-trip":
 			_loadEditarViagemPage();
 			break;
 		case "itinerary":
@@ -128,17 +128,17 @@ function _getHTMLpage() {
 		case "/":
 			return "index";
 		case "/view":
-			return "viagem";
+			return "view";
 		case "/destination":
-			return "destinos";
+			return "destination";
 		case "/expenses":
-			return "gastos";
+			return "expenses";
 		case "/edit/listing":
-			return "editar-listagem";
+			return "edit-listing";
 		case "/edit/destination":
-			return "editar-destino";
+			return "edit-destination";
 		case "/edit/trip":
-			return "editar-viagem";
+			return "edit-trip";
 		default:
 			return result.slice(1);
 	}

@@ -302,9 +302,9 @@ export function _getButton(botao) {
 
 export function _getHomeButton() {
 	const homeButton = [
-		"editar-viagem",
-		"editar-destino",
-		"editar-listagem",
+		"edit-trip",
+		"edit-destination",
+		"edit-listing",
 	].includes(_getHTMLpage())
 		? "../index.html"
 		: "index.html";

@@ -16,7 +16,7 @@ export function _isIOSDevice() {
 }
 
 export function _isViagemHTML() {
-	return _getHTMLpage() === "viagem";
+	return _getHTMLpage() === "view";
 }
 
 // BACKWARD COMPAT: attach to window during migration
