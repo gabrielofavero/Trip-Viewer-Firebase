@@ -13,7 +13,7 @@ import '../../support/styles/colors.js';
 import '../../support/styles/visibility.js';
 import '../../support/pages/messages.js';
 import '../../support/pages/loading.js';
-import '../../support/html/embed.js';
+import '../../components/embed.js';
 import '../../support/styles/stylesheets.js';
 import '../../support/pages/attributions.js';
 import '../../support/pages/pin.js';

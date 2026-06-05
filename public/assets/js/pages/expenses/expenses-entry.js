@@ -22,7 +22,7 @@ import '../../support/pages/dates.js';
 import '../../support/pages/pin.js';
 import './support/currency.js';
 import './support/data.js';
-import '../../support/html/embed.js';
+import '../../components/embed.js';
 import './support/embed.js';
 import './categories.js';
 import './expenses-converted.js';

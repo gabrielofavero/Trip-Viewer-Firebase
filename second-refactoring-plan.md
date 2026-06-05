@@ -394,7 +394,7 @@ STEP 5: Update the status in second-refactoring-plan.md to "✅ Complete".
 | P1 | Fix `scripts-vendor.html` syntax bug | ✅ Complete |
 | P2 | Wire top-bar partial into all HTML files | ✅ Complete |
 | P3 | Remove `window.*` backward-compat attachments | ✅ Complete |
-| P4 | Create `assets/js/components/` directory | ⬜ Not started |
+| P4 | Create `assets/js/components/` directory | ✅ Complete |
 | P5 | Rename Portuguese function names & clean comments | ⬜ Not started |
 | P6 | Clean build pipeline & final validation | ⬜ Not started |
 

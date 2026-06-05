@@ -1,4 +1,4 @@
-import { getChildIDs } from "../pages/data.js";
+import { getChildIDs } from "../support/pages/data.js";
 
 // Accordion Open - Close
 export function closeAccordions(categoria) {

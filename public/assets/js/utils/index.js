@@ -128,7 +128,7 @@ export {
 
 // ======= Components =======
 
-export { BiMap } from "../support/components/bimap.js";
+export { BiMap } from "../components/bimap.js";
 
 export {
 	loadCloseCustomSelectListeners,
@@ -140,7 +140,7 @@ export {
 	loadCustomSelectAction,
 	hideActiveOption,
 	getCustomSelectActiveOption,
-} from "../support/components/custom-select.js";
+} from "../components/custom-select.js";
 
 export {
 	newDynamicSelect,
@@ -151,12 +151,12 @@ export {
 	addEventListenersDS,
 	addRemoveChildListenerDS,
 	removeSelectorDS,
-} from "../support/components/dynamic-select.js";
+} from "../components/dynamic-select.js";
 
 export {
 	initializeSortableForGroup,
 	loadDraggablesWithAccordions,
-} from "../support/components/sortable.js";
+} from "../components/sortable.js";
 
 export {
 	closeAccordions,
@@ -165,7 +165,7 @@ export {
 	onAccordionAction,
 	onAccordionOpen,
 	onAccordionClose,
-} from "../support/html/accordion.js";
+} from "../components/accordion.js";
 
 export {
 	loadEmbedListeners,
@@ -176,7 +176,7 @@ export {
 	getOrigin,
 	loadEmbedVisibility,
 	isEmbed,
-} from "../support/html/embed.js";
+} from "../components/embed.js";
 
 export {
 	snapshotFormState,
@@ -202,4 +202,4 @@ export {
 	validateImageLink,
 	getSelectOptionsHTML,
 	removeEl,
-} from "../support/html/fields.js";
+} from "../components/fields.js";

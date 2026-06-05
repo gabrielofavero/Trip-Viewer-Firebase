@@ -17,7 +17,7 @@ import '../index/support/visibility.js';
 import '../../support/pages/devices.js';
 import '../../support/pages/messages.js';
 import '../../support/pages/loading.js';
-import '../../support/html/fields.js';
+import '../../components/fields.js';
 import '../edit-trip/categories/destination.js';
 import '../edit-trip/new-trip.js';
 import '../edit-trip/categories/customization.js';
