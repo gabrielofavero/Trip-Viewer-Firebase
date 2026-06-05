@@ -1,4 +1,4 @@
-function _animate(
+export function _animate(
 	fadeIn,
 	fadeOut,
 	from = 0,
@@ -28,24 +28,24 @@ function _animate(
 	}
 }
 
-function _animateRight(fadeIn, fadeOut, isBlock = true) {
+export function _animateRight(fadeIn, fadeOut, isBlock = true) {
 	_animate(fadeIn, fadeOut, 0, 1, true, isBlock);
 }
 
-function _animateLeft(fadeIn, fadeOut, isBlock = true) {
+export function _animateLeft(fadeIn, fadeOut, isBlock = true) {
 	_animate(fadeIn, fadeOut, 1, 0, true, isBlock);
 }
 
-function _animateUp(fadeIn, fadeOut, isBlock = true) {
+export function _animateUp(fadeIn, fadeOut, isBlock = true) {
 	_animate(fadeIn, fadeOut, 1, 0, false, isBlock);
 }
 
-function _animateDown(fadeIn, fadeOut, isBlock = true) {
+export function _animateDown(fadeIn, fadeOut, isBlock = true) {
 	_animate(fadeIn, fadeOut, 0, 1, false, isBlock);
 }
 
 // Fade
-function _fadeOut(elementIds, mili = 250) {
+export function _fadeOut(elementIds, mili = 250) {
 	elementIds.forEach(function (id) {
 		var $element = $("#" + id);
 		$element.animate(
@@ -60,7 +60,7 @@ function _fadeOut(elementIds, mili = 250) {
 	});
 }
 
-function _fadeIn(elementIds, mili = 250, isBlock = true) {
+export function _fadeIn(elementIds, mili = 250, isBlock = true) {
 	elementIds.forEach(function (id) {
 		var $element = $("#" + id);
 		$element
@@ -77,7 +77,7 @@ function _fadeIn(elementIds, mili = 250, isBlock = true) {
 	});
 }
 
-function _fade(fadeOutIds, fadeInIds, duration = 250, isBlock = true) {
+export function _fade(fadeOutIds, fadeInIds, duration = 250, isBlock = true) {
 	_fadeOut(fadeOutIds);
 	setTimeout(function () {
 		_fadeIn(fadeInIds, duration, isBlock);
@@ -85,7 +85,7 @@ function _fade(fadeOutIds, fadeInIds, duration = 250, isBlock = true) {
 }
 
 // Swipe
-function _swipeOut(elementIds, direction) {
+export function _swipeOut(elementIds, direction) {
 	const transformOut = _getSwipeDirection(direction, false);
 	elementIds.forEach((id) => {
 		const $element = $("#" + id);
@@ -100,7 +100,7 @@ function _swipeOut(elementIds, direction) {
 	});
 }
 
-function _swipeIn(elementIds, direction, isBlock = true) {
+export function _swipeIn(elementIds, direction, isBlock = true) {
 	const transformInStart = _getSwipeDirection(direction, true);
 	const transformInEnd = "translateX(0) translateY(0)"; // Reset to original position
 
@@ -125,7 +125,7 @@ function _swipeIn(elementIds, direction, isBlock = true) {
 	});
 }
 
-function _getSwipeDirection(direction, isEntering) {
+export function _getSwipeDirection(direction, isEntering) {
 	switch (direction) {
 		case "up":
 			return isEntering ? "translateY(100%)" : "translateY(-100%)";
@@ -140,7 +140,21 @@ function _getSwipeDirection(direction, isEntering) {
 	}
 }
 
-function _swipe(swipeOutIds, swipeInIds, direction, isBlock = true) {
+export function _swipe(swipeOutIds, swipeInIds, direction, isBlock = true) {
 	_swipeOut(swipeOutIds, direction);
 	setTimeout(() => _swipeIn(swipeInIds, direction, isBlock), 500);
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._animate = _animate;
+window._animateRight = _animateRight;
+window._animateLeft = _animateLeft;
+window._animateUp = _animateUp;
+window._animateDown = _animateDown;
+window._fadeOut = _fadeOut;
+window._fadeIn = _fadeIn;
+window._fade = _fade;
+window._swipeOut = _swipeOut;
+window._swipeIn = _swipeIn;
+window._getSwipeDirection = _getSwipeDirection;
+window._swipe = _swipe;

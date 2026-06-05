@@ -76,51 +76,71 @@ function build() {
 }
 
 /**
- * Transpile all .js files in dist/ that contain ES module syntax (export/import)
- * into IIFE format so they work with regular <script> tags.
+ * Transpile all .js source files in public/ that contain ES module syntax
+ * into IIFE format, outputting to dist/.
  *
- * Uses esbuild.buildSync with bundle:true to resolve imports between modules.
- * Each file becomes a self-contained IIFE with all its dependencies inlined.
+ * - Files WITHOUT imports: transformSync strips `export` keywords.
+ * - Files WITH imports: buildSync with bundle:true resolves and inlines deps.
+ *
+ * Source files in public/ are never modified — only dist/ is written.
+ * This ensures imports always resolve against the original source.
  *
  * During migration phases P9-P11, source files use ES module syntax but
  * HTML files still use plain <script> tags. This bridge keeps things working.
  */
 function transpileESModules() {
-  const jsFiles = findJSFiles(DIST_DIR);
+  const jsFiles = findJSFiles(PUBLIC_DIR);
   let count = 0;
 
-  for (const file of jsFiles) {
+  for (const srcFile of jsFiles) {
+    // Compute relative path and corresponding dist path
+    const relPath = path.relative(PUBLIC_DIR, srcFile).replace(/\\/g, "/");
+
     // Skip vendor files, Firebase config, and barrel files
-    const relPath = path.relative(DIST_DIR, file).replace(/\\/g, "/");
     if (
       relPath.startsWith("assets/vendor/") ||
       relPath === "firebase-config.js" ||
-      relPath.startsWith("assets/js/utils/")
+      relPath.startsWith("assets/js/utils/") ||
+      relPath.startsWith("assets/js/services/") ||
+      relPath.startsWith("assets/js/styles/")
     ) {
       continue;
     }
 
-    const content = fs.readFileSync(file, "utf8");
+    const content = fs.readFileSync(srcFile, "utf8");
 
     // Only transpile files that contain ES module syntax
     if (!/\bexport\b/.test(content) && !/\bimport\b/.test(content)) {
       continue;
     }
 
+    const distFile = path.join(DIST_DIR, relPath);
+    const hasImports = /\bimport\b/.test(content);
+
     try {
-      const result = esbuild.buildSync({
-        entryPoints: [file],
-        bundle: true,
-        format: "iife",
-        target: "es2020",
-        write: false,
-      });
-      // buildSync with write:false returns { outputFiles: [{ path, text }] }
-      const outText = result.outputFiles[0].text;
-      fs.writeFileSync(file, outText, "utf8");
+      if (hasImports) {
+        // Use buildSync to resolve imports, outputting bundled IIFE
+        const result = esbuild.buildSync({
+          entryPoints: [srcFile],
+          bundle: true,
+          format: "iife",
+          target: "es2020",
+          write: false,
+          absWorkingDir: PUBLIC_DIR,
+        });
+        fs.writeFileSync(distFile, result.outputFiles[0].text, "utf8");
+      } else {
+        // Use transformSync to just strip export keywords
+        const result = esbuild.transformSync(content, {
+          loader: "js",
+          format: "iife",
+          target: "es2020",
+        });
+        fs.writeFileSync(distFile, result.code, "utf8");
+      }
       count++;
     } catch (err) {
-      console.error(`[build] ERROR transpiling ${path.relative(ROOT, file)}: ${err.message}`);
+      console.error(`[build] ERROR transpiling ${relPath}: ${err.message}`);
     }
   }
 

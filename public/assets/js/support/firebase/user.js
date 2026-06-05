@@ -1,7 +1,9 @@
-var USER_DATA;
-var UID;
+import { _displayError, _displayMessage } from "../pages/messages.js";
 
-async function _getUserData(uid) {
+export let USER_DATA;
+export let UID;
+
+export async function _getUserData(uid) {
 	if (USER_DATA) {
 		return USER_DATA;
 	}
@@ -11,14 +13,14 @@ async function _getUserData(uid) {
 	return await _get(`usuarios/${uid}`);
 }
 
-function _unloadPageUserFunctions() {
+export function _unloadPageUserFunctions() {
 	const html = _getHTMLpage();
 	if (html == "index") {
 		_openIndexPage("unlogged", 0, 1);
 	}
 }
 
-async function _signInWithEmailAndPassword() {
+export async function _signInWithEmailAndPassword() {
 	const email = getID("login-email").value;
 	const password = getID("login-password").value;
 
@@ -42,7 +44,7 @@ async function _signInWithEmailAndPassword() {
 	}
 }
 
-function _signOut() {
+export function _signOut() {
 	UID = null;
 	firebase.auth().signOut();
 	if (window.location.href.includes("index.html")) {
@@ -52,7 +54,7 @@ function _signOut() {
 	}
 }
 
-async function _registerIfUserNotPresent() {
+export async function _registerIfUserNotPresent() {
 	const user = firebase.auth().currentUser;
 
 	if (!user) {
@@ -88,7 +90,7 @@ async function _registerIfUserNotPresent() {
 	}
 }
 
-async function _getUID() {
+export async function _getUID() {
 	if (UID) {
 		return UID;
 	}
@@ -101,7 +103,7 @@ async function _getUID() {
 	});
 }
 
-async function _getFirebaseIdToken(user) {
+export async function _getFirebaseIdToken(user) {
 	if (!user) {
 		user = firebase.auth().currentUser;
 	}
@@ -112,7 +114,7 @@ async function _getFirebaseIdToken(user) {
 	}
 }
 
-async function _getUser() {
+export async function _getUser() {
 	return new Promise((resolve, reject) => {
 		const auth = firebase.auth();
 		const unsubscribe = auth.onAuthStateChanged(
@@ -131,3 +133,15 @@ async function _getUser() {
 		);
 	});
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window.USER_DATA = USER_DATA;
+window.UID = UID;
+window._getUserData = _getUserData;
+window._unloadPageUserFunctions = _unloadPageUserFunctions;
+window._signInWithEmailAndPassword = _signInWithEmailAndPassword;
+window._signOut = _signOut;
+window._registerIfUserNotPresent = _registerIfUserNotPresent;
+window._getUID = _getUID;
+window._getFirebaseIdToken = _getFirebaseIdToken;
+window._getUser = _getUser;

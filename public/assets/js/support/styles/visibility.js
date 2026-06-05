@@ -1,9 +1,12 @@
-// ======= Visibility JS =======
-var CHANGED_SVGS = [];
-var LOGO_CLARO = "";
-var LOGO_ESCURO = "";
+import { _getURLParam, _setURLParam, _firstCharToUpperCase, _removeEmptyChild } from "../pages/data.js";
+import { _getCurrentHour } from "../pages/dates.js";
 
-function _loadVisibility(colors = FIRESTORE_DATA?.cores) {
+// ======= Visibility JS =======
+export let CHANGED_SVGS = [];
+export let LOGO_CLARO = "";
+export let LOGO_ESCURO = "";
+
+export function _loadVisibility(colors = FIRESTORE_DATA?.cores) {
 	if (colors?.claro && colors?.escuro) {
 		CLARO = colors.claro;
 		ESCURO = colors.escuro;
@@ -19,7 +22,7 @@ function _loadVisibility(colors = FIRESTORE_DATA?.cores) {
 	};
 }
 
-function _loadDarkMode() {
+export function _loadDarkMode() {
 	_applyMode({
 		isDark: true,
 		loadCss: true,
@@ -29,7 +32,7 @@ function _loadDarkMode() {
 	});
 }
 
-function _loadLightMode() {
+export function _loadLightMode() {
 	_applyMode({
 		isDark: false,
 		loadCss: true,
@@ -39,7 +42,7 @@ function _loadLightMode() {
 	});
 }
 
-function _loadLightModeLite() {
+export function _loadLightModeLite() {
 	_applyMode({
 		isDark: false,
 		loadCss: false,
@@ -50,7 +53,7 @@ function _loadLightModeLite() {
 }
 
 // ======= DATA-THEME TOGGLE =======
-function _applyThemeAttribute(isDark) {
+export function _applyThemeAttribute(isDark) {
 	document.documentElement.setAttribute(
 		"data-theme",
 		isDark ? "dark" : "light",
@@ -58,7 +61,7 @@ function _applyThemeAttribute(isDark) {
 }
 
 // ======= SETTERS =======
-function _loadUserVisibility() {
+export function _loadUserVisibility() {
 	const param = _getURLParam("visibility");
 
 	if (param === "dark") {
@@ -82,7 +85,7 @@ function _loadUserVisibility() {
 	_autoVisibility();
 }
 
-function _applyMode({
+export function _applyMode({
 	isDark,
 	loadCss = true,
 	barColor,
@@ -148,7 +151,7 @@ function _applyMode({
 	}
 }
 
-function _switchVisibility() {
+export function _switchVisibility() {
 	if (_isOnDarkMode()) {
 		_loadLightMode();
 	} else {
@@ -156,7 +159,7 @@ function _switchVisibility() {
 	}
 }
 
-function _autoVisibility() {
+export function _autoVisibility() {
 	let now = _getCurrentHour();
 	if (now >= 18 || now < 6) {
 		_loadDarkMode();
@@ -165,16 +168,16 @@ function _autoVisibility() {
 	}
 }
 
-function _disableScroll() {
+export function _disableScroll() {
 	document.body.style.overflow = "hidden";
 }
 
-function _enableScroll() {
+export function _enableScroll() {
 	document.body.style.overflow = "auto";
 }
 
 // ======= CHECKERS =======
-function _hasCSSRule(selector, property) {
+export function _hasCSSRule(selector, property) {
 	let styleElement = document.getElementById("custom-styles");
 
 	if (!styleElement) {
@@ -194,7 +197,7 @@ function _hasCSSRule(selector, property) {
 	return false;
 }
 
-function _isOnDarkMode() {
+export function _isOnDarkMode() {
 	const visibility = _getURLParam("visibility");
 	if (visibility) {
 		return visibility === "dark";
@@ -203,20 +206,20 @@ function _isOnDarkMode() {
 }
 
 // ======= Modal Functions =======
-function _openModal(modalID = "modal") {
+export function _openModal(modalID = "modal") {
 	_fadeIn([modalID]);
 }
 
-function _closeModal(modalID = "modal") {
+export function _closeModal(modalID = "modal") {
 	_fadeOut([modalID], "down");
 }
 
-function _isModalOpen(modalID = "modal") {
+export function _isModalOpen(modalID = "modal") {
 	return getID(modalID).style.display === "block";
 }
 
 // ======= Páginas de Editar =======
-function _loadEditModule(categoria) {
+export function _loadEditModule(categoria) {
 	const habilitado = getID(`habilitado-${categoria}`);
 	if (habilitado.checked) {
 		_showContent(categoria);
@@ -229,7 +232,7 @@ function _loadEditModule(categoria) {
 	_loadListener(categoria);
 }
 
-function _loadListener(categoria) {
+export function _loadListener(categoria) {
 	const habilitado = getID(`habilitado-${categoria}`);
 	habilitado.addEventListener("change", function () {
 		if (habilitado.checked) {
@@ -250,7 +253,7 @@ function _loadListener(categoria) {
 	});
 }
 
-function _showContent(type) {
+export function _showContent(type) {
 	const habilitadoContent = getID(`habilitado-${type}-content`);
 	habilitadoContent.style.display = "block";
 
@@ -269,7 +272,7 @@ function _showContent(type) {
 	}
 }
 
-function _hideContent(type) {
+export function _hideContent(type) {
 	const habilitadoContent = getID(`habilitado-${type}-content`);
 	habilitadoContent.style.display = "none";
 
@@ -279,7 +282,7 @@ function _hideContent(type) {
 	}
 }
 
-function _addRemoveChildListener(categoria, j, customFunction = null) {
+export function _addRemoveChildListener(categoria, j, customFunction = null) {
 	getID(`remove-${categoria}-${j}`).addEventListener("click", function () {
 		_removeChildWithValidation(categoria, j);
 		if (customFunction) {
@@ -288,7 +291,7 @@ function _addRemoveChildListener(categoria, j, customFunction = null) {
 	});
 }
 
-function _toggleFadingVisibility(id = "copy-msg") {
+export function _toggleFadingVisibility(id = "copy-msg") {
 	var div = getID(id);
 	div.classList.toggle("visible");
 	div.classList.toggle("hidden");
@@ -301,7 +304,7 @@ function _toggleFadingVisibility(id = "copy-msg") {
 	}
 }
 
-function _searchDestinosListenerAction() {
+export function _searchDestinosListenerAction() {
 	const search = getID("destinos-search").value.toLowerCase();
 
 	for (const j of _getJs("destinos-checkboxes")) {
@@ -310,7 +313,7 @@ function _searchDestinosListenerAction() {
 	}
 }
 
-function _visibilityAdd(type) {
+export function _visibilityAdd(type) {
 	const dynamicFunctionName = `_add${type}`;
 	if (typeof window[dynamicFunctionName] === "function") {
 		window[dynamicFunctionName]();
@@ -319,11 +322,11 @@ function _visibilityAdd(type) {
 	}
 }
 
-function _getVisibility(isDark = _isOnDarkMode()) {
+export function _getVisibility(isDark = _isOnDarkMode()) {
 	return isDark ? "dark" : "light";
 }
 
-function _loadExternalVisibility(external, internal) {
+export function _loadExternalVisibility(external, internal) {
 	internal = internal || _getVisibility();
 
 	if (!internal || !external || internal === external) {
@@ -340,3 +343,34 @@ function _loadExternalVisibility(external, internal) {
 		return;
 	}
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._loadVisibility = _loadVisibility;
+window._loadDarkMode = _loadDarkMode;
+window._loadLightMode = _loadLightMode;
+window._loadLightModeLite = _loadLightModeLite;
+window._applyThemeAttribute = _applyThemeAttribute;
+window._loadUserVisibility = _loadUserVisibility;
+window._applyMode = _applyMode;
+window._switchVisibility = _switchVisibility;
+window._autoVisibility = _autoVisibility;
+window._disableScroll = _disableScroll;
+window._enableScroll = _enableScroll;
+window._hasCSSRule = _hasCSSRule;
+window._isOnDarkMode = _isOnDarkMode;
+window._openModal = _openModal;
+window._closeModal = _closeModal;
+window._isModalOpen = _isModalOpen;
+window._loadEditModule = _loadEditModule;
+window._loadListener = _loadListener;
+window._showContent = _showContent;
+window._hideContent = _hideContent;
+window._addRemoveChildListener = _addRemoveChildListener;
+window._toggleFadingVisibility = _toggleFadingVisibility;
+window._searchDestinosListenerAction = _searchDestinosListenerAction;
+window._visibilityAdd = _visibilityAdd;
+window._getVisibility = _getVisibility;
+window._loadExternalVisibility = _loadExternalVisibility;
+window.CHANGED_SVGS = CHANGED_SVGS;
+window.LOGO_CLARO = LOGO_CLARO;
+window.LOGO_ESCURO = LOGO_ESCURO;

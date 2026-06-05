@@ -1,7 +1,7 @@
 const MISSING_TRANSLATIONS = new Set();
 const LANGUAGES = ["en", "pt"];
 
-function translate(key, replacements = {}, strict = true) {
+export function translate(key, replacements = {}, strict = true) {
 	if (!CONFIG?.language) return "";
 	let result = _searchObject(CONFIG.language, key, strict);
 
@@ -56,7 +56,7 @@ function translate(key, replacements = {}, strict = true) {
 	}
 }
 
-function _getUserLanguage() {
+export function _getUserLanguage() {
 	let language = localStorage.getItem("userLanguage");
 	if (!language) {
 		language = navigator.language || navigator.userLanguage;
@@ -66,14 +66,14 @@ function _getUserLanguage() {
 	return language;
 }
 
-function _getLanguagePackName() {
+export function _getLanguagePackName() {
 	let language = _getUserLanguage();
 	if (LANGUAGES.includes(language)) {
 		return language;
 	} else return "en";
 }
 
-function _updateUserLanguage(language) {
+export function _updateUserLanguage(language) {
 	const previousLang = localStorage.getItem("userLanguage");
 	localStorage.setItem("userLanguage", language);
 
@@ -82,7 +82,7 @@ function _updateUserLanguage(language) {
 	}
 }
 
-function _translatePage() {
+export function _translatePage() {
 	const elements = document.querySelectorAll("[data-translate]");
 	for (const element of elements) {
 		const key = element.getAttribute("data-translate");
@@ -97,7 +97,7 @@ function _translatePage() {
 	}
 }
 
-function _loadLangSelectorSelect() {
+export function _loadLangSelectorSelect() {
 	const langButton = document.querySelector(".lang-button");
 
 	if (!langButton) {
@@ -132,3 +132,11 @@ function _loadLangSelectorSelect() {
 		_updateUserLanguage(lang);
 	}
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window.translate = translate;
+window._getUserLanguage = _getUserLanguage;
+window._getLanguagePackName = _getLanguagePackName;
+window._updateUserLanguage = _updateUserLanguage;
+window._translatePage = _translatePage;
+window._loadLangSelectorSelect = _loadLangSelectorSelect;

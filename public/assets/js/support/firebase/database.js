@@ -1,5 +1,8 @@
-var DOCUMENT_ID;
-var ERROR_FROM_GET_REQUEST = {};
+import { _getIdFromObjectDB, _getURLParam } from "../pages/data.js";
+import { _displayError } from "../pages/messages.js";
+
+export let DOCUMENT_ID;
+export let ERROR_FROM_GET_REQUEST = {};
 
 const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
 const DATABASE_EDITABLE_DOCUMENTS = [
@@ -11,7 +14,7 @@ const DATABASE_EDITABLE_DOCUMENTS = [
 ];
 
 // Constructors
-function _buildDatabaseObject(success, message = "", data = {}) {
+export function _buildDatabaseObject(success, message = "", data = {}) {
 	return {
 		success: success,
 		data: data,
@@ -20,7 +23,7 @@ function _buildDatabaseObject(success, message = "", data = {}) {
 }
 
 // Generic Methods
-async function _get(path, treatError = true, hideWarn = false) {
+export async function _get(path, treatError = true, hideWarn = false) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
@@ -41,7 +44,7 @@ async function _get(path, treatError = true, hideWarn = false) {
 	}
 }
 
-async function _hasReadPermission(path) {
+export async function _hasReadPermission(path) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
@@ -58,7 +61,7 @@ async function _hasReadPermission(path) {
 	}
 }
 
-async function _create(collection, data, docName = "") {
+export async function _create(collection, data, docName = "") {
 	try {
 		let docRef = "";
 		if (!docName) {
@@ -84,7 +87,7 @@ async function _create(collection, data, docName = "") {
 	}
 }
 
-async function _deepCreate(path, data, docId = "") {
+export async function _deepCreate(path, data, docId = "") {
 	try {
 		let docRef;
 
@@ -111,7 +114,7 @@ async function _deepCreate(path, data, docId = "") {
 	}
 }
 
-async function _update(path, newData) {
+export async function _update(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const update = await docRef.update(newData);
@@ -129,7 +132,7 @@ async function _update(path, newData) {
 	}
 }
 
-async function _override(path, newData) {
+export async function _override(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		await docRef.set(newData, { merge: false });
@@ -146,7 +149,7 @@ async function _override(path, newData) {
 	}
 }
 
-async function _delete(path, ignoreError = false) {
+export async function _delete(path, ignoreError = false) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const deleteObj = await docRef.delete();
@@ -171,7 +174,7 @@ async function _delete(path, ignoreError = false) {
 }
 
 // Business logic functions
-function _createBatchOps() {
+export function _createBatchOps() {
 	const db = firebase.firestore();
 	const batch = db.batch();
 	const ops = [];
@@ -237,7 +240,7 @@ function _createBatchOps() {
 	};
 }
 
-async function _getSingleData(type) {
+export async function _getSingleData(type) {
 	let data;
 	try {
 		data = await _get(`${type}/${_getURLParam(type[0])}`);
@@ -260,7 +263,7 @@ async function _getSingleData(type) {
 	return data;
 }
 
-async function _getTripDataWithDestinos(tripData) {
+export async function _getTripDataWithDestinos(tripData) {
 	for (let i = 0; i < tripData?.destinos?.length; i++) {
 		let place;
 		try {
@@ -276,12 +279,12 @@ async function _getTripDataWithDestinos(tripData) {
 	return tripData;
 }
 
-async function _getSystemData() {
+export async function _getSystemData() {
 	const systemData = await _get("config/system");
 	return systemData;
 }
 
-async function _deleteUserObjectDB(id, type) {
+export async function _deleteUserObjectDB(id, type) {
 	const uid = await _getUID();
 	if (uid) {
 		const userData = await _getUserData(uid);
@@ -297,7 +300,7 @@ async function _deleteUserObjectDB(id, type) {
 	}
 }
 
-async function _deleteAccount() {
+export async function _deleteAccount() {
 	const uid = await _getUID();
 	if (uid) {
 		await _deleteAccountDocuments();
@@ -306,7 +309,7 @@ async function _deleteAccount() {
 	}
 }
 
-async function _deleteAccountDocuments() {
+export async function _deleteAccountDocuments() {
 	const uid = await _getUID();
 	const userData = await _getUserData(uid);
 
@@ -392,7 +395,7 @@ async function _deleteAccountDocuments() {
 	await Promise.allSettled(deleteOps);
 }
 
-async function _addToUserArray(type, value) {
+export async function _addToUserArray(type, value) {
 	const uid = await _getUID();
 	if (uid) {
 		const userDoc = await _get(`usuarios/${uid}`);
@@ -412,7 +415,7 @@ async function _addToUserArray(type, value) {
 	}
 }
 
-async function _newUserObjectDB(object, type) {
+export async function _newUserObjectDB(object, type) {
 	if (await _getUID()) {
 		const result = await _create(type, object);
 		console.log(`Document created in ${type}:`);
@@ -425,7 +428,7 @@ async function _newUserObjectDB(object, type) {
 	} else return translate("messages.unauthenticated");
 }
 
-async function _getPermissoes() {
+export async function _getPermissoes() {
 	// Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
 	const uid = await _getUID();
 	if (uid) {
@@ -434,7 +437,7 @@ async function _getPermissoes() {
 	}
 }
 
-async function _getDestination(id, containerID) {
+export async function _getDestination(id, containerID) {
 	if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
 
 	let content, preloader, isAlreadyLoading;
@@ -466,6 +469,30 @@ async function _getDestination(id, containerID) {
 }
 
 // Helpers (Not database related)
-function _haveErrorFromGetRequest() {
+export function _haveErrorFromGetRequest() {
 	return Object.keys(ERROR_FROM_GET_REQUEST).length > 0;
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window.DOCUMENT_ID = DOCUMENT_ID;
+window.ERROR_FROM_GET_REQUEST = ERROR_FROM_GET_REQUEST;
+window._buildDatabaseObject = _buildDatabaseObject;
+window._get = _get;
+window._hasReadPermission = _hasReadPermission;
+window._create = _create;
+window._deepCreate = _deepCreate;
+window._update = _update;
+window._override = _override;
+window._delete = _delete;
+window._createBatchOps = _createBatchOps;
+window._getSingleData = _getSingleData;
+window._getTripDataWithDestinos = _getTripDataWithDestinos;
+window._getSystemData = _getSystemData;
+window._deleteUserObjectDB = _deleteUserObjectDB;
+window._deleteAccount = _deleteAccount;
+window._deleteAccountDocuments = _deleteAccountDocuments;
+window._addToUserArray = _addToUserArray;
+window._newUserObjectDB = _newUserObjectDB;
+window._getPermissoes = _getPermissoes;
+window._getDestination = _getDestination;
+window._haveErrorFromGetRequest = _haveErrorFromGetRequest;

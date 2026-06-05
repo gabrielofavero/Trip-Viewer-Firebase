@@ -1,13 +1,15 @@
-var IMAGE_UPLOAD_STATUS = {
+import { _codifyText } from "../pages/data.js";
+
+export let IMAGE_UPLOAD_STATUS = {
 	hasErrors: false,
 	messages: {},
 };
 
-var UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
-var PERMISSOES;
-var IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-enable image uploads
+export let UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
+export let PERMISSOES;
+export let IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-enable image uploads
 
-async function _uploadImage(path, file) {
+export async function _uploadImage(path, file) {
 	let result = {
 		nome: null,
 		link: null,
@@ -41,7 +43,7 @@ async function _uploadImage(path, file) {
 	return result;
 }
 
-async function _uploadImages(type, files) {
+export async function _uploadImages(type, files) {
 	const results = [];
 	for (const file of files) {
 		const upload = await _uploadImage(`${type}/${DOCUMENT_ID}`, file);
@@ -52,7 +54,7 @@ async function _uploadImages(type, files) {
 	return results;
 }
 
-async function _deleteUnusedImages(path, documentLinks) {
+export async function _deleteUnusedImages(path, documentLinks) {
 	const storageLinks = await _getAllImageUrls(path);
 	for (const link of storageLinks) {
 		if (!documentLinks.includes(link)) {
@@ -61,7 +63,7 @@ async function _deleteUnusedImages(path, documentLinks) {
 	}
 }
 
-async function _deleteImage(path) {
+export async function _deleteImage(path) {
 	try {
 		if (!path) return;
 		const storageRef = firebase.storage().ref();
@@ -74,7 +76,7 @@ async function _deleteImage(path) {
 	}
 }
 
-async function _deleteImageByLink(link) {
+export async function _deleteImageByLink(link) {
 	const path = _getImagePathFromLink(link);
 	if (!path) {
 		console.error("URL path could not be extracted from the link:", link);
@@ -90,7 +92,7 @@ async function _deleteImageByLink(link) {
 	}
 }
 
-function _getImagePathFromLink(link) {
+export function _getImagePathFromLink(link) {
 	try {
 		const match = link.match(/\/o\/(.*?)\?/);
 		if (!match || !match[1]) return null;
@@ -101,7 +103,7 @@ function _getImagePathFromLink(link) {
 	}
 }
 
-async function _deleteUserObjectStorage() {
+export async function _deleteUserObjectStorage() {
 	const paths = [];
 	const addPathIfExists = (path) => {
 		if (path) {
@@ -130,7 +132,7 @@ async function _deleteUserObjectStorage() {
 	}
 }
 
-function _checkFileSize(fileInput, type) {
+export function _checkFileSize(fileInput, type) {
 	const file = fileInput.files[0];
 
 	if (
@@ -144,7 +146,7 @@ function _checkFileSize(fileInput, type) {
 	}
 }
 
-function _loadImageSelector(type) {
+export function _loadImageSelector(type) {
 	const checkboxLink = getID(`enable-link-${type}`);
 	const checkboxUpload = getID(`enable-upload-${type}`);
 	const checkboxGroup = getID(`upload-checkbox-${type}`);
@@ -189,7 +191,7 @@ function _loadImageSelector(type) {
 	}
 }
 
-function _removeImageSelectorListeners(type) {
+export function _removeImageSelectorListeners(type) {
 	const checkboxLink = getID(`enable-link-${type}`);
 	const checkboxUpload = getID(`enable-upload-${type}`);
 
@@ -216,7 +218,7 @@ function _removeImageSelectorListeners(type) {
 	});
 }
 
-function _loadLogoSelector() {
+export function _loadLogoSelector() {
 	const checkboxLink = getID(`enable-link-logo`);
 	const checkboxUpload = getID(`enable-upload-logo`);
 
@@ -287,7 +289,7 @@ function _loadLogoSelector() {
 	}
 }
 
-function _getLastDir(path) {
+export function _getLastDir(path) {
 	if (path && typeof path === "string") {
 		const splitPath = path.split("/");
 		if (splitPath.length > 0) {
@@ -297,7 +299,7 @@ function _getLastDir(path) {
 	return translate("messages.errors.unknown_directory");
 }
 
-function _getStorageErrorMessage(error) {
+export function _getStorageErrorMessage(error) {
 	if (error.code == "storage/unauthorized") {
 		return translate("messages.errors.no_upload_permission");
 	} else {
@@ -305,7 +307,7 @@ function _getStorageErrorMessage(error) {
 	}
 }
 
-async function _getAllImageUrls(path) {
+export async function _getAllImageUrls(path) {
 	const storageRef = firebase.storage().ref(path);
 
 	try {
@@ -322,3 +324,23 @@ async function _getAllImageUrls(path) {
 		return [];
 	}
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window.IMAGE_UPLOAD_STATUS = IMAGE_UPLOAD_STATUS;
+window.UPLOAD_SIZE = UPLOAD_SIZE;
+window.PERMISSOES = PERMISSOES;
+window.IMAGE_UPLOAD_ENABLED = IMAGE_UPLOAD_ENABLED;
+window._uploadImage = _uploadImage;
+window._uploadImages = _uploadImages;
+window._deleteUnusedImages = _deleteUnusedImages;
+window._deleteImage = _deleteImage;
+window._deleteImageByLink = _deleteImageByLink;
+window._getImagePathFromLink = _getImagePathFromLink;
+window._deleteUserObjectStorage = _deleteUserObjectStorage;
+window._checkFileSize = _checkFileSize;
+window._loadImageSelector = _loadImageSelector;
+window._removeImageSelectorListeners = _removeImageSelectorListeners;
+window._loadLogoSelector = _loadLogoSelector;
+window._getLastDir = _getLastDir;
+window._getStorageErrorMessage = _getStorageErrorMessage;
+window._getAllImageUrls = _getAllImageUrls;
