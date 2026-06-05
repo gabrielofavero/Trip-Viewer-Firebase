@@ -1,0 +1,87 @@
+/*--------------------------------------------------------------
+# Custom Select
+--------------------------------------------------------------*/
+
+/* Custom Select: Base */
+.custom-select {
+	transition: all ease-in-out 0.3s;
+	width: 600px;
+	color: #4f5051;
+	margin: auto;
+	margin-bottom: 42px;
+	text-align: center;
+	font-weight: bold;
+	user-select: none;
+	border: 0.5px solid var(--table-border);
+	border-radius: 4px;
+	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+	background: #fff;
+	position: relative;
+}
+
+.custom-select .container {
+	position: relative;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	cursor: pointer;
+	height: 50px;
+	width: 100%;
+}
+
+.custom-select .title {
+	flex: 1;
+	text-align: center;
+	pointer-events: none;
+}
+
+.custom-select .chevron {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%) rotate(180deg);
+	transition: transform 0.3s ease;
+	pointer-events: none;
+}
+
+.custom-select.opened .container .chevron {
+	transform: translateY(-50%) rotate(0deg);
+}
+
+.custom-select .dropdown {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #fff;
+	border: 0.5px solid var(--table-border);
+	border-radius: 4px;
+	z-index: 1000;
+	width: 100%;
+}
+
+.custom-select .dropdown .option {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.custom-select .dropdown .option:hover {
+	background: #f6f6f6;
+}
+
+@media only screen and (max-device-width: 480px) {
+	.custom-select {
+		text-align-last: center;
+		text-align: center;
+	}
+}
+
+@media (max-width: 767px) {
+	.custom-select {
+		width: 100%;
+	}
+}

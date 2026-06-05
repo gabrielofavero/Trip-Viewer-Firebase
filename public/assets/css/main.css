@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------
-# Main CSS — imports all shared base styles
+# Main CSS — imports all shared base & component styles
 --------------------------------------------------------------*/
 @import 'base/variables.css';
 @import 'base/reset.css';
@@ -7,3 +7,11 @@
 @import 'base/preloader.css';
 @import 'base/layout.css';
 @import 'base/dark-mode.css';
+
+/* Components */
+@import 'components/accordion.css';
+@import 'components/modal.css';
+@import 'components/custom-select.css';
+@import 'components/toast.css';
+@import 'components/sensitive-box.css';
+@import 'components/swiper-overrides.css';

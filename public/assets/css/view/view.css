@@ -52,51 +52,6 @@
 	color: #6fa8dc;
 }
 
-.swiper-controls {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-	bottom: 10px;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 10;
-	min-width: max-content;
-	gap: 200px;
-}
-
-.swiper-pagination {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: static !important;
-	/* Keeps pagination inside flex container */
-	width: auto !important;
-	/* Let it adapt dynamically */
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-	position: static !important;
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: #4f5051;
-	font-size: 18px;
-	cursor: pointer;
-	flex-shrink: 0;
-	/* Prevents resizing */
-}
-
-.swiper-button-prev::after,
-.swiper-button-next::after {
-	font-size: 16px;
-}
-
 #programacao-hoje:hover {
 	background-color: rgba(78, 79, 80, 0.03);
 }
@@ -121,11 +76,6 @@
 		width: auto;
 		margin-left: auto;
 		margin-right: auto;
-	}
-
-	.swiper-button-prev,
-	.swiper-button-next {
-		display: none;
 	}
 
 	.header-text {
@@ -1034,33 +984,6 @@ section {
 	width: 100%;
 }
 
-.portfolio-details .portfolio-details-slider .swiper-pagination {
-	margin-top: 20px;
-	position: relative;
-}
-
-.portfolio-details
-	.portfolio-details-slider
-	.swiper-pagination
-	.swiper-pagination-bullet {
-	width: 12px;
-	height: 12px;
-	background-color: #fff;
-	opacity: 1;
-	border: 1px solid var(--theme-color);
-}
-
-.portfolio-details
-	.portfolio-details-slider
-	.swiper-pagination
-	.swiper-pagination-bullet-active {
-	background-color: var(--theme-color);
-}
-
-.swiper-pagination-bullet-active {
-	background-color: var(--theme-color);
-}
-
 .portfolio-details .portfolio-info {
 	padding: 30px;
 	box-shadow: 0px 0 30px rgba(69, 80, 91, 0.08);
@@ -1357,23 +1280,6 @@ section {
 	font-style: italic;
 	margin: 0 auto 15px auto;
 	width: 80%;
-}
-
-.testimonials .swiper-pagination {
-	margin-top: 20px;
-	position: relative;
-}
-
-.testimonials .swiper-pagination .swiper-pagination-bullet {
-	width: 12px;
-	height: 12px;
-	background-color: #fff;
-	opacity: 1;
-	border: 1px solid var(--theme-color);
-}
-
-.testimonials .swiper-pagination .swiper-pagination-bullet-active {
-	background-color: var(--theme-color);
 }
 
 @media (min-width: 992px) {
@@ -1908,34 +1814,10 @@ iframe {
 }
 
 /*--------------------------------------------------------------
-# Messages container
+# Messages container (page-specific overrides)
 --------------------------------------------------------------*/
 
-.message-container,
-.programacao-container,
-.destinos-container,
-.input-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 450px;
-	height: auto;
-	background: #fff;
-	border-radius: 10px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 30px;
-	overflow-wrap: break-word;
-}
-
-.message-container,
-.programacao-container {
-	text-align: center;
-}
-
+/* Page-specific container extensions */
 .programacao-container,
 .destinos-container {
 	padding: 20px;
@@ -1950,29 +1832,15 @@ iframe {
 	}
 }
 
-.message-text-container {
-	width: 100%;
-	font-size: 18px;
-	line-height: 1.5;
-}
-
-.message-title {
-	font-size: 24px;
-	font-weight: 700;
-	margin-bottom: 20px;
-}
-
+/* Page-specific error message styling */
 .error-message {
-	margin-top: 10px;
 	font-size: 18px;
 	color: #666;
 }
 
 @media (max-width: 520px) {
-	.message-container,
 	.programacao-container,
-	.destinos-container,
-	.input-container {
+	.destinos-container {
 		width: 90%;
 		height: auto;
 	}
@@ -2027,46 +1895,6 @@ iframe {
 .mobile-nav-toggle:hover,
 .custom-nav-toggle:hover {
 	color: #7a7a7a;
-}
-
-.modal {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(255, 255, 255, 0.8);
-}
-
-.modal-content {
-	position: absolute;
-	width: 500px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #fff;
-	padding: 20px;
-	text-align: center;
-}
-
-.modal-text {
-	height: auto;
-	margin-bottom: 20px;
-}
-
-.button-box {
-	text-align: center;
-}
-
-.button-box-right {
-	text-align: right;
-}
-
-@media (max-width: 600px) {
-	.modal-content {
-		width: 90%;
-	}
 }
 
 .btn-format {
@@ -2248,10 +2076,6 @@ iframe {
 	.right-text {
 		order: 3;
 	}
-}
-
-.swiper-wrapper {
-	padding-bottom: 45px;
 }
 
 .transporte-categoria {
@@ -2625,52 +2449,6 @@ iframe {
 }
 
 /*--------------------------------------------------------------
-# Toast
---------------------------------------------------------------*/
-
-#toast {
-	position: fixed;
-	bottom: 16px;
-	left: 50%;
-	transform: translateX(-50%);
-	min-width: 300px;
-	width: auto;
-	background-color: var(--theme-color);
-	color: white;
-	text-align: center;
-	padding: 10px;
-	font-size: 16px;
-	box-sizing: border-box;
-	text-decoration: bold;
-	display: flex;
-	align-items: center;
-	word-wrap: break-word;
-	word-break: break-word;
-	white-space: normal;
-	padding: 10px 40px 10px 10px;
-	/* Espaço extra para o botão de fechar */
-}
-
-#toast-text {
-	flex-grow: 1;
-}
-
-.toast-close {
-	position: absolute;
-	top: 50%;
-	right: 10px;
-	transform: translateY(-50%);
-	cursor: pointer;
-}
-
-@media (max-width: 430px) {
-	#toast {
-		bottom: 4em;
-		min-width: 80%;
-	}
-}
-
-/*--------------------------------------------------------------
 # Tabs
 --------------------------------------------------------------*/
 
@@ -2828,90 +2606,6 @@ input[type="radio"] {
 	background: #f5f5f5;
 }
 
-/* Custom Select: Base */
-.custom-select {
-	transition: all ease-in-out 0.3s;
-	width: 600px;
-	color: #4f5051;
-	margin: auto;
-	margin-bottom: 42px;
-	text-align: center;
-	font-weight: bold;
-	user-select: none;
-	border: 0.5px solid var(--table-border);
-	border-radius: 4px;
-	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
-	background: #fff;
-	position: relative;
-}
-
-.custom-select .container {
-	position: relative;
-	font-size: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	cursor: pointer;
-	height: 50px;
-	width: 100%;
-}
-
-.custom-select .title {
-	flex: 1;
-	text-align: center;
-	pointer-events: none;
-}
-
-.custom-select .chevron {
-	position: absolute;
-	right: 12px;
-	top: 50%;
-	transform: translateY(-50%) rotate(180deg);
-	transition: transform 0.3s ease;
-	pointer-events: none;
-}
-
-.custom-select.opened .container .chevron {
-	transform: translateY(-50%) rotate(0deg);
-}
-
-.custom-select .dropdown {
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	transform: translateX(-50%);
-	background: #fff;
-	border: 0.5px solid var(--table-border);
-	border-radius: 4px;
-	z-index: 1000;
-	width: 100%;
-}
-
-.custom-select .dropdown .option {
-	height: 50px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.custom-select .dropdown .option:hover {
-	background: #f6f6f6;
-}
-
-@media only screen and (max-device-width: 480px) {
-	.custom-select {
-		text-align-last: center;
-		text-align: center;
-	}
-}
-
-@media (max-width: 767px) {
-	.custom-select {
-		width: 100%;
-	}
-}
-
 /* Travelers Checkboxes */
 #innner-programacao-travelers-checkboxes {
 	margin: 12px 0 14px 0;
@@ -2978,59 +2672,4 @@ input[type="radio"] {
 	color: var(--nf-input-placeholder-color);
 }
 
-/* Blocked Reservation Container */
-
-.sensitive-box {
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	padding: 6px 12px;
-	background: #f6f6f6;
-	border: 1px solid #d7d7d7;
-	border-radius: 12px;
-	font-size: 16px;
-}
-
-.sensitive-box .code-wrapper {
-	display: inline-flex;
-	align-items: center;
-	white-space: nowrap;
-	transition: width 0.25s ease;
-	padding-right: 0.6ch;
-}
-
-.sensitive-box .code-text {
-	font-weight: 600;
-	line-height: 1;
-}
-
-.sensitive-box .masked {
-	color: var(--font-color);
-	letter-spacing: 0.15em;
-	pointer-events: none;
-}
-
-.sensitive-box .toggle-eye {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 4px;
-	background: none;
-	border: none;
-	cursor: pointer;
-}
-
-.sensitive-box .eye-icon {
-	width: 17px;
-	height: 17px;
-	color: var(--font-color);
-}
-
-.sensitive-box .code-text a {
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.sensitive-box .code-text a:hover {
-	text-decoration: none;
-}
+/* Blocked Reservation Container — shared base in components/sensitive-box.css */

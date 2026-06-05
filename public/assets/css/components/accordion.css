@@ -1,0 +1,44 @@
+/*--------------------------------------------------------------
+# Accordion
+--------------------------------------------------------------*/
+
+/* Shared accordion structural styles */
+
+.accordion-item {
+	background-color: #fff;
+}
+
+.accordion-item.dragging {
+	opacity: 0.5;
+}
+
+.accordion-header {
+	background-color: #f1f1f1;
+	color: #1f2937;
+	border-radius: 0.75rem;
+}
+
+.accordion-body {
+	background-color: #fff;
+	color: #1f2937;
+}
+
+.accordion-button[aria-expanded="false"] {
+	background-color: #f1f1f1;
+	color: #1f2937;
+}
+
+.accordion-button[aria-expanded="true"] {
+	background-color: #f1f1f1;
+	color: #1f2937;
+}
+
+.accordion-button:focus,
+.purple:focus,
+.btn:focus {
+	box-shadow: 0 0 0 0.3rem rgba(88, 89, 167, 0.25);
+}
+
+.accordion-button::after {
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}

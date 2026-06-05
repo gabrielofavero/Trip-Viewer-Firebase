@@ -364,55 +364,7 @@ section {
 	color: #fff;
 }
 
-/*--------------------------------------------------------------
-# Botões
---------------------------------------------------------------*/
-
-.message-container,
-.input-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 450px;
-	height: auto;
-	background: #fff;
-	border-radius: 10px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 30px;
-	overflow-wrap: break-word;
-}
-
-.message-container {
-	text-align: center;
-}
-
-.message-text-container {
-	width: 100%;
-	font-size: 18px;
-	line-height: 1.5;
-}
-
-.message-title {
-	font-size: 24px;
-	font-weight: 700;
-	margin-bottom: 20px;
-}
-
-.error-message {
-	margin-top: 10px;
-}
-
-@media (max-width: 520px) {
-	.message-container,
-	.input-container {
-		width: 90%;
-		height: auto;
-	}
-}
+/* Message containers — shared base in components/modal.css */
 
 /*--------------------------------------------------------------
 # Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)

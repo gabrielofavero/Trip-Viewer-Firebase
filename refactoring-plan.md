@@ -1179,8 +1179,8 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P2 | Rename CSS Folders to EN-US | ✅ Done |
 | P3 | Update Script/CSS Paths in HTML | ✅ Done |
 | P4 | Rename CSS Files Themselves | ✅ Done |
-| P5 | Extract Shared CSS into base/ | ☐ Pending |
-| P6 | Extract Shared Component CSS | ☐ Pending |
+| P5 | Extract Shared CSS into base/ | ✅ Done |
+| P6 | Extract Shared Component CSS | ✅ Done |
 | P7 | Clean Unused CSS Properties | ☐ Pending |
 | P8 | Single Dark Mode System | ☐ Pending |
 | P9 | Convert Utility Files to ES Modules | ☐ Pending |
