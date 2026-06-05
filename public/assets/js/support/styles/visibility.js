@@ -49,16 +49,12 @@ function _loadLightModeLite() {
 	});
 }
 
-// ======= GETTERS =======
-function _getCssHref(name, dark = false) {
-	const darkMode = dark ? "-dark" : "";
-	const editar = ["editar-viagem", "editar-destino", "editar-listagem"];
-
-	if (editar.includes(name)) {
-		return `../assets/css/editar/editar${darkMode}.css`;
-	} else {
-		return `assets/css/${name}/${name}${darkMode}.css`;
-	}
+// ======= DATA-THEME TOGGLE =======
+function _applyThemeAttribute(isDark) {
+	document.documentElement.setAttribute(
+		"data-theme",
+		isDark ? "dark" : "light",
+	);
 }
 
 // ======= SETTERS =======
@@ -105,9 +101,7 @@ function _applyMode({
 	THEME_COLOR_SECONDARY = secondary.main;
 	THEME_COLOR_SECONDARY_HOVER = secondary.hover;
 
-	if (loadCss) {
-		_appendCss(_getHTMLpage(), isDark);
-	}
+	_applyThemeAttribute(isDark);
 
 	_loadToggle(isDark);
 	_changeBarColorIOS(barColor);
@@ -119,19 +113,6 @@ function _applyMode({
 	_applyCustomVisibilityRules();
 
 	// Helpers
-	function _appendCss(page, isDark) {
-		let link = document.getElementById("theme-css");
-
-		if (!link) {
-			link = document.createElement("link");
-			link.id = "theme-css";
-			link.rel = "stylesheet";
-			document.head.appendChild(link);
-		}
-
-		link.href = _getCssHref(page, isDark);
-	}
-
 	function _loadTripViewerLogo() {
 		const isDark = _isOnDarkMode();
 		getID("logo-light").style.display = isDark ? "none" : "block";

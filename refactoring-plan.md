@@ -1,7 +1,7 @@
 # 🔄 E034: Frontend Code Refactoring — Master Plan
 
 > **Status:** Planning
-> **Last updated:** 2026-06-04 (P3 complete)
+> **Last updated:** 2026-06-04 (P8 complete)
 > **Goal:** Transform a legacy jQuery/Bootstrap vanilla-JS app into a maintainable, modular frontend with clear separation of concerns — while keeping everything as static HTML+JS+CSS (no React/Angular/Vue).
 
 ---
@@ -1182,7 +1182,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P5  | Extract Shared CSS into base/               | ✅ Done    |
 | P6  | Extract Shared Component CSS                | ✅ Done    |
 | P7  | Clean Unused CSS Properties                 | ✅ Done    |
-| P8  | Single Dark Mode System                     | ☐ Pending |
+| P8  | Single Dark Mode System                     | ✅ Done    |
 | P9  | Convert Utility Files to ES Modules         | ☐ Pending |
 | P10 | Convert Component Files to ES Modules       | ☐ Pending |
 | P11 | Convert Firebase Services to ES Modules     | ☐ Pending |
