@@ -1,0 +1,9 @@
+/*--------------------------------------------------------------
+# Main CSS — imports all shared base styles
+--------------------------------------------------------------*/
+@import 'base/variables.css';
+@import 'base/reset.css';
+@import 'base/fonts.css';
+@import 'base/preloader.css';
+@import 'base/layout.css';
+@import 'base/dark-mode.css';

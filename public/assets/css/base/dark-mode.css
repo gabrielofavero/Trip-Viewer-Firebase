@@ -1,0 +1,85 @@
+/*--------------------------------------------------------------
+# Dark Mode — Shared Overrides
+# These apply the most common dark styles across all pages.
+# Page-specific dark overrides remain in each page's *-dark.css file.
+--------------------------------------------------------------*/
+[data-theme="dark"] {
+	/* === General === */
+	--theme-color: #7f75b6;
+	--theme-color-rgb: 127, 117, 182;
+	--theme-secondary: #9b91d4;
+	--theme-color-hover: #7367b4;
+	--theme-color-secondary: #494852;
+	--bg-primary: #1c1c1e;
+	--bg-secondary: #2c2c2e;
+	--bg-tertiary: #3a3a3c;
+	--text-primary: #f2f2f2;
+	--text-secondary: #c7c6c6;
+	--text-muted: #8e8e93;
+	--font-color: #e2e2e2;
+	--border-color: #38383a;
+	--box-color: #404040;
+	--box-color-hover: #444444;
+	--subtitle: #e3ecf8;
+	--a-color: #92caff;
+	--a-color-hover: #acd7ff;
+	--table-border: #414040;
+	--text-color: #e2e2e2;
+	--shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+	--shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+	--shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
+	--shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+[data-theme="dark"] body {
+	color: var(--text-primary);
+	background: var(--bg-primary);
+}
+
+[data-theme="dark"] strong {
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] a {
+	color: var(--a-color);
+}
+
+[data-theme="dark"] a:hover {
+	color: var(--a-color-hover);
+}
+
+/* === Preloader === */
+[data-theme="dark"] #preloader {
+	background: #303030;
+}
+
+[data-theme="dark"] #preloader:before {
+	border: 6px solid #7f75b9;
+	border-top-color: #404040;
+	border-bottom-color: #404040;
+}
+
+/* === Top Bar === */
+[data-theme="dark"] .top-bar {
+	background: rgba(28,28,30,0.85);
+	backdrop-filter: blur(20px) saturate(180%);
+	-webkit-backdrop-filter: blur(20px) saturate(180%);
+	border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] #trip-viewer-text {
+	color: var(--theme-color);
+}
+
+[data-theme="dark"] #menu {
+	color: var(--text-color);
+}
+
+/* === Back to top === */
+[data-theme="dark"] .back-to-top {
+	background: var(--theme-color);
+}
+
+[data-theme="dark"] .back-to-top i {
+	color: var(--bg-primary);
+}

@@ -1,0 +1,37 @@
+/*--------------------------------------------------------------
+# Variables
+--------------------------------------------------------------*/
+:root {
+	--theme-color: #5859a7;
+	--theme-color-rgb: 88, 89, 167;
+	--theme-secondary: #7f75b6;
+	--theme-color-hover: #505197;
+	--theme-color-secondary: #d5d6e9;
+	--theme-color-secondary-hover: #e9e9ed;
+	--bg-primary: #ffffff;
+	--bg-secondary: #f7f8f9;
+	--bg-tertiary: #f0f0f5;
+	--text-primary: #1a1a2e;
+	--text-secondary: #4f5051;
+	--text-muted: #8a8a8e;
+	--font-color: #272829;
+	--border-color: #e5e5ea;
+	--box-color: #f1f1f1;
+	--box-color-hover: rgb(236, 235, 235);
+	--subtitle: #4b5563;
+	--a-color: #3d85c6;
+	--a-color-hover: #6fa8dc;
+	--table-border: #d9d9d9;
+	--text-color: #272829;
+	--shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+	--shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+	--shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+	--shadow-xl: 0 20px 60px rgba(0,0,0,0.18);
+	--radius-sm: 8px;
+	--radius-md: 12px;
+	--radius-lg: 16px;
+	--radius-xl: 24px;
+	--transition-fast: 0.15s ease;
+	--transition-normal: 0.25s ease;
+	--transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

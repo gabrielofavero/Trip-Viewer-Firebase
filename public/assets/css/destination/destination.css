@@ -1,68 +1,6 @@
-:root {
-	--theme-color: #5859a7;
-	--theme-color-secondary: #d5d6e9;
-	--theme-color-secondary-hover: #e9e9ed;
-	--font-color: #272829;
-	--box-color: #f1f1f1;
-	--box-color-hover: rgb(236, 235, 235);
-	--border-color: #ccc;
-	--background-color: #ffffff;
-}
-
-@font-face {
-	font-family: "Chelos";
-	src: url("../../fonts/Chelos\ Free.ttf") format("truetype");
-}
-
-body {
-	font-family: "Open Sans", sans-serif;
-	color: var(--font-color);
-	background: #fff;
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-	transition: all 0.3s;
-	padding-top: env(safe-area-inset-top);
-}
-
-strong {
-	color: #3a3838;
-}
-
-a,
-.link {
-	color: #3d85c6;
-	text-decoration: none;
-}
-
-a:hover,
-.link:hover {
-	color: #195b96;
-	text-decoration: none;
-}
-
-.link {
-	cursor: pointer;
-	font-size: 25px;
-}
-
-.links-container {
-	display: flex;
-	margin-top: 4.5px;
-}
-
-.links-container .iconify {
-	margin-left: 8px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.destinos-select {
-	font-family: "Raleway", sans-serif;
-}
+/*--------------------------------------------------------------
+# Destination Page Styles
+--------------------------------------------------------------*/
 
 section {
 	padding: 60px 0;
@@ -422,44 +360,6 @@ h1::after {
  * Mobile Navigation
  */
 
-.top-bar {
-	position: fixed;
-	background-color: var(--background-color);
-	width: 100%;
-	height: 60px;
-	border-bottom: 0.5px solid #d9d9d9;
-	z-index: 999;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.logo-box {
-	display: flex;
-	align-items: center;
-}
-
-#logo-light,
-#logo-dark {
-	height: 25px;
-	margin-left: 20px;
-}
-
-#trip-viewer-text {
-	font-size: 30px;
-	margin-top: 10px;
-	margin-left: 7px;
-	font-family: Chelos;
-	color: var(--theme-color);
-}
-
-.logo-link {
-	text-decoration: none;
-	color: inherit;
-	display: flex;
-	align-items: center;
-}
-
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -535,20 +435,6 @@ h1::after {
 .pessoa-img {
 	width: 36px;
 	height: 36px;
-}
-
-.icons-box {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.icon-buttons {
-	cursor: pointer;
-	width: 30px;
-	height: 30px;
-	font-size: 30px;
-	margin: 0 7px 0 7px;
 }
 
 .accordion-item,
