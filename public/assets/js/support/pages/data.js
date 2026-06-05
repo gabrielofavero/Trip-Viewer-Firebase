@@ -1,30 +1,21 @@
-var CALL_SYNC = [];
-var FIRESTORE_DATA;
-
-var SHEET_DATA;
-var P_DATA;
-var HYPERLINK;
-
-var CONFIG;
-
 // Text Utils
-function _firstCharToUpperCase(str) {
+export function _firstCharToUpperCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function _codifyText(inputString) {
+export function _codifyText(inputString) {
 	let lowercaseString = inputString.toLowerCase();
 	let validFolderName = lowercaseString.replace(/[^a-z0-9_]/g, "");
 	return validFolderName;
 }
 
-function _uncodifyText(inputString) {
+export function _uncodifyText(inputString) {
 	return inputString
 		.replace(/_/g, " ")
 		.replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
-function _getRandomID({ idLength = 5, pool = [] } = {}) {
+export function _getRandomID({ idLength = 5, pool = [] } = {}) {
 	const characters =
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	const array = new Uint32Array(idLength);
@@ -39,11 +30,11 @@ function _getRandomID({ idLength = 5, pool = [] } = {}) {
 	return pool.includes(randomId) ? _getRandomID({ idLength, pool }) : randomId;
 }
 
-function _getEmptyChar() {
+export function _getEmptyChar() {
 	return "\u200B";
 }
 
-function _getLastUpdatedOnText(date) {
+export function _getLastUpdatedOnText(date) {
 	if (typeof date === "string") {
 		date = new Date(date);
 	}
@@ -52,15 +43,15 @@ function _getLastUpdatedOnText(date) {
 }
 
 // Object Utils
-function _isObject(obj) {
+export function _isObject(obj) {
 	return obj === Object(obj);
 }
 
-function _objectExistsAndHasKeys(obj) {
+export function _objectExistsAndHasKeys(obj) {
 	return _isObject(obj) && obj && Object.keys(obj).length > 0;
 }
 
-function _getIdFromObjectDB(dbObject) {
+export function _getIdFromObjectDB(dbObject) {
 	try {
 		const segments = dbObject.data._delegate._key.path.segments;
 		return segments[segments.length - 1];
@@ -70,7 +61,7 @@ function _getIdFromObjectDB(dbObject) {
 	}
 }
 
-function _printObjectHTML(obj) {
+export function _printObjectHTML(obj) {
 	var str = "<br>";
 	for (var key in obj) {
 		if (obj.hasOwnProperty(key)) {
@@ -81,11 +72,11 @@ function _printObjectHTML(obj) {
 	return str;
 }
 
-function _cloneObject(object) {
+export function _cloneObject(object) {
 	return JSON.parse(JSON.stringify(object));
 }
 
-function _getLocalJSON() {
+export function _getLocalJSON() {
 	return new Promise((resolve, reject) => {
 		const input = document.createElement("input");
 		input.type = "file";
@@ -116,7 +107,7 @@ function _getLocalJSON() {
 	});
 }
 
-function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
+export function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
 	return _deepObjectsEqual(obj1, obj2, "", new Set(ignoredPaths));
 
 	function _deepObjectsEqual(val1, val2, path, ignored) {
@@ -146,7 +137,7 @@ function _areObjectsEqual(obj1, obj2, ignoredPaths = []) {
 	}
 }
 
-function _getObjectDiff({ obj1, obj2, ignoredPaths = [], name = "Object" }) {
+export function _getObjectDiff({ obj1, obj2, ignoredPaths = [], name = "Object" }) {
 	const differences = [];
 	const ignored = new Set(ignoredPaths);
 
@@ -159,7 +150,7 @@ function _getObjectDiff({ obj1, obj2, ignoredPaths = [], name = "Object" }) {
 	};
 }
 
-function _collectObjectDiffs(val1, val2, path, ignored, diffs) {
+export function _collectObjectDiffs(val1, val2, path, ignored, diffs) {
 	if (ignored.has(path)) return;
 
 	if (val1 === val2) return;
@@ -187,7 +178,7 @@ function _collectObjectDiffs(val1, val2, path, ignored, diffs) {
 }
 
 // Array Utils
-function _getReadableArray(arr) {
+export function _getReadableArray(arr) {
 	if (arr.length <= 1) return arr[0] ?? "";
 	const andLabel = translate("labels.and");
 	const last = arr.pop();
@@ -195,7 +186,7 @@ function _getReadableArray(arr) {
 }
 
 // Element Utils
-function _getChildIDs(parentId) {
+export function _getChildIDs(parentId) {
 	var parentElement = getID(parentId);
 
 	if (parentElement) {
@@ -215,21 +206,21 @@ function _getChildIDs(parentId) {
 	}
 }
 
-function _setRequired(id) {
+export function _setRequired(id) {
 	const div = getID(id);
 	if (div) {
 		div.setAttribute("required", "");
 	}
 }
 
-function _removeRequired(id) {
+export function _removeRequired(id) {
 	const div = getID(id);
 	if (div) {
 		div.removeAttribute("required");
 	}
 }
 
-function _getOptionsFromSelect(id) {
+export function _getOptionsFromSelect(id) {
 	const selectElement = getID(id);
 	let optionValues = [];
 
@@ -239,12 +230,12 @@ function _getOptionsFromSelect(id) {
 	return optionValues;
 }
 
-function _removeChild(tipo) {
+export function _removeChild(tipo) {
 	const div = getID(tipo);
 	div.parentNode.removeChild(div);
 }
 
-function _removeChildWithValidation(categoria, j) {
+export function _removeChildWithValidation(categoria, j) {
 	const id = getID(`${categoria}-inner-box-${j}`)
 		? `${categoria}-inner-box-${j}`
 		: `${categoria}-${j}`;
@@ -252,14 +243,14 @@ function _removeChildWithValidation(categoria, j) {
 	_hideParentIfNoChildren(categoria);
 }
 
-function _hideParentIfNoChildren(categoria) {
+export function _hideParentIfNoChildren(categoria) {
 	if (_getChildIDs(`${categoria}-box`).length === 0) {
 		getID(`habilitado-${categoria}`).checked = false;
 		_hideContent(categoria);
 	}
 }
 
-function _removeEmptyChild(categoria) {
+export function _removeEmptyChild(categoria) {
 	let itens = [];
 
 	switch (categoria) {
@@ -299,7 +290,7 @@ function _removeEmptyChild(categoria) {
 	}
 }
 
-function _getIDs(divID) {
+export function _getIDs(divID) {
 	const ids = [];
 	for (const item of divID.split("-")) {
 		if (!isNaN(item)) {
@@ -309,12 +300,12 @@ function _getIDs(divID) {
 	return ids.join("-");
 }
 
-function _getJ(id) {
+export function _getJ(id) {
 	const jSplit = id.split("-");
 	return parseInt(jSplit[jSplit.length - 1]);
 }
 
-function _getJs(parentID) {
+export function _getJs(parentID) {
 	const parent = getID(parentID);
 	if (!parent) return [];
 
@@ -327,7 +318,7 @@ function _getJs(parentID) {
 		.filter(Number.isFinite);
 }
 
-function _findJFromID(id, tipo) {
+export function _findJFromID(id, tipo) {
 	const js = _getJs(`${tipo}-box`);
 	for (const j of js) {
 		const result = getID(`${tipo}-id-${j}`).value;
@@ -338,26 +329,26 @@ function _findJFromID(id, tipo) {
 	return 0;
 }
 
-function _getFirstJ(parentID) {
+export function _getFirstJ(parentID) {
 	const js = _getJs(parentID);
 	return js[0];
 }
 
-function _getLastJ(parentID) {
+export function _getLastJ(parentID) {
 	const js = _getJs(parentID);
 	return js.length === 0 ? 0 : js[js.length - 1];
 }
 
-function _getLastUnorderedJ(parentID) {
+export function _getLastUnorderedJ(parentID) {
 	const js = _getJs(parentID);
 	return js.length === 0 ? 0 : Math.max(...js);
 }
 
-function _getNextJ(parentID) {
+export function _getNextJ(parentID) {
 	return _getLastUnorderedJ(parentID) + 1;
 }
 
-function _getCategoriaID(tipo, j) {
+export function _getCategoriaID(tipo, j) {
 	const js = _getJs(`${tipo}-box`);
 	let ids = [];
 
@@ -374,13 +365,13 @@ function _getCategoriaID(tipo, j) {
 	return _getRandomID({ pool: ids });
 }
 
-function _getOrCreateCategoriaID(tipo, j) {
+export function _getOrCreateCategoriaID(tipo, j) {
 	const currentID = getID(`${tipo}-id-${j}`).value;
 	return currentID ? currentID : _getCategoriaID(tipo, j);
 }
 
 // URL Utils
-function _getURLParams() {
+export function _getURLParams() {
 	const urlParams = new URLSearchParams(window.location.search);
 	const params = {};
 	for (const [internalKey, value] of urlParams) {
@@ -389,12 +380,12 @@ function _getURLParams() {
 	return params;
 }
 
-function _getURLParam(param) {
+export function _getURLParam(param) {
 	const urlParams = new URLSearchParams(window.location.search);
 	return urlParams.get(param);
 }
 
-function _setURLParam(key, value) {
+export function _setURLParam(key, value) {
 	const url = new URL(window.location.href);
 	url.searchParams.set(key, value);
 	window.history.replaceState({}, "", url);
@@ -402,7 +393,7 @@ function _setURLParam(key, value) {
 
 // Document Utils
 
-function _getDataDocument(tipo) {
+export function _getDataDocument(tipo) {
 	switch (tipo) {
 		case "viagens":
 		case "listagens":
@@ -414,7 +405,7 @@ function _getDataDocument(tipo) {
 	}
 }
 
-function _getNewDataDocument(tipo) {
+export function _getNewDataDocument(tipo) {
 	switch (tipo) {
 		case "viagens":
 		case "listagens":
@@ -426,7 +417,7 @@ function _getNewDataDocument(tipo) {
 	}
 }
 
-function _getTranslatedDocumentLabel(type) {
+export function _getTranslatedDocumentLabel(type) {
 	switch (type) {
 		case "viagens":
 			return translate("trip.document");
@@ -447,7 +438,7 @@ function _getTranslatedDocumentLabel(type) {
 	}
 }
 
-function _getOrderedDocumentByUpdateDate(data) {
+export function _getOrderedDocumentByUpdateDate(data) {
 	return Object.entries(data)
 		.map(([id, v]) => ({ id, ...v }))
 		.sort(
@@ -457,14 +448,14 @@ function _getOrderedDocumentByUpdateDate(data) {
 		);
 }
 
-function _getOrderedDocumentByTitle(data) {
+export function _getOrderedDocumentByTitle(data) {
 	return Object.entries(data)
 		.map(([id, v]) => ({ id, ...v }))
 		.sort((a, b) => a.titulo.localeCompare(b.titulo));
 }
 
 // Destination
-function _getAndDestinationTitle(value, destinos = [], placeholder = true) {
+export function _getAndDestinationTitle(value, destinos = [], placeholder = true) {
 	if (!destinos || destinos.length === 0) {
 		const placeholderValue = placeholder
 			? translate("trip.itinerary.title")
@@ -490,7 +481,7 @@ function _getAndDestinationTitle(value, destinos = [], placeholder = true) {
 	return _getReadableArray([titles]);
 }
 
-async function _normalizeTikTokLink(link) {
+export async function _normalizeTikTokLink(link) {
 	if (!link) return link;
 
 	const isMobile =
@@ -516,13 +507,13 @@ async function _normalizeTikTokLink(link) {
 	}
 }
 
-function _getDestinationTitle(item) {
+export function _getDestinationTitle(item) {
 	if (item.nome && item.emoji) {
 		return `${item.nome} ${item.emoji}`;
 	} else return item.nome;
 }
 
-function _getDestinosBoxHTML({
+export function _getDestinosBoxHTML({
 	j,
 	item,
 	innerProgramacao,
@@ -538,7 +529,7 @@ function _getDestinosBoxHTML({
 }
 
 // Itinerary
-function _getInnerProgramacaoTitle(dado, viajantes = TRAVELERS) {
+export function _getInnerProgramacaoTitle(dado, viajantes = TRAVELERS) {
 	const programacao = dado.programacao || "";
 	const presentes = !dado.pessoas
 		? []
@@ -585,14 +576,14 @@ function _getInnerProgramacaoTitle(dado, viajantes = TRAVELERS) {
 	};
 }
 
-function _getInnerProgramacaoTitleHTML(dado, spanClass) {
+export function _getInnerProgramacaoTitleHTML(dado, spanClass) {
 	const titleObj = _getInnerProgramacaoTitle(dado);
 	return titleObj.title
 		? `<span class="${spanClass}">${titleObj.title}:</span> ${titleObj.content}`
 		: titleObj.content;
 }
 
-function _getInnerProgramacao(item, destinos) {
+export function _getInnerProgramacao(item, destinos) {
 	const innerProgramacao = {
 		tipo: item?.tipo,
 		titulo: "",
@@ -680,7 +671,7 @@ function _getInnerProgramacao(item, destinos) {
 	}
 }
 
-function _getLinkMediaButton(midia, tipo) {
+export function _getLinkMediaButton(midia, tipo) {
 	if (!midia) return;
 	const video = translate("trip.itinerary.media_button.video");
 	const playlist = translate("trip.itinerary.media_button.playlist");
@@ -707,7 +698,7 @@ function _getLinkMediaButton(midia, tipo) {
 }
 
 // Trips
-function _getCurrentTrips(data) {
+export function _getCurrentTrips(data) {
 	const today = _convertFromDateObject(_getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]) => {
@@ -718,7 +709,7 @@ function _getCurrentTrips(data) {
 		.map(([id, v]) => ({ id, ...v }));
 }
 
-function _getPreviousTrips(data) {
+export function _getPreviousTrips(data) {
 	const today = _convertFromDateObject(_getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]) => _convertFromDateObject(v.fim) < today)
@@ -728,7 +719,7 @@ function _getPreviousTrips(data) {
 		);
 }
 
-function _getNextTrips(data) {
+export function _getNextTrips(data) {
 	const today = _convertFromDateObject(_getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]) => _convertFromDateObject(v.inicio) > today)
@@ -740,7 +731,7 @@ function _getNextTrips(data) {
 }
 
 // Accommodation
-function _getHospedagensHTML(i, innerProgramacao = false) {
+export function _getHospedagensHTML(i, innerProgramacao = false) {
 	const original = FIRESTORE_DATA.hospedagens[i];
 	const hospedagem = {
 		id: original.id,
@@ -768,7 +759,7 @@ function _getHospedagensHTML(i, innerProgramacao = false) {
 }
 
 // Request Utils
-function _getErrorFromGetRequestMessage() {
+export function _getErrorFromGetRequestMessage() {
 	return ERROR_FROM_GET_REQUEST.message.includes(
 		"Missing or insufficient permissions",
 	)
@@ -776,7 +767,7 @@ function _getErrorFromGetRequestMessage() {
 		: ERROR_FROM_GET_REQUEST;
 }
 
-function _combineDatabaseResponses(responses) {
+export function _combineDatabaseResponses(responses) {
 	if (responses.length === 1) {
 		return responses[0];
 	}
@@ -792,3 +783,67 @@ function _combineDatabaseResponses(responses) {
 		data: responses,
 	};
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window.CALL_SYNC = [];
+window.FIRESTORE_DATA = undefined;
+window.SHEET_DATA = undefined;
+window.P_DATA = undefined;
+window.HYPERLINK = undefined;
+window.CONFIG = undefined;
+window._firstCharToUpperCase = _firstCharToUpperCase;
+window._codifyText = _codifyText;
+window._uncodifyText = _uncodifyText;
+window._getRandomID = _getRandomID;
+window._getEmptyChar = _getEmptyChar;
+window._getLastUpdatedOnText = _getLastUpdatedOnText;
+window._isObject = _isObject;
+window._objectExistsAndHasKeys = _objectExistsAndHasKeys;
+window._getIdFromObjectDB = _getIdFromObjectDB;
+window._printObjectHTML = _printObjectHTML;
+window._cloneObject = _cloneObject;
+window._getLocalJSON = _getLocalJSON;
+window._areObjectsEqual = _areObjectsEqual;
+window._getObjectDiff = _getObjectDiff;
+window._collectObjectDiffs = _collectObjectDiffs;
+window._getReadableArray = _getReadableArray;
+window._getChildIDs = _getChildIDs;
+window._setRequired = _setRequired;
+window._removeRequired = _removeRequired;
+window._getOptionsFromSelect = _getOptionsFromSelect;
+window._removeChild = _removeChild;
+window._removeChildWithValidation = _removeChildWithValidation;
+window._hideParentIfNoChildren = _hideParentIfNoChildren;
+window._removeEmptyChild = _removeEmptyChild;
+window._getIDs = _getIDs;
+window._getJ = _getJ;
+window._getJs = _getJs;
+window._findJFromID = _findJFromID;
+window._getFirstJ = _getFirstJ;
+window._getLastJ = _getLastJ;
+window._getLastUnorderedJ = _getLastUnorderedJ;
+window._getNextJ = _getNextJ;
+window._getCategoriaID = _getCategoriaID;
+window._getOrCreateCategoriaID = _getOrCreateCategoriaID;
+window._getURLParams = _getURLParams;
+window._getURLParam = _getURLParam;
+window._setURLParam = _setURLParam;
+window._getDataDocument = _getDataDocument;
+window._getNewDataDocument = _getNewDataDocument;
+window._getTranslatedDocumentLabel = _getTranslatedDocumentLabel;
+window._getOrderedDocumentByUpdateDate = _getOrderedDocumentByUpdateDate;
+window._getOrderedDocumentByTitle = _getOrderedDocumentByTitle;
+window._getAndDestinationTitle = _getAndDestinationTitle;
+window._normalizeTikTokLink = _normalizeTikTokLink;
+window._getDestinationTitle = _getDestinationTitle;
+window._getDestinosBoxHTML = _getDestinosBoxHTML;
+window._getInnerProgramacaoTitle = _getInnerProgramacaoTitle;
+window._getInnerProgramacaoTitleHTML = _getInnerProgramacaoTitleHTML;
+window._getInnerProgramacao = _getInnerProgramacao;
+window._getLinkMediaButton = _getLinkMediaButton;
+window._getCurrentTrips = _getCurrentTrips;
+window._getPreviousTrips = _getPreviousTrips;
+window._getNextTrips = _getNextTrips;
+window._getHospedagensHTML = _getHospedagensHTML;
+window._getErrorFromGetRequestMessage = _getErrorFromGetRequestMessage;
+window._combineDatabaseResponses = _combineDatabaseResponses;

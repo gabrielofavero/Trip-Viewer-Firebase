@@ -2,7 +2,8 @@
  * Build script for Trip-Viewer-Firebase.
  *
  * Phase 0: Copies static assets from public/ to dist/.
- * Future phases will add ESBuild bundling of JS/CSS.
+ * Phase 9+: Transpiles ES module JS files (with export/import) to IIFE format
+ *           so they work with regular <script> tags during the migration.
  *
  * Usage:
  *   node scripts/build.js          — one-shot build
@@ -11,6 +12,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const esbuild = require("esbuild");
 
 const ROOT = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
@@ -64,8 +66,71 @@ function build() {
     console.warn("[build] WARNING: firebase-config.js not found at project root.");
   }
 
+  // 4. Transpile ES module JS files to IIFE format (strips export/import)
+  //    so they work with regular <script> tags during migration phases P9-P11.
+  console.log("[build] Transpiling ES modules to IIFE...");
+  transpileESModules();
+
   const elapsed = Date.now() - start;
   console.log(`[build] Done in ${elapsed}ms.`);
+}
+
+/**
+ * Transpile all .js files in dist/ that contain ES module syntax (export/import)
+ * into IIFE format so they work with regular <script> tags.
+ *
+ * During migration phases P9-P11, source files use ES module syntax but
+ * HTML files still use plain <script> tags. This bridge keeps things working.
+ */
+function transpileESModules() {
+  const jsFiles = findJSFiles(DIST_DIR);
+  let count = 0;
+
+  for (const file of jsFiles) {
+    const content = fs.readFileSync(file, "utf8");
+
+    // Only transpile files that contain ES module syntax
+    if (!/\bexport\b/.test(content) && !/\bimport\b/.test(content)) {
+      continue;
+    }
+
+    try {
+      const result = esbuild.transformSync(content, {
+        loader: "js",
+        format: "iife",
+        target: "es2020",
+      });
+      fs.writeFileSync(file, result.code, "utf8");
+      count++;
+    } catch (err) {
+      console.error(`[build] ERROR transpiling ${path.relative(ROOT, file)}: ${err.message}`);
+    }
+  }
+
+  if (count > 0) {
+    console.log(`[build] Transpiled ${count} ES module file(s) to IIFE.`);
+  }
+}
+
+/**
+ * Recursively find all .js files in a directory.
+ */
+function findJSFiles(dir) {
+  const results = [];
+  try {
+    for (const entry of fs.readdirSync(dir)) {
+      const fullPath = path.join(dir, entry);
+      const stat = fs.statSync(fullPath);
+      if (stat.isDirectory()) {
+        results.push(...findJSFiles(fullPath));
+      } else if (entry.endsWith(".js")) {
+        results.push(fullPath);
+      }
+    }
+  } catch {
+    // Directory may not exist yet — ignore
+  }
+  return results;
 }
 
 // --- Watch mode ---

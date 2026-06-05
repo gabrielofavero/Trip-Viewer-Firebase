@@ -1,4 +1,4 @@
-var MESSAGE_MODAL_OPEN = false;
+let MESSAGE_MODAL_OPEN = false;
 const MENSAGEM_PROPRIEDADES = {
 	titulo: "",
 	conteudo: "",
@@ -19,7 +19,7 @@ const MENSAGEM_PROPRIEDADES = {
 };
 
 // Mensagem Genérica
-function _displayMessage(titulo, conteudo) {
+export function _displayMessage(titulo, conteudo) {
 	const properties = _cloneObject(MENSAGEM_PROPRIEDADES);
 	if (titulo) properties.titulo = titulo;
 	if (conteudo) properties.conteudo = conteudo;
@@ -27,7 +27,7 @@ function _displayMessage(titulo, conteudo) {
 }
 
 // Prompt (Sim / Não)
-function _displayPrompt({
+export function _displayPrompt({
 	titulo,
 	conteudo,
 	yesAction,
@@ -51,7 +51,7 @@ function _displayPrompt({
 	_displayFullMessage(propriedades);
 }
 
-function _displayFullMessage(
+export function _displayFullMessage(
 	propriedades = _cloneObject(MENSAGEM_PROPRIEDADES),
 ) {
 	const preloader = getID("preloader");
@@ -140,7 +140,7 @@ function _displayFullMessage(
 }
 
 // Mensagem de Erro
-function _displayError(erro, tentarNovamente = false) {
+export function _displayError(erro, tentarNovamente = false) {
 	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 
 	propriedades.titulo = translate("messages.errors.load_title");
@@ -156,7 +156,7 @@ function _displayError(erro, tentarNovamente = false) {
 	_displayFullMessage(propriedades);
 }
 
-function _getErrorMessage(erro) {
+export function _getErrorMessage(erro) {
 	const isError = erro && erro instanceof Error;
 	const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate("messages.errors.contact_admin")}</a> ${translate("messages.errors.to_report")}`;
 
@@ -174,7 +174,7 @@ function _getErrorMessage(erro) {
 }
 
 // Mensagem de Não Autorizado
-function _displayForbidden(conteudo, redirectTo = "view.html") {
+export function _displayForbidden(conteudo, redirectTo = "view.html") {
 	const propriedades = _cloneObject(MENSAGEM_PROPRIEDADES);
 	propriedades.titulo = translate("messages.access_denied.title");
 	propriedades.conteudo =
@@ -190,7 +190,7 @@ function _displayForbidden(conteudo, redirectTo = "view.html") {
 }
 
 // Fechar Mensagem
-function _closeMessage() {
+export function _closeMessage() {
 	if (MESSAGE_MODAL_OPEN) {
 		const preloader = getID("preloader");
 		if (preloader) {
@@ -206,14 +206,14 @@ function _closeMessage() {
 }
 
 // Funções de Suporte
-function _getContainersInput() {
+export function _getContainersInput() {
 	return {
 		principal: "input-container",
 		botoes: "button-box-right",
 	};
 }
 
-function _getIconsBox(icones) {
+export function _getIconsBox(icones) {
 	const iconContainer = document.createElement("div");
 	iconContainer.className = "icon-container";
 	iconContainer.style.textAlign = "right";
@@ -241,7 +241,7 @@ function _getIconsBox(icones) {
 	return iconContainer;
 }
 
-function _getErrorElement(erro) {
+export function _getErrorElement(erro) {
 	let location = "";
 	if (erro?.showLocation) {
 		const stackTrace = erro.error ? erro.error.stack : new Error().stack;
@@ -273,7 +273,7 @@ function _getErrorElement(erro) {
 }
 
 // Botões
-function _getButton(botao) {
+export function _getButton(botao) {
 	switch (botao.tipo) {
 		case "tente-novamente":
 			return _getTryAgainButton();
@@ -300,7 +300,7 @@ function _getButton(botao) {
 	}
 }
 
-function _getHomeButton() {
+export function _getHomeButton() {
 	const homeButton = [
 		"editar-viagem",
 		"editar-destino",
@@ -324,7 +324,7 @@ function _getHomeButton() {
 	return button;
 }
 
-function _getBackButton(redirectTo = "index.html") {
+export function _getBackButton(redirectTo = "index.html") {
 	const button = document.createElement("button");
 	button.className = "btn btn-secondary btn-format";
 	button.type = "submit";
@@ -341,7 +341,7 @@ function _getBackButton(redirectTo = "index.html") {
 	return button;
 }
 
-function _getTryAgainButton() {
+export function _getTryAgainButton() {
 	const button = document.createElement("button");
 	button.className = "btn btn-secondary btn-format";
 	button.type = "submit";
@@ -358,7 +358,7 @@ function _getTryAgainButton() {
 	return button;
 }
 
-function _getCloseButton(label, onclick) {
+export function _getCloseButton(label, onclick) {
 	label = label ? label : translate("labels.understood");
 	const button = document.createElement("button");
 	button.className = "btn btn-secondary btn-format";
@@ -370,7 +370,7 @@ function _getCloseButton(label, onclick) {
 	return button;
 }
 
-function _getConfirmButton(
+export function _getConfirmButton(
 	onclick = "_closeMessage();",
 	label = "labels.confirm",
 ) {
@@ -384,7 +384,7 @@ function _getConfirmButton(
 	return button;
 }
 
-function _getDeleteButton(onclick, buttonClass = "btn-secondary") {
+export function _getDeleteButton(onclick, buttonClass = "btn-secondary") {
 	const button = document.createElement("button");
 	button.className = `btn ${buttonClass} btn-format`;
 	button.type = "submit";
@@ -401,11 +401,11 @@ function _getDeleteButton(onclick, buttonClass = "btn-secondary") {
 	return button;
 }
 
-function _getDeleteButtonBasic(onclick) {
+export function _getDeleteButtonBasic(onclick) {
 	return _getDeleteButton(onclick, "btn-basic");
 }
 
-function _openToast(text) {
+export function _openToast(text) {
 	getID("toast-text").innerHTML = text;
 	_fadeIn(["toast"]);
 	setTimeout(() => {
@@ -413,13 +413,13 @@ function _openToast(text) {
 	}, 10000);
 }
 
-function _closeToast() {
+export function _closeToast() {
 	if (getID("toast").style.display != "none") {
 		_fadeOut(["toast"]);
 	}
 }
 
-function _handleMessageKeydown(e) {
+export function _handleMessageKeydown(e) {
 	if (!MESSAGE_MODAL_OPEN) return;
 
 	if (e.key === "Enter") {
@@ -446,3 +446,27 @@ function _handleMessageKeydown(e) {
 		}
 	}
 }
+
+// BACKWARD COMPAT: attach to window during migration
+window._displayMessage = _displayMessage;
+window._displayPrompt = _displayPrompt;
+window._displayFullMessage = _displayFullMessage;
+window._displayError = _displayError;
+window._getErrorMessage = _getErrorMessage;
+window._displayForbidden = _displayForbidden;
+window._closeMessage = _closeMessage;
+window._getContainersInput = _getContainersInput;
+window._getIconsBox = _getIconsBox;
+window._getErrorElement = _getErrorElement;
+window._getButton = _getButton;
+window._getHomeButton = _getHomeButton;
+window._getBackButton = _getBackButton;
+window._getTryAgainButton = _getTryAgainButton;
+window._getCloseButton = _getCloseButton;
+window._getConfirmButton = _getConfirmButton;
+window._getDeleteButton = _getDeleteButton;
+window._getDeleteButtonBasic = _getDeleteButtonBasic;
+window._openToast = _openToast;
+window._closeToast = _closeToast;
+window._handleMessageKeydown = _handleMessageKeydown;
+window.MESSAGE_MODAL_OPEN = MESSAGE_MODAL_OPEN;

@@ -1109,6 +1109,8 @@ SYSTEMATIC APPROACH:
 
 4. Update ALL string comparisons throughout the codebase that check page names.
 
+5. Update ALL functions to not have _ before name anymore.
+
 AFTER ALL RENAMES: Run the app and test every page, every feature.
 ```
 
@@ -1183,7 +1185,7 @@ STEP 5: Create a "lessons-learned" comment block at the top of refactoring-plan.
 | P6  | Extract Shared Component CSS                | ✅ Done    |
 | P7  | Clean Unused CSS Properties                 | ✅ Done    |
 | P8  | Single Dark Mode System                     | ✅ Done    |
-| P9  | Convert Utility Files to ES Modules         | ☐ Pending |
+| P9  | Convert Utility Files to ES Modules         | ✅ Done    |
 | P10 | Convert Component Files to ES Modules       | ☐ Pending |
 | P11 | Convert Firebase Services to ES Modules     | ☐ Pending |
 | P12 | Single JS Entry Point Per HTML              | ☐ Pending |
