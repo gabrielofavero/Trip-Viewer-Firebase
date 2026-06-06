@@ -9,19 +9,20 @@
 import { select, on, onscroll, getID } from '../utils/dom.js';
 import { displayError } from '../utils/messages.js';
 import { loadAllConfigs, setLanguage, getVersoes } from '../app/config.js';
+import { translatePage, getLanguagePackName, loadLangSelectorSelect } from '../i18n/translation.js';
 
 const APP = {
 	projectId: null,
 	version: null,
 };
 
-async function main() {
+export async function main(pageLoaders = {}) {
 	try {
 		await loadAllConfigs(getLanguagePackName());
 		translatePage();
 		initializeApp();
 		loadLangSelectorSelect();
-		loadPage();
+		loadPage(pageLoaders);
 	} catch (error) {
 		displayError("Initialization Error:" + error.message);
 	}
@@ -35,32 +36,32 @@ async function loadTranslationLite() {
 	}
 }
 
-function loadPage() {
+function loadPage(pageLoaders = {}) {
 	setPageName();
 	switch (getHTMLpage()) {
 		case "index":
-			loadIndexPage();
+			pageLoaders.index();
 			break;
 		case "view":
-			loadViewPage();
+			pageLoaders.view();
 			break;
 		case "destination":
-			loadDestinationPage();
+			pageLoaders.destination();
 			break;
 		case "expenses":
-			loadExpensesPage();
+			pageLoaders.expenses();
 			break;
 		case "edit-listing":
-			loadEditListingPage();
+			pageLoaders.editListing();
 			break;
 		case "edit-destination":
-			loadEditDestinationPage();
+			pageLoaders.editDestination();
 			break;
 		case "edit-trip":
-			loadEditTripPage();
+			pageLoaders.editTrip();
 			break;
 		case "itinerary":
-			loadItineraryPage();
+			pageLoaders.itinerary();
 			return;
 		default:
 			displayError(`Page "${getHTMLpage()}" not found.`);
@@ -68,7 +69,7 @@ function loadPage() {
 	}
 }
 
-function getHTMLpage() {
+export function getHTMLpage() {
 	let result = window.location.pathname.replace(".html", "");
 	switch (result) {
 		case "/":
@@ -90,11 +91,7 @@ function getHTMLpage() {
 	}
 }
 
-// Make getHTMLpage available globally for other ES modules
-window.getHTMLpage = getHTMLpage;
-window.main = main;
-
-function getPageURL() {
+export function getPageURL() {
 	const isAltPrd =
 		window.location.hostname === "trip-viewer-prd.firebaseapp.com";
 
@@ -107,7 +104,7 @@ function getPageURL() {
 	return url.toString();
 }
 
-function openLinkInNewTab(url) {
+export function openLinkInNewTab(url) {
 	var win = window.open(url, "_blank");
 	win.focus();
 }

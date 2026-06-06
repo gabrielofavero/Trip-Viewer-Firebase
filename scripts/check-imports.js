@@ -146,7 +146,8 @@ const RE_FIRESTORE_DATA = /\bFIRESTORE_DATA\b/g;
 function stripCommentsAndStrings(source) {
   let s = source;
   // Strip strings first (they may contain comment-like content)
-  s = s.replace(RE_STRINGS, '""');
+  // Replace with "x" so import paths retain a non-empty value for regex matching
+  s = s.replace(RE_STRINGS, '"x"');
   // Strip comments
   s = s.replace(RE_SINGLE_LINE_COMMENT, "");
   s = s.replace(RE_MULTI_LINE_COMMENT, "");
