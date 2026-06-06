@@ -6,6 +6,7 @@ import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
 import { getPageURL, setPageName } from '../../app/main.js';
+import { loadDestinationListeners } from './support/event-listeners.js';
 
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
@@ -34,6 +35,8 @@ async function loadDestinationsData() {
 
 export async function loadDestinationPage() {
 	console.log(this.window.location.href);
+
+	loadDestinationListeners();
 
 	await loadDestinationsData();
 

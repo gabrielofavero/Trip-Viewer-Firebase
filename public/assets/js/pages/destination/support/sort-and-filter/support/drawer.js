@@ -30,7 +30,7 @@ function openDrawer(titleText, innerHTML, actions) {
 	actions.load?.();
 }
 
-function closeDrawer() {
+export function closeDrawer() {
 	const overlay = getID("overlay");
 	const drawer = getID("drawer");
 

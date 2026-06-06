@@ -149,7 +149,7 @@ function loadFilterOptions(force = false) {
 }
 
 // Drawer
-function openFilterDrawer() {
+export function openFilterDrawer() {
 	openFilterSortDrawer({
 		triggerId: "filter",
 		getInnerHTML: getFilterDrawerInnerHTML,

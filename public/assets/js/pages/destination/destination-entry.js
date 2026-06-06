@@ -20,6 +20,7 @@ import './support/trip.js';
 import './categories.js';
 import './edit-destination.js';
 import './import-destination.js';
+import './support/event-listeners.js';
 import { loadDestinationPage } from './destination.js';
 
 main({ destination: loadDestinationPage });

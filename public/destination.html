@@ -19,11 +19,11 @@
     </div>
 
     <div class="section-buttons" id="filter-sort-container">
-      <button class="filter-sort" id="filter" onclick="_openFilterDrawer()">
+      <button class="filter-sort" id="filter" data-action="open-filter-drawer">
         <i class="iconify" data-icon="tdesign:filter"></i>
         <span data-translate="destination.filter.title"></span>
       </button>
-      <button class="filter-sort" id="sort" onclick="_openSortDrawer()">
+      <button class="filter-sort" id="sort" data-action="open-sort-drawer">
         <i class="iconify" data-icon="ant-design:sort-ascending-outlined"></i>
         <span data-translate="destination.sort.title"></span>
       </button>
@@ -32,7 +32,7 @@
     <div id="content"></div>
 
     <div class="add-container" style="display: none">
-      <button class="edit-btn" id="add-button" onclick="_add()">
+      <button class="edit-btn" id="add-button" data-action="add-destination">
           <i class="iconify user-data-icon" data-icon="gridicons:add-outline"></i>
           <span data-translate="labels.add"></span>
       </button>
@@ -44,18 +44,18 @@
         <div class="credits">
           <span data-translate="labels.developed_by"></span> <a
             href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="attributions"
-            onclick="_openAttributions()"><i class="bx bx-info-circle"></i>
+            data-action="open-attributions"><i class="bx bx-info-circle"></i>
             <span data-translate="labels.credits"></span></span>
         </div>
       </div>
     </footer>
   </div>
 
-  <div class="drawer-overlay" id="overlay" onclick="_closeDrawer()">
-    <div class="drawer" id="drawer" onclick="event.stopPropagation()">
+  <div class="drawer-overlay" id="overlay" data-action="close-drawer">
+    <div class="drawer" id="drawer" data-stop-propagation>
       <div class="drawer-header">
         <span id="drawerTitle"></span>
-        <button class="close-btn" onclick="_closeDrawer()">✕</button>
+        <button class="close-btn" data-action="close-drawer">✕</button>
       </div>
       <div class="drawer-body" id="drawerContent"></div>
     </div>
@@ -65,7 +65,7 @@
 
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>

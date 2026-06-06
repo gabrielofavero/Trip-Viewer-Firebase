@@ -135,7 +135,7 @@ function loadSortOptions(force = false) {
 }
 
 // Drawer
-function openSortDrawer() {
+export function openSortDrawer() {
 	openFilterSortDrawer({
 		triggerId: "sort",
 		getInnerHTML: getSortDrawerInnerHTML,

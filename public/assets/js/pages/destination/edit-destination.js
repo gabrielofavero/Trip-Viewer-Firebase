@@ -78,7 +78,7 @@ async function edit(j) {
 	}
 }
 
-async function add() {
+export async function add() {
 	document.querySelector(".add-container").style.display = "none";
 	const canEdit = await canEdit();
 	if (!canEdit) {
