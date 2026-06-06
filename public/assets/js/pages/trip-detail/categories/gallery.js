@@ -1,6 +1,7 @@
 import { getState } from '../../../data/state.js';
 import { BiMap } from '../../../ui/bimap.js';
 import { codifyText, getID, isObject, on, select } from '../../../utils/dom.js';
+import { loadImageLightbox } from "../support/embed.js";
 
 var FILTER_MAP = new BiMap();
 
@@ -133,7 +134,7 @@ function getGaleriaLink(imagem) {
 }
 
 // Visibility
-function adjustPortfolioHeight() {
+export function adjustPortfolioHeight() {
 	const container = getID("portfolio-container");
 
 	if (!container) return;
@@ -150,7 +151,7 @@ function adjustPortfolioHeight() {
 	container.style.height = `${totalHeight}px`;
 }
 
-function refreshCategorias() {
+export function refreshCategorias() {
 	let portfolioContainer = select(".portfolio-container");
 	if (portfolioContainer) {
 		let portfolioIsotope = new Isotope(portfolioContainer, {

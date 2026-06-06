@@ -10,6 +10,6 @@ import {
 	getConversionText,
 } from '../../models/expense.model.js';
 
-var GASTOS_CONVERTIDOS = {};
+export var GASTOS_CONVERTIDOS = {};
 
 

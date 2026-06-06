@@ -5,13 +5,16 @@ import { closeMessage } from '../../../../utils/messages.js';
 import { stopLoadingScreen } from '../../../../utils/loading.js';
 import { openModal } from '../../../../theme/visibility.js';
 import { requestPin } from '../../../../utils/pin.js';
+import { get } from '../../../../data/firebase/database.js';
+import { DOCUMENT_ID, SUCCESSFUL_SAVE, setSuccessfulSave } from '../../edit-trip.js';
+import { FIRESTORE_NEW_DATA } from '../../set-trip.js';
 
-var PIN = {
+export var PIN = {
 	current: "",
 	new: "",
 };
 
-async function loadPinData() {
+export async function loadPinData() {
 	// This data can only be fetch by the owner of the document
 	const pinObject = await get(`protegido/${DOCUMENT_ID}`, true, true);
 
@@ -22,17 +25,17 @@ async function loadPinData() {
 	PIN.current = pinObject.pin;
 }
 
-function getNewPinObject() {
+export function getNewPinObject() {
 	return PIN.new
 		? { pin: PIN.new, compartilhamento: FIRESTORE_NEW_DATA.compartilhamento }
 		: {};
 }
 
-function isDataUnprotected() {
+export function isDataUnprotected() {
 	return getCurrentPreferencePIN() === "no-pin";
 }
 
-function hasCurrentProtectedViagens() {
+export function hasCurrentProtectedViagens() {
 	return (
 		(getState().transportes?.dados ?? []).some(
 			(t) => t.reserva || t.link,
@@ -40,7 +43,7 @@ function hasCurrentProtectedViagens() {
 	);
 }
 
-function getCurrentPreferencePIN() {
+export function getCurrentPreferencePIN() {
 	if (getID("pin-sensitive-only").checked) {
 		return "sensitive-only";
 	} else if (getID("pin-all-data").checked) {
@@ -51,19 +54,19 @@ function getCurrentPreferencePIN() {
 }
 
 // Pin
-function switchPin() {
+export function switchPin() {
 	PIN.new = getID("pin-disabled").checked ? "" : PIN.current || PIN.new;
 	switchPinVisibility();
 	switchPinLabel();
 }
 
-function switchPinVisibility() {
+export function switchPinVisibility() {
 	getID("pin-container").style.display = getID("pin-disabled").checked
 		? "none"
 		: "block";
 }
 
-function switchPinLabel() {
+export function switchPinLabel() {
 	getID("request-pin").innerText =
 		PIN.current || PIN.new
 			? translate("trip.basic_information.pin.change")
@@ -71,7 +74,7 @@ function switchPinLabel() {
 }
 
 export function requestPinEditarGastos(invalido = false) {
-	const confirmAction = "reconfirmPin()";
+	export const confirmAction = "reconfirmPin()";
 	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.insert");
 	requestPin({ confirmAction, cancelAction, precontent, invalido });
@@ -118,7 +121,7 @@ function validatePinField() {
 		getID("modal-inner-text").innerHTML = translate(
 			"trip.basic_information.pin.no_pin",
 		);
-		SUCCESSFUL_SAVE = false;
+		setSuccessfulSave(false);
 		stopLoadingScreen();
 		openModal();
 	}

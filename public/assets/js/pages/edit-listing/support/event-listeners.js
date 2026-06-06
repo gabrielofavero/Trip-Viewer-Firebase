@@ -1,8 +1,8 @@
-import { registerActions } from '../../ui/actions.js';
+import { registerActions } from '../../../ui/actions.js';
 import { deleteListagem } from '../edit-listing.js';
-import { openAttributions } from '../../utils/attributions.js';
-import { closeToast } from '../../utils/messages.js';
-import { closeModal } from '../../theme/visibility.js';
+import { openAttributions } from '../../../utils/attributions.js';
+import { closeToast } from '../../../utils/messages.js';
+import { closeModal } from '../../../theme/visibility.js';
 
 export function loadEditListingListeners() {
     registerActions({

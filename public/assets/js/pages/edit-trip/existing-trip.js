@@ -1,13 +1,25 @@
-import { displayError } from '../../../utils/messages.js';
+import { PIN, switchPinVisibility, switchPinLabel, getCurrentPreferencePIN } from './categories/basic-data/protected-data.js';
+import { DOCUMENT_ID, setGastosData } from './edit-trip.js';
+import { setCurrentPreferencePIN } from './categories/basic-data/set-protected-data.js';
+import { setTravelers, updateTravelersButtonLabel } from './categories/travelers.js';
+import { loadCustomizacaoImageData, setCurrentLight } from './categories/customization.js';
+import { visibilityListenerAction } from './support/event-listeners.js';
+import { addTransportation, addHospedagens, loadDestinations, loadItinerarySchedule, addGaleria } from './new-trip.js';
+import { loadTransportationVisibility, updateTransportationTitle, applyTransportationTypeVisualization } from './categories/transportation.js';
+import { ACCOMMODATION_IMAGES, setImagemButtonLabel, loadCheckIn, loadCheckOut } from './categories/accommodation.js';
+import { loadDestinosAtivos, updateDestinosAtivosCheckboxHTML } from './categories/destination.js';
+import { setProgramacaoData, applyLoadedItineraryData } from './categories/itinerary-module/itinerary-module.js';
+import { displayError } from '../../utils/messages.js';
+import { translate } from '../../i18n/translation.js';
 import { getState } from '../../data/state.js';
 import { cloneObject, getID, getOptionsFromSelect } from '../../utils/dom.js';
 import { convertFromDateObject, getDateString, getTimeStringFromDate } from '../../utils/dates.js';
 import { validateTravelersObject } from '../../models/traveler.model.js';
-import { haveErrorFromGetRequest } from '../../data/firebase/database.js';
+import { haveErrorFromGetRequest, get, ERROR_FROM_GET_REQUEST } from '../../data/firebase/database.js';
 import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { getHTMLpage, setPageName } from '../../app/main.js';
 
-async function loadTripData() {
+export async function loadTripData() {
 	try {
 		loadBasicTripData();
 		loadCustomizacaoData();
@@ -35,7 +47,7 @@ function loadBasicTripData() {
 	getID("inicio").value = getDateString(inicio, "yyyy-mm-dd");
 	getID("fim").value = getDateString(fim, "yyyy-mm-dd");
 
-	TRAVELERS = cloneObject(getState().pessoas);
+	setTravelers(cloneObject(getState().pessoas));
 	validateTravelersObject();
 	updateTravelersButtonLabel();
 	setCurrentPreferencePIN(getState().pin);
@@ -66,7 +78,7 @@ function loadCustomizacaoData() {
 		getID("habilitado-cores").checked = true;
 		claro.value = getState().cores.claro;
 		escuro.value = getState().cores.escuro;
-		CURRENT_LIGHT = getState().cores.claro;
+		setCurrentLight(getState().cores.claro);
 		getID("habilitado-cores-content").style.display = "block";
 	}
 
@@ -102,7 +114,7 @@ async function loadExpensesData() {
 		? `gastos/protected/${PIN.current}/${DOCUMENT_ID}`
 		: `gastos/${DOCUMENT_ID}`;
 
-	FIRESTORE_GASTOS_DATA = await get(getPath, true, true);
+	setGastosData(await get(getPath, true, true));
 
 	if (haveErrorFromGetRequest()) {
 		displayError(ERROR_FROM_GET_REQUEST);
@@ -253,7 +265,7 @@ function loadItineraryData() {
 		j++;
 	}
 	updateDestinosAtivosCheckboxHTML("programacao");
-	FIRESTORE_PROGRAMACAO_DATA = cloneObject(getState().programacoes);
+	setProgramacaoData(cloneObject(getState().programacoes));
 }
 
 function loadGaleriaData() {

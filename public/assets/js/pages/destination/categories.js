@@ -55,7 +55,7 @@ function updateActiveCategory(category) {
 }
 
 // Nota
-function getNotaIcon(nota) {
+export function getNotaIcon(nota) {
 	switch (nota) {
 		case "5":
 			return "ph:number-five-bold";
@@ -72,7 +72,7 @@ function getNotaIcon(nota) {
 	}
 }
 
-function getNotaClass(nota) {
+export function getNotaClass(nota) {
 	switch (nota) {
 		case "5":
 		case "4":
@@ -86,7 +86,7 @@ function getNotaClass(nota) {
 }
 
 // Links
-function getLinkOnClick(item, tipo) {
+export function getLinkOnClick(item, tipo) {
 	if (item[tipo]) {
 		return ` data-action="open-link" data-url="${item[tipo]}"`;
 	} else return "";
@@ -117,7 +117,7 @@ function getPlanejado(id) {
 	}
 }
 
-function getTurno(turno) {
+export function getTurno(turno) {
 	switch (turno) {
 		case "madrugada":
 			return translate("datetime.time_of_day.early_hours");

@@ -1,7 +1,11 @@
 import { normalizePriceBucket } from '../../../../models/destination.model.js';
 import { translate } from '../../../../i18n/translation.js';
+import { CONTENT } from "../../destination";
+import { getSortDrawerInnerHTML } from "./support/drawer";
+import { sortDrawerOptionClickAction } from "./support/drawer";
+import { sortDrawerOptionLoadAction } from "./support/drawer";
 
-const SORT_OPTIONS = {};
+export const SORT_OPTIONS = {};
 
 // Main Action
 function sort(render = false) {

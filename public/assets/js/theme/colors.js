@@ -1,6 +1,7 @@
 import { getColors } from '../app/config.js';
 import { getID } from '../utils/dom.js';
 import { setCSSVariable } from './stylesheets.js';
+import { CHANGED_SVGS } from "./theme";
 
 export let THEME_COLOR;
 export let THEME_COLOR_HOVER;

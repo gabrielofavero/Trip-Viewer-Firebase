@@ -2,6 +2,7 @@ import { getState } from '../../data/state.js';
 import { displayError } from '../../utils/messages.js';
 import { getID } from '../../utils/dom.js';
 import { setPageName } from '../../app/main.js';
+import { translate } from "../../i18n/translation";
 
 // Listagem Existente
 async function loadListData(getState()) {

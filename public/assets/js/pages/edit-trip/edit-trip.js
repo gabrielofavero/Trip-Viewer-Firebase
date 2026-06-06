@@ -2,7 +2,7 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { setState } from '../../data/state.js';
 import { getDateTitle, getTodayFormatted, getTomorrowFormatted, jsDateToKey } from '../../utils/dates.js';
 import { cloneObject, getID, getOrderedDocumentByTitle, getURLParam } from '../../utils/dom.js';
-import { deleteUserObjectDB, getPermissoes, getSingleData, getTripDataWithDestinations } from '../../data/firebase/database.js';
+import { deleteUserObjectDB, getPermissoes, getSingleData, getTripDataWithDestinations, get, deleteDocument } from '../../data/firebase/database.js';
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
 import { newDynamicSelect } from '../../ui/dynamic-select.js';
 import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
@@ -10,13 +10,23 @@ import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '..
 import { snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
-import { displayFullMessage } from '../../utils/messages.js';
+import { displayFullMessage, MESSAGE_PROPERTIES } from '../../utils/messages.js';
+import { loadPinData, PIN } from './categories/basic-data/protected-data.js';
+import { DATAS, loadNewTrip } from './new-trip.js';
+import { loadTripData } from './existing-trip.js';
+import { loadEventListeners } from './support/event-listeners.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
+import { loadUploadSelector } from "../../data/firebase/storage.js";
 
-var FIRESTORE_PROTECTED_DATA = {};
-var FIRESTORE_GASTOS_DATA = {};
+export var DOCUMENT_ID;
+var PERMISSOES;
+export var FIRESTORE_PROTECTED_DATA = {};
+export let DESTINOS;
+export var FIRESTORE_GASTOS_DATA = {};
+export function setGastosData(val) { FIRESTORE_GASTOS_DATA = val; }
 
-var SUCCESSFUL_SAVE = false;
+export var SUCCESSFUL_SAVE = false;
+export function setSuccessfulSave(val) { SUCCESSFUL_SAVE = val; }
 var NEW_TRIP = false;
 
 const TODAY = getTodayFormatted();
@@ -128,14 +138,14 @@ async function deleteTripAction() {
 	const tasks = [
 		deleteUserObjectDB(DOCUMENT_ID, "viagens"),
 		deleteUserObjectStorage(),
-		delete(`gastos/${DOCUMENT_ID}`, true),
+		deleteDocument(`gastos/${DOCUMENT_ID}`, true),
 	];
 
 	if (PIN.current) {
 		tasks.push(
-			delete(`protegido/${DOCUMENT_ID}`, true),
-			delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true),
-			delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, true),
+			deleteDocument(`protegido/${DOCUMENT_ID}`, true),
+			deleteDocument(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true),
+			deleteDocument(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, true),
 		);
 	}
 
@@ -145,7 +155,7 @@ async function deleteTripAction() {
 
 function getDataSelectOptions(j) {
 	const values = DATAS.map((data) => jsDateToKey(data));
-	const labels = DATAS.map((data) => getDateTitle(data, "mini"));
+	export const labels = DATAS.map((data) => getDateTitle(data, "mini"));
 	let result = j
 		? ""
 		: `<option value="" selected>${translate("datetime.select_date")}</option>`;
@@ -182,3 +192,5 @@ function getMergedTripObject(tripData) {
 
 	return tripData;
 }
+
+export { DESTINOS };

@@ -4,10 +4,20 @@ import { addSelectorDS } from '../../ui/dynamic-select.js';
 import { formattedDateToDate, getArrayOfDates, getDateTitle, getNextCategoryStartEnd } from '../../utils/dates.js';
 import { addRemoveChildListener } from '../../theme/visibility.js';
 import { loadImageSelector } from '../../data/firebase/storage.js';
+import { translate } from '../../i18n/translation.js';
+import { DESTINOS } from './edit-trip.js';
+import { loadTransportationListeners, loadTransportationVisibility, applyTransportationTypeVisualization, updateTransportationTitle } from './categories/transportation.js';
+import { loadAccommodationListeners, ACCOMMODATION_IMAGES, removeAccommodationImages } from './categories/accommodation.js';
+import { addRemoveTransportationListener } from './support/event-listeners.js';
+import { getDestinationsItemCheckbox, getActiveDestinationsSelectVisibility, getActiveDestinationsCheckboxOptions } from './categories/destination.js';
+import { loadGaleriaListeners } from './categories/gallery.js';
+import { getItineraryTitleSelectOptions, loadItineraryListeners, updateItineraryTitle, reloadItinerary } from './categories/itinerary-module/itinerary-module.js';
+import { updateDestinosAtivosHTMLs } from "./categories/destination.js";
+import { addRemoveGaleriaListener } from "./support/event-listeners.js";
 
-var DATAS = [];
+export var DATAS = [];
 
-function loadNewTrip() {
+export function loadNewTrip() {
 	loadDadosBasicosNewTrip();
 	loadItinerarySchedule();
 	loadDestinations();
@@ -20,7 +30,7 @@ function loadDadosBasicosNewTrip() {
 	getID("moeda").value = "BRL";
 }
 
-function addTransportation() {
+export function addTransportation() {
 	const j = getNextJ("transporte-box");
 
 	$("#transporte-box").append(`
@@ -176,7 +186,7 @@ function addTransportation() {
 	}
 }
 
-function addHospedagens() {
+export function addHospedagens() {
 	const inicioFim = getNextCategoryStartEnd("hospedagens", "check-out");
 	const j = getNextJ("hospedagens-box");
 	$("#hospedagens-box").append(`
@@ -278,7 +288,7 @@ function addHospedagens() {
 	ACCOMMODATION_IMAGES[j] = [];
 }
 
-function loadDestinations() {
+export function loadDestinations() {
 	if (!DESTINOS || DESTINOS.length === 0) return;
 
 	let destinos = DESTINOS;
@@ -307,7 +317,7 @@ function loadDestinations() {
 	}
 }
 
-function loadItinerarySchedule() {
+export function loadItinerarySchedule() {
 	const inicio = getID("inicio").value;
 	const fim = getID("fim").value;
 
@@ -407,7 +417,7 @@ function loadItinerarySchedule() {
 	);
 }
 
-function addGaleria() {
+export function addGaleria() {
 	const j = getNextJ("galeria-box");
 	$("#galeria-box").append(`
       <div id="galeria-${j}" class="accordion-item accordion-galeria" >

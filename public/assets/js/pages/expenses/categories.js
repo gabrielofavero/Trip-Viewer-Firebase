@@ -1,9 +1,12 @@
 import { getIcons } from '../../app/config.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
+import { setChart, setTable } from "./support/data.js";
+import { formatCurrency } from "../../models/expense.model";
+import { GASTOS_CONVERTIDOS } from "./expenses-converted";
 
 // Resumo
-function loadSummary() {
+export function loadSummary() {
 	loadChartSummary();
 
 	if (
@@ -58,18 +61,18 @@ function loadChartSummary() {
 }
 
 // Gastos Prévios
-function loadPreTripExpenses() {
+export function loadPreTripExpenses() {
 	setDoughnutChartCategoria("trip.expenses.pre_trip", "gastosPrevios");
 	setTableCategoria("gastosPrevios");
 }
 
 // Gastos na Viagem
-function loadDuringTripExpenses() {
+export function loadDuringTripExpenses() {
 	setDoughnutChartCategoria("trip.expenses.during_trip", "gastosDurante");
 	setTableCategoria("gastosDurante");
 }
 
-function loadTravelerExpenses() {
+export function loadTravelerExpenses() {
 	setDoughnutChartCategoria("trip.travelers.title", "gastosViajantes");
 	setTableCategoria("gastosViajantes");
 }

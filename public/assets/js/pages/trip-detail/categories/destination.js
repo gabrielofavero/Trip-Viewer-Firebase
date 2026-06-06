@@ -4,6 +4,12 @@ import { getChildIDs, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, getTodayDateObject, jsDateToKey } from '../../../utils/dates.js';
 import { loadCustomSelect, loadCustomSelectAction } from '../../../ui/custom-select.js';
 import { translate } from '../../../i18n/translation.js';
+import { openViewEmbed } from "../support/embed.js";
+import { getVisibility } from "../../../theme/theme";
+import { CUSTOM_SELECTS } from "../../../ui/custom-select";
+import { END_DATE } from "../view";
+import { START_DATE } from "../view";
+import { SCHEDULE_DESTINATIONS } from "./itinerary-module/itinerary-module";
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
@@ -60,7 +66,7 @@ function autoNavigateDestinos() {
 	loadCustomSelectAction("destinations-select", targetDestinosID, option.label);
 }
 
-function loadDestinationsCustomSelect() {
+export function loadDestinationsCustomSelect() {
 	DESTINOS = getState().destinos;
 
 	if (DESTINOS.length <= 1) {
@@ -134,7 +140,7 @@ function loadDestinationsCustomSelect() {
 	}
 }
 
-function loadDestinationsHTML(destino) {
+export function loadDestinationsHTML(destino) {
 	let text = "";
 	const destinos = getDestinos();
 	const types = destinos.categorias.geral;
@@ -186,7 +192,7 @@ function getDestinationsBoxesIndex(i) {
 	} else return i;
 }
 
-function adjustDestinationsHTML() {
+export function adjustDestinationsHTML() {
 	const elements = Array.from(document.querySelectorAll(".bd"));
 
 	for (const el of elements) {

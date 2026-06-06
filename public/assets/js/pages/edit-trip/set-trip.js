@@ -1,14 +1,25 @@
+import { getCurrentPreferencePIN } from './categories/basic-data/protected-data.js';
+import { DOCUMENT_ID } from './edit-trip.js';
 import { getState } from '../../data/state.js';
 import { getChildIDs, getID, setRequired } from '../../utils/dom.js';
 import { formattedDateToDateObject } from '../../utils/dates.js';
 import { getUID } from '../../data/firebase/auth.js';
 import { deleteUnusedImages } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
+import { TRAVELERS } from './categories/travelers.js';
+import { getGaleriaObject } from './categories/gallery.js';
+import { getItineraryArray } from './categories/itinerary-module/itinerary-module.js';
+import { getDestinationsArray } from "./categories/destination.js";
+import { getAccommodationArray, getProtectedAccommodationObject } from "./categories/accommodation.js";
+import { getProtectedTransportationObject, getTransportationObject } from "./categories/transportation.js";
+import { getExpensesObject } from "./categories/expenses.js";
+import { setDocumento } from "../../utils/set.js";
+import { IMAGE_UPLOAD_STATUS } from "../../data/firebase/storage";
 
-var FIRESTORE_NEW_DATA = {};
+export var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_PROTECTED_NEW_DATA = {};
 
-var FIRESTORE_GASTOS_NEW_DATA = {};
+export var FIRESTORE_GASTOS_NEW_DATA = {};
 var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
 
 async function buildTripObject() {
@@ -169,7 +180,7 @@ function getLinksObject() {
 	};
 }
 
-function getVisibilidadeObject() {
+export function getVisibilidadeObject() {
 	return {
 		claro: getID("dark-and-light").checked || getID("light-exclusive").checked,
 		escuro: getID("dark-and-light").checked || getID("dark-exclusive").checked,
@@ -220,7 +231,7 @@ function verifyImageUploads(type) {
 	);
 }
 
-async function setTripData() {
+export async function setTripData() {
 	if (getID("habilitado-destinos").checked) {
 		for (const child of getChildIDs("com-destinos")) {
 			const i = parseInt(child.split("-")[2]);

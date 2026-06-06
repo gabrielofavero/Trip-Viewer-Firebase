@@ -8,7 +8,7 @@ var GASTOS_CHARTS = {};
 
 
 // Tabelas
-function setTable(id, itens, total) {
+export function setTable(id, itens, total) {
 	if (!itens || itens.length === 0) {
 		return;
 	}
@@ -71,7 +71,7 @@ function setTable(id, itens, total) {
 	}
 }
 
-function setChart(tipo, id, labels, valores) {
+export function setChart(tipo, id, labels, valores) {
 	const div = getID(id);
 
 	if (GASTOS_CHARTS[id]) {
@@ -85,7 +85,7 @@ function setChart(tipo, id, labels, valores) {
 	GASTOS_CHARTS[id] = new Chart(div, config);
 }
 
-function changeChartsLabelsVisibility() {
+export function changeChartsLabelsVisibility() {
 	const cor = isOnDarkMode()
 		? "rgba(227, 236, 248, 1)"
 		: "rgba(75, 85, 99, 1)";

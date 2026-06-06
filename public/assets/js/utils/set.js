@@ -6,14 +6,14 @@ import { isModalOpen, openModal } from '../theme/visibility.js';
 import { hasUnsavedChanges, validateRequiredFields } from '../ui/fields.js';
 import { getID, getNewDataDocument } from './dom.js';
 
-var CUSTOM_UPLOADS = {
+export var CUSTOM_UPLOADS = {
 	hospedagens: [],
 	galeria: [],
 };
 var SET_RESPONSES = [];
 var UPLOAD_AFTER_SET = false;
 
-async function setDocumento({
+export async function setDocumento({
 	type,
 	checks = [],
 	dataBuildingFunctions = [],

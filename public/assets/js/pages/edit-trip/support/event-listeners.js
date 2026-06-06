@@ -7,15 +7,22 @@ import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
 import { registerActions } from '../../../ui/actions.js';
 import { openTravelersInfo } from '../categories/travelers.js';
 import { requestPinEditarGastos } from '../categories/basic-data/protected-data.js';
-import { deleteTrip } from '../edit-trip.js';
+import { deleteTrip, DOCUMENT_ID, SUCCESSFUL_SAVE } from '../edit-trip.js';
 import { openInnerExpense, deleteInnerGasto } from '../categories/expenses.js';
 import { openAttributions } from '../../../utils/attributions.js';
+import { switchPin } from '../categories/basic-data/protected-data.js';
 import { closeToast } from '../../../utils/messages.js';
 import { openAccommodationImages, openInnerAccommodationImage } from '../categories/accommodation.js';
-import { openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap, deleteInnerProgramacao } from '../categories/itinerary-module/inner-itinerary/inner-itinerary.js';
+import { galeriaAdicionarListenerAction } from '../categories/gallery.js';
+import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
+import { deleteInnerProgramacao, openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap } from "../categories/itinerary-module/inner-itinerary/inner-itinerary.js";
+import { getVisibilidadeObject, setTripData } from "../set-trip.js";
+import { autoFillDarkColor } from "../categories/customization.js";
+import { applyTransportationTypeVisualization } from "../categories/transportation.js";
+import { getVisibility } from "../../../theme/theme";
 
 // Loader
-function loadEventListeners() {
+export function loadEventListeners() {
 	// Register data-action handlers via the shared delegated handler (ui/actions.js)
 	registerActions({
 		"open-travelers-info": () => openTravelersInfo(),
@@ -218,7 +225,7 @@ function visualizarListenerAction() {
 	}
 }
 
-function addRemoveTransportationListener(j) {
+export function addRemoveTransportationListener(j) {
 	const dynamicSelects = [
 		{
 			type: "transporte-pessoa",
@@ -228,7 +235,7 @@ function addRemoveTransportationListener(j) {
 	addRemoveChildListenerDS("transporte", j, dynamicSelects);
 }
 
-function addRemoveGaleriaListener(j) {
+export function addRemoveGaleriaListener(j) {
 	const dynamicSelects = [
 		{
 			type: "galeria-categoria",
@@ -238,9 +245,9 @@ function addRemoveGaleriaListener(j) {
 	addRemoveChildListenerDS("galeria", j, dynamicSelects);
 }
 
-function visibilityListenerAction(visibilidade) {
+export function visibilityListenerAction(visibilidade) {
 	if (!visibilidade) {
-		visibilidade = buildVisibilidadeObject();
+		visibilidade = getVisibilidadeObject();
 	}
 
 	getID("tema-claro").style.display = visibilidade.claro ? "block" : "none";

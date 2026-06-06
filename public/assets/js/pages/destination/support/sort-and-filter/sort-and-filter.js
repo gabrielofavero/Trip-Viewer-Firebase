@@ -1,12 +1,15 @@
 import { getID } from '../../../../utils/dom.js';
+import { CONTENT } from "../../destination";
+import { closeAddedDestination } from "../../edit-destination";
+import { PLANNED_DESTINATION } from "../trip";
 
-const FILTER_SORT_KEYS_ORDER = {
+export const FILTER_SORT_KEYS_ORDER = {
 	planned: ["planned", "not_planned"],
 	prices: ["-", "$", "$$", "$$$", "$$$$", "default"],
 	scores: ["5", "4", "3", "2", "1", "default"],
 };
 
-const FILTER_SORT_DATA = {};
+export const FILTER_SORT_DATA = {};
 
 // Loading Action
 function loadSortAndFilter(force = false) {

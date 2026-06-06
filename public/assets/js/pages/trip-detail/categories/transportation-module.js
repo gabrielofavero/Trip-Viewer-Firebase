@@ -8,6 +8,16 @@ import { openToast } from '../../../utils/messages.js';
 import { loadCustomSelect } from '../../../ui/custom-select.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { fade } from '../../../theme/animations.js';
+import { getSensitiveReservationHTML } from "../support/sensitive-reservation.js";
+import { initSwiper } from "../support/swiper.js";
+import { adjustCardsHeights } from "../support/visibility.js";
+import { getDateString } from "../../../utils/dates";
+import { getTimeStringFromDate } from "../../../utils/dates";
+import { jsTimeToVisualTime } from "../../../utils/dates";
+import { codifyText } from "../../../utils/dom";
+import { ADJUST_HEIGHT_CARDS } from "../support/visibility";
+import { END_DATE } from "../view";
+import { START_DATE } from "../view";
 
 var TRANSPORTE_ICONES = [];
 var ACTIVE_TRANSPORTATION;
@@ -65,7 +75,7 @@ function getTransportationHTML(j, identifier) {
             </div>`;
 }
 
-function getFlightBoxHTML(j, identifier, innerItinerary = false) {
+export function getFlightBoxHTML(j, identifier, innerItinerary = false) {
 	const empresa = getEmpresaObj(j);
 	return `<div class="flight-box${innerItinerary ? " inner-programacao-item" : ""}" id="transporte-${identifier}-box-${j}">
             <div class="flight-diagram">
@@ -242,7 +252,7 @@ function buildTransportationSwiper(swiperData) {
 	}
 }
 
-function loadTransportationImages() {
+export function loadTransportationImages() {
 	let j = 1;
 	while (getID(`transporte-slide-${j}`)) {
 		const claro = getID(`flight-img-claro-${j}`);
@@ -388,7 +398,7 @@ function observeFlightBoxes() {
 	});
 }
 
-function adjustTransportationBoxContainerHeight() {
+export function adjustTransportationBoxContainerHeight() {
 	const elements = document.querySelectorAll(".flight-box");
 	const heights = Array.from(elements, (el) => el.offsetHeight);
 	heights.push(250);

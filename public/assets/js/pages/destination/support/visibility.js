@@ -3,6 +3,7 @@ import { loadEmbedVisibility } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { getDescricaoValue } from '../../../models/destination.model.js';
+import { THEME_COLOR } from "../../../theme/theme";
 
 async function loadDestinationVisibility() {
 	loadVisibility();
@@ -41,7 +42,7 @@ function applyDestinationsMediaHeight() {
 	}
 }
 
-function applyAccordionArrowCustomColor() {
+export function applyAccordionArrowCustomColor() {
 	const color = THEME_COLOR.replace("#", "%23");
 	const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='${color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>`;
 	setCSSRule(
@@ -51,12 +52,12 @@ function applyAccordionArrowCustomColor() {
 	);
 }
 
-function getDestinationsTitleVisibility(item) {
+export function getDestinationsTitleVisibility(item) {
 	if (item.nota || item.mapa || item.website || item.instagram) return "flex";
 	else return "none";
 }
 
-function getLinksContainerVisibility(item) {
+export function getLinksContainerVisibility(item) {
 	if (item.mapa || item.website || item.instagram) return "flex";
 	else return "none";
 }
@@ -65,11 +66,11 @@ function getPalcoRegiaoVisibility(item) {
 	return item.regiao ? "block" : "none";
 }
 
-function getValorVisibility(item) {
+export function getValorVisibility(item) {
 	return item.valor ? "block" : "none";
 }
 
-function getDescricaoVisibility(item) {
+export function getDescricaoVisibility(item) {
 	return getDescricaoValue(item) ? "block" : "none";
 }
 

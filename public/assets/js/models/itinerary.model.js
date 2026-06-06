@@ -9,6 +9,8 @@ import { getInnerItinerary, getInnerItineraryTitle } from '../utils/dom.js';
 import { getDestination } from '../data/firebase/database.js';
 import { translate } from '../i18n/translation.js';
 import { getNotaTranslation, getValorValue } from './destination.model.js';
+import { ITINERARY_HTML } from "../pages/itinerary/itinerary-formatter";
+import { getTimeStringFromDateObj } from "../utils/dates";
 
 // ======= Itinerary Content Generator (Multi-format) =======
 

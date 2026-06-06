@@ -5,6 +5,9 @@ import { closeMessage, displayError } from '../../../utils/messages.js';
 import { haveErrorFromGetRequest } from '../../../data/firebase/database.js';
 import { translate } from '../../../i18n/translation.js';
 import { requestPin } from '../../../utils/pin.js';
+import { copyToClipboard } from "../categories/transportation-module.js";
+import { sendToExpenses } from "../support/embed.js";
+import { getURLParam } from "../../../utils/dom";
 
 const SENSITIVE_RESERVATION_BOXES = {
 	transportes: {},
@@ -17,7 +20,7 @@ const ACTIVE_SENSITIVE_RESERVATION = {
 const MASKED = "***";
 const MEASURE = document.createElement("span");
 
-function loadSensitiveReservations() {
+export function loadSensitiveReservations() {
 	const boxes = document.querySelectorAll(".sensitive-box");
 	MEASURE.style.position = "absolute";
 	MEASURE.style.visibility = "hidden";
@@ -43,7 +46,7 @@ function getSensitiveReservationWidth(el, txt) {
 	return MEASURE.getBoundingClientRect().width;
 }
 
-function getSensitiveReservationHTML(type, id) {
+export function getSensitiveReservationHTML(type, id) {
 	return `
     <div class="sensitive-box" data-visible="false" data-type="${type}" data-id="${id}" data-reservation="" data-link="">
         <span class="code-wrapper"><a class="code-text masked" href="#" target="_blank">***</a></span>
@@ -170,7 +173,7 @@ async function protectedDataConfirmAction(afterAction = _setFirestoreData) {
 	afterAction(firestoreData);
 }
 
-function requestDocumentPin({
+export function requestDocumentPin({
 	invalido = false,
 	confirmAction = `protectedDataConfirmAction()`,
 } = {}) {
@@ -179,7 +182,7 @@ function requestDocumentPin({
 	requestPin({ confirmAction, precontent, invalido });
 }
 
-async function updateProtectedDataFromExternalPin(pin) {
+export async function updateProtectedDataFromExternalPin(pin) {
 	const path = `${TYPE}/protected/${pin}/${getURLParam(TYPE[0])}`;
 	const firestoreData = await get(path);
 

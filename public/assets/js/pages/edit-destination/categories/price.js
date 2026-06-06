@@ -62,7 +62,7 @@ function loadMoedaOptions() {
 	}
 }
 
-function getOutroValorVisibility() {
+export function getOutroValorVisibility() {
 	if (VALOR_OPTIONS) return "none";
 	else return "block";
 }

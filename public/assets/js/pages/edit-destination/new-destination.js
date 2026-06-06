@@ -1,8 +1,12 @@
 import { getID, getNextJ } from '../../utils/dom.js';
 import { addSelectorDS } from '../../ui/dynamic-select.js';
+import { translate } from "../../i18n/translation";
+import { getNewSvg } from "../../theme/icons";
+import { getDescriptionHTML } from "./categories/description";
+import { getOutroValorVisibility } from "./categories/price";
 
 // Adicionar
-function addRestaurantes() {
+export function addRestaurantes() {
 	if (!VALOR_OPTIONS) {
 		loadCurrencySelects();
 	}
@@ -141,7 +145,7 @@ function addRestaurantes() {
 	);
 }
 
-function addLanches() {
+export function addLanches() {
 	if (!VALOR_OPTIONS) {
 		loadCurrencySelects();
 	}
@@ -276,7 +280,7 @@ function addLanches() {
 	addSelectorDS("regiao", `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
 }
 
-function addSaidas() {
+export function addSaidas() {
 	if (!VALOR_OPTIONS) {
 		loadCurrencySelects();
 	}
@@ -410,7 +414,7 @@ function addSaidas() {
 	addSelectorDS("regiao", `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
 }
 
-function addTurismo() {
+export function addTurismo() {
 	if (!VALOR_OPTIONS) {
 		loadCurrencySelects();
 	}
@@ -544,7 +548,7 @@ function addTurismo() {
 	addSelectorDS("regiao", `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
 }
 
-function addLojas() {
+export function addLojas() {
 	if (!VALOR_OPTIONS) {
 		loadCurrencySelects();
 	}

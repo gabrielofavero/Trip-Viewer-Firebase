@@ -1,9 +1,9 @@
-import { registerActions } from '../../ui/actions.js';
+import { registerActions } from '../../../ui/actions.js';
 import { deleteDestino, openMoveDestinationModal } from '../edit-destination.js';
 import { openDescriptionModal } from '../categories/description.js';
-import { openAttributions } from '../../utils/attributions.js';
-import { closeToast } from '../../utils/messages.js';
-import { closeModal } from '../../theme/visibility.js';
+import { openAttributions } from '../../../utils/attributions.js';
+import { closeToast } from '../../../utils/messages.js';
+import { closeModal } from '../../../theme/visibility.js';
 
 export function loadEditDestinationListeners() {
     registerActions({

@@ -1,6 +1,6 @@
 import { getID } from '../../../utils/dom.js';
 
-function initSwiper(id) {
+export function initSwiper(id) {
 	const swiper = getID(`${id}-swiper`);
 
 	swiper.style.setProperty("--swiper-navigation-color", THEME_COLOR);

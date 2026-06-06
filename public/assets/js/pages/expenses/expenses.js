@@ -9,7 +9,7 @@ import { getConversionText, loadConvertedExpenses } from '../../models/expense.m
 import { fade } from '../../theme/animations.js';
 import { requestPin } from '../../utils/pin.js';
 
-var GASTOS;
+export var GASTOS;
 var EXPENSES_COUNT = 0;
 var TOTAL_EXPENSES = {
 	resumo: {},
@@ -19,6 +19,10 @@ var TOTAL_EXPENSES = {
 var ACTIVE_EXPENSE_TAB = "resumo";
 
 import { loadExpensesListeners } from './support/event-listeners.js';
+import { loadEmbedMode } from "./support/embed.js";
+import { requestInvalidPin } from "../../utils/pin.js";
+import { loadDuringTripExpenses, loadPreTripExpenses, loadSummary, loadTravelerExpenses } from "./categories.js";
+import { GASTOS_EMBED } from "./support/embed";
 
 export async function loadExpensesPage() {
 	loadExpensesListeners();
@@ -175,7 +179,7 @@ function applyExpenses() {
 		getID("radio-gastosDurante").style.display = "";
 		getID("resumo").style.display = "none";
 		getID("gastosDurante").style.display = "";
-		applyTravelerExpenses();
+		applyAndLoadTravelerExpenses();
 
 		loadDuringTripExpenses();
 
@@ -204,7 +208,7 @@ function applyExpenses() {
 	}
 }
 
-function setTabListeners() {
+export function setTabListeners() {
 	const radios = [
 		"radio-resumo",
 		"radio-gastosPrevios",

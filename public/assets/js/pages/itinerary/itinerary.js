@@ -13,6 +13,7 @@ import { requestPin } from '../../utils/pin.js';
 var FIRESTORE_PROTECTED_DATA;
 
 import { loadItineraryListeners } from './support/event-listeners.js';
+import { requestInvalidPin } from "../../utils/pin.js";
 
 export async function loadItineraryPage() {
 	loadItineraryListeners();
@@ -141,7 +142,7 @@ function displaySensitiveItineraryPrompt() {
 	const titulo = translate("trip.protected");
 	const conteudo = translate("messages.protected.prompt");
 	const yesAction = "requestPinItinerary()";
-	const noAction = "loadItinerary()";
+	export const noAction = "loadItinerary()";
 	const critico = true;
 	displayPrompt({ titulo, conteudo, yesAction, noAction, critico });
 }

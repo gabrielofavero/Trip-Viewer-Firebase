@@ -2,8 +2,9 @@ import { getDestinos } from '../../../app/config.js';
 import { cloneObject, firstCharToUpperCase, getChildIDs, getID, getJ } from '../../../utils/dom.js';
 import { getUserLanguage, translate } from '../../../i18n/translation.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
+import { getSelectOptionsHTML } from "../../../ui/fields";
 
-function getDescriptionHTML(categoria, j) {
+export function getDescriptionHTML(categoria, j) {
 	let content = "";
 
 	for (const lang of LANGUAGES) {

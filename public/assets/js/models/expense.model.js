@@ -8,6 +8,8 @@ import { translate } from '../i18n/translation.js';
 import { getEmptyChar } from '../utils/dom.js';
 import { isOnDarkMode } from '../theme/visibility.js';
 import { hexToRgb, rgbToText } from '../theme/colors.js';
+import { GASTOS } from "../pages/expenses/expenses";
+import { MOEDAS } from "../pages/expenses/support/currency";
 
 // ======= Currency Filtering & Sorting =======
 

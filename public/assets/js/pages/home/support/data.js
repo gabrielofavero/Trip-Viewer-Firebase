@@ -136,7 +136,7 @@ function getTripBackgroundImage(trip) {
 # Trip Dialog
 --------------------------------------------------------------*/
 export function openTripDialog(tripId) {
-	const trip = ALL_TRIPS.find(t => t.id === tripId);
+	export const trip = ALL_TRIPS.find(t => t.id === tripId);
 	if (!trip) return;
 	SELECTED_TRIP_ID = tripId;
 

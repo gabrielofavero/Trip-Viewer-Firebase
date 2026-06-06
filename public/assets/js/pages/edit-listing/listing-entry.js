@@ -6,7 +6,6 @@ import '../../theme/visibility.js';
 import '../../theme/colors.js';
 import '../../theme/stylesheets.js';
 import '../../data/services/auth.service.js';
-import '../index/support/visibility.js';
 import '../edit-trip/categories/destination.js';
 import '../edit-trip/new-trip.js';
 import '../edit-trip/categories/customization.js';

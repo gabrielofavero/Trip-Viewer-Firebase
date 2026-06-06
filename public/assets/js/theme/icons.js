@@ -1,4 +1,4 @@
-function getNewSvg(id = "") {
+export function getNewSvg(id = "") {
 	const idValue = id ? `id="${id}"` : "";
 	return `<svg ${idValue} class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3"

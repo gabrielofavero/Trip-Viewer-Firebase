@@ -6,6 +6,9 @@ import { removeEl, validateInstagramLink, validateLink, validateMapLink, validat
 import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
 import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
+import { getNotaClass } from "./categories";
+import { getNotaIcon } from "./categories";
+import { FIRESTORE_DESTINOS_DATA } from "./destination";
 
 let ADDED_J;
 

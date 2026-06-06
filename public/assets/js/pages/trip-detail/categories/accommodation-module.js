@@ -1,6 +1,15 @@
 import { getState } from '../../../data/state.js';
 import { convertFromDateObject, getDateNoTime, getTodayDateObject } from '../../../utils/dates.js';
 import { getID } from '../../../utils/dom.js';
+import { loadImageLightbox } from "../support/embed.js";
+import { getSensitiveReservationHTML } from "../support/sensitive-reservation.js";
+import { initSwiper } from "../support/swiper.js";
+import { translate } from "../../../i18n/translation";
+import { getDateString } from "../../../utils/dates";
+import { getTimeStringFromDate } from "../../../utils/dates";
+import { ADJUST_HEIGHT_CARDS } from "../support/visibility";
+import { END_DATE } from "../view";
+import { START_DATE } from "../view";
 
 function loadAccommodations() {
 	let swiperData = [];
@@ -48,7 +57,7 @@ function getAccommodationsHTML(i, innerItinerary = false) {
           </div>`;
 }
 
-function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
+export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
 	const imagens = hospedagem.imagens;
 	const checkIn = hospedagem.checkIn;
 	const checkOut = hospedagem.checkOut;
@@ -122,7 +131,7 @@ function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
             </div>`;
 }
 
-function getHospedagensData(dataFirestore) {
+export function getHospedagensData(dataFirestore) {
 	const date = convertFromDateObject(dataFirestore);
 	return `${getDateString(date)}, ${getTimeStringFromDate(date)}`;
 }

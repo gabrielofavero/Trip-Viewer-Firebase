@@ -4,6 +4,11 @@ import { getState } from '../data/state.js';
 import { changeBarColorIOS, DARK_COLOR, getDarkerColor, getLighterColor, getSecondaryColor, LIGHT_COLOR, loadLogoColors, loadThemeColors, saveLocalColors, setDarkColor, setLightColor, setThemeColor, setThemeColorHover, setThemeColorSecondary, setThemeColorSecondaryHover } from './colors.js';
 import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from './animations.js';
+import { loadTransportationImages } from "../pages/trip-detail/categories/transportation-module.js";
+import { loadViewCustomVisibilityRules } from "../pages/trip-detail/support/visibility.js";
+import { applyAccordionArrowCustomColor } from "../pages/destination/support/visibility.js";
+import { changeChartsLabelsVisibility } from "../pages/expenses/support/data.js";
+import { loadCurrenciesTab } from "../pages/expenses/support/currency.js";
 
 // ======= Visibility JS =======
 const _exports = {};

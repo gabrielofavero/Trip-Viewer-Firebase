@@ -6,7 +6,8 @@ import { translate } from '../../../i18n/translation.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
 import { getNewTravelerID, hasDuplicateTravelerNames, validateTravelersObject } from '../../../models/traveler.model.js';
 
-var TRAVELERS = [];
+export var TRAVELERS = [];
+export function setTravelers(val) { TRAVELERS = val; }
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
 let TRAVELER_SELECT_OPTIONS = "";
 
@@ -104,7 +105,7 @@ function saveTravelersInfo() {
 	}
 }
 
-function getTravelersFieldset(id) {
+export function getTravelersFieldset(id) {
 	const result = document.createElement("div");
 	result.className = "nice-form-group";
 
@@ -241,7 +242,7 @@ function validateTravelersFieldset(id) {
 	return isValid;
 }
 
-function updateTravelersButtonLabel() {
+export function updateTravelersButtonLabel() {
 	const el = getID("travelers-info");
 
 	if (TRAVELERS.length === 0) {
@@ -253,7 +254,7 @@ function updateTravelersButtonLabel() {
 	el.textContent = getReadableArray(names);
 }
 
-function getTravelersSelectOptionsHTML() {
+export function getTravelersSelectOptionsHTML() {
 	if (!TRAVELER_SELECT_OPTIONS) {
 		for (const traveler of TRAVELERS) {
 			if (!traveler.nome) {
@@ -265,7 +266,7 @@ function getTravelersSelectOptionsHTML() {
 	return TRAVELER_SELECT_OPTIONS;
 }
 
-function getTravelerName(id) {
+export function getTravelerName(id) {
 	const traveler = TRAVELERS.find((t) => t.id === id);
 	return traveler ? traveler.nome : "";
 }

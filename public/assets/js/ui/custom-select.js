@@ -1,6 +1,6 @@
 import { getID } from '../utils/dom.js';
 
-let CUSTOM_SELECTS = {};
+export let CUSTOM_SELECTS = {};
 
 export function loadCloseCustomSelectListeners() {
 	document.addEventListener("click", function (e) {

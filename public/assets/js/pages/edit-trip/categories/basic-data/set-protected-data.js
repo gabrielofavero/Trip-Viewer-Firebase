@@ -1,7 +1,10 @@
 import { getState } from '../../../../data/state.js';
+import { getNewPinObject, isDataUnprotected, PIN } from './protected-data.js';
 import { getID, objectExistsAndHasKeys } from '../../../../utils/dom.js';
+import { DOCUMENT_ID } from '../../edit-trip.js';
+import { FIRESTORE_NEW_DATA, FIRESTORE_GASTOS_NEW_DATA } from '../../set-trip.js';
 
-function setCurrentPreferencePIN(preference) {
+export function setCurrentPreferencePIN(preference) {
 	if (preference === "sensitive-only") {
 		getID("pin-sensitive-only").checked = true;
 	} else if (preference === "all-data") {

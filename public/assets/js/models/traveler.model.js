@@ -7,6 +7,7 @@
  * @returns {string} Unique random ID
  */
 import { getRandomID } from '../utils/dom.js';
+import { TRAVELERS } from '../pages/edit-trip/categories/travelers.js';
 
 export function getNewTravelerID() {
 	return getRandomID({ pool: TRAVELERS.map((t) => t.id) });

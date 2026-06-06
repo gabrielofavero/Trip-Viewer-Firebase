@@ -1,11 +1,12 @@
 import { getChildIDs, getID, getIDs, getJ } from '../../../utils/dom.js';
 import { getHTMLpage } from '../../../app/main.js';
+import { translate } from "../../../i18n/translation";
 
 var DESTINOS = [];
-var DESTINOS_DATA = {};
-var DESTINOS_ATIVOS = [];
+export var DESTINOS_DATA = {};
+export var DESTINOS_ATIVOS = [];
 
-function getDestinationsArray() {
+export function getDestinationsArray() {
 	const result = [];
 	for (const destino of DESTINOS_ATIVOS) {
 		const destinosID = destino.destinosID;
@@ -15,7 +16,7 @@ function getDestinationsArray() {
 }
 
 // Destinos Ativos
-async function loadDestinosAtivos(firstBoot = true) {
+export async function loadDestinosAtivos(firstBoot = true) {
 	DESTINOS_ATIVOS = [];
 	const habilidadoDestinos = getID("habilitado-destinos");
 	if (habilidadoDestinos && !habilidadoDestinos.checked) return;
@@ -40,7 +41,7 @@ async function loadDestinosAtivos(firstBoot = true) {
 	}
 }
 
-async function updateDestinosAtivosHTMLs() {
+export async function updateDestinosAtivosHTMLs() {
 	await loadDestinosAtivos(false);
 
 	if (getHTMLpage() === "editar-viagem") {
@@ -56,12 +57,12 @@ function getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
 	return result;
 }
 
-function getActiveDestinationsSelectVisibility() {
+export function getActiveDestinationsSelectVisibility() {
 	return DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 }
 
 // Destinos Checkbox (Para Destinos e Programação)
-function updateDestinosAtivosCheckboxHTML(tipo, j) {
+export function updateDestinosAtivosCheckboxHTML(tipo, j) {
 	const visibility = DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 	const values = DESTINOS_ATIVOS.map((destino) => destino.destinosID);
 
@@ -106,7 +107,7 @@ function updateDestinosAtivosCheckboxHTML(tipo, j) {
 	}
 }
 
-function getActiveDestinationsCheckboxOptions(
+export function getActiveDestinationsCheckboxOptions(
 	tipo,
 	j,
 	destinosAtivos = DESTINOS_ATIVOS,
@@ -125,7 +126,7 @@ function getDestinosAtivosCheckboxOptionWithID(checkboxOption, tipo) {
 	return checkboxOption.replace(/check-destinos/g, `check-${tipo}`);
 }
 
-function addValuesForDestinosAtivosCheckbox(tipo, j, values) {
+export function addValuesForDestinosAtivosCheckbox(tipo, j, values) {
 	const fieldsetID = `${tipo}-local-${j}`;
 	for (const containerID of getChildIDs(fieldsetID)) {
 		const ids = getIDs(containerID);
@@ -136,7 +137,7 @@ function addValuesForDestinosAtivosCheckbox(tipo, j, values) {
 	}
 }
 
-function getDestinationsItemCheckbox(j, destinosID, titulo, tipo = "destinos", k) {
+export function getDestinationsItemCheckbox(j, destinosID, titulo, tipo = "destinos", k) {
 	if (!j) {
 		console.error("Error in _getDestinationsItemCheckbox: j is undefined or null.");
 	}
@@ -154,7 +155,7 @@ function loadDestinosCheckboxListeners(tipo, j) {
 	}
 }
 
-function getDestinosFromCheckbox(tipo, j) {
+export function getDestinosFromCheckbox(tipo, j) {
 	result = [];
 	for (const child of getChildIDs(`${tipo}-local-${j}`)) {
 		const k = child.split("-")[2];

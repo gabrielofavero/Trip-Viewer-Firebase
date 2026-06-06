@@ -6,7 +6,7 @@ import { validateLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
 import { buildDS } from '../../../ui/dynamic-select.js';
 
-function getTransportationObject(protectedReservationCodes = false) {
+export function getTransportationObject(protectedReservationCodes = false) {
 	const result = {
 		dados: [],
 		visualizacao: getID("people-view").checked
@@ -53,7 +53,7 @@ function getTransportationObject(protectedReservationCodes = false) {
 	return result;
 }
 
-function getProtectedTransportationObject() {
+export function getProtectedTransportationObject() {
 	const result = {};
 	for (const childID of getChildIDs("transporte-box")) {
 		const j = getJ(childID);
@@ -65,7 +65,7 @@ function getProtectedTransportationObject() {
 	return result;
 }
 
-function updateTransportationTitle(i) {
+export function updateTransportationTitle(i) {
 	const partida = getID(`ponto-partida-${i}`).value;
 	const chegada = getID(`ponto-chegada-${i}`).value;
 
@@ -112,7 +112,7 @@ function getPerson(i) {
 	return select;
 }
 
-function loadTransportationVisibility(j) {
+export function loadTransportationVisibility(j) {
 	const empresasPorTipo = getTransportations().empresas;
 
 	const empresaSelect = getID(`empresa-select-${j}`);
@@ -163,7 +163,7 @@ function loadTransportationVisibility(j) {
 	}
 }
 
-function applyTransportationTypeVisualization(i) {
+export function applyTransportationTypeVisualization(i) {
 	if (i) {
 		apply(i);
 		return;
@@ -223,7 +223,7 @@ function getCompanyValue(j) {
 }
 
 // Listeners
-function loadTransportationListeners(j) {
+export function loadTransportationListeners(j) {
 	// Selects Dinâmicos
 	getID(`empresa-select-${j}`).addEventListener("change", () =>
 		loadTransportationVisibility(j),

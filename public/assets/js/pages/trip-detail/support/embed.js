@@ -3,17 +3,20 @@ import { getState } from '../../../data/state.js';
 import { loadEmbedListeners, openEmbed, sendToEmbed } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { disableScroll, enableScroll, loadExternalVisibility } from '../../../theme/visibility.js';
+import { updateProtectedDataFromExternalPin } from "../support/sensitive-reservation.js";
+import { getVisibility } from "../../../theme/theme";
+import { getURLParam } from "../../../utils/dom";
 
 var SAVED_SCROLL_POSITION = 0;
-const ACTIVE_EMBEDS = {};
+export const ACTIVE_EMBEDS = {};
 
-function loadViewEmbed() {
+export function loadViewEmbed() {
 	if (getState().modulos?.gastos === true) {
 		loadEmbedListeners(_loadViewEmbedAction);
 	}
 }
 
-function openViewEmbed(url) {
+export function openViewEmbed(url) {
 	const frameID = "lightbox-iframe";
 	const newTab = true;
 	const beforeOpen = () => {
@@ -55,14 +58,14 @@ function closeViewEmbed(redirectToHome = false, visibility) {
 	}
 }
 
-function openExpensesEmbed() {
+export function openExpensesEmbed() {
 	openEmbed({
 		frameID: "expenses-embed-frame",
 		url: `expenses.html?visibility=${getVisibility()}&embed=1&g=${getURLParam("v")}`,
 	});
 }
 
-function loadImageLightbox(className) {
+export function loadImageLightbox(className) {
 	GLightbox({
 		selector: `.${className}`,
 		autofocusVideos: false,
@@ -73,7 +76,7 @@ function loadImageLightbox(className) {
 	});
 }
 
-function sendToExpenses(type, value) {
+export function sendToExpenses(type, value) {
 	sendToEmbed("expenses-embed-frame", type, value);
 }
 

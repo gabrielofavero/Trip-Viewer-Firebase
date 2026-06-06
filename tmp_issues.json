@@ -1,0 +1,352 @@
+[
+  {
+    "type": "undefined-reference",
+    "file": "backup/backup.js",
+    "line": 283,
+    "symbol": "account",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "backup/backup.js",
+    "line": 307,
+    "symbol": "account",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/destination.js",
+    "line": 109,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 49,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 49,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 49,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 49,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 49,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 49,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 124,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 125,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 126,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 127,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 128,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/content.js",
+    "line": 129,
+    "symbol": "destination",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/media-embed.js",
+    "line": 30,
+    "symbol": "instgrm",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/media-embed.js",
+    "line": 91,
+    "symbol": "vm",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/media-embed.js",
+    "line": 91,
+    "symbol": "vt",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/destination/support/media-embed.js",
+    "line": 93,
+    "symbol": "supported",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/edit-trip/categories/expenses.js",
+    "line": 113,
+    "symbol": "_afterDragInnerGasto",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "pages/edit-trip/categories/travelers.js",
+    "line": 276,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "goo",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "instagram",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "youtu",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "youtube",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "tiktok",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "instagram",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "instagram",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "instagram",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "pbs",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "pbs",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "ui/fields.js",
+    "line": 247,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "utils/dom.js",
+    "line": 907,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "utils/dom.js",
+    "line": 907,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "utils/messages.js",
+    "line": 443,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "utils/messages.js",
+    "line": 443,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "utils/messages.js",
+    "line": 443,
+    "symbol": "messages",
+    "suggestion": null
+  },
+  {
+    "type": "undefined-reference",
+    "file": "utils/messages.js",
+    "line": 52,
+    "symbol": "noAction",
+    "suggestion": "../pages/itinerary/itinerary.js"
+  }
+]

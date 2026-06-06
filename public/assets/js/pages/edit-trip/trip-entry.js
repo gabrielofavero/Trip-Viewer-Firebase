@@ -6,7 +6,6 @@ import '../../theme/visibility.js';
 import '../../theme/colors.js';
 import '../../theme/stylesheets.js';
 import '../../data/services/auth.service.js';
-import '../index/support/visibility.js';
 import './support/event-listeners.js';
 import './categories/customization.js';
 import './categories/basic-data/protected-data.js';

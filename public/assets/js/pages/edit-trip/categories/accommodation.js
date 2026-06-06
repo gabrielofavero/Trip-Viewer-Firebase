@@ -7,10 +7,13 @@ import { closeMessage, displayFullMessage, getContainersInput } from '../../../u
 import { initializeSortableForGroup } from '../../../ui/sortable.js';
 import { loadImageSelector, uploadImages } from '../../../data/firebase/storage.js';
 import { fade } from '../../../theme/animations.js';
+import { FIRESTORE_NEW_DATA } from '../set-trip.js';
+import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage";
+import { CUSTOM_UPLOADS } from "../../../utils/set";
 
-var ACCOMMODATION_IMAGES = {};
+export var ACCOMMODATION_IMAGES = {};
 
-function getAccommodationArray(protectedReservationCodes = false) {
+export function getAccommodationArray(protectedReservationCodes = false) {
 	let result = [];
 	for (const id of getChildIDs("hospedagens-box")) {
 		const j = getJ(id);
@@ -42,7 +45,7 @@ function getAccommodationArray(protectedReservationCodes = false) {
 	return result;
 }
 
-function getProtectedAccommodationObject() {
+export function getProtectedAccommodationObject() {
 	let result = {};
 	for (const childID of getChildIDs("hospedagens-box")) {
 		const j = getJ(childID);
@@ -68,11 +71,11 @@ function getAccommodationImages(j) {
 	return result;
 }
 
-function loadCheckIn(hospedagem, j) {
+export function loadCheckIn(hospedagem, j) {
 	loadAccommodationCheck("checkin", "in", hospedagem, j);
 }
 
-function loadCheckOut(hospedagem, j) {
+export function loadCheckOut(hospedagem, j) {
 	loadAccommodationCheck("checkout", "out", hospedagem, j);
 }
 
@@ -86,7 +89,7 @@ function loadAccommodationCheck(chave, checkTipo, hospedagem, j) {
 }
 
 // Listener
-function loadAccommodationListeners(j) {
+export function loadAccommodationListeners(j) {
 	// Validação de Link
 	getID(`reserva-hospedagens-link-${j}`).addEventListener("change", () =>
 		validateLink(`reserva-hospedagens-link-${j}`),
@@ -247,7 +250,7 @@ function confirmAccommodationImages(j) {
 	}
 }
 
-function setImagemButtonLabel(j) {
+export function setImagemButtonLabel(j) {
 	getID(`imagens-hospedagem-button-${j}`).innerText =
 		ACCOMMODATION_IMAGES[j].length > 0
 			? translate("labels.image.edit")
@@ -276,7 +279,7 @@ function saveAccommodationImages(j) {
 	closeMessage();
 }
 
-function removeAccommodationImages(j) {
+export function removeAccommodationImages(j) {
 	ACCOMMODATION_IMAGES[j] = [];
 }
 

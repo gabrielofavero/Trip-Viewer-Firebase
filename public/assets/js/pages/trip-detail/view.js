@@ -9,22 +9,28 @@ import { convertFromDateObject } from '../../utils/dates.js';
 import { getPageURL, setPageName } from '../../app/main.js';
 import { translate } from '../../i18n/translation.js';
 import { loadViewListeners } from './support/event-listeners.js';
+import { adjustCardsHeights, adjustCardsHeightsListener, loadViewVisibility, mainView } from "./support/visibility.js";
+import { loadViewEmbed, openExpensesEmbed } from "./support/embed.js";
+import { loadSensitiveReservations, requestDocumentPin } from "./support/sensitive-reservation.js";
+import { adjustDestinationsHTML, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
+import { adjustPortfolioHeight, refreshCategorias } from "./categories/gallery.js";
+import { ACTIVE_EMBEDS } from "./support/embed";
 
 var REFRESHED = false;
 var TYPE = "viagens";
 var PIN = null;
 
-var START_DATE = {
+export var START_DATE = {
 	date: null,
 	text: "",
 };
 
-var END_DATE = {
+export var END_DATE = {
 	date: null,
 	text: "",
 };
 
-var TRAVELERS;
+export var TRAVELERS;
 
 document.addEventListener("DOMContentLoaded", async function () {
 	try {

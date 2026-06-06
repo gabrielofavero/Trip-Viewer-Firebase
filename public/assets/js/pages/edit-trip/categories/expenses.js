@@ -3,6 +3,9 @@ import { translate } from '../../../i18n/translation.js';
 import { initializeSortableForGroup } from '../../../ui/sortable.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
 import { getFieldValueOrNotify } from '../../../ui/fields.js';
+import { TRAVELERS } from "./travelers";
+import { getTravelerName } from "./travelers";
+import { getTravelersSelectOptionsHTML } from "./travelers";
 
 var INNER_EXPENSES = {
 	gastosPrevios: [],
@@ -17,7 +20,7 @@ function loadExpenses(data = FIRESTORE_GASTOS_DATA) {
 	loadExpensesHTML();
 }
 
-async function getExpensesObject() {
+export async function getExpensesObject() {
 	const gastosDurante = getExpenses("gastosDurante");
 	const gastosPrevios = getExpenses("gastosPrevios");
 

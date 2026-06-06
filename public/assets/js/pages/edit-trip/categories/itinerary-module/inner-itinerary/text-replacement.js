@@ -2,6 +2,8 @@ import { findJFromID, getID } from '../../../../../utils/dom.js';
 import { translate } from '../../../../../i18n/translation.js';
 import { getSelectCurrentLabel } from '../../../../../ui/fields.js';
 import { inputDateToKey, jsDateToInputDate } from '../../../../../utils/dates.js';
+import { DATAS } from "../../../new-trip.js";
+import { INNER_PROGRAMACAO, getTurno } from "./inner-itinerary.js";
 
 const TITLE_REPLACEMENT = {
 	current: "",

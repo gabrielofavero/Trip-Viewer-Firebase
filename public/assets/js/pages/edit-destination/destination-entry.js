@@ -7,7 +7,6 @@ import '../../theme/colors.js';
 import '../../theme/stylesheets.js';
 import '../../theme/icons.js';
 import '../../data/services/auth.service.js';
-import '../index/support/visibility.js';
 import './categories/price.js';
 import './categories/description.js';
 import './new-destination.js';

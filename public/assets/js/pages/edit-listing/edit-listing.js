@@ -18,6 +18,7 @@ var SUCCESSFUL_SAVE = false;
 startLoadingScreen();
 
 import { loadEditListingListeners } from './support/event-listeners.js';
+import { getVisibility } from "../../theme/theme";
 
 export async function loadEditListingPage() {
 	loadEditListingListeners();

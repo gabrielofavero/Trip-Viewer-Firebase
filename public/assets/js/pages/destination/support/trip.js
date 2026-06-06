@@ -3,9 +3,13 @@ import { getState, setState } from '../../../data/state.js';
 import { cloneObject, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, dateObjectToInputDate, getDateTitle } from '../../../utils/dates.js';
 import { update } from '../../../data/firebase/database.js';
+import { translate } from "../../../i18n/translation";
+import { jsDateToInputDate } from "../../../utils/dates";
+import { DOCUMENT_ID } from "../../edit-trip/edit-trip";
+import { ACTIVE_CATEGORY } from "../destination";
 
 var TRIP_ID;
-var PLANNED_DESTINATION = {};
+export var PLANNED_DESTINATION = {};
 var ACTIVE_PLANNED_DESTINATION = [];
 
 async function getTripData(tripID) {

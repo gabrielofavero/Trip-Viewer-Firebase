@@ -8,9 +8,9 @@ import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custo
 import { getPageURL, setPageName } from '../../app/main.js';
 import { loadDestinationListeners } from './support/event-listeners.js';
 
-var FIRESTORE_DESTINOS_DATA;
-var CONTENT = [];
-var ACTIVE_CATEGORY;
+export var FIRESTORE_DESTINOS_DATA;
+export var CONTENT = [];
+export var ACTIVE_CATEGORY;
 
 async function loadDestinationsData() {
 	const urlParams = getURLParams();

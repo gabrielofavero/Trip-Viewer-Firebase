@@ -2,12 +2,20 @@ import { getState } from '../../../../data/state.js';
 import { getID } from '../../../../utils/dom.js';
 import { convertFromDateObject, dateObjectToKey, getDateString, getTodayDateObject } from '../../../../utils/dates.js';
 import { getColorNameFromOptions } from '../../../../theme/colors.js';
+import { loadCalendar } from "./calendar.js";
+import { loadCalendarItem } from "./inner-itinerary.js";
+import { openViewEmbed } from "../../support/embed.js";
+import { getVisibility } from "../../../../theme/theme";
+import { DESTINOS } from "../../../edit-trip/edit-trip";
+import { END_DATE } from "../../view";
+import { START_DATE } from "../../view";
+import { CURRENT_SCHEDULE_DATE } from "./inner-itinerary";
 
-var SCHEDULE_DESTINATIONS = {};
+export var SCHEDULE_DESTINATIONS = {};
 var PILLS_ACTIONS = {};
 var PILLS_INDEX = {};
 
-function loadItinerarySchedule() {
+export function loadItinerarySchedule() {
 	loadScheduleDestinations();
 	loadCalendar();
 	loadSchedulePills();
@@ -96,7 +104,7 @@ function loadPill(destinoID, action, colorIndex = -1) {
 	}
 }
 
-function refreshPills() {
+export function refreshPills() {
 	for (const destinoID in PILLS_ACTIONS) {
 		const action = PILLS_ACTIONS[destinoID];
 		const index = PILLS_INDEX[destinoID];

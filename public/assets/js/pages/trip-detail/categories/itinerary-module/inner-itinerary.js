@@ -1,12 +1,14 @@
 import { getItinerary, getCurrencies } from '../../../../app/config.js';
 import { getState } from '../../../../data/state.js';
 import { convertFromDateObject, getDateTitle } from '../../../../utils/dates.js';
-import { cloneObject, getAccommodationsHTML, getAndDestinationTitle, getDestinationTitle, getDestinationsBoxHTML, getID, getLinkMediaButton } from '../../../../utils/dom.js';
+import { cloneObject, getAccommodationsHTML, getAndDestinationTitle, getDestinationTitle, getDestinationsBoxHTML, getID, getInnerItineraryTitleHTML, getLinkMediaButton } from '../../../../utils/dom.js';
 import { displayFullMessage } from '../../../../utils/messages.js';
 import { translate } from '../../../../i18n/translation.js';
+import { loadImageLightbox } from "../../support/embed.js";
+import { getFlightBoxHTML } from "../transportation-module.js";
 
 var SCHEDULE_OPEN = false;
-var CURRENT_SCHEDULE_DATE = {
+export var CURRENT_SCHEDULE_DATE = {
 	dia: 0,
 	mes: 0,
 	ano: 0,
@@ -158,7 +160,7 @@ function loadInnerItineraryMedia(midia) {
 	getID("midia-1").innerHTML = getLinkMediaButton(midia);
 }
 
-function loadCalendarItem(day, month, year, instant = false) {
+export function loadCalendarItem(day, month, year, instant = false) {
 	if (!day || !month || !year) {
 		console.warn("No data string provided to load calendar item.");
 		return;

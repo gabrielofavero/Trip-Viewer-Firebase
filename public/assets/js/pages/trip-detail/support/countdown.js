@@ -1,6 +1,7 @@
 import { getState } from '../../../data/state.js';
 import { convertFromDateObject } from '../../../utils/dates.js';
 import { getID } from '../../../utils/dom.js';
+import { translate } from "../../../i18n/translation";
 
 // ======= Countdown JS =======
 

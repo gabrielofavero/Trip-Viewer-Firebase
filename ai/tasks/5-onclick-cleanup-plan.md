@@ -1,7 +1,8 @@
 # 🔧 Onclick Cleanup Plan — Eliminate Inline `onclick` Handlers
 
-> **Status:** 📋 Ready to execute
+> **Status:** ✅ Complete
 > **Created:** 2026-06-06
+> **Completed:** 2026-06-06
 > **Goal:** Eliminate ALL inline `onclick` handlers — both in static HTML files and in JS-generated `innerHTML` — replacing them with centralized delegated event listeners. Zero `window.functionName` calls from `onclick`.
 
 ---
@@ -1208,14 +1209,14 @@ IMPORTANT:
 
 | # | Prompt | Status |
 |---|--------|--------|
-| P0 | Create shared delegated handler framework | 📋 Ready |
-| P1 | Fix static HTML: `destination.html` | 📋 Ready |
-| P2 | Fix static HTML: `view.html` | 📋 Ready |
-| P3 | Fix static HTML: `edit/trip.html` | 📋 Ready |
-| P4 | Fix remaining static HTML pages | 📋 Ready |
-| P5 | Fix JS-generated: view & destination pages | 📋 Ready |
-| P6 | Fix JS-generated: edit pages | 📋 Ready |
-| P7 | Final validation & cleanup | 📋 Ready |
+| **P0** | Create shared delegated handler framework | ✅ Complete |
+| **P1** | Fix static HTML: `destination.html` | ✅ Complete |
+| **P2** | Fix static HTML: `view.html` | ✅ Complete |
+| **P3** | Fix static HTML: `edit/trip.html` | ✅ Complete |
+| **P4** | Fix remaining static HTML pages | ✅ Complete |
+| **P5** | Fix JS-generated: view & destination pages | ✅ Complete |
+| **P6** | Fix JS-generated: edit pages | ✅ Complete |
+| **P7** | Final validation & cleanup | ✅ Complete |
 
 ---
 

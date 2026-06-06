@@ -22,6 +22,8 @@ var SCHEDULE = {};
 var REGIONS = [];
 
 import { loadEditDestinationListeners } from './support/event-listeners.js';
+import { getVisibility } from "../../theme/theme";
+import { firstCharToUpperCase } from "../../utils/dom";
 
 export async function loadEditDestinationPage() {
 	loadEditDestinationListeners();

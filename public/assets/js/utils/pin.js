@@ -44,6 +44,7 @@ Two callback functions are provided - onSuccess and onFailure
 import { translate } from '../i18n/translation.js';
 import { cloneObject } from './dom.js';
 import { displayFullMessage, getContainersInput } from './messages.js';
+import { confirmAction } from "../pages/edit-trip/categories/basic-data/protected-data";
 
 
 (function ($) {
@@ -265,7 +266,7 @@ export function requestPin({
 	loadPin();
 }
 
-function requestInvalidPin({ confirmAction, cancelAction, precontent }) {
+export function requestInvalidPin({ confirmAction, cancelAction, precontent }) {
 	const invalido = true;
 	if (precontent === undefined) {
 		precontent = translate("trip.basic_information.pin.invalid");
@@ -273,7 +274,7 @@ function requestInvalidPin({ confirmAction, cancelAction, precontent }) {
 	requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
-function setManualPin(pinString) {
+export function setManualPin(pinString) {
 	if (!/^\d{4}$/.test(pinString)) return;
 
 	const inputs = document.querySelectorAll('.pin-wrapper [data-role="pin"]');

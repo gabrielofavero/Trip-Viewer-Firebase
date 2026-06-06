@@ -1,18 +1,21 @@
 import { getDestinos, getItinerary } from '../../../../../app/config.js';
 import { getDateTitle, jsDateToKey } from '../../../../../utils/dates.js';
-import { cloneObject, getID } from '../../../../../utils/dom.js';
+import { cloneObject, getID, getInnerItineraryTitleHTML } from '../../../../../utils/dom.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../../../utils/messages.js';
 import { getSelectCurrentLabel } from '../../../../../ui/fields.js';
 import { translate } from '../../../../../i18n/translation.js';
 import { animate } from '../../../../../theme/animations.js';
 import { getDestination } from '../../../../../data/firebase/database.js';
+import { DESTINOS_ATIVOS } from '../../destination.js';
+import { DATAS } from '../../../new-trip.js';
+import { DESTINOS_DATA } from "../../destination";
 
-var INNER_PROGRAMACAO = {};
+export var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};
 var LAST_OPENED_TURNO = {};
 
 // Carregamento Principal
-function loadInnerItineraryHTML(j) {
+export function loadInnerItineraryHTML(j) {
 	const key = jsDateToKey(DATAS[j - 1]);
 	if (Object.keys(INNER_PROGRAMACAO).length == 0 || !INNER_PROGRAMACAO[key])
 		return;
@@ -22,7 +25,7 @@ function loadInnerItineraryHTML(j) {
 	getID(`inner-programacao-tarde-${j}`).innerHTML = "";
 	getID(`inner-programacao-noite-${j}`).innerHTML = "";
 
-	for (turno in INNER_PROGRAMACAO[key]) {
+	for (let turno in INNER_PROGRAMACAO[key]) {
 		const turnoDados = INNER_PROGRAMACAO[key][turno];
 		for (let k = 1; k <= turnoDados.length; k++) {
 			const dado = turnoDados[k - 1];
@@ -619,7 +622,7 @@ function loadInnerProgramacaoEventListeners() {
 	);
 }
 
-function getTurno(inicioHora) {
+export function getTurno(inicioHora) {
 	if (inicioHora < 6) {
 		return "madrugada";
 	} else if (inicioHora < 12) {
@@ -682,7 +685,7 @@ function getNewTurno(j) {
 	return "noite";
 }
 
-function afterDragInnerItinerary(evt) {
+export function afterDragInnerItinerary(evt) {
 	const turnoInicial = evt.from.id.split("-")[2];
 	const turnoFinal = evt.to.id.split("-")[2];
 

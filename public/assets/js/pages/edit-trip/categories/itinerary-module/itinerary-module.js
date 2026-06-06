@@ -3,10 +3,17 @@ import { getAndDestinationTitle, getChildIDs, getID, getIDs, getReadableArray } 
 import { addValueToSelectIfExists, getAllValuesFromSelect } from '../../../../ui/fields.js';
 import { initializeSortableForGroup } from '../../../../ui/sortable.js';
 import { translate } from '../../../../i18n/translation.js';
+import { addValuesForDestinosAtivosCheckbox, getDestinosFromCheckbox, DESTINOS_ATIVOS } from '../destination.js';
+import { DESTINOS } from '../../edit-trip.js';
+import { INNER_PROGRAMACAO, afterDragInnerItinerary, loadInnerItineraryHTML } from "../itinerary-module/inner-itinerary/inner-itinerary.js";
+import { loadItinerarySchedule } from "../../../trip-detail/categories/itinerary-module/itinerary-module.js";
+import { updateDestinosAtivosCheckboxHTML } from "../destination.js";
+import { DATAS } from "../../new-trip.js";
 
-var FIRESTORE_PROGRAMACAO_DATA = {};
+export var FIRESTORE_PROGRAMACAO_DATA = {};
+export function setProgramacaoData(val) { FIRESTORE_PROGRAMACAO_DATA = val; }
 
-function getItineraryArray() {
+export function getItineraryArray() {
 	let result = [];
 
 	for (let j = 1; j <= DATAS.length; j++) {
@@ -68,7 +75,7 @@ function getItineraryArray() {
 	return result;
 }
 
-function applyLoadedItineraryData(j, dados) {
+export function applyLoadedItineraryData(j, dados) {
 	const jsDate = convertFromDateObject(dados.data);
 
 	const destinosIDsObject = dados.destinosIDs;
@@ -115,11 +122,12 @@ function applyLoadedItineraryData(j, dados) {
 	});
 }
 
-function updateItineraryTitle(j) {
+export function updateItineraryTitle(j) {
 	const div = getID(`programacao-title-${j}`);
 	const tituloInput = getID(`programacao-inner-title-${j}`);
 	const tituloSelect = getID(`programacao-inner-title-select-${j}`);
 	let titulo;
+	let value;
 
 	value = tituloSelect.value;
 	switch (value) {
@@ -183,7 +191,7 @@ function getActiveDestinations(j) {
 	return result;
 }
 
-function getItineraryTitleSelectOptions(j = null) {
+export function getItineraryTitleSelectOptions(j = null) {
 	const semTitulo = `<option value="">${translate("labels.no_title")}</option>`;
 	let destino = "";
 	let idaVoltaDestino = "";
@@ -244,7 +252,7 @@ function getItineraryTitle(dataFormatada, titulo = "") {
 	else return dataFormatada;
 }
 
-function reloadItinerary() {
+export function reloadItinerary() {
 	if (!getID("habilitado-programacao").checked) return;
 	const originalData = getItineraryArray() || [];
 	const originalDataInputs = originalData.map((data) =>
@@ -265,7 +273,7 @@ function reloadItinerary() {
 }
 
 // Listeners
-function loadItineraryListeners(j) {
+export function loadItineraryListeners(j) {
 	// Checkbox Local
 	const fieldsetID = `programacao-local-${j}`;
 	for (const containerID of getChildIDs(fieldsetID)) {

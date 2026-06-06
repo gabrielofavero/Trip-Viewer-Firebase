@@ -2,6 +2,7 @@ import { getDestinos } from '../../app/config.js';
 import { firstCharToUpperCase, getChildIDs, getID, getJ, getOrCreateCategoryID } from '../../utils/dom.js';
 import { getUID } from '../../data/firebase/auth.js';
 import { displayError, displayMessage } from '../../utils/messages.js';
+import { translate } from "../../i18n/translation";
 
 let FIRESTORE_DESTINOS_NEW_DATA = {};
 

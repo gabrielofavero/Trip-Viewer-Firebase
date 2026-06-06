@@ -3,8 +3,11 @@ import { removeImageSelectorListeners, uploadImages } from '../../../data/fireba
 import { validateImageLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
 import { buildDS } from '../../../ui/dynamic-select.js';
+import { FIRESTORE_NEW_DATA } from '../set-trip.js';
+import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage";
+import { CUSTOM_UPLOADS } from "../../../utils/set";
 
-function getGaleriaObject() {
+export function getGaleriaObject() {
 	let result = {
 		descricoes: [],
 		categorias: [],
@@ -44,7 +47,7 @@ function deleteGaleria(i) {
 }
 
 // Listeners
-function loadGaleriaListeners(j) {
+export function loadGaleriaListeners(j) {
 	// Dynamic Title
 	getID(`galeria-titulo-${j}`).addEventListener(
 		"change",
@@ -60,7 +63,7 @@ function loadGaleriaListeners(j) {
 	);
 }
 
-function galeriaAdicionarListenerAction() {
+export function galeriaAdicionarListenerAction() {
 	closeAccordions("galeria");
 	addGaleria();
 	openLastAccordion("galeria");

@@ -1,10 +1,13 @@
 import { getState } from '../../../data/state.js';
 import { getChildIDs, getID, getJ, on, onscroll, select } from '../../../utils/dom.js';
 import { getVisibility, loadDarkMode, loadLightMode } from '../../../theme/visibility.js';
+import { adjustTransportationBoxContainerHeight } from "../categories/transportation-module.js";
+import { sendToExpenses } from "../support/embed.js";
+import { ACTIVE_EMBEDS } from "./embed";
 
-var ADJUST_HEIGHT_CARDS = [];
+export var ADJUST_HEIGHT_CARDS = [];
 
-function adjustCardsHeightsListener() {
+export function adjustCardsHeightsListener() {
 	window.addEventListener("resize", function () {
 		adjustCardsHeights();
 
@@ -15,7 +18,7 @@ function adjustCardsHeightsListener() {
 	});
 }
 
-function adjustCardsHeights(type) {
+export function adjustCardsHeights(type) {
 	const cards = type
 		? ADJUST_HEIGHT_CARDS.filter((card) => card.includes(type))
 		: ADJUST_HEIGHT_CARDS;
@@ -58,7 +61,7 @@ function adjustSingleCardsHeights(tipo, second = false) {
 	}
 }
 
-function loadViewVisibility() {
+export function loadViewVisibility() {
 	if (getState().visibilidade) {
 		const nightMode = getID("night-mode");
 
@@ -72,7 +75,7 @@ function loadViewVisibility() {
 	}
 }
 
-function mainView() {
+export function mainView() {
 	"use strict";
 	$("body").css("overflow", "hidden");
 
@@ -245,7 +248,7 @@ function mainView() {
 	});
 }
 
-function loadViewCustomVisibilityRules() {
+export function loadViewCustomVisibilityRules() {
 	if (ACTIVE_EMBEDS["expenses"] === true) {
 		sendToExpenses("visibility", getVisibility());
 	}

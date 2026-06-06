@@ -2,6 +2,8 @@ import { getState } from '../../../../data/state.js';
 import { convertFromDateObject, getDateNoTime, getMonth } from '../../../../utils/dates.js';
 import { getID } from '../../../../utils/dom.js';
 import { translate } from '../../../../i18n/translation.js';
+import { refreshPills } from "./itinerary-module.js";
+import { SCHEDULE_DESTINATIONS } from "./itinerary-module";
 
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
@@ -22,7 +24,7 @@ var CALENDAR = {
 	calendarTitle: null,
 };
 
-function loadCalendar() {
+export function loadCalendar() {
 	CALENDAR.start = convertFromDateObject(getState().inicio);
 	CALENDAR.end = convertFromDateObject(getState().fim);
 

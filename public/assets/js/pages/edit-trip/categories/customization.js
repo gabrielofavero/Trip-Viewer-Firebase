@@ -1,8 +1,9 @@
 import { getID } from '../../../utils/dom.js';
 
-var CURRENT_LIGHT;
+export var CURRENT_LIGHT;
+export function setCurrentLight(val) { CURRENT_LIGHT = val; }
 
-function loadCustomizacaoImageData(value, id) {
+export function loadCustomizacaoImageData(value, id) {
 	if (value && typeof value === "string") {
 		getID(id).value = value;
 	} else if (value && value.link) {
@@ -19,7 +20,7 @@ function imageDataIncludes(value, includes) {
 	return false;
 }
 
-function autoFillDarkColor() {
+export function autoFillDarkColor() {
 	const DARK_COLOR = getID("escuro");
 	if (
 		DARK_COLOR.value == "#7f75b6" ||

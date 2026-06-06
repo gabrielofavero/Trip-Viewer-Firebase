@@ -148,6 +148,14 @@ export function checkFileSize(fileInput, type) {
 	}
 }
 
+export function loadUploadSelector(type) {
+	if (type === "logo") {
+		loadLogoSelector();
+	} else {
+		loadImageSelector(type);
+	}
+}
+
 export function loadImageSelector(type) {
 	const checkboxLink = getID(`enable-link-${type}`);
 	const checkboxUpload = getID(`enable-upload-${type}`);

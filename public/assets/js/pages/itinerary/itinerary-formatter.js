@@ -8,7 +8,7 @@ import {
 } from '../../models/itinerary.model.js';
 
 var ITINERARY;
-const ITINERARY_HTML = {};
+export const ITINERARY_HTML = {};
 var DESTINOS = {};
 
 async function getDestination(id) {

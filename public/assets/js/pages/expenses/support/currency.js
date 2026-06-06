@@ -1,12 +1,14 @@
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { canConvert, convertCurrency, filterCurrencies, formatCurrency, getCurrencySymbol, loadCurrenciesObject, sortCurrencies } from '../../../models/expense.model.js';
+import { setTabListeners } from "../expenses.js";
+import { GASTOS } from "../expenses";
 
 var DEFAULT_CURRENCY;
 var MOEDA_CONVERSAO = {};
 var CURRENT_CURRENCY;
 
-var MOEDAS = {
+export var MOEDAS = {
 	resumo: [],
 	gastosPrevios: [],
 	gastosDurante: [],
@@ -76,7 +78,7 @@ async function fetchConversoes(url) {
 	}
 }
 
-function loadCurrenciesTab() {
+export function loadCurrenciesTab() {
 	const moedasTab = getID("tab-moedas");
 	moedasTab.innerHTML = "";
 	moedasTab.style.display = MOEDAS.resumo.length > 1 ? "" : "none";

@@ -1,4 +1,8 @@
 import { getID } from '../../../../../utils/dom.js';
+import { translate } from "../../../../../i18n/translation";
+import { FILTER_OPTIONS } from "../filter";
+import { SORT_OPTIONS } from "../sort";
+import { FILTER_SORT_KEYS_ORDER } from "../sort-and-filter";
 
 const DRAWER_STATE = {
 	actions: null,
@@ -45,7 +49,7 @@ export function closeDrawer() {
 }
 
 // Inner HTML
-function getFilterDrawerInnerHTML() {
+export function getFilterDrawerInnerHTML() {
 	const titles = FILTER_OPTIONS.titles;
 	const types = FILTER_OPTIONS[ACTIVE_CATEGORY];
 
@@ -68,7 +72,7 @@ function getFilterDrawerInnerHTML() {
 	return result;
 }
 
-function getSortDrawerInnerHTML() {
+export function getSortDrawerInnerHTML() {
 	const titles = SORT_OPTIONS.titles;
 	const types = SORT_OPTIONS[ACTIVE_CATEGORY];
 
@@ -90,7 +94,7 @@ function getSortDrawerInnerHTML() {
 }
 
 // Load Actions
-function filterDrawerOptionLoadAction() {
+export function filterDrawerOptionLoadAction() {
 	const preferences = getFilterPreferences();
 	const content = getID("drawerContent");
 	const containers = content.querySelectorAll(".drawer-container");
@@ -120,7 +124,7 @@ function filterDrawerOptionLoadAction() {
 	}
 }
 
-function sortDrawerOptionLoadAction() {
+export function sortDrawerOptionLoadAction() {
 	const preferences = getSortPreferences();
 	const content = getID("drawerContent");
 	const containers = content.querySelectorAll(".drawer-container");
@@ -146,13 +150,13 @@ function sortDrawerOptionLoadAction() {
 }
 
 // Click Actions
-function filterDrawerOptionClickAction(e) {
+export function filterDrawerOptionClickAction(e) {
 	const container = e.currentTarget.closest(".drawer-container");
 	handleDrawerOptionClick(e, container, setFilterPreference);
 	filter(true);
 }
 
-function sortDrawerOptionClickAction(e) {
+export function sortDrawerOptionClickAction(e) {
 	const container = getID("drawerContent");
 	handleDrawerOptionClick(e, container, setSortPreference);
 	sort(true);

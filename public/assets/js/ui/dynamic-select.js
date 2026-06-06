@@ -1,4 +1,5 @@
 import { getID, removeChildWithValidation } from '../utils/dom.js';
+import { translate } from "../i18n/translation";
 
 let DYNAMIC_SELECT = {};
 

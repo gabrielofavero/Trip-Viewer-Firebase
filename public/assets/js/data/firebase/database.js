@@ -3,6 +3,8 @@ import { displayError } from "../../utils/messages.js";
 import { isAlreadyLoading, startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { translate } from '../../i18n/translation.js';
 import { getUID, getUserData } from './auth.js';
+import { DESTINOS_ATIVOS } from "../../pages/edit-trip/categories/destination";
+import { getURLParam } from "../../utils/dom";
 
 export let DOCUMENT_ID;
 export let ERROR_FROM_GET_REQUEST = {};

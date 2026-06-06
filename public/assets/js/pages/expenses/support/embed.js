@@ -1,14 +1,15 @@
 import { loadEmbedListeners, sendToParent } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { getVisibility, loadExternalVisibility } from '../../../theme/visibility.js';
+import { setManualPin } from "../../../utils/pin.js";
 
-const GASTOS_EMBED = {
+export const GASTOS_EMBED = {
 	enabled: false,
 	applied: false,
 	visibility: "",
 };
 
-function loadEmbedMode(visibility) {
+export function loadEmbedMode(visibility) {
 	document.querySelector(".top-bar").style.display = "none";
 	document.querySelector(".section-title").style.display = "none";
 	document.querySelector(".footer").style.display = "none";

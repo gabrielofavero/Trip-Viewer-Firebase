@@ -2,6 +2,8 @@ import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { displayError } from '../../utils/messages.js';
 import { getID } from '../../utils/dom.js';
 import { setPageName } from '../../app/main.js';
+import { translate } from "../../i18n/translation";
+import { FIRESTORE_DESTINOS_DATA } from "../destination/destination";
 
 // Destino Existente
 function loadDestinationsData() {

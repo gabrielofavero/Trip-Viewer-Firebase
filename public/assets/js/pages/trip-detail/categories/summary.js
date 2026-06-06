@@ -1,5 +1,8 @@
 import { getState } from '../../../data/state.js';
 import { getID } from '../../../utils/dom.js';
+import { translate } from "../../../i18n/translation";
+import { END_DATE } from "../view";
+import { START_DATE } from "../view";
 
 var TRAVELERS = [];
 

@@ -1,5 +1,20 @@
 import { getCurrencies } from '../../../app/config.js';
 import { translate } from '../../../i18n/translation.js';
+import { getDescricaoValue } from "../../../models/destination.model";
+import { getNotaTranslation } from "../../../models/destination.model";
+import { getValorValue } from "../../../models/destination.model";
+import { getDestinationTitle } from "../../../utils/dom";
+import { getDestinationsBoxHTML } from "../../../utils/dom";
+import { getLinkOnClick } from "../categories";
+import { getNotaClass } from "../categories";
+import { getNotaIcon } from "../categories";
+import { getTurno } from "../categories";
+import { FIRESTORE_DESTINOS_DATA } from "../destination";
+import { FILTER_SORT_DATA } from "./sort-and-filter/sort-and-filter";
+import { getDescricaoVisibility } from "./visibility";
+import { getDestinationsTitleVisibility } from "./visibility";
+import { getLinksContainerVisibility } from "./visibility";
+import { getValorVisibility } from "./visibility";
 
 function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" }) {
 	const planejado = getPlanejado(id);
