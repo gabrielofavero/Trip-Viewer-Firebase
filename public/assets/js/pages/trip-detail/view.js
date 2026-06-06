@@ -8,6 +8,7 @@ import { loadCloseCustomSelectListeners } from '../../ui/custom-select.js';
 import { convertFromDateObject } from '../../utils/dates.js';
 import { getPageURL, setPageName } from '../../app/main.js';
 import { translate } from '../../i18n/translation.js';
+import { loadViewListeners } from './support/event-listeners.js';
 
 var REFRESHED = false;
 var TYPE = "viagens";
@@ -36,6 +37,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 export async function loadViewPage() {
+	loadViewListeners();
+
 	const urlParams = getURLParams();
 	TYPE = urlParams["l"] ? "listagens" : urlParams["d"] ? "destinos" : "viagens";
 	DOCUMENT_ID = urlParams["l"] || urlParams["d"] || urlParams["v"];

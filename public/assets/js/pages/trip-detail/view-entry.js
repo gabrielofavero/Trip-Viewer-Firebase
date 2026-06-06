@@ -23,6 +23,7 @@ import '../destination/categories.js';
 import '../destination/support/visibility.js';
 import '../destination/support/media-embed.js';
 import '../destination/support/content.js';
+import './support/event-listeners.js';
 import { loadViewPage } from './view.js';
 
 main({ view: loadViewPage });

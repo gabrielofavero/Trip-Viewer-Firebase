@@ -73,12 +73,12 @@ function changeCalendarMonth(direction) {
 	loadMonthNavigatorVisibility();
 }
 
-function calendarNext() {
+export function calendarNext() {
 	changeCalendarMonth("next");
 	refreshPills();
 }
 
-function calendarPrevious() {
+export function calendarPrevious() {
 	changeCalendarMonth("previous");
 	refreshPills();
 }

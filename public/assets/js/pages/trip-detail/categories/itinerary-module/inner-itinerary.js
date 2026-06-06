@@ -111,7 +111,7 @@ function openModalCalendar(programacao, instant = false) {
 	}
 }
 
-function closeModalCalendar() {
+export function closeModalCalendar() {
 	SCHEDULE_OPEN = false;
 	CURRENT_SCHEDULE = null;
 	CURRENT_SCHEDULE_DATE.dia = 0;

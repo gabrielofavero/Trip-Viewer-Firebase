@@ -244,9 +244,9 @@
               </table>
 
               <div id="calendarMonthSelector" class="form-inline" style="display: none;">
-                <button class="calendar-navigation" id="previous" onclick="_calendarPrevious()"><i
+                <button class="calendar-navigation" id="previous" data-action="calendar-previous"><i
                     class="bx bx-left-arrow-alt"></i></button>
-                <button class="calendar-navigation" id="next" onclick="_calendarNext()"><i
+                <button class="calendar-navigation" id="next" data-action="calendar-next"><i
                     class="bx bx-right-arrow-alt"></i></button>
               </div>
               <br />
@@ -254,7 +254,7 @@
 
             <div id="programacao-box">
               <div id="programacao-modal">
-                <div id="programacao-fechar" onclick="_closeModalCalendar()"><i class="iconify"
+                <div id="programacao-fechar" data-action="close-modal-calendar"><i class="iconify"
                     data-icon="material-symbols:close"></i></div>
 
                 <div class="programacao-titulo-box">
@@ -360,7 +360,7 @@
         <div class="credits">
           <span data-translate="labels.developed_by"></span> <a
             href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="attributions"
-            onclick="_openAttributions()"><i class="bx bx-info-circle"></i>
+            data-action="open-attributions"><i class="bx bx-info-circle"></i>
             <span data-translate="labels.credits"></span></span>
         </div>
       </div>
@@ -374,7 +374,7 @@
 
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>
