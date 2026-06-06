@@ -1,4 +1,4 @@
-import { getID, removeChildWithValidation } from '../utils/dom.js';;
+import { getID, removeChildWithValidation } from '../utils/dom.js';
 
 let DYNAMIC_SELECT = {};
 

@@ -1,5 +1,5 @@
-import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
-import { closeMessage, displayError, displayFullMessage, getContainersInput } from '../../utils/messages.js';;
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
+import { closeMessage, displayError, displayFullMessage, getContainersInput } from '../../utils/messages.js';
 import { getTodayFormatted, getTomorrowFormatted } from '../../utils/dates.js';
 import { cloneObject, getLastJ, getURLParam, removeChildWithValidation, removeRequired, setRequired } from '../../utils/dom.js';
 import { addRemoveChildListenerDS, buildDS, newDynamicSelect, removeSelectorDS, updateValueDS } from '../../ui/dynamic-select.js';

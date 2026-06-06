@@ -1,4 +1,4 @@
-import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { setState } from '../../data/state.js';
 import { getDateTitle, getTodayFormatted, getTomorrowFormatted, jsDateToKey } from '../../utils/dates.js';
 import { cloneObject, getID, getOrderedDocumentByTitle, getURLParam } from '../../utils/dom.js';

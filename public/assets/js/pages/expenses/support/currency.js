@@ -1,14 +1,6 @@
-import { getChildIDs, getID, import { getChildIDs } from '../../../utils/dom.js';;
+import { getChildIDs, getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
-import { loadCurrenciesObject } from '../../../models/expense.model.js';
-	filterCurrencies,
-	sortCurrencies,
-	convertCurrency,
-	canConvert,
-	getCurrencySymbol,
-	formatCurrency,
-	loadCurrenciesObject,
-} from '../../../models/expense.model.js';
+import { canConvert, convertCurrency, filterCurrencies, formatCurrency, getCurrencySymbol, loadCurrenciesObject, sortCurrencies } from '../../../models/expense.model.js';
 
 var DEFAULT_CURRENCY;
 var MOEDA_CONVERSAO = {};

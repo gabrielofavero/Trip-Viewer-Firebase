@@ -1,5 +1,5 @@
 import { getCurrencies } from '../../app/config.js';
-import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getID, getLastUnorderedJ, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
 import { getLanguagePackName, translate } from '../../i18n/translation.js';
 import { removeEl, validateInstagramLink, validateLink, validateMapLink, validateMediaLink } from '../../ui/fields.js';

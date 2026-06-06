@@ -834,7 +834,7 @@ STEP 7: Update this plan's status to "✅ Complete" and document any
 | P2 | Fix page loader imports | ✅ Complete |
 | P3 | Fix `FIRESTORE_DATA` global → module | ✅ Complete |
 | P4 | Fix all remaining cross-module `window.*` calls | ✅ Substantially Complete (869→292) |
-| P5 | Clean entry-point files | ⬜ Not started |
+| P5 | Clean entry-point files | ✅ Complete |
 | P6 | Final validation | ⬜ Not started |
 
 ---

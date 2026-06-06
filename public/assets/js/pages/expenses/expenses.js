@@ -1,4 +1,4 @@
-import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getLocalColors } from '../../theme/colors.js';
 import { loadVisibility } from '../../theme/visibility.js';
 import { getID, getURLParam, getURLParams } from '../../utils/dom.js';

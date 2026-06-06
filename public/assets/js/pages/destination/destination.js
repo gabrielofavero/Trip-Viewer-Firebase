@@ -5,7 +5,7 @@ import { getID, getJs, getURLParams } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
-import { getPageURL, setPageName } from '../../app/main.js';;
+import { getPageURL, setPageName } from '../../app/main.js';
 
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];

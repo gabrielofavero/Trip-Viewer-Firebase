@@ -1,4 +1,4 @@
-import { codifyText, getID } from '../../utils/dom.js';;
+import { codifyText, getID } from '../../utils/dom.js';
 import { getState } from '../state.js';
 import { translate } from '../../i18n/translation.js';
 

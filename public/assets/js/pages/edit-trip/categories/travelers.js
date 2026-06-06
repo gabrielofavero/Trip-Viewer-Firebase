@@ -1,14 +1,10 @@
 // ======= Travelers =======
 // Traveler functions moved to models/traveler.model.js — imported here for backward compat
 
-import { cloneObject, getID, getReadableArray, import { cloneObject } from '../../../utils/dom.js';;
+import { cloneObject, getID, getReadableArray } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
-import { getNewTravelerID } from '../../../models/traveler.model.js';
-	getNewTravelerID,
-	validateTravelersObject,
-	hasDuplicateTravelerNames,
-} from '../../../models/traveler.model.js';
+import { getNewTravelerID, hasDuplicateTravelerNames, validateTravelersObject } from '../../../models/traveler.model.js';
 
 var TRAVELERS = [];
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
