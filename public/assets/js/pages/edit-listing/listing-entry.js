@@ -13,6 +13,7 @@ import '../edit-trip/categories/customization.js';
 import '../edit-trip/existing-trip.js';
 import '../edit-trip/set-trip.js';
 import './existing-listing.js';
+import './support/event-listeners.js';
 import { loadEditListingPage } from './edit-listing.js';
 
 main({ editListing: loadEditListingPage });

@@ -21,7 +21,11 @@ var SCHEDULE = {};
 
 var REGIONS = [];
 
+import { loadEditDestinationListeners } from './support/event-listeners.js';
+
 export async function loadEditDestinationPage() {
+	loadEditDestinationListeners();
+
 	DOCUMENT_ID = getURLParam("d");
 
 	loadVisibilityIndex();
@@ -347,7 +351,7 @@ function moveDestination(j, categoria) {
 	closeMessage();
 }
 
-function deleteDestino() {
+export function deleteDestino() {
 	const name = getID("titulo").value;
 
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);

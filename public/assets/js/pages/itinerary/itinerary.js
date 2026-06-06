@@ -12,7 +12,11 @@ import { requestPin } from '../../utils/pin.js';
 
 var FIRESTORE_PROTECTED_DATA;
 
+import { loadItineraryListeners } from './support/event-listeners.js';
+
 export async function loadItineraryPage() {
+	loadItineraryListeners();
+
 	DOCUMENT_ID = getURLParam("v");
 	setPageName(translate("trip.itinerary.title"));
 

@@ -14,6 +14,7 @@ import '../view/categories/transportation-module.js';
 import '../view/categories/accommodation-module.js';
 import '../destination/categories.js';
 import './itinerary-formatter.js';
+import './support/event-listeners.js';
 import { loadItineraryPage } from './itinerary.js';
 
 main({ itinerary: loadItineraryPage });

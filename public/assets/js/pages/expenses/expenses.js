@@ -18,7 +18,11 @@ var TOTAL_EXPENSES = {
 };
 var ACTIVE_EXPENSE_TAB = "resumo";
 
+import { loadExpensesListeners } from './support/event-listeners.js';
+
 export async function loadExpensesPage() {
+	loadExpensesListeners();
+
 	console.log(window.location.href);
 
 	const colors = getLocalColors();

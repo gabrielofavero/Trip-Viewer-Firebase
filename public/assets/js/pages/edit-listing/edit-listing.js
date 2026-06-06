@@ -17,7 +17,11 @@ var SUCCESSFUL_SAVE = false;
 
 startLoadingScreen();
 
+import { loadEditListingListeners } from './support/event-listeners.js';
+
 export async function loadEditListingPage() {
+	loadEditListingListeners();
+
 	DOCUMENT_ID = getURLParam("l");
 	PERMISSOES = await getPermissoes();
 
@@ -150,7 +154,7 @@ async function setListagem() {
 	await setDocumento({ type, dataBuildingFunctions });
 }
 
-function deleteListagem() {
+export function deleteListagem() {
 	let listagem = getID("titulo").value;
 	listagem = listagem ? ` "${listagem}"` : "";
 

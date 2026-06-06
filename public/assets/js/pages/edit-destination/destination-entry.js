@@ -14,6 +14,7 @@ import './new-destination.js';
 import './existing-destination.js';
 import './set-destination.js';
 import './import-destination.js';
+import './support/event-listeners.js';
 import { loadEditDestinationPage } from './edit-destination.js';
 
 main({ editDestination: loadEditDestinationPage });
