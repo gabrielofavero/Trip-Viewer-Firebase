@@ -1,4 +1,7 @@
 import { getDestinos } from '../../../app/config.js';
+import { cloneObject, firstCharToUpperCase, getChildIDs, getID, getJ } from '../../../utils/dom.js';
+import { getUserLanguage, translate } from '../../../i18n/translation.js';
+import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
 
 function getDescriptionHTML(categoria, j) {
 	let content = "";

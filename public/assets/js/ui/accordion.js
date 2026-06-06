@@ -1,4 +1,4 @@
-import { getChildIDs } from "../utils/dom.js";
+import { getChildIDs, getID } from '../utils/dom.js';;
 
 // Accordion Open - Close
 export function closeAccordions(categoria) {

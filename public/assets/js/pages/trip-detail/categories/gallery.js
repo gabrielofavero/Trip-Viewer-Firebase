@@ -1,4 +1,6 @@
 import { getState } from '../../../data/state.js';
+import { BiMap } from '../../../ui/bimap.js';
+import { codifyText, getID, isObject, on, select } from '../../../utils/dom.js';
 
 var FILTER_MAP = new BiMap();
 

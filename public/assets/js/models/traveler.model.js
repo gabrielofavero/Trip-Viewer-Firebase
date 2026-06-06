@@ -6,6 +6,8 @@
  * Generates a new unique traveler ID
  * @returns {string} Unique random ID
  */
+import { getRandomID } from '../utils/dom.js';
+
 export function getNewTravelerID() {
 	return getRandomID({ pool: TRAVELERS.map((t) => t.id) });
 }

@@ -1,3 +1,13 @@
+import { cloneObject, getChildIDs, getID, getJ, getOrCreateCategoryID } from '../../../utils/dom.js';
+import { convertFromDateObject, formattedDateToDateObject, getDateString, getTimeStringFromDate } from '../../../utils/dates.js';
+import { validateImageLink, validateLink } from '../../../ui/fields.js';
+import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
+import { translate } from '../../../i18n/translation.js';
+import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
+import { initializeSortableForGroup } from '../../../ui/sortable.js';
+import { loadImageSelector, uploadImages } from '../../../data/firebase/storage.js';
+import { fade } from '../../../theme/animations.js';
+
 var ACCOMMODATION_IMAGES = {};
 
 function getAccommodationArray(protectedReservationCodes = false) {

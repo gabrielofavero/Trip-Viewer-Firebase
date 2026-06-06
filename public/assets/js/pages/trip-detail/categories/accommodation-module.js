@@ -1,4 +1,6 @@
 import { getState } from '../../../data/state.js';
+import { convertFromDateObject, getDateNoTime, getTodayDateObject } from '../../../utils/dates.js';
+import { getID } from '../../../utils/dom.js';
 
 function loadAccommodations() {
 	let swiperData = [];

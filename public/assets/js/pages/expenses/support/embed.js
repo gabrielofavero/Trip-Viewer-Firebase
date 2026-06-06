@@ -1,3 +1,7 @@
+import { loadEmbedListeners, sendToParent } from '../../../ui/embed.js';
+import { getID } from '../../../utils/dom.js';
+import { getVisibility, loadExternalVisibility } from '../../../theme/visibility.js';
+
 const GASTOS_EMBED = {
 	enabled: false,
 	applied: false,

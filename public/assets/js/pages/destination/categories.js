@@ -8,6 +8,9 @@ import {
 	getDescricaoValue,
 } from '../../models/destination.model.js';
 import { getDestinos } from '../../app/config.js';
+import { translate } from '../../i18n/translation.js';
+import { getURLParam, setURLParam } from '../../utils/dom.js';
+import { convertFromDateObject, getMonth, getWeekday } from '../../utils/dates.js';
 
 
 

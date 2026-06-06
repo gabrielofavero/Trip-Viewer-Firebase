@@ -1,4 +1,14 @@
 import { getState, setState } from '../../data/state.js';
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
+import { cloneObject, getChildIDs, getID, getOrderedDocumentByTitle, getURLParam, setRequired } from '../../utils/dom.js';
+import { deleteUserObjectDB, getPermissoes, getSingleData } from '../../data/firebase/database.js';
+import { getUserData } from '../../data/firebase/auth.js';
+import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '../../data/firebase/storage.js';
+import { hasUnsavedChanges, reEdit, snapshotFormState } from '../../ui/fields.js';
+import { loadEditModule, searchDestinationsListenerAction } from '../../theme/visibility.js';
+import { translate } from '../../i18n/translation.js';
+import { displayFullMessage } from '../../utils/messages.js';
+import { loadVisibilityIndex } from '../home/support/visibility.js';
 
 var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_NEW_DATA = {};

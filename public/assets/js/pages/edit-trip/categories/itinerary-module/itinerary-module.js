@@ -1,3 +1,9 @@
+import { convertFromDateObject, convertToDateObject, dateObjectToKey, getDateTitle, jsDateToKey } from '../../../../utils/dates.js';
+import { getAndDestinationTitle, getChildIDs, getID, getIDs, getReadableArray } from '../../../../utils/dom.js';
+import { addValueToSelectIfExists, getAllValuesFromSelect } from '../../../../ui/fields.js';
+import { initializeSortableForGroup } from '../../../../ui/sortable.js';
+import { translate } from '../../../../i18n/translation.js';
+
 var FIRESTORE_PROGRAMACAO_DATA = {};
 
 function getItineraryArray() {

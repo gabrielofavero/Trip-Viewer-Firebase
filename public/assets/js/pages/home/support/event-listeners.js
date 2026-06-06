@@ -1,3 +1,8 @@
+import { getID } from '../../../utils/dom.js';
+import { signInWithEmailAndPassword, signOut } from '../../../data/firebase/auth.js';
+import { startLoadingScreen, stopLoadingScreen } from '../../../utils/loading.js';
+import { deleteAccount } from '../../../data/firebase/database.js';
+
 function loadListenersIndex() {
 	// Login
 	getID("login-button").addEventListener("click", function () {

@@ -1,4 +1,7 @@
 import { getState } from '../../../../data/state.js';
+import { convertFromDateObject, getDateNoTime, getMonth } from '../../../../utils/dates.js';
+import { getID } from '../../../../utils/dom.js';
+import { translate } from '../../../../i18n/translation.js';
 
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)

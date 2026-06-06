@@ -1,6 +1,9 @@
-import { getURLParam, setURLParam, firstCharToUpperCase, removeEmptyChild } from "../utils/dom.js";
+import { firstCharToUpperCase, getID, getJs, getURLParam, removeChildWithValidation, removeEmptyChild, setURLParam } from '../utils/dom.js';;
 import { getCurrentHour } from "../utils/dates.js";
 import { getState } from '../data/state.js';
+import { changeBarColorIOS, getSecondaryColor, loadLogoColors, loadThemeColors, saveLocalColors } from './colors.js';
+import { getHTMLpage } from '../app/main.js';
+import { fadeIn, fadeOut } from './animations.js';
 
 // ======= Visibility JS =======
 const _exports = {};

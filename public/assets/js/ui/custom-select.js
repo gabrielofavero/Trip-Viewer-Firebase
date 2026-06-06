@@ -1,3 +1,5 @@
+import { getID } from '../utils/dom.js';
+
 let CUSTOM_SELECTS = {};
 
 export function loadCloseCustomSelectListeners() {

@@ -1,4 +1,6 @@
 import { getState } from '../../../data/state.js';
+import { getChildIDs, getID, getJ, on, onscroll, select } from '../../../utils/dom.js';
+import { getVisibility, loadDarkMode, loadLightMode } from '../../../theme/visibility.js';
 
 var ADJUST_HEIGHT_CARDS = [];
 

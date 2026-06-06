@@ -1,5 +1,9 @@
 import { getItinerary, getCurrencies } from '../../../../app/config.js';
 import { getState } from '../../../../data/state.js';
+import { convertFromDateObject, getDateTitle } from '../../../../utils/dates.js';
+import { cloneObject, getAccommodationsHTML, getAndDestinationTitle, getDestinationTitle, getDestinationsBoxHTML, getID, getLinkMediaButton } from '../../../../utils/dom.js';
+import { displayFullMessage } from '../../../../utils/messages.js';
+import { translate } from '../../../../i18n/translation.js';
 
 var SCHEDULE_OPEN = false;
 var CURRENT_SCHEDULE_DATE = {

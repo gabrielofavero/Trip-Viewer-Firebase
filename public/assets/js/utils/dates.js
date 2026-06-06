@@ -1,3 +1,6 @@
+import { getLanguagePackName, translate } from '../i18n/translation.js';
+import { getID, getJs, getLastJ } from './dom.js';
+
 // ======= Date JS (Timezone-Agnostic / UTC) =======
 
 let DATE_REGIONAL_FORMAT;

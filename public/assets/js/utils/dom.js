@@ -1,6 +1,9 @@
 // Text Utils
 import { getCurrencies } from '../app/config.js';
 import { getState } from '../data/state.js';
+import { convertFromDateObject, getDateRegionalFormat, getDateString, getTodayDateObject } from './dates.js';
+import { translate } from '../i18n/translation.js';
+import { hideContent } from '../theme/visibility.js';
 
 export function firstCharToUpperCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);

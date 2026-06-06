@@ -1,3 +1,6 @@
+import { getChildIDs, getID, getIDs, getJ } from '../../../utils/dom.js';
+import { getHTMLpage } from '../../../app/main.js';
+
 var DESTINOS = [];
 var DESTINOS_DATA = {};
 var DESTINOS_ATIVOS = [];

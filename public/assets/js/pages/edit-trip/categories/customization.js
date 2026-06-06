@@ -1,3 +1,5 @@
+import { getID } from '../../../utils/dom.js';
+
 var CURRENT_LIGHT;
 
 function loadCustomizacaoImageData(value, id) {

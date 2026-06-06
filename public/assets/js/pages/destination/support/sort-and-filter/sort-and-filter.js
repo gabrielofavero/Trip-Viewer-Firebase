@@ -1,3 +1,5 @@
+import { getID } from '../../../../utils/dom.js';
+
 const FILTER_SORT_KEYS_ORDER = {
 	planned: ["planned", "not_planned"],
 	prices: ["-", "$", "$$", "$$$", "$$$$", "default"],

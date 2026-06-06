@@ -1,3 +1,6 @@
+import { normalizePriceBucket } from '../../../../models/destination.model.js';
+import { translate } from '../../../../i18n/translation.js';
+
 const SORT_OPTIONS = {};
 
 // Main Action

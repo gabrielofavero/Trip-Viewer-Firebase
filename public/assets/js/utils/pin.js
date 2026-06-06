@@ -41,6 +41,10 @@ Two callback functions are provided - onSuccess and onFailure
     });
 
 */
+import { translate } from '../i18n/translation.js';
+import { cloneObject } from './dom.js';
+import { displayFullMessage, getContainersInput } from './messages.js';
+
 
 (function ($) {
 	//Declare our function
@@ -222,7 +226,7 @@ function loadPin() {
 	});
 }
 
-function requestPin({
+export function requestPin({
 	confirmAction,
 	cancelAction,
 	precontent,

@@ -1,4 +1,5 @@
 import { getCurrencies } from '../../../app/config.js';
+import { translate } from '../../../i18n/translation.js';
 
 function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" }) {
 	const planejado = getPlanejado(id);

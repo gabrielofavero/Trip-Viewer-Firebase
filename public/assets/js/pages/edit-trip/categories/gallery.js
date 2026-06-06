@@ -1,3 +1,9 @@
+import { getChildIDs, getID, getJ } from '../../../utils/dom.js';
+import { removeImageSelectorListeners, uploadImages } from '../../../data/firebase/storage.js';
+import { validateImageLink } from '../../../ui/fields.js';
+import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
+import { buildDS } from '../../../ui/dynamic-select.js';
+
 function getGaleriaObject() {
 	let result = {
 		descricoes: [],

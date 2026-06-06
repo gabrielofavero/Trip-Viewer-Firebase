@@ -115,7 +115,7 @@ function initializeApp() {
 	APP.version = versoes[APP.projectId]?.version?.system || "Unknown";
 }
 
-function setPageName(pageName) {
+export function setPageName(pageName) {
 	const isDev = APP.projectId === "trip-viewer-dev";
 	const host = location.hostname;
 	const isLocal = host === "localhost" || !Number.isNaN(Number(host));

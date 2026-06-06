@@ -1,6 +1,8 @@
-import { getIdFromObjectDB, getURLParams } from "../../utils/dom.js";
+import { getID, getIdFromObjectDB, getURLParams } from '../../utils/dom.js';;
 import { displayError } from "../../utils/messages.js";
-import { stopLoadingScreen } from "../../utils/loading.js";
+import { isAlreadyLoading, startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
+import { translate } from '../../i18n/translation.js';
+import { getUID, getUserData } from './auth.js';
 
 export let DOCUMENT_ID;
 export let ERROR_FROM_GET_REQUEST = {};

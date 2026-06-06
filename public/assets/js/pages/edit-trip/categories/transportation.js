@@ -1,4 +1,10 @@
 import { getTransportations } from '../../../app/config.js';
+import { getChildIDs, getID, getJ, getOrCreateCategoryID, removeRequired, setRequired } from '../../../utils/dom.js';
+import { formattedDateToDateObject, getTimeBetweenDates } from '../../../utils/dates.js';
+import { translate } from '../../../i18n/translation.js';
+import { validateLink } from '../../../ui/fields.js';
+import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
+import { buildDS } from '../../../ui/dynamic-select.js';
 
 function getTransportationObject(protectedReservationCodes = false) {
 	const result = {

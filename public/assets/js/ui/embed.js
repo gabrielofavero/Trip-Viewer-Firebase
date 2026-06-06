@@ -1,3 +1,6 @@
+import { getID } from '../utils/dom.js';
+import { getVisibility } from '../theme/visibility.js';
+
 export function loadEmbedListeners(action) {
 	window.addEventListener("message", (e) => {
 		const current = getOrigin().toUpperCase();

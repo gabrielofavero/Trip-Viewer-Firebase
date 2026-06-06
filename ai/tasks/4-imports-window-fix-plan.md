@@ -833,7 +833,7 @@ STEP 7: Update this plan's status to "✅ Complete" and document any
 | P1 | Fix `translation.js` + `main.js` circular dependency | ✅ Complete |
 | P2 | Fix page loader imports | ✅ Complete |
 | P3 | Fix `FIRESTORE_DATA` global → module | ✅ Complete |
-| P4 | Fix all remaining cross-module `window.*` calls | ⬜ Not started |
+| P4 | Fix all remaining cross-module `window.*` calls | ✅ Substantially Complete (869→292) |
 | P5 | Clean entry-point files | ⬜ Not started |
 | P6 | Final validation | ⬜ Not started |
 

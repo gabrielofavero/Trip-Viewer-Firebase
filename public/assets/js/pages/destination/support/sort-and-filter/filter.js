@@ -1,3 +1,6 @@
+import { getPriceLabel, isPriceInBucketRange } from '../../../../models/destination.model.js';
+import { translate } from '../../../../i18n/translation.js';
+
 const FILTER_OPTIONS = {};
 
 // Main Action

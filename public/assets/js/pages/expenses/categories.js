@@ -1,4 +1,6 @@
 import { getIcons } from '../../app/config.js';
+import { getID } from '../../utils/dom.js';
+import { translate } from '../../i18n/translation.js';
 
 // Resumo
 function loadSummary() {

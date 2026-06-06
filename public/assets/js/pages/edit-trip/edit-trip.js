@@ -1,5 +1,17 @@
-import { stopLoadingScreen } from '../../utils/loading.js';
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
 import { setState } from '../../data/state.js';
+import { getDateTitle, getTodayFormatted, getTomorrowFormatted, jsDateToKey } from '../../utils/dates.js';
+import { cloneObject, getID, getOrderedDocumentByTitle, getURLParam } from '../../utils/dom.js';
+import { deleteUserObjectDB, getPermissoes, getSingleData, getTripDataWithDestinations } from '../../data/firebase/database.js';
+import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
+import { newDynamicSelect } from '../../ui/dynamic-select.js';
+import { getUserData } from '../../data/firebase/auth.js';
+import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '../../data/firebase/storage.js';
+import { snapshotFormState } from '../../ui/fields.js';
+import { loadEditModule } from '../../theme/visibility.js';
+import { translate } from '../../i18n/translation.js';
+import { displayFullMessage } from '../../utils/messages.js';
+import { loadVisibilityIndex } from '../home/support/visibility.js';
 
 var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_GASTOS_DATA = {};

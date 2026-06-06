@@ -1,5 +1,8 @@
-import { stopLoadingScreen } from '../../../utils/loading.js';
+import { startLoadingScreen, stopLoadingScreen } from '../../../utils/loading.js';;
 import { getState } from '../../../data/state.js';
+import { loadEmbedListeners, openEmbed, sendToEmbed } from '../../../ui/embed.js';
+import { getID } from '../../../utils/dom.js';
+import { disableScroll, enableScroll, loadExternalVisibility } from '../../../theme/visibility.js';
 
 var SAVED_SCROLL_POSITION = 0;
 const ACTIVE_EMBEDS = {};

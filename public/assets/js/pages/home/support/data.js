@@ -1,4 +1,9 @@
 import { displayError } from '../../../utils/messages.js';
+import { getUserData, registerIfUserNotPresent } from '../../../data/firebase/auth.js';
+import { getCurrentTrips, getID, getLastUpdatedOnText, getNextTrips, getOrderedDocumentByUpdateDate, getPreviousTrips } from '../../../utils/dom.js';
+import { translate, translatePage } from '../../../i18n/translation.js';
+import { stopLoadingScreen } from '../../../utils/loading.js';
+import { dateObjectToString } from '../../../utils/dates.js';
 
 var INDEX_DATA = {};
 var CURRENT_TRIPS = [];

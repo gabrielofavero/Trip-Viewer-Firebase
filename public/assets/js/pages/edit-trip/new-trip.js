@@ -1,4 +1,9 @@
 import { getTransportations } from '../../app/config.js';
+import { getCategoryID, getChildIDs, getID, getJ, getNextJ } from '../../utils/dom.js';
+import { addSelectorDS } from '../../ui/dynamic-select.js';
+import { formattedDateToDate, getArrayOfDates, getDateTitle, getNextCategoryStartEnd } from '../../utils/dates.js';
+import { addRemoveChildListener } from '../../theme/visibility.js';
+import { loadImageSelector } from '../../data/firebase/storage.js';
 
 var DATAS = [];
 

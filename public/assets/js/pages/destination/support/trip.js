@@ -1,5 +1,8 @@
 import { getItinerary } from '../../../app/config.js';
 import { getState, setState } from '../../../data/state.js';
+import { cloneObject, getID } from '../../../utils/dom.js';
+import { convertFromDateObject, dateObjectToInputDate, getDateTitle } from '../../../utils/dates.js';
+import { update } from '../../../data/firebase/database.js';
 
 var TRIP_ID;
 var PLANNED_DESTINATION = {};

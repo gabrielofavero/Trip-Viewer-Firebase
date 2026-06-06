@@ -1,4 +1,9 @@
 import { getState } from '../../data/state.js';
+import { getChildIDs, getID, setRequired } from '../../utils/dom.js';
+import { formattedDateToDateObject } from '../../utils/dates.js';
+import { getUID } from '../../data/firebase/auth.js';
+import { deleteUnusedImages } from '../../data/firebase/storage.js';
+import { translate } from '../../i18n/translation.js';
 
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_PROTECTED_NEW_DATA = {};

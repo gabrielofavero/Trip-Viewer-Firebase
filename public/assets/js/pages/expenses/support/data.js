@@ -1,4 +1,7 @@
-import {
+import { getID, import { getID } from '../../../utils/dom.js';;
+import { translate } from '../../../i18n/translation.js';
+import { isOnDarkMode } from '../../../theme/visibility.js';
+import { formatCurrency, getChartColorsRGB, getChartConfig, getChartData } from '../../../models/expense.model.js';
 	getChartData,
 	getChartConfig,
 	getChartColorsRGB,

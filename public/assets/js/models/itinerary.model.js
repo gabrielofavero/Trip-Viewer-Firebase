@@ -4,6 +4,11 @@
 
 import { getItinerary, getTransportations, getCurrencies } from '../app/config.js';
 import { getState } from '../data/state.js';
+import { convertFromDateObject, getDateTitle } from '../utils/dates.js';
+import { getInnerItinerary, getInnerItineraryTitle } from '../utils/dom.js';
+import { getDestination } from '../data/firebase/database.js';
+import { translate } from '../i18n/translation.js';
+import { getNotaTranslation, getValorValue } from './destination.model.js';
 
 // ======= Itinerary Content Generator (Multi-format) =======
 

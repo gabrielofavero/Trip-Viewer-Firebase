@@ -10,6 +10,8 @@
  * @param {Date} fim - End date
  * @returns {number} Number of days
  */
+import { convertFromDateObject } from '../utils/dates.js';
+
 export function computeTripDuration(inicio, fim) {
 	return Math.ceil((fim - inicio) / (1000 * 60 * 60 * 24)) + 1;
 }

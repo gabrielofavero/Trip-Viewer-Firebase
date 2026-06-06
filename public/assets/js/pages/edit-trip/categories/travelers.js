@@ -1,7 +1,10 @@
 // ======= Travelers =======
 // Traveler functions moved to models/traveler.model.js — imported here for backward compat
 
-import {
+import { cloneObject, getID, getReadableArray, import { cloneObject } from '../../../utils/dom.js';;
+import { translate } from '../../../i18n/translation.js';
+import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
+import { getNewTravelerID } from '../../../models/traveler.model.js';
 	getNewTravelerID,
 	validateTravelersObject,
 	hasDuplicateTravelerNames,

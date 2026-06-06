@@ -3,6 +3,7 @@
 // Extracted from: destination/categories.js, destination/support/sort-and-filter/
 
 import { getCurrencies } from '../app/config.js';
+import { getUserLanguage, translate } from '../i18n/translation.js';
 
 // ======= Destination Value Formatting =======
 

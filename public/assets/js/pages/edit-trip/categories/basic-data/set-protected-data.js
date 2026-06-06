@@ -1,4 +1,5 @@
 import { getState } from '../../../../data/state.js';
+import { getID, objectExistsAndHasKeys } from '../../../../utils/dom.js';
 
 function setCurrentPreferencePIN(preference) {
 	if (preference === "sensitive-only") {

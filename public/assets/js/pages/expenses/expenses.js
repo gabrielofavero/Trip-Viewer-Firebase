@@ -1,4 +1,13 @@
-import { stopLoadingScreen } from '../../utils/loading.js';
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
+import { getLocalColors } from '../../theme/colors.js';
+import { loadVisibility } from '../../theme/visibility.js';
+import { getID, getURLParam, getURLParams } from '../../utils/dom.js';
+import { closeMessage, displayError, displayForbidden } from '../../utils/messages.js';
+import { translate } from '../../i18n/translation.js';
+import { loadCurrencies } from '../../app/config.js';
+import { getConversionText, loadConvertedExpenses } from '../../models/expense.model.js';
+import { fade } from '../../theme/animations.js';
+import { requestPin } from '../../utils/pin.js';
 
 var GASTOS;
 var EXPENSES_COUNT = 0;

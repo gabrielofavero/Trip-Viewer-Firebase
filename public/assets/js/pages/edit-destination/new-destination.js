@@ -1,3 +1,6 @@
+import { getID, getNextJ } from '../../utils/dom.js';
+import { addSelectorDS } from '../../ui/dynamic-select.js';
+
 // Adicionar
 function addRestaurantes() {
 	if (!VALOR_OPTIONS) {

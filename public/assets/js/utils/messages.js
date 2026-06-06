@@ -2,6 +2,8 @@ import { cloneObject, getID } from './dom.js';
 import { stopLoadingScreen, stopLoadingTimer } from './loading.js';
 import { translate } from '../i18n/translation.js';
 import { disableScroll } from '../theme/visibility.js';
+import { getHTMLpage } from '../app/main.js';
+import { fadeIn, fadeOut } from '../theme/animations.js';
 
 export let MESSAGE_MODAL_OPEN = false;
 const MESSAGE_PROPERTIES = {

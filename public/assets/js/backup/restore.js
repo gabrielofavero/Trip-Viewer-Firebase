@@ -1,5 +1,8 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
-import { displayError } from '../utils/messages.js';
+import { closeMessage, displayError, displayMessage, displayPrompt, openToast } from '../utils/messages.js';;
+import { translate } from '../i18n/translation.js';
+import { getUID } from '../data/firebase/auth.js';
+import { cloneObject } from '../utils/dom.js';
 
 async function restoreOnClickAction() {
 	const titulo = translate("account.restore.title");

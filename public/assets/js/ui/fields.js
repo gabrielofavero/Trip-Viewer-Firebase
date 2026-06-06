@@ -1,5 +1,8 @@
-import { firstCharToUpperCase } from "../utils/dom.js";
+import { firstCharToUpperCase, getID } from '../utils/dom.js';;
 import { stopLoadingScreen } from "../utils/loading.js";
+import { closeModal, openModal } from '../theme/visibility.js';
+import { translate } from '../i18n/translation.js';
+import { openToast } from '../utils/messages.js';
 
 let ORIGINAL_STATE = new Map();
 

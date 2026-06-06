@@ -1,5 +1,6 @@
-import { codifyText } from "../../utils/dom.js";
+import { codifyText, getID } from '../../utils/dom.js';;
 import { getState } from '../state.js';
+import { translate } from '../../i18n/translation.js';
 
 export let IMAGE_UPLOAD_STATUS = {
 	hasErrors: false,

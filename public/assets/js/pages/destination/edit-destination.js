@@ -1,5 +1,11 @@
 import { getCurrencies } from '../../app/config.js';
-import { stopLoadingScreen } from '../../utils/loading.js';
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';;
+import { getID, getLastUnorderedJ, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
+import { getLanguagePackName, translate } from '../../i18n/translation.js';
+import { removeEl, validateInstagramLink, validateLink, validateMapLink, validateMediaLink } from '../../ui/fields.js';
+import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
+import { update } from '../../data/firebase/database.js';
+import { getUID } from '../../data/firebase/auth.js';
 
 let ADDED_J;
 

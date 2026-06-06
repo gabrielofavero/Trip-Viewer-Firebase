@@ -1,4 +1,10 @@
 import { getState } from '../../../../data/state.js';
+import { getID } from '../../../../utils/dom.js';
+import { translate } from '../../../../i18n/translation.js';
+import { closeMessage } from '../../../../utils/messages.js';
+import { stopLoadingScreen } from '../../../../utils/loading.js';
+import { openModal } from '../../../../theme/visibility.js';
+import { requestPin } from '../../../../utils/pin.js';
 
 var PIN = {
 	current: "",

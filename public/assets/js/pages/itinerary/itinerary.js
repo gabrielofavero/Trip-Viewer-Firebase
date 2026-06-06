@@ -1,5 +1,14 @@
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getState, setState } from '../../data/state.js';
+import { getID, getURLParam, on, select } from '../../utils/dom.js';
+import { translate } from '../../i18n/translation.js';
+import { closeMessage, displayError, displayPrompt, openToast } from '../../utils/messages.js';
+import { getItineraryContent } from '../../models/itinerary.model.js';
+import { isOnDarkMode, loadVisibility, switchVisibility } from '../../theme/visibility.js';
+import { loadEmbedVisibility } from '../../ui/embed.js';
+import { haveErrorFromGetRequest } from '../../data/firebase/database.js';
+import { setPageName } from '../../app/main.js';
+import { requestPin } from '../../utils/pin.js';
 
 var FIRESTORE_PROTECTED_DATA;
 

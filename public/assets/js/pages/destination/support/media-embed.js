@@ -1,3 +1,5 @@
+import { getID, getJs, getLinkMediaButton } from '../../../utils/dom.js';
+
 var MEDIA_HYPERLINKS = {};
 const EMBED_TIMEOUT = 10000;
 

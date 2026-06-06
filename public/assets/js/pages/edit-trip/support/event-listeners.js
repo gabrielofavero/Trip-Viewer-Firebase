@@ -1,3 +1,10 @@
+import { getID } from '../../../utils/dom.js';
+import { hasUnsavedChanges, reEdit, validateImageLink, validateLink } from '../../../ui/fields.js';
+import { searchDestinationsListenerAction } from '../../../theme/visibility.js';
+import { translate } from '../../../i18n/translation.js';
+import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
+import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
+
 // Loader
 function loadEventListeners() {
 	// Inputs

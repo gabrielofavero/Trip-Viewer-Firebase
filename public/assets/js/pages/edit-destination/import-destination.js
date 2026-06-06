@@ -8,6 +8,10 @@
  *   novo (bool), descricao: { en, pt }, criadoEm, id
  * }
  */
+import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
+import { getJs, getLastJ } from '../../utils/dom.js';
+import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
+
 
 const IMPORT_TYPES = ["restaurantes", "lanches", "saidas", "turismo", "lojas"];
 

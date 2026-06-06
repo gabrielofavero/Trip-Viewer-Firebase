@@ -1,3 +1,5 @@
+import { getHTMLpage } from '../app/main.js';
+
 // ======= Device JS =======
 
 // ======= CHECKERS =======

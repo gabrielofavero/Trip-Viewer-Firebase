@@ -1,3 +1,5 @@
+import { getID } from '../../../../../utils/dom.js';
+
 const DRAWER_STATE = {
 	actions: null,
 };

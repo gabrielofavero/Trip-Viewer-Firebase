@@ -1,4 +1,10 @@
 import { startLoadingScreen, stopLoadingScreen } from './loading.js';
+import { getUID } from '../data/firebase/auth.js';
+import { createBatchOps } from '../data/firebase/database.js';
+import { translate } from '../i18n/translation.js';
+import { isModalOpen, openModal } from '../theme/visibility.js';
+import { hasUnsavedChanges, validateRequiredFields } from '../ui/fields.js';
+import { getID, getNewDataDocument } from './dom.js';
 
 var CUSTOM_UPLOADS = {
 	hospedagens: [],

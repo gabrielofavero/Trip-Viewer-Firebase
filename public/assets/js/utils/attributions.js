@@ -1,4 +1,7 @@
 import { getState } from '../data/state.js';
+import { cloneObject } from './dom.js';
+import { translate } from '../i18n/translation.js';
+import { displayFullMessage } from './messages.js';
 
 function openAtribuicoes() {
 	const page = window.location.href

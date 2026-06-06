@@ -1,3 +1,9 @@
+import { cloneObject, firstCharToUpperCase, getID } from '../../../utils/dom.js';
+import { translate } from '../../../i18n/translation.js';
+import { initializeSortableForGroup } from '../../../ui/sortable.js';
+import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
+import { getFieldValueOrNotify } from '../../../ui/fields.js';
+
 var INNER_EXPENSES = {
 	gastosPrevios: [],
 	gastosDurante: [],

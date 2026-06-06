@@ -1,4 +1,9 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import { translate } from '../i18n/translation.js';
+import { closeMessage, displayFullMessage, displayPrompt, getContainersInput, openToast } from '../utils/messages.js';
+import { cloneObject, getID, getTranslatedDocumentLabel } from '../utils/dom.js';
+import { getTimestamp } from '../utils/dates.js';
+import { getUID } from '../data/firebase/auth.js';
 
 const MISSING_ACCOUNT_DATA = { jobs: [], protected: [], failed: [] };
 

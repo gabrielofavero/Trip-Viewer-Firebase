@@ -1,4 +1,11 @@
 import { getDestinos, getItinerary } from '../../../../../app/config.js';
+import { getDateTitle, jsDateToKey } from '../../../../../utils/dates.js';
+import { cloneObject, getID } from '../../../../../utils/dom.js';
+import { closeMessage, displayFullMessage, getContainersInput } from '../../../../../utils/messages.js';
+import { getSelectCurrentLabel } from '../../../../../ui/fields.js';
+import { translate } from '../../../../../i18n/translation.js';
+import { animate } from '../../../../../theme/animations.js';
+import { getDestination } from '../../../../../data/firebase/database.js';
 
 var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};

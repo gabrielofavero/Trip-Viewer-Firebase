@@ -1,3 +1,9 @@
+import { loadVisibility } from '../../../theme/visibility.js';
+import { loadEmbedVisibility } from '../../../ui/embed.js';
+import { getID } from '../../../utils/dom.js';
+import { setCSSRule } from '../../../theme/stylesheets.js';
+import { getDescricaoValue } from '../../../models/destination.model.js';
+
 async function loadDestinationVisibility() {
 	loadVisibility();
 	const closeAction = _unloadMedias;
