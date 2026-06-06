@@ -1,3 +1,5 @@
+import { stopLoadingScreen } from '../../utils/loading.js';
+
 var FIRESTORE_DATA = {};
 var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_GASTOS_DATA = {};
@@ -51,6 +53,7 @@ async function loadEditTripPage() {
 
 	$("body").css("overflow", "auto");
 }
+window.loadEditTripPage = loadEditTripPage;
 
 function loadHabilitados() {
 	loadEditModule("imagens");

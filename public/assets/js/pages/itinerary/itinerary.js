@@ -1,3 +1,5 @@
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
+
 var FIRESTORE_PROTECTED_DATA;
 
 window.addEventListener("load", async function () {
@@ -44,6 +46,7 @@ async function loadItineraryPage() {
 			await loadItinerary();
 	}
 }
+window.loadItineraryPage = loadItineraryPage;
 
 async function loadItinerary() {
 	if (

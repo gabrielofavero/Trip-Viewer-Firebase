@@ -8,14 +8,15 @@
   should include them AFTER this partial.
 -->
 
-<!-- Firebase SDK (compat / namespaced) -->
-<script src="{{ASSET_PREFIX}}../index.js" type="text/javascript"></script>
+<!-- Firebase: compat SDKs must load first (creates global `firebase`),
+     then init.js (connects emulators), then app module (uses global `firebase`) -->
 <script defer src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
 <script defer src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
 <script defer src="/__/firebase/10.12.2/firebase-firestore-compat.js"></script>
 <script defer src="/__/firebase/10.12.2/firebase-functions-compat.js"></script>
 <script defer src="/__/firebase/10.12.2/firebase-storage-compat.js"></script>
 <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+<script type="module" src="{{ASSET_PREFIX}}index.js"></script>
 
 <!-- Vendor JS Files (common to all pages) -->
 <script src="{{ASSET_PREFIX}}assets/vendor/aos/aos.js"></script>

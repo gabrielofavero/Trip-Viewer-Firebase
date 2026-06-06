@@ -1,3 +1,5 @@
+import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+
 const MISSING_ACCOUNT_DATA = { jobs: [], protected: [], failed: [] };
 
 // Backup

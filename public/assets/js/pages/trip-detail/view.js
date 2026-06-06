@@ -1,3 +1,6 @@
+import { stopLoadingScreen } from '../../utils/loading.js';
+import { displayError } from '../../utils/messages.js';
+
 var REFRESHED = false;
 var TYPE = "viagens";
 var PIN = null;
@@ -57,6 +60,7 @@ async function loadViewPage() {
 		}
 	}
 }
+window.loadViewPage = loadViewPage;
 
 async function syncModules() {
 	try {

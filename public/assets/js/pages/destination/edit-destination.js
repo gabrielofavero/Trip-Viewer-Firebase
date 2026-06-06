@@ -1,4 +1,5 @@
 import { getCurrencies } from '../../app/config.js';
+import { stopLoadingScreen } from '../../utils/loading.js';
 
 let ADDED_J;
 

@@ -1,3 +1,6 @@
+import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
+import { displayError } from '../utils/messages.js';
+
 async function restoreOnClickAction() {
 	const titulo = translate("account.restore.title");
 	const conteudo = translate("account.restore.prompt");

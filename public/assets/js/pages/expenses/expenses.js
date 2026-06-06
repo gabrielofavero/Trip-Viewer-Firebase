@@ -1,3 +1,5 @@
+import { stopLoadingScreen } from '../../utils/loading.js';
+
 var GASTOS;
 var EXPENSES_COUNT = 0;
 var TOTAL_EXPENSES = {
@@ -73,6 +75,7 @@ async function loadExpensesPage() {
 	}
 	stopLoadingScreen();
 }
+window.loadExpensesPage = loadExpensesPage;
 
 function requestPinExpenses() {
 	const cancelAction = `exitExpenses()`;

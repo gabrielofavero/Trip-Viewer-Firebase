@@ -1,5 +1,6 @@
 import { getIdFromObjectDB, getURLParams } from "../../utils/dom.js";
 import { displayError } from "../../utils/messages.js";
+import { stopLoadingScreen } from "../../utils/loading.js";
 
 export let DOCUMENT_ID;
 export let ERROR_FROM_GET_REQUEST = {};

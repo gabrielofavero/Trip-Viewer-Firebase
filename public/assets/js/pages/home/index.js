@@ -1,3 +1,6 @@
+import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
+import { displayError } from '../../utils/messages.js';
+
 document.addEventListener("DOMContentLoaded", async function () {
 	startLoadingScreen();
 	try {
@@ -14,3 +17,4 @@ async function loadIndexPage() {
 	loadListenersIndex();
 	loadUserIndex();
 }
+window.loadIndexPage = loadIndexPage;

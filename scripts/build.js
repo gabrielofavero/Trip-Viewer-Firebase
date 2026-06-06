@@ -52,10 +52,11 @@ function build() {
   const { inject } = require("./inject-partials.js");
   inject();
 
-  // 3. Copy firebase.json and firebase-config.js to dist/
+  // 3. Copy firebase.json, firebase-config.js, and index.js to dist/
   console.log("[build] Copying Firebase config files...");
   const firebaseJson = path.join(ROOT, "firebase.json");
   const firebaseConfig = path.join(ROOT, "firebase-config.js");
+  const indexJs = path.join(ROOT, "index.js");
 
   if (fs.existsSync(firebaseJson)) {
     fs.copyFileSync(firebaseJson, path.join(DIST_DIR, "firebase.json"));
@@ -67,6 +68,12 @@ function build() {
     fs.copyFileSync(firebaseConfig, path.join(DIST_DIR, "firebase-config.js"));
   } else {
     console.warn("[build] WARNING: firebase-config.js not found at project root.");
+  }
+
+  if (fs.existsSync(indexJs)) {
+    fs.copyFileSync(indexJs, path.join(DIST_DIR, "index.js"));
+  } else {
+    console.warn("[build] WARNING: index.js not found at project root.");
   }
 
   const elapsed = Date.now() - start;

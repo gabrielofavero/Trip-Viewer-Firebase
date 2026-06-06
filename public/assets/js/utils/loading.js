@@ -1,10 +1,15 @@
+import { getID } from './dom.js';
+import { disableScroll, enableScroll } from '../theme/visibility.js';
+import { MESSAGE_MODAL_OPEN, closeMessage, displayError } from './messages.js';
+import { translate } from '../i18n/translation.js';
+
 var LOADING_TIMER;
 var LOADING_SECONDS = 0;
 var LOADING_TIMEOUT_TRIGGERED = false;
 
 // Loading Screen
 
-function startLoadingScreen({
+export function startLoadingScreen({
 	useTimer = false,
 	adjustLoadables = true,
 } = {}) {
@@ -23,7 +28,7 @@ function startLoadingScreen({
 	}
 }
 
-function stopLoadingScreen({ adjustLoadables = true } = {}) {
+export function stopLoadingScreen({ adjustLoadables = true } = {}) {
 	const wasTimeoutTriggered = LOADING_TIMEOUT_TRIGGERED;
 	stopLoadingTimer();
 	sessionStorage.setItem("firstLoad", "true");
@@ -49,12 +54,12 @@ function stopLoadingScreen({ adjustLoadables = true } = {}) {
 	}
 }
 
-function isAlreadyLoading() {
+export function isAlreadyLoading() {
 	return getID("preloader").style.display === "block";
 }
 
 // Loading Timer
-function startLoadingTimer() {
+export function startLoadingTimer() {
 	if (LOADING_TIMER == null && MESSAGE_MODAL_OPEN == false) {
 		LOADING_SECONDS = 0;
 		LOADING_TIMER = setInterval(() => {
@@ -75,7 +80,7 @@ function startLoadingTimer() {
 	}
 }
 
-function stopLoadingTimer() {
+export function stopLoadingTimer() {
 	if (LOADING_TIMER) {
 		clearInterval(LOADING_TIMER);
 		LOADING_TIMER = null;

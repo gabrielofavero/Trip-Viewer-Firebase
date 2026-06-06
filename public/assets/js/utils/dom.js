@@ -788,6 +788,37 @@ export function combineDatabaseResponses(responses) {
 
 let CALL_SYNC = [];
 
+// DOM Selector Utilities
+export function getID(id) {
+	return document.getElementById(id);
+}
+
+export function select(el, all = false) {
+	el = el.trim();
+	if (all) {
+		return [...document.querySelectorAll(el)];
+	} else {
+		return document.querySelector(el);
+	}
+}
+
+export function on(type, el, listener, all = false) {
+	if (el === "document") {
+		document.addEventListener(type, listener);
+	} else if (el === "window") {
+		window.addEventListener(type, listener);
+	} else {
+		let selectEl = all
+			? [...document.querySelectorAll(el)]
+			: [document.querySelector(el)];
+		selectEl.forEach((e) => e && e.addEventListener(type, listener));
+	}
+}
+
+export function onscroll(el, listener) {
+	el.addEventListener("scroll", listener);
+}
+
 
 
 

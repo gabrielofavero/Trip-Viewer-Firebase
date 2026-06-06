@@ -1,4 +1,9 @@
-let MESSAGE_MODAL_OPEN = false;
+import { cloneObject, getID } from './dom.js';
+import { stopLoadingScreen, stopLoadingTimer } from './loading.js';
+import { translate } from '../i18n/translation.js';
+import { disableScroll } from '../theme/visibility.js';
+
+export let MESSAGE_MODAL_OPEN = false;
 const MESSAGE_PROPERTIES = {
 	titulo: "",
 	conteudo: "",
@@ -57,7 +62,7 @@ export function displayFullMessage(
 	const preloader = getID("preloader");
 	const isErrorMessage = Object.keys(propriedades.erro).length > 0;
 
-	if (typeof _stopLoadingTimer === "function") {
+	if (typeof stopLoadingTimer === "function") {
 		stopLoadingTimer();
 	}
 
@@ -199,7 +204,7 @@ export function closeMessage() {
 		}
 		MESSAGE_MODAL_OPEN = false;
 		document.removeEventListener("keydown", handleMessageKeydown);
-		if (typeof _stopLoadingScreen === "function") stopLoadingScreen();
+		if (typeof stopLoadingScreen === "function") stopLoadingScreen();
 	} else {
 		console.warn("Cannot close an unopened message modal.");
 	}

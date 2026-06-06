@@ -1,3 +1,5 @@
+import { stopLoadingScreen } from '../../../utils/loading.js';
+
 var SAVED_SCROLL_POSITION = 0;
 const ACTIVE_EMBEDS = {};
 

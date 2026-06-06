@@ -1,3 +1,6 @@
+import { stopLoadingScreen } from '../../utils/loading.js';
+import { displayError } from '../../utils/messages.js';
+
 var FIRESTORE_DESTINOS_DATA;
 
 SUCCESSFUL_SAVE = false;
@@ -34,6 +37,7 @@ async function loadEditDestinationPage() {
 	snapshotFormState();
 	$("body").css("overflow", "auto");
 }
+window.loadEditDestinationPage = loadEditDestinationPage;
 
 function loadHabilitados() {
 	loadEditModule("restaurantes");

@@ -1,4 +1,4 @@
-import { startFirebase } from "./firebase-config";
+import { startFirebase } from "./firebase-config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 	startFirebase();

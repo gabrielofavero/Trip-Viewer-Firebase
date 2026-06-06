@@ -1,3 +1,5 @@
+import { displayError } from '../../../utils/messages.js';
+
 async function loadTripData() {
 	try {
 		loadBasicTripData();

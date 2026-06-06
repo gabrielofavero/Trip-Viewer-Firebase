@@ -1,3 +1,5 @@
+import { displayError } from '../../../utils/messages.js';
+
 var INDEX_DATA = {};
 var CURRENT_TRIPS = [];
 var PREVIOUS_TRIPS = [];

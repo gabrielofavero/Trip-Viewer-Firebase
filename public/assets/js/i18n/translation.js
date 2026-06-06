@@ -136,4 +136,12 @@ export function loadLangSelectorSelect() {
 	}
 }
 
+// Make translation functions globally accessible for cross-module calls
+window.translate = translate;
+window.getUserLanguage = getUserLanguage;
+window.getLanguagePackName = getLanguagePackName;
+window.updateUserLanguage = updateUserLanguage;
+window.translatePage = translatePage;
+window.loadLangSelectorSelect = loadLangSelectorSelect;
+
 

@@ -39,6 +39,7 @@ async function loadEditListingPage() {
 
 	$("body").css("overflow", "auto");
 }
+window.loadEditListingPage = loadEditListingPage;
 
 function loadHabilitados() {
 	loadEditModule("imagens");

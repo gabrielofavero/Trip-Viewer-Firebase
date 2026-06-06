@@ -1,4 +1,5 @@
 import { firstCharToUpperCase } from "../utils/dom.js";
+import { stopLoadingScreen } from "../utils/loading.js";
 
 let ORIGINAL_STATE = new Map();
 

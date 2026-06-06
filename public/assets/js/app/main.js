@@ -6,43 +6,14 @@
     - Modified by: Gabriel Fávero
 */
 
+import { select, on, onscroll, getID } from '../utils/dom.js';
+import { displayError } from '../utils/messages.js';
+import { loadAllConfigs, setLanguage, getVersoes } from '../app/config.js';
+
 const APP = {
 	projectId: null,
 	version: null,
 };
-
-// Easy Selectors
-const select = (el, all = false) => {
-	el = el.trim();
-	if (all) {
-		return [...document.querySelectorAll(el)];
-	} else {
-		return document.querySelector(el);
-	}
-};
-
-const on = (type, el, listener, all = false) => {
-	if (el === "document") {
-		document.addEventListener(type, listener);
-	} else if (el === "window") {
-		window.addEventListener(type, listener);
-	} else {
-		let selectEl = all
-			? [...document.querySelectorAll(el)]
-			: [document.querySelector(el)];
-		selectEl.forEach((e) => e && e.addEventListener(type, listener));
-	}
-};
-
-const onscroll = (el, listener) => {
-	el.addEventListener("scroll", listener);
-};
-
-const getID = (id) => {
-	return document.getElementById(id);
-};
-
-import { loadAllConfigs, setLanguage, getVersoes } from '../app/config.js';
 
 async function main() {
 	try {
@@ -118,6 +89,10 @@ function getHTMLpage() {
 			return result.slice(1);
 	}
 }
+
+// Make getHTMLpage available globally for other ES modules
+window.getHTMLpage = getHTMLpage;
+window.main = main;
 
 function getPageURL() {
 	const isAltPrd =

@@ -1,3 +1,5 @@
+import { stopLoadingScreen } from '../../../utils/loading.js';
+
 const SENSITIVE_RESERVATION_BOXES = {
 	transportes: {},
 	hospedagens: {},

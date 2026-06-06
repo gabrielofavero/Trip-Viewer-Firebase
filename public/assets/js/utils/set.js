@@ -1,3 +1,5 @@
+import { startLoadingScreen, stopLoadingScreen } from './loading.js';
+
 var CUSTOM_UPLOADS = {
 	hospedagens: [],
 	galeria: [],

@@ -3,6 +3,7 @@
 // Extracted from: expenses-converted.js, support/currency.js, support/data.js
 
 import { getCurrencies, getColors } from '../app/config.js';
+import { displayError } from '../utils/messages.js';
 
 // ======= Currency Filtering & Sorting =======
 

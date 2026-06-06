@@ -1,4 +1,5 @@
 import { getDestinos } from '../../app/config.js';
+import { displayError } from '../../utils/messages.js';
 
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
@@ -61,6 +62,7 @@ async function loadDestinationPage() {
 		throw error;
 	}
 }
+window.loadDestinationPage = loadDestinationPage;
 
 function loadDestinationByType(activeCategory) {
 	const content = getID("content");
