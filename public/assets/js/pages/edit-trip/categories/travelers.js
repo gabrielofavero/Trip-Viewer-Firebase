@@ -12,7 +12,7 @@ let TRAVELER_SELECT_OPTIONS = "";
 
 
 
-function openTravelersInfo() {
+export function openTravelersInfo() {
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = translate("trip.travelers.info");
 	propriedades.containers = getContainersInput();

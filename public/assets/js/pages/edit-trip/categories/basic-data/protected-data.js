@@ -70,7 +70,7 @@ function switchPinLabel() {
 			: translate("trip.basic_information.pin.new");
 }
 
-function requestPinEditarGastos(invalido = false) {
+export function requestPinEditarGastos(invalido = false) {
 	const confirmAction = "reconfirmPin()";
 	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.insert");

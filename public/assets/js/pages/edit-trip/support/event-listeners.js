@@ -1,12 +1,36 @@
 import { getID } from '../../../utils/dom.js';
 import { hasUnsavedChanges, reEdit, validateImageLink, validateLink } from '../../../ui/fields.js';
-import { searchDestinationsListenerAction } from '../../../theme/visibility.js';
+import { searchDestinationsListenerAction, closeModal } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
 import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
+import { registerActions } from '../../../ui/actions.js';
+import { openTravelersInfo } from '../categories/travelers.js';
+import { requestPinEditarGastos } from '../categories/basic-data/protected-data.js';
+import { deleteTrip } from '../edit-trip.js';
+import { openInnerExpense } from '../categories/expenses.js';
+import { openAttributions } from '../../../utils/attributions.js';
+import { closeToast } from '../../../utils/messages.js';
 
 // Loader
 function loadEventListeners() {
+	// Register data-action handlers via the shared delegated handler (ui/actions.js)
+	registerActions({
+		"open-travelers-info": () => openTravelersInfo(),
+		"request-pin-expenses": () => requestPinEditarGastos(),
+		"delete-trip": () => deleteTrip(),
+		"open-inner-expense": (target) => {
+			const category = target.getAttribute("data-category");
+			if (category) openInnerExpense(category);
+		},
+		"open-attributions": () => openAttributions(),
+		"close-modal": (target) => {
+			const modalId = target.getAttribute("data-modal") || "delete-modal";
+			closeModal(modalId);
+		},
+		"close-toast": () => closeToast(),
+	});
+
 	// Inputs
 	getID("inicio").addEventListener("change", () => inicioListenerAction());
 	getID("fim").addEventListener("change", () => fimListenerAction());

@@ -111,7 +111,7 @@ function loadExpensesHTML() {
 	}
 }
 
-function openInnerExpense(categoria, tipo = "", index = -1) {
+export function openInnerExpense(categoria, tipo = "", index = -1) {
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = tipo
 		? translate("labels.edit")

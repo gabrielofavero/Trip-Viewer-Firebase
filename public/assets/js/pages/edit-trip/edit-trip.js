@@ -102,7 +102,7 @@ async function loadTrip(stripped = false) {
 	stopLoadingScreen();
 }
 
-function deleteTrip() {
+export function deleteTrip() {
 	let viagem = getID("titulo").value;
 	viagem = viagem ? ` "${viagem}"` : "";
 
