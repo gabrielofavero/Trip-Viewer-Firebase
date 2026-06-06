@@ -5,16 +5,6 @@ var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
 var ACTIVE_CATEGORY;
 
-window.addEventListener("load", async function () {
-	try {
-		startLoadingScreen();
-		main();
-	} catch (error) {
-		displayError(error);
-		console.error(error);
-	}
-});
-
 async function loadDestinationsData() {
 	const urlParams = getURLParams();
 	DOCUMENT_ID = urlParams["d"];
@@ -36,7 +26,7 @@ async function loadDestinationsData() {
 	loadActiveCategory(urlParams);
 }
 
-async function loadDestinationPage() {
+export async function loadDestinationPage() {
 	console.log(this.window.location.href);
 
 	await loadDestinationsData();
@@ -62,7 +52,6 @@ async function loadDestinationPage() {
 		throw error;
 	}
 }
-window.loadDestinationPage = loadDestinationPage;
 
 function loadDestinationByType(activeCategory) {
 	const content = getID("content");

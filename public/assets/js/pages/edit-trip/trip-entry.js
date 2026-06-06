@@ -3,8 +3,7 @@
 // Import order MUST match the original script tag order exactly
 
 // Paths use ../.. because this file is in pages/edit-trip/
-import '../../i18n/translation.js';
-import '../../app/main.js';
+import { main } from '../../app/main.js';
 import '../../theme/animations.js';
 import '../../utils/dom.js';
 import '../../data/services/trip.service.js';
@@ -40,5 +39,7 @@ import './existing-trip.js';
 import '../../utils/set.js';
 import './set-trip.js';
 import './support/event-listeners.js';
-import './edit-trip.js';
+import { loadEditTripPage } from './edit-trip.js';
 import '../../utils/attributions.js';
+
+main({ editTrip: loadEditTripPage });

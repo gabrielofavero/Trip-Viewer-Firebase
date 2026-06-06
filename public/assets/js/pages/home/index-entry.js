@@ -2,8 +2,7 @@
 // Single entry point replacing all <script data-main> tags in index.html
 // Import order MUST match the original script tag order exactly
 
-import '../../i18n/translation.js';
-import '../../app/main.js';
+import { main } from '../../app/main.js';
 import '../../theme/animations.js';
 import '../../utils/dates.js';
 import '../../utils/dom.js';
@@ -19,7 +18,9 @@ import '../../utils/loading.js';
 import './support/data.js';
 import './support/event-listeners.js';
 import './support/navigation.js';
-import './index.js';
+import { loadIndexPage } from './index.js';
 import '../../utils/attributions.js';
 import '../../backup/backup.js';
 import '../../backup/restore.js';
+
+main({ index: loadIndexPage });

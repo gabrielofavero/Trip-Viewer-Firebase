@@ -2,8 +2,7 @@
 // Single entry point replacing all <script data-main> tags in view.html
 // Import order MUST match the original script tag order exactly
 
-import '../../i18n/translation.js';
-import '../../app/main.js';
+import { main } from '../../app/main.js';
 import '../../theme/animations.js';
 import '../../utils/messages.js';
 import '../../utils/loading.js';
@@ -36,5 +35,7 @@ import '../destination/categories.js';
 import '../destination/support/visibility.js';
 import '../destination/support/media-embed.js';
 import '../destination/support/content.js';
-import './view.js';
+import { loadViewPage } from './view.js';
 import '../../utils/attributions.js';
+
+main({ view: loadViewPage });

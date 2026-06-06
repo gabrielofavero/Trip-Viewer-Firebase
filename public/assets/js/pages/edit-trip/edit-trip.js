@@ -12,19 +12,7 @@ const TOMORROW = getTomorrowFormatted();
 
 startLoadingScreen();
 
-document.addEventListener("DOMContentLoaded", async function () {
-	try {
-		main();
-	} catch (error) {
-		if (error?.responseJSON?.error) {
-			displayError(error.responseJSON.error);
-		} else {
-			displayError(error);
-		}
-	}
-});
-
-async function loadEditTripPage() {
+export async function loadEditTripPage() {
 	DOCUMENT_ID = getURLParam("v");
 	PERMISSOES = await getPermissoes();
 
@@ -53,7 +41,6 @@ async function loadEditTripPage() {
 
 	$("body").css("overflow", "auto");
 }
-window.loadEditTripPage = loadEditTripPage;
 
 function loadHabilitados() {
 	loadEditModule("imagens");

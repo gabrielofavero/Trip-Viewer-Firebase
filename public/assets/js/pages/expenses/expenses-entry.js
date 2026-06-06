@@ -2,8 +2,7 @@
 // Single entry point replacing all <script data-main> tags in expenses.html
 // Import order MUST match the original script tag order exactly
 
-import '../../i18n/translation.js';
-import '../../app/main.js';
+import { main } from '../../app/main.js';
 import '../../data/services/trip.service.js';
 import '../../theme/animations.js';
 import '../../utils/dom.js';
@@ -26,5 +25,7 @@ import '../../ui/embed.js';
 import './support/embed.js';
 import './categories.js';
 import './expenses-converted.js';
-import './expenses.js';
+import { loadExpensesPage } from './expenses.js';
 import '../../utils/attributions.js';
+
+main({ expenses: loadExpensesPage });

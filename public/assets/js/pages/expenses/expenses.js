@@ -9,12 +9,7 @@ var TOTAL_EXPENSES = {
 };
 var ACTIVE_EXPENSE_TAB = "resumo";
 
-document.addEventListener("DOMContentLoaded", async function () {
-	startLoadingScreen();
-	main();
-});
-
-async function loadExpensesPage() {
+export async function loadExpensesPage() {
 	console.log(window.location.href);
 
 	const colors = getLocalColors();
@@ -75,7 +70,6 @@ async function loadExpensesPage() {
 	}
 	stopLoadingScreen();
 }
-window.loadExpensesPage = loadExpensesPage;
 
 function requestPinExpenses() {
 	const cancelAction = `exitExpenses()`;

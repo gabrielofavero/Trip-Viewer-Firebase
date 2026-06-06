@@ -6,15 +6,7 @@ var SUCCESSFUL_SAVE = false;
 
 startLoadingScreen();
 
-document.addEventListener("DOMContentLoaded", async function () {
-	try {
-		main();
-	} catch (error) {
-		displayError(error);
-	}
-});
-
-async function loadEditListingPage() {
+export async function loadEditListingPage() {
 	DOCUMENT_ID = getURLParam("l");
 	PERMISSOES = await getPermissoes();
 
@@ -39,7 +31,6 @@ async function loadEditListingPage() {
 
 	$("body").css("overflow", "auto");
 }
-window.loadEditListingPage = loadEditListingPage;
 
 function loadHabilitados() {
 	loadEditModule("imagens");

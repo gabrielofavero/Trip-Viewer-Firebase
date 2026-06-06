@@ -2,9 +2,8 @@
 // Single entry point replacing all <script data-main> tags in destination.html
 // Import order MUST match the original script tag order exactly
 
-import '../../i18n/translation.js';
 import '../../data/services/trip.service.js';
-import '../../app/main.js';
+import { main } from '../../app/main.js';
 import '../../data/services/auth.service.js';
 import '../../utils/loading.js';
 import '../../theme/animations.js';
@@ -24,7 +23,7 @@ import './support/sort-and-filter/filter.js';
 import './support/trip.js';
 import './edit-destination.js';
 import './import-destination.js';
-import './destination.js';
+import { loadDestinationPage } from './destination.js';
 import '../../theme/colors.js';
 import './support/visibility.js';
 import '../../theme/stylesheets.js';
@@ -34,3 +33,5 @@ import '../../utils/dates.js';
 import '../../utils/messages.js';
 import '../../ui/fields.js';
 import '../../utils/attributions.js';
+
+main({ destination: loadDestinationPage });

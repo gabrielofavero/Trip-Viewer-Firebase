@@ -2,18 +2,7 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 
 var FIRESTORE_PROTECTED_DATA;
 
-window.addEventListener("load", async function () {
-	try {
-		startLoadingScreen();
-		main();
-		stopLoadingScreen();
-	} catch (error) {
-		displayError(error);
-		console.error(error);
-	}
-});
-
-async function loadItineraryPage() {
+export async function loadItineraryPage() {
 	DOCUMENT_ID = getURLParam("v");
 	setPageName(translate("trip.itinerary.title"));
 
@@ -46,7 +35,6 @@ async function loadItineraryPage() {
 			await loadItinerary();
 	}
 }
-window.loadItineraryPage = loadItineraryPage;
 
 async function loadItinerary() {
 	if (

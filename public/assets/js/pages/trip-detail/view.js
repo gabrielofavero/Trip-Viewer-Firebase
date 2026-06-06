@@ -21,14 +21,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 	try {
 		startLoadingTimer();
 		mainView();
-		main();
 	} catch (error) {
 		displayError(error);
 		throw error;
 	}
 });
 
-async function loadViewPage() {
+export async function loadViewPage() {
 	const urlParams = getURLParams();
 	TYPE = urlParams["l"] ? "listagens" : urlParams["d"] ? "destinos" : "viagens";
 	DOCUMENT_ID = urlParams["l"] || urlParams["d"] || urlParams["v"];
@@ -60,7 +59,6 @@ async function loadViewPage() {
 		}
 	}
 }
-window.loadViewPage = loadViewPage;
 
 async function syncModules() {
 	try {

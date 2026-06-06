@@ -12,16 +12,7 @@ var SCHEDULE = {};
 
 var REGIONS = [];
 
-document.addEventListener("DOMContentLoaded", async function () {
-	startLoadingScreen();
-	try {
-		main();
-	} catch (error) {
-		displayError(error);
-	}
-});
-
-async function loadEditDestinationPage() {
+export async function loadEditDestinationPage() {
 	DOCUMENT_ID = getURLParam("d");
 
 	loadVisibilityIndex();
@@ -37,7 +28,6 @@ async function loadEditDestinationPage() {
 	snapshotFormState();
 	$("body").css("overflow", "auto");
 }
-window.loadEditDestinationPage = loadEditDestinationPage;
 
 function loadHabilitados() {
 	loadEditModule("restaurantes");
