@@ -1,6 +1,6 @@
 import { getItinerary } from '../../../app/config.js';
+import { getState, setState } from '../../../data/state.js';
 
-var FIRESTORE_DATA;
 var TRIP_ID;
 var PLANNED_DESTINATION = {};
 var ACTIVE_PLANNED_DESTINATION = [];
@@ -15,13 +15,13 @@ async function refreshTripData() {
 	if (!TRIP_ID) return;
 	ACTIVE_PLANNED_DESTINATION = [];
 	PLANNED_DESTINATION = {};
-	FIRESTORE_DATA = await get(`viagens/${TRIP_ID}`);
+	setState(await get(`viagens/${TRIP_ID}`));
 	loadPlannedDestination();
 }
 
 // Planned Destination
 function loadPlannedDestination() {
-	const programacoes = FIRESTORE_DATA?.programacoes || [];
+	const programacoes = getState()?.programacoes || [];
 	for (const dia of programacoes) {
 		const data = dia.data;
 		for (const turno of getItinerary().timeofday) {
@@ -37,7 +37,7 @@ function loadPlannedDestination() {
 	}
 
 	function addPlannedDestination(item, data, turno) {
-		const destino = FIRESTORE_DATA.destinos.find(
+		const destino = getState().destinos.find(
 			(d) => d.destinosID === item.local,
 		);
 		if (!destino || destino.destinosID != DOCUMENT_ID) return;
@@ -105,7 +105,7 @@ function loadPlannedDestinationEditFieldHTML(j) {
 	}
 
 	function loadAllOptions() {
-		for (const programacao of FIRESTORE_DATA.programacoes) {
+		for (const programacao of getState().programacoes) {
 			const ids = programacao.destinosIDs.map((destino) => destino.destinosID);
 
 			if (!ids.includes(DOCUMENT_ID)) {
@@ -170,13 +170,13 @@ async function setPlannedDestination(id, j) {
 			return changeOrder();
 		}
 
-		return FIRESTORE_DATA.programacoes;
+		return getState().programacoes;
 	}
 
 	// ---------- helpers ----------
 
 	function removeDestinationReferences() {
-		const programacoes = cloneObject(FIRESTORE_DATA.programacoes);
+		const programacoes = cloneObject(getState().programacoes);
 
 		for (const day of programacoes) {
 			for (const period of ["manha", "tarde", "noite", "madrugada"]) {
@@ -196,7 +196,7 @@ async function setPlannedDestination(id, j) {
 	}
 
 	function addToLastPosition() {
-		const programacoes = cloneObject(FIRESTORE_DATA.programacoes);
+		const programacoes = cloneObject(getState().programacoes);
 
 		const targetDay = programacoes.find(
 			(p) => dateObjectToInputDate(p.data) === newData,
@@ -228,7 +228,7 @@ async function setPlannedDestination(id, j) {
 	}
 
 	function buildPlannedDestination() {
-		const pessoas = cloneObject(FIRESTORE_DATA.pessoas);
+		const pessoas = cloneObject(getState().pessoas);
 		for (const pessoa of pessoas) {
 			pessoa.isPresent = true;
 		}

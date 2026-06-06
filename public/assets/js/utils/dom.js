@@ -1,5 +1,6 @@
 // Text Utils
 import { getCurrencies } from '../app/config.js';
+import { getState } from '../data/state.js';
 
 export function firstCharToUpperCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
@@ -399,7 +400,7 @@ export function getDataDocument(tipo) {
 	switch (tipo) {
 		case "viagens":
 		case "listagens":
-			return FIRESTORE_DATA;
+			return getState();
 		case "destinos":
 			return FIRESTORE_DESTINOS_DATA;
 		default:
@@ -599,12 +600,12 @@ export function getInnerItinerary(item, destinos) {
 	let index = -1;
 	switch (item?.tipo) {
 		case "transporte":
-			if (FIRESTORE_DATA.modulos.transportes === true && item.id) {
-				index = FIRESTORE_DATA.transportes.dados
+			if (getState().modulos.transportes === true && item.id) {
+				index = getState().transportes.dados
 					.map((programacao) => programacao.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					const transporte = FIRESTORE_DATA.transportes.dados[index];
+					const transporte = getState().transportes.dados[index];
 					innerItinerary.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
 					innerItinerary.content = getFlightBoxHTML(
 						index + 1,
@@ -615,8 +616,8 @@ export function getInnerItinerary(item, destinos) {
 			}
 			break;
 		case "hospedagens":
-			if (FIRESTORE_DATA.modulos.hospedagens === true && item.id) {
-				index = FIRESTORE_DATA.hospedagens
+			if (getState().modulos.hospedagens === true && item.id) {
+				index = getState().hospedagens
 					.map((hospedagem) => hospedagem.id)
 					.indexOf(item.id);
 				if (index >= 0) {
@@ -627,7 +628,7 @@ export function getInnerItinerary(item, destinos) {
 			break;
 		case "destinos":
 			if (
-				FIRESTORE_DATA.modulos.destinos === true &&
+				getState().modulos.destinos === true &&
 				item.local &&
 				item.categoria &&
 				item.id
@@ -734,7 +735,7 @@ export function getNextTrips(data) {
 
 // Accommodation
 export function getAccommodationsHTML(i, innerItinerary = false) {
-	const original = FIRESTORE_DATA.hospedagens[i];
+	const original = getState().hospedagens[i];
 	const hospedagem = {
 		id: original.id,
 		cafe: original.cafe,

@@ -1,6 +1,6 @@
 import { stopLoadingScreen } from '../../utils/loading.js';
+import { setState } from '../../data/state.js';
 
-var FIRESTORE_DATA = {};
 var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_GASTOS_DATA = {};
 
@@ -75,15 +75,15 @@ async function loadTrip(stripped = false) {
 
 	switch (FIRESTORE_PROTECTED_DATA?.pin) {
 		case "all-data":
-			FIRESTORE_DATA = stripped
+			setState(stripped
 				? FIRESTORE_PROTECTED_DATA
-				: await getTripDataWithDestinations(FIRESTORE_PROTECTED_DATA);
+				: await getTripDataWithDestinations(FIRESTORE_PROTECTED_DATA));
 			break;
 		case "sensitive-only":
-			FIRESTORE_DATA = getMergedTripObject(await getTravelDocument(stripped));
+			setState(getMergedTripObject(await getTravelDocument(stripped)));
 			break;
 		default:
-			FIRESTORE_DATA = await getTravelDocument(stripped);
+			setState(await getTravelDocument(stripped));
 	}
 
 	await loadTripData();

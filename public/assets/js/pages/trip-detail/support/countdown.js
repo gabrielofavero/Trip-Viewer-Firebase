@@ -1,12 +1,14 @@
+import { getState } from '../../../data/state.js';
+
 // ======= Countdown JS =======
 
 var COUNTDOWN;
 
 // ======= Loaders =======
 COUNTDOWN = setInterval(function () {
-	if (FIRESTORE_DATA && FIRESTORE_DATA.inicio) {
+	if (getState() && getState().inicio) {
 		const now = new Date(Date.now());
-		const inicio = convertFromDateObject(FIRESTORE_DATA.inicio);
+		const inicio = convertFromDateObject(getState().inicio);
 		var distance = inicio - now;
 
 		if (now > inicio || distance < 0) {

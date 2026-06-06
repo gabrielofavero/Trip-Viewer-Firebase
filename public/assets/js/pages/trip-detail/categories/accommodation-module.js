@@ -1,7 +1,9 @@
+import { getState } from '../../../data/state.js';
+
 function loadAccommodations() {
 	let swiperData = [];
 
-	for (let i = 0; i < FIRESTORE_DATA.hospedagens.length; i++) {
+	for (let i = 0; i < getState().hospedagens.length; i++) {
 		const htmlContent = getAccommodationsHTML(i);
 		swiperData.push(htmlContent);
 	}
@@ -10,7 +12,7 @@ function loadAccommodations() {
 
 	buildHospedagensSwiper(swiperData);
 
-	for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
+	for (let j = 1; j <= getState().hospedagens.length; j++) {
 		loadImageLightbox(`hospedagens-galeria-${j}`);
 	}
 
@@ -18,7 +20,7 @@ function loadAccommodations() {
 }
 
 function getAccommodationsHTML(i, innerItinerary = false) {
-	const original = FIRESTORE_DATA.hospedagens[i];
+	const original = getState().hospedagens[i];
 	const hospedagem = {
 		id: original.id,
 		cafe: original.cafe,
@@ -51,7 +53,7 @@ function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
 	const galeriaId = innerItinerary
 		? "programacao-galeria"
 		: `hospedagens-galeria-${j}`;
-	const isSensitive = FIRESTORE_DATA.pin === "sensitive-only";
+	const isSensitive = getState().pin === "sensitive-only";
 	const reservationClass = isSensitive
 		? "hotel-reservation sensitive"
 		: "hotel-reservation";
@@ -124,7 +126,7 @@ function getHospedagensData(dataFirestore) {
 }
 
 function getAccommodationReservationHTML(hospedagem) {
-	if (FIRESTORE_DATA.pin === "sensitive-only") {
+	if (getState().pin === "sensitive-only") {
 		return getSensitiveReservationHTML("hospedagens", hospedagem.id);
 	}
 	// remove # if first char is #
@@ -159,7 +161,7 @@ function buildHospedagensSwiper(swiperData) {
 
 function autoNavigateHospedagens() {
 	const hoje = getDateNoTime(convertFromDateObject(getTodayDateObject()));
-	const dados = FIRESTORE_DATA.hospedagens;
+	const dados = getState().hospedagens;
 	if (!dados || dados.length === 0) return;
 
 	let targetIndex;

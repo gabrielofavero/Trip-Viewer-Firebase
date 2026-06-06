@@ -1,9 +1,11 @@
+import { getState } from '../../../data/state.js';
+
 var TRAVELERS = [];
 
 function loadSummary() {
-	TRAVELERS = FIRESTORE_DATA.pessoas;
+	TRAVELERS = getState().pessoas;
 	const dias = Math.ceil((END_DATE.date - START_DATE.date) / (1000 * 60 * 60 * 24)) + 1;
-	const pessoas = FIRESTORE_DATA.pessoas.length || 1;
+	const pessoas = getState().pessoas.length || 1;
 
 	// Keypoint 1
 	getID("keypoint1").innerHTML = `<i class="bx bxs-plane-take-off"></i>

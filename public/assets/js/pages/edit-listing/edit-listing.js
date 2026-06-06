@@ -1,4 +1,5 @@
-var FIRESTORE_DATA = {};
+import { getState, setState } from '../../data/state.js';
+
 var FIRESTORE_PROTECTED_DATA = {};
 var FIRESTORE_NEW_DATA = {};
 
@@ -92,9 +93,9 @@ async function carregarListagem() {
 	getID("delete-text").style.display = "block";
 	startLoadingScreen();
 
-	FIRESTORE_DATA = await getSingleData("listagens");
+	setState(await getSingleData("listagens"));
 
-	await loadListData(FIRESTORE_DATA);
+	await loadListData(getState());
 	stopLoadingScreen();
 }
 
@@ -120,9 +121,9 @@ async function buildListObject() {
 }
 
 function getIgnoredPathDestinos() {
-	if (!FIRESTORE_DATA) return [];
+	if (!getState()) return [];
 	let result = [];
-	for (let i = 0; i < FIRESTORE_DATA.destinos.length; i++) {
+	for (let i = 0; i < getState().destinos.length; i++) {
 		result.push(`destinos.${i}.destinos`);
 	}
 	return result;

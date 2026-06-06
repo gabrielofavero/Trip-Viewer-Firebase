@@ -1,11 +1,13 @@
+import { getState } from '../../../data/state.js';
+
 var FILTER_MAP = new BiMap();
 
 // Carregamento
 function loadGallery() {
 	loadGaleriaCategorias(
-		FIRESTORE_DATA.galeria.categorias || FIRESTORE_DATA.galeria.filtros,
+		getState().galeria.categorias || getState().galeria.filtros,
 	);
-	loadGaleriaBody(FIRESTORE_DATA.galeria);
+	loadGaleriaBody(getState().galeria);
 	adjustPortfolioHeight();
 	refreshCategorias();
 }

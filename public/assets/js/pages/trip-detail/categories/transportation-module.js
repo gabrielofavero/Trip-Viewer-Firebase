@@ -1,4 +1,5 @@
 import { getTransportations } from '../../../app/config.js';
+import { getState } from '../../../data/state.js';
 
 var TRANSPORTE_ICONES = [];
 var ACTIVE_TRANSPORTATION;
@@ -18,19 +19,19 @@ function loadTransportation() {
 function getSwiperData() {
 	const swiperData = {};
 
-	const visualizacao = FIRESTORE_DATA.transportes.visualizacao || "simple-view";
+	const visualizacao = getState().transportes.visualizacao || "simple-view";
 	const key = visualizacao === "people-view" ? "pessoa" : "idaVolta";
 	const complement = key === "pessoa" ? "custom-" : "";
 
 	TRANSPORTES_ATIVOS = [
 		...new Set(
-			FIRESTORE_DATA.transportes.dados.map(
+			getState().transportes.dados.map(
 				(item) => `${complement}${codifyText(item[key])}`,
 			),
 		),
 	];
 	TRANSPORTES_ATIVOS_TITULOS = [
-		...new Set(FIRESTORE_DATA.transportes.dados.map((item) => item[key])),
+		...new Set(getState().transportes.dados.map((item) => item[key])),
 	];
 	ACTIVE_TRANSPORTATION =
 		visualizacao === "people-view" ? TRANSPORTES_ATIVOS[0] : "ida";
@@ -39,8 +40,8 @@ function getSwiperData() {
 		swiperData[transporteAtivo] = [];
 	}
 
-	for (let i = 0; i < FIRESTORE_DATA.transportes.dados.length; i++) {
-		const identifier = `${complement}${codifyText(FIRESTORE_DATA.transportes.dados[i][key])}`;
+	for (let i = 0; i < getState().transportes.dados.length; i++) {
+		const identifier = `${complement}${codifyText(getState().transportes.dados[i][key])}`;
 		const htmlContent = getTransportationHTML(i + 1, identifier);
 		swiperData[identifier].push(htmlContent);
 	}
@@ -82,7 +83,7 @@ function getFlightBoxHTML(j, identifier, innerItinerary = false) {
 }
 
 function getEmpresaObj(j) {
-	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
+	const transporte = getState().transportes.dados[j - 1];
 	const tipo = transporte.transporte;
 	const titulo = transporte.empresa;
 
@@ -100,7 +101,7 @@ function getEmpresaObj(j) {
 }
 
 function getImagemHTML(j, empresa) {
-	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
+	const transporte = getState().transportes.dados[j - 1];
 	if (!empresa.isCustom) {
 		return `<a href="${empresa.site}">
               <img class="flight-img" id="flight-img-claro-${j}" src="${empresa.imagens.claro}"
@@ -116,11 +117,11 @@ function getImagemHTML(j, empresa) {
 }
 
 function getReservaHTML(j, empresa) {
-	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
+	const transporte = getState().transportes.dados[j - 1];
 	let reserva = transporte.reserva;
 	let link = empresa.site || "";
 
-	if (FIRESTORE_DATA.pin === "sensitive-only") {
+	if (getState().pin === "sensitive-only") {
 		return getSensitiveReservationHTML("transportes", transporte.id);
 	}
 
@@ -138,7 +139,7 @@ function getReservaHTML(j, empresa) {
 }
 
 function getPartidaChegadaHTML(j, tipo) {
-	const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
+	const transporte = getState().transportes.dados[j - 1];
 	const data = convertFromDateObject(transporte.datas[tipo]);
 	const local = transporte.pontos[tipo];
 	const flightTimeSuffix = getLanguagePackName() == "en" ? "-en" : "";
@@ -151,7 +152,7 @@ function getPartidaChegadaHTML(j, tipo) {
 }
 
 function getTransportationIcon(j) {
-	const tipo = FIRESTORE_DATA.transportes.dados[j - 1].transporte;
+	const tipo = getState().transportes.dados[j - 1].transporte;
 	const icone =
 		getTransportations().icones[tipo] || getTransportations().icones.outro;
 	TRANSPORTE_ICONES.push(icone);
@@ -159,20 +160,20 @@ function getTransportationIcon(j) {
 }
 
 function getDuracaoHTML(j) {
-	const duracao = FIRESTORE_DATA.transportes.dados[j - 1].duracao;
+	const duracao = getState().transportes.dados[j - 1].duracao;
 	if (!duracao) return "";
 	else
 		return `<div class="flight-duration">${jsTimeToVisualTime(duracao)}</div>`;
 }
 
 function adjustFlightLine(j) {
-	const duracao = FIRESTORE_DATA.transportes.dados[j - 1].duracao;
+	const duracao = getState().transportes.dados[j - 1].duracao;
 	if (!duracao) return "style='transform: translateY(-33.75%);'";
 	else return "";
 }
 
 function buildTransportationSwiper(swiperData) {
-	const visualizacao = FIRESTORE_DATA.transportes.visualizacao;
+	const visualizacao = getState().transportes.visualizacao;
 	const keys = [];
 
 	loadSwiperPreActions(visualizacao, keys);
@@ -208,7 +209,7 @@ function buildTransportationSwiper(swiperData) {
 			ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
 			initSwiper(`transporte-${key}`);
 
-			if (FIRESTORE_DATA.transportes.visualizacao == "leg-view") {
+			if (getState().transportes.visualizacao == "leg-view") {
 				getID(`transporte-${key}`).style.visibility = "hidden";
 			}
 		}
@@ -388,7 +389,7 @@ function adjustTransportationBoxContainerHeight() {
 }
 
 function resetSwiperVisibility() {
-	const visualizacao = FIRESTORE_DATA.transportes.visualizacao || "simple-view";
+	const visualizacao = getState().transportes.visualizacao || "simple-view";
 
 	switch (visualizacao) {
 		case "leg-view":
@@ -407,7 +408,7 @@ function customTransportationSelectAction(value) {
 
 function autoNavigateTransportation() {
 	const hoje = getDateNoTime(convertFromDateObject(getTodayDateObject()));
-	const dados = FIRESTORE_DATA.transportes.dados;
+	const dados = getState().transportes.dados;
 	if (!dados || dados.length === 0) return;
 
 	let targetIndex;
@@ -474,7 +475,7 @@ function autoNavigateTransportation() {
 
 	if (targetIndex === undefined || targetIndex < 0) return;
 
-	const visualizacao = FIRESTORE_DATA.transportes.visualizacao || "simple-view";
+	const visualizacao = getState().transportes.visualizacao || "simple-view";
 
 	if (visualizacao === "simple-view") {
 		const swiperEl = getID("transporte-ida-swiper");

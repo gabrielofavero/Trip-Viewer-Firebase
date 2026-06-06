@@ -1,4 +1,5 @@
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
+import { getState, setState } from '../../data/state.js';
 
 var FIRESTORE_PROTECTED_DATA;
 
@@ -12,17 +13,17 @@ export async function loadItineraryPage() {
 		);
 	}
 
-	FIRESTORE_DATA = await get(`viagens/${DOCUMENT_ID}`);
-	if (!FIRESTORE_DATA) {
+	setState(await get(`viagens/${DOCUMENT_ID}`));
+	if (!getState()) {
 		displayError(
 			`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.not_found"))}`,
 		);
 	}
 
 	loadItineraryVisibility();
-	getID("title").innerText = FIRESTORE_DATA.titulo;
+	getID("title").innerText = getState().titulo;
 
-	switch (FIRESTORE_DATA.pin) {
+	switch (getState().pin) {
 		case "all-data":
 			stopLoadingScreen();
 			requestPinItinerary(true);
@@ -134,7 +135,7 @@ function displaySensitiveItineraryPrompt() {
 
 async function loadProtectedItinerary(mandatory = false) {
 	const pin = getID("pin-code")?.innerText || "";
-	const pinType = FIRESTORE_DATA.pin;
+	const pinType = getState().pin;
 	closeMessage();
 	startLoadingScreen();
 
@@ -149,7 +150,7 @@ async function loadProtectedItinerary(mandatory = false) {
 		if (pinType == "sensitive-only") {
 			FIRESTORE_PROTECTED_DATA = protectedData;
 		} else {
-			FIRESTORE_DATA = protectedData;
+			setState(protectedData);
 		}
 
 		loadItinerary();

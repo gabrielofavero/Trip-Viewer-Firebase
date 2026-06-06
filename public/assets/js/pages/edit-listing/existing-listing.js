@@ -1,20 +1,22 @@
+import { getState } from '../../data/state.js';
+
 // Listagem Existente
-async function loadListData(FIRESTORE_DATA) {
+async function loadListData(getState()) {
 	try {
-		loadDadosBasicosListagemData(FIRESTORE_DATA);
-		loadCustomizacaoData(FIRESTORE_DATA);
+		loadDadosBasicosListagemData(getState());
+		loadCustomizacaoData(getState());
 		loadDestinationsData();
 
-		setPageName(`${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`);
+		setPageName(`${translate("labels.edit")} ${getState().titulo}`);
 	} catch (error) {
 		displayError(error);
 		throw error;
 	}
 }
 
-function loadDadosBasicosListagemData(FIRESTORE_DATA) {
-	getID("titulo").value = FIRESTORE_DATA.titulo;
-	getID("subtitulo").value = FIRESTORE_DATA.subtitulo;
-	getID("descricao").value = FIRESTORE_DATA.descricao;
-	getID("exibir-em-destinos").checked = FIRESTORE_DATA.versao.exibirEmDestinos;
+function loadDadosBasicosListagemData(getState()) {
+	getID("titulo").value = getState().titulo;
+	getID("subtitulo").value = getState().subtitulo;
+	getID("descricao").value = getState().descricao;
+	getID("exibir-em-destinos").checked = getState().versao.exibirEmDestinos;
 }

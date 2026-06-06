@@ -1,3 +1,5 @@
+import { getState } from '../../../../data/state.js';
+
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
 
@@ -18,8 +20,8 @@ CALENDAR = {
 };
 
 function loadCalendar() {
-	CALENDAR.start = convertFromDateObject(FIRESTORE_DATA.inicio);
-	CALENDAR.end = convertFromDateObject(FIRESTORE_DATA.fim);
+	CALENDAR.start = convertFromDateObject(getState().inicio);
+	CALENDAR.end = convertFromDateObject(getState().fim);
 
 	CALENDAR.startMonth = CALENDAR.start.getUTCMonth();
 	CALENDAR.startYear = CALENDAR.start.getUTCFullYear();

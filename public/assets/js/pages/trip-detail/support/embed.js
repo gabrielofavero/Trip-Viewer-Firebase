@@ -1,10 +1,11 @@
 import { stopLoadingScreen } from '../../../utils/loading.js';
+import { getState } from '../../../data/state.js';
 
 var SAVED_SCROLL_POSITION = 0;
 const ACTIVE_EMBEDS = {};
 
 function loadViewEmbed() {
-	if (FIRESTORE_DATA.modulos?.gastos === true) {
+	if (getState().modulos?.gastos === true) {
 		loadEmbedListeners(_loadViewEmbedAction);
 	}
 }

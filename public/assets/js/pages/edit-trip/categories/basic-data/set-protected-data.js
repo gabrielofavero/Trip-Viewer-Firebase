@@ -1,3 +1,5 @@
+import { getState } from '../../../../data/state.js';
+
 function setCurrentPreferencePIN(preference) {
 	if (preference === "sensitive-only") {
 		getID("pin-sensitive-only").checked = true;
@@ -22,7 +24,7 @@ function setProtectedDataWithoutPIN(ops) {
 	const hasNewGastos = objectExistsAndHasKeys(FIRESTORE_GASTOS_NEW_DATA);
 	const hasCurrentViagens = hasCurrentViagens();
 
-	if (!FIRESTORE_DATA) {
+	if (!getState()) {
 		setNewDocumentNoPin();
 	} else if (PIN.current) {
 		removePinAndSet();
@@ -78,7 +80,7 @@ function setProtectedDataWithPIN(ops) {
 		FIRESTORE_PROTECTED_NEW_DATA,
 	);
 
-	if (!FIRESTORE_DATA) {
+	if (!getState()) {
 		setNewDocumentWithPin();
 	} else if (!PIN.current) {
 		addPinAndSet();
@@ -193,11 +195,11 @@ function setProtectedDataWithPIN(ops) {
 
 function hasCurrentViagens() {
 	return (
-		!!FIRESTORE_DATA &&
+		!!getState() &&
 		!isDataUnprotected() &&
-		((FIRESTORE_DATA.transportes?.dados ?? []).some(
+		((getState().transportes?.dados ?? []).some(
 			(t) => t.reserva || t.link,
 		) ||
-			(FIRESTORE_DATA.hospedagens ?? []).some((h) => h.reserva || h.link))
+			(getState().hospedagens ?? []).some((h) => h.reserva || h.link))
 	);
 }

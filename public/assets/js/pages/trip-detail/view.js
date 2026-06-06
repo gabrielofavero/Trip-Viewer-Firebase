@@ -1,5 +1,6 @@
 import { stopLoadingScreen } from '../../utils/loading.js';
 import { displayError } from '../../utils/messages.js';
+import { getState, setState } from '../../data/state.js';
 
 var REFRESHED = false;
 var TYPE = "viagens";
@@ -91,7 +92,7 @@ async function syncModules() {
 }
 
 function prepareViewData() {
-	if (FIRESTORE_DATA.inicio && FIRESTORE_DATA.fim) {
+	if (getState().inicio && getState().fim) {
 		loadInicioFim();
 	}
 
@@ -104,7 +105,7 @@ function prepareViewData() {
 	loadViewEmbed();
 }
 
-function loadInicioFim(data = FIRESTORE_DATA) {
+function loadInicioFim(data = getState()) {
 	START_DATE.date = convertFromDateObject(data.inicio);
 	END_DATE.date = convertFromDateObject(data.fim);
 
@@ -115,16 +116,16 @@ function loadInicioFim(data = FIRESTORE_DATA) {
 function loadHeader() {
 	loadTitle();
 
-	if (TYPE == "destinos" && FIRESTORE_DATA.versao?.ultimaAtualizacao) {
+	if (TYPE == "destinos" && getState().versao?.ultimaAtualizacao) {
 		getID("hero-subtitle").innerHTML = getLastUpdatedOnText(
-			FIRESTORE_DATA.versao.ultimaAtualizacao,
+			getState().versao.ultimaAtualizacao,
 		);
 	}
 
-	if (FIRESTORE_DATA?.versao.exibirEmDestinos) {
-		let datas = [new Date(FIRESTORE_DATA.versao.ultimaAtualizacao)];
+	if (getState()?.versao.exibirEmDestinos) {
+		let datas = [new Date(getState().versao.ultimaAtualizacao)];
 
-		for (const destino of FIRESTORE_DATA.destinos) {
+		for (const destino of getState().destinos) {
 			const ultimaAtualizacao = destino.destinos.versao.ultimaAtualizacao;
 			if (ultimaAtualizacao) {
 				datas.push(new Date(ultimaAtualizacao));
@@ -135,52 +136,52 @@ function loadHeader() {
 		getID("destinations-update").innerHTML = getLastUpdatedOnText(mostRecentDate);
 	}
 
-	if (FIRESTORE_DATA.descricao) {
-		getID("destinations-description").innerHTML = FIRESTORE_DATA.descricao;
+	if (getState().descricao) {
+		getID("destinations-description").innerHTML = getState().descricao;
 		getID("destinations-description").style.display = "block";
 	}
 
-	if (FIRESTORE_DATA.links?.ativo) {
+	if (getState().links?.ativo) {
 		getID("social-links").style.display = "block";
 
-		if (FIRESTORE_DATA.links.attachments) {
-			getID("attachmentsLink").href = FIRESTORE_DATA.links.attachments;
+		if (getState().links.attachments) {
+			getID("attachmentsLink").href = getState().links.attachments;
 		} else {
 			getID("attachmentsLink").style.display = "none";
 		}
 
-		if (FIRESTORE_DATA.links.sheet) {
-			getID("sheetLink").href = FIRESTORE_DATA.links.sheet;
+		if (getState().links.sheet) {
+			getID("sheetLink").href = getState().links.sheet;
 		} else {
 			getID("sheetLink").style.display = "none";
 		}
 
-		if (FIRESTORE_DATA.links.ppt) {
-			getID("pptLink").href = FIRESTORE_DATA.links.ppt;
+		if (getState().links.ppt) {
+			getID("pptLink").href = getState().links.ppt;
 		} else {
 			getID("pptLink").style.display = "none";
 		}
 
-		if (FIRESTORE_DATA.links.drive) {
-			getID("driveLink").href = FIRESTORE_DATA.links.drive;
+		if (getState().links.drive) {
+			getID("driveLink").href = getState().links.drive;
 		} else {
 			getID("driveLink").style.display = "none";
 		}
 
-		if (FIRESTORE_DATA.links.vacina) {
-			getID("vaccineLink").href = FIRESTORE_DATA.links.vacina;
+		if (getState().links.vacina) {
+			getID("vaccineLink").href = getState().links.vacina;
 		} else {
 			getID("vaccineLink").style.display = "none";
 		}
 
-		if (FIRESTORE_DATA.links.pdf) {
-			getID("pdfLink").href = FIRESTORE_DATA.links.pdf;
+		if (getState().links.pdf) {
+			getID("pdfLink").href = getState().links.pdf;
 		} else {
 			getID("pdfLink").style.display = "none";
 		}
 
-		if (FIRESTORE_DATA.links.maps) {
-			getID("mapsLink").href = FIRESTORE_DATA.links.maps;
+		if (getState().links.maps) {
+			getID("mapsLink").href = getState().links.maps;
 		} else {
 			getID("mapsLink").style.display = "none";
 		}
@@ -189,7 +190,7 @@ function loadHeader() {
 	loadHeaderImageAndLogo();
 }
 
-function loadTitle(data = FIRESTORE_DATA) {
+function loadTitle(data = getState()) {
 	setPageName(data.titulo);
 	getID("header1").innerHTML = data.titulo;
 	getID("header2").style.display = "none";
@@ -199,7 +200,7 @@ function loadTitle(data = FIRESTORE_DATA) {
 	}
 }
 
-function loadHeaderImageAndLogo(data = FIRESTORE_DATA) {
+function loadHeaderImageAndLogo(data = getState()) {
 	if (data.imagem?.ativo) {
 		const background = data.imagem.background;
 		const claro = data.imagem.claro;
@@ -250,7 +251,7 @@ function loadModules() {
 		}
 
 		function shareTrip() {
-			const title = FIRESTORE_DATA.titulo || document.title;
+			const title = getState().titulo || document.title;
 			const text = getSharingText();
 			const url = getPageURL();
 			navigator.share({ title, text, url });
@@ -259,15 +260,15 @@ function loadModules() {
 		function getSharingText() {
 			switch (TYPE) {
 				case "listagens":
-					return translate("listing.share", { name: FIRESTORE_DATA.titulo });
+					return translate("listing.share", { name: getState().titulo });
 				case "destinos":
 					return translate("destination.share", {
-						name: FIRESTORE_DATA.titulo,
+						name: getState().titulo,
 					});
 				case "viagem":
 				case "viagens":
 					return translate("trip.share", {
-						name: FIRESTORE_DATA.titulo,
+						name: getState().titulo,
 						start: START_DATE.text,
 						end: END_DATE.text,
 					});
@@ -278,7 +279,7 @@ function loadModules() {
 	}
 
 	function loadSummaryModule() {
-		if (FIRESTORE_DATA.modulos?.resumo === true) {
+		if (getState().modulos?.resumo === true) {
 			CALL_SYNC.push(_loadSummary);
 		} else {
 			getID("keypointsNav").innerHTML = "";
@@ -288,10 +289,10 @@ function loadModules() {
 	}
 
 	function loadExpensesModule() {
-		const ativo = FIRESTORE_DATA.modulos?.gastos === true;
+		const ativo = getState().modulos?.gastos === true;
 		localStorage.setItem(
 			"gastos",
-			JSON.stringify({ ativo, pin: FIRESTORE_DATA.pin || "no-pin" }),
+			JSON.stringify({ ativo, pin: getState().pin || "no-pin" }),
 		);
 
 		if (ativo) {
@@ -305,7 +306,7 @@ function loadModules() {
 	}
 
 	function loadTransportationModule() {
-		if (FIRESTORE_DATA.modulos?.transportes === true) {
+		if (getState().modulos?.transportes === true) {
 			CALL_SYNC.push(_loadTransportation);
 		} else {
 			getID("transportationNav").innerHTML = "";
@@ -315,7 +316,7 @@ function loadModules() {
 	}
 
 	function loadAccommodationsModule() {
-		if (FIRESTORE_DATA.modulos?.hospedagens === true) {
+		if (getState().modulos?.hospedagens === true) {
 			CALL_SYNC.push(_loadAccommodations);
 		} else {
 			getID("stayNav").innerHTML = "";
@@ -325,7 +326,7 @@ function loadModules() {
 	}
 
 	function loadItineraryScheduleModule() {
-		if (FIRESTORE_DATA.modulos?.programacao === true) {
+		if (getState().modulos?.programacao === true) {
 			CALL_SYNC.push(_loadItinerarySchedule);
 		} else {
 			getID("scheduleCalendarNav").innerHTML = "";
@@ -338,8 +339,8 @@ function loadModules() {
 		switch (TYPE) {
 			case "viagens":
 				if (
-					FIRESTORE_DATA.modulos?.destinos === true &&
-					FIRESTORE_DATA.destinos?.length > 0
+					getState().modulos?.destinos === true &&
+					getState().destinos?.length > 0
 				) {
 					loadDestinationsDefault();
 				} else {
@@ -368,7 +369,7 @@ function loadModules() {
 
 		function loadDestinationsExclusive() {
 			const destinosID = getURLParam("d");
-			const destinos = FIRESTORE_DATA;
+			const destinos = getState();
 
 			DESTINOS = [{ destinosID, destinos }];
 			ACTIVE_DESTINATION = destinosID;
@@ -394,7 +395,7 @@ function loadModules() {
 	}
 
 	function loadGalleryModule() {
-		if (FIRESTORE_DATA.modulos?.galeria === true) {
+		if (getState().modulos?.galeria === true) {
 			CALL_SYNC.push(_loadGallery);
 		} else {
 			getID("portfolioM").innerHTML = "";
@@ -404,7 +405,7 @@ function loadModules() {
 }
 
 function setFirestoreData(firestoreData) {
-	FIRESTORE_DATA = firestoreData;
+	setState(firestoreData);
 	console.log("Firestore Database data loaded successfully");
 	loadDocumentData();
 }
@@ -416,7 +417,7 @@ function loadDocumentData() {
 	adjustPortfolioHeight();
 	refreshCategorias();
 
-	if (FIRESTORE_DATA.pin == "sensitive-only") {
+	if (getState().pin == "sensitive-only") {
 		loadSensitiveReservations();
 	}
 

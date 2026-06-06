@@ -1,3 +1,5 @@
+import { getState } from '../data/state.js';
+
 function openAtribuicoes() {
 	const page = window.location.href
 		.split("/")
@@ -11,7 +13,7 @@ function openAtribuicoes() {
 	switch (page) {
 		case "index":
 			atribuicoes.push(getBackground());
-			if (FIRESTORE_DATA?.modulos.gastos) {
+			if (getState()?.modulos.gastos) {
 				loadExpensesCredits();
 			}
 			break;

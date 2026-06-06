@@ -1,3 +1,5 @@
+import { getState } from '../../../../data/state.js';
+
 var PIN = {
 	current: "",
 	new: "",
@@ -26,9 +28,9 @@ function isDataUnprotected() {
 
 function hasCurrentProtectedViagens() {
 	return (
-		(FIRESTORE_DATA.transportes?.dados ?? []).some(
+		(getState().transportes?.dados ?? []).some(
 			(t) => t.reserva || t.link,
-		) || (FIRESTORE_DATA.hospedagens ?? []).some((h) => h.reserva || h.link)
+		) || (getState().hospedagens ?? []).some((h) => h.reserva || h.link)
 	);
 }
 

@@ -1,4 +1,5 @@
 import { codifyText } from "../../utils/dom.js";
+import { getState } from '../state.js';
 
 export let IMAGE_UPLOAD_STATUS = {
 	hasErrors: false,
@@ -111,8 +112,8 @@ export async function deleteUserObjectStorage() {
 		}
 	};
 
-	if (FIRESTORE_DATA) {
-		const { imagem, hospedagens, galeria } = FIRESTORE_DATA;
+	if (getState()) {
+		const { imagem, hospedagens, galeria } = getState();
 
 		addPathIfExists(imagem?.background?.caminho);
 		addPathIfExists(imagem?.claro?.caminho);

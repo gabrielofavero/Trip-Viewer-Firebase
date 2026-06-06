@@ -1,5 +1,6 @@
 import { getURLParam, setURLParam, firstCharToUpperCase, removeEmptyChild } from "../utils/dom.js";
 import { getCurrentHour } from "../utils/dates.js";
+import { getState } from '../data/state.js';
 
 // ======= Visibility JS =======
 const _exports = {};
@@ -7,7 +8,7 @@ export let CHANGED_SVGS = [];
 export let LOGO_LIGHT = "";
 export let LOGO_DARK = "";
 
-export function loadVisibility(colors = FIRESTORE_DATA?.cores) {
+export function loadVisibility(colors = getState()?.cores) {
 	if (colors?.claro && colors?.escuro) {
 		LIGHT_COLOR = colors.claro;
 		DARK_COLOR = colors.escuro;

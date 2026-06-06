@@ -1,4 +1,5 @@
 import { stopLoadingScreen } from '../../../utils/loading.js';
+import { getState } from '../../../data/state.js';
 
 const SENSITIVE_RESERVATION_BOXES = {
 	transportes: {},
@@ -157,7 +158,7 @@ async function protectedDataConfirmAction(afterAction = _setFirestoreData) {
 		return;
 	}
 
-	if (FIRESTORE_DATA.modulos.gastos) {
+	if (getState().modulos.gastos) {
 		sendToExpenses("pin", PIN);
 	}
 

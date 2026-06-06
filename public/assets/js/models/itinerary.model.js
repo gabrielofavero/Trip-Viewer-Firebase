@@ -3,6 +3,7 @@
 // Extracted from: itinerary-formatter.js
 
 import { getItinerary, getTransportations, getCurrencies } from '../app/config.js';
+import { getState } from '../data/state.js';
 
 // ======= Itinerary Content Generator (Multi-format) =======
 
@@ -52,9 +53,9 @@ export async function getItineraryContent(type) {
 			case "page":
 				return "";
 			case "notes":
-				return `<div style="font-size: 28px; font-weight: bold;">${FIRESTORE_DATA.titulo}</div><br>`;
+				return `<div style="font-size: 28px; font-weight: bold;">${getState().titulo}</div><br>`;
 			default:
-				return `*${FIRESTORE_DATA.titulo.toUpperCase()}*`;
+				return `*${getState().titulo.toUpperCase()}*`;
 		}
 	}
 
@@ -168,7 +169,7 @@ export async function getItineraryContent(type) {
 
 export async function getItineraryData() {
 	ITINERARY = [];
-	for (const programacao of FIRESTORE_DATA.programacoes) {
+	for (const programacao of getState().programacoes) {
 		const title = getItineraryTitle(programacao);
 		const madrugada = await getInnerItineraries(programacao.madrugada);
 		const manha = await getInnerItineraries(programacao.manha);
@@ -209,7 +210,7 @@ export async function getItineraryData() {
 		for (const rawData of data) {
 			const title = getInnerItineraryTitle(
 				rawData,
-				FIRESTORE_DATA.pessoas || [],
+				getState().pessoas || [],
 			);
 			const subItem = await getSubItem(rawData.item);
 			innerItineraries.push({
@@ -246,7 +247,7 @@ export async function getItineraryData() {
 			return texts;
 
 			function loadTransportation() {
-				const transporte = FIRESTORE_DATA.transportes.dados.find(
+				const transporte = getState().transportes.dados.find(
 					(obj) => obj.id === item.id,
 				);
 				if (!transporte) return;
@@ -289,7 +290,7 @@ export async function getItineraryData() {
 			}
 
 			function loadAccommodationDetail() {
-				const hospedagem = FIRESTORE_DATA.hospedagens.find(
+				const hospedagem = getState().hospedagens.find(
 					(obj) => obj.id === item.id,
 				);
 				if (!hospedagem) return;

@@ -1,10 +1,12 @@
+import { getState } from '../../../data/state.js';
+
 var ADJUST_HEIGHT_CARDS = [];
 
 function adjustCardsHeightsListener() {
 	window.addEventListener("resize", function () {
 		adjustCardsHeights();
 
-		const visualizacao = FIRESTORE_DATA?.transportes?.visualizacao;
+		const visualizacao = getState()?.transportes?.visualizacao;
 		if (visualizacao && visualizacao != "simple-view") {
 			adjustTransportationBoxContainerHeight();
 		}
@@ -55,13 +57,13 @@ function adjustSingleCardsHeights(tipo, second = false) {
 }
 
 function loadViewVisibility() {
-	if (FIRESTORE_DATA.visibilidade) {
+	if (getState().visibilidade) {
 		const nightMode = getID("night-mode");
 
-		if (!FIRESTORE_DATA.visibilidade.claro) {
+		if (!getState().visibilidade.claro) {
 			nightMode.style.display = "none";
 			loadDarkMode();
-		} else if (!FIRESTORE_DATA.visibilidade.escuro) {
+		} else if (!getState().visibilidade.escuro) {
 			nightMode.style.display = "none";
 			loadLightMode();
 		}

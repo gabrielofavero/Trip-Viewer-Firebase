@@ -1,4 +1,5 @@
 import { getDestinos, getLanguage } from '../../../app/config.js';
+import { getState } from '../../../data/state.js';
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
@@ -56,7 +57,7 @@ function autoNavigateDestinos() {
 }
 
 function loadDestinationsCustomSelect() {
-	DESTINOS = FIRESTORE_DATA.destinos;
+	DESTINOS = getState().destinos;
 
 	if (DESTINOS.length <= 1) {
 		getID("destinations-select").style.display = "none";
@@ -76,9 +77,9 @@ function loadDestinationsCustomSelect() {
 
 	function getDestinationsCustomSelectOptions() {
 		const options = [];
-		const itineraryOrder = FIRESTORE_DATA.programacoes
+		const itineraryOrder = getState().programacoes
 			? new Set(
-					FIRESTORE_DATA.programacoes
+					getState().programacoes
 						.flatMap((item) =>
 							(item.destinosIDs || []).map((d) => d.destinosID),
 						)
@@ -121,7 +122,7 @@ function loadDestinationsCustomSelect() {
 		for (let i = 0; i < DESTINOS.length; i++) {
 			if (DESTINOS[i].destinosID === value) {
 				ACTIVE_DESTINATION = DESTINOS[i].destinosID;
-				loadDestinationsHTML(FIRESTORE_DATA.destinos[i]);
+				loadDestinationsHTML(getState().destinos[i]);
 				adjustDestinationsHTML();
 				break;
 			}

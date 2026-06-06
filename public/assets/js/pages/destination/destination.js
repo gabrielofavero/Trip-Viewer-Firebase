@@ -1,5 +1,6 @@
 import { getDestinos } from '../../app/config.js';
 import { displayError } from '../../utils/messages.js';
+import { setState } from '../../data/state.js';
 
 var FIRESTORE_DESTINOS_DATA;
 var CONTENT = [];
@@ -20,7 +21,7 @@ async function loadDestinationsData() {
 	]);
 
 	FIRESTORE_DESTINOS_DATA = destinosData;
-	FIRESTORE_DATA = tripData;
+	setState(tripData);
 
 	loadPlannedDestination();
 	loadActiveCategory(urlParams);

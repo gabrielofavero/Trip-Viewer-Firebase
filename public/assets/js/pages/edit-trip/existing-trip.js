@@ -1,4 +1,5 @@
 import { displayError } from '../../../utils/messages.js';
+import { getState } from '../../data/state.js';
 
 async function loadTripData() {
 	try {
@@ -11,7 +12,7 @@ async function loadTripData() {
 		loadItineraryData();
 		loadGaleriaData();
 
-		setPageName(`${translate("labels.edit")} ${FIRESTORE_DATA.titulo}`);
+		setPageName(`${translate("labels.edit")} ${getState().titulo}`);
 	} catch (error) {
 		displayError(error);
 		throw error;
@@ -19,30 +20,30 @@ async function loadTripData() {
 }
 
 function loadBasicTripData() {
-	getID("titulo").value = FIRESTORE_DATA.titulo;
-	getID("moeda").value = FIRESTORE_DATA.moeda;
+	getID("titulo").value = getState().titulo;
+	getID("moeda").value = getState().moeda;
 
-	const inicio = convertFromDateObject(FIRESTORE_DATA.inicio);
-	const fim = convertFromDateObject(FIRESTORE_DATA.fim);
+	const inicio = convertFromDateObject(getState().inicio);
+	const fim = convertFromDateObject(getState().fim);
 
 	getID("inicio").value = getDateString(inicio, "yyyy-mm-dd");
 	getID("fim").value = getDateString(fim, "yyyy-mm-dd");
 
-	TRAVELERS = cloneObject(FIRESTORE_DATA.pessoas);
+	TRAVELERS = cloneObject(getState().pessoas);
 	validateTravelersObject();
 	updateTravelersButtonLabel();
-	setCurrentPreferencePIN(FIRESTORE_DATA.pin);
+	setCurrentPreferencePIN(getState().pin);
 	switchPinVisibility();
 	switchPinLabel();
 }
 
 function loadCustomizacaoData() {
 	// Imagens
-	const background = FIRESTORE_DATA.imagem.background;
-	const logoClaro = FIRESTORE_DATA.imagem.claro;
-	const logoEscuro = FIRESTORE_DATA.imagem.escuro;
+	const background = getState().imagem.background;
+	const logoClaro = getState().imagem.claro;
+	const logoEscuro = getState().imagem.escuro;
 
-	if (FIRESTORE_DATA.imagem.ativo === true) {
+	if (getState().imagem.ativo === true) {
 		getID("habilitado-imagens").checked = true;
 		getID("habilitado-imagens-content").style.display = "block";
 	}
@@ -55,16 +56,16 @@ function loadCustomizacaoData() {
 	const claro = getID("claro");
 	const escuro = getID("escuro");
 
-	if (FIRESTORE_DATA.cores.ativo === true) {
+	if (getState().cores.ativo === true) {
 		getID("habilitado-cores").checked = true;
-		claro.value = FIRESTORE_DATA.cores.claro;
-		escuro.value = FIRESTORE_DATA.cores.escuro;
-		CURRENT_LIGHT = FIRESTORE_DATA.cores.claro;
+		claro.value = getState().cores.claro;
+		escuro.value = getState().cores.escuro;
+		CURRENT_LIGHT = getState().cores.claro;
 		getID("habilitado-cores-content").style.display = "block";
 	}
 
 	// Visibilidade
-	const visibilidade = FIRESTORE_DATA.visibilidade;
+	const visibilidade = getState().visibilidade;
 	if (visibilidade) {
 		visibilityListenerAction(visibilidade);
 		getID("dark-and-light").checked = visibilidade.claro && visibilidade.escuro;
@@ -75,18 +76,18 @@ function loadCustomizacaoData() {
 	}
 
 	// Links Personalizados
-	getID("habilitado-links").checked = FIRESTORE_DATA.links.ativo;
-	getID("link-attachments").value = FIRESTORE_DATA.links.attachments;
-	getID("link-drive").value = FIRESTORE_DATA.links.drive;
-	getID("link-maps").value = FIRESTORE_DATA.links.maps;
-	getID("link-pdf").value = FIRESTORE_DATA.links.pdf;
-	getID("link-ppt").value = FIRESTORE_DATA.links.ppt;
-	getID("link-sheet").value = FIRESTORE_DATA.links.sheet;
-	getID("link-vacina").value = FIRESTORE_DATA.links.vacina;
+	getID("habilitado-links").checked = getState().links.ativo;
+	getID("link-attachments").value = getState().links.attachments;
+	getID("link-drive").value = getState().links.drive;
+	getID("link-maps").value = getState().links.maps;
+	getID("link-pdf").value = getState().links.pdf;
+	getID("link-ppt").value = getState().links.ppt;
+	getID("link-sheet").value = getState().links.sheet;
+	getID("link-vacina").value = getState().links.vacina;
 }
 
 async function loadExpensesData() {
-	if (FIRESTORE_DATA.modulos.gastos === true) {
+	if (getState().modulos.gastos === true) {
 		getID("habilitado-gastos").checked = true;
 		getID("habilitado-gastos-content").style.display = "block";
 	}
@@ -106,17 +107,17 @@ async function loadExpensesData() {
 }
 
 async function loadTransportationData() {
-	if (FIRESTORE_DATA.modulos.transportes === true) {
+	if (getState().modulos.transportes === true) {
 		getID("habilitado-transporte").checked = true;
 		getID("habilitado-transporte-content").style.display = "block";
 		getID("transporte-adicionar-box").style.display = "block";
 	}
-	getID(FIRESTORE_DATA.transportes.visualizacao || "simple-view").checked =
+	getID(getState().transportes.visualizacao || "simple-view").checked =
 		true;
 
-	for (let j = 1; j <= FIRESTORE_DATA.transportes.dados.length; j++) {
+	for (let j = 1; j <= getState().transportes.dados.length; j++) {
 		addTransportation();
-		const transporte = FIRESTORE_DATA.transportes.dados[j - 1];
+		const transporte = getState().transportes.dados[j - 1];
 
 		getID(`${transporte.idaVolta}-${j}`).checked = true;
 
@@ -170,15 +171,15 @@ async function loadTransportationData() {
 }
 
 function loadAccommodationData() {
-	if (FIRESTORE_DATA.modulos.hospedagens === true) {
+	if (getState().modulos.hospedagens === true) {
 		getID("habilitado-hospedagens").checked = true;
 		getID("habilitado-hospedagens-content").style.display = "block";
 		getID("hospedagens-adicionar-box").style.display = "block";
 	}
 
-	for (let j = 1; j <= FIRESTORE_DATA.hospedagens.length; j++) {
+	for (let j = 1; j <= getState().hospedagens.length; j++) {
 		addHospedagens();
-		const hospedagem = FIRESTORE_DATA.hospedagens[j - 1];
+		const hospedagem = getState().hospedagens[j - 1];
 		ACCOMMODATION_IMAGES[j] = hospedagem.imagens || [];
 
 		getID(`hospedagens-id-${j}`).value = hospedagem.id;
@@ -200,7 +201,7 @@ function loadAccommodationData() {
 async function loadDestinationsData() {
 	if (
 		getHTMLpage() === "edit-listing" ||
-		FIRESTORE_DATA.modulos.destinos === true
+		getState().modulos.destinos === true
 	) {
 		if (getID("habilitado-destinos")) {
 			getID("habilitado-destinos").checked = true;
@@ -217,7 +218,7 @@ async function loadDestinationsData() {
 	const checkboxes = document.querySelectorAll(
 		'#destinos-checkboxes input[type="checkbox"]',
 	);
-	for (const destino of FIRESTORE_DATA.destinos) {
+	for (const destino of getState().destinos) {
 		const id = destino.destinosID;
 		for (const checkbox of checkboxes) {
 			if (checkbox.value === id) {
@@ -230,7 +231,7 @@ async function loadDestinationsData() {
 }
 
 function loadItineraryData() {
-	if (FIRESTORE_DATA.modulos.programacao === true) {
+	if (getState().modulos.programacao === true) {
 		getID("habilitado-programacao").checked = true;
 		getID("habilitado-programacao-content").style.display = "block";
 	}
@@ -239,36 +240,36 @@ function loadItineraryData() {
 
 	let j = 1;
 	while (getID(`programacao-title-${j}`)) {
-		const dados = FIRESTORE_DATA.programacoes[j - 1];
+		const dados = getState().programacoes[j - 1];
 		if (dados?.data) {
 			applyLoadedItineraryData(j, dados);
 		}
 		j++;
 	}
 	updateDestinosAtivosCheckboxHTML("programacao");
-	FIRESTORE_PROGRAMACAO_DATA = cloneObject(FIRESTORE_DATA.programacoes);
+	FIRESTORE_PROGRAMACAO_DATA = cloneObject(getState().programacoes);
 }
 
 function loadGaleriaData() {
-	if (FIRESTORE_DATA.modulos.galeria === true) {
+	if (getState().modulos.galeria === true) {
 		getID("habilitado-galeria").checked = true;
 		getID("habilitado-galeria-content").style.display = "block";
 		getID("galeria-adicionar-box").style.display = "block";
 	}
 
-	const galeriaSize = FIRESTORE_DATA.galeria?.imagens.length;
+	const galeriaSize = getState().galeria?.imagens.length;
 	if (galeriaSize > 0) {
 		for (let j = 1; j <= galeriaSize; j++) {
 			const i = j - 1;
 			addGaleria();
 
-			const titulo = FIRESTORE_DATA.galeria.titulos[i];
+			const titulo = getState().galeria.titulos[i];
 			if (titulo) {
 				getID(`galeria-titulo-${j}`).value = titulo;
 				getID(`galeria-title-${j}`).innerText = titulo;
 			}
 
-			const categoria = FIRESTORE_DATA.galeria.categorias[i];
+			const categoria = getState().galeria.categorias[i];
 			if (categoria) {
 				getID(`galeria-categoria-${j}`).value = categoria;
 				updateValueDS(
@@ -279,12 +280,12 @@ function loadGaleriaData() {
 				buildDS("galeria-categoria");
 			}
 
-			const descricao = FIRESTORE_DATA.galeria.descricoes[i];
+			const descricao = getState().galeria.descricoes[i];
 			if (descricao) {
 				getID(`galeria-descricao-${j}`).value = descricao;
 			}
 
-			getID(`link-galeria-${j}`).value = FIRESTORE_DATA.galeria.imagens[i];
+			getID(`link-galeria-${j}`).value = getState().galeria.imagens[i];
 		}
 	}
 }

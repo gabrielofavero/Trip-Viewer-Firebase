@@ -1,3 +1,5 @@
+import { getState } from '../../../../data/state.js';
+
 var SCHEDULE_DESTINATIONS = {};
 var PILLS_ACTIONS = {};
 var PILLS_INDEX = {};
@@ -12,7 +14,7 @@ function loadItinerarySchedule() {
 }
 
 function loadScheduleDestinations() {
-	for (const programacao of FIRESTORE_DATA.programacoes) {
+	for (const programacao of getState().programacoes) {
 		const key = dateObjectToKey(programacao.data);
 		SCHEDULE_DESTINATIONS[key] = programacao.destinosIDs;
 	}

@@ -1,3 +1,5 @@
+import { getState } from '../../data/state.js';
+
 var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_PROTECTED_NEW_DATA = {};
 
@@ -133,8 +135,8 @@ async function getSharingObject() {
 	return {
 		ativo: true,
 		dono:
-			FIRESTORE_DATA && Object.keys(FIRESTORE_DATA).length > 0
-				? FIRESTORE_DATA.compartilhamento.dono
+			getState() && Object.keys(getState()).length > 0
+				? getState().compartilhamento.dono
 				: await getUID(),
 		editores: [],
 	};
