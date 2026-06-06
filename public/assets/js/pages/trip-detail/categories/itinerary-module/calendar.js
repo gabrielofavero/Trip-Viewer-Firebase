@@ -12,7 +12,7 @@ var CURRENT_CALENDAR = {
 	year: null,
 };
 
-CALENDAR = {
+var CALENDAR = {
 	start: null,
 	end: null,
 	startMonth: null,
