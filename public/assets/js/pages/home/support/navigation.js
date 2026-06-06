@@ -1,46 +1,48 @@
-function viagensEditar(code) {
+import { getVisibility } from '../../../theme/visibility.js';
+
+export function editTrip(code) {
 	window.open(`edit/trip?v=${code}&visibility=${getVisibility()}`, "_blank");
 }
-function viagensVisualizar(code) {
+export function viewTrip(code) {
 	window.open(`view.html?v=${code}&visibility=${getVisibility()}`, "_blank");
 }
 
-function viagensNovo() {
+export function newTrip() {
 	window.open(`edit/trip?visibility=${getVisibility()}`, "_blank");
 }
 
-function destinosNovo() {
+export function newDestination() {
 	window.open(`edit/destination?visibility=${getVisibility()}`, "_blank");
 }
 
-function destinosEditar(code) {
+export function editDestination(code) {
 	window.open(
 		`edit/destination?d=${code}&visibility=${getVisibility()}`,
 		"_blank",
 	);
 }
 
-function destinosVisualizar(code) {
+export function viewDestination(code) {
 	window.open(`destination?d=${code}&visibility=${getVisibility()}`, "_blank");
 }
 
-function listagensEditar(code) {
+export function editListing(code) {
 	window.open(
 		`edit/listing?l=${code}&visibility=${getVisibility()}`,
 		"_blank",
 	);
 }
 
-function listagensVisualizar(code) {
+export function viewListing(code) {
 	window.open(`view?l=${code}&visibility=${getVisibility()}`, "_blank");
 }
 
-function listagensNovo() {
+export function newListing() {
 	window.open(`edit/listing?visibility=${getVisibility()}`, "_blank");
 }
 
-function goToCurrentTrip() {
-	if (CURRENT_TRIPS?.length == 1) {
-		viagensVisualizar(CURRENT_TRIPS[0].id);
+export function goToCurrentTrip() {
+	if (window.CURRENT_TRIPS?.length == 1) {
+		viewTrip(window.CURRENT_TRIPS[0].id);
 	}
 }

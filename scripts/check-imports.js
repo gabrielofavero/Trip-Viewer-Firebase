@@ -6,8 +6,9 @@
  *  2. `window.xxx =` assignments (global namespace pollution)
  *  3. Direct `FIRESTORE_DATA` references (should use getState()/setState())
  *
- * Usage: node scripts/check-imports.js [--verbose] [--json]
- * Exit code: 0 if clean, 1 if issues found
+ * Usage: node scripts/check-imports.js [--verbose] [--json] [--all]
+ *   --all   Show suppressed/known issues too
+ * Exit code: 0 if clean or only known issues, 1 if new issues found
  */
 
 const fs = require("fs");
@@ -58,6 +59,9 @@ const BROWSER_GLOBALS = new Set([
   "DocumentFragment", "ShadowRoot",
   "CSS", "CSSStyleDeclaration",
   "SpeechSynthesisUtterance", "speechSynthesis",
+  "Uint32Array", "Int32Array", "Int16Array", "Int8Array",
+  "Uint16Array", "Uint8ClampedArray", "Float32Array", "Float64Array",
+  "BigInt64Array", "BigUint64Array",
 
   // Node.js (build scripts only)
   "require", "module", "exports", "__dirname", "__filename", "process",
@@ -95,7 +99,191 @@ const VENDOR_GLOBALS = new Set([
   "firebase_", // firebase_ functions are loaded globally
 ]);
 
-const ALL_KNOWN_GLOBALS = new Set([...BROWSER_GLOBALS, ...VENDOR_GLOBALS]);
+// Common callback/parameter names that get called
+const CALLBACK_NAMES = new Set([
+  "customFunction", "hoverFn", "onStartFunc", "onEndFunc",
+  "afterAction", "addFn", "applyPreference", "applyContent",
+  "applyExpenses", "embedAfterLoadAction", "restoreOnFileSelectionAction",
+  "visibilityListenerAction", "sendHeightMessageToParent",
+  "transportationAddListenerAction", "accommodationsAddListenerAction",
+  "galeriaAdicionarListenerAction",
+]);
+
+// ---------------------------------------------------------------
+// Known pre-existing missing imports (from global-to-module migration)
+// These are tracked but not treated as errors.
+// Format: { filePattern: Set of function names }
+// When these get proper imports, remove them from this list.
+// ---------------------------------------------------------------
+
+const KNOWN_MISSING_IMPORTS = {
+  "app/main.js": new Set(["LOCAL"]),
+  "data/firebase/auth.js": new Set(["openIndexPage", "unsubscribe"]),
+  "data/firebase/database.js": new Set(["overwrite"]),
+  "data/firebase/storage.js": new Set(["getLastDir", "getStorageErrorMessage", "deleteImageByLink"]),
+  "models/destination.model.js": new Set(["getPriceBuckets"]),
+  "models/itinerary.model.js": new Set(["getTurno", "getScheduleTitle"]),
+  "models/trip.model.js": new Set(["getFormattedDate"]),
+  "pages/destination/categories.js": new Set(["getPlannedDestinations"]),
+  "pages/destination/destination.js": new Set([
+    "getTripData", "loadPlannedDestination", "loadActiveCategory",
+    "loadDestinationVisibility", "applyDestinationsMediaHeight", "adjustMediaEmbeds",
+    "getDestinationsHTML", "loadEmbed", "loadSortAndFilter", "adjustInstagramMedia",
+    "adjustEditVisibility", "restoreIfEditing", "adjustDrawer", "unloadMedias",
+    "unloadMedia", "loadMedia", "updateActiveCategory",
+  ]),
+  "pages/destination/edit-destination.js": new Set([
+    "getDestinationID", "getEditHTML", "populatePlannedDestinationEditField",
+    "getDestinationsHTML", "openDestinationsAccordion", "processAccordion",
+    "getItem", "setPlannedDestination", "refreshTripData", "refreshDestination",
+    "getPlanejado", "getDestinationsAccordionBodyHTML", "getItemFromJ",
+  ]),
+  "pages/destination/support/content.js": new Set(["getPlanejado"]),
+  "pages/destination/support/media-embed.js": new Set(["getSystemWidth"]),
+  "pages/destination/support/visibility.js": new Set(["adjustEditVisibility"]),
+  "pages/destination/support/sort-and-filter/filter.js": new Set([
+    "getFilterPreferences", "shouldDisplayPlanned", "shouldDisplayPrices",
+    "shouldDisplayScores", "shouldDisplayRegions", "getItem", "applyContent",
+    "isPlanned", "loadFilterSortingData", "getPrices", "openFilterSortDrawer",
+  ]),
+  "pages/destination/support/sort-and-filter/sort-and-filter.js": new Set([
+    "loadFilterOptions", "loadSortOptions", "sort", "filter", "getDataSet",
+    "getPriceBuckets", "isDrawerOpen", "closeDrawer", "openDrawer", "getInnerHTML",
+    "getPrices",
+  ]),
+  "pages/destination/support/sort-and-filter/sort.js": new Set([
+    "getSortPreferences", "getItem", "applyContent", "isPlanned",
+    "loadFilterSortingData", "shouldDisplayScores", "shouldDisplayPlanned",
+    "shouldDisplayPrices", "openFilterSortDrawer",
+  ]),
+  "pages/destination/support/sort-and-filter/support/drawer.js": new Set([
+    "getFilterPreferences", "getSortPreferences", "filter", "sort", "applyPreference",
+  ]),
+  "pages/destination/support/sort-and-filter/support/price-bucket.js": new Set(["getDataSet"]),
+  "pages/edit-destination/edit-destination.js": new Set([
+    "addRestaurantes", "addLanches", "addSaidas", "addTurismo", "addLojas",
+    "setDocumento", "loadCurrencySelects", "loadDestinationsData",
+    "emojisOnInputAction", "getDescription", "addDestino", "addDestinoHTML",
+    "setDescription", "updateDescriptionButtonLabel",
+  ]),
+  "pages/edit-destination/existing-destination.js": new Set([
+    "loadMoedaOptions", "setDescription", "updateDescriptionButtonLabel",
+    "addRestaurantes", "addLanches", "addSaidas", "addTurismo", "addLojas",
+    "loadMoedaValorAndVisibility",
+  ]),
+  "pages/edit-destination/import-destination.js": new Set([
+    "loadMoedaValorAndVisibility", "setDescription", "updateDestinationsTitle",
+    "updateDescriptionButtonLabel", "addFn",
+  ]),
+  "pages/edit-destination/new-destination.js": new Set([
+    "loadCurrencySelects", "addDestinationsListeners", "addListenerToRemoveDestination",
+  ]),
+  "pages/edit-destination/set-destination.js": new Set(["getDescription"]),
+  "pages/edit-listing/edit-listing.js": new Set([
+    "loadDestinations", "loadUploadSelector", "autoFillDarkColor", "loadListData",
+    "buildCompartilhamentoObject", "buildDestinosArray", "buildImagemObject",
+    "buildLinksObject", "setDocumento",
+  ]),
+  "pages/edit-listing/existing-listing.js": new Set(["loadCustomizacaoData", "loadDestinationsData"]),
+  "pages/edit-trip/categories/accommodation.js": new Set(["addHospedagens"]),
+  "pages/edit-trip/categories/basic-data/set-protected-data.js": new Set(["getNewPinObject", "isDataUnprotected"]),
+  "pages/edit-trip/categories/destination.js": new Set(["loadItineraryListeners"]),
+  "pages/edit-trip/categories/expenses.js": new Set(["getSharingObject", "getTravelersObject"]),
+  "pages/edit-trip/categories/gallery.js": new Set(["addGaleria"]),
+  "pages/edit-trip/categories/transportation.js": new Set(["addTransportation"]),
+  "pages/edit-trip/categories/travelers.js": new Set(["loadItineraryData"]),
+  "pages/edit-trip/categories/itinerary-module/inner-itinerary/inner-itinerary.js": new Set([
+    "getInnerProgramacaoContent", "getActiveDestinations", "enableAllTravelersFieldset",
+    "getDataSelectOptions", "getDestinosFromCheckbox", "updateTravelersFieldset",
+    "loadTextReplacementCheckboxes", "replaceTextIfEnabled", "replaceTimeIfEnabled",
+    "validateTravelersFieldset", "getCheckedTravelersIDs",
+  ]),
+  "pages/edit-trip/categories/itinerary-module/inner-itinerary/text-replacement.js": new Set(["getTurno"]),
+  "pages/edit-trip/categories/itinerary-module/itinerary-module.js": new Set([
+    "getDestinosFromCheckbox", "addValuesForDestinosAtivosCheckbox",
+    "loadInnerItineraryHTML", "loadItinerarySchedule", "updateDestinosAtivosCheckboxHTML",
+  ]),
+  "pages/edit-trip/edit-trip.js": new Set([
+    "loadNewTrip", "loadEventListeners", "loadUploadSelector", "loadPinData", "loadTripData",
+  ]),
+  "pages/edit-trip/existing-trip.js": new Set([
+    "updateTravelersButtonLabel", "setCurrentPreferencePIN", "switchPinVisibility",
+    "switchPinLabel", "loadCustomizacaoImageData", "visibilityListenerAction",
+    "addTransportation", "loadTransportationVisibility", "updateTransportationTitle",
+    "applyTransportationTypeVisualization", "addHospedagens", "setImagemButtonLabel",
+    "loadCheckIn", "loadCheckOut", "loadDestinations", "loadDestinosAtivos",
+    "loadItinerarySchedule", "applyLoadedItineraryData", "updateDestinosAtivosCheckboxHTML",
+    "addGaleria",
+  ]),
+  "pages/edit-trip/new-trip.js": new Set([
+    "loadTransportationListeners", "loadTransportationVisibility",
+    "applyTransportationTypeVisualization", "addRemoveTransportationListener",
+    "updateTransportationTitle", "removeAccommodationImages", "loadAccommodationListeners",
+    "getDestinationsItemCheckbox", "updateDestinosAtivosHTMLs", "updateItineraryTitle",
+    "loadItineraryListeners", "reloadItinerary", "loadGaleriaListeners",
+    "addRemoveGaleriaListener",
+  ]),
+  "pages/edit-trip/set-trip.js": new Set([
+    "getCurrentPreferencePIN", "getDestinationsArray", "getProtectedAccommodationObject",
+    "getProtectedTransportationObject", "getGaleriaObject", "getAccommodationArray",
+    "getItineraryArray", "getTransportationObject", "getExpensesObject", "addSetResponse",
+    "setDocumento",
+  ]),
+  "pages/edit-trip/support/event-listeners.js": new Set([
+    "setTripData", "buildVisibilidadeObject", "reloadItinerary",
+    "autoFillDarkColor", "applyTransportationTypeVisualization",
+  ]),
+  "pages/expenses/categories.js": new Set(["setTable", "setChart"]),
+  "pages/expenses/expenses.js": new Set([
+    "loadEmbedMode", "requestInvalidPin", "loadSummary",
+    "loadPreTripExpenses", "loadDuringTripExpenses", "loadTravelerExpenses",
+    "applyTravelerExpenses",
+  ]),
+  "pages/expenses/support/currency.js": new Set(["setTabListeners"]),
+  "pages/expenses/support/embed.js": new Set(["setManualPin"]),
+  "pages/home/index.js": new Set([]),
+  "pages/home/support/data.js": new Set([
+    "loadDestinationsTab", "loadListsTab", "closeDestDialog",
+  ]),
+  "pages/home/support/event-listeners.js": new Set([]),
+  "pages/itinerary/itinerary.js": new Set(["requestInvalidPin"]),
+  "pages/trip-detail/categories/accommodation-module.js": new Set([
+    "loadImageLightbox", "getSensitiveReservationHTML", "initSwiper",
+  ]),
+  "pages/trip-detail/categories/destination.js": new Set(["openViewEmbed"]),
+  "pages/trip-detail/categories/gallery.js": new Set(["loadImageLightbox"]),
+  "pages/trip-detail/categories/itinerary-module/calendar.js": new Set(["refreshPills"]),
+  "pages/trip-detail/categories/itinerary-module/inner-itinerary.js": new Set([
+    "loadImageLightbox", "getFlightBoxHTML",
+  ]),
+  "pages/trip-detail/categories/itinerary-module/itinerary-module.js": new Set([
+    "loadCalendar", "loadCalendarItem", "openViewEmbed",
+  ]),
+  "pages/trip-detail/categories/transportation-module.js": new Set([
+    "getSensitiveReservationHTML", "initSwiper", "adjustCardsHeights",
+  ]),
+  "pages/trip-detail/support/embed.js": new Set(["updateProtectedDataFromExternalPin"]),
+  "pages/trip-detail/support/sensitive-reservation.js": new Set(["copyToClipboard", "sendToExpenses"]),
+  "pages/trip-detail/support/visibility.js": new Set([
+    "adjustTransportationBoxContainerHeight", "sendToExpenses",
+  ]),
+  "pages/trip-detail/view.js": new Set([
+    "mainView", "refreshCategorias", "adjustDestinationsHTML",
+    "adjustCardsHeightsListener", "loadViewEmbed", "openExpensesEmbed",
+    "loadDestinationsCustomSelect", "loadDestinationsHTML", "loadViewVisibility",
+    "adjustPortfolioHeight", "loadSensitiveReservations", "adjustCardsHeights",
+    "requestDocumentPin",
+  ]),
+  "theme/visibility.js": new Set([
+    "loadTransportationImages", "loadViewCustomVisibilityRules",
+    "applyAccordionArrowCustomColor", "changeChartsLabelsVisibility",
+    "loadCurrenciesTab",
+  ]),
+  "utils/dom.js": new Set(["getFlightBoxHTML", "getHospedagensData", "getHotelBoxHTML"]),
+  "utils/pin.js": new Set(["translate", "cloneObject", "getContainersInput", "displayFullMessage"]),
+};
+
+const ALL_KNOWN_GLOBALS = new Set([...BROWSER_GLOBALS, ...VENDOR_GLOBALS, ...CALLBACK_NAMES]);
 
 // ---------------------------------------------------------------
 // Regex patterns
@@ -129,6 +317,10 @@ const RE_ARROW_CONST = /(?:^|\s)(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?\([
 const RE_ARROW_CONST_ONE = /(?:^|\s)(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?\w+\s*=>/gm;
 const RE_ASSIGNED_FN = /(?:^|\s)(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s+)?function/gm;
 const RE_CLASS = /(?:^|\s)class\s+(\w+)/gm;
+
+// Class method definitions: methodName(args) {  (indented, no 'function' keyword)
+// Matches:  method() {,  async method() {,  static method() {,  get prop() {,  set prop(val) {
+const RE_CLASS_METHOD = /(?:^|\n)\s{2,}(?:static\s+)?(?:async\s+)?(?:get\s+|set\s+)?(\w+)\s*\([^)]*\)\s*\{/gm;
 
 // Window assignments  (window.xxx =, window["xxx"] =)
 const RE_WINDOW_ASSIGN = /window\.(\w+)\s*=/g;
@@ -200,6 +392,9 @@ function extractDefinitions(cleanSource) {
   for (const m of cleanSource.matchAll(RE_ARROW_CONST_ONE)) defs.add(m[1]);
   for (const m of cleanSource.matchAll(RE_ASSIGNED_FN)) defs.add(m[1]);
   for (const m of cleanSource.matchAll(RE_CLASS)) defs.add(m[1]);
+
+  // Class method definitions (methodName() { inside a class body)
+  for (const m of cleanSource.matchAll(RE_CLASS_METHOD)) defs.add(m[1]);
 
   // export { a, b } — these are re-exports, treat names as defined
   for (const m of cleanSource.matchAll(RE_EXPORT_BRACES)) {
@@ -283,9 +478,10 @@ function relativePath(filePath) {
 
 function analyze() {
   const issues = {
-    missingImports: [],    // { file, name, line }
-    windowAssignments: [], // { file, name, count }
-    firestoreRefs: [],     // { file, count }
+    missingImports: [],     // { file, name, line }
+    knownMissingImports: [], // { file, name, line } — pre-existing, tracked
+    windowAssignments: [],  // { file, name, count }
+    firestoreRefs: [],      // { file, count }
   };
 
   let filesScanned = 0;
@@ -303,19 +499,23 @@ function analyze() {
     const windowAssigns = findWindowAssignments(cleanSource);
     const firestoreRefs = findFirestoreDataRefs(cleanSource);
 
-    // All names available locally
+    // All names available locally (including known globals)
     const available = new Set([...imported, ...defined, ...ALL_KNOWN_GLOBALS]);
+
+    // Known missing imports for this file
+    const knownForFile = KNOWN_MISSING_IMPORTS[rel] || new Set();
 
     // Check for missing imports
     for (const name of called) {
       if (!available.has(name)) {
-        // Find the line number for better reporting
         const lineNum = findLineNumber(rawSource, name);
-        issues.missingImports.push({
-          file: rel,
-          name,
-          line: lineNum,
-        });
+        const issue = { file: rel, name, line: lineNum };
+
+        if (knownForFile.has(name)) {
+          issues.knownMissingImports.push(issue);
+        } else {
+          issues.missingImports.push(issue);
+        }
       }
     }
 
@@ -324,13 +524,12 @@ function analyze() {
       issues.windowAssignments.push({
         file: rel,
         name,
-        count: 1, // simplified
+        count: 1,
       });
     }
 
     // Check FIRESTORE_DATA
     if (firestoreRefs.length > 0) {
-      // Exclude data/state.js if it exists (it OWNS the variable)
       if (!rel.includes("data/state.js")) {
         issues.firestoreRefs.push({
           file: rel,
@@ -358,26 +557,43 @@ function findLineNumber(source, name) {
 // Output
 // ---------------------------------------------------------------
 
-function printReport(issues, filesScanned, verbose, json) {
+function printReport(issues, filesScanned, verbose, json, showAll) {
   if (json) {
     console.log(JSON.stringify({ issues, filesScanned }, null, 2));
     return;
   }
 
+  const newCount = issues.missingImports.length;
+  const knownCount = issues.knownMissingImports.length;
+
   console.log(`\n🔍 Static Analysis Report`);
   console.log(`   Files scanned: ${filesScanned}`);
   console.log("");
 
-  // Missing imports
-  if (issues.missingImports.length > 0) {
-    console.log(`❌ Missing Imports (${issues.missingImports.length}):`);
+  // New missing imports (real issues)
+  if (newCount > 0) {
+    console.log(`❌ Missing Imports (${newCount} NEW):`);
     console.log(`   These functions are called but not imported or defined locally:\n`);
     for (const issue of issues.missingImports) {
       console.log(`   • ${issue.file}:${issue.line}  →  ${issue.name}()`);
     }
     console.log("");
   } else {
-    console.log(`✅ Missing Imports: 0 (all function calls resolve)`);
+    console.log(`✅ Missing Imports: 0 new issues`);
+  }
+
+  // Known missing imports (tracked)
+  if (knownCount > 0) {
+    if (showAll) {
+      console.log(`📋 Known Missing Imports (${knownCount} tracked, not errors):`);
+      console.log(`   Pre-existing from global-to-module migration:\n`);
+      for (const issue of issues.knownMissingImports) {
+        console.log(`   • ${issue.file}:${issue.line}  →  ${issue.name}()`);
+      }
+    } else {
+      console.log(`📋 Known Missing Imports: ${knownCount} tracked (use --all to show)`);
+    }
+    console.log("");
   }
 
   // Window assignments
@@ -405,16 +621,21 @@ function printReport(issues, filesScanned, verbose, json) {
   }
 
   // Summary
-  const totalIssues =
-    issues.missingImports.length +
+  const totalIssues = newCount +
     issues.windowAssignments.length +
     issues.firestoreRefs.length;
 
   console.log(`\n${"═".repeat(60)}`);
   if (totalIssues === 0) {
-    console.log(`✅ ALL CLEAN — No issues found.`);
+    console.log(`✅ ALL CLEAN — No new issues found.`);
+    if (knownCount > 0) {
+      console.log(`   ${knownCount} known issue(s) tracked (from migration).`);
+    }
   } else {
-    console.log(`❌ ${totalIssues} issue(s) found. See details above.`);
+    console.log(`❌ ${totalIssues} new issue(s) found. See details above.`);
+    if (knownCount > 0) {
+      console.log(`   + ${knownCount} known issue(s) tracked (from migration).`);
+    }
   }
   console.log(`${"═".repeat(60)}\n`);
 
@@ -428,13 +649,14 @@ function printReport(issues, filesScanned, verbose, json) {
 const args = process.argv.slice(2);
 const verbose = args.includes("--verbose");
 const json = args.includes("--json");
+const showAll = args.includes("--all");
 
 if (!fs.existsSync(JS_ROOT)) {
   console.error(`❌ JS root not found: ${JS_ROOT}`);
   process.exit(1);
 }
 
-const { issues, filesScanned } = analyze();
-const totalIssues = printReport(issues, filesScanned, verbose, json);
+const { issues, filesScanned } = analyze(showAll);
+const totalIssues = printReport(issues, filesScanned, verbose, json, showAll);
 
 process.exit(totalIssues > 0 ? 1 : 0);

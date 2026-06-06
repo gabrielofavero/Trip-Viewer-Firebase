@@ -5,7 +5,7 @@ import { cloneObject, getID, getOrderedDocumentByTitle, getURLParam } from '../.
 import { deleteUserObjectDB, getPermissoes, getSingleData, getTripDataWithDestinations } from '../../data/firebase/database.js';
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
 import { newDynamicSelect } from '../../ui/dynamic-select.js';
-import { getUserData } from '../../data/firebase/auth.js';
+import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '../../data/firebase/storage.js';
 import { snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule } from '../../theme/visibility.js';
@@ -34,7 +34,7 @@ export async function loadEditTripPage() {
 	newDynamicSelect("galeria-categoria");
 	newDynamicSelect("transporte-pessoa");
 
-	USER_DATA = await getUserData();
+	setUserData(await getUserData());
 	DESTINOS = getOrderedDocumentByTitle(USER_DATA.destinos);
 
 	if (DOCUMENT_ID) {

@@ -1,7 +1,7 @@
 import { firstCharToUpperCase, getID, getJs, getURLParam, removeChildWithValidation, removeEmptyChild, setURLParam } from '../utils/dom.js';
 import { getCurrentHour } from "../utils/dates.js";
 import { getState } from '../data/state.js';
-import { changeBarColorIOS, getSecondaryColor, loadLogoColors, loadThemeColors, saveLocalColors } from './colors.js';
+import { changeBarColorIOS, DARK_COLOR, getDarkerColor, getLighterColor, getSecondaryColor, LIGHT_COLOR, loadLogoColors, loadThemeColors, saveLocalColors, setDarkColor, setLightColor, setThemeColor, setThemeColorHover, setThemeColorSecondary, setThemeColorSecondaryHover } from './colors.js';
 import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from './animations.js';
 
@@ -13,8 +13,8 @@ export let LOGO_DARK = "";
 
 export function loadVisibility(colors = getState()?.cores) {
 	if (colors?.claro && colors?.escuro) {
-		LIGHT_COLOR = colors.claro;
-		DARK_COLOR = colors.escuro;
+		setLightColor(colors.claro);
+		setDarkColor(colors.escuro);
 	}
 
 	saveLocalColors();
@@ -102,12 +102,12 @@ export function applyMode({
 
 	const base = isDark ? DARK_COLOR : LIGHT_COLOR;
 
-	THEME_COLOR = base;
-	THEME_COLOR_HOVER = hoverFn(base, 10);
+	setThemeColor(base);
+	setThemeColorHover(hoverFn(base, 10));
 
 	const secondary = getSecondaryColor(secondaryKey);
-	THEME_COLOR_SECONDARY = secondary.main;
-	THEME_COLOR_SECONDARY_HOVER = secondary.hover;
+	setThemeColorSecondary(secondary.main);
+	setThemeColorSecondaryHover(secondary.hover);
 
 	applyThemeAttribute(isDark);
 

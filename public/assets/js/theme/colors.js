@@ -13,6 +13,14 @@ export let BOX_COLOR = {
 	escuro: "#404040",
 };
 
+// Setters (for modules that need to write these live bindings)
+export function setThemeColor(value) { THEME_COLOR = value; }
+export function setThemeColorHover(value) { THEME_COLOR_HOVER = value; }
+export function setThemeColorSecondary(value) { THEME_COLOR_SECONDARY = value; }
+export function setThemeColorSecondaryHover(value) { THEME_COLOR_SECONDARY_HOVER = value; }
+export function setLightColor(value) { LIGHT_COLOR = value; }
+export function setDarkColor(value) { DARK_COLOR = value; }
+
 // Loaders
 export function loadLogoColors() {
 	const lightColor1 = getID("light-color-1");

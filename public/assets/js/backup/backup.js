@@ -1,14 +1,14 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
 import { translate } from '../i18n/translation.js';
-import { closeMessage, displayFullMessage, displayPrompt, getContainersInput, openToast } from '../utils/messages.js';
+import { closeMessage, displayFullMessage, displayPrompt, getContainersInput, openToast, MESSAGE_PROPERTIES } from '../utils/messages.js';
 import { cloneObject, getID, getTranslatedDocumentLabel } from '../utils/dom.js';
 import { getTimestamp } from '../utils/dates.js';
-import { getUID } from '../data/firebase/auth.js';
+import { getUID, USER_DATA } from '../data/firebase/auth.js';
 
 const MISSING_ACCOUNT_DATA = { jobs: [], protected: [], failed: [] };
 
 // Backup
-async function backupOnClickAction() {
+export async function backupOnClickAction() {
 	MISSING_ACCOUNT_DATA.jobs = [];
 	MISSING_ACCOUNT_DATA.protected = [];
 	MISSING_ACCOUNT_DATA.failed = [];
@@ -22,9 +22,12 @@ async function backupOnClickAction() {
 
 	const titulo = translate("account.backup.title");
 	const conteudo = translate("account.backup.prompt");
-	const yesAction = "displayPinRequestBackup()";
-	const noAction = "backupAccountData()";
-	displayPrompt({ titulo, conteudo, yesAction, noAction });
+	displayPrompt({
+		titulo,
+		conteudo,
+		yesAction: displayPinRequestBackup,
+		noAction: () => backupAccountData(false),
+	});
 }
 
 function prepareMissingData() {
@@ -90,7 +93,7 @@ function getProtectedJobObject(title, documentID, jobs, pin = "") {
 	return { title, documentID, jobs, pin };
 }
 
-function displayPinRequestBackup() {
+export function displayPinRequestBackup() {
 	stopLoadingScreen();
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = translate("trip.basic_information.pin.title");
@@ -98,7 +101,7 @@ function displayPinRequestBackup() {
 	propriedades.conteudo = getContent();
 	propriedades.botoes = [
 		{ tipo: "cancelar" },
-		{ tipo: "confirmar", acao: "backupAccountData(true)" },
+		{ tipo: "confirmar", acao: () => backupAccountData(true) },
 	];
 
 	displayFullMessage(propriedades);
@@ -117,7 +120,7 @@ function displayPinRequestBackup() {
 	}
 }
 
-async function backupAccountData(useSensitiveData = false) {
+export async function backupAccountData(useSensitiveData = false) {
 	if (useSensitiveData) {
 		getProtectedJobPins();
 	}

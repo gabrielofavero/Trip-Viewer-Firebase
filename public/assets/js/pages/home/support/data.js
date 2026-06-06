@@ -1,9 +1,10 @@
 import { displayError } from '../../../utils/messages.js';
-import { getUserData, registerIfUserNotPresent } from '../../../data/firebase/auth.js';
+import { getUserData, registerIfUserNotPresent, setUserData, USER_DATA } from '../../../data/firebase/auth.js';
 import { getCurrentTrips, getID, getLastUpdatedOnText, getNextTrips, getOrderedDocumentByUpdateDate, getPreviousTrips } from '../../../utils/dom.js';
 import { translate, translatePage } from '../../../i18n/translation.js';
 import { stopLoadingScreen } from '../../../utils/loading.js';
 import { dateObjectToString } from '../../../utils/dates.js';
+import { viewTrip, editTrip, viewDestination, editDestination, viewListing, editListing } from './navigation.js';
 
 var INDEX_DATA = {};
 var CURRENT_TRIPS = [];
@@ -12,14 +13,14 @@ var NEXT_TRIPS = [];
 var ALL_TRIPS = []; // Merged for the unified trip view
 var SELECTED_TRIP_ID = null;
 
-async function loadUserIndex() {
+export async function loadUserIndex() {
 	try {
 		firebase.auth().onAuthStateChanged(async (user) => {
 			if (user) {
 				registerIfUserNotPresent();
 				showLoggedView();
 
-				USER_DATA = await getUserData(user.uid);
+			setUserData(await getUserData(user.uid));
 
 				const displayName = USER_DATA.nome;
 				const photoURL = USER_DATA.foto ? "url(" + USER_DATA.foto + ")" : "";
@@ -111,7 +112,7 @@ function loadTripsTab() {
 			: `<div class="trip-card-image no-image"><i class="iconify card-image-icon" data-icon="tabler:plane-departure"></i></div>`;
 
 		html += `
-			<div class="trip-card" onclick="openTripDialog('${trip.id}')" data-trip-id="${trip.id}">
+			<div class="trip-card" data-action="open-trip-dialog" data-trip-id="${trip.id}">
 				<span class="trip-card-badge ${badgeClass}">${badgeLabel}</span>
 				${imageHTML}
 				<div class="trip-card-body">
@@ -134,7 +135,7 @@ function getTripBackgroundImage(trip) {
 /*--------------------------------------------------------------
 # Trip Dialog
 --------------------------------------------------------------*/
-function openTripDialog(tripId) {
+export function openTripDialog(tripId) {
 	const trip = ALL_TRIPS.find(t => t.id === tripId);
 	if (!trip) return;
 	SELECTED_TRIP_ID = tripId;
@@ -211,15 +212,15 @@ function openTripDialog(tripId) {
 	modulesDiv.innerHTML = modulesHTML || `<span class="module-pill">—</span>`;
 
 	// Buttons
-	getID("trip-dialog-view").onclick = function () { viagensVisualizar(trip.id); };
-	getID("trip-dialog-edit").onclick = function () { viagensEditar(trip.id); };
+	getID("trip-dialog-view").onclick = function () { viewTrip(trip.id); };
+	getID("trip-dialog-edit").onclick = function () { editTrip(trip.id); };
 
 	// Show dialog with scroll lock
 	dialog.style.display = "flex";
 	document.body.classList.add("dialog-open");
 }
 
-function closeTripDialog() {
+export function closeTripDialog() {
 	getID("trip-dialog").style.display = "none";
 	document.body.classList.remove("dialog-open");
 	SELECTED_TRIP_ID = null;
@@ -263,7 +264,7 @@ function loadDestinationsTab() {
 	for (const dest of destinos) {
 		const dateStr = getLastUpdatedOnText(dest.versao?.ultimaAtualizacao);
 		html += `
-			<div class="dest-card" onclick="openDestDialog('${dest.id}')">
+			<div class="dest-card" data-action="open-dest-dialog" data-dest-id="${dest.id}">
 				<div class="dest-card-image no-image">
 					<i class="iconify card-image-icon" data-icon="material-symbols:location-on"></i>
 				</div>
@@ -306,7 +307,7 @@ function loadListsTab() {
 			: `<div class="list-card-image no-image"><i class="iconify card-image-icon" data-icon="fluent:list-28-filled"></i></div>`;
 
 		html += `
-			<div class="list-card" onclick="openListDialog('${list.id}')">
+			<div class="list-card" data-action="open-list-dialog" data-list-id="${list.id}">
 				${imageHTML}
 				<div class="list-card-body">
 					<div class="list-card-title">${list.titulo || translate("labels.no_title")}</div>
@@ -323,7 +324,7 @@ function loadListsTab() {
 /*--------------------------------------------------------------
 # Destination Dialog
 --------------------------------------------------------------*/
-function openDestDialog(destId) {
+export function openDestDialog(destId) {
 	const destinos = getOrderedDocumentByUpdateDate(INDEX_DATA.destinos);
 	const dest = destinos.find(d => d.id === destId);
 	if (!dest) return;
@@ -343,14 +344,14 @@ function openDestDialog(destId) {
 	getID("dest-dialog-updated").textContent = getLastUpdatedOnText(dest.versao?.ultimaAtualizacao);
 
 	// Buttons
-	getID("dest-dialog-view").onclick = function () { closeDestDialog(); destinosVisualizar(dest.id); };
-	getID("dest-dialog-edit").onclick = function () { closeDestDialog(); destinosEditar(dest.id); };
+	getID("dest-dialog-view").onclick = function () { closeDestDialog(); viewDestination(dest.id); };
+	getID("dest-dialog-edit").onclick = function () { closeDestDialog(); editDestination(dest.id); };
 
 	getID("dest-dialog").style.display = "flex";
 	document.body.classList.add("dialog-open");
 }
 
-function closeDestDialog() {
+export function closeDestDialog() {
 	getID("dest-dialog").style.display = "none";
 	document.body.classList.remove("dialog-open");
 }
@@ -358,7 +359,7 @@ function closeDestDialog() {
 /*--------------------------------------------------------------
 # List Dialog
 --------------------------------------------------------------*/
-function openListDialog(listId) {
+export function openListDialog(listId) {
 	const listagens = getOrderedDocumentByUpdateDate(INDEX_DATA.listagens);
 	const list = listagens.find(l => l.id === listId);
 	if (!list) return;
@@ -391,14 +392,14 @@ function openListDialog(listId) {
 	}
 
 	// Buttons
-	getID("list-dialog-view").onclick = function () { closeListDialog(); listagensVisualizar(list.id); };
-	getID("list-dialog-edit").onclick = function () { closeListDialog(); listagensEditar(list.id); };
+	getID("list-dialog-view").onclick = function () { closeListDialog(); viewListing(list.id); };
+	getID("list-dialog-edit").onclick = function () { closeListDialog(); editListing(list.id); };
 
 	getID("list-dialog").style.display = "flex";
 	document.body.classList.add("dialog-open");
 }
 
-function closeListDialog() {
+export function closeListDialog() {
 	getID("list-dialog").style.display = "none";
 	document.body.classList.remove("dialog-open");
 }

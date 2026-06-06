@@ -2,7 +2,7 @@ import { getState, setState } from '../../data/state.js';
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { cloneObject, getChildIDs, getID, getOrderedDocumentByTitle, getURLParam, setRequired } from '../../utils/dom.js';
 import { deleteUserObjectDB, getPermissoes, getSingleData } from '../../data/firebase/database.js';
-import { getUserData } from '../../data/firebase/auth.js';
+import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '../../data/firebase/storage.js';
 import { hasUnsavedChanges, reEdit, snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule, searchDestinationsListenerAction } from '../../theme/visibility.js';
@@ -24,7 +24,7 @@ export async function loadEditListingPage() {
 	loadVisibilityIndex();
 	loadHabilitados();
 
-	USER_DATA = await getUserData();
+	setUserData(await getUserData());
 	DESTINOS = getOrderedDocumentByTitle(USER_DATA.destinos);
 
 	if (DOCUMENT_ID) {

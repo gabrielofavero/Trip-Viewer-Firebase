@@ -1,17 +1,16 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
 import { closeMessage, displayError, displayMessage, displayPrompt, openToast } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
-import { getUID } from '../data/firebase/auth.js';
+import { getUID, USER_DATA } from '../data/firebase/auth.js';
 import { cloneObject } from '../utils/dom.js';
 
-async function restoreOnClickAction() {
+export async function restoreOnClickAction() {
 	const titulo = translate("account.restore.title");
 	const conteudo = translate("account.restore.prompt");
-	const yesAction = "openRestoreFilePicker()";
-	displayPrompt({ titulo, conteudo, yesAction });
+	displayPrompt({ titulo, conteudo, yesAction: openRestoreFilePicker });
 }
 
-function restoreOnFileSelectionAction(event) {
+export function restoreOnFileSelectionAction(event) {
 	const file = event.target.files[0];
 	if (!file) return;
 
@@ -29,7 +28,7 @@ function restoreOnFileSelectionAction(event) {
 	reader.readAsText(file);
 }
 
-function openRestoreFilePicker() {
+export function openRestoreFilePicker() {
 	document.getElementById("restore-account-input").click();
 }
 

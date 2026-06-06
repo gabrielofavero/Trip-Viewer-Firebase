@@ -127,7 +127,7 @@
               <div class="settings-user-info">
                 <div class="settings-user-name" id="settings-user-name"></div>
               </div>
-              <button class="btn btn-outline-theme" onclick="_signOut()">
+              <button class="btn btn-outline-theme" data-action="sign-out">
                 <i class="iconify" data-icon="material-symbols:logout"></i>
                 <span data-translate="labels.auth.sign_out"></span>
               </button>
@@ -137,18 +137,18 @@
             <div class="settings-section">
               <h3 class="settings-section-title" data-translate="labels.advanced"></h3>
               <div class="settings-actions">
-                <button class="btn btn-secondary-theme settings-action-btn" onclick="_backupOnClickAction()">
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="backup-account">
                   <i class="iconify" data-icon="material-symbols:cloud-download"></i>
                   <span data-translate="account.backup.title"></span>
                 </button>
-                <button class="btn btn-secondary-theme settings-action-btn" onclick="_restoreOnClickAction()">
+                <button class="btn btn-secondary-theme settings-action-btn" data-action="restore-account">
                   <i class="iconify" data-icon="material-symbols:cloud-upload"></i>
                   <span data-translate="account.restore.title"></span>
                 </button>
                 <input type="file" id="restore-account-input" accept="application/json" style="display:none">
               </div>
               <div class="settings-danger">
-                <a id="settings-delete-account" href="#" onclick="_openModal()" data-translate="account.delete.title"></a>
+                <a id="settings-delete-account" href="#" data-action="open-delete-modal" data-translate="account.delete.title"></a>
               </div>
             </div>
           </div>
@@ -160,13 +160,13 @@
         <div class="modal-card">
           <div class="modal-header">
             <h4 id="modal-text-title" data-translate="account.delete.title"></h4>
-            <a onclick="_closeModal()" class="modal-close-btn">
+            <a data-action="close-delete-modal" class="modal-close-btn">
               <i class="iconify" data-icon="material-symbols:close"></i>
             </a>
           </div>
           <p class="modal-body" data-translate="account.delete.message"></p>
           <div class="modal-actions">
-            <button id="cancel-btn" class="btn btn-outline-theme" type="button" onclick="_closeModal()">
+            <button id="cancel-btn" class="btn btn-outline-theme" type="button" data-action="close-delete-modal">
               <span data-translate="labels.cancel"></span>
             </button>
             <button id="delete-btn" class="btn btn-danger" type="submit">
@@ -180,7 +180,7 @@
       <div id="trip-dialog" class="dialog-overlay" style="display:none">
         <div class="dialog-card">
           <div class="dialog-image" id="trip-dialog-image"></div>
-          <a class="dialog-close" onclick="_closeTripDialog()">
+          <a class="dialog-close" data-action="close-trip-dialog">
             <i class="iconify" data-icon="material-symbols:close"></i>
           </a>
           <div class="dialog-body">
@@ -223,7 +223,7 @@
           <div class="dialog-image no-image">
             <i class="iconify dialog-image-icon" data-icon="material-symbols:location-on"></i>
           </div>
-          <a class="dialog-close" onclick="_closeDestDialog()">
+          <a class="dialog-close" data-action="close-dest-dialog">
             <i class="iconify" data-icon="material-symbols:close"></i>
           </a>
           <div class="dialog-body">
@@ -258,7 +258,7 @@
       <div id="list-dialog" class="dialog-overlay" style="display:none">
         <div class="dialog-card">
           <div class="dialog-image" id="list-dialog-image"></div>
-          <a class="dialog-close" onclick="_closeListDialog()">
+          <a class="dialog-close" data-action="close-list-dialog">
             <i class="iconify" data-icon="material-symbols:close"></i>
           </a>
           <div class="dialog-body">
@@ -296,7 +296,7 @@
     <div class="container">
       <div class="credits">
         <span data-translate="labels.developed_by"></span> <a href="https://www.linkedin.com/in/gabrielfavero/">Gabriel
-          Fávero</a>. <span class="attributions" onclick="_openAttributions()"><i class="iconify"
+          Fávero</a>. <span class="attributions" data-action="open-attributions"><i class="iconify"
             data-icon="ri:information-line"></i>
           <span data-translate="labels.credits"></span></span>
       </div>
@@ -309,7 +309,7 @@
   <!-- ======= Toast ======= -->
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>

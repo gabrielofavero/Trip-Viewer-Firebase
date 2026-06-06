@@ -6,7 +6,7 @@ import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from '../theme/animations.js';
 
 export let MESSAGE_MODAL_OPEN = false;
-const MESSAGE_PROPERTIES = {
+export const MESSAGE_PROPERTIES = {
 	titulo: "",
 	conteudo: "",
 	critico: false,
@@ -369,8 +369,8 @@ export function getCloseButton(label, onclick) {
 	label = label ? label : translate("labels.understood");
 	const button = document.createElement("button");
 	button.className = "btn btn-secondary btn-format";
-	button.type = "submit";
-	button.setAttribute("onclick", onclick ? onclick : "closeMessage();");
+	button.type = "button";
+	_setButtonAction(button, onclick, closeMessage);
 	button.id = "message-close";
 
 	button.innerHTML = translate(label);
@@ -378,13 +378,13 @@ export function getCloseButton(label, onclick) {
 }
 
 export function getConfirmButton(
-	onclick = "closeMessage();",
+	onclick = closeMessage,
 	label = "labels.confirm",
 ) {
 	const button = document.createElement("button");
 	button.className = "btn btn-theme btn-format";
-	button.type = "submit";
-	button.setAttribute("onclick", onclick);
+	button.type = "button";
+	_setButtonAction(button, onclick, closeMessage);
 	button.id = "message-confirm";
 
 	button.innerHTML = translate(label);
@@ -394,8 +394,8 @@ export function getConfirmButton(
 export function getDeleteButton(onclick, buttonClass = "btn-secondary") {
 	const button = document.createElement("button");
 	button.className = `btn ${buttonClass} btn-format`;
-	button.type = "submit";
-	button.setAttribute("onclick", onclick);
+	button.type = "button";
+	_setButtonAction(button, onclick, closeMessage);
 	button.id = "message-delete";
 
 	const icon = document.createElement("i");
@@ -410,6 +410,63 @@ export function getDeleteButton(onclick, buttonClass = "btn-secondary") {
 
 export function getDeleteButtonBasic(onclick) {
 	return getDeleteButton(onclick, "btn-basic");
+}
+
+/**
+ * Registry of named action callbacks so that string-based acao
+ * (e.g. "backupAccountData(true)") can be resolved without window.* globals.
+ */
+const _actionRegistry = Object.create(null);
+
+/**
+ * Register one or more named callbacks for string-based button actions.
+ * Usage: registerActions({ backupAccountData, openRestoreFilePicker })
+ */
+export function registerActions(map) {
+	Object.assign(_actionRegistry, map);
+}
+
+/**
+ * Attach a click handler to a button.
+ * Accepts a function reference, or a legacy string which is resolved
+ * against the _actionRegistry.
+ */
+function _setButtonAction(button, action, defaultFn) {
+	if (typeof action === "function") {
+		button.addEventListener("click", action);
+	} else if (typeof action === "string" && action) {
+		button.addEventListener("click", () => {
+			const match = action.match(/^([\w.]+)\((.*)\)$/);
+			if (match) {
+				const fn = _actionRegistry[match[1]];
+				if (typeof fn === "function") {
+					const rawArgs = match[2] ? match[2].split(",").map(s => s.trim()) : [];
+					const args = rawArgs.map(a => {
+						if (a === "true") return true;
+						if (a === "false") return false;
+						if (a === "null") return null;
+						if (a === "undefined") return undefined;
+						const num = Number(a);
+						if (!isNaN(num) && a !== "") return num;
+						// Strip surrounding quotes
+						return a.replace(/^['"]|['"]$/g, "");
+					});
+					fn(...args);
+					return;
+				}
+			}
+			console.error("Unregistered button action:", action);
+			// Fallback: try global eval for pages not yet migrated
+			try {
+				const fallback = new Function(action);
+				fallback();
+			} catch (_) {
+				// Silently ignore if even the fallback fails
+			}
+		});
+	} else if (defaultFn) {
+		button.addEventListener("click", defaultFn);
+	}
 }
 
 export function openToast(text) {

@@ -2,10 +2,12 @@ import { displayError, displayMessage } from "../../utils/messages.js";
 import { getHTMLpage } from '../../app/main.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
-import { create, getSystemData } from './database.js';
+import { create, get, getSystemData } from './database.js';
 
 export let USER_DATA;
 export let UID;
+
+export function setUserData(value) { USER_DATA = value; }
 
 export async function getUserData(uid) {
 	if (USER_DATA) {
