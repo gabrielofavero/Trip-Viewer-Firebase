@@ -8,6 +8,7 @@ import { backupOnClickAction } from '../../../backup/backup.js';
 import { openTripDialog, closeTripDialog, openDestDialog, closeDestDialog, openListDialog, closeListDialog } from './data.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
+import { registerActions } from '../../../ui/actions.js';
 
 export function loadListenersIndex() {
 	// Login
@@ -62,61 +63,30 @@ export function loadListenersIndex() {
 			restoreOnFileSelectionAction(event);
 		});
 
-	// Centralized delegated click handler for all data-action elements
-	document.addEventListener("click", function (event) {
-		const target = event.target.closest("[data-action]");
-		if (!target) return;
-
-		const action = target.getAttribute("data-action");
-		if (!action) return;
-
-		switch (action) {
-			case "sign-out":
-				signOut();
-				break;
-			case "backup-account":
-				backupOnClickAction();
-				break;
-			case "restore-account":
-				restoreOnClickAction();
-				break;
-			case "open-delete-modal":
-				openModal();
-				break;
-			case "close-delete-modal":
-				closeModal();
-				break;
-			case "close-trip-dialog":
-				closeTripDialog();
-				break;
-			case "close-dest-dialog":
-				closeDestDialog();
-				break;
-			case "close-list-dialog":
-				closeListDialog();
-				break;
-			case "open-attributions":
-				openAttributions();
-				break;
-			case "close-toast":
-				closeToast();
-				break;
-			case "open-trip-dialog": {
-				const tripId = target.getAttribute("data-trip-id");
-				if (tripId) openTripDialog(tripId);
-				break;
-			}
-			case "open-dest-dialog": {
-				const destId = target.getAttribute("data-dest-id");
-				if (destId) openDestDialog(destId);
-				break;
-			}
-			case "open-list-dialog": {
-				const listId = target.getAttribute("data-list-id");
-				if (listId) openListDialog(listId);
-				break;
-			}
-		}
+	// Register data-action handlers via the shared delegated handler (ui/actions.js)
+	registerActions({
+		"sign-out": () => signOut(),
+		"backup-account": () => backupOnClickAction(),
+		"restore-account": () => restoreOnClickAction(),
+		"open-delete-modal": () => openModal(),
+		"close-delete-modal": () => closeModal(),
+		"close-trip-dialog": () => closeTripDialog(),
+		"close-dest-dialog": () => closeDestDialog(),
+		"close-list-dialog": () => closeListDialog(),
+		"open-attributions": () => openAttributions(),
+		"close-toast": () => closeToast(),
+		"open-trip-dialog": (target) => {
+			const tripId = target.getAttribute("data-trip-id");
+			if (tripId) openTripDialog(tripId);
+		},
+		"open-dest-dialog": (target) => {
+			const destId = target.getAttribute("data-dest-id");
+			if (destId) openDestDialog(destId);
+		},
+		"open-list-dialog": (target) => {
+			const listId = target.getAttribute("data-list-id");
+			if (listId) openListDialog(listId);
+		},
 	});
 }
 

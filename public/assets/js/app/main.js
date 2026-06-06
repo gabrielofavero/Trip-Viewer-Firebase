@@ -10,6 +10,7 @@ import { select, on, onscroll, getID } from '../utils/dom.js';
 import { displayError } from '../utils/messages.js';
 import { loadAllConfigs, setLanguage, getVersoes } from '../app/config.js';
 import { translatePage, getLanguagePackName, loadLangSelectorSelect } from '../i18n/translation.js';
+import { initActions } from '../ui/actions.js';
 
 const APP = {
 	projectId: null,
@@ -113,6 +114,9 @@ function initializeApp() {
 	APP.projectId = firebase.app().options.projectId;
 	const versoes = getVersoes();
 	APP.version = versoes[APP.projectId]?.version?.system || "Unknown";
+
+	// Initialize the centralized delegated click handler (replaces all inline onclick)
+	initActions();
 }
 
 export function setPageName(pageName) {

@@ -279,6 +279,7 @@ const KNOWN_MISSING_IMPORTS = {
     "applyAccordionArrowCustomColor", "changeChartsLabelsVisibility",
     "loadCurrenciesTab",
   ]),
+  "ui/actions.js": new Set(["handler"]),
   "utils/dom.js": new Set(["getFlightBoxHTML", "getHospedagensData", "getHotelBoxHTML"]),
   "utils/pin.js": new Set(["translate", "cloneObject", "getContainersInput", "displayFullMessage"]),
 };
