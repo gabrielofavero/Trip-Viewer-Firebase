@@ -91,7 +91,7 @@ function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                     ${hospedagem.nome}
                     <div>
                       <i style="display: ${hospedagem.link ? "block" : "none"}" class="iconify external-link" 
-                      data-icon="tabler:external-link" onclick="window.open('${hospedagem.link}', '_blank')"></i>
+                      data-icon="tabler:external-link" data-action="open-link" data-url="${hospedagem.link}"></i>
                     </div> 
                   </div>
                   <div class="hotel-address" style="display: ${hospedagem.endereco ? "block" : "none"}">

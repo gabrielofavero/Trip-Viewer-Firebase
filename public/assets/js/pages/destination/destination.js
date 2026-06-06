@@ -137,7 +137,7 @@ function orderInnerHTMLs(innerContents) {
 }
 
 // Actions
-function processAccordion(j) {
+export function processAccordion(j) {
 	restoreIfEditing(j);
 	adjustDrawer();
 	toggleMedia(j);

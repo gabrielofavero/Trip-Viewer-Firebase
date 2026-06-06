@@ -10,7 +10,7 @@ import { getUID } from '../../data/firebase/auth.js';
 let ADDED_J;
 
 // Main Functions
-async function edit(j) {
+export async function edit(j) {
 	const canEdit = await canEdit();
 	if (!canEdit) {
 		editForbidden();
@@ -343,7 +343,7 @@ function editForbidden(message = "messages.access_denied.message.edit") {
 	abortEdit("messages.access_denied.title", message);
 }
 
-function closeAddedDestination() {
+export function closeAddedDestination() {
 	if (!ADDED_J) {
 		return;
 	}

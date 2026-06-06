@@ -134,7 +134,7 @@ function reloadModalCalendar(programacao) {
 	}, 300);
 }
 
-function displayInnerItineraryMessage(index) {
+export function displayInnerItineraryMessage(index) {
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = CURRENT_INNER_ITINERARY[index].titulo;
 	propriedades.conteudo = CURRENT_INNER_ITINERARY[index].content;
@@ -214,7 +214,7 @@ function getInnerItineraryHTML(item) {
 	const innerItinerary = getInnerItinerary(item);
 	if (innerItinerary.content) {
 		CURRENT_INNER_ITINERARY.push(innerItinerary);
-		return `<i class="iconify external-link" data-icon="tabler:external-link" onclick="displayInnerItineraryMessage(${CURRENT_INNER_ITINERARY.length - 1})"></i>`;
+		return `<i class="iconify external-link" data-icon="tabler:external-link" data-action="display-inner-itinerary-message" data-index="${CURRENT_INNER_ITINERARY.length - 1}"></i>`;
 	}
 	return "";
 }

@@ -699,7 +699,7 @@ export function getLinkMediaButton(midia, tipo) {
 	}
 
 	return `<div class="button-box">
-              <button class="btn btn-secondary btn-format" type="submit" onclick="window.open('${midia}', '_blank');">${buttonText}</button>
+              <button class="btn btn-secondary btn-format" type="submit" data-action="open-link" data-url="${midia}">${buttonText}</button>
             </div>`;
 }
 

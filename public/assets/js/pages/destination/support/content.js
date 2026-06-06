@@ -8,7 +8,7 @@ function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" })
     <div class="accordion-group" id='destinos-box-${j}'>
         <div id="destinos-${j}" class="accordion-item" data-drag-listener="true" data-id="${id}">
             <h2 class="accordion-header" id="heading-destinos-${j}">
-                <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false" aria-controls="collapse-destinos-${j}" onclick="${closeAction}(${j})">
+                <button id="destinos-titulo-${j}" class="accordion-button flex-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-destinos-${j}" aria-expanded="false" aria-controls="collapse-destinos-${j}" data-action="${closeAction.replace('_', '')}" data-index="${j}">
                     <span class="title-text" id="destinos-titulo-text-${j}">${getDestinationTitle(item)}</span>
                     <div class="icon-container new-box" style="display: ${item.novo ? "block" : "none"}">
                         <svg class="new" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 11.4 5.3" style="enable-background:new 0 0 11.4 5.3;" xml:space="preserve" height="1em"> <style type="text/css"> .st0 { fill: none; }</style>
@@ -49,7 +49,7 @@ function getDestinationsAccordionBodyHTML({
 
 	const ediText = editBtn
 		? `<div class="edit-container" id="edit-container-${j}">
-    <button class="edit-btn" id="edit-${j}" onclick="edit(${j})">
+    <button class="edit-btn" id="edit-${j}" data-action="edit-destination" data-index="${j}">
         <i class="iconify user-data-icon" data-icon="tabler:edit"></i>
         <span>${translate("labels.edit")}</span>
     </button>

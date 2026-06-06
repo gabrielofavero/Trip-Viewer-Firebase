@@ -142,7 +142,7 @@ function getReservaHTML(j, empresa) {
 	const reservation = link
 		? `<a class="flight-code" href="${link}" target="_blank">#${reserva}</a>`
 		: `<div class="flight-code">#${reserva}</div>`;
-	const icon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" onclick="copyToClipboard('${reserva}')"></i>`;
+	const icon = `<i class="iconify copy-icon" data-icon="mdi:content-copy" data-action="copy-to-clipboard" data-text="${reserva}"></i>`;
 	return `${reservation} ${icon}`;
 }
 
@@ -264,7 +264,7 @@ function loadGeneralTransportationIcon() {
 	}
 }
 
-function copyToClipboard(text) {
+export function copyToClipboard(text) {
 	navigator.clipboard.writeText(text);
 	openToast(translate("messages.text_copied"));
 }

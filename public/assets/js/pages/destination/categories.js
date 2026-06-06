@@ -88,7 +88,7 @@ function getNotaClass(nota) {
 // Links
 function getLinkOnClick(item, tipo) {
 	if (item[tipo]) {
-		return ` onclick="openLinkInNewTab('${item[tipo]}')"`;
+		return ` data-action="open-link" data-url="${item[tipo]}"`;
 	} else return "";
 }
 
