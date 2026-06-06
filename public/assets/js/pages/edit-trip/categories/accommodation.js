@@ -109,7 +109,7 @@ function accommodationsAddListenerAction() {
 }
 
 // Internal Loading (Modal)
-function openAccommodationImages(j) {
+export function openAccommodationImages(j) {
 	const size = 5;
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 
@@ -154,7 +154,7 @@ function getAccommodationImageContent(size = 5) {
 	for (let k = 1; k <= size; k++) {
 		botoes += `
         <div class="input-botao-container" id="input-botao-container-${k}">
-            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" onclick="openInnerAccommodationImage(${k})" style="margin-top:1em">${translate("labels.image.add")}</button>
+            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" data-action="open-inner-accommodation-image" data-index="${k}" style="margin-top:1em">${translate("labels.image.add")}</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
         </div>`;
 
@@ -202,7 +202,7 @@ function getAccommodationImageContent(size = 5) {
     `;
 }
 
-function openInnerAccommodationImage(k) {
+export function openInnerAccommodationImage(k) {
 	fade([`imagem-hospedagens-botoes`], [`hospedagens-imagem-${k}`]);
 	getID("back-icon").style.visibility = "visible";
 }

@@ -243,7 +243,7 @@ function getInnerExpenseContent(categoria, tipo, index) {
                     <input required class="input-full" id="gasto-valor" type="number" placeholder="0.00" step="0.01">
                 </div>
                 <div class="button-box-right" id="gasto-deletar" style="margin-top: 8px; margin-bottom: 8px;">
-                        <button onclick="deleteInnerGasto('${categoria}', '${tipo}', ${index})" class="btn btn-basic btn-format">
+                        <button data-action="delete-inner-expense" data-category="${categoria}" data-type="${tipo}" data-index="${index}" class="btn btn-basic btn-format">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd" d="M8.106 2.553A1 1 0 0 1 9 2h6a1 1 0 0 1 .894.553L17.618 6H20a1 1 0 1 1 0 2h-1v11a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8H4a1 1 0 0 1 0-2h2.382l1.724-3.447ZM14.382 4l1 2H8.618l1-2h4.764ZM11 11a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm4 0a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Z" clip-rule="evenodd"></path>
                             </svg>
@@ -317,7 +317,7 @@ function updateInnerGastos() {
 	}
 }
 
-function deleteInnerGasto(categoria, tipo, index) {
+export function deleteInnerGasto(categoria, tipo, index) {
 	INNER_EXPENSES[categoria]
 		.find((tipoObj) => tipoObj.tipo === tipo)
 		.gastos.splice(index, 1);

@@ -61,7 +61,7 @@ function getDescription(categoria, j) {
 	return description;
 }
 
-function openDescriptionModal(categoria, j) {
+export function openDescriptionModal(categoria, j) {
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	const defaultTitle = isDescriptionPreset(categoria, j)
 		? translate("labels.description.edit")

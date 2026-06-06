@@ -8,9 +8,11 @@ import { registerActions } from '../../../ui/actions.js';
 import { openTravelersInfo } from '../categories/travelers.js';
 import { requestPinEditarGastos } from '../categories/basic-data/protected-data.js';
 import { deleteTrip } from '../edit-trip.js';
-import { openInnerExpense } from '../categories/expenses.js';
+import { openInnerExpense, deleteInnerGasto } from '../categories/expenses.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
+import { openAccommodationImages, openInnerAccommodationImage } from '../categories/accommodation.js';
+import { openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap, deleteInnerProgramacao } from '../categories/itinerary-module/inner-itinerary/inner-itinerary.js';
 
 // Loader
 function loadEventListeners() {
@@ -29,6 +31,41 @@ function loadEventListeners() {
 			closeModal(modalId);
 		},
 		"close-toast": () => closeToast(),
+		"open-accommodation-images": (target) => {
+			const index = parseInt(target.getAttribute("data-index"));
+			if (!isNaN(index)) openAccommodationImages(index);
+		},
+		"open-inner-itinerary": (target) => {
+			const index = parseInt(target.getAttribute("data-index"));
+			if (!isNaN(index)) openInnerItinerary(index);
+		},
+		"open-inner-accommodation-image": (target) => {
+			const index = parseInt(target.getAttribute("data-index"));
+			if (!isNaN(index)) openInnerAccommodationImage(index);
+		},
+		"delete-inner-expense": (target) => {
+			const category = target.getAttribute("data-category");
+			const type = target.getAttribute("data-type");
+			const index = parseInt(target.getAttribute("data-index"));
+			if (category && type && !isNaN(index)) deleteInnerGasto(category, type, index);
+		},
+		"open-inner-itinerary-detail": (target) => {
+			const j = parseInt(target.getAttribute("data-j"));
+			const k = parseInt(target.getAttribute("data-k"));
+			const turno = target.getAttribute("data-turno");
+			if (!isNaN(j) && !isNaN(k) && turno) openInnerItinerary(j, k, turno);
+		},
+		"open-inner-itinerary-item": (target) => {
+			const index = parseInt(target.getAttribute("data-index"));
+			if (!isNaN(index)) openInnerItineraryItem(index);
+		},
+		"open-inner-itinerary-swap": () => openInnerItinerarySwap(),
+		"delete-inner-itinerary": (target) => {
+			const j = parseInt(target.getAttribute("data-j"));
+			const k = parseInt(target.getAttribute("data-k"));
+			const turno = target.getAttribute("data-turno");
+			if (!isNaN(j) && !isNaN(k) && turno) deleteInnerProgramacao(j, k, turno);
+		},
 	});
 
 	// Inputs

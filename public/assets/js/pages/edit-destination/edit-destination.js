@@ -258,7 +258,7 @@ function emojisOnInputAction(j, categoria) {
 	}
 }
 
-function openMoveDestinationModal(j, categoria) {
+export function openMoveDestinationModal(j, categoria) {
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 
 	propriedades.titulo =

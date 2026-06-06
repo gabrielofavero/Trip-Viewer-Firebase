@@ -30,7 +30,7 @@ function loadInnerItineraryHTML(j) {
 
 			if (dado.programacao) {
 				div.innerHTML += `<div class="input-botao-container">
-                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" onclick="openInnerItinerary(${j}, ${k}, '${turno}')">
+                                    <button id="input-botao-${turno}-${j}-${k}" class="btn input-botao draggable" data-action="open-inner-itinerary-detail" data-j="${j}" data-k="${k}" data-turno="${turno}">
                                         ${getInnerItineraryTitleHTML(dado, "inner-programacao-highlight")}
                                     </button>
                                     <i class="iconify drag-icon" data-icon="mdi:drag"></i>
@@ -45,7 +45,7 @@ function loadInnerItineraryHTML(j) {
 }
 
 // Carregamento Interno (Modal)
-async function openInnerItinerary(j, k, turno) {
+export async function openInnerItinerary(j, k, turno) {
 	const selects = getInnerItinerarySelects(j);
 	const isNew = !k && !turno;
 
@@ -216,7 +216,7 @@ async function loadInnerItineraryCurrentData(j, k, turno, isNew) {
 }
 
 // Navegação do Modal
-async function openInnerItineraryItem(j) {
+export async function openInnerItineraryItem(j) {
 	const height = getID("inner-programacao-tela-principal").offsetHeight;
 	const itemSelecionar = getID("inner-programacao-item-selecionar");
 	itemSelecionar.style.minHeight = `${height}px`;
@@ -234,7 +234,7 @@ async function openInnerItineraryItem(j) {
 	TEXT_REPLACEMENT_APPLIED = false;
 }
 
-function openInnerItinerarySwap() {
+export function openInnerItinerarySwap() {
 	const height = getID("inner-programacao-tela-principal").offsetHeight;
 	const itemTrocar = getID("inner-programacao-item-trocar");
 	itemTrocar.style.minHeight = `${height}px`;
@@ -398,7 +398,7 @@ function addInnerProgramacao(j, k, turno) {
 }
 
 // Deletar Inner Programação
-function deleteInnerProgramacao(j, k, turno) {
+export function deleteInnerProgramacao(j, k, turno) {
 	const isNew = !k && !turno;
 	if (isNew) {
 		closeMessage();
