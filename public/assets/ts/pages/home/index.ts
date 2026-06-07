@@ -8,4 +8,10 @@ export async function loadIndexPage() {
 	loadVisibilityIndex();
 	loadListenersIndex();
 	loadUserIndex();
+
+	// Dev mode: expose basic page info (data vars set later in data.ts)
+	if (typeof dev !== "undefined") {
+		dev.page.name = "index";
+		dev.page.url = window.location.href;
+	}
 }

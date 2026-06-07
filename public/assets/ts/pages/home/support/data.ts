@@ -57,6 +57,17 @@ export async function loadUserIndex() {
 				loadDestinationsTab();
 				loadListsTab();
 				translatePage();
+
+				// Expose key variables for dev mode (localhost only)
+				if (typeof dev !== "undefined") {
+				dev.page.INDEX_DATA = INDEX_DATA;
+				dev.page.CURRENT_TRIPS = CURRENT_TRIPS;
+				dev.page.PREVIOUS_TRIPS = PREVIOUS_TRIPS;
+				dev.page.NEXT_TRIPS = NEXT_TRIPS;
+				dev.page.ALL_TRIPS = ALL_TRIPS;
+				dev.page.SELECTED_TRIP_ID = SELECTED_TRIP_ID;
+				dev.page.USER_DATA = USER_DATA;
+				}
 			} else {
 				showUnloggedView();
 			}

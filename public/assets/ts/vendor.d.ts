@@ -48,6 +48,9 @@ declare var TEXT_REPLACEMENT_APPLIED: any;
 declare var THEME_COLOR: any;
 declare var TODAY: any;
 declare var TOMORROW: any;
+
+// Dev mode (set on localhost only)
+declare var dev: import('./utils/dev.js').DevHost;
 declare var TYPE: any;
 declare var VALOR_OPTIONS: any;
 

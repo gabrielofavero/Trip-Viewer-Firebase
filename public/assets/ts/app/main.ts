@@ -11,6 +11,7 @@ import { displayError } from '../utils/messages.js';
 import { loadAllConfigs, setLanguage, getVersions } from '../app/config.js';
 import { translatePage, getLanguagePackName, loadLangSelectorSelect } from '../i18n/translation.js';
 import { initActions } from '../ui/actions.js';
+import { initDev } from '../utils/dev.js';
 
 const APP = {
 	projectId: null,
@@ -111,6 +112,9 @@ export function openLinkInNewTab(url) {
 }
 
 function initializeApp() {
+	// Dev mode — must run before anything that depends on the dev global
+	initDev();
+
 	APP.projectId = firebase.app().options.projectId;
 	const versoes = getVersions();
 	APP.version = versoes[APP.projectId]?.version?.system || "Unknown";

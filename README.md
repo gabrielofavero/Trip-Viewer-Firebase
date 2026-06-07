@@ -120,13 +120,23 @@ npm run dev
 
 ### High Priority
 
-- ⚔️ **E024:** Migrate project to framework (React/Angular/Vue)
+- ⚔️ **E048:** Database ovehaul
+  - Translate database 
+  - Migration + 
+  - ts/json files adaptation (+ final translation round)
+- 📈 **M153:** Index improvements: 
+  - trip/listing destination tags, destination images
 
 ### Medium Priority
 
-- ⚔️ **E016:** New Front-End: destination.html
-- ⚔️ **E027:** New Front-End: view.html
 - ⚔️ **E044:** New Front-End: edit pages
+  - Add option to put image in destination (and make index.html see it)
+- ⚔️ **E016:** New Front-End: destination.html
+  - Use image somehow
+  - boxes like on index
+  - search bar
+- ⚔️ **E027:** New Front-End: view.html
+  - no more iframe/embeds. Use html injection instead
 - ⚔️ **E045:** New Front-End: itinerary.html
 - ⚔️ **E046:** New Front-End: expenses.html
 
@@ -135,12 +145,13 @@ npm run dev
 - ⚔️ **E043:** Offline Mode (Dev Only, POC)
   - *[🏆F152] Export script — Firestore→JSON + image download + offline HTML generation*
   - *[🏆F153] Zip packaging + validation + deploy integration*
-  - *[🏆F154] offline-data.js — local JSON data loader (replaces database.js)*
-  - *[🏆F155] main-offline.js + page JS adaptation (Firebase-free)*
+  - *[🏆F154] offline-data.js — local JSON data loader (replaces database.ts)*
+  - *[🏆F155] main-offline.ts + page JS adaptation (Firebase-free)*
   - *[🏆F156] Service Worker + PWA manifest for iOS home-screen support*
   - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
   - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
+- ⚔️ **E024:** Migrate project to React
 - ⚔️ **E019:** Implement Sonarqube
 - ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
 
@@ -186,6 +197,7 @@ npm run dev
   - *[📈M150] All functions and variables in EN-US*
   - *[📈M151] Better folder structure for js files*
   - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
+- 🏆 **F167:** Add dev mode for easy debugging
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
