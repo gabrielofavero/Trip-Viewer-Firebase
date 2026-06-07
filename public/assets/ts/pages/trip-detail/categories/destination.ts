@@ -18,7 +18,7 @@ var DESTINO_EXPORT = {};
 var DESTINO_TRANSLATIONS = {};
 
 // ======= LOADERS =======
-function loadDestinations() {
+export function loadDestinations() {
 	for (let i = 0; i < DESTINOS.length; i++) {
 		P_RESULT[DESTINOS[i].destinos.destinosID] = DESTINOS[i].destinos;
 	}

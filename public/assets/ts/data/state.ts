@@ -28,7 +28,7 @@ export let TRAVELERS: any[] = [];
 export let FIRESTORE_DESTINOS_DATA: any = null;
 export let FIRESTORE_NEW_DATA: Record<string, any> = {};
 export let FIRESTORE_DESTINOS_NEW_DATA: Record<string, any> = {};
-export let ERROR_FROM_GET_REQUEST: any = null;
+export let ERROR_FROM_GET_REQUEST: any = {};
 
 // Setters for variables that need to be mutated from other modules
 // (ES module imports are live bindings — only the exporting module can reassign them)

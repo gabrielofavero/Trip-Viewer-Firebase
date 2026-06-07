@@ -2,6 +2,7 @@
 // Itinerary data transformation and multi-format output
 // Core functions moved to models/itinerary.model.js — imported here for backward compat
 
+import { get } from '../../data/firebase/database.js';
 import {
 	getItineraryContent,
 	getItineraryData,

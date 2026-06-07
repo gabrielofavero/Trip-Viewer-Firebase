@@ -9,7 +9,7 @@ import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
 import {getNotaClass, getPlanejado} from "./categories.js";
 import { getNotaIcon } from "./categories.js";
-import {FIRESTORE_DESTINOS_DATA, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination} from "./destination.js";
+import { ACTIVE_CATEGORY, FIRESTORE_DESTINOS_DATA, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination } from "./destination.js";
 import { getDestinationsAccordionBodyHTML } from "./support/content.js";
 import { getDestinationsHTML } from "./support/content.js";
 import { getEditHTML } from "./support/content.js";

@@ -1,4 +1,5 @@
 import { getDestinos } from '../../app/config.js';
+import { get } from '../../data/firebase/database.js';
 import { displayError } from '../../utils/messages.js';
 import { setState, DOCUMENT_ID, FIRESTORE_DESTINOS_DATA, setDocumentId, setFirestoreDestinosData } from '../../data/state.js';
 export { FIRESTORE_DESTINOS_DATA };
@@ -8,8 +9,7 @@ import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
 import { getPageURL, setPageName } from '../../app/main.js';
 import { loadDestinationListeners } from './support/event-listeners.js';
-import { loadActiveCategory } from "./categories.js";
-import { updateActiveCategory } from "./categories.js";
+import { loadActiveCategory, updateActiveCategory, ACTIVE_CATEGORY } from "./categories.js";
 import { adjustEditVisibility } from "./edit-destination.js";
 import { restoreIfEditing } from "./edit-destination.js";
 import { getDestinationsHTML } from "./support/content.js";
@@ -26,8 +26,8 @@ import { loadPlannedDestination } from "./support/trip.js";
 import { applyDestinationsMediaHeight } from "./support/visibility.js";
 import { loadDestinationVisibility } from "./support/visibility.js";
 
+export { ACTIVE_CATEGORY };
 export var CONTENT = [];
-export var ACTIVE_CATEGORY;
 
 export async function loadDestinationsData(data?) {
 	const urlParams = getURLParams();

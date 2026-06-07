@@ -12,8 +12,12 @@ import { loadViewListeners } from './support/event-listeners.js';
 import { adjustCardsHeights, adjustCardsHeightsListener, loadViewVisibility, mainView } from "./support/visibility.js";
 import { loadViewEmbed, openExpensesEmbed } from "./support/embed.js";
 import { loadSensitiveReservations, requestDocumentPin } from "./support/sensitive-reservation.js";
-import { adjustDestinationsHTML, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
-import { adjustPortfolioHeight, refreshCategorias } from "./categories/gallery.js";
+import { adjustDestinationsHTML, loadDestinations, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
+import { adjustPortfolioHeight, loadGallery, refreshCategorias } from "./categories/gallery.js";
+import { loadSummary } from "./categories/summary.js";
+import { loadTransportation } from "./categories/transportation-module.js";
+import { loadAccommodations } from "./categories/accommodation-module.js";
+import { loadItinerarySchedule } from "./categories/itinerary-module/itinerary-module.js";
 import { ACTIVE_EMBEDS } from './support/embed.js';
 
 var REFRESHED = false;
@@ -77,25 +81,6 @@ export async function loadViewPage() {
 
 async function syncModules() {
 	try {
-		if (CALL_SYNC.length > 0) {
-			const callSyncOrder = [
-				_loadSummary,
-				_loadTransportation,
-				_loadAccommodations,
-				_loadDestinations,
-				_loadGallery,
-			];
-			CALL_SYNC.sort((a, b) => {
-				const indexA = callSyncOrder.indexOf(a.name);
-				const indexB = callSyncOrder.indexOf(b.name);
-				return indexA - indexB;
-			});
-			for (let fn of CALL_SYNC) {
-				fn();
-			}
-		} else {
-			console.warn("No functions to sync");
-		}
 		// Loading Screen
 		stopLoadingScreen();
 		adjustDestinationsHTML();
@@ -294,7 +279,7 @@ function loadModules() {
 
 	function loadSummaryModule() {
 		if (getState().modulos?.resumo === true) {
-			CALL_SYNC.push(_loadSummary);
+			loadSummary();
 		} else {
 			getID("keypointsNav").innerHTML = "";
 			getID("keypoints").innerHTML = "";
@@ -321,7 +306,7 @@ function loadModules() {
 
 	function loadTransportationModule() {
 		if (getState().modulos?.transportes === true) {
-			CALL_SYNC.push(_loadTransportation);
+			loadTransportation();
 		} else {
 			getID("transportationNav").innerHTML = "";
 			getID("transportation").innerHTML = "";
@@ -331,7 +316,7 @@ function loadModules() {
 
 	function loadAccommodationsModule() {
 		if (getState().modulos?.hospedagens === true) {
-			CALL_SYNC.push(_loadAccommodations);
+			loadAccommodations();
 		} else {
 			getID("stayNav").innerHTML = "";
 			getID("stay").innerHTML = "";
@@ -341,7 +326,7 @@ function loadModules() {
 
 	function loadItineraryScheduleModule() {
 		if (getState().modulos?.programacao === true) {
-			CALL_SYNC.push(_loadItinerarySchedule);
+			loadItinerarySchedule();
 		} else {
 			getID("scheduleCalendarNav").innerHTML = "";
 			getID("scheduleCalendar").innerHTML = "";
@@ -378,7 +363,7 @@ function loadModules() {
 				ACTIVE_DESTINATION = DESTINOS[0].destinosID;
 			}
 
-			CALL_SYNC.push(_loadDestinations);
+			loadDestinations();
 		}
 
 		function loadDestinationsExclusive() {
@@ -393,7 +378,7 @@ function loadModules() {
 			setUniqueDestinationText();
 			loadDestinationsHTML(DESTINOS[0]);
 
-			CALL_SYNC.push(_loadDestinations);
+			loadDestinations();
 		}
 
 		function disableDestinations() {
@@ -410,7 +395,7 @@ function loadModules() {
 
 	function loadGalleryModule() {
 		if (getState().modulos?.galeria === true) {
-			CALL_SYNC.push(_loadGallery);
+			loadGallery();
 		} else {
 			getID("portfolioM").innerHTML = "";
 			getID("portfolio").style.display = "none";

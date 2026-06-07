@@ -473,5 +473,5 @@ export async function getDestination(id, containerID?) {
 
 // Helpers (Not database related)
 export function haveErrorFromGetRequest() {
-	return Object.keys(ERROR_FROM_GET_REQUEST).length > 0;
+	return ERROR_FROM_GET_REQUEST && Object.keys(ERROR_FROM_GET_REQUEST).length > 0;
 }

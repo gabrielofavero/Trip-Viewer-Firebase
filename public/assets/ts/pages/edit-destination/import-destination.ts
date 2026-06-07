@@ -212,5 +212,4 @@ function importNightlifeByName(name, data, force) { importDestinationByName(name
 function importTourismByName(name, data, force) { importDestinationByName(name, data, "turismo", force); }
 function importShopByName(name, data, force) { importDestinationByName(name, data, "lojas", force); }
 
-console.log("📦 Import functions ready: importNewDestination, importDestinationByJ, importDestinationByName");
-console.log("   + per-category: importNewRestaurant, importRestaurantByJ, importRestaurantByName, etc.");
+

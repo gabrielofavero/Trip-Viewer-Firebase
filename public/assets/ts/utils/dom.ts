@@ -794,8 +794,6 @@ export function combineDatabaseResponses(responses) {
 	};
 }
 
-let CALL_SYNC = [];
-
 // DOM Selector Utilities
 
 // A pragmatic element type that covers the common DOM properties

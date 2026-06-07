@@ -21,7 +21,7 @@ var ACTIVE_TRANSPORTATION;
 var TRANSPORTES_ATIVOS = [];
 var TRANSPORTES_ATIVOS_TITULOS = [];
 
-function loadTransportation() {
+export function loadTransportation() {
 	const swiperData = getSwiperData();
 
 	buildTransportationSwiper(swiperData);
@@ -313,10 +313,12 @@ function loadCustomTransportationDivs() {
 function loadTransportationTabs() {
 	loadTransportationTabsHTML();
 
-	getID("tabs-container-transportation").style.display = "";
+	const tabsContainer = getID("tabs-container-transportation");
+	if (tabsContainer) tabsContainer.style.display = "";
 
 	for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
 		const div = getID(`transporte-${TRANSPORTES_ATIVOS[i]}`);
+		if (!div) continue;
 		div.style.display = i === 0 ? "block" : "none";
 		div.style.marginTop = "2em";
 	}
@@ -326,6 +328,7 @@ function loadTransportationTabs() {
 
 function loadTransportationTabsHTML() {
 	const tab = getID("tab-transportation");
+	if (!tab) return;
 	const itemMap = {
 		ida: "departure",
 		durante: "during",
@@ -355,7 +358,9 @@ function loadTransportationTabsHTML() {
 function setTransportationTabListeners() {
 	TRANSPORTES_ATIVOS.forEach((transporte) => {
 		const radio = `radio-${transporte}`;
-		getID(radio).addEventListener("click", function () {
+		const radioEl = getID(radio);
+		if (!radioEl) return;
+		radioEl.addEventListener("click", function () {
 			const transporte = radio.replace("radio-", "");
 			if (ACTIVE_TRANSPORTATION === transporte) return;
 
@@ -365,8 +370,10 @@ function setTransportationTabListeners() {
 			const anterior = `transporte-${transporteAnterior}`;
 			const atual = `transporte-${ACTIVE_TRANSPORTATION}`;
 
-			getID(atual).style.visibility = "";
-			getID(anterior).style.visibility = "";
+			const atualEl = getID(atual);
+			const anteriorEl = getID(anterior);
+			if (atualEl) atualEl.style.visibility = "";
+			if (anteriorEl) anteriorEl.style.visibility = "";
 
 			fade([anterior], [atual]);
 		});

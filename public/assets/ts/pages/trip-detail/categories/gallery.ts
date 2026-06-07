@@ -6,7 +6,7 @@ import { loadImageLightbox } from "../support/embed.js";
 var FILTER_MAP = new BiMap();
 
 // Carregamento
-function loadGallery() {
+export function loadGallery() {
 	loadGaleriaCategorias(
 		getState().galeria.categorias || getState().galeria.filtros,
 	);

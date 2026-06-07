@@ -6,7 +6,7 @@ import { closeMessage, displayError, displayPrompt, openToast } from '../../util
 import { getItineraryContent } from '../../models/itinerary.model.js';
 import { isOnDarkMode, loadVisibility, switchVisibility } from '../../theme/visibility.js';
 import { loadEmbedVisibility } from '../../ui/embed.js';
-import { haveErrorFromGetRequest } from '../../data/firebase/database.js';
+import { get, haveErrorFromGetRequest } from '../../data/firebase/database.js';
 import { setPageName } from '../../app/main.js';
 import { requestPin } from '../../utils/pin.js';
 

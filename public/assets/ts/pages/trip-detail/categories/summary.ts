@@ -5,7 +5,7 @@ import { translate } from "../../../i18n/translation.js";
 import { END_DATE } from "../view.js";
 import { START_DATE } from "../view.js";
 
-function loadSummary() {
+export function loadSummary() {
 	setTravelersFn(getState().pessoas);
 	const dias = Math.ceil((END_DATE.date - START_DATE.date) / (1000 * 60 * 60 * 24)) + 1;
 	const pessoas = getState().pessoas.length || 1;

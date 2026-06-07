@@ -9,7 +9,7 @@ import {getLinkOnClick, getPlanejado} from "../categories.js";
 import { getNotaClass } from "../categories.js";
 import { getNotaIcon } from "../categories.js";
 import { getTurno } from "../categories.js";
-import { FIRESTORE_DESTINOS_DATA } from "../destination.js";
+import { ACTIVE_CATEGORY, FIRESTORE_DESTINOS_DATA } from "../destination.js";
 import { FILTER_SORT_DATA } from "./sort-and-filter/sort-and-filter.js";
 import { getDescricaoVisibility } from "./visibility.js";
 import { getDestinationsTitleVisibility } from "./visibility.js";

@@ -2,7 +2,7 @@ import { getItinerary } from '../../../app/config.js';
 import { getState, setState, DOCUMENT_ID } from '../../../data/state.js';
 import { cloneObject, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, dateObjectToInputDate, getDateTitle } from '../../../utils/dates.js';
-import { update } from '../../../data/firebase/database.js';
+import { get, update } from '../../../data/firebase/database.js';
 import { translate } from "../../../i18n/translation.js";
 import { jsDateToInputDate } from "../../../utils/dates.js";
 import { ACTIVE_CATEGORY } from "../destination.js";

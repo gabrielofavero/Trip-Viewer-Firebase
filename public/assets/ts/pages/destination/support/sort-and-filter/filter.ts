@@ -4,9 +4,7 @@ import {FILTER_SORT_DATA, loadFilterSortingData, openFilterSortDrawer, shouldDis
 import { filterDrawerOptionClickAction } from "./support/drawer.js";
 import { filterDrawerOptionLoadAction } from "./support/drawer.js";
 import { getFilterDrawerInnerHTML } from "./support/drawer.js";
-import { applyContent } from "../../destination.js";
-import { getItem } from "../../destination.js";
-import { isPlanned } from "../../destination.js";
+import { ACTIVE_CATEGORY, applyContent, getItem, isPlanned } from "../../destination.js";
 import { getFilterPreferences } from "./support/preferences.js";
 import { getPrices } from "./support/price-bucket.js";
 

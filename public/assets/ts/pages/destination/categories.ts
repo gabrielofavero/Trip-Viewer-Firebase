@@ -14,7 +14,7 @@ import { convertFromDateObject, getMonth, getWeekday } from '../../utils/dates.j
 import { getPlannedDestinations } from "./support/trip.js";
 import { FIRESTORE_DESTINOS_DATA } from '../../data/state.js';
 
-
+export var ACTIVE_CATEGORY;
 
 // Active Category
 export function loadActiveCategory(urlParams) {
@@ -34,7 +34,7 @@ export function loadActiveCategory(urlParams) {
 		const translations = destinos.translation;
 		const destinoIDs = Object.keys(FIRESTORE_DESTINOS_DATA);
 		for (const type of types) {
-			value = translations[type];
+			const value = translations[type];
 			if (destinoIDs.includes(type) && value) {
 				return value;
 			}

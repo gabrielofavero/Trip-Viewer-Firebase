@@ -11,7 +11,7 @@ import { ADJUST_HEIGHT_CARDS } from "../support/visibility.js";
 import { END_DATE } from "../view.js";
 import { START_DATE } from "../view.js";
 
-function loadAccommodations() {
+export function loadAccommodations() {
 	let swiperData = [];
 
 	for (let i = 0; i < getState().hospedagens.length; i++) {

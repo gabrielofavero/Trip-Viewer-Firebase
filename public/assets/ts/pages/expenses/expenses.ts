@@ -33,21 +33,26 @@ export async function loadExpensesPage() {
 	loadVisibility(colors);
 
 	const closeButton = getID("closeButton");
-	if (window.parent.closeViewEmbed) {
-		closeButton.onclick = function () {
-			window.parent.closeViewEmbed();
-		};
-	} else {
-		closeButton.style.display = "none";
+	if (closeButton) {
+		if ((window.parent as any).closeViewEmbed) {
+			closeButton.onclick = function () {
+				(window.parent as any).closeViewEmbed();
+			};
+		} else {
+			closeButton.style.display = "none";
+		}
 	}
 
-	getID("logo-link").onclick = function () {
-		if ((window.parent as any).closeViewEmbed) {
-			(window.parent as any).closeViewEmbed(true);
-		} else {
-			window.location.href = "index.html";
-		}
-	};
+	const logoLink = getID("logo-link");
+	if (logoLink) {
+		logoLink.onclick = function () {
+			if ((window.parent as any).closeViewEmbed) {
+				(window.parent as any).closeViewEmbed(true);
+			} else {
+				window.location.href = "index.html";
+			}
+		};
+	}
 
 	const gastosExport = localStorage.getItem("gastos")
 		? JSON.parse(localStorage.getItem("gastos"))
