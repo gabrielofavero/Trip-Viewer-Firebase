@@ -11,7 +11,7 @@ import { deleteUserObjectDB, getSingleData } from '../../data/firebase/database.
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from "../../theme/theme.js";
-import { loadDestinationsData } from "../destination/destination.js";
+import { populateExistingDestinationForm } from "./existing-destination.js";
 import { getDescription } from "./categories/description.js";
 import { setDescription } from "./categories/description.js";
 import { updateDescriptionButtonLabel } from "./categories/description.js";
@@ -35,19 +35,25 @@ var SCHEDULE = {};
 var REGIONS = [];
 
 export async function loadEditDestinationPage() {
+	console.log("🔍 [edit-destination] loadEditDestinationPage — starting");
 	loadEditDestinationListeners();
 
 	setDocumentId(getURLParam("d"));
+	console.log("🔍 [edit-destination] DOCUMENT_ID =", DOCUMENT_ID);
 
 	loadVisibilityIndex();
 	loadHabilitados();
 	newDynamicSelect("regiao");
 
 	if (DOCUMENT_ID) {
+		console.log("🔍 [edit-destination] DOCUMENT_ID exists, calling loadDestinations()");
 		await loadDestinations();
+	} else {
+		console.log("🔍 [edit-destination] NO DOCUMENT_ID — skipping loadDestinations()");
 	}
 
 	loadEventListeners();
+	console.log("🔍 [edit-destination] loadEditDestinationPage — done");
 	stopLoadingScreen();
 	snapshotFormState();
 	$("body").css("overflow", "auto");
@@ -170,12 +176,17 @@ export function addListenerToRemoveDestination(categoria, j) {
 }
 
 async function loadDestinations() {
+	console.log("🔍 [edit-destination] loadDestinations — starting");
 	getID("delete-text").style.display = "block";
 	startLoadingScreen();
 
-	setFirestoreDestinosData(await getSingleData("destinos"));
+	const singleData = await getSingleData("destinos");
+	console.log("🔍 [edit-destination] getSingleData('destinos') result:", singleData);
+	setFirestoreDestinosData(singleData);
+	console.log("🔍 [edit-destination] FIRESTORE_DESTINOS_DATA after set:", FIRESTORE_DESTINOS_DATA);
 
-	loadDestinationsData(FIRESTORE_DESTINOS_DATA);
+	populateExistingDestinationForm();
+	console.log("🔍 [edit-destination] loadDestinations — done");
 	stopLoadingScreen();
 }
 

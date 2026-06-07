@@ -1,5 +1,5 @@
 import { getCurrencies } from '../../../app/config.js';
-import { translate } from '../../../i18n/translation.js';
+import { LANGUAGES, translate } from '../../../i18n/translation.js';
 import { getDescricaoValue } from "../../../models/destination.model.js";
 import { getNotaTranslation } from "../../../models/destination.model.js";
 import { getValorValue } from "../../../models/destination.model.js";

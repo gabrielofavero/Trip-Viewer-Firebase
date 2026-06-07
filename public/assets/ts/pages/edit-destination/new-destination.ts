@@ -3,7 +3,7 @@ import { addSelectorDS } from '../../ui/dynamic-select.js';
 import { translate } from "../../i18n/translation.js";
 import { getNewSvg } from "../../theme/icons.js";
 import { getDescriptionHTML } from "./categories/description.js";
-import {getOutroValorVisibility, loadCurrencySelects} from "./categories/price.js";
+import {getOutroValorVisibility, loadCurrencySelects, VALOR_OPTIONS} from "./categories/price.js";
 import { addDestinationsListeners } from "./edit-destination.js";
 import { addListenerToRemoveDestination } from "./edit-destination.js";
 

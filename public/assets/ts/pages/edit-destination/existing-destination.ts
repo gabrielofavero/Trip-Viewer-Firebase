@@ -15,7 +15,8 @@ import { addSaidas } from "./new-destination.js";
 import { addTurismo } from "./new-destination.js";
 
 // Destino Existente
-function loadDestinationsData() {
+export function populateExistingDestinationForm() {
+	console.log("🔍 [existing-destination] populateExistingDestinationForm — populating form with:", FIRESTORE_DESTINOS_DATA);
 	try {
 		loadDadosBasicosDestinosData();
 		loadDestinoExistente("restaurantes");
@@ -29,7 +30,9 @@ function loadDestinationsData() {
 		setPageName(
 			`${translate("labels.edit")} ${FIRESTORE_DESTINOS_DATA.titulo}`,
 		);
+		console.log("🔍 [existing-destination] form populated successfully");
 	} catch (error) {
+		console.error("🔍 [existing-destination] populateExistingDestinationForm — ERROR:", error);
 		displayError(error);
 		throw error;
 	}

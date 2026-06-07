@@ -30,8 +30,10 @@ export { ACTIVE_CATEGORY };
 export var CONTENT = [];
 
 export async function loadDestinationsData(data?) {
+	console.log("🔍 [destination] loadDestinationsData — starting, data param:", data);
 	const urlParams = getURLParams();
 	setDocumentId(urlParams["d"]);
+	console.log("🔍 [destination] DOCUMENT_ID:", DOCUMENT_ID, "tripView param v:", urlParams["v"]);
 
 	if (!DOCUMENT_ID) {
 		const error = translate("messages.errors.missing_data");
@@ -42,12 +44,16 @@ export async function loadDestinationsData(data?) {
 		getTripData(urlParams["v"]),
 		get(`destinos/${DOCUMENT_ID}`),
 	]);
+	console.log("🔍 [destination] tripData:", tripData);
+	console.log("🔍 [destination] destinosData:", destinosData);
 
 	setFirestoreDestinosData(destinosData);
 	setState(tripData);
 
 	loadPlannedDestination();
 	loadActiveCategory(urlParams);
+	console.log("🔍 [destination] ACTIVE_CATEGORY after loadActiveCategory:", ACTIVE_CATEGORY);
+	console.log("🔍 [destination] loadDestinationsData — done");
 }
 
 export async function loadDestinationPage() {

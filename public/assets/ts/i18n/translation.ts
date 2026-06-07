@@ -1,7 +1,7 @@
 import { getLanguage } from '../app/config.js';
 
 const MISSING_TRANSLATIONS = new Set();
-const LANGUAGES = ["en", "pt"];
+export const LANGUAGES = ["en", "pt"];
 
 export function translate(key, replacements = {}, strict = true) {
 	const language = getLanguage();

@@ -1,6 +1,6 @@
 import { getDestinos } from '../../../app/config.js';
 import { cloneObject, firstCharToUpperCase, getChildIDs, getID, getJ } from '../../../utils/dom.js';
-import { getUserLanguage, translate } from '../../../i18n/translation.js';
+import { getUserLanguage, LANGUAGES, translate } from '../../../i18n/translation.js';
 import { closeMessage, displayFullMessage, getContainersInput, MESSAGE_PROPERTIES } from '../../../utils/messages.js';
 import { getSelectOptionsHTML } from "../../../ui/fields.js";
 import { FIRESTORE_DESTINOS_DATA } from '../../../data/state.js';

@@ -2,7 +2,7 @@ import { getDestinos, getCurrencies } from '../../../app/config.js';
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 
-var VALOR_OPTIONS = "";
+export var VALOR_OPTIONS = "";
 
 export function loadCurrencySelects() {
 	loadMoedaOptions();
