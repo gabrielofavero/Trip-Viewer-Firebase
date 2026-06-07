@@ -14,7 +14,7 @@ export function loadEmbedMode(visibility) {
 	(document.querySelector(".section-title") as HTMLElement).style.display = "none";
 	(document.querySelector(".footer") as HTMLElement).style.display = "none";
 	loadViewVisibility(visibility);
-	loadEmbedListeners(_onViewMessage);
+	loadEmbedListeners(onViewMessage);
 	GASTOS_EMBED.applied = true;
 }
 

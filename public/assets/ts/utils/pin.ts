@@ -66,7 +66,7 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 		var $wrapper = $(this),
 			$el = $wrapper.find('[data-role="pin"]'),
 			$elCount = $wrapper.find('[data-role="pin"]').length;
-		pin = "";
+		var pin: any = "";
 
 		$el.each(function () {
 			pin += ".";

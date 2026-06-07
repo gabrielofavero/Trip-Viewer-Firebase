@@ -1,4 +1,5 @@
 import { getID } from '../../../utils/dom.js';
+import { THEME_COLOR } from '../../../theme/colors.js';
 
 export function initSwiper(id) {
 	const swiper = getID(`${id}-swiper`);

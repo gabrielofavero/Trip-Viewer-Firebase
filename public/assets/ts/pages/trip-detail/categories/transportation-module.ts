@@ -21,6 +21,16 @@ var ACTIVE_TRANSPORTATION;
 var TRANSPORTES_ATIVOS = [];
 var TRANSPORTES_ATIVOS_TITULOS = [];
 
+/** Maps Portuguese data keys to English HTML element suffixes (from cleanup refactoring) */
+function mapTransportationKey(key: string): string {
+	const map: Record<string, string> = {
+		ida: "outbound",
+		durante: "internal",
+		volta: "return",
+	};
+	return map[key] || key;
+}
+
 export function loadTransportation() {
 	const swiperData = getSwiperData();
 
@@ -194,7 +204,7 @@ function buildTransportationSwiper(swiperData) {
 	loadSwiperPreActions(viewMode, keys);
 
 	for (const key of keys) {
-		const content = getID(`transporte-${key}-content`);
+		const content = getID(`transportation-${mapTransportationKey(key)}-content`);
 		if (swiperData[key]?.length > 0 || viewMode === "simple-view") {
 			const data =
 				viewMode === "simple-view"
@@ -207,7 +217,7 @@ function buildTransportationSwiper(swiperData) {
 			const swiperButtonStyle = data.length > 1 ? "" : `style="display: none"`;
 
 			if (viewMode != "people-view") {
-				getID(`transporte-${key}`).style.display = "block";
+				getID(`transportation-${mapTransportationKey(key)}`).style.display = "block";
 			}
 
 			content.innerHTML = `<div id="transporte-${key}-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
@@ -225,7 +235,7 @@ function buildTransportationSwiper(swiperData) {
 			initSwiper(`transporte-${key}`);
 
 			if (getState().transportes.visualizacao == "leg-view") {
-				getID(`transporte-${key}`).style.visibility = "hidden";
+				getID(`transportation-${mapTransportationKey(key)}`).style.visibility = "hidden";
 			}
 		}
 	}
@@ -304,8 +314,8 @@ function loadCustomTransportationDivs() {
 	for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
 		const transporte = TRANSPORTES_ATIVOS[i];
 		const display = i === 0 ? "block" : "none";
-		container.innerHTML += `<div class='transporte-box' id="transporte-${transporte}" style="display: ${display}">
-                              <div id="transporte-${transporte}-content"></div>
+		container.innerHTML += `<div class='transporte-box' id="transportation-${transporte}" style="display: ${display}">
+                              <div id="transportation-${transporte}-content"></div>
                             </div>`;
 	}
 }
@@ -317,7 +327,7 @@ function loadTransportationTabs() {
 	if (tabsContainer) tabsContainer.style.display = "";
 
 	for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
-		const div = getID(`transporte-${TRANSPORTES_ATIVOS[i]}`);
+		const div = getID(`transportation-${mapTransportationKey(TRANSPORTES_ATIVOS[i])}`);
 		if (!div) continue;
 		div.style.display = i === 0 ? "block" : "none";
 		div.style.marginTop = "2em";
@@ -367,8 +377,8 @@ function setTransportationTabListeners() {
 			const transporteAnterior = ACTIVE_TRANSPORTATION;
 			ACTIVE_TRANSPORTATION = transporte;
 
-			const anterior = `transporte-${transporteAnterior}`;
-			const atual = `transporte-${ACTIVE_TRANSPORTATION}`;
+			const anterior = `transportation-${mapTransportationKey(transporteAnterior)}`;
+			const atual = `transportation-${mapTransportationKey(ACTIVE_TRANSPORTATION)}`;
 
 			const atualEl = getID(atual);
 			const anteriorEl = getID(anterior);
@@ -424,7 +434,7 @@ function resetSwiperVisibility() {
 }
 
 function customTransportationSelectAction(value) {
-	fade([`transporte-${ACTIVE_TRANSPORTATION}`], [`transporte-${value}`]);
+	fade([`transportation-${ACTIVE_TRANSPORTATION}`], [`transportation-${value}`]);
 	ACTIVE_TRANSPORTATION = value;
 }
 
@@ -436,7 +446,7 @@ function autoNavigateTransportation() {
 	let targetIndex;
 
 	// Outside trip dates → show first element
-	if (INICIO?.date && FIM?.date) {
+	if (START_DATE?.date && END_DATE?.date) {
 		if (
 			hoje < getDateNoTime(START_DATE.date) ||
 			hoje > getDateNoTime(END_DATE.date)

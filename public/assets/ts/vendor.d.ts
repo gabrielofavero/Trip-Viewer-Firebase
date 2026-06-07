@@ -58,7 +58,7 @@ declare function _buildGastosObject(...args: any[]): any;
 declare function _buildTripObject(...args: any[]): any;
 declare function _descriptionSelectChangeAction(...args: any[]): any;
 declare function _loadViewEmbedAction(...args: any[]): any;
-declare function _onViewMessage(...args: any[]): any;
+declare function onViewMessage(...args: any[]): any;
 declare function _setFirestoreData(...args: any[]): any;
 declare function _unloadMedias(...args: any[]): any;
 declare function _updateTikTokLinks(...args: any[]): any;
