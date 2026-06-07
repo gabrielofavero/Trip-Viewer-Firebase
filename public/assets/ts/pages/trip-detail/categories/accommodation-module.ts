@@ -155,7 +155,7 @@ function getAccommodationReservationHTML(hospedagem) {
 function buildHospedagensSwiper(swiperData) {
 	const swiperButtonStyle =
 		swiperData.length > 1 ? "" : `style="display: none"`;
-	getID(`hospedagens-box`).innerHTML =
+	getID(`accommodations-box`).innerHTML =
 		`<div id="hospedagens-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                                           <div class="swiper-wrapper" id="hospedagens-wrapper">
                                             ${swiperData.join("")}
@@ -178,7 +178,7 @@ function autoNavigateHospedagens() {
 	let targetIndex;
 
 	// Outside trip dates → show first element
-	if (INICIO?.date && FIM?.date) {
+	if (START_DATE?.date && END_DATE?.date) {
 		if (
 			hoje < getDateNoTime(START_DATE.date) ||
 			hoje > getDateNoTime(END_DATE.date)

@@ -1,9 +1,9 @@
 import { startLoadingTimer, stopLoadingScreen } from '../../utils/loading.js';
-import { displayError } from '../../utils/messages.js';
+import { displayError, MESSAGE_MODAL_OPEN } from '../../utils/messages.js';
 import { getState, setState, TRAVELERS, DOCUMENT_ID, DESTINATIONS, setDocumentId, setDestinations } from '../../data/state.js';
 import { getErrorFromGetRequestMessage, getID, getLastUpdatedOnText, getURLParam, getURLParams } from '../../utils/dom.js';
 import { getSingleData, haveErrorFromGetRequest } from '../../data/firebase/database.js';
-import { isOnDarkMode, loadVisibility } from '../../theme/visibility.js';
+import { isOnDarkMode, loadVisibility, LOGO_LIGHT, LOGO_DARK, setLogoLight, setLogoDark } from '../../theme/visibility.js';
 import { loadCloseCustomSelectListeners } from '../../ui/custom-select.js';
 import { convertFromDateObject } from '../../utils/dates.js';
 import { getPageURL, setPageName } from '../../app/main.js';
@@ -21,9 +21,7 @@ import { loadItinerarySchedule } from "./categories/itinerary-module/itinerary-m
 import { ACTIVE_EMBEDS } from './support/embed.js';
 
 var REFRESHED = false;
-var TYPE = "viagens";
-var PIN = null;
-
+export var TYPE = "viagens";
 export var START_DATE = {
 	date: null,
 	text: "",
@@ -212,11 +210,11 @@ function loadHeaderImageAndLogo(data = getState()) {
 		}
 
 		if (claro) {
-			LOGO_LIGHT = claro;
+			setLogoLight(claro);
 			if (escuro) {
-				LOGO_DARK = escuro;
+				setLogoDark(escuro);
 			} else {
-				LOGO_DARK = LOGO_LIGHT;
+				setLogoDark(LOGO_LIGHT);
 			}
 
 			getID("header2").src = isOnDarkMode() ? LOGO_DARK : LOGO_LIGHT;

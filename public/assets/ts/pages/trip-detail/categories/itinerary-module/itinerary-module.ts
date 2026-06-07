@@ -8,7 +8,7 @@ import { openViewEmbed } from "../../support/embed.js";
 import { getVisibility } from "../../../../theme/theme.js";
 import { END_DATE } from "../../view.js";
 import { START_DATE } from "../../view.js";
-import { CURRENT_SCHEDULE_DATE } from './inner-itinerary.js';
+import { CURRENT_SCHEDULE_DATE, SCHEDULE_OPEN } from './inner-itinerary.js';
 
 export var SCHEDULE_DESTINATIONS = {};
 var PILLS_ACTIONS = {};
@@ -70,6 +70,12 @@ function loadSchedulePills(multipleColors = true) {
 		pillBox.innerHTML = innerHTML;
 
 		for (let i = 0; i < destinos.length; i++) {
+			const destinoID = destinos[i];
+			const destino = DESTINATIONS.find(
+				(destino) => destino.destinosID === destinoID,
+			);
+			if (!destino) continue;
+
 			const colorIndex = multipleColors ? i : -1;
 			addPillListeners(destinos[i], colorIndex);
 			PILLS_INDEX[destinos[i]] = colorIndex;

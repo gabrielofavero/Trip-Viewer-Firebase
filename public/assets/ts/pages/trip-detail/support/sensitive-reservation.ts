@@ -8,6 +8,7 @@ import { requestPin } from '../../../utils/pin.js';
 import { copyToClipboard } from "../categories/transportation-module.js";
 import { sendToExpenses } from "../support/embed.js";
 import { getURLParam } from "../../../utils/dom.js";
+import { TYPE } from "../view.js";
 
 const SENSITIVE_RESERVATION_BOXES = {
 	transportes: {},
@@ -17,6 +18,8 @@ const ACTIVE_SENSITIVE_RESERVATION = {
 	type: null,
 	id: null,
 };
+export let PIN: string | null = null;
+
 const MASKED = "***";
 const MEASURE = document.createElement("span");
 

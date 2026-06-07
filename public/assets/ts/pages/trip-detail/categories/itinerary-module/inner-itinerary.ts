@@ -7,7 +7,7 @@ import { translate } from '../../../../i18n/translation.js';
 import { loadImageLightbox } from "../../support/embed.js";
 import { getFlightBoxHTML } from "../transportation-module.js";
 
-var SCHEDULE_OPEN = false;
+export var SCHEDULE_OPEN = false;
 export var CURRENT_SCHEDULE_DATE = {
 	dia: 0,
 	mes: 0,

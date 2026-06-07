@@ -16,6 +16,9 @@ export let CHANGED_SVGS = [];
 export let LOGO_LIGHT = "";
 export let LOGO_DARK = "";
 
+export function setLogoLight(value: string) { LOGO_LIGHT = value; }
+export function setLogoDark(value: string) { LOGO_DARK = value; }
+
 export function loadVisibility(colors = getState()?.cores) {
 	if (colors?.claro && colors?.escuro) {
 		setLightColor(colors.claro);

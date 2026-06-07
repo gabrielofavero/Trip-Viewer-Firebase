@@ -3,7 +3,7 @@ import { getState } from '../../../data/state.js';
 import { loadEmbedListeners, openEmbed, sendToEmbed } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { disableScroll, enableScroll, loadExternalVisibility } from '../../../theme/visibility.js';
-import { updateProtectedDataFromExternalPin } from "../support/sensitive-reservation.js";
+import { updateProtectedDataFromExternalPin, PIN } from "../support/sensitive-reservation.js";
 import { getVisibility } from "../../../theme/theme.js";
 import { getURLParam } from "../../../utils/dom.js";
 
@@ -12,7 +12,7 @@ export const ACTIVE_EMBEDS = {};
 
 export function loadViewEmbed() {
 	if (getState().modulos?.gastos === true) {
-		loadEmbedListeners(_loadViewEmbedAction);
+		loadEmbedListeners(loadViewEmbedAction);
 	}
 }
 

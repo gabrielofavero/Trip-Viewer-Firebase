@@ -45,7 +45,7 @@ export function loadDestinations() {
 
 function autoNavigateDestinos() {
 	if (DESTINATIONS.length <= 1) return;
-	if (!INICIO?.date || !FIM?.date) return;
+	if (!START_DATE?.date || !END_DATE?.date) return;
 
 	const hoje = convertFromDateObject(getTodayDateObject());
 	if (hoje < START_DATE.date || hoje > END_DATE.date) return;
