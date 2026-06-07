@@ -4,14 +4,15 @@ import { getState } from '../data/state.js';
 import { changeBarColorIOS, DARK_COLOR, getDarkerColor, getLighterColor, getSecondaryColor, LIGHT_COLOR, loadLogoColors, loadThemeColors, saveLocalColors, setDarkColor, setLightColor, setThemeColor, setThemeColorHover, setThemeColorSecondary, setThemeColorSecondaryHover } from './colors.js';
 import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from './animations.js';
-import { loadTransportationImages } from "../pages/trip-detail/categories/transportation-module.js";
-import { loadViewCustomVisibilityRules } from "../pages/trip-detail/support/visibility.js";
-import { applyAccordionArrowCustomColor } from "../pages/destination/support/visibility.js";
-import { changeChartsLabelsVisibility } from "../pages/expenses/support/data.js";
 import { loadCurrenciesTab } from "../pages/expenses/support/currency.js";
 
 // ======= Visibility JS =======
-const _exports: Record<string, any> = {};
+var _exports: Record<string, any> = {};
+
+export function registerVisibilityExport(name: string, fn: any) {
+	if (!_exports) _exports = {};
+	_exports[name] = fn;
+}
 export let CHANGED_SVGS = [];
 export let LOGO_LIGHT = "";
 export let LOGO_DARK = "";
@@ -148,17 +149,17 @@ export function applyMode({
 		el.classList.toggle("bx-sun", isDark);
 	}
 
-	function applyCustomVisibilityRules() {
+	async function applyCustomVisibilityRules() {
 		switch (getHTMLpage()) {
 			case "view":
-				loadTransportationImages();
-				loadViewCustomVisibilityRules();
+				(await import("../pages/trip-detail/categories/transportation-module.js")).loadTransportationImages();
+				(await import("../pages/trip-detail/support/visibility.js")).loadViewCustomVisibilityRules();
 				break;
 			case "destination":
-				applyAccordionArrowCustomColor();
+				(await import("../pages/destination/support/visibility.js")).applyAccordionArrowCustomColor();
 				break;
 			case "expenses":
-				changeChartsLabelsVisibility();
+				(await import("../pages/expenses/support/data.js")).changeChartsLabelsVisibility();
 				loadCurrenciesTab();
 		}
 	}
@@ -237,7 +238,8 @@ export function loadEditModule(categoria) {
 	if (habilitado.checked) {
 		showContent(categoria);
 		if (!getID(`habilitado-${categoria}-content`).innerText) {
-			visibilityAdd(firstCharToUpperCase(categoria).trim());
+			// Defer to next tick so all registerVisibilityExport calls have executed
+			setTimeout(() => visibilityAdd(firstCharToUpperCase(categoria).trim()), 0);
 		}
 	} else {
 		hideContent(categoria);

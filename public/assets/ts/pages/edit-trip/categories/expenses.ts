@@ -1,7 +1,7 @@
 import { cloneObject, firstCharToUpperCase, getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 import { initializeSortableForGroup } from '../../../ui/sortable.js';
-import { closeMessage, displayFullMessage, getContainersInput, MESSAGE_PROPERTIES } from '../../../utils/messages.js';
+import { closeMessage, displayFullMessage, getContainersInput, MESSAGE_PROPERTIES, registerActions } from '../../../utils/messages.js';
 import { getFieldValueOrNotify } from '../../../ui/fields.js';
 import { getTravelersObject } from "./travelers.js";
 import { TRAVELERS } from '../../../data/state.js';
@@ -117,6 +117,7 @@ function loadExpensesHTML() {
 }
 
 export function openInnerExpense(categoria, tipo = "", index = -1) {
+	registerActions({ saveInnerExpense });
 	const propriedades = cloneObject(MESSAGE_PROPERTIES);
 	propriedades.titulo = tipo
 		? translate("labels.edit")

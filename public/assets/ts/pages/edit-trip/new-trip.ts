@@ -1,8 +1,8 @@
 import { getTransportations } from '../../app/config.js';
 import { getCategoryID, getChildIDs, getID, getJ, getNextJ } from '../../utils/dom.js';
 import { addSelectorDS } from '../../ui/dynamic-select.js';
-import { formattedDateToDate, getArrayOfDates, getDateTitle, getNextCategoryStartEnd } from '../../utils/dates.js';
-import { addRemoveChildListener } from '../../theme/visibility.js';
+import { formattedDateToDate, getArrayOfDates, getDateTitle, getNextCategoryStartEnd, getTodayFormatted, getTomorrowFormatted } from '../../utils/dates.js';
+import { addRemoveChildListener, registerVisibilityExport } from '../../theme/visibility.js';
 import { loadImageSelector } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
 import { DESTINATIONS } from '../../data/state.js';
@@ -16,6 +16,16 @@ import { updateDestinosAtivosHTMLs } from "./categories/destination.js";
 import { addRemoveGaleriaListener } from "./support/event-listeners.js";
 
 export var DATAS = [];
+
+const TODAY = getTodayFormatted();
+const TOMORROW = getTomorrowFormatted();
+
+// Register _add* functions for visibility module backward compat
+registerVisibilityExport("_addTransporte", addTransportation);
+registerVisibilityExport("_addHospedagens", addHospedagens);
+registerVisibilityExport("_addDestinos", loadDestinations);
+registerVisibilityExport("_addGaleria", addGaleria);
+registerVisibilityExport("_addProgramacao", loadItinerarySchedule);
 
 export function loadNewTrip() {
 	loadDadosBasicosNewTrip();
