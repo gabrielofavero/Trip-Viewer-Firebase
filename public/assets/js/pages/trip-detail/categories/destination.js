@@ -5,7 +5,7 @@ import { convertFromDateObject, getTodayDateObject, jsDateToKey } from '../../..
 import { loadCustomSelect, loadCustomSelectAction } from '../../../ui/custom-select.js';
 import { translate } from '../../../i18n/translation.js';
 import { openViewEmbed } from "../support/embed.js";
-import { getVisibility } from "../../../theme/theme";
+import { getVisibility } from "../../../theme/theme.js";
 import { CUSTOM_SELECTS } from "../../../ui/custom-select";
 import { END_DATE } from "../view";
 import { START_DATE } from "../view";

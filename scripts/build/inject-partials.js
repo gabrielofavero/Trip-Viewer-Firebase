@@ -9,13 +9,13 @@
  * This keeps the app fully static — no server-side includes needed.
  *
  * Usage (called from build.js):
- *   node scripts/inject-partials.js
+ *   node scripts/build/inject-partials.js
  */
 
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = path.resolve(__dirname, "..", "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const SHARED_DIR = path.join(PUBLIC_DIR, "shared");
 const DIST_DIR = path.join(ROOT, "dist");

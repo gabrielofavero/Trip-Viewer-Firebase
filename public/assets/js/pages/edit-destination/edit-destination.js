@@ -1,7 +1,7 @@
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { closeMessage, displayError, displayFullMessage, getContainersInput } from '../../utils/messages.js';
 import { getTodayFormatted, getTomorrowFormatted } from '../../utils/dates.js';
-import { cloneObject, getLastJ, getURLParam, removeChildWithValidation, removeRequired, setRequired } from '../../utils/dom.js';
+import { cloneObject, firstCharToUpperCase, getLastJ, getURLParam, removeChildWithValidation, removeRequired, setRequired } from '../../utils/dom.js';
 import { addRemoveChildListenerDS, buildDS, newDynamicSelect, removeSelectorDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { hasUnsavedChanges, reEdit, snapshotFormState, validateInstagramLink, validateLink, validateMapLink, validateMediaLink } from '../../ui/fields.js';
 import { hideContent, loadEditModule, showContent } from '../../theme/visibility.js';
@@ -9,10 +9,11 @@ import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
 import { translate } from '../../i18n/translation.js';
 import { deleteUserObjectDB, getSingleData } from '../../data/firebase/database.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
+import { loadEditDestinationListeners } from './support/event-listeners.js';
+import { getVisibility } from "../../theme/theme.js";
 
 var FIRESTORE_DESTINOS_DATA;
-
-SUCCESSFUL_SAVE = false;
+var SUCCESSFUL_SAVE = false;
 
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
@@ -20,10 +21,6 @@ const TOMORROW = getTomorrowFormatted();
 var SCHEDULE = {};
 
 var REGIONS = [];
-
-import { loadEditDestinationListeners } from './support/event-listeners.js';
-import { getVisibility } from "../../theme/theme";
-import { firstCharToUpperCase } from "../../utils/dom";
 
 export async function loadEditDestinationPage() {
 	loadEditDestinationListeners();

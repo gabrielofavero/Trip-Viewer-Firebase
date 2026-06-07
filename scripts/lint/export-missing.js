@@ -1,17 +1,17 @@
 /**
  * Add export keyword to functions that are called from other files but not exported.
- * Usage: node scripts/export-missing.js [--dry-run]
+ * Usage: node scripts/lint/export-missing.js [--dry-run]
  */
 
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 
-const JS_ROOT = path.resolve(__dirname, "..", "public", "assets", "js");
+const JS_ROOT = path.resolve(__dirname, "..", "..", "public", "assets", "js");
 const dryRun = process.argv.includes("--dry-run");
 
 // Get current missing imports
-const out = execSync("node scripts/check-imports.js --json", {
+const out = execSync("node scripts/lint/check-imports.js --json", {
   stdio: "pipe",
   encoding: "utf-8",
 });

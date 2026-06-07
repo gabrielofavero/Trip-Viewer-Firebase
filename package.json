@@ -4,13 +4,13 @@
 	"private": true,
 	"description": "Trip Viewer — Firebase-hosted static frontend",
 	"scripts": {
-		"build": "node scripts/build.js",
-		"watch": "node scripts/build.js --watch",
+		"build": "node scripts/build/build.js",
+		"watch": "node scripts/build/build.js --watch",
 		"clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); console.log('dist/ cleaned.');\"",
 		"serve": "firebase serve --only hosting --port 5000",
 		"dev": "concurrently -k -n watch,serve,reload -c blue,green,yellow \"npm run watch\" \"npm run serve\" \"browser-sync start --proxy localhost:5000 --port 5001 --files dist/**/* --no-open\"",
-		"check": "node scripts/check-imports.js",
-		"check:runtime": "node scripts/check-errors.js",
+		"check": "node scripts/lint/check-imports.js",
+		"check:runtime": "node scripts/lint/check-errors.js",
 		"test": "npm run build && npm run check"
 	},
 	"devDependencies": {

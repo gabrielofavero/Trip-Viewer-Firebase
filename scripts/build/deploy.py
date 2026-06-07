@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # Repository root (two levels up from scripts/)
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # ============================================================

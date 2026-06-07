@@ -4,13 +4,13 @@
  * Scans all exports across the JS codebase, then automatically adds
  * missing imports to every file that calls functions without importing them.
  *
- * Usage: node scripts/fix-imports.js [--dry-run] [--verbose]
+ * Usage: node scripts/lint/fix-imports.js [--dry-run] [--verbose]
  */
 
 const fs = require("fs");
 const path = require("path");
 
-const JS_ROOT = path.resolve(__dirname, "..", "public", "assets", "js");
+const JS_ROOT = path.resolve(__dirname, "..", "..", "public", "assets", "js");
 const dryRun = process.argv.includes("--dry-run");
 const verbose = process.argv.includes("--verbose");
 

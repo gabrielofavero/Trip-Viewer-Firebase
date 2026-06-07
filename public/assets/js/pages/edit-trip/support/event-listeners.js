@@ -19,7 +19,7 @@ import { deleteInnerProgramacao, openInnerItinerary, openInnerItineraryItem, ope
 import { getVisibilidadeObject, setTripData } from "../set-trip.js";
 import { autoFillDarkColor } from "../categories/customization.js";
 import { applyTransportationTypeVisualization } from "../categories/transportation.js";
-import { getVisibility } from "../../../theme/theme";
+import { getVisibility } from "../../../theme/theme.js";
 
 // Loader
 export function loadEventListeners() {

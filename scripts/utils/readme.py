@@ -12,7 +12,7 @@ import sys
 sys.stdout.reconfigure(encoding="utf-8")
 
 # Repository root (two levels up from scripts/)
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 EMOJI_TYPE_MAP = {
     '🐞': 'B',

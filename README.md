@@ -16,7 +16,7 @@ A **vanilla JavaScript** single-page application for planning, managing, and vie
 | **Firebase Storage** | Image uploads (accommodations, galleries) |
 | **Firebase Cloud Functions** | Backend logic (TypeScript) — migrations, admin operations |
 | **Firebase Hosting** | Production deployment from `dist/` |
-| **Node.js** | Build script (`scripts/build.js`) — copies files & injects HTML partials |
+| **Node.js** | Build script (`scripts/build/build.js`) — copies files & injects HTML partials |
 | **Bootstrap 5** | Layout & responsive grid (with custom CSS overrides) |
 | **Boxicons** | Icon library (navigation, actions, categories) |
 | **Chart.js** | Expense charts & breakdowns |

@@ -14,6 +14,8 @@ export var PIN = {
 	new: "",
 };
 
+export const confirmAction = "reconfirmPin()";
+
 export async function loadPinData() {
 	// This data can only be fetch by the owner of the document
 	const pinObject = await get(`protegido/${DOCUMENT_ID}`, true, true);
@@ -74,7 +76,7 @@ export function switchPinLabel() {
 }
 
 export function requestPinEditarGastos(invalido = false) {
-	export const confirmAction = "reconfirmPin()";
+	const confirmAction = "reconfirmPin()";
 	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.insert");
 	requestPin({ confirmAction, cancelAction, precontent, invalido });

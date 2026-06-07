@@ -4,7 +4,7 @@ import { loadEmbedListeners, openEmbed, sendToEmbed } from '../../../ui/embed.js
 import { getID } from '../../../utils/dom.js';
 import { disableScroll, enableScroll, loadExternalVisibility } from '../../../theme/visibility.js';
 import { updateProtectedDataFromExternalPin } from "../support/sensitive-reservation.js";
-import { getVisibility } from "../../../theme/theme";
+import { getVisibility } from "../../../theme/theme.js";
 import { getURLParam } from "../../../utils/dom";
 
 var SAVED_SCROLL_POSITION = 0;

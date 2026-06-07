@@ -3,7 +3,7 @@ import { loadEmbedVisibility } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { getDescricaoValue } from '../../../models/destination.model.js';
-import { THEME_COLOR } from "../../../theme/theme";
+import { THEME_COLOR } from "../../../theme/theme.js";
 
 async function loadDestinationVisibility() {
 	loadVisibility();

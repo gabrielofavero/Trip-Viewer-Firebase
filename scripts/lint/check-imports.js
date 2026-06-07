@@ -6,7 +6,7 @@
  *  2. `window.xxx =` assignments (global namespace pollution)
  *  3. Direct `FIRESTORE_DATA` references (should use getState()/setState())
  *
- * Usage: node scripts/check-imports.js [--verbose] [--json] [--all]
+ * Usage: node scripts/lint/check-imports.js [--verbose] [--json] [--all]
  *   --all   Show suppressed/known issues too
  * Exit code: 0 if clean or only known issues, 1 if new issues found
  */
@@ -18,7 +18,7 @@ const path = require("path");
 // Configuration
 // ---------------------------------------------------------------
 
-const JS_ROOT = path.resolve(__dirname, "..", "public", "assets", "js");
+const JS_ROOT = path.resolve(__dirname, "..", "..", "public", "assets", "js");
 const EXCLUDE_DIRS = new Set([]);
 const EXCLUDE_FILES = new Set([]);
 

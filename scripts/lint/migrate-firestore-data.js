@@ -4,7 +4,7 @@
  * Replaces all direct FIRESTORE_DATA references with getState()/setState()
  * calls across all JS files in public/assets/js/.
  *
- * Usage: node scripts/migrate-firestore-data.js [--dry-run] [--verbose]
+ * Usage: node scripts/lint/migrate-firestore-data.js [--dry-run] [--verbose]
  *
  * Rules:
  *   FIRESTORE_DATA = expr          → setState(expr)
@@ -20,7 +20,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const JS_ROOT = path.resolve(__dirname, "..", "public", "assets", "js");
+const JS_ROOT = path.resolve(__dirname, "..", "..", "public", "assets", "js");
 const STATE_MODULE = "data/state.js";
 
 const dryRun = process.argv.includes("--dry-run");

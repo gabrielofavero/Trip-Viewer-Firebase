@@ -4,7 +4,7 @@
  * Opens each HTML page in a headless browser and captures console errors,
  * uncaught exceptions, unhandled rejections, and 404s for JS/CSS files.
  *
- * Usage: node scripts/check-errors.js [--page=index] [--verbose]
+ * Usage: node scripts/lint/check-errors.js [--page=index] [--verbose]
  * Exit code: 0 if no errors, 1 if any page has errors
  */
 
@@ -16,7 +16,7 @@ const fs = require("fs");
 // Configuration
 // ---------------------------------------------------------------
 
-const DIST_DIR = path.resolve(__dirname, "..", "dist");
+const DIST_DIR = path.resolve(__dirname, "..", "..", "dist");
 const PAGES = [
   { name: "index", path: "index.html" },
   { name: "view", path: "view.html" },

@@ -1,5 +1,47 @@
 [
   {
+    "type": "undeclared-assignment",
+    "file": "pages/destination/support/media-embed.js",
+    "line": 91,
+    "symbol": "style"
+  },
+  {
+    "type": "undeclared-assignment",
+    "file": "pages/expenses/support/currency.js",
+    "line": 54,
+    "symbol": "type"
+  },
+  {
+    "type": "undeclared-assignment",
+    "file": "pages/expenses/support/currency.js",
+    "line": 54,
+    "symbol": "name"
+  },
+  {
+    "type": "undeclared-assignment",
+    "file": "theme/icons.js",
+    "line": 7,
+    "symbol": "xmlns"
+  },
+  {
+    "type": "undeclared-assignment",
+    "file": "utils/attributions.js",
+    "line": 55,
+    "symbol": "href"
+  },
+  {
+    "type": "undeclared-assignment",
+    "file": "utils/attributions.js",
+    "line": 59,
+    "symbol": "href"
+  },
+  {
+    "type": "undeclared-assignment",
+    "file": "utils/attributions.js",
+    "line": 63,
+    "symbol": "href"
+  },
+  {
     "type": "undefined-reference",
     "file": "backup/backup.js",
     "line": 283,
@@ -324,29 +366,22 @@
   {
     "type": "undefined-reference",
     "file": "utils/messages.js",
-    "line": 443,
+    "line": 444,
     "symbol": "messages",
     "suggestion": null
   },
   {
     "type": "undefined-reference",
     "file": "utils/messages.js",
-    "line": 443,
+    "line": 444,
     "symbol": "messages",
     "suggestion": null
   },
   {
     "type": "undefined-reference",
     "file": "utils/messages.js",
-    "line": 443,
+    "line": 444,
     "symbol": "messages",
     "suggestion": null
-  },
-  {
-    "type": "undefined-reference",
-    "file": "utils/messages.js",
-    "line": 52,
-    "symbol": "noAction",
-    "suggestion": "../pages/itinerary/itinerary.js"
   }
 ]

@@ -48,7 +48,7 @@ def run_command(cmd, capture_output=True, check=True):
 # ============================================================
 
 def main():
-    repo_dir = Path(__file__).resolve().parent.parent
+    repo_dir = Path(__file__).resolve().parent.parent.parent
     print(f"{Colors.CYAN}Repository:{Colors.RESET} {Colors.BOLD}{repo_dir}{Colors.RESET}")
 
     print(

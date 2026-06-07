@@ -34,7 +34,7 @@ Scans all .js files under public/assets/js/ and reports:
      imported binding (e.g., `importedVar = ...`) is a runtime error.
 
 Usage:
-    python scripts/check-cross-module-refs.py [--verbose] [--json]
+    python scripts/lint/check-cross-module-refs.py [--verbose] [--json]
 
 Exit code: 0 if clean, 1 if issues found.
 """
@@ -54,7 +54,7 @@ from typing import Optional
 # ---------------------------------------------------------------
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
 JS_ROOT = PROJECT_ROOT / "public" / "assets" / "js"
 
 EXCLUDE_DIRS = set()
@@ -1112,7 +1112,7 @@ def find_undefined_references(analyses: dict[str, FileAnalysis], xref: dict) -> 
         # `(`, `[`, `.`, or `:` (label). These are likely local vars/params/imports.
         clean = remove_strings_and_comments(content)
         standalone_ids: set[str] = set()
-        for m in re.finditer(r'(?<![.\w])([a-zA-Z_]\w+)(?![(\[\.:])', clean):
+        for m in re.finditer(r'(?<![.\w])([a-zA-Z_]\w+)(?![(\[\.:=])', clean):
             name = m.group(1)
             if name not in NOT_FUNCTION_CALLS and name not in ALL_GLOBALS:
                 standalone_ids.add(name)
@@ -1369,32 +1369,29 @@ def find_undeclared_assignments(analyses: dict[str, FileAnalysis]) -> list[dict]
     and never imported. In ES modules (strict mode), this throws:
         ReferenceError: assignment to undeclared variable X
     
-    This is the classic strict-mode bug where code written for non-strict
-    scripts assigns to a variable without declaring it first.
+    Uses explicit definitions + a restricted standalone heuristic that
+    excludes assignment targets (identifiers followed by `=`).
     """
     issues = []
 
     for fa in analyses.values():
-        # Collect all locally available names (definitions + imports)
         local_names: set[str] = set()
         for d in fa.definitions:
             local_names.add(d.name)
         for imp in fa.imports:
             local_names.add(imp.name)
 
-        # Also collect parameter names (heuristic: standalone identifiers)
         try:
             content = Path(fa.abs_path).read_text(encoding='utf-8')
         except Exception:
             continue
         clean = remove_strings_and_comments(content)
-        for m in re.finditer(r'(?<![.\w])([a-zA-Z_]\w+)(?![(\[\.:])', clean):
+        for m in re.finditer(r'(?<![.\w])([a-zA-Z_]\w+)(?![(\[\.:=])', clean):
             name = m.group(1)
             if name not in NOT_FUNCTION_CALLS and name not in ALL_GLOBALS:
                 local_names.add(name)
 
-        # Remove bare for...in / for...of variables from the heuristic set —
-        # those are exactly the undeclared assignments we want to catch
+        # Remove bare for...in / for...of variables
         for m in RE_BARE_FOR_IN_OF.finditer(clean):
             name = m.group(1)
             local_names.discard(name)
@@ -1407,6 +1404,8 @@ def find_undeclared_assignments(analyses: dict[str, FileAnalysis]) -> list[dict]
                 continue
             if name in NOT_FUNCTION_CALLS:
                 continue
+            if name in COMMON_PARAM_NAMES:
+                continue
 
             issues.append({
                 'type': 'undeclared-assignment',
@@ -1414,6 +1413,8 @@ def find_undeclared_assignments(analyses: dict[str, FileAnalysis]) -> list[dict]
                 'line': assign.line,
                 'symbol': name,
             })
+
+    return issues
 
     return issues
 

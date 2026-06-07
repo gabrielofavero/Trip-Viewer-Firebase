@@ -11,8 +11,8 @@ For each issue:
   - Merges with existing imports from the same module when possible
 
 Usage:
-    python scripts/check-cross-module-refs.py --json > issues.json
-    python scripts/fix-imports.py issues.json [--dry-run] [--verbose]
+    python scripts/lint/check-cross-module-refs.py --json > issues.json
+    python scripts/lint/fix-imports.py issues.json [--dry-run] [--verbose]
 
 Exit code: 0 if all fixable issues resolved, 1 if some couldn't be fixed.
 """
@@ -27,7 +27,7 @@ from collections import defaultdict
 from typing import Optional
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
 JS_ROOT = PROJECT_ROOT / "public" / "assets" / "js"
 
 # ---------------------------------------------------------------------------

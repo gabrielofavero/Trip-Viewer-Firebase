@@ -5,14 +5,14 @@
  * and copies Firebase config files.
  *
  * Usage:
- *   node scripts/build.js          — one-shot build
- *   node scripts/build.js --watch  — watch mode (rebuilds on changes)
+ *   node scripts/build/build.js          — one-shot build
+ *   node scripts/build/build.js --watch  — watch mode (rebuilds on changes)
  */
 
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = path.resolve(__dirname, "..", "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const DIST_DIR = path.join(ROOT, "dist");
 
