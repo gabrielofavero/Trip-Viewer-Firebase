@@ -1,8 +1,7 @@
-import { getDestinos } from '../../app/config.js';
+import { getDestinations } from '../../app/config.js';
 import { get } from '../../data/firebase/database.js';
 import { displayError } from '../../utils/messages.js';
-import { setState, DOCUMENT_ID, FIRESTORE_DESTINOS_DATA, setDocumentId, setFirestoreDestinosData } from '../../data/state.js';
-export { FIRESTORE_DESTINOS_DATA };
+import { setState, DOCUMENT_ID, FIRESTORE_DESTINATIONS_DATA, setDocumentId, setFirestoreDestinationsData } from '../../data/state.js';
 import { getID, getJs, getURLParams } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { stopLoadingScreen } from '../../utils/loading.js';
@@ -43,7 +42,7 @@ export async function loadDestinationsData(data?) {
 		get(`destinos/${DOCUMENT_ID}`),
 	]);
 
-	setFirestoreDestinosData(destinosData);
+	setFirestoreDestinationsData(destinosData);
 	setState(tripData);
 
 	loadPlannedDestination();
@@ -57,7 +56,7 @@ export async function loadDestinationPage() {
 
 	await loadDestinationsData();
 
-	const title = FIRESTORE_DESTINOS_DATA.titulo || "TripViewer";
+	const title = FIRESTORE_DESTINATIONS_DATA.titulo || "TripViewer";
 	setPageName(title);
 	getID("title").innerText = title;
 
@@ -66,7 +65,7 @@ export async function loadDestinationPage() {
 	if (
 		ACTIVE_CATEGORY &&
 		(ACTIVE_CATEGORY === "mapa" ||
-			Object.keys(FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]).length > 0)
+			Object.keys(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]).length > 0)
 	) {
 		loadDestinationCustomSelect();
 		window.addEventListener("resize", () => {
@@ -89,7 +88,7 @@ function loadDestinationByType(activeCategory) {
 
 	if (activeCategory === "myMaps") {
 		content.classList = "map-content";
-		loadMapDestination(FIRESTORE_DESTINOS_DATA.myMaps);
+		loadMapDestination(FIRESTORE_DESTINATIONS_DATA.myMaps);
 		filterSortContainer.style.display = "none";
 		(document.querySelector(".add-container") as HTMLElement).style.display = "none";
 		return;
@@ -98,7 +97,7 @@ function loadDestinationByType(activeCategory) {
 		filterSortContainer.style.display = "";
 	}
 
-	const destino = FIRESTORE_DESTINOS_DATA[activeCategory];
+	const destino = FIRESTORE_DESTINATIONS_DATA[activeCategory];
 	const keys = Object.keys(destino);
 	for (let j = 1; j <= keys.length; j++) {
 		const id = keys[j - 1];
@@ -195,13 +194,13 @@ function loadDestinationCustomSelect() {
 
 	function getDestinationCustomSelectOptions() {
 		const result = [];
-		const destinos = getDestinos();
+		const destinos = getDestinations();
 		const values = destinos.categorias.ids;
-		for (const value in FIRESTORE_DESTINOS_DATA) {
+		for (const value in FIRESTORE_DESTINATIONS_DATA) {
 			if (
 				!values.includes(value) ||
 				(value !== "myMaps" &&
-					Object.keys(FIRESTORE_DESTINOS_DATA[value]).length === 0)
+					Object.keys(FIRESTORE_DESTINATIONS_DATA[value]).length === 0)
 			) {
 				continue;
 			}
@@ -224,7 +223,7 @@ export function getDataSet(key) {
 	const category = ACTIVE_CATEGORY;
 	if (!category) return new Set();
 
-	const data = FIRESTORE_DESTINOS_DATA?.[category] ?? {};
+	const data = FIRESTORE_DESTINATIONS_DATA?.[category] ?? {};
 	return new Set(
 		Object.values(data)
 			.map((item) => item?.[key])
@@ -243,7 +242,7 @@ export function getItemFromJ(j) {
 }
 
 export function getItem(id) {
-	return FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY][id];
+	return FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY][id];
 }
 
 function getItemValue(id, key) {
@@ -257,14 +256,14 @@ export function isPlanned(id) {
 }
 
 export async function refreshDestination() {
-	setFirestoreDestinosData(await get(`destinos/${DOCUMENT_ID}`));
+	setFirestoreDestinationsData(await get(`destinos/${DOCUMENT_ID}`));
 	loadDestinationByType(ACTIVE_CATEGORY);
 }
 
 function share() {
-	const title = FIRESTORE_DESTINOS_DATA.titulo || document.title;
+	const title = FIRESTORE_DESTINATIONS_DATA.titulo || document.title;
 	const text = translate("destination.share", {
-		name: FIRESTORE_DESTINOS_DATA.titulo,
+		name: FIRESTORE_DESTINATIONS_DATA.titulo,
 	});
 	const url = getPageURL();
 	navigator.share({ title, text, url });

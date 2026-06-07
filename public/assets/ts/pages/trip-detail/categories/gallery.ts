@@ -41,8 +41,8 @@ function loadGaleriaCategorias(filters) {
 function loadGaleriaBody(galeria) {
 	let result = "";
 	for (let i = 0; i < galeria.titulos.length; i++) {
-		const titulo = getGaleriaTitulo(galeria, i);
-		const descricao = getGaleriaDescricoes(galeria, i);
+		const title = getGaleriaTitulo(galeria, i);
+		const description = getGaleriaDescricoes(galeria, i);
 		const link = getGaleriaLink(galeria.imagens[i]);
 		const categoria = getGaleriaCategoria(galeria, i);
 
@@ -51,10 +51,10 @@ function loadGaleriaBody(galeria) {
             <div class="portfolio-wrap">
                 <img src="${link}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
                 <div class="portfolio-info">
-                    <h4>${titulo}</h4>
-                    <p>${descricao}</p>
+                    <h4>${title}</h4>
+                    <p>${description}</p>
                     <div class="portfolio-links">
-                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox galeria" title="${descricao}"><i class="bx bx-zoom-in"></i></a>
+                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox galeria" title="${description}"><i class="bx bx-zoom-in"></i></a>
                     </div>
                 </div>
             </div>
@@ -78,35 +78,35 @@ function loadFilterClass(filter) {
 
 // Getters
 function getGaleriaTitulo(galeria, i) {
-	let titulo = "";
+	let title = "";
 	if (galeria.titulos && galeria.titulos[i]) {
 		// Current Implementation
-		titulo = galeria.titulos[i];
+		title = galeria.titulos[i];
 	} else if (
 		galeria.imagens &&
 		galeria.imagens[i] &&
 		galeria.imagens[i].titulo
 	) {
 		// Old Implementation
-		titulo = galeria.imagens[i].titulo;
+		title = galeria.imagens[i].titulo;
 	}
-	return titulo || "";
+	return title || "";
 }
 
 function getGaleriaDescricoes(galeria, i) {
-	let descricao = "";
+	let description = "";
 	if (galeria.descricoes && galeria.descricoes[i]) {
 		// Current Implementation
-		descricao = galeria.descricoes[i];
+		description = galeria.descricoes[i];
 	} else if (
 		galeria.imagens &&
 		galeria.imagens[i] &&
 		galeria.imagens[i].descricao
 	) {
 		// Implementação Antiga
-		descricao = galeria.imagens[i].descricao;
+		description = galeria.imagens[i].descricao;
 	}
-	return descricao || "";
+	return description || "";
 }
 
 function getGaleriaCategoria(galeria, i) {

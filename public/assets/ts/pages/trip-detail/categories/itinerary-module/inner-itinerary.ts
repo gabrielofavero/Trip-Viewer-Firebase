@@ -1,5 +1,5 @@
 import { getItinerary, getCurrencies } from '../../../../app/config.js';
-import { getState, TRAVELERS, DESTINOS } from '../../../../data/state.js';
+import { getState, TRAVELERS, DESTINATIONS } from '../../../../data/state.js';
 import { convertFromDateObject, getDateTitle } from '../../../../utils/dates.js';
 import { cloneObject, getAccommodationsHTML, getAndDestinationTitle, getDestinationTitle, getDestinationsBoxHTML, getID, getInnerItineraryTitleHTML, getLinkMediaButton } from '../../../../utils/dom.js';
 import { displayFullMessage, MESSAGE_PROPERTIES } from '../../../../utils/messages.js';
@@ -269,9 +269,9 @@ function getInnerItinerary(item, destinos?) {
 				item.id
 			) {
 				if (!destinos) {
-					const destinosIDs = DESTINOS.map((destino) => destino.destinosID);
+					const destinosIDs = DESTINATIONS.map((destino) => destino.destinosID);
 					index = destinosIDs.indexOf(item.local);
-					destinos = DESTINOS?.[index]?.destinos;
+					destinos = DESTINATIONS?.[index]?.destinos;
 				}
 
 				if (!destinos) {

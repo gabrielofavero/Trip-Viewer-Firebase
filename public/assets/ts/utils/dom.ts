@@ -1,7 +1,7 @@
 // Text Utils
 import { getCurrencies } from '../app/config.js';
 import { getState } from '../data/state.js';
-import { DESTINOS, TRAVELERS, FIRESTORE_DESTINOS_DATA, FIRESTORE_NEW_DATA, FIRESTORE_DESTINOS_NEW_DATA, ERROR_FROM_GET_REQUEST } from '../data/state.js';
+import { DESTINATIONS, TRAVELERS, FIRESTORE_DESTINATIONS_DATA, FIRESTORE_NEW_DATA, FIRESTORE_DESTINATIONS_NEW_DATA, ERROR_FROM_GET_REQUEST } from '../data/state.js';
 import { convertFromDateObject, getDateRegionalFormat, getDateString, getTodayDateObject } from './dates.js';
 import { translate } from '../i18n/translation.js';
 import { hideContent } from '../theme/visibility.js';
@@ -408,7 +408,7 @@ export function getDataDocument(tipo) {
 		case "listagens":
 			return getState();
 		case "destinos":
-			return FIRESTORE_DESTINOS_DATA;
+			return FIRESTORE_DESTINATIONS_DATA;
 		default:
 			return null;
 	}
@@ -420,7 +420,7 @@ export function getNewDataDocument(tipo) {
 		case "listagens":
 			return FIRESTORE_NEW_DATA;
 		case "destinos":
-			return FIRESTORE_DESTINOS_NEW_DATA;
+			return FIRESTORE_DESTINATIONS_NEW_DATA;
 		default:
 			return null;
 	}
@@ -539,49 +539,49 @@ export function getDestinationsBoxHTML({
 
 // Itinerary
 export function getInnerItineraryTitle(dado: Record<string, any>, viajantes = TRAVELERS) {
-	const programacao = dado.programacao || "";
+	const schedule = dado.programacao || "";
 	const presentes = !dado.pessoas
 		? []
 		: dado.pessoas
 				.filter((p) => p.isPresent)
 				.map((p) => viajantes.find((t) => t.id === p.id)?.nome ?? "");
 
-	const pessoasTexto =
+	const travelersText =
 		presentes.length === 0 || presentes.length === viajantes.length
 			? ""
 			: getReadableArray(presentes);
 
-	let horario = "";
+	let time = "";
 	if (dado.inicio && dado.fim) {
-		horario = `${dado.inicio} - ${dado.fim}`;
+		time = `${dado.inicio} - ${dado.fim}`;
 	} else if (dado.inicio) {
-		horario = dado.inicio;
+		time = dado.inicio;
 	}
 
-	if (pessoasTexto && horario && programacao) {
+	if (travelersText && time && schedule) {
 		return {
-			title: `${horario} (${pessoasTexto})`,
-			content: programacao,
+			title: `${time} (${travelersText})`,
+			content: schedule,
 		};
 	}
 
-	if (pessoasTexto && programacao) {
+	if (travelersText && schedule) {
 		return {
-			title: pessoasTexto,
-			content: programacao,
+			title: travelersText,
+			content: schedule,
 		};
 	}
 
-	if (horario && programacao) {
+	if (time && schedule) {
 		return {
-			title: horario,
-			content: programacao,
+			title: time,
+			content: schedule,
 		};
 	}
 
 	return {
 		title: "",
-		content: programacao,
+		content: schedule,
 	};
 }
 
@@ -592,7 +592,7 @@ export function getInnerItineraryTitleHTML(dado, spanClass) {
 		: titleObj.content;
 }
 
-export function getInnerItinerary(item, destinos) {
+export function getInnerItinerary(item, destinations) {
 	const innerItinerary = {
 		tipo: item?.tipo,
 		titulo: "",
@@ -639,31 +639,31 @@ export function getInnerItinerary(item, destinos) {
 				item.categoria &&
 				item.id
 			) {
-				if (!destinos) {
-					const destinosIDs = DESTINOS.map((destino) => destino.destinosID);
-					index = destinosIDs.indexOf(item.local);
-					destinos = DESTINOS?.[index]?.destinos;
+				if (!destinations) {
+					const destinationIDs = DESTINATIONS.map((d) => d.destinosID);
+					index = destinationIDs.indexOf(item.local);
+					destinations = DESTINATIONS?.[index]?.destinos;
 				}
 
-				if (!destinos) {
+				if (!destinations) {
 					return;
 				}
 
-				const destino = destinos[item.categoria];
-				if (destino && Object.keys(destino).length) {
-					const destinoItem = destino[item.id];
-					if (destinoItem) {
-						innerItinerary.titulo = getDestinationTitle(destinoItem);
+				const destination = destinations[item.categoria];
+				if (destination && Object.keys(destination).length) {
+					const destinationItem = destination[item.id];
+					if (destinationItem) {
+						innerItinerary.titulo = getDestinationTitle(destinationItem);
 						innerItinerary.content = getDestinationsBoxHTML({
 							j: 1,
-							item: destinoItem,
+							item: destinationItem,
 							innerItinerary: true,
-							valores: getDestinationValues(DESTINOS[index]),
-							moeda: destinos.moeda,
+							valores: getDestinationValues(DESTINATIONS[index]),
+							moeda: destinations.moeda,
 							planejado: undefined as any,
 							editBtn: undefined as any,
 						});
-						innerItinerary.midia = destinoItem?.midia;
+						innerItinerary.midia = destinationItem?.midia;
 					}
 				}
 			}
@@ -671,13 +671,13 @@ export function getInnerItinerary(item, destinos) {
 
 	return innerItinerary;
 
-	function getDestinationValues(destino) {
-		const moeda = cloneObject(getCurrencies().escala[destino.destinos.moeda]);
-		const max = translate("destination.price.max", { value: moeda["$$$$"] });
-		moeda["-"] = translate("destination.price.free");
-		moeda["default"] = translate("destination.price.default");
-		moeda["$$$$"] = max;
-		return moeda;
+	function getDestinationValues(destination) {
+		const currency = cloneObject(getCurrencies().escala[destination.destinos.moeda]);
+		const max = translate("destination.price.max", { value: currency["$$$$"] });
+		currency["-"] = translate("destination.price.free");
+		currency["default"] = translate("destination.price.default");
+		currency["$$$$"] = max;
+		return currency;
 	}
 }
 

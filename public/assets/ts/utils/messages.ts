@@ -26,17 +26,17 @@ export const MESSAGE_PROPERTIES = {
 };
 
 // Generic Message
-export function displayMessage(titulo, conteudo) {
+export function displayMessage(title, content) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	if (titulo) properties.titulo = titulo;
-	if (conteudo) properties.conteudo = conteudo;
+	if (title) properties.titulo = title;
+	if (content) properties.conteudo = content;
 	displayFullMessage(properties);
 }
 
 // Prompt (Yes / No)
 export function displayPrompt({
-	titulo,
-	conteudo,
+	titulo: title,
+	conteudo: content,
 	yesAction,
 	noAction = "closeMessage()",
 	critico = false,
@@ -47,11 +47,11 @@ export function displayPrompt({
 	noAction?: string | (() => void);
 	critico?: boolean;
 } = {}) {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = titulo;
-	propriedades.conteudo = conteudo;
-	propriedades.critico = critico;
-	propriedades.botoes = [
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.titulo = title;
+	properties.conteudo = content;
+	properties.critico = critico;
+	properties.botoes = [
 		{
 			tipo: "nao",
 			acao: noAction,
@@ -61,14 +61,14 @@ export function displayPrompt({
 			acao: yesAction,
 		},
 	];
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 }
 
 export function displayFullMessage(
-	propriedades = cloneObject(MESSAGE_PROPERTIES),
+	properties = cloneObject(MESSAGE_PROPERTIES),
 ) {
 	const preloader = getID("preloader");
-	const isErrorMessage = Object.keys(propriedades.erro).length > 0;
+	const isErrorMessage = Object.keys(properties.erro).length > 0;
 
 	if (typeof stopLoadingTimer === "function") {
 		stopLoadingTimer();
@@ -85,15 +85,15 @@ export function displayFullMessage(
 
 	// Container
 	const container = document.createElement("div");
-	container.className = propriedades.containers.principal;
+	container.className = properties.containers.principal;
 
 	// Container de Texto
 	const textDiv = document.createElement("div");
 	textDiv.className = "message-text-container";
 
 	// Criticidade
-	if (!propriedades.critico) {
-		const buttonsBox = getIconsBox(propriedades.icones);
+	if (!properties.critico) {
+		const buttonsBox = getIconsBox(properties.icones);
 		textDiv.appendChild(buttonsBox);
 	}
 
@@ -101,30 +101,30 @@ export function displayFullMessage(
 	const titleDiv = document.createElement("div");
 	titleDiv.className = "message-title";
 	titleDiv.id = "message-title";
-	titleDiv.innerHTML = propriedades.titulo;
+	titleDiv.innerHTML = properties.titulo;
 	textDiv.appendChild(titleDiv);
 
 	// Description
 	const descriptionDiv = document.createElement("div");
 	descriptionDiv.className = "message-description";
 	descriptionDiv.id = "message-description";
-	descriptionDiv.innerHTML = propriedades.conteudo;
+	descriptionDiv.innerHTML = properties.conteudo;
 	textDiv.appendChild(descriptionDiv);
 
 	// Mensagem de Erro
 	if (isErrorMessage) {
-		const errorElement = getErrorElement(propriedades.erro);
+		const errorElement = getErrorElement(properties.erro);
 		textDiv.appendChild(errorElement);
 	}
 
 	// Buttons
-	if (propriedades.botoes && propriedades.botoes.length > 0) {
+	if (properties.botoes && properties.botoes.length > 0) {
 		const buttonBox = document.createElement("div");
-		buttonBox.className = propriedades.containers?.botoes || "button-box";
+		buttonBox.className = properties.containers?.botoes || "button-box";
 
 		buttonBox.style.marginTop = "25px";
 
-		for (const buttonType of propriedades.botoes) {
+		for (const buttonType of properties.botoes) {
 			const button = getButton(buttonType);
 			buttonBox.appendChild(button);
 		}
@@ -138,7 +138,7 @@ export function displayFullMessage(
 	preloader.style.background = "rgba(0, 0, 0, 0.6)";
 
 	// Blur
-	if (propriedades.blur) {
+	if (properties.blur) {
 		preloader.style.backdropFilter = "blur(10px)";
 		(preloader.style as any).webkitBackdropFilter = "blur(10px)";
 	}
@@ -153,53 +153,53 @@ export function displayFullMessage(
 }
 
 // Mensagem de Erro
-export function displayError(erro, tryAgain = false) {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
+export function displayError(error, tryAgain = false) {
+	const properties = cloneObject(MESSAGE_PROPERTIES);
 
-	propriedades.titulo = translate("messages.errors.load_title");
-	propriedades.critico = true;
-	propriedades.conteudo = getErrorMessage(erro);
-	propriedades.localizacao = false; // Disabled. No point in showing to the user.
+	properties.titulo = translate("messages.errors.load_title");
+	properties.critico = true;
+	properties.conteudo = getErrorMessage(error);
+	properties.localizacao = false; // Disabled. No point in showing to the user.
 
-	const botoes = tryAgain ? [{ tipo: "tente-novamente" }] : [];
+	const buttons = tryAgain ? [{ tipo: "tente-novamente" }] : [];
 	if (!window.location.href.includes("index.html")) {
-		botoes.push({ tipo: "home" });
+		buttons.push({ tipo: "home" });
 	}
-	propriedades.botoes = botoes;
-	displayFullMessage(propriedades);
+	properties.botoes = buttons;
+	displayFullMessage(properties);
 }
 
-export function getErrorMessage(erro) {
-	const isError = erro && erro instanceof Error;
+export function getErrorMessage(error) {
+	const isError = error && error instanceof Error;
 	const contact = `<a href=\"mailto:gabriel.o.favero@live.com\">${translate("messages.errors.contact_admin")}</a> ${translate("messages.errors.to_report")}`;
 
-	if (!erro || (isError && !erro.message)) {
+	if (!error || (isError && !error.message)) {
 		return `${translate("messages.errors.unknown")}. ${contact}`;
 	} else if (isError) {
-		let msg = erro.message;
+		let msg = error.message;
 		if (msg[msg.length - 1] === ".") {
 			msg = msg.substring(0, msg.length - 1);
 		}
 		return `${msg}. ${contact}`;
 	} else {
-		return erro;
+		return error;
 	}
 }
 
 // Unauthorized Message
-export function displayForbidden(conteudo, redirectTo = "view.html") {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = translate("messages.access_denied.title");
-	propriedades.conteudo =
-		conteudo || translate("messages.access_denied.message");
-	propriedades.critico = true;
-	propriedades.botoes = [
+export function displayForbidden(content, redirectTo = "view.html") {
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.titulo = translate("messages.access_denied.title");
+	properties.conteudo =
+		content || translate("messages.access_denied.message");
+	properties.critico = true;
+	properties.botoes = [
 		{
 			tipo: "voltar",
 			acao: redirectTo,
 		},
 	];
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 }
 
 // Fechar Mensagem
@@ -254,10 +254,10 @@ export function getIconsBox(icones) {
 	return iconContainer;
 }
 
-export function getErrorElement(erro) {
+export function getErrorElement(err) {
 	let location = "";
-	if (erro?.showLocation) {
-		const stackTrace = erro.error ? erro.error.stack : new Error().stack;
+	if (err?.showLocation) {
+		const stackTrace = err.error ? err.error.stack : new Error().stack;
 		const stackSplit = stackTrace.split("\n");
 		location = stackSplit[2]
 			? stackSplit[2]
@@ -268,10 +268,10 @@ export function getErrorElement(erro) {
 
 	let errorMessage = "";
 
-	if (location && erro.error && erro.error instanceof Error) {
-		errorMessage = `Erro "${erro.error.message}" localizado em ${location}`;
-	} else if (erro.error && erro.error instanceof Error) {
-		errorMessage = `Erro "${erro.error.message}"`;
+	if (location && err.error && err.error instanceof Error) {
+		errorMessage = `Erro "${err.error.message}" localizado em ${location}`;
+	} else if (err.error && err.error instanceof Error) {
+		errorMessage = `Erro "${err.error.message}"`;
 	}
 
 	const errorElement = document.createElement("p");
@@ -286,28 +286,28 @@ export function getErrorElement(erro) {
 }
 
 // Buttons
-export function getButton(botao) {
-	switch (botao.tipo) {
+export function getButton(button) {
+	switch (button.tipo) {
 		case "tente-novamente":
 			return getTryAgainButton();
 		case "home":
 			return getHomeButton();
 		case "voltar":
-			return getBackButton(botao.acao);
+			return getBackButton(button.acao);
 		case "fechar":
 			return getCloseButton();
 		case "cancelar":
-			return getCloseButton("labels.cancel", botao.acao);
+			return getCloseButton("labels.cancel", button.acao);
 		case "confirmar":
-			return getConfirmButton(botao.acao);
+			return getConfirmButton(button.acao);
 		case "apagar":
-			return getDeleteButton(botao.acao);
+			return getDeleteButton(button.acao);
 		case "apagar-basico":
-			return getDeleteButtonBasic(botao.acao);
+			return getDeleteButtonBasic(button.acao);
 		case "sim":
-			return getConfirmButton(botao.acao, "labels.yes");
+			return getConfirmButton(button.acao, "labels.yes");
 		case "nao":
-			return getCloseButton("labels.no", botao.acao);
+			return getCloseButton("labels.no", button.acao);
 		default:
 			return getCloseButton("labels.understood");
 	}

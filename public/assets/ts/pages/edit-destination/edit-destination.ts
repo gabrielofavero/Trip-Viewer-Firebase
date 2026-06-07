@@ -24,7 +24,7 @@ import { addRestaurantes } from "./new-destination.js";
 import { addSaidas } from "./new-destination.js";
 import { addTurismo } from "./new-destination.js";
 import { setDocumento } from "../../utils/set.js";
-import { FIRESTORE_DESTINOS_DATA, SUCCESSFUL_SAVE, DOCUMENT_ID, setDocumentId, setFirestoreDestinosData } from '../../data/state.js';
+import { FIRESTORE_DESTINATIONS_DATA, SUCCESSFUL_SAVE, DOCUMENT_ID, setDocumentId, setFirestoreDestinationsData } from '../../data/state.js';
 import { MESSAGE_PROPERTIES } from '../../utils/messages.js';
 
 const TODAY = getTodayFormatted();
@@ -174,7 +174,7 @@ async function loadDestinations() {
 	startLoadingScreen();
 
 	const singleData = await getSingleData("destinos");
-	setFirestoreDestinosData(singleData);
+	setFirestoreDestinationsData(singleData);
 
 	populateExistingDestinationForm();
 	stopLoadingScreen();
@@ -271,13 +271,13 @@ export function emojisOnInputAction(j, categoria) {
 }
 
 export function openMoveDestinationModal(j, categoria) {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
+	const properties = cloneObject(MESSAGE_PROPERTIES);
 
-	propriedades.titulo =
+	properties.titulo =
 		getID(`${categoria}-nome-${j}`).value ||
 		`Mover - ${firstCharToUpperCase(categoria)}`;
-	propriedades.containers = getContainersInput();
-	propriedades.botoes = [
+	properties.containers = getContainersInput();
+	properties.botoes = [
 		{
 			tipo: "cancelar",
 		},
@@ -303,7 +303,7 @@ export function openMoveDestinationModal(j, categoria) {
 		}
 	}
 
-	propriedades.conteudo = `
+	properties.conteudo = `
   <div class="nice-form-group"">
     <label>Mover para:</label>
       <select class="editar-select" id="move-select">
@@ -311,7 +311,7 @@ export function openMoveDestinationModal(j, categoria) {
       </select>
   </div>`;
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 }
 
 function moveDestination(j, categoria) {
@@ -366,10 +366,10 @@ function moveDestination(j, categoria) {
 export function deleteDestino() {
 	const name = getID("titulo").value;
 
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = translate("destination.delete.title");
-	propriedades.conteudo = translate("destination.delete.message", { name });
-	propriedades.botoes = [
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.titulo = translate("destination.delete.title");
+	properties.conteudo = translate("destination.delete.message", { name });
+	properties.botoes = [
 		{
 			tipo: "cancelar",
 		},
@@ -379,7 +379,7 @@ export function deleteDestino() {
 		},
 	];
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 }
 
 async function deleteDestinoAction() {

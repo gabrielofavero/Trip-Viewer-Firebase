@@ -1,13 +1,13 @@
-import { getDestinos } from '../../app/config.js';
+import { getDestinations } from '../../app/config.js';
 import { firstCharToUpperCase, getChildIDs, getID, getJ, getOrCreateCategoryID } from '../../utils/dom.js';
 import { getUID } from '../../data/firebase/auth.js';
 import { displayError, displayMessage } from '../../utils/messages.js';
 import { translate } from "../../i18n/translation.js";
 import { getDescription } from "./categories/description.js";
-import { FIRESTORE_DESTINOS_DATA, FIRESTORE_DESTINOS_NEW_DATA, setFirestoreDestinosNewData } from '../../data/state.js';
+import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA, setFirestoreDestinationsNewData } from '../../data/state.js';
 
 async function buildDestinosObject() {
-	setFirestoreDestinosNewData({
+	setFirestoreDestinationsNewData({
 		lanches: buildDestinoCategoryObject("lanches"),
 		lojas: buildDestinoCategoryObject("lojas"),
 		restaurantes: buildDestinoCategoryObject("restaurantes"),
@@ -30,7 +30,7 @@ async function buildDestinosObject() {
 		compartilhamento: {
 			ativo: true,
 			dono:
-				FIRESTORE_DESTINOS_DATA?.compartilhamento?.dono || (await getUID()),
+				FIRESTORE_DESTINATIONS_DATA?.compartilhamento?.dono || (await getUID()),
 		},
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
@@ -76,9 +76,9 @@ async function updateTikTokLinks() {
 	let toUpdate = false;
 	const urls = {};
 
-	const destinos = getDestinos();
+	const destinos = getDestinations();
 	for (const categoria of destinos.categorias.passeios) {
-		const entries = Object.entries(FIRESTORE_DESTINOS_NEW_DATA[categoria]);
+		const entries = Object.entries(FIRESTORE_DESTINATIONS_NEW_DATA[categoria]);
 		const midias = entries.map(([id, item]: [string, any]) => ({
 			id,
 			midia: item.midia,
@@ -165,10 +165,10 @@ async function updateTikTokLinks() {
 			return;
 		}
 
-		const destinos = getDestinos();
+		const destinos = getDestinations();
 		for (const categoria of destinos.categorias.passeios) {
 			for (const [id, item] of Object.entries(
-				FIRESTORE_DESTINOS_NEW_DATA[categoria],
+				FIRESTORE_DESTINATIONS_NEW_DATA[categoria],
 			) as [string, any][]) {
 				if (data[categoria][id]) {
 					item.midia = data[categoria][id];
@@ -195,7 +195,7 @@ async function updateTikTokLinks() {
 			conteudo += `<strong>${categoriaTitle}:</strong><br>`;
 			for (const index of unableToConvert[categoria]) {
 				const item =
-					FIRESTORE_DESTINOS_NEW_DATA[categoria][index]?.nome ||
+					FIRESTORE_DESTINATIONS_NEW_DATA[categoria][index]?.nome ||
 					`Item ${index + 1}`;
 				conteudo += `${item}<br>`;
 			}

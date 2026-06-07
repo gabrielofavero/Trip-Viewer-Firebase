@@ -339,17 +339,17 @@ export async function deleteAccountDocuments() {
 
 	// --- CASE B: viagens ---
 	if (Array.isArray(userData.viagens)) {
-		for (const viagemID of userData.viagens) {
-			const refViagem = firebase
+		for (const tripID of userData.viagens) {
+			const tripRef = firebase
 				.firestore()
 				.collection("viagens")
-				.doc(viagemID);
-			safePushDelete(refViagem);
+				.doc(tripID);
+			safePushDelete(tripRef);
 
 			const protRef = firebase
 				.firestore()
 				.collection("protegido")
-				.doc(viagemID);
+				.doc(tripID);
 
 			// Read protRef (read must be awaited, deletes can be parallel)
 			let protSnap = null;
@@ -364,20 +364,20 @@ export async function deleteAccountDocuments() {
 
 				if (pin) {
 					safePushDelete(
-						firebase.firestore().doc(`viagens/protected/${pin}/${viagemID}`),
+						firebase.firestore().doc(`viagens/protected/${pin}/${tripID}`),
 					);
 					safePushDelete(
-						firebase.firestore().doc(`gastos/protected/${pin}/${viagemID}`),
+						firebase.firestore().doc(`gastos/protected/${pin}/${tripID}`),
 					);
 				}
 
 				safePushDelete(protRef);
 			} else {
-				const gastosRef = firebase
+				const expensesRef = firebase
 					.firestore()
 					.collection("gastos")
-					.doc(viagemID);
-				safePushDelete(gastosRef);
+					.doc(tripID);
+				safePushDelete(expensesRef);
 			}
 		}
 

@@ -4,7 +4,7 @@ import { addValueToSelectIfExists, getAllValuesFromSelect } from '../../../../ui
 import { initializeSortableForGroup } from '../../../../ui/sortable.js';
 import { translate } from '../../../../i18n/translation.js';
 import { addValuesForDestinosAtivosCheckbox, getDestinosFromCheckbox, DESTINOS_ATIVOS } from '../destination.js';
-import { DESTINOS } from '../../edit-trip.js';
+import { DESTINATIONS } from '../../../../data/state.js';
 import { INNER_PROGRAMACAO, afterDragInnerItinerary, loadInnerItineraryHTML } from "../itinerary-module/inner-itinerary/inner-itinerary.js";
 import { loadItinerarySchedule } from "../../../trip-detail/categories/itinerary-module/itinerary-module.js";
 import { updateDestinosAtivosCheckboxHTML } from "../destination.js";
@@ -56,7 +56,7 @@ export function getItineraryArray() {
 				"return_and_destinations",
 				"all_destinations",
 			].includes(tituloSelectValue) ||
-			DESTINOS.map((d) => d.id).includes(tituloSelectValue);
+			DESTINATIONS.map((d) => d.id).includes(tituloSelectValue);
 
 		if (
 			DATAS[j - 1] &&

@@ -29,7 +29,7 @@ export async function loadColors() {
 	return loadJSON('/assets/json/cores.json');
 }
 
-export async function loadDestinos() {
+export async function loadDestinations() {
 	return loadJSON('/assets/json/destinos.json');
 }
 
@@ -49,7 +49,7 @@ export async function loadIcons() {
 	return loadJSON('/assets/json/icons.json');
 }
 
-export async function loadVersoes() {
+export async function loadVersions() {
 	return loadJSON('/assets/json/version.json');
 }
 
@@ -71,12 +71,12 @@ export async function loadAllConfigs(languagePackName) {
 	const [cores, destinos, itinerary, moedas, transportes, icons, versoes, language] =
 		await Promise.all([
 			loadColors(),
-			loadDestinos(),
+			loadDestinations(),
 			loadItinerary(),
 			loadCurrencies(),
 			loadTransportations(),
 			loadIcons(),
-			loadVersoes(),
+			loadVersions(),
 			loadLanguage(languagePackName),
 		]);
 	return { cores, destinos, itinerary, moedas, transportes, icons, versoes, language };
@@ -88,7 +88,7 @@ export function getColors() {
 	return _cache['/assets/json/cores.json'];
 }
 
-export function getDestinos() {
+export function getDestinations() {
 	return _cache['/assets/json/destinos.json'];
 }
 
@@ -108,7 +108,7 @@ export function getIcons() {
 	return _cache['/assets/json/icons.json'];
 }
 
-export function getVersoes() {
+export function getVersions() {
 	return _cache['/assets/json/version.json'];
 }
 

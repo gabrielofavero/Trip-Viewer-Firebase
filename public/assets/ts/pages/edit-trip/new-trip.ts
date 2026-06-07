@@ -5,7 +5,7 @@ import { formattedDateToDate, getArrayOfDates, getDateTitle, getNextCategoryStar
 import { addRemoveChildListener } from '../../theme/visibility.js';
 import { loadImageSelector } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
-import { DESTINOS } from './edit-trip.js';
+import { DESTINATIONS } from '../../data/state.js';
 import { loadTransportationListeners, loadTransportationVisibility, applyTransportationTypeVisualization, updateTransportationTitle } from './categories/transportation.js';
 import { loadAccommodationListeners, ACCOMMODATION_IMAGES, removeAccommodationImages } from './categories/accommodation.js';
 import { addRemoveTransportationListener } from './support/event-listeners.js';
@@ -289,21 +289,21 @@ export function addHospedagens() {
 }
 
 export function loadDestinations() {
-	if (!DESTINOS || DESTINOS.length === 0) return;
+	if (!DESTINATIONS || DESTINATIONS.length === 0) return;
 
-	let destinos = DESTINOS;
-	destinos.sort((a, b) => a.titulo.localeCompare(b.titulo));
+	let destinations = DESTINATIONS;
+	destinations.sort((a, b) => a.titulo.localeCompare(b.titulo));
 	getID("sem-destinos").style.display = "none";
 	getID("com-destinos").style.display = "block";
 
 	const fieldset = getID("destinos-checkboxes");
 	fieldset.innerHTML = "";
-	for (let j = 1; j <= destinos.length; j++) {
+	for (let j = 1; j <= destinations.length; j++) {
 		const i = j - 1;
 		fieldset.innerHTML += getDestinationsItemCheckbox(
 			j,
-			destinos[i].id,
-			destinos[i].titulo,
+			destinations[i].id,
+			destinations[i].titulo,
 		);
 	}
 

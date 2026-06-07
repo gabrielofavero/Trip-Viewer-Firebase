@@ -1,5 +1,5 @@
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
-import { setState, DOCUMENT_ID, DESTINOS, SUCCESSFUL_SAVE, setDocumentId, setDestinos, setSuccessfulSaveFn } from '../../data/state.js';
+import { setState, DOCUMENT_ID, DESTINATIONS, SUCCESSFUL_SAVE, setDocumentId, setDestinations, setSuccessfulSaveFn } from '../../data/state.js';
 import { getDateTitle, getTodayFormatted, getTomorrowFormatted, jsDateToKey } from '../../utils/dates.js';
 import { cloneObject, getID, getOrderedDocumentByTitle, getURLParam } from '../../utils/dom.js';
 import { deleteUserObjectDB, getPermissoes, getSingleData, getTripDataWithDestinations, get, deleteDocument } from '../../data/firebase/database.js';
@@ -19,7 +19,6 @@ import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadUploadSelector } from "../../data/firebase/storage.js";
 
 var PERMISSOES;
-export { DESTINOS };
 export var FIRESTORE_PROTECTED_DATA: Record<string, any> = {};
 export var FIRESTORE_GASTOS_DATA: Record<string, any> = {};
 export function setGastosData(val: any) { FIRESTORE_GASTOS_DATA = val; }
@@ -43,7 +42,7 @@ export async function loadEditTripPage() {
 	newDynamicSelect("transporte-pessoa");
 
 	setUserData(await getUserData());
-	setDestinos(getOrderedDocumentByTitle(USER_DATA.destinos));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA.destinos));
 
 	if (DOCUMENT_ID) {
 		await loadTrip(true);
@@ -111,13 +110,13 @@ async function loadTrip(stripped = false) {
 }
 
 export function deleteTrip() {
-	let viagem = getID("titulo").value;
-	viagem = viagem ? ` "${viagem}"` : "";
+	let trip = getID("titulo").value;
+	trip = trip ? ` "${trip}"` : "";
 
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = translate("trip.delete.title");
-	propriedades.conteudo = translate("trip.delete.message", { name: viagem });
-	propriedades.botoes = [
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.titulo = translate("trip.delete.title");
+	properties.conteudo = translate("trip.delete.message", { name: trip });
+	properties.botoes = [
 		{
 			tipo: "cancelar",
 		},
@@ -127,7 +126,7 @@ export function deleteTrip() {
 		},
 	];
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 }
 
 async function deleteTripAction() {

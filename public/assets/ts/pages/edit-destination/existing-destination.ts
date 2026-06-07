@@ -3,7 +3,7 @@ import { displayError } from '../../utils/messages.js';
 import { getID } from '../../utils/dom.js';
 import { setPageName } from '../../app/main.js';
 import { translate } from "../../i18n/translation.js";
-import { FIRESTORE_DESTINOS_DATA } from "../destination/destination.js";
+import { FIRESTORE_DESTINATIONS_DATA } from "../../data/state.js";
 import { setDescription } from "./categories/description.js";
 import { updateDescriptionButtonLabel } from "./categories/description.js";
 import { loadMoedaOptions } from "./categories/price.js";
@@ -27,7 +27,7 @@ export function populateExistingDestinationForm() {
 
 		loadMapaData();
 		setPageName(
-			`${translate("labels.edit")} ${FIRESTORE_DESTINOS_DATA.titulo}`,
+			`${translate("labels.edit")} ${FIRESTORE_DESTINATIONS_DATA.titulo}`,
 		);
 	} catch (error) {
 		displayError(error);
@@ -37,9 +37,9 @@ export function populateExistingDestinationForm() {
 
 // Modules: Existing Tour
 function loadDadosBasicosDestinosData() {
-	getID("titulo").value = FIRESTORE_DESTINOS_DATA.titulo;
+	getID("titulo").value = FIRESTORE_DESTINATIONS_DATA.titulo;
 
-	const moedaValue = FIRESTORE_DESTINOS_DATA.moeda;
+	const moedaValue = FIRESTORE_DESTINATIONS_DATA.moeda;
 	const moedaDiv = getID("moeda");
 
 	if (moedaDiv.querySelector(`option[value="${moedaValue}"]`)) {
@@ -54,7 +54,7 @@ function loadDadosBasicosDestinosData() {
 }
 
 function loadDestinoExistente(categoria) {
-	const habilitado = FIRESTORE_DESTINOS_DATA.modulos[categoria] === true;
+	const habilitado = FIRESTORE_DESTINATIONS_DATA.modulos[categoria] === true;
 	getID(`habilitado-${categoria}`).checked = habilitado;
 	getID(`habilitado-${categoria}-content`).style.display = habilitado
 		? "block"
@@ -63,7 +63,7 @@ function loadDestinoExistente(categoria) {
 		? "block"
 		: "none";
 
-	const destinosArr = Object.entries(FIRESTORE_DESTINOS_DATA[categoria])
+	const destinosArr = Object.entries(FIRESTORE_DESTINATIONS_DATA[categoria])
 		.map(([id, value]) => ({
 			id,
 			...(value as Record<string, unknown>),
@@ -142,12 +142,12 @@ export function addDestinoHTML(categoria, j, destino) {
 function loadMapaData() {
 	const mapaLink = getID("mapa-link");
 
-	if (FIRESTORE_DESTINOS_DATA.modulos.mapa === true) {
+	if (FIRESTORE_DESTINATIONS_DATA.modulos.mapa === true) {
 		getID("habilitado-mapa").checked = true;
 		getID("habilitado-mapa-content").style.display = "block";
 		mapaLink.setAttribute("required", "");
 
-		const mapa = FIRESTORE_DESTINOS_DATA.myMaps;
+		const mapa = FIRESTORE_DESTINATIONS_DATA.myMaps;
 		if (mapa) {
 			mapaLink.value = mapa;
 		}

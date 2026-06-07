@@ -9,7 +9,8 @@ import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
 import {getNotaClass, getPlanejado} from "./categories.js";
 import { getNotaIcon } from "./categories.js";
-import { ACTIVE_CATEGORY, FIRESTORE_DESTINOS_DATA, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination } from "./destination.js";
+import { FIRESTORE_DESTINATIONS_DATA } from "../../data/state.js";
+import { ACTIVE_CATEGORY, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination } from "./destination.js";
 import { getDestinationsAccordionBodyHTML } from "./support/content.js";
 import { getDestinationsHTML } from "./support/content.js";
 import { getEditHTML } from "./support/content.js";
@@ -29,7 +30,7 @@ export async function edit(j: number): Promise<void> {
 	}
 
 	const id = getDestinationID(j);
-	const item = FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY]?.[id];
+	const item = FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]?.[id];
 	const accordionBody = getID(`accordion-body-${j}`);
 
 	if (!item || !accordionBody) {
@@ -397,5 +398,5 @@ async function canEdit() {
 	if (!uid) {
 		return false;
 	}
-	return FIRESTORE_DESTINOS_DATA.compartilhamento.dono === uid;
+	return FIRESTORE_DESTINATIONS_DATA.compartilhamento.dono === uid;
 }

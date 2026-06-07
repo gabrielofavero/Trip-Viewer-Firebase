@@ -95,16 +95,16 @@ function getProtectedJobObject(title, documentID, jobs, pin = "") {
 
 export function displayPinRequestBackup() {
 	stopLoadingScreen();
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = translate("trip.basic_information.pin.title");
-	propriedades.containers = getContainersInput();
-	propriedades.conteudo = getContent();
-	propriedades.botoes = [
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.titulo = translate("trip.basic_information.pin.title");
+	properties.containers = getContainersInput();
+	properties.conteudo = getContent();
+	properties.botoes = [
 		{ tipo: "cancelar" },
 		{ tipo: "confirmar", acao: () => backupAccountData(true) },
 	];
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 
 	function getContent() {
 		const content = [translate("trip.basic_information.pin.trip_pin.optional")];
@@ -259,12 +259,12 @@ function newBackupFail(job, reason) {
 }
 
 function displayPartialBackupWarning() {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = translate("account.backup.partial.title");
-	propriedades.conteudo = getContent();
-	propriedades.botoes = [{ tipo: "fechar" }];
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.titulo = translate("account.backup.partial.title");
+	properties.conteudo = getContent();
+	properties.botoes = [{ tipo: "fechar" }];
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 
 	function getContent() {
 		const list = [translate("account.backup.partial.message")];

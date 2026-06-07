@@ -1,9 +1,9 @@
-import { getDestinos } from '../../../app/config.js';
+import { getDestinations } from '../../../app/config.js';
 import { cloneObject, firstCharToUpperCase, getChildIDs, getID, getJ } from '../../../utils/dom.js';
 import { getUserLanguage, LANGUAGES, translate } from '../../../i18n/translation.js';
 import { closeMessage, displayFullMessage, getContainersInput, MESSAGE_PROPERTIES } from '../../../utils/messages.js';
 import { getSelectOptionsHTML } from "../../../ui/fields.js";
-import { FIRESTORE_DESTINOS_DATA } from '../../../data/state.js';
+import { FIRESTORE_DESTINATIONS_DATA } from '../../../data/state.js';
 
 export function getDescriptionHTML(categoria, j) {
 	let content = "";
@@ -96,7 +96,7 @@ export function openDescriptionModal(categoria, j) {
 
 function getDescriptionContent(categoria) {
 	const selectedLanguage = getUserLanguage();
-	const translation = getDestinos().translation[categoria];
+	const translation = getDestinations().translation[categoria];
 	const placeholders = {};
 	const languages = {};
 
@@ -169,7 +169,7 @@ function descriptionSelectChangeAction() {
 
 function getAllDescriptions() {
 	const result = {};
-	const destinos = getDestinos();
+	const destinos = getDestinations();
 	for (const categoria of destinos.categorias.passeios) {
 		result[categoria] = {};
 		for (const childID of getChildIDs(`${categoria}-box`)) {
@@ -187,7 +187,7 @@ function getAllDescriptions() {
 }
 
 function updateAllDescriptions(data) {
-	const destinos = getDestinos();
+	const destinos = getDestinations();
 	for (const categoria of destinos.categorias.passeios) {
 		for (const childID of getChildIDs(`${categoria}-box`)) {
 			const j = getJ(childID);
@@ -203,7 +203,7 @@ function updateAllDescriptions(data) {
 
 function exportPTtranslations() {
 	const result = {};
-	const input = FIRESTORE_DESTINOS_DATA;
+	const input = FIRESTORE_DESTINATIONS_DATA;
 
 	for (const key in input) {
 		if (Array.isArray(input[key])) {
@@ -218,8 +218,8 @@ function importPTtranslations(input, lang = "en") {
 	const keys = ["lanches", "lojas", "restaurantes", "saidas", "turismo"];
 
 	for (const key of keys) {
-		for (let i = 0; i < FIRESTORE_DESTINOS_DATA[key].length; i++) {
-			const item = FIRESTORE_DESTINOS_DATA[key][i];
+		for (let i = 0; i < FIRESTORE_DESTINATIONS_DATA[key].length; i++) {
+			const item = FIRESTORE_DESTINATIONS_DATA[key][i];
 			const descricao = item.descricao || {};
 			descricao[lang] = input[key][i];
 			item.descricao = descricao;

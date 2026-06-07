@@ -236,33 +236,33 @@ export function requestPin({
 	if (precontent === undefined) {
 		precontent = translate("trip.basic_information.pin.request");
 	}
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
+	const properties = cloneObject(MESSAGE_PROPERTIES);
 	const classComplement = invalido ? "-invalid" : "";
-	propriedades.titulo = translate("trip.basic_information.pin.title");
-	propriedades.conteudo = `${precontent}<div class="pin-wrapper">
+	properties.titulo = translate("trip.basic_information.pin.title");
+	properties.conteudo = `${precontent}<div class="pin-wrapper">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                               </div>
                               <div id="pin-code" class="pin"></div>`;
-	propriedades.critico = true;
-	propriedades.containers = getContainersInput();
-	propriedades.botoes = [];
+	properties.critico = true;
+	properties.containers = getContainersInput();
+	properties.botoes = [];
 
 	if (cancelAction) {
-		propriedades.botoes.push({
+		properties.botoes.push({
 			tipo: "cancelar",
 			acao: cancelAction,
 		});
 	}
 
-	propriedades.botoes.push({
+	properties.botoes.push({
 		tipo: "confirmar",
 		acao: confirmAction,
 	});
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 	loadPin();
 }
 

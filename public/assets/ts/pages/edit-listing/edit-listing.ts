@@ -1,4 +1,4 @@
-import { getState, setState, DOCUMENT_ID, DESTINOS, FIRESTORE_NEW_DATA, SUCCESSFUL_SAVE, setDocumentId, setDestinos, setFirestoreNewData } from '../../data/state.js';
+import { getState, setState, DOCUMENT_ID, DESTINATIONS, FIRESTORE_NEW_DATA, SUCCESSFUL_SAVE, setDocumentId, setDestinations, setFirestoreNewData } from '../../data/state.js';
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { cloneObject, getChildIDs, getID, getOrderedDocumentByTitle, getURLParam, setRequired } from '../../utils/dom.js';
 import { deleteUserObjectDB, getPermissoes, getSingleData } from '../../data/firebase/database.js';
@@ -33,7 +33,7 @@ export async function loadEditListingPage() {
 	loadHabilitados();
 
 	setUserData(await getUserData());
-	setDestinos(getOrderedDocumentByTitle(USER_DATA.destinos));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA.destinos));
 
 	if (DOCUMENT_ID) {
 		await carregarListagem();
@@ -159,13 +159,13 @@ async function setListagem() {
 }
 
 export function deleteListagem() {
-	let listagem = getID("titulo").value;
-	listagem = listagem ? ` "${listagem}"` : "";
+	let listing = getID("titulo").value;
+	listing = listing ? ` "${listing}"` : "";
 
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = "Apagar Listagem";
-	propriedades.conteudo = `Tem certeza que deseja realizar a exclusão da listagem${listagem}? A ação não poderá ser desfeita.`;
-	propriedades.botoes = [
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.titulo = "Apagar Listagem";
+	properties.conteudo = `Tem certeza que deseja realizar a exclusão da listagem${listing}? A ação não poderá ser desfeita.`;
+	properties.botoes = [
 		{
 			tipo: "cancelar",
 		},
@@ -175,7 +175,7 @@ export function deleteListagem() {
 		},
 	];
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 }
 
 async function deleteListagemAction() {

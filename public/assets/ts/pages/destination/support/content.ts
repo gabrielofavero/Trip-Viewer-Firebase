@@ -1,15 +1,16 @@
 import { getCurrencies } from '../../../app/config.js';
 import { LANGUAGES, translate } from '../../../i18n/translation.js';
-import { getDescricaoValue } from "../../../models/destination.model.js";
+import { getDescriptionValue } from "../../../models/destination.model.js";
 import { getNotaTranslation } from "../../../models/destination.model.js";
-import { getValorValue } from "../../../models/destination.model.js";
+import { getPriceValue } from "../../../models/destination.model.js";
 import { getDestinationTitle } from "../../../utils/dom.js";
 import { getDestinationsBoxHTML } from "../../../utils/dom.js";
 import {getLinkOnClick, getPlanejado} from "../categories.js";
 import { getNotaClass } from "../categories.js";
 import { getNotaIcon } from "../categories.js";
 import { getTurno } from "../categories.js";
-import { ACTIVE_CATEGORY, FIRESTORE_DESTINOS_DATA } from "../destination.js";
+import { FIRESTORE_DESTINATIONS_DATA } from "../../../data/state.js";
+import { ACTIVE_CATEGORY } from "../destination.js";
 import { FILTER_SORT_DATA } from "./sort-and-filter/sort-and-filter.js";
 import { getDescricaoVisibility } from "./visibility.js";
 import { getDestinationsTitleVisibility } from "./visibility.js";
@@ -55,11 +56,11 @@ export function getDestinationsAccordionBodyHTML({
 	editBtn = true,
 }) {
 	if (!valores) {
-		valores = getCurrencies().escala[FIRESTORE_DESTINOS_DATA.moeda];
+		valores = getCurrencies().escala[FIRESTORE_DESTINATIONS_DATA.moeda];
 	}
 
 	if (!moeda) {
-		moeda = FIRESTORE_DESTINOS_DATA.moeda;
+		moeda = FIRESTORE_DESTINATIONS_DATA.moeda;
 	}
 
 	const ediText = editBtn
@@ -95,11 +96,11 @@ export function getDestinationsAccordionBodyHTML({
             <div class="destinos-topicos-box" style="display: block">
                 <div class="destinos-topico" style="display: ${getValorVisibility(item)}">
                     <i class="iconify color-icon" data-icon="bx:dollar"></i>
-                    ${getValorValue(item, valores, moeda)}
+                    ${getPriceValue(item, valores, moeda)}
                 </div>
             </div>
             <div class="destinos-descricao" style="display: ${getDescricaoVisibility(item)}">
-                ${getDescricaoValue(item)}
+                ${getDescriptionValue(item)}
             </div>
             <div id="midia-${j}" class="midia-container"></div>
             ${ediText}
@@ -218,7 +219,7 @@ function getRegionOptionsHTML() {
 }
 
 function getValuesOptionsHTML() {
-	const moedas = getCurrencies().escala[FIRESTORE_DESTINOS_DATA.moeda];
+	const moedas = getCurrencies().escala[FIRESTORE_DESTINATIONS_DATA.moeda];
 	return `
         <option value="$">${moedas["$"]}</option>
         <option value="$$">${moedas["$$"]}</option>

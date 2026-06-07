@@ -1,4 +1,4 @@
-import { getState, DESTINOS, DOCUMENT_ID } from '../../../../data/state.js';
+import { getState, DESTINATIONS, DOCUMENT_ID } from '../../../../data/state.js';
 import { getID } from '../../../../utils/dom.js';
 import { convertFromDateObject, dateObjectToKey, getDateString, getTodayDateObject } from '../../../../utils/dates.js';
 import { getColorNameFromOptions } from '../../../../theme/colors.js';
@@ -54,7 +54,7 @@ function loadSchedulePills(multipleColors = true) {
 
 		for (let i = 0; i < destinos.length; i++) {
 			const destinoID = destinos[i];
-			const destino = DESTINOS.find(
+			const destino = DESTINATIONS.find(
 				(destino) => destino.destinosID === destinoID,
 			);
 			if (!destino) continue;

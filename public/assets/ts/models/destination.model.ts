@@ -4,7 +4,7 @@
 
 import { getCurrencies } from '../app/config.js';
 import { getUserLanguage, translate } from '../i18n/translation.js';
-import { FIRESTORE_DESTINOS_DATA } from "../pages/destination/destination.js";
+import { FIRESTORE_DESTINATIONS_DATA } from "../data/state.js";
 import { FILTER_SORT_KEYS_ORDER } from "../pages/destination/support/sort-and-filter/sort-and-filter.js";
 import { getPriceBuckets } from "../pages/destination/support/sort-and-filter/support/price-bucket.js";
 
@@ -23,7 +23,7 @@ export function getNotaTranslation(nota) {
 	}
 }
 
-export function getValorValue(item, valores, moeda) {
+export function getPriceValue(item, values, currency) {
 	switch (item.valor) {
 		case "default":
 			return translate("destination.price.default");
@@ -33,22 +33,22 @@ export function getValorValue(item, valores, moeda) {
 		case "$$":
 		case "$$$":
 		case "$$$$":
-			return valores[item.valor];
+			return values[item.valor];
 		default:
 			if (item.valor) {
-				return convertCustomValor(item.valor, moeda);
+				return convertCustomPrice(item.valor, currency);
 			}
 			return translate("destination.price.default");
 	}
 }
 
-export function convertCustomValor(valor, moeda) {
-	if (isNaN(valor) || (!isNaN(valor) && !moeda)) {
-		return valor;
-	} else return `${moeda}${valor}`;
+export function convertCustomPrice(value, currency) {
+	if (isNaN(value) || (!isNaN(value) && !currency)) {
+		return value;
+	} else return `${currency}${value}`;
 }
 
-export function getDescricaoValue(item) {
+export function getDescriptionValue(item) {
 	const lang = getUserLanguage();
 	return item.descricao?.[lang] || "";
 }
@@ -57,7 +57,7 @@ export function getDescricaoValue(item) {
 
 export function getPriceBucket(value) {
 	const moedas = getCurrencies();
-	const range = moedas.escala_numerica[FIRESTORE_DESTINOS_DATA.moeda];
+	const range = moedas.escala_numerica[FIRESTORE_DESTINATIONS_DATA.moeda];
 	if (isNaN(value)) return "default";
 	if (value === 0) return "-";
 	if (value >= range["$"][0] && value <= range["$"][1]) return "$";

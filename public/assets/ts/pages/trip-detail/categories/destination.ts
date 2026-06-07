@@ -1,5 +1,5 @@
-import { getDestinos, getLanguage } from '../../../app/config.js';
-import { getState, DESTINOS, DOCUMENT_ID, setDestinos } from '../../../data/state.js';
+import { getDestinations, getLanguage } from '../../../app/config.js';
+import { getState, DESTINATIONS, DOCUMENT_ID, setDestinations } from '../../../data/state.js';
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, getTodayDateObject, jsDateToKey } from '../../../utils/dates.js';
 import { loadCustomSelect, loadCustomSelectAction } from '../../../ui/custom-select.js';
@@ -19,17 +19,17 @@ var DESTINO_TRANSLATIONS = {};
 
 // ======= LOADERS =======
 export function loadDestinations() {
-	for (let i = 0; i < DESTINOS.length; i++) {
-		P_RESULT[DESTINOS[i].destinos.destinosID] = DESTINOS[i].destinos;
+	for (let i = 0; i < DESTINATIONS.length; i++) {
+		P_RESULT[DESTINATIONS[i].destinos.destinosID] = DESTINATIONS[i].destinos;
 	}
 
-	if (DESTINOS.length % 2 === 1) {
+	if (DESTINATIONS.length % 2 === 1) {
 		// Ímpar
 		getID("destinationsBox").classList.add("centered-destino-box");
 	}
 
 	if (
-		DESTINOS.length === 1 &&
+		DESTINATIONS.length === 1 &&
 		getID("destinations-select").style.display === "none" &&
 		getChildIDs("destinationsBox").length <= 1
 	) {
@@ -44,7 +44,7 @@ export function loadDestinations() {
 }
 
 function autoNavigateDestinos() {
-	if (DESTINOS.length <= 1) return;
+	if (DESTINATIONS.length <= 1) return;
 	if (!INICIO?.date || !FIM?.date) return;
 
 	const hoje = convertFromDateObject(getTodayDateObject());
@@ -66,9 +66,9 @@ function autoNavigateDestinos() {
 }
 
 export function loadDestinationsCustomSelect() {
-	setDestinos(getState().destinos);
+	setDestinations(getState().destinos);
 
-	if (DESTINOS.length <= 1) {
+	if (DESTINATIONS.length <= 1) {
 		getID("destinations-select").style.display = "none";
 		return;
 	}
@@ -96,7 +96,7 @@ export function loadDestinationsCustomSelect() {
 				)
 			: new Set<string>();
 
-		for (const destino of DESTINOS) {
+		for (const destino of DESTINATIONS) {
 			options.push({
 				value: destino.destinosID,
 				label: destino.destinos.titulo,
@@ -128,9 +128,9 @@ export function loadDestinationsCustomSelect() {
 	}
 
 	function loadDestionationCustomSelectAction(value) {
-		for (let i = 0; i < DESTINOS.length; i++) {
-			if (DESTINOS[i].destinosID === value) {
-				ACTIVE_DESTINATION = DESTINOS[i].destinosID;
+		for (let i = 0; i < DESTINATIONS.length; i++) {
+			if (DESTINATIONS[i].destinosID === value) {
+				ACTIVE_DESTINATION = DESTINATIONS[i].destinosID;
 				loadDestinationsHTML(getState().destinos[i]);
 				adjustDestinationsHTML();
 				break;
@@ -141,7 +141,7 @@ export function loadDestinationsCustomSelect() {
 
 export function loadDestinationsHTML(destino) {
 	let text = "";
-	const destinos = getDestinos();
+	const destinos = getDestinations();
 	const types = destinos.categorias.geral;
 
 	for (let i = 0; i < types.length; i++) {
@@ -179,13 +179,13 @@ export function loadDestinationsHTML(destino) {
 }
 
 export function loadAndOpenDestino(code) {
-	const translation = getDestinos().translation;
+	const translation = getDestinations().translation;
 	const link = `destination?d=${ACTIVE_DESTINATION}&v=${DOCUMENT_ID}&type=${translation[code]}&visibility=${getVisibility()}`;
 	openViewEmbed(link);
 }
 
 function getDestinationsBoxesIndex(i) {
-	const boxes = getDestinos().boxes;
+	const boxes = getDestinations().boxes;
 	if (i > boxes.length - 1) {
 		return i % boxes.length;
 	} else return i;

@@ -1,4 +1,4 @@
-import { getDestinos, getCurrencies } from '../../../app/config.js';
+import { getDestinations, getCurrencies } from '../../../app/config.js';
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 
@@ -7,7 +7,7 @@ export var VALOR_OPTIONS = "";
 export function loadCurrencySelects() {
 	loadMoedaOptions();
 
-	const destinos = getDestinos();
+	const destinos = getDestinations();
 	for (const categoria of destinos.categorias.passeios) {
 		const childs = getChildIDs(`${categoria}-box`);
 		for (const child of childs) {

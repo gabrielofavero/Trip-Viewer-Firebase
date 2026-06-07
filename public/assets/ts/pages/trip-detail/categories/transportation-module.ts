@@ -34,8 +34,8 @@ export function loadTransportation() {
 function getSwiperData() {
 	const swiperData = {};
 
-	const visualizacao = getState().transportes.visualizacao || "simple-view";
-	const key = visualizacao === "people-view" ? "pessoa" : "idaVolta";
+	const viewMode = getState().transportes.visualizacao || "simple-view";
+	const key = viewMode === "people-view" ? "pessoa" : "idaVolta";
 	const complement = key === "pessoa" ? "custom-" : "";
 
 	TRANSPORTES_ATIVOS = [
@@ -49,7 +49,7 @@ function getSwiperData() {
 		...new Set(getState().transportes.dados.map((item) => item[key])),
 	];
 	ACTIVE_TRANSPORTATION =
-		visualizacao === "people-view" ? TRANSPORTES_ATIVOS[0] : "ida";
+		viewMode === "people-view" ? TRANSPORTES_ATIVOS[0] : "ida";
 
 	for (const transporteAtivo of TRANSPORTES_ATIVOS) {
 		swiperData[transporteAtivo] = [];
@@ -188,16 +188,16 @@ function adjustFlightLine(j) {
 }
 
 function buildTransportationSwiper(swiperData) {
-	const visualizacao = getState().transportes.visualizacao;
+	const viewMode = getState().transportes.visualizacao;
 	const keys = [];
 
-	loadSwiperPreActions(visualizacao, keys);
+	loadSwiperPreActions(viewMode, keys);
 
 	for (const key of keys) {
 		const content = getID(`transporte-${key}-content`);
-		if (swiperData[key]?.length > 0 || visualizacao === "simple-view") {
+		if (swiperData[key]?.length > 0 || viewMode === "simple-view") {
 			const data =
-				visualizacao === "simple-view"
+				viewMode === "simple-view"
 					? [
 							...(swiperData["ida"] || []),
 							...(swiperData["durante"] || []),
@@ -206,7 +206,7 @@ function buildTransportationSwiper(swiperData) {
 					: swiperData[key];
 			const swiperButtonStyle = data.length > 1 ? "" : `style="display: none"`;
 
-			if (visualizacao != "people-view") {
+			if (viewMode != "people-view") {
 				getID(`transporte-${key}`).style.display = "block";
 			}
 
@@ -230,8 +230,8 @@ function buildTransportationSwiper(swiperData) {
 		}
 	}
 
-	function loadSwiperPreActions(visualizacao, keys) {
-		switch (visualizacao) {
+	function loadSwiperPreActions(viewMode, keys) {
+		switch (viewMode) {
 			case "simple-view":
 				keys.push("ida");
 				break;
@@ -411,9 +411,9 @@ export function adjustTransportationBoxContainerHeight() {
 }
 
 function resetSwiperVisibility() {
-	const visualizacao = getState().transportes.visualizacao || "simple-view";
+	const viewMode = getState().transportes.visualizacao || "simple-view";
 
-	switch (visualizacao) {
+	switch (viewMode) {
 		case "leg-view":
 			adjustTransportationBoxContainerHeight();
 			getID("transportation-outbound").style.visibility = "";

@@ -18,11 +18,11 @@ export function computeTripDuration(inicio, fim) {
 
 /**
  * Computes the number of travelers
- * @param {Array} pessoas - Array of traveler objects
+ * @param {Array} travelers - Array of traveler objects
  * @returns {number} Number of travelers (minimum 1)
  */
-export function computeTravelerCount(pessoas) {
-	return pessoas?.length || 1;
+export function computeTravelerCount(travelers) {
+	return travelers?.length || 1;
 }
 
 // ======= Trip Date Helpers =======

@@ -1,4 +1,4 @@
-import { getDestinos, getItinerary } from '../../../../../app/config.js';
+import { getDestinations, getItinerary } from '../../../../../app/config.js';
 import { getDateTitle, jsDateToKey } from '../../../../../utils/dates.js';
 import { cloneObject, getID, getInnerItineraryTitleHTML } from '../../../../../utils/dom.js';
 import { closeMessage, displayFullMessage, getContainersInput, MESSAGE_PROPERTIES } from '../../../../../utils/messages.js';
@@ -560,7 +560,7 @@ async function buildInnerProgramacaoDestinosData(id) {
 		lojas: translate("destination.shopping.title"),
 	};
 
-	const passeios = getDestinos().categorias.passeios;
+	const passeios = getDestinations().categorias.passeios;
 	const categorias = Object.keys(data)
 		.filter(
 			(key) =>

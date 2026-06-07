@@ -2,7 +2,7 @@ import { loadVisibility } from '../../../theme/visibility.js';
 import { loadEmbedVisibility } from '../../../ui/embed.js';
 import { getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
-import { getDescricaoValue } from '../../../models/destination.model.js';
+import { getDescriptionValue } from '../../../models/destination.model.js';
 import { THEME_COLOR } from "../../../theme/theme.js";
 import { adjustEditVisibility } from "../edit-destination.js";
 
@@ -72,7 +72,7 @@ export function getValorVisibility(item) {
 }
 
 export function getDescricaoVisibility(item) {
-	return getDescricaoValue(item) ? "block" : "none";
+	return getDescriptionValue(item) ? "block" : "none";
 }
 
 export function getSystemWidth() {

@@ -7,8 +7,8 @@ import { START_DATE } from "../view.js";
 
 export function loadSummary() {
 	setTravelersFn(getState().pessoas);
-	const dias = Math.ceil((END_DATE.date - START_DATE.date) / (1000 * 60 * 60 * 24)) + 1;
-	const pessoas = getState().pessoas.length || 1;
+	const days = Math.ceil((END_DATE.date - START_DATE.date) / (1000 * 60 * 60 * 24)) + 1;
+	const travelers = getState().pessoas.length || 1;
 
 	// Keypoint 1
 	getID("keypoint1").innerHTML = `<i class="bx bxs-plane-take-off"></i>
@@ -22,11 +22,11 @@ export function loadSummary() {
 
 	// Keypoint 3
 	getID("keypoint3").innerHTML = `<i class="bx bxs-sun"></i>
-                                                <span>${dias}</span>
+                                                <span>${days}</span>
                                                 <p>${translate("labels.days")}</p>`;
 
 	// Keypoint 4
 	getID("keypoint4").innerHTML = `<i class="bx bx-male"></i>
-                                                <span>${pessoas}</span>
+                                                <span>${travelers}</span>
                                                 <p>${translate("labels.people")}</p>`;
 }

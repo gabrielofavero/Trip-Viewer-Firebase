@@ -1,6 +1,6 @@
 import { startLoadingTimer, stopLoadingScreen } from '../../utils/loading.js';
 import { displayError } from '../../utils/messages.js';
-import { getState, setState, TRAVELERS, DOCUMENT_ID, DESTINOS, setDocumentId, setDestinos } from '../../data/state.js';
+import { getState, setState, TRAVELERS, DOCUMENT_ID, DESTINATIONS, setDocumentId, setDestinations } from '../../data/state.js';
 import { getErrorFromGetRequestMessage, getID, getLastUpdatedOnText, getURLParam, getURLParams } from '../../utils/dom.js';
 import { getSingleData, haveErrorFromGetRequest } from '../../data/firebase/database.js';
 import { isOnDarkMode, loadVisibility } from '../../theme/visibility.js';
@@ -356,11 +356,11 @@ function loadModules() {
 
 		function loadDestinationsDefault() {
 			loadDestinationsCustomSelect();
-			loadDestinationsHTML(DESTINOS[0]);
+			loadDestinationsHTML(DESTINATIONS[0]);
 
-			if (DESTINOS.length === 1) {
+			if (DESTINATIONS.length === 1) {
 				setUniqueDestinationText();
-				ACTIVE_DESTINATION = DESTINOS[0].destinosID;
+				ACTIVE_DESTINATION = DESTINATIONS[0].destinosID;
 			}
 
 			loadDestinations();
@@ -370,13 +370,13 @@ function loadModules() {
 			const destinosID = getURLParam("d");
 			const destinos = getState();
 
-			setDestinos([{ destinosID, destinos }]);
+			setDestinations([{ destinosID, destinos }]);
 			ACTIVE_DESTINATION = destinosID;
 
 			getID("destinations-select").style.display = "none";
 
 			setUniqueDestinationText();
-			loadDestinationsHTML(DESTINOS[0]);
+			loadDestinationsHTML(DESTINATIONS[0]);
 
 			loadDestinations();
 		}
@@ -387,7 +387,7 @@ function loadModules() {
 		}
 
 		function setUniqueDestinationText() {
-			const titulo = DESTINOS[0].destinos.titulo;
+			const titulo = DESTINATIONS[0].destinos.titulo;
 		getID("destinations-title").innerHTML = titulo;
 		getID("destinationsNavText").innerHTML = titulo;
 		}

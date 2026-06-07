@@ -3,23 +3,23 @@
 
 import {
 	getNotaTranslation,
-	getValorValue,
-	convertCustomValor,
-	getDescricaoValue,
+	getPriceValue,
+	convertCustomPrice,
+	getDescriptionValue,
 } from '../../models/destination.model.js';
-import { getDestinos } from '../../app/config.js';
+import { getDestinations } from '../../app/config.js';
 import { translate } from '../../i18n/translation.js';
 import { getURLParam, setURLParam } from '../../utils/dom.js';
 import { convertFromDateObject, getMonth, getWeekday } from '../../utils/dates.js';
 import { getPlannedDestinations } from "./support/trip.js";
-import { FIRESTORE_DESTINOS_DATA } from '../../data/state.js';
+import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 
 export var ACTIVE_CATEGORY;
 
 // Active Category
 export function loadActiveCategory(urlParams) {
 	let type = urlParams["type"];
-	const destinos = getDestinos();
+	const destinos = getDestinations();
 	const originals = destinos.original;
 
 	if (!type || !originals[type]) {
@@ -29,10 +29,10 @@ export function loadActiveCategory(urlParams) {
 	ACTIVE_CATEGORY = originals[type];
 
 	function getFirstCategory() {
-		const destinos = getDestinos();
+		const destinos = getDestinations();
 		const types = destinos.categorias.ids;
 		const translations = destinos.translation;
-		const destinoIDs = Object.keys(FIRESTORE_DESTINOS_DATA);
+		const destinoIDs = Object.keys(FIRESTORE_DESTINATIONS_DATA);
 		for (const type of types) {
 			const value = translations[type];
 			if (destinoIDs.includes(type) && value) {
@@ -45,7 +45,7 @@ export function loadActiveCategory(urlParams) {
 
 export function updateActiveCategory(category) {
 	const urlParam = getURLParam("type");
-	const translations = getDestinos().translation;
+	const translations = getDestinations().translation;
 	const param = translations[category];
 
 	if (urlParam === param) {

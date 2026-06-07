@@ -8,7 +8,7 @@ import { convertFromDateObject, getDateTitle } from '../utils/dates.js';
 import { getInnerItinerary, getInnerItineraryTitle } from '../utils/dom.js';
 import { getDestination } from '../data/firebase/database.js';
 import { translate } from '../i18n/translation.js';
-import { getNotaTranslation, getValorValue } from './destination.model.js';
+import { getNotaTranslation, getPriceValue } from './destination.model.js';
 import { ITINERARY_HTML } from "../pages/itinerary/itinerary-formatter.js";
 import { getTimeStringFromDateObj } from "../utils/dates.js";
 import { getTurno } from "../pages/destination/categories.js";
@@ -178,34 +178,34 @@ export async function getItineraryContent(type) {
 
 export async function getItineraryData() {
 	ITINERARY = [];
-	for (const programacao of getState().programacoes) {
-		const title = getItineraryTitle(programacao);
-		const madrugada = await getInnerItineraries(programacao.madrugada);
-		const manha = await getInnerItineraries(programacao.manha);
-		const tarde = await getInnerItineraries(programacao.tarde);
-		const noite = await getInnerItineraries(programacao.noite);
+	for (const schedule of getState().programacoes) {
+		const title = getItineraryTitle(schedule);
+		const earlyMorning = await getInnerItineraries(schedule.madrugada);
+		const morning = await getInnerItineraries(schedule.manha);
+		const afternoon = await getInnerItineraries(schedule.tarde);
+		const evening = await getInnerItineraries(schedule.noite);
 
-		ITINERARY.push({ title, madrugada, manha, tarde, noite });
+		ITINERARY.push({ title, madrugada: earlyMorning, manha: morning, tarde: afternoon, noite: evening });
 	}
 
 	return ITINERARY;
 
-	function getItineraryTitle(programacao) {
+	function getItineraryTitle(schedule) {
 		let size = 0;
 		for (const timeofday of getItinerary().timeofday) {
-			size += programacao[timeofday].length;
+			size += schedule[timeofday].length;
 		}
 
 		if (!size) {
 			return "";
 		}
 
-		const date = convertFromDateObject(programacao.data);
+		const date = convertFromDateObject(schedule.data);
 		const dateTitle = getDateTitle(date, "weekday_day_month");
 
 		const title = getScheduleTitle(
-			programacao.titulo,
-			programacao.destinosIDs,
+			schedule.titulo,
+			schedule.destinosIDs,
 			false,
 		);
 		return title ? `${title}: ${dateTitle}` : dateTitle;
@@ -230,11 +230,11 @@ export async function getItineraryData() {
 		return innerItineraries;
 
 		async function getSubItem(item) {
-			let destinos;
+			let destinations;
 			if (item.tipo == "destinos") {
-				destinos = await getDestination(item.local);
+				destinations = await getDestination(item.local);
 			}
-			const card = getInnerItinerary(item, destinos);
+			const card = getInnerItinerary(item, destinations);
 			const texts = await getInnerItineraryAssociatedTexts(item);
 			return { card, texts };
 		}
@@ -256,10 +256,10 @@ export async function getItineraryData() {
 			return texts;
 
 			function loadTransportation() {
-				const transporte = getState().transportes.dados.find(
+				const transportation = getState().transportes.dados.find(
 					(obj) => obj.id === item.id,
 				);
-				if (!transporte) return;
+				if (!transportation) return;
 				loadTextObj(
 					"trip.transportation.type.title",
 					getTransportationType(),
@@ -269,72 +269,72 @@ export async function getItineraryData() {
 				loadTextObj("labels.company", getCompany());
 
 				function getTransportationType() {
-					const tipo = transporte.transporte;
-					if (!tipo) return;
-			const titulo = getTransportations().titulos[tipo];
-					return titulo ? translate(titulo) : tipo;
+					const type = transportation.transporte;
+					if (!type) return;
+					const title = getTransportations().titulos[type];
+					return title ? translate(title) : type;
 				}
 
 				function getTimeWindow() {
-					const partida = transporte?.datas?.partida;
-					const chegada = transporte?.datas?.chegada;
-					return partida && chegada
-						? `${getTimeStringFromDateObj(partida)} - ${getTimeStringFromDateObj(chegada)}`
+					const departure = transportation?.datas?.partida;
+					const arrival = transportation?.datas?.chegada;
+					return departure && arrival
+						? `${getTimeStringFromDateObj(departure)} - ${getTimeStringFromDateObj(arrival)}`
 						: "";
 				}
 
 				function getReservation() {
 					const transporteProtegido =
 						FIRESTORE_PROTECTED_DATA?.transportes?.[item.id];
-					return transporte?.reserva || transporteProtegido?.reserva;
+					return transportation?.reserva || transporteProtegido?.reserva;
 				}
 
 				function getCompany() {
 					return (
-						getTransportations().empresas?.[transporte.transporte]?.[
-							transporte?.empresa
-						] || transporte?.empresa
+						getTransportations().empresas?.[transportation.transporte]?.[
+							transportation?.empresa
+						] || transportation?.empresa
 					);
 				}
 			}
 
 			function loadAccommodationDetail() {
-				const hospedagem = getState().hospedagens.find(
+				const accommodation = getState().hospedagens.find(
 					(obj) => obj.id === item.id,
 				);
-				if (!hospedagem) return;
-				const hospedagemProtegida =
+				if (!accommodation) return;
+				const protectedAccommodation =
 					FIRESTORE_PROTECTED_DATA?.hospedagens?.[item.id];
 
-				const checkin = hospedagem?.datas.checkin
-					? `${getTimeStringFromDateObj(hospedagem.datas.checkin)}`
+				const checkin = accommodation?.datas.checkin
+					? `${getTimeStringFromDateObj(accommodation.datas.checkin)}`
 					: "";
-				const checkout = hospedagem?.datas.checkout
-					? `${getTimeStringFromDateObj(hospedagem.datas.checkout)}`
+				const checkout = accommodation?.datas.checkout
+					? `${getTimeStringFromDateObj(accommodation.datas.checkout)}`
 					: "";
-				loadTextObj("trip.accommodation.accommodation", hospedagem.nome);
+				loadTextObj("trip.accommodation.accommodation", accommodation.nome);
 				loadTextObj("trip.accommodation.checkin", checkin);
 				loadTextObj("trip.accommodation.checkout", checkout);
 				loadTextObj(
 					"labels.reservation.title",
-					hospedagem?.reserva || hospedagemProtegida?.reserva,
+					accommodation?.reserva || protectedAccommodation?.reserva,
 				);
 			}
 
 			async function loadDestinationDetail() {
-				const destinos = await getDestination(item.local);
-				const destino = destinos?.[item?.categoria]?.[item.id];
-				if (!destino) return;
+				const destinations = await getDestination(item.local);
+				const destination = destinations?.[item?.categoria]?.[item.id];
+				if (!destination) return;
 
-				const nota = getNotaTranslation(destino.nota);
-				const moedas = getCurrencies();
-				const valor = getValorValue(
-					destino,
-					moedas.escala[destinos.moeda],
-					moedas.simbolos[destinos.moeda],
+				const rating = getNotaTranslation(destination.nota);
+				const currencies = getCurrencies();
+				const price = getPriceValue(
+					destination,
+					currencies.escala[destinations.moeda],
+					currencies.simbolos[destinations.moeda],
 				);
-				loadTextObj("labels.priority", nota);
-				loadTextObj("labels.cost", valor);
+				loadTextObj("labels.priority", rating);
+				loadTextObj("labels.cost", price);
 			}
 
 			function loadTextObj(titleKey, content) {
