@@ -640,9 +640,10 @@ export function getInnerItinerary(item, destinations) {
 				item.categoria &&
 				item.id
 			) {
+				const destinationIDs = DESTINATIONS.map((d) => d.destinosID);
+				index = destinationIDs.indexOf(item.local);
+
 				if (!destinations) {
-					const destinationIDs = DESTINATIONS.map((d) => d.destinosID);
-					index = destinationIDs.indexOf(item.local);
 					destinations = DESTINATIONS?.[index]?.destinos;
 				}
 
@@ -673,7 +674,8 @@ export function getInnerItinerary(item, destinations) {
 	return innerItinerary;
 
 	function getDestinationValues(destination) {
-		const currency = cloneObject(getCurrencies().escala[destination.destinos.moeda]);
+		const currencyValue = destination?.destinos?.moeda || "BRL";
+		const currency = cloneObject(getCurrencies().escala[currencyValue] || getCurrencies().escala["BRL"]);
 		const max = translate("destination.price.max", { value: currency["$$$$"] });
 		currency["-"] = translate("destination.price.free");
 		currency["default"] = translate("destination.price.default");

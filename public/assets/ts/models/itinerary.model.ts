@@ -16,6 +16,9 @@ import { getScheduleTitle } from "../pages/trip-detail/categories/itinerary-modu
 
 // ======= Itinerary Content Generator (Multi-format) =======
 
+let ITINERARY;
+var FIRESTORE_PROTECTED_DATA;
+
 export async function getItineraryContent(type) {
 	const notPages = type != "pages";
 	if (notPages && ITINERARY_HTML[type]) {

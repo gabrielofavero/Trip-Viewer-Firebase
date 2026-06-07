@@ -2,7 +2,7 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getState, setState, DOCUMENT_ID, setDocumentId } from '../../data/state.js';
 import { getID, getURLParam, on, select } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
-import { closeMessage, displayError, displayPrompt, openToast } from '../../utils/messages.js';
+import { closeMessage, displayError, displayPrompt, openToast, registerActions } from '../../utils/messages.js';
 import { getItineraryContent } from '../../models/itinerary.model.js';
 import { isOnDarkMode, loadVisibility, switchVisibility } from '../../theme/visibility.js';
 import { loadEmbedVisibility } from '../../ui/embed.js';
@@ -16,6 +16,7 @@ import { loadItineraryListeners } from './support/event-listeners.js';
 import { requestInvalidPin } from "../../utils/pin.js";
 
 export async function loadItineraryPage() {
+	registerActions({ loadItinerary, requestPinItinerary, loadProtectedItinerary });
 	loadItineraryListeners();
 
 	setDocumentId(getURLParam("v"));

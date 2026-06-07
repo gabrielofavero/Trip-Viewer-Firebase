@@ -8,7 +8,12 @@ import { requestPin } from '../../../utils/pin.js';
 import { copyToClipboard } from "../categories/transportation-module.js";
 import { sendToExpenses } from "../support/embed.js";
 import { getURLParam } from "../../../utils/dom.js";
-import { TYPE, setFirestoreData } from "../view.js";
+
+// Determine document type from URL params (avoids circular dependency with view.js)
+function getType(): string {
+	const urlParams = new URLSearchParams(window.location.search);
+	return urlParams.get("l") ? "listagens" : urlParams.get("d") ? "destinos" : "viagens";
+}
 
 const SENSITIVE_RESERVATION_BOXES = {
 	transportes: {},
@@ -142,7 +147,7 @@ function loadSensitiveReservationAction(type: string, id: string): void {
 	}
 }
 
-async function protectedDataConfirmAction(afterAction = setFirestoreData) {
+async function protectedDataConfirmAction(afterAction?: (data: any) => void) {
 	PIN = getID("pin-code")?.innerText || "";
 	closeMessage();
 	const adjustLoadables = false;
@@ -154,7 +159,8 @@ async function protectedDataConfirmAction(afterAction = setFirestoreData) {
 		return;
 	}
 
-	const path = `${TYPE}/protected/${PIN}/${getURLParam(TYPE[0])}`;
+	const type = getType();
+	const path = `${type}/protected/${PIN}/${getURLParam(type[0])}`;
 	const firestoreData = await get(path);
 
 	if (!haveErrorFromGetRequest() && !firestoreData) {
@@ -186,7 +192,8 @@ export function requestDocumentPin({
 }
 
 export async function updateProtectedDataFromExternalPin(pin: string): Promise<void> {
-	const path = `${TYPE}/protected/${pin}/${getURLParam(TYPE[0])}`;
+	const type = getType();
+	const path = `${type}/protected/${pin}/${getURLParam(type[0])}`;
 	const firestoreData = await get(path);
 
 	if (!firestoreData || haveErrorFromGetRequest()) {

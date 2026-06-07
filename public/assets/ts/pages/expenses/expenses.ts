@@ -2,12 +2,13 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getLocalColors } from '../../theme/colors.js';
 import { loadVisibility } from '../../theme/visibility.js';
 import { getID, getURLParam, getURLParams } from '../../utils/dom.js';
-import { closeMessage, displayError, displayForbidden } from '../../utils/messages.js';
+import { closeMessage, displayError, displayForbidden, registerActions } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { loadCurrencies } from '../../app/config.js';
 import { getConversionText, loadConvertedExpenses } from '../../models/expense.model.js';
 import { fade } from '../../theme/animations.js';
 import { requestPin } from '../../utils/pin.js';
+import { get } from '../../data/firebase/database.js';
 
 export var GASTOS;
 var EXPENSES_COUNT = 0;
@@ -26,6 +27,7 @@ import { GASTOS_EMBED } from './support/embed.js';
 
 export async function loadExpensesPage() {
 	loadExpensesListeners();
+	registerActions({ loadExpenses, exitExpenses });
 
 	console.log(window.location.href);
 

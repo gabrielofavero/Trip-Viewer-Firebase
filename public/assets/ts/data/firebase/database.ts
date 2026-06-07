@@ -443,7 +443,7 @@ export async function getPermissoes() {
 export async function getDestination(id, containerID?) {
 	if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
 
-	let content, preloader, isAlreadyLoading;
+	let content, preloader, _alreadyLoading;
 	if (containerID) {
 		const container = getID(containerID);
 		content = container.querySelector(".content");
@@ -452,8 +452,8 @@ export async function getDestination(id, containerID?) {
 		content.style.display = "none";
 		preloader.style.display = "block";
 	} else {
-		isAlreadyLoading = isAlreadyLoading();
-		if (!isAlreadyLoading) {
+		_alreadyLoading = isAlreadyLoading();
+		if (!_alreadyLoading) {
 			startLoadingScreen();
 		}
 	}
@@ -465,7 +465,7 @@ export async function getDestination(id, containerID?) {
 		if (containerID) {
 			content.style.display = "block";
 			preloader.style.display = "none";
-		} else if (!isAlreadyLoading) {
+		} else if (!_alreadyLoading) {
 			stopLoadingScreen();
 		}
 	}
