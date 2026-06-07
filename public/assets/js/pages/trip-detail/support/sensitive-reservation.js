@@ -7,7 +7,7 @@ import { translate } from '../../../i18n/translation.js';
 import { requestPin } from '../../../utils/pin.js';
 import { copyToClipboard } from "../categories/transportation-module.js";
 import { sendToExpenses } from "../support/embed.js";
-import { getURLParam } from "../../../utils/dom";
+import { getURLParam } from "../../../utils/dom.js";
 
 const SENSITIVE_RESERVATION_BOXES = {
 	transportes: {},

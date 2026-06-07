@@ -1,15 +1,17 @@
 import { getID } from '../../../../../utils/dom.js';
-import { translate } from "../../../../../i18n/translation";
-import { FILTER_OPTIONS } from "../filter";
-import { SORT_OPTIONS } from "../sort";
-import { FILTER_SORT_KEYS_ORDER } from "../sort-and-filter";
+import { translate } from "../../../../../i18n/translation.js";
+import {FILTER_OPTIONS, filter} from "../filter.js";
+import {SORT_OPTIONS, sort} from "../sort.js";
+import { FILTER_SORT_KEYS_ORDER } from "../sort-and-filter.js";
+import { getFilterPreferences } from "./preferences.js";
+import { getSortPreferences } from "./preferences.js";
 
 const DRAWER_STATE = {
 	actions: null,
 };
 
 // Open and Close Actions
-function openDrawer(titleText, innerHTML, actions) {
+export function openDrawer(titleText, innerHTML, actions) {
 	actions.beforeOpen?.();
 
 	const overlay = getID("overlay");
@@ -180,11 +182,11 @@ function handleDrawerOptionClick(e, container, applyPreference) {
 	applyPreference(type, value);
 }
 
-function isDrawerOpen() {
+export function isDrawerOpen() {
 	return getID("drawer").classList.contains("open");
 }
 
-function adjustDrawer() {
+export function adjustDrawer() {
 	if (isDrawerOpen()) {
 		closeDrawer();
 	}

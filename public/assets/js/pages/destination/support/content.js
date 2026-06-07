@@ -1,22 +1,22 @@
 import { getCurrencies } from '../../../app/config.js';
 import { translate } from '../../../i18n/translation.js';
-import { getDescricaoValue } from "../../../models/destination.model";
-import { getNotaTranslation } from "../../../models/destination.model";
-import { getValorValue } from "../../../models/destination.model";
-import { getDestinationTitle } from "../../../utils/dom";
-import { getDestinationsBoxHTML } from "../../../utils/dom";
-import { getLinkOnClick } from "../categories";
-import { getNotaClass } from "../categories";
-import { getNotaIcon } from "../categories";
-import { getTurno } from "../categories";
-import { FIRESTORE_DESTINOS_DATA } from "../destination";
-import { FILTER_SORT_DATA } from "./sort-and-filter/sort-and-filter";
-import { getDescricaoVisibility } from "./visibility";
-import { getDestinationsTitleVisibility } from "./visibility";
-import { getLinksContainerVisibility } from "./visibility";
-import { getValorVisibility } from "./visibility";
+import { getDescricaoValue } from "../../../models/destination.model.js";
+import { getNotaTranslation } from "../../../models/destination.model.js";
+import { getValorValue } from "../../../models/destination.model.js";
+import { getDestinationTitle } from "../../../utils/dom.js";
+import { getDestinationsBoxHTML } from "../../../utils/dom.js";
+import {getLinkOnClick, getPlanejado} from "../categories.js";
+import { getNotaClass } from "../categories.js";
+import { getNotaIcon } from "../categories.js";
+import { getTurno } from "../categories.js";
+import { FIRESTORE_DESTINOS_DATA } from "../destination.js";
+import { FILTER_SORT_DATA } from "./sort-and-filter/sort-and-filter.js";
+import { getDescricaoVisibility } from "./visibility.js";
+import { getDestinationsTitleVisibility } from "./visibility.js";
+import { getLinksContainerVisibility } from "./visibility.js";
+import { getValorVisibility } from "./visibility.js";
 
-function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" }) {
+export function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" }) {
 	const planejado = getPlanejado(id);
 	const editBtn = true;
 	return `
@@ -46,7 +46,7 @@ function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" })
     </div>`;
 }
 
-function getDestinationsAccordionBodyHTML({
+export function getDestinationsAccordionBodyHTML({
 	j,
 	item,
 	valores,
@@ -106,7 +106,7 @@ function getDestinationsAccordionBodyHTML({
         </div>`;
 }
 
-function getEditHTML(j) {
+export function getEditHTML(j) {
 	return `
         <div class="edit-close-container">
             <button id="close-btn-${j}" class="close-btn">✕</button>

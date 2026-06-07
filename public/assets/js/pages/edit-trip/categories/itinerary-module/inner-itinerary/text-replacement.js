@@ -3,7 +3,8 @@ import { translate } from '../../../../../i18n/translation.js';
 import { getSelectCurrentLabel } from '../../../../../ui/fields.js';
 import { inputDateToKey, jsDateToInputDate } from '../../../../../utils/dates.js';
 import { DATAS } from "../../../new-trip.js";
-import { INNER_PROGRAMACAO, getTurno } from "./inner-itinerary.js";
+import { INNER_PROGRAMACAO } from "./inner-itinerary.js";
+import { getTurno } from "../../../../destination/categories.js";
 
 const TITLE_REPLACEMENT = {
 	current: "",
@@ -23,7 +24,7 @@ const TIME_REPLACEMENT = {
 
 var TEXT_REPLACEMENT_APPLIED = false;
 
-function loadTextReplacementCheckboxes(j) {
+export function loadTextReplacementCheckboxes(j) {
 	loadTitleReplacementCheckbox(j);
 	loadTimeReplacementCheckbox();
 }
@@ -84,7 +85,7 @@ function getTitleReplacement(j) {
 		: labelValue;
 }
 
-function replaceTextIfEnabled() {
+export function replaceTextIfEnabled() {
 	const checkbox = getID("title-replacement-checkbox");
 	if (checkbox.checked && TITLE_REPLACEMENT.replacement) {
 		getID("inner-programacao").value = TITLE_REPLACEMENT.replacement;
@@ -150,7 +151,7 @@ function loadTimeReplacementCheckbox() {
 	}
 }
 
-function replaceTimeIfEnabled() {
+export function replaceTimeIfEnabled() {
 	if (getID("time-replacement-checkbox").checked) {
 		getID("inner-programacao-inicio").value =
 			TIME_REPLACEMENT.replacement.inicio;

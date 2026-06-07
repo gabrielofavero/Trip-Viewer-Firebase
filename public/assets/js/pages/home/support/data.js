@@ -136,7 +136,7 @@ function getTripBackgroundImage(trip) {
 # Trip Dialog
 --------------------------------------------------------------*/
 export function openTripDialog(tripId) {
-	export const trip = ALL_TRIPS.find(t => t.id === tripId);
+	const trip = ALL_TRIPS.find(t => t.id === tripId);
 	if (!trip) return;
 	SELECTED_TRIP_ID = tripId;
 
@@ -245,7 +245,7 @@ function getTripDestinationCount(trip) {
 /*--------------------------------------------------------------
 # Destinations Tab
 --------------------------------------------------------------*/
-function loadDestinationsTab() {
+export function loadDestinationsTab() {
 	const grid = getID("dest-grid");
 	const empty = getID("dest-empty");
 	const count = getID("dests-count");
@@ -283,7 +283,7 @@ function loadDestinationsTab() {
 /*--------------------------------------------------------------
 # Lists Tab
 --------------------------------------------------------------*/
-function loadListsTab() {
+export function loadListsTab() {
 	const grid = getID("list-grid");
 	const empty = getID("lists-empty");
 	const count = getID("lists-count");

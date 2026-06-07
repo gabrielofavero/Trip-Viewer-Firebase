@@ -2,8 +2,17 @@ import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { displayError } from '../../utils/messages.js';
 import { getID } from '../../utils/dom.js';
 import { setPageName } from '../../app/main.js';
-import { translate } from "../../i18n/translation";
-import { FIRESTORE_DESTINOS_DATA } from "../destination/destination";
+import { translate } from "../../i18n/translation.js";
+import { FIRESTORE_DESTINOS_DATA } from "../destination/destination.js";
+import { setDescription } from "./categories/description.js";
+import { updateDescriptionButtonLabel } from "./categories/description.js";
+import { loadMoedaOptions } from "./categories/price.js";
+import { loadMoedaValorAndVisibility } from "./categories/price.js";
+import { addLanches } from "./new-destination.js";
+import { addLojas } from "./new-destination.js";
+import { addRestaurantes } from "./new-destination.js";
+import { addSaidas } from "./new-destination.js";
+import { addTurismo } from "./new-destination.js";
 
 // Destino Existente
 function loadDestinationsData() {
@@ -75,7 +84,7 @@ function loadDestinoExistente(categoria) {
 	}
 }
 
-function addDestino(categoria) {
+export function addDestino(categoria) {
 	switch (categoria) {
 		case "restaurantes":
 			addRestaurantes();
@@ -94,7 +103,7 @@ function addDestino(categoria) {
 	}
 }
 
-function addDestinoHTML(categoria, j, destino) {
+export function addDestinoHTML(categoria, j, destino) {
 	const id = destino.id;
 	if (id) {
 		getID(`${categoria}-id-${j}`).value = id;

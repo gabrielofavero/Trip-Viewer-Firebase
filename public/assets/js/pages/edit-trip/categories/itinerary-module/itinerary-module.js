@@ -176,7 +176,7 @@ function getDestinationItineraryTitle(value, j) {
 	return "";
 }
 
-function getActiveDestinations(j) {
+export function getActiveDestinations(j) {
 	const result = [];
 	const fieldSet = getID(`programacao-local-${j}`);
 	if (!fieldSet) return result;

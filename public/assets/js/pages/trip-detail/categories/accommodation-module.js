@@ -4,12 +4,12 @@ import { getID } from '../../../utils/dom.js';
 import { loadImageLightbox } from "../support/embed.js";
 import { getSensitiveReservationHTML } from "../support/sensitive-reservation.js";
 import { initSwiper } from "../support/swiper.js";
-import { translate } from "../../../i18n/translation";
-import { getDateString } from "../../../utils/dates";
-import { getTimeStringFromDate } from "../../../utils/dates";
-import { ADJUST_HEIGHT_CARDS } from "../support/visibility";
-import { END_DATE } from "../view";
-import { START_DATE } from "../view";
+import { translate } from "../../../i18n/translation.js";
+import { getDateString } from "../../../utils/dates.js";
+import { getTimeStringFromDate } from "../../../utils/dates.js";
+import { ADJUST_HEIGHT_CARDS } from "../support/visibility.js";
+import { END_DATE } from "../view.js";
+import { START_DATE } from "../view.js";
 
 function loadAccommodations() {
 	let swiperData = [];

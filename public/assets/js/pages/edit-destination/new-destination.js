@@ -1,9 +1,11 @@
 import { getID, getNextJ } from '../../utils/dom.js';
 import { addSelectorDS } from '../../ui/dynamic-select.js';
-import { translate } from "../../i18n/translation";
-import { getNewSvg } from "../../theme/icons";
-import { getDescriptionHTML } from "./categories/description";
-import { getOutroValorVisibility } from "./categories/price";
+import { translate } from "../../i18n/translation.js";
+import { getNewSvg } from "../../theme/icons.js";
+import { getDescriptionHTML } from "./categories/description.js";
+import {getOutroValorVisibility, loadCurrencySelects} from "./categories/price.js";
+import { addDestinationsListeners } from "./edit-destination.js";
+import { addListenerToRemoveDestination } from "./edit-destination.js";
 
 // Adicionar
 export function addRestaurantes() {

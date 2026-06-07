@@ -4,8 +4,9 @@
 
 import { getCurrencies } from '../app/config.js';
 import { getUserLanguage, translate } from '../i18n/translation.js';
-import { FIRESTORE_DESTINOS_DATA } from "../pages/destination/destination";
-import { FILTER_SORT_KEYS_ORDER } from "../pages/destination/support/sort-and-filter/sort-and-filter";
+import { FIRESTORE_DESTINOS_DATA } from "../pages/destination/destination.js";
+import { FILTER_SORT_KEYS_ORDER } from "../pages/destination/support/sort-and-filter/sort-and-filter.js";
+import { getPriceBuckets } from "../pages/destination/support/sort-and-filter/support/price-bucket.js";
 
 // ======= Destination Value Formatting =======
 

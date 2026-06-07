@@ -153,9 +153,9 @@ async function deleteTripAction() {
 	window.location.href = "../index.html";
 }
 
-function getDataSelectOptions(j) {
+export function getDataSelectOptions(j) {
 	const values = DATAS.map((data) => jsDateToKey(data));
-	export const labels = DATAS.map((data) => getDateTitle(data, "mini"));
+	const labels = DATAS.map((data) => getDateTitle(data, "mini"));
 	let result = j
 		? ""
 		: `<option value="" selected>${translate("datetime.select_date")}</option>`;
@@ -192,5 +192,3 @@ function getMergedTripObject(tripData) {
 
 	return tripData;
 }
-
-export { DESTINOS };

@@ -7,12 +7,29 @@ import { stopLoadingScreen } from '../../utils/loading.js';
 import { loadCloseCustomSelectListeners, loadCustomSelect } from '../../ui/custom-select.js';
 import { getPageURL, setPageName } from '../../app/main.js';
 import { loadDestinationListeners } from './support/event-listeners.js';
+import { loadActiveCategory } from "./categories.js";
+import { updateActiveCategory } from "./categories.js";
+import { adjustEditVisibility } from "./edit-destination.js";
+import { restoreIfEditing } from "./edit-destination.js";
+import { getDestinationsHTML } from "./support/content.js";
+import { adjustInstagramMedia } from "./support/media-embed.js";
+import { adjustMediaEmbeds } from "./support/media-embed.js";
+import { loadEmbed } from "./support/media-embed.js";
+import { loadMedia } from "./support/media-embed.js";
+import { unloadMedia } from "./support/media-embed.js";
+import { unloadMedias } from "./support/media-embed.js";
+import { loadSortAndFilter } from "./support/sort-and-filter/sort-and-filter.js";
+import { adjustDrawer } from "./support/sort-and-filter/support/drawer.js";
+import { getTripData } from "./support/trip.js";
+import { loadPlannedDestination } from "./support/trip.js";
+import { applyDestinationsMediaHeight } from "./support/visibility.js";
+import { loadDestinationVisibility } from "./support/visibility.js";
 
 export var FIRESTORE_DESTINOS_DATA;
 export var CONTENT = [];
 export var ACTIVE_CATEGORY;
 
-async function loadDestinationsData() {
+export async function loadDestinationsData() {
 	const urlParams = getURLParams();
 	DOCUMENT_ID = urlParams["d"];
 
@@ -110,7 +127,7 @@ function loadMapDestination(link) {
 }
 
 // Setters
-function applyContent() {
+export function applyContent() {
 	const div = getID("content");
 	div.innerHTML = "";
 	for (const content of CONTENT) {
@@ -203,7 +220,7 @@ function loadDestinationCustomSelect() {
 	}
 }
 
-function getDataSet(key) {
+export function getDataSet(key) {
 	const category = ACTIVE_CATEGORY;
 	if (!category) return new Set();
 
@@ -215,17 +232,17 @@ function getDataSet(key) {
 	);
 }
 
-function getDestinationID(j) {
+export function getDestinationID(j) {
 	const destino = getID(`destinos-${j}`);
 	return destino.getAttribute("data-id");
 }
 
-function getItemFromJ(j) {
+export function getItemFromJ(j) {
 	const id = getDestinationID(j);
 	return getItem(id);
 }
 
-function getItem(id) {
+export function getItem(id) {
 	return FIRESTORE_DESTINOS_DATA[ACTIVE_CATEGORY][id];
 }
 
@@ -234,12 +251,12 @@ function getItemValue(id, key) {
 	return item ? item[key] : null;
 }
 
-function isPlanned(id) {
+export function isPlanned(id) {
 	const value = PLANNED_DESTINATION?.[ACTIVE_CATEGORY]?.[id];
 	return value && Object.keys(value).length > 0;
 }
 
-async function refreshDestination() {
+export async function refreshDestination() {
 	FIRESTORE_DESTINOS_DATA = await get(`destinos/${DOCUMENT_ID}`);
 	loadDestinationByType(ACTIVE_CATEGORY);
 }

@@ -1,6 +1,7 @@
 // ======= Price Bucket =======
 // Price bucket functions moved to models/destination.model.js — imported here for backward compat
 
+import { getDataSet } from "../../../destination.js";
 import {
 	getPriceBucket,
 	buildPriceBuckets,
@@ -13,7 +14,7 @@ import {
 
 
 
-function getPrices() {
+export function getPrices() {
 	const buckets = getPriceBuckets();
 	return new Set(
 		buckets
@@ -22,7 +23,7 @@ function getPrices() {
 	);
 }
 
-function getPriceBuckets() {
+export function getPriceBuckets() {
 	if (FILTER_SORT_DATA?.[ACTIVE_CATEGORY]?.prices) {
 		return FILTER_SORT_DATA[ACTIVE_CATEGORY].prices;
 	}

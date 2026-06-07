@@ -3,9 +3,10 @@ import { translate } from '../../../i18n/translation.js';
 import { initializeSortableForGroup } from '../../../ui/sortable.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
 import { getFieldValueOrNotify } from '../../../ui/fields.js';
-import { TRAVELERS } from "./travelers";
-import { getTravelerName } from "./travelers";
-import { getTravelersSelectOptionsHTML } from "./travelers";
+import {TRAVELERS, getTravelersObject} from "./travelers.js";
+import { getTravelerName } from "./travelers.js";
+import { getTravelersSelectOptionsHTML } from "./travelers.js";
+import { getSharingObject } from "../set-trip.js";
 
 var INNER_EXPENSES = {
 	gastosPrevios: [],

@@ -6,10 +6,10 @@ import { loadCalendar } from "./calendar.js";
 import { loadCalendarItem } from "./inner-itinerary.js";
 import { openViewEmbed } from "../../support/embed.js";
 import { getVisibility } from "../../../../theme/theme.js";
-import { DESTINOS } from "../../../edit-trip/edit-trip";
-import { END_DATE } from "../../view";
-import { START_DATE } from "../../view";
-import { CURRENT_SCHEDULE_DATE } from "./inner-itinerary";
+import { DESTINOS } from "../../../edit-trip/edit-trip.js";
+import { END_DATE } from "../../view.js";
+import { START_DATE } from "../../view.js";
+import { CURRENT_SCHEDULE_DATE } from './inner-itinerary.js';
 
 export var SCHEDULE_DESTINATIONS = {};
 var PILLS_ACTIONS = {};

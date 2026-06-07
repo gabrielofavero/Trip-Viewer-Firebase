@@ -8,7 +8,17 @@ import { animate } from '../../../../../theme/animations.js';
 import { getDestination } from '../../../../../data/firebase/database.js';
 import { DESTINOS_ATIVOS } from '../../destination.js';
 import { DATAS } from '../../../new-trip.js';
-import { DESTINOS_DATA } from "../../destination";
+import {DESTINOS_DATA, getDestinosFromCheckbox} from "../../destination.js";
+import { getInnerProgramacaoContent } from "./content.js";
+import { loadTextReplacementCheckboxes } from "./text-replacement.js";
+import { replaceTextIfEnabled } from "./text-replacement.js";
+import { replaceTimeIfEnabled } from "./text-replacement.js";
+import { getActiveDestinations } from "../itinerary-module.js";
+import { enableAllTravelersFieldset } from "../../travelers.js";
+import { getCheckedTravelersIDs } from "../../travelers.js";
+import { updateTravelersFieldset } from "../../travelers.js";
+import { validateTravelersFieldset } from "../../travelers.js";
+import { getDataSelectOptions } from "../../../edit-trip.js";
 
 export var INNER_PROGRAMACAO = {};
 var INNER_PROGRAMACAO_DETINOS_DATA = {};

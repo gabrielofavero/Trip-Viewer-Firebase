@@ -4,8 +4,9 @@ import { validateImageLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
 import { buildDS } from '../../../ui/dynamic-select.js';
 import { FIRESTORE_NEW_DATA } from '../set-trip.js';
-import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage";
-import { CUSTOM_UPLOADS } from "../../../utils/set";
+import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage.js";
+import { CUSTOM_UPLOADS } from "../../../utils/set.js";
+import { addGaleria } from "../new-trip.js";
 
 export function getGaleriaObject() {
 	let result = {

@@ -2,7 +2,7 @@ import { getChildIDs, getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { canConvert, convertCurrency, filterCurrencies, formatCurrency, getCurrencySymbol, loadCurrenciesObject, sortCurrencies } from '../../../models/expense.model.js';
 import { setTabListeners } from "../expenses.js";
-import { GASTOS } from "../expenses";
+import { GASTOS } from '../expenses.js';
 
 var DEFAULT_CURRENCY;
 var MOEDA_CONVERSAO = {};

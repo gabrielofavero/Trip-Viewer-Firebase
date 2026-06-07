@@ -1,14 +1,20 @@
 import { normalizePriceBucket } from '../../../../models/destination.model.js';
 import { translate } from '../../../../i18n/translation.js';
-import { CONTENT } from "../../destination";
-import { getSortDrawerInnerHTML } from "./support/drawer";
-import { sortDrawerOptionClickAction } from "./support/drawer";
-import { sortDrawerOptionLoadAction } from "./support/drawer";
+import {CONTENT, applyContent, getItem, isPlanned} from "../../destination.js";
+import { getSortDrawerInnerHTML } from "./support/drawer.js";
+import { sortDrawerOptionClickAction } from "./support/drawer.js";
+import { sortDrawerOptionLoadAction } from "./support/drawer.js";
+import { loadFilterSortingData } from "./sort-and-filter.js";
+import { openFilterSortDrawer } from "./sort-and-filter.js";
+import { shouldDisplayPlanned } from "./sort-and-filter.js";
+import { shouldDisplayPrices } from "./sort-and-filter.js";
+import { shouldDisplayScores } from "./sort-and-filter.js";
+import { getSortPreferences } from "./support/preferences.js";
 
 export const SORT_OPTIONS = {};
 
 // Main Action
-function sort(render = false) {
+export function sort(render = false) {
 	const { type, value } = getSortPreferences() || {};
 
 	CONTENT.sort((a, b) => {
@@ -87,7 +93,7 @@ function sort(render = false) {
 }
 
 // Options
-function loadSortOptions(force = false) {
+export function loadSortOptions(force = false) {
 	if (SORT_OPTIONS[ACTIVE_CATEGORY] && !force) {
 		return;
 	}

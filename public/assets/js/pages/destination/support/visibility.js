@@ -4,8 +4,9 @@ import { getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { getDescricaoValue } from '../../../models/destination.model.js';
 import { THEME_COLOR } from "../../../theme/theme.js";
+import { adjustEditVisibility } from "../edit-destination.js";
 
-async function loadDestinationVisibility() {
+export async function loadDestinationVisibility() {
 	loadVisibility();
 	const closeAction = _unloadMedias;
 	loadEmbedVisibility({ closeAction });
@@ -23,7 +24,7 @@ function adjustButtonsPositionDestinations() {
 	nightMode.style.right = second;
 }
 
-function applyDestinationsMediaHeight() {
+export function applyDestinationsMediaHeight() {
 	const keys = Object.keys(MEDIA_HYPERLINKS);
 	const firstDiv = getID("destinos-1");
 	if (keys.length > 0 && firstDiv) {
@@ -74,11 +75,11 @@ export function getDescricaoVisibility(item) {
 	return getDescricaoValue(item) ? "block" : "none";
 }
 
-function getSystemWidth() {
+export function getSystemWidth() {
 	return window.innerWidth || document.documentElement.clientWidth;
 }
 
-function openDestinationsAccordion(id) {
+export function openDestinationsAccordion(id) {
 	const num = String(id).match(/\d+$/)?.[0];
 	if (!num) return false;
 

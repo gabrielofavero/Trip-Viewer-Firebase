@@ -1,14 +1,19 @@
 import { getPriceLabel, isPriceInBucketRange } from '../../../../models/destination.model.js';
 import { translate } from '../../../../i18n/translation.js';
-import { FILTER_SORT_DATA } from "./sort-and-filter";
-import { filterDrawerOptionClickAction } from "./support/drawer";
-import { filterDrawerOptionLoadAction } from "./support/drawer";
-import { getFilterDrawerInnerHTML } from "./support/drawer";
+import {FILTER_SORT_DATA, loadFilterSortingData, openFilterSortDrawer, shouldDisplayPlanned, shouldDisplayPrices, shouldDisplayRegions, shouldDisplayScores} from "./sort-and-filter.js";
+import { filterDrawerOptionClickAction } from "./support/drawer.js";
+import { filterDrawerOptionLoadAction } from "./support/drawer.js";
+import { getFilterDrawerInnerHTML } from "./support/drawer.js";
+import { applyContent } from "../../destination.js";
+import { getItem } from "../../destination.js";
+import { isPlanned } from "../../destination.js";
+import { getFilterPreferences } from "./support/preferences.js";
+import { getPrices } from "./support/price-bucket.js";
 
 export const FILTER_OPTIONS = {};
 
 // Main Action
-function filter(render = false) {
+export function filter(render = false) {
 	const preferences = getFilterPreferences();
 	const isPlannedEnabled =
 		shouldDisplayPlanned() && preferences.planned !== "everything";
@@ -81,7 +86,7 @@ function filter(render = false) {
 }
 
 // Options
-function loadFilterOptions(force = false) {
+export function loadFilterOptions(force = false) {
 	if (FILTER_OPTIONS[ACTIVE_CATEGORY] && !force) {
 		return;
 	}

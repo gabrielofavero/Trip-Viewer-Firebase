@@ -1,7 +1,7 @@
-import { translate } from "../../../../../i18n/translation";
-import { getTravelersFieldset } from "../../travelers";
+import { translate } from "../../../../../i18n/translation.js";
+import { getTravelersFieldset } from "../../travelers.js";
 // Conteúdo do Modal (HTML)
-function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
+export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
 	return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some((item) => item.ativo) ? "block" : "none"}">

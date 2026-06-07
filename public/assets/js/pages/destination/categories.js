@@ -11,11 +11,12 @@ import { getDestinos } from '../../app/config.js';
 import { translate } from '../../i18n/translation.js';
 import { getURLParam, setURLParam } from '../../utils/dom.js';
 import { convertFromDateObject, getMonth, getWeekday } from '../../utils/dates.js';
+import { getPlannedDestinations } from "./support/trip.js";
 
 
 
 // Active Category
-function loadActiveCategory(urlParams) {
+export function loadActiveCategory(urlParams) {
 	let type = urlParams["type"];
 	const destinos = getDestinos();
 	const originals = destinos.original;
@@ -41,7 +42,7 @@ function loadActiveCategory(urlParams) {
 	}
 }
 
-function updateActiveCategory(category) {
+export function updateActiveCategory(category) {
 	const urlParam = getURLParam("type");
 	const translations = getDestinos().translation;
 	const param = translations[category];
@@ -93,7 +94,7 @@ export function getLinkOnClick(item, tipo) {
 }
 
 // Planejado
-function getPlanejado(id) {
+export function getPlanejado(id) {
 	const plannedItems = getPlannedDestinations(id);
 	return getPlanejadoValue(plannedItems);
 

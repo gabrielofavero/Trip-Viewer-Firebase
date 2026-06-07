@@ -310,7 +310,7 @@ function getInnerItinerary(item, destinos) {
 	}
 }
 
-function getScheduleTitle(titulo, destinos, placeholder = true) {
+export function getScheduleTitle(titulo, destinos, placeholder = true) {
 	if (!titulo || typeof titulo === "string") {
 		const placeholderValue = placeholder
 			? translate("trip.itinerary.title")

@@ -22,7 +22,7 @@ import { loadExpensesListeners } from './support/event-listeners.js';
 import { loadEmbedMode } from "./support/embed.js";
 import { requestInvalidPin } from "../../utils/pin.js";
 import { loadDuringTripExpenses, loadPreTripExpenses, loadSummary, loadTravelerExpenses } from "./categories.js";
-import { GASTOS_EMBED } from "./support/embed";
+import { GASTOS_EMBED } from './support/embed.js';
 
 export async function loadExpensesPage() {
 	loadExpensesListeners();

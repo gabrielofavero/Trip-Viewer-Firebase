@@ -11,7 +11,7 @@ const SORT_PREFERENCES = {
 };
 
 // Getters
-function getFilterPreferences() {
+export function getFilterPreferences() {
 	const filter = sessionStorage.getItem("destinos-filtered-preferences");
 	if (filter) {
 		return JSON.parse(filter);
@@ -19,7 +19,7 @@ function getFilterPreferences() {
 	return FILTER_PREFERENCES;
 }
 
-function getSortPreferences() {
+export function getSortPreferences() {
 	const sort = sessionStorage.getItem("destinos-sorted-preferences");
 	if (sort) {
 		return JSON.parse(sort);

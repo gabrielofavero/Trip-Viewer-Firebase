@@ -4,8 +4,7 @@ import { translate } from '../i18n/translation.js';
 import { disableScroll } from '../theme/visibility.js';
 import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from '../theme/animations.js';
-import { labels } from "../pages/edit-trip/edit-trip";
-import { noAction } from "../pages/itinerary/itinerary";
+import { noAction } from "../pages/itinerary/itinerary.js";
 
 export let MESSAGE_MODAL_OPEN = false;
 export const MESSAGE_PROPERTIES = {

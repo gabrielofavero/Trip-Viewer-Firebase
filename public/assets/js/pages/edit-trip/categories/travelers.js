@@ -5,6 +5,7 @@ import { cloneObject, getID, getReadableArray } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
 import { getNewTravelerID, hasDuplicateTravelerNames, validateTravelersObject } from '../../../models/traveler.model.js';
+import { loadItineraryData } from "../existing-trip.js";
 
 export var TRAVELERS = [];
 export function setTravelers(val) { TRAVELERS = val; }
@@ -165,7 +166,7 @@ export function getTravelersFieldset(id) {
 	return travelers > 1 ? result.outerHTML : "";
 }
 
-function enableAllTravelersFieldset(id) {
+export function enableAllTravelersFieldset(id) {
 	const checkedData = [];
 	for (const traveler of TRAVELERS) {
 		checkedData.push({ id: traveler.id, nome: traveler.nome, isPresent: true });
@@ -173,7 +174,7 @@ function enableAllTravelersFieldset(id) {
 	updateTravelersFieldset(id, checkedData);
 }
 
-function updateTravelersFieldset(id, checkedData = []) {
+export function updateTravelersFieldset(id, checkedData = []) {
 	let j = 1;
 	while (getID(`${id}-${j}`)) {
 		const checkbox = getID(`${id}-${j}`);
@@ -188,7 +189,7 @@ function updateTravelersFieldset(id, checkedData = []) {
 	}
 }
 
-function getCheckedTravelersIDs(containerID) {
+export function getCheckedTravelersIDs(containerID) {
 	const container = getID(containerID);
 	if (!container) {
 		return [];
@@ -220,7 +221,7 @@ function getCheckedTravelersIDs(containerID) {
 	return result;
 }
 
-function validateTravelersFieldset(id) {
+export function validateTravelersFieldset(id) {
 	const mandatory = getID(`${id}-mandatory`);
 	if (!mandatory) {
 		return true;
@@ -271,7 +272,7 @@ export function getTravelerName(id) {
 	return traveler ? traveler.nome : "";
 }
 
-function getTravelersObject() {
+export function getTravelersObject() {
 	const result = {};
 	for (const traveler of TRAVELERS) {
 		result[traveler.id] = traveler.nome;

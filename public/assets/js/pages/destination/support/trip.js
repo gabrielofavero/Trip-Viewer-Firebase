@@ -3,22 +3,22 @@ import { getState, setState } from '../../../data/state.js';
 import { cloneObject, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, dateObjectToInputDate, getDateTitle } from '../../../utils/dates.js';
 import { update } from '../../../data/firebase/database.js';
-import { translate } from "../../../i18n/translation";
-import { jsDateToInputDate } from "../../../utils/dates";
-import { DOCUMENT_ID } from "../../edit-trip/edit-trip";
-import { ACTIVE_CATEGORY } from "../destination";
+import { translate } from "../../../i18n/translation.js";
+import { jsDateToInputDate } from "../../../utils/dates.js";
+import { DOCUMENT_ID } from "../../edit-trip/edit-trip.js";
+import { ACTIVE_CATEGORY } from "../destination.js";
 
 var TRIP_ID;
 export var PLANNED_DESTINATION = {};
 var ACTIVE_PLANNED_DESTINATION = [];
 
-async function getTripData(tripID) {
+export async function getTripData(tripID) {
 	if (!tripID) return;
 	TRIP_ID = tripID;
 	return await get(`viagens/${tripID}`);
 }
 
-async function refreshTripData() {
+export async function refreshTripData() {
 	if (!TRIP_ID) return;
 	ACTIVE_PLANNED_DESTINATION = [];
 	PLANNED_DESTINATION = {};
@@ -27,7 +27,7 @@ async function refreshTripData() {
 }
 
 // Planned Destination
-function loadPlannedDestination() {
+export function loadPlannedDestination() {
 	const programacoes = getState()?.programacoes || [];
 	for (const dia of programacoes) {
 		const data = dia.data;
@@ -55,11 +55,11 @@ function loadPlannedDestination() {
 	}
 }
 
-function getPlannedDestinations(id) {
+export function getPlannedDestinations(id) {
 	return PLANNED_DESTINATION[ACTIVE_CATEGORY]?.[id] || [];
 }
 
-function populatePlannedDestinationEditField(id, j) {
+export function populatePlannedDestinationEditField(id, j) {
 	if (!TRIP_ID) {
 		return;
 	}
@@ -133,7 +133,7 @@ function loadPlannedDestinationEditFieldHTML(j) {
 	}
 }
 
-async function setPlannedDestination(id, j) {
+export async function setPlannedDestination(id, j) {
 	const newData = getID(`editar-planejado-select-data-${j}`).value;
 	const newTurno = getID(`editar-planejado-select-turno-${j}`).value;
 

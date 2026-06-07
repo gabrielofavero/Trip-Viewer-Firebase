@@ -19,6 +19,11 @@ startLoadingScreen();
 
 import { loadEditListingListeners } from './support/event-listeners.js';
 import { getVisibility } from "../../theme/theme.js";
+import { loadUploadSelector } from "../../data/firebase/storage.js";
+import { loadListData } from "./existing-listing.js";
+import { autoFillDarkColor } from "../edit-trip/categories/customization.js";
+import { loadDestinations } from "../edit-trip/new-trip.js";
+import { setDocumento } from "../../utils/set.js";
 
 export async function loadEditListingPage() {
 	loadEditListingListeners();

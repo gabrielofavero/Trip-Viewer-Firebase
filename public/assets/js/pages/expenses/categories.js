@@ -2,8 +2,8 @@ import { getIcons } from '../../app/config.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { setChart, setTable } from "./support/data.js";
-import { formatCurrency } from "../../models/expense.model";
-import { GASTOS_CONVERTIDOS } from "./expenses-converted";
+import { formatCurrency } from "../../models/expense.model.js";
+import { GASTOS_CONVERTIDOS } from "./expenses-converted.js";
 
 // Resumo
 export function loadSummary() {

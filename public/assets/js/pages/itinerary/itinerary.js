@@ -142,7 +142,7 @@ function displaySensitiveItineraryPrompt() {
 	const titulo = translate("trip.protected");
 	const conteudo = translate("messages.protected.prompt");
 	const yesAction = "requestPinItinerary()";
-	export const noAction = "loadItinerary()";
+	const noAction = "loadItinerary()";
 	const critico = true;
 	displayPrompt({ titulo, conteudo, yesAction, noAction, critico });
 }

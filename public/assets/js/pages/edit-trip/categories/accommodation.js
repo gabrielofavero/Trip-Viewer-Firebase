@@ -8,8 +8,9 @@ import { initializeSortableForGroup } from '../../../ui/sortable.js';
 import { loadImageSelector, uploadImages } from '../../../data/firebase/storage.js';
 import { fade } from '../../../theme/animations.js';
 import { FIRESTORE_NEW_DATA } from '../set-trip.js';
-import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage";
-import { CUSTOM_UPLOADS } from "../../../utils/set";
+import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage.js";
+import { CUSTOM_UPLOADS } from "../../../utils/set.js";
+import { addHospedagens } from "../new-trip.js";
 
 export var ACCOMMODATION_IMAGES = {};
 

@@ -11,11 +11,15 @@
 import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { getJs, getLastJ } from '../../utils/dom.js';
 import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
-import { addLanches } from "./new-destination";
-import { addLojas } from "./new-destination";
-import { addRestaurantes } from "./new-destination";
-import { addSaidas } from "./new-destination";
-import { addTurismo } from "./new-destination";
+import { addLanches } from "./new-destination.js";
+import { addLojas } from "./new-destination.js";
+import { addRestaurantes } from "./new-destination.js";
+import { addSaidas } from "./new-destination.js";
+import { addTurismo } from "./new-destination.js";
+import { setDescription } from "./categories/description.js";
+import { updateDescriptionButtonLabel } from "./categories/description.js";
+import { loadMoedaValorAndVisibility } from "./categories/price.js";
+import { updateDestinationsTitle } from "./edit-destination.js";
 
 
 const IMPORT_TYPES = ["restaurantes", "lanches", "saidas", "turismo", "lojas"];

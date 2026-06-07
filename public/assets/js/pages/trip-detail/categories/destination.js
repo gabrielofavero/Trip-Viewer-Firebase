@@ -6,10 +6,10 @@ import { loadCustomSelect, loadCustomSelectAction } from '../../../ui/custom-sel
 import { translate } from '../../../i18n/translation.js';
 import { openViewEmbed } from "../support/embed.js";
 import { getVisibility } from "../../../theme/theme.js";
-import { CUSTOM_SELECTS } from "../../../ui/custom-select";
-import { END_DATE } from "../view";
-import { START_DATE } from "../view";
-import { SCHEDULE_DESTINATIONS } from "./itinerary-module/itinerary-module";
+import { CUSTOM_SELECTS } from "../../../ui/custom-select.js";
+import { END_DATE } from "../view.js";
+import { START_DATE } from "../view.js";
+import { SCHEDULE_DESTINATIONS } from "./itinerary-module/itinerary-module.js";
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;

@@ -2,8 +2,7 @@ import { getState } from '../../../data/state.js';
 import { getChildIDs, getID, getJ, on, onscroll, select } from '../../../utils/dom.js';
 import { getVisibility, loadDarkMode, loadLightMode } from '../../../theme/visibility.js';
 import { adjustTransportationBoxContainerHeight } from "../categories/transportation-module.js";
-import { sendToExpenses } from "../support/embed.js";
-import { ACTIVE_EMBEDS } from "./embed";
+import { sendToExpenses, ACTIVE_EMBEDS } from "./embed.js";
 
 export var ADJUST_HEIGHT_CARDS = [];
 

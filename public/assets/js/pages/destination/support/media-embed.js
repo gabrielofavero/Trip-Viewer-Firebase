@@ -1,10 +1,11 @@
 import { getID, getJs, getLinkMediaButton } from '../../../utils/dom.js';
+import { getSystemWidth } from "./visibility.js";
 
 var MEDIA_HYPERLINKS = {};
 const EMBED_TIMEOUT = 10000;
 
 // Loader
-function loadEmbed(link, i) {
+export function loadEmbed(link, i) {
 	let result = "";
 
 	result = getEmbed(link);
@@ -15,7 +16,7 @@ function loadEmbed(link, i) {
 }
 
 // Actions
-function loadMedia(id) {
+export function loadMedia(id) {
 	const div = getID(id);
 	if (div && MEDIA_HYPERLINKS[id] && MEDIA_HYPERLINKS[id].conteudo) {
 		div.innerHTML = MEDIA_HYPERLINKS[id].conteudo;
@@ -34,14 +35,14 @@ function loadMedia(id) {
 	}
 }
 
-function unloadMedia(id) {
+export function unloadMedia(id) {
 	div = getID(id);
 	if (div) {
 		div.innerHTML = "";
 	}
 }
 
-function unloadMedias(exclude) {
+export function unloadMedias(exclude) {
 	for (const j of getJs("content")) {
 		if (j !== exclude) {
 			unloadMedia(`midia-${j}`);
@@ -262,7 +263,7 @@ function getVideoEmbedInstagramReels(link) {
 	return "";
 }
 
-function adjustMediaEmbeds() {
+export function adjustMediaEmbeds() {
 	if (getSystemWidth() >= 400) {
 		adjustInstagramMedia();
 		return;
@@ -274,7 +275,7 @@ function adjustMediaEmbeds() {
 	}
 }
 
-function adjustInstagramMedia() {
+export function adjustInstagramMedia() {
 	const maxMarginLeft = -53;
 	const minMarginLeft = -170;
 

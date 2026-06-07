@@ -1,6 +1,7 @@
 import { getChildIDs, getID, getIDs, getJ } from '../../../utils/dom.js';
 import { getHTMLpage } from '../../../app/main.js';
-import { translate } from "../../../i18n/translation";
+import { translate } from "../../../i18n/translation.js";
+import { loadItineraryListeners } from "./itinerary-module/itinerary-module.js";
 
 var DESTINOS = [];
 export var DESTINOS_DATA = {};

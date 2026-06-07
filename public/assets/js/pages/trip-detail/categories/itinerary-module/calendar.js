@@ -3,7 +3,7 @@ import { convertFromDateObject, getDateNoTime, getMonth } from '../../../../util
 import { getID } from '../../../../utils/dom.js';
 import { translate } from '../../../../i18n/translation.js';
 import { refreshPills } from "./itinerary-module.js";
-import { SCHEDULE_DESTINATIONS } from "./itinerary-module";
+import { SCHEDULE_DESTINATIONS } from './itinerary-module.js';
 
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)

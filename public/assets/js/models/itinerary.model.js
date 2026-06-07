@@ -9,8 +9,10 @@ import { getInnerItinerary, getInnerItineraryTitle } from '../utils/dom.js';
 import { getDestination } from '../data/firebase/database.js';
 import { translate } from '../i18n/translation.js';
 import { getNotaTranslation, getValorValue } from './destination.model.js';
-import { ITINERARY_HTML } from "../pages/itinerary/itinerary-formatter";
-import { getTimeStringFromDateObj } from "../utils/dates";
+import { ITINERARY_HTML } from "../pages/itinerary/itinerary-formatter.js";
+import { getTimeStringFromDateObj } from "../utils/dates.js";
+import { getTurno } from "../pages/destination/categories.js";
+import { getScheduleTitle } from "../pages/trip-detail/categories/itinerary-module/inner-itinerary.js";
 
 // ======= Itinerary Content Generator (Multi-format) =======
 

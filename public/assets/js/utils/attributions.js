@@ -2,8 +2,7 @@ import { getState } from '../data/state.js';
 import { cloneObject } from './dom.js';
 import { translate } from '../i18n/translation.js';
 import { displayFullMessage, MESSAGE_PROPERTIES } from './messages.js';
-import { labels } from "../pages/edit-trip/edit-trip";
-import { trip } from "../pages/home/support/data";
+import { trip } from "../pages/home/support/data.js";
 
 export function openAttributions() {
 	const page = window.location.href

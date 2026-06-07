@@ -14,7 +14,7 @@ import { loadViewEmbed, openExpensesEmbed } from "./support/embed.js";
 import { loadSensitiveReservations, requestDocumentPin } from "./support/sensitive-reservation.js";
 import { adjustDestinationsHTML, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
 import { adjustPortfolioHeight, refreshCategorias } from "./categories/gallery.js";
-import { ACTIVE_EMBEDS } from "./support/embed";
+import { ACTIVE_EMBEDS } from './support/embed.js';
 
 var REFRESHED = false;
 var TYPE = "viagens";

@@ -6,9 +6,16 @@ import { removeEl, validateInstagramLink, validateLink, validateMapLink, validat
 import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
 import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
-import { getNotaClass } from "./categories";
-import { getNotaIcon } from "./categories";
-import { FIRESTORE_DESTINOS_DATA } from "./destination";
+import {getNotaClass, getPlanejado} from "./categories.js";
+import { getNotaIcon } from "./categories.js";
+import {FIRESTORE_DESTINOS_DATA, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination} from "./destination.js";
+import { getDestinationsAccordionBodyHTML } from "./support/content.js";
+import { getDestinationsHTML } from "./support/content.js";
+import { getEditHTML } from "./support/content.js";
+import { populatePlannedDestinationEditField } from "./support/trip.js";
+import { refreshTripData } from "./support/trip.js";
+import { setPlannedDestination } from "./support/trip.js";
+import { openDestinationsAccordion } from "./support/visibility.js";
 
 let ADDED_J;
 
@@ -122,7 +129,7 @@ export async function add() {
 }
 
 // Visibility
-async function adjustEditVisibility(j) {
+export async function adjustEditVisibility(j) {
 	const canEdit = await canEdit();
 	const display = canEdit ? "" : "none";
 	document.querySelector(".add-container").style.display = display;
@@ -368,7 +375,7 @@ function restoreAccordionBody(j, item) {
 	});
 }
 
-function restoreIfEditing(j) {
+export function restoreIfEditing(j) {
 	if (isEditing(j)) {
 		const item = getItemFromJ(j);
 		if (!item) return;

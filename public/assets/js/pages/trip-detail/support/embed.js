@@ -5,7 +5,7 @@ import { getID } from '../../../utils/dom.js';
 import { disableScroll, enableScroll, loadExternalVisibility } from '../../../theme/visibility.js';
 import { updateProtectedDataFromExternalPin } from "../support/sensitive-reservation.js";
 import { getVisibility } from "../../../theme/theme.js";
-import { getURLParam } from "../../../utils/dom";
+import { getURLParam } from "../../../utils/dom.js";
 
 var SAVED_SCROLL_POSITION = 0;
 export const ACTIVE_EMBEDS = {};

@@ -1,7 +1,16 @@
 import { getID } from '../../../../utils/dom.js';
-import { CONTENT } from "../../destination";
-import { closeAddedDestination } from "../../edit-destination";
-import { PLANNED_DESTINATION } from "../trip";
+import {CONTENT, getDataSet} from "../../destination.js";
+import { closeAddedDestination } from "../../edit-destination.js";
+import { PLANNED_DESTINATION } from "../trip.js";
+import { filter } from "./filter.js";
+import { loadFilterOptions } from "./filter.js";
+import { loadSortOptions } from "./sort.js";
+import { sort } from "./sort.js";
+import { closeDrawer } from "./support/drawer.js";
+import { isDrawerOpen } from "./support/drawer.js";
+import { openDrawer } from "./support/drawer.js";
+import { getPriceBuckets } from "./support/price-bucket.js";
+import { getPrices } from "./support/price-bucket.js";
 
 export const FILTER_SORT_KEYS_ORDER = {
 	planned: ["planned", "not_planned"],
@@ -12,7 +21,7 @@ export const FILTER_SORT_KEYS_ORDER = {
 export const FILTER_SORT_DATA = {};
 
 // Loading Action
-function loadSortAndFilter(force = false) {
+export function loadSortAndFilter(force = false) {
 	loadFilterOptions(force);
 	loadSortOptions(force);
 	loadSortAndFilterVisibility();
@@ -36,7 +45,7 @@ function loadSortAndFilterVisibility() {
 	}
 }
 
-function loadFilterSortingData(titles) {
+export function loadFilterSortingData(titles) {
 	if (!FILTER_SORT_DATA[ACTIVE_CATEGORY]) {
 		FILTER_SORT_DATA[ACTIVE_CATEGORY] = {};
 	}
@@ -77,7 +86,7 @@ function activateFilterSortContainerButton(buttonEl) {
 	buttonEl.classList.add("active");
 }
 
-function openFilterSortDrawer({
+export function openFilterSortDrawer({
 	triggerId,
 	getInnerHTML,
 	clickAction,
@@ -103,13 +112,13 @@ function openFilterSortDrawer({
 }
 
 // Helpers
-function shouldDisplayRegions() {
+export function shouldDisplayRegions() {
 	const REGIONS = getDataSet("regiao");
 	REGIONS.delete("");
 	return REGIONS.size > 1;
 }
 
-function shouldDisplayPlanned() {
+export function shouldDisplayPlanned() {
 	const item = PLANNED_DESTINATION[ACTIVE_CATEGORY];
 	if (!item || Object.keys(PLANNED_DESTINATION[ACTIVE_CATEGORY]) <= 1) {
 		return false;
@@ -117,12 +126,12 @@ function shouldDisplayPlanned() {
 	return true;
 }
 
-function shouldDisplayScores() {
+export function shouldDisplayScores() {
 	const notas = getDataSet("nota");
 	return notas.size > 1;
 }
 
-function shouldDisplayPrices() {
+export function shouldDisplayPrices() {
 	const precos = getPrices();
 	return precos.size > 1;
 }

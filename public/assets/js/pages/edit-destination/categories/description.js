@@ -2,7 +2,7 @@ import { getDestinos } from '../../../app/config.js';
 import { cloneObject, firstCharToUpperCase, getChildIDs, getID, getJ } from '../../../utils/dom.js';
 import { getUserLanguage, translate } from '../../../i18n/translation.js';
 import { closeMessage, displayFullMessage, getContainersInput } from '../../../utils/messages.js';
-import { getSelectOptionsHTML } from "../../../ui/fields";
+import { getSelectOptionsHTML } from "../../../ui/fields.js";
 
 export function getDescriptionHTML(categoria, j) {
 	let content = "";
@@ -18,7 +18,7 @@ export function getDescriptionHTML(categoria, j) {
 	return content;
 }
 
-function setDescription(categoria, j, descricao) {
+export function setDescription(categoria, j, descricao) {
 	for (const lang of LANGUAGES) {
 		const input = getID(`${categoria}-descricao-${lang}-${j}`);
 		if (input) {
@@ -27,7 +27,7 @@ function setDescription(categoria, j, descricao) {
 	}
 }
 
-function updateDescriptionButtonLabel(categoria, j) {
+export function updateDescriptionButtonLabel(categoria, j) {
 	const button = getID(`${categoria}-descricao-button-${j}`);
 	const text = getDescriptionLabel(categoria, j);
 	button.innerText = text;
@@ -53,7 +53,7 @@ function isDescriptionPreset(categoria, j) {
 	return false;
 }
 
-function getDescription(categoria, j) {
+export function getDescription(categoria, j) {
 	const description = {};
 	for (const lang of LANGUAGES) {
 		const input = getID(`${categoria}-descricao-${lang}-${j}`);

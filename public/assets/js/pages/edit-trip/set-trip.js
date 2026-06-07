@@ -14,7 +14,7 @@ import { getAccommodationArray, getProtectedAccommodationObject } from "./catego
 import { getProtectedTransportationObject, getTransportationObject } from "./categories/transportation.js";
 import { getExpensesObject } from "./categories/expenses.js";
 import { setDocumento } from "../../utils/set.js";
-import { IMAGE_UPLOAD_STATUS } from "../../data/firebase/storage";
+import { IMAGE_UPLOAD_STATUS } from "../../data/firebase/storage.js";
 
 export var FIRESTORE_NEW_DATA = {};
 var FIRESTORE_PROTECTED_NEW_DATA = {};
@@ -147,7 +147,7 @@ function getCoresObject() {
 	};
 }
 
-async function getSharingObject() {
+export async function getSharingObject() {
 	return {
 		ativo: true,
 		dono:

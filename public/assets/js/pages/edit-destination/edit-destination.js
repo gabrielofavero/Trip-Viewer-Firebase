@@ -11,6 +11,19 @@ import { deleteUserObjectDB, getSingleData } from '../../data/firebase/database.
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadEditDestinationListeners } from './support/event-listeners.js';
 import { getVisibility } from "../../theme/theme.js";
+import { loadDestinationsData } from "../destination/destination.js";
+import { getDescription } from "./categories/description.js";
+import { setDescription } from "./categories/description.js";
+import { updateDescriptionButtonLabel } from "./categories/description.js";
+import { loadCurrencySelects } from "./categories/price.js";
+import { addDestino } from "./existing-destination.js";
+import { addDestinoHTML } from "./existing-destination.js";
+import { addLanches } from "./new-destination.js";
+import { addLojas } from "./new-destination.js";
+import { addRestaurantes } from "./new-destination.js";
+import { addSaidas } from "./new-destination.js";
+import { addTurismo } from "./new-destination.js";
+import { setDocumento } from "../../utils/set.js";
 
 var FIRESTORE_DESTINOS_DATA;
 var SUCCESSFUL_SAVE = false;
@@ -147,7 +160,7 @@ function loadEventListeners() {
 	});
 }
 
-function addListenerToRemoveDestination(categoria, j) {
+export function addListenerToRemoveDestination(categoria, j) {
 	const dynamicSelects = [
 		{
 			type: "regiao",
@@ -168,7 +181,7 @@ async function loadDestinations() {
 }
 
 // Listeners
-function addDestinationsListeners(categoria, j) {
+export function addDestinationsListeners(categoria, j) {
 	// Interactive Title
 	getID(`${categoria}-nome-${j}`).addEventListener("change", () =>
 		updateDestinationsTitle(j, categoria),
@@ -220,7 +233,7 @@ function valorListenerAction(j, categoria) {
 	}
 }
 
-function updateDestinationsTitle(j, categoria) {
+export function updateDestinationsTitle(j, categoria) {
 	const titleDiv = getID(`${categoria}-title-text-${j}`);
 	const emojiDiv = getID(`${categoria}-emoji-${j}`);
 
@@ -242,7 +255,7 @@ function updateDestinationsTitle(j, categoria) {
 		: "none";
 }
 
-function emojisOnInputAction(j, categoria) {
+export function emojisOnInputAction(j, categoria) {
 	const emojiDiv = getID(`${categoria}-emoji-${j}`);
 	const emojiUntreated = emojiDiv.value;
 	const emojiTreated = emojiUntreated

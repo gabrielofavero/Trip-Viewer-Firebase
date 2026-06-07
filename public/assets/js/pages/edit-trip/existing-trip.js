@@ -55,7 +55,7 @@ function loadBasicTripData() {
 	switchPinLabel();
 }
 
-function loadCustomizacaoData() {
+export function loadCustomizacaoData() {
 	// Imagens
 	const background = getState().imagem.background;
 	const logoClaro = getState().imagem.claro;
@@ -248,7 +248,7 @@ async function loadDestinationsData() {
 	await loadDestinosAtivos();
 }
 
-function loadItineraryData() {
+export function loadItineraryData() {
 	if (getState().modulos.programacao === true) {
 		getID("habilitado-programacao").checked = true;
 		getID("habilitado-programacao-content").style.display = "block";
