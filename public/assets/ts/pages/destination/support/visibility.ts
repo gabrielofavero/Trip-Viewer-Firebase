@@ -5,11 +5,11 @@ import { setCSSRule } from '../../../theme/stylesheets.js';
 import { getDescriptionValue } from '../../../models/destination.model.js';
 import { THEME_COLOR } from "../../../theme/theme.js";
 import { adjustEditVisibility } from "../edit-destination.js";
+import { unloadMedias, MEDIA_HYPERLINKS } from "./media-embed.js";
 
 export async function loadDestinationVisibility() {
 	loadVisibility();
-	const closeAction = _unloadMedias;
-	loadEmbedVisibility({ closeAction });
+	loadEmbedVisibility({ closeAction() { unloadMedias(undefined); } });
 	await adjustEditVisibility();
 }
 

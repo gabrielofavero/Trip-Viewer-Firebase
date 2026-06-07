@@ -401,7 +401,7 @@ function loadModules() {
 	}
 }
 
-function setFirestoreData(firestoreData) {
+export function setFirestoreData(firestoreData) {
 	setState(firestoreData);
 	console.log("Firestore Database data loaded successfully");
 	loadDocumentData();

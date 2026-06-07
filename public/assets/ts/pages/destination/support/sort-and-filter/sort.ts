@@ -1,6 +1,6 @@
 import { normalizePriceBucket } from '../../../../models/destination.model.js';
 import { translate } from '../../../../i18n/translation.js';
-import {CONTENT, applyContent, getItem, isPlanned} from "../../destination.js";
+import {CONTENT, applyContent, getItem, isPlanned, ACTIVE_CATEGORY} from "../../destination.js";
 import { getSortDrawerInnerHTML } from "./support/drawer.js";
 import { sortDrawerOptionClickAction } from "./support/drawer.js";
 import { sortDrawerOptionLoadAction } from "./support/drawer.js";

@@ -112,7 +112,7 @@ function loadExpensesHTML() {
 		}
 
 		getID(categoria).appendChild(div);
-		initializeSortableForGroup(id, { onEnd: _afterDragInnerGasto });
+		initializeSortableForGroup(id, { onEnd: afterDragInnerGasto });
 	}
 }
 

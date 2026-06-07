@@ -1,7 +1,8 @@
 // ======= Price Bucket =======
 // Price bucket functions moved to models/destination.model.js — imported here for backward compat
 
-import { getDataSet } from "../../../destination.js";
+import { getDataSet, ACTIVE_CATEGORY } from "../../../destination.js";
+import { FILTER_SORT_DATA } from "../sort-and-filter.js";
 import {
 	getPriceBucket,
 	buildPriceBuckets,

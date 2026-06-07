@@ -1,7 +1,7 @@
 import { getID, getJs, getLinkMediaButton } from '../../../utils/dom.js';
 import { getSystemWidth } from "./visibility.js";
 
-var MEDIA_HYPERLINKS = {};
+export var MEDIA_HYPERLINKS = {};
 const EMBED_TIMEOUT = 10000;
 
 // Loader
@@ -36,7 +36,7 @@ export function loadMedia(id) {
 }
 
 export function unloadMedia(id) {
-	div = getID(id);
+	const div = getID(id);
 	if (div) {
 		div.innerHTML = "";
 	}

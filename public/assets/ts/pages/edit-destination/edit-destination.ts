@@ -24,6 +24,7 @@ import { addRestaurantes } from "./new-destination.js";
 import { addSaidas } from "./new-destination.js";
 import { addTurismo } from "./new-destination.js";
 import { setDocumento } from "../../utils/set.js";
+import { buildDestinosObject, updateTikTokLinks } from "./set-destination.js";
 import { FIRESTORE_DESTINATIONS_DATA, SUCCESSFUL_SAVE, DOCUMENT_ID, setDocumentId, setFirestoreDestinationsData } from '../../data/state.js';
 import { MESSAGE_PROPERTIES } from '../../utils/messages.js';
 
@@ -110,7 +111,7 @@ function loadEventListeners() {
 	getID("save-btn").addEventListener("click", () => {
 		startLoadingScreen();
 		const type = "destinos";
-		const dataBuildingFunctions = [_buildDestinosObject, _updateTikTokLinks];
+		const dataBuildingFunctions = [buildDestinosObject, updateTikTokLinks];
 
 		setDocumento({ type, dataBuildingFunctions });
 	});

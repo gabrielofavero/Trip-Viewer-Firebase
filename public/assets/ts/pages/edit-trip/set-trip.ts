@@ -239,7 +239,7 @@ export async function setTripData() {
 
 	const type = "viagens";
 	const checks = [validatePinField];
-	const dataBuildingFunctions = [_buildTripObject, _buildGastosObject];
+	const dataBuildingFunctions = [buildTripObject, buildExpensesObject];
 	const batchFunctions = [setProtectedDataAndExpenses];
 
 	await setDocumento({ type, checks, dataBuildingFunctions, batchFunctions });

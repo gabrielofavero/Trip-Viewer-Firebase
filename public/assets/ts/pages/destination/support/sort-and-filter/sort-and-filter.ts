@@ -1,5 +1,5 @@
 import { getID } from '../../../../utils/dom.js';
-import {CONTENT, getDataSet} from "../../destination.js";
+import {CONTENT, getDataSet, ACTIVE_CATEGORY} from "../../destination.js";
 import { closeAddedDestination } from "../../edit-destination.js";
 import { PLANNED_DESTINATION } from "../trip.js";
 import { filter } from "./filter.js";

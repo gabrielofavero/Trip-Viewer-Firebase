@@ -3,6 +3,7 @@ import { translate } from "../../../../../i18n/translation.js";
 import {FILTER_OPTIONS, filter} from "../filter.js";
 import {SORT_OPTIONS, sort} from "../sort.js";
 import { FILTER_SORT_KEYS_ORDER } from "../sort-and-filter.js";
+import { ACTIVE_CATEGORY } from "../../../destination.js";
 import { getFilterPreferences } from "./preferences.js";
 import { getSortPreferences } from "./preferences.js";
 

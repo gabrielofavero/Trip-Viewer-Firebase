@@ -90,7 +90,7 @@ export function openDescriptionModal(categoria, j) {
 	loadDescriptionInputs(categoria, j);
 	getID("description-language-select").addEventListener(
 		"change",
-		_descriptionSelectChangeAction,
+		descriptionSelectChangeAction,
 	);
 }
 

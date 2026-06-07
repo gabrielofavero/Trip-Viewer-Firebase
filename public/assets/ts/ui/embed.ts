@@ -90,25 +90,25 @@ export function loadEmbedVisibility({
 
 	if (isEmbed()) {
 		embedAction?.();
-		closeButton.onclick = () => {
+		closeButton && (closeButton.onclick = () => {
 			closeAction?.();
 			(window.parent as any).closeViewEmbed(false, getVisibility());
-		};
+		});
 
-		logoLink.onclick = () => {
+		logoLink && (logoLink.onclick = () => {
 			(window.parent as any).closeViewEmbed(true, getVisibility());
-		};
+		});
 	} else {
 		notEmbedAction?.();
-		closeButton.style.display = "none";
+		closeButton && (closeButton.style.display = "none");
 		const share = getID("share");
 		if (share) {
 			share.style.display = "";
 		}
 
-		logoLink.onclick = () => {
+		logoLink && (logoLink.onclick = () => {
 			window.location.href = "index.html";
-		};
+		});
 	}
 }
 

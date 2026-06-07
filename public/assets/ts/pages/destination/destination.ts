@@ -12,12 +12,15 @@ import { loadActiveCategory, updateActiveCategory, ACTIVE_CATEGORY } from "./cat
 import { adjustEditVisibility } from "./edit-destination.js";
 import { restoreIfEditing } from "./edit-destination.js";
 import { getDestinationsHTML } from "./support/content.js";
-import { adjustInstagramMedia } from "./support/media-embed.js";
-import { adjustMediaEmbeds } from "./support/media-embed.js";
-import { loadEmbed } from "./support/media-embed.js";
-import { loadMedia } from "./support/media-embed.js";
-import { unloadMedia } from "./support/media-embed.js";
-import { unloadMedias } from "./support/media-embed.js";
+import {
+	adjustInstagramMedia,
+	adjustMediaEmbeds,
+	loadEmbed,
+	loadMedia,
+	unloadMedia,
+	unloadMedias,
+	MEDIA_HYPERLINKS,
+} from "./support/media-embed.js";
 import { loadSortAndFilter } from "./support/sort-and-filter/sort-and-filter.js";
 import { adjustDrawer } from "./support/sort-and-filter/support/drawer.js";
 import { getTripData } from "./support/trip.js";
@@ -50,7 +53,7 @@ export async function loadDestinationsData(data?) {
 }
 
 export async function loadDestinationPage() {
-	console.log(this.window.location.href);
+	console.log(window.location.href);
 
 	loadDestinationListeners();
 
@@ -84,7 +87,10 @@ function loadDestinationByType(activeCategory) {
 
 	content.innerHTML = "";
 	CONTENT = [];
-	MEDIA_HYPERLINKS = {};
+	// Clear MEDIA_HYPERLINKS in-place (imported bindings are read-only)
+	for (const key of Object.keys(MEDIA_HYPERLINKS)) {
+		delete MEDIA_HYPERLINKS[key];
+	}
 
 	if (activeCategory === "myMaps") {
 		content.classList = "map-content";

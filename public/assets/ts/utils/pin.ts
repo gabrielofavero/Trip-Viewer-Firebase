@@ -219,7 +219,10 @@ function loadPin() {
 		numericKeyboardOnMobile: true,
 		blurOnSuccess: true,
 		onSuccess: function () {
-			$(".pin").html(pin);
+			const inputs = document.querySelectorAll<HTMLInputElement>('.pin-wrapper [data-role="pin"]');
+			let pinValue = "";
+			inputs.forEach((input) => { pinValue += input.value || ""; });
+			$(".pin").html(pinValue);
 		},
 		onFailure: function () {
 			$(".pin").html("");
@@ -277,18 +280,12 @@ export function requestInvalidPin({ confirmAction, cancelAction, precontent }) {
 export function setManualPin(pinString) {
 	if (!/^\d{4}$/.test(pinString)) return;
 
-	const inputs = document.querySelectorAll('.pin-wrapper [data-role="pin"]');
+	const inputs = document.querySelectorAll<HTMLInputElement>('.pin-wrapper [data-role="pin"]');
 	if (inputs.length !== 4) return;
 
-	pin = pinString;
-
 	inputs.forEach((input) => {
-		(input as HTMLInputElement).value = "•";
+		input.value = "•";
 	});
 
-	if (typeof settings !== "undefined" && settings.onSuccess) {
-		settings.onSuccess();
-	} else {
-		document.querySelector(".pin").innerHTML = pin;
-	}
+	document.querySelector(".pin")!.innerHTML = pinString;
 }

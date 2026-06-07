@@ -6,7 +6,7 @@ import { translate } from "../../i18n/translation.js";
 import { getDescription } from "./categories/description.js";
 import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA, setFirestoreDestinationsNewData } from '../../data/state.js';
 
-async function buildDestinosObject() {
+export async function buildDestinosObject() {
 	setFirestoreDestinationsNewData({
 		lanches: buildDestinoCategoryObject("lanches"),
 		lojas: buildDestinoCategoryObject("lojas"),
@@ -72,7 +72,7 @@ function buildDestinoCategoryObject(categoria) {
 	return result;
 }
 
-async function updateTikTokLinks() {
+export async function updateTikTokLinks() {
 	let toUpdate = false;
 	const urls = {};
 

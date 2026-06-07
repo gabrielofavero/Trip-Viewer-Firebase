@@ -8,7 +8,7 @@ import { requestPin } from '../../../utils/pin.js';
 import { copyToClipboard } from "../categories/transportation-module.js";
 import { sendToExpenses } from "../support/embed.js";
 import { getURLParam } from "../../../utils/dom.js";
-import { TYPE } from "../view.js";
+import { TYPE, setFirestoreData } from "../view.js";
 
 const SENSITIVE_RESERVATION_BOXES = {
 	transportes: {},
@@ -142,7 +142,7 @@ function loadSensitiveReservationAction(type: string, id: string): void {
 	}
 }
 
-async function protectedDataConfirmAction(afterAction = _setFirestoreData) {
+async function protectedDataConfirmAction(afterAction = setFirestoreData) {
 	PIN = getID("pin-code")?.innerText || "";
 	closeMessage();
 	const adjustLoadables = false;
