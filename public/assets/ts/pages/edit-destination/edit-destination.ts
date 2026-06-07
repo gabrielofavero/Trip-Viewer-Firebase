@@ -35,25 +35,19 @@ var SCHEDULE = {};
 var REGIONS = [];
 
 export async function loadEditDestinationPage() {
-	console.log("🔍 [edit-destination] loadEditDestinationPage — starting");
 	loadEditDestinationListeners();
 
 	setDocumentId(getURLParam("d"));
-	console.log("🔍 [edit-destination] DOCUMENT_ID =", DOCUMENT_ID);
 
 	loadVisibilityIndex();
 	loadHabilitados();
 	newDynamicSelect("regiao");
 
 	if (DOCUMENT_ID) {
-		console.log("🔍 [edit-destination] DOCUMENT_ID exists, calling loadDestinations()");
 		await loadDestinations();
-	} else {
-		console.log("🔍 [edit-destination] NO DOCUMENT_ID — skipping loadDestinations()");
 	}
 
 	loadEventListeners();
-	console.log("🔍 [edit-destination] loadEditDestinationPage — done");
 	stopLoadingScreen();
 	snapshotFormState();
 	$("body").css("overflow", "auto");
@@ -176,17 +170,13 @@ export function addListenerToRemoveDestination(categoria, j) {
 }
 
 async function loadDestinations() {
-	console.log("🔍 [edit-destination] loadDestinations — starting");
 	getID("delete-text").style.display = "block";
 	startLoadingScreen();
 
 	const singleData = await getSingleData("destinos");
-	console.log("🔍 [edit-destination] getSingleData('destinos') result:", singleData);
 	setFirestoreDestinosData(singleData);
-	console.log("🔍 [edit-destination] FIRESTORE_DESTINOS_DATA after set:", FIRESTORE_DESTINOS_DATA);
 
 	populateExistingDestinationForm();
-	console.log("🔍 [edit-destination] loadDestinations — done");
 	stopLoadingScreen();
 }
 

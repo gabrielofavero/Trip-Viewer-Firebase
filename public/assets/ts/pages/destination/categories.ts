@@ -18,18 +18,14 @@ export var ACTIVE_CATEGORY;
 
 // Active Category
 export function loadActiveCategory(urlParams) {
-	console.log("🔍 [categories] loadActiveCategory — urlParams:", urlParams);
 	let type = urlParams["type"];
 	const destinos = getDestinos();
 	const originals = destinos.original;
-	console.log("🔍 [categories] type from URL:", type, "originals keys:", Object.keys(originals));
 
 	if (!type || !originals[type]) {
-		console.log("🔍 [categories] type missing/invalid, calling getFirstCategory()");
 		type = getFirstCategory();
 	}
 
-	console.log("🔍 [categories] final type:", type, "→ ACTIVE_CATEGORY:", originals[type]);
 	ACTIVE_CATEGORY = originals[type];
 
 	function getFirstCategory() {
@@ -37,15 +33,12 @@ export function loadActiveCategory(urlParams) {
 		const types = destinos.categorias.ids;
 		const translations = destinos.translation;
 		const destinoIDs = Object.keys(FIRESTORE_DESTINOS_DATA);
-		console.log("🔍 [categories] getFirstCategory — types:", types, "destinoIDs:", destinoIDs);
 		for (const type of types) {
 			const value = translations[type];
 			if (destinoIDs.includes(type) && value) {
-				console.log("🔍 [categories] getFirstCategory — found:", value);
 				return value;
 			}
 		}
-		console.error("🔍 [categories] getFirstCategory — no matching category found!");
 		throw translate("messages.errors.missing_data");
 	}
 }

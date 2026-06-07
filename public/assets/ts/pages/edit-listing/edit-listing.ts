@@ -11,6 +11,7 @@ import { displayFullMessage, MESSAGE_PROPERTIES } from '../../utils/messages.js'
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 
 var FIRESTORE_PROTECTED_DATA = {};
+var PERMISSOES;
 
 startLoadingScreen();
 
