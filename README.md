@@ -112,9 +112,9 @@ npm run dev
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 160   | 157  | 3         | 0       |
-| 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
-| 📈   | Improvement | M000 | 152   | 129  | 23        | 0       |
-| ⚔️   | Epic        | E000 | 47    | 30   | 8         | 9       |
+| 🏆   | Feature     | F000 | 167   | 137  | 22        | 8       |
+| 📈   | Improvement | M000 | 154   | 129  | 23        | 2       |
+| ⚔️   | Epic        | E000 | 48    | 30   | 8         | 10      |
 
 ## Backlog
 
@@ -124,6 +124,8 @@ npm run dev
   - Translate database 
   - Migration + 
   - ts/json files adaptation (+ final translation round)
+  - add image tag on destination
+  - copy destinations tag from trip/listing into user data
 - 📈 **M153:** Index improvements: 
   - trip/listing destination tags, destination images
 
@@ -137,6 +139,7 @@ npm run dev
   - search bar
 - ⚔️ **E027:** New Front-End: view.html
   - no more iframe/embeds. Use html injection instead
+- 📈 **M154:** Reduce firestore calls on index
 - ⚔️ **E045:** New Front-End: itinerary.html
 - ⚔️ **E046:** New Front-End: expenses.html
 
