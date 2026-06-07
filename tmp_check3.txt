@@ -1,4 +1,0 @@
-  File "C:\Users\gabri\Documents\GitHub\Trip-Viewer-Firebase\scripts\check-cross-module-refs.py", line 1089
-    def _suggest_export_source(from_rel: str, symbol: str, file_exports: dict) -> Optional[str]:
-    ^
-IndentationError: expected an indented block after function definition on line 1086

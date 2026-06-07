@@ -52,8 +52,26 @@ function build() {
   const { inject } = require("./inject-partials.js");
   inject();
 
+  // 2c. Compile TypeScript → JavaScript
+  console.log("[build] Compiling TypeScript...");
+  const glob = require("glob");
+  const tsFiles = glob.sync("dist/assets/ts/**/*.ts");
+  if (tsFiles.length > 0) {
+    require("esbuild").buildSync({
+      entryPoints: tsFiles,
+      outdir: "dist/assets/ts",
+      format: "esm",
+      target: "es2020",
+      allowOverwrite: true,
+      logLevel: "error",
+    });
+  }
+  // Remove .ts source files from dist/ (only compiled .js needed)
+  glob.sync("dist/assets/ts/**/*.ts").forEach(f => fs.rmSync(f));
+  console.log(`[build] Compiled ${tsFiles.length} TS files.`);
+
   // 3. Copy firebase.json, firebase-config.js, and index.js to dist/
-  console.log("[build] Copying Firebase config files...");
+  console.log("[build] Copying Firebase config and entry files...");
   const firebaseJson = path.join(ROOT, "firebase.json");
   const firebaseConfig = path.join(ROOT, "firebase-config.js");
   const indexJs = path.join(ROOT, "index.js");

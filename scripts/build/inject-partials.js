@@ -36,50 +36,50 @@ const PAGES = [
   {
     source: "index.html",
     title: "TripViewer",
-    entry: "assets/js/pages/home/index-entry.js",
+    entry: "assets/ts/pages/home/index-entry.js",
     useTopBar: true,
   },
   {
     source: "view.html",
     title: "TripViewer",
-    entry: "assets/js/pages/trip-detail/view-entry.js",
+    entry: "assets/ts/pages/trip-detail/view-entry.js",
     useTopBar: true,
   },
   {
     source: "destination.html",
     title: "TripViewer",
-    entry: "assets/js/pages/destination/destination-entry.js",
+    entry: "assets/ts/pages/destination/destination-entry.js",
     useTopBar: true,
   },
   {
     source: "expenses.html",
     title: "TripViewer",
-    entry: "assets/js/pages/expenses/expenses-entry.js",
+    entry: "assets/ts/pages/expenses/expenses-entry.js",
     useTopBar: true,
   },
   {
     source: "itinerary.html",
     title: "TripViewer",
-    entry: "assets/js/pages/itinerary/itinerary-entry.js",
+    entry: "assets/ts/pages/itinerary/itinerary-entry.js",
     useTopBar: true,
   },
   // Edit pages
   {
     source: "edit/trip.html",
     title: "TripViewer",
-    entry: "../assets/js/pages/edit-trip/trip-entry.js",
+    entry: "../assets/ts/pages/edit-trip/trip-entry.js",
     useTopBar: true,
   },
   {
     source: "edit/destination.html",
     title: "TripViewer",
-    entry: "../assets/js/pages/edit-destination/destination-entry.js",
+    entry: "../assets/ts/pages/edit-destination/destination-entry.js",
     useTopBar: true,
   },
   {
     source: "edit/listing.html",
     title: "TripViewer",
-    entry: "../assets/js/pages/edit-listing/listing-entry.js",
+    entry: "../assets/ts/pages/edit-listing/listing-entry.js",
     useTopBar: true,
   },
 ];

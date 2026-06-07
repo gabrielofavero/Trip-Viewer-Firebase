@@ -13,7 +13,7 @@ repos:
         name: Format JS
         entry: bash -c "npx biome format --write || true"
         language: system
-        files: ^public/assets/js/.*\.js$
+        files: ^public/assets/ts/.*\.ts$
 
       # JSON
       - id: biome-json
