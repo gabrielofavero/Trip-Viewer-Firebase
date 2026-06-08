@@ -1,0 +1,19 @@
+<!--
+  Live-reload polling script — only active on localhost.
+  Polls /reload for timestamp changes; refreshes the page when a rebuild is detected.
+-->
+<script>
+(function () {
+  if (!/localhost|127\.0\.0\.1|^192\.168\.|^10\.|^172\.(1[6-9]|2\d|3[01])\./.test(location.hostname)) return;
+  var last = null;
+  setInterval(function () {
+    fetch('/reload', { cache: 'no-store' })
+      .then(function (r) { return r.text(); })
+      .then(function (ts) {
+        if (last && last !== ts) location.reload();
+        last = ts;
+      })
+      .catch(function () { /* server not ready yet */ });
+  }, 800);
+})();
+</script>

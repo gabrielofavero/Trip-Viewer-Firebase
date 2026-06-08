@@ -5,8 +5,12 @@
  * It supports nested namespaces — just assign: `dev.page.myVar = ...`
  *
  * Built-in namespaces:
- *   dev.firestore.get("path")     — read a Firestore document
- *   dev.firestore.set("path", {}) — write a Firestore document
+ *   dev.firestore.get("path")         — read a Firestore document
+ *   dev.firestore.set("path", {})     — write a Firestore document
+ *   dev.messages.show(title, content)  — show a message modal
+ *   dev.messages.error(err)           — show an error message
+ *   dev.messages.close()              — close the current message
+ *   dev.messages.toast(text)          — show a toast notification
  *
  * Usage in console:
  *   dev.help()     — show commands
@@ -15,7 +19,7 @@
  */
 
 // ---------- internal sentinel ----------
-const BUILTINS = new Set(["help", "list", "isEnabled", "host", "firestore"]);
+const BUILTINS = new Set(["help", "list", "isEnabled", "host", "firestore", "messages"]);
 const STORE_KEY = Symbol("store");
 
 // ---------- helpers ----------
@@ -49,22 +53,22 @@ interface Namespace {
 }
 
 function createNamespace(parentPath: string): Namespace & { [key: string]: any } {
-	const store: Record<string, any> = {};
+	const store: Record<string | symbol, any> = {};
 
 	const proxy = new Proxy({} as any, {
-		get(_target, prop: string) {
+		get(_target, prop: string | symbol) {
 			if (prop === STORE_KEY) return store;
 			// already a leaf value? return it
 			if (prop in store && !(store[prop] && typeof store[prop] === "object" && STORE_KEY in store[prop])) {
 				return store[prop];
 			}
 			// auto-create nested namespace
-			if (!(prop in store)) {
+			if (!(prop in store) && typeof prop === "string") {
 				store[prop] = createNamespace(parentPath ? `${parentPath}.${prop}` : prop);
 			}
 			return store[prop];
 		},
-		set(_target, prop: string, value: any) {
+		set(_target, prop: string | symbol, value: any) {
 			if (prop === STORE_KEY) return true;
 			store[prop] = value;
 			return true;
@@ -98,6 +102,46 @@ function listTree(store: Record<string, any>, prefix: string, indent: number): v
 			);
 		}
 	}
+}
+
+// ---------- message helpers ----------
+import {
+	displayMessage,
+	displayError,
+	closeMessage,
+	openToast,
+	displayPrompt,
+	displayFullMessage,
+} from './messages.js';
+
+function createMessagesNs(): any {
+	const ns = createNamespace("messages");
+
+	ns.show = function (title?: string, content?: string): void {
+		displayMessage(title, content);
+	};
+
+	ns.error = function (err: any, tryAgain = false): void {
+		displayError(err, tryAgain);
+	};
+
+	ns.close = function (): void {
+		closeMessage();
+	};
+
+	ns.toast = function (text: string): void {
+		openToast(text);
+	};
+
+	ns.prompt = function (options?: any): void {
+		displayPrompt(options);
+	};
+
+	ns.full = function (properties?: any): void {
+		displayFullMessage(properties);
+	};
+
+	return ns;
 }
 
 // ---------- firestore helpers ----------
@@ -137,6 +181,14 @@ export interface DevHost {
 	isEnabled: true;
 	host: string;
 	firestore: { get(path: string): Promise<any>; set(path: string, data: Record<string, any>): Promise<void>; [key: string]: any };
+	messages: {
+		show(title?: string, content?: string): void;
+		error(err: any, tryAgain?: boolean): void;
+		close(): void;
+		toast(text: string): void;
+		prompt(options?: any): void;
+		full(properties?: any): void;
+	};
 	help(): void;
 	list(): void;
 	[key: string]: any;
@@ -147,8 +199,9 @@ export function initDev(): DevHost | null {
 
 	const rootNs = createNamespace("");
 
-	// ---- pre-populate firestore ----
+	// ---- pre-populate namespaces ----
 	(rootNs as any).firestore = createFirestoreNs();
+	(rootNs as any).messages = createMessagesNs();
 
 	const rootStore = (rootNs as any)[STORE_KEY] as Record<string, any>;
 
@@ -164,6 +217,10 @@ export function initDev(): DevHost | null {
 		console.log("  %cdev.page.foo%c          — inspect a page variable", "font-weight:bold;", "");
 		console.log("  %cdev.firestore.get()%c   — read a Firestore document", "font-weight:bold;", "");
 		console.log("  %cdev.firestore.set()%c   — write a Firestore document", "font-weight:bold;", "");
+		console.log("  %cdev.messages.show()%c  — show a message modal", "font-weight:bold;", "");
+		console.log("  %cdev.messages.error()%c — show an error message", "font-weight:bold;", "");
+		console.log("  %cdev.messages.close()%c — close the current message", "font-weight:bold;", "");
+		console.log("  %cdev.messages.toast()%c — show a toast", "font-weight:bold;", "");
 	};
 
 	const listFn = function (): void {
@@ -216,3 +273,5 @@ export function initDev(): DevHost | null {
 
 	return dev as any;
 }
+
+

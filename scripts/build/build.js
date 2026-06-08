@@ -11,6 +11,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
 const ROOT = path.resolve(__dirname, "..", "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
@@ -39,6 +40,18 @@ function copyRecursive(src, dest) {
  */
 function build() {
   const start = Date.now();
+
+  // 0. Type-check TypeScript (blocks build on errors)
+  console.log("[build] Type-checking TypeScript...");
+  try {
+    execSync(`"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit`, {
+      cwd: ROOT,
+      stdio: "inherit",
+    });
+  } catch {
+    console.error("\n[build] ❌ Build aborted — TypeScript errors found. Fix them and try again.");
+    process.exit(1);
+  }
 
   // 1. Clean dist/
   fs.rmSync(DIST_DIR, { recursive: true, force: true });
@@ -96,6 +109,9 @@ function build() {
 
   const elapsed = Date.now() - start;
   console.log(`[build] Done in ${elapsed}ms.`);
+
+  // Signal live-reload clients (polling-based, no proxy needed)
+  fs.writeFileSync(path.join(DIST_DIR, "reload"), String(Date.now()));
 }
 
 // --- Watch mode ---

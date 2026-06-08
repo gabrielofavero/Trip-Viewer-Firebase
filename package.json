@@ -8,7 +8,7 @@
 		"watch": "node scripts/build/build.js --watch",
 		"clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); console.log('dist/ cleaned.');\"",
 		"serve": "firebase serve --only hosting --port 5000",
-		"dev": "concurrently -k -n watch,serve,reload -c blue,green,yellow \"npm run watch\" \"npm run serve\" \"browser-sync start --proxy localhost:5000 --port 5001 --files dist/**/* --no-open\"",
+		"dev": "concurrently -k -n watch,serve -c blue,green \"npm run watch\" \"npm run serve\"",
 		"typecheck": "tsc --noEmit"
 	},
 	"devDependencies": {
