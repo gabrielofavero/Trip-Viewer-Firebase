@@ -8,7 +8,9 @@
 		"watch": "node scripts/build/build.js --watch",
 		"clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); console.log('dist/ cleaned.');\"",
 		"serve": "firebase serve --only hosting --port 5000",
-		"dev": "concurrently -k -n watch,serve -c blue,green \"npm run watch\" \"npm run serve\"",
+		"dev": "concurrently -k -n watch,serve -c blue,green \"npm run watch:fast\" \"npm run serve\"",
+		"dev:livereload": "concurrently -k -n watch,serve -c blue,green \"npm run watch\" \"npm run serve\"",
+		"watch:fast": "node scripts/build/build.js --watch --no-livereload",
 		"typecheck": "tsc --noEmit"
 	},
 	"devDependencies": {

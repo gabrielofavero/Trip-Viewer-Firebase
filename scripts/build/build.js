@@ -18,6 +18,7 @@ const PUBLIC_DIR = path.join(ROOT, "public");
 const DIST_DIR = path.join(ROOT, "dist");
 
 const watchMode = process.argv.includes("--watch");
+const noLiveReload = process.argv.includes("--no-livereload");
 
 /**
  * Recursively copy a directory (or file).
@@ -49,6 +50,27 @@ function build() {
       stdio: "inherit",
     });
   } catch {
+    // Collect per-file error summary from tsc (--pretty false for machine-parseable output)
+    try {
+      execSync(
+        `"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit --pretty false`,
+        { cwd: ROOT, stdio: "pipe" }
+      );
+    } catch (e) {
+      const output = (e.stdout || "") + (e.stderr || "");
+      const errorLines = output.split("\n").filter(l => l.includes("error TS"));
+      if (errorLines.length > 0) {
+        const files = new Set();
+        for (const line of errorLines) {
+          const m = line.match(/^(.+?)\(\d+/);
+          if (m) files.add(m[1]);
+        }
+        if (files.size > 0) {
+          console.error("\n[build] Files with errors:");
+          for (const f of files) console.error(`  • ${f}`);
+        }
+      }
+    }
     console.error("\n[build] ❌ Build aborted — TypeScript errors found. Fix them and try again.");
     process.exit(1);
   }
@@ -63,7 +85,7 @@ function build() {
   // 2b. Inject shared HTML partials into dist/ HTML files
   console.log("[build] Injecting HTML partials...");
   const { inject } = require("./inject-partials.js");
-  inject();
+  inject({ noLiveReload });
 
   // 2c. Compile TypeScript → JavaScript
   console.log("[build] Compiling TypeScript...");

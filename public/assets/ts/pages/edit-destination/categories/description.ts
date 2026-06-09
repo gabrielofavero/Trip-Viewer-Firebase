@@ -144,7 +144,7 @@ function loadDescriptionInputs(categoria, j) {
 	}
 }
 
-function saveDescription(categoria, j) {
+export function saveDescription(categoria, j) {
 	const description = {};
 	for (const lang of LANGUAGES) {
 		const input = getID(`description-${lang}`);

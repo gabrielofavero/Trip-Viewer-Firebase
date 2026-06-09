@@ -24,7 +24,9 @@ export function loadItinerarySchedule() {
 }
 
 function loadScheduleDestinations() {
-	for (const programacao of getState().programacoes) {
+	const programacoes = getState()?.programacoes;
+	if (!programacoes) return;
+	for (const programacao of programacoes) {
 		const key = dateObjectToKey(programacao.data);
 		SCHEDULE_DESTINATIONS[key] = programacao.destinosIDs;
 	}

@@ -315,7 +315,7 @@ export function openMoveDestinationModal(j, categoria) {
 	displayFullMessage(properties);
 }
 
-function moveDestination(j, categoria) {
+export function moveDestination(j, categoria) {
 	const newCategoria = getID("move-select").value;
 	const description = getDescription(categoria, j);
 
@@ -383,7 +383,7 @@ export function deleteDestino() {
 	displayFullMessage(properties);
 }
 
-async function deleteDestinoAction() {
+export async function deleteDestinoAction() {
 	if (DOCUMENT_ID) {
 		await deleteUserObjectDB(DOCUMENT_ID, "destinos");
 		window.location.href = `../index?visibility=${getVisibility()}`;

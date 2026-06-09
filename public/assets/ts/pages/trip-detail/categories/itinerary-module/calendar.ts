@@ -91,11 +91,16 @@ function showCalendar(month, year) {
 
 	let tbl = getID("calendar-body");
 
+	// Guard: calendar DOM may not exist on all pages (e.g. edit-trip)
+	if (!tbl) return;
+
 	tbl.innerHTML = "";
-	CALENDAR.calendarTitle.innerHTML = translate("datetime.titles.month_year", {
-		month: getMonth(month),
-		year,
-	});
+	if (CALENDAR.calendarTitle) {
+		CALENDAR.calendarTitle.innerHTML = translate("datetime.titles.month_year", {
+			month: getMonth(month),
+			year,
+		});
+	}
 
 	let day = 1;
 	for (let i = 0; i < 6; i++) {
@@ -160,6 +165,9 @@ function loadMonthSelector() {
 function loadMonthNavigatorVisibility() {
 	const previous = getID("previous");
 	const next = getID("next");
+
+	// Guard: navigation buttons may not exist on all pages
+	if (!previous || !next) return;
 
 	if (
 		CURRENT_CALENDAR.month === CALENDAR.startMonth &&

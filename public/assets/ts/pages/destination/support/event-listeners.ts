@@ -1,8 +1,9 @@
 import { registerActions } from '../../../ui/actions.js';
+import { registerActions as registerMessageActions } from '../../../utils/messages.js';
 import { openFilterDrawer } from './sort-and-filter/filter.js';
 import { openSortDrawer } from './sort-and-filter/sort.js';
 import { closeDrawer } from './sort-and-filter/support/drawer.js';
-import { add, edit, closeAddedDestination } from '../edit-destination.js';
+import { add, edit, closeAddedDestination, deleteEdit } from '../edit-destination.js';
 import { processAccordion } from '../destination.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
@@ -31,5 +32,10 @@ export function loadDestinationListeners() {
             const index = parseInt(target.getAttribute("data-index"));
             if (!isNaN(index)) edit(index);
         },
+    });
+
+    // Register string-based button actions used in modals (via messages.js _actionRegistry)
+    registerMessageActions({
+        deleteEdit,
     });
 }

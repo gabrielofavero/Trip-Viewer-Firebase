@@ -147,7 +147,7 @@ function loadSensitiveReservationAction(type: string, id: string): void {
 	}
 }
 
-async function protectedDataConfirmAction(afterAction?: (data: any) => void) {
+export async function protectedDataConfirmAction(afterAction?: (data: any) => void) {
 	PIN = getID("pin-code")?.innerText || "";
 	closeMessage();
 	const adjustLoadables = false;

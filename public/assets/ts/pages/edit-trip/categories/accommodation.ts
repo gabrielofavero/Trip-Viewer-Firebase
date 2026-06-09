@@ -106,7 +106,7 @@ export function loadAccommodationListeners(j) {
 	});
 }
 
-function accommodationsAddListenerAction() {
+export function accommodationsAddListenerAction() {
 	closeAccordions("hospedagens");
 	addHospedagens();
 	openLastAccordion("hospedagens");
@@ -211,7 +211,7 @@ export function openInnerAccommodationImage(k) {
 	getID("back-icon").style.visibility = "visible";
 }
 
-function closeInnerAccommodationImage() {
+export function closeInnerAccommodationImage() {
 	for (const orderId of getChildIDs("inner-hospedagens-imagem")) {
 		const k = getJ(orderId);
 		const id = `hospedagens-imagem-${k}`;
@@ -241,7 +241,7 @@ function hasInnerAccommodationImage(k) {
 	);
 }
 
-function confirmAccommodationImages(j) {
+export function confirmAccommodationImages(j) {
 	const isEditing = getID(`hospedagens-imagem-${j}`).style.display === "block";
 	if (isEditing) {
 		closeInnerAccommodationImage();

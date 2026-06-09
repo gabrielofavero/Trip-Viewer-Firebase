@@ -1,6 +1,7 @@
 import { registerActions } from '../../../ui/actions.js';
-import { deleteDestino, openMoveDestinationModal } from '../edit-destination.js';
-import { openDescriptionModal } from '../categories/description.js';
+import { registerActions as registerMessageActions } from '../../../utils/messages.js';
+import { deleteDestino, openMoveDestinationModal, moveDestination, deleteDestinoAction } from '../edit-destination.js';
+import { openDescriptionModal, saveDescription } from '../categories/description.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
 import { closeModal } from '../../../theme/visibility.js';
@@ -24,5 +25,12 @@ export function loadEditDestinationListeners() {
             const category = target.getAttribute("data-category");
             if (!isNaN(index) && category) openMoveDestinationModal(index, category);
         },
+    });
+
+    // Register string-based button actions used in modals (via messages.js _actionRegistry)
+    registerMessageActions({
+        deleteDestinoAction,
+        moveDestination,
+        saveDescription,
     });
 }

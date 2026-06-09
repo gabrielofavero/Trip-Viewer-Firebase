@@ -6,7 +6,8 @@ import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from '../theme/animations.js';
 
 export let MESSAGE_MODAL_OPEN = false;
-export const MESSAGE_PROPERTIES = {
+// Use var (not const) to avoid TDZ errors from circular module dependencies
+export var MESSAGE_PROPERTIES: Record<string, any> = {
 	titulo: "",
 	conteudo: "",
 	critico: false,
@@ -246,7 +247,7 @@ export function getIconsBox(icones) {
 	cancelIcon.id = "cancel-icon";
 	cancelIcon.className = "iconify";
 	cancelIcon.setAttribute("data-icon", "material-symbols-light:close");
-	cancelIcon.setAttribute("onclick", "closeMessage()");
+	cancelIcon.addEventListener("click", closeMessage);
 	cancelIcon.style.cursor = "pointer";
 
 	iconContainer.appendChild(cancelIcon);
@@ -421,16 +422,21 @@ export function getDeleteButtonBasic(onclick) {
 /**
  * Registry of named action callbacks so that string-based acao
  * (e.g. "backupAccountData(true)") can be resolved without window.* globals.
+ * Uses var (not const) to avoid TDZ errors from circular module dependencies.
  */
-const _actionRegistry = Object.create(null);
+var _actionRegistry = Object.create(null);
 
 /**
  * Register one or more named callbacks for string-based button actions.
  * Usage: registerActions({ backupAccountData, openRestoreFilePicker })
  */
 export function registerActions(map) {
+	if (!_actionRegistry) _actionRegistry = Object.create(null);
 	Object.assign(_actionRegistry, map);
 }
+
+// Built-in message actions — registered here so they're always available
+registerActions({ closeMessage });
 
 /**
  * Attach a click handler to a button.

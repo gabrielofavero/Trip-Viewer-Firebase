@@ -165,8 +165,11 @@ export function loadImageSelector(type) {
 	const link = getID(`link-${type}`);
 	const upload = getID(`upload-${type}`);
 
+	// Guard: if any required element is missing, abort gracefully
+	if (!link || !upload) return;
+
 	if (IMAGE_UPLOAD_ENABLED && PERMISSOES && PERMISSOES["upload"] === true) {
-		if (checkboxLink.checked) {
+		if (checkboxLink?.checked) {
 			link.style.display = "block";
 			upload.style.display = "none";
 		} else {
@@ -174,7 +177,7 @@ export function loadImageSelector(type) {
 			upload.style.display = "block";
 		}
 
-		checkboxLink.addEventListener("change", function () {
+		checkboxLink?.addEventListener("change", function () {
 			if (checkboxLink.checked) {
 				link.style.display = "block";
 				upload.style.display = "none";
@@ -183,7 +186,7 @@ export function loadImageSelector(type) {
 				upload.style.display = "block";
 			}
 		});
-		checkboxUpload.addEventListener("change", function () {
+		checkboxUpload?.addEventListener("change", function () {
 			if (checkboxUpload.checked) {
 				link.style.display = "none";
 				upload.style.display = "block";
@@ -192,13 +195,13 @@ export function loadImageSelector(type) {
 				upload.style.display = "none";
 			}
 		});
-		upload.addEventListener("change", function () {
+		upload?.addEventListener("change", function () {
 			checkFileSize(upload, type);
 		});
 	} else {
 		link.style.display = "block";
 		upload.style.display = "none";
-		checkboxGroup.style.display = "none";
+		if (checkboxGroup) checkboxGroup.style.display = "none";
 	}
 }
 
@@ -239,8 +242,11 @@ export function loadLogoSelector() {
 	const linkDark = getID(`link-logo-dark`);
 	const uploadDark = getID(`upload-logo-dark`);
 
+	// Guard: if any required element is missing, abort gracefully
+	if (!linkLight || !linkDark || !uploadLight || !uploadDark) return;
+
 	if (IMAGE_UPLOAD_ENABLED && PERMISSOES && PERMISSOES["upload"] === true) {
-		if (checkboxLink.checked) {
+		if (checkboxLink?.checked) {
 			linkLight.style.display = "block";
 			linkDark.style.display = "block";
 
@@ -254,7 +260,7 @@ export function loadLogoSelector() {
 			uploadDark.style.display = "block";
 		}
 
-		checkboxLink.addEventListener("change", function () {
+		checkboxLink?.addEventListener("change", function () {
 			if (checkboxLink.checked) {
 				linkLight.style.display = "block";
 				linkDark.style.display = "block";
@@ -269,7 +275,7 @@ export function loadLogoSelector() {
 				uploadDark.style.display = "block";
 			}
 		});
-		checkboxUpload.addEventListener("change", function () {
+		checkboxUpload?.addEventListener("change", function () {
 			if (checkboxUpload.checked) {
 				linkLight.style.display = "none";
 				linkDark.style.display = "none";
@@ -285,11 +291,11 @@ export function loadLogoSelector() {
 			}
 		});
 
-		uploadLight.addEventListener("change", function () {
+		uploadLight?.addEventListener("change", function () {
 			checkFileSize(uploadLight, "logo-light");
 		});
 
-		uploadDark.addEventListener("change", function () {
+		uploadDark?.addEventListener("change", function () {
 			checkFileSize(uploadDark, "logo-dark");
 		});
 	} else {

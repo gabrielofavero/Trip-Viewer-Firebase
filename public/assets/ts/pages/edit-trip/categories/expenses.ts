@@ -260,7 +260,7 @@ function getInnerExpenseContent(categoria, tipo, index) {
             </div>`;
 }
 
-function saveInnerExpense(categoria, tipo, index = -1) {
+export function saveInnerExpense(categoria, tipo, index = -1) {
 	const valor = getFieldValueOrNotify("gasto-valor");
 	const newGasto = {
 		nome: getFieldValueOrNotify("gasto-nome"),

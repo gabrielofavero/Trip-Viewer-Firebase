@@ -83,7 +83,7 @@ export function requestPinEditarGastos(invalido = false) {
 	requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
-function reconfirmPin() {
+export function reconfirmPin() {
 	const atual = getID("pin-code").innerText;
 	if (!atual || atual.length < 4) {
 		requestPinEditarGastos(true);
@@ -95,7 +95,7 @@ function reconfirmPin() {
 	}
 }
 
-function validatePin(pin) {
+export function validatePin(pin) {
 	if (getID("pin-code").innerText === pin) {
 		PIN.new = pin;
 		closeMessage();

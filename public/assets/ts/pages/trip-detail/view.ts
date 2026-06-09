@@ -1,5 +1,5 @@
 import { startLoadingTimer, stopLoadingScreen } from '../../utils/loading.js';
-import { displayError, MESSAGE_MODAL_OPEN } from '../../utils/messages.js';
+import { closeMessage, displayError, MESSAGE_MODAL_OPEN, registerActions } from '../../utils/messages.js';
 import { getState, setState, TRAVELERS, DOCUMENT_ID, DESTINATIONS, setDocumentId, setDestinations } from '../../data/state.js';
 import { getErrorFromGetRequestMessage, getID, getLastUpdatedOnText, getURLParam, getURLParams } from '../../utils/dom.js';
 import { getSingleData, haveErrorFromGetRequest } from '../../data/firebase/database.js';
@@ -11,7 +11,7 @@ import { translate } from '../../i18n/translation.js';
 import { loadViewListeners } from './support/event-listeners.js';
 import { adjustCardsHeights, adjustCardsHeightsListener, loadViewVisibility, mainView } from "./support/visibility.js";
 import { loadViewEmbed, openExpensesEmbed } from "./support/embed.js";
-import { loadSensitiveReservations, requestDocumentPin } from "./support/sensitive-reservation.js";
+import { loadSensitiveReservations, requestDocumentPin, protectedDataConfirmAction } from "./support/sensitive-reservation.js";
 import { adjustDestinationsHTML, loadDestinations, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
 import { adjustPortfolioHeight, loadGallery, refreshCategorias } from "./categories/gallery.js";
 import { loadSummary } from "./categories/summary.js";
@@ -44,6 +44,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 export async function loadViewPage() {
 	loadViewListeners();
+
+	// Register string-based button actions used in PIN modals
+	registerActions({ protectedDataConfirmAction });
 
 	const urlParams = getURLParams();
 	TYPE = urlParams["l"] ? "listagens" : urlParams["d"] ? "destinos" : "viagens";

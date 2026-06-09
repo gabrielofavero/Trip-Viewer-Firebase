@@ -26,6 +26,10 @@ export function getTodayDateObject() {
 // ======= CORE UTC CONVERSION HELPERS =======
 
 export function convertFromDateObject(dateObject) {
+	if (!dateObject) {
+		console.warn("convertFromDateObject received undefined/null dateObject");
+		return new Date();
+	}
 	return new Date(
 		Date.UTC(
 			dateObject.year,

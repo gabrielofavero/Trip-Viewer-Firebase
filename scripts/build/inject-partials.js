@@ -214,7 +214,7 @@ function replacePlaceholders(template, replacements) {
 // Main
 // ---------------------------------------------------------------------------
 
-function inject() {
+function inject(options = {}) {
   console.log("[inject] Processing HTML partials...");
   let count = 0;
 
@@ -224,8 +224,12 @@ function inject() {
     "shared/scripts-vendor.html": readPartial("scripts-vendor.html"),
     "shared/scripts-core.html": readPartial("scripts-core.html"),
     "shared/top-bar.html": readPartial("top-bar.html"),
-    "shared/livereload.html": readPartial("livereload.html"),
   };
+
+  // LiveReload is included by default; pass { noLiveReload: true } to skip it
+  if (!options.noLiveReload) {
+    partials["shared/livereload.html"] = readPartial("livereload.html");
+  }
 
   for (const page of PAGES) {
     const srcPath = path.join(PUBLIC_DIR, page.source);

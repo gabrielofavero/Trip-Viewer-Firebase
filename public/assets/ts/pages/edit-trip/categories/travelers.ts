@@ -77,7 +77,7 @@ function getTravelersNameContent() {
 	return properties.join("");
 }
 
-function saveTravelersInfo() {
+export function saveTravelersInfo() {
 	let j = 1;
 	const travelers = [];
 	while (getID(`traveler-name-${j}`)) {

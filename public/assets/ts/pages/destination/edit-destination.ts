@@ -328,7 +328,7 @@ function promptDeleteEdit(j) {
 	displayPrompt({ titulo, conteudo, yesAction });
 }
 
-async function deleteEdit(id) {
+export async function deleteEdit(id) {
 	closeMessage();
 	startLoadingScreen();
 

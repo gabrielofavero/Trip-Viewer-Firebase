@@ -5,27 +5,31 @@ import { translate } from '../../../i18n/translation.js';
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
 import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
 import { registerActions } from '../../../ui/actions.js';
-import { openTravelersInfo } from '../categories/travelers.js';
-import { requestPinEditarGastos } from '../categories/basic-data/protected-data.js';
-import { deleteTrip } from '../edit-trip.js';
+import { registerActions as registerMessageActions } from '../../../utils/messages.js';
+import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
+import { requestPinEditarGastos, reconfirmPin, validatePin } from '../categories/basic-data/protected-data.js';
+import { deleteTrip, deleteTripAction } from '../edit-trip.js';
 import { DOCUMENT_ID, SUCCESSFUL_SAVE } from '../../../data/state.js';
-import { openInnerExpense, deleteInnerGasto } from '../categories/expenses.js';
+import { openInnerExpense, deleteInnerGasto, saveInnerExpense } from '../categories/expenses.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { switchPin } from '../categories/basic-data/protected-data.js';
 import { closeToast } from '../../../utils/messages.js';
-import { openAccommodationImages, openInnerAccommodationImage } from '../categories/accommodation.js';
+import { openAccommodationImages, openInnerAccommodationImage, accommodationsAddListenerAction, closeInnerAccommodationImage, confirmAccommodationImages } from '../categories/accommodation.js';
 import { galeriaAdicionarListenerAction } from '../categories/gallery.js';
 import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
-import { deleteInnerProgramacao, openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap } from "../categories/itinerary-module/inner-itinerary/inner-itinerary.js";
+import { deleteInnerProgramacao, openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap, closeInnerProgramacao, innerProgramacaoConfirmAction } from "../categories/itinerary-module/inner-itinerary/inner-itinerary.js";
 import { getVisibilidadeObject, setTripData } from "../set-trip.js";
 import { autoFillDarkColor } from "../categories/customization.js";
-import { applyTransportationTypeVisualization } from "../categories/transportation.js";
+import { applyTransportationTypeVisualization, transportationAddListenerAction } from "../categories/transportation.js";
 import { getVisibility } from "../../../theme/theme.js";
 
 // Loader
 export function loadEventListeners() {
 	// Register data-action handlers via the shared delegated handler (ui/actions.js)
 	registerActions({
+		saveTravelersInfo,
+		reconfirmPin,
+		validatePin,
 		"open-travelers-info": () => openTravelersInfo(),
 		"request-pin-expenses": () => requestPinEditarGastos(),
 		"delete-trip": () => deleteTrip(),
@@ -74,6 +78,19 @@ export function loadEventListeners() {
 			const turno = target.getAttribute("data-turno");
 			if (!isNaN(j) && !isNaN(k) && turno) deleteInnerProgramacao(j, k, turno);
 		},
+	});
+
+	// Register string-based button actions used in modals (via messages.js _actionRegistry)
+	registerMessageActions({
+		saveTravelersInfo,
+		reconfirmPin,
+		validatePin,
+		deleteTripAction,
+		closeInnerAccommodationImage,
+		confirmAccommodationImages,
+		saveInnerExpense,
+		closeInnerProgramacao,
+		innerProgramacaoConfirmAction,
 	});
 
 	// Inputs

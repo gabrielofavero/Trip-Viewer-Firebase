@@ -10,7 +10,7 @@ import { DESTINOS_ATIVOS } from '../../destination.js';
 import { DATAS } from '../../../new-trip.js';
 import {DESTINOS_DATA, getDestinosFromCheckbox} from "../../destination.js";
 import { getInnerProgramacaoContent } from "./content.js";
-import { loadTextReplacementCheckboxes } from "./text-replacement.js";
+import { loadTextReplacementCheckboxes, TEXT_REPLACEMENT } from "./text-replacement.js";
 import { replaceTextIfEnabled } from "./text-replacement.js";
 import { replaceTimeIfEnabled } from "./text-replacement.js";
 import { getActiveDestinations } from "../itinerary-module.js";
@@ -244,7 +244,7 @@ export async function openInnerItineraryItem(j) {
 	);
 	getID("back-icon").style.visibility = "visible";
 	loadTextReplacementCheckboxes(j);
-	TEXT_REPLACEMENT_APPLIED = false;
+	TEXT_REPLACEMENT.applied = false;
 }
 
 export function openInnerItinerarySwap() {
@@ -260,7 +260,7 @@ export function openInnerItinerarySwap() {
 	getID("back-icon").style.visibility = "visible";
 }
 
-function closeInnerProgramacao(j) {
+export function closeInnerProgramacao(j) {
 	if (getID("inner-programacao-item-selecionar").style.display === "block") {
 		const itemAssociado = getID("inner-programacao-item-associado");
 		if (getID("inner-programacao-item-transporte-radio").checked) {
@@ -284,7 +284,7 @@ function closeInnerProgramacao(j) {
 
 		replaceTextIfEnabled();
 		replaceTimeIfEnabled();
-		TEXT_REPLACEMENT_APPLIED = true;
+		TEXT_REPLACEMENT.applied = true;
 
 		animate(
 			["inner-programacao-tela-principal"],
@@ -306,7 +306,7 @@ function getInnerProgramacaoMessageTitle(j) {
 	return getDateTitle(DATAS[newJ - 1], "mini");
 }
 
-function innerProgramacaoConfirmAction(j, k, turno) {
+export function innerProgramacaoConfirmAction(j, k, turno) {
 	if (getID("inner-programacao-item-selecionar").style.display === "block") {
 		closeInnerProgramacao(j);
 		return;
@@ -328,7 +328,7 @@ function innerProgramacaoConfirmAction(j, k, turno) {
 function addInnerProgramacao(j, k?, turno?) {
 	const programacao = getID(`inner-programacao`);
 
-	if (!TEXT_REPLACEMENT_APPLIED) {
+	if (!TEXT_REPLACEMENT.applied) {
 		replaceTextIfEnabled();
 		replaceTimeIfEnabled();
 	}

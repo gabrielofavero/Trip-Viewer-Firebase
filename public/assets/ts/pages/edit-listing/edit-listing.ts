@@ -7,7 +7,7 @@ import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '..
 import { hasUnsavedChanges, reEdit, snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule, searchDestinationsListenerAction } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
-import { displayFullMessage, MESSAGE_PROPERTIES } from '../../utils/messages.js';
+import { displayFullMessage, MESSAGE_PROPERTIES, registerActions } from '../../utils/messages.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 
 var FIRESTORE_PROTECTED_DATA = {};
@@ -25,6 +25,9 @@ import { setDocumento } from "../../utils/set.js";
 
 export async function loadEditListingPage() {
 	loadEditListingListeners();
+
+	// Register string-based button actions used in modals
+	registerActions({ deleteListagemAction });
 
 	setDocumentId(getURLParam("l"));
 	PERMISSOES = await getPermissoes();
@@ -178,7 +181,7 @@ export function deleteListagem() {
 	displayFullMessage(properties);
 }
 
-async function deleteListagemAction() {
+export async function deleteListagemAction() {
 	if (DOCUMENT_ID) {
 		await deleteUserObjectDB(DOCUMENT_ID, "listagens");
 		await deleteUserObjectStorage();

@@ -12,7 +12,7 @@ import { loadEditModule } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
 import { displayFullMessage, MESSAGE_PROPERTIES } from '../../utils/messages.js';
 import { loadPinData, PIN } from './categories/basic-data/protected-data.js';
-import { DATAS, loadNewTrip } from './new-trip.js';
+import { DATAS, loadNewTrip, addTransportation, addHospedagens, loadDestinations, addGaleria, loadItinerarySchedule } from './new-trip.js';
 import { loadTripData } from './existing-trip.js';
 import { loadEventListeners } from './support/event-listeners.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
@@ -66,11 +66,11 @@ function loadHabilitados() {
 	loadEditModule("cores");
 	loadEditModule("links");
 	loadEditModule("gastos");
-	loadEditModule("transporte");
-	loadEditModule("hospedagens");
-	loadEditModule("programacao");
-	loadEditModule("destinos");
-	loadEditModule("galeria");
+	loadEditModule("transporte", addTransportation);
+	loadEditModule("hospedagens", addHospedagens);
+	loadEditModule("programacao", loadItinerarySchedule);
+	loadEditModule("destinos", loadDestinations);
+	loadEditModule("galeria", addGaleria);
 }
 
 function loadUploadSelectors() {
@@ -129,7 +129,7 @@ export function deleteTrip() {
 	displayFullMessage(properties);
 }
 
-async function deleteTripAction() {
+export async function deleteTripAction() {
 	if (!DOCUMENT_ID) return;
 
 	const tasks = [

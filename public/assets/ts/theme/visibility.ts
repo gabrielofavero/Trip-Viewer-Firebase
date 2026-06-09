@@ -233,21 +233,32 @@ export function isModalOpen(modalID = "modal") {
 }
 
 // ======= Edit Pages =======
-export function loadEditModule(categoria) {
+export function loadEditModule(categoria, addFn?: () => void) {
 	const habilitado = getID(`habilitado-${categoria}`);
 	if (habilitado.checked) {
 		showContent(categoria);
 		if (!getID(`habilitado-${categoria}-content`).innerText) {
-			// Defer to next tick so all registerVisibilityExport calls have executed
-			setTimeout(() => visibilityAdd(firstCharToUpperCase(categoria).trim()), 0);
+			// Prefer the directly-passed function (avoids circular dependency issues);
+			// fall back to _exports lookup for backward compat.
+			const type = firstCharToUpperCase(categoria).trim();
+			if (addFn) {
+				setTimeout(() => addFn(), 0);
+			} else {
+				const fnName = `_add${type}`;
+				if (typeof _exports[fnName] === "function") {
+					setTimeout(() => _exports[fnName](), 0);
+				} else {
+					setTimeout(() => visibilityAdd(type), 0);
+				}
+			}
 		}
 	} else {
 		hideContent(categoria);
 	}
-	loadListener(categoria);
+	loadListener(categoria, addFn);
 }
 
-export function loadListener(categoria) {
+export function loadListener(categoria, addFn?: () => void) {
 	const habilitado = getID(`habilitado-${categoria}`);
 	habilitado.addEventListener("change", function () {
 		if (habilitado.checked) {
@@ -259,7 +270,11 @@ export function loadListener(categoria) {
 				(box && !box.innerText) ||
 				(habilitadoContent && !habilitadoContent.innerText)
 			) {
-				visibilityAdd(firstCharToUpperCase(categoria).trim());
+				if (addFn) {
+					addFn();
+				} else {
+					visibilityAdd(firstCharToUpperCase(categoria).trim());
+				}
 			}
 		} else {
 			removeEmptyChild(categoria);
@@ -333,7 +348,13 @@ export function visibilityAdd(type) {
 	if (typeof _exports[dynamicFunctionName] === "function") {
 		_exports[dynamicFunctionName]();
 	} else {
-		console.error(`${dynamicFunctionName} is not defined.`);
+		// Fallback: try global scope (for pages where registerVisibilityExport hasn't run yet)
+		try {
+			const fallback = new Function(`${dynamicFunctionName}()`);
+			fallback();
+		} catch (_) {
+			console.error(`${dynamicFunctionName} is not defined.`);
+		}
 	}
 }
 

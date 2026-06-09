@@ -157,7 +157,7 @@ function loadDestinosCheckboxListeners(tipo, j) {
 }
 
 export function getDestinosFromCheckbox(tipo, j) {
-	result = [];
+	let result = [];
 	for (const child of getChildIDs(`${tipo}-local-${j}`)) {
 		const k = child.split("-")[2];
 		const checkbox = getID(`check-${tipo}-${j}-${k}`);

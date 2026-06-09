@@ -264,7 +264,7 @@ export function loadTransportationListeners(j) {
 	);
 }
 
-function transportationAddListenerAction() {
+export function transportationAddListenerAction() {
 	closeAccordions("transporte");
 	addTransportation();
 	openLastAccordion("transporte");

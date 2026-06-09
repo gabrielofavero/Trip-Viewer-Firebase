@@ -22,7 +22,7 @@ const TIME_REPLACEMENT = {
 	},
 };
 
-var TEXT_REPLACEMENT_APPLIED = false;
+export const TEXT_REPLACEMENT = { applied: false };
 
 export function loadTextReplacementCheckboxes(j) {
 	loadTitleReplacementCheckbox(j);

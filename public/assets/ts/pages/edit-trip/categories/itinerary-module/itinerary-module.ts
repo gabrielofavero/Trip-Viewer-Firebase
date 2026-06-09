@@ -6,7 +6,6 @@ import { translate } from '../../../../i18n/translation.js';
 import { addValuesForDestinosAtivosCheckbox, getDestinosFromCheckbox, DESTINOS_ATIVOS } from '../destination.js';
 import { DESTINATIONS } from '../../../../data/state.js';
 import { INNER_PROGRAMACAO, afterDragInnerItinerary, loadInnerItineraryHTML } from "../itinerary-module/inner-itinerary/inner-itinerary.js";
-import { loadItinerarySchedule } from "../../../trip-detail/categories/itinerary-module/itinerary-module.js";
 import { updateDestinosAtivosCheckboxHTML } from "../destination.js";
 import { DATAS } from "../../new-trip.js";
 
@@ -259,7 +258,6 @@ export function reloadItinerary() {
 		dateObjectToKey(data.data),
 	);
 
-	loadItinerarySchedule();
 	let j = 1;
 	for (const data of DATAS.map((data) => jsDateToKey(data))) {
 		if (originalDataInputs.includes(data)) {
