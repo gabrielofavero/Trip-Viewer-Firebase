@@ -205,6 +205,9 @@ export function loadCalendarItem(day, month, year, instant = false) {
 	}
 }
 
+// Expose on window so inline onclick handlers (set via calendar.ts) can call it
+window.loadCalendarItem = loadCalendarItem;
+
 function unloadCalendarTripActive() {
 	for (const el of document.querySelectorAll(".calendarTrip")) {
 		el.classList.remove("active");

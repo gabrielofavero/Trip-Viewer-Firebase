@@ -92,11 +92,9 @@ export function displayFullMessage(
 	const textDiv = document.createElement("div");
 	textDiv.className = "message-text-container";
 
-	// Criticidade
-	if (!properties.critico) {
-		const buttonsBox = getIconsBox(properties.icones);
-		textDiv.appendChild(buttonsBox);
-	}
+	// Criticidade — always show the icon box (includes X close button)
+	const buttonsBox = getIconsBox(properties.icones);
+	textDiv.appendChild(buttonsBox);
 
 	// Title
 	const titleDiv = document.createElement("div");
@@ -247,10 +245,16 @@ export function getIconsBox(icones) {
 	cancelIcon.id = "cancel-icon";
 	cancelIcon.className = "iconify";
 	cancelIcon.setAttribute("data-icon", "material-symbols-light:close");
-	cancelIcon.addEventListener("click", closeMessage);
 	cancelIcon.style.cursor = "pointer";
 
 	iconContainer.appendChild(cancelIcon);
+
+	// Use event delegation on the container so the close button works
+	// even if Iconify replaces the <i> element with an <svg> at runtime.
+	iconContainer.addEventListener("click", (e) => {
+		const icon = (e.target as Element).closest("[data-icon='material-symbols-light:close']");
+		if (icon) closeMessage();
+	});
 
 	return iconContainer;
 }
@@ -515,7 +519,7 @@ export function handleMessageKeydown(e) {
 		}
 
 		// fallback: close icon (only if not critical)
-		const container = document.querySelector(".message-container");
+		const container = document.querySelector(".message-container, .programacao-container, .destinos-container, .input-container");
 		if (container && !container.classList.contains("critical-message")) {
 			e.preventDefault();
 			closeMessage();

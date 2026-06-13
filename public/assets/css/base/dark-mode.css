@@ -402,7 +402,9 @@
 
 /* ===== Messages / Input ===== */
 [data-theme="dark"] .message-container,
-[data-theme="dark"] .input-container {
+[data-theme="dark"] .input-container,
+[data-theme="dark"] .programacao-container,
+[data-theme="dark"] .destinos-container {
 	background: #303030;
 }
 

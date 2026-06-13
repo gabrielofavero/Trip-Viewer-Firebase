@@ -83,6 +83,7 @@
 	background: var(--theme-secondary);
 	box-shadow: 0 4px 16px rgba(var(--theme-color-rgb),0.4);
 	transform: translateY(-1px);
+	color: white;
 }
 .btn-outline-theme {
 	background: transparent; color: var(--theme-color);
@@ -151,7 +152,7 @@
 }
 .category-tab:hover { color: var(--text-primary); background: rgba(0,0,0,0.03); }
 .category-tab.active {
-	background: #fff; color: var(--theme-color);
+	background: #fafafa; color: var(--theme-color);
 	box-shadow: var(--shadow-sm);
 }
 

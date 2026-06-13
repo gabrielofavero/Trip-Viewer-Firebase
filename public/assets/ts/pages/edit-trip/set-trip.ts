@@ -16,10 +16,10 @@ import { setDocumento, addSetResponse } from "../../utils/set.js";
 import { IMAGE_UPLOAD_STATUS } from "../../data/firebase/storage.js";
 import { TRAVELERS } from '../../data/state.js';
 
-var FIRESTORE_PROTECTED_NEW_DATA = {};
+export var FIRESTORE_PROTECTED_NEW_DATA = {};
 
 export var FIRESTORE_GASTOS_NEW_DATA = {};
-var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
+export var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
 
 async function buildTripObject() {
 	switch (getCurrentPreferencePIN()) {

@@ -3,7 +3,7 @@ import { getNewPinObject, isDataUnprotected, PIN } from './protected-data.js';
 import { FIRESTORE_GASTOS_DATA } from '../../edit-trip.js';
 import { getID, objectExistsAndHasKeys } from '../../../../utils/dom.js';
 import { FIRESTORE_NEW_DATA } from '../../../../data/state.js';
-import { FIRESTORE_GASTOS_NEW_DATA } from '../../set-trip.js';
+import { FIRESTORE_GASTOS_NEW_DATA, FIRESTORE_GASTOS_PROTECTED_NEW_DATA, FIRESTORE_PROTECTED_NEW_DATA } from '../../set-trip.js';
 
 export function setCurrentPreferencePIN(preference) {
 	if (preference === "sensitive-only") {

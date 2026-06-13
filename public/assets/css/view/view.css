@@ -620,10 +620,13 @@ section {
 # Resume - Programação
 --------------------------------------------------------------*/
 
-#tabela {
+#calendar-table-card {
 	margin-top: 24px;
+	margin-left: auto;
+	margin-right: auto;
 	background-color: #fff;
 	border: none;
+	max-width: 700px;
 }
 
 #calendar {
@@ -672,11 +675,11 @@ section {
 }
 
 @media (min-width: 768px) {
-	#tabela {
+	#calendar-table-card {
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
-		width: 700px;
+		max-width: 700px;
 	}
 
 	#programacao-box {
@@ -1829,11 +1832,20 @@ iframe {
 # Messages container (page-specific overrides)
 --------------------------------------------------------------*/
 
-/* Page-specific container extensions */
+/* Page-specific container extensions — extend .message-container base styles */
 .programacao-container,
 .destinos-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 	padding: 20px;
 	width: 500px;
+	height: auto;
+	overflow-wrap: break-word;
 }
 
 @media (max-height: 730px) {

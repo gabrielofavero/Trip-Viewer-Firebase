@@ -115,7 +115,7 @@ function loadTripsTab() {
 		const badgeClass = trip.category === "current" ? "badge-current" :
 			trip.category === "next" ? "badge-next" : "badge-past";
 		const badgeLabel = trip.category === "current" ? translate("index.active") :
-			trip.category === "next" ? translate("index.upcoming") : translate("index.past");
+			trip.category === "next" ? translate("index.upcoming") : translate("index.finished");
 		const dateStr = dateObjectToString(trip.inicio) + " – " + dateObjectToString(trip.fim);
 
 		const imageHTML = bgImage
@@ -174,7 +174,7 @@ export function openTripDialog(tripId) {
 	const badgeClass = trip.category === "current" ? "badge-current" :
 		trip.category === "next" ? "badge-next" : "badge-past";
 	const badgeLabel = trip.category === "current" ? translate("index.active") :
-		trip.category === "next" ? translate("index.upcoming") : translate("index.past");
+		trip.category === "next" ? translate("index.upcoming") : translate("index.finished");
 	badge.textContent = badgeLabel;
 	badge.className = "dialog-badge " + badgeClass;
 

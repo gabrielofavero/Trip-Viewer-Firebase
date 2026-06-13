@@ -1291,6 +1291,12 @@ details summary::-webkit-details-marker {
 	background: #f1f1f1;
 }
 
+#double-button-section .button-box {
+	display: flex;
+	gap: 12px;
+	justify-content: flex-end;
+}
+
 #salvar {
 	margin-left: 20px;
 }
