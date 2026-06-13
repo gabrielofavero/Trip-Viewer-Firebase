@@ -11,8 +11,12 @@ export var CUSTOM_UPLOADS = {
 	hospedagens: [],
 	galeria: [],
 };
-var SET_RESPONSES = [];
+var SET_RESPONSES: { message: string; success: boolean }[] = [];
 var UPLOAD_AFTER_SET = false;
+
+export function addSetResponse(message: string, success: boolean) {
+	SET_RESPONSES.push({ message, success });
+}
 
 export async function setDocumento({
 	type,

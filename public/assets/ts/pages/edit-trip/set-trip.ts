@@ -1,4 +1,5 @@
-import { getCurrentPreferencePIN } from './categories/basic-data/protected-data.js';
+import { getCurrentPreferencePIN, validatePinField } from './categories/basic-data/protected-data.js';
+import { setProtectedDataAndExpenses } from './categories/basic-data/set-protected-data.js';
 import { getState, DOCUMENT_ID, FIRESTORE_NEW_DATA, setFirestoreNewData } from '../../data/state.js';
 import { getChildIDs, getID, setRequired } from '../../utils/dom.js';
 import { formattedDateToDateObject } from '../../utils/dates.js';
@@ -11,7 +12,7 @@ import { getDestinationsArray } from "./categories/destination.js";
 import { getAccommodationArray, getProtectedAccommodationObject } from "./categories/accommodation.js";
 import { getProtectedTransportationObject, getTransportationObject } from "./categories/transportation.js";
 import { getExpensesObject } from "./categories/expenses.js";
-import { setDocumento } from "../../utils/set.js";
+import { setDocumento, addSetResponse } from "../../utils/set.js";
 import { IMAGE_UPLOAD_STATUS } from "../../data/firebase/storage.js";
 import { TRAVELERS } from '../../data/state.js';
 

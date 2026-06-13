@@ -212,4 +212,29 @@ function importNightlifeByName(name, data, force) { importDestinationByName(name
 function importTourismByName(name, data, force) { importDestinationByName(name, data, "turismo", force); }
 function importShopByName(name, data, force) { importDestinationByName(name, data, "lojas", force); }
 
+// ─── Expose on dev.page for console use ──────────────────────────────────────
+if (typeof dev !== "undefined") {
+	dev.page.importNewDestination = importNewDestination;
+	dev.page.importDestinationByJ = importDestinationByJ;
+	dev.page.importDestinationByName = importDestinationByName;
+
+	dev.page.importNewRestaurant = importNewRestaurant;
+	dev.page.importNewSnack = importNewSnack;
+	dev.page.importNewNightlife = importNewNightlife;
+	dev.page.importNewTourism = importNewTourism;
+	dev.page.importNewShop = importNewShop;
+
+	dev.page.importRestaurantByJ = importRestaurantByJ;
+	dev.page.importSnackByJ = importSnackByJ;
+	dev.page.importNightlifeByJ = importNightlifeByJ;
+	dev.page.importTourismByJ = importTourismByJ;
+	dev.page.importShopByJ = importShopByJ;
+
+	dev.page.importRestaurantByName = importRestaurantByName;
+	dev.page.importSnackByName = importSnackByName;
+	dev.page.importNightlifeByName = importNightlifeByName;
+	dev.page.importTourismByName = importTourismByName;
+	dev.page.importShopByName = importShopByName;
+}
+
 

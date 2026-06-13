@@ -101,4 +101,9 @@ async function importDestination(data, force = false) {
 	console.log(`✅ Imported data into item at index ${j}: ${data.nome || "(unnamed)"}`);
 }
 
+// ─── Expose on dev.page for console use ──────────────────────────────────────
+if (typeof dev !== "undefined") {
+	dev.page.importDestination = importDestination;
+}
+
 console.log("📦 Import function ready: importDestination(data, force?)");

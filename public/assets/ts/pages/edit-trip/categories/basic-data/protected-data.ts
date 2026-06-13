@@ -115,7 +115,7 @@ function invalidPin() {
 	requestPin({ confirmAction, cancelAction, precontent, invalido });
 }
 
-function validatePinField() {
+export function validatePinField() {
 	if (
 		(getID("pin-all-data").checked || getID("pin-sensitive-only").checked) &&
 		!PIN.current &&
