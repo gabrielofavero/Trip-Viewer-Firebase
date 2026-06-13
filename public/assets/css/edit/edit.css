@@ -46,6 +46,32 @@
 }
 
 /*--------------------------------------------------------------
+# Language Selector (in shared top-bar)
+--------------------------------------------------------------*/
+.lang-selector { position: relative; }
+.lang-button {
+	background: none; border: none; cursor: pointer;
+	font-size: 13px; font-weight: 600; color: var(--text-secondary);
+	padding: 6px 10px; border-radius: 8px; font-family: inherit;
+	transition: all var(--transition-fast);
+}
+.lang-button:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+.lang-options {
+	display: none; position: absolute; top: 100%; right: 0;
+	background: var(--bg-primary); border: 1px solid var(--border-color);
+	border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+	overflow: hidden; z-index: 100; min-width: 60px;
+}
+.lang-selector:hover .lang-options { display: block; }
+.lang-options button {
+	display: block; width: 100%; padding: 8px 16px;
+	border: none; background: none; cursor: pointer;
+	font-size: 13px; font-family: inherit; color: var(--text-primary);
+	transition: background var(--transition-fast); text-align: center;
+}
+.lang-options button:hover { background: var(--bg-tertiary); }
+
+/*--------------------------------------------------------------
 # Edit Tab Bar — Horizontal Category Navigation
 # Sticky below top-bar, scrollable on mobile
 --------------------------------------------------------------*/
@@ -908,6 +934,82 @@
 }
 
 /*--------------------------------------------------------------
+# Drag Icon (sortable accordion items)
+--------------------------------------------------------------*/
+.drag-icon {
+	cursor: grab;
+	font-size: 20px;
+	color: var(--text-muted);
+	flex-shrink: 0;
+	margin-right: 8px;
+	transition: color var(--transition-fast);
+}
+.drag-icon:hover { color: var(--text-primary); }
+.drag-icon:active { cursor: grabbing; }
+
+.draggable {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.input-botao-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.gastos-item {
+	margin-bottom: 16px;
+}
+
+.gastos-item > label {
+	display: block;
+	font-weight: 600;
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	margin-bottom: 8px;
+}
+
+/*--------------------------------------------------------------
+# Habilitado Content Spacing
+--------------------------------------------------------------*/
+[id^="habilitado-"][id$="-content"] {
+	margin-top: 16px;
+}
+
+[id^="habilitado-"][id$="-content"] .item-box {
+	margin-top: 8px;
+}
+
+/* Destinos Checkboxes — modern card-based layout */
+.destinos-checkboxes {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-height: auto !important;
+	padding: 8px 0;
+}
+
+.destinos-checkboxes .nice-form-group {
+	margin-top: 0;
+	padding: 8px 12px;
+	border-radius: var(--radius-sm);
+	transition: background var(--transition-fast);
+}
+
+.destinos-checkboxes .nice-form-group:hover {
+	background: var(--bg-secondary);
+}
+
+.destinos-checkboxes .nice-form-group > label {
+	margin-bottom: 0;
+	font-weight: 500;
+	font-size: 0.875rem;
+}
+
+/*--------------------------------------------------------------
 # Button Box & Add Button Row
 --------------------------------------------------------------*/
 .button-box-formatted {
@@ -1204,7 +1306,7 @@ details summary::-webkit-details-marker {
 --------------------------------------------------------------*/
 
 /* ≤768px: Compact tab bar, full-width sections */
-@media (max-width: 768px) {
+@media (max-width: 975px) {
 	.edit-tab-bar {
 		top: 60px;
 		border-radius: 0;
@@ -1261,8 +1363,8 @@ details summary::-webkit-details-marker {
 	}
 }
 
-/* ≤400px: Icon-only tabs (except Save) */
-@media (max-width: 400px) {
+/* ≤975px: Icon-only tabs (except Save) */
+@media (max-width: 975px) {
 	.edit-tab:not(.save-tab) span {
 		display: none;
 	}
