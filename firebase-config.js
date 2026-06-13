@@ -1,4 +1,8 @@
-import { initializeApp } from "firebase/app";
+// Firebase configuration using the compat SDK (loaded via <script> tags).
+// The compat SDK makes `firebase` available globally – no import map needed.
+//
+// Firebase Hosting's reserved compat SDK auto-initializes the default app,
+// so we ONLY re-initialize when running outside Firebase Hosting (localhost).
 
 const configPRD = {
 	apiKey: "AIzaSyBZJeSANyiJi6ijzDadJOJXSLqzSgf9xfk",
@@ -33,23 +37,41 @@ const configTCC = {
 	measurementId: "G-9RFY3B31ZS",
 };
 
-// Initialize Firebase
-const app = initializeApp(_getConfig());
-
 function _getConfig() {
-	const projectId = process.env.GCP_PROJECT || process.env.GCLOUD_PROJECT || "";
-	switch (projectId) {
-		case "trip-viewer-dev":
-			return configDEV;
-		case "trip-viewer-tcc":
-			return configTCC;
-		case "trip-viewer-prd":
-			return configPRD;
-		default:
-			console.error("Projeto não reconhecido:", projectId);
-			return {};
+	const hostname = window?.location?.hostname || "";
+
+	if (hostname.includes("trip-viewer-dev") || hostname === "localhost" || hostname === "127.0.0.1")
+		return configDEV;
+	if (hostname.includes("trip-viewer-tcc"))
+		return configTCC;
+	if (hostname.includes("trip-viewer-prd") || hostname.includes("trip-viewer.com"))
+		return configPRD;
+
+	// Last resort: try reserved __env from Firebase Hosting (injected as global)
+	if (typeof __firebase_env !== "undefined" && __firebase_env?.projectId) {
+		const pid = __firebase_env.projectId;
+		if (pid === "trip-viewer-dev") return configDEV;
+		if (pid === "trip-viewer-tcc") return configTCC;
+		if (pid === "trip-viewer-prd") return configPRD;
+	}
+
+	console.error("Projeto não reconhecido, usando config DEV como fallback. Hostname:", hostname);
+	return configDEV;
+}
+
+// Get or initialize the Firebase app.
+// On Firebase Hosting the compat SDK already initializes the default app;
+// we only need to re-initialize when running locally (localhost).
+function _getOrInitApp() {
+	try {
+		return firebase.app(); // use existing default app
+	} catch (_) {
+		// No default app yet (e.g. localhost without Firebase Hosting auto-init)
+		return firebase.initializeApp(_getConfig());
 	}
 }
+
+const app = _getOrInitApp();
 
 export function startFirebase() {
 	let features = [

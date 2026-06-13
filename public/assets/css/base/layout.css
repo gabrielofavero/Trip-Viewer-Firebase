@@ -1,0 +1,118 @@
+/*--------------------------------------------------------------
+# Top Bar (shared across all pages)
+--------------------------------------------------------------*/
+.top-bar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: rgba(255,255,255,0.85);
+	backdrop-filter: blur(20px) saturate(180%);
+	-webkit-backdrop-filter: blur(20px) saturate(180%);
+	height: 60px;
+	border-bottom: 1px solid var(--border-color);
+	z-index: 999;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 16px;
+}
+
+.logo-box {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+}
+
+.logo-link {
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+#logo-light, #logo-dark {
+	height: 22px;
+}
+
+#trip-viewer-text {
+	font-size: 26px;
+	font-family: Chelos;
+	color: var(--theme-color);
+	letter-spacing: -0.5px;
+}
+
+.icons-box {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.icon-buttons {
+	cursor: pointer;
+	width: 32px;
+	height: 32px;
+	font-size: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: background var(--transition-fast, 0.15s ease);
+	color: var(--text-secondary);
+}
+
+.icon-buttons:hover { background: var(--bg-tertiary); }
+
+#profile-icon {
+	border-radius: 50%;
+	background-size: cover;
+	background-position: center;
+	border: 2px solid var(--border-color);
+}
+
+#menu {
+	border: 0;
+	background: none;
+	font-size: 28px;
+	outline: none !important;
+	line-height: 0;
+	cursor: pointer;
+	border-radius: 50px;
+	padding: 5px;
+	color: var(--font-color, var(--text-primary));
+}
+
+/*--------------------------------------------------------------
+# Back to top button
+--------------------------------------------------------------*/
+.back-to-top {
+	position: fixed;
+	visibility: hidden;
+	opacity: 0;
+	right: 15px;
+	bottom: 15px;
+	z-index: 996;
+	background: var(--theme-color);
+	width: 40px;
+	height: 40px;
+	border-radius: 50px;
+	transition: all 0.4s;
+}
+
+.back-to-top i {
+	font-size: 28px;
+	color: #fff;
+	line-height: 0;
+}
+
+.back-to-top:hover {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+.back-to-top.active {
+	visibility: visible;
+	opacity: 1;
+}

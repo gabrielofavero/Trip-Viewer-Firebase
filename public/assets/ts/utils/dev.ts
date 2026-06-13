@@ -1,0 +1,277 @@
+/**
+ * Dev Mode utility.
+ *
+ * When running on localhost, a global `dev` object is exposed on `window`.
+ * It supports nested namespaces — just assign: `dev.page.myVar = ...`
+ *
+ * Built-in namespaces:
+ *   dev.firestore.get("path")         — read a Firestore document
+ *   dev.firestore.set("path", {})     — write a Firestore document
+ *   dev.messages.show(title, content)  — show a message modal
+ *   dev.messages.error(err)           — show an error message
+ *   dev.messages.close()              — close the current message
+ *   dev.messages.toast(text)          — show a toast notification
+ *
+ * Usage in console:
+ *   dev.help()     — show commands
+ *   dev.list()     — list all dev variables (recursive)
+ *   dev.page.foo   — inspect any variable directly
+ */
+
+// ---------- internal sentinel ----------
+const BUILTINS = new Set(["help", "list", "isEnabled", "host", "firestore", "messages"]);
+const STORE_KEY = Symbol("store");
+
+// ---------- helpers ----------
+function typeLabel(val: any): string {
+	const t = typeof val;
+	if (t !== "object" || val === null) return t;
+	if (Array.isArray(val)) return `array(${val.length})`;
+	if (val instanceof Map) return `Map(${val.size})`;
+	if (val instanceof Set) return `Set(${val.size})`;
+	if (typeof (val as any)[STORE_KEY] === "object") return "namespace";
+	return "object";
+}
+
+// ---------- localhost detection ----------
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
+
+function isLocalhost(): boolean {
+	const host = window.location.hostname;
+	if (LOCAL_HOSTS.has(host)) return true;
+	if (
+		host.startsWith("192.168.") ||
+		host.startsWith("10.") ||
+		/^172\.(1[6-9]|2\d|3[01])\./.test(host)
+	) return true;
+	return false;
+}
+
+// ---------- recursive namespace proxy factory ----------
+interface Namespace {
+	[STORE_KEY]: Record<string, any>;
+}
+
+function createNamespace(parentPath: string): Namespace & { [key: string]: any } {
+	const store: Record<string | symbol, any> = {};
+
+	const proxy = new Proxy({} as any, {
+		get(_target, prop: string | symbol) {
+			if (prop === STORE_KEY) return store;
+			// already a leaf value? return it
+			if (prop in store && !(store[prop] && typeof store[prop] === "object" && STORE_KEY in store[prop])) {
+				return store[prop];
+			}
+			// auto-create nested namespace
+			if (!(prop in store) && typeof prop === "string") {
+				store[prop] = createNamespace(parentPath ? `${parentPath}.${prop}` : prop);
+			}
+			return store[prop];
+		},
+		set(_target, prop: string | symbol, value: any) {
+			if (prop === STORE_KEY) return true;
+			store[prop] = value;
+			return true;
+		},
+		ownKeys() {
+			return Object.keys(store);
+		},
+		getOwnPropertyDescriptor() {
+			return { enumerable: true, configurable: true };
+		},
+	});
+
+	return proxy;
+}
+
+// ---- list helpers ----
+function listTree(store: Record<string, any>, prefix: string, indent: number): void {
+	const keys = Object.keys(store).sort();
+	const pad = "  ".repeat(indent);
+	for (const key of keys) {
+		const val = store[key];
+		if (val && typeof val === "object" && STORE_KEY in val) {
+			console.log(`${pad}%c${key}/%c`, "font-weight:bold;color:#f0c040;", "");
+			listTree(val[STORE_KEY], prefix ? `${prefix}.${key}` : key, indent + 1);
+		} else {
+			console.log(
+				`${pad}%c${key}%c : %c${typeLabel(val)}`,
+				"font-weight:bold;",
+				"",
+				"color:#888;",
+			);
+		}
+	}
+}
+
+// ---------- message helpers ----------
+import {
+	displayMessage,
+	displayError,
+	closeMessage,
+	openToast,
+	displayPrompt,
+	displayFullMessage,
+} from './messages.js';
+
+function createMessagesNs(): any {
+	const ns = createNamespace("messages");
+
+	ns.show = function (title?: string, content?: string): void {
+		displayMessage(title, content);
+	};
+
+	ns.error = function (err: any, tryAgain = false): void {
+		displayError(err, tryAgain);
+	};
+
+	ns.close = function (): void {
+		closeMessage();
+	};
+
+	ns.toast = function (text: string): void {
+		openToast(text);
+	};
+
+	ns.prompt = function (options?: any): void {
+		displayPrompt(options);
+	};
+
+	ns.full = function (properties?: any): void {
+		displayFullMessage(properties);
+	};
+
+	return ns;
+}
+
+// ---------- firestore helpers ----------
+function createFirestoreNs(): any {
+	const ns = createNamespace("firestore");
+
+	ns.get = async function (path: string): Promise<any> {
+		try {
+			const snapshot = await firebase.firestore().doc(path).get();
+			if (snapshot.exists) {
+				console.log("%c[FS GET]%c", "color:#4caf50;font-weight:bold;", "", path);
+				return snapshot.data();
+			}
+			console.warn(`%c[FS GET]%c not found: ${path}`, "color:#f0c040;font-weight:bold;", "");
+			return undefined;
+		} catch (err: any) {
+			console.error(`%c[FS GET]%c ${path}`, "color:red;font-weight:bold;", "", err);
+			throw err;
+		}
+	};
+
+	ns.set = async function (path: string, data: Record<string, any>): Promise<void> {
+		try {
+			await firebase.firestore().doc(path).set(data, { merge: true });
+			console.log("%c[FS SET]%c", "color:#4caf50;font-weight:bold;", "", path, data);
+		} catch (err: any) {
+			console.error(`%c[FS SET]%c ${path}`, "color:red;font-weight:bold;", "", err);
+			throw err;
+		}
+	};
+
+	return ns;
+}
+
+// ---------- public interface ----------
+export interface DevHost {
+	isEnabled: true;
+	host: string;
+	firestore: { get(path: string): Promise<any>; set(path: string, data: Record<string, any>): Promise<void>; [key: string]: any };
+	messages: {
+		show(title?: string, content?: string): void;
+		error(err: any, tryAgain?: boolean): void;
+		close(): void;
+		toast(text: string): void;
+		prompt(options?: any): void;
+		full(properties?: any): void;
+	};
+	help(): void;
+	list(): void;
+	[key: string]: any;
+}
+
+export function initDev(): DevHost | null {
+	if (!isLocalhost()) return null;
+
+	const rootNs = createNamespace("");
+
+	// ---- pre-populate namespaces ----
+	(rootNs as any).firestore = createFirestoreNs();
+	(rootNs as any).messages = createMessagesNs();
+
+	const rootStore = (rootNs as any)[STORE_KEY] as Record<string, any>;
+
+	const helpFn = function (): void {
+		console.log(
+			`%c🔧 TripViewer Dev Mode %cACTIVE %c(on ${window.location.hostname})`,
+			"font-size:14px;font-weight:bold;",
+			"color:#4caf50;font-weight:bold;",
+			"color:#aaa;",
+		);
+		console.log("  %cdev.help()%c            — show this message", "font-weight:bold;", "");
+		console.log("  %cdev.list()%c            — list all dev variables (recursive)", "font-weight:bold;", "");
+		console.log("  %cdev.page.foo%c          — inspect a page variable", "font-weight:bold;", "");
+		console.log("  %cdev.firestore.get()%c   — read a Firestore document", "font-weight:bold;", "");
+		console.log("  %cdev.firestore.set()%c   — write a Firestore document", "font-weight:bold;", "");
+		console.log("  %cdev.messages.show()%c  — show a message modal", "font-weight:bold;", "");
+		console.log("  %cdev.messages.error()%c — show an error message", "font-weight:bold;", "");
+		console.log("  %cdev.messages.close()%c — close the current message", "font-weight:bold;", "");
+		console.log("  %cdev.messages.toast()%c — show a toast", "font-weight:bold;", "");
+	};
+
+	const listFn = function (): void {
+		const keys = Object.keys(rootStore).filter(k => !BUILTINS.has(k));
+		if (keys.length === 0) {
+			console.log("%c[DEV]%c No variables set yet.", "color:#f0c040;font-weight:bold;", "");
+			return;
+		}
+		console.group(
+			`%c[DEV]%c variables`,
+			"color:#f0c040;font-weight:bold;",
+			"",
+		);
+		listTree(rootStore, "", 0);
+		console.groupEnd();
+		console.log(
+			"%c💡 Tip: %ctype %cdev.<name>%c to inspect any value.",
+			"color:#f0c040;",
+			"",
+			"font-weight:bold;",
+			"",
+		);
+	};
+
+	const dev = new Proxy(rootNs as any, {
+		get(_target, prop: string) {
+			if (prop === "isEnabled") return true;
+			if (prop === "host") return window.location.hostname;
+			if (prop === "help") return helpFn;
+			if (prop === "list") return listFn;
+			return (rootNs as any)[prop];
+		},
+		set(_target, prop: string, value: any) {
+			if (BUILTINS.has(prop)) return true;
+			(rootNs as any)[prop] = value;
+			return true;
+		},
+	});
+
+	(window as any).dev = dev;
+
+	console.log(
+		`%c🔧 DEV MODE %c• ${window.location.hostname} %c• type %cdev.help()%c for commands`,
+		"color:#f0c040;font-weight:bold;",
+		"color:#aaa;",
+		"",
+		"font-weight:bold;color:#4caf50;",
+		"",
+	);
+
+	return dev as any;
+}
+
+

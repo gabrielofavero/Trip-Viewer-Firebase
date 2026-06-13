@@ -1,34 +1,145 @@
 ![alt text](https://i.imgur.com/vejNzOv.png)
 
+# Description
+
+A **vanilla JavaScript** single-page application for planning, managing, and viewing trips, destinations, expenses, and itineraries. Data is stored in **Firebase Firestore**, with authentication via **Firebase Auth** and image uploads through **Firebase Storage**. The app is built as a static site — no framework, no bundler — with a lightweight Node.js build script that copies assets and injects HTML partials.
+
+# How it works
+
+## Main technologies
+
+| Tech | Usage |
+|---|---|
+| **Vanilla JS (ES Modules)** | All front-end logic — no framework dependencies |
+| **Firebase Firestore** | Database — trips, destinations, expenses, user data |
+| **Firebase Auth** | Email/password authentication & session management |
+| **Firebase Storage** | Image uploads (accommodations, galleries) |
+| **Firebase Cloud Functions** | Backend logic (TypeScript) — migrations, admin operations |
+| **Firebase Hosting** | Production deployment from `dist/` |
+| **Node.js** | Build script (`scripts/build/build.js`) — copies files & injects HTML partials |
+| **Bootstrap 5** | Layout & responsive grid (with custom CSS overrides) |
+| **Boxicons** | Icon library (navigation, actions, categories) |
+| **Chart.js** | Expense charts & breakdowns |
+| **Swiper** | Touch-enabled sliders (accommodation images, calendar) |
+
+## Project Structure — `public/assets/js/`
+
+```
+public/assets/js/
+├── app/                          # Bootstrap & configuration
+│   ├── main.js                   # App initialization entry point
+│   └── config.js                 # Lazy-loads & caches JSON configs (colors, language, versions)
+├── backup/                       # Backup & restore feature
+│   ├── backup.js                 # Export trip/destination data to JSON
+│   └── restore.js                # Import data from JSON backup files
+├── data/                         # Data access layer
+│   ├── firebase/
+│   │   ├── database.js           # Firestore CRUD operations (get, set, update, delete)
+│   │   ├── storage.js            # Firebase Storage (image uploads)
+│   │   └── auth.js               # Firebase Auth (user state, login, sign-out)
+│   └── services/                 # Domain services (orchestrate Firebase calls)
+│       ├── trip.service.js       # Trip-related database operations
+│       ├── destination.service.js# Destination-related database operations
+│       ├── expense.service.js    # Expense-related database operations
+│       └── auth.service.js       # Auth orchestration (login, registration, session)
+├── i18n/                         # Internationalization
+│   └── translation.js            # Multi-language text translations
+├── models/                       # Pure data transformation functions
+│   ├── trip.model.js             # Trip duration, traveler count, date helpers
+│   ├── traveler.model.js         # Traveler ID generation, validation
+│   ├── destination.model.js      # Price buckets, ratings, descriptions
+│   ├── expense.model.js          # Currency conversion, expense calculations, chart data
+│   └── itinerary.model.js        # Itinerary content formatting & extraction
+├── pages/                        # Page controllers (one folder per route)
+│   ├── home/                     # Landing page (trips, destinations, listings overview)
+│   ├── trip-detail/              # Single trip view (itinerary, categories, lightbox)
+│   ├── destination/              # Destination details with embeds & media
+│   ├── edit-trip/                # Create & edit trips
+│   ├── edit-destination/         # Create & edit destinations
+│   ├── edit-listing/             # Create & edit listings
+│   ├── expenses/                 # Trip expense breakdown & currency conversion
+│   └── itinerary/                # Full itinerary page (print/PDF export)
+├── theme/                        # Visual theme management
+│   ├── theme.js                  # Barrel file re-exporting all theme functions
+│   ├── colors.js                 # Trip/logo colors, color manipulation utilities
+│   ├── animations.js             # Loading animations & transitions
+│   ├── stylesheets.js            # Dynamic stylesheet loading & management
+│   ├── icons.js                  # SVG icon manipulation & fill colors
+│   └── visibility.js             # Dark/light mode switching & scroll locking
+├── ui/                           # Reusable UI widgets
+│   ├── accordion.js              # Collapsible accordion sections
+│   ├── bimap.js                  # Bidirectional map data structure
+│   ├── custom-select.js          # Styled custom <select> replacement
+│   ├── dynamic-select.js         # Dynamic multi-category select with search
+│   ├── embed.js                  # Third-party embed (YouTube, TikTok, Instagram)
+│   ├── fields.js                 # Input field validation & auto-formatting
+│   └── sortable.js               # Drag-and-drop reordering (transportation, accommodations)
+└── utils/                        # Pure helper functions
+    ├── dom.js                    # DOM queries, URL params, document helpers
+    ├── dates.js                  # Date formatting, timezone, calendar conversions
+    ├── devices.js                # Device/browser detection
+    ├── loading.js                # Loading spinner & long-loading timeout
+    ├── messages.js               # Toast notifications & error dialogs
+    ├── pin.js                    # PIN protection for sensitive trip data
+    ├── set.js                    # Generic form-field binding & data capture
+    └── attributions.js           # Credits & attributions modal
+```
+
+## Build Instructions
+
+```bash
+# Install dependencies
+npm install
+
+# One-shot build (copies public/ → dist/, injects HTML partials)
+npm run build
+
+# Watch mode (rebuilds on file changes)
+npm run watch
+
+# Clean build output
+npm run clean
+
+# Serve locally (requires Firebase CLI)
+npm run serve
+
+# Full dev mode (build + serve + live reload on port 3000)
+npm run dev
+```
+
 # Tasks
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
 | 🐞   | Bug         | B000 | 160   | 157  | 3         | 0       |
-| 🏆   | Feature     | F000 | 166   | 136  | 22        | 8       |
-| 📈   | Improvement | M000 | 150   | 119  | 23        | 8       |
-| ⚔️   | Epic        | E000 | 46    | 29   | 10        | 7       |
+| 🏆   | Feature     | F000 | 167   | 137  | 22        | 8       |
+| 📈   | Improvement | M000 | 154   | 129  | 23        | 2       |
+| ⚔️   | Epic        | E000 | 48    | 30   | 8         | 10      |
 
 ## Backlog
 
 ### High Priority
 
-
-- ⚔️ **E034:** Frontend code refactoring
-  - *[📈M106] Use require in js files + single entrypoint for scripts in html files*
-  - *[📈M098] Change js folder structures to EN-US*
-  - *[📈M135] Refactor "dados.js" to shared dir*
-  - *[📈M105] Remove CONFIG and reduce use of global variables*
-  - *[📈M058] Modularize CSS files to reduce redundancy*
-  - *[📈M046] Clean unused properties in application CSS*
-  - *[📈M149] Better file/folder architecture + separation of concerns (visuals, bussiness, api calls, crud etc)*
-  - *[📈M150] All functions and variables in EN-US*
+- ⚔️ **E048:** Database ovehaul
+  - Translate database 
+  - Migration + 
+  - ts/json files adaptation (+ final translation round)
+  - add image tag on destination
+  - copy destinations tag from trip/listing into user data
+- 📈 **M153:** Index improvements: 
+  - trip/listing destination tags, destination images
 
 ### Medium Priority
 
-- ⚔️ **E016:** New Front-End: destination.html
-- ⚔️ **E027:** New Front-End: view.html
 - ⚔️ **E044:** New Front-End: edit pages
+  - Add option to put image in destination (and make index.html see it)
+- ⚔️ **E016:** New Front-End: destination.html
+  - Use image somehow
+  - boxes like on index
+  - search bar
+- ⚔️ **E027:** New Front-End: view.html
+  - no more iframe/embeds. Use html injection instead
+- 📈 **M154:** Reduce firestore calls on index
 - ⚔️ **E045:** New Front-End: itinerary.html
 - ⚔️ **E046:** New Front-End: expenses.html
 
@@ -37,12 +148,15 @@
 - ⚔️ **E043:** Offline Mode (Dev Only, POC)
   - *[🏆F152] Export script — Firestore→JSON + image download + offline HTML generation*
   - *[🏆F153] Zip packaging + validation + deploy integration*
-  - *[🏆F154] offline-data.js — local JSON data loader (replaces database.js)*
-  - *[🏆F155] main-offline.js + page JS adaptation (Firebase-free)*
+  - *[🏆F154] offline-data.js — local JSON data loader (replaces database.ts)*
+  - *[🏆F155] main-offline.ts + page JS adaptation (Firebase-free)*
   - *[🏆F156] Service Worker + PWA manifest for iOS home-screen support*
   - *[🏆F157] Image & embed offline fallbacks (thumbnails, placeholders)*
   - *[🏆F158] Bundle instructions (README.txt) + QA validation flag*
   - *[🏆F159] Python requirements.txt + wire into pre-commit/deploy pipeline*
+- ⚔️ **E024:** Migrate project to React
+- ⚔️ **E019:** Implement Sonarqube
+- ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
 
 ## Done
 
@@ -75,6 +189,18 @@
 - 📈 **M148:** Improve trip categories in index.html
 - ⚔️ **E018:** New Front-End: index.html
   - *[📈M021] Improve "My Trips / Destinations / Listings" in index.html*
+- ⚔️ **E034:** Frontend code refactoring
+  - *[📈M106] Use require in js files + single entrypoint for scripts in html files*
+  - *[📈M098] Change js folder structures to EN-US*
+  - *[📈M135] Proper separation of shared elements*
+  - *[📈M105] Remove CONFIG and reduce use of global variables*
+  - *[📈M058] Modularize CSS files to reduce redundancy*
+  - *[📈M046] Clean unused properties in application CSS*
+  - *[📈M149] Better file/folder architecture + separation of concerns*
+  - *[📈M150] All functions and variables in EN-US*
+  - *[📈M151] Better folder structure for js files*
+  - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
+- 🏆 **F167:** Add dev mode for easy debugging
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
@@ -707,12 +833,10 @@
   - *Find a template online and apply (credit the source)*
 - 📈 **M104:** All external links should open via window.open
 - 📈 **M087:** Destination load loads everything immediately
-- ⚔️ **E019:** Implement Sonarqube
 - 🏆 **F070:** Add to calendar component
 - 📈 **M100:** Storage size limit for document (10MB)
 - 📈 **M101:** Put Swiper inside accommodation image box when accommodation has more than one image
 - 📈 **M102:** Instead of opening accommodation/transportation pop-up, scroll page to position and auto-click item
-- ⚔️ **E024:** Migrate project to React OR Angular
 - ⚔️ **E025:** iOS and Android implementation
 - 🏆 **F043:** Create customizable keypoints
 - 📈 **M018:** Improve centering of demo-box element on edit screens in tablet mode

@@ -2,119 +2,15 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
-
-  <title>TripViewer</title>
-  <meta content="Your Travel Planner" name="description">
-  <meta property="og:description" content="Your Travel Planner">
-  <meta content="" name="keywords">
-
-  <!-- Apple Data -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="TripViewer" />
-  <meta name="theme-color" content="#fff">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="favicon.ico">
-  <meta name="msapplication-TileColor" content="#e4ebdb">
-  <meta name="msapplication-config" content="browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link data-main href="assets/css/viagem/viagem.css" rel="stylesheet">
+  <!-- #include shared/head.html -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link data-main href="assets/css/view/view.css" rel="stylesheet">
 
 </head>
 
 <body>
   <div class="loadable" style="display: none">
-    <div class="top-bar">
-      <a href="index.html" class="logo-link">
-        <div class="logo-box">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-light">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #595a5a; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="light-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="light-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.57,1.6,3.57,3.57v28.62c0,1.97-1.6,3.58-3.58,3.58H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #5859a7; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #595a5a; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.69 71.98" id="logo-dark" style="display:none">
-            <g style="isolation: isolate;">
-              <g id="Capa_1" data-name="Capa 1">
-                <g>
-                  <path d="m50.9,15.03V6.19c0-1.21-.98-2.19-2.19-2.19h-17.75c-1.21,0-2.18.98-2.18,2.19v8.84h22.12Z"
-                    style="fill: none; stroke: #bfbfbf; stroke-miterlimit: 10; stroke-width: 8px;" />
-                  <path id="dark-color-1"
-                    d="m5.06,15.36h69.56c1.89,0,3.43,1.54,3.43,3.43v49.76c0,1.89-1.54,3.43-3.43,3.43H5.06c-1.89,0-3.43-1.54-3.43-3.43V18.79c0-1.89,1.54-3.43,3.43-3.43Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m10.62,67.76c-1.89,0-3.43-1.54-3.43-3.43v-10.34c0-1.89,1.53-3.43,3.43-3.43h67.43v-31.77c0-1.89-1.53-3.43-3.43-3.43H5.06c-1.89,0-3.43,1.53-3.43,3.43v49.76c0,1.89,1.53,3.43,3.43,3.43h69.56c1.89,0,3.43-1.53,3.43-3.43v-.79H10.62Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <path id="dark-color-2"
-                    d="m3.57,12.2h72.54c1.97,0,3.58,1.6,3.58,3.58v28.62c0,1.97-1.6,3.57-3.57,3.57H3.57c-1.97,0-3.57-1.6-3.57-3.57V15.77c0-1.97,1.6-3.57,3.57-3.57Z"
-                    style="fill: #7f75b6; stroke-width: 0px;" />
-                  <path
-                    d="m78.57,41.39c-2.53,3.12-5.72,3.06-9.54,3.05-14.72-.05-13.87-.09-26.49-.05-7.49.03-12.14.02-19.16-2.95-7.07-3-9.7-9.72-9.61-17.05.05-4.07.76-8.09,2.54-11.78.07-.14.14-.28.21-.42H3.58c-1.98,0-3.58,1.6-3.58,3.57v28.62c0,1.97,1.6,3.57,3.58,3.57h72.54c1.97,0,3.57-1.6,3.57-3.57v-4.59c-.35.55-.71,1.09-1.12,1.59Z"
-                    style="fill: #d1d3d4; mix-blend-mode: multiply; stroke-width: 0px;" />
-                  <rect x="34.91" y="46.69" width="9.87" height="8.32" style="fill: #bfbfbf; stroke-width: 0px;" />
-                </g>
-              </g>
-            </g>
-          </svg>
-          <div id="trip-viewer-text">TripViewer</div>
-        </div>
-      </a>
-      <div class="icons-box" id="icons-box">
-        <div class="lang-selector">
-          <button class="lang-button">EN</button>
-          <div class="lang-options">
-            <button data-lang="en">EN</button>
-            <button data-lang="pt">PT</button>
-          </div>
-        </div>
-        <i id="share" class="bx bx-share-alt icon-buttons"></i>
-        <i id="night-mode" class="bx bx-moon icon-buttons"></i>
-        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-      </div>
-    </div>
+      <!-- #include shared/top-bar.html -->
 
     <!-- ======= Header ======= -->
     <header id="header" class="d-flex flex-column justify-content-center">
@@ -163,10 +59,10 @@
             </a>
           </li>
 
-          <li id="destinosNav">
-            <a href="#destinos" class="nav-link scrollto">
+          <li id="destinationsNav">
+            <a href="#destinations" class="nav-link scrollto">
               <i class="bx bx-map"></i>
-              <span id="destinosNavText" data-translate="destination.title"></span>
+              <span id="destinationsNavText" data-translate="destination.title"></span>
             </a>
           </li>
 
@@ -187,7 +83,7 @@
       <div class="container" data-aos="zoom-in" data-aos-delay="100">
         <h1 id="header1"></h1>
         <img id="header2">
-        <h2 class="header-text" id="subtitulo"></h2>
+        <h2 class="header-text" id="hero-subtitle"></h2>
         <h2 class="header-text" id="countdown"></h2>
         <div class="social-links" id="social-links" style="display: none">
           <a id="attachmentsLink" href="" target="_blank" class="documents"><i class="iconify"
@@ -205,7 +101,7 @@
           <a id="vaccineLink" href="" target="_blank" class="sheets"><i class="iconify" data-icon="tabler:vaccine"
               style="display:none"></i></a>
         </div>
-        <button id="programacao-hoje" style="display: none"><span
+        <button id="todays-itinerary-btn" style="display: none"><span
             data-translate="trip.itinerary.todays_itinerary"></span></button>
       </div>
     </section>
@@ -220,9 +116,9 @@
           </div>
           <div class="col-lg-4" id="googleMaps"></div>
 
-          <div class="row" id="dados">
+          <div class="row" id="keypoints-grid">
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado1">
+              <div class="count-box" id="keypoint1">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -230,7 +126,7 @@
             </div>
 
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado2">
+              <div class="count-box" id="keypoint2">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -238,7 +134,7 @@
             </div>
 
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado3">
+              <div class="count-box" id="keypoint3">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -246,7 +142,7 @@
             </div>
 
             <div class="col-6 col-lg-3">
-              <div class="count-box" id="dado4">
+              <div class="count-box" id="keypoint4">
                 <i></i>
                 <span> </span>
                 <p>...</p>
@@ -272,30 +168,30 @@
         <div class="container" data-aos="fade-up">
 
           <div class="section-title">
-            <h2 id="transporte-titulo" data-translate="trip.transportation.title"></h2>
+            <h2 id="transportation-title" data-translate="trip.transportation.title"></h2>
           </div>
 
-          <div class="custom-select" id="transporte-select" style="display: none;"></div>
+          <div class="custom-select" id="transportation-select" style="display: none;"></div>
 
-          <div class="tabs-container" id="tabs-container-transportes" style="display: none">
-            <div class="tabs" id="tab-transporte">
+          <div class="tabs-container" id="tabs-container-transportation" style="display: none">
+            <div class="tabs" id="tab-transportation">
             </div>
           </div>
 
-          <div id="transporte-box-container">
-            <div class='transporte-box' id="transporte-ida">
-              <div id="transporte-ida-content"></div>
+          <div id="transportation-box-container">
+            <div class='transporte-box' id="transportation-outbound">
+              <div id="transportation-outbound-content"></div>
             </div>
 
-            <div class='transporte-box' id="transporte-durante" style="display: none;">
-              <div id="transporte-durante-content"></div>
+            <div class='transporte-box' id="transportation-internal" style="display: none;">
+              <div id="transportation-internal-content"></div>
             </div>
 
-            <div class='transporte-box' id="transporte-volta" style="display: none;">
-              <div id="transporte-volta-content"></div>
+            <div class='transporte-box' id="transportation-return" style="display: none;">
+              <div id="transportation-return-content"></div>
             </div>
 
-            <div id="transporte-custom-container"></div>
+            <div id="transportation-custom-container"></div>
           </div>
 
         </div>
@@ -307,31 +203,31 @@
 
           <div class="section-title">
             <h2 data-translate="trip.accommodation.title"></h2>
-            <div id="sobre"></div>
+            <div id="accommodation-about"></div>
           </div>
 
-          <div id="hospedagens-box"></div>
+          <div id="accommodations-box"></div>
 
         </div>
       </section>
 
-      <!-- ======= Schedule: Calendar ======= -->
-      <section id="scheduleCalendar" class="resume">
+      <!-- ======= Itinerary Calendar ======= -->
+      <section id="scheduleCalendar" class="itinerary resume">
         <div class="container" data-aos="fade-up">
 
           <div class="section-title">
             <h2 data-translate="trip.itinerary.title"></h2>
-            <div id="progDescription" data-translate="trip.itinerary.instructions"></div>
-            <div id="pTotal"></div>
-            <div id="pAjuste"></div>
-            <div class="backup" id="dadosBackup"></div>
+            <div id="itinerary-description" data-translate="trip.itinerary.instructions"></div>
+            <div id="itinerary-total"></div>
+            <div id="itinerary-adjustment"></div>
+            <div class="backup" id="backupData"></div>
 
             <div id="pill-box" class="pill-box" style="display: none;"></div>
 
-            <div class="card" id="tabela">
+            <div class="card" id="calendar-table-card">
               <h3 class="card-header" id="calendarTitle"></h3>
               <table class="table table-bordered table-responsive-sm" id="calendar">
-                <thead id="tabHeader">
+                <thead id="calendar-table-header">
                   <tr>
                     <th data-translate="datetime.weekdays.mini.sunday"></th>
                     <th data-translate="datetime.weekdays.mini.monday"></th>
@@ -349,9 +245,9 @@
               </table>
 
               <div id="calendarMonthSelector" class="form-inline" style="display: none;">
-                <button class="calendar-navigation" id="previous" onclick="_calendarPrevious()"><i
+                <button class="calendar-navigation" id="previous" data-action="calendar-previous"><i
                     class="bx bx-left-arrow-alt"></i></button>
-                <button class="calendar-navigation" id="next" onclick="_calendarNext()"><i
+                <button class="calendar-navigation" id="next" data-action="calendar-next"><i
                     class="bx bx-right-arrow-alt"></i></button>
               </div>
               <br />
@@ -359,7 +255,7 @@
 
             <div id="programacao-box">
               <div id="programacao-modal">
-                <div id="programacao-fechar" onclick="_closeModalCalendar()"><i class="iconify"
+                <div id="programacao-fechar" data-action="close-modal-calendar"><i class="iconify"
                     data-icon="material-symbols:close"></i></div>
 
                 <div class="programacao-titulo-box">
@@ -411,25 +307,25 @@
       </section>
 
       <!-- ======= Destinations ======= -->
-      <section id="destinos" class="services">
+      <section id="destinations" class="services">
         <div class="container" data-aos="fade-up">
 
-          <div class="section-title" id="destinosTitleContainer">
-            <h2 id="dTitle" data-translate="destination.title"></h2>
-            <div id="dUpdate"></div>
+          <div class="section-title" id="destinationsTitleContainer">
+            <h2 id="destinations-title" data-translate="destination.title"></h2>
+            <div id="destinations-update"></div>
           </div>
 
-          <div id="dDescription"></div>
+          <div id="destinations-description"></div>
 
-          <div id="destinos-select" class="custom-select"></div>
+          <div id="destinations-select" class="custom-select"></div>
           </select>
 
-          <div class="row" id="destinosBox"></div>
+          <div class="row" id="destinationsBox"></div>
 
         </div>
       </section>
 
-      <!-- ======= Galeria Section ======= -->
+      <!-- ======= Gallery Section ======= -->
       <section id="portfolio" class="portfolio section-bg">
         <div class="container" data-aos="fade-up">
 
@@ -448,7 +344,7 @@
           <div class="row portfolio-container" id="portfolio-container" data-aos="fade-up" data-aos-delay="200"></div>
 
         </div>
-      </section><!-- End Portfolio Section -->
+      </section><!-- End Gallery Section -->
 
       <!-- ======= Support: LightBox ======= -->
       <div id="lightbox" class="lightbox">
@@ -464,8 +360,8 @@
       <div class="container">
         <div class="credits">
           <span data-translate="labels.developed_by"></span> <a
-            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="atribuicoes"
-            onclick="_openAtribuicoes()"><i class="bx bx-info-circle"></i>
+            href="https://www.linkedin.com/in/gabrielfavero/">Gabriel Fávero</a>. <span class="attributions"
+            data-action="open-attributions"><i class="bx bx-info-circle"></i>
             <span data-translate="labels.credits"></span></span>
         </div>
       </div>
@@ -479,70 +375,14 @@
 
   <div id="toast" style="display: none">
     <span id="toast-text"></span>
-    <span class="toast-close" onclick="_closeToast()">
+    <span class="toast-close" data-action="close-toast">
       <i class="iconify" data-icon="material-symbols:close"></i>
     </span>
   </div>
 
-  <!-- Firebase -->
-  <script data-main src="../index.js" type=text/JSX"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
-  <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
-  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <!-- #include shared/scripts-vendor.html -->
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <script src="https://apis.google.com/js/api.js"></script>
-
-  <!-- Main JS Files -->
-  <script data-main src="assets/js/main/translation.js"></script>
-  <script data-main src="assets/js/main/main.js"></script>
-  <script data-main src="assets/js/suporte/estilos/animacoes.js"></script>
-  <script data-main src="assets/js/suporte/paginas/mensagens.js"></script>
-  <script data-main src="assets/js/suporte/paginas/carregamento.js"></script>
-  <script data-main src="assets/js/suporte/firebase/user.js"></script>
-  <script data-main src="assets/js/suporte/componentes/bimap.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dados.js"></script>
-  <script data-main src="assets/js/suporte/paginas/datas.js"></script>
-  <script data-main src="assets/js/suporte/firebase/storage.js"></script>
-  <script data-main src="assets/js/paginas/viagem/suporte/swiper.js"></script>
-  <script data-main src="assets/js/suporte/estilos/stylesheets.js"></script>
-  <script data-main src="assets/js/suporte/estilos/visibilidade.js"></script>
-  <script data-main src="assets/js/paginas/viagem/suporte/visibilidade.js"></script>
-  <script data-main src="assets/js/suporte/estilos/cores.js"></script>
-  <script data-main src="assets/js/suporte/paginas/dispositivos.js"></script>
-  <script data-main src="assets/js/suporte/paginas/pin.js"></script>
-  <script data-main src="assets/js/suporte/html/embed.js"></script>
-  <script data-main src="assets/js/paginas/viagem/suporte/embed.js"></script>
-  <script data-main src="assets/js/suporte/componentes/custom-select.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/destinos.js"></script>
-  <script data-main src="assets/js/paginas/viagem/suporte/countdown.js"></script>
-  <script data-main src="assets/js/paginas/viagem/suporte/sensitive-reservation.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/programacao/programacao.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/programacao/calendario.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/programacao/inner-programacao.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/transportes.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/hospedagens.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/resumo.js"></script>
-  <script data-main src="assets/js/paginas/viagem/categorias/galeria.js"></script>
-  <script data-main src="assets/js/suporte/firebase/database.js"></script>
-  <script data-main src="assets/js/paginas/destinos/categorias.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/visibilidade.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/media-embed.js"></script>
-  <script data-main src="assets/js/paginas/destinos/suporte/content.js"></script>
-  <script data-main src="assets/js/paginas/viagem/viagem.js"></script>
-  <script data-main src="assets/js/suporte/paginas/atribuicoes.js"></script>
+  <!-- #include shared/scripts-core.html -->
 </body>
 
 </html>

@@ -1,19 +1,3 @@
-:root {
-	--theme-color: #5859a7;
-	--theme-color-hover: #505197;
-	--theme-color-secondary: #d5d6e9;
-	--subtitle: #4b5563;
-	--box-color: #fcfcfc;
-	--box-color-hover: rgb(236, 235, 235);
-	--border-color: #dedede;
-	--text-color: #272829;
-}
-
-@font-face {
-	font-family: "Chelos";
-	src: url("../../fonts/Chelos\ Free.ttf") format("truetype");
-}
-
 @media print {
 	* {
 		-webkit-print-color-adjust: exact;
@@ -71,100 +55,8 @@
 	}
 }
 
-body {
-	font-family: "Open Sans", sans-serif;
-	color: var(--text-color);
-	background: #fff;
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-	transition: all 0.3s;
-	padding-top: env(safe-area-inset-top);
-}
-
-a {
-	color: #3d85c6;
-	text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: "Raleway", sans-serif;
-}
-
 /*--------------------------------------------------------------
-# Navigation Menu
---------------------------------------------------------------*/
-
-.top-bar {
-	position: fixed;
-	background-color: #fff;
-	width: 100%;
-	height: 60px;
-	border-bottom: 0.5px solid #d9d9d9;
-	z-index: 999;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.logo-box {
-	display: flex;
-	align-items: center;
-}
-
-#logo-light,
-#logo-dark {
-	height: 25px;
-	margin-left: 20px;
-}
-
-#trip-viewer-text {
-	font-size: 30px;
-	margin-top: 10px;
-	margin-left: 7px;
-	font-family: Chelos;
-	color: var(--theme-color);
-}
-
-.logo-link {
-	text-decoration: none;
-	color: inherit;
-	display: flex;
-	align-items: center;
-}
-
-.icons-box {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.icon-buttons {
-	cursor: pointer;
-	width: 30px;
-	height: 30px;
-	font-size: 30px;
-	margin: 0 7px 0 7px;
-}
-
-#menu {
-	border: 0;
-	background: none;
-	font-size: 28px;
-	outline: none !important;
-	line-height: 0;
-	cursor: pointer;
-	border-radius: 50px;
-	padding: 5px;
-	color: var(--text-color);
-}
-
-/*--------------------------------------------------------------
-# Mobile Navigation Menu
+# Main HTML elements
 --------------------------------------------------------------*/
 
 #header {
@@ -205,7 +97,6 @@ h6 {
 	color: #4f5051;
 	padding: 10px 18px;
 	margin-bottom: 8px;
-	transition: 0.3s;
 	font-size: 15px;
 	border-radius: 50px;
 	background: #f2f3f5;
@@ -268,78 +159,6 @@ h6 {
 	#header {
 		display: none;
 	}
-}
-
-/*--------------------------------------------------------------
-# Footer
---------------------------------------------------------------*/
-.footer {
-	color: #4f5051;
-	font-size: 14px;
-	text-align: center;
-	padding: 20px 0;
-}
-
-.atribuicoes {
-	cursor: pointer;
-}
-
-.atribuicoes:hover {
-	color: #666768;
-}
-
-.atribuicoes-icon {
-	font-size: 10px;
-}
-
-.footer .footer h3 {
-	font-size: 36px;
-	font-weight: 700;
-	position: relative;
-	font-family: "Poppins", sans-serif;
-	padding: 0;
-	margin: 0 0 15px 0;
-}
-
-.footer p {
-	font-size: 15;
-	font-style: italic;
-	padding: 0;
-	margin: 0 0 40px 0;
-}
-
-.footer .social-links {
-	margin-bottom: 20px;
-	margin-top: -20px;
-}
-
-.footer .social-links a {
-	font-size: 18px;
-	display: inline-block;
-	background: var(--theme-color);
-	color: #fff;
-	line-height: 1;
-	padding: 8px 0;
-	margin-right: 4px;
-	border-radius: 50%;
-	text-align: center;
-	width: 36px;
-	height: 36px;
-	transition: 0.3s;
-}
-
-.footer .social-links a:hover {
-	background: var(--theme-color);
-	color: #fff;
-	text-decoration: none;
-}
-
-.footer .copyright {
-	margin: 0 0 5px 0;
-}
-
-.footer .credits {
-	font-size: 13px;
 }
 
 /*--------------------------------------------------------------
@@ -458,63 +277,6 @@ h3 {
 }
 
 /*--------------------------------------------------------------
-# Preloader
---------------------------------------------------------------*/
-.preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 9999;
-	overflow: hidden;
-}
-
-.preloader {
-	background: #fff;
-}
-
-.preloader:before {
-	content: "";
-	position: fixed;
-	top: calc(50% - 30px);
-	left: calc(50% - 30px);
-	border: 6px solid var(--theme-color);
-	border-top-color: #f7f8f9;
-	border-bottom-color: #f7f8f9;
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
-	-webkit-animation: animate-preloader 1s linear infinite;
-	animation: animate-preloader 1s linear infinite;
-}
-
-.preloader:before {
-	border-top-color: #fff;
-	border-bottom-color: #fff;
-}
-
-@-webkit-keyframes animate-preloader {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-@keyframes animate-preloader {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-/*--------------------------------------------------------------
 # Botões
 --------------------------------------------------------------*/
 
@@ -564,55 +326,7 @@ h3 {
 	color: #fff;
 }
 
-/*--------------------------------------------------------------
-# Botões
---------------------------------------------------------------*/
-
-.message-container,
-.input-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 450px;
-	height: auto;
-	background: #fff;
-	border-radius: 10px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 30px;
-	overflow-wrap: break-word;
-}
-
-.message-container {
-	text-align: center;
-}
-
-.message-text-container {
-	width: 100%;
-	font-size: 18px;
-	line-height: 1.5;
-}
-
-.message-title {
-	font-size: 24px;
-	font-weight: 700;
-	margin-bottom: 20px;
-}
-
-.error-message {
-	margin-top: 10px;
-}
-
-@media (max-width: 520px) {
-	.message-container,
-	.input-container {
-		width: 90%;
-		height: auto;
-	}
-}
+/* Message containers — shared base in components/modal.css */
 
 /* Language Selector */
 
@@ -700,43 +414,4 @@ h3 {
 	display: none;
 }
 
-#toast {
-	position: fixed;
-	bottom: 16px;
-	left: 50%;
-	transform: translateX(-50%);
-	min-width: 300px;
-	width: auto;
-	background-color: var(--theme-color);
-	color: white;
-	text-align: center;
-	padding: 10px;
-	font-size: 16px;
-	box-sizing: border-box;
-	text-decoration: bold;
-	display: flex;
-	align-items: center;
-	word-wrap: break-word;
-	word-break: break-word;
-	white-space: normal;
-	padding: 10px 40px 10px 10px;
-}
-
-#toast-text {
-	flex-grow: 1;
-}
-
-.toast-close {
-	position: absolute;
-	top: 50%;
-	right: 10px;
-	transform: translateY(-50%);
-	cursor: pointer;
-}
-
-@media (max-width: 430px) {
-	#toast {
-		bottom: 4em;
-		min-width: 80%;
-	}
-}
+/* Toast — shared base in components/toast.css */

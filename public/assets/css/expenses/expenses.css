@@ -1,0 +1,442 @@
+/*--------------------------------------------------------------
+# Tabs
+--------------------------------------------------------------*/
+
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
+}
+
+.tabs-container {
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* UNUSED: .left-items — not found in any HTML file */
+
+.tabs {
+	display: flex;
+	position: relative;
+	background-color: #fff;
+	box-shadow:
+		0 0 1px 0 rgba(110, 123, 131, 0.15),
+		0 6px 12px 0 rgba(110, 123, 131, 0.15);
+	padding: 0.75rem;
+	border-radius: 99px;
+	transform: scale(0.7);
+}
+
+.tabs * {
+	z-index: 2;
+}
+
+input[type="radio"] {
+	display: none;
+}
+
+/* UNUSED: .tab-mini — not found in any HTML file; keeping .tab only */
+.tab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 54px;
+	width: 200px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	border-radius: 99px;
+	cursor: pointer;
+	transition: color 0.15s ease-in;
+}
+
+input[type="radio"]:checked + label {
+	font-weight: bold;
+}
+
+input[type="radio"]:checked + label > .notification {
+	background-color: var(--theme-color);
+	color: #fff;
+}
+
+input[id="radio-resumo"]:checked ~ .glider {
+	transform: translateX(0);
+}
+
+input[id="radio-gastosPrevios"]:checked ~ .glider {
+	transform: translateX(100%);
+}
+
+input[id="radio-gastosDurante"]:checked ~ .glider {
+	transform: translateX(200%);
+}
+
+input[id="radio-gastosViajantes"]:checked ~ .glider {
+	transform: translateX(300%);
+}
+
+/* UNUSED: .glider-mini — not found in any HTML file; keeping .glider only */
+.glider {
+	position: absolute;
+	display: flex;
+	height: 54px;
+	width: 200px;
+	background-color: var(--theme-color-secondary);
+	z-index: 1;
+	border-radius: 99px;
+	transition: 0.25s ease-out;
+}
+
+@media (max-width: 630px) {
+	#tabs-container-gastos {
+		padding: 0rem 2rem;
+	}
+
+	#tab-gastos {
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		padding: 0;
+		background-color: none;
+		background: none;
+		box-shadow: none;
+		border-radius: 0;
+		transform: none;
+		display: flex;
+		justify-content: center;
+	}
+
+	#tab-gastos .tab {
+		width: auto;
+		min-width: 120px;
+		height: 44px;
+		padding: 0 1rem;
+		border-radius: 99px;
+		background-color: var(--box-color);
+		border: 1px solid var(--border-color);
+		font-size: 0.8rem;
+	}
+
+	#tab-gastos input[type="radio"]:checked + label {
+		background-color: var(--theme-color-secondary);
+		font-weight: bold;
+	}
+
+	#tab-gastos .glider {
+		display: none;
+	}
+}
+
+/*--------------------------------------------------------------
+# Sections General
+--------------------------------------------------------------*/
+section {
+	padding: 40px 0;
+	overflow: hidden;
+}
+
+.section-title {
+	text-align: center;
+}
+
+.section-title h2 {
+	font-size: 32px;
+	font-weight: bold;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	position: relative;
+	color: #4f5051;
+}
+
+.section-title h2::before {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 120px;
+	height: 1px;
+	background: #ddd;
+	bottom: 1px;
+	left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 40px;
+	height: 3px;
+	background: var(--theme-color);
+	bottom: 0;
+	left: calc(50% - 20px);
+}
+
+.section-title p {
+	margin-bottom: 0;
+}
+
+.main-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.gastos-container {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: 1.5rem;
+	padding: 0rem 2rem 2rem 2rem;
+	width: 100%;
+}
+
+@media (max-width: 1025px) and (min-width: 600px) {
+	.gastos-container {
+		width: 640px;
+	}
+}
+
+#conversao {
+	color: var(--subtitle);
+	padding-right: 2rem;
+	padding-left: 2rem;
+	text-align: right;
+	font-size: 14px;
+}
+
+@media (min-width: 1300px) {
+	.gastos-container,
+	#conversao {
+		padding-right: 10%;
+		padding-left: 10%;
+	}
+}
+
+@media (min-width: 1750px) {
+	.gastos-container,
+	#conversao {
+		padding-right: 20%;
+		padding-left: 20%;
+	}
+}
+
+.gastos-card {
+	border: 1px solid #d9d9d9;
+	background-color: #fff;
+	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+}
+
+.gastos-card.container-mode {
+	box-shadow: 0 8px 24px rgba(110, 123, 131, 0.08);
+}
+
+.card-full-size {
+	width: 100%;
+}
+
+.gastos-recibo {
+	grid-column: span 12;
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+}
+
+/* Media query for large screens */
+@media (min-width: 1024px) {
+	.gastos-recibo {
+		grid-column: span 4;
+	}
+}
+
+.grafico,
+.grafico-wide {
+	padding: 1.5rem;
+	grid-column: span 12 / span 12;
+	border-radius: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+	.grafico {
+		grid-column: span 4 / span 4;
+	}
+
+	.grafico-wide {
+		grid-column: span 8 / span 8;
+	}
+}
+
+.gastos-titulo {
+	margin-bottom: 1rem;
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+	font-weight: 500;
+}
+
+.gastos-subtitulo,
+.total {
+	font-weight: bold;
+	color: var(--subtitle);
+}
+
+.tabela-titulo-esquerda {
+	text-align: left;
+	color: var(--subtitle);
+}
+
+.tabela-titulo-direita {
+	text-align: right;
+	color: var(--subtitle);
+}
+
+.tabela-texto-esquerda,
+.tabela-texto-direita {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+}
+
+.tabela-texto-direita {
+	text-align: right;
+	min-width: 100px;
+}
+
+/*--------------------------------------------------------------
+# Sections General
+--------------------------------------------------------------*/
+
+.button-box,
+.button-box-right {
+	text-align: right;
+}
+
+.btn-format {
+	margin: 5px;
+}
+
+.btn-format:first-child {
+	margin-left: 0;
+}
+
+.btn-format:last-child {
+	margin-right: 0;
+}
+
+.icon-buttons {
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	font-size: 30px;
+	margin: 0 7px 0 7px;
+}
+
+.btn-basic {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+	background: none;
+}
+
+.btn-theme,
+.btn-basic:hover,
+.btn-basic:focus {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+.btn-theme:hover,
+.btn-theme:focus {
+	background: var(--theme-color-hover);
+	color: #fff;
+}
+
+/* Message containers — shared base in components/modal.css */
+
+/*--------------------------------------------------------------
+# Pin (Anshul Kumar https://codepen.io/the_anshulkumar/pen/RKzYKj)
+--------------------------------------------------------------*/
+.pin-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+
+.pin-input,
+.pin-input-invalid {
+	width: 44px;
+	height: 44px;
+	border: 1px solid #d7d7d7;
+	border-radius: 6px;
+	outline: none;
+	margin: 1px;
+	text-align: center;
+	margin: 0 5px;
+	background: #eeeeee;
+	font-size: 20px;
+}
+
+.pin-input-invalid {
+	color: #3a3838;
+	background: #eee0e0;
+	border-color: #dbbbbb;
+}
+
+.pin {
+	color: #ffffff;
+	font-size: 20px;
+	text-align: center;
+	display: none;
+}
+
+/* Language Selector */
+
+.lang-selector {
+	position: relative;
+}
+
+.lang-button {
+	background: none;
+	border: none;
+	border-radius: 999px;
+	padding: 0.4rem 1rem;
+	cursor: pointer;
+	font-size: 1rem;
+	color: #3a3838;
+}
+
+.lang-options {
+	position: absolute;
+	top: 120%;
+	left: 0;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 0.5rem;
+	overflow: hidden;
+	box-shadow: 0 2px 6px rgba(166, 166, 166, 0.05);
+	display: none;
+	min-width: 100%;
+}
+
+.lang-options button {
+	background: none;
+	border: none;
+	padding: 0.5rem 1rem;
+	width: 100%;
+	text-align: left;
+	cursor: pointer;
+	font-size: 1rem;
+	color: #3a3838;
+}
+
+.lang-options button:hover {
+	background: #f5f5f5;
+}
+
+.highlight {
+	font-weight: bold;
+}

@@ -1,0 +1,32 @@
+/*--------------------------------------------------------------
+# Reset & Base
+--------------------------------------------------------------*/
+*, *::before, *::after { box-sizing: border-box; }
+
+body, html { margin: 0; padding: 0; }
+
+body {
+	overflow-y: auto;
+	font-family: "Open Sans", "Inter", sans-serif;
+	color: var(--text-primary);
+	background: var(--bg-primary);
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+	padding-top: env(safe-area-inset-top);
+	-webkit-font-smoothing: antialiased;
+}
+
+strong { color: var(--text-primary); font-weight: bold; }
+
+a {
+	color: var(--a-color);
+	text-decoration: none;
+	transition: color var(--transition-fast, 0.15s ease);
+}
+
+a:hover { color: var(--a-color-hover); text-decoration: none; }
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Inter", "Raleway", sans-serif;
+	margin: 0;
+}
