@@ -17,6 +17,7 @@ import { loadTripData } from './existing-trip.js';
 import { loadEventListeners } from './support/event-listeners.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadUploadSelector } from "../../data/firebase/storage.js";
+import { initEditTabs } from "../../ui/edit-tabs.js";
 
 var PERMISSOES;
 export var FIRESTORE_PROTECTED_DATA: Record<string, any> = {};
@@ -36,6 +37,7 @@ export async function loadEditTripPage() {
 	PERMISSOES = await getPermissoes();
 
 	loadVisibilityIndex();
+	initEditTabs();
 	loadHabilitados();
 	loadDraggablesWithAccordions(["transporte", "hospedagens"]);
 	newDynamicSelect("galeria-categoria");

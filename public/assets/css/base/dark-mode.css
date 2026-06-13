@@ -670,26 +670,61 @@
 	background: #665e94;
 }
 
-[data-theme="dark"] section {
-	background: #303030;
+/* Tab Bar */
+[data-theme="dark"] .edit-tab-bar {
+	background: rgba(28, 28, 30, 0.6);
+	border-color: var(--border-color);
 }
 
-[data-theme="dark"] section h1 {
-	color: #fff;
+[data-theme="dark"] .edit-tab:hover {
+	background: rgba(255, 255, 255, 0.06);
 }
 
-[data-theme="dark"] section strong {
-	color: #fff;
-}
-
-[data-theme="dark"] section p a {
+[data-theme="dark"] .edit-tab.active {
+	background: var(--bg-tertiary);
 	color: var(--theme-color);
 }
 
-[data-theme="dark"] section code {
+[data-theme="dark"] .edit-tab.save-tab {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+[data-theme="dark"] .edit-tab.save-tab:hover {
+	background: var(--theme-secondary);
+}
+
+/* Section Cards */
+[data-theme="dark"] .demo-page-content section {
+	background: rgba(44, 44, 46, 0.7);
+	border-color: var(--border-color);
+}
+
+[data-theme="dark"] .demo-page-content section h1 {
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .demo-page-content section h1 svg {
+	color: var(--theme-color);
+}
+
+[data-theme="dark"] .demo-page-content section p {
+	color: var(--text-muted);
+}
+
+[data-theme="dark"] .demo-page-content section strong {
+	color: var(--text-primary);
+}
+
+[data-theme="dark"] .demo-page-content section code {
 	background: #303030;
 }
 
+[data-theme="dark"] .demo-page-content section p a {
+	color: var(--theme-color);
+}
+
+/* Details */
 [data-theme="dark"] details {
 	background: #303030;
 }
@@ -703,17 +738,31 @@
 	background: #665e94;
 }
 
+/* Buttons */
+[data-theme="dark"] .btn-secondary-theme,
+[data-theme="dark"] .input-botao {
+	background: var(--bg-secondary);
+	color: var(--text-primary);
+	border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-secondary-theme:hover,
+[data-theme="dark"] .input-botao:hover {
+	background: var(--bg-tertiary);
+}
+
+/* Button Box */
 [data-theme="dark"] .button-box-formatted {
-	background: #404040;
+	background: transparent;
 }
 
 [data-theme="dark"] #double-button-section {
-	background: #404040;
+	background: transparent;
 }
 
+/* Legacy sidebar nav (kept for backward compat) */
 [data-theme="dark"] .demo-page {
 	color: #e2e2e2;
-	background: #303030;
 }
 
 [data-theme="dark"] .demo-page .demo-page-navigation nav {

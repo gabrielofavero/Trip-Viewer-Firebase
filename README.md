@@ -120,6 +120,9 @@ npm run dev
 
 ### High Priority
 
+- 🐞 **B161:** Fix page issues post migration
+- ⚔️ **E044:** New Front-End: edit pages
+- 🏆 **F168:** Add option to put image in destination (and make index.html see it)
 - ⚔️ **E048:** Database ovehaul
   - Translate database 
   - Migration + 
@@ -131,8 +134,6 @@ npm run dev
 
 ### Medium Priority
 
-- ⚔️ **E044:** New Front-End: edit pages
-  - Add option to put image in destination (and make index.html see it)
 - ⚔️ **E016:** New Front-End: destination.html
   - Use image somehow
   - boxes like on index

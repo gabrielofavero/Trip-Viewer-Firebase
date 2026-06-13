@@ -125,17 +125,9 @@ def increment_build_number(version_data):
     return version_data["build"]
 
 
-def save_version_json(version_data, project, firebase_version=None):
+def save_version_json(version_data, project, system_version, firebase_version=None):
     """Save updated version.json with deployment info."""
     version_json_path = BASE_DIR / "public" / "assets" / "json" / "version.json"
-    
-    try:
-        import sys
-        sys.path.insert(0, str(BASE_DIR / "scripts"))
-        from readme import get_system_version
-        system_version = get_system_version()
-    except Exception:
-        system_version = "Unknown"
     
     version_data["projects"][project] = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -147,6 +139,89 @@ def save_version_json(version_data, project, firebase_version=None):
     
     version_json_path.write_text(json.dumps(version_data, indent=2) + "\n")
     print(f"{Colors.GREEN}✓{Colors.RESET} Updated version.json: {Colors.BOLD}build={version_data['build']}{Colors.RESET}, firebase={firebase_version}, system={system_version}")
+
+
+# ============================================================
+# Package Version Update
+# ============================================================
+
+def update_package_jsons(system_version):
+    """Update version in package.json and package-lock.json to match system version."""
+    print(f"\n{Colors.BOLD}{Colors.CYAN}Updating package version to {system_version}...{Colors.RESET}")
+
+    package_json_path = BASE_DIR / "package.json"
+    package_lock_path = BASE_DIR / "package-lock.json"
+
+    originals = {}
+
+    # Update package.json
+    if package_json_path.exists():
+        data = json.loads(package_json_path.read_text())
+        original_version = data.get("version")
+        if original_version and original_version != system_version:
+            data["version"] = system_version
+            package_json_path.write_text(json.dumps(data, indent=2) + "\n")
+            originals["package.json"] = original_version
+            print(f"  {Colors.GREEN}✓{Colors.RESET} package.json: {Colors.BOLD}{original_version}{Colors.RESET} \u2192 {Colors.GREEN}{system_version}{Colors.RESET}")
+        else:
+            print(f"  {Colors.YELLOW}Already at {system_version}, no change needed.{Colors.RESET}")
+
+    # Update package-lock.json (top-level and packages[""] version)
+    if package_lock_path.exists():
+        data = json.loads(package_lock_path.read_text())
+        original_top_version = data.get("version")
+        modified = False
+        original_pkg_version = None
+
+        if original_top_version and original_top_version != system_version:
+            data["version"] = system_version
+            modified = True
+
+        if "" in data.get("packages", {}):
+            pkg = data["packages"][""]
+            original_pkg_version = pkg.get("version")
+            if original_pkg_version and original_pkg_version != system_version:
+                pkg["version"] = system_version
+                modified = True
+
+        if modified:
+            package_lock_path.write_text(json.dumps(data, indent=2) + "\n")
+            originals["package-lock.json"] = {
+                "version": original_top_version,
+                "packages_version": original_pkg_version
+            }
+            print(f"  {Colors.GREEN}✓{Colors.RESET} package-lock.json: {Colors.BOLD}{original_top_version}{Colors.RESET} \u2192 {Colors.GREEN}{system_version}{Colors.RESET}")
+        else:
+            print(f"  {Colors.YELLOW}Already at {system_version}, no change needed.{Colors.RESET}")
+
+    return originals
+
+
+def restore_package_jsons(originals):
+    """Restore package.json and package-lock.json to original versions."""
+    if not originals:
+        return
+
+    print(f"\n{Colors.BOLD}{Colors.CYAN}Restoring package version files...{Colors.RESET}")
+
+    if "package.json" in originals:
+        package_json_path = BASE_DIR / "package.json"
+        data = json.loads(package_json_path.read_text())
+        data["version"] = originals["package.json"]
+        package_json_path.write_text(json.dumps(data, indent=2) + "\n")
+        print(f"  {Colors.GREEN}✓{Colors.RESET} package.json restored to {Colors.BOLD}{originals['package.json']}{Colors.RESET}")
+
+    if "package-lock.json" in originals:
+        package_lock_path = BASE_DIR / "package-lock.json"
+        data = json.loads(package_lock_path.read_text())
+        orig = originals["package-lock.json"]
+        data["version"] = orig["version"]
+        if orig.get("packages_version") is not None and "" in data.get("packages", {}):
+            data["packages"][""]["version"] = orig["packages_version"]
+        package_lock_path.write_text(json.dumps(data, indent=2) + "\n")
+        print(f"  {Colors.GREEN}✓{Colors.RESET} package-lock.json restored to {Colors.BOLD}{orig['version']}{Colors.RESET}")
+
+    print(f"{Colors.GREEN}✓{Colors.RESET} Restored {len(originals)} package file(s) to original state")
 
 
 # ============================================================
@@ -285,17 +360,27 @@ def main():
 
         target_projects = select_deployment_targets()
 
+        # Compute system version once from README
+        try:
+            import sys as _sys
+            _sys.path.insert(0, str(BASE_DIR / "scripts"))
+            from readme import get_system_version
+            system_version = get_system_version()
+        except Exception:
+            system_version = "Unknown"
+
         run_build()
 
         version_data = load_version_json()
         build_number = increment_build_number(version_data)
 
         modified_files = update_html_cache_busting(build_number)
+        package_originals = update_package_jsons(system_version)
 
         try:
             for project in target_projects:
                 firebase_version = deploy_firebase(project)
-                save_version_json(version_data, project, firebase_version)
+                save_version_json(version_data, project, system_version, firebase_version)
 
             print(
                 f"\n{Colors.BOLD}{Colors.GREEN}✓ All deployments complete!{Colors.RESET} "
@@ -304,6 +389,7 @@ def main():
 
         finally:
             restore_html_files(modified_files)
+            restore_package_jsons(package_originals)
 
     except KeyboardInterrupt:
         print(f"\n{Colors.YELLOW}Deployment cancelled by user.{Colors.RESET}")

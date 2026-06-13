@@ -22,6 +22,7 @@ import { loadListData } from "./existing-listing.js";
 import { autoFillDarkColor } from "../edit-trip/categories/customization.js";
 import { loadDestinations } from "../edit-trip/new-trip.js";
 import { setDocumento } from "../../utils/set.js";
+import { initEditTabs } from "../../ui/edit-tabs.js";
 
 export async function loadEditListingPage() {
 	loadEditListingListeners();
@@ -33,6 +34,7 @@ export async function loadEditListingPage() {
 	PERMISSOES = await getPermissoes();
 
 	loadVisibilityIndex();
+	initEditTabs();
 	loadHabilitados();
 
 	setUserData(await getUserData());
