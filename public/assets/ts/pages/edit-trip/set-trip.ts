@@ -130,7 +130,7 @@ function getModulosObject() {
 	return {
 		hospedagens: getID("habilitado-hospedagens").checked,
 		destinos: getID("habilitado-destinos").checked,
-		gastos: getID("habilitado-gastos").checked,
+		gastos: getID("enabled-expenses").checked,
 		programacao: getID("habilitado-programacao").checked,
 		resumo: true,
 		transportes: getID("habilitado-transporte").checked,

@@ -14,8 +14,8 @@ export var GASTOS;
 var EXPENSES_COUNT = 0;
 var TOTAL_EXPENSES = {
 	resumo: {},
-	gastosPrevios: {},
-	gastosDurante: {},
+	preTrip: {},
+	duringTrip: {},
 };
 var ACTIVE_EXPENSE_TAB = "resumo";
 
@@ -153,14 +153,14 @@ async function loadExpenses() {
 }
 
 function applyExpenses() {
-	const hasGastosPrevios = GASTOS.gastosPrevios.length > 0;
-	const hasGastosDurante = GASTOS.gastosDurante.length > 0;
+	const hasPreTrip = GASTOS.preTrip?.length > 0;
+	const hasDuringTrip = GASTOS.duringTrip?.length > 0;
 
-	if (hasGastosPrevios && hasGastosDurante) {
-		getID("tab-gastos").style.display = "";
+	if (hasPreTrip && hasDuringTrip) {
+		getID("tab-expenses").style.display = "";
 		getID("radio-resumo").style.display = "";
-		getID("radio-gastosPrevios").style.display = "";
-		getID("radio-gastosDurante").style.display = "";
+		getID("radio-preTrip").style.display = "";
+		getID("radio-duringTrip").style.display = "";
 
 		loadSummary();
 		loadPreTripExpenses();
@@ -171,10 +171,10 @@ function applyExpenses() {
 		return;
 	}
 
-	if (hasGastosPrevios) {
-		getID("radio-gastosPrevios").style.display = "";
+	if (hasPreTrip) {
+		getID("radio-preTrip").style.display = "";
 		getID("resumo").style.display = "none";
-		getID("gastosPrevios").style.display = "";
+		getID("preTrip").style.display = "";
 
 		loadPreTripExpenses();
 
@@ -182,10 +182,10 @@ function applyExpenses() {
 		return;
 	}
 
-	if (hasGastosDurante) {
-		getID("radio-gastosDurante").style.display = "";
+	if (hasDuringTrip) {
+		getID("radio-duringTrip").style.display = "";
 		getID("resumo").style.display = "none";
-		getID("gastosDurante").style.display = "";
+		getID("duringTrip").style.display = "";
 		applyAndLoadTravelerExpenses();
 
 		loadDuringTripExpenses();
@@ -204,23 +204,23 @@ function applyExpenses() {
 		if (!hasTravelerExpenses()) {
 			return;
 		}
-		getID("radio-gastosPrevios").style.display = "";
+		getID("radio-expensesTravelers").style.display = "";
 		loadTravelerExpenses();
 	}
 
 	function hasTravelerExpenses() {
-		const hasPessoaDurante = GASTOS.gastosDurante.some((i) => i.pessoa);
-		const hasPessoaPrevios = GASTOS.gastosPrevios.some((i) => i.pessoa);
-		return GASTOS.pessoas && (hasPessoaDurante || hasPessoaPrevios);
+		const hasPersonDuring = GASTOS.duringTrip?.some((i: any) => i.person);
+		const hasPersonPre = GASTOS.preTrip?.some((i: any) => i.person);
+		return GASTOS.travelers && (hasPersonDuring || hasPersonPre);
 	}
 }
 
 export function setTabListeners() {
 	const radios = [
 		"radio-resumo",
-		"radio-gastosPrevios",
-		"radio-gastosDurante",
-		"radio-gastosViajantes",
+		"radio-preTrip",
+		"radio-duringTrip",
+		"radio-expensesTravelers",
 	];
 	radios.forEach((radio) => {
 		getID(radio).addEventListener("click", function () {

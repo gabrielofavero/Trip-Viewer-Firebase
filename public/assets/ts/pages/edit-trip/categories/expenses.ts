@@ -10,30 +10,30 @@ import { getTravelersSelectOptionsHTML } from "./travelers.js";
 import { getSharingObject } from "../set-trip.js";
 
 var INNER_EXPENSES = {
-	gastosPrevios: [],
-	gastosDurante: [],
+	preTrip: [],
+	duringTrip: [],
 };
 
 var LAST_INNER_EXPENSE_TYPE = "";
 
 function loadExpenses(data = FIRESTORE_GASTOS_DATA) {
-	pushExpense("gastosPrevios", data);
-	pushExpense("gastosDurante", data);
+	pushExpense("preTrip", data);
+	pushExpense("duringTrip", data);
 	loadExpensesHTML();
 }
 
 export async function getExpensesObject(_protectedOnly?) {
-	const gastosDurante = getExpenses("gastosDurante");
-	const gastosPrevios = getExpenses("gastosPrevios");
+	const duringTrip = getExpenses("duringTrip");
+	const preTrip = getExpenses("preTrip");
 
-	if (gastosDurante.length === 0 && gastosPrevios.length === 0) {
+	if (duringTrip.length === 0 && preTrip.length === 0) {
 		return {};
 	}
 
 	return {
 		compartilhamento: await getSharingObject(),
-		gastosDurante,
-		gastosPrevios,
+		gastosDurante: duringTrip,
+		gastosPrevios: preTrip,
 		moeda: getID(`moeda`).value,
 		pessoas: getTravelersObject(),
 		versao: {

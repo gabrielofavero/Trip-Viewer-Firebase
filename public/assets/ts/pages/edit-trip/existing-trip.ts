@@ -108,8 +108,8 @@ export function loadCustomizacaoData(state?) {
 
 async function loadExpensesData() {
 	if (getState().modulos.gastos === true) {
-		getID("habilitado-gastos").checked = true;
-		getID("habilitado-gastos-content").style.display = "block";
+		getID("enabled-expenses").checked = true;
+		getID("enabled-expenses-content").style.display = "block";
 	}
 
 	const getPath = PIN.current

@@ -360,26 +360,26 @@
           <p data-translate="trip.expenses.subtitle"></p>
 
           <div class="nice-form-group">
-            <input id="habilitado-gastos" type="checkbox" class="switch" />
-            <label for="habilitado-gastos" data-translate="labels.enabled"></label>
+            <input id="enabled-expenses" type="checkbox" class="switch" />
+            <label for="enabled-expenses" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-gastos-content">
-            <div class="item-box accordion gastos-box" id="gastos-box">
-              <div id="programacao-gastosPrevios" class="accordion-item accordion-programacao">
-                <h2 class="accordion-header" id="heading-programacao-gastosPrevios">
-                  <button id="programacao-title-gastosPrevios" class="accordion-button collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapse-programacao-gastosPrevios" aria-expanded="false"
-                    aria-controls="collapse-programacao-gastosPrevios" data-translate="trip.expenses.pre_trip"></button>
+          <div id="enabled-expenses-content">
+            <div class="item-box accordion gastos-box" id="expenses-box">
+              <div id="itinerary-preTrip" class="accordion-item accordion-programacao">
+                <h2 class="accordion-header" id="heading-itinerary-preTrip">
+                  <button id="itinerary-title-preTrip" class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse-itinerary-preTrip" aria-expanded="false"
+                    aria-controls="collapse-itinerary-preTrip" data-translate="trip.expenses.pre_trip"></button>
                 </h2>
-                <div id="collapse-programacao-gastosPrevios" class="accordion-collapse collapse"
-                  aria-labelledby="heading-programacao-gastosPrevios" data-bs-parent="#gastos-box" style="">
+                <div id="collapse-itinerary-preTrip" class="accordion-collapse collapse"
+                  aria-labelledby="heading-itinerary-preTrip" data-bs-parent="#expenses-box" style="">
                   <div class="accordion-body">
-                    <div id="gastosPrevios"></div>
-                    <div class="button-box-right" id="gasto-adicionar-box-gastosPrevios"
+                    <div id="preTrip"></div>
+                    <div class="button-box-right" id="expense-add-box-preTrip"
                       style="margin-top: 24px">
-                      <button id="programacao-adicionar-gastosPrevios" class="btn btn-theme"
-                        data-action="open-inner-expense" data-category="gastosPrevios">
+                      <button id="itinerary-add-preTrip" class="btn btn-theme"
+                        data-action="open-inner-expense" data-category="preTrip">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path
@@ -397,21 +397,21 @@
                 </div>
               </div>
 
-              <div id="programacao-gastosDurante" class="accordion-item accordion-programacao">
-                <h2 class="accordion-header" id="heading-programacao-gastosDurante">
-                  <button id="programacao-title-gastosDurante" class="accordion-button collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapse-programacao-gastosDurante" aria-expanded="false"
-                    aria-controls="collapse-programacao-gastosDurante"
+              <div id="itinerary-duringTrip" class="accordion-item accordion-programacao">
+                <h2 class="accordion-header" id="heading-itinerary-duringTrip">
+                  <button id="itinerary-title-duringTrip" class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse-itinerary-duringTrip" aria-expanded="false"
+                    aria-controls="collapse-itinerary-duringTrip"
                     data-translate="trip.expenses.during_trip"></button>
                 </h2>
-                <div id="collapse-programacao-gastosDurante" class="accordion-collapse collapse"
-                  aria-labelledby="heading-programacao-gastosDurante" data-bs-parent="#gastos-box" style="">
+                <div id="collapse-itinerary-duringTrip" class="accordion-collapse collapse"
+                  aria-labelledby="heading-itinerary-duringTrip" data-bs-parent="#expenses-box" style="">
                   <div class="accordion-body">
-                    <div id="gastosDurante"></div>
-                    <div class="button-box-right" id="gasto-adicionar-box-gastosDurante"
+                    <div id="duringTrip"></div>
+                    <div class="button-box-right" id="expense-add-box-duringTrip"
                       style="margin-top: 24px">
-                      <button id="programacao-adicionar-gastosDurante" class="btn btn-theme"
-                        data-action="open-inner-expense" data-category="gastosDurante">
+                      <button id="itinerary-add-duringTrip" class="btn btn-theme"
+                        data-action="open-inner-expense" data-category="duringTrip">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                           <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                             <path

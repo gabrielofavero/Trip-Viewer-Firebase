@@ -22,16 +22,16 @@
         <div class="tabs" id="tab-moedas" style="display: none;">
         </div>
       </div>
-      <div class="tabs-container" id="tabs-container-gastos">
-        <div class="tabs" id="tab-gastos" style="display: none;">
-          <input type="radio" style="display: none;" id="radio-resumo" name="tabs-gastos" checked />
+      <div class="tabs-container" id="tabs-container-expenses">
+        <div class="tabs" id="tab-expenses" style="display: none;">
+          <input type="radio" style="display: none;" id="radio-resumo" name="tabs-expenses" checked />
           <label class="tab" for="radio-resumo" data-translate="labels.overview"></label>
-          <input type="radio" style="display: none;" id="radio-gastosPrevios" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosPrevios" data-translate="trip.expenses.min.pre_trip"></label>
-          <input type="radio" style="display: none;" id="radio-gastosDurante" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosDurante" data-translate="trip.expenses.min.during_trip"></label>
-          <input type="radio" style="display: none;" id="radio-gastosViajantes" name="tabs-gastos" />
-          <label class="tab" for="radio-gastosViajantes" data-translate="trip.travelers.title"></label>
+          <input type="radio" style="display: none;" id="radio-preTrip" name="tabs-expenses" />
+          <label class="tab" for="radio-preTrip" data-translate="trip.expenses.min.pre_trip"></label>
+          <input type="radio" style="display: none;" id="radio-duringTrip" name="tabs-expenses" />
+          <label class="tab" for="radio-duringTrip" data-translate="trip.expenses.min.during_trip"></label>
+          <input type="radio" style="display: none;" id="radio-expensesTravelers" name="tabs-expenses" />
+          <label class="tab" for="radio-expensesTravelers" data-translate="trip.travelers.title"></label>
           <span class="glider"></span>
         </div>
       </div>
@@ -47,49 +47,49 @@
             <canvas id="resumo-grafico" width="300" height="300"></canvas>
           </div>
 
-          <div id="resumo-gastosPrevios" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosPrevios-titulo" data-translate="trip.expenses.pre_trip"></h2>
-            <table id="resumo-gastosPrevios-tabela" class="card-full-size">
+          <div id="summary-preTrip" class="gastos-card gastos-recibo" style="display: none;">
+            <h2 class="gastos-titulo" id="summary-preTrip-title" data-translate="trip.expenses.pre_trip"></h2>
+            <table id="summary-preTrip-table" class="card-full-size">
             </table>
           </div>
 
-          <div id="resumo-gastosDurante" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosDurante-titulo" data-translate="trip.expenses.during_trip"></h2>
-            <table id="resumo-gastosDurante-tabela" class="card-full-size">
+          <div id="summary-duringTrip" class="gastos-card gastos-recibo" style="display: none;">
+            <h2 class="gastos-titulo" id="summary-duringTrip-title" data-translate="trip.expenses.during_trip"></h2>
+            <table id="summary-duringTrip-table" class="card-full-size">
             </table>
           </div>
 
-          <div id="resumo-gastosViajantes" class="gastos-card gastos-recibo" style="display: none;">
-            <h2 class="gastos-titulo" id="resumo-gastosViajantes-titulo" data-translate="trip.travelers.title"></h2>
-            <table id="resumo-gastosViajantes-tabela" class="card-full-size">
+          <div id="summary-expensesTravelers" class="gastos-card gastos-recibo" style="display: none;">
+            <h2 class="gastos-titulo" id="summary-expensesTravelers-title" data-translate="trip.travelers.title"></h2>
+            <table id="summary-expensesTravelers-table" class="card-full-size">
             </table>
           </div>
         </div>
       </div>
-      <div id="gastosPrevios" class="main-container" style="display: none">
-        <div id="gastosPrevios-container" class="gastos-container">
+      <div id="preTrip" class="main-container" style="display: none">
+        <div id="preTrip-container" class="gastos-container">
           <div class="gastos-card grafico">
-            <h2 id="gastosPrevios-titulo" class="gastos-titulo" data-translate="trip.expenses.pre_trip"></h2>
-            <div id="gastosPrevios-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosPrevios-grafico" style="margin-top: 16px;" width="300" height="150"></canvas>
+            <h2 id="preTrip-title" class="gastos-titulo" data-translate="trip.expenses.pre_trip"></h2>
+            <div id="preTrip-total" class="gastos-subtitulo"></div>
+            <canvas id="preTrip-chart" style="margin-top: 16px;" width="300" height="150"></canvas>
           </div>
         </div>
       </div>
-      <div id="gastosDurante" class="main-container" style="display: none">
-        <div id="gastosDurante-container" class="gastos-container">
+      <div id="duringTrip" class="main-container" style="display: none">
+        <div id="duringTrip-container" class="gastos-container">
           <div class="gastos-card grafico">
-            <h2 id="gastosDurante-titulo" class="gastos-titulo" data-translate="trip.expenses.during_trip"></h2>
-            <div id="gastosDurante-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosDurante-grafico" style="margin-top: 16px;" width="150" height="75"></canvas>
+            <h2 id="duringTrip-title" class="gastos-titulo" data-translate="trip.expenses.during_trip"></h2>
+            <div id="duringTrip-total" class="gastos-subtitulo"></div>
+            <canvas id="duringTrip-chart" style="margin-top: 16px;" width="150" height="75"></canvas>
           </div>
         </div>
       </div>
-      <div id="gastosViajantes" class="main-container" style="display: none">
-        <div id="gastosViajantes-container" class="gastos-container">
+      <div id="expensesTravelers" class="main-container" style="display: none">
+        <div id="expensesTravelers-container" class="gastos-container">
           <div class="gastos-card grafico">
-            <h2 id="gastosViajantes-titulo" class="gastos-titulo" data-translate="trip.travelers.title"></h2>
-            <div id="gastosViajantes-total" class="gastos-subtitulo"></div>
-            <canvas id="gastosViajantes-grafico" style="margin-top: 16px;" width="300" height="150"></canvas>
+            <h2 id="expensesTravelers-title" class="gastos-titulo" data-translate="trip.travelers.title"></h2>
+            <div id="expensesTravelers-total" class="gastos-subtitulo"></div>
+            <canvas id="expensesTravelers-chart" style="margin-top: 16px;" width="300" height="150"></canvas>
           </div>
         </div>
       </div>

@@ -98,21 +98,21 @@ export function loadCurrenciesObject(): void {
 			previousCurrencies = filterCurrencies(
 				GASTOS.preTrip.map((expense: any) => expense.currency), // was "moeda"
 			);
-			MOEDAS.gastosPrevios = previousCurrencies;
+			MOEDAS.preTrip = previousCurrencies;
 		}
 
 		if (GASTOS.duringTrip.length > 0) {
 			duringCurrencies = filterCurrencies(
 				GASTOS.duringTrip.map((expense: any) => expense.currency), // was "moeda"
 			);
-			MOEDAS.gastosDurante = duringCurrencies;
+			MOEDAS.duringTrip = duringCurrencies;
 		}
 
 		MOEDAS.resumo = [...new Set([...previousCurrencies, ...duringCurrencies])];
 
 		MOEDAS.resumo = sortCurrencies(MOEDAS.resumo);
-		MOEDAS.gastosPrevios = sortCurrencies(MOEDAS.gastosPrevios);
-		MOEDAS.gastosDurante = sortCurrencies(MOEDAS.gastosDurante);
+	MOEDAS.preTrip = sortCurrencies(MOEDAS.preTrip);
+	MOEDAS.duringTrip = sortCurrencies(MOEDAS.duringTrip);
 	}
 }
 

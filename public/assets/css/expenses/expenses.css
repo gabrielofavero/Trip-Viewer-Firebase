@@ -67,15 +67,15 @@ input[id="radio-resumo"]:checked ~ .glider {
 	transform: translateX(0);
 }
 
-input[id="radio-gastosPrevios"]:checked ~ .glider {
+input[id="radio-preTrip"]:checked ~ .glider {
 	transform: translateX(100%);
 }
 
-input[id="radio-gastosDurante"]:checked ~ .glider {
+input[id="radio-duringTrip"]:checked ~ .glider {
 	transform: translateX(200%);
 }
 
-input[id="radio-gastosViajantes"]:checked ~ .glider {
+input[id="radio-expensesTravelers"]:checked ~ .glider {
 	transform: translateX(300%);
 }
 
@@ -92,11 +92,11 @@ input[id="radio-gastosViajantes"]:checked ~ .glider {
 }
 
 @media (max-width: 630px) {
-	#tabs-container-gastos {
+	#tabs-container-expenses {
 		padding: 0rem 2rem;
 	}
 
-	#tab-gastos {
+	#tab-expenses {
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		padding: 0;
@@ -109,7 +109,7 @@ input[id="radio-gastosViajantes"]:checked ~ .glider {
 		justify-content: center;
 	}
 
-	#tab-gastos .tab {
+	#tab-expenses .tab {
 		width: auto;
 		min-width: 120px;
 		height: 44px;
@@ -120,12 +120,12 @@ input[id="radio-gastosViajantes"]:checked ~ .glider {
 		font-size: 0.8rem;
 	}
 
-	#tab-gastos input[type="radio"]:checked + label {
+	#tab-expenses input[type="radio"]:checked + label {
 		background-color: var(--theme-color-secondary);
 		font-weight: bold;
 	}
 
-	#tab-gastos .glider {
+	#tab-expenses .glider {
 		display: none;
 	}
 }

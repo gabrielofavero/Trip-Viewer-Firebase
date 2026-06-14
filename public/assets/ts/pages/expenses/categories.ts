@@ -10,34 +10,34 @@ export function loadSummary() {
 	loadChartSummary();
 
 	if (
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["gastosPrevios"].length === 0 ||
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["gastosDurante"].length === 0
+		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["preTrip"].length === 0 ||
+		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["duringTrip"].length === 0
 	) {
 		getID("radio-resumo").style.display = "none";
 		return;
 	}
 
-	const gastosPrevios = GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["gastosPrevios"].resumo;
-	getID(`resumo-gastosPrevios-titulo`).innerHTML = getTitleWithIcon(
+	const preTripExpenses = GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["preTrip"].resumo;
+	getID(`summary-preTrip-title`).innerHTML = getTitleWithIcon(
 		"trip.expenses.pre_trip",
 	);
-	setTable("resumo-gastosPrevios", gastosPrevios.itens, gastosPrevios.total);
+	setTable("summary-preTrip", preTripExpenses.itens, preTripExpenses.total);
 
-	const gastosDurante = GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["gastosDurante"].resumo;
-	getID(`resumo-gastosDurante-titulo`).innerHTML = getTitleWithIcon(
+	const duringTripExpenses = GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["duringTrip"].resumo;
+	getID(`summary-duringTrip-title`).innerHTML = getTitleWithIcon(
 		"trip.expenses.during_trip",
 	);
-	setTable("resumo-gastosDurante", gastosDurante.itens, gastosDurante.total);
+	setTable("summary-duringTrip", duringTripExpenses.itens, duringTripExpenses.total);
 
-	const gastosViajantes =
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["gastosViajantes"].resumo;
-	getID(`resumo-gastosViajantes-titulo`).innerHTML = getTitleWithIcon(
+	const travelerExpenses =
+		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["travelerExpenses"].resumo;
+	getID(`summary-expensesTravelers-title`).innerHTML = getTitleWithIcon(
 		"trip.travelers.title",
 	);
 	setTable(
-		"resumo-gastosViajantes",
-		gastosViajantes.itens,
-		gastosViajantes.total,
+		"summary-expensesTravelers",
+		travelerExpenses.itens,
+		travelerExpenses.total,
 	);
 }
 
@@ -47,8 +47,8 @@ function loadChartSummary() {
 		translate("trip.expenses.during_trip"),
 	];
 	const valores = [
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY].gastosPrevios.resumo.total,
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY].gastosDurante.resumo.total,
+		GASTOS_CONVERTIDOS[CURRENT_CURRENCY].preTrip.resumo.total,
+		GASTOS_CONVERTIDOS[CURRENT_CURRENCY].duringTrip.resumo.total,
 	];
 
 	getID("resumo-titulo").innerHTML = getTitleWithIcon(
@@ -62,19 +62,19 @@ function loadChartSummary() {
 
 // Gastos Prévios
 export function loadPreTripExpenses() {
-	setDoughnutChartCategoria("trip.expenses.pre_trip", "gastosPrevios");
-	setTableCategoria("gastosPrevios");
+	setDoughnutChartCategoria("trip.expenses.pre_trip", "preTrip");
+	setTableCategoria("preTrip");
 }
 
 // Gastos na Viagem
 export function loadDuringTripExpenses() {
-	setDoughnutChartCategoria("trip.expenses.during_trip", "gastosDurante");
-	setTableCategoria("gastosDurante");
+	setDoughnutChartCategoria("trip.expenses.during_trip", "duringTrip");
+	setTableCategoria("duringTrip");
 }
 
 export function loadTravelerExpenses() {
-	setDoughnutChartCategoria("trip.travelers.title", "gastosViajantes");
-	setTableCategoria("gastosViajantes");
+	setDoughnutChartCategoria("trip.travelers.title", "expensesTravelers");
+	setTableCategoria("expensesTravelers");
 }
 
 function setDoughnutChartCategoria(titulo, tipo) {

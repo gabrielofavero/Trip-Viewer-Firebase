@@ -10,8 +10,8 @@ var CURRENT_CURRENCY;
 
 export var MOEDAS = {
 	resumo: [],
-	gastosPrevios: [],
-	gastosDurante: [],
+	preTrip: [],
+	duringTrip: [],
 };
 
 
