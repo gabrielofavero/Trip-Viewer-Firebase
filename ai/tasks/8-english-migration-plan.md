@@ -48,7 +48,7 @@ Create the following interfaces:
    - `visibility: { light: boolean, dark: boolean }`
    - `colors: { light: string, dark: string, active: boolean }`
    - `sharing: { owner: string, active: boolean, editors: string[] }`
-   - `modules: { destinations: boolean, transportation: boolean, schedule: boolean, gallery: boolean, summary: boolean, accommodations: boolean, expenses: boolean }`
+   - `modules: { destinations: boolean, transportation: boolean, itinerary: boolean, gallery: boolean, summary: boolean, accommodations: boolean, expenses: boolean }`
    - `travelers: Traveler[]`
    - `links: { maps: string, attachments: string, active: boolean, drive: string, pdf: string, ppt: string, sheet: string, vaccine: string }`
    - `gallery: { categories: string[], descriptions: string[], images: string[], titles: string[] }`
@@ -80,7 +80,7 @@ Create the following interfaces:
 6. **`TransportSettings`** — Document at `trips/{tripId}/transportation/_settings`:
    - `viewMode: "simple" | "leg"`
 
-7. **`ScheduleDay`** — Document at `trips/{tripId}/schedule/{dayId}`:
+7. **`ItineraryDay`** — Document at `trips/{tripId}/itinerary/{dayId}`:
    - `title: { value: string, showDestinations: boolean, translate: boolean }`
    - `date: DateObject`
    - `destinationIds: string[]`
@@ -158,8 +158,8 @@ export type TransportViewMode = "simple" | "leg";
 export type PinType = "sensitive-only" | "no-pin";
 export type ThemeMode = "light" | "dark" | "active";
 export type UserVisibilityMode = "dynamic";
-export type ScheduleItemType = "destination" | "transportation" | "accommodation";
-export type SchedulePeriod = "earlyMorning" | "morning" | "afternoon" | "night";
+export type ItineraryItemType = "destination" | "transportation" | "accommodation";
+export type ItineraryPeriod = "earlyMorning" | "morning" | "afternoon" | "night";
 export type DestinationCategory = "restaurants" | "snacks" | "shops" | "nightlife" | "attractions";
 ```
 
@@ -219,7 +219,7 @@ Use the complete dictionary from `ai/analysis/new-database-proposal.md` sections
 | `pessoas` | `travelers` |
 | `hospedagens` | `accommodations` |
 | `transportes` | `transportation` |
-| `programacoes` | `schedule` |
+| `programacoes` | `itinerary` |
 | `galeria` | `gallery` |
 | `nome` | `name` |
 | `descricao` | `description` |
@@ -269,8 +269,8 @@ Use the complete dictionary from `ai/analysis/new-database-proposal.md` sections
 | `ativo` | `active` |
 | `editores` | `editors` |
 | `vacina` | `vaccine` |
-| `valor` (schedule title) | `value` |
-| `destinos` (schedule title boolean) | `showDestinations` |
+| `valor` (itinerary title) | `value` |
+| `destinos` (itinerary title boolean) | `showDestinations` |
 | `traduzir` | `translate` |
 
 #### Enum/Value Translations
@@ -290,9 +290,9 @@ For field **values** (not keys), translate:
 | `visibility.light` / `visibility.dark` / `colors.active` | `"claro"` | `"light"` |
 | | `"escuro"` | `"dark"` |
 | | `"ativo"` | `"active"` |
-| schedule `item.type` | `"destinos"` | `"destination"` |
-| schedule `item.type` | `"transporte"` | `"transportation"` |
-| schedule `item.type` | `"hospedagens"` | `"accommodation"` |
+| itinerary `item.type` | `"destinos"` | `"destination"` |
+| itinerary `item.type` | `"transporte"` | `"transportation"` |
+| itinerary `item.type` | `"hospedagens"` | `"accommodation"` |
 | user `visibility` | `"dinamico"` | `"dynamic"` |
 | module keys | `"saidas"` | `"nightlife"` |
 | module keys | `"mapa"` | `"map"` |
@@ -410,15 +410,15 @@ Create these 5 migration files:
 4. Extract `transportation.data` array → for each leg, generate ID, write to `viagens/{tripId}/transportation/{legId}`
 5. Remove `transportation` field from trip doc
 
-#### 3e. `functions/src/migrations/18-migrate-schedule-subcollection.ts`
+#### 3e. `functions/src/migrations/18-migrate-itinerary-subcollection.ts`
 
-**Purpose:** Move `schedule` array from trip doc into `viagens/{id}/schedule/*` subcollection.
+**Purpose:** Move `itinerary` array from trip doc into `viagens/{id}/itinerary/*` subcollection.
 
 **What it does:**
 1. Read each document in `viagens` collection
-2. For each trip doc, extract `schedule` array (was `programacoes`, renamed by Prompt 2)
-3. For each schedule day, generate a unique ID (or use the date as ID: `day-{index}`), write to `viagens/{tripId}/schedule/{dayId}`
-4. Remove `schedule` field from trip doc
+2. For each trip doc, extract `itinerary` array (was `programacoes`, renamed by Prompt 2)
+3. For each itinerary day, generate a date-based ID using YYYYMMDD format (falls back to `day-{index}` if date is missing), write to `viagens/{tripId}/itinerary/{dayId}`
+4. Remove `itinerary` field from trip doc
 
 ### Common Requirements (all 5 scripts)
 
@@ -479,7 +479,7 @@ Create `functions/src/migrations/19-migrate-collection-names.ts`.
 - `usuarios/{uid}/listingSummaries/*` → `users/{uid}/listingSummaries/*`
 - `viagens/{id}/accommodations/*` → `trips/{id}/accommodations/*`
 - `viagens/{id}/transportation/*` → `trips/{id}/transportation/*`
-- `viagens/{id}/schedule/*` → `trips/{id}/schedule/*`
+- `viagens/{id}/itinerary/*` → `trips/{id}/itinerary/*`
 
 **Approach:**
 1. For each collection in the rename map:
@@ -542,7 +542,7 @@ cd functions && npm run build
 
 The current `public/assets/ts/data/firebase/database.ts` contains all Firestore read/write functions. Many functions reference Portuguese collection names (`"viagens"`, `"usuarios"`, `"destinos"`, etc.) and Portuguese field names. After the DB migration (Prompts 2–5), the database uses English names, so this file must be updated.
 
-The new schema also introduces subcollections for accommodations, transportation, schedule, and user summaries — the database layer needs functions to read/write these.
+The new schema also introduces subcollections for accommodations, transportation, itinerary, and user summaries — the database layer needs functions to read/write these.
 
 ### Task
 
@@ -569,7 +569,7 @@ export const SUBCOLLECTION = {
     LISTING_SUMMARIES: "listingSummaries",
     ACCOMMODATIONS: "accommodations",
     TRANSPORTATION: "transportation",
-    SCHEDULE: "schedule",
+    ITINERARY: "itinerary",
     PROTECTED_TRIPS: "protected",   // under trips/
     PROTECTED_EXPENSES: "protected", // under expenses/
 } as const;
@@ -630,10 +630,10 @@ export async function getTransportation(tripId: string): Promise<{ legs: Transpo
     return { legs, settings };
 }
 
-/** Get all schedule days for a trip */
-export async function getSchedule(tripId: string): Promise<ScheduleDay[]> {
+/** Get all itinerary days for a trip */
+export async function getItinerary(tripId: string): Promise<ItineraryDay[]> {
     const snapshot = await firebase.firestore()
-        .collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.SCHEDULE}`)
+        .collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ITINERARY}`)
         .get();
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
@@ -666,23 +666,23 @@ export async function getUserListingSummaries(uid: string): Promise<ListingSumma
 export async function getTripComplete(tripId: string): Promise<Trip & {
     accommodations: Accommodation[],
     transportation: { legs: TransportLeg[], settings: TransportSettings },
-    schedule: ScheduleDay[],
+    itinerary: ItineraryDay[],
     destinations: Destination[],
 }> {
     const tripData = await get(`${COLLECTION.TRIPS}/${tripId}`) as Trip;
     if (!tripData) return null;
 
-    const [accommodations, transportation, schedule, destinations] = await Promise.all([
+    const [accommodations, transportation, itinerary, destinations] = await Promise.all([
         getAccommodations(tripId),
         getTransportation(tripId),
-        getSchedule(tripId),
+        getItinerary(tripId),
         tripData.destinationRefs?.length
             ? Promise.all(tripData.destinationRefs.map(ref =>
                 get(`${COLLECTION.DESTINATIONS}/${ref.id}`, false)))
             : Promise.resolve([]),
     ]);
 
-    return { ...tripData, accommodations, transportation, schedule, destinations };
+    return { ...tripData, accommodations, transportation, itinerary, destinations };
 }
 ```
 
@@ -723,7 +723,7 @@ Update all 4 service files:
 
 1. Import new functions from `database.ts`:
    - `getTripComplete` instead of `getTripDataWithDestinations`
-   - `getAccommodations`, `getTransportation`, `getSchedule` for subcollections
+   - `getAccommodations`, `getTransportation`, `getItinerary` for subcollections
 2. Update `getTrip()`:
    ```ts
    export async function getTrip(tripId?: string) {
@@ -738,7 +738,7 @@ Update all 4 service files:
 4. Add new service functions:
    - `getTripAccommodations(tripId)` → `getAccommodations(tripId)`
    - `getTripTransportation(tripId)` → `getTransportation(tripId)`
-   - `getTripSchedule(tripId)` → `getSchedule(tripId)`
+   - `getTripItinerary(tripId)` → `getItinerary(tripId)`
 5. Remove re-exports of deprecated functions like `getTripDataWithDestinations` (keep a deprecated alias if needed during transition)
 
 #### 7b. `destination.service.ts`
@@ -923,7 +923,7 @@ import * as migration14 from "./migrations/14-migrate-user-summaries";
 import * as migration15 from "./migrations/15-migrate-trip-destinations";
 import * as migration16 from "./migrations/16-migrate-accommodations-subcollection";
 import * as migration17 from "./migrations/17-migrate-transportation-subcollection";
-import * as migration18 from "./migrations/18-migrate-schedule-subcollection";
+import * as migration18 from "./migrations/18-migrate-itinerary-subcollection";
 import * as migration19 from "./migrations/19-migrate-collection-names";
 import * as migration20 from "./migrations/20-migrate-cleanup";
 
@@ -932,7 +932,7 @@ export const migrateUserSummaries = migration14.migrate;
 export const migrateTripDestinations = migration15.migrate;
 export const migrateAccommodationsSubcollection = migration16.migrate;
 export const migrateTransportationSubcollection = migration17.migrate;
-export const migrateScheduleSubcollection = migration18.migrate;
+export const migrateItinerarySubcollection = migration18.migrate;
 export const migrateCollectionNames = migration19.migrate;
 export const migrateCleanup = migration20.migrate;
 ```
@@ -1018,7 +1018,7 @@ When deploying to production, run migrations in this exact order:
 4. Run 15-migrate-trip-destinations    (with ?dryRun=true first)
 5. Run 16-migrate-accommodations-subcollection
 6. Run 17-migrate-transportation-subcollection
-7. Run 18-migrate-schedule-subcollection
+7. Run 18-migrate-itinerary-subcollection
 8. Run 19-migrate-collection-names
 9. Deploy updated Firestore security rules
 10. Deploy updated client code (TS refactored pages)

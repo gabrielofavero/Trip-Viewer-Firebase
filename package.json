@@ -8,8 +8,8 @@
 		"watch": "node scripts/build/build.js --watch",
 		"clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); console.log('dist/ cleaned.');\"",
 		"serve": "firebase serve --only hosting --port 5000",
-		"dev": "concurrently -k -n fn-watch,front-watch,emulators -c yellow,blue,green \"npm --prefix functions run build:watch\" \"npm run watch:fast\" \"firebase emulators:start --import=./.emulator-data --export-on-exit\"",
-		"dev:livereload": "concurrently -k -n fn-watch,front-watch,emulators -c yellow,blue,green \"npm --prefix functions run build:watch\" \"npm run watch\" \"firebase emulators:start --import=./.emulator-data --export-on-exit\"",
+		"dev": "concurrently -k -n fn-watch,front-watch,emulators -c yellow,blue,green \"npm --prefix functions run build:watch\" \"npm run watch:fast\" \"firebase emulators:start --import=./.emulator-data --export-on-exit=./.emulator-data\"",
+		"dev:livereload": "concurrently -k -n fn-watch,front-watch,emulators -c yellow,blue,green \"npm --prefix functions run build:watch\" \"npm run watch\" \"firebase emulators:start --import=./.emulator-data --export-on-exit=./.emulator-data\"",
 		"watch:fast": "node scripts/build/build.js --watch --no-livereload",
 		"typecheck": "tsc --noEmit"
 	},

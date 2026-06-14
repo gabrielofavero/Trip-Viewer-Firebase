@@ -19,7 +19,7 @@ const FIELD_MAP: Record<string, string> = {
 	pessoas: "travelers",
 	hospedagens: "accommodations",
 	transportes: "transportation",
-	programacoes: "schedule",
+	programacoes: "itinerary",
 	galeria: "gallery",
 	nome: "name",
 	descricao: "description",
@@ -65,7 +65,7 @@ const FIELD_MAP: Record<string, string> = {
 	checkin: "checkIn",
 	checkout: "checkOut",
 	ativo: "active",
-	// Singular destinosID appears inside destinationRefs[] entries and schedule destinationIds[] entries
+	// Singular destinosID appears inside destinationRefs[] entries and itinerary destinationIds[] entries
 	destinosID: "id",
 	// dados = data array (e.g. transportation.dados)
 	dados: "data",
@@ -105,6 +105,10 @@ const FIELD_MAP: Record<string, string> = {
 	idioma: "language",
 	categoria: "category",
 	local: "location",
+	// Gallery plural fields (was inside galeria object)
+	categorias: "categories",
+	descricoes: "descriptions",
+	titulos: "titles",
 };
 
 // ============================================================
@@ -125,7 +129,7 @@ const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 		partida: "departure",
 		chegada: "arrival",
 	},
-	// Inside schedule entry titulo: valor = the title string, destinos = show flag
+	// Inside itinerary entry title: valor = the title string, destinos = show flag
 	titulo: {
 		valor: "value",
 		destinos: "showDestinations",
@@ -136,14 +140,16 @@ const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 	_root_viagens: {
 		destinos: "destinationRefs",
 	},
-	// Inside schedule entries (parent was "programacoes"): data = Portuguese for "date"
+	// Inside itinerary entries (parent is the ORIGINAL Portuguese key "programacoes",
+	// NOT the translated "itinerary" — because transformObject passes old keys as context):
+	// data = Portuguese for "date"
 	programacoes: {
 		data: "date",
 	},
-	// Inside modulos object: programacao = schedule module flag
-	// (singular, unlike FIELD_MAP's programacoes: "schedule" for the array)
+	// Inside modulos object: programacao = itinerary module flag
+	// (singular, unlike FIELD_MAP's programacoes: "itinerary" for the array)
 	modulos: {
-		programacao: "schedule",
+		programacao: "itinerary",
 	},
 };
 
@@ -164,7 +170,7 @@ const VALUE_MAP: Record<string, string> = {
 	// View mode
 	"simple-view": "simple",
 	"leg-view": "leg",
-	// Schedule item type (when stored as a string value)
+	// Itinerary item type (when stored as a string value)
 	destinos: "destination",
 	transporte: "transportation",
 	hospedagens: "accommodation",
@@ -179,7 +185,7 @@ const VALUE_MAP: Record<string, string> = {
 	mapa: "map",
 	gastos: "expenses",
 	resumo: "summary",
-	// Category values (e.g. categoria: "restaurantes" in schedule items)
+	// Category values (e.g. categoria: "restaurantes" in itinerary items)
 	restaurantes: "restaurants",
 	lanches: "snacks",
 	lojas: "shopping",
@@ -189,6 +195,17 @@ const VALUE_MAP: Record<string, string> = {
 	nao: "no",
 	todos: "all",
 	nenhum: "none",
+};
+
+// ============================================================
+// Document ID Translation Map (Portuguese → English)
+// For documents whose ID itself is a Portuguese word.
+// Applied per-collection: { collectionName: { oldId: newId } }
+// ============================================================
+const DOC_ID_MAP: Record<string, Record<string, string>> = {
+	admin: {
+		permissoes: "permissions",
+	},
 };
 
 // ============================================================
@@ -215,6 +232,7 @@ interface MigrationReport {
 	fieldsRenamed: number;
 	valuesTranslated: number;
 	docsWritten: number;
+	docIdsRenamed: number;
 }
 
 /**
@@ -335,6 +353,7 @@ async function migrateCollection(
 		fieldsRenamed: 0,
 		valuesTranslated: 0,
 		docsWritten: 0,
+		docIdsRenamed: 0,
 	};
 
 	const collectionRef = admin.firestore().collection(collectionName);
@@ -352,6 +371,33 @@ async function migrateCollection(
 	for (const doc of snapshot.docs) {
 		report.docsProcessed++;
 		const data = doc.data();
+
+		// Check if this document ID itself needs translation (e.g. admin/permissoes → admin/permissions)
+		const idMap = DOC_ID_MAP[collectionName] ?? {};
+		const newDocId: string | undefined = idMap[doc.id];
+
+		// Idempotency: if new ID already exists, this rename was already done — just clean up old doc
+		if (newDocId) {
+			const newDocSnap = await admin
+				.firestore()
+				.doc(`${collectionName}/${newDocId}`)
+				.get();
+			if (newDocSnap.exists) {
+				console.log(
+					`[${collectionName}/${doc.id}] Already renamed to ${newDocId} — deleting old doc.`,
+				);
+				if (!dryRun) {
+					batch.delete(doc.ref);
+					batchOpCount++;
+					if (batchOpCount >= 500) {
+						batch = admin.firestore().batch();
+						batches.push(batch);
+						batchOpCount = 0;
+					}
+				}
+				continue;
+			}
+		}
 
 		if (isAlreadyTranslated(data)) {
 			console.log(`[${collectionName}/${doc.id}] Already translated — skipping.`);
@@ -371,10 +417,13 @@ async function migrateCollection(
 		report.valuesTranslated += transformed.valuesTranslated;
 
 		if (dryRun) {
+			const renameNote = newDocId
+				? ` (doc ID: ${doc.id} → ${newDocId})`
+				: "";
 			console.log(
 				`[DRY RUN] [${collectionName}/${doc.id}] ` +
 					`${transformed.fieldsRenamed} fields renamed, ` +
-					`${transformed.valuesTranslated} values translated.`,
+					`${transformed.valuesTranslated} values translated.${renameNote}`,
 			);
 			console.log(`  Old keys: ${Object.keys(data).join(", ")}`);
 			console.log(
@@ -383,10 +432,24 @@ async function migrateCollection(
 			continue;
 		}
 
-		// Write: set with merge=false replaces the entire document
-		batch.set(doc.ref, transformed.result as FirebaseFirestore.DocumentData);
-		batchOpCount++;
-		report.docsWritten++;
+		// If doc ID needs renaming, write to new ID and delete old
+		if (newDocId) {
+			// Document ID rename: write to new ID, delete old ID
+			const newDocRef = admin.firestore().doc(`${collectionName}/${newDocId}`);
+			batch.set(newDocRef, transformed.result as FirebaseFirestore.DocumentData);
+			batch.delete(doc.ref);
+			batchOpCount += 2;
+			report.docsWritten++;
+			report.docIdsRenamed++;
+			console.log(
+				`[${collectionName}] Doc ID renamed: ${doc.id} → ${newDocId}`,
+			);
+		} else {
+			// Write: set with merge=false replaces the entire document
+			batch.set(doc.ref, transformed.result as FirebaseFirestore.DocumentData);
+			batchOpCount++;
+			report.docsWritten++;
+		}
 
 		// Firestore batch limit is 500 operations
 		if (batchOpCount >= 500) {
@@ -482,6 +545,7 @@ async function migrateProtectedSubcollections(
 				fieldsRenamed: transformed.fieldsRenamed,
 				valuesTranslated: transformed.valuesTranslated,
 				docsWritten: dryRun ? 0 : 1,
+				docIdsRenamed: 0,
 			});
 		} catch (err) {
 			console.warn(`[${viagensPath}] Error: ${(err as Error).message}`);
@@ -531,6 +595,7 @@ async function migrateProtectedSubcollections(
 				fieldsRenamed: transformed.fieldsRenamed,
 				valuesTranslated: transformed.valuesTranslated,
 				docsWritten: dryRun ? 0 : 1,
+				docIdsRenamed: 0,
 			});
 		} catch (err) {
 			console.warn(`[${gastosPath}] Error: ${(err as Error).message}`);
@@ -565,7 +630,8 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 				`[${collectionName}] Done: ${report.docsProcessed} scanned, ` +
 					`${report.fieldsRenamed} fields renamed, ` +
 					`${report.valuesTranslated} values translated, ` +
-					`${report.docsWritten} written.`,
+					`${report.docsWritten} written, ` +
+					`${report.docIdsRenamed} doc IDs renamed.`,
 			);
 		}
 
@@ -591,6 +657,10 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			(sum, r) => sum + r.docsWritten,
 			0,
 		);
+		const totalDocIdsRenamed = allReports.reduce(
+			(sum, r) => sum + r.docIdsRenamed,
+			0,
+		);
 
 		const summary =
 			`\n========================================\n` +
@@ -600,6 +670,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			`  Fields renamed:        ${totalRenamed}\n` +
 			`  Values translated:     ${totalTranslated}\n` +
 			`  Documents written:     ${totalWritten}\n` +
+			`  Doc IDs renamed:       ${totalDocIdsRenamed}\n` +
 			`========================================`;
 
 		console.log(summary);

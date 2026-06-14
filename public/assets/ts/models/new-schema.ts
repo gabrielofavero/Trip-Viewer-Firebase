@@ -53,10 +53,10 @@ export type ThemeMode = "light" | "dark" | "active";
 export type UserVisibilityMode = "dynamic";
 
 /** was "destinos" | "transporte" | "hospedagens" */
-export type ScheduleItemType = "destination" | "transportation" | "accommodation";
+export type ItineraryItemType = "destination" | "transportation" | "accommodation";
 
 /** was "madrugada" | "manha" | "tarde" | "noite" */
-export type SchedulePeriod = "earlyMorning" | "morning" | "afternoon" | "night";
+export type ItineraryPeriod = "earlyMorning" | "morning" | "afternoon" | "night";
 
 /** was "restaurantes" | "lanches" | "lojas" | "saidas" | "turismo" */
 export type DestinationCategory =
@@ -157,7 +157,7 @@ export interface TripModules {
 	/** was "transportes" */
 	transportation: boolean;
 	/** was "programacao" */
-	schedule: boolean;
+	itinerary: boolean;
 	/** was "galeria" */
 	gallery: boolean;
 	/** was "resumo" */
@@ -288,14 +288,14 @@ export interface TransportSettings {
 }
 
 // -----------------------------------------------------------
-// Schedule — Subcollection: trips/{tripId}/schedule/{dayId}
+// Itinerary — Subcollection: trips/{tripId}/itinerary/{dayId}
 // was "programacoes[i]" embedded in trip doc
 // -----------------------------------------------------------
 
 /** was "programacoes[i]" */
-export interface ScheduleDay {
+export interface ItineraryDay {
 	/** was "titulo" */
-	title: ScheduleTitle;
+	title: ItineraryTitle;
 	/** was "data" */
 	date: DateObject;
 	/** was "destinosIDs" */
@@ -311,7 +311,7 @@ export interface ScheduleDay {
 }
 
 /** was "programacoes[i].titulo" */
-export interface ScheduleTitle {
+export interface ItineraryTitle {
 	/** was "valor" */
 	value: string;
 	/** was "destinos" */
@@ -320,7 +320,7 @@ export interface ScheduleTitle {
 	translate: boolean;
 }
 
-/** was schedule entry within a period (madrugada/manha/tarde/noite) */
+/** was itinerary entry within a period (madrugada/manha/tarde/noite) */
 export interface PeriodItem {
 	/** was "programacao" */
 	label: string;
@@ -331,10 +331,10 @@ export interface PeriodItem {
 	/** was "pessoas" */
 	travelers: PeriodTraveler[];
 	/** was "item" */
-	item: ScheduleItemRef;
+	item: ItineraryItemRef;
 }
 
-/** was "pessoas[i]" inside a schedule entry */
+/** was "pessoas[i]" inside an itinerary entry */
 export interface PeriodTraveler {
 	id: string;
 	/** was "nome" */
@@ -343,9 +343,9 @@ export interface PeriodTraveler {
 }
 
 /** was "item" */
-export interface ScheduleItemRef {
+export interface ItineraryItemRef {
 	/** was "tipo" (destinos|transporte|hospedagens) */
-	type: ScheduleItemType;
+	type: ItineraryItemType;
 	id: string;
 	/** was "categoria" */
 	category: string;
@@ -576,7 +576,7 @@ export interface ProtectedData {
 export interface TripComplete extends Trip {
 	accommodations: Accommodation[];
 	transportation: TransportBundle;
-	schedule: ScheduleDay[];
+	itinerary: ItineraryDay[];
 	destinations: Destination[];
 }
 

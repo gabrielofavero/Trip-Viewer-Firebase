@@ -24,7 +24,7 @@
 
 ### Database Size
 
-The current Firestore database is **approximately 2 MB** total across all collections. This is very small — likely fewer than 100 documents total across all collections (a typical trip document with embedded destinations, accommodations, transportation, and schedule runs ~50–200 KB).
+The current Firestore database is **approximately 2 MB** total across all collections. This is very small — likely fewer than 100 documents total across all collections (a typical trip document with embedded destinations, accommodations, transportation, and itinerary runs ~50–200 KB).
 
 **Implication:** Migration costs are proportionally low. Both Option A (rename-only) and Option B (restructure) can process the entire database in a **single migration run** of under a minute. The risk of hitting Firestore quotas during migration is near-zero. The 1 MiB per-document limit is not an immediate threat, but is a growth concern worth addressing now while the dataset is small.
 
@@ -38,7 +38,7 @@ The goal is a **full translation** — not just field names and collection names
 | **Collection names** | `usuarios` → `users`, `viagens` → `trips`, `gastos` → `expenses` |
 | **Enum/constant values** | `"ida"` → `"outbound"`, `"voo"` → `"flight"`, `"claro"` → `"light"` |
 | **Nested object keys** | `datas.checkin` → `dates.checkIn`, `pontos.partida` → `points.origin` |
-| **Schedule item types** | `"destinos"` → `"destination"`, `"hospedagens"` → `"accommodation"` |
+| **Itinerary item types** | `"destinos"` → `"destination"`, `"hospedagens"` → `"accommodation"` |
 | **User visibility modes** | `"dinamico"` → `"dynamic"` |
 
 No Portuguese string should remain in the database after migration. See [Enum Value Translation](#enum-value-translation) for the complete dictionary.
@@ -78,7 +78,7 @@ All field names, collection names, document keys, and many **data values** are i
 | `pessoas` | `travelers` | array | `[{id, nome}]` |
 | `hospedagens` | `accommodations` | array | See sub-fields below |
 | `transportes` | `transportation` | object | `{visualizacao, dados}` |
-| `programacoes` | `schedule` | array | Day-by-day itinerary |
+| `programacoes` | `itinerary` | array | Day-by-day itinerary |
 | `galeria` | `gallery` | object | `{categorias, descricoes, imagens, titulos}` |
 | `links` | `links` | object | `{maps, attachments, drive, pdf, ppt, sheet, vacina, ativo}` |
 
@@ -109,7 +109,7 @@ All field names, collection names, document keys, and many **data values** are i
 | `pessoa` | `person` | string (traveler ref) |
 | `visualizacao` | `viewMode` | string |
 
-#### Schedule Sub-fields (`programacoes[i]`)
+#### Itinerary Sub-fields (`programacoes[i]`)
 
 | Portuguese | English | Type |
 |-----------|---------|------|
@@ -121,7 +121,7 @@ All field names, collection names, document keys, and many **data values** are i
 | `tarde` | `afternoon` | PeriodItem[] |
 | `noite` | `night` | PeriodItem[] |
 
-#### PeriodItem Sub-fields (schedule entries)
+#### PeriodItem Sub-fields (itinerary entries)
 
 | Portuguese | English | Type |
 |-----------|---------|------|
@@ -237,7 +237,7 @@ These are **Portuguese string values stored as data** (not field names) that mus
 |-----------|---------|
 | `"dinamico"` | `"dynamic"` |
 
-### Schedule Item Type (`item.tipo`)
+### Itinerary Item Type (`item.tipo`)
 
 | Portuguese | English |
 |-----------|---------|
@@ -245,7 +245,7 @@ These are **Portuguese string values stored as data** (not field names) that mus
 | `"transporte"` | `"transportation"` |
 | `"hospedagens"` | `"accommodation"` |
 
-### Schedule Period Names (keys in `programacoes[i]`)
+### Itinerary Period Names (keys in `programacoes[i]`)
 
 | Portuguese | English |
 |-----------|---------|
@@ -281,7 +281,7 @@ These are **Portuguese string values stored as data** (not field names) that mus
 |-----------|---------|
 | `"destinos"` | `"destinations"` |
 | `"transportes"` | `"transportation"` |
-| `"programacao"` | `"schedule"` |
+| `"programacao"` | `"itinerary"` |
 | `"galeria"` | `"gallery"` |
 | `"resumo"` | `"summary"` |
 | `"hospedagens"` | `"accommodations"` |
@@ -294,7 +294,7 @@ These are **Portuguese string values stored as data** (not field names) that mus
 | `"vacina"` | `"vaccine"` |
 | `"ativo"` | `"active"` |
 
-### Schedule Title Object Keys
+### Itinerary Title Object Keys
 
 | Portuguese | English |
 |-----------|---------|
@@ -364,7 +364,7 @@ The client-side code lives in `public/assets/ts/` (~124 `.ts` files). Key areas 
 
 Since the codebase is already 100% TypeScript (`public/assets/ts/` compiled to `dist/`), the DB migration should:
 
-1. **Define the new schema as TypeScript interfaces first** — create `models/new-schema.ts` with all interfaces (`Trip`, `Destination`, `Accommodation`, `TransportLeg`, `ScheduleDay`, `ExpenseEntry`, `UserProfile`, etc.) using English names and English enum literals.
+1. **Define the new schema as TypeScript interfaces first** — create `models/new-schema.ts` with all interfaces (`Trip`, `Destination`, `Accommodation`, `TransportLeg`, `ItineraryDay`, `ExpenseEntry`, `UserProfile`, etc.) using English names and English enum literals.
 2. **Write the migration to target the TS interfaces** — the Cloud Function migration script becomes the reference implementation of the schema.
 3. **Refactor TS services/models to the new interfaces** — the existing TS files in `public/assets/ts/` are updated to match.
 4. **Refactor all TS files to the new schema** — update field access, enum comparisons, and type annotations across all layers (services, models, pages, UI, utils, backup).
@@ -427,7 +427,7 @@ Do a **1:1 field-name and enum-value translation** across all documents. No stru
 2. Create a new document with translated field names in the new collection
 3. Copy the old document data field-by-field with renaming
 4. Delete the old document (or keep for a grace period)
-5. Handle nested objects recursively (accommodations, transportation, schedule, expenses)
+5. Handle nested objects recursively (accommodations, transportation, itinerary, expenses)
 
 Batch writes (max 500 ops/batch) can handle ~250 documents per batch (1 delete + 1 create each).
 
@@ -500,7 +500,7 @@ users/{uid}/listingSummaries/{id}      → { title, subtitle, description, image
   modules: {
     destinations: boolean,
     transportation: boolean,
-    schedule: boolean,
+    itinerary: boolean,
     gallery: boolean,
     summary: boolean,
     accommodations: boolean,
@@ -609,12 +609,12 @@ users/{uid}/listingSummaries/{id}      → { title, subtitle, description, image
 
 ---
 
-#### Collection: `trips/{id}/schedule` (NEW subcollection)
+#### Collection: `trips/{id}/itinerary` (NEW subcollection)
 
 **Previously:** `programacoes` was an array embedded in the trip document.
 
 ```ts
-// Document: trips/{tripId}/schedule/{dayId}
+// Document: trips/{tripId}/itinerary/{dayId}
 {
   title: {
     value: string,                   // was "valor"
@@ -791,7 +791,7 @@ expenses/protected/{pin}/{tripId}    → protected expense data
 | 🔴 **Complex migration script** | Must handle nested data (accommodations within trips → subcollection docs), data integrity validation, and rollback capability. |
 | 🔴 **More Firestore writes during migration** | Creating subcollections means more documents overall. May incur one-time migration cost. |
 | 🔴 **Firestore rule rewrite** | Security rules need to match the new subcollection structure. More rules, more complexity. |
-| 🟡 **More documents to manage** | ~5× more documents (accommodations, transportation, schedule, summaries become individual docs). Trade-off: more docs but smaller reads. |
+| 🟡 **More documents to manage** | ~5× more documents (accommodations, transportation, itinerary, summaries become individual docs). Trade-off: more docs but smaller reads. |
 | 🟡 **Requires collection group queries** | To get "all accommodations for all trips," need collection group queries (requires composite indexes). |
 | 🟡 **Larger blast radius on bugs** | More surface area for migration errors. Thorough testing required. |
 | 🟡 **Rollback is harder** | Going back to the old schema means re-embedding data that was split into subcollections. |
@@ -809,10 +809,10 @@ expenses/protected/{pin}/{tripId}    → protected expense data
 | **Trip destination data** | Embedded (N+1 reads) | References (parallel reads) |
 | **Accommodations** | Array in trip doc | Subcollection: `trips/{id}/accommodations` |
 | **Transportation** | Object in trip doc | Subcollection: `trips/{id}/transportation` |
-| **Schedule** | Array in trip doc | Subcollection: `trips/{id}/schedule` |
+| **Itinerary** | Array in trip doc | Subcollection: `trips/{id}/itinerary` |
 | **User document** | Unbounded (all summaries inline) | Slim + subcollections for summaries |
 | **Document count** | Same as today (~N) | ~5× more (~5N) — but DB is only ~2MB, so ~10MB post-migration |
-| **Avg. read per view page** | 1 trip + N destinations = N+1 | 1 trip + N destinations + 1 accoms + 1 transport + 1 schedule = N+4 (but all parallel) |
+| **Avg. read per view page** | 1 trip + N destinations = N+1 | 1 trip + N destinations + 1 accoms + 1 transport + 1 itinerary = N+4 (but all parallel) |
 | **Perf improvement** | 0% | ~80–90% reduction in latency for trip detail pages |
 | **Migration effort** | ~1.5 weeks | ~3 weeks (small DB simplifies migration) |
 | **Risk level** | Low | Medium (reduced — small DB = fast migration, easy validation) |
@@ -837,7 +837,7 @@ expenses/protected/{pin}/{tripId}    → protected expense data
 
 3. **Doing Option A first doubles the migration cost.** If we do the simple translation now, a future structural optimization requires a second full migration. Every `.ts` file, every security rule — rewritten twice. At 2 MB, there's no reason to defer the structural fixes.
 
-4. **The subcollection pattern is Firestore's recommended approach.** Firebase documentation explicitly recommends subcollections over deeply nested arrays. Accommodations, transportation, and schedule data fit this pattern perfectly. At 2 MB, the "more documents" concern is academic — even a 5× increase is only ~10 MB total.
+4. **The subcollection pattern is Firestore's recommended approach.** Firebase documentation explicitly recommends subcollections over deeply nested arrays. Accommodations, transportation, and itinerary data fit this pattern perfectly. At 2 MB, the "more documents" concern is academic — even a 5× increase is only ~10 MB total.
 
 5. **TypeScript alignment.** The planned TypeScript migration means we'll write type definitions for the data model. It's far better to write them for the optimized English schema than to write Portuguese-field types now and migrate them later. Define the TS interfaces first, let them drive the migration script, and refactor the TS services to match.
 
@@ -870,7 +870,7 @@ Consider a **hybrid approach**:
 - Do Option A (simple translation) but apply the **two highest-impact structural changes**:
   1. **Fix the N+1 destination reads** — change `destinos` to store only `{id}` references (fetched in parallel). This alone is an 80% perf improvement.
   2. **Split user document summaries** to subcollections — prevents the 1 MiB scaling cliff.
-- Defer accommodations/transportation/schedule subcollection split to a later migration.
+- Defer accommodations/transportation/itinerary subcollection split to a later migration.
 
 This hybrid gives you ~70% of the benefit at ~50% of the cost.
 
@@ -887,7 +887,7 @@ All migrations follow the pattern established in `functions/src/migrations/`. Gi
 3. **15-migrate-trip-destinations.ts** — Strips embedded destination data from trip docs, keeps only `{id}` refs.
 4. **16-migrate-accommodations-subcollection.ts** — Moves `accommodations` array into `trips/{id}/accommodations/*` subcollection.
 5. **17-migrate-transportation-subcollection.ts** — Moves `transportation.dados` array into `trips/{id}/transportation/*` subcollection.
-6. **18-migrate-schedule-subcollection.ts** — Moves `schedule` array into `trips/{id}/schedule/*` subcollection.
+6. **18-migrate-itinerary-subcollection.ts** — Moves `itinerary` array into `trips/{id}/itinerary/*` subcollection.
 7. **19-migrate-collection-names.ts** — Renames top-level collections (`usuarios` → `users`, `viagens` → `trips`, etc.).
 8. **20-migrate-cleanup.ts** — Removes old fields/collections after validation period.
 

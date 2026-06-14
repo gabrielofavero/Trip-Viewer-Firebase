@@ -35,7 +35,7 @@ const COLLECTION_RENAME_MAP: Record<string, string> = {
 // ============================================================
 const PARENT_SUBCOLLECTIONS: Record<string, string[]> = {
 	usuarios: ["tripSummaries", "destinationSummaries", "listingSummaries"],
-	viagens: ["accommodations", "transportation", "schedule"],
+	viagens: ["accommodations", "transportation", "itinerary"],
 };
 
 // ============================================================
