@@ -112,14 +112,14 @@ function loadEventListeners() {
 
 	getID("save-btn").addEventListener("click", () => {
 		startLoadingScreen();
-		const type = "destinos";
+		const type = "destinations";
 		const dataBuildingFunctions = [buildDestinosObject, updateTikTokLinks];
 
 		setDocumento({ type, dataBuildingFunctions });
 	});
 
 	getID("re-editar").addEventListener("click", () => {
-		reEdit("destinos", SUCCESSFUL_SAVE);
+		reEdit("destinations", SUCCESSFUL_SAVE);
 	});
 
 	getID("cancel-btn").addEventListener("click", () => {
@@ -176,7 +176,7 @@ async function loadDestinations() {
 	getID("delete-text").style.display = "block";
 	startLoadingScreen();
 
-	const singleData = await getSingleData("destinos");
+	const singleData = await getSingleData("destinations");
 	setFirestoreDestinationsData(singleData);
 
 	populateExistingDestinationForm();
@@ -387,7 +387,7 @@ export function deleteDestino() {
 
 export async function deleteDestinoAction() {
 	if (DOCUMENT_ID) {
-		await deleteUserObjectDB(DOCUMENT_ID, "destinos");
+		await deleteUserObjectDB(DOCUMENT_ID, "destinations");
 		window.location.href = `../index?visibility=${getVisibility()}`;
 	}
 }

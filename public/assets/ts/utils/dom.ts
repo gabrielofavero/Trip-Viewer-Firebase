@@ -405,10 +405,10 @@ export function setURLParam(key, value) {
 
 export function getDataDocument(tipo) {
 	switch (tipo) {
-		case "viagens":
-		case "listagens":
+		case "trips":
+		case "listings":
 			return getState();
-		case "destinos":
+		case "destinations":
 			return FIRESTORE_DESTINATIONS_DATA;
 		default:
 			return null;
@@ -417,10 +417,10 @@ export function getDataDocument(tipo) {
 
 export function getNewDataDocument(tipo) {
 	switch (tipo) {
-		case "viagens":
-		case "listagens":
+		case "trips":
+		case "listings":
 			return FIRESTORE_NEW_DATA;
-		case "destinos":
+		case "destinations":
 			return FIRESTORE_DESTINATIONS_NEW_DATA;
 		default:
 			return null;
@@ -429,19 +429,19 @@ export function getNewDataDocument(tipo) {
 
 export function getTranslatedDocumentLabel(type) {
 	switch (type) {
-		case "viagens":
+		case "trips":
 			return translate("trip.document");
-		case "viagens/protected":
+		case "trips/protected":
 			return translate("trip.protected");
-		case "destinos":
+		case "destinations":
 			return translate("destination.document");
-		case "listagens":
+		case "listings":
 			return translate("listing.document");
-		case "gastos":
+		case "expenses":
 			return translate("trip.expenses.document");
-		case "gastos/protected":
+		case "expenses/protected":
 			return translate("trip.expenses.protected");
-		case "protegido":
+		case "protected":
 			return translate("labels.protected");
 		default:
 			return translate("labels.unknown");
@@ -600,7 +600,7 @@ export function getInnerItinerary(item, destinations) {
 		content: "",
 		midia: "",
 		container:
-			item?.tipo === "destinos"
+			item?.tipo === "destinations"
 				? "destinos-container"
 				: "programacao-container",
 	};

@@ -61,7 +61,7 @@ function closeViewEmbed(redirectToHome = false, visibility) {
 export function openExpensesEmbed() {
 	openEmbed({
 		frameID: "expenses-embed-frame",
-		url: `expenses.html?visibility=${getVisibility()}&embed=1&g=${getURLParam("v")}`,
+		url: `expenses.html?visibility=${getVisibility()}&embed=1&e=${getURLParam("t")}`,
 	});
 }
 

@@ -293,7 +293,7 @@ async function uploadAndSetAccommodationImages() {
 	}
 
 	const hospedagensFiles = CUSTOM_UPLOADS.accommodations.map((file) => file.file);
-	const hospedagemResult = await uploadImages("viagens", hospedagensFiles);
+	const hospedagemResult = await uploadImages("trips", hospedagensFiles);
 
 	if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
 		for (let i = 0; i < hospedagemResult.length; i++) {

@@ -32,21 +32,11 @@ export const SUBCOLLECTION = {
 	PROTECTED_EXPENSES: "protected", // under expenses/{id}/protected
 } as const;
 
-/** Maps collection names to historical URL param chars (v=viagens→trips, d=destinos, l=listagens) */
+/** Maps collection names to URL param chars (t=trips, d=destinations, l=listings) */
 const URL_PARAM_MAP: Record<string, string> = {
-	[COLLECTION.TRIPS]: "v",
+	[COLLECTION.TRIPS]: "t",
 	[COLLECTION.DESTINATIONS]: "d",
 	[COLLECTION.LISTINGS]: "l",
-};
-
-/** Dual-read fallback: new English → old Portuguese collection names */
-const COLLECTION_ALIASES: Record<string, string> = {
-	[COLLECTION.USERS]: "usuarios",
-	[COLLECTION.TRIPS]: "viagens",
-	[COLLECTION.DESTINATIONS]: "destinos",
-	[COLLECTION.LISTINGS]: "listagens",
-	[COLLECTION.EXPENSES]: "gastos",
-	[COLLECTION.PROTECTED]: "protegido",
 };
 
 /** @deprecated Use COLLECTION.TRIPS, COLLECTION.DESTINATIONS, COLLECTION.LISTINGS */
@@ -437,27 +427,7 @@ export async function deleteAccountDocuments() {
 		userData.trips = [];
 	}
 
-	// Also handle Portuguese field name backward compat (old user doc may have "viagens")
-	if (!Array.isArray(userData.trips) && Array.isArray(userData.viagens)) {
-		for (const tripID of userData.viagens) {
-			const tripRef = firebase.firestore().collection("viagens").doc(tripID);
-			safePushDelete(tripRef);
-			const protRef = firebase.firestore().collection("protegido").doc(tripID);
-			let protSnap = null;
-			try { protSnap = await protRef.get(); } catch (e) { /* skip */ }
-			if (protSnap?.exists) {
-				const pin = protSnap.data()?.pin;
-				if (pin) {
-					safePushDelete(firebase.firestore().doc(`viagens/protected/${pin}/${tripID}`));
-					safePushDelete(firebase.firestore().doc(`expenses/protected/${pin}/${tripID}`));
-				}
-				safePushDelete(protRef);
-			} else {
-				safePushDelete(firebase.firestore().collection("gastos").doc(tripID));
-			}
-		}
-		userData.viagens = [];
-	}
+
 
 	// --- Update user object individually (not batched) ---
 	const userRef = firebase.firestore().collection(COLLECTION.USERS).doc(uid);
@@ -635,32 +605,6 @@ export async function getTripComplete(tripId: string): Promise<any> {
 	]);
 
 	return { ...tripData, accommodations, transportation, itinerary, destinations };
-}
-
-// ============================================================
-// Dual-Read Transition Helper
-// ============================================================
-
-/**
- * Reads from the new English collection path first, falls back to
- * the old Portuguese collection name if not found.
- *
- * Remove this helper after the migration is complete and all clients
- * have been updated to use the new English collection names.
- */
-export async function getWithFallback(newPath: string): Promise<any> {
-	// Try new collection path first
-	let data = await get(newPath, false, true); // hideWarn=true
-	if (data) return data;
-
-	// Fall back to old Portuguese path
-	for (const [newName, oldName] of Object.entries(COLLECTION_ALIASES)) {
-		if (newPath.startsWith(newName)) {
-			const oldPath = newPath.replace(newName, oldName);
-			return await get(oldPath, false, true);
-		}
-	}
-	return null;
 }
 
 // Helpers (Not database related)

@@ -21,7 +21,7 @@ import { loadItinerarySchedule } from "./categories/itinerary-module/itinerary-m
 import { ACTIVE_EMBEDS } from './support/embed.js';
 
 var REFRESHED = false;
-export var TYPE = "viagens";
+export var TYPE = "trips";
 export var START_DATE = {
 	date: null,
 	text: "",
@@ -49,8 +49,8 @@ export async function loadViewPage() {
 	registerActions({ protectedDataConfirmAction });
 
 	const urlParams = getURLParams();
-	TYPE = urlParams["l"] ? "listagens" : urlParams["d"] ? "destinos" : "viagens";
-	setDocumentId(urlParams["l"] || urlParams["d"] || urlParams["v"]);
+	TYPE = urlParams["l"] ? "listings" : urlParams["d"] ? "destinations" : "trips";
+	setDocumentId(urlParams["l"] || urlParams["d"] || urlParams["t"]);
 
 	window.addEventListener("scroll", () => {
 		if (window.scrollY > 0) {
@@ -116,7 +116,7 @@ function loadInicioFim(data = getState()) {
 function loadHeader() {
 	loadTitle();
 
-	if (TYPE == "destinos" && getState().versao?.ultimaAtualizacao) {
+	if (TYPE == "destinations" && getState().versao?.ultimaAtualizacao) {
 		getID("hero-subtitle").innerHTML = getLastUpdatedOnText(
 			getState().versao.ultimaAtualizacao,
 		);
@@ -259,14 +259,14 @@ function loadModules() {
 
 		function getSharingText() {
 			switch (TYPE) {
-				case "listagens":
+				case "listings":
 					return translate("listing.share", { name: getState().titulo });
-				case "destinos":
+				case "destinations":
 					return translate("destination.share", {
 						name: getState().titulo,
 					});
-				case "viagem":
-				case "viagens":
+				case "trip":
+				case "trips":
 					return translate("trip.share", {
 						name: getState().titulo,
 						start: START_DATE.text,
@@ -337,7 +337,7 @@ function loadModules() {
 
 	function loadDestinationsModule() {
 		switch (TYPE) {
-			case "viagens":
+			case "trips":
 				if (
 					getState().modulos?.destinos === true &&
 					getState().destinos?.length > 0
@@ -347,10 +347,10 @@ function loadModules() {
 					disableDestinations();
 				}
 				break;
-			case "listagens":
+			case "listings":
 				loadDestinationsDefault();
 				break;
-			case "destinos":
+			case "destinations":
 				loadDestinationsExclusive();
 				break;
 		}

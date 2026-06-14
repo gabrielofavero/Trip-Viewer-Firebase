@@ -235,7 +235,7 @@ function fimListenerAction() {
 function visualizarListenerAction() {
 	if (DOCUMENT_ID) {
 		window.open(
-			`../view.html?v=${DOCUMENT_ID}&visibility=${getVisibility()}`,
+			`../view.html?t=${DOCUMENT_ID}&visibility=${getVisibility()}`,
 			"_blank",
 		);
 	} else {

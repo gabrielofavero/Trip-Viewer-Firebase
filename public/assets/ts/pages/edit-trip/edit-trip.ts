@@ -35,7 +35,7 @@ const TOMORROW = getTomorrowFormatted();
 startLoadingScreen();
 
 export async function loadEditTripPage() {
-	setDocumentId(getURLParam("v"));
+	setDocumentId(getURLParam("t"));
 	PERMISSIONS = await getPermissions();
 
 	loadVisibilityIndex();
@@ -141,15 +141,15 @@ export async function deleteTripAction() {
 	if (!DOCUMENT_ID) return;
 
 	const tasks = [
-		deleteUserObjectDB(DOCUMENT_ID, "viagens"),
+		deleteUserObjectDB(DOCUMENT_ID, "trips"),
 		deleteUserObjectStorage(),
 		deleteDocument(`expenses/${DOCUMENT_ID}`, true),
 	];
 
 	if (PIN.current) {
 		tasks.push(
-			deleteDocument(`protegido/${DOCUMENT_ID}`, true),
-			deleteDocument(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true),
+			deleteDocument(`protected/${DOCUMENT_ID}`, true),
+			deleteDocument(`trips/protected/${PIN.current}/${DOCUMENT_ID}`, true),
 			deleteDocument(`expenses/protected/${PIN.current}/${DOCUMENT_ID}`, true),
 		);
 	}
@@ -174,8 +174,8 @@ export function getDataSelectOptions(j) {
 
 async function getTravelDocument(stripped = false) {
 	return stripped
-		? await get(`viagens/${DOCUMENT_ID}`)
-		: await getSingleData("viagens");
+		? await get(`trips/${DOCUMENT_ID}`)
+		: await getSingleData("trips");
 }
 
 function getMergedTripObject(tripData) {

@@ -110,13 +110,13 @@ function setUserData(ops, uid, type, documentData) {
 
 	function getSingleUserData(type, data) {
 		switch (type) {
-			case "destinos":
+			case "destinations":
 				return {
 					moeda: data.moeda,
 					titulo: data.titulo,
 					versao: data.versao,
 				};
-			case "listagens":
+			case "listings":
 				return {
 					cores: data.cores,
 					descricao: data.descricao,
@@ -125,7 +125,7 @@ function setUserData(ops, uid, type, documentData) {
 					titulo: data.titulo,
 					versao: data.versao,
 				};
-			case "viagens":
+			case "trips":
 				return {
 					cores: data.cores,
 					fim: data.fim,

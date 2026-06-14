@@ -19,7 +19,7 @@ export async function loadItineraryPage() {
 	registerActions({ loadItinerary, requestPinItinerary, loadProtectedItinerary });
 	loadItineraryListeners();
 
-	setDocumentId(getURLParam("v"));
+	setDocumentId(getURLParam("t"));
 	setPageName(translate("trip.itinerary.title"));
 
 	if (!DOCUMENT_ID) {
@@ -28,7 +28,7 @@ export async function loadItineraryPage() {
 		);
 	}
 
-	setState(await get(`viagens/${DOCUMENT_ID}`));
+	setState(await get(`trips/${DOCUMENT_ID}`));
 	if (!getState()) {
 		displayError(
 			`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.not_found"))}`,

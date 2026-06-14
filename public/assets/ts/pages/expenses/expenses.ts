@@ -60,7 +60,7 @@ export async function loadExpensesPage() {
 		? JSON.parse(localStorage.getItem("gastos"))
 		: "";
 	const params = getURLParams();
-	const documentID = params.g;
+	const documentID = params.e;
 	EXPENSES_EMBED.enabled = params.embed === "1";
 
 	if (EXPENSES_EMBED.enabled && !EXPENSES_EMBED.applied) {
@@ -68,7 +68,7 @@ export async function loadExpensesPage() {
 	}
 
 	if (!gastosExport || !documentID) {
-		const url = documentID ? `view.html?v=${documentID}` : "index.html";
+		const url = documentID ? `view.html?t=${documentID}` : "index.html";
 		displayForbidden(
 			`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
 			url,
@@ -81,7 +81,7 @@ export async function loadExpensesPage() {
 			translate("messages.errors.module_not_active", {
 				module: translate("trip.expenses.title"),
 			}),
-			`view.html?v=${documentID}`,
+			`view.html?t=${documentID}`,
 		);
 		return;
 	}
@@ -110,15 +110,15 @@ function requestPinExpensesInvalid() {
 function exitExpenses() {
 	if (window.parent.closeViewEmbed) {
 		window.parent.closeViewEmbed();
-	} else if (getURLParam("g")) {
-		window.location.href = `view.html?v=${getURLParam("g")}`;
+	} else if (getURLParam("e")) {
+		window.location.href = `view.html?t=${getURLParam("e")}`;
 	} else {
 		window.location.href = "index.html";
 	}
 }
 
 async function loadExpenses() {
-	const documentID = getURLParam("g");
+	const documentID = getURLParam("e");
 	const pin = getID("pin-code")?.innerText || "";
 	closeMessage();
 	startLoadingScreen();

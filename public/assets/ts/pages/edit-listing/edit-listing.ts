@@ -95,7 +95,7 @@ function loadEventListeners() {
 	});
 
 	getID("re-editar").addEventListener("click", () => {
-		reEdit("listagens", SUCCESSFUL_SAVE);
+		reEdit("listings", SUCCESSFUL_SAVE);
 	});
 
 	getID("home").addEventListener("click", () => {
@@ -119,7 +119,7 @@ async function carregarListagem() {
 	getID("delete-text").style.display = "block";
 	startLoadingScreen();
 
-	setState(await getSingleData("listagens"));
+	setState(await getSingleData("listings"));
 
 	await loadListData(getState());
 	stopLoadingScreen();
@@ -161,7 +161,7 @@ async function setListagem() {
 		setRequired(`select-destinations-${i}`);
 	}
 
-	const type = "listagens";
+	const type = "listings";
 	const dataBuildingFunctions = [buildListObject];
 	await setDocumento({ type, dataBuildingFunctions });
 }
@@ -188,7 +188,7 @@ export function deleteListagem() {
 
 export async function deleteListagemAction() {
 	if (DOCUMENT_ID) {
-		await deleteUserObjectDB(DOCUMENT_ID, "listagens");
+		await deleteUserObjectDB(DOCUMENT_ID, "listings");
 		await deleteUserObjectStorage();
 		window.location.href = "../index.html";
 	}

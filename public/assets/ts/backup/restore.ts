@@ -70,11 +70,11 @@ async function restoreAccountData(restore) {
 
 function isRestoreValid(restore) {
 	const REQUIRED_KEYS = [
-		"destinos",
-		"gastos",
-		"listagens",
-		"protegido",
-		"viagens",
+		"destinations",
+		"expenses",
+		"listings",
+		"protected",
+		"trips",
 	];
 
 	// Basic type check
@@ -94,11 +94,11 @@ function isRestoreValid(restore) {
 
 async function isRestoreOwnerValid(restore) {
 	const REQUIRED_KEYS = [
-		"destinos",
-		"gastos",
-		"listagens",
-		"protegido",
-		"viagens",
+		"destinations",
+		"expenses",
+		"listings",
+		"protected",
+		"trips",
 	];
 	const uid = await getUID();
 
@@ -239,7 +239,7 @@ async function restoreAccount(restore) {
 		// Finally update the user document
 		ops.push({
 			type: "set",
-			ref: firebase.firestore().collection("usuarios").doc(uid),
+			ref: firebase.firestore().collection("users").doc(uid),
 			data: userData,
 		});
 
@@ -283,7 +283,7 @@ async function restoreAccount(restore) {
 
 		return {
 			type: "set",
-			ref: firebase.firestore().collection("usuarios").doc(uid),
+			ref: firebase.firestore().collection("users").doc(uid),
 			data: patch,
 			options: { merge: true },
 		};
@@ -294,7 +294,7 @@ async function restoreAccount(restore) {
 		const types = ["trips", "destinations", "listings"];
 
 		for (const type of types) {
-			const group = restore?.usuario?.[type];
+			const group = restore?.user?.[type];
 			if (!group || Object.keys(group).length === 0) {
 				patch[type] = {};
 				continue;

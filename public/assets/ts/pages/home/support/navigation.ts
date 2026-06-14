@@ -1,10 +1,10 @@
 import { getVisibility } from '../../../theme/visibility.js';
 
 export function editTrip(code) {
-	window.open(`edit/trip?v=${code}&visibility=${getVisibility()}`, "_blank");
+	window.open(`edit/trip?t=${code}&visibility=${getVisibility()}`, "_blank");
 }
 export function viewTrip(code) {
-	window.open(`view.html?v=${code}&visibility=${getVisibility()}`, "_blank");
+	window.open(`view.html?t=${code}&visibility=${getVisibility()}`, "_blank");
 }
 
 export function newTrip() {

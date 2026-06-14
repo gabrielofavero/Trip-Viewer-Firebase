@@ -206,6 +206,6 @@ function loadScheduleTodayButton() {
 
 // Full Schedule
 function openFullItinerary() {
-	const url = `itinerary?v=${DOCUMENT_ID}&visibility=${getVisibility()}`;
+	const url = `itinerary?t=${DOCUMENT_ID}&visibility=${getVisibility()}`;
 	openViewEmbed(url);
 }

@@ -172,13 +172,13 @@ export function reEdit(type, SUCCESSFUL_SAVE = true) {
 	let param;
 	let url;
 
-	if (type == "viagens") {
-		param = "v";
+	if (type == "trips") {
+		param = "t";
 		url = "trip.html";
-	} else if (type == "destinos") {
+	} else if (type == "destinations") {
 		param = "d";
 		url = "destination.html";
-	} else if (type == "listagens") {
+	} else if (type == "listings") {
 		param = "l";
 		url = "listing.html";
 	}

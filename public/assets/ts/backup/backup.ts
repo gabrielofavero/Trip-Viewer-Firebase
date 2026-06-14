@@ -274,7 +274,7 @@ function displayPartialBackupWarning() {
 		for (const failed of MISSING_ACCOUNT_DATA.failed) {
 			const isProtected =
 				failed.job.subpath?.includes("protected") ||
-				failed.job.collection === "protegido";
+				failed.job.collection === "protected";
 
 			if (isProtected) {
 				if (protectedDataAdded.includes(failed.job.documentID)) continue;
