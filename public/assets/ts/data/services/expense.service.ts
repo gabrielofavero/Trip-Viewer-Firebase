@@ -10,6 +10,7 @@ import {
 	override,
 	deleteDocument,
 	createBatchOps,
+	COLLECTION,
 } from "../firebase/database.js";
 
 // Re-export raw database functions that expense pages may still use during transition
@@ -21,6 +22,7 @@ export {
 	override,
 	deleteDocument,
 	createBatchOps,
+	COLLECTION,
 };
 
 // ── Expense-specific wrappers ──
@@ -30,7 +32,7 @@ export {
  * @param {string} tripId - The trip document ID
  */
 export async function getExpenses(tripId) {
-	return await get(`gastos/${tripId}`, true, true);
+	return await get(`${COLLECTION.EXPENSES}/${tripId}`, true, true);
 }
 
 /**
@@ -39,35 +41,35 @@ export async function getExpenses(tripId) {
  * @param {string} tripId - The trip document ID
  */
 export async function getProtectedExpenses(pin, tripId) {
-	return await get(`gastos/protected/${pin}/${tripId}`, false);
+	return await get(`${COLLECTION.EXPENSES}/protected/${pin}/${tripId}`, false);
 }
 
 /**
  * Update expenses for a trip (shallow merge).
  */
 export async function updateExpenses(tripId, data) {
-	return await update(`gastos/${tripId}`, data);
+	return await update(`${COLLECTION.EXPENSES}/${tripId}`, data);
 }
 
 /**
  * Replace all expenses for a trip (no merge).
  */
 export async function replaceExpenses(tripId, data) {
-	return await override(`gastos/${tripId}`, data);
+	return await override(`${COLLECTION.EXPENSES}/${tripId}`, data);
 }
 
 /**
  * Create or overwrite protected expenses for a trip.
  */
 export async function setProtectedExpenses(pin, tripId, data) {
-	return await deepCreate(`gastos/protected/${pin}`, data, tripId);
+	return await deepCreate(`${COLLECTION.EXPENSES}/protected/${pin}`, data, tripId);
 }
 
 /**
  * Delete expenses for a trip (used during account deletion).
  */
 export async function deleteExpenses(tripId) {
-	return await deleteDocument(`gastos/${tripId}`, true);
+	return await deleteDocument(`${COLLECTION.EXPENSES}/${tripId}`, true);
 }
 
 
