@@ -10,6 +10,7 @@
 	z-index: 9999;
 	overflow: hidden;
 	background: #fff;
+	transition: opacity 0.2s ease;
 }
 
 #preloader:before {

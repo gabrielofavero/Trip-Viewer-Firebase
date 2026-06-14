@@ -23,30 +23,24 @@ export async function loadDestinosAtivos(firstBoot = true) {
 	if (habilidadoDestinos && !habilidadoDestinos.checked) return;
 
 	let result = [];
-	const checkboxes = getID("destinos-checkboxes");
-	for (const checkbox of checkboxes.children) {
-		const input = checkbox.querySelector("input");
-		if (!input.checked) continue;
+	const container = getID("destinos-checkboxes");
+	for (const card of container.children) {
+		if (!card.classList.contains("selected")) continue;
 
-		const titulo = checkbox.querySelector("label").innerText;
-		const destinosID = input.value;
+		const titulo = card.querySelector(".destino-card-name")?.textContent?.trim() || "";
+		const destinosID = card.getAttribute("data-destino-id") || "";
 
 		result.push({ titulo, destinosID });
 	}
 
 	DESTINOS_ATIVOS = result;
-	if (firstBoot) {
-		reorganizeDestinosCheckbox();
-		const offsetHeight = getID("destinos-checkboxes").offsetHeight;
-		getID("destinos-checkboxes").style.height = `${offsetHeight}px`;
-	}
 }
 
 export async function updateDestinosAtivosHTMLs() {
 	await loadDestinosAtivos(false);
 
 	if (getHTMLpage() === "editar-viagem") {
-		updateDestinosAtivosCheckboxHTML("programacao");
+		updateDestinosAtivosCardsHTML("programacao");
 	}
 }
 
@@ -62,39 +56,41 @@ export function getActiveDestinationsSelectVisibility() {
 	return DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 }
 
-// Destinos Checkbox (Para Destinos e Programação)
-export function updateDestinosAtivosCheckboxHTML(tipo, j?) {
+// Destinos Cards para Programação
+export function updateDestinosAtivosCardsHTML(tipo, j?) {
 	const visibility = DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 	const values = DESTINOS_ATIVOS.map((destino) => destino.destinosID);
 
 	function write(tipo, j) {
-		const id = `${tipo}-local-${j}`;
-		const childs = getChildIDs(id);
-		const div = getID(id);
+		const container = getID(`${tipo}-local-${j}`);
+		if (!container) return;
 
 		getID(`${tipo}-local-box-${j}`).style.display = visibility;
-		const originalValues = [];
 
-		for (const child of childs) {
-			const k = child.split("-")[2];
-			const checkbox = getID(`check-${tipo}-${j}-${k}`);
-			if (values.includes(checkbox.value) && checkbox.checked) {
-				originalValues.push(checkbox.value);
-			}
+		// Collect currently selected values before rebuild
+		const selectedValues: string[] = [];
+		for (const card of container.querySelectorAll(".destino-card.selected")) {
+			const id = card.getAttribute("data-destino-id");
+			if (id) selectedValues.push(id);
 		}
 
-		div.innerHTML = getActiveDestinationsCheckboxOptions(tipo, j);
+		container.innerHTML = getActiveDestinationsCardOptions(tipo, j);
 
-		if (originalValues.length > 0) {
-			for (const child of childs) {
-				const k = child.split("-")[2];
-				const checkbox = getID(`check-${tipo}-${j}-${k}`);
-				if (checkbox && originalValues.includes(checkbox.value)) {
-					checkbox.checked = true;
+		// Re-select previously selected cards
+		for (const card of container.querySelectorAll(".destino-card")) {
+			const destinosID = card.getAttribute("data-destino-id");
+			if (selectedValues.includes(destinosID)) {
+				card.classList.add("selected");
+				container.prepend(card);
+			}
+			// Add click listeners
+			card.addEventListener("click", () => {
+				card.classList.toggle("selected");
+				if (card.classList.contains("selected")) {
+					container.prepend(card);
 				}
-			}
+			});
 		}
-		loadDestinosCheckboxListeners(tipo, j);
 	}
 
 	if (j) {
@@ -149,6 +145,12 @@ export function getDestinationsItemCheckbox(j, destinosID, titulo, tipo = "desti
             </div>`;
 }
 
+export function getDestinationsItemCard(destinosID: string, titulo: string): string {
+	return `<div class="destino-card" data-destino-id="${destinosID}">
+                <span class="destino-card-name">${titulo}</span>
+            </div>`;
+}
+
 function loadDestinosCheckboxListeners(tipo, j) {
 	switch (tipo) {
 		case "programacao":
@@ -171,37 +173,71 @@ export function getDestinosFromCheckbox(tipo, j) {
 	return result;
 }
 
+// Card-based versions for itinerary (programacao-local-x)
+export function getActiveDestinationsCardOptions(
+	tipo: string,
+	j: number,
+	destinosAtivos = DESTINOS_ATIVOS,
+): string {
+	let items: string[] = [];
+	for (const destino of destinosAtivos) {
+		items.push(getDestinationsItemCard(destino.destinosID, destino.titulo));
+	}
+	return items.join("");
+}
+
+export function getDestinosFromCards(tipo: string, j: number) {
+	let result: { titulo: string; destinosID: string }[] = [];
+	const container = getID(`${tipo}-local-${j}`);
+	if (!container) return result;
+	for (const card of container.querySelectorAll(".destino-card.selected")) {
+		const titulo = card.querySelector(".destino-card-name")?.textContent?.trim() || "";
+		const destinosID = card.getAttribute("data-destino-id") || "";
+		result.push({ titulo, destinosID });
+	}
+	return result;
+}
+
+export function addValuesForDestinosAtivosCards(tipo: string, j: number, values: string[]) {
+	const container = getID(`${tipo}-local-${j}`);
+	if (!container) return;
+	for (const card of container.querySelectorAll(".destino-card")) {
+		const destinosID = card.getAttribute("data-destino-id");
+		if (values.includes(destinosID)) {
+			card.classList.add("selected");
+			container.prepend(card);
+		}
+	}
+}
+
 function reorganizeDestinosCheckbox() {
 	const fieldset = document.getElementById("destinos-checkboxes");
-	const checkboxes = Array.from(fieldset.querySelectorAll(".nice-form-group"));
+	const cards = Array.from(fieldset.querySelectorAll(".destino-card"));
 
-	const ativos = [];
-	const inativos = [];
+	const selecionados: { element: Element; label: string }[] = [];
+	const naoSelecionados: { element: Element; label: string }[] = [];
 
-	checkboxes.forEach((group) => {
-		const input = group.querySelector('input[type="checkbox"]') as HTMLInputElement;
-		const label = group.querySelector("label");
-		const labelText = label.textContent.trim();
+	cards.forEach((card) => {
+		const nameEl = card.querySelector(".destino-card-name");
+		const labelText = nameEl?.textContent?.trim() || "";
 
-		const data = {
-			element: group,
-			label: labelText.toLowerCase(),
-		};
-
-		if (input.checked) {
-			ativos.push(data);
+		if (card.classList.contains("selected")) {
+			selecionados.push({ element: card, label: labelText.toLowerCase() });
 		} else {
-			inativos.push(data);
+			naoSelecionados.push({ element: card, label: labelText.toLowerCase() });
 		}
 	});
 
-	ativos.sort((a, b) => a.label.localeCompare(b.label));
-	inativos.sort((a, b) => a.label.localeCompare(b.label));
+	naoSelecionados.sort((a, b) => a.label.localeCompare(b.label));
 
-	[...ativos, ...inativos].forEach((item) => {
+	// Selected cards stay in their clicked order (already in DOM order = click order)
+	// Re-append: selected first, then unselected alphabetically
+	[...selecionados, ...naoSelecionados].forEach((item) => {
 		fieldset.appendChild(item.element);
 	});
 }
+
+export { reorganizeDestinosCheckbox };
 
 // Outros (Genérico)
 function getDestinoTitle(destinoID) {

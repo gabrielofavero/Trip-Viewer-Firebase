@@ -48,10 +48,10 @@
 			"subtitle": "Adicione aqui as principais informações da sua viagem",
 			"title_placeholder": "Digite o título da viagem",
 			"security": {
-				"title": "Segurança",
-				"disabled": "Não proteger dados da viagem",
-				"sensitive_only": "Proteger apenas dados sensíveis (gastos e códigos de reserva)",
-				"all_data": "Proteger todos os dados da viagem"
+				"title": "Proteção de dados",
+				"disabled": "Desabilitada",
+				"sensitive_only": "Apenas dados sensíveis",
+				"all_data": "Habilitada"
 			},
 			"pin": {
 				"title": "PIN de Acesso",
@@ -142,6 +142,9 @@
 			"subtitle": "Cadastre onde você ficará hospedado durante a viagem",
 			"checkin": "Check-in",
 			"checkout": "Check-out",
+			"stay_duration": "Duração da estadia",
+			"checkin_time": "Horário de check-in",
+			"checkout_time": "Horário de check-out",
 			"breakfast": "Café da manhã",
 			"name_placeholder": "Hotel, Pousada, Airbnb, etc",
 			"address_placeholder": "Rua Exemplo, 123",
@@ -675,9 +678,9 @@
 			"colors": {
 				"title": "Cores Personalizadas",
 				"themes": {
-					"light_and_dark": "Exibir em tema Claro e Escuro",
-					"light": "Exibir apenas no tema Claro",
-					"dark": "Exibir apenas no tema Escuro"
+					"light_and_dark": "Ambos",
+					"light": "Modo claro",
+					"dark": "Modo escuro"
 				}
 			},
 			"links": {

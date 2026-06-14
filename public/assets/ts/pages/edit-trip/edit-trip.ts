@@ -17,6 +17,9 @@ import { loadTripData } from './existing-trip.js';
 import { loadEventListeners } from './support/event-listeners.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 import { loadUploadSelector } from "../../data/firebase/storage.js";
+import { initEditTabs } from "../../ui/edit-tabs.js";
+import { DateRangePicker } from "../../ui/date-range-picker.js";
+import { enhanceAllColorPickers } from "../../ui/color-picker-hex.js";
 
 var PERMISSOES;
 export var FIRESTORE_PROTECTED_DATA: Record<string, any> = {};
@@ -36,13 +39,14 @@ export async function loadEditTripPage() {
 	PERMISSOES = await getPermissoes();
 
 	loadVisibilityIndex();
+	initEditTabs();
 	loadHabilitados();
 	loadDraggablesWithAccordions(["transporte", "hospedagens"]);
 	newDynamicSelect("galeria-categoria");
 	newDynamicSelect("transporte-pessoa");
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA.destinos));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinos || []));
 
 	if (DOCUMENT_ID) {
 		await loadTrip(true);
@@ -57,6 +61,10 @@ export async function loadEditTripPage() {
 	loadEventListeners();
 	stopLoadingScreen();
 	snapshotFormState();
+
+	// Initialize enhanced UI components
+	initDateRangePickers();
+	enhanceAllColorPickers();
 
 	$("body").css("overflow", "auto");
 }
@@ -188,4 +196,18 @@ function getMergedTripObject(tripData) {
 	}
 
 	return tripData;
+}
+
+/** Initialize date range picker components on the edit trip page */
+function initDateRangePickers() {
+	const tripDateRange = getID("trip-date-range");
+	if (tripDateRange) {
+		const picker = new DateRangePicker(tripDateRange);
+		// If hidden inputs already have values (from existing trip load), update display
+		const inicio = getID("inicio") as HTMLInputElement;
+		const fim = getID("fim") as HTMLInputElement;
+		if (inicio?.value && fim?.value) {
+			picker.setRange(inicio.value, fim.value);
+		}
+	}
 }

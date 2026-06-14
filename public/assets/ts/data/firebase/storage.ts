@@ -172,6 +172,7 @@ export function loadImageSelector(type) {
 		if (checkboxLink?.checked) {
 			link.style.display = "block";
 			upload.style.display = "none";
+			hideSizeMsg();
 		} else {
 			link.style.display = "none";
 			upload.style.display = "block";
@@ -181,6 +182,7 @@ export function loadImageSelector(type) {
 			if (checkboxLink.checked) {
 				link.style.display = "block";
 				upload.style.display = "none";
+				hideSizeMsg();
 			} else {
 				link.style.display = "none";
 				upload.style.display = "block";
@@ -193,15 +195,24 @@ export function loadImageSelector(type) {
 			} else {
 				link.style.display = "block";
 				upload.style.display = "none";
+				hideSizeMsg();
 			}
 		});
 		upload?.addEventListener("change", function () {
 			checkFileSize(upload, type);
 		});
+
+		function hideSizeMsg() {
+			const sizeMsg = document.getElementById(`upload-${type}-size-message`);
+			if (sizeMsg) sizeMsg.style.display = "none";
+		}
 	} else {
 		link.style.display = "block";
 		upload.style.display = "none";
 		if (checkboxGroup) checkboxGroup.style.display = "none";
+		// Hide size message when upload is disabled
+		const sizeMsg = document.getElementById(`upload-${type}-size-message`);
+		if (sizeMsg) sizeMsg.style.display = "none";
 	}
 }
 
@@ -252,6 +263,7 @@ export function loadLogoSelector() {
 
 			uploadLight.style.display = "none";
 			uploadDark.style.display = "none";
+			hideLogoSizeMsgs();
 		} else {
 			linkLight.style.display = "none";
 			linkDark.style.display = "none";
@@ -267,6 +279,7 @@ export function loadLogoSelector() {
 
 				uploadLight.style.display = "none";
 				uploadDark.style.display = "none";
+				hideLogoSizeMsgs();
 			} else {
 				linkLight.style.display = "none";
 				linkDark.style.display = "none";
@@ -288,6 +301,7 @@ export function loadLogoSelector() {
 
 				uploadLight.style.display = "none";
 				uploadDark.style.display = "none";
+				hideLogoSizeMsgs();
 			}
 		});
 
@@ -298,11 +312,26 @@ export function loadLogoSelector() {
 		uploadDark?.addEventListener("change", function () {
 			checkFileSize(uploadDark, "logo-dark");
 		});
+
+		function hideLogoSizeMsgs() {
+			const sizeMsgLight = document.getElementById("upload-logo-light-size-message");
+			if (sizeMsgLight) sizeMsgLight.style.display = "none";
+			const sizeMsgDark = document.getElementById("upload-logo-dark-size-message");
+			if (sizeMsgDark) sizeMsgDark.style.display = "none";
+		}
 	} else {
 		linkLight.style.display = "block";
 		linkDark.style.display = "block";
 		uploadLight.style.display = "none";
 		uploadDark.style.display = "none";
+
+		// Hide upload checkbox group and size messages when upload disabled
+		const checkboxGroup = document.getElementById("upload-checkbox-logo");
+		if (checkboxGroup) checkboxGroup.style.display = "none";
+		const sizeMsgLight = document.getElementById("upload-logo-light-size-message");
+		if (sizeMsgLight) sizeMsgLight.style.display = "none";
+		const sizeMsgDark = document.getElementById("upload-logo-dark-size-message");
+		if (sizeMsgDark) sizeMsgDark.style.display = "none";
 	}
 }
 

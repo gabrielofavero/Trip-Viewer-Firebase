@@ -49,9 +49,9 @@
 			"title_placeholder": "Enter the trip title",
 			"security": {
 				"title": "Data protection",
-				"disabled": "Don't protect trip data",
-				"sensitive_only": "Protect only sensitive data (expenses and reservation codes)",
-				"all_data": "Protect all trip data"
+				"disabled": "Disabled",
+				"sensitive_only": "Sensitive data",
+				"all_data": "Enabled"
 			},
 			"pin": {
 				"title": "Access PIN",
@@ -104,6 +104,9 @@
 			"arrival": "Arrival",
 			"during": "While traveling",
 			"return": "Return",
+			"duration": "Duration",
+			"departure_time": "Departure time",
+			"arrival_time": "Arrival time",
 			"simple_view": "Simplified view",
 			"leg_view": "Group by leg",
 			"people_view": "Group by people",
@@ -142,6 +145,9 @@
 			"subtitle": "Add where you'll be staying during your trip",
 			"checkin": "Check-in",
 			"checkout": "Check-out",
+			"stay_duration": "Stay duration",
+			"checkin_time": "Check-in time",
+			"checkout_time": "Check-out time",
 			"breakfast": "Breakfast",
 			"name_placeholder": "Hotel, Inn, Airbnb, etc.",
 			"address_placeholder": "Example Street, 123",
@@ -675,9 +681,9 @@
 			"colors": {
 				"title": "Custom colors",
 				"themes": {
-					"light_and_dark": "Show in Light and Dark mode",
-					"light": "Show only in Light mode",
-					"dark": "Show only in Dark mode"
+					"light_and_dark": "Both",
+					"light": "Light mode",
+					"dark": "Dark mode"
 				}
 			},
 			"links": {

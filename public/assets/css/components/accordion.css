@@ -2,10 +2,14 @@
 # Accordion
 --------------------------------------------------------------*/
 
-/* Shared accordion structural styles */
+/* Shared accordion structural styles — uses CSS variables for light/dark */
 
 .accordion-item {
-	background-color: #fff;
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+	margin-bottom: 8px;
+	overflow: hidden;
 }
 
 .accordion-item.dragging {
@@ -13,30 +17,45 @@
 }
 
 .accordion-header {
-	background-color: #f1f1f1;
-	color: #1f2937;
-	border-radius: 0.75rem;
+	background: var(--bg-tertiary);
+	border-radius: var(--radius-md);
 }
 
 .accordion-body {
-	background-color: #fff;
-	color: #1f2937;
+	background: var(--bg-primary);
+	color: var(--text-primary);
+	padding: 16px;
+}
+
+.accordion-button {
+	background: transparent;
+	color: var(--text-primary);
+	font-weight: 600;
+	font-size: 14px;
+	padding: 14px 16px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .accordion-button[aria-expanded="false"] {
-	background-color: #f1f1f1;
-	color: #1f2937;
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
 }
 
 .accordion-button[aria-expanded="true"] {
-	background-color: #f1f1f1;
-	color: #1f2937;
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
 }
 
 .accordion-button:focus,
 .purple:focus,
 .btn:focus {
-	box-shadow: 0 0 0 0.3rem rgba(88, 89, 167, 0.25);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.25);
 }
 
 .accordion-button::after {

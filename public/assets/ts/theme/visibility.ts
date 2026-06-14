@@ -336,10 +336,11 @@ export function toggleFadingVisibility(id = "copy-msg") {
 
 export function searchDestinationsListenerAction() {
 	const search = getID("destinos-search").value.toLowerCase();
+	const container = getID("destinos-checkboxes");
 
-	for (const j of getJs("destinos-checkboxes")) {
-		const label = getID(`check-destinos-label-${j}`).innerText.toLowerCase();
-		getID(`checkbox-${j}`).style.display = label.includes(search) ? "" : "none";
+	for (const card of container.querySelectorAll(".destino-card")) {
+		const name = card.querySelector(".destino-card-name")?.textContent?.toLowerCase() || "";
+		(card as HTMLElement).style.display = name.includes(search) ? "" : "none";
 	}
 }
 

@@ -8,7 +8,7 @@ import { visibilityListenerAction } from './support/event-listeners.js';
 import { addTransportation, addHospedagens, loadDestinations, loadItinerarySchedule, addGaleria } from './new-trip.js';
 import { loadTransportationVisibility, updateTransportationTitle, applyTransportationTypeVisualization } from './categories/transportation.js';
 import { ACCOMMODATION_IMAGES, setImagemButtonLabel, loadCheckIn, loadCheckOut } from './categories/accommodation.js';
-import { loadDestinosAtivos, updateDestinosAtivosCheckboxHTML } from './categories/destination.js';
+import { loadDestinosAtivos, updateDestinosAtivosCardsHTML } from './categories/destination.js';
 import { setProgramacaoData, applyLoadedItineraryData } from './categories/itinerary-module/itinerary-module.js';
 import { displayError } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
@@ -235,15 +235,15 @@ async function loadDestinationsData() {
 	}
 
 	loadDestinations();
-	const checkboxes = document.querySelectorAll(
-		'#destinos-checkboxes input[type="checkbox"]',
-	);
+	const cards = document.querySelectorAll('#destinos-checkboxes .destino-card');
 	for (const destino of getState().destinos) {
 		const id = destino.destinosID;
-		for (const checkbox of checkboxes) {
-		const cb = checkbox as HTMLInputElement;
-		if (cb.value === id) {
-			cb.checked = true;
+		for (const card of cards) {
+			if (card.getAttribute("data-destino-id") === id) {
+				card.classList.add("selected");
+				// Move to top of selected group
+				const container = getID("destinos-checkboxes");
+				container.prepend(card);
 				break;
 			}
 		}
@@ -267,7 +267,7 @@ export function loadItineraryData() {
 		}
 		j++;
 	}
-	updateDestinosAtivosCheckboxHTML("programacao");
+	updateDestinosAtivosCardsHTML("programacao");
 	setProgramacaoData(cloneObject(getState().programacoes));
 }
 

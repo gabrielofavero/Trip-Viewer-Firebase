@@ -3,10 +3,10 @@ import { getAndDestinationTitle, getChildIDs, getID, getIDs, getReadableArray } 
 import { addValueToSelectIfExists, getAllValuesFromSelect } from '../../../../ui/fields.js';
 import { initializeSortableForGroup } from '../../../../ui/sortable.js';
 import { translate } from '../../../../i18n/translation.js';
-import { addValuesForDestinosAtivosCheckbox, getDestinosFromCheckbox, DESTINOS_ATIVOS } from '../destination.js';
+import { addValuesForDestinosAtivosCards, getDestinosFromCards, DESTINOS_ATIVOS } from '../destination.js';
 import { DESTINATIONS } from '../../../../data/state.js';
 import { INNER_PROGRAMACAO, afterDragInnerItinerary, loadInnerItineraryHTML } from "../itinerary-module/inner-itinerary/inner-itinerary.js";
-import { updateDestinosAtivosCheckboxHTML } from "../destination.js";
+import { updateDestinosAtivosCardsHTML } from "../destination.js";
 import { DATAS } from "../../new-trip.js";
 
 export var FIRESTORE_PROGRAMACAO_DATA = {};
@@ -30,7 +30,7 @@ export function getItineraryArray() {
 			noite: [],
 		};
 
-		innerResult.destinosIDs = getDestinosFromCheckbox("programacao", j);
+		innerResult.destinosIDs = getDestinosFromCards("programacao", j);
 
 		const tituloSelectValue = getID(
 			`programacao-inner-title-select-${j}`,
@@ -81,7 +81,7 @@ export function applyLoadedItineraryData(j, dados) {
 	let destinosIDs = [];
 	if (destinosIDsObject && destinosIDsObject.length > 0) {
 		destinosIDs = destinosIDsObject.map((destino) => destino.destinosID);
-		addValuesForDestinosAtivosCheckbox("programacao", j, destinosIDs);
+		addValuesForDestinosAtivosCards("programacao", j, destinosIDs);
 	}
 
 	getID(`programacao-inner-title-select-${j}`).innerHTML =
@@ -179,12 +179,12 @@ export function getActiveDestinations(j) {
 	const result = [];
 	const fieldSet = getID(`programacao-local-${j}`);
 	if (!fieldSet) return result;
-	const children = fieldSet.children;
-	for (const checkbox of children) {
-		const input = checkbox.querySelector('input[type="checkbox"]') as HTMLInputElement;
-		const label = checkbox.querySelector("label") as HTMLElement;
-		if (input.checked) {
-			result.push({ label: label.innerText, value: input.value });
+	for (const card of fieldSet.querySelectorAll(".destino-card.selected")) {
+		const nameEl = card.querySelector(".destino-card-name") as HTMLElement;
+		const label = nameEl?.textContent?.trim() || "";
+		const value = card.getAttribute("data-destino-id") || "";
+		if (value) {
+			result.push({ label, value });
 		}
 	}
 	return result;
@@ -267,17 +267,22 @@ export function reloadItinerary() {
 		}
 		j++;
 	}
-	updateDestinosAtivosCheckboxHTML("programacao");
+	updateDestinosAtivosCardsHTML("programacao");
 }
 
 // Listeners
 export function loadItineraryListeners(j) {
-	// Checkbox Local
-	const fieldsetID = `programacao-local-${j}`;
-	for (const containerID of getChildIDs(fieldsetID)) {
-		const ids = getIDs(containerID);
-		getID(`check-programacao-${ids}`).addEventListener("change", () =>
-			updateItineraryTitleSelect(j),
-		);
+	// Card-based destination selection
+	const container = getID(`programacao-local-${j}`);
+	if (!container) return;
+	for (const card of container.querySelectorAll(".destino-card")) {
+		card.addEventListener("click", () => {
+			card.classList.toggle("selected");
+			if (card.classList.contains("selected")) {
+				container.prepend(card);
+			}
+			updateItineraryTitleSelect(j);
+			updateItineraryTitle(j);
+		});
 	}
 }

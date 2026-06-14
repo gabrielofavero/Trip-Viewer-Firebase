@@ -27,6 +27,7 @@ import { setDocumento } from "../../utils/set.js";
 import { buildDestinosObject, updateTikTokLinks } from "./set-destination.js";
 import { FIRESTORE_DESTINATIONS_DATA, SUCCESSFUL_SAVE, DOCUMENT_ID, setDocumentId, setFirestoreDestinationsData } from '../../data/state.js';
 import { MESSAGE_PROPERTIES } from '../../utils/messages.js';
+import { initEditTabs } from "../../ui/edit-tabs.js";
 
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
@@ -41,6 +42,7 @@ export async function loadEditDestinationPage() {
 	setDocumentId(getURLParam("d"));
 
 	loadVisibilityIndex();
+	initEditTabs();
 	loadHabilitados();
 	newDynamicSelect("regiao");
 
