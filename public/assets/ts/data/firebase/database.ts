@@ -7,13 +7,58 @@ import { DESTINOS_ATIVOS } from "../../pages/edit-trip/categories/destination.js
 import { getURLParam } from "../../utils/dom.js";
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, setErrorFromGetRequest } from '../state.js';
 
-const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
+// ============================================================
+// Collection & Subcollection Name Constants
+// ============================================================
+
+export const COLLECTION = {
+	USERS: "users",
+	TRIPS: "trips",
+	DESTINATIONS: "destinations",
+	LISTINGS: "listings",
+	EXPENSES: "expenses",
+	PROTECTED: "protected",
+	CONFIG: "config",
+} as const;
+
+export const SUBCOLLECTION = {
+	TRIP_SUMMARIES: "tripSummaries",
+	DESTINATION_SUMMARIES: "destinationSummaries",
+	LISTING_SUMMARIES: "listingSummaries",
+	ACCOMMODATIONS: "accommodations",
+	TRANSPORTATION: "transportation",
+	ITINERARY: "itinerary",
+	PROTECTED_TRIPS: "protected",   // under trips/{id}/protected
+	PROTECTED_EXPENSES: "protected", // under expenses/{id}/protected
+} as const;
+
+/** Maps collection names to historical URL param chars (v=viagens→trips, d=destinos, l=listagens) */
+const URL_PARAM_MAP: Record<string, string> = {
+	[COLLECTION.TRIPS]: "v",
+	[COLLECTION.DESTINATIONS]: "d",
+	[COLLECTION.LISTINGS]: "l",
+};
+
+/** Dual-read fallback: new English → old Portuguese collection names */
+const COLLECTION_ALIASES: Record<string, string> = {
+	[COLLECTION.USERS]: "usuarios",
+	[COLLECTION.TRIPS]: "viagens",
+	[COLLECTION.DESTINATIONS]: "destinos",
+	[COLLECTION.LISTINGS]: "listagens",
+	[COLLECTION.EXPENSES]: "gastos",
+	[COLLECTION.PROTECTED]: "protegido",
+};
+
+/** @deprecated Use COLLECTION.TRIPS, COLLECTION.DESTINATIONS, COLLECTION.LISTINGS */
+const DATABASE_TRIP_DOCUMENTS = [COLLECTION.TRIPS, COLLECTION.DESTINATIONS, COLLECTION.LISTINGS];
+
+/** @deprecated Use COLLECTION constants */
 export const DATABASE_EDITABLE_DOCUMENTS = [
-	"viagens",
-	"destinos",
-	"listagens",
-	"gastos",
-	"protegido",
+	COLLECTION.TRIPS,
+	COLLECTION.DESTINATIONS,
+	COLLECTION.LISTINGS,
+	COLLECTION.EXPENSES,
+	COLLECTION.PROTECTED,
 ];
 
 // Constructors
@@ -246,14 +291,15 @@ export function createBatchOps() {
 export async function getSingleData(type) {
 	let data;
 	try {
-		data = await get(`${type}/${getURLParam(type[0])}`);
+		const param = URL_PARAM_MAP[type] || type[0];
+		data = await get(`${type}/${getURLParam(param)}`);
 		if (!data) {
 			displayError(
 				`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
 			);
 		}
 		if (
-			["viagens", "listagens"].includes(type) &&
+			[COLLECTION.TRIPS, COLLECTION.LISTINGS].includes(type) &&
 			data?.destinos &&
 			data.destinos.length > 0
 		) {
@@ -267,18 +313,25 @@ export async function getSingleData(type) {
 }
 
 export async function getTripDataWithDestinations(tripData) {
-	for (let i = 0; i < tripData?.destinos?.length; i++) {
-		let place;
-		try {
-			place = await get(`destinos/${tripData.destinos[i].destinosID}`, false);
-			tripData.destinos[i].destinos = place;
-		} catch (e) {
+	const refs = tripData?.destinos;
+	if (!refs || refs.length === 0) return tripData;
+
+	const results = await Promise.allSettled(
+		refs.map((ref) => get(`${COLLECTION.DESTINATIONS}/${ref.destinosID}`, false))
+	);
+
+	results.forEach((result, i) => {
+		if (result.status === "fulfilled" && result.value) {
+			tripData.destinos[i].destinos = result.value;
+		} else {
+			const reason = result.status === "rejected" ? result.reason?.message : "not found";
 			console.warn(
-				`Unable to get destination ${tripData.destinos[i].destinosID}: ${e.message}`,
+				`Unable to get destination ${refs[i].destinosID}: ${reason}`,
 			);
 			tripData.destinos.splice(i, 1);
 		}
-	}
+	});
+
 	return tripData;
 }
 
@@ -297,7 +350,7 @@ export async function deleteUserObjectDB(id, type) {
 		let result = {};
 		result[type] = dataArray;
 
-		update(`usuarios/${uid}/`, result);
+		update(`${COLLECTION.USERS}/${uid}/`, result);
 
 		return await deleteDocument(`${type}/${id}`);
 	}
@@ -307,7 +360,7 @@ export async function deleteAccount() {
 	const uid = await getUID();
 	if (uid) {
 		await deleteAccountDocuments();
-		await deleteDocument(`usuarios/${uid}`);
+		await deleteDocument(`${COLLECTION.USERS}/${uid}`);
 		await firebase.auth().currentUser.delete();
 	}
 }
@@ -327,8 +380,8 @@ export async function deleteAccountDocuments() {
 		);
 	};
 
-	// --- CASE A: destinos + listagens ---
-	for (const type of ["destinos", "listagens"]) {
+	// --- CASE A: destinations + listings ---
+	for (const type of [COLLECTION.DESTINATIONS, COLLECTION.LISTINGS]) {
 		const ids = userData[type] ?? [];
 		for (const id of ids) {
 			const ref = firebase.firestore().collection(type).doc(id);
@@ -337,18 +390,18 @@ export async function deleteAccountDocuments() {
 		userData[type] = [];
 	}
 
-	// --- CASE B: viagens ---
-	if (Array.isArray(userData.viagens)) {
-		for (const tripID of userData.viagens) {
+	// --- CASE B: trips ---
+	if (Array.isArray(userData.trips)) {
+		for (const tripID of userData.trips) {
 			const tripRef = firebase
 				.firestore()
-				.collection("viagens")
+				.collection(COLLECTION.TRIPS)
 				.doc(tripID);
 			safePushDelete(tripRef);
 
 			const protRef = firebase
 				.firestore()
-				.collection("protegido")
+				.collection(COLLECTION.PROTECTED)
 				.doc(tripID);
 
 			// Read protRef (read must be awaited, deletes can be parallel)
@@ -364,10 +417,10 @@ export async function deleteAccountDocuments() {
 
 				if (pin) {
 					safePushDelete(
-						firebase.firestore().doc(`viagens/protected/${pin}/${tripID}`),
+						firebase.firestore().doc(`${COLLECTION.TRIPS}/protected/${pin}/${tripID}`),
 					);
 					safePushDelete(
-						firebase.firestore().doc(`gastos/protected/${pin}/${tripID}`),
+						firebase.firestore().doc(`${COLLECTION.EXPENSES}/protected/${pin}/${tripID}`),
 					);
 				}
 
@@ -375,17 +428,39 @@ export async function deleteAccountDocuments() {
 			} else {
 				const expensesRef = firebase
 					.firestore()
-					.collection("gastos")
+					.collection(COLLECTION.EXPENSES)
 					.doc(tripID);
 				safePushDelete(expensesRef);
 			}
 		}
 
+		userData.trips = [];
+	}
+
+	// Also handle Portuguese field name backward compat (old user doc may have "viagens")
+	if (!Array.isArray(userData.trips) && Array.isArray(userData.viagens)) {
+		for (const tripID of userData.viagens) {
+			const tripRef = firebase.firestore().collection("viagens").doc(tripID);
+			safePushDelete(tripRef);
+			const protRef = firebase.firestore().collection("protegido").doc(tripID);
+			let protSnap = null;
+			try { protSnap = await protRef.get(); } catch (e) { /* skip */ }
+			if (protSnap?.exists) {
+				const pin = protSnap.data()?.pin;
+				if (pin) {
+					safePushDelete(firebase.firestore().doc(`viagens/protected/${pin}/${tripID}`));
+					safePushDelete(firebase.firestore().doc(`gastos/protected/${pin}/${tripID}`));
+				}
+				safePushDelete(protRef);
+			} else {
+				safePushDelete(firebase.firestore().collection("gastos").doc(tripID));
+			}
+		}
 		userData.viagens = [];
 	}
 
 	// --- Update user object individually (not batched) ---
-	const userRef = firebase.firestore().collection("usuarios").doc(uid);
+	const userRef = firebase.firestore().collection(COLLECTION.USERS).doc(uid);
 	deleteOps.push(
 		userRef.update(userData).then(
 			() => console.log("Updated user:", userRef.path),
@@ -401,7 +476,7 @@ export async function deleteAccountDocuments() {
 export async function addToUserArray(type, value) {
 	const uid = await getUID();
 	if (uid) {
-		const userDoc = await get(`usuarios/${uid}`);
+		const userDoc = await get(`${COLLECTION.USERS}/${uid}`);
 		if (userDoc) {
 			let list = userDoc[type];
 			if (!list) {
@@ -409,7 +484,7 @@ export async function addToUserArray(type, value) {
 			}
 			if (!list.includes(value)) {
 				list.push(value);
-				await update(`usuarios/${uid}`, {
+				await update(`${COLLECTION.USERS}/${uid}`, {
 					[type]: list,
 				});
 			}
@@ -431,14 +506,18 @@ export async function newUserObjectDB(object, type) {
 	} else return translate("messages.unauthenticated");
 }
 
-export async function getPermissoes() {
-	// Seing permissions is only for Front-End purposes. Security is handled by Firebase Rules
+/** Get user permissions from Firestore.  was "getPermissoes" */
+export async function getPermissions() {
+	// Seeing permissions is only for Front-End purposes. Security is handled by Firebase Rules
 	const uid = await getUID();
 	if (uid) {
 		const userData = await getUserData(uid);
-		return userData?.permissoes;
+		return userData?.permissions ?? userData?.permissoes;
 	}
 }
+
+/** @deprecated Use getPermissions() */
+export const getPermissoes = getPermissions;
 
 export async function getDestination(id, containerID?) {
 	if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
@@ -459,7 +538,7 @@ export async function getDestination(id, containerID?) {
 	}
 
 	try {
-		DESTINOS_ATIVOS[id] = await get(`destinos/${id}`);
+		DESTINOS_ATIVOS[id] = await get(`${COLLECTION.DESTINATIONS}/${id}`);
 		return DESTINOS_ATIVOS[id];
 	} finally {
 		if (containerID) {
@@ -469,6 +548,119 @@ export async function getDestination(id, containerID?) {
 			stopLoadingScreen();
 		}
 	}
+}
+
+// ============================================================
+// Subcollection Read Functions (Option B — Optimized Redesign)
+// ============================================================
+
+/** Get all accommodations for a trip from trips/{tripId}/accommodations */
+export async function getAccommodations(tripId: string): Promise<any[]> {
+	const snapshot = await firebase.firestore()
+		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ACCOMMODATIONS}`)
+		.get();
+	return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get all transportation legs + settings for a trip from trips/{tripId}/transportation */
+export async function getTransportation(tripId: string): Promise<{ legs: any[], settings: any }> {
+	const colRef = firebase.firestore()
+		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.TRANSPORTATION}`);
+	const snapshot = await colRef.get();
+	const legs: any[] = [];
+	let settings: any = { viewMode: "simple" };
+	snapshot.forEach(doc => {
+		if (doc.id === "_settings") {
+			settings = doc.data();
+		} else {
+			legs.push({ id: doc.id, ...doc.data() });
+		}
+	});
+	return { legs, settings };
+}
+
+/** Get all itinerary days for a trip from trips/{tripId}/itinerary */
+export async function getItinerary(tripId: string): Promise<any[]> {
+	const snapshot = await firebase.firestore()
+		.collection(`${COLLECTION.TRIPS}/${tripId}/${SUBCOLLECTION.ITINERARY}`)
+		.get();
+	return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get trip summaries for a user from users/{uid}/tripSummaries */
+export async function getUserTripSummaries(uid: string): Promise<any[]> {
+	const snapshot = await firebase.firestore()
+		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.TRIP_SUMMARIES}`)
+		.get();
+	return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get destination summaries for a user from users/{uid}/destinationSummaries */
+export async function getUserDestinationSummaries(uid: string): Promise<any[]> {
+	const snapshot = await firebase.firestore()
+		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.DESTINATION_SUMMARIES}`)
+		.get();
+	return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+/** Get listing summaries for a user from users/{uid}/listingSummaries */
+export async function getUserListingSummaries(uid: string): Promise<any[]> {
+	const snapshot = await firebase.firestore()
+		.collection(`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.LISTING_SUMMARIES}`)
+		.get();
+	return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+/**
+ * Get a trip with all subcollections resolved in parallel.
+ * Replaces getTripDataWithDestinations for the new subcollection architecture.
+ */
+export async function getTripComplete(tripId: string): Promise<any> {
+	const tripData = await get(`${COLLECTION.TRIPS}/${tripId}`);
+	if (!tripData) return null;
+
+	const destinationRefs = tripData.destinationRefs || tripData.destinos;
+
+	const [accommodations, transportation, itinerary, destinations] = await Promise.all([
+		getAccommodations(tripId).catch(() => []),
+		getTransportation(tripId).catch(() => ({ legs: [], settings: { viewMode: "simple" } })),
+		getItinerary(tripId).catch(() => []),
+		destinationRefs?.length
+			? Promise.all(
+				destinationRefs.map((ref: any) =>
+					get(`${COLLECTION.DESTINATIONS}/${ref.id || ref.destinosID}`, false)
+				)
+			).then(results => results.filter(Boolean))
+			: Promise.resolve([]),
+	]);
+
+	return { ...tripData, accommodations, transportation, itinerary, destinations };
+}
+
+// ============================================================
+// Dual-Read Transition Helper
+// ============================================================
+
+/**
+ * Reads from the new English collection path first, falls back to
+ * the old Portuguese collection name if not found.
+ *
+ * Remove this helper after the migration is complete and all clients
+ * have been updated to use the new English collection names.
+ */
+export async function getWithFallback(newPath: string): Promise<any> {
+	// Try new collection path first
+	let data = await get(newPath, false, true); // hideWarn=true
+	if (data) return data;
+
+	// Fall back to old Portuguese path
+	for (const [newName, oldName] of Object.entries(COLLECTION_ALIASES)) {
+		if (newPath.startsWith(newName)) {
+			const oldPath = newPath.replace(newName, oldName);
+			return await get(oldPath, false, true);
+		}
+	}
+	return null;
 }
 
 // Helpers (Not database related)

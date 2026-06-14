@@ -2,7 +2,7 @@ import { displayError, displayMessage } from "../../utils/messages.js";
 import { getHTMLpage } from '../../app/main.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
-import { create, get, getSystemData } from './database.js';
+import { create, get, getSystemData, COLLECTION } from './database.js';
 
 export let USER_DATA;
 export let UID;
@@ -16,7 +16,7 @@ export async function getUserData(uid?) {
 	if (!uid) {
 		uid = await getUID();
 	}
-	return await get(`usuarios/${uid}`);
+	return await get(`${COLLECTION.USERS}/${uid}`);
 }
 
 export function unloadPageUserFunctions() {
@@ -69,22 +69,21 @@ export async function registerIfUserNotPresent() {
 		return;
 	}
 
-	const userDoc = await get(`usuarios/${user.uid}`);
+	const userDoc = await get(`${COLLECTION.USERS}/${user.uid}`);
 	const systemData = await getSystemData();
 	const registrationOpen = systemData?.registrationOpen == true;
 
 	if (!userDoc && !registrationOpen) {
 		signOut();
-		const title = "Você chegou muito cedo! 😅";
-		const content =
-			"Olá! O TripViewer não está aceitando novos registros. Estamos trabalhando para lançar a primeira versão pública da aplicação. Fique atento para novidades! 🚀";
+		const title = translate('messages.too_early.title');
+		const content = translate('messages.too_early.message');
 		displayMessage(title, content);
 		return;
 	}
 
 	if (!userDoc && registrationOpen) {
 		await create(
-			`usuarios`,
+			`${COLLECTION.USERS}`,
 			{
 				listagens: [],
 				viagens: [],
