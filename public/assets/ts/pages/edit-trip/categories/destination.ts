@@ -56,7 +56,7 @@ export function getActiveDestinationsSelectVisibility() {
 	return DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 }
 
-// Destinos Cards para Programação
+// Destination Cards for Itinerary
 export function updateDestinosAtivosCardsHTML(tipo, j?) {
 	const visibility = DESTINOS_ATIVOS.length > 0 ? "block" : "none";
 	const values = DESTINOS_ATIVOS.map((destino) => destino.destinosID);
@@ -239,7 +239,7 @@ function reorganizeDestinosCheckbox() {
 
 export { reorganizeDestinosCheckbox };
 
-// Outros (Genérico)
+// Other (Generic)
 function getDestinoTitle(destinoID) {
 	if (!destinoID) return "";
 	for (const destino of DESTINOS) {

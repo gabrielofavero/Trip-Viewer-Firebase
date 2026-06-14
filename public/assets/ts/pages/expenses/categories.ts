@@ -60,7 +60,7 @@ function loadChartSummary() {
 	setChart("doughnut", "resumo-grafico", labels, valores);
 }
 
-// Gastos Prévios
+// Pre-Trip Expenses
 export function loadPreTripExpenses() {
 	setDoughnutChartCategoria("trip.expenses.pre_trip", "preTrip");
 	setTableCategoria("preTrip");

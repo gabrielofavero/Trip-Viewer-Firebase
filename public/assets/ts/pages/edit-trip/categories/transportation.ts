@@ -225,7 +225,7 @@ function getCompanyValue(j) {
 
 // Listeners
 export function loadTransportationListeners(j) {
-	// Selects Dinâmicos
+// Dynamic Selects
 	getID(`empresa-select-${j}`).addEventListener("change", () =>
 		loadTransportationVisibility(j),
 	);
@@ -233,7 +233,7 @@ export function loadTransportationListeners(j) {
 		loadTransportationVisibility(j),
 	);
 
-	// Título Dinâmico
+// Dynamic Title
 	getID(`ponto-partida-${j}`).addEventListener("change", () =>
 		updateTransportationTitle(j),
 	);
@@ -248,7 +248,7 @@ export function loadTransportationListeners(j) {
 		updateTransportationTitle(j),
 	);
 
-	// Cálculo Automático da Duração do Trajeto
+	// Automatic Route Duration Calculation
 	getID(`partida-${j}`).addEventListener("change", () => loadAutoDuration(j));
 	getID(`partida-horario-${j}`).addEventListener("change", () =>
 		loadAutoDuration(j),
@@ -258,7 +258,7 @@ export function loadTransportationListeners(j) {
 		loadAutoDuration(j),
 	);
 
-	// Validação de Link
+// Link Validation
 	getID(`transporte-link-${j}`).addEventListener("change", () =>
 		validateLink(`transporte-link-${j}`),
 	);

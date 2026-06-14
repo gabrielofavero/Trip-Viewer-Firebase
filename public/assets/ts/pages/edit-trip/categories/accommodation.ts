@@ -91,7 +91,7 @@ function loadAccommodationCheck(chave, checkTipo, hospedagem, j) {
 
 // Listener
 export function loadAccommodationListeners(j) {
-	// Validação de Link
+// Link Validation
 	getID(`reserva-hospedagens-link-${j}`).addEventListener("change", () =>
 		validateLink(`reserva-hospedagens-link-${j}`),
 	);

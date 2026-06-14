@@ -228,7 +228,7 @@ async function loadInnerItineraryCurrentData(j, k, turno, isNew) {
 	}
 }
 
-// Navegação do Modal
+// Modal Navigation
 export async function openInnerItineraryItem(j) {
 	const height = getID("inner-programacao-tela-principal").offsetHeight;
 	const itemSelecionar = getID("inner-programacao-item-selecionar");
@@ -324,7 +324,7 @@ export function innerProgramacaoConfirmAction(j, k, turno) {
 	closeMessage();
 }
 
-// Salvar Inner Programação
+// Save Inner Itinerary
 function addInnerProgramacao(j, k?, turno?) {
 	const programacao = getID(`inner-programacao`);
 
@@ -388,17 +388,17 @@ function addInnerProgramacao(j, k?, turno?) {
 		const newTurno = getID(`inner-programacao-select-turno`).value;
 
 		if (isNew) {
-			// Nova Inner Programação (Apenas Adição)
-			INNER_PROGRAMACAO[key][newTurno].push(innerItinerary);
-			LAST_OPENED_TURNO[j] = newTurno;
+		// New Inner Itinerary (Addition Only)
+		INNER_PROGRAMACAO[key][newTurno].push(innerItinerary);
+		LAST_OPENED_TURNO[j] = newTurno;
+	} else {
+		// Existing Inner Itinerary (Replacement)
+		const newJ = getMostRecentJ(j);
+		if (turno == newTurno && newJ == j) {
+			// Simple Replacement
+			INNER_PROGRAMACAO[key][turno][k - 1] = innerItinerary;
 		} else {
-			// Inner Programacao Existente (Substituição)
-			const newJ = getMostRecentJ(j);
-			if (turno == newTurno && newJ == j) {
-				// Substituição Simples
-				INNER_PROGRAMACAO[key][turno][k - 1] = innerItinerary;
-			} else {
-				// Substituição Composta
+			// Compound Replacement
 				const newKey = jsDateToKey(DATAS[newJ - 1]);
 				INNER_PROGRAMACAO[newKey][newTurno].push(innerItinerary);
 				INNER_PROGRAMACAO[key][turno].splice(k - 1, 1);
@@ -410,7 +410,7 @@ function addInnerProgramacao(j, k?, turno?) {
 	}
 }
 
-// Deletar Inner Programação
+// Delete Inner Itinerary
 export function deleteInnerProgramacao(j, k, turno) {
 	const isNew = !k && !turno;
 	if (isNew) {

@@ -88,7 +88,7 @@ export function displayFullMessage(
 	const container = document.createElement("div");
 	container.className = properties.containers.principal;
 
-	// Container de Texto
+// Text Container
 	const textDiv = document.createElement("div");
 	textDiv.className = "message-text-container";
 

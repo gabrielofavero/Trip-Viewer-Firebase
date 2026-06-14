@@ -97,7 +97,7 @@ export function loadEventListeners() {
 	getID("inicio").addEventListener("change", () => inicioListenerAction());
 	getID("fim").addEventListener("change", () => fimListenerAction());
 
-	// Botões
+	// Buttons
 	getID("save-btn").addEventListener("click", () => setTripData());
 	getID("re-editar").addEventListener("click", () =>
 		reEdit("viagens", SUCCESSFUL_SAVE),
@@ -142,7 +142,7 @@ export function loadEventListeners() {
 		applyTransportationTypeVisualization(),
 	);
 
-	// Validação de Imagens no módulo de Customização
+	// Image Validation in Customization module
 	getID("link-background").addEventListener("change", () =>
 		validateImageLink("link-background"),
 	);
@@ -153,7 +153,7 @@ export function loadEventListeners() {
 		validateImageLink("link-logo-dark"),
 	);
 
-	// Validação de Links no módulo de Customização
+	// Link Validation in Customization module
 	getID("link-attachments").addEventListener("change", () =>
 		validateLink("link-attachments"),
 	);

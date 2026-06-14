@@ -1,6 +1,6 @@
 import { translate } from "../../../../../i18n/translation.js";
 import { getTravelersFieldset } from "../../travelers.js";
-// Conteúdo do Modal (HTML)
+// Modal Content (HTML)
 export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
 	return `<div class="inner-programacao" id="inner-programacao-box">
                 <div id="inner-programacao-tela-principal">

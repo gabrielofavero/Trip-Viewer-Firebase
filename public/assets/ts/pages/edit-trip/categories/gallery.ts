@@ -58,7 +58,7 @@ export function loadGaleriaListeners(j) {
 			).value),
 	);
 
-	// Validação de Link
+// Link Validation
 	getID(`link-galeria-${j}`).addEventListener("change", () =>
 		validateImageLink(`link-galeria-${j}`),
 	);

@@ -617,7 +617,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Resume - Programação
+# Resume - Itinerary
 --------------------------------------------------------------*/
 
 #calendar-table-card {
@@ -2119,7 +2119,7 @@ iframe {
 	margin-top: 0;
 }
 
-/* Hospedagem Box */
+/* Accommodation Box */
 
 .hotel-box,
 .flight-box,
@@ -2371,7 +2371,7 @@ iframe {
 	max-width: 390px;
 }
 
-/* Programação Pills */
+/* Itinerary Pills */
 .pill-box {
 	margin-top: 36px;
 	margin-left: auto;

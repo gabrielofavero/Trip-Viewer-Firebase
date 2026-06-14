@@ -298,7 +298,7 @@ function displayPartialBackupWarning() {
             </div>
         `;
 
-		// mensagem + lista rolável
+// message + scrollable list
 		list.push(scrollableContent);
 
 		return list.join("<br><br>");

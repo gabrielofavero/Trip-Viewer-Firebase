@@ -24,7 +24,7 @@ export function loadDestinations() {
 	}
 
 	if (DESTINATIONS.length % 2 === 1) {
-		// Ímpar
+	// Odd
 		getID("destinationsBox").classList.add("centered-destino-box");
 	}
 

@@ -103,7 +103,7 @@ function getGaleriaDescricoes(galeria, i) {
 		galeria.imagens[i] &&
 		galeria.imagens[i].descricao
 	) {
-		// Implementação Antiga
+		// Old Implementation
 		description = galeria.imagens[i].descricao;
 	}
 	return description || "";
@@ -112,14 +112,14 @@ function getGaleriaDescricoes(galeria, i) {
 function getGaleriaCategoria(galeria, i) {
 	let categoria = "";
 	if (galeria.categorias && galeria.categorias[i]) {
-		// Implementação Atual
+		// Current Implementation
 		categoria = FILTER_MAP.getByValue(galeria.categorias[i]);
 	} else if (
 		galeria.imagens &&
 		galeria.imagens[i] &&
 		galeria.imagens[i].filtro
 	) {
-		// Implementação Antiga
+		// Old Implementation
 		categoria = FILTER_MAP.getByValue(galeria.imagens[i].filtro);
 	}
 	return categoria || "";
