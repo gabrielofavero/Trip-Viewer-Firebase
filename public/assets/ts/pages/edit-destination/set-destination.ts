@@ -8,11 +8,11 @@ import { FIRESTORE_DESTINATIONS_DATA, FIRESTORE_DESTINATIONS_NEW_DATA, setFirest
 
 export async function buildDestinosObject() {
 	setFirestoreDestinationsNewData({
-		lanches: buildDestinoCategoryObject("lanches"),
-		lojas: buildDestinoCategoryObject("lojas"),
-		restaurantes: buildDestinoCategoryObject("restaurantes"),
-		saidas: buildDestinoCategoryObject("saidas"),
-		turismo: buildDestinoCategoryObject("turismo"),
+		snacks: buildDestinoCategoryObject("snacks"),
+		shopping: buildDestinoCategoryObject("shopping"),
+		restaurants: buildDestinoCategoryObject("restaurants"),
+		nightlife: buildDestinoCategoryObject("nightlife"),
+		tourism: buildDestinoCategoryObject("tourism"),
 		titulo: getID("title").value,
 		moeda:
 			getID("currency").value == "outra"
@@ -20,12 +20,12 @@ export async function buildDestinosObject() {
 				: getID("currency").value,
 		myMaps: getID("map-link").value,
 		modulos: {
-			lanches: getID(`enabled-lanches`).checked,
-			lojas: getID(`enabled-lojas`).checked,
+			snacks: getID(`enabled-snacks`).checked,
+			shopping: getID(`enabled-shopping`).checked,
 			mapa: getID("map-enabled").checked,
-			restaurantes: getID(`enabled-restaurantes`).checked,
-			saidas: getID(`enabled-saidas`).checked,
-			turismo: getID(`enabled-turismo`).checked,
+			restaurants: getID(`enabled-restaurants`).checked,
+			nightlife: getID(`enabled-nightlife`).checked,
+			tourism: getID(`enabled-tourism`).checked,
 		},
 		compartilhamento: {
 			ativo: true,

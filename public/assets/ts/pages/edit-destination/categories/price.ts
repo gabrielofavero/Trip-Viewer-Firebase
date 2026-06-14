@@ -5,7 +5,7 @@ import { translate } from '../../../i18n/translation.js';
 export var VALOR_OPTIONS = "";
 
 export function loadCurrencySelects() {
-	loadMoedaOptions();
+	loadCurrencyOptions();
 
 	const destinationsConfig = getDestinations();
 	for (const category of destinationsConfig.categories.tours) {
@@ -25,7 +25,7 @@ export function loadCurrencySelects() {
 	}
 }
 
-export function loadMoedaOptions() {
+export function loadCurrencyOptions() {
 	const currencies = getCurrencies();
 	const categories = currencies.values;
 	const moeda = getID("currency").value;
@@ -67,7 +67,7 @@ export function getOutroValorVisibility() {
 	else return "block";
 }
 
-export function loadMoedaValorAndVisibility(valor, categoria, i) {
+export function loadCurrencyValueAndVisibility(valor, categoria, i) {
 	const valorSelect = getID(`${categoria}-valor-${i}`);
 	const outroValorDiv = getID(`${categoria}-outro-valor-${i}`);
 

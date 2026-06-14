@@ -11,18 +11,18 @@
 import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { getJs, getLastJ } from '../../utils/dom.js';
 import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
-import { addLanches } from "./new-destination.js";
-import { addLojas } from "./new-destination.js";
-import { addRestaurantes } from "./new-destination.js";
-import { addSaidas } from "./new-destination.js";
-import { addTurismo } from "./new-destination.js";
+import { addSnacks } from "./new-destination.js";
+import { addShopping } from "./new-destination.js";
+import { addRestaurants } from "./new-destination.js";
+import { addNightlife } from "./new-destination.js";
+import { addTourism } from "./new-destination.js";
 import { setDescription } from "./categories/description.js";
 import { updateDescriptionButtonLabel } from "./categories/description.js";
-import { loadMoedaValorAndVisibility } from "./categories/price.js";
+import { loadCurrencyValueAndVisibility } from "./categories/price.js";
 import { updateDestinationsTitle } from "./edit-destination.js";
 
 
-const IMPORT_TYPES = ["restaurantes", "lanches", "saidas", "turismo", "lojas"];
+const IMPORT_TYPES = ["restaurants", "snacks", "nightlife", "tourism", "shopping"];
 
 // ─── Core: Fill a destination's fields ────────────────────────────────────────
 function importFillDestination(categoria, j, data, force) {
@@ -63,7 +63,7 @@ function importFillDestination(categoria, j, data, force) {
 
 	// valor (uses _loadMoedaValorAndVisibility)
 	if (force || (data.valor !== undefined && data.valor !== null && data.valor !== "")) {
-		loadMoedaValorAndVisibility(data.valor || "", categoria, j);
+		loadCurrencyValueAndVisibility(data.valor || "", categoria, j);
 	}
 
 	// descricao
@@ -83,17 +83,17 @@ function importGetLastJ(categoria) {
 
 // ─── Add-function lookup (replaces dynamic window._addXxx calls) ──────────────
 const ADD_FUNCTIONS = {
-	restaurantes: addRestaurantes,
-	lanches: addLanches,
-	saidas: addSaidas,
-	turismo: addTurismo,
-	lojas: addLojas,
+	restaurants: addRestaurants,
+	snacks: addSnacks,
+	nightlife: addNightlife,
+	tourism: addTourism,
+	shopping: addShopping,
 };
 
 // ─── 1. importNewDestination ──────────────────────────────────────────────────
 /**
  * Click the "add" button for the given type, then fill the new item.
- * @param {"restaurantes"|"lanches"|"saidas"|"turismo"|"lojas"} type
+ * @param {"restaurants"|"snacks"|"nightlife"|"tourism"|"shopping"} type
  * @param {Object} data - destination data
  * @param {boolean} [force=false] - if true, replace all fields (even with empty values)
  */
@@ -123,8 +123,8 @@ function importNewDestination(type, data, force = false) {
 // ─── 2. importDestinationByJ ──────────────────────────────────────────────────
 /**
  * Replace all fields of the destination at the given index.
- * @param {"restaurantes"|"lanches"|"saidas"|"turismo"|"lojas"} type
- * @param {number} j - the index (e.g., 15 for collapse-restaurantes-15)
+ * @param {"restaurants"|"snacks"|"nightlife"|"tourism"|"shopping"} type
+ * @param {number} j - the index (e.g., 15 for collapse-restaurants-15)
  * @param {Object} data
  * @param {boolean} [force=false]
  */
@@ -192,25 +192,25 @@ function importDestinationByName(name, data, type, force = false) {
 // ─── Per-category convenience wrappers ────────────────────────────────────────
 
 // --- importNew* ---
-function importNewRestaurant(data, force) { importNewDestination("restaurantes", data, force); }
-function importNewSnack(data, force) { importNewDestination("lanches", data, force); }
-function importNewNightlife(data, force) { importNewDestination("saidas", data, force); }
-function importNewTourism(data, force) { importNewDestination("turismo", data, force); }
-function importNewShop(data, force) { importNewDestination("lojas", data, force); }
+function importNewRestaurant(data, force) { importNewDestination("restaurants", data, force); }
+function importNewSnack(data, force) { importNewDestination("snacks", data, force); }
+function importNewNightlife(data, force) { importNewDestination("nightlife", data, force); }
+function importNewTourism(data, force) { importNewDestination("tourism", data, force); }
+function importNewShop(data, force) { importNewDestination("shopping", data, force); }
 
 // --- import*ByJ ---
-function importRestaurantByJ(j, data, force) { importDestinationByJ("restaurantes", j, data, force); }
-function importSnackByJ(j, data, force) { importDestinationByJ("lanches", j, data, force); }
-function importNightlifeByJ(j, data, force) { importDestinationByJ("saidas", j, data, force); }
-function importTourismByJ(j, data, force) { importDestinationByJ("turismo", j, data, force); }
-function importShopByJ(j, data, force) { importDestinationByJ("lojas", j, data, force); }
+function importRestaurantByJ(j, data, force) { importDestinationByJ("restaurants", j, data, force); }
+function importSnackByJ(j, data, force) { importDestinationByJ("snacks", j, data, force); }
+function importNightlifeByJ(j, data, force) { importDestinationByJ("nightlife", j, data, force); }
+function importTourismByJ(j, data, force) { importDestinationByJ("tourism", j, data, force); }
+function importShopByJ(j, data, force) { importDestinationByJ("shopping", j, data, force); }
 
 // --- import*ByName ---
-function importRestaurantByName(name, data, force) { importDestinationByName(name, data, "restaurantes", force); }
-function importSnackByName(name, data, force) { importDestinationByName(name, data, "lanches", force); }
-function importNightlifeByName(name, data, force) { importDestinationByName(name, data, "saidas", force); }
-function importTourismByName(name, data, force) { importDestinationByName(name, data, "turismo", force); }
-function importShopByName(name, data, force) { importDestinationByName(name, data, "lojas", force); }
+function importRestaurantByName(name, data, force) { importDestinationByName(name, data, "restaurants", force); }
+function importSnackByName(name, data, force) { importDestinationByName(name, data, "snacks", force); }
+function importNightlifeByName(name, data, force) { importDestinationByName(name, data, "nightlife", force); }
+function importTourismByName(name, data, force) { importDestinationByName(name, data, "tourism", force); }
+function importShopByName(name, data, force) { importDestinationByName(name, data, "shopping", force); }
 
 // ─── Expose on dev.page for console use ──────────────────────────────────────
 if (typeof dev !== "undefined") {

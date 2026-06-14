@@ -16,13 +16,13 @@ import { getDescription } from "./categories/description.js";
 import { setDescription } from "./categories/description.js";
 import { updateDescriptionButtonLabel } from "./categories/description.js";
 import { loadCurrencySelects } from "./categories/price.js";
-import { addDestino } from "./existing-destination.js";
-import { addDestinoHTML } from "./existing-destination.js";
-import { addLanches } from "./new-destination.js";
-import { addLojas } from "./new-destination.js";
-import { addRestaurantes } from "./new-destination.js";
-import { addSaidas } from "./new-destination.js";
-import { addTurismo } from "./new-destination.js";
+import { addDestination } from "./existing-destination.js";
+import { addDestinationHTML } from "./existing-destination.js";
+import { addSnacks } from "./new-destination.js";
+import { addShopping } from "./new-destination.js";
+import { addRestaurants } from "./new-destination.js";
+import { addNightlife } from "./new-destination.js";
+import { addTourism } from "./new-destination.js";
 import { setDocumento } from "../../utils/set.js";
 import { buildDestinosObject, updateTikTokLinks } from "./set-destination.js";
 import { FIRESTORE_DESTINATIONS_DATA, SUCCESSFUL_SAVE, DOCUMENT_ID, setDocumentId, setFirestoreDestinationsData } from '../../data/state.js';
@@ -57,11 +57,11 @@ export async function loadEditDestinationPage() {
 }
 
 function loadHabilitados() {
-	loadEditModule("restaurantes");
-	loadEditModule("lanches");
-	loadEditModule("saidas");
-	loadEditModule("turismo");
-	loadEditModule("lojas");
+	loadEditModule("restaurants");
+	loadEditModule("snacks");
+	loadEditModule("nightlife");
+	loadEditModule("tourism");
+	loadEditModule("shopping");
 	loadEditModule("mapa");
 
 	const mapa = getID("map-enabled");
@@ -75,38 +75,38 @@ function loadHabilitados() {
 }
 
 function loadEventListeners() {
-	getID("restaurantes-adicionar").addEventListener("click", () => {
-		closeAccordions("restaurantes");
-		addRestaurantes();
-		openLastAccordion("restaurantes");
+	getID("restaurants-add").addEventListener("click", () => {
+		closeAccordions("restaurants");
+		addRestaurants();
+		openLastAccordion("restaurants");
 		buildDS("region");
 	});
 
-	getID("lanches-adicionar").addEventListener("click", () => {
-		closeAccordions("lanches");
-		addLanches();
-		openLastAccordion("lanches");
+	getID("snacks-add").addEventListener("click", () => {
+		closeAccordions("snacks");
+		addSnacks();
+		openLastAccordion("snacks");
 		buildDS("region");
 	});
 
-	getID("saidas-adicionar").addEventListener("click", () => {
-		closeAccordions("saidas");
-		addSaidas();
-		openLastAccordion("saidas");
+	getID("nightlife-add").addEventListener("click", () => {
+		closeAccordions("nightlife");
+		addNightlife();
+		openLastAccordion("nightlife");
 		buildDS("region");
 	});
 
-	getID("turismo-adicionar").addEventListener("click", () => {
-		closeAccordions("turismo");
-		addTurismo();
-		openLastAccordion("turismo");
+	getID("tourism-add").addEventListener("click", () => {
+		closeAccordions("tourism");
+		addTourism();
+		openLastAccordion("tourism");
 		buildDS("region");
 	});
 
-	getID("lojas-adicionar").addEventListener("click", () => {
-		closeAccordions("lojas");
-		addLojas();
-		openLastAccordion("lojas");
+	getID("shopping-add").addEventListener("click", () => {
+		closeAccordions("shopping");
+		addShopping();
+		openLastAccordion("shopping");
 		buildDS("region");
 	});
 
@@ -291,11 +291,11 @@ export function openMoveDestinationModal(j, categoria) {
 	];
 
 	const options = {
-		restaurantes: "Restaurants",
-		lanches: "Snacks",
-		saidas: "Nightlife",
-		turismo: "Tourism",
-		lojas: "Shopping",
+		restaurants: "Restaurants",
+		snacks: "Snacks",
+		nightlife: "Nightlife",
+		tourism: "Tourism",
+		shopping: "Shopping",
 	};
 
 	let optionsString = "";
@@ -337,8 +337,8 @@ export function moveDestination(j, categoria) {
 
 		const newJ = getLastJ(`${newCategoria}-box`) + 1;
 
-		addDestino(newCategoria);
-		addDestinoHTML(newCategoria, newJ, destino);
+		addDestination(newCategoria);
+		addDestinationHTML(newCategoria, newJ, destino);
 		setDescription(newCategoria, newJ, description);
 		removeChildWithValidation(categoria, j);
 

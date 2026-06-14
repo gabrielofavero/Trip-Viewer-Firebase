@@ -215,7 +215,7 @@ function exportPTtranslations() {
 }
 
 function importPTtranslations(input, lang = "en") {
-	const keys = ["lanches", "lojas", "restaurantes", "saidas", "turismo"];
+	const keys = ["snacks", "shopping", "restaurants", "nightlife", "tourism"];
 
 	for (const key of keys) {
 		for (let i = 0; i < FIRESTORE_DESTINATIONS_DATA[key].length; i++) {

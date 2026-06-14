@@ -268,7 +268,7 @@ export function removeEmptyChild(categoria) {
 		case "snacks":
 		case "nightlife":
 		case "tourism":
-		case "lojas":
+		case "shopping":
 		case "lineup":
 			itens = [`${categoria}-nome`];
 			break;
