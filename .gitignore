@@ -1,6 +1,9 @@
 # Build output
 dist/
 
+# Functions compiled output
+functions/lib/
+
 # Dev
 dev/
 
