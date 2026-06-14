@@ -120,15 +120,17 @@
             </div>
 
             <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-background">
-              <div class="nice-form-group">
-                <input type="radio" name="type-background" id="enable-link-background" checked>
-                <label for="enable-link-background" data-translate="labels.image.link"></label>
-              </div>
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="type-background" id="enable-link-background" checked>
+                  <label for="enable-link-background" data-translate="labels.image.link"></label>
+                </div>
 
-              <div class="nice-form-group">
-                <input type="radio" name="type-background" id="enable-upload-background">
-                <label for="enable-upload-background"><span data-translate="labels.image.upload"></span> <span
-                    class="opcional"> (<span data-translate="labels.image.upload_limit"></span>)</span>
+                <div class="nice-form-group">
+                  <input type="radio" name="type-background" id="enable-upload-background">
+                  <label for="enable-upload-background"><span data-translate="labels.image.upload"></span><span
+                      class="opcional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                </div>
               </div>
             </fieldset>
 
@@ -159,15 +161,17 @@
             </div>
 
             <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-logo">
-              <div class="nice-form-group">
-                <input type="radio" name="type-logo" id="enable-link-logo" checked>
-                <label for="enable-link-logo" data-translate="labels.image.link"></label>
-              </div>
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="type-logo" id="enable-link-logo" checked>
+                  <label for="enable-link-logo" data-translate="labels.image.link"></label>
+                </div>
 
-              <div class="nice-form-group">
-                <input type="radio" name="type-logo" id="enable-upload-logo">
-                <label for="enable-upload-logo"><span data-translate="labels.image.upload"></span> <span
-                    class="opcional">(<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                <div class="nice-form-group">
+                  <input type="radio" name="type-logo" id="enable-upload-logo">
+                  <label for="enable-upload-logo"><span data-translate="labels.image.upload"></span><span
+                      class="opcional"> (<span data-translate="labels.image.upload_limit"></span>)</span></label>
+                </div>
               </div>
             </fieldset>
           </div>
@@ -183,31 +187,37 @@
           <div class="transparent-background-color" id="habilitado-cores-content">
 
             <fieldset class="nice-form-group">
-              <div class="nice-form-group">
-                <input type="radio" id="dark-and-light" name="display-mode" checked />
-                <label for="dark-and-light" data-translate="labels.customization.colors.themes.light_and_dark"></label>
-              </div>
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" id="dark-and-light" name="display-mode" checked />
+                  <label for="dark-and-light" data-translate="labels.customization.colors.themes.light_and_dark"></label>
+                </div>
 
-              <div class="nice-form-group">
-                <input type="radio" id="light-exclusive" name="display-mode" />
-                <label for="light-exclusive" data-translate="labels.customization.colors.themes.light"></label>
-              </div>
+                <div class="nice-form-group">
+                  <input type="radio" id="light-exclusive" name="display-mode" />
+                  <label for="light-exclusive" data-translate="labels.customization.colors.themes.light"></label>
+                </div>
 
-              <div class="nice-form-group">
-                <input type="radio" id="dark-exclusive" name="display-mode" />
-                <label for="dark-exclusive" data-translate="labels.customization.colors.themes.dark"></label>
+                <div class="nice-form-group">
+                  <input type="radio" id="dark-exclusive" name="display-mode" />
+                  <label for="dark-exclusive" data-translate="labels.customization.colors.themes.dark"></label>
+                </div>
               </div>
             </fieldset>
 
             <div class="side-by-side-color-box" id="cores">
               <div class="nice-form-group side-by-side-color" id="tema-claro">
                 <label data-translate="labels.light_mode"></label>
-                <input id="claro" type="color" value="#5859a7" />
+                <div class="color-picker-box">
+                  <input id="claro" type="color" value="#5859a7" />
+                </div>
               </div>
 
               <div class="nice-form-group side-by-side-color" id="tema-escuro">
                 <label data-translate="labels.dark_mode"></label>
-                <input id="escuro" type="color" value="#7f75b6" />
+                <div class="color-picker-box">
+                  <input id="escuro" type="color" value="#7f75b6" />
+                </div>
               </div>
             </div>
           </div>

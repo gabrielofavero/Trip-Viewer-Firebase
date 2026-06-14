@@ -145,9 +145,15 @@ export function displayFullMessage(
 	// Adiciona ao Preloader
 	preloader.appendChild(container);
 
-	// Exibe o Preloader
+	// Exibe o Preloader com fade-in
 	if (preloader.style.display != "block") {
+		preloader.style.opacity = "0";
 		preloader.style.display = "block";
+		requestAnimationFrame(() => {
+			preloader.style.opacity = "1";
+		});
+	} else {
+		preloader.style.opacity = "1";
 	}
 }
 
@@ -206,8 +212,13 @@ export function closeMessage() {
 	if (MESSAGE_MODAL_OPEN) {
 		const preloader = getID("preloader");
 		if (preloader) {
-			preloader.innerHTML = "";
-			preloader.style.background = "";
+			preloader.style.opacity = "0";
+			setTimeout(() => {
+				preloader.innerHTML = "";
+				preloader.style.background = "";
+				preloader.style.display = "none";
+				preloader.style.opacity = "";
+			}, 200);
 		}
 		MESSAGE_MODAL_OPEN = false;
 		document.removeEventListener("keydown", handleMessageKeydown);

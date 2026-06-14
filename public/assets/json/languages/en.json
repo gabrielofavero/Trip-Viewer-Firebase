@@ -49,9 +49,9 @@
 			"title_placeholder": "Enter the trip title",
 			"security": {
 				"title": "Data protection",
-				"disabled": "Don't protect trip data",
-				"sensitive_only": "Protect only sensitive data (expenses and reservation codes)",
-				"all_data": "Protect all trip data"
+				"disabled": "Disabled",
+				"sensitive_only": "Sensitive data",
+				"all_data": "Enabled"
 			},
 			"pin": {
 				"title": "Access PIN",
@@ -675,9 +675,9 @@
 			"colors": {
 				"title": "Custom colors",
 				"themes": {
-					"light_and_dark": "Show in Light and Dark mode",
-					"light": "Show only in Light mode",
-					"dark": "Show only in Dark mode"
+					"light_and_dark": "Light and Dark Mode",
+					"light": "Light mode",
+					"dark": "Dark mode"
 				}
 			},
 			"links": {

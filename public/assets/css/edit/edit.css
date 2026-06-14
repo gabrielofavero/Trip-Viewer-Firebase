@@ -47,6 +47,90 @@
 }
 
 /*--------------------------------------------------------------
+# Button Box — Right aligned (expense add buttons)
+--------------------------------------------------------------*/
+.button-box-right {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+/*--------------------------------------------------------------
+# Side-by-side Color Box
+--------------------------------------------------------------*/
+.side-by-side-color-box {
+	display: flex;
+	gap: 16px;
+}
+
+.side-by-side-color-box .nice-form-group {
+	flex: 1;
+	margin-top: 0;
+}
+
+/*--------------------------------------------------------------
+# Accordion — First/Last border-radius
+--------------------------------------------------------------*/
+.accordion .accordion-item:first-child {
+	border-top-left-radius: var(--radius-md);
+	border-top-right-radius: var(--radius-md);
+}
+
+.accordion .accordion-item:last-child {
+	border-bottom-left-radius: var(--radius-md);
+	border-bottom-right-radius: var(--radius-md);
+	margin-bottom: 0;
+}
+
+.accordion .accordion-item:only-child {
+	border-radius: var(--radius-md);
+}
+
+/* Draggable accordions: .inner-box wrapper (SortableJS).
+   Wrapper is transparent; accordion-item fills it.
+   Drag icon is a flex sibling — keep wrapper display:flex. */
+.accordion > .inner-box {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	border-radius: 0;
+}
+
+.accordion > .inner-box > .accordion-item {
+	flex: 1;
+	border-radius: 0;
+	margin-bottom: 0;
+}
+
+.accordion > .inner-box:first-child > .accordion-item {
+	border-top-left-radius: var(--radius-md);
+	border-top-right-radius: var(--radius-md);
+}
+
+.accordion > .inner-box:last-child > .accordion-item {
+	border-bottom-left-radius: var(--radius-md);
+	border-bottom-right-radius: var(--radius-md);
+}
+
+.accordion > .inner-box:only-child > .accordion-item {
+	border-radius: var(--radius-md);
+}
+
+/* Accordion items fill container width */
+.accordion .accordion-item {
+	width: 100%;
+}
+
+/* Consistent gap between stacked accordion items */
+.accordion {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+}
+
+/*--------------------------------------------------------------
 # Language Selector (in shared top-bar)
 --------------------------------------------------------------*/
 .lang-selector { position: relative; }
@@ -80,7 +164,7 @@
 	display: flex;
 	justify-content: center;
 	gap: 4px;
-	margin-bottom: 84px;
+	margin-bottom: 3em;
 	background: rgba(255, 255, 255, 0.5);
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
@@ -88,7 +172,7 @@
 	padding: 4px;
 	border: 1px solid var(--border-color);
 	position: sticky;
-	top: 68px;
+	top: 2em;
 	z-index: 10;
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
@@ -258,10 +342,10 @@
 	margin-top: calc(var(--nf-input-size) * 1.5);
 	line-height: 1;
 	white-space: nowrap;
-	--switch-orb-size: var(--nf-input-size);
+	--switch-orb-size: calc(var(--nf-input-size) * 0.875);
 	--switch-orb-offset: calc(var(--nf-input-border-width) * 2);
-	--switch-width: calc(var(--nf-input-size) * 2.5);
-	--switch-height: calc(var(--nf-input-size) * 1.25 + var(--switch-orb-offset));
+	--switch-width: calc(var(--nf-input-size) * 2.25);
+	--switch-height: calc(var(--nf-input-size) * 1.125 + var(--switch-orb-offset));
 }
 
 .nice-form-group > label {
@@ -270,7 +354,7 @@
 	color: var(--nf-label-color);
 	font-size: var(--nf-label-font-size);
 	font-family: var(--nf-label-font-family);
-	margin-bottom: calc(var(--nf-input-size) / 2);
+	margin-bottom: calc(var(--nf-input-size) / 4);
 	white-space: normal;
 }
 
@@ -386,10 +470,12 @@
 .nice-form-group > input[type="radio"] {
 	width: var(--nf-input-size);
 	height: var(--nf-input-size);
-	min-height: auto;
-	padding: inherit;
+	min-width: var(--nf-input-size);
+	min-height: var(--nf-input-size);
+	flex-shrink: 0;
+	padding: 0;
 	margin: 0;
-	display: inline-block;
+	display: inline-flex;
 	vertical-align: top;
 	border-radius: calc(var(--nf-input-border-radius) / 2);
 	border-width: var(--nf-input-border-width);
@@ -428,7 +514,7 @@
 
 .nice-form-group > input[type="checkbox"]:checked {
 	background:
-		url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23FFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") no-repeat 50% / 85%;
+		url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23FFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") no-repeat 50% / 70%;
 	background-color: var(--nf-input-focus-border-color);
 	border-color: var(--nf-input-focus-border-color);
 }
@@ -875,8 +961,8 @@
 .accordion-item {
 	background: var(--bg-secondary);
 	border: 1px solid var(--border-color);
-	border-radius: var(--radius-md);
-	margin-bottom: 8px;
+	border-radius: 0;
+	margin-bottom: 0;
 	overflow: hidden;
 }
 
@@ -886,7 +972,7 @@
 
 .accordion-header {
 	background: var(--bg-tertiary);
-	border-radius: var(--radius-md);
+	border-radius: 0;
 }
 
 .accordion-button {
@@ -1047,19 +1133,45 @@
 # Transparent Background Container (customization sections)
 --------------------------------------------------------------*/
 .transparent-background {
-	margin-top: 8px;
+	margin-top: 12px;
+}
+
+.transparent-background .nice-form-group:first-child {
+	margin-top: 0;
 }
 
 .customization-box {
-	margin-top: 12px;
+	margin-top: 16px;
+	margin-bottom: 4px;
+}
+
+.transparent-background .imagem-checkbox {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+/* Turno-box — itinerary time-of-day containers */
+.turno-box {
+	margin-top: 16px;
+	padding: 16px;
+	background: var(--bg-secondary);
+	border-radius: var(--radius-md);
+	border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .turno-box {
+	background: rgba(255, 255, 255, 0.03);
+}
+
+.turno-box > .nice-form-group:first-child {
+	margin-top: 0;
 }
 
 /*--------------------------------------------------------------
 # Delete Link
 --------------------------------------------------------------*/
 #delete-text {
-	display: flex;
-	justify-content: flex-end;
+	text-align: right;
 	margin-top: 16px;
 }
 
@@ -1095,6 +1207,71 @@
 
 .message-text .red {
 	color: #e74c3c;
+}
+
+/*--------------------------------------------------------------
+# PIN Input Overrides
+# Restore dedicated pin-input styling that the general
+# .nice-form-group > input rules would otherwise clobber
+--------------------------------------------------------------*/
+.nice-form-group > input.pin-input,
+.nice-form-group > input.pin-input-invalid,
+input.pin-input,
+input.pin-input-invalid {
+	width: 44px;
+	height: 44px;
+	min-height: auto;
+	border: 1px solid #d7d7d7;
+	border-radius: 6px;
+	outline: none;
+	margin: 0 5px;
+	text-align: center;
+	background: #eeeeee;
+	font-size: 20px;
+	color: var(--font-color);
+	padding: 0;
+}
+
+input.pin-input-invalid {
+	color: #3a3838;
+	background: #eee0e0;
+	border-color: #dbbbbb;
+}
+
+[data-theme="dark"] input.pin-input {
+	background: #3a3a3c;
+	border-color: #555;
+	color: #e2e2e2;
+}
+
+[data-theme="dark"] input.pin-input-invalid {
+	background: #4a3030;
+	border-color: #6b4040;
+	color: #e2c0c0;
+}
+
+/*--------------------------------------------------------------
+# Side-by-side Fixed — Desktop layout for color pickers
+--------------------------------------------------------------*/
+.side-by-side-color-box .side-by-side-fixed {
+	flex: 1;
+	min-width: 0;
+}
+
+/* Spacing between theme radio group and color pickers on desktop */
+#habilitado-cores-content > fieldset {
+	margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+	.side-by-side-color-box {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.side-by-side-color-box .nice-form-group {
+		margin-top: calc(var(--nf-input-size) * 1.5);
+	}
 }
 
 /*--------------------------------------------------------------
@@ -1319,14 +1496,20 @@ details summary::-webkit-details-marker {
 # Mobile — Responsive Breakpoints
 --------------------------------------------------------------*/
 
-/* ≤768px: Compact tab bar, full-width sections */
-@media (max-width: 975px) {
+@media (max-width: 900px) {
 	.edit-tab-bar {
+		position: fixed;
 		top: 60px;
+		left: 0;
+		right: 0;
+		border-top: none;
+		margin: 0;
 		border-radius: 0;
-		margin-left: -12px;
-		margin-right: -12px;
 		padding: 6px 8px;
+		z-index: 100;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
 	}
 
 	.edit-tab {
@@ -1340,8 +1523,12 @@ details summary::-webkit-details-marker {
 		height: 16px;
 	}
 
+	.edit-page {
+		padding-top: 120px;
+	}
+
 	.edit-page-content {
-		padding: 12px 12px;
+		padding: 0 12px 12px;
 	}
 
 	.edit-page-content section {
@@ -1374,13 +1561,485 @@ details summary::-webkit-details-marker {
 
 	#hero {
 		top: 0;
-		padding: 60px 0.5em 0 0.5em !important;
+		padding: 0 0.5em 0 0.5em !important;
 	}
 }
 
 /* Always icon-only tabs */
 .edit-tab span {
 	display: none;
+}
+
+/*--------------------------------------------------------------
+# Modern Radio — Pill / Segmented Style
+# Replaces native radio with card-like segmented buttons
+--------------------------------------------------------------*/
+.modern-radio-group {
+	display: flex;
+	gap: 2px;
+	background: var(--bg-tertiary);
+	border-radius: var(--radius-md);
+	padding: 3px;
+	border: 1px solid var(--border-color);
+}
+
+/* Sections containing overlays (date picker, etc.) need elevated stacking */
+.edit-page-content section:has(.date-range-picker) {
+	z-index: 11;
+}
+
+.modern-radio-group .nice-form-group {
+	margin-top: 0;
+	flex: 1;
+}
+
+.modern-radio-group input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	pointer-events: none;
+}
+
+.modern-radio-group input[type="radio"] + label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 10px 16px;
+	border-radius: calc(var(--radius-md) - 2px);
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--text-muted);
+	cursor: pointer;
+	transition: all var(--transition-fast);
+	white-space: normal;
+	text-align: center;
+	line-height: 1.35;
+	user-select: none;
+	-webkit-user-select: none;
+	margin-bottom: 0;
+	max-width: 100%;
+	padding-left: 16px;
+	word-break: break-word;
+	hyphens: auto;
+}
+
+.modern-radio-group input[type="radio"] + label:hover {
+	color: var(--text-primary);
+	background: rgba(0, 0, 0, 0.03);
+}
+
+.modern-radio-group input[type="radio"]:checked + label {
+	background: rgba(var(--theme-color-rgb), 0.12);
+	color: var(--theme-color);
+	font-weight: 600;
+	box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .modern-radio-group input[type="radio"] + label:hover {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+/* Modern radio group in a fieldset — stack vertically on mobile */
+fieldset.modern-radio-group {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+	.modern-radio-group {
+		flex-direction: column;
+		gap: 2px;
+	}
+	.modern-radio-group input[type="radio"] + label {
+		justify-content: flex-start;
+	}
+}
+
+/*--------------------------------------------------------------
+# Color Picker with Hex Input
+# Native color input + adjacent hex text field in a neat row
+--------------------------------------------------------------*/
+.color-picker-box {
+	display: flex;
+	align-items: stretch;
+	gap: 8px;
+}
+
+.color-picker-box input[type="color"] {
+	flex: 0 0 48px;
+	width: 48px;
+	height: 48px;
+	padding: 4px;
+	border-radius: var(--radius-md);
+	border: 1.5px solid var(--border-color);
+	cursor: pointer;
+	background: transparent;
+	min-height: auto;
+}
+
+.color-picker-box input[type="color"]:focus {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.color-picker-box input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+.color-picker-box input[type="color"]::-webkit-color-swatch {
+	border-radius: calc(var(--radius-md) - 4px);
+	border: none;
+}
+
+.color-picker-box input[type="color"]::-moz-color-swatch {
+	border-radius: calc(var(--radius-md) - 4px);
+	border: none;
+}
+
+.color-picker-box .hex-input {
+	flex: 1;
+	background: var(--nf-input-background-color);
+	font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+	font-size: var(--nf-input-font-size);
+	border-radius: var(--nf-input-border-radius);
+	border: var(--nf-input-border-width) var(--nf-input-border-style) var(--nf-input-border-color);
+	color: var(--nf-input-color);
+	padding: 12px 16px;
+	letter-spacing: 0.5px;
+	transition: border var(--transition-fast), box-shadow var(--transition-fast);
+	outline: none;
+}
+
+.color-picker-box .hex-input:focus {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+/*--------------------------------------------------------------
+# Date Range Picker — Single calendar, period selection
+# A combined input that opens a custom calendar overlay
+--------------------------------------------------------------*/
+.date-range-picker {
+	position: relative;
+	width: 100%;
+}
+
+.date-range-input {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: var(--nf-input-background-color);
+	border: var(--nf-input-border-width) var(--nf-input-border-style) var(--nf-input-border-color);
+	border-radius: var(--nf-input-border-radius);
+	padding: 0 16px;
+	min-height: 48px;
+	cursor: pointer;
+	transition: border var(--transition-fast), box-shadow var(--transition-fast);
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.date-range-input:hover {
+	border-color: var(--text-muted);
+}
+
+.date-range-input.active,
+.date-range-input:focus-within {
+	border-color: var(--nf-input-focus-border-color);
+	box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.date-range-input .date-icon {
+	flex-shrink: 0;
+	color: var(--text-muted);
+	width: 20px;
+	height: 20px;
+}
+
+.date-range-input .date-text {
+	flex: 1;
+	font-size: var(--nf-input-font-size);
+	color: var(--text-primary);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.date-range-input .date-text.placeholder {
+	color: var(--nf-input-placeholder-color);
+}
+
+.date-range-input .date-clear {
+	flex-shrink: 0;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--text-muted);
+	padding: 4px;
+	border-radius: 50%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.date-range-input .date-clear:hover {
+	color: var(--text-primary);
+	background: var(--bg-tertiary);
+}
+
+.date-range-input.has-value .date-clear {
+	display: flex;
+}
+
+/* Calendar dropdown */
+.date-range-calendar {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	z-index: 1000;
+	background: rgba(255, 255, 255, 0.97);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+	padding: 16px;
+	display: none;
+	min-width: 320px;
+	width: max-content;
+}
+
+[data-theme="dark"] .date-range-calendar {
+	background: rgba(44, 44, 46, 0.97);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.date-range-calendar.open {
+	display: block;
+}
+
+/* Calendar header with month navigation */
+.cal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+}
+
+.cal-nav-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--radius-sm);
+	border: none;
+	background: transparent;
+	color: var(--text-primary);
+	cursor: pointer;
+	transition: background var(--transition-fast);
+}
+
+.cal-nav-btn:hover {
+	background: var(--bg-tertiary);
+}
+
+.cal-month-label {
+	font-size: 0.9375rem;
+	font-weight: 700;
+	color: var(--text-primary);
+	cursor: default;
+}
+
+/* Day-of-week header */
+.cal-weekdays {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	text-align: center;
+	margin-bottom: 4px;
+}
+
+.cal-weekdays span {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--text-muted);
+	padding: 4px 0;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Day grid */
+.cal-days {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 2px;
+}
+
+.cal-day {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 36px;
+	border-radius: var(--radius-sm);
+	font-size: 0.8125rem;
+	color: var(--text-primary);
+	cursor: pointer;
+	transition: background var(--transition-fast), color var(--transition-fast);
+	position: relative;
+	border: none;
+	background: transparent;
+	font-family: inherit;
+	width: 100%;
+}
+
+.cal-day:hover {
+	background: var(--bg-tertiary);
+}
+
+.cal-day.other-month {
+	color: var(--text-muted);
+	opacity: 0.4;
+	cursor: default;
+	pointer-events: none;
+}
+
+.cal-day.today {
+	font-weight: 700;
+	color: var(--theme-color);
+}
+
+.cal-day.in-range {
+	background: rgba(var(--theme-color-rgb), 0.08);
+	border-radius: 0;
+}
+
+.cal-day.range-start {
+	background: var(--theme-color);
+	color: #fff;
+	font-weight: 600;
+	border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.cal-day.range-end {
+	background: var(--theme-color);
+	color: #fff;
+	font-weight: 600;
+	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.cal-day.range-start.range-end {
+	border-radius: var(--radius-sm);
+}
+
+/* Quick shortcuts below calendar */
+.cal-shortcuts {
+	display: flex;
+	gap: 6px;
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid var(--border-color);
+	flex-wrap: wrap;
+}
+
+.cal-shortcut-btn {
+	flex: 1;
+	min-width: fit-content;
+	padding: 6px 10px;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border-color);
+	background: transparent;
+	color: var(--text-secondary);
+	font-size: 0.75rem;
+	font-weight: 500;
+	cursor: pointer;
+	font-family: inherit;
+	transition: all var(--transition-fast);
+	white-space: nowrap;
+}
+
+.cal-shortcut-btn:hover {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+	border-color: var(--text-muted);
+}
+
+.cal-shortcut-btn.active-shortcut {
+	background: rgba(var(--theme-color-rgb), 0.1);
+	color: var(--theme-color);
+	border-color: rgba(var(--theme-color-rgb), 0.3);
+	font-weight: 600;
+}
+
+/* Calendar footer with Apply/Cancel */
+.cal-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid var(--border-color);
+}
+
+.cal-footer .cal-range-label {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	flex: 1;
+}
+
+.cal-footer-buttons {
+	display: flex;
+	gap: 8px;
+}
+
+.cal-apply-btn,
+.cal-cancel-btn {
+	padding: 8px 16px;
+	border-radius: var(--radius-md);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	cursor: pointer;
+	font-family: inherit;
+	border: none;
+	transition: all var(--transition-fast);
+}
+
+.cal-cancel-btn {
+	background: transparent;
+	color: var(--text-secondary);
+}
+
+.cal-cancel-btn:hover {
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+}
+
+.cal-apply-btn {
+	background: var(--theme-color);
+	color: #fff;
+	box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
+}
+
+.cal-apply-btn:hover {
+	background: var(--theme-secondary);
+	box-shadow: 0 4px 16px rgba(var(--theme-color-rgb), 0.4);
+}
+
+/* Calendar responsive */
+@media (max-width: 400px) {
+	.date-range-calendar {
+		left: -8px;
+		right: auto;
+		min-width: auto;
+		width: calc(100vw - 32px);
+	}
+	.cal-day {
+		height: 32px;
+		font-size: 0.75rem;
+	}
 }
 
 /* ≤975px: Compact tab bar, reduced section padding */

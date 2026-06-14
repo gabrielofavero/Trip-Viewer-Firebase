@@ -23,6 +23,7 @@ import { autoFillDarkColor } from "../edit-trip/categories/customization.js";
 import { loadDestinations } from "../edit-trip/new-trip.js";
 import { setDocumento } from "../../utils/set.js";
 import { initEditTabs } from "../../ui/edit-tabs.js";
+import { enhanceAllColorPickers } from "../../ui/color-picker-hex.js";
 
 export async function loadEditListingPage() {
 	loadEditListingListeners();
@@ -52,6 +53,8 @@ export async function loadEditListingPage() {
 	loadEventListeners();
 	stopLoadingScreen();
 	snapshotFormState();
+
+	enhanceAllColorPickers();
 
 	$("body").css("overflow", "auto");
 }

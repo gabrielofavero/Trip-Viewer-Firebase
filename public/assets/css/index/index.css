@@ -421,6 +421,13 @@ body.dialog-open { overflow: hidden; }
 .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
 .modal-actions .btn { min-width: 100px; }
 
+/* Button box (message modals) */
+.button-box {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
 /*--------------------------------------------------------------
 # Language Selector
 --------------------------------------------------------------*/
