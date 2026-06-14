@@ -4,7 +4,7 @@
  *
  * Data shape (from export-maps-data script):
  * {
- *   nome, emoji, website, mapa, instagram, regiao, valor, midia, nota,
+ *   nome, emoji, website, mapa, instagram, regiao, valor, midia, rating,
  *   novo (bool), descricao: { en, pt }, criadoEm, id
  * }
  */
@@ -33,7 +33,7 @@ function importFillDestination(categoria, j, data, force) {
 		{ key: "mapa", field: "mapa", type: "value" },
 		{ key: "instagram", field: "instagram", type: "value" },
 		{ key: "midia", field: "midia", type: "value" },
-		{ key: "nota", field: "nota", type: "value" },
+		{ key: "rating", field: "rating", type: "value" },
 		{ key: "id", field: "id", type: "value" },
 		{ key: "criadoEm", field: "criadoEm", type: "value" },
 	];

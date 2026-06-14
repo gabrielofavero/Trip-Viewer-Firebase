@@ -3,7 +3,7 @@
  * Only one item can be edited at a time, so just fill the open edit form.
  *
  * Data shape (from export-maps-data script):
- * { nome, emoji, website, mapa, instagram, regiao, valor, midia, nota,
+ * { nome, emoji, website, mapa, instagram, regiao, valor, midia, rating,
  *   novo (bool), descricao: { en, pt }, criadoEm, id }
  */
 
@@ -54,11 +54,11 @@ function importFillEditFields(j, data, force) {
 	setValue(`editar-website-${j}`, data.website);
 	setValue(`editar-midia-${j}`, data.midia);
 
-	// nota (select)
-	const notaEl = document.getElementById(`editar-rating-${j}`) as HTMLSelectElement;
-	if (notaEl) {
-		if (force || (data.nota !== undefined && data.nota !== null && data.nota !== "")) {
-			notaEl.value = data.nota === "?" ? "default" : data.nota;
+	// rating (select)
+	const ratingEl = document.getElementById(`editar-rating-${j}`) as HTMLSelectElement;
+	if (ratingEl) {
+		if (force || (data.rating !== undefined && data.rating !== null && data.rating !== "")) {
+			ratingEl.value = data.rating === "?" ? "default" : data.rating;
 		}
 	}
 
