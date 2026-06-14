@@ -25,3 +25,6 @@ export const m18 = migration18.migrate;
 
 import * as migration19 from "./migrations/19-migrate-collection-names";
 export const m19 = migration19.migrate;
+
+import * as migration20 from "./migrations/20-migrate-cleanup";
+export const m20 = migration20.migrate;
