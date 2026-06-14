@@ -10,13 +10,13 @@ import { fade } from '../../../theme/animations.js';
 import { FIRESTORE_NEW_DATA } from '../../../data/state.js';
 import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage.js";
 import { CUSTOM_UPLOADS } from "../../../utils/set.js";
-import { addHospedagens } from "../new-trip.js";
+import { addAccommodations } from "../new-trip.js";
 
 export var ACCOMMODATION_IMAGES = {};
 
 export function getAccommodationArray(protectedReservationCodes = false) {
 	let result = [];
-	for (const id of getChildIDs("hospedagens-box")) {
+	for (const id of getChildIDs("accommodations-box")) {
 		const j = getJ(id);
 		result.push({
 			cafe: getID(`accommodations-cafe-${j}`).checked,
@@ -48,7 +48,7 @@ export function getAccommodationArray(protectedReservationCodes = false) {
 
 export function getProtectedAccommodationObject() {
 	let result = {};
-	for (const childID of getChildIDs("hospedagens-box")) {
+	for (const childID of getChildIDs("accommodations-box")) {
 		const j = getJ(childID);
 		const id = getID(`accommodations-id-${j}`).value;
 		const reserva = getID(`reserva-accommodations-${j}`).value;
@@ -62,7 +62,7 @@ function getAccommodationImages(j) {
 	const result = [];
 	for (const imagem of ACCOMMODATION_IMAGES[j]) {
 		if (imagem.file) {
-			CUSTOM_UPLOADS.hospedagens.push(imagem);
+			CUSTOM_UPLOADS.accommodations.push(imagem);
 		}
 		result.push({
 			descricao: imagem.descricao,
@@ -107,9 +107,9 @@ export function loadAccommodationListeners(j) {
 }
 
 export function accommodationsAddListenerAction() {
-	closeAccordions("hospedagens");
-	addHospedagens();
-	openLastAccordion("hospedagens");
+	closeAccordions("accommodations");
+	addAccommodations();
+	openLastAccordion("accommodations");
 }
 
 // Internal Loading (Modal)
@@ -287,19 +287,19 @@ export function removeAccommodationImages(j) {
 async function uploadAndSetAccommodationImages() {
 	if (
 		IMAGE_UPLOAD_STATUS.hasErrors ||
-		CUSTOM_UPLOADS.hospedagens.length === 0
+		CUSTOM_UPLOADS.accommodations.length === 0
 	) {
 		return;
 	}
 
-	const hospedagensFiles = CUSTOM_UPLOADS.hospedagens.map((file) => file.file);
+	const hospedagensFiles = CUSTOM_UPLOADS.accommodations.map((file) => file.file);
 	const hospedagemResult = await uploadImages("viagens", hospedagensFiles);
 
 	if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
 		for (let i = 0; i < hospedagemResult.length; i++) {
-			const outerPosition = CUSTOM_UPLOADS.hospedagens[i].position[0] - 1;
-			const innerPosition = CUSTOM_UPLOADS.hospedagens[i].position[1] - 1;
-			FIRESTORE_NEW_DATA.hospedagens[outerPosition].imagens[
+			const outerPosition = CUSTOM_UPLOADS.accommodations[i].position[0] - 1;
+			const innerPosition = CUSTOM_UPLOADS.accommodations[i].position[1] - 1;
+			FIRESTORE_NEW_DATA.accommodations[outerPosition].images[
 				innerPosition
 			].link = hospedagemResult[i].link;
 		}

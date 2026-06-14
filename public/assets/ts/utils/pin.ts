@@ -234,35 +234,35 @@ export function requestPin({
 	confirmAction,
 	cancelAction,
 	precontent,
-	invalido = false,
+	invalid = false,
 }) {
 	if (precontent === undefined) {
 		precontent = translate("trip.basic_information.pin.request");
 	}
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	const classComplement = invalido ? "-invalid" : "";
-	properties.titulo = translate("trip.basic_information.pin.title");
-	properties.conteudo = `${precontent}<div class="pin-wrapper">
+	const classComplement = invalid ? "-invalid" : "";
+	properties.title = translate("trip.basic_information.pin.title");
+	properties.content = `${precontent}<div class="pin-wrapper">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                               </div>
                               <div id="pin-code" class="pin"></div>`;
-	properties.critico = true;
+	properties.critical = true;
 	properties.containers = getContainersInput();
-	properties.botoes = [];
+	properties.buttons = [];
 
 	if (cancelAction) {
-		properties.botoes.push({
-			tipo: "cancelar",
-			acao: cancelAction,
+		properties.buttons.push({
+			type: "cancel",
+			action: cancelAction,
 		});
 	}
 
-	properties.botoes.push({
-		tipo: "confirmar",
-		acao: confirmAction,
+	properties.buttons.push({
+		type: "confirm",
+		action: confirmAction,
 	});
 
 	displayFullMessage(properties);
@@ -270,11 +270,11 @@ export function requestPin({
 }
 
 export function requestInvalidPin({ confirmAction, cancelAction, precontent }) {
-	const invalido = true;
+	const invalid = true;
 	if (precontent === undefined) {
 		precontent = translate("trip.basic_information.pin.invalid");
 	}
-	requestPin({ confirmAction, cancelAction, precontent, invalido });
+	requestPin({ confirmAction, cancelAction, precontent, invalid });
 }
 
 export function setManualPin(pinString) {

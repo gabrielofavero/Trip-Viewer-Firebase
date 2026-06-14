@@ -3,7 +3,7 @@ import { displayError } from "../../utils/messages.js";
 import { isAlreadyLoading, startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { translate } from '../../i18n/translation.js';
 import { getUID, getUserData } from './auth.js';
-import { DESTINOS_ATIVOS } from "../../pages/edit-trip/categories/destination.js";
+import { ACTIVE_DESTINATIONS } from "../../pages/edit-trip/categories/destination.js";
 import { getURLParam } from "../../utils/dom.js";
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, setErrorFromGetRequest } from '../state.js';
 
@@ -512,15 +512,15 @@ export async function getPermissions() {
 	const uid = await getUID();
 	if (uid) {
 		const userData = await getUserData(uid);
-		return userData?.permissions ?? userData?.permissoes;
+		return userData?.permissions ?? userData?.permissions_legacy;
 	}
 }
 
 /** @deprecated Use getPermissions() */
-export const getPermissoes = getPermissions;
+export const getPermissions_legacy = getPermissions;
 
 export async function getDestination(id, containerID?) {
-	if (DESTINOS_ATIVOS[id]) return DESTINOS_ATIVOS[id];
+	if (ACTIVE_DESTINATIONS[id]) return ACTIVE_DESTINATIONS[id];
 
 	let content, preloader, _alreadyLoading;
 	if (containerID) {
@@ -538,8 +538,8 @@ export async function getDestination(id, containerID?) {
 	}
 
 	try {
-		DESTINOS_ATIVOS[id] = await get(`${COLLECTION.DESTINATIONS}/${id}`);
-		return DESTINOS_ATIVOS[id];
+		ACTIVE_DESTINATIONS[id] = await get(`${COLLECTION.DESTINATIONS}/${id}`);
+		return ACTIVE_DESTINATIONS[id];
 	} finally {
 		if (containerID) {
 			content.style.display = "block";

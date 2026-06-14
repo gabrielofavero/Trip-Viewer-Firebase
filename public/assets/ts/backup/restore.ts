@@ -6,9 +6,9 @@ import { DATABASE_EDITABLE_DOCUMENTS } from '../data/firebase/database.js';
 import { cloneObject } from '../utils/dom.js';
 
 export async function restoreOnClickAction() {
-	const titulo = translate("account.restore.title");
-	const conteudo = translate("account.restore.prompt");
-	displayPrompt({ titulo, conteudo, yesAction: openRestoreFilePicker });
+	const title = translate("account.restore.title");
+	const content = translate("account.restore.prompt");
+	displayPrompt({ title, content, yesAction: openRestoreFilePicker });
 }
 
 export function restoreOnFileSelectionAction(event) {
@@ -120,7 +120,7 @@ async function isRestoreOwnerValid(restore) {
 
 	// --- Ownership check for normal docs ---
 	function hasValidOwnership(doc) {
-		const owner = doc?.compartilhamento?.dono;
+		const owner = doc?.sharing?.owner;
 		return !owner || owner === uid;
 	}
 
@@ -189,24 +189,24 @@ async function restoreAccount(restore) {
 
 		const pushDelete = (ref) => ops.push({ type: "delete", ref });
 
-		// --- CASE A: destinos + listagens ---
-		for (const type of ["destinos", "listagens"]) {
+		// --- CASE A: destinations + listings ---
+		for (const type of ["destinations", "listings"]) {
 			const data = userData[type] ?? [];
 			for (const id in data)
 				pushDelete(firebase.firestore().collection(type).doc(id));
 			userData[type] = [];
 		}
 
-		// --- CASE B: viagens (+ protected / gastos) ---
-		if (Array.isArray(userData.viagens)) {
-			for (const viagemID in userData.viagens) {
-				// Main viagem
-				pushDelete(firebase.firestore().collection("viagens").doc(viagemID));
+		// --- CASE B: trips (+ protected / expenses) ---
+		if (Array.isArray(userData.trips)) {
+			for (const tripID in userData.trips) {
+				// Main trip
+				pushDelete(firebase.firestore().collection("trips").doc(tripID));
 
 				const protRef = firebase
 					.firestore()
-					.collection("protegido")
-					.doc(viagemID);
+					.collection("protected")
+					.doc(tripID);
 
 				// Try read for protected
 				let protSnap = null;
@@ -219,21 +219,21 @@ async function restoreAccount(restore) {
 
 					if (pin) {
 						pushDelete(
-							firebase.firestore().doc(`viagens/protected/${pin}/${viagemID}`),
+							firebase.firestore().doc(`trips/protected/${pin}/${tripID}`),
 						);
 						pushDelete(
-							firebase.firestore().doc(`expenses/protected/${pin}/${viagemID}`),
+							firebase.firestore().doc(`expenses/protected/${pin}/${tripID}`),
 						);
 					}
 
 					pushDelete(protRef);
 				} else {
-					// Fallback normal gastos/<viagemID>
-					pushDelete(firebase.firestore().collection("gastos").doc(viagemID));
+					// Fallback normal expenses/<tripID>
+					pushDelete(firebase.firestore().collection("expenses").doc(tripID));
 				}
 			}
 
-			userData.viagens = [];
+			userData.trips = [];
 		}
 
 		// Finally update the user document
@@ -291,7 +291,7 @@ async function restoreAccount(restore) {
 
 	function buildUserUpdateFromRestore(restore) {
 		const patch = {};
-		const types = ["viagens", "destinos", "listagens"];
+		const types = ["trips", "destinations", "listings"];
 
 		for (const type of types) {
 			const group = restore?.usuario?.[type];

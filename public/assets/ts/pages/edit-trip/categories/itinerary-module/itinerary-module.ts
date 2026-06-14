@@ -3,10 +3,10 @@ import { getAndDestinationTitle, getChildIDs, getID, getIDs, getReadableArray } 
 import { addValueToSelectIfExists, getAllValuesFromSelect } from '../../../../ui/fields.js';
 import { initializeSortableForGroup } from '../../../../ui/sortable.js';
 import { translate } from '../../../../i18n/translation.js';
-import { addValuesForDestinosAtivosCards, getDestinosFromCards, DESTINOS_ATIVOS } from '../destination.js';
+import { addValuesForActiveDestinationsCards, getDestinationsFromCards, ACTIVE_DESTINATIONS } from '../destination.js';
 import { DESTINATIONS } from '../../../../data/state.js';
-import { INNER_PROGRAMACAO, afterDragInnerItinerary, loadInnerItineraryHTML } from "../itinerary-module/inner-itinerary/inner-itinerary.js";
-import { updateDestinosAtivosCardsHTML } from "../destination.js";
+import { INNER_ITINERARY, afterDragInnerItinerary, loadInnerItineraryHTML } from "../itinerary-module/inner-itinerary/inner-itinerary.js";
+import { updateActiveDestinationsCardsHTML } from "../destination.js";
 import { DATAS } from "../../new-trip.js";
 
 export var FIRESTORE_PROGRAMACAO_DATA = {};
@@ -18,7 +18,7 @@ export function getItineraryArray() {
 	for (let j = 1; j <= DATAS.length; j++) {
 		const innerResult = {
 			data: convertToDateObject(DATAS[j - 1]),
-			destinosIDs: [],
+			destinationIds: [],
 			titulo: {
 				valor: "",
 				traduzir: false,
@@ -30,7 +30,7 @@ export function getItineraryArray() {
 			noite: [],
 		};
 
-		innerResult.destinosIDs = getDestinosFromCards("programacao", j);
+		innerResult.destinationIds = getDestinationsFromCards("programacao", j);
 
 		const tituloSelectValue = getID(
 			`itinerary-inner-title-select-${j}`,
@@ -60,13 +60,13 @@ export function getItineraryArray() {
 		if (
 			DATAS[j - 1] &&
 			DATAS[j - 1] &&
-			INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])]
+			INNER_ITINERARY[jsDateToKey(DATAS[j - 1])]
 		) {
-			const turnos = INNER_PROGRAMACAO[jsDateToKey(DATAS[j - 1])];
-			innerResult.madrugada = turnos.madrugada;
-			innerResult.manha = turnos.manha;
-			innerResult.tarde = turnos.tarde;
-			innerResult.noite = turnos.noite;
+			const periods = INNER_ITINERARY[jsDateToKey(DATAS[j - 1])];
+			innerResult.madrugada = periods.madrugada;
+			innerResult.manha = periods.manha;
+			innerResult.tarde = periods.tarde;
+			innerResult.noite = periods.noite;
 		}
 		result.push(innerResult);
 	}
@@ -77,11 +77,11 @@ export function getItineraryArray() {
 export function applyLoadedItineraryData(j, dados) {
 	const jsDate = convertFromDateObject(dados.data);
 
-	const destinosIDsObject = dados.destinosIDs;
-	let destinosIDs = [];
-	if (destinosIDsObject && destinosIDsObject.length > 0) {
-		destinosIDs = destinosIDsObject.map((destino) => destino.destinosID);
-		addValuesForDestinosAtivosCards("programacao", j, destinosIDs);
+	const destinationIdsObject = dados.destinationIds;
+	let destinationIds = [];
+	if (destinationIdsObject && destinationIdsObject.length > 0) {
+		destinationIds = destinationIdsObject.map((dest) => dest.destinationId);
+		addValuesForActiveDestinationsCards("programacao", j, destinationIds);
 	}
 
 	getID(`itinerary-inner-title-select-${j}`).innerHTML =
@@ -92,7 +92,7 @@ export function applyLoadedItineraryData(j, dados) {
 		const selectValues = getAllValuesFromSelect(
 			getID(`itinerary-inner-title-select-${j}`),
 		);
-		if (destinosIDs && destinosIDs.includes(titulo)) {
+		if (destinationIds && destinationIds.includes(titulo)) {
 			getID(`itinerary-inner-title-${j}`).style.display = "none";
 		} else if (
 			titulo.toLowerCase() == "outro" ||
@@ -107,7 +107,7 @@ export function applyLoadedItineraryData(j, dados) {
 		}
 	}
 
-	INNER_PROGRAMACAO[jsDateToKey(jsDate)] = {
+	INNER_ITINERARY[jsDateToKey(jsDate)] = {
 		madrugada: dados.madrugada || [],
 		manha: dados.manha || [],
 		tarde: dados.tarde || [],
@@ -156,20 +156,20 @@ export function updateItineraryTitle(j) {
 
 function getDestinationItineraryTitle(value, j) {
 	const activeDestinations = getActiveDestinations(j);
-	const destinosTitulos = activeDestinations.map((destino) => destino.label);
-	const destinosIDs = activeDestinations.map((destino) => destino.value);
+	const destinationTitles = activeDestinations.map((destino) => destino.label);
+	const destinationIds = activeDestinations.map((destino) => destino.value);
 
 	if (value === "all_destinations") {
-		return getReadableArray(destinosTitulos);
+		return getReadableArray(destinationTitles);
 	}
 
 	if (value.includes("_and_destinations")) {
-		return getAndDestinationTitle(value, destinosTitulos);
+		return getAndDestinationTitle(value, destinationTitles);
 	}
 
-	if (destinosIDs.includes(value)) {
-		const index = destinosIDs.indexOf(value);
-		return destinosTitulos[index];
+	if (destinationIds.includes(value)) {
+		const index = destinationIds.indexOf(value);
+		return destinationTitles[index];
 	}
 
 	return "";
@@ -208,7 +208,7 @@ export function getItineraryTitleSelectOptions(j = null) {
 			}
 		}
 
-		if (values.length > 0 && DESTINOS_ATIVOS.length > 0) {
+		if (values.length > 0 && ACTIVE_DESTINATIONS.length > 0) {
 			for (let i = 0; i < values.length; i++) {
 				destino += `<option value="${values[i]}">${labels[i]}</option>`;
 			}
@@ -267,7 +267,7 @@ export function reloadItinerary() {
 		}
 		j++;
 	}
-	updateDestinosAtivosCardsHTML("programacao");
+	updateActiveDestinationsCardsHTML("programacao");
 }
 
 // Listeners

@@ -12,12 +12,12 @@ import { getURLParam } from "../../../utils/dom.js";
 // Determine document type from URL params (avoids circular dependency with view.js)
 function getType(): string {
 	const urlParams = new URLSearchParams(window.location.search);
-	return urlParams.get("l") ? "listagens" : urlParams.get("d") ? "destinos" : "viagens";
+	return urlParams.get("l") ? "listings" : urlParams.get("d") ? "destinations" : "trips";
 }
 
 const SENSITIVE_RESERVATION_BOXES = {
-	transportes: {},
-	hospedagens: {},
+	transportation: {},
+	accommodations: {},
 };
 const ACTIVE_SENSITIVE_RESERVATION = {
 	type: null,
@@ -78,7 +78,7 @@ function loadSensitiveReservation(type: string, id: string): void {
 	if (!PIN) {
 		const confirmAction = `protectedDataConfirmAction(_updateSensitiveReservations)`;
 		const cancelAction = `closeMessage()`;
-		requestPin({ confirmAction, cancelAction, precontent: undefined as any, invalido: false });
+		requestPin({ confirmAction, cancelAction, precontent: undefined as any, invalid: false });
 	} else {
 		loadSensitiveReservationAction(type, id);
 	}
@@ -175,7 +175,7 @@ export async function protectedDataConfirmAction(afterAction?: (data: any) => vo
 		return;
 	}
 
-	if (getState().modulos.gastos) {
+	if (getState().modules.expenses) {
 		sendToExpenses("pin", PIN);
 	}
 
@@ -188,7 +188,7 @@ export function requestDocumentPin({
 }: { invalido?: boolean; confirmAction?: string } = {}): void {
 	const precontent = translate("messages.protected.pin");
 	stopLoadingScreen();
-	requestPin({ confirmAction, cancelAction: `closeMessage()`, precontent, invalido });
+	requestPin({ confirmAction, cancelAction: `closeMessage()`, precontent, invalid: invalido });
 }
 
 export async function updateProtectedDataFromExternalPin(pin: string): Promise<void> {

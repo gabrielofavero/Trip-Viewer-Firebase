@@ -10,20 +10,20 @@ import { fade } from '../../theme/animations.js';
 import { requestPin } from '../../utils/pin.js';
 import { get } from '../../data/firebase/database.js';
 
-export var GASTOS;
+export var EXPENSES_DATA;
 var EXPENSES_COUNT = 0;
 var TOTAL_EXPENSES = {
-	resumo: {},
+	summary: {},
 	preTrip: {},
 	duringTrip: {},
 };
-var ACTIVE_EXPENSE_TAB = "resumo";
+var ACTIVE_EXPENSE_TAB = "summary";
 
 import { loadExpensesListeners } from './support/event-listeners.js';
 import { loadEmbedMode } from "./support/embed.js";
 import { requestInvalidPin } from "../../utils/pin.js";
 import { loadDuringTripExpenses, loadPreTripExpenses, loadSummary, loadTravelerExpenses } from "./categories.js";
-import { GASTOS_EMBED } from './support/embed.js';
+import { EXPENSES_EMBED } from './support/embed.js';
 
 export async function loadExpensesPage() {
 	loadExpensesListeners();
@@ -61,9 +61,9 @@ export async function loadExpensesPage() {
 		: "";
 	const params = getURLParams();
 	const documentID = params.g;
-	GASTOS_EMBED.enabled = params.embed === "1";
+	EXPENSES_EMBED.enabled = params.embed === "1";
 
-	if (GASTOS_EMBED.enabled && !GASTOS_EMBED.applied) {
+	if (EXPENSES_EMBED.enabled && !EXPENSES_EMBED.applied) {
 		loadEmbedMode(params.visibility);
 	}
 
@@ -124,19 +124,19 @@ async function loadExpenses() {
 	startLoadingScreen();
 	try {
 		if (pin) {
-			GASTOS = await get(`expenses/protected/${pin}/${documentID}`, false);
+			EXPENSES_DATA = await get(`expenses/protected/${pin}/${documentID}`, false);
 		} else {
-			GASTOS = await get(`expenses/${documentID}`, false);
+			EXPENSES_DATA = await get(`expenses/${documentID}`, false);
 		}
 
-		if (GASTOS) {
+		if (EXPENSES_DATA) {
 			await loadCurrencies();
 			loadConvertedExpenses();
 			applyExpenses();
 			getID("conversao").innerText = getConversionText();
 			setTabListeners();
 			stopLoadingScreen();
-			if (GASTOS_EMBED.enabled) {
+			if (EXPENSES_EMBED.enabled) {
 				embedAfterLoadAction(pin);
 			}
 		}
@@ -153,8 +153,8 @@ async function loadExpenses() {
 }
 
 function applyExpenses() {
-	const hasPreTrip = GASTOS.preTrip?.length > 0;
-	const hasDuringTrip = GASTOS.duringTrip?.length > 0;
+	const hasPreTrip = EXPENSES_DATA.preTrip?.length > 0;
+	const hasDuringTrip = EXPENSES_DATA.duringTrip?.length > 0;
 
 	if (hasPreTrip && hasDuringTrip) {
 		getID("tab-expenses").style.display = "";
@@ -209,9 +209,9 @@ function applyExpenses() {
 	}
 
 	function hasTravelerExpenses() {
-		const hasPersonDuring = GASTOS.duringTrip?.some((i: any) => i.person);
-		const hasPersonPre = GASTOS.preTrip?.some((i: any) => i.person);
-		return GASTOS.travelers && (hasPersonDuring || hasPersonPre);
+		const hasPersonDuring = EXPENSES_DATA.duringTrip?.some((i: any) => i.person);
+		const hasPersonPre = EXPENSES_DATA.preTrip?.some((i: any) => i.person);
+		return EXPENSES_DATA.travelers && (hasPersonDuring || hasPersonPre);
 	}
 }
 
@@ -224,22 +224,22 @@ export function setTabListeners() {
 	];
 	radios.forEach((radio) => {
 		getID(radio).addEventListener("click", function () {
-			const gasto = radio.replace("radio-", "");
-			if (ACTIVE_EXPENSE_TAB === gasto) return;
+			const tab = radio.replace("radio-", "");
+			if (ACTIVE_EXPENSE_TAB === tab) return;
 
-			const gastoAnterior = ACTIVE_EXPENSE_TAB;
-			ACTIVE_EXPENSE_TAB = gasto;
+			const previousTab = ACTIVE_EXPENSE_TAB;
+			ACTIVE_EXPENSE_TAB = tab;
 
-			const antigo = radios.indexOf(`radio-${gastoAnterior}`);
-			const novo = radios.indexOf(radio);
+			const oldIdx = radios.indexOf(`radio-${previousTab}`);
+			const newIdx = radios.indexOf(radio);
 
-			if (novo > antigo) {
-				fade([gastoAnterior], [ACTIVE_EXPENSE_TAB], 150, false);
+			if (newIdx > oldIdx) {
+				fade([previousTab], [ACTIVE_EXPENSE_TAB], 150, false);
 			} else {
-				fade([gastoAnterior], [ACTIVE_EXPENSE_TAB], 150, false);
+				fade([previousTab], [ACTIVE_EXPENSE_TAB], 150, false);
 			}
 
-			if (GASTOS_EMBED.enabled) {
+			if (EXPENSES_EMBED.enabled) {
 				sendHeightMessageToParent();
 			}
 		});

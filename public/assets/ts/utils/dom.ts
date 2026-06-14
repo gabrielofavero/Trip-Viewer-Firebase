@@ -264,10 +264,10 @@ export function removeEmptyChild(categoria) {
 	let itens = [];
 
 	switch (categoria) {
-		case "restaurantes":
-		case "lanches":
-		case "saidas":
-		case "turismo":
+		case "restaurants":
+		case "snacks":
+		case "nightlife":
+		case "tourism":
 		case "lojas":
 		case "lineup":
 			itens = [`${categoria}-nome`];
@@ -534,7 +534,7 @@ export function getDestinationsBoxHTML({
 }) {
 	return `
     <div ${innerItinerary ? "" : `class="accordion-body" id="accordion-body-${j}"`}>
-        ${getDestinationsAccordionBodyHTML({ j, item, valores, moeda, planejado, editBtn })}
+        ${getDestinationsAccordionBodyHTML({ j, item, values: valores, currency: moeda, planned: planejado, editBtn })}
     </div>`;
 }
 

@@ -11,9 +11,9 @@ import { loadAccommodationListeners, ACCOMMODATION_IMAGES, removeAccommodationIm
 import { addRemoveTransportationListener } from './support/event-listeners.js';
 import { DateRangePicker } from '../../ui/date-range-picker.js';
 import { getDestinationsItemCheckbox, getActiveDestinationsSelectVisibility, getActiveDestinationsCheckboxOptions, getDestinationsItemCard, getActiveDestinationsCardOptions } from './categories/destination.js';
-import { loadGaleriaListeners } from './categories/gallery.js';
+import { loadGalleryListeners } from './categories/gallery.js';
 import { getItineraryTitleSelectOptions, loadItineraryListeners, updateItineraryTitle, reloadItinerary } from './categories/itinerary-module/itinerary-module.js';
-import { updateDestinosAtivosHTMLs, reorganizeDestinosCheckbox } from "./categories/destination.js";
+import { updateActiveDestinationsHTMLs, reorganizeDestinationsCheckbox } from "./categories/destination.js";
 import { addRemoveGaleriaListener } from "./support/event-listeners.js";
 
 export var DATAS = [];
@@ -23,18 +23,18 @@ const TOMORROW = getTomorrowFormatted();
 
 // Register _add* functions for visibility module backward compat
 registerVisibilityExport("_addTransporte", addTransportation);
-registerVisibilityExport("_addHospedagens", addHospedagens);
+registerVisibilityExport("_addAccommodations", addAccommodations);
 registerVisibilityExport("_addDestinos", loadDestinations);
-registerVisibilityExport("_addGaleria", addGaleria);
+registerVisibilityExport("_addGallery", addGallery);
 registerVisibilityExport("_addProgramacao", loadItinerarySchedule);
 
 export function loadNewTrip() {
-	loadDadosBasicosNewTrip();
+	loadBasicFieldsNewTrip();
 	loadItinerarySchedule();
 	loadDestinations();
 }
 
-function loadDadosBasicosNewTrip() {
+function loadBasicFieldsNewTrip() {
 	getID("inicio").value = TODAY;
 	getID("fim").value = TOMORROW;
 
@@ -202,7 +202,7 @@ export function addTransportation() {
 	}
 }
 
-export function addHospedagens() {
+export function addAccommodations() {
 	const inicioFim = getNextCategoryStartEnd("hospedagens", "check-out");
 	const j = getNextJ("hospedagens-box");
 	$("#hospedagens-box").append(`
@@ -330,13 +330,13 @@ export function loadDestinations() {
 			if (card.classList.contains("selected")) {
 				container.prepend(card);
 			}
-			reorganizeDestinosCheckbox();
-			updateDestinosAtivosHTMLs();
+			reorganizeDestinationsCheckbox();
+			updateActiveDestinationsHTMLs();
 		});
 	}
 
 	getID("destinations-enabled")?.addEventListener("change", () =>
-		updateDestinosAtivosHTMLs(),
+		updateActiveDestinationsHTMLs(),
 	);
 }
 
@@ -451,7 +451,7 @@ export function loadItinerarySchedule() {
 	);
 }
 
-export function addGaleria() {
+export function addGallery() {
 	const j = getNextJ("galeria-box");
 	$("#galeria-box").append(`
       <div id="galeria-${j}" class="accordion-item accordion-galeria" >
@@ -520,7 +520,7 @@ export function addGaleria() {
       `);
 
 	loadImageSelector(`gallery-${j}`);
-	loadGaleriaListeners(j);
+	loadGalleryListeners(j);
 	addRemoveGaleriaListener(j);
 	addSelectorDS(
 		"galeria-categoria",

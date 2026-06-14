@@ -3,7 +3,7 @@ import { translate } from '../../../../../i18n/translation.js';
 import { getSelectCurrentLabel } from '../../../../../ui/fields.js';
 import { inputDateToKey, jsDateToInputDate } from '../../../../../utils/dates.js';
 import { DATAS } from "../../../new-trip.js";
-import { INNER_PROGRAMACAO } from "./inner-itinerary.js";
+import { INNER_ITINERARY } from "./inner-itinerary.js";
 import { getTurno } from "../../../../destination/categories.js";
 
 const TITLE_REPLACEMENT = {
@@ -192,7 +192,7 @@ function processAccomodationReplacement(labelValue, itineraryJ) {
 		: "trip.accommodation.checkout";
 	const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
 
-	const itineraries = INNER_PROGRAMACAO[inputDateToKey(inputDate)];
+	const itineraries = INNER_ITINERARY[inputDateToKey(inputDate)];
 	const allEntries = Object.values(itineraries).flat();
 	const hasTreatedLabel = allEntries.some(
 		(entry: any) => entry.programacao === treatedLabel,

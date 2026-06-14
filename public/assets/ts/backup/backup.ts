@@ -20,11 +20,11 @@ export async function backupOnClickAction() {
 		return;
 	}
 
-	const titulo = translate("account.backup.title");
-	const conteudo = translate("account.backup.prompt");
+	const title = translate("account.backup.title");
+	const content = translate("account.backup.prompt");
 	displayPrompt({
-		titulo,
-		conteudo,
+		title,
+		content,
 		yesAction: displayPinRequestBackup,
 		noAction: () => backupAccountData(false),
 	});
@@ -41,44 +41,44 @@ function prepareMissingData() {
 	MISSING_ACCOUNT_DATA.protected = protectedJobs;
 
 	function prepareMainData() {
-		for (const type of ["viagens", "destinos", "listagens"]) {
+		for (const type of ["trips", "destinations", "listings"]) {
 			for (const documentID in USER_DATA[type]) {
-				const titulo = USER_DATA[type][documentID].titulo;
-				jobs.push(getJobObject(titulo, documentID, type));
+				const title = USER_DATA[type][documentID].title;
+				jobs.push(getJobObject(title, documentID, type));
 			}
 		}
 	}
 
 	function prepareAdditionalData() {
-		const viagens = USER_DATA.viagens || {};
-		for (const documentID in viagens) {
-			const viagem = viagens[documentID];
+		const trips = USER_DATA.trips || {};
+		for (const documentID in trips) {
+			const trip = trips[documentID];
 
-			switch (viagem.pin) {
+			switch (trip.pin) {
 				case "no-pin":
-					if (viagem?.modulos?.gastos === true)
-						jobs.push(getJobObject(viagem.titulo, documentID, "gastos"));
+					if (trip?.modules?.expenses === true)
+						jobs.push(getJobObject(trip.title, documentID, "expenses"));
 					break;
 				case "all-data":
 				case "sensitive-only":
 					const innerJobs = [];
-					if (viagem?.modulos?.gastos === true) {
+					if (trip?.modules?.expenses === true) {
 						innerJobs.push(
-							getJobObject(viagem.titulo, documentID, "gastos", "protected"),
+							getJobObject(trip.title, documentID, "expenses", "protected"),
 						);
 						innerJobs.push(
-							getJobObject(viagem.titulo, documentID, "protegido"),
+							getJobObject(trip.title, documentID, "protected"),
 						);
 					}
 					if (
-						viagem?.modulos?.hospedagens === true ||
-						viagem?.modulos?.transportes === true
+						trip?.modules?.accommodations === true ||
+						trip?.modules?.transportation === true
 					)
 						innerJobs.push(
-							getJobObject(viagem.titulo, documentID, "viagens", "protected"),
+							getJobObject(trip.title, documentID, "trips", "protected"),
 						);
 					protectedJobs.push(
-						getProtectedJobObject(viagem.titulo, documentID, innerJobs),
+						getProtectedJobObject(trip.title, documentID, innerJobs),
 					);
 			}
 		}
@@ -96,12 +96,12 @@ function getProtectedJobObject(title, documentID, jobs, pin = "") {
 export function displayPinRequestBackup() {
 	stopLoadingScreen();
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = translate("trip.basic_information.pin.title");
+	properties.title = translate("trip.basic_information.pin.title");
 	properties.containers = getContainersInput();
-	properties.conteudo = getContent();
-	properties.botoes = [
-		{ tipo: "cancelar" },
-		{ tipo: "confirmar", acao: () => backupAccountData(true) },
+	properties.content = getContent();
+	properties.buttons = [
+		{ type: "cancel" },
+		{ type: "confirm", action: () => backupAccountData(true) },
 	];
 
 	displayFullMessage(properties);
@@ -184,16 +184,16 @@ async function getAccountData(useSensitiveData = false) {
 
 	function getInitialBaseStructure() {
 		return {
-			usuario: {
-				destinos: USER_DATA.destinos,
-				listagens: USER_DATA.listagens,
-				viagens: USER_DATA.viagens,
+			user: {
+				destinations: USER_DATA.destinations,
+				listings: USER_DATA.listings,
+				trips: USER_DATA.trips,
 			},
-			destinos: {},
-			gastos: { protected: {} },
-			listagens: {},
-			protegido: {},
-			viagens: { protected: {} },
+			destinations: {},
+			expenses: { protected: {} },
+			listings: {},
+			protected: {},
+			trips: { protected: {} },
 		};
 	}
 
@@ -260,9 +260,9 @@ function newBackupFail(job, reason) {
 
 function displayPartialBackupWarning() {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = translate("account.backup.partial.title");
-	properties.conteudo = getContent();
-	properties.botoes = [{ tipo: "fechar" }];
+	properties.title = translate("account.backup.partial.title");
+	properties.content = getContent();
+	properties.buttons = [{ type: "close" }];
 
 	displayFullMessage(properties);
 
@@ -281,7 +281,7 @@ function displayPartialBackupWarning() {
 				protectedDataAdded.push(failed.job.documentID);
 			}
 
-			const label = isProtected ? "viagens/protected" : failed.job.collection;
+			const label = isProtected ? "trips/protected" : failed.job.collection;
 			const type = getTranslatedDocumentLabel(label);
 
 			failedItems.push(

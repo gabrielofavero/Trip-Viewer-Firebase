@@ -57,8 +57,8 @@ export function updateActiveCategory(category) {
 }
 
 // Nota
-export function getNotaIcon(nota) {
-	switch (nota) {
+export function getRatingIcon(rating) {
+	switch (rating) {
 		case "5":
 			return "ph:number-five-bold";
 		case "4":
@@ -74,16 +74,16 @@ export function getNotaIcon(nota) {
 	}
 }
 
-export function getNotaClass(nota) {
-	switch (nota) {
+export function getRatingClass(rating) {
+	switch (rating) {
 		case "5":
 		case "4":
 		case "3":
 		case "2":
 		case "1":
-			return `rating-${nota}`;
+			return `rating-${rating}`;
 		default:
-			return "nota-ausente";
+			return "rating-absent";
 	}
 }
 

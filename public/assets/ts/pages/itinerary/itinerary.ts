@@ -145,7 +145,7 @@ function displaySensitiveItineraryPrompt() {
 	const yesAction = "requestPinItinerary()";
 	const noAction = "loadItinerary()";
 	const critico = true;
-	displayPrompt({ titulo, conteudo, yesAction, noAction, critico });
+	displayPrompt({ title: titulo, content: conteudo, yesAction, noAction, critical: critico });
 }
 
 async function loadProtectedItinerary(mandatory = false) {

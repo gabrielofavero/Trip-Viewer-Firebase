@@ -5,61 +5,61 @@ import { loadItineraryListeners } from "./itinerary-module/itinerary-module.js";
 
 var DESTINOS = [];
 export var DESTINOS_DATA = {};
-export var DESTINOS_ATIVOS = [];
+export var ACTIVE_DESTINATIONS = [];
 
 export function getDestinationsArray() {
 	const result = [];
-	for (const destino of DESTINOS_ATIVOS) {
-		const destinosID = destino.destinosID;
-		result.push({ destinosID });
+	for (const dest of ACTIVE_DESTINATIONS) {
+		const destinationId = dest.destinationId;
+		result.push({ destinationId });
 	}
 	return result;
 }
 
-// Destinos Ativos
-export async function loadDestinosAtivos(firstBoot = true) {
-	DESTINOS_ATIVOS = [];
-	const habilidadoDestinos = getID("destinations-enabled");
-	if (habilidadoDestinos && !habilidadoDestinos.checked) return;
+// Active Destinations
+export async function loadActiveDestinations(firstBoot = true) {
+	ACTIVE_DESTINATIONS = [];
+	const destinationsEnabled = getID("destinations-enabled");
+	if (destinationsEnabled && !destinationsEnabled.checked) return;
 
 	let result = [];
 	const container = getID("destinations-checkboxes");
 	for (const card of container.children) {
 		if (!card.classList.contains("selected")) continue;
 
-		const titulo = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
-		const destinosID = card.getAttribute("data-destino-id") || "";
+		const title = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
+		const destinationId = card.getAttribute("data-destino-id") || "";
 
-		result.push({ titulo, destinosID });
+		result.push({ title, destinationId });
 	}
 
-	DESTINOS_ATIVOS = result;
+	ACTIVE_DESTINATIONS = result;
 }
 
-export async function updateDestinosAtivosHTMLs() {
-	await loadDestinosAtivos(false);
+export async function updateActiveDestinationsHTMLs() {
+	await loadActiveDestinations(false);
 
 	if (getHTMLpage() === "editar-viagem") {
-		updateDestinosAtivosCardsHTML("programacao");
+		updateActiveDestinationsCardsHTML("programacao");
 	}
 }
 
-function getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
+function getActiveDestinationsSelectOptions(activeDestinations = ACTIVE_DESTINATIONS) {
 	let result = `<option value="">${translate("destination.undefined")}</option>`;
-	for (const destino of destinosAtivos) {
-		result += `<option value="${destino.destinosID}">${destino.title}</option>`;
+	for (const dest of activeDestinations) {
+		result += `<option value="${dest.destinationId}">${dest.title}</option>`;
 	}
 	return result;
 }
 
 export function getActiveDestinationsSelectVisibility() {
-	return DESTINOS_ATIVOS.length > 0 ? "block" : "none";
+	return ACTIVE_DESTINATIONS.length > 0 ? "block" : "none";
 }
 
 // Destination Cards for Itinerary
-export function updateDestinosAtivosCardsHTML(tipo, j?) {
-	const visibility = DESTINOS_ATIVOS.length > 0 ? "block" : "none";
-	const values = DESTINOS_ATIVOS.map((destino) => destino.destinosID);
+export function updateActiveDestinationsCardsHTML(tipo, j?) {
+	const visibility = ACTIVE_DESTINATIONS.length > 0 ? "block" : "none";
+	const values = ACTIVE_DESTINATIONS.map((dest) => dest.id);
 
 	function write(tipo, j) {
 		const container = getID(`${tipo}-local-${j}`);
@@ -78,8 +78,8 @@ export function updateDestinosAtivosCardsHTML(tipo, j?) {
 
 		// Re-select previously selected cards
 		for (const card of container.querySelectorAll(".destination-card")) {
-			const destinosID = card.getAttribute("data-destino-id");
-			if (selectedValues.includes(destinosID)) {
+			const destinationId = card.getAttribute("data-destino-id");
+			if (selectedValues.includes(destinationId)) {
 				card.classList.add("selected");
 				container.prepend(card);
 			}
@@ -107,13 +107,13 @@ export function updateDestinosAtivosCardsHTML(tipo, j?) {
 export function getActiveDestinationsCheckboxOptions(
 	tipo,
 	j,
-	destinosAtivos = DESTINOS_ATIVOS,
+	activeDestinations = ACTIVE_DESTINATIONS,
 ) {
 	let items = [];
-	for (let k = 1; k <= destinosAtivos.length; k++) {
-		const destino = destinosAtivos[k - 1];
+	for (let k = 1; k <= activeDestinations.length; k++) {
+		const dest = activeDestinations[k - 1];
 		items.push(
-			getDestinationsItemCheckbox(j, destino.destinosID, destino.titulo, tipo, k),
+			getDestinationsItemCheckbox(j, dest.destinationId, dest.title, tipo, k),
 		);
 	}
 	return items.join("");
@@ -134,20 +134,20 @@ export function addValuesForDestinosAtivosCheckbox(tipo, j, values) {
 	}
 }
 
-export function getDestinationsItemCheckbox(j, destinosID, titulo, tipo = "destinos", k?) {
+export function getDestinationsItemCheckbox(j, destinationId, title, tipo = "destinos", k?) {
 	if (!j) {
 		console.error("Error in _getDestinationsItemCheckbox: j is undefined or null.");
 	}
 	const ids = k ? `${j}-${k}` : j;
 	return `<div class="nice-form-group" id="checkbox-${ids}">
-                <input type="checkbox" id="check-${tipo}-${ids}" value="${destinosID}">
-                <label id=check-${tipo}-label-${ids} for="check-${tipo}-${ids}">${titulo}</label>
+                <input type="checkbox" id="check-${tipo}-${ids}" value="${destinationId}">
+                <label id=check-${tipo}-label-${ids} for="check-${tipo}-${ids}">${title}</label>
             </div>`;
 }
 
-export function getDestinationsItemCard(destinosID: string, titulo: string): string {
-	return `<div class="destino-card" data-destino-id="${destinosID}">
-                <span class="destino-card-name">${titulo}</span>
+export function getDestinationsItemCard(destinationId: string, title: string): string {
+	return `<div class="destino-card" data-destino-id="${destinationId}">
+                <span class="destino-card-name">${title}</span>
             </div>`;
 }
 
@@ -158,15 +158,15 @@ function loadDestinosCheckboxListeners(tipo, j) {
 	}
 }
 
-export function getDestinosFromCheckbox(tipo, j) {
+export function getDestinationsFromCheckbox(tipo, j) {
 	let result = [];
 	for (const child of getChildIDs(`${tipo}-local-${j}`)) {
 		const k = child.split("-")[2];
 		const checkbox = getID(`check-${tipo}-${j}-${k}`);
 		if (checkbox.checked) {
 			result.push({
-				titulo: getID(`check-${tipo}-label-${j}-${k}`).innerText,
-				destinosID: checkbox.value,
+				title: getID(`check-${tipo}-label-${j}-${k}`).innerText,
+				destinationId: checkbox.value,
 			});
 		}
 	}
@@ -177,74 +177,74 @@ export function getDestinosFromCheckbox(tipo, j) {
 export function getActiveDestinationsCardOptions(
 	tipo: string,
 	j: number,
-	destinosAtivos = DESTINOS_ATIVOS,
+	activeDestinations = ACTIVE_DESTINATIONS,
 ): string {
 	let items: string[] = [];
-	for (const destino of destinosAtivos) {
-		items.push(getDestinationsItemCard(destino.destinosID, destino.titulo));
+	for (const dest of activeDestinations) {
+		items.push(getDestinationsItemCard(dest.destinationId, dest.title));
 	}
 	return items.join("");
 }
 
-export function getDestinosFromCards(tipo: string, j: number) {
-	let result: { titulo: string; destinosID: string }[] = [];
+export function getDestinationsFromCards(tipo: string, j: number) {
+	let result: { title: string; destinationId: string }[] = [];
 	const container = getID(`${tipo}-local-${j}`);
 	if (!container) return result;
 	for (const card of container.querySelectorAll(".destination-card.selected")) {
-		const titulo = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
-		const destinosID = card.getAttribute("data-destino-id") || "";
-		result.push({ titulo, destinosID });
+		const title = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
+		const destinationId = card.getAttribute("data-destino-id") || "";
+		result.push({ title, destinationId });
 	}
 	return result;
 }
 
-export function addValuesForDestinosAtivosCards(tipo: string, j: number, values: string[]) {
+export function addValuesForActiveDestinationsCards(tipo: string, j: number, values: string[]) {
 	const container = getID(`${tipo}-local-${j}`);
 	if (!container) return;
 	for (const card of container.querySelectorAll(".destination-card")) {
-		const destinosID = card.getAttribute("data-destino-id");
-		if (values.includes(destinosID)) {
+		const destinationId = card.getAttribute("data-destino-id");
+		if (values.includes(destinationId)) {
 			card.classList.add("selected");
 			container.prepend(card);
 		}
 	}
 }
 
-function reorganizeDestinosCheckbox() {
+function reorganizeDestinationsCheckbox() {
 	const fieldset = document.getElementById("destinations-checkboxes");
 	const cards = Array.from(fieldset.querySelectorAll(".destination-card"));
 
-	const selecionados: { element: Element; label: string }[] = [];
-	const naoSelecionados: { element: Element; label: string }[] = [];
+	const selected: { element: Element; label: string }[] = [];
+	const unselected: { element: Element; label: string }[] = [];
 
 	cards.forEach((card) => {
 		const nameEl = card.querySelector(".destination-card-name");
 		const labelText = nameEl?.textContent?.trim() || "";
 
 		if (card.classList.contains("selected")) {
-			selecionados.push({ element: card, label: labelText.toLowerCase() });
+			selected.push({ element: card, label: labelText.toLowerCase() });
 		} else {
-			naoSelecionados.push({ element: card, label: labelText.toLowerCase() });
+			unselected.push({ element: card, label: labelText.toLowerCase() });
 		}
 	});
 
-	naoSelecionados.sort((a, b) => a.label.localeCompare(b.label));
+	unselected.sort((a, b) => a.label.localeCompare(b.label));
 
 	// Selected cards stay in their clicked order (already in DOM order = click order)
 	// Re-append: selected first, then unselected alphabetically
-	[...selecionados, ...naoSelecionados].forEach((item) => {
+	[...selected, ...unselected].forEach((item) => {
 		fieldset.appendChild(item.element);
 	});
 }
 
-export { reorganizeDestinosCheckbox };
+export { reorganizeDestinationsCheckbox };
 
 // Other (Generic)
-function getDestinoTitle(destinoID) {
-	if (!destinoID) return "";
-	for (const destino of DESTINOS) {
-		if (destino.id === destinoID) {
-			return destino.titulo;
+function getDestinationTitle(destinationId) {
+	if (!destinationId) return "";
+	for (const dest of DESTINOS) {
+		if (dest.id === destinationId) {
+			return dest.title;
 		}
 	}
 }

@@ -6,7 +6,7 @@ import { formattedDateToDateObject } from '../../utils/dates.js';
 import { getUID } from '../../data/firebase/auth.js';
 import { deleteUnusedImages } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
-import { getGaleriaObject } from './categories/gallery.js';
+import { getGalleryObject } from './categories/gallery.js';
 import { getItineraryArray } from './categories/itinerary-module/itinerary-module.js';
 import { getDestinationsArray } from "./categories/destination.js";
 import { getAccommodationArray, getProtectedAccommodationObject } from "./categories/accommodation.js";
@@ -18,8 +18,8 @@ import { TRAVELERS } from '../../data/state.js';
 
 export var FIRESTORE_PROTECTED_NEW_DATA = {};
 
-export var FIRESTORE_GASTOS_NEW_DATA = {};
-export var FIRESTORE_GASTOS_PROTECTED_NEW_DATA = {};
+export var FIRESTORE_EXPENSES_NEW_DATA = {};
+export var FIRESTORE_EXPENSES_PROTECTED_NEW_DATA = {};
 
 async function buildTripObject() {
 	switch (getCurrentPreferencePIN()) {
@@ -39,76 +39,76 @@ async function buildTripObject() {
 
 async function getUnprotectedTripObject() {
 	return {
-		destinos: getDestinationsArray(),
-		compartilhamento: await getSharingObject(),
-		cores: getCoresObject(),
-		fim: getID(`fim`).value
+		destinations: getDestinationsArray(),
+		sharing: await getSharingObject(),
+		colors: getColorsObject(),
+		end: getID(`fim`).value
 			? formattedDateToDateObject(getID(`fim`).value)
 			: "",
-		galeria: {},
-		hospedagens: [],
-		imagem: getImagemObject(),
-		inicio: getID(`inicio`).value
+		gallery: {},
+		accommodations: [],
+		image: getImageObject(),
+		start: getID(`inicio`).value
 			? formattedDateToDateObject(getID(`inicio`).value)
 			: "",
 		links: {},
-		modulos: {},
-		moeda: getID("currency").value,
-		programacoes: {},
-		pessoas: {},
-		titulo: getID("title").value,
-		transportes: getVisibilidadeObject(),
-		versao: {
-			ultimaAtualizacao: new Date().toISOString(),
+		modules: {},
+		currency: getID("currency").value,
+		schedules: {},
+		people: {},
+		title: getID("title").value,
+		transportation: getVisibilidadeObject(),
+		version: {
+			lastUpdated: new Date().toISOString(),
 		},
-		visibilidade: {},
+		visibility: {},
 		pin: getCurrentPreferencePIN(),
 	};
 }
 
 function getSensitiveTripObject() {
-	const hospedagens = getProtectedAccommodationObject();
-	const transportes = getProtectedTransportationObject();
+	const accommodations = getProtectedAccommodationObject();
+	const transportation = getProtectedTransportationObject();
 
 	if (
-		Object.keys(hospedagens).length === 0 &&
-		Object.keys(transportes).length === 0
+		Object.keys(accommodations).length === 0 &&
+		Object.keys(transportation).length === 0
 	) {
 		return {};
 	}
 
 	return {
-		hospedagens: hospedagens,
-		transportes: transportes,
+		accommodations: accommodations,
+		transportation: transportation,
 		pin: getCurrentPreferencePIN(),
 	};
 }
 
 async function getTripObjectFull(protectedReservationCodes = false) {
 	return {
-		destinos: getDestinationsArray(),
-		compartilhamento: await getSharingObject(),
-		cores: getCoresObject(),
-		fim: getID(`fim`).value
+		destinations: getDestinationsArray(),
+		sharing: await getSharingObject(),
+		colors: getColorsObject(),
+		end: getID(`fim`).value
 			? formattedDateToDateObject(getID(`fim`).value)
 			: "",
-		galeria: getGaleriaObject(),
-		hospedagens: getAccommodationArray(protectedReservationCodes),
-		imagem: getImagemObject(),
-		inicio: getID(`inicio`).value
+		gallery: getGalleryObject(),
+		accommodations: getAccommodationArray(protectedReservationCodes),
+		image: getImageObject(),
+		start: getID(`inicio`).value
 			? formattedDateToDateObject(getID(`inicio`).value)
 			: "",
 		links: getLinksObject(),
-		modulos: getModulosObject(),
-		moeda: getID("currency").value,
-		programacoes: getItineraryArray(),
-		pessoas: TRAVELERS,
-		titulo: getID("title").value,
-		transportes: getTransportationObject(protectedReservationCodes),
-		versao: {
-			ultimaAtualizacao: new Date().toISOString(),
+		modules: getModulesObject(),
+		currency: getID("currency").value,
+		schedules: getItineraryArray(),
+		people: TRAVELERS,
+		title: getID("title").value,
+		transportation: getTransportationObject(protectedReservationCodes),
+		version: {
+			lastUpdated: new Date().toISOString(),
 		},
-		visibilidade: getVisibilidadeObject(),
+		visibility: getVisibilidadeObject(),
 		pin: getCurrentPreferencePIN(),
 	};
 }
@@ -117,52 +117,52 @@ async function buildExpensesObject() {
 	switch (getCurrentPreferencePIN()) {
 		case "all-data":
 		case "sensitive-only":
-			FIRESTORE_GASTOS_PROTECTED_NEW_DATA = await getExpensesObject();
-			FIRESTORE_GASTOS_NEW_DATA = {};
+			FIRESTORE_EXPENSES_PROTECTED_NEW_DATA = await getExpensesObject();
+			FIRESTORE_EXPENSES_NEW_DATA = {};
 			break;
 		default:
-			FIRESTORE_GASTOS_NEW_DATA = await getExpensesObject(false);
+			FIRESTORE_EXPENSES_NEW_DATA = await getExpensesObject(false);
 			FIRESTORE_PROTECTED_NEW_DATA = {};
 	}
 }
 
-function getModulosObject() {
+function getModulesObject() {
 	return {
-		hospedagens: getID("accommodations-enabled").checked,
-		destinos: getID("destinations-enabled").checked,
-		gastos: getID("enabled-expenses").checked,
-		programacao: getID("itinerary-enabled").checked,
-		resumo: true,
-		transportes: getID("transportation-enabled").checked,
-		galeria: getID("gallery-enabled").checked,
+		accommodations: getID("accommodations-enabled").checked,
+		destinations: getID("destinations-enabled").checked,
+		expenses: getID("enabled-expenses").checked,
+		itinerary: getID("itinerary-enabled").checked,
+		summary: true,
+		transportation: getID("transportation-enabled").checked,
+		gallery: getID("gallery-enabled").checked,
 	};
 }
 
-function getCoresObject() {
+function getColorsObject() {
 	return {
-		ativo: getID("colors-enabled").checked,
-		claro: getID("claro").value,
-		escuro: getID("escuro").value,
+		active: getID("colors-enabled").checked,
+		light: getID("claro").value,
+		dark: getID("escuro").value,
 	};
 }
 
 export async function getSharingObject() {
 	return {
-		ativo: true,
-		dono:
+		active: true,
+		owner:
 			getState() && Object.keys(getState()).length > 0
-				? getState().compartilhamento.dono
+				? getState().sharing.owner
 				: await getUID(),
-		editores: [],
+		editors: [],
 	};
 }
 
-function getImagemObject() {
+function getImageObject() {
 	return {
-		ativo: getID("habilitado-imagens").checked,
+		active: getID("habilitado-imagens").checked,
 		background: getID("link-background").value || "",
-		claro: getID("link-logo-light").value || "",
-		escuro: getID("link-logo-dark").value || "",
+		light: getID("link-logo-light").value || "",
+		dark: getID("link-logo-dark").value || "",
 	};
 }
 
@@ -192,33 +192,33 @@ function verifyImageUploads(type) {
 
 		const documentLinks = [];
 
-		if (FIRESTORE_NEW_DATA.imagem.background) {
-			documentLinks.push(FIRESTORE_NEW_DATA.imagem.background);
+		if (FIRESTORE_NEW_DATA.image.background) {
+			documentLinks.push(FIRESTORE_NEW_DATA.image.background);
 		}
 
-		if (FIRESTORE_NEW_DATA.imagem.claro) {
-			documentLinks.push(FIRESTORE_NEW_DATA.imagem.claro);
+		if (FIRESTORE_NEW_DATA.image.light) {
+			documentLinks.push(FIRESTORE_NEW_DATA.image.light);
 		}
 
-		if (FIRESTORE_NEW_DATA.imagem.escuro) {
-			documentLinks.push(FIRESTORE_NEW_DATA.imagem.escuro);
+		if (FIRESTORE_NEW_DATA.image.dark) {
+			documentLinks.push(FIRESTORE_NEW_DATA.image.dark);
 		}
 
-		if (type == "viagens") {
-		const data: Record<string, any> =
+if (type == "trips") {
+	const data: Record<string, any> =
 				getCurrentPreferencePIN() === "all-data"
 					? FIRESTORE_PROTECTED_NEW_DATA
 					: FIRESTORE_NEW_DATA;
-			const hospedagens = data.hospedagens || [];
-			const hospedagemLinks = (hospedagens ?? []).flatMap((hospedagem) =>
-				(hospedagem?.imagens ?? [])
-					.map((imagem) => imagem?.link)
+			const accommodations = data.accommodations || [];
+			const accommodationLinks = (accommodations ?? []).flatMap((accommodation) =>
+				(accommodation?.images ?? [])
+					.map((image) => image?.link)
 					.filter(Boolean),
 			);
 
-			const imagens = data?.galeria?.imagens || [];
-			documentLinks.push(...hospedagemLinks);
-			documentLinks.push(...imagens);
+			const images = data?.gallery?.images || [];
+			documentLinks.push(...accommodationLinks);
+			documentLinks.push(...images);
 		}
 
 		deleteUnusedImages(path, documentLinks);
@@ -238,7 +238,7 @@ export async function setTripData() {
 		}
 	}
 
-	const type = "viagens";
+	const type = "trips";
 	const checks = [validatePinField];
 	const dataBuildingFunctions = [buildTripObject, buildExpensesObject];
 	const batchFunctions = [setProtectedDataAndExpenses];

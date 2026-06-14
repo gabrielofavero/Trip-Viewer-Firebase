@@ -1,7 +1,7 @@
 import { getState, setState, DOCUMENT_ID, DESTINATIONS, FIRESTORE_NEW_DATA, SUCCESSFUL_SAVE, setDocumentId, setDestinations, setFirestoreNewData } from '../../data/state.js';
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { cloneObject, getChildIDs, getID, getOrderedDocumentByTitle, getURLParam, setRequired } from '../../utils/dom.js';
-import { deleteUserObjectDB, getPermissoes, getSingleData } from '../../data/firebase/database.js';
+import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/firebase/database.js';
 import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '../../data/firebase/storage.js';
 import { hasUnsavedChanges, reEdit, snapshotFormState } from '../../ui/fields.js';
@@ -11,7 +11,7 @@ import { displayFullMessage, MESSAGE_PROPERTIES, registerActions } from '../../u
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 
 var FIRESTORE_PROTECTED_DATA = {};
-var PERMISSOES;
+var PERMISSIONS;
 
 startLoadingScreen();
 
@@ -32,7 +32,7 @@ export async function loadEditListingPage() {
 	registerActions({ deleteListagemAction });
 
 	setDocumentId(getURLParam("l"));
-	PERMISSOES = await getPermissoes();
+	PERMISSIONS = await getPermissions();
 
 	loadVisibilityIndex();
 	initEditTabs();

@@ -8,58 +8,58 @@ import { fadeIn, fadeOut } from '../theme/animations.js';
 export let MESSAGE_MODAL_OPEN = false;
 // Use var (not const) to avoid TDZ errors from circular module dependencies
 export var MESSAGE_PROPERTIES: Record<string, any> = {
-	titulo: "",
-	conteudo: "",
-	critico: false,
+	title: "",
+	content: "",
+	critical: false,
 	blur: true,
 	erro: {},
 	icons: [],
-	botoes: [
+	buttons: [
 		{
-			tipo: "ok",
-			acao: "",
+			type: "ok",
+			action: "",
 		},
 	],
 	containers: {
 		principal: "message-container",
-		botoes: "button-box",
+		buttons: "button-box",
 	},
 };
 
 // Generic Message
 export function displayMessage(title, content) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	if (title) properties.titulo = title;
-	if (content) properties.conteudo = content;
+	if (title) properties.title = title;
+	if (content) properties.content = content;
 	displayFullMessage(properties);
 }
 
 // Prompt (Yes / No)
 export function displayPrompt({
-	titulo: title,
-	conteudo: content,
+	title: title,
+	content: content,
 	yesAction,
 	noAction = "closeMessage()",
-	critico = false,
+	critical = false,
 }: {
-	titulo?: string;
-	conteudo?: string;
+	title?: string;
+	content?: string;
 	yesAction?: string | (() => void);
 	noAction?: string | (() => void);
-	critico?: boolean;
+	critical?: boolean;
 } = {}) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = title;
-	properties.conteudo = content;
-	properties.critico = critico;
-	properties.botoes = [
+	properties.title = title;
+	properties.content = content;
+	properties.critical = critical;
+	properties.buttons = [
 		{
-			tipo: "nao",
-			acao: noAction,
+			type: "no",
+			action: noAction,
 		},
 		{
-			tipo: "sim",
-			acao: yesAction,
+			type: "yes",
+			action: yesAction,
 		},
 	];
 	displayFullMessage(properties);
@@ -100,14 +100,14 @@ export function displayFullMessage(
 	const titleDiv = document.createElement("div");
 	titleDiv.className = "message-title";
 	titleDiv.id = "message-title";
-	titleDiv.innerHTML = properties.titulo;
+	titleDiv.innerHTML = properties.title;
 	textDiv.appendChild(titleDiv);
 
 	// Description
 	const descriptionDiv = document.createElement("div");
 	descriptionDiv.className = "message-description";
 	descriptionDiv.id = "message-description";
-	descriptionDiv.innerHTML = properties.conteudo;
+	descriptionDiv.innerHTML = properties.content;
 	textDiv.appendChild(descriptionDiv);
 
 	// Mensagem de Erro
@@ -117,13 +117,13 @@ export function displayFullMessage(
 	}
 
 	// Buttons
-	if (properties.botoes && properties.botoes.length > 0) {
+	if (properties.buttons && properties.buttons.length > 0) {
 		const buttonBox = document.createElement("div");
-		buttonBox.className = properties.containers?.botoes || "button-box";
+		buttonBox.className = properties.containers?.buttons || "button-box";
 
 		buttonBox.style.marginTop = "25px";
 
-		for (const buttonType of properties.botoes) {
+		for (const buttonType of properties.buttons) {
 			const button = getButton(buttonType);
 			buttonBox.appendChild(button);
 		}
@@ -161,16 +161,16 @@ export function displayFullMessage(
 export function displayError(error, tryAgain = false) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 
-	properties.titulo = translate("messages.errors.load_title");
-	properties.critico = true;
-	properties.conteudo = getErrorMessage(error);
+	properties.title = translate("messages.errors.load_title");
+	properties.critical = true;
+	properties.content = getErrorMessage(error);
 	properties.localizacao = false; // Disabled. No point in showing to the user.
 
-	const buttons = tryAgain ? [{ tipo: "tente-novamente" }] : [];
+	const buttons = tryAgain ? [{ type: "try-again" }] : [];
 	if (!window.location.href.includes("index.html")) {
-		buttons.push({ tipo: "home" });
+		buttons.push({ type: "home" });
 	}
-	properties.botoes = buttons;
+	properties.buttons = buttons;
 	displayFullMessage(properties);
 }
 
@@ -194,14 +194,14 @@ export function getErrorMessage(error) {
 // Unauthorized Message
 export function displayForbidden(content, redirectTo = "view.html") {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = translate("messages.access_denied.title");
-	properties.conteudo =
+	properties.title = translate("messages.access_denied.title");
+	properties.content =
 		content || translate("messages.access_denied.message");
-	properties.critico = true;
-	properties.botoes = [
+	properties.critical = true;
+	properties.buttons = [
 		{
-			tipo: "voltar",
-			acao: redirectTo,
+			type: "back",
+			action: redirectTo,
 		},
 	];
 	displayFullMessage(properties);

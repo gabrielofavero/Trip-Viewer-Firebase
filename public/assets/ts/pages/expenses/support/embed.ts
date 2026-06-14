@@ -3,7 +3,7 @@ import { getID } from '../../../utils/dom.js';
 import { getVisibility, loadExternalVisibility } from '../../../theme/visibility.js';
 import { setManualPin } from "../../../utils/pin.js";
 
-export const GASTOS_EMBED = {
+export const EXPENSES_EMBED = {
 	enabled: false,
 	applied: false,
 	visibility: "",
@@ -15,7 +15,7 @@ export function loadEmbedMode(visibility) {
 	(document.querySelector(".footer") as HTMLElement).style.display = "none";
 	loadViewVisibility(visibility);
 	loadEmbedListeners(onViewMessage);
-	GASTOS_EMBED.applied = true;
+	EXPENSES_EMBED.applied = true;
 }
 
 function onViewMessage(data) {
@@ -51,9 +51,9 @@ function loadExternalPin(pin) {
 }
 
 function loadViewVisibility(externalVisibility) {
-	if (GASTOS_EMBED.visibility === undefined) {
-		GASTOS_EMBED.visibility = getVisibility();
+	if (EXPENSES_EMBED.visibility === undefined) {
+		EXPENSES_EMBED.visibility = getVisibility();
 	}
-	loadExternalVisibility(externalVisibility, GASTOS_EMBED.visibility);
-	GASTOS_EMBED.visibility = externalVisibility;
+	loadExternalVisibility(externalVisibility, EXPENSES_EMBED.visibility);
+	EXPENSES_EMBED.visibility = externalVisibility;
 }

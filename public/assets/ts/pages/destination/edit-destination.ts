@@ -7,8 +7,8 @@ import { removeEl, validateInstagramLink, validateLink, validateMapLink, validat
 import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
 import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
-import {getNotaClass, getPlanejado} from "./categories.js";
-import { getNotaIcon } from "./categories.js";
+import {getRatingClass, getPlanejado} from "./categories.js";
+import { getRatingIcon } from "./categories.js";
 import { FIRESTORE_DESTINATIONS_DATA } from "../../data/state.js";
 import { ACTIVE_CATEGORY, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination } from "./destination.js";
 import { getDestinationsAccordionBodyHTML } from "./support/content.js";
@@ -218,7 +218,7 @@ function setAddListeners() {
 // Load Actions
 function editScoreLoadAction(value, j) {
 	const icon = getID(`editar-rating-icon-${j}`);
-	icon.innerHTML = `<i class="iconify rating-no-margin ${getNotaClass(value)}" data-icon="${getNotaIcon(value)}"></i>`;
+	icon.innerHTML = `<i class="iconify rating-no-margin ${getRatingClass(value)}" data-icon="${getRatingIcon(value)}"></i>`;
 }
 
 function editRegionLoadAction(value, j) {
@@ -325,7 +325,7 @@ function promptDeleteEdit(j) {
 	const conteudo = translate("destination.delete.message", { name });
 	const yesAction = `deleteEdit('${id}')`;
 
-	displayPrompt({ titulo, conteudo, yesAction });
+	displayPrompt({ title: titulo, content: conteudo, yesAction });
 }
 
 export async function deleteEdit(id) {
@@ -372,10 +372,10 @@ function restoreAccordionBody(j: number, item: Record<string, any>): void {
 	getID(`accordion-body-${j}`)!.innerHTML = getDestinationsAccordionBodyHTML({
 		j,
 		item,
-		planejado,
+		planned: planejado,
 		editBtn,
-		valores: undefined as any,
-		moeda: undefined as any,
+		values: undefined as any,
+		currency: undefined as any,
 	});
 }
 

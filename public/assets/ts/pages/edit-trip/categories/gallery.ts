@@ -6,9 +6,9 @@ import { buildDS } from '../../../ui/dynamic-select.js';
 import { FIRESTORE_NEW_DATA } from '../../../data/state.js';
 import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage.js";
 import { CUSTOM_UPLOADS } from "../../../utils/set.js";
-import { addGaleria } from "../new-trip.js";
+import { addGallery } from "../new-trip.js";
 
-export function getGaleriaObject() {
+export function getGalleryObject() {
 	let result = {
 		descricoes: [],
 		categorias: [],
@@ -28,7 +28,7 @@ export function getGaleriaObject() {
 
 		if (getID(`enable-upload-gallery-${j}`).checked) {
 			result.imagens.push("");
-			CUSTOM_UPLOADS.galeria.push({
+			CUSTOM_UPLOADS.gallery.push({
 				file: getID(`upload-gallery-${j}`)?.files[0],
 				position: j,
 			});
@@ -40,7 +40,7 @@ export function getGaleriaObject() {
 	return result;
 }
 
-function deleteGaleria(i) {
+function deleteGallery(i) {
 	const id = `gallery-${i}`;
 	removeImageSelectorListeners(id);
 	const div = getID(id);
@@ -48,7 +48,7 @@ function deleteGaleria(i) {
 }
 
 // Listeners
-export function loadGaleriaListeners(j) {
+export function loadGalleryListeners(j) {
 	// Dynamic Title
 	getID(`gallery-title-${j}`).addEventListener(
 		"change",
@@ -64,24 +64,24 @@ export function loadGaleriaListeners(j) {
 	);
 }
 
-export function galeriaAdicionarListenerAction() {
-	closeAccordions("galeria");
-	addGaleria();
-	openLastAccordion("galeria");
-	buildDS("galeria-categoria");
+export function galleryAddListenerAction() {
+	closeAccordions("gallery");
+	addGallery();
+	openLastAccordion("gallery");
+	buildDS("gallery-category");
 }
 
-async function uploadAndSetGaleriaImages() {
-	if (IMAGE_UPLOAD_STATUS.hasErrors || CUSTOM_UPLOADS.galeria.length === 0) {
+async function uploadAndSetGalleryImages() {
+	if (IMAGE_UPLOAD_STATUS.hasErrors || CUSTOM_UPLOADS.gallery.length === 0) {
 		return;
 	}
-	const galeriaFiles = CUSTOM_UPLOADS.galeria.map((file) => file.file);
-	const galeriaResult = await uploadImages("viagens", galeriaFiles);
+	const galleryFiles = CUSTOM_UPLOADS.gallery.map((file) => file.file);
+	const galleryResult = await uploadImages("trips", galleryFiles);
 
 	if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
-		for (let i = 0; i < galeriaResult.length; i++) {
-			const position = CUSTOM_UPLOADS.galeria[i].position - 1;
-			FIRESTORE_NEW_DATA.galeria.imagens[position] = galeriaResult[i].link;
+		for (let i = 0; i < galleryResult.length; i++) {
+			const position = CUSTOM_UPLOADS.gallery[i].position - 1;
+			FIRESTORE_NEW_DATA.gallery.images[position] = galleryResult[i].link;
 		}
 	}
 }

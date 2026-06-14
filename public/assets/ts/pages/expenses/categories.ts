@@ -3,40 +3,39 @@ import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { setChart, setTable } from "./support/data.js";
 import { formatCurrency } from "../../models/expense.model.js";
-import { GASTOS_CONVERTIDOS } from "./expenses-converted.js";
 
-// Resumo
+// Summary
 export function loadSummary() {
 	loadChartSummary();
 
 	if (
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["preTrip"].length === 0 ||
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["duringTrip"].length === 0
+		EXPENSES_CONVERTED[CURRENT_CURRENCY]["preTrip"].length === 0 ||
+		EXPENSES_CONVERTED[CURRENT_CURRENCY]["duringTrip"].length === 0
 	) {
 		getID("radio-resumo").style.display = "none";
 		return;
 	}
 
-	const preTripExpenses = GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["preTrip"].resumo;
+	const preTripExpenses = EXPENSES_CONVERTED[CURRENT_CURRENCY]["preTrip"].summary;
 	getID(`summary-preTrip-title`).innerHTML = getTitleWithIcon(
 		"trip.expenses.pre_trip",
 	);
-	setTable("summary-preTrip", preTripExpenses.itens, preTripExpenses.total);
+	setTable("summary-preTrip", preTripExpenses.items, preTripExpenses.total);
 
-	const duringTripExpenses = GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["duringTrip"].resumo;
+	const duringTripExpenses = EXPENSES_CONVERTED[CURRENT_CURRENCY]["duringTrip"].summary;
 	getID(`summary-duringTrip-title`).innerHTML = getTitleWithIcon(
 		"trip.expenses.during_trip",
 	);
-	setTable("summary-duringTrip", duringTripExpenses.itens, duringTripExpenses.total);
+	setTable("summary-duringTrip", duringTripExpenses.items, duringTripExpenses.total);
 
 	const travelerExpenses =
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY]["travelerExpenses"].resumo;
+		EXPENSES_CONVERTED[CURRENT_CURRENCY]["travelerExpenses"].summary;
 	getID(`summary-expensesTravelers-title`).innerHTML = getTitleWithIcon(
 		"trip.travelers.title",
 	);
 	setTable(
 		"summary-expensesTravelers",
-		travelerExpenses.itens,
+		travelerExpenses.items,
 		travelerExpenses.total,
 	);
 }
@@ -46,18 +45,18 @@ function loadChartSummary() {
 		translate("trip.expenses.pre_trip"),
 		translate("trip.expenses.during_trip"),
 	];
-	const valores = [
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY].preTrip.resumo.total,
-		GASTOS_CONVERTIDOS[CURRENT_CURRENCY].duringTrip.resumo.total,
+	const values = [
+		EXPENSES_CONVERTED[CURRENT_CURRENCY].preTrip.summary.total,
+		EXPENSES_CONVERTED[CURRENT_CURRENCY].duringTrip.summary.total,
 	];
 
 	getID("summary-title").innerHTML = getTitleWithIcon(
 		"trip.expenses.overview",
 	);
 	getID("summary-total").innerText =
-		`Total: ${formatCurrency(valores[0] + valores[1], true)}`;
+		`Total: ${formatCurrency(values[0] + values[1], true)}`;
 
-	setChart("doughnut", "resumo-grafico", labels, valores);
+	setChart("doughnut", "resumo-grafico", labels, values);
 }
 
 // Pre-Trip Expenses
@@ -77,28 +76,28 @@ export function loadTravelerExpenses() {
 	setTableCategoria("expensesTravelers");
 }
 
-function setDoughnutChartCategoria(titulo, tipo) {
-	const itens = GASTOS_CONVERTIDOS[CURRENT_CURRENCY][tipo].itens;
-	const total = GASTOS_CONVERTIDOS[CURRENT_CURRENCY][tipo].resumo.total;
+function setDoughnutChartCategoria(title, type) {
+	const items = EXPENSES_CONVERTED[CURRENT_CURRENCY][type].items;
+	const total = EXPENSES_CONVERTED[CURRENT_CURRENCY][type].summary.total;
 
-	getID(`${tipo}-title`).innerHTML = getTitleWithIcon(titulo, tipo);
-	getID(`${tipo}-total`).innerText = `Total: ${formatCurrency(total, true)}`;
+	getID(`${type}-title`).innerHTML = getTitleWithIcon(title, type);
+	getID(`${type}-total`).innerText = `Total: ${formatCurrency(total, true)}`;
 
-	const labels = itens.map((item) => translate(item.nome, {}, false));
-	const valores = itens.map((item) => item.total);
+	const labels = items.map((item) => translate(item.name, {}, false));
+	const values = items.map((item) => item.total);
 
-	setChart("doughnut", `${tipo}-grafico`, labels, valores);
+	setChart("doughnut", `${type}-grafico`, labels, values);
 }
 
-function setTableCategoria(tipo) {
-	unsetTableCategoria(tipo);
+function setTableCategoria(type) {
+	unsetTableCategoria(type);
 
-	const itens = GASTOS_CONVERTIDOS[CURRENT_CURRENCY][tipo].itens;
-	const container = getID(`${tipo}-container`);
+	const items = EXPENSES_CONVERTED[CURRENT_CURRENCY][type].items;
+	const container = getID(`${type}-container`);
 
-	for (let j = 1; j <= itens.length; j++) {
-		const item = itens[j - 1];
-		const id = `${tipo}-${j}`;
+	for (let j = 1; j <= items.length; j++) {
+		const item = items[j - 1];
+		const id = `${type}-${j}`;
 
 		const recibo = document.createElement("div");
 		recibo.id = `${id}-recibo`;
@@ -106,24 +105,24 @@ function setTableCategoria(tipo) {
 
 		const h2 = document.createElement("h2");
 		h2.className = "gastos-titulo";
-		h2.innerHTML = getTitleWithIcon(item.nome, tipo);
+		h2.innerHTML = getTitleWithIcon(item.name, type);
 		recibo.appendChild(h2);
 
-		const table = document.createElement("table");
-		table.className = "card-full-size";
-		table.id = `${id}-tabela`;
-		recibo.appendChild(table);
+		const tableEl = document.createElement("table");
+		tableEl.className = "card-full-size";
+		tableEl.id = `${id}-tabela`;
+		recibo.appendChild(tableEl);
 
 		container.appendChild(recibo);
 
-		setTable(id, item.itens, item.total);
+		setTable(id, item.items, item.total);
 	}
 }
 
-function unsetTableCategoria(tipo) {
+function unsetTableCategoria(type) {
 	let j = 1;
-	while (getID(`${tipo}-${j}-recibo`)) {
-		getID(`${tipo}-${j}-recibo`).remove();
+	while (getID(`${type}-${j}-recibo`)) {
+		getID(`${type}-${j}-recibo`).remove();
 		j++;
 	}
 }

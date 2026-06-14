@@ -1,21 +1,20 @@
 import { getCurrencies } from '../../../app/config.js';
 import { LANGUAGES, translate } from '../../../i18n/translation.js';
 import { getDescriptionValue } from "../../../models/destination.model.js";
-import { getNotaTranslation } from "../../../models/destination.model.js";
+import { getRatingTranslation } from "../../../models/destination.model.js";
 import { getPriceValue } from "../../../models/destination.model.js";
 import { getDestinationTitle } from "../../../utils/dom.js";
 import { getDestinationsBoxHTML } from "../../../utils/dom.js";
-import {getLinkOnClick, getPlanejado} from "../categories.js";
-import { getNotaClass } from "../categories.js";
-import { getNotaIcon } from "../categories.js";
-import { getTurno } from "../categories.js";
+import {getLinkOnClick, getPlanejado, getTurno as getPeriod} from "../categories.js";
+import { getRatingClass } from "../categories.js";
+import { getRatingIcon } from "../categories.js";
 import { FIRESTORE_DESTINATIONS_DATA } from "../../../data/state.js";
 import { ACTIVE_CATEGORY } from "../destination.js";
 import { FILTER_SORT_DATA } from "./sort-and-filter/sort-and-filter.js";
-import { getDescricaoVisibility } from "./visibility.js";
+import { getDescricaoVisibility as getDescriptionVisibility } from "./visibility.js";
 import { getDestinationsTitleVisibility } from "./visibility.js";
 import { getLinksContainerVisibility } from "./visibility.js";
-import { getValorVisibility } from "./visibility.js";
+import { getValorVisibility as getPriceVisibility } from "./visibility.js";
 
 export function getDestinationsHTML({ j, id, item, closeAction = "_processAccordion" }) {
 	const planejado = getPlanejado(id);
@@ -35,8 +34,8 @@ export function getDestinationsHTML({ j, id, item, closeAction = "_processAccord
                     <div class="icon-container" style="display: ${planejado ? "block" : "none"}">
                         <i class="iconify planejado" data-icon="fa-solid:check"></i>
                     </div>
-                    <div class="icon-container" style="display: ${item.nota ? "block" : "none"}">
-                        <i class="iconify nota ${getNotaClass(item.nota)}" data-icon="${getNotaIcon(item.nota)}"></i>
+                    <div class="icon-container" style="display: ${item.rating ? "block" : "none"}">
+                        <i class="iconify nota ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
                     </div>
                 </button>
             </h2>
@@ -50,17 +49,17 @@ export function getDestinationsHTML({ j, id, item, closeAction = "_processAccord
 export function getDestinationsAccordionBodyHTML({
 	j,
 	item,
-	valores,
-	moeda,
-	planejado,
+	values,
+	currency,
+	planned,
 	editBtn = true,
 }) {
-	if (!valores) {
-		valores = getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA.moeda];
+	if (!values) {
+		values = getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA.currency];
 	}
 
-	if (!moeda) {
-		moeda = FIRESTORE_DESTINATIONS_DATA.moeda;
+	if (!currency) {
+		currency = FIRESTORE_DESTINATIONS_DATA.currency;
 	}
 
 	const ediText = editBtn
@@ -75,8 +74,8 @@ export function getDestinationsAccordionBodyHTML({
 	return `
         <div class="destinos-titulo" style="display: ${getDestinationsTitleVisibility(item)}">
             <div class="notas-box">
-                <i class="iconify nota-sem-margem ${getNotaClass(item.nota)}" data-icon="${getNotaIcon(item.nota)}"></i>
-                <span class="nota-texto">${getNotaTranslation(item.nota)}</span>
+                <i class="iconify nota-sem-margem ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
+                <span class="nota-texto">${getRatingTranslation(item.rating)}</span>
             </div>
             <div class="links-container" style="display: ${getLinksContainerVisibility(item)}">
                 <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? "block" : "none"}"${getLinkOnClick(item, "mapa")}></i>
@@ -85,21 +84,21 @@ export function getDestinationsAccordionBodyHTML({
             </div>
         </div>
         <div class="destinos-text">
-            <div class="destinos-topico" style="display: ${planejado ? "block" : "none"}">
+            <div class="destinos-topico" style="display: ${planned ? "block" : "none"}">
                 <i class="iconify color-icon" data-icon="fa-solid:check"></i>
-                ${planejado}
+                ${planned}
             </div>
-            <div class="destinos-topico" style="display: ${item.regiao ? "block" : "none"}">
+            <div class="destinos-topico" style="display: ${item.region ? "block" : "none"}">
                 <i class="iconify color-icon" data-icon="mingcute:location-line"></i>
-                ${item.regiao || ""}
+                ${item.region || ""}
             </div>
             <div class="destinos-topicos-box" style="display: block">
-                <div class="destinos-topico" style="display: ${getValorVisibility(item)}">
+                <div class="destinos-topico" style="display: ${getPriceVisibility(item)}">
                     <i class="iconify color-icon" data-icon="bx:dollar"></i>
-                    ${getPriceValue(item, valores, moeda)}
+                    ${getPriceValue(item, values, currency)}
                 </div>
             </div>
-            <div class="destinos-descricao" style="display: ${getDescricaoVisibility(item)}">
+            <div class="destinos-descricao" style="display: ${getDescriptionVisibility(item)}">
                 ${getDescriptionValue(item)}
             </div>
             <div id="midia-${j}" class="midia-container"></div>
@@ -134,11 +133,11 @@ export function getEditHTML(j) {
                 <i class="iconify color-icon edit" data-icon="fa-solid:check"></i>
                 <div class="edit-column-container">
                     <select class="edit-input" id="editar-planejado-select-data-${j}"></select>
-                    <select class="edit-input" id="editar-planejado-select-turno-${j}">
-                        <option value="madrugada">${getTurno("madrugada")}</option>
-                        <option value="manha">${getTurno("manha")}</option>
-                        <option value="tarde">${getTurno("tarde")}</option>
-                        <option value="noite">${getTurno("noite")}</option>
+                    <select class="edit-input" id="editar-planejado-select-period-${j}">
+                        <option value="early_morning">${getPeriod("early_morning")}</option>
+                        <option value="morning">${getPeriod("morning")}</option>
+                        <option value="afternoon">${getPeriod("afternoon")}</option>
+                        <option value="night">${getPeriod("night")}</option>
                     </select>
                 </div>
             </div>

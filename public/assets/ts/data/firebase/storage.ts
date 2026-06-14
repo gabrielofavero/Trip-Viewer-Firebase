@@ -9,7 +9,7 @@ export let IMAGE_UPLOAD_STATUS = {
 };
 
 export let UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
-export let PERMISSOES;
+export let PERMISSIONS;
 export let IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-enable image uploads
 
 export async function uploadImage(path, file) {
@@ -139,7 +139,7 @@ export function checkFileSize(fileInput, type) {
 	const file = fileInput.files[0];
 
 	if (
-		(PERMISSOES && PERMISSOES["tamanhoUploadIrrestrito"] === true) ||
+		(PERMISSIONS && PERMISSIONS["unlimitedUploadSize"] === true) ||
 		file.size <= UPLOAD_SIZE
 	) {
 		getID(`upload-${type}-size-message`).style.display = "none";
@@ -168,7 +168,7 @@ export function loadImageSelector(type) {
 	// Guard: if any required element is missing, abort gracefully
 	if (!link || !upload) return;
 
-	if (IMAGE_UPLOAD_ENABLED && PERMISSOES && PERMISSOES["upload"] === true) {
+	if (IMAGE_UPLOAD_ENABLED && PERMISSIONS && PERMISSIONS["upload"] === true) {
 		if (checkboxLink?.checked) {
 			link.style.display = "block";
 			upload.style.display = "none";
@@ -256,7 +256,7 @@ export function loadLogoSelector() {
 	// Guard: if any required element is missing, abort gracefully
 	if (!linkLight || !linkDark || !uploadLight || !uploadDark) return;
 
-	if (IMAGE_UPLOAD_ENABLED && PERMISSOES && PERMISSOES["upload"] === true) {
+	if (IMAGE_UPLOAD_ENABLED && PERMISSIONS && PERMISSIONS["upload"] === true) {
 		if (checkboxLink?.checked) {
 			linkLight.style.display = "block";
 			linkDark.style.display = "block";

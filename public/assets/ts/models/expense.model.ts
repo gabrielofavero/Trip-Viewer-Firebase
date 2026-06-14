@@ -8,8 +8,8 @@ import { translate } from '../i18n/translation.js';
 import { getEmptyChar } from '../utils/dom.js';
 import { isOnDarkMode } from '../theme/visibility.js';
 import { hexToRgb, rgbToText } from '../theme/colors.js';
-import { GASTOS } from "../pages/expenses/expenses.js";
-import { MOEDAS } from "../pages/expenses/support/currency.js";
+import { EXPENSES_DATA } from "../pages/expenses/expenses.js";
+import { CURRENCIES } from "../pages/expenses/support/currency.js";
 
 // ======= Currency Filtering & Sorting =======
 
@@ -38,12 +38,12 @@ export function convertCurrency(from: string, to: string, amount: number): numbe
 		return amount;
 	}
 
-	if (MOEDA_CONVERSAO[from + to]) {
-		return amount * MOEDA_CONVERSAO[from + to];
+	if (CURRENCY_CONVERSION[from + to]) {
+		return amount * CURRENCY_CONVERSION[from + to];
 	}
 
-	if (MOEDA_CONVERSAO[to + from]) {
-		return amount / MOEDA_CONVERSAO[to + from];
+	if (CURRENCY_CONVERSION[to + from]) {
+		return amount / CURRENCY_CONVERSION[to + from];
 	} else {
 		console.error(`Conversion error: from ${amount} ${from} to ? ${to}`);
 		displayError(translate("messages.errors.unknown"));
@@ -55,7 +55,7 @@ export function canConvert(currencies: string[]): boolean {
 		return true;
 	}
 
-	const keys = Object.keys(MOEDA_CONVERSAO);
+	const keys = Object.keys(CURRENCY_CONVERSION);
 	if (keys.length === 0) {
 		return false;
 	}
@@ -90,29 +90,29 @@ export function formatCurrency(currencyFloat: number, includeSymbol = false): st
 // ======= Currency Loading =======
 
 export function loadCurrenciesObject(): void {
-	if (GASTOS.preTrip.length > 0 || GASTOS.duringTrip.length > 0) { // was "gastosPrevios" / "gastosDurante"
+	if (EXPENSES_DATA.preTrip.length > 0 || EXPENSES_DATA.duringTrip.length > 0) { // was "gastosPrevios" / "gastosDurante"
 		let previousCurrencies: string[] = [];
 		let duringCurrencies: string[] = [];
 
-		if (GASTOS.preTrip.length > 0) {
+		if (EXPENSES_DATA.preTrip.length > 0) {
 			previousCurrencies = filterCurrencies(
-				GASTOS.preTrip.map((expense: any) => expense.currency), // was "moeda"
+				EXPENSES_DATA.preTrip.map((expense: any) => expense.currency), // was "moeda"
 			);
-			MOEDAS.preTrip = previousCurrencies;
+			CURRENCIES.preTrip = previousCurrencies;
 		}
 
-		if (GASTOS.duringTrip.length > 0) {
+		if (EXPENSES_DATA.duringTrip.length > 0) {
 			duringCurrencies = filterCurrencies(
-				GASTOS.duringTrip.map((expense: any) => expense.currency), // was "moeda"
+				EXPENSES_DATA.duringTrip.map((expense: any) => expense.currency), // was "moeda"
 			);
-			MOEDAS.duringTrip = duringCurrencies;
+			CURRENCIES.duringTrip = duringCurrencies;
 		}
 
-		MOEDAS.resumo = [...new Set([...previousCurrencies, ...duringCurrencies])];
+		CURRENCIES.summary = [...new Set([...previousCurrencies, ...duringCurrencies])];
 
-		MOEDAS.resumo = sortCurrencies(MOEDAS.resumo);
-	MOEDAS.preTrip = sortCurrencies(MOEDAS.preTrip);
-	MOEDAS.duringTrip = sortCurrencies(MOEDAS.duringTrip);
+		CURRENCIES.summary = sortCurrencies(CURRENCIES.summary);
+	CURRENCIES.preTrip = sortCurrencies(CURRENCIES.preTrip);
+	CURRENCIES.duringTrip = sortCurrencies(CURRENCIES.duringTrip);
 	}
 }
 
@@ -125,11 +125,11 @@ export function loadConvertedExpenses(): void {
 }
 
 export function processConvertedExpenses(expenseType: string): void {
-	for (const currency of MOEDAS.resumo) {
-		if (!GASTOS_CONVERTIDOS[currency]) {
-			GASTOS_CONVERTIDOS[currency] = {};
+	for (const currency of CURRENCIES.summary) {
+		if (!EXPENSES_CONVERTED[currency]) {
+			EXPENSES_CONVERTED[currency] = {};
 		}
-		GASTOS_CONVERTIDOS[currency][expenseType] = calculateConvertedExpenses(
+		EXPENSES_CONVERTED[currency][expenseType] = calculateConvertedExpenses(
 			expenseType,
 			currency,
 		);
@@ -142,13 +142,13 @@ export function processConvertedTravelerExpenses(): void {
 		duringTrip: "trip.expenses.during_trip",  // was "gastosDurante"
 	};
 
-	for (const currency of MOEDAS.resumo) {
+	for (const currency of CURRENCIES.summary) {
 		const travelerMap = new Map(); // was "viajanteMap"
 		const summaryMap = new Map();  // was "resumoMap"
 		let totalSummary = 0;
 
 		for (const type in types) {
-			const group = GASTOS_CONVERTIDOS?.[currency]?.[type]; // was "grupo"
+			const group = EXPENSES_CONVERTED?.[currency]?.[type]; // was "grupo"
 			if (!group?.items) continue; // was "itens"
 
 			for (const expense of group.items) { // was "gasto"
@@ -156,7 +156,7 @@ export function processConvertedTravelerExpenses(): void {
 
 				for (const item of expense.items) { // was "itens"
 					const person = item.person  // was "pessoa"
-						? GASTOS.travelers[item.person] // was "pessoas"
+					? EXPENSES_DATA.travelers[item.person] // was "pessoas"
 						: "labels.non_specified";
 
 					const amount = Number(item.amount) || 0; // was "valor"
@@ -216,7 +216,7 @@ export function processConvertedTravelerExpenses(): void {
 			items: Array.from(summaryMap.values()).sort(compareWithNonSpecifiedLast), // was "itens"
 		};
 
-		GASTOS_CONVERTIDOS[currency].travelerExpenses = { summary, items }; // was "gastosViajantes", "resumo", "itens"
+		EXPENSES_CONVERTED[currency].travelerExpenses = { summary, items }; // was "gastosViajantes", "resumo", "itens"
 	}
 }
 
@@ -259,7 +259,7 @@ export function calculateConvertedExpenses(type: string, currency: string): { su
 		}
 	}
 
-	const expenses = GASTOS[type]; // was "gastos"
+	const expenses = EXPENSES_DATA[type]; // was "gastos"
 	const summary = { // was "resumo"
 		total: 0,
 		items: [], // was "itens"
@@ -292,11 +292,11 @@ export function calculateConvertedExpenses(type: string, currency: string): { su
 }
 
 export function getConversionText(): string {
-	if (MOEDAS.resumo.length == 1) {
+	if (CURRENCIES.summary.length == 1) {
 		return getEmptyChar();
 	}
 	const conversions = [`1 ${DEFAULT_CURRENCY}`]; // was "conversoes"
-	for (const currency of MOEDAS.resumo) { // was "moeda"
+	for (const currency of CURRENCIES.summary) { // was "moeda"
 		if (currency == DEFAULT_CURRENCY) { // was "moeda"
 			continue;
 		}

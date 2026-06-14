@@ -8,8 +8,8 @@ import { getID, getNewDataDocument } from './dom.js';
 import { DOCUMENT_ID, SUCCESSFUL_SAVE, setDocumentId, setSuccessfulSaveFn } from '../data/state.js';
 
 export var CUSTOM_UPLOADS = {
-	hospedagens: [],
-	galeria: [],
+	accommodations: [],
+	gallery: [],
 };
 var SET_RESPONSES: { message: string; success: boolean }[] = [];
 var UPLOAD_AFTER_SET = false;
@@ -104,7 +104,7 @@ function setUserData(ops, uid, type, documentData) {
 		return;
 	}
 
-	ops.update(`usuarios/${uid}`, {
+	ops.update(`users/${uid}`, {
 		[`${type}.${DOCUMENT_ID}`]: newData,
 	});
 

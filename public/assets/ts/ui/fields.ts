@@ -103,14 +103,14 @@ export function validateRequiredFields() {
 }
 
 export function getInvalidFieldsText(invalidFields) {
-	const dadosBasicos = ["titulo", "moeda"];
+	const basicFields = ["title", "currency"];
 
 	let intro = `${translate("messages.fields.invalid")}<br>`;
 	let title = "";
 	let normalText = "";
 
 	if (invalidFields.length > 0) {
-		if (dadosBasicos.includes(invalidFields[0])) {
+		if (basicFields.includes(invalidFields[0])) {
 			title = translate("labels.basic_information");
 			normalText += `<strong>${title}:</strong><br><ul>`;
 		}
@@ -140,7 +140,7 @@ export function getInvalidFieldsText(invalidFields) {
 				innerText = getInnerText(idSplit);
 			}
 
-			if (title == innerTitle || dadosBasicos.includes(id)) {
+			if (title == innerTitle || basicFields.includes(id)) {
 				normalText += `
                 <li>
                     ${innerText || innerTitle}

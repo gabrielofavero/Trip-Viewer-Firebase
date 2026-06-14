@@ -9,44 +9,44 @@ export function openAttributions() {
 		.pop()
 		.split("?")[0]
 		.replace(".html", "");
-	const atribuicoes = [];
+	const credits = [];
 
-	atribuicoes.push(getLogo());
+	credits.push(getLogo());
 
 	switch (page) {
 		case "index":
-			atribuicoes.push(getBackground());
-			if (getState()?.modulos.gastos) {
+			credits.push(getBackground());
+			if (getState()?.modules.expenses) {
 				loadExpensesCredits();
 			}
 			break;
 		case "trip":
 		case "destination":
 		case "listing":
-			atribuicoes.push(getBackground());
-			atribuicoes.push(getForms());
+			credits.push(getBackground());
+			credits.push(getForms());
 			break;
 		case "view":
-			atribuicoes.push(getBackground());
-			atribuicoes.push(getCalendar());
+			credits.push(getBackground());
+			credits.push(getCalendar());
 			break;
 		case "expenses":
 			loadExpensesCredits();
 			break;
 	}
 
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = translate("labels.credits");
-	propriedades.conteudo = atribuicoes.join("<br>");
-	propriedades.botoes = [];
+	const props = cloneObject(MESSAGE_PROPERTIES);
+	props.title = translate("labels.credits");
+	props.content = credits.join("<br>");
+	props.buttons = [];
 
-	displayFullMessage(propriedades);
+	displayFullMessage(props);
 
 	function loadExpensesCredits() {
-		atribuicoes.push(getPinStyle());
-		atribuicoes.push(getTabs());
-		atribuicoes.push(getDashboard());
-		atribuicoes.push(getExchangeRateAPI());
+		credits.push(getPinStyle());
+		credits.push(getTabs());
+		credits.push(getDashboard());
+		credits.push(getExchangeRateAPI());
 	}
 
 	function getLogo() {

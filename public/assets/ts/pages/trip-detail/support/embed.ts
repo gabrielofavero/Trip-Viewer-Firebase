@@ -11,7 +11,7 @@ var SAVED_SCROLL_POSITION = 0;
 export const ACTIVE_EMBEDS = {};
 
 export function loadViewEmbed() {
-	if (getState().modulos?.gastos === true) {
+	if (getState().modules?.expenses === true) {
 		loadEmbedListeners(loadViewEmbedAction);
 	}
 }

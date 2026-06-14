@@ -1,14 +1,14 @@
 import { PIN, switchPinVisibility, switchPinLabel, getCurrentPreferencePIN } from './categories/basic-data/protected-data.js';
-import { setGastosData } from './edit-trip.js';
+import { setExpensesData } from './edit-trip.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { setCurrentPreferencePIN } from './categories/basic-data/set-protected-data.js';
 import { setTravelers, updateTravelersButtonLabel } from './categories/travelers.js';
 import { loadCustomizacaoImageData, setCurrentLight } from './categories/customization.js';
 import { visibilityListenerAction } from './support/event-listeners.js';
-import { addTransportation, addHospedagens, loadDestinations, loadItinerarySchedule, addGaleria } from './new-trip.js';
+import { addTransportation, addAccommodations, loadDestinations, loadItinerarySchedule, addGallery } from './new-trip.js';
 import { loadTransportationVisibility, updateTransportationTitle, applyTransportationTypeVisualization } from './categories/transportation.js';
 import { ACCOMMODATION_IMAGES, setImagemButtonLabel, loadCheckIn, loadCheckOut } from './categories/accommodation.js';
-import { loadDestinosAtivos, updateDestinosAtivosCardsHTML } from './categories/destination.js';
+import { loadActiveDestinations, updateActiveDestinationsCardsHTML } from './categories/destination.js';
 import { setProgramacaoData, applyLoadedItineraryData } from './categories/itinerary-module/itinerary-module.js';
 import { displayError } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
@@ -40,16 +40,16 @@ export async function loadTripData() {
 }
 
 function loadBasicTripData() {
-	getID("title").value = getState().titulo;
-	getID("currency").value = getState().moeda;
+	getID("title").value = getState().title;
+	getID("currency").value = getState().currency;
 
-	const inicio = convertFromDateObject(getState().inicio);
-	const fim = convertFromDateObject(getState().fim);
+	const start = convertFromDateObject(getState().start);
+	const end = convertFromDateObject(getState().end);
 
-	getID("inicio").value = getDateString(inicio, "yyyy-mm-dd");
-	getID("fim").value = getDateString(fim, "yyyy-mm-dd");
+	getID("inicio").value = getDateString(start, "yyyy-mm-dd");
+	getID("fim").value = getDateString(end, "yyyy-mm-dd");
 
-	setTravelers(cloneObject(getState().pessoas));
+	setTravelers(cloneObject(getState().people));
 	validateTravelersObject();
 	updateTravelersButtonLabel();
 	setCurrentPreferencePIN(getState().pin);
@@ -58,19 +58,19 @@ function loadBasicTripData() {
 }
 
 export function loadCustomizacaoData(state?) {
-	// Imagens
-	const background = getState().imagem.background;
-	const logoClaro = getState().imagem.claro;
-	const logoEscuro = getState().imagem.escuro;
+	// Images
+	const background = getState().image.background;
+	const logoLight = getState().image.light;
+	const logoDark = getState().image.dark;
 
-	if (getState().imagem.ativo === true) {
+	if (getState().image.active === true) {
 		getID("habilitado-imagens").checked = true;
 		getID("habilitado-imagens-content").style.display = "block";
 	}
 
 	loadCustomizacaoImageData(background, "link-background");
-	loadCustomizacaoImageData(logoClaro, "link-logo-light");
-	loadCustomizacaoImageData(logoEscuro, "link-logo-dark");
+	loadCustomizacaoImageData(logoLight, "link-logo-light");
+	loadCustomizacaoImageData(logoDark, "link-logo-dark");
 
 	// Cores
 	const claro = getID("claro");
@@ -84,30 +84,30 @@ export function loadCustomizacaoData(state?) {
 		getID("habilitado-cores-content").style.display = "block";
 	}
 
-	// Visibilidade
-	const visibilidade = getState().visibilidade;
-	if (visibilidade) {
-		visibilityListenerAction(visibilidade);
-		getID("dark-and-light").checked = visibilidade.claro && visibilidade.escuro;
+	// Visibility
+	const visibility = getState().visibility;
+	if (visibility) {
+		visibilityListenerAction(visibility);
+		getID("dark-and-light").checked = visibility.light && visibility.dark;
 		getID("light-exclusive").checked =
-			visibilidade.claro && !visibilidade.escuro;
+			visibility.light && !visibility.dark;
 		getID("dark-exclusive").checked =
-			!visibilidade.claro && visibilidade.escuro;
+			!visibility.light && visibility.dark;
 	}
 
-	// Links Personalizados
-	getID("habilitado-links").checked = getState().links.ativo;
+	// Custom Links
+	getID("habilitado-links").checked = getState().links.active;
 	getID("link-attachments").value = getState().links.attachments;
 	getID("link-drive").value = getState().links.drive;
 	getID("link-maps").value = getState().links.maps;
 	getID("link-pdf").value = getState().links.pdf;
 	getID("link-ppt").value = getState().links.ppt;
 	getID("link-sheet").value = getState().links.sheet;
-	getID("link-vacina").value = getState().links.vacina;
+	getID("link-vacina").value = getState().links.vaccine;
 }
 
 async function loadExpensesData() {
-	if (getState().modulos.gastos === true) {
+	if (getState().modules.expenses === true) {
 		getID("enabled-expenses").checked = true;
 		getID("enabled-expenses-content").style.display = "block";
 	}
@@ -116,7 +116,7 @@ async function loadExpensesData() {
 		? `expenses/protected/${PIN.current}/${DOCUMENT_ID}`
 		: `expenses/${DOCUMENT_ID}`;
 
-	setGastosData(await get(getPath, true, true));
+	setExpensesData(await get(getPath, true, true));
 
 	if (haveErrorFromGetRequest()) {
 		displayError(ERROR_FROM_GET_REQUEST);
@@ -127,17 +127,17 @@ async function loadExpensesData() {
 }
 
 async function loadTransportationData() {
-	if (getState().modulos.transportes === true) {
+	if (getState().modules.transportation === true) {
 		getID("transportation-enabled").checked = true;
 		getID("transportation-enabled-content").style.display = "block";
 		getID("transportation-add-box").style.display = "block";
 	}
-	getID(getState().transportes.visualizacao || "simple-view").checked =
+	getID(getState().transportation.visualizacao || "simple-view").checked =
 		true;
 
-	for (let j = 1; j <= getState().transportes.dados.length; j++) {
+	for (let j = 1; j <= getState().transportation.dados.length; j++) {
 		addTransportation();
-		const transporte = getState().transportes.dados[j - 1];
+		const transporte = getState().transportation.dados[j - 1];
 
 		getID(`${transporte.idaVolta}-${j}`).checked = true;
 
@@ -191,37 +191,37 @@ async function loadTransportationData() {
 }
 
 function loadAccommodationData() {
-	if (getState().modulos.hospedagens === true) {
+	if (getState().modules.accommodations === true) {
 		getID("accommodations-enabled").checked = true;
 		getID("habilitado-hospedagens-content").style.display = "block";
 		getID("hospedagens-adicionar-box").style.display = "block";
 	}
 
-	for (let j = 1; j <= getState().hospedagens.length; j++) {
-		addHospedagens();
-		const hospedagem = getState().hospedagens[j - 1];
-		ACCOMMODATION_IMAGES[j] = hospedagem.imagens || [];
+	for (let j = 1; j <= getState().accommodations.length; j++) {
+		addAccommodations();
+		const accommodation = getState().accommodations[j - 1];
+		ACCOMMODATION_IMAGES[j] = accommodation.images || [];
 
-		getID(`accommodations-id-${j}`).value = hospedagem.id;
-		getID(`accommodations-cafe-${j}`).checked = hospedagem.cafe;
-		getID(`accommodations-nome-${j}`).value = hospedagem.nome;
+		getID(`accommodations-id-${j}`).value = accommodation.id;
+		getID(`accommodations-cafe-${j}`).checked = accommodation.breakfast;
+		getID(`accommodations-nome-${j}`).value = accommodation.name;
 		getID(`accommodations-title-${j}`).innerText =
-			hospedagem.nome || getID(`accommodations-title-${j}`).innerText;
-		getID(`accommodations-endereco-${j}`).value = hospedagem.endereco;
-		getID(`accommodations-description-${j}`).value = hospedagem.descricao;
-		getID(`reserva-accommodations-${j}`).value = hospedagem.reserva || "";
-		getID(`reserva-accommodations-link-${j}`).value = hospedagem.link;
+			accommodation.name || getID(`accommodations-title-${j}`).innerText;
+		getID(`accommodations-endereco-${j}`).value = accommodation.address;
+		getID(`accommodations-description-${j}`).value = accommodation.description;
+		getID(`reserva-accommodations-${j}`).value = accommodation.reserva || "";
+		getID(`reserva-accommodations-link-${j}`).value = accommodation.link;
 
 		setImagemButtonLabel(j);
-		loadCheckIn(hospedagem, j);
-		loadCheckOut(hospedagem, j);
+		loadCheckIn(accommodation, j);
+		loadCheckOut(accommodation, j);
 	}
 }
 
 async function loadDestinationsData() {
 	if (
 		getHTMLpage() === "edit-listing" ||
-		getState().modulos.destinos === true
+		getState().modules.destinations === true
 	) {
 		if (getID("destinations-enabled")) {
 			getID("destinations-enabled").checked = true;
@@ -236,8 +236,8 @@ async function loadDestinationsData() {
 
 	loadDestinations();
 	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
-	for (const destino of getState().destinos) {
-		const id = destino.destinosID;
+	for (const destino of getState().destinations) {
+		const id = destino.destinationId;
 		for (const card of cards) {
 			if (card.getAttribute("data-destino-id") === id) {
 				card.classList.add("selected");
@@ -248,11 +248,11 @@ async function loadDestinationsData() {
 			}
 		}
 	}
-	await loadDestinosAtivos();
+	await loadActiveDestinations();
 }
 
 export function loadItineraryData() {
-	if (getState().modulos.programacao === true) {
+	if (getState().modules.itinerary === true) {
 		getID("itinerary-enabled").checked = true;
 		getID("itinerary-enabled-content").style.display = "block";
 	}
@@ -261,52 +261,52 @@ export function loadItineraryData() {
 
 	let j = 1;
 	while (getID(`itinerary-title-${j}`)) {
-		const dados = getState().programacoes[j - 1];
+		const dados = getState().schedules[j - 1];
 		if (dados?.data) {
 			applyLoadedItineraryData(j, dados);
 		}
 		j++;
 	}
-	updateDestinosAtivosCardsHTML("programacao");
-	setProgramacaoData(cloneObject(getState().programacoes));
+	updateActiveDestinationsCardsHTML("programacao");
+	setProgramacaoData(cloneObject(getState().schedules));
 }
 
 function loadGaleriaData() {
-	if (getState().modulos.galeria === true) {
+	if (getState().modules.gallery === true) {
 		getID("gallery-enabled").checked = true;
 		getID("gallery-enabled-content").style.display = "block";
 		getID("gallery-add-box").style.display = "block";
 	}
 
-	const galeriaSize = getState().galeria?.imagens.length;
-	if (galeriaSize > 0) {
-		for (let j = 1; j <= galeriaSize; j++) {
+	const gallerySize = getState().gallery?.images.length;
+	if (gallerySize > 0) {
+		for (let j = 1; j <= gallerySize; j++) {
 			const i = j - 1;
-			addGaleria();
+			addGallery();
 
-			const titulo = getState().galeria.titulos[i];
-			if (titulo) {
-				getID(`gallery-title-${j}`).value = titulo;
-				getID(`gallery-title-${j}`).innerText = titulo;
+			const title = getState().gallery.titles[i];
+			if (title) {
+				getID(`gallery-title-${j}`).value = title;
+				getID(`gallery-title-${j}`).innerText = title;
 			}
 
-			const categoria = getState().galeria.categorias[i];
-			if (categoria) {
-				getID(`gallery-category-${j}`).value = categoria;
+			const category = getState().gallery.categories[i];
+			if (category) {
+				getID(`gallery-category-${j}`).value = category;
 				updateValueDS(
 					"galeria-categoria",
-					categoria,
+					category,
 					`gallery-category-select-${j}`,
 				);
 				buildDS("galeria-categoria");
 			}
 
-			const descricao = getState().galeria.descricoes[i];
-			if (descricao) {
-				getID(`gallery-description-${j}`).value = descricao;
+			const description = getState().gallery.descriptions[i];
+			if (description) {
+				getID(`gallery-description-${j}`).value = description;
 			}
 
-			getID(`link-gallery-${j}`).value = getState().galeria.imagens[i];
+			getID(`link-gallery-${j}`).value = getState().gallery.images[i];
 		}
 	}
 }

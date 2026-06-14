@@ -4,7 +4,7 @@ import { getID } from '../../utils/dom.js';
 import { setPageName, getHTMLpage } from '../../app/main.js';
 import { translate } from "../../i18n/translation.js";
 import { loadDestinations } from "../edit-trip/new-trip.js";
-import { loadDestinosAtivos } from "../edit-trip/categories/destination.js";
+import { loadActiveDestinations } from "../edit-trip/categories/destination.js";
 import { loadCustomizacaoData } from "../edit-trip/existing-trip.js";
 
 // Listagem Existente
@@ -50,7 +50,7 @@ async function loadDestinationsData() {
 			}
 		}
 	}
-	await loadDestinosAtivos();
+	await loadActiveDestinations();
 }
 
 function loadDadosBasicosListagemData(state) {

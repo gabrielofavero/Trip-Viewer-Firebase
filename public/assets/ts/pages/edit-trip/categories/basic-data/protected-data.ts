@@ -76,11 +76,11 @@ export function switchPinLabel() {
 			: translate("trip.basic_information.pin.new");
 }
 
-export function requestPinEditarGastos(invalido = false) {
+export function requestPinEditarGastos(invalid = false) {
 	const confirmAction = "reconfirmPin()";
 	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.insert");
-	requestPin({ confirmAction, cancelAction, precontent, invalido });
+	requestPin({ confirmAction, cancelAction, precontent, invalid });
 }
 
 export function reconfirmPin() {
@@ -111,8 +111,8 @@ function invalidPin() {
 	const confirmAction = "reconfirmPin()";
 	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.invalid");
-	const invalido = true;
-	requestPin({ confirmAction, cancelAction, precontent, invalido });
+	const invalid = true;
+	requestPin({ confirmAction, cancelAction, precontent, invalid });
 }
 
 export function validatePinField() {

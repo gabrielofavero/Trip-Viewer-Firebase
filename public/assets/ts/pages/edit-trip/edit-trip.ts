@@ -2,7 +2,7 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { setState, DOCUMENT_ID, DESTINATIONS, SUCCESSFUL_SAVE, setDocumentId, setDestinations, setSuccessfulSaveFn } from '../../data/state.js';
 import { getDateTitle, getTodayFormatted, getTomorrowFormatted, jsDateToKey } from '../../utils/dates.js';
 import { cloneObject, getID, getOrderedDocumentByTitle, getURLParam } from '../../utils/dom.js';
-import { deleteUserObjectDB, getPermissoes, getSingleData, getTripDataWithDestinations, get, deleteDocument } from '../../data/firebase/database.js';
+import { deleteUserObjectDB, getPermissions, getSingleData, getTripDataWithDestinations, get, deleteDocument } from '../../data/firebase/database.js';
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
 import { newDynamicSelect } from '../../ui/dynamic-select.js';
 import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
@@ -12,7 +12,7 @@ import { loadEditModule } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
 import { displayFullMessage, MESSAGE_PROPERTIES } from '../../utils/messages.js';
 import { loadPinData, PIN } from './categories/basic-data/protected-data.js';
-import { DATAS, loadNewTrip, addTransportation, addHospedagens, loadDestinations, addGaleria, loadItinerarySchedule } from './new-trip.js';
+import { DATAS, loadNewTrip, addTransportation, addAccommodations, loadDestinations, addGallery, loadItinerarySchedule } from './new-trip.js';
 import { loadTripData } from './existing-trip.js';
 import { loadEventListeners } from './support/event-listeners.js';
 import { loadVisibilityIndex } from '../home/support/visibility.js';
@@ -21,10 +21,10 @@ import { initEditTabs } from "../../ui/edit-tabs.js";
 import { DateRangePicker } from "../../ui/date-range-picker.js";
 import { enhanceAllColorPickers } from "../../ui/color-picker-hex.js";
 
-var PERMISSOES;
+var PERMISSIONS;
 export var FIRESTORE_PROTECTED_DATA: Record<string, any> = {};
-export var FIRESTORE_GASTOS_DATA: Record<string, any> = {};
-export function setGastosData(val: any) { FIRESTORE_GASTOS_DATA = val; }
+export var FIRESTORE_EXPENSES_DATA: Record<string, any> = {};
+export function setExpensesData(val: any) { FIRESTORE_EXPENSES_DATA = val; }
 
 export function setSuccessfulSave(val) { setSuccessfulSaveFn(val); }
 var NEW_TRIP = false;
@@ -36,7 +36,7 @@ startLoadingScreen();
 
 export async function loadEditTripPage() {
 	setDocumentId(getURLParam("v"));
-	PERMISSOES = await getPermissoes();
+	PERMISSIONS = await getPermissions();
 
 	loadVisibilityIndex();
 	initEditTabs();
@@ -75,10 +75,10 @@ function loadHabilitados() {
 	loadEditModule("links");
 	loadEditModule("gastos");
 	loadEditModule("transporte", addTransportation);
-	loadEditModule("hospedagens", addHospedagens);
+	loadEditModule("hospedagens", addAccommodations);
 	loadEditModule("programacao", loadItinerarySchedule);
 	loadEditModule("destinos", loadDestinations);
-	loadEditModule("galeria", addGaleria);
+	loadEditModule("galeria", addGallery);
 }
 
 function loadUploadSelectors() {

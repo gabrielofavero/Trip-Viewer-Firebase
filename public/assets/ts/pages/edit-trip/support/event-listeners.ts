@@ -15,9 +15,9 @@ import { openAttributions } from '../../../utils/attributions.js';
 import { switchPin } from '../categories/basic-data/protected-data.js';
 import { closeToast } from '../../../utils/messages.js';
 import { openAccommodationImages, openInnerAccommodationImage, accommodationsAddListenerAction, closeInnerAccommodationImage, confirmAccommodationImages } from '../categories/accommodation.js';
-import { galeriaAdicionarListenerAction } from '../categories/gallery.js';
+import { galleryAddListenerAction } from '../categories/gallery.js';
 import { reloadItinerary } from '../categories/itinerary-module/itinerary-module.js';
-import { deleteInnerProgramacao, openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap, closeInnerProgramacao, innerProgramacaoConfirmAction } from "../categories/itinerary-module/inner-itinerary/inner-itinerary.js";
+import { deleteInnerItinerary, openInnerItinerary, openInnerItineraryItem, openInnerItinerarySwap, closeInnerItinerary, innerItineraryConfirmAction } from "../categories/itinerary-module/inner-itinerary/inner-itinerary.js";
 import { getVisibilidadeObject, setTripData } from "../set-trip.js";
 import { autoFillDarkColor } from "../categories/customization.js";
 import { applyTransportationTypeVisualization, transportationAddListenerAction } from "../categories/transportation.js";
@@ -64,8 +64,8 @@ export function loadEventListeners() {
 		"open-inner-itinerary-detail": (target) => {
 			const j = parseInt(target.getAttribute("data-j"));
 			const k = parseInt(target.getAttribute("data-k"));
-			const turno = target.getAttribute("data-turno");
-			if (!isNaN(j) && !isNaN(k) && turno) openInnerItinerary(j, k, turno);
+			const period = target.getAttribute("data-period");
+			if (!isNaN(j) && !isNaN(k) && period) openInnerItinerary(j, k, period);
 		},
 		"open-inner-itinerary-item": (target) => {
 			const index = parseInt(target.getAttribute("data-index"));
@@ -75,8 +75,8 @@ export function loadEventListeners() {
 		"delete-inner-itinerary": (target) => {
 			const j = parseInt(target.getAttribute("data-j"));
 			const k = parseInt(target.getAttribute("data-k"));
-			const turno = target.getAttribute("data-turno");
-			if (!isNaN(j) && !isNaN(k) && turno) deleteInnerProgramacao(j, k, turno);
+			const period = target.getAttribute("data-period");
+			if (!isNaN(j) && !isNaN(k) && period) deleteInnerItinerary(j, k, period);
 		},
 	});
 
@@ -89,8 +89,8 @@ export function loadEventListeners() {
 		closeInnerAccommodationImage,
 		confirmAccommodationImages,
 		saveInnerExpense,
-		closeInnerProgramacao,
-		innerProgramacaoConfirmAction,
+		closeInnerItinerary,
+		innerItineraryConfirmAction,
 	});
 
 	// Inputs
@@ -100,7 +100,7 @@ export function loadEventListeners() {
 	// Buttons
 	getID("save-btn").addEventListener("click", () => setTripData());
 	getID("re-editar").addEventListener("click", () =>
-		reEdit("viagens", SUCCESSFUL_SAVE),
+		reEdit("trips", SUCCESSFUL_SAVE),
 	);
 	getID("visualizar").addEventListener("click", () =>
 		visualizarListenerAction(),
@@ -124,7 +124,7 @@ export function loadEventListeners() {
 		accommodationsAddListenerAction(),
 	);
 	getID("gallery-add").addEventListener("click", () =>
-		galeriaAdicionarListenerAction(),
+		galleryAddListenerAction(),
 	);
 	getID("pin-disabled").addEventListener("click", switchPin);
 	getID("pin-sensitive-only").addEventListener("click", switchPin);
