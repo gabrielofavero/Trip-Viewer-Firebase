@@ -44,7 +44,7 @@ export async function loadEditDestinationPage() {
 	loadVisibilityIndex();
 	initEditTabs();
 	loadHabilitados();
-	newDynamicSelect("regiao");
+	newDynamicSelect("region");
 
 	if (DOCUMENT_ID) {
 		await loadDestinations();
@@ -79,35 +79,35 @@ function loadEventListeners() {
 		closeAccordions("restaurantes");
 		addRestaurantes();
 		openLastAccordion("restaurantes");
-		buildDS("regiao");
+		buildDS("region");
 	});
 
 	getID("lanches-adicionar").addEventListener("click", () => {
 		closeAccordions("lanches");
 		addLanches();
 		openLastAccordion("lanches");
-		buildDS("regiao");
+		buildDS("region");
 	});
 
 	getID("saidas-adicionar").addEventListener("click", () => {
 		closeAccordions("saidas");
 		addSaidas();
 		openLastAccordion("saidas");
-		buildDS("regiao");
+		buildDS("region");
 	});
 
 	getID("turismo-adicionar").addEventListener("click", () => {
 		closeAccordions("turismo");
 		addTurismo();
 		openLastAccordion("turismo");
-		buildDS("regiao");
+		buildDS("region");
 	});
 
 	getID("lojas-adicionar").addEventListener("click", () => {
 		closeAccordions("lojas");
 		addLojas();
 		openLastAccordion("lojas");
-		buildDS("regiao");
+		buildDS("region");
 	});
 
 	getID("save-btn").addEventListener("click", () => {
@@ -165,8 +165,8 @@ function loadEventListeners() {
 export function addListenerToRemoveDestination(categoria, j) {
 	const dynamicSelects = [
 		{
-			type: "regiao",
-			selectID: `${categoria}-regiao-select-${j}`,
+		type: "region",
+		selectID: `${categoria}-region-select-${j}`,
 		},
 	];
 	addRemoveChildListenerDS(categoria, j, dynamicSelects);
@@ -329,7 +329,7 @@ export function moveDestination(j, categoria) {
 			website: getID(`${categoria}-website-${j}`).value,
 			mapa: getID(`${categoria}-map-${j}`).value,
 			instagram: getID(`${categoria}-instagram-${j}`).value,
-			regiao: getID(`${categoria}-regiao-select-${j}`).value,
+			regiao: getID(`${categoria}-region-select-${j}`).value,
 			valor: getID(`${categoria}-valor-${j}`).value,
 			midia: getID(`${categoria}-midia-${j}`).value,
 			nota: getID(`${categoria}-rating-${j}`).value,
@@ -342,13 +342,13 @@ export function moveDestination(j, categoria) {
 		setDescription(newCategoria, newJ, description);
 		removeChildWithValidation(categoria, j);
 
-		removeSelectorDS("regiao", `${categoria}-regiao-select-${j}`);
+		removeSelectorDS("region", `${categoria}-region-select-${j}`);
 		updateValueDS(
-			"regiao",
+			"region",
 			destino.regiao,
-			`${newCategoria}-regiao-select-${newJ}`,
+			`${newCategoria}-region-select-${newJ}`,
 		);
-		buildDS("regiao");
+		buildDS("region");
 
 		updateDescriptionButtonLabel(newCategoria, newJ);
 

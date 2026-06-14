@@ -321,11 +321,11 @@ function promptDeleteEdit(j) {
 	const id = getDestinationID(j);
 	const name = getItem(id).nome;
 
-	const titulo = translate("destination.delete.title");
-	const conteudo = translate("destination.delete.message", { name });
+	const title = translate("destination.delete.title");
+	const content = translate("destination.delete.message", { name });
 	const yesAction = `deleteEdit('${id}')`;
 
-	displayPrompt({ title: titulo, content: conteudo, yesAction });
+	displayPrompt({ title, content, yesAction });
 }
 
 export async function deleteEdit(id) {
@@ -367,12 +367,12 @@ export function closeAddedDestination(index?) {
 
 function restoreAccordionBody(j: number, item: Record<string, any>): void {
 	const id = getDestinationID(j);
-	const planejado = getPlanejado(id);
+	const planned = getPlanejado(id);
 	const editBtn = true;
 	getID(`accordion-body-${j}`)!.innerHTML = getDestinationsAccordionBodyHTML({
 		j,
 		item,
-		planned: planejado,
+		planned,
 		editBtn,
 		values: undefined as any,
 		currency: undefined as any,

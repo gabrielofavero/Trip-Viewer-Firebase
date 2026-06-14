@@ -30,7 +30,7 @@ export function getItineraryArray() {
 			noite: [],
 		};
 
-		innerResult.destinationIds = getDestinationsFromCards("programacao", j);
+		innerResult.destinationIds = getDestinationsFromCards("itinerary", j);
 
 		const tituloSelectValue = getID(
 			`itinerary-inner-title-select-${j}`,
@@ -81,7 +81,7 @@ export function applyLoadedItineraryData(j, dados) {
 	let destinationIds = [];
 	if (destinationIdsObject && destinationIdsObject.length > 0) {
 		destinationIds = destinationIdsObject.map((dest) => dest.destinationId);
-		addValuesForActiveDestinationsCards("programacao", j, destinationIds);
+		addValuesForActiveDestinationsCards("itinerary", j, destinationIds);
 	}
 
 	getID(`itinerary-inner-title-select-${j}`).innerHTML =
@@ -267,7 +267,7 @@ export function reloadItinerary() {
 		}
 		j++;
 	}
-	updateActiveDestinationsCardsHTML("programacao");
+	updateActiveDestinationsCardsHTML("itinerary");
 }
 
 // Listeners

@@ -82,8 +82,8 @@ export function addTransportation() {
 
             <div class="nice-form-group" id="people-box-${j}">
               <label>${translate("labels.person")}</label>
-              <select ${getID("people-view").checked ? "required" : ""} class="editar-select" id="transporte-pessoa-select-${j}" style="display: none;"></select>
-              <input class="nice-form-group" id="transporte-pessoa-${j}" type="text" placeholder="${translate("labels.person")}" />
+              <select ${getID("people-view").checked ? "required" : ""} class="editar-select" id="transportation-person-select-${j}" style="display: none;"></select>
+              <input class="nice-form-group" id="transportation-person-${j}" type="text" placeholder="${translate("labels.person")}" />
             </div>
 
             <div class="nice-form-group">
@@ -162,7 +162,7 @@ export function addTransportation() {
     </div>
       `);
 
-	getID(`transportation-id-${j}`).value = getCategoryID("transporte", j);
+	getID(`transportation-id-${j}`).value = getCategoryID("transportation", j);
 	getID(`ponto-partida-${j}`).value =
 		j == 1 ? "" : getID(`ponto-chegada-${j - 1}`).value;
 	getID(`ponto-chegada-${j}`).value =
@@ -184,9 +184,9 @@ export function addTransportation() {
 	applyTransportationTypeVisualization(j);
 	addRemoveTransportationListener(j);
 	addSelectorDS(
-		"transporte-pessoa",
-		`transportation-pessoa-select-${j}`,
-		`transportation-pessoa-${j}`,
+		"transportation-person",
+		`transportation-person-select-${j}`,
+		`transportation-person-${j}`,
 		() => updateTransportationTitle(j),
 	);
 
@@ -203,7 +203,7 @@ export function addTransportation() {
 }
 
 export function addAccommodations() {
-	const startEnd = getNextCategoryStartEnd("hospedagens", "check-out");
+	const startEnd = getNextCategoryStartEnd("accommodations", "check-out");
 	const j = getNextJ("accommodations-box");
 	$("#accommodations-box").append(`
       <div id="hospedagens-inner-box-${j}" class="inner-box draggable">
@@ -297,8 +297,8 @@ export function addAccommodations() {
       </div>
       `);
 
-	getID(`accommodations-id-${j}`).value = getCategoryID("hospedagens", j);
-	addRemoveChildListener("hospedagens", j, () => removeAccommodationImages(j));
+	getID(`accommodations-id-${j}`).value = getCategoryID("accommodations", j);
+	addRemoveChildListener("accommodations", j, () => removeAccommodationImages(j));
 
 	// Initialize date range picker for this accommodation
 	const hospDurPicker = getID(`accommodations-duration-${j}`);
@@ -372,7 +372,7 @@ export function loadItinerarySchedule() {
           <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${getActiveDestinationsSelectVisibility()}">
             <label>${translate("destination.title")}<span class="opcional"> (${translate("labels.optional")})</span></label>
             <div class="destinos-cards itinerario-cards" id="programacao-local-${j}">
-              ${getActiveDestinationsCardOptions("programacao", j)}
+              ${getActiveDestinationsCardOptions("itinerary", j)}
             </div>
           </div>
 
@@ -471,8 +471,8 @@ export function addGallery() {
 
           <div class="nice-form-group" id="galeria-select-form-group-${j}">
             <label>${translate("labels.type")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select id="galeria-categoria-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="galeria-categoria-${j}" type="text" placeholder="${translate("destination.map.title")}" />
+            <select id="gallery-category-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="gallery-category-${j}" type="text" placeholder="${translate("destination.map.title")}" />
           </div>
     
           <div class="nice-form-group">
@@ -523,7 +523,7 @@ export function addGallery() {
 	loadGalleryListeners(j);
 	addRemoveGaleriaListener(j);
 	addSelectorDS(
-		"galeria-categoria",
+		"gallery-category",
 		`gallery-category-select-${j}`,
 		`gallery-category-${j}`,
 	);

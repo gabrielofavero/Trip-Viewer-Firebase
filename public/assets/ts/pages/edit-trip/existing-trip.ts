@@ -143,13 +143,13 @@ async function loadTransportationData() {
 
 		const pessoa = transporte.pessoa;
 		if (pessoa) {
-			getID(`transportation-pessoa-${j}`).value = pessoa;
+			getID(`transportation-person-${j}`).value = pessoa;
 			updateValueDS(
-				"transporte-pessoa",
+				"transportation-person",
 				pessoa,
-				`transportation-pessoa-select-${j}`,
+				`transportation-person-select-${j}`,
 			);
-			buildDS("transporte-pessoa");
+			buildDS("transportation-person");
 		}
 
 		const partida = convertFromDateObject(transporte.datas.partida);
@@ -267,7 +267,7 @@ export function loadItineraryData() {
 		}
 		j++;
 	}
-	updateActiveDestinationsCardsHTML("programacao");
+	updateActiveDestinationsCardsHTML("itinerary");
 	setProgramacaoData(cloneObject(getState().schedules));
 }
 
@@ -294,11 +294,11 @@ function loadGaleriaData() {
 			if (category) {
 				getID(`gallery-category-${j}`).value = category;
 				updateValueDS(
-					"galeria-categoria",
+					"gallery-category",
 					category,
 					`gallery-category-select-${j}`,
 				);
-				buildDS("galeria-categoria");
+				buildDS("gallery-category");
 			}
 
 			const description = getState().gallery.descriptions[i];

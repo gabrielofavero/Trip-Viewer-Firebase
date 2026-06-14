@@ -41,9 +41,9 @@ export async function loadEditTripPage() {
 	loadVisibilityIndex();
 	initEditTabs();
 	loadHabilitados();
-	loadDraggablesWithAccordions(["transporte", "hospedagens"]);
-	newDynamicSelect("galeria-categoria");
-	newDynamicSelect("transporte-pessoa");
+	loadDraggablesWithAccordions(["transportation", "accommodations"]);
+	newDynamicSelect("gallery-category");
+	newDynamicSelect("transportation-person");
 
 	setUserData(await getUserData());
 	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinos || []));

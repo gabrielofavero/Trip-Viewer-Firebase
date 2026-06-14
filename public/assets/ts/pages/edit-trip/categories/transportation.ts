@@ -31,7 +31,7 @@ export function getTransportationObject(protectedReservationCodes = false) {
 			},
 			duracao: getID(`transportation-duracao-${j}`).value,
 			empresa: getCompanyValue(j),
-			id: getOrCreateCategoryID("transporte", j),
+			id: getOrCreateCategoryID("transportation", j),
 			idaVolta: getID(`ida-${j}`).checked
 				? "ida"
 				: getID(`volta-${j}`).checked
@@ -265,8 +265,8 @@ export function loadTransportationListeners(j) {
 }
 
 export function transportationAddListenerAction() {
-	closeAccordions("transporte");
+	closeAccordions("transportation");
 	addTransportation();
-	openLastAccordion("transporte");
-	buildDS("transporte-pessoa");
+	openLastAccordion("transportation");
+	buildDS("transportation-person");
 }

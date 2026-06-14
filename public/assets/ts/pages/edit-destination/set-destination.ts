@@ -55,7 +55,7 @@ function buildDestinoCategoryObject(categoria) {
 		item.descricao = getDescription(categoria, j);
 		item.website = getID(`${categoria}-website-${j}`).value;
 		item.instagram = getID(`${categoria}-instagram-${j}`).value;
-		item.regiao = getID(`${categoria}-regiao-select-${j}`).value;
+		item.regiao = getID(`${categoria}-region-select-${j}`).value;
 		item.mapa = getID(`${categoria}-map-${j}`).value;
 		item.midia = getID(`${categoria}-midia-${j}`).value;
 		item.nota = getID(`${categoria}-rating-${j}`).value;

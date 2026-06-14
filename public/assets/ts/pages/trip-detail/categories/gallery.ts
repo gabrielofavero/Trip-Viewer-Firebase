@@ -62,7 +62,7 @@ function loadGaleriaBody(galeria) {
 	}
 
 	getID("portfolio-container").innerHTML = result;
-	loadImageLightbox("galeria");
+	loadImageLightbox("gallery");
 }
 
 function loadFilterClass(filter) {

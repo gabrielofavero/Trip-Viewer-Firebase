@@ -32,7 +32,7 @@ export function getAccommodationArray(protectedReservationCodes = false) {
 			},
 			descricao: getID(`accommodations-description-${j}`).value,
 			endereco: getID(`accommodations-endereco-${j}`).value,
-			id: getOrCreateCategoryID("hospedagens", j),
+			id: getOrCreateCategoryID("accommodations", j),
 			imagens: getAccommodationImages(j),
 			reserva: protectedReservationCodes
 				? ""

@@ -401,7 +401,7 @@ function observeFlightBoxes() {
 		timeoutId = setTimeout(() => {
 			flightBoxes.forEach((box) => {
 			if ((box as HTMLElement).offsetHeight < 5) {
-					adjustCardsHeights("transporte");
+					adjustCardsHeights("transportation");
 				}
 			});
 		}, 200);

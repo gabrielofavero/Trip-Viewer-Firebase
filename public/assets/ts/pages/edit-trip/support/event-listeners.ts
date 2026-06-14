@@ -246,21 +246,21 @@ function visualizarListenerAction() {
 export function addRemoveTransportationListener(j) {
 	const dynamicSelects = [
 		{
-			type: "transporte-pessoa",
-			selectID: `transportation-pessoa-select-${j}`,
+			type: "transportation-person",
+			selectID: `transportation-person-select-${j}`,
 		},
 	];
-	addRemoveChildListenerDS("transporte", j, dynamicSelects);
+	addRemoveChildListenerDS("transportation", j, dynamicSelects);
 }
 
 export function addRemoveGaleriaListener(j) {
 	const dynamicSelects = [
 		{
-			type: "galeria-categoria",
+			type: "gallery-category",
 			selectID: `gallery-category-select-${j}`,
 		},
 	];
-	addRemoveChildListenerDS("galeria", j, dynamicSelects);
+	addRemoveChildListenerDS("gallery", j, dynamicSelects);
 }
 
 export function visibilityListenerAction(visibilidade?) {

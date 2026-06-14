@@ -80,7 +80,7 @@ function getTitleReplacement(j) {
 
 	if (!labelValue) return "";
 
-	return selected.id.includes("hospedagens")
+	return selected.id.includes("accommodations")
 		? processAccomodationReplacement(labelValue, j)
 		: labelValue;
 }
@@ -102,7 +102,7 @@ function loadTimeReplacementCheckbox() {
 	const value = getID("inner-itinerary-select-transportation").value;
 
 	if (getID("inner-itinerary-item-transportation-radio").checked && value) {
-		const j = findJFromID(value, "transporte");
+		const j = findJFromID(value, "transportation");
 
 		TIME_REPLACEMENT.replacement.start = getID(`partida-horario-${j}`).value;
 		TIME_REPLACEMENT.replacement.end = getID(`chegada-horario-${j}`).value;
@@ -178,7 +178,7 @@ function processAccomodationReplacement(labelValue, itineraryJ) {
 	const value = getID("inner-itinerary-select-accommodations").value;
 	if (!inputDate || !value) return labelValue;
 
-	const j = findJFromID(value, "hospedagens");
+	const j = findJFromID(value, "accommodations");
 	const checkInValue = getID(`check-in-${j}`).value;
 	const checkOutValue = getID(`check-out-${j}`).value;
 

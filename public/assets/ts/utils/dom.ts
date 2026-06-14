@@ -272,13 +272,13 @@ export function removeEmptyChild(categoria) {
 		case "lineup":
 			itens = [`${categoria}-nome`];
 			break;
-		case "transporte":
+		case "transportation":
 			itens = ["ponto-partida", "ponto-chegada"];
 			break;
-		case "hospedagens":
+		case "accommodations":
 			itens = [`${categoria}-nome`, `${categoria}-endereco`];
 			break;
-		case "galeria":
+	case "gallery":
 			itens = [`${categoria}-title`, `link-${categoria}`];
 			break;
 	}
@@ -606,7 +606,7 @@ export function getInnerItinerary(item, destinations) {
 	};
 	let index = -1;
 	switch (item?.tipo) {
-		case "transporte":
+		case "transportation":
 			if (getState().modulos.transportes === true && item.id) {
 				index = getState().transportes.dados
 					.map((programacao) => programacao.id)
@@ -622,7 +622,7 @@ export function getInnerItinerary(item, destinations) {
 				}
 			}
 			break;
-		case "hospedagens":
+		case "accommodations":
 			if (getState().modulos.hospedagens === true && item.id) {
 				index = getState().hospedagens
 					.map((hospedagem) => hospedagem.id)
@@ -633,7 +633,7 @@ export function getInnerItinerary(item, destinations) {
 				}
 			}
 			break;
-		case "destinos":
+		case "destinations":
 			if (
 				getState().modulos.destinos === true &&
 				item.local &&

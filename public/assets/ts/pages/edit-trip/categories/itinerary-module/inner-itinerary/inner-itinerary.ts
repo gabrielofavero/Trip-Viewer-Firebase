@@ -103,8 +103,8 @@ export async function openInnerItinerary(j, k?, period?) {
 // Selects
 function getInnerItinerarySelects(j) {
 	return {
-		transporte: getInnerItinerarySelect("transporte"),
-		hospedagens: getInnerItinerarySelect("hospedagens"),
+		transporte: getInnerItinerarySelect("transportation"),
+		hospedagens: getInnerItinerarySelect("accommodations"),
 		destinos: getInnerItinerarySelectsDestinos(j),
 		datas: getDataSelectOptions(j),
 	};
@@ -136,7 +136,7 @@ function getInnerItinerarySelectsDestinos(j) {
 		ACTIVE_DESTINATIONS.length === 0
 	)
 		returnFalse();
-	const destinations = getDestinationsFromCards("programacao", j);
+	const destinations = getDestinationsFromCards("itinerary", j);
 	if (destinations.length === 0) returnFalse();
 
 	let options = "";
@@ -183,15 +183,15 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 		);
 
 		switch (dados?.item?.tipo) {
-			case "transporte":
-				getID(`inner-itinerary-item-transportation-radio`).checked = true;
-				getID(`inner-itinerary-item-transporte`).style.display = "block";
-				getID(`inner-itinerary-select-transporte`).value = dados.item.id;
-				itemAssociado.innerText = getSelectCurrentLabel(
-					getID(`inner-itinerary-select-transporte`),
-				);
-				break;
-			case "hospedagens":
+		case "transportation":
+			getID(`inner-itinerary-item-transportation-radio`).checked = true;
+			getID(`inner-itinerary-item-transporte`).style.display = "block";
+			getID(`inner-itinerary-select-transporte`).value = dados.item.id;
+			itemAssociado.innerText = getSelectCurrentLabel(
+				getID(`inner-itinerary-select-transporte`),
+			);
+			break;
+		case "accommodations":
 				getID(`inner-itinerary-item-accommodations-radio`).checked = true;
 				getID(`inner-itinerary-item-hospedagens`).style.display = "block";
 				getID(`inner-itinerary-select-hospedagens`).value = dados.item.id;
@@ -199,7 +199,7 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 					getID(`inner-itinerary-select-hospedagens`),
 				);
 				break;
-			case "destinos":
+		case "destinations":
 				getID(`inner-itinerary-item-destinations-radio`).checked = true;
 				getID("inner-itinerary-item-destinations").style.display = "block";
 
@@ -355,19 +355,19 @@ function addInnerItinerary(j, k?, period?) {
 			getID("inner-itinerary-item-transportation-radio").checked &&
 			getID(`inner-itinerary-select-transporte`).value
 		) {
-			item.tipo = "transporte";
+			item.tipo = "transportation";
 			item.id = getID(`inner-itinerary-select-transporte`).value;
 		} else if (
 			getID("inner-itinerary-item-accommodations-radio").checked &&
 			getID(`inner-itinerary-select-hospedagens`).value
 		) {
-			item.tipo = "hospedagens";
+			item.tipo = "accommodations";
 			item.id = getID(`inner-itinerary-select-hospedagens`).value;
 		} else if (
 			getID("inner-itinerary-item-destinations-radio").checked &&
 			getID(`inner-itinerary-select-passeio`).value
 		) {
-			item.tipo = "destinos";
+			item.tipo = "destinations";
 			item.local = getID(`inner-itinerary-select-local`).value;
 			item.id = getID(`inner-itinerary-select-passeio`).value;
 			item.categoria = getID(`inner-itinerary-select-categoria`).value;

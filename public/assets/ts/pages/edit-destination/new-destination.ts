@@ -83,8 +83,8 @@ export function addRestaurantes() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="restaurantes-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="restaurantes-regiao-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.region")}" />
+            <select class="editar-select" id="restaurantes-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="restaurantes-region-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
@@ -141,9 +141,9 @@ export function addRestaurantes() {
 	addDestinationsListeners(categoria, j);
 	addListenerToRemoveDestination(categoria, j);
 	addSelectorDS(
-		"regiao",
-		`restaurantes-regiao-select-${j}`,
-		`restaurantes-regiao-${j}`,
+		"region",
+		`restaurantes-region-select-${j}`,
+		`restaurantes-region-${j}`,
 	);
 }
 
@@ -221,8 +221,8 @@ export function addLanches() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lanches-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="lanches-regiao-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.region")}" />
+            <select class="editar-select" id="lanches-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="lanches-region-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
@@ -279,7 +279,7 @@ export function addLanches() {
 	addCreatedDate(categoria, j);
 	addDestinationsListeners(categoria, j);
 	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `lanches-regiao-select-${j}`, `lanches-regiao-${j}`);
+	addSelectorDS("region", `lanches-region-select-${j}`, `lanches-region-${j}`);
 }
 
 export function addSaidas() {
@@ -356,8 +356,8 @@ export function addSaidas() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="saidas-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="saidas-regiao-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.region")}" />
+            <select class="editar-select" id="saidas-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="saidas-region-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
@@ -413,7 +413,7 @@ export function addSaidas() {
 	addCreatedDate(categoria, j);
 	addDestinationsListeners(categoria, j);
 	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `saidas-regiao-select-${j}`, `saidas-regiao-${j}`);
+	addSelectorDS("region", `saidas-region-select-${j}`, `saidas-region-${j}`);
 }
 
 export function addTurismo() {
@@ -490,8 +490,8 @@ export function addTurismo() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="turismo-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="turismo-regiao-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.region")}" />
+            <select class="editar-select" id="turismo-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="turismo-region-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
@@ -547,7 +547,7 @@ export function addTurismo() {
 	addCreatedDate(categoria, j);
 	addDestinationsListeners(categoria, j);
 	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `turismo-regiao-select-${j}`, `turismo-regiao-${j}`);
+	addSelectorDS("region", `turismo-region-select-${j}`, `turismo-region-${j}`);
 }
 
 export function addLojas() {
@@ -626,8 +626,8 @@ export function addLojas() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="lojas-regiao-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="lojas-regiao-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.region")}" />
+            <select class="editar-select" id="lojas-region-select-${j}" style="display: none;"></select>
+            <input class="nice-form-group" id="lojas-region-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
@@ -683,7 +683,7 @@ export function addLojas() {
 	addCreatedDate(categoria, j);
 	addDestinationsListeners(categoria, j);
 	addListenerToRemoveDestination(categoria, j);
-	addSelectorDS("regiao", `lojas-regiao-select-${j}`, `lojas-regiao-${j}`);
+	addSelectorDS("region", `lojas-region-select-${j}`, `lojas-region-${j}`);
 }
 
 function addCreatedDate(categoria, j) {

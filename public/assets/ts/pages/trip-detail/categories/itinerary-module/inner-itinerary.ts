@@ -146,10 +146,10 @@ export function displayInnerItineraryMessage(index) {
 	displayFullMessage(propriedades);
 
 	switch (CURRENT_INNER_ITINERARY[index].tipo) {
-		case "hospedagens":
+		case "accommodations":
 			loadImageLightbox("programacao-galeria");
 			break;
-		case "destinos":
+		case "destinations":
 			if (CURRENT_INNER_ITINERARY[index].midia) {
 				loadInnerItineraryMedia(CURRENT_INNER_ITINERARY[index].midia);
 			}
@@ -231,13 +231,13 @@ function getInnerItinerary(item, destinos?) {
 		content: "",
 		midia: "",
 		container:
-			item?.tipo === "destinos"
+			item?.tipo === "destinations"
 				? "destinos-container"
 				: "programacao-container",
 	};
 	let index = -1;
 	switch (item?.tipo) {
-		case "transporte":
+	case "transportation":
 			if (getState().modulos.transportes === true && item.id) {
 				index = getState().transportes.dados
 					.map((programacao) => programacao.id)
@@ -253,7 +253,7 @@ function getInnerItinerary(item, destinos?) {
 				}
 			}
 			break;
-		case "hospedagens":
+	case "accommodations":
 			if (getState().modulos.hospedagens === true && item.id) {
 				index = getState().hospedagens
 					.map((hospedagem) => hospedagem.id)
@@ -264,7 +264,7 @@ function getInnerItinerary(item, destinos?) {
 				}
 			}
 			break;
-		case "destinos":
+case "destinations":
 			if (
 				getState().modulos.destinos === true &&
 				item.local &&

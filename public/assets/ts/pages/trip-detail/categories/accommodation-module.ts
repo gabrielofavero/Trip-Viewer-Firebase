@@ -138,7 +138,7 @@ export function getHospedagensData(dataFirestore) {
 
 function getAccommodationReservationHTML(hospedagem) {
 	if (getState().pin === "sensitive-only") {
-		return getSensitiveReservationHTML("hospedagens", hospedagem.id);
+		return getSensitiveReservationHTML("accommodations", hospedagem.id);
 	}
 	// remove # if first char is #
 	if (hospedagem.reserva && hospedagem.reserva.charAt(0) === "#") {
@@ -166,8 +166,8 @@ function buildHospedagensSwiper(swiperData) {
                                             <div class="swiper-button-next hospedagens-next" ${swiperButtonStyle}></div>
                                           </div>
                                         </div>`;
-	ADJUST_HEIGHT_CARDS.push("hospedagens");
-	initSwiper("hospedagens");
+	ADJUST_HEIGHT_CARDS.push("accommodations");
+	initSwiper("accommodations");
 }
 
 function autoNavigateHospedagens() {

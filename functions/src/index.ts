@@ -49,3 +49,9 @@ import * as migration20 from "./migrations/20-migrate-cleanup";
 export const migrateCleanup = migration20.migrate;
 /** @deprecated Use migrateCleanup */
 export const m20 = migration20.migrate;
+
+// Prompt B: Migrate itinerary item `tipo` values Portuguese → English
+import * as migration21 from "./migrations/21-migrate-itinerary-tipo";
+export const migrateItineraryTipo = migration21.migrate;
+/** @deprecated Use migrateItineraryTipo */
+export const m21 = migration21.migrate;

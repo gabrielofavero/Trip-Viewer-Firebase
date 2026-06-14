@@ -40,7 +40,7 @@ export async function updateActiveDestinationsHTMLs() {
 	await loadActiveDestinations(false);
 
 	if (getHTMLpage() === "editar-viagem") {
-		updateActiveDestinationsCardsHTML("programacao");
+		updateActiveDestinationsCardsHTML("itinerary");
 	}
 }
 
@@ -134,7 +134,7 @@ export function addValuesForDestinosAtivosCheckbox(tipo, j, values) {
 	}
 }
 
-export function getDestinationsItemCheckbox(j, destinationId, title, tipo = "destinos", k?) {
+export function getDestinationsItemCheckbox(j, destinationId, title, tipo = "destinations", k?) {
 	if (!j) {
 		console.error("Error in _getDestinationsItemCheckbox: j is undefined or null.");
 	}
@@ -153,7 +153,7 @@ export function getDestinationsItemCard(destinationId: string, title: string): s
 
 function loadDestinosCheckboxListeners(tipo, j) {
 	switch (tipo) {
-		case "programacao":
+		case "itinerary":
 			loadItineraryListeners(j);
 	}
 }

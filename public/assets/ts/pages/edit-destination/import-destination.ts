@@ -57,8 +57,8 @@ function importFillDestination(categoria, j, data, force) {
 
 	// regiao (uses dynamic select + input)
 	if (force || (data.regiao !== undefined && data.regiao !== null && data.regiao !== "")) {
-		updateValueDS("regiao", data.regiao || "", `${categoria}-regiao-select-${j}`);
-		buildDS("regiao");
+		updateValueDS("region", data.regiao || "", `${categoria}-region-select-${j}`);
+		buildDS("region");
 	}
 
 	// valor (uses _loadMoedaValorAndVisibility)
@@ -114,7 +114,7 @@ function importNewDestination(type, data, force = false) {
 	addFn();
 	const j = importGetLastJ(type);
 	openLastAccordion(type);
-	buildDS("regiao");
+	buildDS("region");
 
 	importFillDestination(type, j, data, force);
 	console.log(`✅ Imported new "${type}" at index ${j}: ${data.nome || "(unnamed)"}`);

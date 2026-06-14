@@ -29,7 +29,7 @@ export function adjustCardsHeights(type?) {
 }
 
 function adjustSingleCardsHeights(tipo, second = false) {
-	let innerID = tipo === "hospedagens" && !second ? "nome" : "box";
+	let innerID = tipo === "accommodations" && !second ? "nome" : "box";
 
 	const sliders = getChildIDs(`${tipo}-wrapper`);
 	let maxHeight = 0;
@@ -55,8 +55,8 @@ function adjustSingleCardsHeights(tipo, second = false) {
 		}
 	}
 
-	if (tipo === "hospedagens" && !second) {
-		adjustSingleCardsHeights("hospedagens", true);
+	if (tipo === "accommodations" && !second) {
+		adjustSingleCardsHeights("accommodations", true);
 	}
 }
 

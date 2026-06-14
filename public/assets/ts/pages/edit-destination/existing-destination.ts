@@ -23,7 +23,7 @@ export function populateExistingDestinationForm() {
 		loadDestinoExistente("saidas");
 		loadDestinoExistente("turismo");
 		loadDestinoExistente("lojas");
-		buildDS("regiao");
+		buildDS("region");
 
 		loadMapaData();
 		setPageName(
@@ -130,9 +130,9 @@ export function addDestinoHTML(categoria, j, destino) {
 	getID(`${categoria}-website-${j}`).value = destino.website || "";
 	getID(`${categoria}-map-${j}`).value = destino.mapa || "";
 	getID(`${categoria}-instagram-${j}`).value = destino.instagram || "";
-	getID(`${categoria}-regiao-${j}`).value = destino.regiao || "";
+	getID(`${categoria}-region-${j}`).value = destino.regiao || "";
 
-	updateValueDS("regiao", destino.regiao, `${categoria}-regiao-select-${j}`);
+	updateValueDS("region", destino.regiao, `${categoria}-region-select-${j}`);
 	loadMoedaValorAndVisibility(destino.valor || "", categoria, j);
 
 	getID(`${categoria}-midia-${j}`).value = destino.midia || "";
