@@ -2,6 +2,7 @@ import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
 import { closeMessage, displayError, displayMessage, displayPrompt, openToast } from '../utils/messages.js';
 import { translate } from '../i18n/translation.js';
 import { getUID, USER_DATA } from '../data/firebase/auth.js';
+import { DATABASE_EDITABLE_DOCUMENTS } from '../data/firebase/database.js';
 import { cloneObject } from '../utils/dom.js';
 
 export async function restoreOnClickAction() {
