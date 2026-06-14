@@ -2,7 +2,7 @@
 // Destination formatting functions moved to models/destination.model.js — imported here for backward compat
 
 import {
-	getNotaTranslation,
+	getRatingTranslation,
 	getPriceValue,
 	convertCustomPrice,
 	getDescriptionValue,

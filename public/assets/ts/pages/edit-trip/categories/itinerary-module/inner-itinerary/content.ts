@@ -6,7 +6,7 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
                 <div id="inner-itinerary-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some((item: any) => item.ativo) ? "block" : "none"}">
                         <label style="margin-bottom: 0px;">${translate("trip.itinerary.linked_item")} <span class="opcional">(${translate("labels.optional")})</span></label>
-                        <button id="inner-itinerary-item-associado" class="btn input-botao placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate("trip.itinerary.link_item")}</button>
+                        <button id="inner-itinerary-item-associado" class="btn input-button placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate("trip.itinerary.link_item")}</button>
                     </div>
 
                     <div class="nice-form-group">

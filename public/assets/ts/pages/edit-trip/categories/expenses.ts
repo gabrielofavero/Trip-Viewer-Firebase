@@ -93,10 +93,10 @@ function loadExpensesHTML() {
 		for (let i = 0; i < innerGasto.gastos.length; i++) {
 			const gasto = innerGasto.gastos[i];
 			const container = document.createElement("div");
-			container.className = "input-botao-container";
+			container.className = "input-button-container";
 
 			const button = document.createElement("button");
-			button.className = "btn input-botao draggable";
+			button.className = "btn input-button draggable";
 			button.innerHTML = gasto.pessoa
 				? `<span class="highlight">${getTravelerName(gasto.pessoa)}:</span> ${gasto.nome}`
 				: gasto.nome;

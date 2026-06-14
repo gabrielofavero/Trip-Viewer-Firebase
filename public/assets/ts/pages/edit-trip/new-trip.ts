@@ -276,7 +276,7 @@ export function addAccommodations() {
 
             <div class="nice-form-group customization-box" id="hospedagens-${j}-box">
               <label>${translate("labels.image.title_plural")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-              <button id="imagens-hospedagem-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-botao" style="margin-top:0px">${translate("labels.image.add_title")}</button>
+              <button id="imagens-hospedagem-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate("labels.image.add_title")}</button>
             </div>
               
           </div>
@@ -384,22 +384,22 @@ export function loadItinerarySchedule() {
             <input class="nice-form-group" id="itinerary-inner-title-${j}" maxlength="25" type="text" placeholder="São Paulo" style="display: none;">
           </div>
 
-          <div class='turno-box' id='programacao-madrugada-${j}'>
+          <div class='period-box' id='programacao-madrugada-${j}'>
             <label>${translate("datetime.time_of_day.early_hours")}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-early-morning-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-manha-${j}'>
+          <div class='period-box' id='programacao-manha-${j}'>
             <label>${translate("datetime.time_of_day.morning")}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-morning-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-tarde-${j}'>
+          <div class='period-box' id='programacao-tarde-${j}'>
             <label>${translate("datetime.time_of_day.afternoon")}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-afternoon-${j}"></div>
           </div>
 
-          <div class='turno-box' id='programacao-noite-${j}'>
+          <div class='period-box' id='programacao-noite-${j}'>
             <label>${translate("datetime.time_of_day.evening")}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-night-${j}"></div>
           </div>
@@ -482,16 +482,16 @@ export function addGallery() {
     
           <div class="nice-form-group customization-box" id="galeria-${j}-box">
             <label>${translate("labels.image.title")}</label>
-            <input id="upload-galeria-${j}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+            <input id="upload-galeria-${j}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
             <div id="upload-galeria-${j}-size-message" class="message-text"> <i class='red'>*</i> ${translate("labels.image.upload_limit")}</div>
           </div>
     
           <div class="nice-form-group">
-            <input id="link-galeria-${j}" class="imagem-input" type="url" placeholder="${translate("labels.image.placeholder")}" value=""
+            <input id="link-galeria-${j}" class='image-input' type="url" placeholder="${translate("labels.image.placeholder")}" value=""
               class="icon-right">
           </div>
     
-          <fieldset class="nice-form-group imagem-checkbox">
+          <fieldset class="nice-form-group image-checkbox">
             <div class="nice-form-group enable-link">
               <input type="radio" name="type-galeria-${j}" id="enable-link-galeria-${j}" checked>
               <label for="enable-link-galeria-${j}">${translate("labels.image.link")}</label>

@@ -35,7 +35,7 @@ export function getDestinationsHTML({ j, id, item, closeAction = "_processAccord
                         <i class="iconify planejado" data-icon="fa-solid:check"></i>
                     </div>
                     <div class="icon-container" style="display: ${item.rating ? "block" : "none"}">
-                        <i class="iconify nota ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
+                        <i class="iconify rating ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
                     </div>
                 </button>
             </h2>
@@ -74,8 +74,8 @@ export function getDestinationsAccordionBodyHTML({
 	return `
         <div class="destinos-titulo" style="display: ${getDestinationsTitleVisibility(item)}">
             <div class="notas-box">
-                <i class="iconify nota-sem-margem ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
-                <span class="nota-texto">${getRatingTranslation(item.rating)}</span>
+                <i class="iconify rating-no-margin ${getRatingClass(item.rating)}" data-icon="${getRatingIcon(item.rating)}"></i>
+                <span class="rating-text">${getRatingTranslation(item.rating)}</span>
             </div>
             <div class="links-container" style="display: ${getLinksContainerVisibility(item)}">
                 <i class="iconify link" data-icon="f7:map" style="display: ${item.mapa ? "block" : "none"}"${getLinkOnClick(item, "mapa")}></i>
@@ -118,7 +118,7 @@ export function getEditHTML(j) {
         <div class="edit-column-container">
             <div class="edit-double-container aligned">
                 <div id="editar-nota-icon-${j}">
-                    <i class="iconify nota-sem-margem nota-ausente" data-icon="ic:outline-question-mark"></i>
+                    <i class="iconify rating-no-margin rating-absent" data-icon="ic:outline-question-mark"></i>
                 </div>
                 <select class="edit-input" id="editar-nota-${j}">
                     <option value="default">${translate(`destination.scores.default`)}</option>

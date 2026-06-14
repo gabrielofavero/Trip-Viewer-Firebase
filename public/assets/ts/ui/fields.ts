@@ -40,7 +40,7 @@ export function getElPosition(el) {
 	if (!parent) return null;
 
 	const siblings = Array.from(parent.children).filter((child) =>
-		(child as Element).matches?.("input, textarea, select, .input-botao"),
+		(child as Element).matches?.("input, textarea, select, .input-button"),
 	);
 
 	return {
@@ -53,7 +53,7 @@ export function hasUnsavedChanges(root = document) {
 	if (!DOCUMENT_ID) return true;
 
 	const currentFields = root.querySelectorAll(
-		"input, textarea, select, .input-botao",
+		"input, textarea, select, .input-button",
 	);
 
 	for (const el of currentFields) {

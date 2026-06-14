@@ -11,11 +11,6 @@ import type { PlaceItem } from './new-schema.js';
 
 // ======= Destination Value Formatting =======
 
-/** @deprecated Use `getRatingTranslation` instead */
-export function getNotaTranslation(rating: string): string {
-	return getRatingTranslation(rating);
-}
-
 export function getRatingTranslation(rating: string): string {
 	switch (rating) {
 		case "5":

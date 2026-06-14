@@ -8,7 +8,7 @@ import { convertFromDateObject, getDateTitle } from '../utils/dates.js';
 import { getInnerItinerary, getInnerItineraryTitle } from '../utils/dom.js';
 import { getDestination } from '../data/firebase/database.js';
 import { translate } from '../i18n/translation.js';
-import { getNotaTranslation, getPriceValue } from './destination.model.js';
+import { getRatingTranslation, getPriceValue } from './destination.model.js';
 import { ITINERARY_HTML } from "../pages/itinerary/itinerary-formatter.js";
 import { getTimeStringFromDateObj } from "../utils/dates.js";
 import { getTurno } from "../pages/destination/categories.js";
@@ -332,7 +332,7 @@ export async function getItineraryData(): Promise<any[]> {
 				const destination = destinations?.[item?.category]?.[item.id]; // was "categoria"
 				if (!destination) return;
 
-				const rating = getNotaTranslation(destination.rating); // was "nota"
+				const rating = getRatingTranslation(destination.rating); // was "nota"
 				const currencies = getCurrencies();
 				const price = getPriceValue(
 					destination,

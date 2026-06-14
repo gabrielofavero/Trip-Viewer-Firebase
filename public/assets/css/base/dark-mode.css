@@ -610,7 +610,7 @@
 	color: #f1f1f1;
 }
 
-[data-theme="dark"] .nota-texto {
+[data-theme="dark"] .rating-text {
 	color: #f2f2f2;
 }
 
@@ -733,19 +733,19 @@
 
 /* Buttons */
 [data-theme="dark"] .btn-secondary-theme,
-[data-theme="dark"] .input-botao {
+[data-theme="dark"] .input-button {
 	background: var(--bg-secondary);
 	color: var(--text-primary);
 	border-color: var(--border-color);
 }
 
 [data-theme="dark"] .btn-secondary-theme:hover,
-[data-theme="dark"] .input-botao:hover {
+[data-theme="dark"] .input-button:hover {
 	background: var(--bg-tertiary);
 }
 
-/* Turno-box input differentiation in dark mode */
-[data-theme="dark"] .turno-box .input-botao {
+/* Period-box input differentiation in dark mode */
+[data-theme="dark"] .period-box .input-button {
 	background: var(--bg-primary);
 }
 

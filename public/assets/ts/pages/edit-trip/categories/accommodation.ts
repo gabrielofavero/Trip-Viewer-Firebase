@@ -157,8 +157,8 @@ function getAccommodationImageContent(size = 5) {
 	let inner = "";
 	for (let k = 1; k <= size; k++) {
 		botoes += `
-        <div class="input-botao-container" id="input-botao-container-${k}">
-            <button id="hospedagens-imagem-botao-${k}" class="btn input-botao draggable" data-action="open-inner-accommodation-image" data-index="${k}" style="margin-top:1em">${translate("labels.image.add")}</button>
+        <div class='input-button-container' id="input-button-container-${k}">
+            <button id="hospedagens-imagem-botao-${k}" class="btn input-button draggable" data-action="open-inner-accommodation-image" data-index="${k}" style="margin-top:1em">${translate("labels.image.add")}</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
         </div>`;
 
@@ -166,16 +166,16 @@ function getAccommodationImageContent(size = 5) {
         <div id="hospedagens-imagem-${k}" style="display: none">
             <div class="nice-form-group customization-box" id="accommodations-box-${k}">
                 <label>${translate("labels.image.title_plural")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-                <input id="upload-hospedagens-${k}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+                <input id="upload-hospedagens-${k}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
                 <p id="upload-hospedagens-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate("labels.image.upload_limit")}</p>
             </div>
 
             <div class="nice-form-group">
-                <input id="link-hospedagens-${k}" class="imagem-input" type="url" placeholder="${translate("labels.image.placeholder")}" value=""
+                <input id="link-hospedagens-${k}" class='image-input' type="url" placeholder="${translate("labels.image.placeholder")}" value=""
                 class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-hospedagens-${k}">
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-hospedagens-${k}">
                 <div class="nice-form-group">
                 <input type="radio" name="type-hospedagens-${k}" id="enable-link-hospedagens-${k}" checked>
                 <label for="enable-link-hospedagens-${k}">${translate("labels.image.link")}</label>

@@ -59,14 +59,14 @@ export function addRestaurants() {
 
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="restaurants-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="restaurants-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="restaurants-mapa-${j}" type="url" placeholder="${translate("destination.restaurants.placeholders.map")}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -99,7 +99,7 @@ export function addRestaurants() {
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="restaurants-midia-${j}" type="url"
               placeholder="${translate("destination.restaurants.placeholders.video")}" value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -197,14 +197,14 @@ export function addSnacks() {
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="snacks-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="snacks-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="snacks-mapa-${j}" type="url" placeholder="${translate("destination.snacks.placeholders.map")}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
 
           <div class="nice-form-group">
@@ -238,7 +238,7 @@ export function addSnacks() {
             <input id="snacks-midia-${j}" type="url"
               placeholder="${translate("destination.snacks.placeholders.video")}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -332,14 +332,14 @@ export function addNightlife() {
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="nightlife-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="nightlife-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="nightlife-mapa-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.map")}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -372,7 +372,7 @@ export function addNightlife() {
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="nightlife-midia-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.video")}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -466,14 +466,14 @@ export function addTourism() {
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="tourism-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="tourism-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="tourism-mapa-${j}" type="url" placeholder="${translate("destination.tourism.placeholders.map")}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -507,7 +507,7 @@ export function addTourism() {
             <input id="tourism-midia-${j}" type="url"
               placeholder="${translate("destination.tourism.placeholders.video")}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -601,14 +601,14 @@ export function addShopping() {
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="shopping-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-botao" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="shopping-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="shopping-mapa-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.map")}" value=""
               class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.map")}</div>
+            <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
   
           <div class="nice-form-group">
@@ -642,7 +642,7 @@ export function addShopping() {
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
             <input id="shopping-midia-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.video")}"
               value="" class="icon-right" />
-            <div class="legenda">${translate("destination.tooltips.video")}</div>
+            <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">

@@ -1199,7 +1199,7 @@
 	margin-bottom: 16px;
 }
 
-/* Turno-box — itinerary time-of-day containers */
+/* Period-box — itinerary time-of-day containers */
 .period-box {
 	margin-top: 16px;
 	padding: 16px;
@@ -1219,7 +1219,7 @@
 	opacity: 0.85;
 }
 
-[data-theme="dark"] .turno-box {
+[data-theme="dark"] .period-box {
 	background: rgba(255, 255, 255, 0.03);
 }
 
@@ -1227,7 +1227,7 @@
 	margin-top: 0;
 }
 
-/* Input-botao inside turno-box — differentiate from container background */
+/* Input-button inside period-box — differentiate from container background */
 .period-box .input-button {
 	background: var(--bg-primary);
 	border-color: var(--border-color);
@@ -1533,18 +1533,18 @@ details summary::-webkit-details-marker {
 
 /* Buttons */
 [data-theme="dark"] .btn-secondary-theme,
-[data-theme="dark"] .input-botao {
+[data-theme="dark"] .input-button {
 	background: var(--bg-secondary);
 	color: var(--text-primary);
 	border-color: var(--border-color);
 }
 
 [data-theme="dark"] .btn-secondary-theme:hover,
-[data-theme="dark"] .input-botao:hover {
+[data-theme="dark"] .input-button:hover {
 	background: var(--bg-tertiary);
 }
 
-[data-theme="dark"] .turno-box .input-botao {
+[data-theme="dark"] .period-box .input-button {
 	background: var(--bg-primary);
 }
 

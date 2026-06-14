@@ -42,8 +42,8 @@ export function loadInnerItineraryHTML(j) {
 			const div = getID(`inner-itinerary-${period}-${j}`);
 
 			if (dado.programacao) {
-				div.innerHTML += `<div class="input-botao-container">
-                                    <button id="input-botao-${period}-${j}-${k}" class="btn input-botao draggable" data-action="open-inner-itinerary-detail" data-j="${j}" data-k="${k}" data-period="${period}">
+				div.innerHTML += `<div class='input-button-container'>
+                                    <button id="input-button-${period}-${j}-${k}" class="btn input-button draggable" data-action="open-inner-itinerary-detail" data-j="${j}" data-k="${k}" data-period="${period}">
                                         ${getInnerItineraryTitleHTML(dado, "inner-itinerary-highlight")}
                                     </button>
                                     <i class="iconify drag-icon" data-icon="mdi:drag"></i>
