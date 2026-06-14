@@ -65,6 +65,41 @@ const FIELD_MAP: Record<string, string> = {
 	checkin: "checkIn",
 	checkout: "checkOut",
 	ativo: "active",
+	// Fields discovered missing after initial run:
+	destinos: "destinations",
+	valor: "price",
+	subtitulo: "subtitle",
+	imagem: "image",
+	foto: "photo",
+	altura: "height",
+	caminho: "path",
+	claro: "light",
+	escuro: "dark",
+	exibirEmDestinos: "showInDestinations",
+	gastos: "expenses",
+	resumo: "summary",
+	listagens: "listings",
+	tamanhoUploadIrrestrito: "unlimitedUploadSize",
+	versoes: "versions",
+	enviadoEm: "sentAt",
+	link: "link",
+	instagram: "instagram",
+	website: "website",
+	emoji: "emoji",
+	preco: "price",
+	documento: "document",
+	arquivo: "file",
+	icone: "icon",
+	texto: "text",
+	legenda: "caption",
+	destaque: "highlight",
+	ordem: "order",
+	status: "status",
+	configuracao: "configuration",
+	tema: "theme",
+	idioma: "language",
+	categoria: "category",
+	local: "location",
 };
 
 // ============================================================
@@ -89,6 +124,12 @@ const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 	titulo: {
 		valor: "value",
 		destinos: "showDestinations",
+	},
+	// Trip root: destinos array should become destinationRefs (not destinations)
+	// because it contains {id, ...} refs, not embedded destination data.
+	// Parent key is the collection name prefixed with _root_.
+	_root_viagens: {
+		destinos: "destinationRefs",
 	},
 };
 
@@ -115,6 +156,25 @@ const VALUE_MAP: Record<string, string> = {
 	hospedagens: "accommodation",
 	// User visibility mode
 	dinamico: "dynamic",
+	// Theme / visibility values (stored as string values, e.g. visibility.light = "claro")
+	claro: "light",
+	escuro: "dark",
+	ativo: "active",
+	// Module keys (when stored as string values in arrays or settings)
+	saidas: "nightlife",
+	mapa: "map",
+	gastos: "expenses",
+	resumo: "summary",
+	// Category values (e.g. categoria: "restaurantes" in schedule items)
+	restaurantes: "restaurants",
+	lanches: "snacks",
+	lojas: "shops",
+	turismo: "attractions",
+	// Common enum values
+	sim: "yes",
+	nao: "no",
+	todos: "all",
+	nenhum: "none",
 };
 
 // ============================================================
@@ -206,25 +266,38 @@ function transformObject(
 
 /**
  * Check if a document already has English field names (idempotency check).
- * We look for a few telltale English fields that only the new schema would have.
+ *
+ * Strategy: recursively scan for ANY known Portuguese field name (from FIELD_MAP
+ * or non-_root_ CONTEXT_FIELD_MAP parents).  If a single Portuguese key is found
+ * at any nesting level, the doc needs (re-)translation.
+ *
+ * This catches partially-translated docs where top-level keys are already English
+ * but nested keys are still Portuguese (e.g. from a buggy previous run).
  */
 function isAlreadyTranslated(data: Record<string, unknown>): boolean {
-	// If the doc has "title" instead of "titulo", it's likely already translated
-	if (data["title"] !== undefined && data["titulo"] === undefined) return true;
-	// If it has "modules" instead of "modulos"
-	if (data["modules"] !== undefined && data["modulos"] === undefined) return true;
-	// For protected/config docs which may not have title/modules fields,
-	// check if any known English field exists without its Portuguese counterpart
-	const knownPairs: Array<[string, string]> = [
-		["visibility", "visibilidade"],
-		["start", "inicio"],
-		["end", "fim"],
-		["currency", "moeda"],
-	];
-	for (const [en, pt] of knownPairs) {
-		if (data[en] !== undefined && data[pt] === undefined) return true;
+	// Build the set of Portuguese keys we know how to translate
+	const knownPortugueseKeys = new Set(Object.keys(FIELD_MAP));
+	for (const parentKey of Object.keys(CONTEXT_FIELD_MAP)) {
+		if (!parentKey.startsWith("_root_")) {
+			knownPortugueseKeys.add(parentKey);
+		}
 	}
-	return false;
+
+	// Recursively check for any Portuguese key
+	function hasPortugueseKeys(obj: unknown): boolean {
+		if (obj === null || typeof obj !== "object") return false;
+		if (Array.isArray(obj)) {
+			return obj.some(item => hasPortugueseKeys(item));
+		}
+		const record = obj as Record<string, unknown>;
+		for (const key of Object.keys(record)) {
+			if (knownPortugueseKeys.has(key)) return true;
+			if (hasPortugueseKeys(record[key])) return true;
+		}
+		return false;
+	}
+
+	return !hasPortugueseKeys(data);
 }
 
 /**
