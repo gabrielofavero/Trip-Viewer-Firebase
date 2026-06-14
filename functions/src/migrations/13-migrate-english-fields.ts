@@ -65,6 +65,10 @@ const FIELD_MAP: Record<string, string> = {
 	checkin: "checkIn",
 	checkout: "checkOut",
 	ativo: "active",
+	// Singular destinosID appears inside destinationRefs[] entries and schedule destinationIds[] entries
+	destinosID: "id",
+	// dados = data array (e.g. transportation.dados)
+	dados: "data",
 	// Fields discovered missing after initial run:
 	destinos: "destinations",
 	valor: "price",
@@ -79,6 +83,7 @@ const FIELD_MAP: Record<string, string> = {
 	gastos: "expenses",
 	resumo: "summary",
 	listagens: "listings",
+	viagens: "trips",
 	tamanhoUploadIrrestrito: "unlimitedUploadSize",
 	versoes: "versions",
 	enviadoEm: "sentAt",
@@ -130,6 +135,10 @@ const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 	// Parent key is the collection name prefixed with _root_.
 	_root_viagens: {
 		destinos: "destinationRefs",
+	},
+	// Inside schedule entries (parent was "programacoes"): data = Portuguese for "date"
+	programacoes: {
+		data: "date",
 	},
 };
 
@@ -188,6 +197,7 @@ const TOP_COLLECTIONS = [
 	"gastos",
 	"protegido",
 	"config",
+	"admin",
 ];
 
 // ============================================================
@@ -275,11 +285,18 @@ function transformObject(
  * but nested keys are still Portuguese (e.g. from a buggy previous run).
  */
 function isAlreadyTranslated(data: Record<string, unknown>): boolean {
-	// Build the set of Portuguese keys we know how to translate
+	// Build the set of Portuguese keys we know how to translate.
+	// Includes all FIELD_MAP keys, non-_root_ CONTEXT_FIELD_MAP parent keys,
+	// AND all Portuguese keys that appear as VALUES inside context maps
+	// (e.g. "data" inside "programacoes" → should be detected as Portuguese).
 	const knownPortugueseKeys = new Set(Object.keys(FIELD_MAP));
 	for (const parentKey of Object.keys(CONTEXT_FIELD_MAP)) {
 		if (!parentKey.startsWith("_root_")) {
 			knownPortugueseKeys.add(parentKey);
+		}
+		// Also add the inner Portuguese keys from each context entry
+		for (const innerKey of Object.keys(CONTEXT_FIELD_MAP[parentKey])) {
+			knownPortugueseKeys.add(innerKey);
 		}
 	}
 
