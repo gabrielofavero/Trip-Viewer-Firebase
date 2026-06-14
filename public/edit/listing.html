@@ -15,23 +15,23 @@
 
     <div class="edit-page">
       <div class="edit-tab-bar" id="edit-tab-bar">
-        <button class="edit-tab active" data-tab="dados-basicos">
+        <button class="edit-tab active" data-tab="basic-information">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           <span data-translate="labels.basic_information"></span>
         </button>
-        <button class="edit-tab" data-tab="customizacao">
+        <button class="edit-tab" data-tab="customization">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
           <span data-translate="labels.customization.title"></span>
         </button>
-        <button class="edit-tab" data-tab="destinos">
+        <button class="edit-tab" data-tab="destinations">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" d="m12.596 11.596l-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193a6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z"/></svg>
           <span data-translate="destination.title"></span>
         </button>
       </div>
 
       <main class="edit-page-content">
-        <section data-category="dados-basicos">
-          <div class="href-target" id="dados-basicos"></div>
+        <section data-category="basic-information">
+          <div class="href-target" id="basic-information"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -75,8 +75,8 @@
 
         </section>
 
-        <section data-category="customizacao">
-          <div class="href-target" id="customizacao"></div>
+        <section data-category="customization">
+          <div class="href-target" id="customization"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -97,14 +97,14 @@
 
 
           <div class="nice-form-group">
-            <input id="habilitado-imagens" type="checkbox" id="check-4" class="switch" />
+            <input id="images-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.images.title"></span>
               <small data-translate="labels.customization.images.subtitle"></small>
             </label>
           </div>
 
-          <div class="transparent-background" id="habilitado-imagens-content">
+          <div class="transparent-background" id="images-enabled-content">
 
             <div class="nice-form-group customization-box" id="background-box">
               <label><span data-translate="labels.wallpaper"></span> <span class="opcional">(<span
@@ -184,7 +184,7 @@
             </label>
           </div>
 
-          <div class="transparent-background-color" id="habilitado-cores-content">
+          <div class="transparent-background-color" id="colors-enabled-content">
 
             <fieldset class="nice-form-group">
               <div class="modern-radio-group">
@@ -205,32 +205,32 @@
               </div>
             </fieldset>
 
-            <div class="side-by-side-color-box" id="cores">
-              <div class="nice-form-group side-by-side-color" id="tema-claro">
+            <div class="side-by-side-color-box" id="colors">
+              <div class="nice-form-group side-by-side-color" id="light-theme">
                 <label data-translate="labels.light_mode"></label>
                 <div class="color-picker-box">
-                  <input id="claro" type="color" value="#5859a7" />
+                  <input id="light-color" type="color" value="#5859a7" />
                 </div>
               </div>
 
-              <div class="nice-form-group side-by-side-color" id="tema-escuro">
+              <div class="nice-form-group side-by-side-color" id="dark-theme">
                 <label data-translate="labels.dark_mode"></label>
                 <div class="color-picker-box">
-                  <input id="escuro" type="color" value="#7f75b6" />
+                  <input id="dark-color" type="color" value="#7f75b6" />
                 </div>
               </div>
             </div>
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-links" style="margin-top: 0px;" type="checkbox" id="check-4" class="switch" />
+            <input id="links-enabled" style="margin-top: 0px;" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.links.title"></span>
               <small data-translate="listing.customization.links"></small>
             </label>
           </div>
 
-          <div class="transparent-background" id="habilitado-links-content">
+          <div class="transparent-background" id="links-enabled-content">
             <div class="nice-form-group" style="margin-top: 10px;">
               <label><span data-translate="labels.customization.links.attachment"></span> <span class="opcional">(<span
                     data-translate="labels.optional"></span>)</span></label>
@@ -281,7 +281,7 @@
 
         </section>
 
-        <section data-category="destinos">
+        <section data-category="destinations">
           <div class="href-target" id="destinations"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">

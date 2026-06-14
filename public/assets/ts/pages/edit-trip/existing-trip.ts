@@ -46,8 +46,8 @@ function loadBasicTripData() {
 	const start = convertFromDateObject(getState().start);
 	const end = convertFromDateObject(getState().end);
 
-	getID("inicio").value = getDateString(start, "yyyy-mm-dd");
-	getID("fim").value = getDateString(end, "yyyy-mm-dd");
+	getID("start").value = getDateString(start, "yyyy-mm-dd");
+	getID("end").value = getDateString(end, "yyyy-mm-dd");
 
 	setTravelers(cloneObject(getState().people));
 	validateTravelersObject();
@@ -64,8 +64,8 @@ export function loadCustomizacaoData(state?) {
 	const logoDark = getState().image.dark;
 
 	if (getState().image.active === true) {
-		getID("habilitado-imagens").checked = true;
-		getID("habilitado-imagens-content").style.display = "block";
+		getID("images-enabled").checked = true;
+		getID("images-enabled-content").style.display = "block";
 	}
 
 	loadCustomizacaoImageData(background, "link-background");
@@ -73,15 +73,15 @@ export function loadCustomizacaoData(state?) {
 	loadCustomizacaoImageData(logoDark, "link-logo-dark");
 
 	// Cores
-	const claro = getID("claro");
-	const escuro = getID("escuro");
+	const lightColor = getID("light-color");
+	const darkColor = getID("dark-color");
 
 	if (getState().cores.ativo === true) {
 		getID("colors-enabled").checked = true;
-		claro.value = getState().cores.claro;
-		escuro.value = getState().cores.escuro;
+		lightColor.value = getState().cores.claro;
+		darkColor.value = getState().cores.escuro;
 		setCurrentLight(getState().cores.claro);
-		getID("habilitado-cores-content").style.display = "block";
+		getID("colors-enabled-content").style.display = "block";
 	}
 
 	// Visibility
@@ -96,7 +96,7 @@ export function loadCustomizacaoData(state?) {
 	}
 
 	// Custom Links
-	getID("habilitado-links").checked = getState().links.active;
+	getID("links-enabled").checked = getState().links.active;
 	getID("link-attachments").value = getState().links.attachments;
 	getID("link-drive").value = getState().links.drive;
 	getID("link-maps").value = getState().links.maps;
@@ -193,8 +193,8 @@ async function loadTransportationData() {
 function loadAccommodationData() {
 	if (getState().modules.accommodations === true) {
 		getID("accommodations-enabled").checked = true;
-		getID("habilitado-hospedagens-content").style.display = "block";
-		getID("hospedagens-adicionar-box").style.display = "block";
+		getID("accommodations-enabled-content").style.display = "block";
+		getID("accommodations-add-box").style.display = "block";
 	}
 
 	for (let j = 1; j <= getState().accommodations.length; j++) {

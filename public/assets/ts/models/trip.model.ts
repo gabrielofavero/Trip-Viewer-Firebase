@@ -53,4 +53,4 @@ export function loadStartEnd(firestoreData: Trip): {
 }
 
 /** @deprecated Use `loadStartEnd` instead */
-export const loadInicioFim = loadStartEnd;
+export const loadStartEndAlias = loadStartEnd;

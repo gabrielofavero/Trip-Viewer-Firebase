@@ -164,7 +164,7 @@ function getAccommodationImageContent(size = 5) {
 
 		inner += `
         <div id="hospedagens-imagem-${k}" style="display: none">
-            <div class="nice-form-group customization-box" id="hospedagens-box-${k}">
+            <div class="nice-form-group customization-box" id="accommodations-box-${k}">
                 <label>${translate("labels.image.title_plural")} <span class="opcional"> (${translate("labels.optional")})</span></label>
                 <input id="upload-hospedagens-${k}" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
                 <p id="upload-hospedagens-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate("labels.image.upload_limit")}</p>

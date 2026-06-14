@@ -21,12 +21,12 @@ function imageDataIncludes(value, includes) {
 }
 
 export function autoFillDarkColor() {
-	const DARK_COLOR = getID("escuro");
+	const DARK_COLOR = getID("dark-color");
 	if (
 		DARK_COLOR.value == "#7f75b6" ||
 		(CURRENT_LIGHT && DARK_COLOR.value == CURRENT_LIGHT)
 	) {
-		DARK_COLOR.value = getID("claro").value;
+		DARK_COLOR.value = getID("light-color").value;
 	}
 	CURRENT_LIGHT = getID("claro").value;
 }

@@ -128,9 +128,9 @@ function setUserData(ops, uid, type, documentData) {
 			case "trips":
 				return {
 					cores: data.cores,
-					fim: data.fim,
-					imagem: data.imagem,
-					inicio: data.inicio,
+				end: data.end,
+				image: data.image,
+				start: data.start,
 					modulos: data.modulos,
 					pin: data.pin,
 					titulo: data.titulo,

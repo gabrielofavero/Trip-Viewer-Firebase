@@ -269,7 +269,7 @@ export function emojisOnInputAction(j, categoria) {
 		emojiDiv.value = emojiTreated;
 	} else if (!emojiTreated && emojiUntreated) {
 		emojiDiv.value = "";
-		emojiDiv.placeholder = "Insira um Emoji Válido 🫠";
+		emojiDiv.placeholder = "Enter a valid emoji 🫠";
 	}
 }
 
@@ -291,11 +291,11 @@ export function openMoveDestinationModal(j, categoria) {
 	];
 
 	const options = {
-		restaurantes: "Restaurantes",
-		lanches: "Lanches",
-		saidas: "Saídas",
-		turismo: "Turismo",
-		lojas: "Lojas",
+		restaurantes: "Restaurants",
+		lanches: "Snacks",
+		saidas: "Nightlife",
+		turismo: "Tourism",
+		lojas: "Shopping",
 	};
 
 	let optionsString = "";

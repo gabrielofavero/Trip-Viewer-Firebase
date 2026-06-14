@@ -1,0 +1,10 @@
+{
+  "photo": "https://howlongtobeat.com/avatars/gabrielxzlive_1780620878859.jpeg?width=500&crop=1%3A1%2Csmart",
+  "name": "Gabriel",
+  "permissions": {
+    "admin": true,
+    "unlimitedUploadSize": false,
+    "upload": false
+  },
+  "visibility": "light"
+}

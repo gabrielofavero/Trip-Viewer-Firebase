@@ -42,14 +42,14 @@ async function getUnprotectedTripObject() {
 		destinations: getDestinationsArray(),
 		sharing: await getSharingObject(),
 		colors: getColorsObject(),
-		end: getID(`fim`).value
-			? formattedDateToDateObject(getID(`fim`).value)
+		end: getID("end").value
+			? formattedDateToDateObject(getID("end").value)
 			: "",
 		gallery: {},
 		accommodations: [],
 		image: getImageObject(),
-		start: getID(`inicio`).value
-			? formattedDateToDateObject(getID(`inicio`).value)
+		start: getID("start").value
+			? formattedDateToDateObject(getID("start").value)
 			: "",
 		links: {},
 		modules: {},
@@ -89,14 +89,14 @@ async function getTripObjectFull(protectedReservationCodes = false) {
 		destinations: getDestinationsArray(),
 		sharing: await getSharingObject(),
 		colors: getColorsObject(),
-		end: getID(`fim`).value
-			? formattedDateToDateObject(getID(`fim`).value)
+		end: getID("end").value
+			? formattedDateToDateObject(getID("end").value)
 			: "",
 		gallery: getGalleryObject(),
 		accommodations: getAccommodationArray(protectedReservationCodes),
 		image: getImageObject(),
-		start: getID(`inicio`).value
-			? formattedDateToDateObject(getID(`inicio`).value)
+		start: getID("start").value
+			? formattedDateToDateObject(getID("start").value)
 			: "",
 		links: getLinksObject(),
 		modules: getModulesObject(),
@@ -141,8 +141,8 @@ function getModulesObject() {
 function getColorsObject() {
 	return {
 		active: getID("colors-enabled").checked,
-		light: getID("claro").value,
-		dark: getID("escuro").value,
+		light: getID("light-color").value,
+		dark: getID("dark-color").value,
 	};
 }
 
@@ -159,7 +159,7 @@ export async function getSharingObject() {
 
 function getImageObject() {
 	return {
-		active: getID("habilitado-imagens").checked,
+		active: getID("images-enabled").checked,
 		background: getID("link-background").value || "",
 		light: getID("link-logo-light").value || "",
 		dark: getID("link-logo-dark").value || "",
@@ -168,7 +168,7 @@ function getImageObject() {
 
 function getLinksObject() {
 	return {
-		ativo: getID("habilitado-links").checked,
+		ativo: getID("links-enabled").checked,
 		attachments: getID("link-attachments").value || "",
 		drive: getID("link-drive").value || "",
 		maps: getID("link-maps").value || "",

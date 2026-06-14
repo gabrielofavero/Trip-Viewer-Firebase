@@ -70,15 +70,15 @@ export async function loadEditTripPage() {
 }
 
 function loadHabilitados() {
-	loadEditModule("imagens");
-	loadEditModule("cores");
+	loadEditModule("images");
+	loadEditModule("colors");
 	loadEditModule("links");
-	loadEditModule("gastos");
-	loadEditModule("transporte", addTransportation);
-	loadEditModule("hospedagens", addAccommodations);
-	loadEditModule("programacao", loadItinerarySchedule);
-	loadEditModule("destinos", loadDestinations);
-	loadEditModule("galeria", addGallery);
+	loadEditModule("expenses");
+	loadEditModule("transportation", addTransportation);
+	loadEditModule("accommodations", addAccommodations);
+	loadEditModule("itinerary", loadItinerarySchedule);
+	loadEditModule("destinations", loadDestinations);
+	loadEditModule("gallery", addGallery);
 }
 
 function loadUploadSelectors() {
@@ -204,10 +204,10 @@ function initDateRangePickers() {
 	if (tripDateRange) {
 		const picker = new DateRangePicker(tripDateRange);
 		// If hidden inputs already have values (from existing trip load), update display
-		const inicio = getID("inicio") as HTMLInputElement;
-		const fim = getID("fim") as HTMLInputElement;
-		if (inicio?.value && fim?.value) {
-			picker.setRange(inicio.value, fim.value);
+		const start = getID("start") as HTMLInputElement;
+		const end = getID("end") as HTMLInputElement;
+		if (start?.value && end?.value) {
+			picker.setRange(start.value, end.value);
 		}
 	}
 }

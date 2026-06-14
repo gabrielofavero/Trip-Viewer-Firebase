@@ -92,8 +92,8 @@ async function syncModules() {
 }
 
 function prepareViewData() {
-	if (getState().inicio && getState().fim) {
-		loadInicioFim();
+	if (getState().start && getState().end) {
+		loadStartEnd();
 	}
 
 	loadVisibility();
@@ -105,12 +105,12 @@ function prepareViewData() {
 	loadViewEmbed();
 }
 
-function loadInicioFim(data = getState()) {
-	START_DATE.date = convertFromDateObject(data.inicio);
-	END_DATE.date = convertFromDateObject(data.fim);
+function loadStartEnd(data = getState()) {
+	START_DATE.date = convertFromDateObject(data.start);
+	END_DATE.date = convertFromDateObject(data.end);
 
-	START_DATE.text = `${data.inicio.day}/${data.inicio.month}`;
-	END_DATE.text = `${data.fim.day}/${data.fim.month}`;
+	START_DATE.text = `${data.start.day}/${data.start.month}`;
+	END_DATE.text = `${data.end.day}/${data.end.month}`;
 }
 
 function loadHeader() {
@@ -291,7 +291,7 @@ function loadModules() {
 	function loadExpensesModule() {
 		const ativo = getState().modulos?.gastos === true;
 		localStorage.setItem(
-			"gastos",
+			"expenses",
 			JSON.stringify({ ativo, pin: getState().pin || "no-pin" }),
 		);
 
@@ -434,7 +434,7 @@ function loadDocumentData() {
 
 function loadProtectedData(firestoreData) {
 	loadTitle(firestoreData);
-	loadInicioFim(firestoreData);
+	loadStartEnd(firestoreData);
 	loadHeaderImageAndLogo(firestoreData);
 	loadVisibility(firestoreData.cores);
 	requestDocumentPin();

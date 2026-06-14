@@ -13,12 +13,12 @@ const TITLE_REPLACEMENT = {
 
 const TIME_REPLACEMENT = {
 	current: {
-		inicio: "",
-		fim: "",
+		start: "",
+		end: "",
 	},
 	replacement: {
-		inicio: "",
-		fim: "",
+		start: "",
+		end: "",
 	},
 };
 
@@ -97,49 +97,49 @@ export function replaceTextIfEnabled() {
 }
 
 function loadTimeReplacementCheckbox() {
-	TIME_REPLACEMENT.current.inicio = getID("inner-itinerary-start").value;
-	TIME_REPLACEMENT.current.fim = getID("inner-itinerary-end").value;
+	TIME_REPLACEMENT.current.start = getID("inner-itinerary-start").value;
+	TIME_REPLACEMENT.current.end = getID("inner-itinerary-end").value;
 	const value = getID("inner-itinerary-select-transportation").value;
 
 	if (getID("inner-itinerary-item-transportation-radio").checked && value) {
 		const j = findJFromID(value, "transporte");
 
-		TIME_REPLACEMENT.replacement.inicio = getID(`partida-horario-${j}`).value;
-		TIME_REPLACEMENT.replacement.fim = getID(`chegada-horario-${j}`).value;
+		TIME_REPLACEMENT.replacement.start = getID(`partida-horario-${j}`).value;
+		TIME_REPLACEMENT.replacement.end = getID(`chegada-horario-${j}`).value;
 
 		if (
-			TIME_REPLACEMENT.current.inicio != TIME_REPLACEMENT.replacement.inicio ||
-			TIME_REPLACEMENT.current.fim != TIME_REPLACEMENT.replacement.fim
+			TIME_REPLACEMENT.current.start != TIME_REPLACEMENT.replacement.start ||
+			TIME_REPLACEMENT.current.end != TIME_REPLACEMENT.replacement.end
 		) {
 			getID("time-replacement-container").style.display = "block";
 
 			let action;
 
 			if (
-				TIME_REPLACEMENT.current.inicio !=
-					TIME_REPLACEMENT.replacement.inicio &&
-				TIME_REPLACEMENT.current.fim != TIME_REPLACEMENT.replacement.fim
+				TIME_REPLACEMENT.current.start !=
+					TIME_REPLACEMENT.replacement.start &&
+				TIME_REPLACEMENT.current.end != TIME_REPLACEMENT.replacement.end
 			) {
 				action =
-					!TIME_REPLACEMENT.current.inicio && !TIME_REPLACEMENT.current.fim
+					!TIME_REPLACEMENT.current.start && !TIME_REPLACEMENT.current.end
 						? translate("labels.set")
 						: translate("labels.replace");
 				getID("time-replacement-label").innerText =
-					`${action} horário de início e fim para "${TIME_REPLACEMENT.replacement.inicio}" e "${TIME_REPLACEMENT.replacement.fim}"`;
+				`${action} start and end time to "${TIME_REPLACEMENT.replacement.start}" and "${TIME_REPLACEMENT.replacement.end}"`;
 			} else if (
-				TIME_REPLACEMENT.current.inicio != TIME_REPLACEMENT.replacement.inicio
+				TIME_REPLACEMENT.current.start != TIME_REPLACEMENT.replacement.start
 			) {
-				action = !TIME_REPLACEMENT.current.inicio
+				action = !TIME_REPLACEMENT.current.start
 					? translate("labels.set")
 					: translate("labels.replace");
 				getID("time-replacement-label").innerText =
-					`${action} horário de início para "${TIME_REPLACEMENT.replacement.inicio}"`;
+				`${action} start time to "${TIME_REPLACEMENT.replacement.start}"`;
 			} else {
-				action = !TIME_REPLACEMENT.current.fim
+				action = !TIME_REPLACEMENT.current.end
 					? translate("labels.set")
 					: translate("labels.replace");
 				getID("time-replacement-label").innerText =
-					`${action} horário de fim para "${TIME_REPLACEMENT.replacement.fim}"`;
+				`${action} end time to "${TIME_REPLACEMENT.replacement.end}"`;
 			}
 
 			if (action === translate("labels.set")) {
@@ -154,20 +154,20 @@ function loadTimeReplacementCheckbox() {
 export function replaceTimeIfEnabled() {
 	if (getID("time-replacement-checkbox").checked) {
 		getID("inner-itinerary-start").value =
-			TIME_REPLACEMENT.replacement.inicio;
-		getID("inner-itinerary-end").value = TIME_REPLACEMENT.replacement.fim;
+			TIME_REPLACEMENT.replacement.start;
+		getID("inner-itinerary-end").value = TIME_REPLACEMENT.replacement.end;
 
-		if (TIME_REPLACEMENT.replacement.inicio) {
-			const inicioHora = parseInt(
-				TIME_REPLACEMENT.replacement.inicio.split(":")[0],
+		if (TIME_REPLACEMENT.replacement.start) {
+			const startHour = parseInt(
+				TIME_REPLACEMENT.replacement.start.split(":")[0],
 			);
-			getID("inner-itinerary-select-period").value = getTurno(inicioHora);
+			getID("inner-itinerary-select-period").value = getTurno(startHour);
 		}
 	}
-	TIME_REPLACEMENT.current.inicio = "";
-	TIME_REPLACEMENT.current.fim = "";
-	TIME_REPLACEMENT.replacement.inicio = "";
-	TIME_REPLACEMENT.replacement.fim = "";
+	TIME_REPLACEMENT.current.start = "";
+	TIME_REPLACEMENT.current.end = "";
+	TIME_REPLACEMENT.replacement.start = "";
+	TIME_REPLACEMENT.replacement.end = "";
 	getID("time-replacement-checkbox").checked = false;
 	getID("time-replacement-container").style.display = "none";
 }

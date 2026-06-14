@@ -94,8 +94,8 @@ export function loadEventListeners() {
 	});
 
 	// Inputs
-	getID("start").addEventListener("change", () => inicioListenerAction());
-	getID("fim").addEventListener("change", () => fimListenerAction());
+	getID("start").addEventListener("change", () => startListenerAction());
+	getID("end").addEventListener("change", () => endListenerAction());
 
 	// Buttons
 	getID("save-btn").addEventListener("click", () => setTripData());
@@ -129,7 +129,7 @@ export function loadEventListeners() {
 	getID("pin-disabled").addEventListener("click", switchPin);
 	getID("pin-sensitive-only").addEventListener("click", switchPin);
 	getID("pin-all-data").addEventListener("click", switchPin);
-	getID("claro").addEventListener("change", () => autoFillDarkColor());
+	getID("light-color").addEventListener("change", () => autoFillDarkColor());
 
 	// Visibilidade do Ida e Volta (Transporte)
 	getID("simple-view").addEventListener("change", () =>
@@ -197,36 +197,36 @@ export function loadEventListeners() {
 }
 
 // Actions
-function inicioListenerAction() {
-	const inicioDiv = getID("start");
-	const fimDiv = getID("fim");
+function startListenerAction() {
+	const startDiv = getID("start");
+	const endDiv = getID("end");
 
-	const inicio = inicioDiv.value;
-	const fim = fimDiv.value;
+	const start = startDiv.value;
+	const end = endDiv.value;
 
 	if (
 		NEW_TRIP ||
-		!fim ||
-		inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()
+		!end ||
+		inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()
 	) {
-		fimDiv.value = getNextInputDay(inicio);
+		endDiv.value = getNextInputDay(start);
 	}
 
 	reloadItinerary();
 }
 
-function fimListenerAction() {
-	const inicioDiv = getID("inicio");
-	const fimDiv = getID("fim");
+function endListenerAction() {
+	const startDiv = getID("start");
+	const endDiv = getID("end");
 
-	const inicio = inicioDiv.value;
-	const fim = fimDiv.value;
+	const start = startDiv.value;
+	const end = endDiv.value;
 
 	if (
-		!inicio ||
-		inputDateToJsDate(fim).getTime() < inputDateToJsDate(inicio).getTime()
+		!start ||
+		inputDateToJsDate(end).getTime() < inputDateToJsDate(start).getTime()
 	) {
-		inicioDiv.value = getPreviousInputDay(fim);
+		startDiv.value = getPreviousInputDay(end);
 	}
 
 	reloadItinerary();
@@ -268,6 +268,6 @@ export function visibilityListenerAction(visibilidade?) {
 		visibilidade = getVisibilidadeObject();
 	}
 
-	getID("tema-claro").style.display = visibilidade.claro ? "block" : "none";
-	getID("tema-escuro").style.display = visibilidade.escuro ? "block" : "none";
+	getID("light-theme").style.display = visibilidade.claro ? "block" : "none";
+	getID("dark-theme").style.display = visibilidade.escuro ? "block" : "none";
 }

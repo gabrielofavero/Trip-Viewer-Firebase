@@ -345,17 +345,17 @@ export function getMonth(month) {
 }
 
 export function getNextCategoryStartEnd(tipo, lastEndStructure) {
-	let inicio = getID("inicio").value;
-	let fim = getID("fim").value;
+	let start = getID("start").value;
+	let end = getID("end").value;
 
 	const js = getJs(`${tipo}-box`);
 
 	if (js.length != 0) {
 		const lastJ = getLastJ(`${tipo}-box`);
-		inicio = getID(`${lastEndStructure}-${lastJ}`).value;
+		start = getID(`${lastEndStructure}-${lastJ}`).value;
 	}
 
-	return { inicio, fim };
+	return { start, end };
 }
 
 export function getTimestamp() {

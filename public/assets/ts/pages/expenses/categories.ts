@@ -12,7 +12,7 @@ export function loadSummary() {
 		EXPENSES_CONVERTED[CURRENT_CURRENCY]["preTrip"].length === 0 ||
 		EXPENSES_CONVERTED[CURRENT_CURRENCY]["duringTrip"].length === 0
 	) {
-		getID("radio-resumo").style.display = "none";
+		getID("radio-summary").style.display = "none";
 		return;
 	}
 
@@ -56,7 +56,7 @@ function loadChartSummary() {
 	getID("summary-total").innerText =
 		`Total: ${formatCurrency(values[0] + values[1], true)}`;
 
-	setChart("doughnut", "resumo-grafico", labels, values);
+	setChart("doughnut", "summary-chart", labels, values);
 }
 
 // Pre-Trip Expenses

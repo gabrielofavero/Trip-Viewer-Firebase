@@ -24,8 +24,8 @@
       </div>
       <div class="tabs-container" id="tabs-container-expenses">
         <div class="tabs" id="tab-expenses" style="display: none;">
-          <input type="radio" style="display: none;" id="radio-resumo" name="tabs-expenses" checked />
-          <label class="tab" for="radio-resumo" data-translate="labels.overview"></label>
+          <input type="radio" style="display: none;" id="radio-summary" name="tabs-expenses" checked />
+          <label class="tab" for="radio-summary" data-translate="labels.overview"></label>
           <input type="radio" style="display: none;" id="radio-preTrip" name="tabs-expenses" />
           <label class="tab" for="radio-preTrip" data-translate="trip.expenses.min.pre_trip"></label>
           <input type="radio" style="display: none;" id="radio-duringTrip" name="tabs-expenses" />
@@ -39,12 +39,12 @@
 
     <div>
       <div id="conversao"></div>
-      <div id="resumo" class="main-container">
+      <div id="summary" class="main-container">
         <div id="summary-container"class="expenses-container"">
           <div class="expenses-card grafico">
             <h2 id="summary-title" class="expenses-title" data-translate="labels.overview"></h2>
             <div id="summary-total"class="expenses-subtitle""></div>
-            <canvas id="resumo-grafico" width="300" height="300"></canvas>
+            <canvas id="summary-chart" width="300" height="300"></canvas>
           </div>
 
           <div id="summary-preTrip" class="expenses-card expenses-receipt" style="display: none;">

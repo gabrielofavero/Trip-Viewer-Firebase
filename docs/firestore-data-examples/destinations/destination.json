@@ -1,0 +1,897 @@
+{
+  "sharing": {
+    "owner": "eySHdjIyK0MNAgiPU77xE0d1CTjp",
+    "active": true
+  },
+  "modules": {
+    "restaurants": true,
+    "map": true,
+    "nightlife": true,
+    "tourism": true,
+    "shopping": true,
+    "snacks": true
+  },
+  "tourism": {
+    "khO8O": {
+      "isNew": false,
+      "instagram": "",
+      "rating": "5",
+      "website": "",
+      "emoji": "🎨",
+      "description": {
+        "pt": "Antigo palácio histórico que abriga uma enorme coleção de artes, de esculturas romanas à \"Mona Lisa\" de da Vinci.",
+        "en": ""
+      },
+      "media": "https://www.tiktok.com/@irmaspelomundo/video/7553762096597552395",
+      "region": "",
+      "name": "Museu do Louvre",
+      "price": "€22",
+      "map": "https://maps.app.goo.gl/zaoXuZjdo4asnLPBA",
+      "createdAt": "2026-01-05T15:43:57.855Z"
+    },
+    "hdzJC": {
+      "map": "https://maps.app.goo.gl/H5RpkvJCvy5nsMJLA",
+      "price": "default",
+      "createdAt": "2026-01-05T15:44:11.855Z",
+      "name": "Le mur des je t'aime",
+      "media": "",
+      "region": "",
+      "description": {
+        "pt": "Mural dentro de um parque com as palavras \"eu te amo\" em vários idiomas e ponto de encontro popular.",
+        "en": ""
+      },
+      "instagram": "",
+      "rating": "4",
+      "isNew": false,
+      "website": "",
+      "emoji": "💖"
+    },
+    "x8KE3": {
+      "description": {
+        "pt": "O 18º arrondissement fica em torno da charmosa colina de Montmartre (\"La Butte\"), um antigo reduto de artistas por onde já passaram Picasso e Dalí, além de ser lar da Basílica de Sacré-Cœur. As ruas íngremes e sinuosas oferecem vistas deslumbrantes da cidade. Na parte baixa, o famoso cabaré Moulin Rouge atrai turistas e frequentadores de casas noturnas. Pessoas descoladas frequentam a badalada área de Lamarck, com bares e restaurantes retrô.",
+        "en": ""
+      },
+      "instagram": "",
+      "isNew": false,
+      "rating": "4",
+      "emoji": "🏙️",
+      "website": "",
+      "price": "-",
+      "map": "https://maps.app.goo.gl/55tXUYAPTddQUcsN9",
+      "createdAt": "2026-01-05T15:44:03.855Z",
+      "name": "Montmartre",
+      "media": "https://www.tiktok.com/@le__walk/video/7495709019961675051",
+      "region": ""
+    },
+    "08Xzu": {
+      "description": {
+        "pt": "Famoso cabaré do século XIX com decoração Belle Époque, jantar e dançarinos em trajes elaborados.",
+        "en": ""
+      },
+      "rating": "4",
+      "instagram": "",
+      "isNew": false,
+      "website": "",
+      "emoji": "💃",
+      "name": "Moulin Rouge",
+      "media": "",
+      "region": "",
+      "map": "https://maps.app.goo.gl/d4U6kq3sv13WRJk8A",
+      "price": "default",
+      "createdAt": "2026-01-19T01:39:52.227Z"
+    },
+    "fCgxf": {
+      "website": "",
+      "emoji": "🏛️",
+      "instagram": "",
+      "isNew": false,
+      "rating": "4",
+      "description": {
+        "pt": "Mausoléu do século XVIII com fachada de colunas, onde repousam notáveis cidadãos franceses. Paga para entrar, mas a vista externa é suficiente.",
+        "en": ""
+      },
+      "region": "",
+      "media": "https://www.tiktok.com/@viagemcomcamila/video/7414617467588185350",
+      "name": "Panthéon",
+      "createdAt": "2026-01-05T15:43:56.855Z",
+      "map": "https://maps.app.goo.gl/5PueR6eqovue1dYCA",
+      "price": "€16"
+    },
+    "piOqN": {
+      "price": "-",
+      "map": "https://maps.app.goo.gl/Hp3NkQCxbu6eAYoD9",
+      "createdAt": "2026-01-05T15:43:58.855Z",
+      "media": "https://www.tiktok.com/@luizafrancabandiera/video/7519177064767819063",
+      "region": "",
+      "name": "Notre Dame",
+      "instagram": "",
+      "rating": "4",
+      "isNew": false,
+      "website": "",
+      "emoji": "⛪",
+      "description": {
+        "pt": "Localizado em 2 ilhas no rio Sena, Notre Dame abriga a impressionante catedral que leva o mesmo nome, a Cathédrale Notre-Dame de Paris, com suas gárgulas e enormes pilares. Île de la Cité também tem pontes históricas, uma praça com fonte e uma cripta arqueológica, enquanto a Rue Saint-Louis en l’Île em Île Saint-Louis é cheia de lojas especializadas ao lado de confortáveis cafés, bistrôs pitorescos e restaurantes sofisticados.",
+        "en": ""
+      }
+    },
+    "OgZoP": {
+      "description": {
+        "pt": "Capela gótica ornamentada do século XIII, com relíquias e janelas em vitrais com cenas bíblicas.",
+        "en": ""
+      },
+      "rating": "3",
+      "instagram": "",
+      "isNew": false,
+      "website": "",
+      "emoji": "⛪",
+      "name": "Sainte-Chapelle",
+      "media": "https://www.tiktok.com/@lili.debois/video/7299395873518128416",
+      "region": "",
+      "map": "https://maps.app.goo.gl/pV8YCGCvCwBMRDWm9",
+      "price": "€19",
+      "createdAt": "2026-01-05T15:44:05.855Z"
+    },
+    "RLalJ": {
+      "emoji": "🏙️",
+      "website": "",
+      "isNew": false,
+      "rating": "5",
+      "instagram": "",
+      "description": {
+        "pt": "A elegante região do Champs-Élysées é conhecida pela ampla avenida de mesmo nome, que liga o grandioso Arco do Triunfo com o caótico anel viário da Place de la Concorde. Lojas de grife e escritórios de alto padrão enfeitam a área, com restaurantes cheios de estilo e outras lanchonetes mais casuais. O distrito também abriga o fabuloso Jardins des Champs-Élysées e museus de arte, como o Grand Palais, com exposições notórias.",
+        "en": ""
+      },
+      "region": "",
+      "media": "https://www.tiktok.com/@theo.yapping/video/7274996986430901536",
+      "name": "Champs-Élysées",
+      "createdAt": "2026-01-05T15:44:02.855Z",
+      "map": "https://maps.app.goo.gl/ymDxMRBsq1o6Ribb7",
+      "price": "-"
+    },
+    "KqcHo": {
+      "media": "https://www.tiktok.com/@viagemcomcamila/video/7415639038985637125",
+      "region": "",
+      "name": "Jardim de Luxemburgo",
+      "map": "https://maps.app.goo.gl/9Z7mCp1jznwRxS1w7",
+      "price": "-",
+      "createdAt": "2026-01-05T15:44:10.855Z",
+      "isNew": false,
+      "rating": "4",
+      "instagram": "",
+      "website": "",
+      "emoji": "🏞️",
+      "description": {
+        "pt": "Parque do século XVII com jardins, árvores plantadas em formato padrão e estátuas em pedestais.",
+        "en": ""
+      }
+    },
+    "De3uF": {
+      "map": "https://maps.app.goo.gl/JHZULCxKNhmT9Fey9",
+      "price": "-",
+      "createdAt": "2026-01-05T15:44:00.855Z",
+      "media": "https://www.tiktok.com/@lareinating/video/7292039194908773650",
+      "region": "",
+      "name": "Jardim do Trocadéro",
+      "rating": "5",
+      "instagram": "",
+      "isNew": false,
+      "website": "",
+      "emoji": "🏞️",
+      "description": {
+        "pt": "Parque público, criado em 1937, com esculturas e uma fonte central com 20 jatos de água.",
+        "en": ""
+      }
+    },
+    "t2XZj": {
+      "map": "https://maps.app.goo.gl/q1LtNih5cotxG2kY8",
+      "price": "€22",
+      "createdAt": "2026-01-05T15:44:01.855Z",
+      "media": "https://www.tiktok.com/@goodtraveldays/video/7353821368137420039",
+      "region": "",
+      "name": "Arc de Triomphe",
+      "instagram": "",
+      "rating": "4",
+      "isNew": false,
+      "emoji": "🏛️",
+      "website": "",
+      "description": {
+        "pt": "Famoso Arco do Triunfo construído para comemorar as vitórias de Napoleão, com um observatório.",
+        "en": ""
+      }
+    },
+    "nKgUE": {
+      "isNew": false,
+      "rating": "3",
+      "instagram": "",
+      "emoji": "🎨",
+      "website": "",
+      "description": {
+        "pt": "Um dos museus do exército que conta com uma igreja e tumbas de muitos oficiais famosos, incluindo Napoleão.",
+        "en": ""
+      },
+      "map": "https://maps.app.goo.gl/FH8y2Sec7XuvAvq99",
+      "price": "€17",
+      "createdAt": "2026-01-05T15:44:08.855Z",
+      "media": "https://www.tiktok.com/@annettaadventures/video/7528408685249432862",
+      "region": "",
+      "name": "Hôtel des Invalides"
+    },
+    "puUo6": {
+      "createdAt": "2026-01-05T15:44:04.855Z",
+      "price": "-",
+      "map": "https://maps.app.goo.gl/t1XLZ9euYD9EAkam8",
+      "name": "Basilique du Sacré-Cœur",
+      "region": "",
+      "media": "https://www.tiktok.com/@tiiffxny/video/7502211246733692203",
+      "description": {
+        "pt": "Igreja branca com cúpula, finalizada em 1914, com mosaicos na parte interna, vitrais e criptas.",
+        "en": ""
+      },
+      "emoji": "⛪",
+      "website": "",
+      "isNew": false,
+      "instagram": "",
+      "rating": "4"
+    },
+    "MC4S1": {
+      "map": "https://maps.app.goo.gl/wPY8vTzyVnkuVM28A",
+      "price": "€23",
+      "createdAt": "2026-01-05T15:43:59.855Z",
+      "name": "Tour Eiffel",
+      "media": "https://www.tiktok.com/@beparisiense/video/7512939084751375621",
+      "region": "",
+      "description": {
+        "pt": "Famosa torre de ferro forjado de Gustave Eiffel de 1889, com escadas e elevadores para os observatórios.",
+        "en": ""
+      },
+      "rating": "5",
+      "isNew": false,
+      "instagram": "",
+      "emoji": "🏛️",
+      "website": ""
+    },
+    "zJsLh": {
+      "createdAt": "2026-01-05T15:44:09.855Z",
+      "price": "€100",
+      "map": "https://maps.app.goo.gl/wRnxkpY13QciMuhH8",
+      "region": "",
+      "media": "https://www.tiktok.com/@annettaadventures/video/7528408685249432862",
+      "name": "Disneyland Paris",
+      "emoji": "🎢",
+      "website": "",
+      "rating": "4",
+      "isNew": false,
+      "instagram": "",
+      "description": {
+        "pt": "Complexo de parques temáticos com atrações para famílias, shows, personagens caracterizados e hotéis.",
+        "en": ""
+      }
+    },
+    "mWAua": {
+      "description": {
+        "pt": "Cruzeiro",
+        "en": ""
+      },
+      "isNew": false,
+      "instagram": "",
+      "rating": "4",
+      "website": "https://www.tripadvisor.com.br/AttractionProductHighlight-g187147-d11469156-Paris_Seine_River_Sightseeing_Cruise_by_Bateaux_Mouches-Paris_Ile_de_France.html",
+      "emoji": "🛥️",
+      "name": "Bateau-mouche",
+      "media": "https://www.tiktok.com/@rolecomrenan/video/7306850441101446406",
+      "region": "",
+      "price": "-",
+      "map": "https://maps.app.goo.gl/zjFnaeuHk33WPnA3A",
+      "createdAt": "2026-01-05T15:44:07.855Z"
+    },
+    "skjyA": {
+      "description": {
+        "pt": "Também conhecido como 5º arrondissement, o singular Quartier Latin abriga a Universidade de Sorbonne e cafés cheios de estudantes. Ele também é famoso pelas livrarias, incluindo a Shakespeare & Company, que já virou uma atração turística. Atrações ideais para famílias incluem o jardim botânico Jardin des Plantes e o Museu Nacional de História Natural. O imponente Panthéon guarda os restos mortais de pessoas notáveis, como Voltaire e Marie Curie.",
+        "en": ""
+      },
+      "isNew": false,
+      "rating": "5",
+      "instagram": "",
+      "website": "",
+      "emoji": "🏙️",
+      "name": "Quartier Latin",
+      "media": "https://www.tiktok.com/@sonhealtoviagens/video/7456104642573765894",
+      "region": "",
+      "map": "https://maps.app.goo.gl/sjNkcoXakKSyMA6x5",
+      "price": "-",
+      "createdAt": "2026-01-05T15:43:55.855Z"
+    },
+    "HHtfe": {
+      "region": "",
+      "media": "https://www.tiktok.com/@viagemcomcamila/video/7516982850688699653",
+      "name": "Château de Versailles",
+      "createdAt": "2026-01-05T15:44:06.855Z",
+      "price": "€32",
+      "map": "https://maps.app.goo.gl/CnGxZgTMRoBWGLAf7",
+      "website": "",
+      "emoji": "⛪",
+      "isNew": false,
+      "rating": "5",
+      "instagram": "",
+      "description": {
+        "pt": "Imenso palácio do século XVIII com apartamentos dourados, Sala de Espelhos com candelabros e espetáculo de fontes.",
+        "en": ""
+      }
+    }
+  },
+  "snacks": {
+    "cMXya": {
+      "description": {
+        "pt": "Cafés, doces, pães e salgados feitos no local em um café descontraído e elegante.",
+        "en": ""
+      },
+      "instagram": "",
+      "rating": "3",
+      "isNew": false,
+      "website": "",
+      "emoji": "☕🥐",
+      "name": "BO&MIE",
+      "media": "",
+      "region": "",
+      "map": "https://maps.app.goo.gl/E56Sh1T8RmTw3bbCA",
+      "price": "$",
+      "createdAt": "2026-01-05T15:44:05.855Z"
+    },
+    "8JKU7": {
+      "description": {
+        "pt": "Padaria pequena em bairro famoso que serve bombas de chocolate com creme, tortas de maçã e baguetes clássicas.",
+        "en": ""
+      },
+      "website": "",
+      "emoji": "☕🥐",
+      "rating": "3",
+      "instagram": "",
+      "isNew": false,
+      "createdAt": "2026-01-05T15:43:58.855Z",
+      "price": "$",
+      "map": "https://maps.app.goo.gl/qvD8rH1wJ99wLhxR6",
+      "name": "Boulangerie Utopie",
+      "region": "",
+      "media": ""
+    },
+    "Fbv7H": {
+      "name": "Chez Alain Miam Miam",
+      "region": "",
+      "media": "https://www.tiktok.com/@sherryeatworld/video/7379710069253868846",
+      "createdAt": "2026-01-05T15:44:04.855Z",
+      "map": "https://maps.app.goo.gl/tuphrs65Jy7aqFxY7",
+      "price": "$",
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "website": "",
+      "emoji": "🥪",
+      "instagram": "",
+      "isNew": false,
+      "rating": "4"
+    },
+    "J9Iw1": {
+      "instagram": "",
+      "isNew": false,
+      "rating": "4",
+      "website": "",
+      "emoji": "🍫",
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "media": "https://www.tiktok.com/@pariscomgabi/video/7563398849469926678",
+      "region": "",
+      "name": "Aux Merveilleux de Fred",
+      "map": "https://maps.app.goo.gl/mSsKZyPJ2tiEqCys5",
+      "price": "$",
+      "createdAt": "2026-01-05T15:44:08.855Z"
+    },
+    "Jhjl7": {
+      "emoji": "☕🥐",
+      "website": "",
+      "isNew": false,
+      "rating": "4",
+      "instagram": "",
+      "description": {
+        "pt": "Cafeteria tradicional.",
+        "en": ""
+      },
+      "createdAt": "2026-01-05T15:43:57.855Z",
+      "price": "$$",
+      "map": "https://maps.app.goo.gl/CEqDEmQdPQvmgoqo7",
+      "region": "",
+      "media": "https://www.tiktok.com/@grazieats/video/7457932478532046085",
+      "name": "Carette"
+    },
+    "iLYBT": {
+      "map": "https://maps.app.goo.gl/6X4QnHYCK1mGjnnN6",
+      "price": "$",
+      "createdAt": "2026-01-05T15:44:10.855Z",
+      "name": "TRAM café-restaurant",
+      "media": "",
+      "region": "",
+      "description": {
+        "pt": "Recomendado pelo croque monsieur",
+        "en": ""
+      },
+      "isNew": false,
+      "instagram": "",
+      "rating": "4",
+      "website": "",
+      "emoji": "🥪"
+    },
+    "dE1hD": {
+      "price": "$$$",
+      "map": "https://maps.app.goo.gl/XHQ4xrUsHaGDJgnL6",
+      "createdAt": "2026-01-05T15:44:07.855Z",
+      "name": "Les Deux Magots",
+      "media": "",
+      "region": "",
+      "description": {
+        "pt": "Brasserie icônico de 1885 em um espaço arejado e charmoso que serve culinária francesa tradicional.",
+        "en": ""
+      },
+      "isNew": false,
+      "rating": "3",
+      "instagram": "",
+      "website": "",
+      "emoji": "☕🥐"
+    },
+    "kJr0m": {
+      "description": {
+        "pt": "Delicatessen",
+        "en": ""
+      },
+      "instagram": "",
+      "isNew": false,
+      "rating": "4",
+      "emoji": "🥩🥐",
+      "website": "",
+      "price": "$",
+      "map": "https://maps.app.goo.gl/z68hLmJkDi7uY7V29",
+      "createdAt": "2026-01-05T15:44:00.855Z",
+      "name": "Galeries Lafayette Le Gourmet",
+      "media": "",
+      "region": ""
+    },
+    "QY7Pv": {
+      "website": "",
+      "emoji": "🥞",
+      "rating": "4",
+      "instagram": "",
+      "isNew": false,
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "region": "",
+      "media": "",
+      "name": "Creperie Oroyona",
+      "createdAt": "2026-01-05T15:44:03.855Z",
+      "price": "$",
+      "map": "https://maps.app.goo.gl/NmmWSRRs5KUwuaQL8"
+    },
+    "XnQqt": {
+      "price": "$",
+      "map": "https://maps.app.goo.gl/Fy82Fqud2Nmfuh4E6",
+      "createdAt": "2026-01-05T15:44:01.855Z",
+      "name": "Caractère de Cochon",
+      "media": "",
+      "region": "",
+      "description": {
+        "pt": "Sanduíche de frios. Raiz",
+        "en": ""
+      },
+      "rating": "3",
+      "instagram": "",
+      "isNew": false,
+      "emoji": "🥪",
+      "website": ""
+    },
+    "w3WTr": {
+      "price": "$",
+      "map": "https://maps.app.goo.gl/WYDyUaGjaH5PjHRp7",
+      "createdAt": "2026-01-05T15:43:56.855Z",
+      "media": "https://www.tiktok.com/@umcasalnafranca_/video/7542917301213875478",
+      "region": "",
+      "name": "Au P'tit Grec",
+      "instagram": "",
+      "isNew": false,
+      "rating": "3",
+      "website": "",
+      "emoji": "🥞",
+      "description": {
+        "pt": "Creperia",
+        "en": ""
+      }
+    },
+    "5caWR": {
+      "website": "",
+      "emoji": "☕🥐",
+      "instagram": "",
+      "isNew": false,
+      "rating": "4",
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "createdAt": "2026-01-05T15:44:06.855Z",
+      "map": "https://maps.app.goo.gl/x7j2vCL27sPiQPpo7",
+      "price": "$$$",
+      "region": "",
+      "media": "",
+      "name": "Angelina"
+    },
+    "dRzzl": {
+      "rating": "4",
+      "instagram": "",
+      "isNew": false,
+      "emoji": "🥪🍟",
+      "website": "",
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "media": "",
+      "region": "",
+      "name": "La Baguette du Relais",
+      "price": "$",
+      "map": "https://maps.app.goo.gl/9Ad8wexAcfvwjQbK8",
+      "createdAt": "2026-01-05T15:43:59.855Z"
+    },
+    "VUBuj": {
+      "isNew": false,
+      "instagram": "https://www.instagram.com/berthillon_officiel/",
+      "rating": "4",
+      "website": "",
+      "emoji": "🍦",
+      "description": {
+        "pt": "Sorveteria famosa",
+        "en": ""
+      },
+      "media": "https://www.tiktok.com/@fwarg/video/7249733053663366446",
+      "region": "",
+      "name": "Berthillon",
+      "map": "https://maps.app.goo.gl/ZqiN4CHrgdHCUewC6",
+      "price": "$",
+      "createdAt": "2026-01-05T15:43:55.855Z"
+    },
+    "JAOBO": {
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "instagram": "",
+      "isNew": false,
+      "rating": "4",
+      "website": "",
+      "emoji": "🥖",
+      "name": "Boulangerie-Pâtisserie Terroirs d'Avenir",
+      "media": "",
+      "region": "",
+      "price": "$",
+      "map": "https://maps.app.goo.gl/LC5mLDLUz5tsFsMd6",
+      "createdAt": "2026-01-05T15:44:02.855Z"
+    }
+  },
+  "myMaps": "https://www.google.com/maps/d/edit?mid=1TVAH63Bvd05BJ5v4H6XllRlWX_WVQ4g&usp=sharing",
+  "title": "Paris",
+  "restaurants": {
+    "rXTi8": {
+      "region": "",
+      "media": "",
+      "name": "Comme un Bouillon",
+      "createdAt": "2026-01-05T15:44:07.855Z",
+      "price": "$$",
+      "map": "https://maps.app.goo.gl/YnwamBDPuWm43aGt5",
+      "website": "",
+      "emoji": "🇫🇷",
+      "rating": "4",
+      "instagram": "",
+      "isNew": false,
+      "description": {
+        "pt": "",
+        "en": ""
+      }
+    },
+    "QZnE5": {
+      "createdAt": "2026-01-05T15:43:55.855Z",
+      "map": "https://maps.app.goo.gl/nMWM4jwK1EFkukk17",
+      "price": "-",
+      "region": "",
+      "media": "https://www.tiktok.com/@preetigills/video/7334820571072466209",
+      "name": "Le Relais de Venise",
+      "emoji": "🥩🍟",
+      "website": "",
+      "instagram": "",
+      "rating": "4",
+      "isNew": false,
+      "description": {
+        "en": "",
+        "pt": "Restaurante famoso de bife e batata frita com molho na mostarda."
+      }
+    },
+    "p52Di": {
+      "instagram": "",
+      "rating": "4",
+      "isNew": false,
+      "website": "",
+      "emoji": "🍽️🍕",
+      "description": {
+        "pt": "Ambiente amplo em estilo de mercado que serve pizzas e massas italianas tradicionais, coquetéis e sobremesas.",
+        "en": ""
+      },
+      "media": "https://www.tiktok.com/@bruzzbe/video/7277549931735338272",
+      "region": "",
+      "name": "La Felicità",
+      "price": "default",
+      "map": "https://maps.app.goo.gl/vxvM2Uz3utMpaiL49",
+      "createdAt": "2026-01-05T15:43:58.855Z"
+    },
+    "KPUyM": {
+      "createdAt": "2026-01-05T15:43:59.855Z",
+      "price": "$$",
+      "map": "https://maps.app.goo.gl/vE7Ehmrk69sZAxUL6",
+      "name": "MELT Cambronne",
+      "region": "",
+      "media": "",
+      "description": {
+        "en": "",
+        "pt": ""
+      },
+      "emoji": "🥩",
+      "website": "",
+      "instagram": "",
+      "isNew": false,
+      "rating": "3"
+    },
+    "ak7y8": {
+      "name": "The Brooklyn Pizzeria",
+      "region": "",
+      "media": "",
+      "createdAt": "2026-01-05T15:44:09.855Z",
+      "map": "https://maps.app.goo.gl/2C2iZwQfXkutq6na7",
+      "price": "$",
+      "description": {
+        "en": "",
+        "pt": ""
+      },
+      "website": "",
+      "emoji": "🍕",
+      "instagram": "",
+      "rating": "4",
+      "isNew": false
+    },
+    "ftxa0": {
+      "rating": "3",
+      "instagram": "",
+      "isNew": false,
+      "emoji": "🇫🇷",
+      "website": "",
+      "description": {
+        "en": "",
+        "pt": "Restaurante sofisticado com terraço e vista para a Torre Eiffel que serve pratos gourmet de frutos do mar."
+      },
+      "price": "$$$",
+      "map": "https://maps.app.goo.gl/MdtysZbmsHYZo2R36",
+      "createdAt": "2026-01-05T15:44:03.855Z",
+      "media": "",
+      "region": "",
+      "name": "Girafe"
+    },
+    "w0bX1": {
+      "isNew": false,
+      "rating": "3",
+      "instagram": "",
+      "website": "",
+      "emoji": "🇫🇷",
+      "description": {
+        "en": "",
+        "pt": ""
+      },
+      "media": "",
+      "region": "",
+      "name": "Le Train Blue",
+      "map": "https://maps.app.goo.gl/JpGLYhSkWWWXm41V6",
+      "price": "$$$",
+      "createdAt": "2026-01-05T15:44:02.855Z"
+    },
+    "EeqqJ": {
+      "map": "https://maps.app.goo.gl/qQAk1oeiGw5KQNTZ9",
+      "price": "$$",
+      "createdAt": "2026-01-05T15:44:00.855Z",
+      "media": "",
+      "region": "",
+      "name": "Chez Janou",
+      "rating": "3",
+      "instagram": "",
+      "isNew": false,
+      "emoji": "🇫🇷",
+      "website": "",
+      "description": {
+        "en": "",
+        "pt": "Culinária provençal"
+      }
+    },
+    "laWPY": {
+      "name": "Bouillon Pigalle",
+      "region": "",
+      "media": "",
+      "createdAt": "2026-01-05T15:44:04.855Z",
+      "price": "$$",
+      "map": "https://maps.app.goo.gl/14QhtimHNuPJkMEf9",
+      "description": {
+        "pt": "Bistrô casual que serve pratos e sobremesas tradicionais da França com taças de vinho da casa.",
+        "en": ""
+      },
+      "website": "",
+      "emoji": "🇫🇷",
+      "instagram": "",
+      "rating": "5",
+      "isNew": false
+    },
+    "l8KYR": {
+      "name": "Ambassade d’Auvergne",
+      "media": "https://www.tiktok.com/@limitless.asa/video/7550389594039061782",
+      "region": "",
+      "map": "https://maps.app.goo.gl/wbFiNxQRsquTMCY36",
+      "price": "$$$",
+      "createdAt": "2026-01-05T15:43:56.855Z",
+      "description": {
+        "en": "",
+        "pt": "Restaurante tradicional francês famoso pelo alligot"
+      },
+      "instagram": "",
+      "isNew": false,
+      "rating": "2",
+      "website": "",
+      "emoji": "🫕"
+    },
+    "hNjxr": {
+      "description": {
+        "en": "",
+        "pt": "Pratos franceses tradicionais servidos em um ambiente clássico com paredes floridas e espelhos."
+      },
+      "emoji": "🇫🇷",
+      "website": "",
+      "instagram": "",
+      "rating": "3",
+      "isNew": false,
+      "name": "Le Petit Bouillon Pharamond",
+      "region": "",
+      "media": "",
+      "createdAt": "2026-01-05T15:44:05.855Z",
+      "map": "https://maps.app.goo.gl/oKANk4QMsRTSW17J7",
+      "price": "$$"
+    },
+    "OEMOP": {
+      "name": "Le Relais de l'Entrecôte",
+      "media": "https://www.tiktok.com/@vickyy.blanco/video/7563686838070693151",
+      "region": "",
+      "map": "",
+      "price": "default",
+      "createdAt": "2026-01-05T15:44:08.855Z",
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "isNew": false,
+      "instagram": "",
+      "rating": "5",
+      "emoji": "🥩🍟",
+      "website": ""
+    },
+    "674Ot": {
+      "website": "",
+      "emoji": "🇫🇷",
+      "instagram": "",
+      "isNew": false,
+      "rating": "5",
+      "description": {
+        "pt": "",
+        "en": ""
+      },
+      "region": "",
+      "media": "https://www.tiktok.com/@brasserie.nesle/video/7544411404342791446",
+      "name": "Le Nesle",
+      "createdAt": "2026-01-05T15:44:06.855Z",
+      "map": "https://maps.app.goo.gl/s7faNegBNRyrMMy76",
+      "price": "$$"
+    },
+    "VH2oV": {
+      "description": {
+        "en": "",
+        "pt": "Bistrot especializado na sopa de cebola. Tem outros pratos tradicionais franceses."
+      },
+      "emoji": "🍲",
+      "website": "",
+      "instagram": "",
+      "rating": "4",
+      "isNew": false,
+      "createdAt": "2026-01-05T15:43:57.855Z",
+      "map": "https://maps.app.goo.gl/75pMkdxpGocsVRYA9",
+      "price": "$$",
+      "name": "Loup",
+      "region": "",
+      "media": ""
+    },
+    "5RlTs": {
+      "website": "",
+      "emoji": "🇫🇷",
+      "isNew": false,
+      "instagram": "",
+      "rating": "3",
+      "description": {
+        "en": "",
+        "pt": "Restaurante tradicional de 1600 com decoração vintage e mesas externas que serve coq au vin, molusco e carnes."
+      },
+      "createdAt": "2026-01-05T15:44:01.855Z",
+      "map": "https://maps.app.goo.gl/3RURqGmtUYS31ddq6",
+      "price": "$$",
+      "region": "",
+      "media": "",
+      "name": "Le Procope"
+    }
+  },
+  "currency": "EUR",
+  "shopping": {
+    "OGz46": {
+      "name": "Galerias Lafayette Haussmann",
+      "region": "",
+      "media": "",
+      "createdAt": "2026-01-05T15:43:55.855Z",
+      "price": "default",
+      "map": "https://maps.app.goo.gl/TpLHC9uRzwBY9gM68",
+      "description": {
+        "en": "",
+        "pt": "Loja de departamentos grande e centenária com uma cúpula art nouveau de vidro rodeada por lógias."
+      },
+      "emoji": "🛍️",
+      "website": "",
+      "isNew": false,
+      "rating": "4",
+      "instagram": ""
+    },
+    "6KDzy": {
+      "instagram": "",
+      "isNew": false,
+      "rating": "4",
+      "website": "",
+      "emoji": "🛒",
+      "description": {
+        "en": "",
+        "pt": "Mercado coberto de 1615 com produtos frescos, barracas de queijo e flores, além de comidas de rua."
+      },
+      "media": "",
+      "region": "",
+      "name": "Marché couvert des Enfants Rouges",
+      "map": "https://maps.app.goo.gl/Wv1bK6HeMB1vHQep9",
+      "price": "default",
+      "createdAt": "2026-01-05T15:43:56.855Z"
+    }
+  },
+  "version": {
+    "lastUpdated": "2026-01-27T22:46:03.464Z"
+  },
+  "nightlife": {
+    "FrViq": {
+      "description": {
+        "en": "",
+        "pt": "Clube de jazz conhecido, vintage e pequeno com um atmosfera da metade do século passado e que serve bebidas e tem música ao vivo."
+      },
+      "website": "",
+      "emoji": "🎺",
+      "instagram": "",
+      "isNew": false,
+      "rating": "5",
+      "createdAt": "2026-01-05T15:43:55.855Z",
+      "price": "€16",
+      "map": "https://maps.app.goo.gl/8uaLon8UP5zGyEZM7",
+      "name": "Le Caveau de la Huchette",
+      "region": "",
+      "media": "https://www.tiktok.com/@anyuuuuuuuut/video/7577114658667089172"
+    }
+  }
+}

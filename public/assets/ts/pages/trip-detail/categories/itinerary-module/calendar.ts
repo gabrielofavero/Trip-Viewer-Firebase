@@ -25,8 +25,8 @@ var CALENDAR = {
 };
 
 export function loadCalendar() {
-	CALENDAR.start = convertFromDateObject(getState().inicio);
-	CALENDAR.end = convertFromDateObject(getState().fim);
+	CALENDAR.start = convertFromDateObject(getState().start);
+	CALENDAR.end = convertFromDateObject(getState().end);
 
 	CALENDAR.startMonth = CALENDAR.start.getUTCMonth();
 	CALENDAR.startYear = CALENDAR.start.getUTCFullYear();

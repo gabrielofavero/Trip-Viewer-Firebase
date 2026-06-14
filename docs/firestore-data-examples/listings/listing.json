@@ -1,0 +1,61 @@
+{
+  "colors": {
+    "light": "#9f9fab",
+    "active": true,
+    "dark": "#9f9fab"
+  },
+  "sharing": {
+    "editors": [],
+    "owner": "eySHdjIyK0MNAgiPU77xE0d1CTjp",
+    "active": true
+  },
+  "description": "Olá! Esses são alguns dos destinos internacionais que já conheci ou pretendo conhecer. ",
+  "image": {
+    "background": "https://i.imgur.com/rIRIjAF.jpeg",
+    "dark": "",
+    "light": "",
+    "active": true
+  },
+  "links": {
+    "pdf": "",
+    "vaccine": "",
+    "maps": "",
+    "sheet": "",
+    "drive": "",
+    "ppt": "",
+    "active": false,
+    "attachments": ""
+  },
+  "title": "Destinos Internacionais",
+  "subtitle": "by Bibs :)",
+  "destinations": [
+    {
+      "id": "fAPPhG0hQGLs59jE2rU0"
+    },
+    {
+      "id": "5iv1v9Sj5txwU0nWXqrM"
+    },
+    {
+      "id": "ynxc9oRyN99QnwaBufwD"
+    },
+    {
+      "id": "eWj79W36wxxyhuvccevW"
+    },
+    {
+      "id": "xDxwEbXqNCTNi0SkbnsW"
+    },
+    {
+      "id": "mpWmzszqIcfi0XmTlYoD"
+    },
+    {
+      "id": "jZndqjAyZYfyWlGoeVfi"
+    },
+    {
+      "id": "h4xtlEIZvLrHvpIfUh88"
+    }
+  ],
+  "version": {
+    "lastUpdated": "2025-04-01T22:10:02.870Z",
+    "showInDestinations": true
+  }
+}

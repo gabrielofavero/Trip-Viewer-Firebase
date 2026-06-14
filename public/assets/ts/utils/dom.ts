@@ -553,10 +553,10 @@ export function getInnerItineraryTitle(dado: Record<string, any>, viajantes = TR
 			: getReadableArray(presentes);
 
 	let time = "";
-	if (dado.inicio && dado.fim) {
-		time = `${dado.inicio} - ${dado.fim}`;
-	} else if (dado.inicio) {
-		time = dado.inicio;
+	if (dado.start && dado.end) {
+		time = `${dado.start} - ${dado.end}`;
+	} else if (dado.start) {
+		time = dado.start;
 	}
 
 	if (travelersText && time && schedule) {
@@ -715,8 +715,8 @@ export function getCurrentTrips(data: Record<string, any>) {
 	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
 		.filter(([_, v]: [string, any]) => {
-			const start = convertFromDateObject(v.inicio);
-			const end = convertFromDateObject(v.fim);
+		const start = convertFromDateObject(v.start);
+		const end = convertFromDateObject(v.end);
 			return start <= today && today <= end;
 		})
 		.map(([id, v]: [string, any]) => ({ id, ...v }));
@@ -725,21 +725,21 @@ export function getCurrentTrips(data: Record<string, any>) {
 export function getPreviousTrips(data: Record<string, any>) {
 	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
-		.filter(([_, v]: [string, any]) => convertFromDateObject(v.fim) < today)
+		.filter(([_, v]: [string, any]) => convertFromDateObject(v.end) < today)
 		.map(([id, v]: [string, any]) => ({ id, ...v }))
 		.sort(
-			(a: any, b: any) => convertFromDateObject(b.fim).getTime() - convertFromDateObject(a.fim).getTime(),
+			(a: any, b: any) => convertFromDateObject(b.end).getTime() - convertFromDateObject(a.end).getTime(),
 		);
 }
 
 export function getNextTrips(data: Record<string, any>) {
 	const today = convertFromDateObject(getTodayDateObject());
 	return Object.entries(data)
-		.filter(([_, v]: [string, any]) => convertFromDateObject(v.inicio) > today)
+		.filter(([_, v]: [string, any]) => convertFromDateObject(v.start) > today)
 		.map(([id, v]: [string, any]) => ({ id, ...v }))
 		.sort(
 			(a: any, b: any) =>
-				convertFromDateObject(a.inicio).getTime() - convertFromDateObject(b.inicio).getTime(),
+				convertFromDateObject(a.start).getTime() - convertFromDateObject(b.start).getTime(),
 		);
 }
 

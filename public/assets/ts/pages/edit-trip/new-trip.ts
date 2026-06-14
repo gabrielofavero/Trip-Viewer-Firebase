@@ -35,8 +35,8 @@ export function loadNewTrip() {
 }
 
 function loadBasicFieldsNewTrip() {
-	getID("inicio").value = TODAY;
-	getID("fim").value = TOMORROW;
+	getID("start").value = TODAY;
+	getID("end").value = TOMORROW;
 
 	getID("currency").value = "BRL";
 }
@@ -169,9 +169,9 @@ export function addTransportation() {
 		j == 2 ? getID(`ponto-partida-${j - 1}`).value : "";
 	getID(`partida-${j}`).value =
 		j == 1
-			? getID("inicio").value
+			? getID("start").value
 			: j == 2
-				? getID("fim").value
+				? getID("end").value
 				: getID(`chegada-${j - 1}`).value;
 	getID(`chegada-${j}`).value = getID(`partida-${j}`).value;
 
@@ -203,9 +203,9 @@ export function addTransportation() {
 }
 
 export function addAccommodations() {
-	const inicioFim = getNextCategoryStartEnd("hospedagens", "check-out");
-	const j = getNextJ("hospedagens-box");
-	$("#hospedagens-box").append(`
+	const startEnd = getNextCategoryStartEnd("hospedagens", "check-out");
+	const j = getNextJ("accommodations-box");
+	$("#accommodations-box").append(`
       <div id="hospedagens-inner-box-${j}" class="inner-box draggable">
         <div id="hospedagens-${j}" class="accordion-item accordion-hospedagens accordion-draggable" >
         <h2 class="accordion-header" id="heading-hospedagens-${j}">
@@ -215,7 +215,7 @@ export function addAccommodations() {
           </button>
         </h2>
         <div id="collapse-hospedagens-${j}" class="accordion-collapse collapse"
-          aria-labelledby="heading-hospedagens-${j}" data-bs-parent="#hospedagens-box">
+          aria-labelledby="heading-hospedagens-${j}" data-bs-parent="#accommodations-box">
             <div class="accordion-body">
               <div class="nice-form-group" style="display: none">
               <label>${translate("labels.id")}</label>
@@ -242,8 +242,8 @@ export function addAccommodations() {
             <div class="nice-form-group">
               <label>${translate("trip.accommodation.stay_duration")}</label>
               <div class="date-range-picker" id="hospedagens-duration-${j}">
-                <input type="hidden" id="check-in-${j}" value="${inicioFim.inicio}" />
-                <input type="hidden" id="check-out-${j}" value="${inicioFim.fim}" />
+                <input type="hidden" id="check-in-${j}" value="${startEnd.start}" />
+                <input type="hidden" id="check-out-${j}" value="${startEnd.end}" />
               </div>
             </div>
     
@@ -341,22 +341,22 @@ export function loadDestinations() {
 }
 
 export function loadItinerarySchedule() {
-	const inicio = getID("inicio").value;
-	const fim = getID("fim").value;
+	const start = getID("start").value;
+	const end = getID("end").value;
 
 	DATAS = getArrayOfDates(
-		formattedDateToDate(inicio),
-		formattedDateToDate(fim),
+		formattedDateToDate(start),
+		formattedDateToDate(end),
 	);
 
-	const programacaoBox = getID("itinerary-box");
-	programacaoBox.innerHTML = "";
+	const itineraryBox = getID("itinerary-box");
+	itineraryBox.innerHTML = "";
 
 	for (let j = 1; j <= DATAS.length; j++) {
 		const data = DATAS[j - 1];
 		let dataFormatada = getDateTitle(data, "weekday_day_month");
 
-		programacaoBox.innerHTML += `
+		itineraryBox.innerHTML += `
       <div id="programacao-${j}" class="accordion-item accordion-programacao" >
       <h2 class="accordion-header" id="heading-programacao-${j}">
         <button id="programacao-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -378,10 +378,10 @@ export function loadItinerarySchedule() {
 
           <div class="nice-form-group">
             <label>${translate("labels.title")}<span class="opcional"> (${translate("labels.optional")})</span></label>
-              <select class="editar-select" id="programacao-inner-title-select-${j}" style="display: block;">
+              <select class="editar-select" id="itinerary-inner-title-select-${j}" style="display: block;">
                 ${getItineraryTitleSelectOptions()}
               </select>  
-            <input class="nice-form-group" id="programacao-inner-title-${j}" maxlength="25" type="text" placeholder="São Paulo" style="display: none;">
+            <input class="nice-form-group" id="itinerary-inner-title-${j}" maxlength="25" type="text" placeholder="São Paulo" style="display: none;">
           </div>
 
           <div class='turno-box' id='programacao-madrugada-${j}'>

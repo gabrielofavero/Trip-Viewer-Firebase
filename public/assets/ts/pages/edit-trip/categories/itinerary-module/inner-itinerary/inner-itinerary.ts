@@ -252,7 +252,7 @@ export function openInnerItinerarySwap() {
 	const itemTrocar = getID("inner-itinerary-swap-item");
 	itemTrocar.style.minHeight = `${height}px`;
 
-	getID("message-title").innerText = "Trocar Programação";
+	getID("message-title").innerText = "Swap Itinerary";
 	animate(
 		["inner-itinerary-item-trocar"],
 		["inner-itinerary-tela-principal"],

@@ -22,7 +22,7 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
                             ${translate("labels.start")}<br>
                             <span class="opcional">(${translate("labels.optional")})</span>
                         </label>
-                        <input class="flex-input-50-50" id="inner-itinerary-inicio" type="time">
+                        <input class="flex-input-50-50" id="inner-itinerary-start" type="time">
                     </div>
 
                     <div class="nice-form-group side-by-side-fixed">
@@ -30,7 +30,7 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
                             ${translate("labels.end")}<br>
                             <span class="opcional">(${translate("labels.optional")})</span>
                         </label>
-                        <input class="flex-input-50-50" id="inner-itinerary-fim" type="time">
+                        <input class="flex-input-50-50" id="inner-itinerary-end" type="time">
                     </div>
                     </div>
 

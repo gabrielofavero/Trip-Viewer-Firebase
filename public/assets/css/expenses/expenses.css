@@ -63,7 +63,7 @@ input[type="radio"]:checked + label > .notification {
 	color: #fff;
 }
 
-input[id="radio-resumo"]:checked ~ .glider {
+input[id="radio-summary"]:checked ~ .glider {
 	transform: translateX(0);
 }
 

@@ -1,0 +1,47 @@
+{
+  "transportation": {
+    "Fm05z": {
+      "link": "",
+      "reservation": "YAC6D6"
+    },
+    "8gTu2": {
+      "link": "",
+      "reservation": "XRRTP4"
+    },
+    "Ybqc1": {
+      "link": "",
+      "reservation": "ZM7OEA"
+    },
+    "lOHTR": {
+      "link": "",
+      "reservation": "ZM7OEA"
+    },
+    "w0ZkR": {
+      "link": "",
+      "reservation": "2DVFV2"
+    },
+    "EkMDf": {
+      "link": "",
+      "reservation": "XRRTP4"
+    }
+  },
+  "accommodations": {
+    "fCNnY": {
+      "link": "",
+      "reservation": ""
+    },
+    "JBeZl": {
+      "link": "https://www.shiadu.com/bookingstep3/?reservationCode=25110995491&code=D76B5CAED9DDAF5970C63E9B7F73C0590A2A268E&home=https%3A%2F%2Fwww.shiadu.com%2F&lang=pt&serverNameForSSL=reservation.mirai.com&tracking=e30%3D&idchain=502016&hsri=02080&version=2&idHotel=100378946&outsideHotelDomain=true",
+      "reservation": "25110995491"
+    },
+    "MDLcr": {
+      "link": "",
+      "reservation": ""
+    },
+    "NrqxO": {
+      "link": "https://www.royalpasseigdegraciahotel.com/mirai/bookingstep3.html?idHotel=100375804&lang=pt&reservationCode=25112863104&pinCode=3961282&code=363A4F73ACBCB92905DA5D968A340CBBA2511E7F&useWhiteLabel=true&home=https%3A%2F%2Fwww.royalpasseigdegraciahotel.com%2F&serverNameForSSL=reservation.mirai.com&outsideHotelDomain=true",
+      "reservation": "25112863104"
+    }
+  },
+  "pin": "sensitive-only"
+}

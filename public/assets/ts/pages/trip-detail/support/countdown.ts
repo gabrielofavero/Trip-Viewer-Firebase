@@ -9,12 +9,12 @@ var COUNTDOWN;
 
 // ======= Loaders =======
 COUNTDOWN = setInterval(function () {
-	if (getState() && getState().inicio) {
+	if (getState() && getState().start) {
 		const now = new Date(Date.now());
-		const inicio = convertFromDateObject(getState().inicio) as Date;
-		var distance = inicio.getTime() - now.getTime();
+		const start = convertFromDateObject(getState().start) as Date;
+		var distance = start.getTime() - now.getTime();
 
-		if (now > inicio || distance < 0) {
+		if (now > start || distance < 0) {
 			clearInterval(COUNTDOWN);
 			getID("countdown").innerHTML = "";
 			hideCountdown();

@@ -2,10 +2,6 @@ import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
-// Existing migration
-import * as migration12 from "./migrations/12-migrate-destination-object";
-export const migrate = migration12.migrate;
-
 // English migration series — Prompt 2: Field name & enum value translation
 import * as migration13 from "./migrations/13-migrate-english-fields";
 export const migrateEnglishFields = migration13.migrate;

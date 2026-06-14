@@ -4,7 +4,7 @@
  *
  * Handles tab clicks on .edit-tab-bar: shows the matching section,
  * hides all others. The double-buttons (save/cancel) section is always visible.
- * On page load, only the "dados-basicos" (basic information) tab is shown.
+ * On page load, only the "basic-information" (basic information) tab is shown.
  */
 export function initEditTabs(): void {
 	const tabBar = document.getElementById("edit-tab-bar");
@@ -28,8 +28,8 @@ export function initEditTabs(): void {
 		});
 	}
 
-	// On page load, show only basic information (dados-basicos)
-	filterSections("dados-basicos");
+	// On page load, show only basic information (basic-information)
+	filterSections("basic-information");
 
 	tabs.forEach((tab) => {
 		tab.addEventListener("click", () => {

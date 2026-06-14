@@ -123,7 +123,7 @@ function loadDestinationByType(activeCategory) {
 
 function loadMapDestination(link) {
 	if (!link || !link.includes("mid=")) {
-		console.error("Link do My Maps inválido.");
+		console.error("Invalid My Maps link.");
 		return;
 	}
 	const mid = link.split("mid=")[1].split("&")[0];

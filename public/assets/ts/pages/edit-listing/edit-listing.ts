@@ -60,8 +60,8 @@ export async function loadEditListingPage() {
 }
 
 function loadHabilitados() {
-	loadEditModule("imagens");
-	loadEditModule("cores");
+	loadEditModule("images");
+	loadEditModule("colors");
 	loadEditModule("links");
 }
 
@@ -171,8 +171,8 @@ export function deleteListagem() {
 	listing = listing ? ` "${listing}"` : "";
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = "Apagar Listagem";
-	properties.conteudo = `Tem certeza que deseja realizar a exclusão da listagem${listing}? A ação não poderá ser desfeita.`;
+	properties.titulo = "Delete Listing";
+	properties.conteudo = `Are you sure you want to delete the listing${listing}? This action cannot be undone.`;
 	properties.botoes = [
 		{
 			tipo: "cancelar",

@@ -56,8 +56,8 @@ export async function loadExpensesPage() {
 		};
 	}
 
-	const gastosExport = localStorage.getItem("gastos")
-		? JSON.parse(localStorage.getItem("gastos"))
+	const expensesExport = localStorage.getItem("expenses")
+		? JSON.parse(localStorage.getItem("expenses"))
 		: "";
 	const params = getURLParams();
 	const documentID = params.e;
@@ -67,7 +67,7 @@ export async function loadExpensesPage() {
 		loadEmbedMode(params.visibility);
 	}
 
-	if (!gastosExport || !documentID) {
+	if (!expensesExport || !documentID) {
 		const url = documentID ? `view.html?t=${documentID}` : "index.html";
 		displayForbidden(
 			`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
@@ -76,7 +76,7 @@ export async function loadExpensesPage() {
 		return;
 	}
 
-	if (!gastosExport?.ativo) {
+	if (!expensesExport?.ativo) {
 		displayForbidden(
 			translate("messages.errors.module_not_active", {
 				module: translate("trip.expenses.title"),
@@ -86,7 +86,7 @@ export async function loadExpensesPage() {
 		return;
 	}
 
-	if (gastosExport?.pin == "no-pin") {
+	if (expensesExport?.pin == "no-pin") {
 		loadExpenses();
 	} else {
 		stopLoadingScreen();
@@ -158,7 +158,7 @@ function applyExpenses() {
 
 	if (hasPreTrip && hasDuringTrip) {
 		getID("tab-expenses").style.display = "";
-		getID("radio-resumo").style.display = "";
+		getID("radio-summary").style.display = "";
 		getID("radio-preTrip").style.display = "";
 		getID("radio-duringTrip").style.display = "";
 
@@ -173,7 +173,7 @@ function applyExpenses() {
 
 	if (hasPreTrip) {
 		getID("radio-preTrip").style.display = "";
-		getID("resumo").style.display = "none";
+		getID("summary").style.display = "none";
 		getID("preTrip").style.display = "";
 
 		loadPreTripExpenses();
@@ -184,7 +184,7 @@ function applyExpenses() {
 
 	if (hasDuringTrip) {
 		getID("radio-duringTrip").style.display = "";
-		getID("resumo").style.display = "none";
+		getID("summary").style.display = "none";
 		getID("duringTrip").style.display = "";
 		applyAndLoadTravelerExpenses();
 
@@ -217,7 +217,7 @@ function applyExpenses() {
 
 export function setTabListeners() {
 	const radios = [
-		"radio-resumo",
+		"radio-summary",
 		"radio-preTrip",
 		"radio-duringTrip",
 		"radio-expensesTravelers",
