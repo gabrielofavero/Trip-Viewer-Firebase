@@ -1,59 +1,59 @@
 {
 	"pin": {
-		"ativo": true,
-		"valor": "$2a$12$x2EwKfzcTlKULohC5W/L6.d5K60hrCNZlWbbgHlIOPDWMWqMOMYFy"
+		"active": true,
+		"value": "$2a$12$x2EwKfzcTlKULohC5W/L6.d5K60hrCNZlWbbgHlIOPDWMWqMOMYFy"
 	},
-	"moeda": "BRL",
-	"gastosPrevios": [
+	"currency": "BRL",
+	"preTrip": [
 		{
-			"nome": "Ingresso Adele (x2)",
-			"tipo": "Shows",
-			"valor": 15574.22,
-			"moeda": "BRL"
+			"name": "Ingresso Adele (x2)",
+			"type": "Shows",
+			"amount": 15574.22,
+			"currency": "BRL"
 		},
 		{
-			"nome": "Voo Ida (Azul)",
-			"tipo": "Transporte",
-			"valor": 14302.28,
-			"moeda": "BRL"
+			"name": "Voo Ida (Azul)",
+			"type": "Transportation",
+			"amount": 14302.28,
+			"currency": "BRL"
 		},
 		{
-			"nome": "Voo Volta (LATAM)",
-			"tipo": "Transporte",
-			"valor": 8331.6,
-			"moeda": "BRL"
+			"name": "Voo Volta (LATAM)",
+			"type": "Transportation",
+			"amount": 8331.6,
+			"currency": "BRL"
 		},
 		{
-			"nome": "Caesars Palace (Las Vegas)",
-			"tipo": "Hospedagens",
-			"valor": 5514.65,
-			"moeda": "BRL"
+			"name": "Caesars Palace (Las Vegas)",
+			"type": "Accommodations",
+			"amount": 5514.65,
+			"currency": "BRL"
 		},
 		{
-			"nome": "Pendry (San Diego)",
-			"tipo": "Hospedagens",
-			"valor": 9830.41,
-			"moeda": "BRL"
+			"name": "Pendry (San Diego)",
+			"type": "Accommodations",
+			"amount": 9830.41,
+			"currency": "BRL"
 		},
 		{
-			"nome": "Sheraton Universal Hotel (Los Angeles)",
-			"tipo": "Hospedagens",
-			"valor": 4872.9,
-			"moeda": "BRL"
+			"name": "Sheraton Universal Hotel (Los Angeles)",
+			"type": "Accommodations",
+			"amount": 4872.9,
+			"currency": "BRL"
 		},
 		{
-			"nome": "La Playa (Carmel / Monterey)",
-			"tipo": "Hospedagens",
-			"valor": 3270.52,
-			"moeda": "BRL"
+			"name": "La Playa (Carmel / Monterey)",
+			"type": "Accommodations",
+			"amount": 3270.52,
+			"currency": "BRL"
 		}
 	],
-	"gastosDurante": [
+	"duringTrip": [
 		{
-			"nome": "Riu Plaza Fisherman's Wharf (San Francisco)",
-			"tipo": "Hospedagens",
-			"valor": 1080.32,
-			"moeda": "DLR"
+			"name": "Riu Plaza Fisherman's Wharf (San Francisco)",
+			"type": "Accommodations",
+			"amount": 1080.32,
+			"currency": "DLR"
 		}
 	]
 }
