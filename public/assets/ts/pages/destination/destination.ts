@@ -200,8 +200,8 @@ function loadDestinationCustomSelect() {
 
 	function getDestinationCustomSelectOptions() {
 		const result = [];
-		const destinos = getDestinations();
-		const values = destinos.categorias.ids;
+		const destinationsConfig = getDestinations();
+		const values = destinationsConfig.categories.ids;
 		for (const value in FIRESTORE_DESTINATIONS_DATA) {
 			if (
 				!values.includes(value) ||
@@ -211,7 +211,7 @@ function loadDestinationCustomSelect() {
 				continue;
 			}
 
-			const key = destinos.translation[value];
+			const key = destinationsConfig.translation[value];
 			const label = translate(`destination.${key}.title`);
 			result.push({ value, label });
 		}

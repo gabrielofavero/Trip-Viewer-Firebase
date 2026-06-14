@@ -70,8 +70,8 @@ export function canConvert(currencies: string[]): boolean {
 
 export function getCurrencySymbol(currency: string): string {
 	const currencies = getCurrencies();
-	if (currencies.simbolos[currency]) {
-		return currencies.simbolos[currency];
+	if (currencies.symbols[currency]) {
+		return currencies.symbols[currency];
 	} else {
 		return currency;
 	}
@@ -368,7 +368,7 @@ export function getChartConfig(type: string, data: any): any {
 
 export function getChartColorsRGB(size: number): number[][] {
 	const result: number[][] = [];
-	const hexColors = getColors().opcoes.map((color: any) => color.hex);
+	const hexColors = getColors().options.map((color: any) => color.hex);
 	const rgbColors = hexColors.map((color: string) => hexToRgb(color));
 
 	for (let i = 0; i < size; i++) {

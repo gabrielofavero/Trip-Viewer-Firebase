@@ -76,9 +76,9 @@ export async function updateTikTokLinks() {
 	let toUpdate = false;
 	const urls = {};
 
-	const destinos = getDestinations();
-	for (const categoria of destinos.categorias.passeios) {
-		const entries = Object.entries(FIRESTORE_DESTINATIONS_NEW_DATA[categoria]);
+	const destinationsConfig = getDestinations();
+	for (const category of destinationsConfig.categories.tours) {
+		const entries = Object.entries(FIRESTORE_DESTINATIONS_NEW_DATA[category]);
 		const midias = entries.map(([id, item]: [string, any]) => ({
 			id,
 			midia: item.midia,
@@ -92,7 +92,7 @@ export async function updateTikTokLinks() {
 			toUpdate = true;
 		}
 
-		urls[categoria] = midias;
+		urls[category] = midias;
 	}
 
 	if (!toUpdate) return;
@@ -165,13 +165,13 @@ export async function updateTikTokLinks() {
 			return;
 		}
 
-		const destinos = getDestinations();
-		for (const categoria of destinos.categorias.passeios) {
+		const destinationsConfig = getDestinations();
+		for (const category of destinationsConfig.categories.tours) {
 			for (const [id, item] of Object.entries(
-				FIRESTORE_DESTINATIONS_NEW_DATA[categoria],
+				FIRESTORE_DESTINATIONS_NEW_DATA[category],
 			) as [string, any][]) {
-				if (data[categoria][id]) {
-					item.midia = data[categoria][id];
+			if (data[category][id]) {
+				item.midia = data[category][id];
 				}
 			}
 		}

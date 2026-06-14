@@ -123,7 +123,7 @@ export function openInnerExpense(categoria, tipo = "", index = -1) {
 		? translate("labels.edit")
 		: translate("labels.add");
 	propriedades.conteudo = getInnerExpenseContent(categoria, tipo, index);
-	propriedades.icones = [{ tipo: "voltar", acao: "" }];
+	propriedades.icons = [{ tipo: "voltar", acao: "" }];
 	propriedades.containers = getContainersInput();
 	propriedades.botoes = [
 		{

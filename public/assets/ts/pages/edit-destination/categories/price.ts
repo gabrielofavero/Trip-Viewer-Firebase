@@ -7,42 +7,42 @@ export var VALOR_OPTIONS = "";
 export function loadCurrencySelects() {
 	loadMoedaOptions();
 
-	const destinos = getDestinations();
-	for (const categoria of destinos.categorias.passeios) {
-		const childs = getChildIDs(`${categoria}-box`);
+	const destinationsConfig = getDestinations();
+	for (const category of destinationsConfig.categories.tours) {
+		const childs = getChildIDs(`${category}-box`);
 		for (const child of childs) {
 			const i = child.split("-").pop();
 			if (VALOR_OPTIONS) {
-				const select = getID(`${categoria}-valor-${i}`);
+				const select = getID(`${category}-valor-${i}`);
 				const value = select.value;
 				select.innerHTML = VALOR_OPTIONS;
 				select.value = value;
 			} else {
-				getID(`${categoria}-valor-${i}`).style.display = "none";
-				getID(`${categoria}-outro-valor-${i}`).style.display = "none";
+				getID(`${category}-valor-${i}`).style.display = "none";
+				getID(`${category}-outro-valor-${i}`).style.display = "none";
 			}
 		}
 	}
 }
 
 export function loadMoedaOptions() {
-	const moedas = getCurrencies();
-	const categorias = moedas.valores;
+	const currencies = getCurrencies();
+	const categories = currencies.values;
 	const moeda = getID("moeda").value;
 	VALOR_OPTIONS = "";
 
-	if (moeda != "outra" && moedas.escala[moeda]) {
-		for (const categoria of categorias) {
-			const label = getLabel(categoria);
-			VALOR_OPTIONS += `<option value="${categoria}">${label}</option>`;
+	if (moeda != "outra" && currencies.scale[moeda]) {
+		for (const category of categories) {
+			const label = getLabel(category);
+			VALOR_OPTIONS += `<option value="${category}">${label}</option>`;
 		}
 		if (VALOR_OPTIONS) {
 			VALOR_OPTIONS += `<option value="outro">${translate("labels.other")}</option>`;
 		}
 	}
 
-	function getLabel(categoria) {
-		switch (categoria) {
+	function getLabel(category) {
+		switch (category) {
 			case "default":
 				return translate(`destination.price.default`);
 			case "-":
@@ -51,10 +51,10 @@ export function loadMoedaOptions() {
 			case "$":
 			case "$$":
 			case "$$$":
-				return moedas.escala[moeda][categoria];
+				return currencies.scale[moeda][category];
 			case "$$$$":
 				return translate(`destination.price.max`, {
-					value: moedas.escala[moeda][categoria],
+					value: currencies.scale[moeda][category],
 				});
 			default:
 				return translate("labels.other");

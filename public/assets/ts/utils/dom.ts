@@ -675,7 +675,7 @@ export function getInnerItinerary(item, destinations) {
 
 	function getDestinationValues(destination) {
 		const currencyValue = destination?.destinos?.moeda || "BRL";
-		const currency = cloneObject(getCurrencies().escala[currencyValue] || getCurrencies().escala["BRL"]);
+		const currency = cloneObject(getCurrencies().scale[currencyValue] || getCurrencies().scale["BRL"]);
 		const max = translate("destination.price.max", { value: currency["$$$$"] });
 		currency["-"] = translate("destination.price.free");
 		currency["default"] = translate("destination.price.default");

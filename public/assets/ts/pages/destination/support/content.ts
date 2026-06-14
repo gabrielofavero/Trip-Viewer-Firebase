@@ -56,7 +56,7 @@ export function getDestinationsAccordionBodyHTML({
 	editBtn = true,
 }) {
 	if (!valores) {
-		valores = getCurrencies().escala[FIRESTORE_DESTINATIONS_DATA.moeda];
+		valores = getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA.moeda];
 	}
 
 	if (!moeda) {
@@ -219,7 +219,7 @@ function getRegionOptionsHTML() {
 }
 
 function getValuesOptionsHTML() {
-	const moedas = getCurrencies().escala[FIRESTORE_DESTINATIONS_DATA.moeda];
+	const moedas = getCurrencies().scale[FIRESTORE_DESTINATIONS_DATA.moeda];
 	return `
         <option value="$">${moedas["$"]}</option>
         <option value="$$">${moedas["$$"]}</option>

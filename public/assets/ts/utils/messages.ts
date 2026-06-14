@@ -13,7 +13,7 @@ export var MESSAGE_PROPERTIES: Record<string, any> = {
 	critico: false,
 	blur: true,
 	erro: {},
-	icones: [],
+	icons: [],
 	botoes: [
 		{
 			tipo: "ok",
@@ -93,7 +93,7 @@ export function displayFullMessage(
 	textDiv.className = "message-text-container";
 
 	// Criticidade — always show the icon box (includes X close button)
-	const buttonsBox = getIconsBox(properties.icones);
+	const buttonsBox = getIconsBox(properties.icons);
 	textDiv.appendChild(buttonsBox);
 
 	// Title
@@ -236,16 +236,16 @@ export function getContainersInput() {
 	};
 }
 
-export function getIconsBox(icones) {
+export function getIconsBox(icons) {
 	const iconContainer = document.createElement("div");
 	iconContainer.className = "icon-container";
 	iconContainer.style.textAlign = "right";
 
-	if (icones && icones[0] && icones[0].tipo === "voltar") {
+	if (icons && icons[0] && icons[0].tipo === "voltar") {
 		const backIcon = document.createElement("i");
 		backIcon.id = "back-icon";
 		backIcon.className = "bx bx-arrow-back";
-		backIcon.setAttribute("onclick", icones[0].acao);
+		backIcon.setAttribute("onclick", icons[0].acao);
 		backIcon.style.visibility = "hidden";
 		backIcon.style.cursor = "pointer";
 

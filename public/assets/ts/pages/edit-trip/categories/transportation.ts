@@ -114,7 +114,7 @@ function getPerson(i) {
 }
 
 export function loadTransportationVisibility(j) {
-	const empresasPorTipo = getTransportations().empresas;
+	const empresasPorTipo = getTransportations().companies;
 
 	const empresaSelect = getID(`empresa-select-${j}`);
 	const empresaInput = getID(`empresa-${j}`);

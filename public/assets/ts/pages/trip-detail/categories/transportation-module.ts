@@ -83,12 +83,12 @@ function getTransportationHTML(j, identifier) {
 }
 
 export function getFlightBoxHTML(j, identifier, innerItinerary = false) {
-	const empresa = getEmpresaObj(j);
+	const company = getEmpresaObj(j);
 	return `<div class="flight-box${innerItinerary ? " inner-programacao-item" : ""}" id="transporte-${identifier}-box-${j}">
             <div class="flight-diagram">
               <div class="flight-title">
-                ${getImagemHTML(j, empresa)}
-                ${getReservaHTML(j, empresa)}
+                ${getImagemHTML(j, company)}
+                ${getReservaHTML(j, company)}
               </div>
               <div class="flight-text">
                 <div class="left-text">
@@ -112,39 +112,39 @@ function getEmpresaObj(j) {
 	const tipo = transporte.transporte;
 	const titulo = transporte.empresa;
 
-	const transportes = getTransportations();
-	const tituloConfig = transportes?.empresas?.[tipo]?.[titulo];
-	const siteConfig = transportes?.sites?.[tipo]?.[titulo];
-	const imagemConfig = transportes?.imagens?.[tipo]?.[titulo];
+	const transportation = getTransportations();
+	const titleConfig = transportation?.companies?.[tipo]?.[titulo];
+	const websiteConfig = transportation?.websites?.[tipo]?.[titulo];
+	const imageConfig = transportation?.images?.[tipo]?.[titulo];
 
 	return {
-		titulo: tituloConfig || titulo,
-		imagens: imagemConfig || {},
-		site: siteConfig || "",
-		isCustom: !tituloConfig,
+		title: titleConfig || titulo,
+		images: imageConfig || {},
+		website: websiteConfig || "",
+		isCustom: !titleConfig,
 	};
 }
 
-function getImagemHTML(j, empresa) {
+function getImagemHTML(j, company) {
 	const transporte = getState().transportes.dados[j - 1];
-	if (!empresa.isCustom) {
-		return `<a href="${empresa.site}">
-              <img class="flight-img" id="flight-img-claro-${j}" src="${empresa.imagens.claro}"
+	if (!company.isCustom) {
+		return `<a href="${company.website}">
+              <img class="flight-img" id="flight-img-claro-${j}" src="${company.images.light}"
                 style="display: ${isOnDarkMode() ? "none" : "block"};">
-              <img class="flight-img" id="flight-img-escuro-${j}" src="${empresa.imagens.escuro}"
+              <img class="flight-img" id="flight-img-escuro-${j}" src="${company.images.dark}"
                 style="display: ${isOnDarkMode() ? "block" : "none"};">
             </a>`;
-	} else if (empresa.titulo) {
-		return `<div class="flight-title-text">${empresa.titulo}</div>`;
+	} else if (company.title) {
+		return `<div class="flight-title-text">${company.title}</div>`;
 	} else {
 		return `<div class="flight-title-text">${transporte.pontos.partida} → ${transporte.pontos.chegada}</div>`;
 	}
 }
 
-function getReservaHTML(j, empresa) {
+function getReservaHTML(j, company) {
 	const transporte = getState().transportes.dados[j - 1];
 	let reserva = transporte.reserva;
-	let link = empresa.site || "";
+	let link = company.website || "";
 
 	if (getState().pin === "sensitive-only") {
 		return getSensitiveReservationHTML("transportes", transporte.id);
@@ -179,7 +179,7 @@ function getPartidaChegadaHTML(j, tipo) {
 function getTransportationIcon(j) {
 	const tipo = getState().transportes.dados[j - 1].transporte;
 	const icone =
-		getTransportations().icones[tipo] || getTransportations().icones.outro;
+		getTransportations().icons[tipo] || getTransportations().icons.other;
 	TRANSPORTE_ICONES.push(icone);
 	return icone;
 }

@@ -120,7 +120,7 @@ export function openAccommodationImages(j) {
 	propriedades.titulo = translate("labels.image.add_title");
 	propriedades.containers = getContainersInput();
 	propriedades.conteudo = getAccommodationImageContent(size);
-	propriedades.icones = [
+	propriedades.icons = [
 		{ tipo: "voltar", acao: `closeInnerAccommodationImage()` },
 	];
 	propriedades.botoes = [

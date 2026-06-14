@@ -39,8 +39,8 @@ export async function getItineraryContent(type: string): Promise<string> {
 
 	for (const itinerary of ITINERARY) {
 		loadItineraryTitle(itinerary.title, type); // was "loadItineararyTitle"
-		for (const timeOfDay of getItinerary().timeofday) {
-			const timeOfDayData = itinerary[timeOfDay];
+		for (const timeOfDay of getItinerary().timeOfDay) {
+		const timeOfDayData = itinerary[timeOfDay];
 			if (timeOfDayData.length === 0) continue;
 			loadTimeOfDay(timeOfDay);
 			for (const innerItinerary of timeOfDayData) {
@@ -198,7 +198,7 @@ export async function getItineraryData(): Promise<any[]> {
 
 	function getItineraryTitle(schedule: any): string {
 		let size = 0;
-		for (const timeofday of getItinerary().timeofday) {
+		for (const timeofday of getItinerary().timeOfDay) {
 			size += schedule[timeofday].length;
 		}
 
@@ -277,7 +277,7 @@ export async function getItineraryData(): Promise<any[]> {
 				function getTransportationType(): string {
 					const type = transportation.type; // was "transporte"
 					if (!type) return "";
-					const title = getTransportations().titulos[type];
+					const title = getTransportations().titles[type];
 					return title ? translate(title) : type;
 				}
 
@@ -336,8 +336,8 @@ export async function getItineraryData(): Promise<any[]> {
 				const currencies = getCurrencies();
 				const price = getPriceValue(
 					destination,
-					currencies.escala[destinations.currency], // was "moeda"
-					currencies.simbolos[destinations.currency], // was "moeda"
+			currencies.scale[destinations.currency], // was "moeda"
+			currencies.symbols[destinations.currency], // was "moeda"
 				);
 				loadTextObj("labels.priority", rating);
 				loadTextObj("labels.cost", price);

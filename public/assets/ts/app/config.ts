@@ -26,11 +26,11 @@ async function loadJSON(path) {
 }
 
 export async function loadColors() {
-	return loadJSON('/assets/json/cores.json');  // file still named "cores.json" (pt)
+	return loadJSON('/assets/json/colors.json');
 }
 
 export async function loadDestinations() {
-	return loadJSON('/assets/json/destinos.json');  // file still named "destinos.json" (pt)
+	return loadJSON('/assets/json/destinations-config.json');
 }
 
 export async function loadItinerary() {
@@ -38,11 +38,11 @@ export async function loadItinerary() {
 }
 
 export async function loadCurrencies() {
-	return loadJSON('/assets/json/moedas.json');  // file still named "moedas.json" (pt)
+	return loadJSON('/assets/json/currencies.json');
 }
 
 export async function loadTransportations() {
-	return loadJSON('/assets/json/transportes.json');  // file still named "transportes.json" (pt)
+	return loadJSON('/assets/json/transportation.json');
 }
 
 export async function loadIcons() {
@@ -85,11 +85,11 @@ export async function loadAllConfigs(languagePackName: string) {
 // ======= Synchronous Getters (for use after configs are loaded) =======
 
 export function getColors() {
-	return _cache['/assets/json/cores.json'];
+	return _cache['/assets/json/colors.json'];
 }
 
 export function getDestinations() {
-	return _cache['/assets/json/destinos.json'];
+	return _cache['/assets/json/destinations-config.json'];
 }
 
 export function getItinerary() {
@@ -97,11 +97,11 @@ export function getItinerary() {
 }
 
 export function getCurrencies() {
-	return _cache['/assets/json/moedas.json'];
+	return _cache['/assets/json/currencies.json'];
 }
 
 export function getTransportations() {
-	return _cache['/assets/json/transportes.json'];
+	return _cache['/assets/json/transportation.json'];
 }
 
 export function getIcons() {

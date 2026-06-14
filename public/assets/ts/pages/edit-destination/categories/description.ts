@@ -169,15 +169,15 @@ function descriptionSelectChangeAction() {
 
 function getAllDescriptions() {
 	const result = {};
-	const destinos = getDestinations();
-	for (const categoria of destinos.categorias.passeios) {
-		result[categoria] = {};
-		for (const childID of getChildIDs(`${categoria}-box`)) {
+	const destinationsConfig = getDestinations();
+	for (const category of destinationsConfig.categories.tours) {
+		result[category] = {};
+		for (const childID of getChildIDs(`${category}-box`)) {
 			const j = getJ(childID);
-			const id = getID(`${categoria}-id-${j}`).value;
-			const nome = getID(`${categoria}-nome-${j}`).value;
-			const descricao = getDescription(categoria, j);
-			result[categoria][id] = {
+			const id = getID(`${category}-id-${j}`).value;
+			const nome = getID(`${category}-nome-${j}`).value;
+			const descricao = getDescription(category, j);
+			result[category][id] = {
 				nome: nome,
 				descricao: descricao,
 			};
@@ -187,15 +187,15 @@ function getAllDescriptions() {
 }
 
 function updateAllDescriptions(data) {
-	const destinos = getDestinations();
-	for (const categoria of destinos.categorias.passeios) {
-		for (const childID of getChildIDs(`${categoria}-box`)) {
+	const destinationsConfig = getDestinations();
+	for (const category of destinationsConfig.categories.tours) {
+		for (const childID of getChildIDs(`${category}-box`)) {
 			const j = getJ(childID);
-			const id = getID(`${categoria}-id-${j}`).value;
-			if (data[categoria] && data[categoria][id]) {
-				const descricao = data[categoria][id].descricao;
-				setDescription(categoria, j, descricao);
-				updateDescriptionButtonLabel(categoria, j);
+			const id = getID(`${category}-id-${j}`).value;
+			if (data[category] && data[category][id]) {
+				const descricao = data[category][id].descricao;
+				setDescription(category, j, descricao);
+				updateDescriptionButtonLabel(category, j);
 			}
 		}
 	}

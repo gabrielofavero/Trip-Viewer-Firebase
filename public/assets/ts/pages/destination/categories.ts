@@ -19,8 +19,8 @@ export var ACTIVE_CATEGORY;
 // Active Category
 export function loadActiveCategory(urlParams) {
 	let type = urlParams["type"];
-	const destinos = getDestinations();
-	const originals = destinos.original;
+	const destinationsConfig = getDestinations();
+	const originals = destinationsConfig._deprecated_original;
 
 	if (!type || !originals[type]) {
 		type = getFirstCategory();
@@ -29,9 +29,9 @@ export function loadActiveCategory(urlParams) {
 	ACTIVE_CATEGORY = originals[type];
 
 	function getFirstCategory() {
-		const destinos = getDestinations();
-		const types = destinos.categorias.ids;
-		const translations = destinos.translation;
+		const destinationsConfig = getDestinations();
+		const types = destinationsConfig.categories.ids;
+		const translations = destinationsConfig.translation;
 		const destinoIDs = Object.keys(FIRESTORE_DESTINATIONS_DATA);
 		for (const type of types) {
 			const value = translations[type];

@@ -192,11 +192,11 @@ export function addTransportation() {
 
 	function getTypeOptions() {
 		let result = "";
-		const transportes = getTransportations();
-		for (const tipo of transportes.tipos) {
-			const titulo = transportes.titulos[tipo];
-			if (!titulo) continue;
-			result += `<option value="${tipo}">${translate(titulo)}</option>`;
+		const transportation = getTransportations();
+		for (const type of transportation.types) {
+			const title = transportation.titles[type];
+			if (!title) continue;
+			result += `<option value="${type}">${translate(title)}</option>`;
 		}
 		return result;
 	}

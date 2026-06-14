@@ -66,7 +66,7 @@ function loadModalContentCalendar() {
 	function shouldShowCheckbox() {
 		if (!CURRENT_SCHEDULE || !TRAVELERS?.length) return false;
 
-		const periods = getItinerary().timeofday;
+		const periods = getItinerary().timeOfDay;
 		const combinations = new Set();
 
 		for (const period of periods) {
@@ -304,7 +304,7 @@ function getInnerItinerary(item, destinos?) {
 	return innerItinerary;
 
 	function getDestinationValues(destinosMoeda) {
-		const moeda = cloneObject(getCurrencies().escala[destinosMoeda]);
+		const moeda = cloneObject(getCurrencies().scale[destinosMoeda]);
 		const max = translate("destination.price.max", { value: moeda["$$$$"] });
 		moeda["-"] = translate("destination.price.free");
 		moeda["default"] = translate("destination.price.default");

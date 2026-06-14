@@ -72,7 +72,7 @@ export async function openInnerItinerary(j, k?, turno?) {
 		selects,
 		isNew,
 	);
-	propriedades.icones = [
+	propriedades.icons = [
 		{ tipo: "voltar", acao: `closeInnerProgramacao(${j})` },
 	];
 	propriedades.botoes = [
@@ -560,7 +560,7 @@ async function buildInnerProgramacaoDestinosData(id) {
 		lojas: translate("destination.shopping.title"),
 	};
 
-	const passeios = getDestinations().categorias.passeios;
+	const passeios = getDestinations().categories.tours;
 	const categorias = Object.keys(data)
 		.filter(
 			(key) =>
@@ -685,7 +685,7 @@ function getNewTurno(j) {
 	if (LAST_OPENED_TURNO[j]) {
 		return LAST_OPENED_TURNO[j];
 	} else {
-		for (const turno of getItinerary().timeofday) {
+		for (const turno of getItinerary().timeOfDay) {
 			const element = getID(`inner-programacao-${turno}-${j}`);
 			if (element && !element.innerText) {
 				return turno;

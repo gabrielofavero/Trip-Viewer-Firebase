@@ -52,8 +52,8 @@ export function getLocalColors() {
 
 export function getEquivalentColorAndPosition(lightColor) {
 	const colors = getColors();
-	const lightObj = colors.claro;
-	const darkObj = colors.escuro;
+	const lightObj = colors.light;
+	const darkObj = colors.dark;
 
 	for (let i = 0; i < lightObj.length; i++) {
 		if (lightObj[i] === lightColor) {
@@ -86,8 +86,8 @@ export function getDarkerColor(hex, percentage = 75) {
 
 export function getColorIndexFromOptions(i) {
 	const colors = getColors();
-	if (i >= colors.opcoes.length) {
-		i = i % colors.opcoes.length;
+	if (i >= colors.options.length) {
+		i = i % colors.options.length;
 	}
 	return i;
 }
@@ -119,11 +119,11 @@ export function getSecondaryColor(type) {
 }
 
 export function getColorNameFromOptions(i) {
-	return getColors().opcoes[getColorIndexFromOptions(i)].cor;
+	return getColors().options[getColorIndexFromOptions(i)].color;
 }
 
 export function getColorHexFromOptions(i) {
-	return getColors().opcoes[getColorIndexFromOptions(i)].hex;
+	return getColors().options[getColorIndexFromOptions(i)].hex;
 }
 
 export function getThemeColorBoxShadow(cor = THEME_COLOR_SECONDARY) {

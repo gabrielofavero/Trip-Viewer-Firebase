@@ -141,8 +141,8 @@ export function loadDestinationsCustomSelect() {
 
 export function loadDestinationsHTML(destino) {
 	let text = "";
-	const destinos = getDestinations();
-	const types = destinos.categorias.geral;
+	const destinationsConfig = getDestinations();
+	const types = destinationsConfig.categories.general;
 
 	for (let i = 0; i < types.length; i++) {
 		const type = types[i];
@@ -151,12 +151,12 @@ export function loadDestinationsHTML(destino) {
 			continue;
 		}
 
-		const translatedType = destinos.translation[type] || type;
+		const translatedType = destinationsConfig.translation[type] || type;
 		const j = i + 1;
-		const box = destinos.boxes[getDestinationsBoxesIndex(i)];
+		const box = destinationsConfig.boxes[getDestinationsBoxesIndex(i)];
 		const title = translate(`destination.${translatedType}.title`);
 		const description = translate(`destination.${translatedType}.description`);
-		const icon = destinos.icons[type];
+		const icon = destinationsConfig.icons[type];
 
 		text += `
     <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" id="b${j}">

@@ -30,7 +30,7 @@ export function loadPlannedDestination() {
 	const programacoes = getState()?.programacoes || [];
 	for (const dia of programacoes) {
 		const data = dia.data;
-		for (const turno of getItinerary().timeofday) {
+		for (const turno of getItinerary().timeOfDay) {
 			const programacoes = dia[turno];
 			if (!programacoes) continue;
 
