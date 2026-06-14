@@ -255,7 +255,7 @@ export function removeChildWithValidation(categoria, j) {
 
 export function hideParentIfNoChildren(categoria) {
 	if (getChildIDs(`${categoria}-box`).length === 0) {
-		getID(`habilitado-${categoria}`).checked = false;
+		getID(`enabled-${categoria}`).checked = false;
 		hideContent(categoria);
 	}
 }
@@ -279,7 +279,7 @@ export function removeEmptyChild(categoria) {
 			itens = [`${categoria}-nome`, `${categoria}-endereco`];
 			break;
 		case "galeria":
-			itens = [`${categoria}-titulo`, `link-${categoria}`];
+			itens = [`${categoria}-title`, `link-${categoria}`];
 			break;
 	}
 
@@ -616,7 +616,7 @@ export function getInnerItinerary(item, destinations) {
 					innerItinerary.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
 					innerItinerary.content = getFlightBoxHTML(
 						index + 1,
-						"inner-programacao",
+						"inner-itinerary",
 						true,
 					);
 				}
@@ -760,7 +760,7 @@ export function getAccommodationsHTML(i, innerItinerary = false) {
 	};
 
 	if (innerItinerary) {
-		return getHotelBoxHTML(hospedagem, "inner-programacao", true);
+		return getHotelBoxHTML(hospedagem, "inner-itinerary", true);
 	}
 
 	const j = i + 1;

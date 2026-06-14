@@ -31,7 +31,7 @@ export function loadTextReplacementCheckboxes(j) {
 
 function loadTitleReplacementCheckbox(j) {
 	const container = getID("title-replacement-container");
-	TITLE_REPLACEMENT.current = getID("inner-programacao").value;
+	TITLE_REPLACEMENT.current = getID("inner-itinerary").value;
 	TITLE_REPLACEMENT.replacement = getTitleReplacement(j);
 
 	if (
@@ -62,17 +62,17 @@ function loadTitleReplacementCheckbox(j) {
 
 function getTitleReplacement(j) {
 	const selected = Array.from(
-		document.getElementsByName("inner-programacao-item-radio"),
+		document.getElementsByName("inner-itinerary-item-radio"),
 	).find((r) => (r as HTMLInputElement).checked);
 
 	if (!selected?.id) return "";
 
 	const idToSelectMap = {
-		"inner-programacao-item-transporte-radio":
-			"inner-programacao-select-transporte",
-		"inner-programacao-item-hospedagens-radio":
-			"inner-programacao-select-hospedagens",
-		"inner-programacao-item-destinos-radio": "inner-programacao-select-passeio",
+		"inner-itinerary-item-transporte-radio":
+			"inner-itinerary-select-transporte",
+		"inner-itinerary-item-hospedagens-radio":
+			"inner-itinerary-select-hospedagens",
+		"inner-itinerary-item-destinos-radio": "inner-itinerary-select-passeio",
 	};
 
 	const select = getID(idToSelectMap[selected.id]);
@@ -88,7 +88,7 @@ function getTitleReplacement(j) {
 export function replaceTextIfEnabled() {
 	const checkbox = getID("title-replacement-checkbox");
 	if (checkbox.checked && TITLE_REPLACEMENT.replacement) {
-		getID("inner-programacao").value = TITLE_REPLACEMENT.replacement;
+		getID("inner-itinerary").value = TITLE_REPLACEMENT.replacement;
 	}
 	TITLE_REPLACEMENT.current = "";
 	TITLE_REPLACEMENT.replacement = "";
@@ -97,11 +97,11 @@ export function replaceTextIfEnabled() {
 }
 
 function loadTimeReplacementCheckbox() {
-	TIME_REPLACEMENT.current.inicio = getID("inner-programacao-inicio").value;
-	TIME_REPLACEMENT.current.fim = getID("inner-programacao-fim").value;
-	const value = getID("inner-programacao-select-transporte").value;
+	TIME_REPLACEMENT.current.inicio = getID("inner-itinerary-start").value;
+	TIME_REPLACEMENT.current.fim = getID("inner-itinerary-end").value;
+	const value = getID("inner-itinerary-select-transportation").value;
 
-	if (getID("inner-programacao-item-transporte-radio").checked && value) {
+	if (getID("inner-itinerary-item-transportation-radio").checked && value) {
 		const j = findJFromID(value, "transporte");
 
 		TIME_REPLACEMENT.replacement.inicio = getID(`partida-horario-${j}`).value;
@@ -153,15 +153,15 @@ function loadTimeReplacementCheckbox() {
 
 export function replaceTimeIfEnabled() {
 	if (getID("time-replacement-checkbox").checked) {
-		getID("inner-programacao-inicio").value =
+		getID("inner-itinerary-start").value =
 			TIME_REPLACEMENT.replacement.inicio;
-		getID("inner-programacao-fim").value = TIME_REPLACEMENT.replacement.fim;
+		getID("inner-itinerary-end").value = TIME_REPLACEMENT.replacement.fim;
 
 		if (TIME_REPLACEMENT.replacement.inicio) {
 			const inicioHora = parseInt(
 				TIME_REPLACEMENT.replacement.inicio.split(":")[0],
 			);
-			getID("inner-programacao-select-turno").value = getTurno(inicioHora);
+			getID("inner-itinerary-select-period").value = getTurno(inicioHora);
 		}
 	}
 	TIME_REPLACEMENT.current.inicio = "";
@@ -175,7 +175,7 @@ export function replaceTimeIfEnabled() {
 function processAccomodationReplacement(labelValue, itineraryJ) {
 	const date = DATAS[itineraryJ - 1];
 	const inputDate = jsDateToInputDate(date);
-	const value = getID("inner-programacao-select-hospedagens").value;
+	const value = getID("inner-itinerary-select-accommodations").value;
 	if (!inputDate || !value) return labelValue;
 
 	const j = findJFromID(value, "hospedagens");

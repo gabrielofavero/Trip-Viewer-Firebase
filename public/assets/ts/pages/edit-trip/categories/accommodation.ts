@@ -19,7 +19,7 @@ export function getAccommodationArray(protectedReservationCodes = false) {
 	for (const id of getChildIDs("hospedagens-box")) {
 		const j = getJ(id);
 		result.push({
-			cafe: getID(`hospedagens-cafe-${j}`).checked,
+			cafe: getID(`accommodations-cafe-${j}`).checked,
 			datas: {
 				checkin: formattedDateToDateObject(
 					getID(`check-in-${j}`).value,
@@ -30,17 +30,17 @@ export function getAccommodationArray(protectedReservationCodes = false) {
 					getID(`check-out-horario-${j}`).value,
 				),
 			},
-			descricao: getID(`hospedagens-descricao-${j}`).value,
-			endereco: getID(`hospedagens-endereco-${j}`).value,
+			descricao: getID(`accommodations-description-${j}`).value,
+			endereco: getID(`accommodations-endereco-${j}`).value,
 			id: getOrCreateCategoryID("hospedagens", j),
 			imagens: getAccommodationImages(j),
 			reserva: protectedReservationCodes
 				? ""
-				: getID(`reserva-hospedagens-${j}`).value,
+				: getID(`reserva-accommodations-${j}`).value,
 			link: protectedReservationCodes
 				? ""
-				: getID(`reserva-hospedagens-link-${j}`).value,
-			nome: getID(`hospedagens-nome-${j}`).value,
+				: getID(`reserva-accommodations-link-${j}`).value,
+			nome: getID(`accommodations-nome-${j}`).value,
 		});
 	}
 	return result;
@@ -50,9 +50,9 @@ export function getProtectedAccommodationObject() {
 	let result = {};
 	for (const childID of getChildIDs("hospedagens-box")) {
 		const j = getJ(childID);
-		const id = getID(`hospedagens-id-${j}`).value;
-		const reserva = getID(`reserva-hospedagens-${j}`).value;
-		const link = getID(`reserva-hospedagens-link-${j}`).value;
+		const id = getID(`accommodations-id-${j}`).value;
+		const reserva = getID(`reserva-accommodations-${j}`).value;
+		const link = getID(`reserva-accommodations-link-${j}`).value;
 		result[id] = { reserva, link };
 	}
 	return result;
@@ -92,15 +92,15 @@ function loadAccommodationCheck(chave, checkTipo, hospedagem, j) {
 // Listener
 export function loadAccommodationListeners(j) {
 // Link Validation
-	getID(`reserva-hospedagens-link-${j}`).addEventListener("change", () =>
-		validateLink(`reserva-hospedagens-link-${j}`),
+	getID(`reserva-accommodations-link-${j}`).addEventListener("change", () =>
+		validateLink(`reserva-accommodations-link-${j}`),
 	);
 
 	// Nome
-	getID(`hospedagens-nome-${j}`).addEventListener("change", function () {
-		if (getID(`hospedagens-nome-${j}`).value) {
-			getID(`hospedagens-title-${j}`).innerText = getID(
-				`hospedagens-nome-${j}`,
+	getID(`accommodations-nome-${j}`).addEventListener("change", function () {
+		if (getID(`accommodations-nome-${j}`).value) {
+			getID(`accommodations-title-${j}`).innerText = getID(
+				`accommodations-nome-${j}`,
 			).value;
 		}
 	});
@@ -134,20 +134,20 @@ export function openAccommodationImages(j) {
 	];
 
 	displayFullMessage(propriedades);
-	initializeSortableForGroup(`imagem-hospedagens`, { onEnd: "" });
+	initializeSortableForGroup(`image-hospedagens`, { onEnd: "" });
 
 	for (let k = 1; k <= size; k++) {
 		const imagem = ACCOMMODATION_IMAGES[j][k - 1];
 		if (imagem) {
-			getID(`hospedagens-imagem-descricao-${k}`).value = imagem.descricao;
-			getID(`link-hospedagens-${k}`).value = imagem.link;
-			getID(`hospedagens-imagem-botao-${k}`).innerText =
+			getID(`accommodations-image-description-${k}`).value = imagem.descricao;
+			getID(`link-accommodations-${k}`).value = imagem.link;
+			getID(`accommodations-image-button-${k}`).innerText =
 				imagem.descricao || `${translate("labels.image.title")} ${k}`;
 		}
 
-		loadImageSelector(`hospedagens-${k}`);
-		getID(`link-hospedagens-${k}`).addEventListener("change", () =>
-			validateImageLink(`link-hospedagens-${k}`),
+		loadImageSelector(`accommodations-${k}`);
+		getID(`link-accommodations-${k}`).addEventListener("change", () =>
+			validateImageLink(`link-accommodations-${k}`),
 		);
 	}
 }
@@ -207,25 +207,25 @@ function getAccommodationImageContent(size = 5) {
 }
 
 export function openInnerAccommodationImage(k) {
-	fade([`imagem-hospedagens-botoes`], [`hospedagens-imagem-${k}`]);
+	fade([`image-accommodations-botoes`], [`accommodations-image-${k}`]);
 	getID("back-icon").style.visibility = "visible";
 }
 
 export function closeInnerAccommodationImage() {
 	for (const orderId of getChildIDs("inner-hospedagens-imagem")) {
 		const k = getJ(orderId);
-		const id = `hospedagens-imagem-${k}`;
+		const id = `accommodations-image-${k}`;
 		if (getID(id).style.display == "block") {
 			let titulo = translate("labels.image.add");
 
 			if (hasInnerAccommodationImage(k)) {
 				titulo =
-					getID(`hospedagens-imagem-descricao-${k}`).value ||
+					getID(`accommodations-image-description-${k}`).value ||
 					`${translate("labels.image.title")} ${k}`;
 			}
 
-			getID(`hospedagens-imagem-botao-${k}`).innerText = titulo;
-			fade([`hospedagens-imagem-${k}`], [`imagem-hospedagens-botoes`]);
+			getID(`accommodations-image-button-${k}`).innerText = titulo;
+			fade([`accommodations-image-${k}`], [`image-accommodations-botoes`]);
 			break;
 		}
 	}
@@ -234,15 +234,15 @@ export function closeInnerAccommodationImage() {
 
 function hasInnerAccommodationImage(k) {
 	return (
-		(getID(`enable-link-hospedagens-${k}`).checked &&
-			getID(`link-hospedagens-${k}`).value) ||
-		(getID(`enable-upload-hospedagens-${k}`).checked &&
-			getID(`upload-hospedagens-${k}`).value)
+		(getID(`enable-link-accommodations-${k}`).checked &&
+			getID(`link-accommodations-${k}`).value) ||
+		(getID(`enable-upload-accommodations-${k}`).checked &&
+			getID(`upload-accommodations-${k}`).value)
 	);
 }
 
 export function confirmAccommodationImages(j) {
-	const isEditing = getID(`hospedagens-imagem-${j}`).style.display === "block";
+	const isEditing = getID(`accommodations-image-${j}`).style.display === "block";
 	if (isEditing) {
 		closeInnerAccommodationImage();
 	} else {
@@ -264,12 +264,12 @@ function saveAccommodationImages(j) {
 		const k = getJ(id);
 		if (hasInnerAccommodationImage(k)) {
 			result.push({
-				descricao: getID(`hospedagens-imagem-descricao-${k}`).value,
-				link: getID(`enable-link-hospedagens-${k}`).checked
-					? getID(`link-hospedagens-${k}`).value
+				descricao: getID(`accommodations-image-description-${k}`).value,
+				link: getID(`enable-link-accommodations-${k}`).checked
+					? getID(`link-accommodations-${k}`).value
 					: "",
-				file: getID(`enable-upload-hospedagens-${k}`).checked
-					? getID(`upload-hospedagens-${k}`)?.files[0]
+				file: getID(`enable-upload-accommodations-${k}`).checked
+					? getID(`upload-accommodations-${k}`)?.files[0]
 					: "",
 				position: [j, k],
 			});

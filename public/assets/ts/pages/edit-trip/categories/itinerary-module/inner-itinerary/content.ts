@@ -2,19 +2,19 @@ import { translate } from "../../../../../i18n/translation.js";
 import { getTravelersFieldset } from "../../travelers.js";
 // Modal Content (HTML)
 export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) {
-	return `<div class="inner-programacao" id="inner-programacao-box">
-                <div id="inner-programacao-tela-principal">
+	return `<div class="inner-itinerary" id="inner-itinerary-box">
+                <div id="inner-itinerary-tela-principal">
                     <div class="nice-form-group" style="display: ${Object.values(selects).some((item: any) => item.ativo) ? "block" : "none"}">
                         <label style="margin-bottom: 0px;">${translate("trip.itinerary.linked_item")} <span class="opcional">(${translate("labels.optional")})</span></label>
-                        <button id="inner-programacao-item-associado" class="btn input-botao placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate("trip.itinerary.link_item")}</button>
+                        <button id="inner-itinerary-item-associado" class="btn input-botao placeholder-text" data-action="open-inner-itinerary-item" data-index="${j}" style="margin-top: 8px;">${translate("trip.itinerary.link_item")}</button>
                     </div>
 
                     <div class="nice-form-group">
                         <label>${translate("trip.itinerary.title")}</label>
-                        <input required class="nice-form-group" id="inner-programacao" type="text" placeholder="${translate("trip.itinerary.placeholder")}" maxlength="50" autocomplete="off" />
+                        <input required class="nice-form-group" id="inner-itinerary" type="text" placeholder="${translate("trip.itinerary.placeholder")}" maxlength="50" autocomplete="off" />
                     </div>
 
-                    ${getTravelersFieldset("inner-programacao-travelers", [])}
+                    ${getTravelersFieldset("inner-itinerary-travelers", [])}
 
                     <div class="side-by-side-box-fixed">
                         <div class="nice-form-group side-by-side-fixed">
@@ -22,7 +22,7 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
                             ${translate("labels.start")}<br>
                             <span class="opcional">(${translate("labels.optional")})</span>
                         </label>
-                        <input class="flex-input-50-50" id="inner-programacao-inicio" type="time">
+                        <input class="flex-input-50-50" id="inner-itinerary-inicio" type="time">
                     </div>
 
                     <div class="nice-form-group side-by-side-fixed">
@@ -30,13 +30,13 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
                             ${translate("labels.end")}<br>
                             <span class="opcional">(${translate("labels.optional")})</span>
                         </label>
-                        <input class="flex-input-50-50" id="inner-programacao-fim" type="time">
+                        <input class="flex-input-50-50" id="inner-itinerary-fim" type="time">
                     </div>
                     </div>
 
                     <div class="nice-form-group" style="display: ${isNew ? "block" : "none"}">
                         <label>${translate("datetime.time_of_day.title")}</label>
-                        <select class="editar-select" id="inner-programacao-select-turno">
+                        <select class="editar-select" id="inner-itinerary-select-turno">
                             <option value="madrugada">${translate("datetime.time_of_day.early_hours")}</option>
                             <option value="manha">${translate("datetime.time_of_day.morning")}</option>
                             <option value="tarde">${translate("datetime.time_of_day.afternoon")}</option>
@@ -59,53 +59,53 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
                         </button>
                     </div>
                 </div>
-                <div id="inner-programacao-item-selecionar" class="inner-programacao" style="display: none;">
-                    <div class="nice-form-group" id="inner-programacao-item-selecionar-radio">
+                <div id="inner-itinerary-item-selecionar" class="inner-itinerary" style="display: none;">
+                    <div class="nice-form-group" id="inner-itinerary-item-selecionar-radio">
                         <label>${translate("labels.type")}</label>
                         <fieldset class="nice-form-group">
-                            <div class="nice-form-group" id="inner-programacao-nenhum-radio-container">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-nenhum-radio">
-                                <label for="inner-programacao-item-nenhum-radio">${translate("labels.none")}</label>
+                            <div class="nice-form-group" id="inner-itinerary-nenhum-radio-container">
+                                <input type="radio" name="inner-itinerary-item-radio" id="inner-itinerary-item-nenhum-radio">
+                                <label for="inner-itinerary-item-nenhum-radio">${translate("labels.none")}</label>
                             </div>
 
-                            <div class="nice-form-group" id="inner-programacao-transporte-radio-container" style="display: ${selects.transporte.ativo ? "block" : "none"};">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-transporte-radio">
-                                <label for="inner-programacao-item-transporte-radio">${translate("trip.transportation.title")}</label>
+                            <div class="nice-form-group" id="inner-itinerary-transporte-radio-container" style="display: ${selects.transporte.ativo ? "block" : "none"};">
+                                <input type="radio" name="inner-itinerary-item-radio" id="inner-itinerary-item-transporte-radio">
+                                <label for="inner-itinerary-item-transporte-radio">${translate("trip.transportation.title")}</label>
                             </div>
                 
-                            <div class="nice-form-group" id="inner-programacao-hospedagens-radio-container" style="display: ${selects.hospedagens.ativo ? "block" : "none"};">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-hospedagens-radio">
-                                <label for="inner-programacao-item-hospedagens-radio">${translate("trip.accommodation.title")}</label>
+                            <div class="nice-form-group" id="inner-itinerary-hospedagens-radio-container" style="display: ${selects.hospedagens.ativo ? "block" : "none"};">
+                                <input type="radio" name="inner-itinerary-item-radio" id="inner-itinerary-item-hospedagens-radio">
+                                <label for="inner-itinerary-item-hospedagens-radio">${translate("trip.accommodation.title")}</label>
                             </div>
                 
-                            <div class="nice-form-group" id="inner-programacao-destinos-radio-container" style="display: ${selects.destinos.ativo ? "block" : "none"};">
-                                <input type="radio" name="inner-programacao-item-radio" id="inner-programacao-item-destinos-radio">
-                                <label id="inner-programacao-item-destinos-radio-label" for="inner-programacao-item-destinos-radio">${translate("destination.title")}</label>
+                            <div class="nice-form-group" id="inner-itinerary-destinos-radio-container" style="display: ${selects.destinos.ativo ? "block" : "none"};">
+                                <input type="radio" name="inner-itinerary-item-radio" id="inner-itinerary-item-destinos-radio">
+                                <label id="inner-itinerary-item-destinos-radio-label" for="inner-itinerary-item-destinos-radio">${translate("destination.title")}</label>
                             </div>
                         </fieldset>
 
                     </div>
 
-                    <div class="nice-form-group" id="inner-programacao-item-transporte" style="display: none;">
+                    <div class="nice-form-group" id="inner-itinerary-item-transporte" style="display: none;">
                         <label>${translate("trip.transportation.title")}</label>
-                        <select class="editar-select" id="inner-programacao-select-transporte">
+                        <select class="editar-select" id="inner-itinerary-select-transporte">
                             <option value="">${translate("labels.select")}</option>
                             ${selects.transporte.options}
                         </select>
                     </div>
 
-                <div class="nice-form-group" id="inner-programacao-item-hospedagens" style="display: none;">
+                <div class="nice-form-group" id="inner-itinerary-item-hospedagens" style="display: none;">
                     <label>${translate("trip.accommodation.title")}</label>
-                    <select class="editar-select" id="inner-programacao-select-hospedagens">
+                    <select class="editar-select" id="inner-itinerary-select-hospedagens">
                         <option value="">${translate("labels.select")}</option>
                         ${selects.hospedagens.options}
                     </select>
                 </div>
 
-                    <div id="inner-programacao-item-destinos" style="display: none;">
-                        <div class="nice-form-group" id="inner-programacao-item-destinos-local">
+                    <div id="inner-itinerary-item-destinos" style="display: none;">
+                        <div class="nice-form-group" id="inner-itinerary-item-destinos-local">
                             <label>${translate("destination.document")}</label>
-                            <select class="editar-select" id="inner-programacao-select-local">
+                            <select class="editar-select" id="inner-itinerary-select-local">
                                 ${selects.destinos.options}
                                 <option value="">${translate("labels.select")}</option>
                             </select>
@@ -113,14 +113,14 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
 
                         <div class="nice-form-group" style="margin-top: 16px;">
                             <label>${translate("labels.type")}</label>
-                            <select class="editar-select" id="inner-programacao-select-categoria">
+                            <select class="editar-select" id="inner-itinerary-select-categoria">
                                 <option value="">${translate("labels.select")}</option>
                             </select>
                         </div>
 
-                        <div class="nice-form-group" id="inner-programacao-select-passeio-box" style="margin-top: 16px;">
+                        <div class="nice-form-group" id="inner-itinerary-select-passeio-box" style="margin-top: 16px;">
                             <label>${translate("trip.itinerary.title")}</label>
-                            <select class="editar-select" id="inner-programacao-select-passeio">
+                            <select class="editar-select" id="inner-itinerary-select-passeio">
                                 <option value="">${translate("labels.select")}</option>
                             </select>
                         </div>            
@@ -138,16 +138,16 @@ export function getInnerProgramacaoContent(j, k, turno, selects, isNew = false) 
 
                 </div>
 
-                <div id="inner-programacao-item-trocar" class="inner-programacao" style="display: none;">
+                <div id="inner-itinerary-item-trocar" class="inner-itinerary" style="display: none;">
                     <div class="nice-form-group">
                         <label>${translate("labels.date")}</label>
-                        <select class="editar-select" id="inner-programacao-select-troca-data">
+                        <select class="editar-select" id="inner-itinerary-select-troca-data">
                             ${selects.datas}
                         </select>
                     </div>
                     <div class="nice-form-group">
                         <label>${translate("datetime.time_of_day.title")}</label>
-                        <select class="editar-select" id="inner-programacao-select-troca-turno">
+                        <select class="editar-select" id="inner-itinerary-select-troca-turno">
                             <option value="madrugada">${translate("datetime.time_of_day.early_hours")}</option>
                             <option value="manha">${translate("datetime.time_of_day.morning")}</option>
                             <option value="tarde">${translate("datetime.time_of_day.afternoon")}</option>

@@ -61,13 +61,13 @@
           <p data-translate="destination.basic_information"></p>
 
           <div class="nice-form-group">
-            <label id="titulo-label" data-translate="labels.title"></label>
-            <input required id="titulo" type="text" data-translate="destination.location_placeholder" />
+            <label id="title-label" data-translate="labels.title"></label>
+            <input required id="title" type="text" data-translate="destination.location_placeholder" />
           </div>
 
           <div class="nice-form-group">
             <label data-translate="currency.title"></label>
-            <select id="moeda" name="currency">
+            <select id="currency" name="currency">
               <option value="BRL" data-translate="currency.type.BRL"></option>
               <option value="USD" data-translate="currency.type.USD"></option>
               <option value="EUR" data-translate="currency.type.EUR"></option>
@@ -94,7 +94,7 @@
               <option value="THB" data-translate="currency.type.THB"></option>
               <option value="outra" data-translate="currency.type.other"></option>
             </select>
-            <input style="display:none" class="nice-form-group" id="outra-moeda" type="text"
+            <input style="display:none" class="nice-form-group" id="other-currency" type="text"
               data-translate="currency.title" />
           </div>
 
@@ -296,7 +296,7 @@
         </section>
 
         <section data-category="mapa">
-          <div class="href-target" id="mapa"></div>
+          <div class="href-target" id="map-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -313,14 +313,14 @@
           </p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-mapa" class="switch" />
-            <label id="habilitado-mapa-label" for="habilitado-mapa" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="map-enabled" class="switch" />
+            <label id="map-enabled-label" for=for="map-enabled"a-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-mapa-content">
+          <div id="map-enabled-content">
             <div class="nice-form-group">
-              <label id="mapa-link-label">My Maps Link</label>
-              <input id="mapa-link" type="url"
+              <label id="map-link-label">My Maps Link</label>
+              <input id="map-link" type="url"
                 placeholder="https://www.google.com/maps/d/viewer?mid=1tgHq3Dg7zI1yMKTDlObLRryNPi_sy79t&usp=sharing "
                 value="" class="icon-right" />
             </div>

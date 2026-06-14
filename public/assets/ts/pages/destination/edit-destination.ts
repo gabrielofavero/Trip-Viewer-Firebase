@@ -49,7 +49,7 @@ export async function edit(j: number): Promise<void> {
 
 		populatePlannedDestinationEditField(id, j);
 
-		getID(`editar-mapa-${j}`).value = item.mapa || "";
+		getID(`editar-map-${j}`).value = item.mapa || "";
 		getID(`editar-instagram-${j}`).value = item.instagram || "";
 		getID(`editar-website-${j}`).value = item.website || "";
 
@@ -61,7 +61,7 @@ export async function edit(j: number): Promise<void> {
 		populateDescriptionFields(item.descricao || {}, j);
 
 		function populateScoresField(nota, j) {
-			getID(`editar-nota-${j}`).value = nota === "?" ? "default" : nota || "";
+			getID(`editar-rating-${j}`).value = nota === "?" ? "default" : nota || "";
 			editScoreLoadAction(nota, j);
 		}
 
@@ -83,8 +83,8 @@ export async function edit(j: number): Promise<void> {
 		}
 
 		function populateDescriptionFields(descricao, j) {
-			getID(`editar-descricao-en-${j}`).value = descricao.en || "";
-			getID(`editar-descricao-pt-${j}`).value = descricao.pt || "";
+			getID(`editar-description-en-${j}`).value = descricao.en || "";
+			getID(`editar-description-pt-${j}`).value = descricao.pt || "";
 			applyDescriptionLanguage(j);
 		}
 	}
@@ -147,11 +147,11 @@ export async function adjustEditVisibility(j?: number): Promise<void> {
 
 // Listeners
 function setFieldListeners(j: number): void {
-	getID(`editar-nota-${j}`)!.onchange = (e: Event) => {
+	getID(`editar-rating-${j}`)!.onchange = (e: Event) => {
 		editScoreLoadAction((e.target as HTMLInputElement).value, j);
 	};
 
-	getID(`editar-mapa-${j}`)!.onchange = (e: Event) => {
+	getID(`editar-map-${j}`)!.onchange = (e: Event) => {
 		validateMapLink((e.target as HTMLElement).id);
 	};
 
@@ -171,7 +171,7 @@ function setFieldListeners(j: number): void {
 		editValueLoadAction((e.target as HTMLSelectElement).value, j);
 	};
 
-	getID(`editar-descricao-lang-${j}`)!.onchange = (e: Event) => {
+	getID(`editar-description-lang-${j}`)!.onchange = (e: Event) => {
 		editDescriptionLoadAction((e.target as HTMLSelectElement).value, j);
 	};
 
@@ -217,8 +217,8 @@ function setAddListeners() {
 
 // Load Actions
 function editScoreLoadAction(value, j) {
-	const icon = getID(`editar-nota-icon-${j}`);
-	icon.innerHTML = `<i class="iconify nota-sem-margem ${getNotaClass(value)}" data-icon="${getNotaIcon(value)}"></i>`;
+	const icon = getID(`editar-rating-icon-${j}`);
+	icon.innerHTML = `<i class="iconify rating-no-margin ${getNotaClass(value)}" data-icon="${getNotaIcon(value)}"></i>`;
 }
 
 function editRegionLoadAction(value, j) {
@@ -247,14 +247,14 @@ function editValueLoadAction(value, j) {
 function editDescriptionLoadAction(value, j) {
 	for (const lang of LANGUAGES) {
 		const display = lang == value ? "" : "none";
-		const id = `editar-descricao-${lang}-${j}`;
+		const id = `editar-description-${lang}-${j}`;
 		getID(id).style.display = display;
 	}
 }
 
 function applyDescriptionLanguage(j) {
 	const lang = getLanguagePackName();
-	getID(`editar-descricao-lang-${j}`).value = lang;
+	getID(`editar-description-lang-${j}`).value = lang;
 	editDescriptionLoadAction(lang, j);
 }
 
@@ -266,15 +266,15 @@ async function saveEdit(j, isNew = false) {
 	const item = {
 		criadoEm: originalItem?.criadoEm || new Date().toISOString(),
 		descricao: {
-			en: getID(`editar-descricao-en-${j}`).value,
-			pt: getID(`editar-descricao-pt-${j}`).value,
+			en: getID(`editar-description-en-${j}`).value,
+			pt: getID(`editar-description-pt-${j}`).value,
 		},
 		emoji: getID(`editar-emoji-${j}`).value,
 		instagram: getID(`editar-instagram-${j}`).value,
-		mapa: getID(`editar-mapa-${j}`).value,
+		mapa: getID(`editar-map-${j}`).value,
 		midia: getID(`editar-midia-${j}`).value,
 		nome: getID(`editar-nome-${j}`).value,
-		nota: getID(`editar-nota-${j}`).value,
+		nota: getID(`editar-rating-${j}`).value,
 		novo: isNew ? true : originalItem.novo,
 		regiao: getValue("regiao", j),
 		valor: getValue("valor", j),
@@ -294,7 +294,7 @@ async function saveEdit(j, isNew = false) {
 		item.midia = await normalizeTikTokLink(item.midia);
 	}
 
-	const docPath = `destinos/${DOCUMENT_ID}`;
+	const docPath = `destinations/${DOCUMENT_ID}`;
 	const [, plannedResult] = await Promise.all([
 		update(docPath, { [`${ACTIVE_CATEGORY}.${id}`]: item }),
 		setPlannedDestination(id, j),
@@ -332,7 +332,7 @@ export async function deleteEdit(id) {
 	closeMessage();
 	startLoadingScreen();
 
-	await update(`destinos/${DOCUMENT_ID}`, {
+	await update(`destinations/${DOCUMENT_ID}`, {
 		[`${ACTIVE_CATEGORY}.${id}`]: firebase.firestore.FieldValue.delete(),
 	});
 
@@ -359,7 +359,7 @@ export function closeAddedDestination(index?) {
 	if (!ADDED_J) {
 		return;
 	}
-	removeEl(`destinos-box-${ADDED_J}`);
+	removeEl(`destinations-box-${ADDED_J}`);
 	adjustEditVisibility();
 	ADDED_J = null;
 	ACTIVE_PLANNED_DESTINATION = [];

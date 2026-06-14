@@ -48,13 +48,13 @@ h1::after {
 	left: calc(50% - 20px);
 }
 
-.destinos-select-container {
+.destinations-select-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.destinos-select {
+.destinations-select {
 	font-size: 24px;
 	padding: 8px;
 	margin: 0;
@@ -64,7 +64,7 @@ h1::after {
 	align-items: center;
 }
 
-.destinos-select .container {
+.destinations-select .container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -72,16 +72,16 @@ h1::after {
 	cursor: pointer;
 }
 
-.destinos-select.opened .chevron {
+.destinations-select.opened .chevron {
 	transform: rotate(0deg);
 }
 
-.destinos-select .chevron {
+.destinations-select .chevron {
 	transform: rotate(180deg);
 	transition: transform 0.3s ease;
 }
 
-.destinos-select .dropdown {
+.destinations-select .dropdown {
 	position: absolute;
 	top: 100%;
 	left: 50%;
@@ -94,17 +94,17 @@ h1::after {
 	min-width: 180px;
 }
 
-.destinos-select .dropdown .option {
+.destinations-select .dropdown .option {
 	background-color: transparent;
 	transition: background-color 0.15s ease;
 	border-radius: 0.5rem;
 }
 
-.destinos-select .dropdown .option:hover {
+.destinations-select .dropdown .option:hover {
 	background-color: var(--theme-color-secondary);
 }
 
-.destinos-select .option {
+.destinations-select .option {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -118,11 +118,11 @@ h1::after {
 	text-align: center;
 }
 
-.destinos-select .option:hover {
+.destinations-select .option:hover {
 	background: var(--box-color);
 }
 
-.destinos-select .container {
+.destinations-select .container {
 	position: relative;
 }
 
@@ -493,8 +493,8 @@ h1::after {
 }
 
 .nota,
-.nota-sem-margem,
-.planejado {
+.rating-no-margin,
+.planned {
 	font-size: 25px;
 	color: #1f2937;
 	margin-right: 10px;
@@ -502,50 +502,50 @@ h1::after {
 	padding: 3px;
 }
 
-.nota-sem-margem {
+.rating-no-margin {
 	margin-right: 0;
 }
 
-.notas-box {
+.rating-box {
 	display: block;
 	white-space: nowrap;
 	margin-top: 5px;
 	margin-bottom: 20px;
 }
 
-.nota-texto {
+.rating-text {
 	color: #4f5051;
 	font-weight: bold;
 	position: relative;
 	top: 1.5px;
 }
 
-.nota-5 {
+.rating-5 {
 	background-color: #cfe2f3;
 }
 
-.nota-4 {
+.rating-4 {
 	background-color: #d9ead3;
 }
 
-.nota-3 {
+.rating-3 {
 	background-color: #fff2cc;
 }
 
-.nota-2 {
+.rating-2 {
 	background-color: #fce5cd;
 }
 
-.nota-1 {
+.rating-1 {
 	background-color: #f4cccc;
 }
 
-.nota-ausente {
+.rating-absent {
 	background-color: #ead1dc;
 }
 
 /* NOTE: .planejado background-color was 'none' (invalid); changed to transparent */
-.planejado {
+.planned {
 	background-color: transparent;
 }
 
@@ -553,7 +553,7 @@ h1::after {
 	padding: 20px;
 }
 
-.destinos-titulo {
+.destination-title {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 16px;
@@ -585,17 +585,17 @@ h1::after {
 	color: var(--theme-color);
 }
 
-.destinos-descricao {
+.destination-description {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
-.destinos-topicos-box {
+.destination-topics-box {
 	margin-bottom: 10px;
 	font-size: 16px;
 }
 
-.destinos-topico {
+.destination-topic {
 	margin-top: 4px;
 	margin-bottom: 4px;
 }

@@ -118,7 +118,7 @@ async function loadTrip(stripped = false) {
 }
 
 export function deleteTrip() {
-	let trip = getID("titulo").value;
+	let trip = getID("title").value;
 	trip = trip ? ` "${trip}"` : "";
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
@@ -143,14 +143,14 @@ export async function deleteTripAction() {
 	const tasks = [
 		deleteUserObjectDB(DOCUMENT_ID, "viagens"),
 		deleteUserObjectStorage(),
-		deleteDocument(`gastos/${DOCUMENT_ID}`, true),
+		deleteDocument(`expenses/${DOCUMENT_ID}`, true),
 	];
 
 	if (PIN.current) {
 		tasks.push(
 			deleteDocument(`protegido/${DOCUMENT_ID}`, true),
 			deleteDocument(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`, true),
-			deleteDocument(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`, true),
+			deleteDocument(`expenses/protected/${PIN.current}/${DOCUMENT_ID}`, true),
 		);
 	}
 

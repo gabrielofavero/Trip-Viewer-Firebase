@@ -34,7 +34,7 @@ export async function getExpensesObject(_protectedOnly?) {
 		compartilhamento: await getSharingObject(),
 		gastosDurante: duringTrip,
 		gastosPrevios: preTrip,
-		moeda: getID(`moeda`).value,
+		moeda: getID("currency").value,
 		pessoas: getTravelersObject(),
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
@@ -147,7 +147,7 @@ export function openInnerExpense(categoria, tipo = "", index = -1) {
 		applyExpenseInnerType(gasto.tipo);
 	} else {
 		getID("gasto-deletar").style.display = "none";
-		getID("gasto-moeda").value = getID("moeda").value;
+		getID("gasto-moeda").value = getID("currency").value;
 		if (LAST_INNER_EXPENSE_TYPE) {
 			applyExpenseInnerType(LAST_INNER_EXPENSE_TYPE);
 		}

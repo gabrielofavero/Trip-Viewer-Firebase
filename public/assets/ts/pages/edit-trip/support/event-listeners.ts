@@ -94,7 +94,7 @@ export function loadEventListeners() {
 	});
 
 	// Inputs
-	getID("inicio").addEventListener("change", () => inicioListenerAction());
+	getID("start").addEventListener("change", () => inicioListenerAction());
 	getID("fim").addEventListener("change", () => fimListenerAction());
 
 	// Buttons
@@ -117,13 +117,13 @@ export function loadEventListeners() {
 		"click",
 		() => (window.location.href = "../index.html"),
 	);
-	getID("transporte-adicionar").addEventListener("click", () =>
+	getID("transportation-add").addEventListener("click", () =>
 		transportationAddListenerAction(),
 	);
-	getID("hospedagens-adicionar").addEventListener("click", () =>
+	getID("accommodation-add").addEventListener("click", () =>
 		accommodationsAddListenerAction(),
 	);
-	getID("galeria-adicionar").addEventListener("click", () =>
+	getID("gallery-add").addEventListener("click", () =>
 		galeriaAdicionarListenerAction(),
 	);
 	getID("pin-disabled").addEventListener("click", switchPin);
@@ -173,7 +173,7 @@ export function loadEventListeners() {
 	);
 
 	// Barra de pesquisa em destinos
-	getID("destinos-search").addEventListener("input", () =>
+	getID("destinations-search").addEventListener("input", () =>
 		searchDestinationsListenerAction(),
 	);
 
@@ -198,7 +198,7 @@ export function loadEventListeners() {
 
 // Actions
 function inicioListenerAction() {
-	const inicioDiv = getID("inicio");
+	const inicioDiv = getID("start");
 	const fimDiv = getID("fim");
 
 	const inicio = inicioDiv.value;
@@ -247,7 +247,7 @@ export function addRemoveTransportationListener(j) {
 	const dynamicSelects = [
 		{
 			type: "transporte-pessoa",
-			selectID: `transporte-pessoa-select-${j}`,
+			selectID: `transportation-pessoa-select-${j}`,
 		},
 	];
 	addRemoveChildListenerDS("transporte", j, dynamicSelects);
@@ -257,7 +257,7 @@ export function addRemoveGaleriaListener(j) {
 	const dynamicSelects = [
 		{
 			type: "galeria-categoria",
-			selectID: `galeria-categoria-select-${j}`,
+			selectID: `gallery-category-select-${j}`,
 		},
 	];
 	addRemoveChildListenerDS("galeria", j, dynamicSelects);

@@ -51,10 +51,10 @@ function loadChartSummary() {
 		GASTOS_CONVERTIDOS[CURRENT_CURRENCY].duringTrip.resumo.total,
 	];
 
-	getID("resumo-titulo").innerHTML = getTitleWithIcon(
+	getID("summary-title").innerHTML = getTitleWithIcon(
 		"trip.expenses.overview",
 	);
-	getID("resumo-total").innerText =
+	getID("summary-total").innerText =
 		`Total: ${formatCurrency(valores[0] + valores[1], true)}`;
 
 	setChart("doughnut", "resumo-grafico", labels, valores);
@@ -81,7 +81,7 @@ function setDoughnutChartCategoria(titulo, tipo) {
 	const itens = GASTOS_CONVERTIDOS[CURRENT_CURRENCY][tipo].itens;
 	const total = GASTOS_CONVERTIDOS[CURRENT_CURRENCY][tipo].resumo.total;
 
-	getID(`${tipo}-titulo`).innerHTML = getTitleWithIcon(titulo, tipo);
+	getID(`${tipo}-title`).innerHTML = getTitleWithIcon(titulo, tipo);
 	getID(`${tipo}-total`).innerText = `Total: ${formatCurrency(total, true)}`;
 
 	const labels = itens.map((item) => translate(item.nome, {}, false));

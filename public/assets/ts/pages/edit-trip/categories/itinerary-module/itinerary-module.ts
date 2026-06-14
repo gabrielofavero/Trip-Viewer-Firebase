@@ -33,10 +33,10 @@ export function getItineraryArray() {
 		innerResult.destinosIDs = getDestinosFromCards("programacao", j);
 
 		const tituloSelectValue = getID(
-			`programacao-inner-title-select-${j}`,
+			`itinerary-inner-title-select-${j}`,
 		).value;
 		if (tituloSelectValue == "outro") {
-			innerResult.titulo.valor = getID(`programacao-inner-title-${j}`).value;
+			innerResult.titulo.valor = getID(`itinerary-inner-title-${j}`).value;
 		} else {
 			innerResult.titulo.valor = tituloSelectValue;
 		}
@@ -84,26 +84,26 @@ export function applyLoadedItineraryData(j, dados) {
 		addValuesForDestinosAtivosCards("programacao", j, destinosIDs);
 	}
 
-	getID(`programacao-inner-title-select-${j}`).innerHTML =
+	getID(`itinerary-inner-title-select-${j}`).innerHTML =
 		getItineraryTitleSelectOptions(j);
 
 	let titulo = dados.titulo?.valor ?? dados.titulo;
 	if (titulo) {
 		const selectValues = getAllValuesFromSelect(
-			getID(`programacao-inner-title-select-${j}`),
+			getID(`itinerary-inner-title-select-${j}`),
 		);
 		if (destinosIDs && destinosIDs.includes(titulo)) {
-			getID(`programacao-inner-title-${j}`).style.display = "none";
+			getID(`itinerary-inner-title-${j}`).style.display = "none";
 		} else if (
 			titulo.toLowerCase() == "outro" ||
 			!selectValues.includes(titulo)
 		) {
-			getID(`programacao-inner-title-select-${j}`).value = "outro";
-			getID(`programacao-inner-title-${j}`).style.display = "block";
-			getID(`programacao-inner-title-${j}`).value = titulo;
+			getID(`itinerary-inner-title-select-${j}`).value = "outro";
+			getID(`itinerary-inner-title-${j}`).style.display = "block";
+			getID(`itinerary-inner-title-${j}`).value = titulo;
 		} else {
-			getID(`programacao-inner-title-select-${j}`).value = titulo;
-			getID(`programacao-inner-title-${j}`).style.display = "none";
+			getID(`itinerary-inner-title-select-${j}`).value = titulo;
+			getID(`itinerary-inner-title-${j}`).style.display = "none";
 		}
 	}
 
@@ -116,15 +116,15 @@ export function applyLoadedItineraryData(j, dados) {
 
 	updateItineraryTitle(j);
 	loadInnerItineraryHTML(j);
-	initializeSortableForGroup(`programacao-${j}`, {
+	initializeSortableForGroup(`itinerary-${j}`, {
 		onEnd: afterDragInnerItinerary,
 	});
 }
 
 export function updateItineraryTitle(j) {
-	const div = getID(`programacao-title-${j}`);
-	const tituloInput = getID(`programacao-inner-title-${j}`);
-	const tituloSelect = getID(`programacao-inner-title-select-${j}`);
+	const div = getID(`itinerary-title-${j}`);
+	const tituloInput = getID(`itinerary-inner-title-${j}`);
+	const tituloSelect = getID(`itinerary-inner-title-select-${j}`);
 	let titulo;
 	let value;
 
@@ -177,10 +177,10 @@ function getDestinationItineraryTitle(value, j) {
 
 export function getActiveDestinations(j) {
 	const result = [];
-	const fieldSet = getID(`programacao-local-${j}`);
+	const fieldSet = getID(`itinerary-location-${j}`);
 	if (!fieldSet) return result;
-	for (const card of fieldSet.querySelectorAll(".destino-card.selected")) {
-		const nameEl = card.querySelector(".destino-card-name") as HTMLElement;
+	for (const card of fieldSet.querySelectorAll(".destination-card.selected")) {
+		const nameEl = card.querySelector(".destination-card-name") as HTMLElement;
 		const label = nameEl?.textContent?.trim() || "";
 		const value = card.getAttribute("data-destino-id") || "";
 		if (value) {
@@ -199,11 +199,11 @@ export function getItineraryTitleSelectOptions(j = null) {
 		let labels = [];
 		let values = [];
 
-		for (const child of getChildIDs(`programacao-local-${j}`)) {
+		for (const child of getChildIDs(`itinerary-location-${j}`)) {
 			const ids = getIDs(child);
-			const checkbox = getID(`check-programacao-${ids}`);
+			const checkbox = getID(`check-itinerary-${ids}`);
 			if (checkbox.checked) {
-				labels.push(getID(`check-programacao-label-${ids}`).innerText);
+				labels.push(getID(`check-itinerary-label-${ids}`).innerText);
 				values.push(checkbox.value);
 			}
 		}
@@ -237,7 +237,7 @@ export function getItineraryTitleSelectOptions(j = null) {
 }
 
 function updateItineraryTitleSelect(j) {
-	const select = getID(`programacao-inner-title-select-${j}`);
+	const select = getID(`itinerary-inner-title-select-${j}`);
 	const value = select.value;
 	select.innerHTML = getItineraryTitleSelectOptions(j);
 	if (value) {
@@ -252,7 +252,7 @@ function getItineraryTitle(dataFormatada, titulo = "") {
 }
 
 export function reloadItinerary() {
-	if (!getID("habilitado-programacao").checked) return;
+	if (!getID("itinerary-enabled").checked) return;
 	const originalData = getItineraryArray() || [];
 	const originalDataInputs = originalData.map((data) =>
 		dateObjectToKey(data.data),
@@ -273,9 +273,9 @@ export function reloadItinerary() {
 // Listeners
 export function loadItineraryListeners(j) {
 	// Card-based destination selection
-	const container = getID(`programacao-local-${j}`);
+	const container = getID(`itinerary-location-${j}`);
 	if (!container) return;
-	for (const card of container.querySelectorAll(".destino-card")) {
+	for (const card of container.querySelectorAll(".destination-card")) {
 		card.addEventListener("click", () => {
 			card.classList.toggle("selected");
 			if (card.classList.contains("selected")) {

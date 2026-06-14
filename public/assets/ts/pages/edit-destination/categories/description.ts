@@ -21,7 +21,7 @@ export function getDescriptionHTML(categoria, j) {
 
 export function setDescription(categoria, j, descricao) {
 	for (const lang of LANGUAGES) {
-		const input = getID(`${categoria}-descricao-${lang}-${j}`);
+		const input = getID(`${categoria}-description-${lang}-${j}`);
 		if (input) {
 			input.value = descricao[lang] || "";
 		}
@@ -29,7 +29,7 @@ export function setDescription(categoria, j, descricao) {
 }
 
 export function updateDescriptionButtonLabel(categoria, j) {
-	const button = getID(`${categoria}-descricao-button-${j}`);
+	const button = getID(`${categoria}-description-button-${j}`);
 	const text = getDescriptionLabel(categoria, j);
 	button.innerText = text;
 }
@@ -46,7 +46,7 @@ function getDescriptionLabel(categoria, j) {
 
 function isDescriptionPreset(categoria, j) {
 	for (const lang of LANGUAGES) {
-		const input = getID(`${categoria}-descricao-${lang}-${j}`);
+		const input = getID(`${categoria}-description-${lang}-${j}`);
 		if (input && input.value.trim() !== "") {
 			return true;
 		}
@@ -57,7 +57,7 @@ function isDescriptionPreset(categoria, j) {
 export function getDescription(categoria, j) {
 	const description = {};
 	for (const lang of LANGUAGES) {
-		const input = getID(`${categoria}-descricao-${lang}-${j}`);
+		const input = getID(`${categoria}-description-${lang}-${j}`);
 		description[lang] = input ? input.value.trim() : "";
 	}
 	return description;

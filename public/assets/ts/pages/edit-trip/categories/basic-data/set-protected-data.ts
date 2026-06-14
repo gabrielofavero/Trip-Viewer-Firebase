@@ -39,13 +39,13 @@ function setProtectedDataWithoutPIN(ops) {
 
 	function setNewDocumentNoPin() {
 		if (hasNewGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 		}
 	}
 
 	function removePinAndSet() {
 		if (hasCurrentGastos) {
-			ops.delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`);
+			ops.delete(`expenses/protected/${PIN.current}/${DOCUMENT_ID}`);
 		}
 
 		if (currentHasViagens) {
@@ -53,11 +53,11 @@ function setProtectedDataWithoutPIN(ops) {
 		}
 
 		if (hasNewGastos && !hasCurrentGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 		} else if (hasNewGastos && hasCurrentGastos) {
-			ops.overwrite(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.overwrite(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 		} else if (!hasNewGastos && hasCurrentGastos) {
-			ops.delete(`gastos/${DOCUMENT_ID}`);
+			ops.delete(`expenses/${DOCUMENT_ID}`);
 		}
 
 		ops.delete(`protegido/${DOCUMENT_ID}`);
@@ -65,11 +65,11 @@ function setProtectedDataWithoutPIN(ops) {
 
 	function setNoPinDocument() {
 		if (hasNewGastos && hasCurrentGastos) {
-			ops.update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.update(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 		} else if (!hasCurrentGastos && hasNewGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 		} else if (hasCurrentGastos && !hasNewGastos) {
-			ops.delete(`gastos/${DOCUMENT_ID}`);
+			ops.delete(`expenses/${DOCUMENT_ID}`);
 		}
 	}
 }
@@ -98,7 +98,7 @@ function setProtectedDataWithPIN(ops) {
 	function setNewDocumentWithPin() {
 		if (hasNewProtectedGastos) {
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
 			);
 		}
@@ -115,12 +115,12 @@ function setProtectedDataWithPIN(ops) {
 
 	function addPinAndSet() {
 		if (hasCurrentGastos) {
-			ops.delete(`gastos/${DOCUMENT_ID}`);
+			ops.delete(`expenses/${DOCUMENT_ID}`);
 		}
 
 		if (hasNewProtectedGastos) {
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
 			);
 		}
@@ -137,16 +137,16 @@ function setProtectedDataWithPIN(ops) {
 
 	function setChangedPinDocument() {
 		if (hasCurrentGastos && hasNewProtectedGastos) {
-			ops.update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
-			ops.delete(`gastos/protected/${PIN.current}/${DOCUMENT_ID}`);
+			ops.update(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.delete(`expenses/protected/${PIN.current}/${DOCUMENT_ID}`);
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
 			);
 		} else if (!hasCurrentGastos && hasNewProtectedGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 			ops.set(
-				`gastos/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`expenses/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
 			);
 		}
@@ -169,15 +169,15 @@ function setProtectedDataWithPIN(ops) {
 
 	function setSamePinDocument() {
 		if (hasCurrentGastos && hasNewProtectedGastos) {
-			ops.update(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.update(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 			ops.update(
-				`gastos/protected/${PIN.current}/${DOCUMENT_ID}`,
+				`expenses/protected/${PIN.current}/${DOCUMENT_ID}`,
 				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
 			);
 		} else if (!hasCurrentGastos && hasNewProtectedGastos) {
-			ops.set(`gastos/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
+			ops.set(`expenses/${DOCUMENT_ID}`, FIRESTORE_GASTOS_NEW_DATA);
 			ops.set(
-				`gastos/protected/${PIN.current}/${DOCUMENT_ID}`,
+				`expenses/protected/${PIN.current}/${DOCUMENT_ID}`,
 				FIRESTORE_GASTOS_PROTECTED_NEW_DATA,
 			);
 		}

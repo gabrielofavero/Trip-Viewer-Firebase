@@ -38,7 +38,7 @@ function loadDadosBasicosNewTrip() {
 	getID("inicio").value = TODAY;
 	getID("fim").value = TOMORROW;
 
-	getID("moeda").value = "BRL";
+	getID("currency").value = "BRL";
 }
 
 export function addTransportation() {
@@ -162,7 +162,7 @@ export function addTransportation() {
     </div>
       `);
 
-	getID(`transporte-id-${j}`).value = getCategoryID("transporte", j);
+	getID(`transportation-id-${j}`).value = getCategoryID("transporte", j);
 	getID(`ponto-partida-${j}`).value =
 		j == 1 ? "" : getID(`ponto-chegada-${j - 1}`).value;
 	getID(`ponto-chegada-${j}`).value =
@@ -176,7 +176,7 @@ export function addTransportation() {
 	getID(`chegada-${j}`).value = getID(`partida-${j}`).value;
 
 	// Initialize date range picker for this transportation
-	const transportDurPicker = getID(`transporte-duration-${j}`);
+	const transportDurPicker = getID(`transportation-duration-${j}`);
 	if (transportDurPicker) new DateRangePicker(transportDurPicker);
 
 	loadTransportationListeners(j);
@@ -185,8 +185,8 @@ export function addTransportation() {
 	addRemoveTransportationListener(j);
 	addSelectorDS(
 		"transporte-pessoa",
-		`transporte-pessoa-select-${j}`,
-		`transporte-pessoa-${j}`,
+		`transportation-pessoa-select-${j}`,
+		`transportation-pessoa-${j}`,
 		() => updateTransportationTitle(j),
 	);
 
@@ -297,11 +297,11 @@ export function addHospedagens() {
       </div>
       `);
 
-	getID(`hospedagens-id-${j}`).value = getCategoryID("hospedagens", j);
+	getID(`accommodations-id-${j}`).value = getCategoryID("hospedagens", j);
 	addRemoveChildListener("hospedagens", j, () => removeAccommodationImages(j));
 
 	// Initialize date range picker for this accommodation
-	const hospDurPicker = getID(`hospedagens-duration-${j}`);
+	const hospDurPicker = getID(`accommodations-duration-${j}`);
 	if (hospDurPicker) new DateRangePicker(hospDurPicker);
 
 	loadAccommodationListeners(j);
@@ -313,17 +313,17 @@ export function loadDestinations() {
 
 	let destinations = [...DESTINATIONS];
 	destinations.sort((a, b) => a.titulo.localeCompare(b.titulo));
-	getID("sem-destinos").style.display = "none";
-	getID("com-destinos").style.display = "block";
+	getID("no-destinations").style.display = "none";
+	getID("has-destinations").style.display = "block";
 
-	const container = getID("destinos-checkboxes");
+	const container = getID("destinations-checkboxes");
 	container.innerHTML = "";
 	for (const destino of destinations) {
 		container.innerHTML += getDestinationsItemCard(destino.id, destino.titulo);
 	}
 
 	// Card click: toggle selected, move to top of selected group
-	for (const card of container.querySelectorAll(".destino-card")) {
+	for (const card of container.querySelectorAll(".destination-card")) {
 		card.addEventListener("click", () => {
 			card.classList.toggle("selected");
 			// Move clicked card to top of selected group
@@ -335,7 +335,7 @@ export function loadDestinations() {
 		});
 	}
 
-	getID("habilitado-destinos")?.addEventListener("change", () =>
+	getID("destinations-enabled")?.addEventListener("change", () =>
 		updateDestinosAtivosHTMLs(),
 	);
 }
@@ -349,7 +349,7 @@ export function loadItinerarySchedule() {
 		formattedDateToDate(fim),
 	);
 
-	const programacaoBox = getID("programacao-box");
+	const programacaoBox = getID("itinerary-box");
 	programacaoBox.innerHTML = "";
 
 	for (let j = 1; j <= DATAS.length; j++) {
@@ -386,22 +386,22 @@ export function loadItinerarySchedule() {
 
           <div class='turno-box' id='programacao-madrugada-${j}'>
             <label>${translate("datetime.time_of_day.early_hours")}</label>
-            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-madrugada-${j}"></div>
+            <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-early-morning-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-manha-${j}'>
             <label>${translate("datetime.time_of_day.morning")}</label>
-            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-manha-${j}"></div>
+            <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-morning-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-tarde-${j}'>
             <label>${translate("datetime.time_of_day.afternoon")}</label>
-            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-tarde-${j}"></div>
+            <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-afternoon-${j}"></div>
           </div>
 
           <div class='turno-box' id='programacao-noite-${j}'>
             <label>${translate("datetime.time_of_day.evening")}</label>
-            <div class="inner-programacao draggable-area" data-group="programacao-${j}" id="inner-programacao-noite-${j}"></div>
+            <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-night-${j}"></div>
           </div>
 
           <div class="button-box-right-formatted" id="programacao-adicionar-box-${j}" style="display: block; margin-top: 24px">
@@ -423,18 +423,18 @@ export function loadItinerarySchedule() {
     </div>`;
 	}
 
-	for (const child of getChildIDs("programacao-box")) {
+	for (const child of getChildIDs("itinerary-box")) {
 		const j = getJ(child);
-		getID(`programacao-inner-title-select-${j}`).addEventListener(
+		getID(`itinerary-inner-title-select-${j}`).addEventListener(
 			"change",
 			() => updateItineraryTitle(j),
 		);
-		getID(`programacao-inner-title-${j}`).addEventListener("change", () =>
+		getID(`itinerary-inner-title-${j}`).addEventListener("change", () =>
 			updateItineraryTitle(j),
 		);
 		// Card click for itinerary destination cards
-		const localContainer = getID(`programacao-local-${j}`);
-		for (const card of localContainer.querySelectorAll(".destino-card")) {
+		const localContainer = getID(`itinerary-location-${j}`);
+		for (const card of localContainer.querySelectorAll(".destination-card")) {
 			card.addEventListener("click", () => {
 				card.classList.toggle("selected");
 				if (card.classList.contains("selected")) {
@@ -446,7 +446,7 @@ export function loadItinerarySchedule() {
 		loadItineraryListeners(j);
 	}
 
-	getID("habilitado-programacao").addEventListener("change", () =>
+	getID("itinerary-enabled").addEventListener("change", () =>
 		reloadItinerary(),
 	);
 }
@@ -519,12 +519,12 @@ export function addGaleria() {
     </div>
       `);
 
-	loadImageSelector(`galeria-${j}`);
+	loadImageSelector(`gallery-${j}`);
 	loadGaleriaListeners(j);
 	addRemoveGaleriaListener(j);
 	addSelectorDS(
 		"galeria-categoria",
-		`galeria-categoria-select-${j}`,
-		`galeria-categoria-${j}`,
+		`gallery-category-select-${j}`,
+		`gallery-category-${j}`,
 	);
 }

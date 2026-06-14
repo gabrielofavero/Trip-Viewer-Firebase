@@ -66,12 +66,12 @@
 
           <div class="nice-form-group">
             <label data-translate="labels.title"></label>
-            <input required id="titulo" type="text" data-translate="trip.basic_information.title_placeholder" />
+            <input required id="title" type="text" data-translate="trip.basic_information.title_placeholder" />
           </div>
 
           <div class="nice-form-group">
             <label data-translate="currency.title"></label>
-            <select id="moeda" class="editar-select" name="currency">
+            <select id="currency" class="editar-select" name="currency">
               <option value="BRL" data-translate="currency.type.BRL"></option>
               <option value="USD" data-translate="currency.type.USD"></option>
               <option value="EUR" data-translate="currency.type.EUR"></option>
@@ -109,7 +109,7 @@
 
           <div class="nice-form-group">
             <label data-translate="trip.travelers.title"></label>
-            <button id="travelers-info" class="btn input-botao travelers-input" data-action="open-travelers-info"
+            <button id="travelers-info" class="btn input-button travelers-input" data-action="open-travelers-info"
               data-translate="trip.travelers.add"></button>
           </div>
 
@@ -131,7 +131,7 @@
               </div>
             </div>
             <div class="nice-form-group" id="pin-container" style="margin-top: 16px">
-              <button id="request-pin" class="btn input-botao" data-action="request-pin-expenses"
+              <button id="request-pin" class="btn input-button" data-action="request-pin-expenses"
                 data-translate="trip.basic_information.pin.new"></button>
             </div>
           </fieldset>
@@ -176,17 +176,17 @@
             <div class="nice-form-group customization-box" id="background-box">
               <label><span data-translate="labels.wallpaper"></span> <span class="opcional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-background" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+              <input id="upload-background" class="image-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
               <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-background" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-background" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-background">
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-background">
               <div class="modern-radio-group">
                 <div class="nice-form-group">
                   <input type="radio" name="type-background" id="enable-link-background" checked>
@@ -210,24 +210,24 @@
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-light" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-logo-light" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
             <div class="nice-form-group customization-box">
               <label><span data-translate="labels.customization.images.logo_dark"></span> <span class="opcional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-logo-dark" class="imagem-uploadbox" type="file" accept=".png" />
+              <input id="upload-logo-dark" class="image-uploadbox" type="file" accept=".png" />
               <p id="upload-logo-dark-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-dark" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-logo-dark" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-logo">
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-logo">
               <div class="modern-radio-group">
                 <div class="nice-form-group">
                   <input type="radio" name="type-logo" id="enable-link-logo" checked>
@@ -244,7 +244,7 @@
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-cores" type="checkbox" id="check-4" class="switch" />
+            <input id="colors-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.colors.title"></span>
               <small data-translate="trip.customization.colors"></small>
@@ -349,7 +349,7 @@
         </section>
 
         <section data-category="gastos">
-          <div class="href-target" id="gastos"></div>
+          <div class="href-target" id="expenses-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor"
@@ -365,8 +365,8 @@
           </div>
 
           <div id="enabled-expenses-content">
-            <div class="item-box accordion gastos-box" id="expenses-box">
-              <div id="itinerary-preTrip" class="accordion-item accordion-programacao">
+            <div class="item-box accordion expenses-box" id="expenses-box">
+              <div id="itinerary-preTrip" class="accordion-item accordion-itinerary">
                 <h2 class="accordion-header" id="heading-itinerary-preTrip">
                   <button id="itinerary-title-preTrip" class="accordion-button collapsed" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapse-itinerary-preTrip" aria-expanded="false"
@@ -397,7 +397,7 @@
                 </div>
               </div>
 
-              <div id="itinerary-duringTrip" class="accordion-item accordion-programacao">
+              <div id="itinerary-duringTrip" class="accordion-item accordion-itinerary">
                 <h2 class="accordion-header" id="heading-itinerary-duringTrip">
                   <button id="itinerary-title-duringTrip" class="accordion-button collapsed" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapse-itinerary-duringTrip" aria-expanded="false"
@@ -434,7 +434,7 @@
         </section>
 
         <section data-category="meios-de-transporte">
-          <div class="href-target" id="meios-de-transporte"></div>
+          <div class="href-target" id="transportation-modes"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -449,11 +449,11 @@
           </p>
 
           <div class="nice-form-group">
-            <input id="habilitado-transporte" type="checkbox" class="switch" />
-            <label for="habilitado-transporte" data-translate="labels.enabled"></label>
+            <input id="transportation-enabled" type="checkbox" class="switch" />
+            <label for="transportation-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-transporte-content">
+          <div id="transportation-enabled-content">
             <fieldset class="nice-form-group">
               <div class="modern-radio-group">
                 <div class="nice-form-group">
@@ -470,12 +470,12 @@
                 </div>
               </div>
             </fieldset>
-            <div class="item-box accordion transporte-box draggable-area" data-group="transporte" id="transporte-box">
+            <div class="item-box accordion transportation-box draggable-area" data-group="transporid="transportation-box"box">
             </div>
           </div>
 
-          <div class="button-box-formatted" id="transporte-adicionar-box">
-            <button id="transporte-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="transportation-add-box">
+            <button id="transportation-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -504,8 +504,8 @@
           <p data-translate="trip.accommodation.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-hospedagens" class="switch" />
-            <label for="habilitado-hospedagens" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="accommodations-enabled" class="switch" />
+            <label for="accommodations-enabled" data-translate="labels.enabled"></label>
           </div>
 
           <div id="habilitado-hospedagens-content">
@@ -514,7 +514,7 @@
             </div>
           </div>
           <div class="button-box-formatted" id="hospedagens-adicionar-box">
-            <button id="hospedagens-adicionar" class="btn btn-theme">
+            <button id="accommodation-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
@@ -530,7 +530,7 @@
         </section>
 
         <section data-category="destinos">
-          <div class="href-target" id="destinos"></div>
+          <div class="href-target" id="destinations"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
               <path fill="currentColor"
@@ -542,28 +542,28 @@
           <p data-translate="destination.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-destinos" class="switch" />
-            <label for="habilitado-destinos" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="destinations-enabled" class="switch" />
+            <label for="destinations-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-destinos-content">
-            <div class="nice-form-group" id="sem-destinos">
+          <div id="destinations-enabled-content">
+            <div class="nice-form-group" id="no-destinations">
               <input type="text" readonly data-translate="destination.nothing" />
             </div>
-            <div id="com-destinos" style="display: none">
+            <div id="has-destinations" style="display: none">
               <div class="nice-form-group">
-                <input type="search" id="destinos-search" data-translate="labels.search" value="">
+                <input type="search" id="destinations-search" data-translate="labels.search" value="">
               </div>
-              <div class="destinos-cards" id="destinos-checkboxes">
+              <div class="destinations-carid="destinations-checkboxes"xes">
               </div>
             </div>
-            <div id="todos-destinos-utilizados" class="message-text"> <i class='red'>*</i> <span
+            <div id="all-destinations-used" class="message-text"> <i class='red'>*</i> <span
                 data-translate="destination.all_used"></span></div>
           </div>
         </section>
 
         <section data-category="programacao">
-          <div class="href-target" id="programacao"></div>
+          <div class="href-target" id="itinerary-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -578,19 +578,19 @@
           <p data-translate="trip.itinerary.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-programacao" class="switch" />
-            <label for="habilitado-programacao" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="itinerary-enabled" class="switch" />
+            <label for="itinerary-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-programacao-content">
-            <div class="item-box accordion programacao-box" id="programacao-box">
+          <div id="itinerary-enabled-content">
+            <div class="item-box accordion itinerary-box" idid="itinerary-box"
             </div>
           </div>
 
         </section>
 
         <section data-category="galeria">
-          <div class="href-target" id="galeria"></div>
+          <div class="href-target" id="gallery-section"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="currentColor" d="M11.024 11.536L10 10l-2 3h9l-3.5-5z"></path>
@@ -604,17 +604,17 @@
           <p data-translate="trip.gallery.subtitle"></p>
 
           <div class="nice-form-group">
-            <input type="checkbox" id="habilitado-galeria" class="switch" />
-            <label for="habilitado-galeria" data-translate="labels.enabled"></label>
+            <input type="checkbox" id="gallery-enabled" class="switch" />
+            <label for="gallery-enabled" data-translate="labels.enabled"></label>
           </div>
 
-          <div id="habilitado-galeria-content">
-            <div class="item-box accordion galeria-box" id="galeria-box">
+          <div id="gallery-enabled-content">
+            <div class="item-box accordion gallery-box" id="gallery-box">
             </div>
           </div>
 
-          <div class="button-box-formatted" id="galeria-adicionar-box">
-            <button id="galeria-adicionar" class="btn btn-theme">
+          <div class="button-box-formatted" id="gallery-add-box">
+            <button id="gallery-add" class="btn btn-theme">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path

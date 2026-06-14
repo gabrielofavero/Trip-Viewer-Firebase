@@ -84,7 +84,7 @@ function getTransportationHTML(j, identifier) {
 
 export function getFlightBoxHTML(j, identifier, innerItinerary = false) {
 	const company = getEmpresaObj(j);
-	return `<div class="flight-box${innerItinerary ? " inner-programacao-item" : ""}" id="transporte-${identifier}-box-${j}">
+	return `<div class="flight-box${innerItinerary ? " inner-itinerary-item" : ""}" id="transporte-${identifier}-box-${j}">
             <div class="flight-diagram">
               <div class="flight-title">
                 ${getImagemHTML(j, company)}
@@ -231,8 +231,8 @@ function buildTransportationSwiper(swiperData) {
                         </div>
                       </div>`;
 
-			ADJUST_HEIGHT_CARDS.push(`transporte-${key}`);
-			initSwiper(`transporte-${key}`);
+			ADJUST_HEIGHT_CARDS.push(`transportation-${key}`);
+			initSwiper(`transportation-${key}`);
 
 			if (getState().transportes.visualizacao == "leg-view") {
 				getID(`transportation-${mapTransportationKey(key)}`).style.visibility = "hidden";
@@ -261,7 +261,7 @@ function buildTransportationSwiper(swiperData) {
 
 export function loadTransportationImages() {
 	let j = 1;
-	while (getID(`transporte-slide-${j}`)) {
+	while (getID(`transportation-slide-${j}`)) {
 		const claro = getID(`flight-img-claro-${j}`);
 		const escuro = getID(`flight-img-escuro-${j}`);
 
@@ -526,7 +526,7 @@ function autoNavigateTransportation() {
 			if (dados[i][key] === targetGroup) slideIndex++;
 		}
 
-		const swiperEl = getID(`transporte-${targetGroup}-swiper`);
+		const swiperEl = getID(`transportation-${targetGroup}-swiper`);
 		if (swiperEl?.swiper) {
 			swiperEl.swiper.slideTo(slideIndex, 600);
 		}
@@ -542,7 +542,7 @@ function autoNavigateTransportation() {
 			if (dados[i][key] === targetGroup) slideIndex++;
 		}
 
-		const swiperEl = getID(`transporte-${groupId}-swiper`);
+		const swiperEl = getID(`transportation-${groupId}-swiper`);
 		if (swiperEl?.swiper) {
 			swiperEl.swiper.slideTo(slideIndex, 600);
 		}

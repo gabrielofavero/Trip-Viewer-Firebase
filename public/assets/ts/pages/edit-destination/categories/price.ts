@@ -28,7 +28,7 @@ export function loadCurrencySelects() {
 export function loadMoedaOptions() {
 	const currencies = getCurrencies();
 	const categories = currencies.values;
-	const moeda = getID("moeda").value;
+	const moeda = getID("currency").value;
 	VALOR_OPTIONS = "";
 
 	if (moeda != "outra" && currencies.scale[moeda]) {

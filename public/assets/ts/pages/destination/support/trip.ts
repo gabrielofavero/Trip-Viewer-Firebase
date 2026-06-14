@@ -67,9 +67,9 @@ export function populatePlannedDestinationEditField(id, j) {
 }
 
 function loadPlannedDestinationEditFieldHTML(j) {
-	const container = getID(`editar-planejado-container-${j}`);
-	const dataSelect = getID(`editar-planejado-select-data-${j}`);
-	const turnoSelect = getID(`editar-planejado-select-turno-${j}`);
+	const container = getID(`editar-planned-container-${j}`);
+	const dataSelect = getID(`editar-planned-select-data-${j}`);
+	const turnoSelect = getID(`editar-planned-select-period-${j}`);
 
 	let options = `<option value="">${translate("labels.planned.not_planned")}</option>`;
 
@@ -133,8 +133,8 @@ function loadPlannedDestinationEditFieldHTML(j) {
 }
 
 export async function setPlannedDestination(id, j) {
-	const newData = getID(`editar-planejado-select-data-${j}`).value;
-	const newTurno = getID(`editar-planejado-select-turno-${j}`).value;
+	const newData = getID(`editar-planned-select-data-${j}`).value;
+	const newTurno = getID(`editar-planned-select-period-${j}`).value;
 
 	const currentSize = ACTIVE_PLANNED_DESTINATION.length;
 

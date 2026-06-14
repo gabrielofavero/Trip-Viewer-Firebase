@@ -23,9 +23,9 @@ function loadModalContentCalendar() {
 		"weekday_day_month",
 	);
 
-	(getID("programacao-titulo")!.querySelector(".titulo") as HTMLElement).innerText =
+	(getID("itinerary-title")!.querySelector(".title") as HTMLElement).innerText =
 		getScheduleTitle(titulo, CURRENT_SCHEDULE.destinosIDs);
-	getID("programacao-data").innerText = data;
+	getID("itinerary-date").innerText = data;
 
 	CURRENT_INNER_ITINERARY = [];
 
@@ -34,7 +34,7 @@ function loadModalContentCalendar() {
 	// Helpers
 	function loadInnerItineraryHTML() {
 		const show = shouldShowCheckbox();
-		getID("innner-programacao-travelers-checkboxes").style.display =
+		getID("inner-itinerary-travelers-checkboxes").style.display =
 			show ? "" : "none";
 
 		if (show) {
@@ -44,19 +44,19 @@ function loadModalContentCalendar() {
 		}
 
 		setModalCalendarInnerHTML(
-			getID("programacao-itens-madrugada"),
+			getID("itinerary-items-early-morning"),
 			CURRENT_SCHEDULE.madrugada,
 		);
 		setModalCalendarInnerHTML(
-			getID("programacao-itens-manha"),
+			getID("itinerary-items-morning"),
 			CURRENT_SCHEDULE.manha,
 		);
 		setModalCalendarInnerHTML(
-			getID("programacao-itens-tarde"),
+			getID("itinerary-items-afternoon"),
 			CURRENT_SCHEDULE.tarde,
 		);
 		setModalCalendarInnerHTML(
-			getID("programacao-itens-noite"),
+			getID("itinerary-items-night"),
 			CURRENT_SCHEDULE.noite,
 		);
 
@@ -97,7 +97,7 @@ function openModalCalendar(programacao, instant = false) {
 	loadModalContentCalendar();
 
 	if (instant) {
-		const box = getID("programacao-box");
+		const box = getID("itinerary-box");
 		box.style.transition = "none";
 		box.style.display = "block";
 		box.classList.add("show");
@@ -108,7 +108,7 @@ function openModalCalendar(programacao, instant = false) {
 	} else {
 		$("#programacao-box").show();
 		setTimeout(() => {
-			getID("programacao-box").classList.toggle("show");
+			getID("itinerary-box").classList.toggle("show");
 		}, 100);
 	}
 }
@@ -121,7 +121,7 @@ export function closeModalCalendar() {
 	CURRENT_SCHEDULE_DATE.ano = 0;
 
 	unloadCalendarTripActive();
-	getID("programacao-box").classList.toggle("show");
+	getID("itinerary-box").classList.toggle("show");
 	setTimeout(() => {
 		$("#programacao-box").hide();
 	}, 300);
@@ -129,10 +129,10 @@ export function closeModalCalendar() {
 
 function reloadModalCalendar(programacao) {
 	CURRENT_SCHEDULE = programacao;
-	getID("programacao-modal").classList.toggle("show");
+	getID("itinerary-modal").classList.toggle("show");
 	setTimeout(() => {
 		loadModalContentCalendar();
-		getID("programacao-modal").classList.toggle("show");
+		getID("itinerary-modal").classList.toggle("show");
 	}, 300);
 }
 
@@ -247,7 +247,7 @@ function getInnerItinerary(item, destinos?) {
 					innerItinerary.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
 					innerItinerary.content = getFlightBoxHTML(
 						index + 1,
-						"inner-programacao",
+						"inner-itinerary",
 						true,
 					);
 				}
@@ -354,18 +354,18 @@ function setModalCalendarInnerHTML(div, programacao) {
 
 // Converters
 function adaptModalCalendarInnerHTML() {
-	const madrugada = getID("programacao-itens-madrugada");
-	const manha = getID("programacao-itens-manha");
-	const tarde = getID("programacao-itens-tarde");
-	const noite = getID("programacao-itens-noite");
+	const madrugada = getID("itinerary-items-early-morning");
+	const manha = getID("itinerary-items-morning");
+	const tarde = getID("itinerary-items-afternoon");
+	const noite = getID("itinerary-items-night");
 
-	getID("programacao-madrugada").style.display = madrugada.innerHTML
+	getID("itinerary-early-morning").style.display = madrugada.innerHTML
 		? "block"
 		: "none";
-	getID("programacao-manha").style.display = manha.innerHTML ? "block" : "none";
-	getID("programacao-tarde").style.display = tarde.innerHTML ? "block" : "none";
-	getID("programacao-noite").style.display = noite.innerHTML ? "block" : "none";
-	getID("sem-programacao").style.display =
+	getID("itinerary-morning").style.display = manha.innerHTML ? "block" : "none";
+	getID("itinerary-afternoon").style.display = tarde.innerHTML ? "block" : "none";
+	getID("itinerary-night").style.display = noite.innerHTML ? "block" : "none";
+	getID("no-itinerary").style.display =
 		madrugada.innerHTML || manha.innerHTML || tarde.innerHTML || noite.innerHTML
 			? "none"
 			: "block";
@@ -373,7 +373,7 @@ function adaptModalCalendarInnerHTML() {
 
 // Custom Checkboxes
 function loadItineraryTravelersCheckboxes() {
-	const container = getID("innner-programacao-travelers-checkboxes");
+	const container = getID("inner-itinerary-travelers-checkboxes");
 	container.innerHTML = "";
 
 	if (!TRAVELERS?.length) {
@@ -413,7 +413,7 @@ function filterInnerProgramacoesByTravelers(list, selectedIds) {
 }
 
 function loadItineraryTravelersCheckboxAction() {
-	const container = getID("innner-programacao-travelers-checkboxes");
+	const container = getID("inner-itinerary-travelers-checkboxes");
 	const selectedIds = [
 		...container.querySelectorAll("input[type='checkbox']:checked"),
 	].map((i) => (i as HTMLInputElement).value);
@@ -435,10 +435,10 @@ function loadItineraryTravelersCheckboxAction() {
 		selectedIds,
 	);
 
-	setModalCalendarInnerHTML(getID("programacao-itens-madrugada"), madrugada);
-	setModalCalendarInnerHTML(getID("programacao-itens-manha"), manha);
-	setModalCalendarInnerHTML(getID("programacao-itens-tarde"), tarde);
-	setModalCalendarInnerHTML(getID("programacao-itens-noite"), noite);
+	setModalCalendarInnerHTML(getID("itinerary-items-early-morning"), madrugada);
+	setModalCalendarInnerHTML(getID("itinerary-items-morning"), manha);
+	setModalCalendarInnerHTML(getID("itinerary-items-afternoon"), tarde);
+	setModalCalendarInnerHTML(getID("itinerary-items-night"), noite);
 
 	adaptModalCalendarInnerHTML();
 }

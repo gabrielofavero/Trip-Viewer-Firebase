@@ -19,15 +19,15 @@ export function getDestinationsArray() {
 // Destinos Ativos
 export async function loadDestinosAtivos(firstBoot = true) {
 	DESTINOS_ATIVOS = [];
-	const habilidadoDestinos = getID("habilitado-destinos");
+	const habilidadoDestinos = getID("destinations-enabled");
 	if (habilidadoDestinos && !habilidadoDestinos.checked) return;
 
 	let result = [];
-	const container = getID("destinos-checkboxes");
+	const container = getID("destinations-checkboxes");
 	for (const card of container.children) {
 		if (!card.classList.contains("selected")) continue;
 
-		const titulo = card.querySelector(".destino-card-name")?.textContent?.trim() || "";
+		const titulo = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
 		const destinosID = card.getAttribute("data-destino-id") || "";
 
 		result.push({ titulo, destinosID });
@@ -47,7 +47,7 @@ export async function updateDestinosAtivosHTMLs() {
 function getDestinosAtivosSelectOptions(destinosAtivos = DESTINOS_ATIVOS) {
 	let result = `<option value="">${translate("destination.undefined")}</option>`;
 	for (const destino of destinosAtivos) {
-		result += `<option value="${destino.destinosID}">${destino.titulo}</option>`;
+		result += `<option value="${destino.destinosID}">${destino.title}</option>`;
 	}
 	return result;
 }
@@ -69,7 +69,7 @@ export function updateDestinosAtivosCardsHTML(tipo, j?) {
 
 		// Collect currently selected values before rebuild
 		const selectedValues: string[] = [];
-		for (const card of container.querySelectorAll(".destino-card.selected")) {
+		for (const card of container.querySelectorAll(".destination-card.selected")) {
 			const id = card.getAttribute("data-destino-id");
 			if (id) selectedValues.push(id);
 		}
@@ -77,7 +77,7 @@ export function updateDestinosAtivosCardsHTML(tipo, j?) {
 		container.innerHTML = getActiveDestinationsCardOptions(tipo, j);
 
 		// Re-select previously selected cards
-		for (const card of container.querySelectorAll(".destino-card")) {
+		for (const card of container.querySelectorAll(".destination-card")) {
 			const destinosID = card.getAttribute("data-destino-id");
 			if (selectedValues.includes(destinosID)) {
 				card.classList.add("selected");
@@ -190,8 +190,8 @@ export function getDestinosFromCards(tipo: string, j: number) {
 	let result: { titulo: string; destinosID: string }[] = [];
 	const container = getID(`${tipo}-local-${j}`);
 	if (!container) return result;
-	for (const card of container.querySelectorAll(".destino-card.selected")) {
-		const titulo = card.querySelector(".destino-card-name")?.textContent?.trim() || "";
+	for (const card of container.querySelectorAll(".destination-card.selected")) {
+		const titulo = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
 		const destinosID = card.getAttribute("data-destino-id") || "";
 		result.push({ titulo, destinosID });
 	}
@@ -201,7 +201,7 @@ export function getDestinosFromCards(tipo: string, j: number) {
 export function addValuesForDestinosAtivosCards(tipo: string, j: number, values: string[]) {
 	const container = getID(`${tipo}-local-${j}`);
 	if (!container) return;
-	for (const card of container.querySelectorAll(".destino-card")) {
+	for (const card of container.querySelectorAll(".destination-card")) {
 		const destinosID = card.getAttribute("data-destino-id");
 		if (values.includes(destinosID)) {
 			card.classList.add("selected");
@@ -211,14 +211,14 @@ export function addValuesForDestinosAtivosCards(tipo: string, j: number, values:
 }
 
 function reorganizeDestinosCheckbox() {
-	const fieldset = document.getElementById("destinos-checkboxes");
-	const cards = Array.from(fieldset.querySelectorAll(".destino-card"));
+	const fieldset = document.getElementById("destinations-checkboxes");
+	const cards = Array.from(fieldset.querySelectorAll(".destination-card"));
 
 	const selecionados: { element: Element; label: string }[] = [];
 	const naoSelecionados: { element: Element; label: string }[] = [];
 
 	cards.forEach((card) => {
-		const nameEl = card.querySelector(".destino-card-name");
+		const nameEl = card.querySelector(".destination-card-name");
 		const labelText = nameEl?.textContent?.trim() || "";
 
 		if (card.classList.contains("selected")) {

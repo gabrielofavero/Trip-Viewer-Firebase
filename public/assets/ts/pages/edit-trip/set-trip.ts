@@ -53,10 +53,10 @@ async function getUnprotectedTripObject() {
 			: "",
 		links: {},
 		modulos: {},
-		moeda: getID(`moeda`).value,
+		moeda: getID("currency").value,
 		programacoes: {},
 		pessoas: {},
-		titulo: getID(`titulo`).value,
+		titulo: getID("title").value,
 		transportes: getVisibilidadeObject(),
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
@@ -100,10 +100,10 @@ async function getTripObjectFull(protectedReservationCodes = false) {
 			: "",
 		links: getLinksObject(),
 		modulos: getModulosObject(),
-		moeda: getID(`moeda`).value,
+		moeda: getID("currency").value,
 		programacoes: getItineraryArray(),
 		pessoas: TRAVELERS,
-		titulo: getID(`titulo`).value,
+		titulo: getID("title").value,
 		transportes: getTransportationObject(protectedReservationCodes),
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
@@ -128,19 +128,19 @@ async function buildExpensesObject() {
 
 function getModulosObject() {
 	return {
-		hospedagens: getID("habilitado-hospedagens").checked,
-		destinos: getID("habilitado-destinos").checked,
+		hospedagens: getID("accommodations-enabled").checked,
+		destinos: getID("destinations-enabled").checked,
 		gastos: getID("enabled-expenses").checked,
-		programacao: getID("habilitado-programacao").checked,
+		programacao: getID("itinerary-enabled").checked,
 		resumo: true,
-		transportes: getID("habilitado-transporte").checked,
-		galeria: getID("habilitado-galeria").checked,
+		transportes: getID("transportation-enabled").checked,
+		galeria: getID("gallery-enabled").checked,
 	};
 }
 
 function getCoresObject() {
 	return {
-		ativo: getID("habilitado-cores").checked,
+		ativo: getID("colors-enabled").checked,
 		claro: getID("claro").value,
 		escuro: getID("escuro").value,
 	};
@@ -231,10 +231,10 @@ function verifyImageUploads(type) {
 }
 
 export async function setTripData() {
-	if (getID("habilitado-destinos").checked) {
-		for (const child of getChildIDs("com-destinos")) {
+	if (getID("destinations-enabled").checked) {
+		for (const child of getChildIDs("has-destinations")) {
 			const i = parseInt(child.split("-")[2]);
-			setRequired(`select-destinos-${i}`);
+			setRequired(`select-destinations-${i}`);
 		}
 	}
 

@@ -199,7 +199,7 @@ function loadScheduleTodayButton() {
 				);
 			}
 
-			getID("programacao-box").scrollIntoView({ behavior: "smooth" });
+			getID("itinerary-box").scrollIntoView({ behavior: "smooth" });
 		});
 	}
 }

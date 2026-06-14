@@ -124,9 +124,9 @@ async function loadExpenses() {
 	startLoadingScreen();
 	try {
 		if (pin) {
-			GASTOS = await get(`gastos/protected/${pin}/${documentID}`, false);
+			GASTOS = await get(`expenses/protected/${pin}/${documentID}`, false);
 		} else {
-			GASTOS = await get(`gastos/${documentID}`, false);
+			GASTOS = await get(`expenses/${documentID}`, false);
 		}
 
 		if (GASTOS) {

@@ -102,7 +102,7 @@ function loadEventListeners() {
 		window.location.href = "../index.html";
 	});
 
-	getID("destinos-search").addEventListener("input", () =>
+	getID("destinations-search").addEventListener("input", () =>
 		searchDestinationsListenerAction(),
 	);
 
@@ -129,19 +129,19 @@ async function buildListObject() {
 	setFirestoreNewData({
 		compartilhamento: await buildCompartilhamentoObject(),
 		cores: {
-			ativo: getID("habilitado-cores").checked,
+			ativo: getID("colors-enabled").checked,
 			claro: getID("claro").value,
 			escuro: getID("escuro").value,
 		},
-		descricao: getID(`descricao`).value,
+		descricao: getID("description").value,
 		destinos: buildDestinosArray(),
 		imagem: buildImagemObject(),
 		links: buildLinksObject(),
-		subtitulo: getID(`subtitulo`).value,
-		titulo: getID(`titulo`).value,
+		subtitulo: getID("subtitle").value,
+		titulo: getID("title").value,
 		versao: {
 			ultimaAtualizacao: new Date().toISOString(),
-			exibirEmDestinos: getID(`exibir-em-destinos`).checked,
+			exibirEmDestinos: getID("show-in-destinations").checked,
 		},
 	});
 }
@@ -150,15 +150,15 @@ function getIgnoredPathDestinos() {
 	if (!getState()) return [];
 	let result = [];
 	for (let i = 0; i < getState().destinos.length; i++) {
-		result.push(`destinos.${i}.destinos`);
+		result.push(`destinations.${i}.destinations`);
 	}
 	return result;
 }
 
 async function setListagem() {
-	for (const child of getChildIDs("com-destinos")) {
+	for (const child of getChildIDs("has-destinations")) {
 		const i = parseInt(child.split("-")[2]);
-		setRequired(`select-destinos-${i}`);
+		setRequired(`select-destinations-${i}`);
 	}
 
 	const type = "listagens";
@@ -167,7 +167,7 @@ async function setListagem() {
 }
 
 export function deleteListagem() {
-	let listing = getID("titulo").value;
+	let listing = getID("title").value;
 	listing = listing ? ` "${listing}"` : "";
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);

@@ -81,7 +81,7 @@ export function getNotaClass(nota) {
 		case "3":
 		case "2":
 		case "1":
-			return `nota-${nota}`;
+			return `rating-${nota}`;
 		default:
 			return "nota-ausente";
 	}

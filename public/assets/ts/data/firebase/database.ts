@@ -449,7 +449,7 @@ export async function deleteAccountDocuments() {
 				const pin = protSnap.data()?.pin;
 				if (pin) {
 					safePushDelete(firebase.firestore().doc(`viagens/protected/${pin}/${tripID}`));
-					safePushDelete(firebase.firestore().doc(`gastos/protected/${pin}/${tripID}`));
+					safePushDelete(firebase.firestore().doc(`expenses/protected/${pin}/${tripID}`));
 				}
 				safePushDelete(protRef);
 			} else {

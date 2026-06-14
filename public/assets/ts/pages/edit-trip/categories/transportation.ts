@@ -16,7 +16,7 @@ export function getTransportationObject(protectedReservationCodes = false) {
 				? "leg-view"
 				: "simple-view",
 	};
-	for (const child of getChildIDs("transporte-box")) {
+	for (const child of getChildIDs("transportation-box")) {
 		const j = getJ(child);
 		result.dados.push({
 			datas: {
@@ -29,7 +29,7 @@ export function getTransportationObject(protectedReservationCodes = false) {
 					getID(`partida-horario-${j}`).value,
 				),
 			},
-			duracao: getID(`transporte-duracao-${j}`).value,
+			duracao: getID(`transportation-duracao-${j}`).value,
 			empresa: getCompanyValue(j),
 			id: getOrCreateCategoryID("transporte", j),
 			idaVolta: getID(`ida-${j}`).checked
@@ -39,16 +39,16 @@ export function getTransportationObject(protectedReservationCodes = false) {
 					: "durante",
 			link: protectedReservationCodes
 				? ""
-				: getID(`transporte-link-${j}`).value,
+				: getID(`transportation-link-${j}`).value,
 			pontos: {
 				chegada: getID(`ponto-chegada-${j}`).value,
 				partida: getID(`ponto-partida-${j}`).value,
 			},
 			reserva: protectedReservationCodes
 				? ""
-				: getID(`reserva-transporte-${j}`).value,
-			transporte: getID(`transporte-tipo-${j}`).value,
-			pessoa: getID(`transporte-pessoa-select-${j}`).value,
+				: getID(`reserva-transportation-${j}`).value,
+			transporte: getID(`transportation-tipo-${j}`).value,
+			pessoa: getID(`transportation-pessoa-select-${j}`).value,
 		});
 	}
 	return result;
@@ -56,11 +56,11 @@ export function getTransportationObject(protectedReservationCodes = false) {
 
 export function getProtectedTransportationObject() {
 	const result = {};
-	for (const childID of getChildIDs("transporte-box")) {
+	for (const childID of getChildIDs("transportation-box")) {
 		const j = getJ(childID);
-		const id = getID(`transporte-id-${j}`).value;
-		const reserva = getID(`reserva-transporte-${j}`).value;
-		const link = getID(`transporte-link-${j}`).value;
+		const id = getID(`transportation-id-${j}`).value;
+		const reserva = getID(`reserva-transportation-${j}`).value;
+		const link = getID(`transportation-link-${j}`).value;
 		result[id] = { reserva, link };
 	}
 	return result;
@@ -85,7 +85,7 @@ export function updateTransportationTitle(i) {
 		}
 	}
 
-	getID(`transporte-title-${i}`).innerText = texto;
+	getID(`transportation-title-${i}`).innerText = texto;
 }
 
 function getTransportationType(i) {
@@ -103,8 +103,8 @@ function getTransportationType(i) {
 }
 
 function getPerson(i) {
-	const select = getID(`transporte-pessoa-select-${i}`).value;
-	const input = getID(`transporte-pessoa-${i}`).value;
+	const select = getID(`transportation-pessoa-select-${i}`).value;
+	const input = getID(`transportation-pessoa-${i}`).value;
 
 	if (select === "outra" || select === "selecione") {
 		return input;
@@ -118,7 +118,7 @@ export function loadTransportationVisibility(j) {
 
 	const empresaSelect = getID(`empresa-select-${j}`);
 	const empresaInput = getID(`empresa-${j}`);
-	const tipo = getID(`transporte-tipo-${j}`).value;
+	const tipo = getID(`transportation-tipo-${j}`).value;
 	const previousValue = empresaSelect.value;
 
 	const empresas = empresasPorTipo[tipo];
@@ -170,7 +170,7 @@ export function applyTransportationTypeVisualization(i?) {
 		return;
 	}
 
-	for (const child of getChildIDs("transporte-box")) {
+	for (const child of getChildIDs("transportation-box")) {
 		apply(getJ(child));
 	}
 
@@ -184,15 +184,15 @@ export function applyTransportationTypeVisualization(i?) {
 			: "none";
 
 		if (getID("people-view").checked) {
-			setRequired(`transporte-pessoa-select-${j}`);
+			setRequired(`transportation-pessoa-select-${j}`);
 		} else {
-			removeRequired(`transporte-pessoa-select-${j}`);
+			removeRequired(`transportation-pessoa-select-${j}`);
 		}
 	}
 }
 
 function loadAutoDuration(i) {
-	const div = getID(`transporte-duracao-${i}`);
+	const div = getID(`transportation-duracao-${i}`);
 
 	const startDate = getID(`partida-${i}`).value;
 	const startTime = getID(`partida-horario-${i}`).value;
@@ -229,7 +229,7 @@ export function loadTransportationListeners(j) {
 	getID(`empresa-select-${j}`).addEventListener("change", () =>
 		loadTransportationVisibility(j),
 	);
-	getID(`transporte-tipo-${j}`).addEventListener("change", () =>
+	getID(`transportation-tipo-${j}`).addEventListener("change", () =>
 		loadTransportationVisibility(j),
 	);
 
@@ -259,8 +259,8 @@ export function loadTransportationListeners(j) {
 	);
 
 // Link Validation
-	getID(`transporte-link-${j}`).addEventListener("change", () =>
-		validateLink(`transporte-link-${j}`),
+	getID(`transportation-link-${j}`).addEventListener("change", () =>
+		validateLink(`transportation-link-${j}`),
 	);
 }
 

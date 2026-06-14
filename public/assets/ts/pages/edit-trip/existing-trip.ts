@@ -32,7 +32,7 @@ export async function loadTripData() {
 		loadItineraryData();
 		loadGaleriaData();
 
-		setPageName(`${translate("labels.edit")} ${getState().titulo}`);
+		setPageName(`${translate("labels.edit")} ${getState().title}`);
 	} catch (error) {
 		displayError(error);
 		throw error;
@@ -40,8 +40,8 @@ export async function loadTripData() {
 }
 
 function loadBasicTripData() {
-	getID("titulo").value = getState().titulo;
-	getID("moeda").value = getState().moeda;
+	getID("title").value = getState().titulo;
+	getID("currency").value = getState().moeda;
 
 	const inicio = convertFromDateObject(getState().inicio);
 	const fim = convertFromDateObject(getState().fim);
@@ -77,7 +77,7 @@ export function loadCustomizacaoData(state?) {
 	const escuro = getID("escuro");
 
 	if (getState().cores.ativo === true) {
-		getID("habilitado-cores").checked = true;
+		getID("colors-enabled").checked = true;
 		claro.value = getState().cores.claro;
 		escuro.value = getState().cores.escuro;
 		setCurrentLight(getState().cores.claro);
@@ -113,8 +113,8 @@ async function loadExpensesData() {
 	}
 
 	const getPath = PIN.current
-		? `gastos/protected/${PIN.current}/${DOCUMENT_ID}`
-		: `gastos/${DOCUMENT_ID}`;
+		? `expenses/protected/${PIN.current}/${DOCUMENT_ID}`
+		: `expenses/${DOCUMENT_ID}`;
 
 	setGastosData(await get(getPath, true, true));
 
@@ -128,9 +128,9 @@ async function loadExpensesData() {
 
 async function loadTransportationData() {
 	if (getState().modulos.transportes === true) {
-		getID("habilitado-transporte").checked = true;
-		getID("habilitado-transporte-content").style.display = "block";
-		getID("transporte-adicionar-box").style.display = "block";
+		getID("transportation-enabled").checked = true;
+		getID("transportation-enabled-content").style.display = "block";
+		getID("transportation-add-box").style.display = "block";
 	}
 	getID(getState().transportes.visualizacao || "simple-view").checked =
 		true;
@@ -143,11 +143,11 @@ async function loadTransportationData() {
 
 		const pessoa = transporte.pessoa;
 		if (pessoa) {
-			getID(`transporte-pessoa-${j}`).value = pessoa;
+			getID(`transportation-pessoa-${j}`).value = pessoa;
 			updateValueDS(
 				"transporte-pessoa",
 				pessoa,
-				`transporte-pessoa-select-${j}`,
+				`transportation-pessoa-select-${j}`,
 			);
 			buildDS("transporte-pessoa");
 		}
@@ -165,7 +165,7 @@ async function loadTransportationData() {
 			getID(`chegada-horario-${j}`).value = getTimeStringFromDate(chegada);
 		}
 
-		getID(`transporte-tipo-${j}`).value = transporte.transporte;
+		getID(`transportation-tipo-${j}`).value = transporte.transporte;
 		const empresa = transporte.empresa;
 		if (empresa) {
 			loadTransportationVisibility(j);
@@ -178,12 +178,12 @@ async function loadTransportationData() {
 			}
 		}
 
-		getID(`transporte-id-${j}`).value = transporte.id;
-		getID(`transporte-duracao-${j}`).value = transporte.duracao;
-		getID(`reserva-transporte-${j}`).value = transporte.reserva;
+		getID(`transportation-id-${j}`).value = transporte.id;
+		getID(`transportation-duracao-${j}`).value = transporte.duracao;
+		getID(`reserva-transportation-${j}`).value = transporte.reserva;
 		getID(`ponto-partida-${j}`).value = transporte.pontos.partida;
 		getID(`ponto-chegada-${j}`).value = transporte.pontos.chegada;
-		getID(`transporte-link-${j}`).value = transporte.link;
+		getID(`transportation-link-${j}`).value = transporte.link;
 
 		updateTransportationTitle(j);
 	}
@@ -192,7 +192,7 @@ async function loadTransportationData() {
 
 function loadAccommodationData() {
 	if (getState().modulos.hospedagens === true) {
-		getID("habilitado-hospedagens").checked = true;
+		getID("accommodations-enabled").checked = true;
 		getID("habilitado-hospedagens-content").style.display = "block";
 		getID("hospedagens-adicionar-box").style.display = "block";
 	}
@@ -202,15 +202,15 @@ function loadAccommodationData() {
 		const hospedagem = getState().hospedagens[j - 1];
 		ACCOMMODATION_IMAGES[j] = hospedagem.imagens || [];
 
-		getID(`hospedagens-id-${j}`).value = hospedagem.id;
-		getID(`hospedagens-cafe-${j}`).checked = hospedagem.cafe;
-		getID(`hospedagens-nome-${j}`).value = hospedagem.nome;
-		getID(`hospedagens-title-${j}`).innerText =
-			hospedagem.nome || getID(`hospedagens-title-${j}`).innerText;
-		getID(`hospedagens-endereco-${j}`).value = hospedagem.endereco;
-		getID(`hospedagens-descricao-${j}`).value = hospedagem.descricao;
-		getID(`reserva-hospedagens-${j}`).value = hospedagem.reserva || "";
-		getID(`reserva-hospedagens-link-${j}`).value = hospedagem.link;
+		getID(`accommodations-id-${j}`).value = hospedagem.id;
+		getID(`accommodations-cafe-${j}`).checked = hospedagem.cafe;
+		getID(`accommodations-nome-${j}`).value = hospedagem.nome;
+		getID(`accommodations-title-${j}`).innerText =
+			hospedagem.nome || getID(`accommodations-title-${j}`).innerText;
+		getID(`accommodations-endereco-${j}`).value = hospedagem.endereco;
+		getID(`accommodations-description-${j}`).value = hospedagem.descricao;
+		getID(`reserva-accommodations-${j}`).value = hospedagem.reserva || "";
+		getID(`reserva-accommodations-link-${j}`).value = hospedagem.link;
 
 		setImagemButtonLabel(j);
 		loadCheckIn(hospedagem, j);
@@ -223,26 +223,26 @@ async function loadDestinationsData() {
 		getHTMLpage() === "edit-listing" ||
 		getState().modulos.destinos === true
 	) {
-		if (getID("habilitado-destinos")) {
-			getID("habilitado-destinos").checked = true;
+		if (getID("destinations-enabled")) {
+			getID("destinations-enabled").checked = true;
 		}
-		getID("habilitado-destinos-content").style.display = "block";
-		getID("sem-destinos").style.display = "none";
-		getID("com-destinos").style.display = "block";
+		getID("destinations-enabled-content").style.display = "block";
+		getID("no-destinations").style.display = "none";
+		getID("has-destinations").style.display = "block";
 	} else {
-		getID("sem-destinos").style.display = "block";
-		getID("com-destinos").style.display = "none";
+		getID("no-destinations").style.display = "block";
+		getID("has-destinations").style.display = "none";
 	}
 
 	loadDestinations();
-	const cards = document.querySelectorAll('#destinos-checkboxes .destino-card');
+	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
 	for (const destino of getState().destinos) {
 		const id = destino.destinosID;
 		for (const card of cards) {
 			if (card.getAttribute("data-destino-id") === id) {
 				card.classList.add("selected");
 				// Move to top of selected group
-				const container = getID("destinos-checkboxes");
+				const container = getID("destinations-checkboxes");
 				container.prepend(card);
 				break;
 			}
@@ -253,14 +253,14 @@ async function loadDestinationsData() {
 
 export function loadItineraryData() {
 	if (getState().modulos.programacao === true) {
-		getID("habilitado-programacao").checked = true;
-		getID("habilitado-programacao-content").style.display = "block";
+		getID("itinerary-enabled").checked = true;
+		getID("itinerary-enabled-content").style.display = "block";
 	}
 
 	loadItinerarySchedule();
 
 	let j = 1;
-	while (getID(`programacao-title-${j}`)) {
+	while (getID(`itinerary-title-${j}`)) {
 		const dados = getState().programacoes[j - 1];
 		if (dados?.data) {
 			applyLoadedItineraryData(j, dados);
@@ -273,9 +273,9 @@ export function loadItineraryData() {
 
 function loadGaleriaData() {
 	if (getState().modulos.galeria === true) {
-		getID("habilitado-galeria").checked = true;
-		getID("habilitado-galeria-content").style.display = "block";
-		getID("galeria-adicionar-box").style.display = "block";
+		getID("gallery-enabled").checked = true;
+		getID("gallery-enabled-content").style.display = "block";
+		getID("gallery-add-box").style.display = "block";
 	}
 
 	const galeriaSize = getState().galeria?.imagens.length;
@@ -286,27 +286,27 @@ function loadGaleriaData() {
 
 			const titulo = getState().galeria.titulos[i];
 			if (titulo) {
-				getID(`galeria-titulo-${j}`).value = titulo;
-				getID(`galeria-title-${j}`).innerText = titulo;
+				getID(`gallery-title-${j}`).value = titulo;
+				getID(`gallery-title-${j}`).innerText = titulo;
 			}
 
 			const categoria = getState().galeria.categorias[i];
 			if (categoria) {
-				getID(`galeria-categoria-${j}`).value = categoria;
+				getID(`gallery-category-${j}`).value = categoria;
 				updateValueDS(
 					"galeria-categoria",
 					categoria,
-					`galeria-categoria-select-${j}`,
+					`gallery-category-select-${j}`,
 				);
 				buildDS("galeria-categoria");
 			}
 
 			const descricao = getState().galeria.descricoes[i];
 			if (descricao) {
-				getID(`galeria-descricao-${j}`).value = descricao;
+				getID(`gallery-description-${j}`).value = descricao;
 			}
 
-			getID(`link-galeria-${j}`).value = getState().galeria.imagens[i];
+			getID(`link-gallery-${j}`).value = getState().galeria.imagens[i];
 		}
 	}
 }

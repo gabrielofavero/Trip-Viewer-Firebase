@@ -36,7 +36,7 @@ function sendHeightMessageToParent() {
 }
 
 function embedAfterLoadAction(pin) {
-	for (const card of document.querySelectorAll(".gastos-card")) {
+	for (const card of document.querySelectorAll(".expenses-card")) {
 		card.classList.add("container-mode");
 	}
 	sendHeightMessageToParent();

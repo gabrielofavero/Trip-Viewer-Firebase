@@ -14,7 +14,7 @@ var DESTINOS = {};
 
 async function getDestination(id) {
 	if (!Object.keys(DESTINOS).includes(id)) {
-		DESTINOS[id] = await get(`destinos/${id}`);
+		DESTINOS[id] = await get(`destinations/${id}`);
 	}
 	return DESTINOS[id];
 }

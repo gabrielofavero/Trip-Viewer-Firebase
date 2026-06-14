@@ -83,7 +83,7 @@ export function openDestinationsAccordion(id) {
 	const num = String(id).match(/\d+$/)?.[0];
 	if (!num) return false;
 
-	const target = document.getElementById(`collapse-destinos-${num}`);
+	const target = document.getElementById(`collapse-destinations-${num}`);
 	if (!target) return false;
 
 	for (const el of getID("content").children) {
@@ -103,7 +103,7 @@ function closeDestinationsAccordion(id) {
 	const num = String(id).match(/\d+$/)?.[0];
 	if (!num) return false;
 
-	const target = document.getElementById(`collapse-destinos-${num}`);
+	const target = document.getElementById(`collapse-destinations-${num}`);
 	if (!target) return false;
 
 	const acc = bootstrap.Collapse.getOrCreateInstance(target, { toggle: false });
@@ -116,7 +116,7 @@ function isDestinationsAccordionOpen(id) {
 	const num = String(id).match(/\d+$/)?.[0];
 	if (!num) return false;
 
-	const target = document.getElementById(`collapse-destinos-${num}`);
+	const target = document.getElementById(`collapse-destinations-${num}`);
 	if (!target) return false;
 
 	return target.classList.contains("show");

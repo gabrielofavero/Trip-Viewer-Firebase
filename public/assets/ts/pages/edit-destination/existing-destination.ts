@@ -27,7 +27,7 @@ export function populateExistingDestinationForm() {
 
 		loadMapaData();
 		setPageName(
-			`${translate("labels.edit")} ${FIRESTORE_DESTINATIONS_DATA.titulo}`,
+			`${translate("labels.edit")} ${FIRESTORE_DESTINATIONS_DATA.title}`,
 		);
 	} catch (error) {
 		displayError(error);
@@ -37,16 +37,16 @@ export function populateExistingDestinationForm() {
 
 // Modules: Existing Tour
 function loadDadosBasicosDestinosData() {
-	getID("titulo").value = FIRESTORE_DESTINATIONS_DATA.titulo;
+	getID("title").value = FIRESTORE_DESTINATIONS_DATA.titulo;
 
 	const moedaValue = FIRESTORE_DESTINATIONS_DATA.moeda;
-	const moedaDiv = getID("moeda");
+	const moedaDiv = getID("currency");
 
 	if (moedaDiv.querySelector(`option[value="${moedaValue}"]`)) {
 		moedaDiv.value = moedaValue;
 	} else {
-		getID("outra-moeda").style.display = "block";
-		getID("outra-moeda").value = moedaValue;
+		getID("other-currency").style.display = "block";
+		getID("other-currency").value = moedaValue;
 		moedaDiv.value = "outra";
 	}
 
@@ -55,11 +55,11 @@ function loadDadosBasicosDestinosData() {
 
 function loadDestinoExistente(categoria) {
 	const habilitado = FIRESTORE_DESTINATIONS_DATA.modulos[categoria] === true;
-	getID(`habilitado-${categoria}`).checked = habilitado;
-	getID(`habilitado-${categoria}-content`).style.display = habilitado
+	getID(`enabled-${categoria}`).checked = habilitado;
+	getID(`enabled-${categoria}-content`).style.display = habilitado
 		? "block"
 		: "none";
-	getID(`${categoria}-adicionar-box`).style.display = habilitado
+	getID(`${categoria}-add-box`).style.display = habilitado
 		? "block"
 		: "none";
 
@@ -128,7 +128,7 @@ export function addDestinoHTML(categoria, j, destino) {
 
 	updateDescriptionButtonLabel(categoria, j);
 	getID(`${categoria}-website-${j}`).value = destino.website || "";
-	getID(`${categoria}-mapa-${j}`).value = destino.mapa || "";
+	getID(`${categoria}-map-${j}`).value = destino.mapa || "";
 	getID(`${categoria}-instagram-${j}`).value = destino.instagram || "";
 	getID(`${categoria}-regiao-${j}`).value = destino.regiao || "";
 
@@ -136,15 +136,15 @@ export function addDestinoHTML(categoria, j, destino) {
 	loadMoedaValorAndVisibility(destino.valor || "", categoria, j);
 
 	getID(`${categoria}-midia-${j}`).value = destino.midia || "";
-	getID(`${categoria}-nota-${j}`).value = destino.nota || "";
+	getID(`${categoria}-rating-${j}`).value = destino.nota || "";
 }
 
 function loadMapaData() {
-	const mapaLink = getID("mapa-link");
+	const mapaLink = getID("map-link");
 
 	if (FIRESTORE_DESTINATIONS_DATA.modulos.mapa === true) {
-		getID("habilitado-mapa").checked = true;
-		getID("habilitado-mapa-content").style.display = "block";
+		getID("map-enabled").checked = true;
+		getID("map-enabled-content").style.display = "block";
 		mapaLink.setAttribute("required", "");
 
 		const mapa = FIRESTORE_DESTINATIONS_DATA.myMaps;

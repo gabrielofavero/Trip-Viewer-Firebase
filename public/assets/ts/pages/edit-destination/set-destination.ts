@@ -13,19 +13,19 @@ export async function buildDestinosObject() {
 		restaurantes: buildDestinoCategoryObject("restaurantes"),
 		saidas: buildDestinoCategoryObject("saidas"),
 		turismo: buildDestinoCategoryObject("turismo"),
-		titulo: getID(`titulo`).value,
+		titulo: getID("title").value,
 		moeda:
-			getID(`moeda`).value == "outra"
-				? getID(`outra-moeda`).value
-				: getID(`moeda`).value,
-		myMaps: getID(`mapa-link`).value,
+			getID("currency").value == "outra"
+				? getID("other-currency").value
+				: getID("currency").value,
+		myMaps: getID("map-link").value,
 		modulos: {
-			lanches: getID(`habilitado-lanches`).checked,
-			lojas: getID(`habilitado-lojas`).checked,
-			mapa: getID(`habilitado-mapa`).checked,
-			restaurantes: getID(`habilitado-restaurantes`).checked,
-			saidas: getID(`habilitado-saidas`).checked,
-			turismo: getID(`habilitado-turismo`).checked,
+			lanches: getID(`enabled-lanches`).checked,
+			lojas: getID(`enabled-lojas`).checked,
+			mapa: getID("map-enabled").checked,
+			restaurantes: getID(`enabled-restaurantes`).checked,
+			saidas: getID(`enabled-saidas`).checked,
+			turismo: getID(`enabled-turismo`).checked,
 		},
 		compartilhamento: {
 			ativo: true,
@@ -56,9 +56,9 @@ function buildDestinoCategoryObject(categoria) {
 		item.website = getID(`${categoria}-website-${j}`).value;
 		item.instagram = getID(`${categoria}-instagram-${j}`).value;
 		item.regiao = getID(`${categoria}-regiao-select-${j}`).value;
-		item.mapa = getID(`${categoria}-mapa-${j}`).value;
+		item.mapa = getID(`${categoria}-map-${j}`).value;
 		item.midia = getID(`${categoria}-midia-${j}`).value;
-		item.nota = getID(`${categoria}-nota-${j}`).value;
+		item.nota = getID(`${categoria}-rating-${j}`).value;
 
 		const valor = getID(`${categoria}-valor-${j}`);
 		item.valor =

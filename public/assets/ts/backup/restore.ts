@@ -222,7 +222,7 @@ async function restoreAccount(restore) {
 							firebase.firestore().doc(`viagens/protected/${pin}/${viagemID}`),
 						);
 						pushDelete(
-							firebase.firestore().doc(`gastos/protected/${pin}/${viagemID}`),
+							firebase.firestore().doc(`expenses/protected/${pin}/${viagemID}`),
 						);
 					}
 

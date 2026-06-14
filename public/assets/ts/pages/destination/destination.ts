@@ -42,7 +42,7 @@ export async function loadDestinationsData(data?) {
 
 	const [tripData, destinosData] = await Promise.all([
 		getTripData(urlParams["v"]),
-		get(`destinos/${DOCUMENT_ID}`),
+		get(`destinations/${DOCUMENT_ID}`),
 	]);
 
 	setFirestoreDestinationsData(destinosData);
@@ -169,7 +169,7 @@ export function processAccordion(j) {
 }
 
 function toggleMedia(j) {
-	const button = getID(`destinos-titulo-${j}`);
+	const button = getID(`destinations-title-${j}`);
 	const midia = `midia-${j}`;
 	if (button.classList.contains("collapsed")) {
 		unloadMedia(midia);
@@ -182,7 +182,7 @@ function toggleMedia(j) {
 function closeAccordions(exclude) {
 	for (const j of getJs("content")) {
 		if (j !== exclude) {
-			$(`#collapse-destinos-${j}`).collapse("hide");
+			$(`#collapse-destinations-${j}`).collapse("hide");
 		}
 	}
 }
@@ -238,7 +238,7 @@ export function getDataSet(key) {
 }
 
 export function getDestinationID(j) {
-	const destino = getID(`destinos-${j}`);
+	const destino = getID(`destinations-${j}`);
 	return destino.getAttribute("data-id");
 }
 
@@ -262,7 +262,7 @@ export function isPlanned(id) {
 }
 
 export async function refreshDestination() {
-	setFirestoreDestinationsData(await get(`destinos/${DOCUMENT_ID}`));
+	setFirestoreDestinationsData(await get(`destinations/${DOCUMENT_ID}`));
 	loadDestinationByType(ACTIVE_CATEGORY);
 }
 

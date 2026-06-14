@@ -185,7 +185,7 @@ section {
 	width: 100%;
 }
 
-.gastos-container {
+.expenses-container {
 	display: grid;
 	grid-template-columns: repeat(12, minmax(0, 1fr));
 	gap: 1.5rem;
@@ -194,7 +194,7 @@ section {
 }
 
 @media (max-width: 1025px) and (min-width: 600px) {
-	.gastos-container {
+	.expenses-container {
 		width: 640px;
 	}
 }
@@ -208,7 +208,7 @@ section {
 }
 
 @media (min-width: 1300px) {
-	.gastos-container,
+	.expenses-container,
 	#conversao {
 		padding-right: 10%;
 		padding-left: 10%;
@@ -216,20 +216,20 @@ section {
 }
 
 @media (min-width: 1750px) {
-	.gastos-container,
+	.expenses-container,
 	#conversao {
 		padding-right: 20%;
 		padding-left: 20%;
 	}
 }
 
-.gastos-card {
+.expenses-card {
 	border: 1px solid #d9d9d9;
 	background-color: #fff;
 	box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
 }
 
-.gastos-card.container-mode {
+.expenses-card.container-mode {
 	box-shadow: 0 8px 24px rgba(110, 123, 131, 0.08);
 }
 
@@ -237,7 +237,7 @@ section {
 	width: 100%;
 }
 
-.gastos-recibo {
+.expenses-receipt {
 	grid-column: span 12;
 	border-radius: 0.5rem;
 	padding: 1.5rem;
@@ -245,7 +245,7 @@ section {
 
 /* Media query for large screens */
 @media (min-width: 1024px) {
-	.gastos-recibo {
+	.expenses-receipt {
 		grid-column: span 4;
 	}
 }
@@ -267,14 +267,14 @@ section {
 	}
 }
 
-.gastos-titulo {
+.expenses-title {
 	margin-bottom: 1rem;
 	font-size: 1.125rem;
 	line-height: 1.75rem;
 	font-weight: 500;
 }
 
-.gastos-subtitulo,
+.expenses-subtitle,
 .total {
 	font-weight: bold;
 	color: var(--subtitle);

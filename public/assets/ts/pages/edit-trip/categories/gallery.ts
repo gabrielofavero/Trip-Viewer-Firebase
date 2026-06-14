@@ -16,24 +16,24 @@ export function getGaleriaObject() {
 		titulos: [],
 	};
 
-	const childIDs = getChildIDs("galeria-box");
+	const childIDs = getChildIDs("gallery-box");
 	for (var i = 0; i < childIDs.length; i++) {
 		const j = getJ(childIDs[i]);
 
-		const descricao = getID(`galeria-descricao-${j}`).value || "";
+		const descricao = getID(`gallery-description-${j}`).value || "";
 		result.descricoes.push(descricao);
 
-		const titulo = getID(`galeria-titulo-${j}`).value || "";
+		const titulo = getID(`gallery-title-${j}`).value || "";
 		result.titulos.push(titulo);
 
-		if (getID(`enable-upload-galeria-${j}`).checked) {
+		if (getID(`enable-upload-gallery-${j}`).checked) {
 			result.imagens.push("");
 			CUSTOM_UPLOADS.galeria.push({
-				file: getID(`upload-galeria-${j}`)?.files[0],
+				file: getID(`upload-gallery-${j}`)?.files[0],
 				position: j,
 			});
 		} else {
-			result.imagens.push(getID(`link-galeria-${j}`).value);
+			result.imagens.push(getID(`link-gallery-${j}`).value);
 		}
 	}
 
@@ -41,7 +41,7 @@ export function getGaleriaObject() {
 }
 
 function deleteGaleria(i) {
-	const id = `galeria-${i}`;
+	const id = `gallery-${i}`;
 	removeImageSelectorListeners(id);
 	const div = getID(id);
 	div.parentNode.removeChild(div);
@@ -50,17 +50,17 @@ function deleteGaleria(i) {
 // Listeners
 export function loadGaleriaListeners(j) {
 	// Dynamic Title
-	getID(`galeria-titulo-${j}`).addEventListener(
+	getID(`gallery-title-${j}`).addEventListener(
 		"change",
 		() =>
-			(getID(`galeria-title-${j}`).innerText = getID(
-				`galeria-titulo-${j}`,
+			(getID(`gallery-title-${j}`).innerText = getID(
+				`gallery-title-${j}`,
 			).value),
 	);
 
 // Link Validation
-	getID(`link-galeria-${j}`).addEventListener("change", () =>
-		validateImageLink(`link-galeria-${j}`),
+	getID(`link-gallery-${j}`).addEventListener("change", () =>
+		validateImageLink(`link-gallery-${j}`),
 	);
 }
 

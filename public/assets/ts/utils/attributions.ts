@@ -54,7 +54,7 @@ export function openAttributions() {
 	}
 
 	function getBackground() {
-		return `<strong>${translate("labels.image.background")}: </strong> <a href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-mapa-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph" target="_blank">jcomp</a> (Freepik)`;
+		return `<strong>${translate("labels.image.background")}: </strong> <a href="https://br.freepik.com/fotos-gratis/femininos-turistas-na-mao-tem-um-map-de-viagem-feliz_3953407.htm#query=viagem&position=14&from_view=search&track=sph" target="_blank">jcomp</a> (Freepik)`;
 	}
 
 	function getForms() {

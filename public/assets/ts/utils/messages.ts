@@ -530,7 +530,7 @@ export function handleMessageKeydown(e) {
 		}
 
 		// fallback: close icon (only if not critical)
-		const container = document.querySelector(".message-container, .programacao-container, .destinos-container, .input-container");
+		const container = document.querySelector(".message-container, .itinerary-container, .destinations-container, .input-container");
 		if (container && !container.classList.contains("critical-message")) {
 			e.preventDefault();
 			closeMessage();

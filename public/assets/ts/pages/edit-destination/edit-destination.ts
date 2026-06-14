@@ -64,7 +64,7 @@ function loadHabilitados() {
 	loadEditModule("lojas");
 	loadEditModule("mapa");
 
-	const mapa = getID("habilitado-mapa");
+	const mapa = getID("map-enabled");
 	mapa.addEventListener("change", function () {
 		if (mapa.checked) {
 			setRequired("mapa-link");
@@ -141,16 +141,16 @@ function loadEventListeners() {
 		}
 	});
 
-	getID("moeda").addEventListener("change", () => {
-		if (getID("moeda").value == "outra") {
-			getID("outra-moeda").style.display = "block";
+	getID("currency").addEventListener("change", () => {
+		if (getID("currency").value == "outra") {
+			getID("other-currency").style.display = "block";
 		} else {
-			getID("outra-moeda").style.display = "none";
+			getID("other-currency").style.display = "none";
 		}
 		loadCurrencySelects();
 	});
 
-	getID("outra-moeda").addEventListener("change", () => {
+	getID("other-currency").addEventListener("change", () => {
 		loadCurrencySelects();
 	});
 
@@ -212,8 +212,8 @@ export function addDestinationsListeners(categoria, j) {
 	getID(`${categoria}-website-${j}`).addEventListener("change", () =>
 		validateLink(`${categoria}-website-${j}`),
 	);
-	getID(`${categoria}-mapa-${j}`).addEventListener("change", () =>
-		validateMapLink(`${categoria}-mapa-${j}`),
+	getID(`${categoria}-map-${j}`).addEventListener("change", () =>
+		validateMapLink(`${categoria}-map-${j}`),
 	);
 	getID(`${categoria}-instagram-${j}`).addEventListener("change", () =>
 		validateInstagramLink(`${categoria}-instagram-${j}`),
@@ -327,12 +327,12 @@ export function moveDestination(j, categoria) {
 			nome: getID(`${categoria}-nome-${j}`).value,
 			emoji: getID(`${categoria}-emoji-${j}`).value,
 			website: getID(`${categoria}-website-${j}`).value,
-			mapa: getID(`${categoria}-mapa-${j}`).value,
+			mapa: getID(`${categoria}-map-${j}`).value,
 			instagram: getID(`${categoria}-instagram-${j}`).value,
 			regiao: getID(`${categoria}-regiao-select-${j}`).value,
 			valor: getID(`${categoria}-valor-${j}`).value,
 			midia: getID(`${categoria}-midia-${j}`).value,
-			nota: getID(`${categoria}-nota-${j}`).value,
+			nota: getID(`${categoria}-rating-${j}`).value,
 		};
 
 		const newJ = getLastJ(`${newCategoria}-box`) + 1;
@@ -352,13 +352,13 @@ export function moveDestination(j, categoria) {
 
 		updateDescriptionButtonLabel(newCategoria, newJ);
 
-		if (getID(`habilitado-${newCategoria}-content`).children.length === 1) {
-			getID(`habilitado-${newCategoria}`).checked = true;
+		if (getID(`enabled-${newCategoria}-content`).children.length === 1) {
+			getID(`enabled-${newCategoria}`).checked = true;
 			showContent(newCategoria);
 		}
 
-		if (getID(`habilitado-${categoria}-content`).children.length === 0) {
-			getID(`habilitado-${categoria}`).checked = false;
+		if (getID(`enabled-${categoria}-content`).children.length === 0) {
+			getID(`enabled-${categoria}`).checked = false;
 			hideContent(categoria);
 		}
 	}
@@ -367,7 +367,7 @@ export function moveDestination(j, categoria) {
 }
 
 export function deleteDestino() {
-	const name = getID("titulo").value;
+	const name = getID("title").value;
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.titulo = translate("destination.delete.title");

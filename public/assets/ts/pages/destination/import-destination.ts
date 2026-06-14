@@ -49,13 +49,13 @@ function importFillEditFields(j, data, force) {
 
 	setValue(`editar-nome-${j}`, data.nome);
 	setValue(`editar-emoji-${j}`, data.emoji);
-	setValue(`editar-mapa-${j}`, data.mapa);
+	setValue(`editar-map-${j}`, data.mapa);
 	setValue(`editar-instagram-${j}`, data.instagram);
 	setValue(`editar-website-${j}`, data.website);
 	setValue(`editar-midia-${j}`, data.midia);
 
 	// nota (select)
-	const notaEl = document.getElementById(`editar-nota-${j}`) as HTMLSelectElement;
+	const notaEl = document.getElementById(`editar-rating-${j}`) as HTMLSelectElement;
 	if (notaEl) {
 		if (force || (data.nota !== undefined && data.nota !== null && data.nota !== "")) {
 			notaEl.value = data.nota === "?" ? "default" : data.nota;
@@ -74,8 +74,8 @@ function importFillEditFields(j, data, force) {
 
 	// descricao
 	if (data.descricao) {
-		if (force || data.descricao.en) setValue(`editar-descricao-en-${j}`, data.descricao.en || "");
-		if (force || data.descricao.pt) setValue(`editar-descricao-pt-${j}`, data.descricao.pt || "");
+		if (force || data.descricao.en) setValue(`editar-description-en-${j}`, data.descricao.en || "");
+		if (force || data.descricao.pt) setValue(`editar-description-pt-${j}`, data.descricao.pt || "");
 	}
 }
 

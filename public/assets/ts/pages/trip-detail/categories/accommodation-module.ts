@@ -24,7 +24,7 @@ export function loadAccommodations() {
 	buildHospedagensSwiper(swiperData);
 
 	for (let j = 1; j <= getState().hospedagens.length; j++) {
-		loadImageLightbox(`hospedagens-galeria-${j}`);
+		loadImageLightbox(`accommodations-gallery-${j}`);
 	}
 
 	autoNavigateHospedagens();
@@ -46,7 +46,7 @@ function getAccommodationsHTML(i, innerItinerary = false) {
 	};
 
 	if (innerItinerary) {
-		return getHotelBoxHTML(hospedagem, "inner-programacao", true);
+		return getHotelBoxHTML(hospedagem, "inner-itinerary", true);
 	}
 
 	const j = i + 1;
@@ -63,7 +63,7 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
 	const checkOut = hospedagem.checkOut;
 	const galeriaId = innerItinerary
 		? "programacao-galeria"
-		: `hospedagens-galeria-${j}`;
+		: `accommodations-gallery-${j}`;
 	const isSensitive = getState().pin === "sensitive-only";
 	const reservationClass = isSensitive
 		? "hotel-reservation sensitive"
@@ -78,7 +78,7 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
 		galeriaItems += `<a href="${imagem.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${imagem.descricao}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ""}</a>`;
 	}
 
-	return `<div class="hotel-box${innerItinerary ? "-inner inner-programacao-item" : ""}" id="hospedagens-box-${j}${innerItinerary ? "-inner" : ""}">
+	return `<div class="hotel-box${innerItinerary ? "-inner inner-itinerary-item" : ""}" id="hospedagens-box-${j}${innerItinerary ? "-inner" : ""}">
             <div class="portfolio-wrap" style="display: ${imagens.length > 0 ? "block" : "none"};">
               <div class="hotel-img" style="background-image: url('${imagens?.[0]?.link}');">
                 <div class="portfolio-info">

@@ -234,10 +234,10 @@ export function isModalOpen(modalID = "modal") {
 
 // ======= Edit Pages =======
 export function loadEditModule(categoria, addFn?: () => void) {
-	const habilitado = getID(`habilitado-${categoria}`);
+	const habilitado = getID(`enabled-${categoria}`);
 	if (habilitado.checked) {
 		showContent(categoria);
-		if (!getID(`habilitado-${categoria}-content`).innerText) {
+		if (!getID(`enabled-${categoria}-content`).innerText) {
 			// Prefer the directly-passed function (avoids circular dependency issues);
 			// fall back to _exports lookup for backward compat.
 			const type = firstCharToUpperCase(categoria).trim();
@@ -259,12 +259,12 @@ export function loadEditModule(categoria, addFn?: () => void) {
 }
 
 export function loadListener(categoria, addFn?: () => void) {
-	const habilitado = getID(`habilitado-${categoria}`);
+	const habilitado = getID(`enabled-${categoria}`);
 	habilitado.addEventListener("change", function () {
 		if (habilitado.checked) {
 			showContent(categoria);
 			const box = getID(`${categoria}-box`);
-			const habilitadoContent = getID(`habilitado-${categoria}-content`);
+			const habilitadoContent = getID(`enabled-${categoria}-content`);
 
 			if (
 				(box && !box.innerText) ||
@@ -284,10 +284,10 @@ export function loadListener(categoria, addFn?: () => void) {
 }
 
 export function showContent(type) {
-	const habilitadoContent = getID(`habilitado-${type}-content`);
+	const habilitadoContent = getID(`enabled-${type}-content`);
 	habilitadoContent.style.display = "block";
 
-	const adicionarBox = getID(`${type}-adicionar-box`);
+	const adicionarBox = getID(`${type}-add-box`);
 	if (adicionarBox) {
 		adicionarBox.style.display = "block";
 	}
@@ -303,10 +303,10 @@ export function showContent(type) {
 }
 
 export function hideContent(type) {
-	const habilitadoContent = getID(`habilitado-${type}-content`);
+	const habilitadoContent = getID(`enabled-${type}-content`);
 	habilitadoContent.style.display = "none";
 
-	const adicionarBox = getID(`${type}-adicionar-box`);
+	const adicionarBox = getID(`${type}-add-box`);
 	if (adicionarBox) {
 		adicionarBox.style.display = "none";
 	}
@@ -335,11 +335,11 @@ export function toggleFadingVisibility(id = "copy-msg") {
 }
 
 export function searchDestinationsListenerAction() {
-	const search = getID("destinos-search").value.toLowerCase();
-	const container = getID("destinos-checkboxes");
+	const search = getID("destinations-search").value.toLowerCase();
+	const container = getID("destinations-checkboxes");
 
-	for (const card of container.querySelectorAll(".destino-card")) {
-		const name = card.querySelector(".destino-card-name")?.textContent?.toLowerCase() || "";
+	for (const card of container.querySelectorAll(".destination-card")) {
+		const name = card.querySelector(".destination-card-name")?.textContent?.toLowerCase() || "";
 		(card as HTMLElement).style.display = name.includes(search) ? "" : "none";
 	}
 }

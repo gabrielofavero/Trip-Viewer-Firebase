@@ -13,7 +13,7 @@ export function snapshotFormState(root = document) {
 
 	ORIGINAL_STATE.clear();
 
-	const fields = root.querySelectorAll("input, textarea, select, .input-botao");
+	const fields = root.querySelectorAll("input, textarea, select, .input-button");
 
 	fields.forEach((el) => {
 		ORIGINAL_STATE.set(el, {

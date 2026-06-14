@@ -46,24 +46,24 @@
 
           <div class="nice-form-group">
             <label data-translate="labels.title"></label>
-            <input required id="titulo" type="text" data-translate="listing.title_placeholder" />
+            <input required id="title" type="text" data-translate="listing.title_placeholder" />
           </div>
 
           <div class="nice-form-group">
             <label><span data-translate="labels.subtitle"></span> <span class="opcional">(<span
                   data-translate="labels.optional"></span>)</span></label>
-            <input id="subtitulo" type="text" data-translate="listing.subtitle_placeholder" />
+            <input id="subtitle" type="text" data-translate="listing.subtitle_placeholder" />
           </div>
 
           <div class="nice-form-group">
             <label><span data-translate="labels.description.title"></span> <span class="opcional">(<span
                   data-translate="labels.optional"></span>)</span></label>
-            <textarea id="descricao" rows="3" data-translate="listing.description_placeholder"></textarea>
+            <textarea id="description" rows="3" data-translate="listing.description_placeholder"></textarea>
           </div>
 
           <div class="nice-form-group">
-            <input id="exibir-em-destinos" type="checkbox" class="switch" checked="">
-            <label id="exibir-em-destinos-label" for="exibir-em-destinos">
+            <input id="show-in-destinations" type="checkbox" class="switch" checked="">
+            <label id="show-in-destinations-labelfor="show-in-destinations"s">
               <span data-translate="listing.last_update.title"></span>
               <small data-translate="listing.last_update.description"></small>
             </label>
@@ -109,17 +109,17 @@
             <div class="nice-form-group customization-box" id="background-box">
               <label><span data-translate="labels.wallpaper"></span> <span class="opcional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-background" class="imagem-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
+              <input id="upload-background" class="image-uploadbox" type="file" accept=".jpg, .jpeg, .png" />
               <p id="upload-background-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-background" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-background" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-background">
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-background">
               <div class="modern-radio-group">
                 <div class="nice-form-group">
                   <input type="radio" name="type-background" id="enable-link-background" checked>
@@ -143,24 +143,24 @@
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-light" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-logo-light" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
             <div class="nice-form-group customization-box">
               <label><span data-translate="labels.customization.images.logo_dark"></span> <span class="opcional">(<span
                     data-translate="labels.optional"></span>)</span></label>
-              <input id="upload-logo-dark" class="imagem-uploadbox" type="file" accept=".png" />
+              <input id="upload-logo-dark" class="image-uploadbox" type="file" accept=".png" />
               <p id="upload-logo-dark-size-message" class="message-text"> <i class='red'>*</i> <span
                   data-translate="labels.image.upload_limit"></span></p>
             </div>
 
             <div class="nice-form-group">
-              <input id="link-logo-dark" class="imagem-input" type="url" data-translate="labels.image.placeholder"
+              <input id="link-logo-dark" class="image-input" type="url" data-translate="labels.image.placeholder"
                 value="" class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group imagem-checkbox" id="upload-checkbox-logo">
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-logo">
               <div class="modern-radio-group">
                 <div class="nice-form-group">
                   <input type="radio" name="type-logo" id="enable-link-logo" checked>
@@ -177,7 +177,7 @@
           </div>
 
           <div class="nice-form-group">
-            <input id="habilitado-cores" type="checkbox" id="check-4" class="switch" />
+            <input id="colors-enabled" type="checkbox" id="check-4" class="switch" />
             <label for="check-4">
               <span data-translate="labels.customization.colors.title"></span>
               <small data-translate="listing.customization.colors"></small>
@@ -282,7 +282,7 @@
         </section>
 
         <section data-category="destinos">
-          <div class="href-target" id="destinos"></div>
+          <div class="href-target" id="destinations"></div>
           <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
               <path fill="currentColor"
@@ -293,17 +293,17 @@
           </h1>
           <p data-translate="destination.subtitle"></p>
 
-          <div id="habilitado-destinos-content">
-            <div class="nice-form-group" id="sem-destinos">
+          <div id="destinations-enabled-content">
+            <div class="nice-form-group" id="no-destinations">
               <input type="text" readonly data-translate="destination.nothing" />
             </div>
-            <div id="com-destinos" style="display: none">
+            <div id="has-destinations" style="display: none">
               <div class="nice-form-group">
-                <input type="search" id="destinos-search" data-translate="labels.search" value="">
+                <input type="search" id="destinations-search" data-translate="labels.search" value="">
               </div>
-              <div class="destinos-cards" id="destinos-checkboxes"></div>
+              <div class="destinations-carid="destinations-checkboxes"xes"></div>
             </div>
-            <div id="todos-destinos-utilizados" class="message-text"> <i class='red'>*</i> <span
+            <div id="all-destinations-used" class="message-text"> <i class='red'>*</i> <span
                 data-translate="destination.all_used"></span></div>
           </div>
         </section>

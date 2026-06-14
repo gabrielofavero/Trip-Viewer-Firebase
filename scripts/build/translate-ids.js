@@ -476,17 +476,17 @@ function processTS(filePath) {
         }
       }
 
-      // Sort by index descending (longer matches take priority at same index)
+      // Sort by length descending first (longer prefixes win), then by index
       allReplacements.sort((a, b) => {
-        if (a.index !== b.index) return b.index - a.index;
-        return b.length - a.length;
+        if (a.length !== b.length) return b.length - a.length;
+        return b.index - a.index;
       });
 
-      // Deduplicate overlapping replacements
+      // Deduplicate overlapping replacements (bidirectional interval overlap)
       const applied = [];
       for (const rpl of allReplacements) {
         const overlaps = applied.some(
-          a => rpl.index >= a.index && rpl.index < a.index + a.length
+          a => rpl.index < a.index + a.length && rpl.index + rpl.length > a.index
         );
         if (!overlaps) {
           applied.push(rpl);
