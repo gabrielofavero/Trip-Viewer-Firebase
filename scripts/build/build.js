@@ -42,39 +42,6 @@ function copyRecursive(src, dest) {
 function build() {
   const start = Date.now();
 
-  // 0. Type-check TypeScript (blocks build on errors)
-  console.log("[build] Type-checking TypeScript...");
-  try {
-    execSync(`"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit`, {
-      cwd: ROOT,
-      stdio: "inherit",
-    });
-  } catch {
-    // Collect per-file error summary from tsc (--pretty false for machine-parseable output)
-    try {
-      execSync(
-        `"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit --pretty false`,
-        { cwd: ROOT, stdio: "pipe" }
-      );
-    } catch (e) {
-      const output = (e.stdout || "") + (e.stderr || "");
-      const errorLines = output.split("\n").filter(l => l.includes("error TS"));
-      if (errorLines.length > 0) {
-        const files = new Set();
-        for (const line of errorLines) {
-          const m = line.match(/^(.+?)\(\d+/);
-          if (m) files.add(m[1]);
-        }
-        if (files.size > 0) {
-          console.error("\n[build] Files with errors:");
-          for (const f of files) console.error(`  • ${f}`);
-        }
-      }
-    }
-    console.error("\n[build] ❌ Build aborted — TypeScript errors found. Fix them and try again.");
-    process.exit(1);
-  }
-
   // 1. Clean dist/
   fs.rmSync(DIST_DIR, { recursive: true, force: true });
 
@@ -129,11 +96,58 @@ function build() {
     console.warn("[build] WARNING: index.js not found at project root.");
   }
 
-  const elapsed = Date.now() - start;
-  console.log(`[build] Done in ${elapsed}ms.`);
-
-  // Signal live-reload clients (polling-based, no proxy needed)
+  // Signal live-reload clients immediately after compilation (before slow type-check)
   fs.writeFileSync(path.join(DIST_DIR, "reload"), String(Date.now()));
+
+  const elapsed = Date.now() - start;
+  console.log(`[build] Compiled in ${elapsed}ms.`);
+
+  // 4. Type-check TypeScript (runs after compilation so reload isn't blocked)
+  console.log("[build] Type-checking TypeScript...");
+  typeCheck();
+}
+
+/**
+ * Run tsc --noEmit. In one-shot mode, aborts on errors.
+ * In watch mode, only reports errors (non-blocking).
+ */
+function typeCheck() {
+  try {
+    execSync(`"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit`, {
+      cwd: ROOT,
+      stdio: "inherit",
+    });
+    console.log("[build] Type-check passed.");
+  } catch {
+    // Collect per-file error summary from tsc (--pretty false for machine-parseable output)
+    try {
+      execSync(
+        `"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit --pretty false`,
+        { cwd: ROOT, stdio: "pipe" }
+      );
+    } catch (e) {
+      const output = (e.stdout || "") + (e.stderr || "");
+      const errorLines = output.split("\n").filter(l => l.includes("error TS"));
+      if (errorLines.length > 0) {
+        const files = new Set();
+        for (const line of errorLines) {
+          const m = line.match(/^(.+?)\(\d+/);
+          if (m) files.add(m[1]);
+        }
+        if (files.size > 0) {
+          console.error("\n[build] Files with TypeScript errors:");
+          for (const f of files) console.error(`  • ${f}`);
+        }
+      }
+    }
+
+    if (watchMode) {
+      console.error("[build] ⚠ TypeScript errors found (page already reloaded).");
+    } else {
+      console.error("\n[build] ❌ Build aborted — TypeScript errors found. Fix them and try again.");
+      process.exit(1);
+    }
+  }
 }
 
 // --- Watch mode ---

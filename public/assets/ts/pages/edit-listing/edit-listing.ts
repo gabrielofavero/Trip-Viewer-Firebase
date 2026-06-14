@@ -22,6 +22,8 @@ import { loadListData } from "./existing-listing.js";
 import { autoFillDarkColor } from "../edit-trip/categories/customization.js";
 import { loadDestinations } from "../edit-trip/new-trip.js";
 import { setDocumento } from "../../utils/set.js";
+import { initEditTabs } from "../../ui/edit-tabs.js";
+import { enhanceAllColorPickers } from "../../ui/color-picker-hex.js";
 
 export async function loadEditListingPage() {
 	loadEditListingListeners();
@@ -33,10 +35,11 @@ export async function loadEditListingPage() {
 	PERMISSOES = await getPermissoes();
 
 	loadVisibilityIndex();
+	initEditTabs();
 	loadHabilitados();
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA.destinos));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinos || []));
 
 	if (DOCUMENT_ID) {
 		await carregarListagem();
@@ -50,6 +53,8 @@ export async function loadEditListingPage() {
 	loadEventListeners();
 	stopLoadingScreen();
 	snapshotFormState();
+
+	enhanceAllColorPickers();
 
 	$("body").css("overflow", "auto");
 }

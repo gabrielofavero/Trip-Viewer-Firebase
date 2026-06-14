@@ -9,10 +9,11 @@ import { DESTINATIONS } from '../../data/state.js';
 import { loadTransportationListeners, loadTransportationVisibility, applyTransportationTypeVisualization, updateTransportationTitle } from './categories/transportation.js';
 import { loadAccommodationListeners, ACCOMMODATION_IMAGES, removeAccommodationImages } from './categories/accommodation.js';
 import { addRemoveTransportationListener } from './support/event-listeners.js';
-import { getDestinationsItemCheckbox, getActiveDestinationsSelectVisibility, getActiveDestinationsCheckboxOptions } from './categories/destination.js';
+import { DateRangePicker } from '../../ui/date-range-picker.js';
+import { getDestinationsItemCheckbox, getActiveDestinationsSelectVisibility, getActiveDestinationsCheckboxOptions, getDestinationsItemCard, getActiveDestinationsCardOptions } from './categories/destination.js';
 import { loadGaleriaListeners } from './categories/gallery.js';
 import { getItineraryTitleSelectOptions, loadItineraryListeners, updateItineraryTitle, reloadItinerary } from './categories/itinerary-module/itinerary-module.js';
-import { updateDestinosAtivosHTMLs } from "./categories/destination.js";
+import { updateDestinosAtivosHTMLs, reorganizeDestinosCheckbox } from "./categories/destination.js";
 import { addRemoveGaleriaListener } from "./support/event-listeners.js";
 
 export var DATAS = [];
@@ -61,19 +62,21 @@ export function addTransportation() {
             </div>
 
             <fieldset class="nice-form-group" id="idaVolta-box-${j}">
-              <div class="nice-form-group" style="margin-top: -15px">
-                <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${j === 1 ? "checked" : ""} />
-                <label for="ida-${j}">${translate("trip.transportation.departure")}</label>
-              </div>
-    
-              <div class="nice-form-group">
-                <input type="radio" name="idaVolta-${j}" id="durante-${j}"/>
-                <label for="durante-${j}">${translate("trip.transportation.during")}</label>
-              </div>
-    
-              <div class="nice-form-group">
-                <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${j != 1 ? "checked" : ""} />
-                <label for="volta-${j}">${translate("trip.transportation.return")}</label>
+              <div class="modern-radio-group">
+                <div class="nice-form-group">
+                  <input type="radio" name="idaVolta-${j}" id="ida-${j}" ${j === 1 ? "checked" : ""} />
+                  <label for="ida-${j}">${translate("trip.transportation.departure")}</label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="idaVolta-${j}" id="durante-${j}"/>
+                  <label for="durante-${j}">${translate("trip.transportation.during")}</label>
+                </div>
+
+                <div class="nice-form-group">
+                  <input type="radio" name="idaVolta-${j}" id="volta-${j}" ${j != 1 ? "checked" : ""} />
+                  <label for="volta-${j}">${translate("trip.transportation.return")}</label>
+                </div>
               </div>
             </fieldset>
 
@@ -93,22 +96,21 @@ export function addTransportation() {
               <input id="ponto-chegada-${j}" type="text" placeholder="Las Vegas" />
             </div>
     
-            <div class="side-by-side-box">
-              <div class="nice-form-group side-by-side">
-                <label>${translate("trip.transportation.departure")}</label>
-                <input required class="flex-input" id="partida-${j}" type="date" />
-              </div>
-              <div class="nice-form-group side-by-side">
-                <input required class="flex-input mini-box" id="partida-horario-${j}" type="time" value="00:00" />
+            <div class="nice-form-group">
+              <label>${translate("trip.transportation.duration")}</label>
+              <div class="date-range-picker" id="transporte-duration-${j}">
+                <input type="hidden" id="partida-${j}" />
+                <input type="hidden" id="chegada-${j}" />
               </div>
             </div>
     
             <div class="side-by-side-box">
               <div class="nice-form-group side-by-side">
-                <label>${translate("trip.transportation.arrival")}</label>
-                <input required class="flex-input" id="chegada-${j}" type="date" />
+                <label>${translate("trip.transportation.departure_time")}</label>
+                <input required class="flex-input mini-box" id="partida-horario-${j}" type="time" value="00:00" />
               </div>
               <div class="nice-form-group side-by-side">
+                <label>${translate("trip.transportation.arrival_time")}</label>
                 <input required class="flex-input mini-box" id="chegada-horario-${j}" type="time" value="00:30" />
               </div>
             </div>
@@ -173,6 +175,10 @@ export function addTransportation() {
 				: getID(`chegada-${j - 1}`).value;
 	getID(`chegada-${j}`).value = getID(`partida-${j}`).value;
 
+	// Initialize date range picker for this transportation
+	const transportDurPicker = getID(`transporte-duration-${j}`);
+	if (transportDurPicker) new DateRangePicker(transportDurPicker);
+
 	loadTransportationListeners(j);
 	loadTransportationVisibility(j);
 	applyTransportationTypeVisualization(j);
@@ -233,22 +239,21 @@ export function addHospedagens() {
               <input id="hospedagens-endereco-${j}" type="text" placeholder="${translate("trip.accommodation.address_placeholder")}" />
             </div>
     
-            <div class="side-by-side-box">
-              <div class="nice-form-group side-by-side">
-                <label>${translate("trip.accommodation.checkin")}</label>
-                <input class="flex-input" id="check-in-${j}" type="date" value="${inicioFim.inicio}" />
-              </div>
-              <div class="nice-form-group side-by-side">
-                <input class="flex-input mini-box" id="check-in-horario-${j}" type="time" value="14:00" />
+            <div class="nice-form-group">
+              <label>${translate("trip.accommodation.stay_duration")}</label>
+              <div class="date-range-picker" id="hospedagens-duration-${j}">
+                <input type="hidden" id="check-in-${j}" value="${inicioFim.inicio}" />
+                <input type="hidden" id="check-out-${j}" value="${inicioFim.fim}" />
               </div>
             </div>
     
             <div class="side-by-side-box">
               <div class="nice-form-group side-by-side">
-                <label>${translate("trip.accommodation.checkout")}</label>
-                <input class="flex-input" id="check-out-${j}" type="date" value="${inicioFim.fim}" />
+                <label>${translate("trip.accommodation.checkin_time")}</label>
+                <input class="flex-input mini-box" id="check-in-horario-${j}" type="time" value="14:00" />
               </div>
               <div class="nice-form-group side-by-side">
+                <label>${translate("trip.accommodation.checkout_time")}</label>
                 <input class="flex-input mini-box" id="check-out-horario-${j}" type="time" value="12:00" />
               </div>
             </div>
@@ -294,6 +299,11 @@ export function addHospedagens() {
 
 	getID(`hospedagens-id-${j}`).value = getCategoryID("hospedagens", j);
 	addRemoveChildListener("hospedagens", j, () => removeAccommodationImages(j));
+
+	// Initialize date range picker for this accommodation
+	const hospDurPicker = getID(`hospedagens-duration-${j}`);
+	if (hospDurPicker) new DateRangePicker(hospDurPicker);
+
 	loadAccommodationListeners(j);
 	ACCOMMODATION_IMAGES[j] = [];
 }
@@ -301,30 +311,33 @@ export function addHospedagens() {
 export function loadDestinations() {
 	if (!DESTINATIONS || DESTINATIONS.length === 0) return;
 
-	let destinations = DESTINATIONS;
+	let destinations = [...DESTINATIONS];
 	destinations.sort((a, b) => a.titulo.localeCompare(b.titulo));
 	getID("sem-destinos").style.display = "none";
 	getID("com-destinos").style.display = "block";
 
-	const fieldset = getID("destinos-checkboxes");
-	fieldset.innerHTML = "";
-	for (let j = 1; j <= destinations.length; j++) {
-		const i = j - 1;
-		fieldset.innerHTML += getDestinationsItemCheckbox(
-			j,
-			destinations[i].id,
-			destinations[i].titulo,
-		);
+	const container = getID("destinos-checkboxes");
+	container.innerHTML = "";
+	for (const destino of destinations) {
+		container.innerHTML += getDestinationsItemCard(destino.id, destino.titulo);
+	}
+
+	// Card click: toggle selected, move to top of selected group
+	for (const card of container.querySelectorAll(".destino-card")) {
+		card.addEventListener("click", () => {
+			card.classList.toggle("selected");
+			// Move clicked card to top of selected group
+			if (card.classList.contains("selected")) {
+				container.prepend(card);
+			}
+			reorganizeDestinosCheckbox();
+			updateDestinosAtivosHTMLs();
+		});
 	}
 
 	getID("habilitado-destinos")?.addEventListener("change", () =>
 		updateDestinosAtivosHTMLs(),
 	);
-	for (const child of getChildIDs("destinos-checkboxes")) {
-		getID(`check-destinos-${getJ(child)}`).addEventListener("change", () =>
-			updateDestinosAtivosHTMLs(),
-		);
-	}
 }
 
 export function loadItinerarySchedule() {
@@ -358,9 +371,9 @@ export function loadItinerarySchedule() {
 
           <div class="nice-form-group" id="programacao-local-box-${j}" style="display: ${getActiveDestinationsSelectVisibility()}">
             <label>${translate("destination.title")}<span class="opcional"> (${translate("labels.optional")})</span></label>
-            <fieldset class="nice-form-group destinos-checkboxes" id="programacao-local-${j}">
-              ${getActiveDestinationsCheckboxOptions("programacao", j)}
-            </fieldset>
+            <div class="destinos-cards itinerario-cards" id="programacao-local-${j}">
+              ${getActiveDestinationsCardOptions("programacao", j)}
+            </div>
           </div>
 
           <div class="nice-form-group">
@@ -419,6 +432,17 @@ export function loadItinerarySchedule() {
 		getID(`programacao-inner-title-${j}`).addEventListener("change", () =>
 			updateItineraryTitle(j),
 		);
+		// Card click for itinerary destination cards
+		const localContainer = getID(`programacao-local-${j}`);
+		for (const card of localContainer.querySelectorAll(".destino-card")) {
+			card.addEventListener("click", () => {
+				card.classList.toggle("selected");
+				if (card.classList.contains("selected")) {
+					localContainer.prepend(card);
+				}
+				updateItineraryTitle(j);
+			});
+		}
 		loadItineraryListeners(j);
 	}
 

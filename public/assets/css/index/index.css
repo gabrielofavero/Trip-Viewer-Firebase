@@ -152,8 +152,10 @@
 }
 .category-tab:hover { color: var(--text-primary); background: rgba(0,0,0,0.03); }
 .category-tab.active {
-	background: #fafafa; color: var(--theme-color);
+	background: rgba(var(--theme-color-rgb), 0.1);
+	color: var(--theme-color);
 	box-shadow: var(--shadow-sm);
+	font-weight: 700;
 }
 
 /*--------------------------------------------------------------
@@ -418,6 +420,13 @@ body.dialog-open { overflow: hidden; }
 .modal-body { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
 .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
 .modal-actions .btn { min-width: 100px; }
+
+/* Button box (message modals) */
+.button-box {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
 
 /*--------------------------------------------------------------
 # Language Selector

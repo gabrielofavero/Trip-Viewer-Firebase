@@ -8,7 +8,7 @@ import { getURLParam } from "../../utils/dom.js";
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, setErrorFromGetRequest } from '../state.js';
 
 const DATABASE_TRIP_DOCUMENTS = ["viagens", "destinos", "listagens"];
-const DATABASE_EDITABLE_DOCUMENTS = [
+export const DATABASE_EDITABLE_DOCUMENTS = [
 	"viagens",
 	"destinos",
 	"listagens",

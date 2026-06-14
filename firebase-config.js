@@ -73,6 +73,27 @@ function _getOrInitApp() {
 
 const app = _getOrInitApp();
 
+// Connect to local emulators when running on localhost
+const _isLocalhost =
+	window?.location?.hostname === "localhost" ||
+	window?.location?.hostname === "127.0.0.1";
+
+if (_isLocalhost) {
+	try {
+		firebase.auth().useEmulator("http://localhost:9099");
+		console.log("[emulator] Auth connected on http://localhost:9099");
+	} catch (e) {
+		console.warn("[emulator] Auth emulator not available:", e.message);
+	}
+
+	try {
+		firebase.firestore().useEmulator("localhost", 8085);
+		console.log("[emulator] Firestore connected on localhost:8085");
+	} catch (e) {
+		console.warn("[emulator] Firestore emulator not available:", e.message);
+	}
+}
+
 export function startFirebase() {
 	let features = [
 		"auth",
