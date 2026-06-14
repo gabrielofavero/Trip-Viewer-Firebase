@@ -13,13 +13,14 @@ import { ITINERARY_HTML } from "../pages/itinerary/itinerary-formatter.js";
 import { getTimeStringFromDateObj } from "../utils/dates.js";
 import { getTurno } from "../pages/destination/categories.js";
 import { getScheduleTitle } from "../pages/trip-detail/categories/itinerary-module/inner-itinerary.js";
+import type { ItineraryDay, PeriodItem } from './new-schema.js';
 
 // ======= Itinerary Content Generator (Multi-format) =======
 
-let ITINERARY;
-var FIRESTORE_PROTECTED_DATA;
+let ITINERARY: any[];
+var FIRESTORE_PROTECTED_DATA: any;
 
-export async function getItineraryContent(type) {
+export async function getItineraryContent(type: string): Promise<string> {
 	const notPages = type != "pages";
 	if (notPages && ITINERARY_HTML[type]) {
 		return ITINERARY_HTML[type];
@@ -29,7 +30,7 @@ export async function getItineraryContent(type) {
 		ITINERARY = await getItineraryData();
 	}
 
-	const content = [];
+	const content: string[] = [];
 	const title = getTitle(type);
 
 	if (title) {
@@ -37,7 +38,7 @@ export async function getItineraryContent(type) {
 	}
 
 	for (const itinerary of ITINERARY) {
-		loadItineararyTitle(itinerary.title, type);
+		loadItineraryTitle(itinerary.title, type); // was "loadItineararyTitle"
 		for (const timeOfDay of getItinerary().timeofday) {
 			const timeOfDayData = itinerary[timeOfDay];
 			if (timeOfDayData.length === 0) continue;
@@ -60,18 +61,18 @@ export async function getItineraryContent(type) {
 	return result;
 
 	// Helpers
-	function getTitle(type) {
+	function getTitle(type: string): string {
 		switch (type) {
 			case "page":
 				return "";
 			case "notes":
-				return `<div style="font-size: 28px; font-weight: bold;">${getState().titulo}</div><br>`;
+				return `<div style="font-size: 28px; font-weight: bold;">${getState().title}</div><br>`; // was "titulo"
 			default:
-				return `*${getState().titulo.toUpperCase()}*`;
+				return `*${getState().title.toUpperCase()}*`; // was "titulo"
 		}
 	}
 
-	function loadItineararyTitle(value, type) {
+	function loadItineraryTitle(value: string, type: string): void { // was "loadItineararyTitle"
 		if (!value) {
 			return;
 		}
@@ -85,11 +86,12 @@ export async function getItineraryContent(type) {
 				);
 				break;
 			default:
-				return content.push(`\n*${value}*`);
+				content.push(`\n*${value}*`);
+				return;
 		}
 	}
 
-	function loadTimeOfDay(timeOfDayKey) {
+	function loadTimeOfDay(timeOfDayKey: string): void {
 		const timeOfDay = getTurno(timeOfDayKey);
 		switch (type) {
 			case "page":
@@ -99,11 +101,12 @@ export async function getItineraryContent(type) {
 				content.push(`<b>${timeOfDay}</b>`);
 				break;
 			default:
-				return content.push(`\n_${timeOfDay}_`);
+				content.push(`\n_${timeOfDay}_`);
+				return;
 		}
 	}
 
-	function loadInnerItinerary(innerItinerary, type) {
+	function loadInnerItinerary(innerItinerary: any, type: string): void {
 		switch (type) {
 			case "page":
 				loadHTMLInnerItineraryPage(innerItinerary, type);
@@ -115,7 +118,7 @@ export async function getItineraryContent(type) {
 				loadDefaultInnerItinerary(innerItinerary);
 		}
 
-		function loadHTMLInnerItineraryPage(innerItinerary, type) {
+		function loadHTMLInnerItineraryPage(innerItinerary: any, type: string): void {
 			const texts = innerItinerary.subItem?.texts ?? [];
 
 			if (texts.length === 0) {
@@ -132,7 +135,7 @@ export async function getItineraryContent(type) {
 			content.push(`</ul></li>`);
 		}
 
-		function loadHTMLInnerItineraryNotes(innerItinerary, type) {
+		function loadHTMLInnerItineraryNotes(innerItinerary: any, type: string): void {
 			content.push(
 				`<ul><li><div style="margin-left: 20px;">${getTextContent(innerItinerary, type)}</li></ul>`,
 			);
@@ -153,7 +156,7 @@ export async function getItineraryContent(type) {
 			content.push(`</div>`);
 		}
 
-		function loadDefaultInnerItinerary(innerItinerary) {
+		function loadDefaultInnerItinerary(innerItinerary: any): void {
 			content.push(`- ${getTextContent(innerItinerary)}`);
 			for (const text of innerItinerary.subItem.texts) {
 				content.push(`> ${getTextContent(text)}`);
@@ -161,7 +164,7 @@ export async function getItineraryContent(type) {
 		}
 
 		// Helpers
-		function getTextContent(textObj, type = "text") {
+		function getTextContent(textObj: any, type: string = "text"): string {
 			switch (type) {
 				case "page":
 				case "notes":
@@ -179,21 +182,21 @@ export async function getItineraryContent(type) {
 
 // ======= Itinerary Data Transformation =======
 
-export async function getItineraryData() {
+export async function getItineraryData(): Promise<any[]> {
 	ITINERARY = [];
-	for (const schedule of getState().programacoes) {
+	for (const schedule of getState().itinerary) { // was "programacoes"
 		const title = getItineraryTitle(schedule);
-		const earlyMorning = await getInnerItineraries(schedule.madrugada);
-		const morning = await getInnerItineraries(schedule.manha);
-		const afternoon = await getInnerItineraries(schedule.tarde);
-		const evening = await getInnerItineraries(schedule.noite);
+		const earlyMorning = await getInnerItineraries(schedule.earlyMorning); // was "madrugada"
+		const morning = await getInnerItineraries(schedule.morning);          // was "manha"
+		const afternoon = await getInnerItineraries(schedule.afternoon);      // was "tarde"
+		const evening = await getInnerItineraries(schedule.night);            // was "noite"
 
-		ITINERARY.push({ title, madrugada: earlyMorning, manha: morning, tarde: afternoon, noite: evening });
+		ITINERARY.push({ title, earlyMorning, morning, afternoon, night: evening }); // was "madrugada", "manha", "tarde", "noite"
 	}
 
 	return ITINERARY;
 
-	function getItineraryTitle(schedule) {
+	function getItineraryTitle(schedule: any): string {
 		let size = 0;
 		for (const timeofday of getItinerary().timeofday) {
 			size += schedule[timeofday].length;
@@ -203,26 +206,26 @@ export async function getItineraryData() {
 			return "";
 		}
 
-		const date = convertFromDateObject(schedule.data);
+		const date = convertFromDateObject(schedule.date); // was "data"
 		const dateTitle = getDateTitle(date, "weekday_day_month");
 
 		const title = getScheduleTitle(
-			schedule.titulo,
-			schedule.destinosIDs,
+			schedule.title,         // was "titulo"
+			schedule.destinationIds, // was "destinosIDs"
 			false,
 		);
 		return title ? `${title}: ${dateTitle}` : dateTitle;
 	}
 
-	async function getInnerItineraries(data) {
+	async function getInnerItineraries(data: any[]): Promise<any[]> {
 		if (data.length === 0) {
 			return [];
 		}
-		const innerItineraries = [];
+		const innerItineraries: any[] = [];
 		for (const rawData of data) {
 			const title = getInnerItineraryTitle(
 				rawData,
-				getState().pessoas || [],
+				getState().travelers || [], // was "pessoas"
 			);
 			const subItem = await getSubItem(rawData.item);
 			innerItineraries.push({
@@ -232,35 +235,35 @@ export async function getItineraryData() {
 		}
 		return innerItineraries;
 
-		async function getSubItem(item) {
-			let destinations;
-			if (item.tipo == "destinos") {
-				destinations = await getDestination(item.local);
+		async function getSubItem(item: any): Promise<any> {
+			let destinations: any;
+			if (item.type == "destination") { // was "tipo" == "destinos"
+				destinations = await getDestination(item.location); // was "local"
 			}
 			const card = getInnerItinerary(item, destinations);
 			const texts = await getInnerItineraryAssociatedTexts(item);
 			return { card, texts };
 		}
 
-		async function getInnerItineraryAssociatedTexts(item) {
-			const texts = [];
+		async function getInnerItineraryAssociatedTexts(item: any): Promise<any[]> {
+			const texts: any[] = [];
 
-			switch (item.tipo) {
-				case "transporte":
+			switch (item.type) { // was "tipo"
+				case "transportation": // was "transporte"
 					loadTransportation();
 					break;
-				case "hospedagens":
+				case "accommodation": // was "hospedagens"
 					loadAccommodationDetail();
 					break;
-				case "destinos":
+				case "destination": // was "destinos"
 					await loadDestinationDetail();
 			}
 
 			return texts;
 
-			function loadTransportation() {
-				const transportation = getState().transportes.dados.find(
-					(obj) => obj.id === item.id,
+			function loadTransportation(): void {
+				const transportation = getState().transportation?.legs?.find( // was "transportes.dados"
+					(obj: any) => obj.id === item.id,
 				);
 				if (!transportation) return;
 				loadTextObj(
@@ -271,76 +274,76 @@ export async function getItineraryData() {
 				loadTextObj("labels.reservation.title", getReservation());
 				loadTextObj("labels.company", getCompany());
 
-				function getTransportationType() {
-					const type = transportation.transporte;
-					if (!type) return;
+				function getTransportationType(): string {
+					const type = transportation.type; // was "transporte"
+					if (!type) return "";
 					const title = getTransportations().titulos[type];
 					return title ? translate(title) : type;
 				}
 
-				function getTimeWindow() {
-					const departure = transportation?.datas?.partida;
-					const arrival = transportation?.datas?.chegada;
+				function getTimeWindow(): string {
+					const departure = transportation?.dates?.departure; // was "datas.partida"
+					const arrival = transportation?.dates?.arrival;     // was "datas.chegada"
 					return departure && arrival
 						? `${getTimeStringFromDateObj(departure)} - ${getTimeStringFromDateObj(arrival)}`
 						: "";
 				}
 
-				function getReservation() {
-					const transporteProtegido =
-						FIRESTORE_PROTECTED_DATA?.transportes?.[item.id];
-					return transportation?.reserva || transporteProtegido?.reserva;
+				function getReservation(): string {
+					const protectedTransport =
+						FIRESTORE_PROTECTED_DATA?.transportation?.[item.id]; // was "transportes"
+					return transportation?.reservation || protectedTransport?.reservation; // was "reserva"
 				}
 
-				function getCompany() {
+				function getCompany(): string {
 					return (
-						getTransportations().empresas?.[transportation.transporte]?.[
-							transportation?.empresa
-						] || transportation?.empresa
+						getTransportations().empresas?.[transportation.type]?.[ // was "transporte"
+							transportation?.company // was "empresa"
+						] || transportation?.company // was "empresa"
 					);
 				}
 			}
 
-			function loadAccommodationDetail() {
-				const accommodation = getState().hospedagens.find(
-					(obj) => obj.id === item.id,
+			function loadAccommodationDetail(): void {
+				const accommodation = getState().accommodations?.find( // was "hospedagens"
+					(obj: any) => obj.id === item.id,
 				);
 				if (!accommodation) return;
 				const protectedAccommodation =
-					FIRESTORE_PROTECTED_DATA?.hospedagens?.[item.id];
+					FIRESTORE_PROTECTED_DATA?.accommodations?.[item.id]; // was "hospedagens"
 
-				const checkin = accommodation?.datas.checkin
-					? `${getTimeStringFromDateObj(accommodation.datas.checkin)}`
+				const checkin = accommodation?.dates?.checkIn // was "datas.checkin"
+					? `${getTimeStringFromDateObj(accommodation.dates.checkIn)}`
 					: "";
-				const checkout = accommodation?.datas.checkout
-					? `${getTimeStringFromDateObj(accommodation.datas.checkout)}`
+				const checkout = accommodation?.dates?.checkOut // was "datas.checkout"
+					? `${getTimeStringFromDateObj(accommodation.dates.checkOut)}`
 					: "";
-				loadTextObj("trip.accommodation.accommodation", accommodation.nome);
+				loadTextObj("trip.accommodation.accommodation", accommodation.name); // was "nome"
 				loadTextObj("trip.accommodation.checkin", checkin);
 				loadTextObj("trip.accommodation.checkout", checkout);
 				loadTextObj(
 					"labels.reservation.title",
-					accommodation?.reserva || protectedAccommodation?.reserva,
+					accommodation?.reservation || protectedAccommodation?.reservation, // was "reserva"
 				);
 			}
 
-			async function loadDestinationDetail() {
-				const destinations = await getDestination(item.local);
-				const destination = destinations?.[item?.categoria]?.[item.id];
+			async function loadDestinationDetail(): Promise<void> {
+				const destinations = await getDestination(item.location); // was "local"
+				const destination = destinations?.[item?.category]?.[item.id]; // was "categoria"
 				if (!destination) return;
 
-				const rating = getNotaTranslation(destination.nota);
+				const rating = getNotaTranslation(destination.rating); // was "nota"
 				const currencies = getCurrencies();
 				const price = getPriceValue(
 					destination,
-					currencies.escala[destinations.moeda],
-					currencies.simbolos[destinations.moeda],
+					currencies.escala[destinations.currency], // was "moeda"
+					currencies.simbolos[destinations.currency], // was "moeda"
 				);
 				loadTextObj("labels.priority", rating);
 				loadTextObj("labels.cost", price);
 			}
 
-			function loadTextObj(titleKey, content) {
+			function loadTextObj(titleKey: string, content: string): void {
 				if (!content) return;
 				const title = translate(titleKey);
 				texts.push({ title, content });

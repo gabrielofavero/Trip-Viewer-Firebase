@@ -7,24 +7,31 @@ import { getUserLanguage, translate } from '../i18n/translation.js';
 import { FIRESTORE_DESTINATIONS_DATA } from "../data/state.js";
 import { FILTER_SORT_KEYS_ORDER } from "../pages/destination/support/sort-and-filter/sort-and-filter.js";
 import { getPriceBuckets } from "../pages/destination/support/sort-and-filter/support/price-bucket.js";
+import type { PlaceItem } from './new-schema.js';
 
 // ======= Destination Value Formatting =======
 
-export function getNotaTranslation(nota) {
-	switch (nota) {
+/** @deprecated Use `getRatingTranslation` instead */
+export function getNotaTranslation(rating: string): string {
+	return getRatingTranslation(rating);
+}
+
+export function getRatingTranslation(rating: string): string {
+	switch (rating) {
 		case "5":
 		case "4":
 		case "3":
 		case "2":
 		case "1":
-			return translate(`destination.scores.${nota}`);
+			return translate(`destination.scores.${rating}`);
 		default:
 			return translate(`destination.scores.default`);
 	}
 }
 
-export function getPriceValue(item, values, currency) {
-	switch (item.valor) {
+export function getPriceValue(item: PlaceItem, values: Record<string, string>, currency: string): string {
+	const price = item.price; // was "valor"
+	switch (price) {
 		case "default":
 			return translate("destination.price.default");
 		case "-":
@@ -33,31 +40,31 @@ export function getPriceValue(item, values, currency) {
 		case "$$":
 		case "$$$":
 		case "$$$$":
-			return values[item.valor];
+			return values[price];
 		default:
-			if (item.valor) {
-				return convertCustomPrice(item.valor, currency);
+			if (price) {
+				return convertCustomPrice(price, currency);
 			}
 			return translate("destination.price.default");
 	}
 }
 
-export function convertCustomPrice(value, currency) {
-	if (isNaN(value) || (!isNaN(value) && !currency)) {
+export function convertCustomPrice(value: string, currency: string): string {
+	if (isNaN(Number(value)) || (!isNaN(Number(value)) && !currency)) {
 		return value;
 	} else return `${currency}${value}`;
 }
 
-export function getDescriptionValue(item) {
+export function getDescriptionValue(item: PlaceItem): string {
 	const lang = getUserLanguage();
-	return item.descricao?.[lang] || "";
+	return item.description?.[lang] || ""; // was "descricao"
 }
 
 // ======= Price Bucket Logic =======
 
-export function getPriceBucket(value) {
-	const moedas = getCurrencies();
-	const range = moedas.escala_numerica[FIRESTORE_DESTINATIONS_DATA.moeda];
+export function getPriceBucket(value: number): string {
+	const currencies = getCurrencies();
+	const range = currencies.escala_numerica[FIRESTORE_DESTINATIONS_DATA.currency]; // was "moeda"
 	if (isNaN(value)) return "default";
 	if (value === 0) return "-";
 	if (value >= range["$"][0] && value <= range["$"][1]) return "$";

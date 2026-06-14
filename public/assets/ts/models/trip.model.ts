@@ -2,26 +2,27 @@
 // Pure data transformation functions for trip data
 // Extracted from: view/categories/summary.js, edit-trip/
 
+import { convertFromDateObject } from '../utils/dates.js';
+import type { Trip, DateObject, Traveler } from './new-schema.js';
+
 // ======= Trip Duration & Traveler Count =======
 
 /**
  * Computes the number of days between two dates (inclusive)
- * @param {Date} inicio - Start date
- * @param {Date} fim - End date
- * @returns {number} Number of days
+ * @param start - Start date (was "inicio")
+ * @param end - End date (was "fim")
+ * @returns Number of days
  */
-import { convertFromDateObject } from '../utils/dates.js';
-
-export function computeTripDuration(inicio, fim) {
-	return Math.ceil((fim - inicio) / (1000 * 60 * 60 * 24)) + 1;
+export function computeTripDuration(start: Date, end: Date): number {
+	return Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 }
 
 /**
  * Computes the number of travelers
- * @param {Array} travelers - Array of traveler objects
- * @returns {number} Number of travelers (minimum 1)
+ * @param travelers - Array of traveler objects (was "pessoas")
+ * @returns Number of travelers (minimum 1)
  */
-export function computeTravelerCount(travelers) {
+export function computeTravelerCount(travelers: Traveler[]): number {
 	return travelers?.length || 1;
 }
 
@@ -29,21 +30,27 @@ export function computeTravelerCount(travelers) {
 
 /**
  * Gets the trip date range formatted as {date, text} objects
- * @param {Object} firestoreData - Raw Firestore trip data
- * @returns {{inicio: {date: Date, text: string}, fim: {date: Date, text: string}}}
+ * @param firestoreData - Raw Firestore trip data (was using "inicio"/"fim" fields)
+ * @returns Date range with start/end
  */
-export function loadInicioFim(firestoreData) {
-	const inicio = convertFromDateObject(firestoreData.inicio);
-	const fim = convertFromDateObject(firestoreData.fim);
+export function loadStartEnd(firestoreData: Trip): {
+	start: { date: Date; text: string };
+	end: { date: Date; text: string };
+} {
+	const startDate = convertFromDateObject(firestoreData.start);
+	const endDate = convertFromDateObject(firestoreData.end);
 
 	return {
-		inicio: {
-			date: inicio,
-			text: getFormattedDate(inicio),
+		start: {
+			date: startDate,
+			text: getFormattedDate(startDate),
 		},
-		fim: {
-			date: fim,
-			text: getFormattedDate(fim),
+		end: {
+			date: endDate,
+			text: getFormattedDate(endDate),
 		},
 	};
 }
+
+/** @deprecated Use `loadStartEnd` instead */
+export const loadInicioFim = loadStartEnd;
