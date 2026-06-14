@@ -1060,7 +1060,54 @@
 	margin-top: 8px;
 }
 
-/* Destinos Checkboxes — modern card-based layout */
+/* Destinos Cards — modern card-based layout */
+#habilitado-destinos-content {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.destinos-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: auto !important;
+  padding: 8px 0;
+}
+
+.destino-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color, #e0e0e0);
+  background: var(--bg-primary, #fff);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.15s ease;
+  user-select: none;
+}
+
+.destino-card:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent-color, #4a90d9);
+}
+
+.destino-card.selected {
+  background: var(--accent-color, #4a90d9);
+  border-color: var(--accent-color, #4a90d9);
+  color: #fff;
+}
+
+.destino-card.selected .destino-card-name {
+  color: #fff;
+}
+
+.destino-card-name {
+  font-weight: 500;
+  font-size: 0.875rem;
+  flex: 1;
+}
+
+/* Keep old class for itinerary inner checkboxes (they still use checkboxes) */
 .destinos-checkboxes {
 	display: flex;
 	flex-direction: column;
@@ -1095,14 +1142,16 @@
 	justify-content: flex-end;
 }
 
-.button-box-formatted {
+.button-box-formatted,
+.button-box-right-formatted {
 	display: flex;
 	justify-content: flex-end;
 	padding: 12px 0 0;
 	margin-top: 8px;
 }
 
-.button-box-formatted .btn {
+.button-box-formatted .btn,
+.button-box-right-formatted .btn {
 	min-height: 40px;
 }
 
@@ -1159,12 +1208,39 @@
 	border: 1px solid var(--border-color);
 }
 
+.turno-box > label:first-of-type {
+	font-weight: 700;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.6px;
+	color: var(--text-primary);
+	margin-bottom: 12px;
+	display: block;
+	opacity: 0.85;
+}
+
 [data-theme="dark"] .turno-box {
 	background: rgba(255, 255, 255, 0.03);
 }
 
 .turno-box > .nice-form-group:first-child {
 	margin-top: 0;
+}
+
+/* Input-botao inside turno-box — differentiate from container background */
+.turno-box .input-botao {
+	background: var(--bg-primary);
+	border-color: var(--border-color);
+}
+
+.turno-box .input-botao:hover {
+	background: var(--bg-tertiary);
+}
+
+/* Itinerary destination cards — slightly smaller */
+.itinerario-cards .destino-card {
+	padding: 6px 12px;
+	font-size: 0.8125rem;
 }
 
 /*--------------------------------------------------------------
@@ -1466,6 +1542,10 @@ details summary::-webkit-details-marker {
 [data-theme="dark"] .btn-secondary-theme:hover,
 [data-theme="dark"] .input-botao:hover {
 	background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .turno-box .input-botao {
+	background: var(--bg-primary);
 }
 
 /* Delete */

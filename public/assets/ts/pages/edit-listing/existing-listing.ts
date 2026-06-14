@@ -38,15 +38,14 @@ async function loadDestinationsData() {
 	}
 
 	loadDestinations();
-	const checkboxes = document.querySelectorAll(
-		'#destinos-checkboxes input[type="checkbox"]',
-	);
+	const cards = document.querySelectorAll('#destinos-checkboxes .destino-card');
 	for (const destino of getState().destinos) {
 		const id = destino.destinosID;
-		for (const checkbox of checkboxes) {
-			const cb = checkbox as HTMLInputElement;
-			if (cb.value === id) {
-				cb.checked = true;
+		for (const card of cards) {
+			if (card.getAttribute("data-destino-id") === id) {
+				card.classList.add("selected");
+				const container = getID("destinos-checkboxes");
+				container.prepend(card);
 				break;
 			}
 		}

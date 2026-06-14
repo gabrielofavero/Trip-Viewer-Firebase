@@ -142,6 +142,9 @@
 			"subtitle": "Cadastre onde você ficará hospedado durante a viagem",
 			"checkin": "Check-in",
 			"checkout": "Check-out",
+			"stay_duration": "Duração da estadia",
+			"checkin_time": "Horário de check-in",
+			"checkout_time": "Horário de check-out",
 			"breakfast": "Café da manhã",
 			"name_placeholder": "Hotel, Pousada, Airbnb, etc",
 			"address_placeholder": "Rua Exemplo, 123",
@@ -675,7 +678,7 @@
 			"colors": {
 				"title": "Cores Personalizadas",
 				"themes": {
-					"light_and_dark": "Modo claro e escuro",
+					"light_and_dark": "Ambos",
 					"light": "Modo claro",
 					"dark": "Modo escuro"
 				}

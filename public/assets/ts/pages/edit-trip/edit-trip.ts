@@ -46,7 +46,7 @@ export async function loadEditTripPage() {
 	newDynamicSelect("transporte-pessoa");
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA.destinos));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinos || []));
 
 	if (DOCUMENT_ID) {
 		await loadTrip(true);

@@ -39,7 +39,7 @@ export async function loadEditListingPage() {
 	loadHabilitados();
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA.destinos));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinos || []));
 
 	if (DOCUMENT_ID) {
 		await carregarListagem();

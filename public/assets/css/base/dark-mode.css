@@ -744,6 +744,11 @@
 	background: var(--bg-tertiary);
 }
 
+/* Turno-box input differentiation in dark mode */
+[data-theme="dark"] .turno-box .input-botao {
+	background: var(--bg-primary);
+}
+
 /* Button Box */
 [data-theme="dark"] .button-box-formatted {
 	background: transparent;

@@ -8,7 +8,7 @@ import { animate } from '../../../../../theme/animations.js';
 import { getDestination } from '../../../../../data/firebase/database.js';
 import { DESTINOS_ATIVOS } from '../../destination.js';
 import { DATAS } from '../../../new-trip.js';
-import {DESTINOS_DATA, getDestinosFromCheckbox} from "../../destination.js";
+import {DESTINOS_DATA, getDestinosFromCards} from "../../destination.js";
 import { getInnerProgramacaoContent } from "./content.js";
 import { loadTextReplacementCheckboxes, TEXT_REPLACEMENT } from "./text-replacement.js";
 import { replaceTextIfEnabled } from "./text-replacement.js";
@@ -136,7 +136,7 @@ function getInnerItinerarySelectsDestinos(j) {
 		DESTINOS_ATIVOS.length === 0
 	)
 		returnFalse();
-	const destinations = getDestinosFromCheckbox("programacao", j);
+	const destinations = getDestinosFromCards("programacao", j);
 	if (destinations.length === 0) returnFalse();
 
 	let options = "";

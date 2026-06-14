@@ -104,6 +104,9 @@
 			"arrival": "Arrival",
 			"during": "While traveling",
 			"return": "Return",
+			"duration": "Duration",
+			"departure_time": "Departure time",
+			"arrival_time": "Arrival time",
 			"simple_view": "Simplified view",
 			"leg_view": "Group by leg",
 			"people_view": "Group by people",
@@ -142,6 +145,9 @@
 			"subtitle": "Add where you'll be staying during your trip",
 			"checkin": "Check-in",
 			"checkout": "Check-out",
+			"stay_duration": "Stay duration",
+			"checkin_time": "Check-in time",
+			"checkout_time": "Check-out time",
 			"breakfast": "Breakfast",
 			"name_placeholder": "Hotel, Inn, Airbnb, etc.",
 			"address_placeholder": "Example Street, 123",
@@ -675,7 +681,7 @@
 			"colors": {
 				"title": "Custom colors",
 				"themes": {
-					"light_and_dark": "Light and Dark Mode",
+					"light_and_dark": "Both",
 					"light": "Light mode",
 					"dark": "Dark mode"
 				}
