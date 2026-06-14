@@ -21,9 +21,9 @@ export function setLogoLight(value: string) { LOGO_LIGHT = value; }
 export function setLogoDark(value: string) { LOGO_DARK = value; }
 
 export function loadVisibility(colors = getState()?.cores) {
-	if (colors?.claro && colors?.escuro) {
-		setLightColor(colors.claro);
-		setDarkColor(colors.escuro);
+	if (colors?.light && colors?.dark) {
+		setLightColor(colors.light);
+		setDarkColor(colors.dark);
 	}
 
 	saveLocalColors();
@@ -42,7 +42,7 @@ export function loadDarkMode() {
 		loadCss: true,
 		barColor: "#303030",
 		hoverFn: getDarkerColor,
-		secondaryKey: "escuro",
+		secondaryKey: "dark",
 	});
 }
 
@@ -52,7 +52,7 @@ export function loadLightMode() {
 		loadCss: true,
 		barColor: "#fff",
 		hoverFn: getLighterColor,
-		secondaryKey: "claro",
+		secondaryKey: "light",
 	});
 }
 
@@ -62,7 +62,7 @@ export function loadLightModeLite() {
 		loadCss: false,
 		barColor: "#fff",
 		hoverFn: getLighterColor,
-		secondaryKey: "claro",
+		secondaryKey: "light",
 	});
 }
 

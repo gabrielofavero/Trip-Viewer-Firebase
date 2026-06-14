@@ -10,8 +10,8 @@ export let THEME_COLOR_SECONDARY_HOVER;
 export let LIGHT_COLOR = "#5859a7";
 export let DARK_COLOR = "#7f75b6";
 export let BOX_COLOR = {
-	claro: "#f1f1f1",
-	escuro: "#404040",
+	light: "#f1f1f1",
+	dark: "#404040",
 };
 
 // Setters (for modules that need to write these live bindings)
@@ -110,7 +110,7 @@ export function getMixedColor(mainColor, mixColor, mixColorPercentage = 85) {
 }
 
 export function getSecondaryColor(type) {
-	const mainColor = type == "claro" ? LIGHT_COLOR : DARK_COLOR;
+	const mainColor = type == "light" ? LIGHT_COLOR : DARK_COLOR;
 	const mixColor = BOX_COLOR[type];
 	return {
 		main: getMixedColor(mainColor, mixColor),
@@ -159,8 +159,8 @@ export function changeBarColorIOS(color) {
 
 export function saveLocalColors() {
 	var localColors = {
-		claro: LIGHT_COLOR,
-		escuro: DARK_COLOR,
+		light: LIGHT_COLOR,
+		dark: DARK_COLOR,
 	};
 	sessionStorage.setItem("localColors", JSON.stringify(localColors));
 }
