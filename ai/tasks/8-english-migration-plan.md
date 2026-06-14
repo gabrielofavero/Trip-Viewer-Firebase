@@ -9,7 +9,7 @@
 
 ## Summary
 
-This plan implements **Option B** from the database proposal: full English translation + structural optimization. The database is small (~2 MB, <100 docs), so migration is fast and low-risk. The plan is organized into **10 prompts** that an AI can execute sequentially.
+This plan implements **Option B** from the database proposal: full English translation + structural optimization. The database is small (~2 MB, <100 docs), so migration is fast and low-risk. The plan is organized into **14 prompts** that an AI can execute sequentially.
 
 ### Key Deliverables
 
@@ -21,6 +21,10 @@ This plan implements **Option B** from the database proposal: full English trans
 | 4 | Refactored services with subcollection reads | `public/assets/ts/data/services/` |
 | 5 | Updated models with English types | `public/assets/ts/models/` |
 | 6 | Updated state.ts with English names | `public/assets/ts/data/state.ts` |
+| 7 | Renamed & translated JSON config files (4 renamed, 3 in-place) | `public/assets/json/` |
+| 8 | Updated config.ts loaders & all JSON consumers (~15 files) | `public/assets/ts/` |
+| 9 | Updated HTML element IDs + expense template | `public/*.html` |
+| 10 | Renamed transport image directories | `public/assets/img/transportation/` |
 
 ---
 
@@ -971,6 +975,521 @@ cd functions && npm run build
 
 ---
 
+## 📋 Prompt 11 — Rename & Translate JSON Config Files (Keys + Values)
+
+### Context
+
+The original migration plan focused exclusively on the Firestore database, but the project also relies on **8 JSON configuration files** that act as a static data layer. These files contain Portuguese key names, enum values, and transport-type strings that are deeply referenced throughout the TypeScript codebase. They serve as *mapping tables* between the database values and the UI — if the DB switches to English but these JSON maps still use Portuguese keys, the entire UI layer breaks.
+
+The files fall into three categories:
+
+| Category | Files | Impact |
+|----------|-------|--------|
+| **DB value mappers** — keys used as lookups for Firestore field values | `transportes.json`, `destinos.json`, `itinerary.json`, `moedas.json`, `cores.json` | **CRITICAL** — mismatch = runtime errors |
+| **UI icon/config maps** — keys that drive UI rendering | `icons.json`, `templates/gastos.json` | **HIGH** — broken icons & templates |
+| **No change needed** | `version.json`, `languages/pt.json`, `languages/en.json` | None |
+
+### Task
+
+#### 11a. Rename JSON Files
+
+Rename files to English while keeping them in the same directory:
+
+| Old Filename | New Filename |
+|-------------|-------------|
+| `public/assets/json/transportes.json` | `public/assets/json/transportation.json` |
+| `public/assets/json/moedas.json` | `public/assets/json/currencies.json` |
+| `public/assets/json/cores.json` | `public/assets/json/colors.json` |
+| `public/assets/json/destinos.json` | `public/assets/json/destinations-config.json` |
+
+> **Note:** `destinos.json` is renamed to `destinations-config.json` (not `destinations.json`) to avoid confusion with the Firestore `destinations` collection.
+
+#### 11b. Translate `transportation.json` (was `transportes.json`)
+
+This is the highest-impact file — it maps transport company IDs to display names, icons, images, and websites.
+
+**Top-level key renames:**
+
+| Old Key | New Key |
+|---------|---------|
+| `empresas` | `companies` |
+| `icones` | `icons` |
+| `imagens` | `images` |
+| `sites` | `websites` |
+| `tipos` | `types` |
+| `titulos` | `titles` |
+
+**Transport type key renames (recursive in `companies`, `icons`, `images`, `websites`, `types`, `titles`):**
+
+| Old Key | New Key |
+|---------|---------|
+| `carro` | `car` |
+| `onibus` | `bus` |
+| `voo` | `flight` |
+| `trem-bala` | `bulletTrain` |
+| `bicicleta` | `bicycle` |
+| `bondinho` | `cableCar` |
+| `helicoptero` | `helicopter` |
+| `locomotiva` | `locomotive` |
+| `metro` | `subway` |
+| `moto` | `motorcycle` |
+| `navio` | `ship` |
+| `outro` | `other` |
+
+**Theme key renames (inside `images.*.`):**
+
+| Old Key | New Key |
+|---------|---------|
+| `claro` | `light` |
+| `escuro` | `dark` |
+
+**Transport type array values (the `types` array):**
+
+Each string value in the `types` array must be translated:
+- `"voo"` → `"flight"`, `"carro"` → `"car"`, `"onibus"` → `"bus"`, etc.
+
+**Image paths:** The file paths inside `images` point to directories like `assets/img/transportes/carro/`, `assets/img/transportes/onibus/`, `assets/img/transportes/voo/`, `assets/img/transportes/trem-bala/`. These must be updated to match the new English directory names, AND the actual directories on disk must be renamed:
+
+| Old Path | New Path |
+|----------|----------|
+| `assets/img/transportes/carro/` | `assets/img/transportation/car/` |
+| `assets/img/transportes/onibus/` | `assets/img/transportation/bus/` |
+| `assets/img/transportes/voo/` | `assets/img/transportation/flight/` |
+| `assets/img/transportes/trem-bala/` | `assets/img/transportation/bulletTrain/` |
+
+> **⚠️ Important:** Also rename the `public/assets/img/transportes/` directory itself to `public/assets/img/transportation/`.
+
+**Title translation key updates (the `titles` object values):**
+
+The existing title keys like `"trip.transportation.type.flight"` should be checked — the icon keys in `transportes.json` map to iconify strings (e.g., `"fa-solid:plane"`), not translation keys. The `titles` object maps transport types to translation keys — these should be verified against the language packs.
+
+#### 11c. Translate `currencies.json` (was `moedas.json`)
+
+| Old Key | New Key |
+|---------|---------|
+| `simbolos` | `symbols` |
+| `escala` | `scale` |
+
+The values (currency codes like `BRL`, `USD`) remain unchanged — they are ISO standards.
+
+#### 11d. Translate `colors.json` (was `cores.json`)
+
+| Old Key | New Key |
+|---------|---------|
+| `claro` | `light` |
+| `escuro` | `dark` |
+| `opcoes` | `options` |
+
+Inside each option object:
+
+| Old Key | New Key |
+|---------|---------|
+| `cor` | `color` |
+| `hex` | `hex` (keep — already English) |
+
+#### 11e. Translate `destinations-config.json` (was `destinos.json`)
+
+This file has a dual role: it maps Portuguese category names ↔ English (via `translation` + `original` objects), AND it provides icons and category lists. After the DB migration, the source-of-truth category names will be English, so the Portuguese→English mapping can be simplified.
+
+**Category key renames in `categorias.geral`, `categorias.passeios`, `categorias.ids`:**
+
+Each string value in these arrays must be translated:
+
+| Old Value | New Value |
+|-----------|-----------|
+| `restaurantes` | `restaurants` |
+| `lanches` | `snacks` |
+| `saidas` | `nightlife` |
+| `turismo` | `tourism` |
+| `lojas` | `shopping` |
+| `mapa` | `map` |
+
+**Icon key renames:**
+
+| Old Key | New Key |
+|---------|---------|
+| `comida` | `food` |
+| `lanches` | `snacks` |
+| `lojas` | `shopping` |
+| `mapa` | `map` |
+| `turismo` | `tourism` |
+| `saidas` | `nightlife` |
+| `restaurantes` | `restaurants` |
+| `lineup` | `lineup` (keep — already English) |
+| `tourismAndShopping` | `tourismAndShopping` (keep) |
+
+**`translation` object — SIMPLIFY:**
+
+The `translation` object currently maps Portuguese→English. After migration, the code will use English keys directly, so this becomes a no-op mapping. Replace with a **reverse-only** approach:
+
+```json
+"translation": {
+    "restaurants": "Restaurants",
+    "snacks": "Snacks",
+    "nightlife": "Nightlife",
+    "tourism": "Tourism",
+    "shopping": "Shopping",
+    "map": "Map",
+    "myMaps": "Map",
+    "lineup": "Lineup",
+    "tourismAndShopping": "Tourism & Shopping",
+    "food": "Food"
+}
+```
+
+**`original` object — DEPRECATE:**
+
+The `original` object currently maps English→Portuguese. After the migration, the code won't need reverse lookups. Mark it as deprecated and keep it for backward compatibility during the transition period:
+
+```json
+"_deprecated_original": {
+    "restaurants": "restaurantes",
+    ...
+}
+```
+
+#### 11f. Translate `itinerary.json`
+
+| Old Key/Value | New Key/Value |
+|---------------|---------------|
+| `timeofday` | `timeOfDay` |
+| `"madrugada"` | `"earlyMorning"` |
+| `"manha"` | `"morning"` |
+| `"tarde"` | `"afternoon"` |
+| `"noite"` | `"night"` |
+
+#### 11g. Translate `icons.json`
+
+| Old Key | New Key |
+|---------|---------|
+| `gastosDurante` | `duringTrip` |
+| `gastosPrevios` | `preTrip` |
+| `gastosViajantes` | `expensesTravelers` |
+
+#### 11h. Translate `templates/gastos.json`
+
+| Old Key | New Key |
+|---------|---------|
+| `gastosPrevios` | `preTrip` |
+| `gastosDurante` | `duringTrip` |
+| `moeda` | `currency` |
+| `pin.ativo` | `pin.active` |
+| `pin.valor` | `pin.value` |
+
+In each expense entry object:
+
+| Old Key | New Key |
+|---------|---------|
+| `nome` | `name` |
+| `tipo` | `type` |
+| `valor` | `amount` |
+| `moeda` | `currency` |
+
+Expense type values within entries:
+
+| Old Value | New Value |
+|-----------|-----------|
+| `"Transporte"` | `"Transportation"` |
+| `"Hospedagens"` | `"Accommodations"` |
+| `"Shows"` | `"Shows"` (already English, keep) |
+
+### Expected Output
+
+- 4 renamed JSON files + 3 in-place updated files
+- `public/assets/img/transportes/` directory renamed to `public/assets/img/transportation/`
+- All subdirectories (`carro/`, `onibus/`, `voo/`, `trem-bala/`) renamed to English (`car/`, `bus/`, `flight/`, `bulletTrain/`)
+- All Portuguese keys and values translated to English
+- Original files kept as copies with `.bak` extension during transition
+
+### Validation
+
+```bash
+# Verify all JSON files are valid
+for f in public/assets/json/*.json; do node -e "JSON.parse(require('fs').readFileSync('$f','utf8')); console.log('$f: OK')"; done
+
+# Verify old Portuguese keys no longer appear in new files
+grep -r "empresas\|icones\|imagens.*transporte\|tipos.*transporte\|titulos.*transporte\|gastosPrevios\|gastosDurante\|claro.*svg\|escuro.*svg\|simbolos\|escala.*BRL\|madrugada\|manha\|tarde\|noite" public/assets/json/
+```
+
+---
+
+## 📋 Prompt 12 — Update `config.ts` Loaders & All JSON Consumers
+
+### Context
+
+Prompt 11 renamed JSON files and translated their internal keys. Now every TypeScript file that loads or reads these JSON files must be updated. This is the largest surface-area change because the JSON keys are accessed via dot notation throughout ~15+ TypeScript files.
+
+### Task
+
+#### 12a. Update `public/assets/ts/app/config.ts`
+
+Update all file paths and cache keys:
+
+```ts
+export async function loadColors() {
+    return loadJSON('/assets/json/colors.json');  // was "cores.json"
+}
+
+export async function loadDestinations() {
+    return loadJSON('/assets/json/destinations-config.json');  // was "destinos.json"
+}
+
+export async function loadCurrencies() {
+    return loadJSON('/assets/json/currencies.json');  // was "moedas.json"
+}
+
+export async function loadTransportations() {
+    return loadJSON('/assets/json/transportation.json');  // was "transportes.json"
+}
+```
+
+Update the sync getter cache keys to match:
+
+```ts
+export function getColors() {
+    return _cache['/assets/json/colors.json'];
+}
+export function getDestinations() {
+    return _cache['/assets/json/destinations-config.json'];
+}
+export function getCurrencies() {
+    return _cache['/assets/json/currencies.json'];
+}
+export function getTransportations() {
+    return _cache['/assets/json/transportation.json'];
+}
+```
+
+#### 12b. Update `transportation-module.ts` (HIGHEST IMPACT)
+
+File: `public/assets/ts/pages/trip-detail/categories/transportation-module.ts`
+
+This file is the primary consumer of `transportes.json`. It accesses nested keys deeply:
+
+| Old Access Pattern | New Access Pattern |
+|-------------------|-------------------|
+| `transportes?.empresas?.[tipo]?.[titulo]` | `transportation?.companies?.[type]?.[title]` |
+| `transportes?.imagens?.[tipo]?.[titulo]` | `transportation?.images?.[type]?.[title]` |
+| `empresa.imagens.claro` | `company.images.light` |
+| `empresa.imagens.escuro` | `company.images.dark` |
+
+Also update the transport type comparison logic. The `tipo` variable that comes from Firestore data will now be in English (`"flight"`, `"bus"`, `"car"`) after Prompt 2's migration, so the lookups into `transportation.json` will naturally match the new English keys.
+
+Search the file for all occurrences and update:
+- `getTransportations()` calls → same function name (unchanged), but the returned object has English keys
+- All `.empresas` → `.companies`
+- All `.imagens` → `.images`
+- All `.icones` → `.icons`
+- All `.claro` → `.light`
+- All `.escuro` → `.dark`
+
+#### 12c. Update `destination.ts` and `edit-destination/` files
+
+Files:
+- `public/assets/ts/pages/destination/destination.ts`
+- `public/assets/ts/pages/destination/categories.ts`
+- `public/assets/ts/pages/edit-destination/categories/description.ts`
+- `public/assets/ts/pages/edit-destination/categories/price.ts`
+
+These files access `destinos.json` (now `destinations-config.json`) properties:
+
+| Old Access Pattern | New Access Pattern |
+|-------------------|-------------------|
+| `destinos.categorias.geral` | `destinationsConfig.categories.general` |
+| `destinos.categorias.passeios` | `destinationsConfig.categories.tours` |
+| `destinos.categorias.ids` | `destinationsConfig.categories.ids` |
+| `destinos.translation[categoria]` | `destinationsConfig.translation[category]` |
+| `destinos.original` | Remove — use `_deprecated_original` during transition |
+
+Also update the category key names referenced as strings in loops:
+
+```ts
+// Old:
+for (const categoria of destinos.categorias.passeios) { ... }
+// New:
+for (const category of destinationsConfig.categories.tours) { ... }
+```
+
+#### 12d. Update `inner-itinerary.ts`
+
+File: `public/assets/ts/pages/edit-trip/categories/itinerary-module/inner-itinerary/inner-itinerary.ts`
+
+| Old Access Pattern | New Access Pattern |
+|-------------------|-------------------|
+| `getDestinations().categorias.passeios` | `getDestinations().categories.tours` |
+
+#### 12e. Update `dom.ts`
+
+File: `public/assets/ts/utils/dom.ts`
+
+| Old Access Pattern | New Access Pattern |
+|-------------------|-------------------|
+| `getCurrencies().escala[currencyValue]` | `getCurrencies().scale[currencyValue]` |
+| `getCurrencies().escala["BRL"]` | `getCurrencies().scale["BRL"]` |
+
+#### 12f. Update `colors.ts`
+
+File: `public/assets/ts/theme/colors.ts`
+
+| Old Access Pattern | New Access Pattern |
+|-------------------|-------------------|
+| `getColors().opcoes` | `getColors().options` |
+| `getColors().opcoes[i].cor` | `getColors().options[i].color` |
+| `getColors().opcoes[i].hex` | `getColors().options[i].hex` (unchanged) |
+
+#### 12g. Update `expense.model.ts`
+
+File: `public/assets/ts/models/expense.model.ts`
+
+| Old Access Pattern | New Access Pattern |
+|-------------------|-------------------|
+| `getCurrencies().opcoes` | `getCurrencies().options` |
+| Ensure `preTrip`/`duringTrip` references match new `icons.json` keys |
+
+#### 12h. Update `messages.ts`
+
+File: `public/assets/ts/utils/messages.ts`
+
+| Old Access Pattern | New Access Pattern |
+|-------------------|-------------------|
+| `properties.icones` | `properties.icons` |
+| `getIconsBox(icones)` | `getIconsBox(icons)` |
+
+#### 12i. Update `edit-trip` Transport & Accommodation Modules
+
+Files:
+- `public/assets/ts/pages/edit-trip/categories/transportation.ts`
+- Any other file that reads `transportes.json` properties
+
+Search for all references to the old JSON key names and update.
+
+#### 12j. Update itinerary model & pages
+
+The `itinerary.json` `timeofday` → `timeOfDay` rename affects any code that reads it. Search for `timeofday` references and update to `timeOfDay`.
+
+### Expected Output
+
+- `config.ts` updated with new file paths and cache keys
+- All ~15 TypeScript files updated with English JSON key access patterns
+- Zero occurrences of old Portuguese JSON keys in the TypeScript codebase
+
+### Validation
+
+```bash
+npx tsc --noEmit
+
+# Search for any remaining old key access patterns:
+grep -rn "\.empresas\|\.icones\|\.imagens\|\.tipos\|\.titulos\|\.claro\|\.escuro\|\.opcoes\|\.cor\b\|\.escala\|\.simbolos\|\.categorias\.geral\|\.categorias\.passeios\|timeofday\|gastosPrevios\|gastosDurante" public/assets/ts/
+```
+
+---
+
+## 📋 Prompt 13 — Update HTML Element IDs & Expense Template
+
+### Context
+
+The HTML files contain DOM element IDs that use Portuguese names (`gastosPrevios`, `gastosDurante`, `gastosViajantes`). These IDs are referenced in TypeScript code via `getID()` / `getElementById()` calls. The expense template JSON (`templates/gastos.json`) was already translated in Prompt 11, but the HTML and TS code that references its structure also needs updating.
+
+### Task
+
+#### 13a. Update `public/expenses.html`
+
+Rename all Portuguese element IDs:
+
+| Old ID | New ID |
+|--------|--------|
+| `radio-gastosPrevios` | `radio-preTrip` |
+| `radio-gastosDurante` | `radio-duringTrip` |
+| `radio-gastosViajantes` | `radio-expensesTravelers` |
+| `resumo-gastosPrevios` | `summary-preTrip` |
+| `resumo-gastosPrevios-titulo` | `summary-preTrip-title` |
+| `resumo-gastosPrevios-tabela` | `summary-preTrip-table` |
+| `resumo-gastosDurante` | `summary-duringTrip` |
+| `resumo-gastosDurante-titulo` | `summary-duringTrip-title` |
+| `resumo-gastosDurante-tabela` | `summary-duringTrip-table` |
+| `gastosPrevios` | `preTrip` |
+| `gastosPrevios-container` | `preTrip-container` |
+| `gastosPrevios-titulo` | `preTrip-title` |
+| `gastosPrevios-total` | `preTrip-total` |
+| `gastosPrevios-grafico` | `preTrip-chart` |
+| `gastosDurante` | `duringTrip` |
+| `gastosDurante-container` | `duringTrip-container` |
+| `gastosDurante-titulo` | `duringTrip-title` |
+| `gastosDurante-total` | `duringTrip-total` |
+| `gastosDurante-grafico` | `duringTrip-chart` |
+| `gastosViajantes` | `expensesTravelers` (if exists) |
+
+Also update any `name="tabs-gastos"` → `name="tabs-expenses"`.
+
+#### 13b. Update `public/edit/trip.html`
+
+| Old ID | New ID |
+|--------|--------|
+| `programacao-gastosPrevios` | `itinerary-preTrip` |
+
+#### 13c. Update All TypeScript Files Referencing These HTML IDs
+
+Search for all `getID("gastosPrevios...")`, `getID("gastosDurante...")`, `getID("gastosViajantes...")` calls and update to the new English IDs.
+
+Key files to update:
+- `public/assets/ts/pages/edit-trip/categories/expenses.ts` — accesses `gastosPrevios`, `gastosDurante` IDs
+- `public/assets/ts/pages/expenses/` — all files in this directory
+- `public/assets/ts/models/expense.model.ts` — references `gastosPrevios`, `gastosDurante`
+- Any other file with `getID("gastos...")` calls
+
+Search command to find all affected lines:
+```bash
+grep -rn "gastosPrevios\|gastosDurante\|gastosViajantes" public/assets/ts/ public/ --include="*.ts" --include="*.html"
+```
+
+#### 13d. Update Firestore Write Paths for Expenses
+
+The `templates/gastos.json` template is used to create new expense documents. After Prompt 2 and 4, the Firestore expense documents will use English field names (`preTrip`, `duringTrip`, `currency`). Verify that the code that reads from/writes to expense documents uses these new field names consistently with the updated template.
+
+### Expected Output
+
+- `expenses.html` with all English element IDs
+- `edit/trip.html` with English element IDs
+- All TS files updated to use new HTML IDs
+- Zero occurrences of `gastosPrevios`, `gastosDurante`, `gastosViajantes` in HTML IDs and TS code
+
+### Validation
+
+```bash
+npx tsc --noEmit
+
+# Verify no old Portuguese HTML IDs remain:
+grep -rn "gastosPrevios\|gastosDurante\|gastosViajantes" public/ --include="*.html"
+
+# Verify no old ID references remain in TS:
+grep -rn '"gastosPrevios"\|"gastosDurante"\|"gastosViajantes"' public/assets/ts/
+```
+
+---
+
+## 📋 Prompt 14 — Update POC Sample Data (Documentation)
+
+### Context
+
+`pocs/responses examples/Firestore/FIRESTORE_DATA.json` is a sample Firestore document used for testing and reference. It contains Portuguese field names throughout. While not critical to runtime, updating it ensures documentation consistency with the new English schema.
+
+### Task
+
+1. Translate all field names in `FIRESTORE_DATA.json` to match the new English schema
+2. Translate all Portuguese enum values (`"claro"` → `"light"`, `"escuro"` → `"dark"`, etc.)
+3. Update the embedded destination data to reflect the new structure
+4. Add a comment at the top noting this reflects the post-migration schema
+
+### Expected Output
+
+- Updated `FIRESTORE_DATA.json` with English field names and values
+
+### Validation
+
+Manual review — compare against `new-schema.ts` interfaces.
+
+---
+
 ## Execution Order & Dependencies
 
 ```
@@ -1000,10 +1519,30 @@ Prompt 8 (models update) ─── depends on Prompt 1 ────────�
 Prompt 9 (state/config) ─── depends on Prompt 6 ───────────────────┤
     │                                                              │
     ▼                                                              │
-Prompt 10 (integration) ─── depends on all above ──────────────────┘
+Prompt 10 (integration) ─── depends on all above ──────────────────┤
+    │                                                              │
+    ├──────────────────────────────────────────────────────────────┤
+    │  JSON Config Layer (new prompts)                             │
+    │                                                              │
+    ▼                                                              │
+Prompt 11 (JSON files: rename + translate keys) ─── can start after│
+    │                                               Prompt 1 ──────┤
+    ▼                                                              │
+Prompt 12 (config.ts + all JSON consumers) ─── depends on 11 ──────┤
+    │                                                              │
+    ▼                                                              │
+Prompt 13 (HTML IDs + expense template) ─── depends on 11, 12 ─────┤
+    │                                                              │
+    ▼                                                              │
+Prompt 14 (POC sample data) ─── docs only, anytime ────────────────┤
 ```
 
-**Parallelization:** Prompts 6 and 8 can run in parallel after Prompt 1. Prompts 2–5 are sequential migrations. Prompt 10 is the final gate.
+**Parallelization:**
+- Prompts 6, 8, and 11 can start after Prompt 1
+- Prompts 2–5 are sequential migrations
+- Prompts 11→12→13 are sequential for the JSON layer
+- Prompt 14 is documentation-only, can be done anytime
+- Prompt 10 is the final integration gate for all above
 
 ---
 
@@ -1012,18 +1551,20 @@ Prompt 10 (integration) ─── depends on all above ────────�
 When deploying to production, run migrations in this exact order:
 
 ```
-1. Deploy Cloud Functions (all migrations +index.ts)
-2. Run 13-migrate-english-fields       (with ?dryRun=true first)
-3. Run 14-migrate-user-summaries       (with ?dryRun=true first)
-4. Run 15-migrate-trip-destinations    (with ?dryRun=true first)
-5. Run 16-migrate-accommodations-subcollection
-6. Run 17-migrate-transportation-subcollection
-7. Run 18-migrate-itinerary-subcollection
-8. Run 19-migrate-collection-names
-9. Deploy updated Firestore security rules
-10. Deploy updated client code (TS refactored pages)
-11. Wait 30 days, validate
-12. Run 20-migrate-cleanup (optional)
+ 1. Deploy Cloud Functions (all migrations + index.ts)
+ 2. Run 13-migrate-english-fields       (with ?dryRun=true first)
+ 3. Run 14-migrate-user-summaries       (with ?dryRun=true first)
+ 4. Run 15-migrate-trip-destinations    (with ?dryRun=true first)
+ 5. Run 16-migrate-accommodations-subcollection
+ 6. Run 17-migrate-transportation-subcollection
+ 7. Run 18-migrate-itinerary-subcollection
+ 8. Run 19-migrate-collection-names
+ 9. Move/rename JSON files (Prompt 11) + rename transport img dirs
+10. Deploy updated Firestore security rules
+11. Deploy updated client code (TS + HTML + JSON refactored)
+12. Wait 30 days, validate
+13. Run 20-migrate-cleanup (optional)
+14. Remove .bak JSON files and deprecated re-exports
 ```
 
 ---

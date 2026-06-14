@@ -123,11 +123,6 @@ npm run dev
 - 🐞 **B161:** Fix page issues post migration
 - 🏆 **F168:** Add option to put image in destination (and make index.html see it)
 - ⚔️ **E048:** Database ovehaul
-  - Translate database 
-  - Migration + 
-  - ts/json files adaptation (+ final translation round)
-  - add image tag on destination
-  - copy destinations tag from trip/listing into user data
 - 📈 **M153:** Index improvements: 
   - trip/listing destination tags, destination images
 
