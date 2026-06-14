@@ -152,8 +152,10 @@
 }
 .category-tab:hover { color: var(--text-primary); background: rgba(0,0,0,0.03); }
 .category-tab.active {
-	background: #fafafa; color: var(--theme-color);
+	background: rgba(var(--theme-color-rgb), 0.1);
+	color: var(--theme-color);
 	box-shadow: var(--shadow-sm);
+	font-weight: 700;
 }
 
 /*--------------------------------------------------------------

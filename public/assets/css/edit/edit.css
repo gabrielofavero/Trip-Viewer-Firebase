@@ -19,6 +19,7 @@
 	position: relative;
 	top: 30px;
 	padding: 2em 1em !important;
+	scroll-padding-top: 120px;
 }
 
 #hero::before {
@@ -33,14 +34,14 @@
 /*--------------------------------------------------------------
 # Demo Page Container (replaces sidebar layout)
 --------------------------------------------------------------*/
-.demo-page {
+.edit-page {
 	margin: 0 auto;
 	max-width: 55em;
 	position: relative;
 	z-index: 1;
 }
 
-.demo-page-content {
+.edit-page-content {
 	padding: 16px 0;
 	max-width: 100%;
 }
@@ -77,8 +78,9 @@
 --------------------------------------------------------------*/
 .edit-tab-bar {
 	display: flex;
+	justify-content: center;
 	gap: 4px;
-	margin-bottom: 24px;
+	margin-bottom: 84px;
 	background: rgba(255, 255, 255, 0.5);
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
@@ -122,21 +124,10 @@
 }
 
 .edit-tab.active {
-	background: #fafafa;
+	background: rgba(var(--theme-color-rgb), 0.1);
 	color: var(--theme-color);
 	box-shadow: var(--shadow-sm);
-}
-
-/* Save tab — accent style, pushed to the right */
-.edit-tab.save-tab {
-	color: #fff;
-	background: var(--theme-color);
-	box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
-	margin-left: auto;
-}
-
-.edit-tab.save-tab:hover {
-	background: var(--theme-secondary);
+	font-weight: 700;
 }
 
 .edit-tab svg {
@@ -148,7 +139,7 @@
 /*--------------------------------------------------------------
 # Section Cards — Frosted Glass (matches index.html cards)
 --------------------------------------------------------------*/
-.demo-page-content section {
+.edit-page-content section {
 	background: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(16px);
 	-webkit-backdrop-filter: blur(16px);
@@ -162,7 +153,7 @@
 	position: relative;
 }
 
-.demo-page-content section h1 {
+.edit-page-content section h1 {
 	font-size: 1.25rem;
 	font-weight: 700;
 	color: var(--text-primary);
@@ -172,36 +163,36 @@
 	gap: 8px;
 }
 
-.demo-page-content section h1 svg {
+.edit-page-content section h1 svg {
 	width: 1.25em;
 	height: 1.25em;
 	color: var(--theme-color);
 	flex-shrink: 0;
 }
 
-.demo-page-content section p {
+.edit-page-content section p {
 	color: var(--text-muted);
 	margin: 0 0 20px 0;
 	font-size: 0.875rem;
 	line-height: 1.5;
 }
 
-.demo-page-content section p:last-child {
+.edit-page-content section p:last-child {
 	margin-bottom: 0;
 }
 
-.demo-page-content section strong {
+.edit-page-content section strong {
 	font-weight: 600;
 	color: var(--text-primary);
 }
 
-.demo-page-content section p a {
+.edit-page-content section p a {
 	text-decoration: none;
 	font-weight: 500;
 	color: var(--theme-color);
 }
 
-.demo-page-content section code {
+.edit-page-content section code {
 	font-weight: 500;
 	font-family: Consolas, monaco, monospace;
 	position: relative;
@@ -213,7 +204,7 @@
 	white-space: nowrap;
 }
 
-.demo-page-content section ul {
+.edit-page-content section ul {
 	margin-top: 0.5em;
 	padding-left: 1em;
 	list-style-type: disc;
@@ -1012,6 +1003,12 @@
 /*--------------------------------------------------------------
 # Button Box & Add Button Row
 --------------------------------------------------------------*/
+.button-box {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
 .button-box-formatted {
 	display: flex;
 	justify-content: flex-end;
@@ -1021,6 +1018,29 @@
 
 .button-box-formatted .btn {
 	min-height: 40px;
+}
+
+/*--------------------------------------------------------------
+# Double Buttons Section — Persistent Save/Cancel Bar
+# Always visible regardless of active tab filter
+--------------------------------------------------------------*/
+#double-button-section {
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	background: rgba(255, 255, 255, 0.85);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border-top: 1px solid var(--border-color);
+	border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+	padding: 16px 24px;
+	margin-bottom: 0;
+	margin-top: 20px;
+	box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] #double-button-section {
+	background: rgba(44, 44, 46, 0.85);
 }
 
 /*--------------------------------------------------------------
@@ -1038,6 +1058,8 @@
 # Delete Link
 --------------------------------------------------------------*/
 #delete-text {
+	display: flex;
+	justify-content: flex-end;
 	margin-top: 16px;
 }
 
@@ -1086,6 +1108,7 @@
 	width: 100%;
 	padding: 10px 0;
 	margin-bottom: 32px;
+	border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 .attributions,
@@ -1186,9 +1209,9 @@ details summary::-webkit-details-marker {
 /*--------------------------------------------------------------
 # Base Reset (scoped to edit pages, minimal)
 --------------------------------------------------------------*/
-.demo-page-content *,
-.demo-page-content *:after,
-.demo-page-content *:before {
+.edit-page-content *,
+.edit-page-content *:after,
+.edit-page-content *:before {
 	box-sizing: inherit;
 }
 
@@ -1215,38 +1238,29 @@ details summary::-webkit-details-marker {
 	color: var(--theme-color);
 }
 
-[data-theme="dark"] .edit-tab.save-tab {
-	background: var(--theme-color);
-	color: #fff;
-}
-
-[data-theme="dark"] .edit-tab.save-tab:hover {
-	background: var(--theme-secondary);
-}
-
 /* Section Cards */
-[data-theme="dark"] .demo-page-content section {
+[data-theme="dark"] .edit-page-content section {
 	background: rgba(44, 44, 46, 0.7);
 	border-color: var(--border-color);
 }
 
-[data-theme="dark"] .demo-page-content section h1 {
+[data-theme="dark"] .edit-page-content section h1 {
 	color: var(--text-primary);
 }
 
-[data-theme="dark"] .demo-page-content section h1 svg {
+[data-theme="dark"] .edit-page-content section h1 svg {
 	color: var(--theme-color);
 }
 
-[data-theme="dark"] .demo-page-content section p {
+[data-theme="dark"] .edit-page-content section p {
 	color: var(--text-muted);
 }
 
-[data-theme="dark"] .demo-page-content section strong {
+[data-theme="dark"] .edit-page-content section strong {
 	color: var(--text-primary);
 }
 
-[data-theme="dark"] .demo-page-content section code {
+[data-theme="dark"] .edit-page-content section code {
 	background: #303030;
 }
 
@@ -1292,7 +1306,7 @@ details summary::-webkit-details-marker {
 }
 
 /* Demo page */
-[data-theme="dark"] .demo-page {
+[data-theme="dark"] .edit-page {
 	color: #e2e2e2;
 }
 
@@ -1326,16 +1340,16 @@ details summary::-webkit-details-marker {
 		height: 16px;
 	}
 
-	.demo-page-content {
+	.edit-page-content {
 		padding: 12px 12px;
 	}
 
-	.demo-page-content section {
+	.edit-page-content section {
 		padding: 16px;
 		border-radius: var(--radius-md);
 	}
 
-	.demo-page-content section h1 {
+	.edit-page-content section h1 {
 		font-size: 1.1rem;
 	}
 
@@ -1359,29 +1373,23 @@ details summary::-webkit-details-marker {
 	}
 
 	#hero {
-		padding: 1em 0.5em !important;
+		top: 0;
+		padding: 60px 0.5em 0 0.5em !important;
 	}
 }
 
-/* ≤975px: Icon-only tabs (except Save) */
+/* Always icon-only tabs */
+.edit-tab span {
+	display: none;
+}
+
+/* ≤975px: Compact tab bar, reduced section padding */
 @media (max-width: 975px) {
-	.edit-tab:not(.save-tab) span {
-		display: none;
-	}
-
-	.edit-tab.save-tab span {
-		display: inline;
-	}
-
-	.edit-tab.save-tab {
-		margin-left: 4px;
-	}
-
 	.edit-tab {
 		padding: 8px 10px;
 	}
 
-	.demo-page-content section {
+	.edit-page-content section {
 		padding: 12px;
 	}
 }

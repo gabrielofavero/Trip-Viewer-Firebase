@@ -300,8 +300,9 @@
 }
 
 [data-theme="dark"] .category-tab.active {
-	background: var(--bg-secondary);
+	background: rgba(var(--theme-color-rgb), 0.2);
 	color: var(--theme-color);
+	font-weight: 700;
 }
 
 /* ===== Dialog ===== */
@@ -681,46 +682,38 @@
 }
 
 [data-theme="dark"] .edit-tab.active {
-	background: var(--bg-tertiary);
+	background: rgba(var(--theme-color-rgb), 0.2);
 	color: var(--theme-color);
-}
-
-[data-theme="dark"] .edit-tab.save-tab {
-	background: var(--theme-color);
-	color: #fff;
-}
-
-[data-theme="dark"] .edit-tab.save-tab:hover {
-	background: var(--theme-secondary);
+	font-weight: 700;
 }
 
 /* Section Cards */
-[data-theme="dark"] .demo-page-content section {
+[data-theme="dark"] .edit-page-content section {
 	background: rgba(44, 44, 46, 0.7);
 	border-color: var(--border-color);
 }
 
-[data-theme="dark"] .demo-page-content section h1 {
+[data-theme="dark"] .edit-page-content section h1 {
 	color: var(--text-primary);
 }
 
-[data-theme="dark"] .demo-page-content section h1 svg {
+[data-theme="dark"] .edit-page-content section h1 svg {
 	color: var(--theme-color);
 }
 
-[data-theme="dark"] .demo-page-content section p {
+[data-theme="dark"] .edit-page-content section p {
 	color: var(--text-muted);
 }
 
-[data-theme="dark"] .demo-page-content section strong {
+[data-theme="dark"] .edit-page-content section strong {
 	color: var(--text-primary);
 }
 
-[data-theme="dark"] .demo-page-content section code {
+[data-theme="dark"] .edit-page-content section code {
 	background: #303030;
 }
 
-[data-theme="dark"] .demo-page-content section p a {
+[data-theme="dark"] .edit-page-content section p a {
 	color: var(--theme-color);
 }
 
@@ -761,27 +754,27 @@
 }
 
 /* Legacy sidebar nav (kept for backward compat) */
-[data-theme="dark"] .demo-page {
+[data-theme="dark"] .edit-page {
 	color: #e2e2e2;
 }
 
-[data-theme="dark"] .demo-page .demo-page-navigation nav {
+[data-theme="dark"] .edit-page .edit-page-navigation nav {
 	background: #303030;
 }
 
-[data-theme="dark"] .demo-page .demo-page-navigation a {
+[data-theme="dark"] .edit-page .edit-page-navigation a {
 	color: #e2e2e2;
 }
 
-[data-theme="dark"] .demo-page .demo-page-navigation a:hover {
+[data-theme="dark"] .edit-page .edit-page-navigation a:hover {
 	background: #404040;
 }
 
-[data-theme="dark"] .demo-page .demo-page-navigation a svg {
+[data-theme="dark"] .edit-page .edit-page-navigation a svg {
 	color: #e2e2e2;
 }
 
-[data-theme="dark"] .demo-page-navigation {
+[data-theme="dark"] .edit-page-navigation {
 	color: #e2e2e2;
 }
 

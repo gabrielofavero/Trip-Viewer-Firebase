@@ -12,11 +12,11 @@
 
 ```
 <section id="hero" class="loadable">
-  <div class="demo-page">                          ← flex container
-    <div class="demo-page-navigation">              ← LEFT sidebar nav (category links)
+  <div class="edit-page">                          ← flex container
+    <div class="edit-page-navigation">              ← LEFT sidebar nav (category links)
       <nav><ul><li><a href="#section-id">…</a></li>…</ul></nav>
     </div>
-    <main class="demo-page-content">                ← RIGHT content area
+    <main class="edit-page-content">                ← RIGHT content area
       <section>                                     ← one per category
         <div class="href-target" id="dados-basicos"></div>
         <h1>…</h1>
@@ -62,7 +62,7 @@
 
 ### 2.1 Overall Layout — Horizontal Category Tabs
 
-**Replace** the left sidebar nav (`.demo-page-navigation`) with a **horizontal tab bar** at the top, inspired by `index.html`'s `.category-tabs`:
+**Replace** the left sidebar nav (`.edit-page-navigation`) with a **horizontal tab bar** at the top, inspired by `index.html`'s `.category-tabs`:
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -127,7 +127,7 @@ Create this either as a new component CSS file (`public/assets/css/components/ca
 
 ### 2.3 Section Visibility Behavior
 
-Each `<section>` inside `<main class="demo-page-content">` gets a `data-category` attribute matching its tab:
+Each `<section>` inside `<main class="edit-page-content">` gets a `data-category` attribute matching its tab:
 
 ```html
 <section data-category="dados-basicos">…</section>
@@ -151,7 +151,7 @@ Each `<section>` inside `<main class="demo-page-content">` gets a `data-category
 
 ```css
 /* In the edit page context, override nice-form variables */
-.demo-page-content .nice-form-group {
+.edit-page-content .nice-form-group {
   --nf-input-size: 1rem;
   --nf-input-font-size: 0.9375rem;
   --nf-input-color: var(--text-primary);
@@ -166,14 +166,14 @@ Each `<section>` inside `<main class="demo-page-content">` gets a `data-category
 }
 
 /* Input fields — modern look */
-.demo-page-content .nice-form-group > input[type="text"],
-.demo-page-content .nice-form-group > input[type="url"],
-.demo-page-content .nice-form-group > input[type="email"],
-.demo-page-content .nice-form-group > input[type="number"],
-.demo-page-content .nice-form-group > input[type="date"],
-.demo-page-content .nice-form-group > input[type="time"],
-.demo-page-content .nice-form-group > select,
-.demo-page-content .nice-form-group > textarea {
+.edit-page-content .nice-form-group > input[type="text"],
+.edit-page-content .nice-form-group > input[type="url"],
+.edit-page-content .nice-form-group > input[type="email"],
+.edit-page-content .nice-form-group > input[type="number"],
+.edit-page-content .nice-form-group > input[type="date"],
+.edit-page-content .nice-form-group > input[type="time"],
+.edit-page-content .nice-form-group > select,
+.edit-page-content .nice-form-group > textarea {
   padding: 12px 16px;
   height: auto;
   min-height: 48px;
@@ -186,9 +186,9 @@ Each `<section>` inside `<main class="demo-page-content">` gets a `data-category
   transition: border var(--transition-fast), box-shadow var(--transition-fast);
   outline: none;
 }
-.demo-page-content .nice-form-group > input:focus,
-.demo-page-content .nice-form-group > select:focus,
-.demo-page-content .nice-form-group > textarea:focus {
+.edit-page-content .nice-form-group > input:focus,
+.edit-page-content .nice-form-group > select:focus,
+.edit-page-content .nice-form-group > textarea:focus {
   border-color: var(--theme-color);
   box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.12);
 }
@@ -199,7 +199,7 @@ Each `<section>` inside `<main class="demo-page-content">` gets a `data-category
 Each `<section>` should look like a clean card, matching the index aesthetic:
 
 ```css
-.demo-page-content section {
+.edit-page-content section {
   background: rgba(255,255,255,0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -213,17 +213,17 @@ Each `<section>` should look like a clean card, matching the index aesthetic:
 }
 
 /* Section heading */
-.demo-page-content section h1 {
+.edit-page-content section h1 {
   font-size: 1.25rem; font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 8px;
   display: flex; align-items: center; gap: 8px;
 }
-.demo-page-content section h1 svg {
+.edit-page-content section h1 svg {
   width: 1.25em; height: 1.25em;
   color: var(--theme-color); flex-shrink: 0;
 }
-.demo-page-content section p {
+.edit-page-content section p {
   color: var(--text-muted);
   margin: 0 0 20px 0;
   font-size: 0.875rem;
@@ -297,17 +297,17 @@ All buttons inside edit pages should use the same `.btn` system from `index.html
 [data-theme="dark"] .edit-tab.save-tab {
   background: var(--theme-color); color: #fff;
 }
-[data-theme="dark"] .demo-page-content section {
+[data-theme="dark"] .edit-page-content section {
   background: rgba(44,44,46,0.7);
   border-color: var(--border-color);
 }
-[data-theme="dark"] .demo-page-content section h1 {
+[data-theme="dark"] .edit-page-content section h1 {
   color: var(--text-primary);
 }
-[data-theme="dark"] .demo-page-content section h1 svg {
+[data-theme="dark"] .edit-page-content section h1 svg {
   color: var(--theme-color);
 }
-[data-theme="dark"] .demo-page-content section p {
+[data-theme="dark"] .edit-page-content section p {
   color: var(--text-muted);
 }
 ```
@@ -350,10 +350,10 @@ All buttons inside edit pages should use the same `.btn` system from `index.html
 
 ```css
 @media (max-width: 768px) {
-  .demo-page-content {
+  .edit-page-content {
     padding: 16px 12px;
   }
-  .demo-page-content section {
+  .edit-page-content section {
     padding: 16px;
     border-radius: var(--radius-md);
   }
@@ -371,14 +371,14 @@ All buttons inside edit pages should use the same `.btn` system from `index.html
 
 ### 4.1 Remove Sidebar Navigation
 
-Remove the entire `.demo-page-navigation` div from all 3 HTML files.
+Remove the entire `.edit-page-navigation` div from all 3 HTML files.
 
 ### 4.2 Add Tab Bar
 
-Insert the tab bar **inside** `<main class="demo-page-content">`, **before** the first `<section>`:
+Insert the tab bar **inside** `<main class="edit-page-content">`, **before** the first `<section>`:
 
 ```html
-<main class="demo-page-content">
+<main class="edit-page-content">
   <div class="edit-tab-bar" id="edit-tab-bar">
     <!-- Tabs will be generated by JS or defined statically -->
   </div>
@@ -424,7 +424,7 @@ export function initEditTabs() {
   if (!tabBar) return;
 
   const tabs = tabBar.querySelectorAll(".edit-tab");
-  const sections = document.querySelectorAll(".demo-page-content section[data-category]");
+  const sections = document.querySelectorAll(".edit-page-content section[data-category]");
 
   tabs.forEach(tab => {
     tab.addEventListener("click", () => {
@@ -458,11 +458,11 @@ Each edit page's entry point needs to call `initEditTabs()`:
 - `public/assets/ts/pages/edit-destination/edit-destination.ts` — same
 - `public/assets/ts/pages/edit-listing/edit-listing.ts` — same
 
-### 5.3 JS Files That Reference `.demo-page-navigation`
+### 5.3 JS Files That Reference `.edit-page-navigation`
 
 Search for any JS that references the old sidebar nav classes:
-- `.demo-page-navigation` — no JS references found (only CSS)
-- `.demo-page` — only CSS references
+- `.edit-page-navigation` — no JS references found (only CSS)
+- `.edit-page` — only CSS references
 
 **No JS changes needed for the sidebar removal.**
 
@@ -495,8 +495,8 @@ The accordion logic (`public/assets/ts/ui/accordion.ts`) works purely on IDs and
 ### Phase 2: HTML Changes
 
 5. **Edit** `public/edit/trip.html`:
-   - Remove `.demo-page-navigation` div
-   - Add `.edit-tab-bar` with tabs inside `.demo-page-content`
+   - Remove `.edit-page-navigation` div
+   - Add `.edit-tab-bar` with tabs inside `.edit-page-content`
    - Add `data-category` attributes to all `<section>` elements
 6. **Edit** `public/edit/destination.html`: same changes
 7. **Edit** `public/edit/listing.html`: same changes
