@@ -111,17 +111,16 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 160   | 157  | 3         | 0       |
-| 🏆   | Feature     | F000 | 167   | 137  | 22        | 8       |
+| 🐞   | Bug         | B000 | 161   | 157  | 3         | 1       |
+| 🏆   | Feature     | F000 | 168   | 137  | 22        | 9       |
 | 📈   | Improvement | M000 | 154   | 129  | 23        | 2       |
-| ⚔️   | Epic        | E000 | 48    | 30   | 8         | 10      |
+| ⚔️   | Epic        | E000 | 48    | 31   | 8         | 9       |
 
 ## Backlog
 
 ### High Priority
 
 - 🐞 **B161:** Fix page issues post migration
-- ⚔️ **E044:** New Front-End: edit pages
 - 🏆 **F168:** Add option to put image in destination (and make index.html see it)
 - ⚔️ **E048:** Database ovehaul
   - Translate database 
@@ -202,6 +201,7 @@ npm run dev
   - *[📈M151] Better folder structure for js files*
   - *[📈M152] All ids, classes and html comments in EN-US (+ better naming)*
 - 🏆 **F167:** Add dev mode for easy debugging
+- ⚔️ **E044:** New Front-End: edit pages
 
 ### May 2026
 - 🐞 **B159:** Fix travelers saving action
