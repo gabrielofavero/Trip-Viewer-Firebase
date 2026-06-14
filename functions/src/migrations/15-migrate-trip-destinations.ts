@@ -39,9 +39,9 @@ function refsAlreadySlim(destinationRefs: any[]): boolean {
 		"myMaps",
 		"restaurants",
 		"snacks",
-		"shops",
+		"shopping",
 		"nightlife",
-		"attractions",
+		"tourism",
 	]);
 
 	for (const ref of destinationRefs) {

@@ -44,9 +44,9 @@ const FIELD_MAP: Record<string, string> = {
 	transporte: "type",
 	restaurantes: "restaurants",
 	lanches: "snacks",
-	lojas: "shops",
+	lojas: "shopping",
 	saidas: "nightlife",
-	turismo: "attractions",
+	turismo: "tourism",
 	nota: "rating",
 	mapa: "map",
 	regiao: "region",
@@ -140,6 +140,11 @@ const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 	programacoes: {
 		data: "date",
 	},
+	// Inside modulos object: programacao = schedule module flag
+	// (singular, unlike FIELD_MAP's programacoes: "schedule" for the array)
+	modulos: {
+		programacao: "schedule",
+	},
 };
 
 // ============================================================
@@ -177,8 +182,8 @@ const VALUE_MAP: Record<string, string> = {
 	// Category values (e.g. categoria: "restaurantes" in schedule items)
 	restaurantes: "restaurants",
 	lanches: "snacks",
-	lojas: "shops",
-	turismo: "attractions",
+	lojas: "shopping",
+	turismo: "tourism",
 	// Common enum values
 	sim: "yes",
 	nao: "no",

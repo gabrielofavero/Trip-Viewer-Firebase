@@ -62,9 +62,9 @@ export type SchedulePeriod = "earlyMorning" | "morning" | "afternoon" | "night";
 export type DestinationCategory =
 	| "restaurants"
 	| "snacks"
-	| "shops"
+	| "shopping"
 	| "nightlife"
-	| "attractions";
+	| "tourism";
 
 // ============================================================
 // Core Entities
@@ -375,12 +375,12 @@ export interface Destination {
 	restaurants: Record<string, PlaceItem>;
 	/** was "lanches" */
 	snacks: Record<string, PlaceItem>;
-	/** was "lojas" */
-	shops: Record<string, PlaceItem>;
+	/** was "lojas" → "shopping" */
+	shopping: Record<string, PlaceItem>;
 	/** was "saidas" */
 	nightlife: Record<string, PlaceItem>;
-	/** was "turismo" */
-	attractions: Record<string, PlaceItem>;
+	/** was "turismo" → "tourism" */
+	tourism: Record<string, PlaceItem>;
 }
 
 /** was "versao" */
@@ -403,10 +403,10 @@ export interface DestinationModules {
 	nightlife: boolean;
 	/** was "restaurantes" */
 	restaurants: boolean;
-	/** was "lojas" */
-	shops: boolean;
-	/** was "turismo" */
-	attractions: boolean;
+	/** was "lojas" → "shopping" */
+	shopping: boolean;
+	/** was "turismo" → "tourism" */
+	tourism: boolean;
 	/** was "lanches" */
 	snacks: boolean;
 	/** was "mapa" */

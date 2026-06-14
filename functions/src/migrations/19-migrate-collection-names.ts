@@ -459,22 +459,13 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 
 	try {
 		// --------------------------------------------------
-		// Step 1: Rename top-level collections
+		// Step 1: Rename subcollections under parent docs
+		// (Must run BEFORE top-level renames, because
+		//  Step 2 deletes the old parent docs — subcollections
+		//  survive parent doc deletion in Firestore, but we
+		//  need the parent IDs to build subcollection paths.)
 		// --------------------------------------------------
-		console.log(`\n--- STEP 1: Top-Level Collection Renames ---\n`);
-		for (const [oldName, newName] of Object.entries(COLLECTION_RENAME_MAP)) {
-			const report = await migrateTopLevelCollection(
-				oldName,
-				newName,
-				dryRun,
-			);
-			allReports.push(report);
-		}
-
-		// --------------------------------------------------
-		// Step 2: Rename subcollections under parent docs
-		// --------------------------------------------------
-		console.log(`\n--- STEP 2: Subcollection Renames ---\n`);
+		console.log(`\n--- STEP 1: Subcollection Renames ---\n`);
 		for (const [oldParent, subNames] of Object.entries(
 			PARENT_SUBCOLLECTIONS,
 		)) {
@@ -496,11 +487,27 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		}
 
 		// --------------------------------------------------
-		// Step 3: Rename protected subcollections
+		// Step 2: Rename protected subcollections
+		// (Must also run before top-level renames, for the
+		//  same reason — we need old parent path to resolve.)
 		// --------------------------------------------------
-		console.log(`\n--- STEP 3: Protected Subcollection Renames ---\n`);
+		console.log(`\n--- STEP 2: Protected Subcollection Renames ---\n`);
 		const protectedReports = await migrateProtectedSubcollections(dryRun);
 		allReports.push(...protectedReports);
+
+		// --------------------------------------------------
+		// Step 3: Rename top-level collections
+		// (Run last — after subcollections are safely moved)
+		// --------------------------------------------------
+		console.log(`\n--- STEP 3: Top-Level Collection Renames ---\n`);
+		for (const [oldName, newName] of Object.entries(COLLECTION_RENAME_MAP)) {
+			const report = await migrateTopLevelCollection(
+				oldName,
+				newName,
+				dryRun,
+			);
+			allReports.push(report);
+		}
 
 		// --------------------------------------------------
 		// Summary
