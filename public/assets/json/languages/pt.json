@@ -154,6 +154,7 @@
 			"title": "Programação",
 			"subtitle": "Inclua aqui a sua programação diária",
 			"placeholder": "Ir para...",
+			"swap_title": "Trocar Programação",
 			"todays_itinerary": "Programação de hoje",
 			"no_itinerary": "Nada programado por aqui! ☹️",
 			"full_itinerary": "Programação completa",
@@ -301,7 +302,9 @@
 			"title": "Mapa",
 			"description": "Mapa interativo no Google Maps com vários pontos turísticos da cidade: Restaurantes, Lanches, Saídas, Turismo e Lojas",
 			"instructions": "Cadastre um mapa gratuitamente no",
-			"my_maps": "My Maps"
+			"my_maps": "My Maps",
+			"link_label": "Link do My Maps",
+			"url_placeholder": "https://www.google.com/maps/d/viewer?mid=1tgHq3Dg7zI1yMKTDlObLRryNPi_sy79t&usp=sharing"
 		},
 		"lineup": {
 			"title": "Lineup",
@@ -331,8 +334,13 @@
 			"free": "Gratuito",
 			"placeholder": "R$26 - R$50"
 		},
+		"move": {
+			"title": "Mover - {{category}}",
+			"label": "Mover para:"
+		},
 		"errors": {
 			"missing_title": "Não foi possível atualizar o destino. O título está ausente",
+			"invalid_emoji": "Insira um emoji válido 🫠",
 			"tiktok": {
 				"not_found": "Não foi possível encontrar o link do TikTok",
 				"conversion": "Erro ao converter TikTok",
@@ -393,6 +401,10 @@
 		"new": "Nova lista de destinos",
 		"edit": "Editar lista de destinos",
 		"share": "Venha visualizar a lista de destinos \"{{name}}\" criada no TripViewer",
+		"delete": {
+			"title": "Excluir Lista",
+			"message": "Tem certeza que deseja excluir a lista \"{{name}}\"? A ação não poderá ser desfeita"
+		},
 		"basic_information": "Adicione aqui as principais informações da sua lista de destinos",
 		"last_update": {
 			"title": "Exibir data da última atualização",
@@ -443,6 +455,17 @@
 		}
 	},
 	"datetime": {
+		"datepicker": {
+			"today": "Hoje",
+			"this_week": "Esta semana",
+			"this_month": "Este mês",
+			"clear": "Limpar",
+			"select_dates": "Selecionar datas...",
+			"cancel": "Cancelar",
+			"apply": "Aplicar",
+			"pick_start_date": "Selecionar data inicial",
+			"start_pick_end": "Início: {{start}} — selecionar data final"
+		},
 		"titles": {
 			"day_month": "{{day}} de {{month}}",
 			"weekday_day_month": "{{weekday}}, {{day}} de {{month}}",
@@ -522,7 +545,9 @@
 			"module_not_active": "Não é possível carregar a página. O módulo {{module}} não está ativo",
 			"no_data_on_module": "Não há dados cadastrados para o módulo de {{module}}",
 			"loading_timeout": "O carregamento demorou mais que o esperado. Tente novamente mais tarde",
-			"missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando"
+			"missing_data": "Não foi possível carregar este documento. Parece que informações obrigatórias estão faltando",
+			"with_location": "Erro \"{{message}}\" localizado em {{location}}",
+			"without_location": "Erro \"{{message}}\""
 		},
 		"too_early": {
 			"title": "Você chegou muito cedo! 😅",
@@ -648,6 +673,8 @@
 		"last_updated_on": "Última atualização em",
 		"unauthenticated": "Não autenticado",
 		"home": "Home",
+		"url_placeholder": "https://drive.google.com/drive",
+		"map_url_placeholder": "https://www.google.com/maps/",
 		"days": "Dias",
 		"people": "Pessoas",
 		"person": "Pessoa",

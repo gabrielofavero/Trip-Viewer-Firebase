@@ -269,7 +269,7 @@ export function emojisOnInputAction(j, categoria) {
 		emojiDiv.value = emojiTreated;
 	} else if (!emojiTreated && emojiUntreated) {
 		emojiDiv.value = "";
-		emojiDiv.placeholder = "Enter a valid emoji 🫠";
+		emojiDiv.placeholder = translate("destination.errors.invalid_emoji");
 	}
 }
 
@@ -278,7 +278,7 @@ export function openMoveDestinationModal(j, categoria) {
 
 	properties.titulo =
 		getID(`${categoria}-nome-${j}`).value ||
-		`Mover - ${firstCharToUpperCase(categoria)}`;
+		translate("destination.move.title", { category: firstCharToUpperCase(categoria) });
 	properties.containers = getContainersInput();
 	properties.botoes = [
 		{
@@ -290,13 +290,10 @@ export function openMoveDestinationModal(j, categoria) {
 		},
 	];
 
-	const options = {
-		restaurants: "Restaurants",
-		snacks: "Snacks",
-		nightlife: "Nightlife",
-		tourism: "Tourism",
-		shopping: "Shopping",
-	};
+	const options: Record<string, string> = {};
+	for (const cat of ["restaurants", "snacks", "nightlife", "tourism", "shopping"]) {
+		options[cat] = translate(`destination.${cat}.title`);
+	}
 
 	let optionsString = "";
 
@@ -308,7 +305,7 @@ export function openMoveDestinationModal(j, categoria) {
 
 	properties.conteudo = `
   <div class="nice-form-group"">
-    <label>Mover para:</label>
+    <label>${translate("destination.move.label")}</label>
       <select class="editar-select" id="move-select">
         ${optionsString}
       </select>

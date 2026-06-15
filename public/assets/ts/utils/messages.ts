@@ -285,9 +285,9 @@ export function getErrorElement(err) {
 	let errorMessage = "";
 
 	if (location && err.error && err.error instanceof Error) {
-		errorMessage = `Erro "${err.error.message}" localizado em ${location}`;
+		errorMessage = translate("messages.errors.with_location", { message: err.error.message, location });
 	} else if (err.error && err.error instanceof Error) {
-		errorMessage = `Erro "${err.error.message}"`;
+		errorMessage = translate("messages.errors.without_location", { message: err.error.message });
 	}
 
 	const errorElement = document.createElement("p");

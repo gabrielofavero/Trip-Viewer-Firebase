@@ -171,8 +171,8 @@ export function deleteListagem() {
 	listing = listing ? ` "${listing}"` : "";
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = "Delete Listing";
-	properties.conteudo = `Are you sure you want to delete the listing${listing}? This action cannot be undone.`;
+	properties.titulo = translate("listing.delete.title");
+	properties.conteudo = translate("listing.delete.message", { name: listing.replace(/^ "|"$/g, "") });
 	properties.botoes = [
 		{
 			tipo: "cancelar",

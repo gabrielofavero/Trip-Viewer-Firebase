@@ -91,7 +91,7 @@ function updateSensitiveReservations(firestoreData: Record<string, any>): void {
 		}
 		for (const id in SENSITIVE_RESERVATION_BOXES[key]) {
 			const box = SENSITIVE_RESERVATION_BOXES[key][id];
-			const reserva = firestoreData[key][id].reserva || "N/A";
+			const reserva = firestoreData[key][id].reserva || translate("labels.non_specified");
 			box.dataset.reservation =
 				reserva.charAt(0) === "#" ? reserva : `#${reserva}`;
 			box.dataset.link = firestoreData[key][id].link || "";

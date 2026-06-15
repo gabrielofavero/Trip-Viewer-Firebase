@@ -9,7 +9,7 @@
 import { select, on, onscroll, getID } from '../utils/dom.js';
 import { displayError } from '../utils/messages.js';
 import { loadAllConfigs, setLanguage, getVersions } from '../app/config.js';
-import { translatePage, getLanguagePackName, loadLangSelectorSelect } from '../i18n/translation.js';
+import { translate, translatePage, getLanguagePackName, loadLangSelectorSelect } from '../i18n/translation.js';
 import { initActions } from '../ui/actions.js';
 import { initDev } from '../utils/dev.js';
 
@@ -146,7 +146,7 @@ export function setPageName(pageName?) {
 window.addEventListener("unhandledrejection", function (event) {
 	console.error("Unhandled promise rejection:", event.reason);
 	displayError(
-		event.reason?.message || event.reason || "An unexpected error occurred",
+		event.reason?.message || event.reason || translate("messages.errors.unknown"),
 	);
 	event.preventDefault(); // Prevent default browser error handling
 });
@@ -154,7 +154,7 @@ window.addEventListener("unhandledrejection", function (event) {
 window.addEventListener("error", function (event) {
 	console.error("Global error:", event.error || event.message);
 	displayError(
-		event.error?.message || event.message || "An unexpected error occurred",
+		event.error?.message || event.message || translate("messages.errors.unknown"),
 	);
 	event.preventDefault(); // Prevent default browser error handling
 });

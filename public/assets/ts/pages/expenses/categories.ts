@@ -54,7 +54,7 @@ function loadChartSummary() {
 		"trip.expenses.overview",
 	);
 	getID("summary-total").innerText =
-		`Total: ${formatCurrency(values[0] + values[1], true)}`;
+		`${translate("labels.total")}: ${formatCurrency(values[0] + values[1], true)}`;
 
 	setChart("doughnut", "summary-chart", labels, values);
 }
@@ -81,7 +81,7 @@ function setDoughnutChartCategoria(title, type) {
 	const total = EXPENSES_CONVERTED[CURRENT_CURRENCY][type].summary.total;
 
 	getID(`${type}-title`).innerHTML = getTitleWithIcon(title, type);
-	getID(`${type}-total`).innerText = `Total: ${formatCurrency(total, true)}`;
+	getID(`${type}-total`).innerText = `${translate("labels.total")}: ${formatCurrency(total, true)}`;
 
 	const labels = items.map((item) => translate(item.name, {}, false));
 	const values = items.map((item) => item.total);
