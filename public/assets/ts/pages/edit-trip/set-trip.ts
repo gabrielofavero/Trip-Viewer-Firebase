@@ -175,7 +175,7 @@ function getLinksObject() {
 		pdf: getID("link-pdf").value || "",
 		ppt: getID("link-ppt").value || "",
 		sheet: getID("link-sheet").value || "",
-		vacina: getID("link-vacina").value || "",
+		vaccine: getID("link-vaccine").value || "",
 	};
 }
 

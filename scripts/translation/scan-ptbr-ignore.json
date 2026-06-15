@@ -1,0 +1,19 @@
+{
+  "_comment": "Ignore rules for scan-ptbr.py — suppress reviewed/unfixable matches.",
+  "_usage": [
+    "ignoreFiles:         skip entire files (relative path from project root)",
+    "ignoreLines:         skip specific line numbers in a file",
+    "ignoreWords:        skip a word in a specific file",
+    "ignoreWordsGlobal:  skip a word across all files"
+  ],
+  "_tips": [
+    "Run with --summary first to see counts, then add ignores incrementally.",
+    "Use --include-was to also see intentional 'was' annotation comments.",
+    "Use --strict to disable all auto-filtering (identical words + was annotations).",
+    "Use --json --save to export a machine-readable report."
+  ],
+  "ignoreFiles": [],
+  "ignoreLines": {},
+  "ignoreWords": {},
+  "ignoreWordsGlobal": []
+}

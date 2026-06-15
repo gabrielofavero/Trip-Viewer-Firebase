@@ -199,7 +199,7 @@ section {
 	}
 }
 
-#conversao {
+#conversion {
 	color: var(--subtitle);
 	padding-right: 2rem;
 	padding-left: 2rem;
@@ -209,7 +209,7 @@ section {
 
 @media (min-width: 1300px) {
 	.expenses-container,
-	#conversao {
+	#conversion {
 		padding-right: 10%;
 		padding-left: 10%;
 	}
@@ -217,7 +217,7 @@ section {
 
 @media (min-width: 1750px) {
 	.expenses-container,
-	#conversao {
+	#conversion {
 		padding-right: 20%;
 		padding-left: 20%;
 	}

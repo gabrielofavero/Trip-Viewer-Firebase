@@ -103,7 +103,7 @@ export function loadCustomizacaoData(state?) {
 	getID("link-pdf").value = getState().links.pdf;
 	getID("link-ppt").value = getState().links.ppt;
 	getID("link-sheet").value = getState().links.sheet;
-	getID("link-vacina").value = getState().links.vaccine;
+	getID("link-vaccine").value = getState().links.vaccine;
 }
 
 async function loadExpensesData() {

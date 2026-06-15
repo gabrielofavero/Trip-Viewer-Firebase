@@ -168,8 +168,8 @@ function loadHeader() {
 			getID("driveLink").style.display = "none";
 		}
 
-		if (getState().links.vacina) {
-			getID("vaccineLink").href = getState().links.vacina;
+		if (getState().links.vaccine) {
+			getID("vaccineLink").href = getState().links.vaccine;
 		} else {
 			getID("vaccineLink").style.display = "none";
 		}

@@ -133,7 +133,7 @@ async function loadExpenses() {
 			await loadCurrencies();
 			loadConvertedExpenses();
 			applyExpenses();
-			getID("conversao").innerText = getConversionText();
+			getID("conversion").innerText = getConversionText();
 			setTabListeners();
 			stopLoadingScreen();
 			if (EXPENSES_EMBED.enabled) {

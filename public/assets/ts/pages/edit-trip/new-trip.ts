@@ -42,9 +42,9 @@ function loadBasicFieldsNewTrip() {
 }
 
 export function addTransportation() {
-	const j = getNextJ("transporte-box");
+	const j = getNextJ("transportation-box");
 
-	$("#transporte-box").append(`
+	$("#transportation-box").append(`
   <div id="transporte-inner-box-${j}" class="inner-box draggable">
         <div id="transporte-${j}" class="accordion-item accordion-transporte accordion-draggable" >
         <h2 class="accordion-header" id="heading-transporte-${j}">
@@ -54,7 +54,7 @@ export function addTransportation() {
           </button>
         </h2>
         <div id="collapse-transporte-${j}" class="accordion-collapse collapse"
-          aria-labelledby="heading-transporte-${j}" data-bs-parent="#transporte-box">
+          aria-labelledby="heading-transporte-${j}" data-bs-parent="#transportation-box">
             <div class="accordion-body">
               <div class="nice-form-group" style="display: none">
               <label>${translate("labels.id")}</label>

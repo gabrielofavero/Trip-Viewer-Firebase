@@ -30,14 +30,6 @@ export async function main(pageLoaders: Record<string, () => void> = {}) {
 	}
 }
 
-async function loadTranslationLite() {
-	await setLanguage(getLanguagePackName());
-	translatePage();
-	if (document.querySelector(".lang-button")) {
-		loadLangSelectorSelect();
-	}
-}
-
 function loadPage(pageLoaders: Record<string, () => void> = {}) {
 	setPageName();
 	switch (getHTMLpage()) {

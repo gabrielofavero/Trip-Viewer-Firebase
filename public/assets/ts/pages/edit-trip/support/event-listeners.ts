@@ -168,8 +168,8 @@ export function loadEventListeners() {
 	getID("link-sheet").addEventListener("change", () =>
 		validateLink("link-sheet"),
 	);
-	getID("link-vacina").addEventListener("change", () =>
-		validateLink("link-vacina"),
+	getID("link-vaccine").addEventListener("change", () =>
+		validateLink("link-vaccine"),
 	);
 
 	// Barra de pesquisa em destinos

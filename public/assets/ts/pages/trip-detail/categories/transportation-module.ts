@@ -314,7 +314,7 @@ function loadCustomTransportationDivs() {
 	for (let i = 0; i < TRANSPORTES_ATIVOS.length; i++) {
 		const transporte = TRANSPORTES_ATIVOS[i];
 		const display = i === 0 ? "block" : "none";
-		container.innerHTML += `<div class='transporte-box' id="transportation-${transporte}" style="display: ${display}">
+		container.innerHTML += `<div class='transportation-box' id="transportation-${transporte}" style="display: ${display}">
                               <div id="transportation-${transporte}-content"></div>
                             </div>`;
 	}

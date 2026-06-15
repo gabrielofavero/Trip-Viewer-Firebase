@@ -40,7 +40,7 @@ declare var LOGO_DARK: any;
 declare var LOGO_LIGHT: any;
 declare var MEDIA_HYPERLINKS: any;
 declare var MESSAGE_MODAL_OPEN: any;
-declare var MOEDA_CONVERSAO: any;
+declare var CURRENCY_DISPLAY: any;
 declare var NEW_TRIP: any;
 declare var PERMISSIONS: any;
 declare var PLANNED_DESTINATION: any;
