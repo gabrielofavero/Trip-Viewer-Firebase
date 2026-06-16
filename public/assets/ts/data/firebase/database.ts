@@ -599,7 +599,7 @@ export async function getTripComplete(tripId: string): Promise<any> {
 
 	const destinationRefs = tripData.destinationRefs || tripData.destinations;
 
-	const [accommodations, transportation, itinerary, destinations] = await Promise.all([
+	let [accommodations, transportation, itinerary, destinations] = await Promise.all([
 		getAccommodations(tripId).catch(() => []),
 		getTransportation(tripId).catch(() => ({ legs: [], settings: { viewMode: "simple" } })),
 		getItinerary(tripId).catch(() => []),
@@ -613,6 +613,13 @@ export async function getTripComplete(tripId: string): Promise<any> {
 			).then(results => results.filter(Boolean))
 			: Promise.resolve([]),
 	]);
+
+	if (!transportation.legs?.length && tripData.transportation?.data?.length) {
+		transportation = {
+			legs: tripData.transportation.data,
+			settings: { viewMode: tripData.transportation.viewMode || "simple" },
+		};
+	}
 
 	return { ...tripData, accommodations, transportation, itinerary, destinations };
 }

@@ -405,7 +405,9 @@
 [data-theme="dark"] .message-container,
 [data-theme="dark"] .input-container,
 [data-theme="dark"] .programacao-container,
-[data-theme="dark"] .destinos-container {
+[data-theme="dark"] .itinerary-container,
+[data-theme="dark"] .destinos-container,
+[data-theme="dark"] .destinations-container {
 	background: #303030;
 }
 
@@ -434,6 +436,15 @@
 
 [data-theme="dark"] .pin {
 	color: #ffffff;
+}
+
+[data-theme="dark"] .sensitive-box {
+	background: #3b3b3b;
+	border-color: #414040;
+}
+
+[data-theme="dark"] .sensitive-box .code-text a {
+	color: #92caff;
 }
 
 /* ===== Partial Backup ===== */
@@ -537,8 +548,30 @@
 }
 
 /* ===== Transport/Stay Box ===== */
-[data-theme="dark"] .transpStayBox {
-	background-color: #a5a5a5;
+[data-theme="dark"] .transpStayBox,
+[data-theme="dark"] .transportation-box,
+[data-theme="dark"] .hotel-box,
+[data-theme="dark"] .flight-box,
+[data-theme="dark"] .itinerary-box,
+[data-theme="dark"] #calendar {
+	background-color: #303030;
+	color: #e2e2e2;
+	border-color: #414040;
+}
+
+[data-theme="dark"] .hotel-box,
+[data-theme="dark"] .hotel-box-inner {
+	background-color: #303030;
+	color: #e2e2e2;
+	border-color: #414040;
+}
+
+[data-theme="dark"] #accommodations-box {
+	background-color: transparent;
+}
+
+[data-theme="dark"] #calendar-table-card {
+	background-color: #303030;
 }
 
 /* ===== Score / Details ===== */
@@ -571,30 +604,81 @@
 /*--------------------------------------------------------------
 # Page: View
 --------------------------------------------------------------*/
-[data-theme="dark"] #programacao-hoje {
+[data-theme="dark"] #programacao-hoje,
+[data-theme="dark"] #itinerary-today {
 	background-color: rgba(255, 255, 255, 0.05);
 	border: 3px solid rgba(255, 255, 255, 0.05);
 	color: var(--font-color);
 }
 
-[data-theme="dark"] #programacao-hoje:hover {
+[data-theme="dark"] #programacao-hoje:hover,
+[data-theme="dark"] #itinerary-today:hover {
 	background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Calendar */
+[data-theme="dark"] .calendarTrip {
+	background-color: #3b3b3b !important;
+}
+
+[data-theme="dark"] .calendarTrip:hover,
+[data-theme="dark"] .calendarTrip:active,
+[data-theme="dark"] .calendarTrip.active {
+	background-color: var(--theme-color) !important;
+	color: white;
+}
+
+[data-theme="dark"] .calendarDisabled {
+	color: #595959;
+}
+
+/* Destination icon-boxes (inside #destinationsBox) */
+[data-theme="dark"] .services .icon-box {
+	background: #303030;
+	color: var(--font-color);
+}
+
+[data-theme="dark"] .services .icon-box .icon svg path {
+	fill: #404040;
+}
+
+[data-theme="dark"] .services .icon-box h4 a {
+	color: #e2e2e2;
+}
+
+/* Custom select (shared component, used by #destinations-select etc.) */
+[data-theme="dark"] .custom-select {
+	background: #303030;
+	color: var(--font-color);
+	border-color: #414040;
+}
+
+[data-theme="dark"] .custom-select .dropdown {
+	background: var(--box-color);
+	border-color: #414040;
+}
+
+[data-theme="dark"] .custom-select .dropdown .option:hover {
+	background: #505050;
 }
 
 /*--------------------------------------------------------------
 # Page: Destination
 --------------------------------------------------------------*/
-[data-theme="dark"] .destinos-select .dropdown {
+[data-theme="dark"] .destinos-select .dropdown,
+[data-theme="dark"] .destinations-select .dropdown {
 	background: var(--box-color);
 	border: 1px solid var(--border-color-alt);
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .destinos-select .dropdown .option {
+[data-theme="dark"] .destinos-select .dropdown .option,
+[data-theme="dark"] .destinations-select .dropdown .option {
 	color: var(--font-color);
 }
 
-[data-theme="dark"] .destinos-select .option:hover {
+[data-theme="dark"] .destinos-select .option:hover,
+[data-theme="dark"] .destinations-select .option:hover {
 	background: #505050;
 }
 
@@ -614,7 +698,8 @@
 	color: #f2f2f2;
 }
 
-[data-theme="dark"] .destinos-titulo {
+[data-theme="dark"] .destinos-titulo,
+[data-theme="dark"] .destinations-title {
 	border-bottom: 0.5px solid #383838;
 }
 
@@ -637,13 +722,15 @@
 	color: var(--subtitle);
 }
 
-[data-theme="dark"] .gastos-card {
+[data-theme="dark"] .gastos-card,
+[data-theme="dark"] .expenses-card {
 	border: 1px solid #414040;
 	background-color: #3b3b3b;
 	box-shadow: 0px 5px 90px 0px rgba(166, 166, 166, 0.05);
 }
 
-[data-theme="dark"] .gastos-card.container-mode {
+[data-theme="dark"] .gastos-card.container-mode,
+[data-theme="dark"] .expenses-card.container-mode {
 	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
 }
 

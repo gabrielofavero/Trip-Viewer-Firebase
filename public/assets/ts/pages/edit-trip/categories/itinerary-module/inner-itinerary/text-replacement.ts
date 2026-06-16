@@ -188,8 +188,8 @@ function processAccomodationReplacement(labelValue, itineraryJ) {
 	if (!isCheckIn && !isCheckOut) return labelValue;
 
 	const labelKey = isCheckIn
-		? "trip.accommodation.checkIn"
-		: "trip.accommodation.checkOut";
+		? "trip.accommodation.checkin"
+		: "trip.accommodation.checkout";
 	const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
 
 	const itineraries = INNER_ITINERARY[inputDateToKey(inputDate)];

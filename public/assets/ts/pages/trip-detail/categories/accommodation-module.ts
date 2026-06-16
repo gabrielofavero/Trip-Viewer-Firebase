@@ -120,10 +120,10 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                 </div>
                   <div class="hotel-description">
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkIn")}:</strong> <span>${checkIn}</span> 
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkin")}:</strong> <span>${checkIn}</span> 
                     </div>
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkOut")}:</strong> <span>${checkOut}</span>
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkout")}:</strong> <span>${checkOut}</span>
                     </div>
                   </div>
                 </div>

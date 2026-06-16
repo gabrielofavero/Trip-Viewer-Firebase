@@ -32,6 +32,20 @@ export var END_DATE = {
 	text: "",
 };
 
+/**
+ * Normalize viewMode values from Firestore (which may be "simple"/"leg" after
+ * migration 13) to the hyphenated format expected by the transportation module
+ * ("simple-view"/"leg-view"/"people-view").
+ */
+function normalizeTransportViewMode(raw: string): string {
+	switch (raw) {
+		case "simple": return "simple-view";
+		case "leg": return "leg-view";
+		case "people": return "people-view";
+		default: return raw || "simple-view";
+	}
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
 	try {
 		startLoadingTimer();
@@ -84,9 +98,20 @@ export async function loadViewPage() {
 
 		// Normalize transportation data from subcollection format to module-expected format
 		if (firestoreData?.transportation) {
+			// Also handle the legacy embedded format { viewMode, data } from the trip doc
+			// (used as fallback when subcollection migration hasn't run yet)
+			const rawViewMode: string =
+				firestoreData.transportation.settings?.viewMode ||
+				firestoreData.transportation.viewMode ||
+				"simple";
+			const rawData: any[] =
+				firestoreData.transportation.legs ||
+				firestoreData.transportation.data ||
+				[];
+
 			firestoreData.transportation = {
-				viewMode: firestoreData.transportation.settings?.viewMode || "simple-view",
-				data: firestoreData.transportation.legs || [],
+				viewMode: normalizeTransportViewMode(rawViewMode),
+				data: rawData,
 			};
 		}
 
