@@ -2,7 +2,7 @@ import { startLoadingScreen, stopLoadingScreen } from '../../../utils/loading.js
 import { getState } from '../../../data/state.js';
 import { getErrorFromGetRequestMessage, getID } from '../../../utils/dom.js';
 import { closeMessage, displayError } from '../../../utils/messages.js';
-import { haveErrorFromGetRequest } from '../../../data/firebase/database.js';
+import { get, haveErrorFromGetRequest } from '../../../data/firebase/database.js';
 import { translate } from '../../../i18n/translation.js';
 import { requestPin } from '../../../utils/pin.js';
 import { copyToClipboard } from "../categories/transportation-module.js";
@@ -91,10 +91,19 @@ function updateSensitiveReservations(firestoreData: Record<string, any>): void {
 		}
 		for (const id in SENSITIVE_RESERVATION_BOXES[key]) {
 			const box = SENSITIVE_RESERVATION_BOXES[key][id];
-			const reservation = firestoreData[key][id].reservation || translate("labels.non_specified");
+			const entry = firestoreData[key]?.[id];
+			if (!entry) {
+				console.warn(
+					`[Sensitive] No entry in firestoreData.${key}["${id}"]. ` +
+					`Available ids in ${key}:`,
+					firestoreData[key] ? Object.keys(firestoreData[key]) : "(key missing)",
+				);
+				continue;
+			}
+			const reservation = entry.reservation || translate("labels.non_specified");
 			box.dataset.reservation =
 				reservation.charAt(0) === "#" ? reservation : `#${reservation}`;
-			box.dataset.link = firestoreData[key][id].link || "";
+			box.dataset.link = entry.link || "";
 
 			if (!box.dataset.link) {
 				const wrapper = box.querySelector(".code-wrapper");
@@ -106,6 +115,7 @@ function updateSensitiveReservations(firestoreData: Record<string, any>): void {
 	const adjustLoadables = false;
 	stopLoadingScreen({ adjustLoadables });
 	const { type, id } = ACTIVE_SENSITIVE_RESERVATION;
+	console.log('[Sensitive] updateSensitiveReservations done. boxes:', Object.keys(SENSITIVE_RESERVATION_BOXES.transportation).length + Object.keys(SENSITIVE_RESERVATION_BOXES.accommodations).length, '| active type:', type, '| active id:', id);
 	if (type && id) {
 		loadSensitiveReservationAction(type, id);
 	}
@@ -116,6 +126,7 @@ function loadSensitiveReservationAction(type: string, id: string): void {
 	const show = box.dataset.visible !== "true";
 	const label = box.dataset.reservation;
 	const link = box.dataset.link;
+	console.log('[Sensitive] loadSensitiveReservationAction | type:', type, '| id:', id, '| show:', show, '| label:', label, '| link:', link, '| box exists:', !!box);
 	const wrapper = box.querySelector(".code-wrapper");
 	const textEl = box.querySelector(".code-text");
 	const linkActive = show && link;
@@ -147,7 +158,26 @@ function loadSensitiveReservationAction(type: string, id: string): void {
 	}
 }
 
-export async function protectedDataConfirmAction(afterAction?: (data: any) => void) {
+// Maps legacy string-based action names to actual functions.
+// The string-action system (messages.ts) passes arguments as strings,
+// so "protectedDataConfirmAction(_updateSensitiveReservations)" results in
+// afterAction being the literal string "_updateSensitiveReservations".
+const AFTER_ACTION_MAP: Record<string, (data: any) => void> = {
+	_updateSensitiveReservations: updateSensitiveReservations,
+};
+
+export async function protectedDataConfirmAction(afterAction?: string | ((data: any) => void)) {
+	// Resolve string-based afterAction (from legacy string-action system)
+	if (typeof afterAction === "string") {
+		const resolved = AFTER_ACTION_MAP[afterAction];
+		if (resolved) {
+			afterAction = resolved;
+		} else {
+			console.error('[Sensitive] Unknown afterAction string:', afterAction);
+			afterAction = undefined;
+		}
+	}
+
 	PIN = getID("pin-code")?.innerText || "";
 	closeMessage();
 	const adjustLoadables = false;
@@ -161,7 +191,9 @@ export async function protectedDataConfirmAction(afterAction?: (data: any) => vo
 
 	const type = getType();
 	const path = `${type}/protected/${PIN}/${getURLParam(type[0])}`;
+	console.log('[Sensitive] get() path:', path, '| PIN:', PIN);
 	const firestoreData = await get(path);
+	console.log('[Sensitive] get() result:', firestoreData, '| haveError:', haveErrorFromGetRequest());
 
 	if (!haveErrorFromGetRequest() && !firestoreData) {
 		requestDocumentPin({ invalido });
@@ -179,7 +211,9 @@ export async function protectedDataConfirmAction(afterAction?: (data: any) => vo
 		sendToExpenses("pin", PIN);
 	}
 
-	afterAction(firestoreData);
+	if (typeof afterAction === "function") {
+		afterAction(firestoreData);
+	}
 }
 
 export function requestDocumentPin({

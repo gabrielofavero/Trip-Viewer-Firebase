@@ -215,14 +215,29 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 })(jQuery);
 
 function loadPin() {
+	// Track actual digits via keydown — the validatePin plugin replaces input
+	// values with "•" bullets, so we must capture the real digits before masking.
+	const actualDigits: string[] = ["", "", "", ""];
+	const pinWrapper = document.querySelector(".pin-wrapper")!;
+	pinWrapper.addEventListener("keydown", (e: KeyboardEvent) => {
+		const target = e.target as HTMLInputElement;
+		if (target.getAttribute("data-role") !== "pin") return;
+		const inputs = Array.from(pinWrapper.querySelectorAll<HTMLInputElement>('[data-role="pin"]'));
+		const index = inputs.indexOf(target);
+		if (index < 0) return;
+
+		if (e.key >= "0" && e.key <= "9") {
+			actualDigits[index] = e.key;
+		} else if (e.key === "Backspace" || e.key === "Delete") {
+			actualDigits[index] = "";
+		}
+	});
+
 	$(".pin-wrapper").validatePin({
 		numericKeyboardOnMobile: true,
 		blurOnSuccess: true,
 		onSuccess: function () {
-			const inputs = document.querySelectorAll<HTMLInputElement>('.pin-wrapper [data-role="pin"]');
-			let pinValue = "";
-			inputs.forEach((input) => { pinValue += input.value || ""; });
-			$(".pin").html(pinValue);
+			$(".pin").html(actualDigits.join(""));
 		},
 		onFailure: function () {
 			$(".pin").html("");

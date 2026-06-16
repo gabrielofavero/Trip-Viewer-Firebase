@@ -32,8 +32,8 @@ export function getTransportationObject(protectedReservationCodes = false) {
 			duration: getID(`transportation-duration-other-${j}`).value,
 			company: getCompanyValue(j),
 			id: getOrCreateCategoryID("transportation", j),
-			direction: getID(`outbound-${j}`).checked
-				? "outbound"
+			direction: getID(`departure-${j}`).checked
+				? "departure"
 				: getID(`return-${j}`).checked
 					? "return"
 					: "during",
@@ -89,7 +89,7 @@ export function updateTransportationTitle(i) {
 }
 
 function getTransportationType(i) {
-	const outboundLabel = getID(`outbound-${i}`).checked
+	const outboundLabel = getID(`departure-${i}`).checked
 		? translate("trip.transportation.departure")
 		: "";
 	const duringLabel = getID(`during-${i}`).checked
@@ -240,7 +240,7 @@ export function loadTransportationListeners(j) {
 	getID(`arrival-point-${j}`).addEventListener("change", () =>
 		updateTransportationTitle(j),
 	);
-	getID(`outbound-${j}`).addEventListener("change", () => updateTransportationTitle(j));
+	getID(`departure-${j}`).addEventListener("change", () => updateTransportationTitle(j));
 	getID(`during-${j}`).addEventListener("change", () =>
 		updateTransportationTitle(j),
 	);

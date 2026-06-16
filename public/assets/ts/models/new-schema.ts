@@ -38,7 +38,7 @@ export type CollectionName =
 export type TransportType = "flight" | "bus" | "car";
 
 /** was "ida" | "volta" | "durante" */
-export type Direction = "outbound" | "return" | "during";
+export type Direction = "departure" | "return" | "during";
 
 /** was "simple-view" | "leg-view" */
 export type TransportViewMode = "simple" | "leg";

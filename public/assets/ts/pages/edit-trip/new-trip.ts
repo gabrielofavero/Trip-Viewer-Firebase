@@ -63,8 +63,8 @@ export function addTransportation() {
             <fieldset class="nice-form-group" id="direction-box-${j}">
               <div class="modern-radio-group">
                 <div class="nice-form-group">
-                  <input type="radio" name="direction-${j}" id="outbound-${j}" ${j === 1 ? "checked" : ""} />
-                  <label for="outbound-${j}">${translate("trip.transportation.departure")}</label>
+                  <input type="radio" name="direction-${j}" id="departure-${j}" ${j === 1 ? "checked" : ""} />
+                  <label for="departure-${j}">${translate("trip.transportation.departure")}</label>
                 </div>
 
                 <div class="nice-form-group">

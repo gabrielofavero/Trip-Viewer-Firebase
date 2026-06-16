@@ -478,7 +478,7 @@ function _setButtonAction(button, action, defaultFn) {
 						// Strip surrounding quotes
 						return a.replace(/^['"]|['"]$/g, "");
 					});
-					fn(...args);
+				fn(...args);
 					return;
 				}
 			}
@@ -487,8 +487,8 @@ function _setButtonAction(button, action, defaultFn) {
 			try {
 				const fallback = new Function(action);
 				fallback();
-			} catch (_) {
-				// Silently ignore if even the fallback fails
+			} catch (e) {
+				console.error('Button action fallback failed:', e);
 			}
 		});
 	} else if (defaultFn) {

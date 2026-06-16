@@ -23,7 +23,8 @@ export function loadActiveCategory(urlParams) {
 	const originals = destinationsConfig._deprecated_original;
 
 	if (!type || !originals[type]) {
-		type = getFirstCategory();
+		ACTIVE_CATEGORY = getFirstCategory();
+		return;
 	}
 
 	ACTIVE_CATEGORY = originals[type];
@@ -36,7 +37,7 @@ export function loadActiveCategory(urlParams) {
 		for (const type of types) {
 			const value = translations[type];
 			if (destinoIDs.includes(type) && value) {
-				return value;
+				return type;
 			}
 		}
 		throw translate("messages.errors.missing_data");

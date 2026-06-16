@@ -163,8 +163,9 @@ const VALUE_MAP: Record<string, string> = {
 	voo: "flight",
 	onibus: "bus",
 	carro: "car",
+	"trem-bala": "bullet_train",
 	// Direction
-	ida: "outbound",
+	ida: "departure",
 	volta: "return",
 	durante: "during",
 	// View mode

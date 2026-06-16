@@ -36,7 +36,7 @@ The goal is a **full translation** — not just field names and collection names
 |----------|----------|
 | **Field names** | `titulo` → `title`, `hospedagens` → `accommodations` |
 | **Collection names** | `usuarios` → `users`, `viagens` → `trips`, `gastos` → `expenses` |
-| **Enum/constant values** | `"ida"` → `"outbound"`, `"voo"` → `"flight"`, `"claro"` → `"light"` |
+| **Enum/constant values** | `"ida"` → `"departure"`, `"voo"` → `"flight"`, `"claro"` → `"light"` |
 | **Nested object keys** | `datas.checkin` → `dates.checkIn`, `pontos.partida` → `points.origin` |
 | **Itinerary item types** | `"destinos"` → `"destination"`, `"hospedagens"` → `"accommodation"` |
 | **User visibility modes** | `"dinamico"` → `"dynamic"` |
@@ -205,7 +205,7 @@ These are **Portuguese string values stored as data** (not field names) that mus
 
 | Portuguese | English |
 |-----------|---------|
-| `"ida"` | `"outbound"` |
+| `"ida"` | `"departure"` |
 | `"volta"` | `"return"` |
 | `"durante"` | `"during"` |
 
@@ -592,7 +592,7 @@ users/{uid}/listingSummaries/{id}      → { title, subtitle, description, image
     arrival: DateObject,             // was "chegada"
   },
   duration: string,                  // was "duracao"
-  direction: string,                 // was "idaVolta" (outbound, return, during)
+  direction: string,                 // was "idaVolta" (departure, return, during)
   reservation: string,               // was "reserva"
   link: string,
   person: string,                    // was "pessoa"
@@ -841,7 +841,7 @@ expenses/protected/{pin}/{tripId}    → protected expense data
 
 5. **TypeScript alignment.** The planned TypeScript migration means we'll write type definitions for the data model. It's far better to write them for the optimized English schema than to write Portuguese-field types now and migrate them later. Define the TS interfaces first, let them drive the migration script, and refactor the TS services to match.
 
-6. **Full translation includes enum values.** Both options require translating stored Portuguese enum strings (`"ida"` → `"outbound"`, `"voo"` → `"flight"`, `"claro"` → `"light"`, etc.). This is the same effort either way. By doing it as part of the restructuring, we only touch each document once.
+6. **Full translation includes enum values.** Both options require translating stored Portuguese enum strings (`"ida"` → `"departure"`, `"voo"` → `"flight"`, `"claro"` → `"light"`, etc.). This is the same effort either way. By doing it as part of the restructuring, we only touch each document once.
 
 ### Mitigation Strategy for Option B Risks
 
@@ -906,8 +906,8 @@ function getField(doc, newKey, oldKey) {
 For enum values, a similar pattern applies:
 
 ```ts
-function translateDirection(value: string): "outbound" | "return" | "during" {
-  const map = { "ida": "outbound", "volta": "return", "durante": "during" };
+function translateDirection(value: string): "departure" | "return" | "during" {
+  const map = { "ida": "departure", "volta": "return", "durante": "during" };
   return map[value] ?? value;
 }
 ```

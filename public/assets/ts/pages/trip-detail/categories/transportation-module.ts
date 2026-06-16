@@ -24,7 +24,7 @@ var ACTIVE_TRANSPORTATION_TITLES = [];
 /** Maps Portuguese data keys to English HTML element suffixes (from cleanup refactoring) */
 function mapTransportationKey(key: string): string {
 	const map: Record<string, string> = {
-		outbound: "outbound",
+		departure: "departure",
 		during: "internal",
 		return: "return",
 	};
@@ -59,7 +59,7 @@ function getSwiperData() {
 		...new Set(getState().transportation.data.map((item) => item[key])),
 	];
 	ACTIVE_TRANSPORTATION =
-		viewMode === "people-view" ? ACTIVE_TRANSPORTATIONS[0] : "outbound";
+		viewMode === "people-view" ? ACTIVE_TRANSPORTATIONS[0] : "departure";
 
 	for (const activeTransport of ACTIVE_TRANSPORTATIONS) {
 		swiperData[activeTransport] = [];
@@ -209,7 +209,7 @@ function buildTransportationSwiper(swiperData) {
 			const data =
 				viewMode === "simple-view"
 					? [
-							...(swiperData["outbound"] || []),
+							...(swiperData["departure"] || []),
 							...(swiperData["during"] || []),
 							...(swiperData["return"] || []),
 						]
@@ -243,10 +243,10 @@ function buildTransportationSwiper(swiperData) {
 	function loadSwiperPreActions(viewMode, keys) {
 		switch (viewMode) {
 			case "simple-view":
-				keys.push("outbound");
+				keys.push("departure");
 				break;
 			case "leg-view":
-				keys.push("outbound", "during", "return");
+				keys.push("departure", "during", "return");
 				loadTransportationTabs();
 				break;
 			case "people-view":
@@ -340,7 +340,7 @@ function loadTransportationTabsHTML() {
 	const tab = getID("tab-transportation");
 	if (!tab) return;
 	const itemMap = {
-		outbound: "departure",
+		departure: "departure",
 		during: "during",
 		return: "return",
 	};
@@ -426,7 +426,7 @@ function resetSwiperVisibility() {
 	switch (viewMode) {
 		case "leg-view":
 			adjustTransportationBoxContainerHeight();
-			getID("transportation-outbound").style.visibility = "";
+			getID("transportation-departure").style.visibility = "";
 			break;
 		case "people-view":
 			adjustTransportationBoxContainerHeight();
@@ -510,7 +510,7 @@ function autoNavigateTransportation() {
 	const viewMode = getState().transportation.viewMode || "simple-view";
 
 	if (viewMode === "simple-view") {
-		const swiperEl = getID("transportation-outbound-swiper");
+		const swiperEl = getID("transportation-departure-swiper");
 		if (swiperEl?.swiper) {
 			swiperEl.swiper.slideTo(targetIndex, 600);
 		}
