@@ -64,7 +64,7 @@ export async function getTrip(tripId?) {
 
 	// Fallback: old embedded-data format (no subcollections migrated yet)
 	const tripData = await get(`${COLLECTION.TRIPS}/${tripId}`);
-	if (tripData?.destinos?.length > 0) {
+	if (tripData?.destinations?.length > 0) {
 		return await getTripDataWithDestinations(tripData);
 	}
 	return tripData;

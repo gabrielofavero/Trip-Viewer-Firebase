@@ -9,7 +9,7 @@ import { getDestination } from '../../../../../data/firebase/database.js';
 import { ACTIVE_DESTINATIONS } from '../../destination.js';
 import { DATAS } from '../../../new-trip.js';
 import {DESTINOS_DATA, getDestinationsFromCards} from "../../destination.js";
-import { getInnerProgramacaoContent } from "./content.js";
+import { getInnerItineraryContent } from "./content.js";
 import { loadTextReplacementCheckboxes, TEXT_REPLACEMENT } from "./text-replacement.js";
 import { replaceTextIfEnabled } from "./text-replacement.js";
 import { replaceTimeIfEnabled } from "./text-replacement.js";
@@ -24,7 +24,7 @@ export var INNER_ITINERARY = {};
 var INNER_ITINERARY_DESTINATIONS_DATA = {};
 var LAST_OPENED_PERIOD = {};
 
-// Carregamento Principal
+// Main Loading
 export function loadInnerItineraryHTML(j) {
 	const key = jsDateToKey(DATAS[j - 1]);
 	if (Object.keys(INNER_ITINERARY).length == 0 || !INNER_ITINERARY[key])
@@ -38,13 +38,13 @@ export function loadInnerItineraryHTML(j) {
 	for (let period in INNER_ITINERARY[key]) {
 		const periodData = INNER_ITINERARY[key][period];
 		for (let k = 1; k <= periodData.length; k++) {
-			const dado = periodData[k - 1];
+			const dataEntry = periodData[k - 1];
 			const div = getID(`inner-itinerary-${period}-${j}`);
 
-			if (dado.programacao) {
+			if (dataEntry.label) {
 				div.innerHTML += `<div class='input-button-container'>
                                     <button id="input-button-${period}-${j}-${k}" class="btn input-button draggable" data-action="open-inner-itinerary-detail" data-j="${j}" data-k="${k}" data-period="${period}">
-                                        ${getInnerItineraryTitleHTML(dado, "inner-itinerary-highlight")}
+                                        ${getInnerItineraryTitleHTML(dataEntry, "inner-itinerary-highlight")}
                                     </button>
                                     <i class="iconify drag-icon" data-icon="mdi:drag"></i>
                                 </div>`;
@@ -65,7 +65,7 @@ export async function openInnerItinerary(j, k?, period?) {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
 	properties.title = getInnerItineraryMessageTitle(j);
 	properties.containers = getContainersInput();
-	properties.content = getInnerProgramacaoContent(
+	properties.content = getInnerItineraryContent(
 		j,
 		k,
 		period,
@@ -91,46 +91,46 @@ export async function openInnerItinerary(j, k?, period?) {
 	if (activeDestinations.length === 1) {
 		getID("inner-itinerary-item-destinations-location").style.display = "none";
 		getID("inner-itinerary-item-destinations-radio-label").innerText =
-			getSelectCurrentLabel(getID(`inner-itinerary-select-local`));
+			getSelectCurrentLabel(getID(`inner-itinerary-select-location`));
 	}
 
-	await loadInnerProgramacaoListeners(j);
+	await loadInnerItineraryListeners(j);
 	enableAllTravelersFieldset("inner-itinerary-travelers");
 	await loadInnerItineraryCurrentData(j, k, period, isNew);
-	loadInnerProgramacaoEventListeners();
+	loadInnerItineraryEventListeners();
 }
 
 // Selects
 function getInnerItinerarySelects(j) {
 	return {
-		transporte: getInnerItinerarySelect("transportation"),
-		hospedagens: getInnerItinerarySelect("accommodations"),
-		destinos: getInnerItinerarySelectsDestinos(j),
-		datas: getDataSelectOptions(j),
+		transportation: getInnerItinerarySelect("transportation"),
+		accommodations: getInnerItinerarySelect("accommodations"),
+		destinations: getInnerItinerarySelectsDestinations(j),
+		dates: getDataSelectOptions(j),
 	};
 }
 
-function getInnerItinerarySelect(tipo) {
-	let ativo = false;
+function getInnerItinerarySelect(type) {
+	let active = false;
 	let options = "";
 
-	for (const child of getID(`${tipo}-box`).children) {
+	for (const child of getID(`${type}-box`).children) {
 		const j = child.id.split("-")[3];
-		const label = getID(`${tipo}-title-${j}`).innerText;
-		const id = getID(`${tipo}-id-${j}`).value;
+		const label = getID(`${type}-title-${j}`).innerText;
+		const id = getID(`${type}-id-${j}`).value;
 		if (id && label) {
-			ativo = true;
+			active = true;
 			options += `<option value="${id}">${label}</option>`;
 		}
 	}
 
 	return {
-		ativo: ativo,
+		active: active,
 		options: options,
 	};
 }
 
-function getInnerItinerarySelectsDestinos(j) {
+function getInnerItinerarySelectsDestinations(j) {
 	if (
 		getID("destinations-enabled").checked === false ||
 		ACTIVE_DESTINATIONS.length === 0
@@ -140,22 +140,22 @@ function getInnerItinerarySelectsDestinos(j) {
 	if (destinations.length === 0) returnFalse();
 
 	let options = "";
-	let ativo = false;
+	let active = false;
 	for (const strippedData of destinations) {
 		const id = strippedData.destinationId;
 		if (!id) continue;
-		ativo = true;
+		active = true;
 		options += `<option value="${id}">${strippedData.title}</option>`;
 	}
 
-	return { ativo, options };
+	return { active, options };
 	function returnFalse() {
-		const ativo = false;
-		return { ativo };
+		const active = false;
+		return { active };
 	}
 }
 
-// Carrega dados atuais no Modal
+// Load current data into Modal
 async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 	if (period) {
 		getID("inner-itinerary-select-period").value = period;
@@ -171,55 +171,55 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 		INNER_ITINERARY[key][period] &&
 		INNER_ITINERARY[key][period][k - 1]
 	) {
-		const dados = INNER_ITINERARY[key][period][k - 1];
-		const itemAssociado = getID("inner-itinerary-linked-item");
+		const dataEntry = INNER_ITINERARY[key][period][k - 1];
+		const linkedItem = getID("inner-itinerary-linked-item");
 
-		getID(`inner-itinerary`).value = dados.programacao;
-	getID(`inner-itinerary-start`).value = dados.start;
-	getID(`inner-itinerary-end`).value = dados.end;
+		getID(`inner-itinerary`).value = dataEntry.label;
+	getID(`inner-itinerary-start`).value = dataEntry.start;
+	getID(`inner-itinerary-end`).value = dataEntry.end;
 		updateTravelersFieldset(
 			"inner-itinerary-travelers",
-			dados.people || [],
+			dataEntry.people || [],
 		);
 
-		switch (dados?.item?.tipo) {
+		switch (dataEntry?.item?.type) {
 		case "transportation":
 			getID(`inner-itinerary-item-transportation-radio`).checked = true;
-			getID(`inner-itinerary-item-transporte`).style.display = "block";
-			getID(`inner-itinerary-select-transporte`).value = dados.item.id;
-			itemAssociado.innerText = getSelectCurrentLabel(
-				getID(`inner-itinerary-select-transporte`),
+			getID(`inner-itinerary-item-transportation`).style.display = "block";
+			getID(`inner-itinerary-select-transportation`).value = dataEntry.item.id;
+			linkedItem.innerText = getSelectCurrentLabel(
+				getID(`inner-itinerary-select-transportation`),
 			);
 			break;
 		case "accommodations":
 				getID(`inner-itinerary-item-accommodations-radio`).checked = true;
-				getID(`inner-itinerary-item-hospedagens`).style.display = "block";
-				getID(`inner-itinerary-select-hospedagens`).value = dados.item.id;
-				itemAssociado.innerText = getSelectCurrentLabel(
-					getID(`inner-itinerary-select-hospedagens`),
+				getID(`inner-itinerary-item-accommodations`).style.display = "block";
+				getID(`inner-itinerary-select-accommodations`).value = dataEntry.item.id;
+				linkedItem.innerText = getSelectCurrentLabel(
+					getID(`inner-itinerary-select-accommodations`),
 				);
 				break;
 		case "destinations":
 				getID(`inner-itinerary-item-destinations-radio`).checked = true;
 				getID("inner-itinerary-item-destinations").style.display = "block";
 
-				getID(`inner-itinerary-select-local`).value = dados.item.local;
-				await innerProgramacaoSelectLocalAction();
+				getID(`inner-itinerary-select-location`).value = dataEntry.item.location;
+				await innerItinerarySelectLocationAction();
 
-				getID(`inner-itinerary-select-categoria`).value =
-					dados.item.categoria;
-				await innerProgramacaoSelectCategoriaAction();
+				getID(`inner-itinerary-select-category`).value =
+					dataEntry.item.category;
+				await innerItinerarySelectCategoryAction();
 
-				const passeio = dados.item.id;
-				if (passeio) {
-					getID(`inner-itinerary-select-passeio`).value = passeio;
-					itemAssociado.innerText = translate(
+				const tour = dataEntry.item.id;
+				if (tour) {
+					getID(`inner-itinerary-select-passeio`).value = tour;
+					linkedItem.innerText = translate(
 						"trip.itinerary.linked_destination",
 					);
 				}
 				break;
 			default:
-				getID(`inner-itinerary-item-nenhum-radio`).checked = true;
+				getID(`inner-itinerary-item-none-radio`).checked = true;
 		}
 	} else if (isNew) {
 		const selectPeriod = getID("inner-itinerary-select-period");
@@ -230,9 +230,9 @@ async function loadInnerItineraryCurrentData(j, k, period, isNew) {
 
 // Modal Navigation
 export async function openInnerItineraryItem(j) {
-	const height = getID("inner-itinerary-main-screen").offsetHeight;
-	const itemSelecionar = getID("inner-itinerary-select-item");
-	itemSelecionar.style.minHeight = `${height}px`;
+	const height = getID("inner-itinerary-tela-principal").offsetHeight;
+	const itemSelect = getID("inner-itinerary-select-item");
+	itemSelect.style.minHeight = `${height}px`;
 
 	if (getID("inner-itinerary").value) {
 		getID("message-title").innerText = translate("trip.itinerary.link_item");
@@ -248,9 +248,9 @@ export async function openInnerItineraryItem(j) {
 }
 
 export function openInnerItinerarySwap() {
-	const height = getID("inner-itinerary-main-screen").offsetHeight;
-	const itemTrocar = getID("inner-itinerary-swap-item");
-	itemTrocar.style.minHeight = `${height}px`;
+	const height = getID("inner-itinerary-tela-principal").offsetHeight;
+	const itemSwap = getID("inner-itinerary-swap-item");
+	itemSwap.style.minHeight = `${height}px`;
 
 	getID("message-title").innerText = translate("trip.itinerary.swap_title");
 	animate(
@@ -262,21 +262,21 @@ export function openInnerItinerarySwap() {
 
 export function closeInnerItinerary(j) {
 	if (getID("inner-itinerary-select-item").style.display === "block") {
-		const itemAssociado = getID("inner-itinerary-linked-item");
+		const linkedItem = getID("inner-itinerary-linked-item");
 		if (getID("inner-itinerary-item-transportation-radio").checked) {
-			itemAssociado.innerText = getSelectCurrentLabel(
-				getID(`inner-itinerary-select-transporte`),
+			linkedItem.innerText = getSelectCurrentLabel(
+				getID(`inner-itinerary-select-transportation`),
 			);
 		} else if (getID("inner-itinerary-item-accommodations-radio").checked) {
-			itemAssociado.innerText = getSelectCurrentLabel(
-				getID(`inner-itinerary-select-hospedagens`),
+			linkedItem.innerText = getSelectCurrentLabel(
+				getID(`inner-itinerary-select-accommodations`),
 			);
 		} else if (getID("inner-itinerary-item-destinations-radio").checked) {
-			itemAssociado.innerText = getSelectCurrentLabel(
+			linkedItem.innerText = getSelectCurrentLabel(
 				getID(`inner-itinerary-select-passeio`),
 			);
 		} else {
-			itemAssociado.innerText = translate("trip.itinerary.link_item");
+			linkedItem.innerText = translate("trip.itinerary.link_item");
 		}
 
 		getID("message-title").innerText = getInnerItineraryMessageTitle(j);
@@ -345,36 +345,36 @@ function addInnerItinerary(j, k?, period?) {
 
 	function buildInnerItinerary(itinerary) {
 		let item = {
-			tipo: "",
+			type: "",
 			id: "",
-			local: "",
-			categoria: "",
+			location: "",
+			category: "",
 		};
 
 		if (
 			getID("inner-itinerary-item-transportation-radio").checked &&
-			getID(`inner-itinerary-select-transporte`).value
+			getID(`inner-itinerary-select-transportation`).value
 		) {
-			item.tipo = "transportation";
-			item.id = getID(`inner-itinerary-select-transporte`).value;
+			item.type = "transportation";
+			item.id = getID(`inner-itinerary-select-transportation`).value;
 		} else if (
 			getID("inner-itinerary-item-accommodations-radio").checked &&
-			getID(`inner-itinerary-select-hospedagens`).value
+			getID(`inner-itinerary-select-accommodations`).value
 		) {
-			item.tipo = "accommodations";
-			item.id = getID(`inner-itinerary-select-hospedagens`).value;
+			item.type = "accommodations";
+			item.id = getID(`inner-itinerary-select-accommodations`).value;
 		} else if (
 			getID("inner-itinerary-item-destinations-radio").checked &&
 			getID(`inner-itinerary-select-passeio`).value
 		) {
-			item.tipo = "destinations";
-			item.local = getID(`inner-itinerary-select-local`).value;
+			item.type = "destinations";
+			item.location = getID(`inner-itinerary-select-location`).value;
 			item.id = getID(`inner-itinerary-select-passeio`).value;
-			item.categoria = getID(`inner-itinerary-select-categoria`).value;
+			item.category = getID(`inner-itinerary-select-category`).value;
 		}
 
 		return {
-			itinerary: itinerary.value,
+			schedule: itinerary.value,
 			people: getCheckedTravelersIDs("inner-itinerary-travelers"),
 		start: getID(`inner-itinerary-start`).value,
 		end: getID(`inner-itinerary-end`).value,
@@ -425,17 +425,17 @@ export function deleteInnerItinerary(j, k, period) {
 }
 
 // Listeners
-async function loadInnerProgramacaoListeners(j) {
-	const itemTransporte = getID(`inner-itinerary-item-transporte`);
-	const itemHospedagens = getID(`inner-itinerary-item-hospedagens`);
-	const itemDestinos = getID(`inner-itinerary-item-destinations`);
+async function loadInnerItineraryListeners(j) {
+	const itemTransportation = getID(`inner-itinerary-item-transportation`);
+	const itemAccommodations = getID(`inner-itinerary-item-accommodations`);
+	const itemDestinations = getID(`inner-itinerary-item-destinations`);
 
 	getID(`inner-itinerary-item-transportation-radio`).addEventListener(
 		"change",
 		() => {
-			itemTransporte.style.display = "block";
-			itemHospedagens.style.display = "none";
-			itemDestinos.style.display = "none";
+			itemTransportation.style.display = "block";
+			itemAccommodations.style.display = "none";
+			itemDestinations.style.display = "none";
 			loadTextReplacementCheckboxes(j);
 		},
 	);
@@ -443,9 +443,9 @@ async function loadInnerProgramacaoListeners(j) {
 	getID(`inner-itinerary-item-accommodations-radio`).addEventListener(
 		"change",
 		() => {
-			itemTransporte.style.display = "none";
-			itemHospedagens.style.display = "block";
-			itemDestinos.style.display = "none";
+			itemTransportation.style.display = "none";
+			itemAccommodations.style.display = "block";
+			itemDestinations.style.display = "none";
 			loadTextReplacementCheckboxes(j);
 		},
 	);
@@ -453,30 +453,30 @@ async function loadInnerProgramacaoListeners(j) {
 	getID(`inner-itinerary-item-destinations-radio`).addEventListener(
 		"change",
 		() => {
-			itemTransporte.style.display = "none";
-			itemHospedagens.style.display = "none";
-			itemDestinos.style.display = "block";
+			itemTransportation.style.display = "none";
+			itemAccommodations.style.display = "none";
+			itemDestinations.style.display = "block";
 			loadTextReplacementCheckboxes(j);
 		},
 	);
 
-	getID(`inner-itinerary-item-nenhum-radio`).addEventListener(
+	getID(`inner-itinerary-item-none-radio`).addEventListener(
 		"change",
 		() => {
-			itemTransporte.style.display = "none";
-			itemHospedagens.style.display = "none";
-			itemDestinos.style.display = "none";
+			itemTransportation.style.display = "none";
+			itemAccommodations.style.display = "none";
+			itemDestinations.style.display = "none";
 			loadTextReplacementCheckboxes(j);
 		},
 	);
 
-	getID(`inner-itinerary-select-local`).addEventListener("change", () =>
-		innerProgramacaoSelectLocalAction(),
+	getID(`inner-itinerary-select-location`).addEventListener("change", () =>
+		innerItinerarySelectLocationAction(),
 	);
-	getID(`inner-itinerary-select-categoria`).addEventListener("change", () =>
-		innerProgramacaoSelectCategoriaAction(),
+	getID(`inner-itinerary-select-category`).addEventListener("change", () =>
+		innerItinerarySelectCategoryAction(),
 	);
-	getID("inner-itinerary-select-tour").addEventListener("change", () =>
+	getID("inner-itinerary-select-passeio").addEventListener("change", () =>
 		loadTextReplacementCheckboxes(j),
 	);
 
@@ -488,22 +488,22 @@ async function loadInnerProgramacaoListeners(j) {
 	);
 
 	getID("inner-itinerary-select-period").addEventListener("change", () =>
-		pairTurnos("inner-itinerary-select-turno"),
+		pairTurnos("inner-itinerary-select-period"),
 	);
 	getID("inner-itinerary-select-swap-period").addEventListener("change", () =>
-		pairTurnos("inner-itinerary-select-troca-turno"),
+		pairTurnos("inner-itinerary-select-troca-period"),
 	);
 }
 
-async function innerProgramacaoSelectLocalAction() {
+async function innerItinerarySelectLocationAction() {
 	const selectLocal = getID("inner-itinerary-select-location");
 	const selectCategoria = getID("inner-itinerary-select-category");
-	const selectPasseio = getID("inner-itinerary-select-tour");
+	const selectPasseio = getID("inner-itinerary-select-passeio");
 
 	const id = selectLocal.value;
 	const locais =
 		INNER_ITINERARY_DESTINATIONS_DATA[id] ||
-		(await buildInnerProgramacaoDestinosData(id));
+		(await buildInnerItineraryDestinationsData(id));
 
 	if (locais) {
 		selectCategoria.innerHTML =
@@ -515,19 +515,19 @@ async function innerProgramacaoSelectLocalAction() {
 	}
 
 	selectCategoria.addEventListener("change", () => {
-		innerProgramacaoSelectCategoriaAction();
+		innerItinerarySelectCategoryAction();
 	});
 }
 
-async function innerProgramacaoSelectCategoriaAction() {
+async function innerItinerarySelectCategoryAction() {
 	const selectLocal = getID("inner-itinerary-select-location");
 	const selectCategoria = getID("inner-itinerary-select-category");
-	const selectPasseio = getID("inner-itinerary-select-tour");
+	const selectPasseio = getID("inner-itinerary-select-passeio");
 
 	const id2 = selectLocal.value;
 	const locais2 =
 		INNER_ITINERARY_DESTINATIONS_DATA[id2] ||
-		(await buildInnerProgramacaoDestinosData(id2));
+		(await buildInnerItineraryDestinationsData(id2));
 
 	if (
 		selectLocal.value &&
@@ -542,7 +542,7 @@ async function innerProgramacaoSelectCategoriaAction() {
 	}
 }
 
-async function buildInnerProgramacaoDestinosData(id) {
+async function buildInnerItineraryDestinationsData(id) {
 	if (INNER_ITINERARY_DESTINATIONS_DATA[id]) {
 		return INNER_ITINERARY_DESTINATIONS_DATA[id];
 	}
@@ -552,16 +552,16 @@ async function buildInnerProgramacaoDestinosData(id) {
 	}
 
 	const data = DESTINOS_DATA[id];
-	const titulos = {
-		restaurantes: translate("destination.restaurants.title"),
-		lanches: translate("destination.snacks.title"),
-		saidas: translate("destination.nightlife.title"),
-		turismo: translate("destination.tourism.title"),
-		lojas: translate("destination.shopping.title"),
+	const titles = {
+		restaurants: translate("destination.restaurants.title"),
+		snacks: translate("destination.snacks.title"),
+		nightlife: translate("destination.nightlife.title"),
+		tourism: translate("destination.tourism.title"),
+		shopping: translate("destination.shopping.title"),
 	};
 
 	const passeios = getDestinations().categories.tours;
-	const categorias = Object.keys(data)
+	const categories = Object.keys(data)
 		.filter(
 			(key) =>
 				passeios.includes(key) &&
@@ -571,23 +571,23 @@ async function buildInnerProgramacaoDestinosData(id) {
 		)
 		.sort((a, b) => passeios.indexOf(a) - passeios.indexOf(b));
 
-	const categoriaOptions = categorias
+	const categoriaOptions = categories
 		.map(
-			(categoria) =>
-				`<option value="${categoria}">${titulos[categoria]}</option>`,
+			(category) =>
+				`<option value="${category}">${titles[category]}</option>`,
 		)
 		.join("");
 
 	const passeioOptions = {};
-	for (const categoria of categorias) {
-		const passeiosArr = Object.entries(data[categoria]).map(([id, value]) => ({
+	for (const category of categories) {
+		const passeiosArr = Object.entries(data[category]).map(([id, value]) => ({
 			id,
 			...(value as any),
 		}));
-		passeiosArr.sort((a, b) => a.nome.localeCompare(b.nome));
-		passeioOptions[categoria] = passeiosArr
+		passeiosArr.sort((a, b) => a.name.localeCompare(b.name));
+		passeioOptions[category] = passeiosArr
 			.map(
-				(passeio) => `<option value="${passeio.id}">${passeio.nome}</option>`,
+				(passeio) => `<option value="${passeio.id}">${passeio.name}</option>`,
 			)
 			.join("");
 	}
@@ -596,13 +596,13 @@ async function buildInnerProgramacaoDestinosData(id) {
 	return INNER_ITINERARY_DESTINATIONS_DATA[id];
 }
 
-function loadInnerProgramacaoEventListeners() {
+function loadInnerItineraryEventListeners() {
 	getID("inner-itinerary-start").addEventListener(
 		"change",
 		function (event) {
 			const inicioValue = (event.target as HTMLInputElement).value;
 			const inicioHora = parseInt(inicioValue.split(":")[0]);
-			getID("inner-itinerary-select-period").value = getTurno(inicioHora);
+			getID("inner-itinerary-select-period").value = getPeriod(inicioHora);
 		},
 	);
 
@@ -627,26 +627,26 @@ function loadInnerProgramacaoEventListeners() {
 	getID("inner-itinerary-item-destinations-radio").addEventListener(
 		"click",
 		function () {
-			innerProgramacaoSelectLocalAction();
+			innerItinerarySelectLocationAction();
 		},
 	);
 }
 
-export function getTurno(inicioHora) {
+export function getPeriod(inicioHora) {
 	if (inicioHora < 6) {
-		return "madrugada";
+		return "earlyMorning";
 	} else if (inicioHora < 12) {
-		return "manha";
+		return "morning";
 	} else if (inicioHora < 18) {
-		return "tarde";
+		return "afternoon";
 	} else {
-		return "noite";
+		return "night";
 	}
 }
 
 function pairTurnos(callerID) {
-	const id1 = "inner-itinerary-select-turno";
-	const id2 = "inner-itinerary-select-troca-turno";
+	const id1 = "inner-itinerary-select-period";
+	const id2 = "inner-itinerary-select-troca-period";
 
 	const turno1 = getID(id1).value;
 	const turno2 = getID(id2).value;
@@ -667,11 +667,11 @@ function getMostRecentJ(j) {
 		const keys = DATAS.map((data) => jsDateToKey(data));
 		const atual = keys[j - 1];
 		if (atual != nova) {
-			const turno = getID("inner-itinerary-select-swap-period").value;
+			const period = getID("inner-itinerary-select-swap-period").value;
 			if (
 				keys.includes(nova) &&
 			INNER_ITINERARY[nova] &&
-			INNER_ITINERARY[nova][turno]
+			INNER_ITINERARY[nova][period]
 			) {
 				return keys.indexOf(nova) + 1;
 			}
@@ -685,14 +685,14 @@ function getNewPeriod(j) {
 	if (LAST_OPENED_PERIOD[j]) {
 		return LAST_OPENED_PERIOD[j];
 	} else {
-		for (const turno of getItinerary().timeOfDay) {
-			const element = getID(`inner-itinerary-${turno}-${j}`);
+		for (const period of getItinerary().timeOfDay) {
+			const element = getID(`inner-itinerary-${period}-${j}`);
 			if (element && !element.innerText) {
-				return turno;
+				return period;
 			}
 		}
 	}
-	return "noite";
+	return "night";
 }
 
 export function afterDragInnerItinerary(evt) {

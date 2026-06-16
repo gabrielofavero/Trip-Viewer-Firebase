@@ -40,13 +40,13 @@ export async function loadEditTripPage() {
 
 	loadVisibilityIndex();
 	initEditTabs();
-	loadHabilitados();
+	loadEnabled();
 	loadDraggablesWithAccordions(["transportation", "accommodations"]);
 	newDynamicSelect("gallery-category");
 	newDynamicSelect("transportation-person");
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinos || []));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinations || []));
 
 	if (DOCUMENT_ID) {
 		await loadTrip(true);
@@ -69,7 +69,7 @@ export async function loadEditTripPage() {
 	$("body").css("overflow", "auto");
 }
 
-function loadHabilitados() {
+function loadEnabled() {
 	loadEditModule("images");
 	loadEditModule("colors");
 	loadEditModule("links");
@@ -94,7 +94,7 @@ async function loadTrip(stripped = false) {
 
 	if (PIN.current) {
 		FIRESTORE_PROTECTED_DATA = await get(
-			`viagens/protected/${PIN.current}/${DOCUMENT_ID}`,
+			`trips/protected/${PIN.current}/${DOCUMENT_ID}`,
 			true,
 			true,
 		);
@@ -122,15 +122,15 @@ export function deleteTrip() {
 	trip = trip ? ` "${trip}"` : "";
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = translate("trip.delete.title");
-	properties.conteudo = translate("trip.delete.message", { name: trip });
-	properties.botoes = [
+	properties.title = translate("trip.delete.title");
+	properties.content = translate("trip.delete.message", { name: trip });
+	properties.buttons = [
 		{
-			tipo: "cancelar",
+			type: "cancel",
 		},
 		{
-			tipo: "confirmar",
-			acao: "deleteTripAction()",
+			type: "confirm",
+			action: "deleteTripAction()",
 		},
 	];
 
@@ -179,20 +179,20 @@ async function getTravelDocument(stripped = false) {
 }
 
 function getMergedTripObject(tripData) {
-	for (let i = 0; i < tripData.transportes.dados.length; i++) {
-		const id = tripData.transportes.dados[i].id;
-		tripData.transportes.dados[i].reserva =
-			FIRESTORE_PROTECTED_DATA.transportes[id]?.reserva || "";
-		tripData.transportes.dados[i].link =
-			FIRESTORE_PROTECTED_DATA.transportes[id]?.link || "";
+	for (let i = 0; i < tripData.transportation.data.length; i++) {
+		const id = tripData.transportation.data[i].id;
+		tripData.transportation.data[i].reservation =
+			FIRESTORE_PROTECTED_DATA.transportation[id]?.reservation || "";
+		tripData.transportation.data[i].link =
+			FIRESTORE_PROTECTED_DATA.transportation[id]?.link || "";
 	}
 
-	for (let i = 0; i < tripData.hospedagens.length; i++) {
-		const id = tripData.hospedagens[i].id;
-		tripData.hospedagens[i].reserva =
-			FIRESTORE_PROTECTED_DATA.hospedagens[id]?.reserva || "";
-		tripData.hospedagens[i].link =
-			FIRESTORE_PROTECTED_DATA.hospedagens[id]?.link || "";
+	for (let i = 0; i < tripData.accommodations.length; i++) {
+		const id = tripData.accommodations[i].id;
+		tripData.accommodations[i].reservation =
+			FIRESTORE_PROTECTED_DATA.accommodations[id]?.reservation || "";
+		tripData.accommodations[i].link =
+			FIRESTORE_PROTECTED_DATA.accommodations[id]?.link || "";
 	}
 
 	return tripData;

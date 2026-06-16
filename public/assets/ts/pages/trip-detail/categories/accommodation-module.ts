@@ -14,7 +14,7 @@ import { START_DATE } from "../view.js";
 export function loadAccommodations() {
 	let swiperData = [];
 
-	for (let i = 0; i < getState().hospedagens.length; i++) {
+	for (let i = 0; i < getState().accommodations.length; i++) {
 		const htmlContent = getAccommodationsHTML(i);
 		swiperData.push(htmlContent);
 	}
@@ -23,7 +23,7 @@ export function loadAccommodations() {
 
 	buildHospedagensSwiper(swiperData);
 
-	for (let j = 1; j <= getState().hospedagens.length; j++) {
+	for (let j = 1; j <= getState().accommodations.length; j++) {
 		loadImageLightbox(`accommodations-gallery-${j}`);
 	}
 
@@ -31,18 +31,18 @@ export function loadAccommodations() {
 }
 
 function getAccommodationsHTML(i, innerItinerary = false) {
-	const original = getState().hospedagens[i];
+	const original = getState().accommodations[i];
 	const hospedagem = {
 		id: original.id,
-		cafe: original.cafe,
-		checkIn: getHospedagensData(original.datas.checkin),
-		checkOut: getHospedagensData(original.datas.checkout),
-		reserva: original.reserva,
-		descricao: original.descricao,
-		endereco: original.endereco,
-		imagens: original.imagens,
+		breakfast: original.breakfast,
+		checkIn: getHospedagensData(original.dates.checkIn),
+		checkOut: getHospedagensData(original.dates.checkOut),
+		reservation: original.reservation,
+		description: original.description,
+		address: original.address,
+		images: original.images,
 		link: original.link,
-		nome: original.nome,
+		name: original.name,
 	};
 
 	if (innerItinerary) {
@@ -50,7 +50,7 @@ function getAccommodationsHTML(i, innerItinerary = false) {
 	}
 
 	const j = i + 1;
-	return `<div class="swiper-slide" id="hospedagens-slide-${j}">
+	return `<div class="swiper-slide" id="accommodations-slide-${j}">
             <div class="testimonial-item">
               ${getHotelBoxHTML(hospedagem, j)}
             </div>
@@ -58,36 +58,36 @@ function getAccommodationsHTML(i, innerItinerary = false) {
 }
 
 export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
-	const imagens = hospedagem.imagens;
+	const images = hospedagem.images;
 	const checkIn = hospedagem.checkIn;
 	const checkOut = hospedagem.checkOut;
 	const galeriaId = innerItinerary
-		? "programacao-galeria"
+		? "itinerary-gallery"
 		: `accommodations-gallery-${j}`;
 	const isSensitive = getState().pin === "sensitive-only";
 	const reservationClass = isSensitive
 		? "hotel-reservation sensitive"
 		: "hotel-reservation";
 	const reservationVisibility =
-		isSensitive || hospedagem.reserva ? "block" : "none";
+		isSensitive || hospedagem.reservation ? "block" : "none";
 
 	let galeriaItems = "";
 
-	for (let i = 0; i < imagens.length; i++) {
-		const imagem = imagens[i];
-		galeriaItems += `<a href="${imagem.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${imagem.descricao}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ""}</a>`;
+	for (let i = 0; i < images.length; i++) {
+		const image = images[i];
+		galeriaItems += `<a href="${image.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${image.description}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ""}</a>`;
 	}
 
 	return `<div class="hotel-box${innerItinerary ? "-inner inner-itinerary-item" : ""}" id="accommodations-box-${j}${innerItinerary ? "-inner" : ""}">
-            <div class="portfolio-wrap" style="display: ${imagens.length > 0 ? "block" : "none"};">
-              <div class="hotel-img" style="background-image: url('${imagens?.[0]?.link}');">
+            <div class="portfolio-wrap" style="display: ${images.length > 0 ? "block" : "none"};">
+              <div class="hotel-img" style="background-image: url('${images?.[0]?.link}');">
                 <div class="portfolio-info">
                   <div class="portfolio-links">
                     ${galeriaItems}
                   </div>
                 </div>
                 <div class="hotel-img-text-container">
-                  <div class="hotel-img-text" style="display: ${hospedagem.cafe ? "block" : "none"};">
+                  <div class="hotel-img-text" style="display: ${hospedagem.breakfast ? "block" : "none"};">
                     <i class="bx bx-coffee-togo"></i> ${translate("trip.accommodation.breakfast")}
                   </div>
                 </div>
@@ -96,16 +96,16 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
             <div class="hotel-content">
               <div class="hotel-title">
                 <div class="left-title">
-                  <div class="hotel-name" id="hospedagens-nome-${j}">
-                    ${hospedagem.nome}
+                  <div class="hotel-name" id="accommodations-name-${j}">
+                    ${hospedagem.name}
                     <div>
                       <i style="display: ${hospedagem.link ? "block" : "none"}" class="iconify external-link" 
                       data-icon="tabler:external-link" data-action="open-link" data-url="${hospedagem.link}"></i>
                     </div> 
                   </div>
-                  <div class="hotel-address" style="display: ${hospedagem.endereco ? "block" : "none"}">
+                  <div class="hotel-address" style="display: ${hospedagem.address ? "block" : "none"}">
                     <i class="bx bxs-map color-icon"></i> 
-                    ${hospedagem.endereco}
+                    ${hospedagem.address}
                   </div>
                 </div>
               </div>
@@ -114,16 +114,16 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                 <i class="bx bxs-file color-icon"></i>
                 ${getAccommodationReservationHTML(hospedagem)} 
               </div>
-                <div class="hotel-description" style="display: ${hospedagem.descricao ? "block" : "none"}">
+                <div class="hotel-description" style="display: ${hospedagem.description ? "block" : "none"}">
                   <i class="bx bxs-hotel color-icon"></i> 
-                  ${hospedagem.descricao}
+                  ${hospedagem.description}
                 </div>
                   <div class="hotel-description">
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkin")}:</strong> <span>${checkIn}</span> 
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkIn")}:</strong> <span>${checkIn}</span> 
                     </div>
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkout")}:</strong> <span>${checkOut}</span>
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkOut")}:</strong> <span>${checkOut}</span>
                     </div>
                   </div>
                 </div>
@@ -141,29 +141,29 @@ function getAccommodationReservationHTML(hospedagem) {
 		return getSensitiveReservationHTML("accommodations", hospedagem.id);
 	}
 	// remove # if first char is #
-	if (hospedagem.reserva && hospedagem.reserva.charAt(0) === "#") {
-		return `${translate("labels.reservation.title")} ${hospedagem.reserva}`;
+	if (hospedagem.reservation && hospedagem.reservation.charAt(0) === "#") {
+		return `${translate("labels.reservation.title")} ${hospedagem.reservation}`;
 	}
 
-	if (!hospedagem.reserva) {
+	if (!hospedagem.reservation) {
 		return "";
 	}
 
-	return `${translate("labels.reservation.title")} #${hospedagem.reserva}`;
+	return `${translate("labels.reservation.title")} #${hospedagem.reservation}`;
 }
 
 function buildHospedagensSwiper(swiperData) {
 	const swiperButtonStyle =
 		swiperData.length > 1 ? "" : `style="display: none"`;
 	getID(`accommodations-box`).innerHTML =
-		`<div id="hospedagens-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                                          <div class="swiper-wrapper" id="hospedagens-wrapper">
+		`<div id="accommodations-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                                          <div class="swiper-wrapper" id="accommodations-wrapper">
                                             ${swiperData.join("")}
                                           </div>
                                           <div class="swiper-controls">
-                                            <div class="swiper-button-prev hospedagens-prev" ${swiperButtonStyle}></div>
-                                            <div class="swiper-pagination hospedagens-pagination"></div>
-                                            <div class="swiper-button-next hospedagens-next" ${swiperButtonStyle}></div>
+                                            <div class="swiper-button-prev accommodations-prev" ${swiperButtonStyle}></div>
+                                            <div class="swiper-pagination accommodations-pagination"></div>
+                                            <div class="swiper-button-next accommodations-next" ${swiperButtonStyle}></div>
                                           </div>
                                         </div>`;
 	ADJUST_HEIGHT_CARDS.push("accommodations");
@@ -172,8 +172,8 @@ function buildHospedagensSwiper(swiperData) {
 
 function autoNavigateHospedagens() {
 	const hoje = getDateNoTime(convertFromDateObject(getTodayDateObject()));
-	const dados = getState().hospedagens;
-	if (!dados || dados.length === 0) return;
+	const data = getState().accommodations;
+	if (!data || data.length === 0) return;
 
 	let targetIndex;
 
@@ -192,11 +192,11 @@ function autoNavigateHospedagens() {
 		const now = new Date();
 		let found = false;
 
-		for (let i = 0; i < dados.length; i++) {
-			const checkin = convertFromDateObject(dados[i].datas.checkin);
-			const checkout = convertFromDateObject(dados[i].datas.checkout);
+		for (let i = 0; i < data.length; i++) {
+			const checkIn = convertFromDateObject(data[i].dates.checkIn);
+			const checkOut = convertFromDateObject(data[i].dates.checkOut);
 
-			if (now >= checkin && now <= checkout) {
+			if (now >= checkIn && now <= checkOut) {
 				targetIndex = i;
 				found = true;
 				break;
@@ -204,11 +204,11 @@ function autoNavigateHospedagens() {
 		}
 
 		if (!found) {
-			// Uncovered period → find closest future checkin
+			// Uncovered period → find closest future checkIn
 			let closestDiff = Infinity;
-			for (let i = 0; i < dados.length; i++) {
-				const checkin = convertFromDateObject(dados[i].datas.checkin);
-				const diff = checkin.getTime() - now.getTime();
+			for (let i = 0; i < data.length; i++) {
+				const checkIn = convertFromDateObject(data[i].dates.checkIn);
+				const diff = checkIn.getTime() - now.getTime();
 				if (diff > 0 && diff < closestDiff) {
 					closestDiff = diff;
 					targetIndex = i;
@@ -224,7 +224,7 @@ function autoNavigateHospedagens() {
 
 	if (targetIndex === undefined || targetIndex < 0) return;
 
-	const swiperEl = getID("hospedagens-swiper");
+	const swiperEl = getID("accommodations-swiper");
 	if (swiperEl?.swiper) {
 		swiperEl.swiper.slideTo(targetIndex, 600);
 	}

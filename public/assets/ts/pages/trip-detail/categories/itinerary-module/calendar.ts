@@ -134,10 +134,10 @@ function showCalendar(month, year) {
 					const formattedMonth = String(month + 1).padStart(2, "0");
 					const formattedDay = String(day).padStart(2, "0");
 					const key = `${year}${formattedMonth}${formattedDay}`;
-					const destinos = SCHEDULE_DESTINATIONS[key];
-					if (destinos && destinos.length > 0) {
-						for (const destino of destinos) {
-							cell.classList.add(`pill-${destino.destinosID}`);
+					const destinations = SCHEDULE_DESTINATIONS[key];
+					if (destinations && destinations.length > 0) {
+						for (const destination of destinations) {
+							cell.classList.add(`pill-${destination.id}`);
 						}
 					}
 				} else {

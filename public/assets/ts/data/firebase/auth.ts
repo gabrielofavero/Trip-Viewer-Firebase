@@ -85,10 +85,10 @@ export async function registerIfUserNotPresent() {
 		await create(
 			`${COLLECTION.USERS}`,
 			{
-				listagens: [],
-				viagens: [],
-				destinos: [],
-				visibilidade: "dinamico",
+				listings: [],
+				trips: [],
+				destinations: [],
+				visibility: "dynamic",
 			},
 			user.uid,
 		);

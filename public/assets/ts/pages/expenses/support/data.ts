@@ -38,14 +38,14 @@ export function setTable(id, items, total) {
 		const tr = document.createElement("tr");
 
 		const td1 = document.createElement("td");
-		td1.className = `tabela-texto-esquerda`;
+		td1.className = `tabela-text-left`;
 		td1.innerHTML = person
 			? `<span class="highlight">${person}:</span> ${title}`
 			: title;
 		tr.appendChild(td1);
 
 		const td2 = document.createElement("td");
-		td2.className = `tabela-texto-direita`;
+		td2.className = `tabela-text-right`;
 		td2.innerText = formatCurrency(item.value, true);
 		tr.appendChild(td2);
 
@@ -57,12 +57,12 @@ export function setTable(id, items, total) {
 
 		const tr = document.createElement("tr");
 		const td1 = document.createElement("td");
-		td1.className = "tabela-texto-esquerda total";
+		td1.className = "tabela-text-left total";
 		td1.innerText = translate("labels.total");
 		tr.appendChild(td1);
 
 		const td2 = document.createElement("td");
-		td2.className = "tabela-texto-direita total";
+		td2.className = "tabela-text-right total";
 		td2.innerText = formatCurrency(total, true);
 		tr.appendChild(td2);
 
@@ -79,9 +79,9 @@ export function setChart(type, id, labels, values) {
 		EXPENSES_CHARTS[id].update();
 		return;
 	}
-	const coresRGB = getChartColorsRGB(labels.length);
-	const dados = getChartData(labels, values, coresRGB);
-	const config = getChartConfig(type, dados);
+	const colorsRGB = getChartColorsRGB(labels.length);
+	const chartData = getChartData(labels, values, colorsRGB);
+	const config = getChartConfig(type, chartData);
 	EXPENSES_CHARTS[id] = new Chart(div, config);
 }
 

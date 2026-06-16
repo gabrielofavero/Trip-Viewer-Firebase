@@ -15,22 +15,22 @@ let TRAVELER_SELECT_OPTIONS = "";
 
 
 export function openTravelersInfo() {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = translate("trip.travelers.info");
-	propriedades.containers = getContainersInput();
-	propriedades.conteudo = getTravelersInfoContent();
-	propriedades.botoes = [
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.title = translate("trip.travelers.info");
+	properties.containers = getContainersInput();
+	properties.content = getTravelersInfoContent();
+	properties.buttons = [
 		{
-			tipo: "cancelar",
+			type: "cancel",
 		},
 		{
-			tipo: "confirmar",
-			acao: `saveTravelersInfo()`,
+			type: "confirm",
+			action: `saveTravelersInfo()`,
 		},
 	];
 
-	displayFullMessage(propriedades);
-	getID("quantidadePessoas").addEventListener("change", function () {
+	displayFullMessage(properties);
+	getID("travelersCount").addEventListener("change", function () {
 		getID("travelers-names-container").innerHTML = getTravelersNameContent();
 	});
 }
@@ -39,7 +39,7 @@ function getTravelersInfoContent() {
 	return `
     <div class="nice-form-group">
         <label>${translate("trip.travelers.quantity")}</label>
-        <input required class="flex-input" id="quantidadePessoas" type="number" placeholder="0" min="1" max="10" value="${TRAVELERS.length || 1}" />
+        <input required class="flex-input" id="travelersCount" type="number" placeholder="0" min="1" max="10" value="${TRAVELERS.length || 1}" />
     </div>
     <div id="travelers-names-container">
         ${getTravelersNameContent()}
@@ -54,16 +54,16 @@ function getTravelersInfoContent() {
 function getTravelersNameContent() {
 	const properties = [];
 	const nameLabel = translate("labels.name");
-	const quantidadePessoas = getID("quantidadePessoas");
-	const quantity = quantidadePessoas
-		? parseInt(quantidadePessoas.value) || 1
+	const travelersCount = getID("travelersCount");
+	const quantity = travelersCount
+		? parseInt(travelersCount.value) || 1
 		: TRAVELERS.length || 1;
 
 	for (let j = 1; j <= quantity; j++) {
 		const traveler = TRAVELERS[j - 1];
 		const id =
 			getID(`traveler-id-${j}`)?.value || traveler?.id || getNewTravelerID();
-		const name = getID(`traveler-name-${j}`)?.value || traveler?.nome || "";
+		const name = getID(`traveler-name-${j}`)?.value || traveler?.name || "";
 
 		properties.push(`
             <div class="nice-form-group">
@@ -83,14 +83,14 @@ export function saveTravelersInfo() {
 	while (getID(`traveler-name-${j}`)) {
 		travelers.push({
 			id: getID(`traveler-id-${j}`).value,
-			nome: getID(`traveler-name-${j}`).value.trim(),
+			name: getID(`traveler-name-${j}`).value.trim(),
 		});
 		j++;
 	}
 
-	const nomes = travelers.map((t) => t.nome);
-	const hasRepetitions = nomes.some((nome, index) => {
-		return nomes.indexOf(nome) !== index && nome !== "";
+	const names = travelers.map((t) => t.name);
+	const hasRepetitions = names.some((name, index) => {
+		return names.indexOf(name) !== index && name !== "";
 	});
 
 	if (hasRepetitions) {
@@ -134,7 +134,7 @@ export function getTravelersFieldset(id, _defaultValue?) {
 	for (let j = 1; j <= TRAVELERS.length; j++) {
 		const traveler = TRAVELERS[j - 1];
 
-		if (!traveler.nome) {
+		if (!traveler.name) {
 			continue; // Skip if no name is provided
 		}
 
@@ -153,7 +153,7 @@ export function getTravelersFieldset(id, _defaultValue?) {
 		label.id = `${id}-label-${j}`;
 		label.className = "checkbox-label";
 		label.setAttribute("for", input.id);
-		label.textContent = traveler.nome;
+		label.textContent = traveler.name;
 
 		div.appendChild(input);
 		div.appendChild(label);
@@ -169,7 +169,7 @@ export function getTravelersFieldset(id, _defaultValue?) {
 export function enableAllTravelersFieldset(id) {
 	const checkedData = [];
 	for (const traveler of TRAVELERS) {
-		checkedData.push({ id: traveler.id, nome: traveler.nome, isPresent: true });
+		checkedData.push({ id: traveler.id, name: traveler.name, isPresent: true });
 	}
 	updateTravelersFieldset(id, checkedData);
 }
@@ -202,18 +202,18 @@ export function getCheckedTravelersIDs(containerID) {
 		const checkbox = checkBoxContainer.querySelector("input");
 		result.push({
 			id: checkbox.value,
-			nome: label.innerText,
+			name: label.innerText,
 			isPresent: checkbox.checked,
 		});
 	}
 
 	const missingNames = TRAVELERS.filter(
-		(t) => !result.some((r) => r.nome === t.nome),
+		(t) => !result.some((r) => r.name === t.name),
 	);
 	for (const missing of missingNames) {
 		result.push({
 			id: missing.id,
-			nome: missing.nome,
+			name: missing.name,
 			isPresent: INCLUDE_LATE_TRAVELERS,
 		});
 	}
@@ -251,17 +251,17 @@ export function updateTravelersButtonLabel() {
 		return;
 	}
 
-	const names = TRAVELERS.map((t) => t.nome).filter((n) => n);
+	const names = TRAVELERS.map((t) => t.name).filter((n) => n);
 	el.textContent = getReadableArray(names);
 }
 
 export function getTravelersSelectOptionsHTML() {
 	if (!TRAVELER_SELECT_OPTIONS) {
 		for (const traveler of TRAVELERS) {
-			if (!traveler.nome) {
+			if (!traveler.name) {
 				continue;
 			}
-			TRAVELER_SELECT_OPTIONS += `<option value="${traveler.id}">${traveler.nome}</option>`;
+			TRAVELER_SELECT_OPTIONS += `<option value="${traveler.id}">${traveler.name}</option>`;
 		}
 	}
 	return TRAVELER_SELECT_OPTIONS;
@@ -269,13 +269,13 @@ export function getTravelersSelectOptionsHTML() {
 
 export function getTravelerName(id) {
 	const traveler = TRAVELERS.find((t) => t.id === id);
-	return traveler ? traveler.nome : "";
+	return traveler ? traveler.name : "";
 }
 
 export function getTravelersObject() {
 	const result = {};
 	for (const traveler of TRAVELERS) {
-		result[traveler.id] = traveler.nome;
+		result[traveler.id] = traveler.name;
 	}
 	return result;
 }

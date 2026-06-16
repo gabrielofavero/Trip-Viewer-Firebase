@@ -28,10 +28,10 @@ export async function refreshTripData() {
 // Planned Destination
 export function loadPlannedDestination() {
 	const schedules = getState()?.schedules || [];
-	for (const dia of schedules) {
-		const data = dia.data;
+	for (const day of schedules) {
+		const data = day.data;
 		for (const period of getItinerary().timeOfDay) {
-			const periods = dia[period];
+			const periods = day[period];
 			if (!periods) continue;
 
 			for (const schedule of periods) {
@@ -43,10 +43,10 @@ export function loadPlannedDestination() {
 	}
 
 	function addPlannedDestination(item, data, period) {
-		const destino = getState().destinos.find(
+		const destination = getState().destinations.find(
 			(d) => d.destinationId === item.location,
 		);
-		if (!destino || destino.destinationId != DOCUMENT_ID) return;
+		if (!destination || destination.destinationId != DOCUMENT_ID) return;
 
 		PLANNED_DESTINATION[item.category] ??= {};
 		PLANNED_DESTINATION[item.category][item.id] ??= [];
@@ -67,9 +67,9 @@ export function populatePlannedDestinationEditField(id, j) {
 }
 
 function loadPlannedDestinationEditFieldHTML(j) {
-	const container = getID(`editar-planned-container-${j}`);
-	const dataSelect = getID(`editar-planned-select-data-${j}`);
-	const turnoSelect = getID(`editar-planned-select-period-${j}`);
+	const container = getID(`edit-planned-container-${j}`);
+	const dataSelect = getID(`edit-planned-select-data-${j}`);
+	const periodSelect = getID(`edit-planned-select-period-${j}`);
 
 	let options = `<option value="">${translate("labels.planned.not_planned")}</option>`;
 
@@ -90,7 +90,7 @@ function loadPlannedDestinationEditFieldHTML(j) {
 		loadAllOptions();
 		dataSelect.innerHTML = options;
 		dataSelect.value = "";
-		turnoSelect.style.display = "none";
+		periodSelect.style.display = "none";
 		addSelectListener();
 	}
 
@@ -99,7 +99,7 @@ function loadPlannedDestinationEditFieldHTML(j) {
 		const item = ACTIVE_PLANNED_DESTINATION[0];
 		dataSelect.innerHTML = options;
 		dataSelect.value = dateObjectToInputDate(item.data);
-		turnoSelect.value = item.turno;
+		periodSelect.value = item.period;
 		addSelectListener();
 	}
 
@@ -107,12 +107,12 @@ function loadPlannedDestinationEditFieldHTML(j) {
 		options += `<option value="multi">${translate("labels.planned.multiple")}</option>`;
 		dataSelect.innerHTML = options;
 		dataSelect.value = "multi";
-		turnoSelect.style.display = "none";
+		periodSelect.style.display = "none";
 	}
 
 	function loadAllOptions() {
 		for (const schedule of getState().schedules) {
-			const ids = schedule.destinationIds.map((destino) => destino.destinationId);
+			const ids = schedule.destinationIds.map((destination) => destination.destinationId);
 
 			if (!ids.includes(DOCUMENT_ID)) {
 				continue;
@@ -127,14 +127,14 @@ function loadPlannedDestinationEditFieldHTML(j) {
 
 	function addSelectListener() {
 		dataSelect.onchange = (e) => {
-			turnoSelect.style.display = (e.target as HTMLSelectElement).value ? "" : "none";
+			periodSelect.style.display = (e.target as HTMLSelectElement).value ? "" : "none";
 		};
 	}
 }
 
 export async function setPlannedDestination(id, j) {
-	const newData = getID(`editar-planned-select-data-${j}`).value;
-	const newTurno = getID(`editar-planned-select-period-${j}`).value;
+	const newData = getID(`edit-planned-select-data-${j}`).value;
+	const newPeriod = getID(`edit-planned-select-period-${j}`).value;
 
 	const currentSize = ACTIVE_PLANNED_DESTINATION.length;
 
@@ -146,12 +146,12 @@ export async function setPlannedDestination(id, j) {
 	const currentInputDate = currentData
 		? dateObjectToInputDate(currentData)
 		: null;
-	const currentTurno = ACTIVE_PLANNED_DESTINATION[0]?.turno;
+	const currentPeriod = ACTIVE_PLANNED_DESTINATION[0]?.period;
 
 	if (
 		currentSize === 1 &&
 		newData === currentInputDate &&
-		newTurno === currentTurno
+		newPeriod === currentPeriod
 	) {
 		return false;
 	}
@@ -172,7 +172,7 @@ export async function setPlannedDestination(id, j) {
 			return addToLastPosition();
 		}
 
-		if (newData !== currentInputDate || newTurno !== currentTurno) {
+		if (newData !== currentInputDate || newPeriod !== currentPeriod) {
 			return changeOrder();
 		}
 
@@ -212,7 +212,7 @@ export async function setPlannedDestination(id, j) {
 			return schedules;
 		}
 
-		targetDay[newTurno].push(buildPlannedDestination());
+		targetDay[newPeriod].push(buildPlannedDestination());
 
 		return schedules;
 	}
@@ -228,7 +228,7 @@ export async function setPlannedDestination(id, j) {
 			return schedules;
 		}
 
-		targetDay[newTurno].push(buildPlannedDestination());
+		targetDay[newPeriod].push(buildPlannedDestination());
 
 		return schedules;
 	}
@@ -239,7 +239,7 @@ export async function setPlannedDestination(id, j) {
 			person.isPresent = true;
 		}
 		return {
-			itinerary: getID(`editar-nome-${j}`).value,
+			itinerary: getID(`edit-name-${j}`).value,
 			item: {
 				type: "destinations",
 				category: ACTIVE_CATEGORY,

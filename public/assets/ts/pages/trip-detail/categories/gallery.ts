@@ -8,9 +8,9 @@ var FILTER_MAP = new BiMap();
 // Carregamento
 export function loadGallery() {
 	loadGaleriaCategorias(
-		getState().galeria.categorias || getState().galeria.filtros,
+		getState().gallery.categories || getState().gallery.filtros,
 	);
-	loadGaleriaBody(getState().galeria);
+	loadGaleriaBody(getState().gallery);
 	adjustPortfolioHeight();
 	refreshCategorias();
 }
@@ -38,23 +38,23 @@ function loadGaleriaCategorias(filters) {
 	}
 }
 
-function loadGaleriaBody(galeria) {
+function loadGaleriaBody(gallery) {
 	let result = "";
-	for (let i = 0; i < galeria.titulos.length; i++) {
-		const title = getGaleriaTitulo(galeria, i);
-		const description = getGaleriaDescricoes(galeria, i);
-		const link = getGaleriaLink(galeria.imagens[i]);
-		const categoria = getGaleriaCategoria(galeria, i);
+	for (let i = 0; i < gallery.titles.length; i++) {
+		const title = getGaleriaTitulo(gallery, i);
+		const description = getGaleriaDescricoes(gallery, i);
+		const link = getGaleriaLink(gallery.images[i]);
+		const category = getGaleriaCategoria(gallery, i);
 
 		result += `
-        <div class="col-lg-4 col-md-6 portfolio-item ${categoria}">
+        <div class="col-lg-4 col-md-6 portfolio-item ${category}">
             <div class="portfolio-wrap">
                 <img src="${link}" class="img-fluid portfolio-lightbox" data-gallery="portfolioGallery" alt="">
                 <div class="portfolio-info">
                     <h4>${title}</h4>
                     <p>${description}</p>
                     <div class="portfolio-links">
-                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox galeria" title="${description}"><i class="bx bx-zoom-in"></i></a>
+                        <a href="${link}" data-gallery="portfolioGallery" class="portfolio-lightbox gallery" title="${description}"><i class="bx bx-zoom-in"></i></a>
                     </div>
                 </div>
             </div>
@@ -77,59 +77,59 @@ function loadFilterClass(filter) {
 }
 
 // Getters
-function getGaleriaTitulo(galeria, i) {
+function getGaleriaTitulo(gallery, i) {
 	let title = "";
-	if (galeria.titulos && galeria.titulos[i]) {
+	if (gallery.titles && gallery.titles[i]) {
 		// Current Implementation
-		title = galeria.titulos[i];
+		title = gallery.titles[i];
 	} else if (
-		galeria.imagens &&
-		galeria.imagens[i] &&
-		galeria.imagens[i].titulo
+		gallery.images &&
+		gallery.images[i] &&
+		gallery.images[i].title
 	) {
 		// Old Implementation
-		title = galeria.imagens[i].titulo;
+		title = gallery.images[i].title;
 	}
 	return title || "";
 }
 
-function getGaleriaDescricoes(galeria, i) {
+function getGaleriaDescricoes(gallery, i) {
 	let description = "";
-	if (galeria.descricoes && galeria.descricoes[i]) {
+	if (gallery.descriptions && gallery.descriptions[i]) {
 		// Current Implementation
-		description = galeria.descricoes[i];
+		description = gallery.descriptions[i];
 	} else if (
-		galeria.imagens &&
-		galeria.imagens[i] &&
-		galeria.imagens[i].descricao
+		gallery.images &&
+		gallery.images[i] &&
+		gallery.images[i].description
 	) {
 		// Old Implementation
-		description = galeria.imagens[i].descricao;
+		description = gallery.images[i].description;
 	}
 	return description || "";
 }
 
-function getGaleriaCategoria(galeria, i) {
-	let categoria = "";
-	if (galeria.categorias && galeria.categorias[i]) {
+function getGaleriaCategoria(gallery, i) {
+	let category = "";
+	if (gallery.categories && gallery.categories[i]) {
 		// Current Implementation
-		categoria = FILTER_MAP.getByValue(galeria.categorias[i]);
+		category = FILTER_MAP.getByValue(gallery.categories[i]);
 	} else if (
-		galeria.imagens &&
-		galeria.imagens[i] &&
-		galeria.imagens[i].filtro
+		gallery.images &&
+		gallery.images[i] &&
+		gallery.images[i].filtro
 	) {
 		// Old Implementation
-		categoria = FILTER_MAP.getByValue(galeria.imagens[i].filtro);
+		category = FILTER_MAP.getByValue(gallery.images[i].filtro);
 	}
-	return categoria || "";
+	return category || "";
 }
 
-function getGaleriaLink(imagem) {
-	if (isObject(imagem)) {
-		return imagem.link;
+function getGaleriaLink(image) {
+	if (isObject(image)) {
+		return image.link;
 	} else {
-		return imagem;
+		return image;
 	}
 }
 

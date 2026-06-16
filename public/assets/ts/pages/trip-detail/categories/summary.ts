@@ -6,9 +6,9 @@ import { END_DATE } from "../view.js";
 import { START_DATE } from "../view.js";
 
 export function loadSummary() {
-	setTravelersFn(getState().pessoas);
+	setTravelersFn(getState().travelers);
 	const days = Math.ceil((END_DATE.date - START_DATE.date) / (1000 * 60 * 60 * 24)) + 1;
-	const travelers = getState().pessoas.length || 1;
+	const travelers = getState().travelers.length || 1;
 
 	// Keypoint 1
 	getID("keypoint1").innerHTML = `<i class="bx bxs-plane-take-off"></i>

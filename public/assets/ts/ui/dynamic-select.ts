@@ -64,7 +64,7 @@ export function buildDS(type) {
 			selectInnerHTML += `<option value="${value}">${value}</option>`;
 		}
 
-		selectInnerHTML += `<option value="outra">${translate("labels.other")}</option>`;
+		selectInnerHTML += `<option value="other">${translate("labels.other")}</option>`;
 		DYNAMIC_SELECT[type].selectInnerHTML = selectInnerHTML;
 	}
 
@@ -81,7 +81,7 @@ export function buildDS(type) {
 				select.value = value;
 			}
 			select.style.display = "block";
-			input.style.display = select.value === "outra" ? "block" : "none";
+			input.style.display = select.value === "other" ? "block" : "none";
 		}
 	}
 }
@@ -92,7 +92,7 @@ export function addEventListenersDS(type, selectID, inputID, customFunction = nu
 
 	select.addEventListener("change", () => {
 		const value = select.value;
-		if (value === "outra") {
+		if (value === "other") {
 			input.style.display = "block";
 		} else {
 			input.style.display = "none";
@@ -110,13 +110,13 @@ export function addEventListenersDS(type, selectID, inputID, customFunction = nu
 	});
 }
 
-export function addRemoveChildListenerDS(categoria, j, dynamicSelects = []) {
-	getID(`remove-${categoria}-${j}`).addEventListener("click", function () {
+export function addRemoveChildListenerDS(category, j, dynamicSelects = []) {
+	getID(`remove-${category}-${j}`).addEventListener("click", function () {
 		for (const dynamicSelect of dynamicSelects) {
 			removeSelectorDS(dynamicSelect.type, dynamicSelect.selectID);
 		}
 
-		removeChildWithValidation(categoria, j);
+		removeChildWithValidation(category, j);
 
 		for (const dynamicSelect of dynamicSelects) {
 			buildDS(dynamicSelect.type);

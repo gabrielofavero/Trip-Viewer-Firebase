@@ -26,7 +26,7 @@ function adjustButtonsPositionDestinations() {
 
 export function applyDestinationsMediaHeight() {
 	const keys = Object.keys(MEDIA_HYPERLINKS);
-	const firstDiv = getID("destinos-1");
+	const firstDiv = getID("destinations-1");
 	if (keys.length > 0 && firstDiv) {
 		const width = firstDiv.offsetWidth - 40; // 20px padding em cada lado
 
@@ -54,24 +54,24 @@ export function applyAccordionArrowCustomColor() {
 }
 
 export function getDestinationsTitleVisibility(item) {
-	if (item.nota || item.mapa || item.website || item.instagram) return "flex";
+	if (item.rating || item.map || item.website || item.instagram) return "flex";
 	else return "none";
 }
 
 export function getLinksContainerVisibility(item) {
-	if (item.mapa || item.website || item.instagram) return "flex";
+	if (item.map || item.website || item.instagram) return "flex";
 	else return "none";
 }
 
-function getPalcoRegiaoVisibility(item) {
-	return item.regiao ? "block" : "none";
+function getStageRegionVisibility(item) {
+	return item.region ? "block" : "none";
 }
 
-export function getValorVisibility(item) {
-	return item.valor ? "block" : "none";
+export function getPriceVisibility(item) {
+	return item.price ? "block" : "none";
 }
 
-export function getDescricaoVisibility(item) {
+export function getDescriptionVisibility(item) {
 	return getDescriptionValue(item) ? "block" : "none";
 }
 

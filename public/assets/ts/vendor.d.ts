@@ -56,7 +56,7 @@ declare var TYPE: any;
 declare var VALOR_OPTIONS: any;
 
 // Legacy function globals
-declare function _afterDragInnerGasto(...args: any[]): any;
+declare function _afterDragInnerExpense(...args: any[]): any;
 declare function _buildDestinosObject(...args: any[]): any;
 declare function _buildGastosObject(...args: any[]): any;
 declare function _buildTripObject(...args: any[]): any;

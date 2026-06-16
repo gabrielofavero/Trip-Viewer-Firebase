@@ -7,7 +7,7 @@ import { removeEl, validateInstagramLink, validateLink, validateMapLink, validat
 import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
 import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
-import {getRatingClass, getPlanejado} from "./categories.js";
+import {getRatingClass, getPlanned} from "./categories.js";
 import { getRatingIcon } from "./categories.js";
 import { FIRESTORE_DESTINATIONS_DATA } from "../../data/state.js";
 import { ACTIVE_CATEGORY, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination } from "./destination.js";
@@ -44,47 +44,47 @@ export async function edit(j: number): Promise<void> {
 	setEditListeners(j, item);
 
 	function populateEditFields(j, item) {
-		getID(`editar-nome-${j}`).value = item.nome || "";
-		getID(`editar-emoji-${j}`).value = item.emoji || "";
+		getID(`edit-name-${j}`).value = item.name || "";
+		getID(`edit-emoji-${j}`).value = item.emoji || "";
 
 		populatePlannedDestinationEditField(id, j);
 
-		getID(`editar-map-${j}`).value = item.mapa || "";
-		getID(`editar-instagram-${j}`).value = item.instagram || "";
-		getID(`editar-website-${j}`).value = item.website || "";
+		getID(`edit-map-${j}`).value = item.map || "";
+		getID(`edit-instagram-${j}`).value = item.instagram || "";
+		getID(`edit-website-${j}`).value = item.website || "";
 
-		getID(`editar-midia-${j}`).value = item.midia || "";
+		getID(`edit-media-${j}`).value = item.media || "";
 
-		populateScoresField(item.nota, j);
-		populateRegionField(item.regiao, j);
-		populateValueField(item.valor, j);
-		populateDescriptionFields(item.descricao || {}, j);
+		populateScoresField(item.rating, j);
+		populateRegionField(item.region, j);
+		populateValueField(item.price, j);
+		populateDescriptionFields(item.description || {}, j);
 
-		function populateScoresField(nota, j) {
-			getID(`editar-rating-${j}`).value = nota === "?" ? "default" : nota || "";
-			editScoreLoadAction(nota, j);
+		function populateScoresField(rating, j) {
+			getID(`edit-rating-${j}`).value = rating === "?" ? "default" : rating || "";
+			editScoreLoadAction(rating, j);
 		}
 
-		function populateRegionField(regiao, j) {
-			const regionSelect = getID(`editar-regiao-select-${j}`);
-			regionSelect.value = regiao || "";
+		function populateRegionField(region, j) {
+			const regionSelect = getID(`edit-region-select-${j}`);
+			regionSelect.value = region || "";
 		}
 
-		function populateValueField(valor, j) {
-			const valores = getCurrencies().valores;
-			const valueSelect = getID(`editar-valor-select-${j}`);
-			if (valores.includes(valor)) {
-				valueSelect.value = valor;
+		function populateValueField(price, j) {
+			const values = getCurrencies().values;
+			const valueSelect = getID(`edit-price-select-${j}`);
+			if (values.includes(price)) {
+				valueSelect.value = price;
 			} else {
 				valueSelect.value = "custom";
 				editValueLoadAction("custom", j);
-				getID(`editar-valor-input-${j}`).value = valor || "";
+				getID(`edit-price-input-${j}`).value = price || "";
 			}
 		}
 
-		function populateDescriptionFields(descricao, j) {
-			getID(`editar-description-en-${j}`).value = descricao.en || "";
-			getID(`editar-description-pt-${j}`).value = descricao.pt || "";
+		function populateDescriptionFields(description, j) {
+			getID(`edit-description-en-${j}`).value = description.en || "";
+			getID(`edit-description-pt-${j}`).value = description.pt || "";
 			applyDescriptionLanguage(j);
 		}
 	}
@@ -108,9 +108,9 @@ export async function add(): Promise<void> {
 	const id = getRandomID({ pool });
 	const j = getLastUnorderedJ("content") + 1;
 	const item = {
-		nome: translate("destination.new"),
-		nota: "default",
-		novo: true,
+		name: translate("destination.new"),
+		rating: "default",
+		isNew: true,
 	};
 	const closeAction = "_closeAddedDestination";
 	getID("content").innerHTML += getDestinationsHTML({ j, id, item, closeAction });
@@ -123,7 +123,7 @@ export async function add(): Promise<void> {
 
 	ADDED_J = j;
 	accordionBody.innerHTML = getEditHTML(ADDED_J);
-	getID(`editar-delete-${ADDED_J}`).style.visibility = "hidden";
+	getID(`edit-delete-${ADDED_J}`).style.visibility = "hidden";
 
 	openDestinationsAccordion(ADDED_J);
 	applyDescriptionLanguage(ADDED_J);
@@ -147,31 +147,31 @@ export async function adjustEditVisibility(j?: number): Promise<void> {
 
 // Listeners
 function setFieldListeners(j: number): void {
-	getID(`editar-rating-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-rating-${j}`)!.onchange = (e: Event) => {
 		editScoreLoadAction((e.target as HTMLInputElement).value, j);
 	};
 
-	getID(`editar-map-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-map-${j}`)!.onchange = (e: Event) => {
 		validateMapLink((e.target as HTMLElement).id);
 	};
 
-	getID(`editar-instagram-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-instagram-${j}`)!.onchange = (e: Event) => {
 		validateInstagramLink((e.target as HTMLElement).id);
 	};
 
-	getID(`editar-website-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-website-${j}`)!.onchange = (e: Event) => {
 		validateLink((e.target as HTMLElement).id);
 	};
 
-	getID(`editar-regiao-select-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-region-select-${j}`)!.onchange = (e: Event) => {
 		editRegionLoadAction((e.target as HTMLSelectElement).value, j);
 	};
 
-	getID(`editar-valor-select-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-price-select-${j}`)!.onchange = (e: Event) => {
 		editValueLoadAction((e.target as HTMLSelectElement).value, j);
 	};
 
-	getID(`editar-description-lang-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-description-lang-${j}`)!.onchange = (e: Event) => {
 		editDescriptionLoadAction((e.target as HTMLSelectElement).value, j);
 	};
 
@@ -181,7 +181,7 @@ function setFieldListeners(j: number): void {
 		};
 	});
 
-	getID(`editar-midia-${j}`)!.onchange = (e: Event) => {
+	getID(`edit-media-${j}`)!.onchange = (e: Event) => {
 		validateMediaLink((e.target as HTMLElement).id);
 	};
 }
@@ -192,11 +192,11 @@ function setEditListeners(j, item) {
 		processAccordion(j);
 	};
 
-	getID(`editar-delete-${j}`).onclick = () => {
+	getID(`edit-delete-${j}`).onclick = () => {
 		promptDeleteEdit(j);
 	};
 
-	getID(`editar-save-${j}`).onclick = () => {
+	getID(`edit-save-${j}`).onclick = () => {
 		saveEdit(j);
 	};
 
@@ -208,7 +208,7 @@ function setAddListeners() {
 		closeAddedDestination();
 	};
 
-	getID(`editar-save-${ADDED_J}`).onclick = () => {
+	getID(`edit-save-${ADDED_J}`).onclick = () => {
 		saveEdit(ADDED_J, true);
 	};
 
@@ -217,13 +217,13 @@ function setAddListeners() {
 
 // Load Actions
 function editScoreLoadAction(value, j) {
-	const icon = getID(`editar-rating-icon-${j}`);
+	const icon = getID(`edit-rating-icon-${j}`);
 	icon.innerHTML = `<i class="iconify rating-no-margin ${getRatingClass(value)}" data-icon="${getRatingIcon(value)}"></i>`;
 }
 
 function editRegionLoadAction(value, j) {
-	const select = getID(`editar-regiao-select-${j}`);
-	const input = getID(`editar-regiao-input-${j}`);
+	const select = getID(`edit-region-select-${j}`);
+	const input = getID(`edit-region-input-${j}`);
 	if (value == "custom") {
 		input.style.display = "";
 		select.value = "custom";
@@ -233,8 +233,8 @@ function editRegionLoadAction(value, j) {
 }
 
 function editValueLoadAction(value, j) {
-	const select = getID(`editar-valor-select-${j}`);
-	const input = getID(`editar-valor-input-${j}`);
+	const select = getID(`edit-price-select-${j}`);
+	const input = getID(`edit-price-input-${j}`);
 
 	if (value == "custom") {
 		input.style.display = "";
@@ -247,14 +247,14 @@ function editValueLoadAction(value, j) {
 function editDescriptionLoadAction(value, j) {
 	for (const lang of LANGUAGES) {
 		const display = lang == value ? "" : "none";
-		const id = `editar-description-${lang}-${j}`;
+		const id = `edit-description-${lang}-${j}`;
 		getID(id).style.display = display;
 	}
 }
 
 function applyDescriptionLanguage(j) {
 	const lang = getLanguagePackName();
-	getID(`editar-description-lang-${j}`).value = lang;
+	getID(`edit-description-lang-${j}`).value = lang;
 	editDescriptionLoadAction(lang, j);
 }
 
@@ -264,24 +264,24 @@ async function saveEdit(j, isNew = false) {
 	const id = getDestinationID(j);
 	const originalItem = isNew ? {} : getItem(id);
 	const item = {
-		criadoEm: originalItem?.criadoEm || new Date().toISOString(),
-		descricao: {
-			en: getID(`editar-description-en-${j}`).value,
-			pt: getID(`editar-description-pt-${j}`).value,
+		createdAt: originalItem?.createdAt || new Date().toISOString(),
+		description: {
+			en: getID(`edit-description-en-${j}`).value,
+			pt: getID(`edit-description-pt-${j}`).value,
 		},
-		emoji: getID(`editar-emoji-${j}`).value,
-		instagram: getID(`editar-instagram-${j}`).value,
-		mapa: getID(`editar-map-${j}`).value,
-		midia: getID(`editar-midia-${j}`).value,
-		nome: getID(`editar-nome-${j}`).value,
-		nota: getID(`editar-rating-${j}`).value,
-		novo: isNew ? true : originalItem.novo,
-		regiao: getValue("regiao", j),
-		valor: getValue("valor", j),
-		website: getID(`editar-website-${j}`).value,
+		emoji: getID(`edit-emoji-${j}`).value,
+		instagram: getID(`edit-instagram-${j}`).value,
+		map: getID(`edit-map-${j}`).value,
+		media: getID(`edit-media-${j}`).value,
+		name: getID(`edit-name-${j}`).value,
+		rating: getID(`edit-rating-${j}`).value,
+		isNew: isNew ? true : originalItem.isNew,
+		region: getValue("region", j),
+		price: getValue("price", j),
+		website: getID(`edit-website-${j}`).value,
 	};
 
-	if (!item.nome) {
+	if (!item.name) {
 		stopLoadingScreen();
 		displayMessage(
 			translate("destination.edit"),
@@ -290,8 +290,8 @@ async function saveEdit(j, isNew = false) {
 		return;
 	}
 
-	if (item.midia && item.midia.includes("tiktok")) {
-		item.midia = await normalizeTikTokLink(item.midia);
+	if (item.media && item.media.includes("tiktok")) {
+		item.media = await normalizeTikTokLink(item.media);
 	}
 
 	const docPath = `destinations/${DOCUMENT_ID}`;
@@ -309,17 +309,17 @@ async function saveEdit(j, isNew = false) {
 	stopLoadingScreen();
 
 	function getValue(type, j) {
-		const selectValue = getID(`editar-${type}-select-${j}`).value;
+		const selectValue = getID(`edit-${type}-select-${j}`).value;
 		return selectValue != "custom"
 			? selectValue
-			: getID(`editar-${type}-input-${j}`).value;
+			: getID(`edit-${type}-input-${j}`).value;
 	}
 }
 
 // Delete Actions
 function promptDeleteEdit(j) {
 	const id = getDestinationID(j);
-	const name = getItem(id).nome;
+	const name = getItem(id).name;
 
 	const title = translate("destination.delete.title");
 	const content = translate("destination.delete.message", { name });
@@ -367,7 +367,7 @@ export function closeAddedDestination(index?) {
 
 function restoreAccordionBody(j: number, item: Record<string, any>): void {
 	const id = getDestinationID(j);
-	const planned = getPlanejado(id);
+	const planned = getPlanned(id);
 	const editBtn = true;
 	getID(`accordion-body-${j}`)!.innerHTML = getDestinationsAccordionBodyHTML({
 		j,
@@ -398,5 +398,5 @@ async function canEdit() {
 	if (!uid) {
 		return false;
 	}
-	return FIRESTORE_DESTINATIONS_DATA.compartilhamento.dono === uid;
+	return FIRESTORE_DESTINATIONS_DATA.sharing.owner === uid;
 }

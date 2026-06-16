@@ -3,7 +3,7 @@ import { getID } from '../../../utils/dom.js';
 export var CURRENT_LIGHT;
 export function setCurrentLight(val) { CURRENT_LIGHT = val; }
 
-export function loadCustomizacaoImageData(value, id) {
+export function loadCustomizationImageData(value, id) {
 	if (value && typeof value === "string") {
 		getID(id).value = value;
 	} else if (value && value.link) {
@@ -28,5 +28,5 @@ export function autoFillDarkColor() {
 	) {
 		DARK_COLOR.value = getID("light-color").value;
 	}
-	CURRENT_LIGHT = getID("claro").value;
+	CURRENT_LIGHT = getID("light").value;
 }

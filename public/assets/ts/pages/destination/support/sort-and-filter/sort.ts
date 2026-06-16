@@ -43,8 +43,8 @@ export function sort(render = false) {
 			}
 
 			case "prices": {
-				const pa = priceRank(normalizePriceBucket(a.valor));
-				const pb = priceRank(normalizePriceBucket(b.valor));
+				const pa = priceRank(normalizePriceBucket(a.price));
+				const pb = priceRank(normalizePriceBucket(b.price));
 				return value === "lowest_first" ? pa - pb : pb - pa;
 			}
 
@@ -78,7 +78,7 @@ export function sort(render = false) {
 	// ---- Accessors ----
 
 	function scoreOf(item) {
-		const n = parseInt(item.nota, 10);
+		const n = parseInt(item.rating, 10);
 		return Number.isNaN(n) ? -Infinity : n;
 	}
 
@@ -88,7 +88,7 @@ export function sort(render = false) {
 	}
 
 	function nameOf(item) {
-		return (item.nome || "").toString().toLowerCase();
+		return (item.name || "").toString().toLowerCase();
 	}
 }
 

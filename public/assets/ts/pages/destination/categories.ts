@@ -56,7 +56,7 @@ export function updateActiveCategory(category) {
 	setURLParam("type", param);
 }
 
-// Nota
+// Rating
 export function getRatingIcon(rating) {
 	switch (rating) {
 		case "5":
@@ -88,18 +88,18 @@ export function getRatingClass(rating) {
 }
 
 // Links
-export function getLinkOnClick(item, tipo) {
-	if (item[tipo]) {
-		return ` data-action="open-link" data-url="${item[tipo]}"`;
+export function getLinkOnClick(item, type) {
+	if (item[type]) {
+		return ` data-action="open-link" data-url="${item[type]}"`;
 	} else return "";
 }
 
-// Planejado
-export function getPlanejado(id) {
+// Planned
+export function getPlanned(id) {
 	const plannedItems = getPlannedDestinations(id);
-	return getPlanejadoValue(plannedItems);
+	return getPlannedValue(plannedItems);
 
-	function getPlanejadoValue(plannedItems = []) {
+	function getPlannedValue(plannedItems = []) {
 		if (plannedItems.length === 0) {
 			return "";
 		}
@@ -113,21 +113,21 @@ export function getPlanejado(id) {
 		const weekday = getWeekday(date.getUTCDay());
 		const day = plannedItem.data.day;
 		const month = getMonth(plannedItem.data.month - 1).toLowerCase();
-		const turno = getTurno(plannedItem.turno).toLowerCase();
-		const turnoLabel = turno ? ` (${turno})` : "";
-		return `${translate("labels.planned.title")}: ${weekday}, ${translate("datetime.titles.day_month", { day, month })}${turnoLabel}`;
+		const period = getPeriod(plannedItem.period).toLowerCase();
+		const periodLabel = period ? ` (${period})` : "";
+		return `${translate("labels.planned.title")}: ${weekday}, ${translate("datetime.titles.day_month", { day, month })}${periodLabel}`;
 	}
 }
 
-export function getTurno(turno) {
-	switch (turno) {
-		case "madrugada":
+export function getPeriod(period) {
+	switch (period) {
+		case "earlyMorning":
 			return translate("datetime.time_of_day.early_hours");
-		case "manha":
+		case "morning":
 			return translate("datetime.time_of_day.morning");
-		case "tarde":
+		case "afternoon":
 			return translate("datetime.time_of_day.afternoon");
-		case "noite":
+		case "night":
 			return translate("datetime.time_of_day.evening");
 		default:
 			return undefined;

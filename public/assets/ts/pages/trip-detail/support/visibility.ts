@@ -10,8 +10,8 @@ export function adjustCardsHeightsListener() {
 	window.addEventListener("resize", function () {
 		adjustCardsHeights();
 
-		const visualizacao = getState()?.transportes?.visualizacao;
-		if (visualizacao && visualizacao != "simple-view") {
+		const viewMode = getState()?.transportation?.viewMode;
+		if (viewMode && viewMode != "simple-view") {
 			adjustTransportationBoxContainerHeight();
 		}
 	});
@@ -28,15 +28,15 @@ export function adjustCardsHeights(type?) {
 	}
 }
 
-function adjustSingleCardsHeights(tipo, second = false) {
-	let innerID = tipo === "accommodations" && !second ? "nome" : "box";
+function adjustSingleCardsHeights(type, second = false) {
+	let innerID = type === "accommodations" && !second ? "name" : "box";
 
-	const sliders = getChildIDs(`${tipo}-wrapper`);
+	const sliders = getChildIDs(`${type}-wrapper`);
 	let maxHeight = 0;
 
 	for (const slider of sliders) {
 		const j = getJ(slider);
-		const box = getID(`${tipo}-${innerID}-${j}`);
+		const box = getID(`${type}-${innerID}-${j}`);
 
 		if (box) {
 			box.style.height = "auto";
@@ -49,25 +49,25 @@ function adjustSingleCardsHeights(tipo, second = false) {
 
 	for (const slider of sliders) {
 		const j = getJ(slider);
-		const div = getID(`${tipo}-${innerID}-${j}`);
+		const div = getID(`${type}-${innerID}-${j}`);
 		if (div) {
 			div.style.height = `${maxHeight}px`;
 		}
 	}
 
-	if (tipo === "accommodations" && !second) {
+	if (type === "accommodations" && !second) {
 		adjustSingleCardsHeights("accommodations", true);
 	}
 }
 
 export function loadViewVisibility() {
-	if (getState().visibilidade) {
+	if (getState().visibility) {
 		const nightMode = getID("night-mode");
 
-		if (!getState().visibilidade.claro) {
+		if (!getState().visibility.light) {
 			nightMode.style.display = "none";
 			loadDarkMode();
-		} else if (!getState().visibilidade.escuro) {
+		} else if (!getState().visibility.dark) {
 			nightMode.style.display = "none";
 			loadLightMode();
 		}

@@ -9,23 +9,23 @@ import { getFlightBoxHTML } from "../transportation-module.js";
 
 export var SCHEDULE_OPEN = false;
 export var CURRENT_SCHEDULE_DATE = {
-	dia: 0,
-	mes: 0,
-	ano: 0,
+	day: 0,
+	month: 0,
+	year: 0,
 };
 var CURRENT_SCHEDULE = null;
 var CURRENT_INNER_ITINERARY = [];
 
 function loadModalContentCalendar() {
-	let titulo = CURRENT_SCHEDULE.titulo;
-	const data = getDateTitle(
-		convertFromDateObject(CURRENT_SCHEDULE.data),
+	let scheduleTitle = CURRENT_SCHEDULE.title;
+	const dateStr = getDateTitle(
+		convertFromDateObject(CURRENT_SCHEDULE.date),
 		"weekday_day_month",
 	);
 
 	(getID("itinerary-title")!.querySelector(".title") as HTMLElement).innerText =
-		getScheduleTitle(titulo, CURRENT_SCHEDULE.destinosIDs);
-	getID("itinerary-date").innerText = data;
+		getScheduleTitle(scheduleTitle, CURRENT_SCHEDULE.destinationIds);
+	getID("itinerary-date").innerText = dateStr;
 
 	CURRENT_INNER_ITINERARY = [];
 
@@ -45,19 +45,19 @@ function loadModalContentCalendar() {
 
 		setModalCalendarInnerHTML(
 			getID("itinerary-items-early-morning"),
-			CURRENT_SCHEDULE.madrugada,
+			CURRENT_SCHEDULE.earlyMorning,
 		);
 		setModalCalendarInnerHTML(
 			getID("itinerary-items-morning"),
-			CURRENT_SCHEDULE.manha,
+			CURRENT_SCHEDULE.morning,
 		);
 		setModalCalendarInnerHTML(
 			getID("itinerary-items-afternoon"),
-			CURRENT_SCHEDULE.tarde,
+			CURRENT_SCHEDULE.afternoon,
 		);
 		setModalCalendarInnerHTML(
 			getID("itinerary-items-night"),
-			CURRENT_SCHEDULE.noite,
+			CURRENT_SCHEDULE.night,
 		);
 
 		adaptModalCalendarInnerHTML();
@@ -73,12 +73,12 @@ function loadModalContentCalendar() {
 			const items = CURRENT_SCHEDULE[period] || [];
 
 			for (const item of items) {
-				const presentes = (item.pessoas || [])
+				const present = (item.travelers || [])
 					.filter((p) => p.isPresent)
 					.map((p) => p.id)
 					.sort();
 
-				const key = presentes.join("|");
+				const key = present.join("|");
 
 				combinations.add(key);
 			}
@@ -92,8 +92,8 @@ function loadModalContentCalendar() {
 	}
 }
 
-function openModalCalendar(programacao, instant = false) {
-	CURRENT_SCHEDULE = programacao;
+function openModalCalendar(schedule, instant = false) {
+	CURRENT_SCHEDULE = schedule;
 	loadModalContentCalendar();
 
 	if (instant) {
@@ -106,7 +106,7 @@ function openModalCalendar(programacao, instant = false) {
 			box.style.transition = "";
 		});
 	} else {
-		$("#programacao-box").show();
+		$("#label-box").show();
 		setTimeout(() => {
 			getID("itinerary-box").classList.toggle("show");
 		}, 100);
@@ -116,19 +116,19 @@ function openModalCalendar(programacao, instant = false) {
 export function closeModalCalendar() {
 	SCHEDULE_OPEN = false;
 	CURRENT_SCHEDULE = null;
-	CURRENT_SCHEDULE_DATE.dia = 0;
-	CURRENT_SCHEDULE_DATE.mes = 0;
-	CURRENT_SCHEDULE_DATE.ano = 0;
+	CURRENT_SCHEDULE_DATE.day = 0;
+	CURRENT_SCHEDULE_DATE.month = 0;
+	CURRENT_SCHEDULE_DATE.year = 0;
 
 	unloadCalendarTripActive();
 	getID("itinerary-box").classList.toggle("show");
 	setTimeout(() => {
-		$("#programacao-box").hide();
+		$("#label-box").hide();
 	}, 300);
 }
 
-function reloadModalCalendar(programacao) {
-	CURRENT_SCHEDULE = programacao;
+function reloadModalCalendar(schedule) {
+	CURRENT_SCHEDULE = schedule;
 	getID("itinerary-modal").classList.toggle("show");
 	setTimeout(() => {
 		loadModalContentCalendar();
@@ -137,27 +137,27 @@ function reloadModalCalendar(programacao) {
 }
 
 export function displayInnerItineraryMessage(index) {
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
-	propriedades.titulo = CURRENT_INNER_ITINERARY[index].titulo;
-	propriedades.conteudo = CURRENT_INNER_ITINERARY[index].content;
-	propriedades.botoes = [];
-	propriedades.containers.principal = CURRENT_INNER_ITINERARY[index].container;
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.title = CURRENT_INNER_ITINERARY[index].title;
+	properties.content = CURRENT_INNER_ITINERARY[index].content;
+	properties.buttons = [];
+	properties.containers.main = CURRENT_INNER_ITINERARY[index].container;
 
-	displayFullMessage(propriedades);
+	displayFullMessage(properties);
 
-	switch (CURRENT_INNER_ITINERARY[index].tipo) {
+	switch (CURRENT_INNER_ITINERARY[index].type) {
 		case "accommodations":
-			loadImageLightbox("programacao-galeria");
+			loadImageLightbox("label-gallery");
 			break;
 		case "destinations":
-			if (CURRENT_INNER_ITINERARY[index].midia) {
-				loadInnerItineraryMedia(CURRENT_INNER_ITINERARY[index].midia);
+			if (CURRENT_INNER_ITINERARY[index].media) {
+				loadInnerItineraryMedia(CURRENT_INNER_ITINERARY[index].media);
 			}
 	}
 }
 
-function loadInnerItineraryMedia(midia) {
-	getID("midia-1").innerHTML = getLinkMediaButton(midia);
+function loadInnerItineraryMedia(media) {
+	getID("media-1").innerHTML = getLinkMediaButton(media);
 }
 
 export function loadCalendarItem(day, month, year, instant = false) {
@@ -171,22 +171,22 @@ export function loadCalendarItem(day, month, year, instant = false) {
 	const calendarTrip = getID(`calendarTrip-${day}-${month}-${year}`);
 
 	if (
-		day == CURRENT_SCHEDULE_DATE.dia &&
-		month == CURRENT_SCHEDULE_DATE.mes &&
-		year == CURRENT_SCHEDULE_DATE.ano
+		day == CURRENT_SCHEDULE_DATE.day &&
+		month == CURRENT_SCHEDULE_DATE.month &&
+		year == CURRENT_SCHEDULE_DATE.year
 	) {
 		closeModalCalendar();
 		return;
 	}
 
 	calendarTrip.classList.add("active");
-	CURRENT_SCHEDULE_DATE.dia = day;
-	CURRENT_SCHEDULE_DATE.mes = month;
-	CURRENT_SCHEDULE_DATE.ano = year;
+	CURRENT_SCHEDULE_DATE.day = day;
+	CURRENT_SCHEDULE_DATE.month = month;
+	CURRENT_SCHEDULE_DATE.year = year;
 	if (day != 0) {
-		for (let i = 0; i < getState().programacoes.length; i++) {
+		for (let i = 0; i < getState().itinerary.length; i++) {
 			var currentDate = convertFromDateObject(
-				getState().programacoes[i].data,
+				getState().itinerary[i].date,
 			);
 			if (
 				currentDate.getUTCDate() == day &&
@@ -195,9 +195,9 @@ export function loadCalendarItem(day, month, year, instant = false) {
 			) {
 				if (!SCHEDULE_OPEN) {
 					SCHEDULE_OPEN = true;
-					openModalCalendar(getState().programacoes[i], instant);
+					openModalCalendar(getState().itinerary[i], instant);
 				} else {
-					reloadModalCalendar(getState().programacoes[i]);
+					reloadModalCalendar(getState().itinerary[i]);
 				}
 				break;
 			}
@@ -224,27 +224,27 @@ function getInnerItineraryHTML(item) {
 	return "";
 }
 
-function getInnerItinerary(item, destinos?) {
+function getInnerItinerary(item, destinations?) {
 	const innerItinerary = {
-		tipo: item?.tipo,
-		titulo: "",
+		type: item?.type,
+		title: "",
 		content: "",
-		midia: "",
+		media: "",
 		container:
-			item?.tipo === "destinations"
-				? "destinos-container"
-				: "programacao-container",
+			item?.type === "destinations"
+				? "destinations-container"
+				: "label-container",
 	};
 	let index = -1;
-	switch (item?.tipo) {
+	switch (item?.type) {
 	case "transportation":
-			if (getState().modulos.transportes === true && item.id) {
-				index = getState().transportes.dados
-					.map((programacao) => programacao.id)
+			if (getState().modules.transportation === true && item.id) {
+				index = getState().transportation.data
+					.map((leg) => leg.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					const transporte = getState().transportes.dados[index];
-					innerItinerary.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
+					const transport = getState().transportation.data[index];
+					innerItinerary.title = `${transport.points.origin} → ${transport.points.destination}`;
 					innerItinerary.content = getFlightBoxHTML(
 						index + 1,
 						"inner-itinerary",
@@ -254,99 +254,100 @@ function getInnerItinerary(item, destinos?) {
 			}
 			break;
 	case "accommodations":
-			if (getState().modulos.hospedagens === true && item.id) {
-				index = getState().hospedagens
-					.map((hospedagem) => hospedagem.id)
+			if (getState().modules.accommodations === true && item.id) {
+				index = getState().accommodations
+					.map((accommodation) => accommodation.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					innerItinerary.titulo = "";
+					innerItinerary.title = "";
 					innerItinerary.content = getAccommodationsHTML(index, true);
 				}
 			}
 			break;
-case "destinations":
+	case "destinations":
 			if (
-				getState().modulos.destinos === true &&
-				item.local &&
-				item.categoria &&
+				getState().modules.destinations === true &&
+				item.location &&
+				item.category &&
 				item.id
 			) {
-				if (!destinos) {
-					const destinosIDs = DESTINATIONS.map((destino) => destino.destinosID);
-					index = destinosIDs.indexOf(item.local);
-					destinos = DESTINATIONS?.[index]?.destinos;
+				if (!destinations) {
+					const destinationIds = DESTINATIONS.map((d) => d.destinationId);
+					index = destinationIds.indexOf(item.location);
+					destinations = DESTINATIONS?.[index]?.destinations;
 				}
 
-				if (!destinos) {
+				if (!destinations) {
 					return;
 				}
 
-				const destino = destinos[item.categoria];
-				if (destino && Object.keys(destino).length) {
-					const destinoItem = destino[item.id];
-					if (destinoItem) {
-						innerItinerary.titulo = getDestinationTitle(destinoItem);
+				const destination = destinations[item.category];
+				if (destination && Object.keys(destination).length) {
+					const destinationItem = destination[item.id];
+					if (destinationItem) {
+						innerItinerary.title = getDestinationTitle(destinationItem);
 						innerItinerary.content = getDestinationsBoxHTML({
 							j: 1,
-							item: destinoItem,
+							item: destinationItem,
 							innerItinerary: true,
-							valores: getDestinationValues(destinos.moeda),
-							moeda: destinos.moeda,
-							planejado: false,
+						values: getDestinationValues(destinations.currency),
+						currency: destinations.currency,
+							planned: false,
 							editBtn: false,
 						} as any);
-						innerItinerary.midia = destinoItem?.midia;
-					}
-				}
+						innerItinerary.media = destinationItem?.media;
 			}
 	}
 
 	return innerItinerary;
 
-	function getDestinationValues(destinosMoeda) {
-		const moeda = cloneObject(getCurrencies().scale[destinosMoeda]);
-		const max = translate("destination.price.max", { value: moeda["$$$$"] });
-		moeda["-"] = translate("destination.price.free");
-		moeda["default"] = translate("destination.price.default");
-		moeda["$$$$"] = max;
-		return moeda;
+	function getDestinationValues(destinationsCurrency) {
+		const currency = cloneObject(getCurrencies().scale[destinationsCurrency]);
+		const max = translate("destination.price.max", { value: currency["$$$$"] });
+		currency["-"] = translate("destination.price.free");
+		currency["default"] = translate("destination.price.default");
+		currency["$$$$"] = max;
+		return currency;
+	}
+		}
+		break;
 	}
 }
 
-export function getScheduleTitle(titulo, destinos, placeholder = true) {
-	if (!titulo || typeof titulo === "string") {
+export function getScheduleTitle(title, destinations, placeholder = true) {
+	if (!title || typeof title === "string") {
 		const placeholderValue = placeholder
 			? translate("trip.itinerary.title")
 			: "";
-		return titulo || placeholderValue;
+		return title || placeholderValue;
 	}
 
-	if (!titulo.valor) {
+	if (!title.value) {
 		return placeholder
 			? translate("trip.itinerary.title")
 			: "";
 	}
 
-	if (titulo.destinos) {
-		return getAndDestinationTitle(titulo.valor, destinos, placeholder);
+	if (title.showDestinations) {
+		return getAndDestinationTitle(title.value, destinations, placeholder);
 	}
 
-	if (titulo.traduzir) {
-		return translate(`trip.transportation.${titulo.valor}`);
+	if (title.translate) {
+		return translate(`trip.transportation.${title.value}`);
 	}
 
-	return titulo.valor;
+	return title.value;
 }
 
 // Setters
-function setModalCalendarInnerHTML(div, programacao) {
+function setModalCalendarInnerHTML(div, period) {
 	div.innerHTML = "";
-	for (let i = 0; i < programacao.length; i++) {
-		if (programacao[i].programacao) {
+	for (let i = 0; i < period.length; i++) {
+		if (period[i].label) {
 			div.innerHTML += `<div>
                                 <i class="bi bi-chevron-right color-icon"></i>
-                                ${getInnerItineraryTitleHTML(programacao[i], "programacao-item")}
-                                ${getInnerItineraryHTML(programacao[i].item)}
+                                ${getInnerItineraryTitleHTML(period[i], "label-item")}
+                                ${getInnerItineraryHTML(period[i].item)}
                               </div>`;
 		}
 	}
@@ -354,19 +355,19 @@ function setModalCalendarInnerHTML(div, programacao) {
 
 // Converters
 function adaptModalCalendarInnerHTML() {
-	const madrugada = getID("itinerary-items-early-morning");
-	const manha = getID("itinerary-items-morning");
-	const tarde = getID("itinerary-items-afternoon");
-	const noite = getID("itinerary-items-night");
+	const earlyMorning = getID("itinerary-items-early-morning");
+	const morning = getID("itinerary-items-morning");
+	const afternoon = getID("itinerary-items-afternoon");
+	const night = getID("itinerary-items-night");
 
-	getID("itinerary-early-morning").style.display = madrugada.innerHTML
+	getID("itinerary-early-morning").style.display = earlyMorning.innerHTML
 		? "block"
 		: "none";
-	getID("itinerary-morning").style.display = manha.innerHTML ? "block" : "none";
-	getID("itinerary-afternoon").style.display = tarde.innerHTML ? "block" : "none";
-	getID("itinerary-night").style.display = noite.innerHTML ? "block" : "none";
+	getID("itinerary-morning").style.display = morning.innerHTML ? "block" : "none";
+	getID("itinerary-afternoon").style.display = afternoon.innerHTML ? "block" : "none";
+	getID("itinerary-night").style.display = night.innerHTML ? "block" : "none";
 	getID("no-itinerary").style.display =
-		madrugada.innerHTML || manha.innerHTML || tarde.innerHTML || noite.innerHTML
+		earlyMorning.innerHTML || morning.innerHTML || afternoon.innerHTML || night.innerHTML
 			? "none"
 			: "block";
 }
@@ -391,7 +392,7 @@ function loadItineraryTravelersCheckboxes() {
                     value="${traveler.id}" 
                     checked
                 >
-                ${traveler.nome}
+                ${traveler.name}
             </label>
         `;
 	}
@@ -400,15 +401,15 @@ function loadItineraryTravelersCheckboxes() {
 	container.addEventListener("change", loadItineraryTravelersCheckboxAction);
 }
 
-function filterInnerProgramacoesByTravelers(list, selectedIds) {
+function filterInnerItineraryByTravelers(list, selectedIds) {
 	if (!selectedIds.length || selectedIds.length === TRAVELERS.length) {
 		return list;
 	}
 
 	return list.filter((item) => {
-		const presentes = item.pessoas.filter((p) => p.isPresent).map((p) => p.id);
+		const present = item.travelers.filter((p) => p.isPresent).map((p) => p.id);
 
-		return selectedIds.some((id) => presentes.includes(id));
+		return selectedIds.some((id) => present.includes(id));
 	});
 }
 
@@ -418,27 +419,27 @@ function loadItineraryTravelersCheckboxAction() {
 		...container.querySelectorAll("input[type='checkbox']:checked"),
 	].map((i) => (i as HTMLInputElement).value);
 
-	const madrugada = filterInnerProgramacoesByTravelers(
-		CURRENT_SCHEDULE.madrugada,
+	const earlyMorningFiltered = filterInnerItineraryByTravelers(
+		CURRENT_SCHEDULE.earlyMorning,
 		selectedIds,
 	);
-	const manha = filterInnerProgramacoesByTravelers(
-		CURRENT_SCHEDULE.manha,
+	const morningFiltered = filterInnerItineraryByTravelers(
+		CURRENT_SCHEDULE.morning,
 		selectedIds,
 	);
-	const tarde = filterInnerProgramacoesByTravelers(
-		CURRENT_SCHEDULE.tarde,
+	const afternoonFiltered = filterInnerItineraryByTravelers(
+		CURRENT_SCHEDULE.afternoon,
 		selectedIds,
 	);
-	const noite = filterInnerProgramacoesByTravelers(
-		CURRENT_SCHEDULE.noite,
+	const nightFiltered = filterInnerItineraryByTravelers(
+		CURRENT_SCHEDULE.night,
 		selectedIds,
 	);
 
-	setModalCalendarInnerHTML(getID("itinerary-items-early-morning"), madrugada);
-	setModalCalendarInnerHTML(getID("itinerary-items-morning"), manha);
-	setModalCalendarInnerHTML(getID("itinerary-items-afternoon"), tarde);
-	setModalCalendarInnerHTML(getID("itinerary-items-night"), noite);
+	setModalCalendarInnerHTML(getID("itinerary-items-early-morning"), earlyMorningFiltered);
+	setModalCalendarInnerHTML(getID("itinerary-items-morning"), morningFiltered);
+	setModalCalendarInnerHTML(getID("itinerary-items-afternoon"), afternoonFiltered);
+	setModalCalendarInnerHTML(getID("itinerary-items-night"), nightFiltered);
 
 	adaptModalCalendarInnerHTML();
 }

@@ -4,8 +4,8 @@
  *
  * Data shape (from export-maps-data script):
  * {
- *   nome, emoji, website, mapa, instagram, regiao, valor, midia, rating,
- *   novo (bool), descricao: { en, pt }, criadoEm, id
+ *   name, emoji, website, map, instagram, region, price, media, rating,
+ *   isNew (bool), description: { en, pt }, createdAt, id
  * }
  */
 import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
@@ -25,21 +25,21 @@ import { updateDestinationsTitle } from "./edit-destination.js";
 const IMPORT_TYPES = ["restaurants", "snacks", "nightlife", "tourism", "shopping"];
 
 // ─── Core: Fill a destination's fields ────────────────────────────────────────
-function importFillDestination(categoria, j, data, force) {
+function importFillDestination(category, j, data, force) {
 	const entries = [
-		{ key: "nome", field: "nome", type: "value" },
+		{ key: "name", field: "name", type: "value" },
 		{ key: "emoji", field: "emoji", type: "value" },
 		{ key: "website", field: "website", type: "value" },
-		{ key: "mapa", field: "mapa", type: "value" },
+		{ key: "map", field: "map", type: "value" },
 		{ key: "instagram", field: "instagram", type: "value" },
-		{ key: "midia", field: "midia", type: "value" },
+		{ key: "media", field: "media", type: "value" },
 		{ key: "rating", field: "rating", type: "value" },
 		{ key: "id", field: "id", type: "value" },
-		{ key: "criadoEm", field: "criadoEm", type: "value" },
+		{ key: "createdAt", field: "createdAt", type: "value" },
 	];
 
 	for (const { key, field, type } of entries) {
-		const el = document.getElementById(`${categoria}-${field}-${j}`);
+		const el = document.getElementById(`${category}-${field}-${j}`);
 		if (!el) continue;
 		const newVal = data[key];
 		if (force || (newVal !== undefined && newVal !== null && newVal !== "")) {
@@ -47,38 +47,38 @@ function importFillDestination(categoria, j, data, force) {
 		}
 	}
 
-	// novo (checkbox)
-	const novoEl = document.getElementById(`${categoria}-novo-${j}`);
-	if (novoEl) {
-		if (force || data.novo !== undefined) {
-			(novoEl as HTMLInputElement).checked = !!data.novo;
+	// isNew (checkbox)
+	const isNewEl = document.getElementById(`${category}-isNew-${j}`);
+	if (isNewEl) {
+		if (force || data.isNew !== undefined) {
+			(isNewEl as HTMLInputElement).checked = !!data.isNew;
 		}
 	}
 
-	// regiao (uses dynamic select + input)
-	if (force || (data.regiao !== undefined && data.regiao !== null && data.regiao !== "")) {
-		updateValueDS("region", data.regiao || "", `${categoria}-region-select-${j}`);
+	// region (uses dynamic select + input)
+	if (force || (data.region !== undefined && data.region !== null && data.region !== "")) {
+		updateValueDS("region", data.region || "", `${category}-region-select-${j}`);
 		buildDS("region");
 	}
 
-	// valor (uses _loadMoedaValorAndVisibility)
-	if (force || (data.valor !== undefined && data.valor !== null && data.valor !== "")) {
-		loadCurrencyValueAndVisibility(data.valor || "", categoria, j);
+	// price (uses loadCurrencyValueAndVisibility)
+	if (force || (data.price !== undefined && data.price !== null && data.price !== "")) {
+		loadCurrencyValueAndVisibility(data.price || "", category, j);
 	}
 
-	// descricao
-	if (data.descricao && (force || Object.values(data.descricao).some(v => v))) {
-		setDescription(categoria, j, data.descricao);
+	// description
+	if (data.description && (force || Object.values(data.description).some(v => v))) {
+		setDescription(category, j, data.description);
 	}
 
 	// update title & description button
-	updateDestinationsTitle(j, categoria);
-	updateDescriptionButtonLabel(categoria, j);
+	updateDestinationsTitle(j, category);
+	updateDescriptionButtonLabel(category, j);
 }
 
 // ─── Helper: get last J (index) in a category box ─────────────────────────────
-function importGetLastJ(categoria) {
-	return getLastJ(`${categoria}-box`);
+function importGetLastJ(category) {
+	return getLastJ(`${category}-box`);
 }
 
 // ─── Add-function lookup (replaces dynamic window._addXxx calls) ──────────────
@@ -117,7 +117,7 @@ function importNewDestination(type, data, force = false) {
 	buildDS("region");
 
 	importFillDestination(type, j, data, force);
-	console.log(`✅ Imported new "${type}" at index ${j}: ${data.nome || "(unnamed)"}`);
+	console.log(`✅ Imported new "${type}" at index ${j}: ${data.name || "(unnamed)"}`);
 }
 
 // ─── 2. importDestinationByJ ──────────────────────────────────────────────────
@@ -141,7 +141,7 @@ function importDestinationByJ(type, j, data, force = false) {
 	}
 
 	importFillDestination(type, j, data, force);
-	console.log(`✅ Imported "${type}" at index ${j}: ${data.nome || "(unnamed)"}`);
+	console.log(`✅ Imported "${type}" at index ${j}: ${data.name || "(unnamed)"}`);
 }
 
 // ─── 3. importDestinationByName ───────────────────────────────────────────────
@@ -165,7 +165,7 @@ function importDestinationByName(name, data, type, force = false) {
 	for (const cat of typesToSearch) {
 		const js = [...new Set(getJs(`${cat}-box`))];
 		for (const j of js) {
-			const nameEl = document.getElementById(`${cat}-nome-${j}`);
+			const nameEl = document.getElementById(`${cat}-name-${j}`);
 			if (nameEl && (nameEl as HTMLInputElement).value.trim().toLowerCase() === name.trim().toLowerCase()) {
 				matches.push({ type: cat, j });
 			}

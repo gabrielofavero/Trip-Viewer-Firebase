@@ -9,8 +9,8 @@ import { INNER_ITINERARY, afterDragInnerItinerary, loadInnerItineraryHTML } from
 import { updateActiveDestinationsCardsHTML } from "../destination.js";
 import { DATAS } from "../../new-trip.js";
 
-export var FIRESTORE_PROGRAMACAO_DATA = {};
-export function setProgramacaoData(val) { FIRESTORE_PROGRAMACAO_DATA = val; }
+export var FIRESTORE_ITINERARY_DATA = {};
+export function setItineraryData(val) { FIRESTORE_ITINERARY_DATA = val; }
 
 export function getItineraryArray() {
 	let result = [];
@@ -19,15 +19,15 @@ export function getItineraryArray() {
 		const innerResult = {
 			data: convertToDateObject(DATAS[j - 1]),
 			destinationIds: [],
-			titulo: {
-				valor: "",
-				traduzir: false,
-				destinos: false,
+			title: {
+				price: "",
+				translate: false,
+				destinations: false,
 			},
-			madrugada: [],
-			manha: [],
-			tarde: [],
-			noite: [],
+			earlyMorning: [],
+			morning: [],
+			afternoon: [],
+			night: [],
 		};
 
 		innerResult.destinationIds = getDestinationsFromCards("itinerary", j);
@@ -35,13 +35,13 @@ export function getItineraryArray() {
 		const tituloSelectValue = getID(
 			`itinerary-inner-title-select-${j}`,
 		).value;
-		if (tituloSelectValue == "outro") {
-			innerResult.titulo.valor = getID(`itinerary-inner-title-${j}`).value;
+		if (tituloSelectValue == "other") {
+			innerResult.title.price = getID(`itinerary-inner-title-${j}`).value;
 		} else {
-			innerResult.titulo.valor = tituloSelectValue;
+			innerResult.title.price = tituloSelectValue;
 		}
 
-		innerResult.titulo.traduzir = [
+		innerResult.title.translate = [
 			"departure",
 			"return",
 			"during",
@@ -49,7 +49,7 @@ export function getItineraryArray() {
 			"return_and_destinations",
 		].includes(tituloSelectValue);
 
-		innerResult.titulo.destinos =
+		innerResult.title.destinations =
 			[
 				"departure_and_destinations",
 				"return_and_destinations",
@@ -63,10 +63,10 @@ export function getItineraryArray() {
 			INNER_ITINERARY[jsDateToKey(DATAS[j - 1])]
 		) {
 			const periods = INNER_ITINERARY[jsDateToKey(DATAS[j - 1])];
-			innerResult.madrugada = periods.madrugada;
-			innerResult.manha = periods.manha;
-			innerResult.tarde = periods.tarde;
-			innerResult.noite = periods.noite;
+			innerResult.earlyMorning = periods.earlyMorning;
+			innerResult.morning = periods.morning;
+			innerResult.afternoon = periods.afternoon;
+			innerResult.night = periods.night;
 		}
 		result.push(innerResult);
 	}
@@ -74,10 +74,10 @@ export function getItineraryArray() {
 	return result;
 }
 
-export function applyLoadedItineraryData(j, dados) {
-	const jsDate = convertFromDateObject(dados.data);
+export function applyLoadedItineraryData(j, data) {
+	const jsDate = convertFromDateObject(data.data);
 
-	const destinationIdsObject = dados.destinationIds;
+	const destinationIdsObject = data.destinationIds;
 	let destinationIds = [];
 	if (destinationIdsObject && destinationIdsObject.length > 0) {
 		destinationIds = destinationIdsObject.map((dest) => dest.destinationId);
@@ -87,31 +87,31 @@ export function applyLoadedItineraryData(j, dados) {
 	getID(`itinerary-inner-title-select-${j}`).innerHTML =
 		getItineraryTitleSelectOptions(j);
 
-	let titulo = dados.titulo?.valor ?? dados.titulo;
-	if (titulo) {
+	let title = data.title?.price ?? data.title;
+	if (title) {
 		const selectValues = getAllValuesFromSelect(
 			getID(`itinerary-inner-title-select-${j}`),
 		);
-		if (destinationIds && destinationIds.includes(titulo)) {
+		if (destinationIds && destinationIds.includes(title)) {
 			getID(`itinerary-inner-title-${j}`).style.display = "none";
 		} else if (
-			titulo.toLowerCase() == "outro" ||
-			!selectValues.includes(titulo)
+			title.toLowerCase() == "other" ||
+			!selectValues.includes(title)
 		) {
-			getID(`itinerary-inner-title-select-${j}`).value = "outro";
+			getID(`itinerary-inner-title-select-${j}`).value = "other";
 			getID(`itinerary-inner-title-${j}`).style.display = "block";
-			getID(`itinerary-inner-title-${j}`).value = titulo;
+			getID(`itinerary-inner-title-${j}`).value = title;
 		} else {
-			getID(`itinerary-inner-title-select-${j}`).value = titulo;
+			getID(`itinerary-inner-title-select-${j}`).value = title;
 			getID(`itinerary-inner-title-${j}`).style.display = "none";
 		}
 	}
 
 	INNER_ITINERARY[jsDateToKey(jsDate)] = {
-		madrugada: dados.madrugada || [],
-		manha: dados.manha || [],
-		tarde: dados.tarde || [],
-		noite: dados.noite || [],
+		earlyMorning: data.earlyMorning || [],
+		morning: data.morning || [],
+		afternoon: data.afternoon || [],
+		night: data.night || [],
 	};
 
 	updateItineraryTitle(j);
@@ -125,39 +125,39 @@ export function updateItineraryTitle(j) {
 	const div = getID(`itinerary-title-${j}`);
 	const tituloInput = getID(`itinerary-inner-title-${j}`);
 	const tituloSelect = getID(`itinerary-inner-title-select-${j}`);
-	let titulo;
+	let title;
 	let value;
 
 	value = tituloSelect.value;
 	switch (value) {
 		case "":
-			titulo = "";
+			title = "";
 			break;
-		case "outro":
-			titulo = tituloInput.value;
+		case "other":
+			title = tituloInput.value;
 			tituloInput.style.display = "block";
 			value = tituloInput.value;
 			break;
 		case "departure":
 		case "return":
 		case "during":
-			titulo = translate(`trip.transportation.${tituloSelect.value}`);
+			title = translate(`trip.transportation.${tituloSelect.value}`);
 			tituloInput.style.display = "none";
 			break;
 		default:
-			titulo = getDestinationItineraryTitle(value, j);
+			title = getDestinationItineraryTitle(value, j);
 			tituloInput.style.display = "none";
 	}
 
 	const data = DATAS[j - 1];
 	const dataFormatada = getDateTitle(data, "weekday_day_month");
-	div.innerText = getItineraryTitle(dataFormatada, titulo);
+	div.innerText = getItineraryTitle(dataFormatada, title);
 }
 
 function getDestinationItineraryTitle(value, j) {
 	const activeDestinations = getActiveDestinations(j);
-	const destinationTitles = activeDestinations.map((destino) => destino.label);
-	const destinationIds = activeDestinations.map((destino) => destino.value);
+	const destinationTitles = activeDestinations.map((destination) => destination.label);
+	const destinationIds = activeDestinations.map((destination) => destination.value);
 
 	if (value === "all_destinations") {
 		return getReadableArray(destinationTitles);
@@ -182,7 +182,7 @@ export function getActiveDestinations(j) {
 	for (const card of fieldSet.querySelectorAll(".destination-card.selected")) {
 		const nameEl = card.querySelector(".destination-card-name") as HTMLElement;
 		const label = nameEl?.textContent?.trim() || "";
-		const value = card.getAttribute("data-destino-id") || "";
+		const value = card.getAttribute("data-destination-id") || "";
 		if (value) {
 			result.push({ label, value });
 		}
@@ -192,7 +192,7 @@ export function getActiveDestinations(j) {
 
 export function getItineraryTitleSelectOptions(j = null) {
 	const semTitulo = `<option value="">${translate("labels.no_title")}</option>`;
-	let destino = "";
+	let destination = "";
 	let idaVoltaDestino = "";
 
 	if (j) {
@@ -210,11 +210,11 @@ export function getItineraryTitleSelectOptions(j = null) {
 
 		if (values.length > 0 && ACTIVE_DESTINATIONS.length > 0) {
 			for (let i = 0; i < values.length; i++) {
-				destino += `<option value="${values[i]}">${labels[i]}</option>`;
+				destination += `<option value="${values[i]}">${labels[i]}</option>`;
 			}
 			if (labels.length > 1) {
 				const text = getReadableArray(labels);
-				destino += `<option value="all_destinations">${text}</option>`;
+				destination += `<option value="all_destinations">${text}</option>`;
 			}
 			const idaArray = [translate("trip.transportation.departure"), ...labels];
 			const idaText = getReadableArray(idaArray);
@@ -226,14 +226,14 @@ export function getItineraryTitleSelectOptions(j = null) {
 		}
 	}
 
-	return `${destino}
-            ${destino ? "" : semTitulo}
+	return `${destination}
+            ${destination ? "" : semTitulo}
             <option value="departure">${translate("trip.transportation.departure")}</option>
             <option value="return">${translate("trip.transportation.return")}</option>
             <option value="during">${translate("trip.transportation.during")}</option>
             ${idaVoltaDestino}
-            ${destino ? semTitulo : ""}
-            <option value="outro">${translate("labels.other")}</option>`;
+            ${destination ? semTitulo : ""}
+            <option value="other">${translate("labels.other")}</option>`;
 }
 
 function updateItineraryTitleSelect(j) {
@@ -246,8 +246,8 @@ function updateItineraryTitleSelect(j) {
 	updateItineraryTitle(j);
 }
 
-function getItineraryTitle(dataFormatada, titulo = "") {
-	if (titulo) return `${titulo}: ${dataFormatada}`;
+function getItineraryTitle(dataFormatada, title = "") {
+	if (title) return `${title}: ${dataFormatada}`;
 	else return dataFormatada;
 }
 
@@ -262,8 +262,8 @@ export function reloadItinerary() {
 	for (const data of DATAS.map((data) => jsDateToKey(data))) {
 		if (originalDataInputs.includes(data)) {
 			const index = originalDataInputs.indexOf(data);
-			const dados = originalData[index];
-			applyLoadedItineraryData(j, dados);
+			const orig = originalData[index];
+			applyLoadedItineraryData(j, orig);
 		}
 		j++;
 	}

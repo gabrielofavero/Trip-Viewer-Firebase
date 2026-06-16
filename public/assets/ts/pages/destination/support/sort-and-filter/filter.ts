@@ -51,7 +51,7 @@ export function filter(render = false) {
 	}
 
 	function shouldFilterByPrices(item) {
-		const value = item.valor;
+		const value = item.price;
 
 		if (value === "$$$$") {
 			return true;
@@ -65,7 +65,7 @@ export function filter(render = false) {
 	}
 
 	function shouldFilterByScores(item) {
-		const value = item.nota;
+		const value = item.rating;
 
 		if (["default", "1"].includes(value)) {
 			return true;
@@ -75,7 +75,7 @@ export function filter(render = false) {
 	}
 
 	function shouldFilterByRegions(item) {
-		const value = item.regiao;
+		const value = item.region;
 		if (!value) {
 			return true;
 		}

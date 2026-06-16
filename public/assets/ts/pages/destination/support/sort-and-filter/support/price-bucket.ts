@@ -29,6 +29,6 @@ export function getPriceBuckets() {
 		return FILTER_SORT_DATA[ACTIVE_CATEGORY].prices;
 	}
 
-	const prices = getDataSet("valor");
+	const prices = getDataSet("price");
 	return buildPriceBuckets(prices);
 }

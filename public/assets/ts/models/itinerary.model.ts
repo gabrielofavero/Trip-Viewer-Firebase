@@ -11,7 +11,7 @@ import { translate } from '../i18n/translation.js';
 import { getRatingTranslation, getPriceValue } from './destination.model.js';
 import { ITINERARY_HTML } from "../pages/itinerary/itinerary-formatter.js";
 import { getTimeStringFromDateObj } from "../utils/dates.js";
-import { getTurno } from "../pages/destination/categories.js";
+import { getPeriod } from "../pages/destination/categories.js";
 import { getScheduleTitle } from "../pages/trip-detail/categories/itinerary-module/inner-itinerary.js";
 import type { ItineraryDay, PeriodItem } from './new-schema.js';
 
@@ -92,7 +92,7 @@ export async function getItineraryContent(type: string): Promise<string> {
 	}
 
 	function loadTimeOfDay(timeOfDayKey: string): void {
-		const timeOfDay = getTurno(timeOfDayKey);
+		const timeOfDay = getPeriod(timeOfDayKey);
 		switch (type) {
 			case "page":
 				content.push(`<h3>${timeOfDay}</h3>`);

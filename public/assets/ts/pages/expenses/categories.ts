@@ -101,10 +101,10 @@ function setTableCategoria(type) {
 
 		const recibo = document.createElement("div");
 		recibo.id = `${id}-recibo`;
-		recibo.className = "gastos-card gastos-recibo";
+		recibo.className = "expenses-card expenses-recibo";
 
 		const h2 = document.createElement("h2");
-		h2.className = "gastos-titulo";
+		h2.className = "expenses-title";
 		h2.innerHTML = getTitleWithIcon(item.name, type);
 		recibo.appendChild(h2);
 

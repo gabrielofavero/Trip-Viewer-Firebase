@@ -57,7 +57,7 @@ async function getUnprotectedTripObject() {
 		schedules: {},
 		people: {},
 		title: getID("title").value,
-		transportation: getVisibilidadeObject(),
+		transportation: getVisibilityObject(),
 		version: {
 			lastUpdated: new Date().toISOString(),
 		},
@@ -108,7 +108,7 @@ async function getTripObjectFull(protectedReservationCodes = false) {
 		version: {
 			lastUpdated: new Date().toISOString(),
 		},
-		visibility: getVisibilidadeObject(),
+		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 	};
 }
@@ -168,7 +168,7 @@ function getImageObject() {
 
 function getLinksObject() {
 	return {
-		ativo: getID("links-enabled").checked,
+		active: getID("links-enabled").checked,
 		attachments: getID("link-attachments").value || "",
 		drive: getID("link-drive").value || "",
 		maps: getID("link-maps").value || "",
@@ -179,10 +179,10 @@ function getLinksObject() {
 	};
 }
 
-export function getVisibilidadeObject() {
+export function getVisibilityObject() {
 	return {
-		claro: getID("dark-and-light").checked || getID("light-exclusive").checked,
-		escuro: getID("dark-and-light").checked || getID("dark-exclusive").checked,
+		light: getID("dark-and-light").checked || getID("light-exclusive").checked,
+		dark: getID("dark-and-light").checked || getID("dark-exclusive").checked,
 	};
 }
 

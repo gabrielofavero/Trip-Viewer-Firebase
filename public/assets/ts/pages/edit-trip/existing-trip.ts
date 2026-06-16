@@ -3,13 +3,13 @@ import { setExpensesData } from './edit-trip.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { setCurrentPreferencePIN } from './categories/basic-data/set-protected-data.js';
 import { setTravelers, updateTravelersButtonLabel } from './categories/travelers.js';
-import { loadCustomizacaoImageData, setCurrentLight } from './categories/customization.js';
+import { loadCustomizationImageData, setCurrentLight } from './categories/customization.js';
 import { visibilityListenerAction } from './support/event-listeners.js';
 import { addTransportation, addAccommodations, loadDestinations, loadItinerarySchedule, addGallery } from './new-trip.js';
 import { loadTransportationVisibility, updateTransportationTitle, applyTransportationTypeVisualization } from './categories/transportation.js';
-import { ACCOMMODATION_IMAGES, setImagemButtonLabel, loadCheckIn, loadCheckOut } from './categories/accommodation.js';
+import { ACCOMMODATION_IMAGES, setImageButtonLabel, loadCheckIn, loadCheckOut } from './categories/accommodation.js';
 import { loadActiveDestinations, updateActiveDestinationsCardsHTML } from './categories/destination.js';
-import { setProgramacaoData, applyLoadedItineraryData } from './categories/itinerary-module/itinerary-module.js';
+import { setItineraryData, applyLoadedItineraryData } from './categories/itinerary-module/itinerary-module.js';
 import { displayError } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { getState } from '../../data/state.js';
@@ -24,13 +24,13 @@ import { getHTMLpage, setPageName } from '../../app/main.js';
 export async function loadTripData() {
 	try {
 		loadBasicTripData();
-		loadCustomizacaoData();
+		loadCustomizationData();
 		await loadExpensesData();
 		loadTransportationData();
 		loadAccommodationData();
 		await loadDestinationsData();
 		loadItineraryData();
-		loadGaleriaData();
+		loadGalleryData();
 
 		setPageName(`${translate("labels.edit")} ${getState().title}`);
 	} catch (error) {
@@ -57,7 +57,7 @@ function loadBasicTripData() {
 	switchPinLabel();
 }
 
-export function loadCustomizacaoData(state?) {
+export function loadCustomizationData(state?) {
 	// Images
 	const background = getState().image.background;
 	const logoLight = getState().image.light;
@@ -68,19 +68,19 @@ export function loadCustomizacaoData(state?) {
 		getID("images-enabled-content").style.display = "block";
 	}
 
-	loadCustomizacaoImageData(background, "link-background");
-	loadCustomizacaoImageData(logoLight, "link-logo-light");
-	loadCustomizacaoImageData(logoDark, "link-logo-dark");
+	loadCustomizationImageData(background, "link-background");
+	loadCustomizationImageData(logoLight, "link-logo-light");
+	loadCustomizationImageData(logoDark, "link-logo-dark");
 
 	// Cores
 	const lightColor = getID("light-color");
 	const darkColor = getID("dark-color");
 
-	if (getState().cores.ativo === true) {
+	if (getState().colors.active === true) {
 		getID("colors-enabled").checked = true;
-		lightColor.value = getState().cores.claro;
-		darkColor.value = getState().cores.escuro;
-		setCurrentLight(getState().cores.claro);
+		lightColor.value = getState().colors.light;
+		darkColor.value = getState().colors.dark;
+		setCurrentLight(getState().colors.light);
 		getID("colors-enabled-content").style.display = "block";
 	}
 
@@ -132,58 +132,58 @@ async function loadTransportationData() {
 		getID("transportation-enabled-content").style.display = "block";
 		getID("transportation-add-box").style.display = "block";
 	}
-	getID(getState().transportation.visualizacao || "simple-view").checked =
+	getID(getState().transportation.viewMode || "simple-view").checked =
 		true;
 
-	for (let j = 1; j <= getState().transportation.dados.length; j++) {
+	for (let j = 1; j <= getState().transportation.data.length; j++) {
 		addTransportation();
-		const transporte = getState().transportation.dados[j - 1];
+		const transport = getState().transportation.data[j - 1];
 
-		getID(`${transporte.idaVolta}-${j}`).checked = true;
+		getID(`${transport.direction}-${j}`).checked = true;
 
-		const pessoa = transporte.pessoa;
-		if (pessoa) {
-			getID(`transportation-person-${j}`).value = pessoa;
+		const person = transport.person;
+		if (person) {
+			getID(`transportation-person-${j}`).value = person;
 			updateValueDS(
 				"transportation-person",
-				pessoa,
+				person,
 				`transportation-person-select-${j}`,
 			);
 			buildDS("transportation-person");
 		}
 
-		const partida = convertFromDateObject(transporte.datas.partida);
-		const chegada = convertFromDateObject(transporte.datas.chegada);
+		const departure = convertFromDateObject(transport.dates.departure);
+		const arrival = convertFromDateObject(transport.dates.arrival);
 
-		if (partida) {
-			getID(`partida-${j}`).value = getDateString(partida, "yyyy-mm-dd");
-			getID(`partida-horario-${j}`).value = getTimeStringFromDate(partida);
+		if (departure) {
+			getID(`departure-${j}`).value = getDateString(departure, "yyyy-mm-dd");
+			getID(`departure-time-${j}`).value = getTimeStringFromDate(departure);
 		}
 
-		if (chegada) {
-			getID(`chegada-${j}`).value = getDateString(chegada, "yyyy-mm-dd");
-			getID(`chegada-horario-${j}`).value = getTimeStringFromDate(chegada);
+		if (arrival) {
+			getID(`arrival-${j}`).value = getDateString(arrival, "yyyy-mm-dd");
+			getID(`arrival-time-${j}`).value = getTimeStringFromDate(arrival);
 		}
 
-		getID(`transportation-tipo-${j}`).value = transporte.transporte;
-		const empresa = transporte.empresa;
-		if (empresa) {
+		getID(`transportation-type-${j}`).value = transport.type;
+		const company = transport.company;
+		if (company) {
 			loadTransportationVisibility(j);
-			if (getOptionsFromSelect(`empresa-select-${j}`).includes(empresa)) {
-				getID(`empresa-select-${j}`).value = empresa;
+			if (getOptionsFromSelect(`company-select-${j}`).includes(company)) {
+				getID(`company-select-${j}`).value = company;
 			} else {
-				getID(`empresa-select-${j}`).value = "outra";
-				getID(`empresa-${j}`).value = empresa;
+				getID(`company-select-${j}`).value = "other";
+				getID(`company-${j}`).value = company;
 				loadTransportationVisibility(j);
 			}
 		}
 
-		getID(`transportation-id-${j}`).value = transporte.id;
-		getID(`transportation-duracao-${j}`).value = transporte.duracao;
-		getID(`reserva-transportation-${j}`).value = transporte.reserva;
-		getID(`ponto-partida-${j}`).value = transporte.pontos.partida;
-		getID(`ponto-chegada-${j}`).value = transporte.pontos.chegada;
-		getID(`transportation-link-${j}`).value = transporte.link;
+		getID(`transportation-id-${j}`).value = transport.id;
+		getID(`transportation-duration-${j}`).value = transport.duration;
+		getID(`reservation-transportation-${j}`).value = transport.reservation;
+		getID(`point-departure-${j}`).value = transport.points.departure;
+		getID(`point-arrival-${j}`).value = transport.points.arrival;
+		getID(`transportation-link-${j}`).value = transport.link;
 
 		updateTransportationTitle(j);
 	}
@@ -203,16 +203,16 @@ function loadAccommodationData() {
 		ACCOMMODATION_IMAGES[j] = accommodation.images || [];
 
 		getID(`accommodations-id-${j}`).value = accommodation.id;
-		getID(`accommodations-cafe-${j}`).checked = accommodation.breakfast;
-		getID(`accommodations-nome-${j}`).value = accommodation.name;
+		getID(`accommodations-breakfast-${j}`).checked = accommodation.breakfast;
+		getID(`accommodations-name-${j}`).value = accommodation.name;
 		getID(`accommodations-title-${j}`).innerText =
 			accommodation.name || getID(`accommodations-title-${j}`).innerText;
-		getID(`accommodations-endereco-${j}`).value = accommodation.address;
+		getID(`accommodations-address-${j}`).value = accommodation.address;
 		getID(`accommodations-description-${j}`).value = accommodation.description;
-		getID(`reserva-accommodations-${j}`).value = accommodation.reserva || "";
-		getID(`reserva-accommodations-link-${j}`).value = accommodation.link;
+		getID(`reservation-accommodations-${j}`).value = accommodation.reservation || "";
+		getID(`reservation-accommodations-link-${j}`).value = accommodation.link;
 
-		setImagemButtonLabel(j);
+		setImageButtonLabel(j);
 		loadCheckIn(accommodation, j);
 		loadCheckOut(accommodation, j);
 	}
@@ -236,10 +236,10 @@ async function loadDestinationsData() {
 
 	loadDestinations();
 	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
-	for (const destino of getState().destinations) {
-		const id = destino.destinationId;
+	for (const destination of getState().destinations) {
+		const id = destination.destinationId;
 		for (const card of cards) {
-			if (card.getAttribute("data-destino-id") === id) {
+			if (card.getAttribute("data-destination-id") === id) {
 				card.classList.add("selected");
 				// Move to top of selected group
 				const container = getID("destinations-checkboxes");
@@ -261,17 +261,17 @@ export function loadItineraryData() {
 
 	let j = 1;
 	while (getID(`itinerary-title-${j}`)) {
-		const dados = getState().schedules[j - 1];
-		if (dados?.data) {
-			applyLoadedItineraryData(j, dados);
+		const data = getState().schedules[j - 1];
+		if (data?.data) {
+			applyLoadedItineraryData(j, data);
 		}
 		j++;
 	}
 	updateActiveDestinationsCardsHTML("itinerary");
-	setProgramacaoData(cloneObject(getState().schedules));
+	setItineraryData(cloneObject(getState().schedules));
 }
 
-function loadGaleriaData() {
+function loadGalleryData() {
 	if (getState().modules.gallery === true) {
 		getID("gallery-enabled").checked = true;
 		getID("gallery-enabled-content").style.display = "block";

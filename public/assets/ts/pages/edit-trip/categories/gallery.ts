@@ -10,30 +10,30 @@ import { addGallery } from "../new-trip.js";
 
 export function getGalleryObject() {
 	let result = {
-		descricoes: [],
-		categorias: [],
-		imagens: [],
-		titulos: [],
+		descriptions: [],
+		categories: [],
+		images: [],
+		titles: [],
 	};
 
 	const childIDs = getChildIDs("gallery-box");
 	for (var i = 0; i < childIDs.length; i++) {
 		const j = getJ(childIDs[i]);
 
-		const descricao = getID(`gallery-description-${j}`).value || "";
-		result.descricoes.push(descricao);
+		const description = getID(`gallery-description-${j}`).value || "";
+		result.descriptions.push(description);
 
-		const titulo = getID(`gallery-title-${j}`).value || "";
-		result.titulos.push(titulo);
+		const title = getID(`gallery-title-${j}`).value || "";
+		result.titles.push(title);
 
 		if (getID(`enable-upload-gallery-${j}`).checked) {
-			result.imagens.push("");
+			result.images.push("");
 			CUSTOM_UPLOADS.gallery.push({
 				file: getID(`upload-gallery-${j}`)?.files[0],
 				position: j,
 			});
 		} else {
-			result.imagens.push(getID(`link-gallery-${j}`).value);
+			result.images.push(getID(`link-gallery-${j}`).value);
 		}
 	}
 

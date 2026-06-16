@@ -39,7 +39,7 @@ export async function loadEditListingPage() {
 	loadHabilitados();
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinos || []));
+	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinations || []));
 
 	if (DOCUMENT_ID) {
 		await carregarListagem();
@@ -94,7 +94,7 @@ function loadEventListeners() {
 		setListagem();
 	});
 
-	getID("re-editar").addEventListener("click", () => {
+	getID("re-edit").addEventListener("click", () => {
 		reEdit("listings", SUCCESSFUL_SAVE);
 	});
 
@@ -112,7 +112,7 @@ function loadEventListeners() {
 			event.returnValue = translate("messages.exit_confirmation");
 		}
 	});
-	getID("claro").addEventListener("change", () => autoFillDarkColor());
+	getID("light").addEventListener("change", () => autoFillDarkColor());
 }
 
 async function carregarListagem() {
@@ -127,21 +127,21 @@ async function carregarListagem() {
 
 async function buildListObject() {
 	setFirestoreNewData({
-		compartilhamento: await buildCompartilhamentoObject(),
-		cores: {
-			ativo: getID("colors-enabled").checked,
-			claro: getID("claro").value,
-			escuro: getID("escuro").value,
+		sharing: await buildCompartilhamentoObject(),
+		colors: {
+			active: getID("colors-enabled").checked,
+			light: getID("light").value,
+			dark: getID("dark").value,
 		},
-		descricao: getID("description").value,
-		destinos: buildDestinosArray(),
-		imagem: buildImagemObject(),
+		description: getID("description").value,
+		destinations: buildDestinosArray(),
+		image: buildImagemObject(),
 		links: buildLinksObject(),
-		subtitulo: getID("subtitle").value,
-		titulo: getID("title").value,
-		versao: {
-			ultimaAtualizacao: new Date().toISOString(),
-			exibirEmDestinos: getID("show-in-destinations").checked,
+		subtitle: getID("subtitle").value,
+		title: getID("title").value,
+		version: {
+			lastUpdated: new Date().toISOString(),
+			showInDestinations: getID("show-in-destinations").checked,
 		},
 	});
 }
@@ -149,7 +149,7 @@ async function buildListObject() {
 function getIgnoredPathDestinos() {
 	if (!getState()) return [];
 	let result = [];
-	for (let i = 0; i < getState().destinos.length; i++) {
+	for (let i = 0; i < getState().destinations.length; i++) {
 		result.push(`destinations.${i}.destinations`);
 	}
 	return result;
@@ -171,15 +171,15 @@ export function deleteListagem() {
 	listing = listing ? ` "${listing}"` : "";
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.titulo = translate("listing.delete.title");
-	properties.conteudo = translate("listing.delete.message", { name: listing.replace(/^ "|"$/g, "") });
+	properties.title = translate("listing.delete.title");
+	properties.content = translate("listing.delete.message", { name: listing.replace(/^ "|"$/g, "") });
 	properties.botoes = [
 		{
-			tipo: "cancelar",
+			type: "cancel",
 		},
 		{
-			tipo: "confirmar",
-			acao: "deleteListagemAction()",
+			type: "confirm",
+			action: "deleteListagemAction()",
 		},
 	];
 

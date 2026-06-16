@@ -3,17 +3,17 @@ import { addSelectorDS } from '../../ui/dynamic-select.js';
 import { translate } from "../../i18n/translation.js";
 import { getNewSvg } from "../../theme/icons.js";
 import { getDescriptionHTML } from "./categories/description.js";
-import {getOutroValorVisibility, loadCurrencySelects, VALOR_OPTIONS} from "./categories/price.js";
+import {getOtherPriceVisibility, loadCurrencySelects, PRICE_OPTIONS} from "./categories/price.js";
 import { addDestinationsListeners } from "./edit-destination.js";
 import { addListenerToRemoveDestination } from "./edit-destination.js";
 
 // Adicionar
 export function addRestaurants() {
-	if (!VALOR_OPTIONS) {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "restaurants";
+	const category = "restaurants";
 	const j = getNextJ("restaurants-box");
 
 	$("#restaurants-box").append(`
@@ -31,8 +31,8 @@ export function addRestaurants() {
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="restaurants-novo-${j}" class="switch" />
-            <label for="restaurants-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="restaurants-isNew-${j}" class="switch" />
+            <label for="restaurants-isNew-${j}">${translate("destination.recent")}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
@@ -42,12 +42,12 @@ export function addRestaurants() {
 
           <div class="nice-form-group" style="display: none">
             <label>${translate("labels.created_date")}</label>
-            <input id="restaurants-criadoEm-${j}" type="text" disabled />
+            <input id="restaurants-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.name")}</label>
-            <input required id="restaurants-nome-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.name")}" />
+            <input required id="restaurants-name-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.name")}" />
           </div>
   
           <div class="nice-form-group">
@@ -55,16 +55,16 @@ export function addRestaurants() {
             <input id="restaurants-emoji-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.emoji")}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
 
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="restaurants-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="restaurants-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="restaurants-mapa-${j}" type="url" placeholder="${translate("destination.restaurants.placeholders.map")}" value=""
+            <input id="restaurants-map-${j}" type="url" placeholder="${translate("destination.restaurants.placeholders.map")}" value=""
               class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
@@ -83,28 +83,28 @@ export function addRestaurants() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="restaurants-region-select-${j}" style="display: none;"></select>
+            <select class="edit-select" id="restaurants-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="restaurants-region-${j}" type="text" placeholder="${translate("destination.restaurants.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="restaurants-valor-${j}">
-            ${VALOR_OPTIONS}
+            <select class="edit-select" id="restaurants-price-${j}">
+            ${PRICE_OPTIONS}
           </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="restaurants-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="restaurants-other-price-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="restaurants-midia-${j}" type="url"
+            <input id="restaurants-media-${j}" type="url"
               placeholder="${translate("destination.restaurants.placeholders.video")}" value="" class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">
           <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="restaurants-nota-${j}">
+            <select class="edit-select" id="restaurants-rating-${j}">
               <option value="?">${translate("destination.scores.default")}</option>
               <option value="5">5 - ${translate("destination.scores.5")}</option>
               <option value="4">4 - ${translate("destination.scores.4")}</option>
@@ -117,7 +117,7 @@ export function addRestaurants() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -137,9 +137,9 @@ export function addRestaurants() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
 	addSelectorDS(
 		"region",
 		`restaurants-region-select-${j}`,
@@ -148,11 +148,11 @@ export function addRestaurants() {
 }
 
 export function addSnacks() {
-	if (!VALOR_OPTIONS) {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "snacks";
+	const category = "snacks";
 	const j = getNextJ("snacks-box");
 
 	$("#snacks-box").append(`
@@ -169,8 +169,8 @@ export function addSnacks() {
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="snacks-novo-${j}" class="switch" />
-            <label for="snacks-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="snacks-isNew-${j}" class="switch" />
+            <label for="snacks-isNew-${j}">${translate("destination.recent")}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
@@ -180,12 +180,12 @@ export function addSnacks() {
 
           <div class="nice-form-group" style="display: none">
             <label>${translate("labels.created_date")}</label>
-            <input id="snacks-criadoEm-${j}" type="text" disabled />
+            <input id="snacks-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.name")}</label>
-            <input required id="snacks-nome-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.name")}" />
+            <input required id="snacks-name-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.name")}" />
           </div>
   
           <div class="nice-form-group">
@@ -193,16 +193,16 @@ export function addSnacks() {
             <input id="snacks-emoji-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.emoji")}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="snacks-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="snacks-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="snacks-mapa-${j}" type="url" placeholder="${translate("destination.snacks.placeholders.map")}" value=""
+            <input id="snacks-map-${j}" type="url" placeholder="${translate("destination.snacks.placeholders.map")}" value=""
               class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
@@ -221,21 +221,21 @@ export function addSnacks() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="snacks-region-select-${j}" style="display: none;"></select>
+            <select class="edit-select" id="snacks-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="snacks-region-${j}" type="text" placeholder="${translate("destination.snacks.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="snacks-valor-${j}">
-              ${VALOR_OPTIONS}
+            <select class="edit-select" id="snacks-price-${j}">
+              ${PRICE_OPTIONS}
             </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="snacks-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="snacks-other-price-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="snacks-midia-${j}" type="url"
+            <input id="snacks-media-${j}" type="url"
               placeholder="${translate("destination.snacks.placeholders.video")}"
               value="" class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.video")}</div>
@@ -243,7 +243,7 @@ export function addSnacks() {
   
           <div class="nice-form-group">
           <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="snacks-nota-${j}">
+            <select class="edit-select" id="snacks-rating-${j}">
               <option value="?">${translate("destination.scores.default")}</option>
               <option value="5">5 - ${translate("destination.scores.5")}</option>
               <option value="4">4 - ${translate("destination.scores.4")}</option>
@@ -256,7 +256,7 @@ export function addSnacks() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -276,18 +276,18 @@ export function addSnacks() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
 	addSelectorDS("region", `snacks-region-select-${j}`, `snacks-region-${j}`);
 }
 
 export function addNightlife() {
-	if (!VALOR_OPTIONS) {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "nightlife";
+	const category = "nightlife";
 	const j = getNextJ("nightlife-box");
 
 	$("#nightlife-box").append(`
@@ -304,8 +304,8 @@ export function addNightlife() {
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="nightlife-novo-${j}" class="switch" />
-            <label for="nightlife-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="nightlife-isNew-${j}" class="switch" />
+            <label for="nightlife-isNew-${j}">${translate("destination.recent")}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
@@ -315,12 +315,12 @@ export function addNightlife() {
 
           <div class="nice-form-group" style="display: none">
             <label>${translate("labels.created_date")}</label>
-            <input id="nightlife-criadoEm-${j}" type="text" disabled />
+            <input id="nightlife-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.name")}</label>
-            <input required id="nightlife-nome-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.name")}" />
+            <input required id="nightlife-name-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.name")}" />
           </div>
   
           <div class="nice-form-group">
@@ -328,16 +328,16 @@ export function addNightlife() {
             <input id="nightlife-emoji-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.emoji")}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="nightlife-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="nightlife-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="nightlife-mapa-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.map")}" value=""
+            <input id="nightlife-map-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.map")}" value=""
               class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
@@ -356,28 +356,28 @@ export function addNightlife() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="nightlife-region-select-${j}" style="display: none;"></select>
+            <select class="edit-select" id="nightlife-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="nightlife-region-${j}" type="text" placeholder="${translate("destination.nightlife.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="nightlife-valor-${j}">
-            ${VALOR_OPTIONS}
+            <select class="edit-select" id="nightlife-price-${j}">
+            ${PRICE_OPTIONS}
           </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="nightlife-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="nightlife-other-price-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="nightlife-midia-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.video")}"
+            <input id="nightlife-media-${j}" type="url" placeholder="${translate("destination.nightlife.placeholders.video")}"
               value="" class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">
           <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="nightlife-nota-${j}">
+            <select class="edit-select" id="nightlife-rating-${j}">
               <option value="?">${translate("destination.scores.default")}</option>
               <option value="5">5 - ${translate("destination.scores.5")}</option>
               <option value="4">4 - ${translate("destination.scores.4")}</option>
@@ -390,7 +390,7 @@ export function addNightlife() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -410,18 +410,18 @@ export function addNightlife() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
 	addSelectorDS("region", `nightlife-region-select-${j}`, `nightlife-region-${j}`);
 }
 
 export function addTourism() {
-	if (!VALOR_OPTIONS) {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "tourism";
+	const category = "tourism";
 	const j = getNextJ("tourism-box");
 
 	$("#tourism-box").append(`
@@ -438,8 +438,8 @@ export function addTourism() {
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="tourism-novo-${j}" class="switch" />
-            <label for="tourism-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="tourism-isNew-${j}" class="switch" />
+            <label for="tourism-isNew-${j}">${translate("destination.recent")}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
@@ -449,12 +449,12 @@ export function addTourism() {
 
           <div class="nice-form-group" style="display: none">
             <label>${translate("labels.created_date")}</label>
-            <input id="tourism-criadoEm-${j}" type="text" disabled />
+            <input id="tourism-createdAt-${j}" type="text" disabled />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.name")}</label>
-            <input required id="tourism-nome-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.name")}" />
+            <input required id="tourism-name-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.name")}" />
           </div>
   
           <div class="nice-form-group">
@@ -462,16 +462,16 @@ export function addTourism() {
             <input id="tourism-emoji-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.emoji")}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="tourism-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="tourism-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="tourism-mapa-${j}" type="url" placeholder="${translate("destination.tourism.placeholders.map")}" value=""
+            <input id="tourism-map-${j}" type="url" placeholder="${translate("destination.tourism.placeholders.map")}" value=""
               class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
@@ -490,21 +490,21 @@ export function addTourism() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="tourism-region-select-${j}" style="display: none;"></select>
+            <select class="edit-select" id="tourism-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="tourism-region-${j}" type="text" placeholder="${translate("destination.tourism.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="tourism-valor-${j}">
-              ${VALOR_OPTIONS}
+            <select class="edit-select" id="tourism-price-${j}">
+              ${PRICE_OPTIONS}
             </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="tourism-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="tourism-other-price-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="tourism-midia-${j}" type="url"
+            <input id="tourism-media-${j}" type="url"
               placeholder="${translate("destination.tourism.placeholders.video")}"
               value="" class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.video")}</div>
@@ -512,7 +512,7 @@ export function addTourism() {
   
           <div class="nice-form-group">
           <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="tourism-nota-${j}">
+            <select class="edit-select" id="tourism-rating-${j}">
               <option value="?">${translate("destination.scores.default")}</option>
               <option value="5">5 - ${translate("destination.scores.5")}</option>
               <option value="4">4 - ${translate("destination.scores.4")}</option>
@@ -524,7 +524,7 @@ export function addTourism() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -544,18 +544,18 @@ export function addTourism() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
 	addSelectorDS("region", `tourism-region-select-${j}`, `tourism-region-${j}`);
 }
 
 export function addShopping() {
-	if (!VALOR_OPTIONS) {
+	if (!PRICE_OPTIONS) {
 		loadCurrencySelects();
 	}
 
-	const categoria = "shopping";
+	const category = "shopping";
 	const j = getNextJ("shopping-box");
 
 	$("#shopping-box").append(`
@@ -573,13 +573,13 @@ export function addShopping() {
         <div class="accordion-body">
   
           <div class="nice-form-group">
-            <input type="checkbox" id="shopping-novo-${j}" class="switch" />
-            <label for="shopping-novo-${j}">${translate("destination.recent")}</label>
+            <input type="checkbox" id="shopping-isNew-${j}" class="switch" />
+            <label for="shopping-isNew-${j}">${translate("destination.recent")}</label>
           </div>
 
           <div class="nice-form-group" style="display: none">
             <label>${translate("labels.created_date")}</label>
-            <input id="shopping-criadoEm-${j}" type="text" disabled />
+            <input id="shopping-createdAt-${j}" type="text" disabled />
           </div>
 
           <div class="nice-form-group" style="display: none">
@@ -589,7 +589,7 @@ export function addShopping() {
   
           <div class="nice-form-group">
             <label>${translate("labels.name")}</label>
-            <input required id="shopping-nome-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.name")}" />
+            <input required id="shopping-name-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.name")}" />
           </div>
   
           <div class="nice-form-group">
@@ -597,16 +597,16 @@ export function addShopping() {
             <input id="shopping-emoji-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.emoji")}" />
           </div>
 
-          ${getDescriptionHTML(categoria, j)}
+          ${getDescriptionHTML(category, j)}
   
           <div class="nice-form-group customization-box">
             <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <button id="shopping-descricao-button-${j}" data-action="open-description-modal" data-category="${categoria}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
+            <button id="shopping-description-button-${j}" data-action="open-description-modal" data-category="${category}" data-index="${j}" class="btn input-button" style="margin-top: 0px;">${translate("labels.description.add")}</button>
           </div>
 
           <div class="nice-form-group">
             <label>${translate("labels.customization.links.map")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="shopping-mapa-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.map")}" value=""
+            <input id="shopping-map-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.map")}" value=""
               class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.map")}</div>
           </div>
@@ -626,28 +626,28 @@ export function addShopping() {
   
           <div class="nice-form-group">
             <label>${translate("labels.region")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="shopping-region-select-${j}" style="display: none;"></select>
+            <select class="edit-select" id="shopping-region-select-${j}" style="display: none;"></select>
             <input class="nice-form-group" id="shopping-region-${j}" type="text" placeholder="${translate("destination.shopping.placeholders.region")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.cost")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="shopping-valor-${j}">
-              ${VALOR_OPTIONS}
+            <select class="edit-select" id="shopping-price-${j}">
+              ${PRICE_OPTIONS}
             </select>
-            <input style="display: ${getOutroValorVisibility()}" class="nice-form-group" id="shopping-outro-valor-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
+            <input style="display: ${getOtherPriceVisibility()}" class="nice-form-group" id="shopping-other-price-${j}" type="text" placeholder="${translate("destination.price.placeholder")}" />
           </div>
   
           <div class="nice-form-group">
             <label>${translate("labels.video")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-            <input id="shopping-midia-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.video")}"
+            <input id="shopping-media-${j}" type="url" placeholder="${translate("destination.shopping.placeholders.video")}"
               value="" class="icon-right" />
             <div class='caption'>${translate("destination.tooltips.video")}</div>
           </div>
   
           <div class="nice-form-group">
           <label>${translate("labels.priority")} <span class="opcional">(${translate("labels.optional")})</span></label>
-            <select class="editar-select" id="shopping-nota-${j}">
+            <select class="edit-select" id="shopping-rating-${j}">
               <option value="?">${translate("destination.scores.default")}</option>
               <option value="5">5 - ${translate("destination.scores.5")}</option>
               <option value="4">4 - ${translate("destination.scores.4")}</option>
@@ -660,7 +660,7 @@ export function addShopping() {
         </div>
   
         <div class="button-box-right-formatted">
-          <button data-action="move-destination" data-index="${j}" data-category="${categoria}" class="btn btn-basic-secondary btn-format">
+          <button data-action="move-destination" data-index="${j}" data-category="${category}" class="btn btn-basic-secondary btn-format">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M18 31h20V5"/>
                       <path d="M30 21H10v22m34-32l-6-6l-6 6"/><path d="m16 37l-6 6l-6-6"/>
@@ -680,12 +680,12 @@ export function addShopping() {
     </div>
     `);
 
-	addCreatedDate(categoria, j);
-	addDestinationsListeners(categoria, j);
-	addListenerToRemoveDestination(categoria, j);
+	addCreatedDate(category, j);
+	addDestinationsListeners(category, j);
+	addListenerToRemoveDestination(category, j);
 	addSelectorDS("region", `shopping-region-select-${j}`, `shopping-region-${j}`);
 }
 
-function addCreatedDate(categoria, j) {
-	getID(`${categoria}-criadoEm-${j}`).value = new Date().toISOString();
+function addCreatedDate(category, j) {
+	getID(`${category}-createdAt-${j}`).value = new Date().toISOString();
 }

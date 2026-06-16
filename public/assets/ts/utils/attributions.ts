@@ -50,7 +50,7 @@ export function openAttributions() {
 	}
 
 	function getLogo() {
-		return `<strong>${translate("labels.logo")}: </strong> <a href="https://br.freepik.com/vetores-gratis/marketing-de-midia-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph" target="_blank">studiogstock</a> (${translate("labels.adapted")})`;
+		return `<strong>${translate("labels.logo")}: </strong> <a href="https://br.freepik.com/vetores-gratis/marketing-de-media-social-conjunto-de-icones_5825519.htm#query=briefcase&position=9&from_view=search&track=sph" target="_blank">studiogstock</a> (${translate("labels.adapted")})`;
 	}
 
 	function getBackground() {
@@ -78,7 +78,7 @@ export function openAttributions() {
 	}
 
 	function getExchangeRateAPI() {
-		return `<strong>${translate("trip.expenses.exchange_rate_api")}: </strong> <a href="https://docs.awesomeapi.com.br/api-de-moedas" target="_blank">Ranielly Ferreira</a> (${translate("labels.adapted")})`;
+		return `<strong>${translate("trip.expenses.exchange_rate_api")}: </strong> <a href="https://docs.awesomeapi.com.br/api-de-currencies" target="_blank">Ranielly Ferreira</a> (${translate("labels.adapted")})`;
 	}
 
 	function getPinStyle() {

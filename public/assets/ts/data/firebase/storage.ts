@@ -14,9 +14,9 @@ export let IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-
 
 export async function uploadImage(path, file) {
 	let result = {
-		nome: null,
+		name: null,
 		link: null,
-		caminho: null,
+		path: null,
 	};
 
 	if (file && IMAGE_UPLOAD_STATUS.hasErrors === false) {
@@ -27,12 +27,12 @@ export async function uploadImage(path, file) {
 			const snapshot = await imageRef.put(file);
 			const downloadURL = await snapshot.ref.getDownloadURL();
 
-			result.nome = file.name;
+			result.name = file.name;
 			result.link = downloadURL;
-			result.caminho = snapshot.ref.fullPath;
+			result.path = snapshot.ref.fullPath;
 
 			console.log(
-				`Image '${result.nome}' uploaded successfully: ${result.link}`,
+				`Image '${result.name}' uploaded successfully: ${result.link}`,
 			);
 		} catch (error) {
 			IMAGE_UPLOAD_STATUS.hasErrors = true;
@@ -115,22 +115,22 @@ export async function deleteUserObjectStorage() {
 	};
 
 	if (getState()) {
-		const { imagem, hospedagens, galeria } = getState();
+		const { image, accommodations, gallery } = getState();
 
-		addPathIfExists(imagem?.background?.caminho);
-		addPathIfExists(imagem?.claro?.caminho);
-		addPathIfExists(imagem?.escuro?.caminho);
+		addPathIfExists(image?.background?.path);
+		addPathIfExists(image?.light?.path);
+		addPathIfExists(image?.dark?.path);
 
-		if (hospedagens?.imagens) {
-			hospedagens.imagens.forEach(({ caminho }) => addPathIfExists(caminho));
+		if (accommodations?.images) {
+			accommodations.images.forEach(({ path }) => addPathIfExists(path));
 		}
 
-		if (galeria?.imagens) {
-			galeria.imagens.forEach(({ caminho }) => addPathIfExists(caminho));
+		if (gallery?.images) {
+			gallery.images.forEach(({ path }) => addPathIfExists(path));
 		}
 
-		for (const caminho of paths) {
-			await deleteImage(caminho);
+		for (const path of paths) {
+			await deleteImage(path);
 		}
 	}
 }

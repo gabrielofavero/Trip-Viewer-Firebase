@@ -36,7 +36,7 @@ export async function loadItineraryPage() {
 	}
 
 	loadItineraryVisibility();
-	getID("title").innerText = getState().titulo;
+	getID("title").innerText = getState().title;
 
 	switch (getState().pin) {
 		case "all-data":
@@ -140,12 +140,12 @@ function requestPinItineraryInvalido(mandatory = false) {
 }
 
 function displaySensitiveItineraryPrompt() {
-	const titulo = translate("trip.protected");
-	const conteudo = translate("messages.protected.prompt");
+	const title = translate("trip.protected");
+	const content = translate("messages.protected.prompt");
 	const yesAction = "requestPinItinerary()";
 	const noAction = "loadItinerary()";
 	const critico = true;
-	displayPrompt({ title: titulo, content: conteudo, yesAction, noAction, critical: critico });
+	displayPrompt({ title: title, content: content, yesAction, noAction, critical: critico });
 }
 
 async function loadProtectedItinerary(mandatory = false) {
@@ -155,7 +155,7 @@ async function loadProtectedItinerary(mandatory = false) {
 	startLoadingScreen();
 
 	try {
-		const protectedData = await get(`viagens/protected/${pin}/${DOCUMENT_ID}`);
+		const protectedData = await get(`trips/protected/${pin}/${DOCUMENT_ID}`);
 		if (haveErrorFromGetRequest() || !protectedData) {
 			stopLoadingScreen();
 			requestPinItineraryInvalido(mandatory);

@@ -11,15 +11,15 @@ export function loadEmbed(link, i) {
 	result = getEmbed(link);
 
 	if (result) {
-		MEDIA_HYPERLINKS[`midia-${i}`] = result;
+		MEDIA_HYPERLINKS[`media-${i}`] = result;
 	}
 }
 
 // Actions
 export function loadMedia(id) {
 	const div = getID(id);
-	if (div && MEDIA_HYPERLINKS[id] && MEDIA_HYPERLINKS[id].conteudo) {
-		div.innerHTML = MEDIA_HYPERLINKS[id].conteudo;
+	if (div && MEDIA_HYPERLINKS[id] && MEDIA_HYPERLINKS[id].content) {
+		div.innerHTML = MEDIA_HYPERLINKS[id].content;
 
 		if (getSystemWidth() < 400) {
 			setMediaButton(id);
@@ -27,7 +27,7 @@ export function loadMedia(id) {
 		}
 
 		initMediaWatchdogs();
-		if (MEDIA_HYPERLINKS[id].tipo === "instagram") {
+		if (MEDIA_HYPERLINKS[id].type === "instagram") {
 			instgrm.Embeds.process();
 			adjustInstagramMedia();
 			initInstagramWatchdogs();
@@ -45,7 +45,7 @@ export function unloadMedia(id) {
 export function unloadMedias(exclude) {
 	for (const j of getJs("content")) {
 		if (j !== exclude) {
-			unloadMedia(`midia-${j}`);
+			unloadMedia(`media-${j}`);
 		}
 	}
 }
@@ -53,8 +53,8 @@ export function unloadMedias(exclude) {
 // Support Functions
 
 function getEmbed(link) {
-	let tipo = "";
-	let conteudo = "";
+	let type = "";
+	let content = "";
 
 	if (!link) return "";
 
@@ -62,21 +62,21 @@ function getEmbed(link) {
 		(link.includes("youtu.be/") || link.includes("youtube.com")) &&
 		!link.includes("/shorts/")
 	) {
-		tipo = "youtube";
-		conteudo = getVideoEmbedYoutube(link);
+		type = "youtube";
+		content = getVideoEmbedYoutube(link);
 	} else if (link.includes("tiktok")) {
-		tipo = "tiktok";
-		conteudo = getMediaEmbedTikTok(link);
+		type = "tiktok";
+		content = getMediaEmbedTikTok(link);
 	} else if (link.includes("instagram")) {
-		tipo = "instagram";
-		conteudo = getVideoEmbedInstagramReels(link);
+		type = "instagram";
+		content = getVideoEmbedInstagramReels(link);
 	}
 
-	if (conteudo) {
+	if (content) {
 		return {
-			tipo: tipo,
-			conteudo: conteudo,
-			botao: getLinkMediaButton(link, tipo),
+			type: type,
+			content: content,
+			button: getLinkMediaButton(link, type),
 		};
 	} else return "";
 }
@@ -159,7 +159,7 @@ function getInstagramBlockquote(id) {
                 <div style="padding-top: 8px;">
                     <div
                         style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">
-                        Ver essa foto no Instagram</div>
+                        Instagram</div>
                 </div>
                 <div style="padding: 12.5% 0;"></div>
                 <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;">
@@ -269,7 +269,7 @@ export function adjustMediaEmbeds() {
 		return;
 	}
 
-	for (const container of document.querySelectorAll(".midia-container")) {
+	for (const container of document.querySelectorAll(".media-container")) {
 		const id = container.id;
 		setMediaButton(id);
 	}
@@ -382,7 +382,7 @@ function setMediaButton(id) {
 	const mediaEmbed = getID(id);
 	if (!mediaEmbed) return;
 	if (!MEDIA_HYPERLINKS[id]) return;
-	mediaEmbed.innerHTML = MEDIA_HYPERLINKS[id].botao;
+	mediaEmbed.innerHTML = MEDIA_HYPERLINKS[id].button;
 }
 
 function watchdogFallback(id, link, provider) {

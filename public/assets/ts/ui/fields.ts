@@ -89,7 +89,7 @@ export function validateRequiredFields() {
 
 	fields.forEach(function (field) {
 		const value = (field as HTMLInputElement | HTMLSelectElement).value.trim();
-		if (value == "" || value == "selecione" || value == "outra") {
+		if (value == "" || value == "select" || value == "other") {
 			invalidFields.push(field.id);
 		}
 	});

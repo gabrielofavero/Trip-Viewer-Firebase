@@ -24,21 +24,21 @@ export function loadItinerarySchedule() {
 }
 
 function loadScheduleDestinations() {
-	const programacoes = getState()?.programacoes;
-	if (!programacoes) return;
-	for (const programacao of programacoes) {
-		const key = dateObjectToKey(programacao.data);
-		SCHEDULE_DESTINATIONS[key] = programacao.destinosIDs;
+	const itinerary = getState()?.itinerary;
+	if (!itinerary) return;
+	for (const label of itinerary) {
+		const key = dateObjectToKey(label.date);
+		SCHEDULE_DESTINATIONS[key] = label.destinationIds;
 	}
 }
 
 function getUniqueDestinationsFromSchedule() {
 	const result = [];
 	for (const key in SCHEDULE_DESTINATIONS) {
-		const destinos = SCHEDULE_DESTINATIONS[key];
-		for (const destino of destinos) {
-			if (!result.includes(destino.destinosID)) {
-				result.push(destino.destinosID);
+		const destinations = SCHEDULE_DESTINATIONS[key];
+		for (const destination of destinations) {
+			if (!result.includes(destination.id)) {
+				result.push(destination.id);
 			}
 		}
 	}
@@ -47,40 +47,40 @@ function getUniqueDestinationsFromSchedule() {
 
 // Pills
 function loadSchedulePills(multipleColors = true) {
-	const destinos = getUniqueDestinationsFromSchedule();
-	if (destinos.length > 1) {
+	const destinations = getUniqueDestinationsFromSchedule();
+	if (destinations.length > 1) {
 		const pillBox = getID("pill-box");
 		pillBox.style.display = "";
 
 		let innerHTML = "";
 
-		for (let i = 0; i < destinos.length; i++) {
-			const destinoID = destinos[i];
-			const destino = DESTINATIONS.find(
-				(destino) => destino.destinosID === destinoID,
+		for (let i = 0; i < destinations.length; i++) {
+			const destinoID = destinations[i];
+			const destination = DESTINATIONS.find(
+				(destination) => destination.id === destinoID,
 			);
-			if (!destino) continue;
+			if (!destination) continue;
 
 			const circleClass = multipleColors
 				? `pill-circle pill-circle-${getColorNameFromOptions(i)}`
 				: `pill-circle pill-circle-default`;
 			innerHTML += `<div class="pill" id="pill-${destinoID}">
-                            <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destino.destinos.titulo}</span>
+                            <span class="${circleClass}" id="pill-circle-${destinoID}"></span><span>${destination.destinations.title}</span>
                           </div>`;
 		}
 
 		pillBox.innerHTML = innerHTML;
 
-		for (let i = 0; i < destinos.length; i++) {
-			const destinoID = destinos[i];
-			const destino = DESTINATIONS.find(
-				(destino) => destino.destinosID === destinoID,
+		for (let i = 0; i < destinations.length; i++) {
+			const destinoID = destinations[i];
+			const destination = DESTINATIONS.find(
+				(destination) => destination.id === destinoID,
 			);
-			if (!destino) continue;
+			if (!destination) continue;
 
 			const colorIndex = multipleColors ? i : -1;
-			addPillListeners(destinos[i], colorIndex);
-			PILLS_INDEX[destinos[i]] = colorIndex;
+			addPillListeners(destinations[i], colorIndex);
+			PILLS_INDEX[destinations[i]] = colorIndex;
 		}
 	}
 }
@@ -181,11 +181,10 @@ function loadScheduleTodayButton() {
 		getID("todays-itinerary-btn").addEventListener("click", function () {
 			const hojeText = getDateString(hoje, "dd/mm/yyyy");
 			const programacaoText =
-				CURRENT_SCHEDULE_DATE.dia.toString().padStart(2, "0") +
+			CURRENT_SCHEDULE_DATE.day.toString().padStart(2, "0") +
+				CURRENT_SCHEDULE_DATE.month.toString().padStart(2, "0") +
 				"/" +
-				CURRENT_SCHEDULE_DATE.mes.toString().padStart(2, "0") +
-				"/" +
-				CURRENT_SCHEDULE_DATE.ano;
+				CURRENT_SCHEDULE_DATE.year;
 
 			if (
 				!SCHEDULE_OPEN ||

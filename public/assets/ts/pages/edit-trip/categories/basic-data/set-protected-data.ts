@@ -49,7 +49,7 @@ function setProtectedDataWithoutPIN(ops) {
 		}
 
 		if (currentHasViagens) {
-			ops.delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
+			ops.delete(`trips/protected/${PIN.current}/${DOCUMENT_ID}`);
 		}
 
 		if (hasNewExpenses && !hasCurrentExpenses) {
@@ -60,7 +60,7 @@ function setProtectedDataWithoutPIN(ops) {
 			ops.delete(`expenses/${DOCUMENT_ID}`);
 		}
 
-		ops.delete(`protegido/${DOCUMENT_ID}`);
+		ops.delete(`protected/${DOCUMENT_ID}`);
 	}
 
 	function setNoPinDocument() {
@@ -105,12 +105,12 @@ function setProtectedDataWithPIN(ops) {
 
 		if (hasNewProtectedViagens) {
 			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`trips/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_PROTECTED_NEW_DATA,
 			);
 		}
 
-		ops.set(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		ops.set(`protected/${DOCUMENT_ID}`, getNewPinObject());
 	}
 
 	function addPinAndSet() {
@@ -127,12 +127,12 @@ function setProtectedDataWithPIN(ops) {
 
 		if (hasNewProtectedViagens) {
 			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`trips/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_PROTECTED_NEW_DATA,
 			);
 		}
 
-		ops.set(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		ops.set(`protected/${DOCUMENT_ID}`, getNewPinObject());
 	}
 
 	function setChangedPinDocument() {
@@ -152,19 +152,19 @@ function setProtectedDataWithPIN(ops) {
 		}
 
 		if (hasCurrentViagens && hasNewProtectedViagens) {
-			ops.delete(`viagens/protected/${PIN.current}/${DOCUMENT_ID}`);
+			ops.delete(`trips/protected/${PIN.current}/${DOCUMENT_ID}`);
 			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`trips/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_PROTECTED_NEW_DATA,
 			);
 		} else if (!hasCurrentViagens && hasNewProtectedViagens) {
 			ops.set(
-				`viagens/protected/${PIN.new}/${DOCUMENT_ID}`,
+				`trips/protected/${PIN.new}/${DOCUMENT_ID}`,
 				FIRESTORE_PROTECTED_NEW_DATA,
 			);
 		}
 
-		ops.update(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		ops.update(`protected/${DOCUMENT_ID}`, getNewPinObject());
 	}
 
 	function setSamePinDocument() {
@@ -184,17 +184,17 @@ function setProtectedDataWithPIN(ops) {
 
 		if (hasCurrentViagens && hasNewProtectedViagens) {
 			ops.overwrite(
-				`viagens/protected/${PIN.current}/${DOCUMENT_ID}`,
+				`trips/protected/${PIN.current}/${DOCUMENT_ID}`,
 				FIRESTORE_PROTECTED_NEW_DATA,
 			);
 		} else if (!hasCurrentViagens && hasNewProtectedViagens) {
 			ops.set(
-				`viagens/protected/${PIN.current}/${DOCUMENT_ID}`,
+				`trips/protected/${PIN.current}/${DOCUMENT_ID}`,
 				FIRESTORE_PROTECTED_NEW_DATA,
 			);
 		}
 
-		ops.update(`protegido/${DOCUMENT_ID}`, getNewPinObject());
+		ops.update(`protected/${DOCUMENT_ID}`, getNewPinObject());
 	}
 }
 
@@ -202,9 +202,9 @@ function hasCurrentViagens() {
 	return (
 		!!getState() &&
 		!isDataUnprotected() &&
-		((getState().transportes?.dados ?? []).some(
-			(t) => t.reserva || t.link,
+		((getState().transportation?.data ?? []).some(
+			(t) => t.reservation || t.link,
 		) ||
-			(getState().hospedagens ?? []).some((h) => h.reserva || h.link))
+			(getState().accommodations ?? []).some((h) => h.reservation || h.link))
 	);
 }

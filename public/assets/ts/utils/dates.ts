@@ -344,14 +344,14 @@ export function getMonth(month) {
 	return months[month];
 }
 
-export function getNextCategoryStartEnd(tipo, lastEndStructure) {
+export function getNextCategoryStartEnd(type, lastEndStructure) {
 	let start = getID("start").value;
 	let end = getID("end").value;
 
-	const js = getJs(`${tipo}-box`);
+	const js = getJs(`${type}-box`);
 
 	if (js.length != 0) {
-		const lastJ = getLastJ(`${tipo}-box`);
+		const lastJ = getLastJ(`${type}-box`);
 		start = getID(`${lastEndStructure}-${lastJ}`).value;
 	}
 

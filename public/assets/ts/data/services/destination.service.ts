@@ -71,9 +71,9 @@ export async function createDestination(destData) {
 					await create(
 						`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.DESTINATION_SUMMARIES}`,
 						{
-							title: destData?.title || destData?.titulo || "",
-							currency: destData?.currency || destData?.moeda || "",
-							version: destData?.version || destData?.versao || {},
+							title: destData?.title || destData?.title || "",
+							currency: destData?.currency || destData?.currency || "",
+							version: destData?.version || destData?.version || {},
 						},
 						destId,
 					);

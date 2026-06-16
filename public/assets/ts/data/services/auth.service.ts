@@ -134,7 +134,7 @@ export async function getUserTrips(uid?) {
 	const summaries = await getUserTripSummaries(uid);
 	if (summaries?.length > 0) return summaries;
 
-	// Fallback: old embedded format (user doc had "trips" or "viagens" object)
+	// Fallback: old embedded format (user doc had "trips" or "trips" object)
 	const userData = await getUserData(uid);
 	if (userData?.trips) {
 		// Convert object {id: data} → array of {id, ...data}
@@ -143,8 +143,8 @@ export async function getUserTrips(uid?) {
 			...(typeof data === "object" ? data : { title: data }),
 		}));
 	}
-	if (userData?.viagens) {
-		return Object.entries(userData.viagens).map(([id, data]: [string, any]) => ({
+	if (userData?.trips) {
+		return Object.entries(userData.trips).map(([id, data]: [string, any]) => ({
 			id,
 			...(typeof data === "object" ? data : { title: data }),
 		}));
@@ -173,8 +173,8 @@ export async function getUserDestinations(uid?) {
 			...(typeof data === "object" ? data : { title: data }),
 		}));
 	}
-	if (userData?.destinos) {
-		return Object.entries(userData.destinos).map(([id, data]: [string, any]) => ({
+	if (userData?.destinations) {
+		return Object.entries(userData.destinations).map(([id, data]: [string, any]) => ({
 			id,
 			...(typeof data === "object" ? data : { title: data }),
 		}));
@@ -203,8 +203,8 @@ export async function getUserListings(uid?) {
 			...(typeof data === "object" ? data : { title: data }),
 		}));
 	}
-	if (userData?.listagens) {
-		return Object.entries(userData.listagens).map(([id, data]: [string, any]) => ({
+	if (userData?.listings) {
+		return Object.entries(userData.listings).map(([id, data]: [string, any]) => ({
 			id,
 			...(typeof data === "object" ? data : { title: data }),
 		}));

@@ -647,16 +647,16 @@
 	box-shadow: 0 8px 24px rgba(166, 166, 166, 0.05);
 }
 
-[data-theme="dark"] .gastos-subtitulo,
+[data-theme="dark"] .expenses-subtitle,
 [data-theme="dark"] .total {
 	color: var(--subtitle);
 }
 
-[data-theme="dark"] .tabela-titulo-esquerda {
+[data-theme="dark"] .tabela-titulo-left {
 	color: var(--subtitle);
 }
 
-[data-theme="dark"] .tabela-titulo-direita {
+[data-theme="dark"] .tabela-titulo-right {
 	color: var(--subtitle);
 }
 

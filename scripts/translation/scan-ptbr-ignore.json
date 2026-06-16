@@ -15,5 +15,8 @@
   "ignoreFiles": [],
   "ignoreLines": {},
   "ignoreWords": {},
-  "ignoreWordsGlobal": []
+  "ignoreWordsGlobal": [
+    "checkin",
+    "checkout"
+  ]
 }

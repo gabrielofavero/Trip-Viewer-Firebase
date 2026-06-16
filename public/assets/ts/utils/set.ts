@@ -112,29 +112,29 @@ function setUserData(ops, uid, type, documentData) {
 		switch (type) {
 			case "destinations":
 				return {
-					moeda: data.moeda,
-					titulo: data.titulo,
-					versao: data.versao,
+					currency: data.currency,
+					title: data.title,
+					version: data.version,
 				};
 			case "listings":
 				return {
-					cores: data.cores,
-					descricao: data.descricao,
-					imagem: data.imagem,
-					subtitulo: data.subtitulo,
-					titulo: data.titulo,
-					versao: data.versao,
+					colors: data.colors,
+					description: data.description,
+					image: data.image,
+					subtitle: data.subtitle,
+					title: data.title,
+					version: data.version,
 				};
 			case "trips":
 				return {
-					cores: data.cores,
+					colors: data.colors,
 				end: data.end,
 				image: data.image,
 				start: data.start,
-					modulos: data.modulos,
+					modules: data.modules,
 					pin: data.pin,
-					titulo: data.titulo,
-					versao: data.versao,
+					title: data.title,
+					version: data.version,
 				};
 		}
 	}

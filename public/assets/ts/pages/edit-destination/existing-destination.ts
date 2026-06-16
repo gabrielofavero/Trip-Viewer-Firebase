@@ -14,7 +14,7 @@ import { addRestaurants } from "./new-destination.js";
 import { addNightlife } from "./new-destination.js";
 import { addTourism } from "./new-destination.js";
 
-// Destino Existente
+// Existing Destination
 export function populateExistingDestinationForm() {
 	try {
 		loadBasicDestinationData();
@@ -37,9 +37,9 @@ export function populateExistingDestinationForm() {
 
 // Modules: Existing Tour
 function loadBasicDestinationData() {
-	getID("title").value = FIRESTORE_DESTINATIONS_DATA.titulo;
+	getID("title").value = FIRESTORE_DESTINATIONS_DATA.title;
 
-	const currencyValue = FIRESTORE_DESTINATIONS_DATA.moeda;
+	const currencyValue = FIRESTORE_DESTINATIONS_DATA.currency;
 	const currencyDiv = getID("currency");
 
 	if (currencyDiv.querySelector(`option[value="${currencyValue}"]`)) {
@@ -47,45 +47,45 @@ function loadBasicDestinationData() {
 	} else {
 		getID("other-currency").style.display = "block";
 		getID("other-currency").value = currencyValue;
-		currencyDiv.value = "outra";
+		currencyDiv.value = "other";
 	}
 
 	loadCurrencyOptions();
 }
 
-function loadExistingDestination(categoria) {
-	const enabled = FIRESTORE_DESTINATIONS_DATA.modulos[categoria] === true;
-	getID(`enabled-${categoria}`).checked = enabled;
-	getID(`enabled-${categoria}-content`).style.display = enabled
+function loadExistingDestination(category) {
+	const enabled = FIRESTORE_DESTINATIONS_DATA.modules[category] === true;
+	getID(`enabled-${category}`).checked = enabled;
+	getID(`enabled-${category}-content`).style.display = enabled
 		? "block"
 		: "none";
-	getID(`${categoria}-add-box`).style.display = enabled
+	getID(`${category}-add-box`).style.display = enabled
 		? "block"
 		: "none";
 
-	const itemsArr = Object.entries(FIRESTORE_DESTINATIONS_DATA[categoria])
+	const itemsArr = Object.entries(FIRESTORE_DESTINATIONS_DATA[category])
 		.map(([id, value]) => ({
 			id,
 			...(value as Record<string, unknown>),
 		}) as Record<string, unknown>)
 		.sort((a, b) => {
-			if (!a.criadoEm && !b.criadoEm) return 0;
-			if (!a.criadoEm) return 1;
-			if (!b.criadoEm) return -1;
-			return new Date(a.criadoEm as string).getTime() - new Date(b.criadoEm as string).getTime();
+			if (!a.createdAt && !b.createdAt) return 0;
+			if (!a.createdAt) return 1;
+			if (!b.createdAt) return -1;
+			return new Date(a.createdAt as string).getTime() - new Date(b.createdAt as string).getTime();
 		});
 
 	for (let j = 1; j <= itemsArr.length; j++) {
 		const item = itemsArr[j - 1];
-		addDestination(categoria);
-		addDestinationHTML(categoria, j, item);
-		setDescription(categoria, j, item.descricao);
-		updateDescriptionButtonLabel(categoria, j);
+		addDestination(category);
+		addDestinationHTML(category, j, item);
+		setDescription(category, j, item.description);
+		updateDescriptionButtonLabel(category, j);
 	}
 }
 
-export function addDestination(categoria) {
-	switch (categoria) {
+export function addDestination(category) {
+	switch (category) {
 		case "restaurants":
 			addRestaurants();
 			break;
@@ -103,55 +103,55 @@ export function addDestination(categoria) {
 	}
 }
 
-export function addDestinationHTML(categoria, j, item) {
+export function addDestinationHTML(category, j, item) {
 	const id = item.id;
 	if (id) {
-		getID(`${categoria}-id-${j}`).value = id;
+		getID(`${category}-id-${j}`).value = id;
 	}
 
-	const criadoEm = item.criadoEm;
-	if (criadoEm) {
-		getID(`${categoria}-criadoEm-${j}`).value = criadoEm;
+	const createdAt = item.createdAt;
+	if (createdAt) {
+		getID(`${category}-createdAt-${j}`).value = createdAt;
 	}
 
-	const novo = item.novo || false;
-	getID(`${categoria}-novo-${j}`).checked = novo;
-	getID(`${categoria}-title-icon-${j}`).style.display = novo ? "block" : "none";
+	const isNew = item.isNew || false;
+	getID(`${category}-isNew-${j}`).checked = isNew;
+	getID(`${category}-title-icon-${j}`).style.display = isNew ? "block" : "none";
 
-	const nome = item.nome || "";
-	getID(`${categoria}-nome-${j}`).value = nome;
-	getID(`${categoria}-title-text-${j}`).innerText = nome;
+	const name = item.name || "";
+	getID(`${category}-name-${j}`).value = name;
+	getID(`${category}-title-text-${j}`).innerText = name;
 
 	const emoji = item.emoji;
-	getID(`${categoria}-emoji-${j}`).value = emoji;
-	getID(`${categoria}-title-text-${j}`).innerText += ` ${emoji}`;
+	getID(`${category}-emoji-${j}`).value = emoji;
+	getID(`${category}-title-text-${j}`).innerText += ` ${emoji}`;
 
-	updateDescriptionButtonLabel(categoria, j);
-	getID(`${categoria}-website-${j}`).value = item.website || "";
-	getID(`${categoria}-map-${j}`).value = item.mapa || "";
-	getID(`${categoria}-instagram-${j}`).value = item.instagram || "";
-	getID(`${categoria}-region-${j}`).value = item.regiao || "";
+	updateDescriptionButtonLabel(category, j);
+	getID(`${category}-website-${j}`).value = item.website || "";
+	getID(`${category}-map-${j}`).value = item.map || "";
+	getID(`${category}-instagram-${j}`).value = item.instagram || "";
+	getID(`${category}-region-${j}`).value = item.region || "";
 
-	updateValueDS("region", item.regiao, `${categoria}-region-select-${j}`);
-	loadCurrencyValueAndVisibility(item.valor || "", categoria, j);
+	updateValueDS("region", item.region, `${category}-region-select-${j}`);
+	loadCurrencyValueAndVisibility(item.price || "", category, j);
 
-	getID(`${categoria}-midia-${j}`).value = item.midia || "";
-	getID(`${categoria}-rating-${j}`).value = item.nota || "";
+	getID(`${category}-media-${j}`).value = item.media || "";
+	getID(`${category}-rating-${j}`).value = item.rating || "";
 }
 
 function loadMapData() {
-	const mapaLink = getID("map-link");
+	const mapLinkInput = getID("map-link");
 
-	if (FIRESTORE_DESTINATIONS_DATA.modulos.mapa === true) {
+	if (FIRESTORE_DESTINATIONS_DATA.modules.map === true) {
 		getID("map-enabled").checked = true;
 		getID("map-enabled-content").style.display = "block";
-		mapaLink.setAttribute("required", "");
+		mapLinkInput.setAttribute("required", "");
 
-		const mapa = FIRESTORE_DESTINATIONS_DATA.myMaps;
-		if (mapa) {
-			mapaLink.value = mapa;
+		const mapData = FIRESTORE_DESTINATIONS_DATA.myMaps;
+		if (mapData) {
+			mapLinkInput.value = mapData;
 		}
 	} else {
-		mapaLink.removeAttribute("required");
+		mapLinkInput.removeAttribute("required");
 	}
 }

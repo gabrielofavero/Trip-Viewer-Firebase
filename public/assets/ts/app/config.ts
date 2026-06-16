@@ -10,7 +10,7 @@
 //
 //   // Anywhere else (synchronous, config must be loaded first):
 //   import { getColors } from '../../app/config.js';
-//   const cores = getColors();
+//   const colors = getColors();
 
 const _cache = {};
 

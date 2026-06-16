@@ -240,53 +240,53 @@ export function getOptionsFromSelect(id) {
 	return optionValues;
 }
 
-export function removeChild(tipo) {
-	const div = getID(tipo);
+export function removeChild(type) {
+	const div = getID(type);
 	div.parentNode.removeChild(div);
 }
 
-export function removeChildWithValidation(categoria, j) {
-	const id = getID(`${categoria}-inner-box-${j}`)
-		? `${categoria}-inner-box-${j}`
-		: `${categoria}-${j}`;
+export function removeChildWithValidation(category, j) {
+	const id = getID(`${category}-inner-box-${j}`)
+		? `${category}-inner-box-${j}`
+		: `${category}-${j}`;
 	removeChild(id);
-	hideParentIfNoChildren(categoria);
+	hideParentIfNoChildren(category);
 }
 
-export function hideParentIfNoChildren(categoria) {
-	if (getChildIDs(`${categoria}-box`).length === 0) {
-		getID(`enabled-${categoria}`).checked = false;
-		hideContent(categoria);
+export function hideParentIfNoChildren(category) {
+	if (getChildIDs(`${category}-box`).length === 0) {
+		getID(`enabled-${category}`).checked = false;
+		hideContent(category);
 	}
 }
 
-export function removeEmptyChild(categoria) {
+export function removeEmptyChild(category) {
 	let itens = [];
 
-	switch (categoria) {
+	switch (category) {
 		case "restaurants":
 		case "snacks":
 		case "nightlife":
 		case "tourism":
 		case "shopping":
 		case "lineup":
-			itens = [`${categoria}-nome`];
+			itens = [`${category}-name`];
 			break;
 		case "transportation":
-			itens = ["ponto-partida", "ponto-chegada"];
+			itens = ["departure-point", "arrival-point"];
 			break;
 		case "accommodations":
-			itens = [`${categoria}-nome`, `${categoria}-endereco`];
+			itens = [`${category}-name`, `${category}-address`];
 			break;
 	case "gallery":
-			itens = [`${categoria}-title`, `link-${categoria}`];
+			itens = [`${category}-title`, `link-${category}`];
 			break;
 	}
 
 	if (itens.length > 0) {
-		const j = getFirstJ(`${categoria}-box`);
+		const j = getFirstJ(`${category}-box`);
 		if (j && !hasUserData(itens, j)) {
-			removeChild(`${categoria}-${j}`);
+			removeChild(`${category}-${j}`);
 		}
 	}
 
@@ -328,10 +328,10 @@ export function getJs(parentID) {
 		.filter(Number.isFinite);
 }
 
-export function findJFromID(id, tipo) {
-	const js = getJs(`${tipo}-box`);
+export function findJFromID(id, type) {
+	const js = getJs(`${type}-box`);
 	for (const j of js) {
-		const result = getID(`${tipo}-id-${j}`).value;
+		const result = getID(`${type}-id-${j}`).value;
 		if (result === id) {
 			return j;
 		}
@@ -358,16 +358,16 @@ export function getNextJ(parentID) {
 	return getLastUnorderedJ(parentID) + 1;
 }
 
-export function getCategoryID(tipo, j) {
-	const js = getJs(`${tipo}-box`);
+export function getCategoryID(type, j) {
+	const js = getJs(`${type}-box`);
 	let ids = [];
 
 	for (const innerJ of js) {
-		const id = getID(`${tipo}-id-${innerJ}`).value;
+		const id = getID(`${type}-id-${innerJ}`).value;
 		if (id) ids.push(id);
 	}
 
-	const currentID = getID(`${tipo}-id-${j}`).value;
+	const currentID = getID(`${type}-id-${j}`).value;
 	if (currentID && !ids.includes(currentID)) {
 		return currentID;
 	}
@@ -375,9 +375,9 @@ export function getCategoryID(tipo, j) {
 	return getRandomID({ pool: ids });
 }
 
-export function getOrCreateCategoryID(tipo, j) {
-	const currentID = getID(`${tipo}-id-${j}`).value;
-	return currentID ? currentID : getCategoryID(tipo, j);
+export function getOrCreateCategoryID(type, j) {
+	const currentID = getID(`${type}-id-${j}`).value;
+	return currentID ? currentID : getCategoryID(type, j);
 }
 
 // URL Utils
@@ -403,8 +403,8 @@ export function setURLParam(key, value) {
 
 // Document Utils
 
-export function getDataDocument(tipo) {
-	switch (tipo) {
+export function getDataDocument(type) {
+	switch (type) {
 		case "trips":
 		case "listings":
 			return getState();
@@ -415,8 +415,8 @@ export function getDataDocument(tipo) {
 	}
 }
 
-export function getNewDataDocument(tipo) {
-	switch (tipo) {
+export function getNewDataDocument(type) {
+	switch (type) {
 		case "trips":
 		case "listings":
 			return FIRESTORE_NEW_DATA;
@@ -453,27 +453,27 @@ export function getOrderedDocumentByUpdateDate(data: Record<string, any>): any[]
 		.map(([id, v]) => ({ id, ...(v as Record<string, any>) }))
 		.sort(
 			(a: any, b: any) =>
-				new Date(b.versao.ultimaAtualizacao).getTime() -
-				new Date(a.versao.ultimaAtualizacao).getTime(),
+				new Date(b.version.lastUpdated).getTime() -
+				new Date(a.version.lastUpdated).getTime(),
 		);
 }
 
 export function getOrderedDocumentByTitle(data: Record<string, any>): any[] {
 	return Object.entries(data)
 		.map(([id, v]) => ({ id, ...(v as Record<string, any>) }))
-		.sort((a: any, b: any) => a.titulo.localeCompare(b.titulo));
+		.sort((a: any, b: any) => a.title.localeCompare(b.title));
 }
 
 // Destination
-export function getAndDestinationTitle(value, destinos = [], placeholder = true) {
-	if (!destinos || destinos.length === 0) {
+export function getAndDestinationTitle(value, destinations = [], placeholder = true) {
+	if (!destinations || destinations.length === 0) {
 		const placeholderValue = placeholder
 			? translate("trip.itinerary.title")
 			: "";
 		return value || placeholderValue;
 	}
 
-	const titles = destinos.map((d) => d.titulo);
+	const titles = destinations.map((d) => d.title);
 	if (value.includes("departure")) {
 		return getReadableArray([
 			translate("trip.transportation.departure"),
@@ -518,34 +518,34 @@ export async function normalizeTikTokLink(link) {
 }
 
 export function getDestinationTitle(item) {
-	if (item.nome && item.emoji) {
-		return `${item.nome} ${item.emoji}`;
-	} else return item.nome;
+	if (item.name && item.emoji) {
+		return `${item.name} ${item.emoji}`;
+	} else return item.name;
 }
 
 export function getDestinationsBoxHTML({
 	j,
 	item,
 	innerItinerary,
-	valores,
-	moeda,
-	planejado,
+	values,
+	currency,
+	planned,
 	editBtn,
 }) {
 	return `
     <div ${innerItinerary ? "" : `class="accordion-body" id="accordion-body-${j}"`}>
-        ${getDestinationsAccordionBodyHTML({ j, item, values: valores, currency: moeda, planned: planejado, editBtn })}
+        ${getDestinationsAccordionBodyHTML({ j, item, values: values, currency: currency, planned: planned, editBtn })}
     </div>`;
 }
 
 // Itinerary
 export function getInnerItineraryTitle(dado: Record<string, any>, viajantes = TRAVELERS) {
-	const schedule = dado.programacao || "";
-	const presentes = !dado.pessoas
+	const schedule = dado.label || "";
+	const presentes = !dado.travelers
 		? []
-		: dado.pessoas
+		: dado.travelers
 				.filter((p) => p.isPresent)
-				.map((p) => viajantes.find((t) => t.id === p.id)?.nome ?? "");
+				.map((p) => viajantes.find((t) => t.id === p.id)?.name ?? "");
 
 	const travelersText =
 		presentes.length === 0 || presentes.length === viajantes.length
@@ -595,25 +595,25 @@ export function getInnerItineraryTitleHTML(dado, spanClass) {
 
 export function getInnerItinerary(item, destinations) {
 	const innerItinerary = {
-		tipo: item?.tipo,
-		titulo: "",
+		type: item?.type,
+		title: "",
 		content: "",
-		midia: "",
+		media: "",
 		container:
-			item?.tipo === "destinations"
-				? "destinos-container"
-				: "programacao-container",
+			item?.type === "destinations"
+				? "destinations-container"
+				: "label-container",
 	};
 	let index = -1;
-	switch (item?.tipo) {
+	switch (item?.type) {
 		case "transportation":
-			if (getState().modulos.transportes === true && item.id) {
-				index = getState().transportes.dados
-					.map((programacao) => programacao.id)
+			if (getState().modules.transportation === true && item.id) {
+				index = getState().transportation.data
+					.map((label) => label.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					const transporte = getState().transportes.dados[index];
-					innerItinerary.titulo = `${transporte.pontos.partida} → ${transporte.pontos.chegada}`;
+					const transportation = getState().transportation.data[index];
+					innerItinerary.title = `${transportation.points.departure} → ${transportation.points.arrival}`;
 					innerItinerary.content = getFlightBoxHTML(
 						index + 1,
 						"inner-itinerary",
@@ -623,49 +623,49 @@ export function getInnerItinerary(item, destinations) {
 			}
 			break;
 		case "accommodations":
-			if (getState().modulos.hospedagens === true && item.id) {
-				index = getState().hospedagens
+			if (getState().modules.accommodations === true && item.id) {
+				index = getState().accommodations
 					.map((hospedagem) => hospedagem.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					innerItinerary.titulo = "";
+					innerItinerary.title = "";
 					innerItinerary.content = getAccommodationsHTML(index, true);
 				}
 			}
 			break;
 		case "destinations":
 			if (
-				getState().modulos.destinos === true &&
-				item.local &&
-				item.categoria &&
+				getState().modules.destinations === true &&
+				item.location &&
+				item.category &&
 				item.id
 			) {
-				const destinationIDs = DESTINATIONS.map((d) => d.destinosID);
-				index = destinationIDs.indexOf(item.local);
+				const destinationIDs = DESTINATIONS.map((d) => d.id);
+				index = destinationIDs.indexOf(item.location);
 
 				if (!destinations) {
-					destinations = DESTINATIONS?.[index]?.destinos;
+					destinations = DESTINATIONS?.[index]?.destinations;
 				}
 
 				if (!destinations) {
 					return;
 				}
 
-				const destination = destinations[item.categoria];
+				const destination = destinations[item.category];
 				if (destination && Object.keys(destination).length) {
 					const destinationItem = destination[item.id];
 					if (destinationItem) {
-						innerItinerary.titulo = getDestinationTitle(destinationItem);
+						innerItinerary.title = getDestinationTitle(destinationItem);
 						innerItinerary.content = getDestinationsBoxHTML({
 							j: 1,
 							item: destinationItem,
 							innerItinerary: true,
-							valores: getDestinationValues(DESTINATIONS[index]),
-							moeda: destinations.moeda,
-							planejado: undefined as any,
+							values: getDestinationValues(DESTINATIONS[index]),
+							currency: destinations.currency,
+							planned: undefined as any,
 							editBtn: undefined as any,
 						});
-						innerItinerary.midia = destinationItem?.midia;
+						innerItinerary.media = destinationItem?.media;
 					}
 				}
 			}
@@ -674,7 +674,7 @@ export function getInnerItinerary(item, destinations) {
 	return innerItinerary;
 
 	function getDestinationValues(destination) {
-		const currencyValue = destination?.destinos?.moeda || "BRL";
+		const currencyValue = destination?.destinations?.currency || "BRL";
 		const currency = cloneObject(getCurrencies().scale[currencyValue] || getCurrencies().scale["BRL"]);
 		const max = translate("destination.price.max", { value: currency["$$$$"] });
 		currency["-"] = translate("destination.price.free");
@@ -684,29 +684,29 @@ export function getInnerItinerary(item, destinations) {
 	}
 }
 
-export function getLinkMediaButton(midia, tipo?) {
-	if (!midia) return;
+export function getLinkMediaButton(media, type?) {
+	if (!media) return;
 	const video = translate("trip.itinerary.media_button.video");
 	const playlist = translate("trip.itinerary.media_button.playlist");
 
 	let buttonText = `<i class="iconify" data-icon="lets-icons:video-fill"></i>${video}`;
 
 	if (
-		tipo == "youtube" ||
-		midia.includes("youtube") ||
-		midia.includes("youtu.be")
+		type == "youtube" ||
+		media.includes("youtube") ||
+		media.includes("youtu.be")
 	) {
 		buttonText = `<i class="iconify" data-icon="mdi:youtube"></i>${video}`;
-	} else if (tipo == "tiktok" || midia.includes("tiktok")) {
+	} else if (type == "tiktok" || media.includes("tiktok")) {
 		buttonText = `<i class="iconify" data-icon="ic:baseline-tiktok"></i>${video}`;
-	} else if (tipo == "spotify" || midia.includes("spotify")) {
+	} else if (type == "spotify" || media.includes("spotify")) {
 		buttonText = `<i class="iconify" data-icon="mdi:spotify"></i>${playlist}`;
-	} else if (tipo == "instagram" || midia.includes("instagram")) {
+	} else if (type == "instagram" || media.includes("instagram")) {
 		buttonText = `<i class="iconify" data-icon="mdi:instagram"></i> ${video}`;
 	}
 
 	return `<div class="button-box">
-              <button class="btn btn-secondary btn-format" type="submit" data-action="open-link" data-url="${midia}">${buttonText}</button>
+              <button class="btn btn-secondary btn-format" type="submit" data-action="open-link" data-url="${media}">${buttonText}</button>
             </div>`;
 }
 
@@ -745,18 +745,18 @@ export function getNextTrips(data: Record<string, any>) {
 
 // Accommodation
 export function getAccommodationsHTML(i, innerItinerary = false) {
-	const original = getState().hospedagens[i];
+	const original = getState().accommodations[i];
 	const hospedagem = {
 		id: original.id,
-		cafe: original.cafe,
-		checkIn: getHospedagensData(original.datas.checkin),
-		checkOut: getHospedagensData(original.datas.checkout),
-		reserva: original.reserva,
-		descricao: original.descricao,
-		endereco: original.endereco,
-		imagens: original.imagens,
+		breakfast: original.breakfast,
+		checkIn: getHospedagensData(original.dates.checkIn),
+		checkOut: getHospedagensData(original.dates.checkOut),
+		reservation: original.reservation,
+		description: original.description,
+		address: original.address,
+		images: original.images,
 		link: original.link,
-		nome: original.nome,
+		name: original.name,
 	};
 
 	if (innerItinerary) {
@@ -764,7 +764,7 @@ export function getAccommodationsHTML(i, innerItinerary = false) {
 	}
 
 	const j = i + 1;
-	return `<div class="swiper-slide" id="hospedagens-slide-${j}">
+	return `<div class="swiper-slide" id="accommodations-slide-${j}">
             <div class="testimonial-item">
               ${getHotelBoxHTML(hospedagem, j)}
             </div>

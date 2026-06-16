@@ -53,14 +53,14 @@ export function loadFilterSortingData(titles) {
 		let data;
 		switch (title) {
 			case "region":
-				data = getDataSet("regiao");
+				data = getDataSet("region");
 				data.delete("");
 				break;
 			case "planned":
-				data = getDataSet("planejado");
+				data = getDataSet("planned");
 				break;
 			case "scores":
-				data = getDataSet("nota");
+				data = getDataSet("rating");
 				break;
 			case "prices":
 				data = getPriceBuckets();
@@ -113,7 +113,7 @@ export function openFilterSortDrawer({
 
 // Helpers
 export function shouldDisplayRegions() {
-	const REGIONS = getDataSet("regiao");
+	const REGIONS = getDataSet("region");
 	REGIONS.delete("");
 	return REGIONS.size > 1;
 }
@@ -127,11 +127,11 @@ export function shouldDisplayPlanned() {
 }
 
 export function shouldDisplayScores() {
-	const notas = getDataSet("nota");
-	return notas.size > 1;
+	const ratings = getDataSet("rating");
+	return ratings.size > 1;
 }
 
 export function shouldDisplayPrices() {
-	const precos = getPrices();
-	return precos.size > 1;
+	const prices = getPrices();
+	return prices.size > 1;
 }

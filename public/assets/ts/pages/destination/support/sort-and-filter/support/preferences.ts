@@ -12,7 +12,7 @@ const SORT_PREFERENCES = {
 
 // Getters
 export function getFilterPreferences() {
-	const filter = sessionStorage.getItem("destinos-filtered-preferences");
+	const filter = sessionStorage.getItem("destinations-filtered-preferences");
 	if (filter) {
 		return JSON.parse(filter);
 	}
@@ -20,7 +20,7 @@ export function getFilterPreferences() {
 }
 
 export function getSortPreferences() {
-	const sort = sessionStorage.getItem("destinos-sorted-preferences");
+	const sort = sessionStorage.getItem("destinations-sorted-preferences");
 	if (sort) {
 		return JSON.parse(sort);
 	}
@@ -30,14 +30,14 @@ export function getSortPreferences() {
 // Setters
 function setFilterPreferences() {
 	sessionStorage.setItem(
-		"destinos-filtered-preferences",
+		"destinations-filtered-preferences",
 		JSON.stringify(FILTER_PREFERENCES),
 	);
 }
 
 function setSortPreferences() {
 	sessionStorage.setItem(
-		"destinos-sorted-preferences",
+		"destinations-sorted-preferences",
 		JSON.stringify(SORT_PREFERENCES),
 	);
 }

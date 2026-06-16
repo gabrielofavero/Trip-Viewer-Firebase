@@ -232,7 +232,7 @@ export function closeMessage() {
 export function getContainersInput() {
 	return {
 		principal: "input-container",
-		botoes: "button-box-right",
+		buttons: "button-box-right",
 	};
 }
 
@@ -241,11 +241,11 @@ export function getIconsBox(icons) {
 	iconContainer.className = "icon-container";
 	iconContainer.style.textAlign = "right";
 
-	if (icons && icons[0] && icons[0].tipo === "voltar") {
+	if (icons && icons[0] && icons[0].type === "goBack") {
 		const backIcon = document.createElement("i");
 		backIcon.id = "back-icon";
 		backIcon.className = "bx bx-arrow-back";
-		backIcon.setAttribute("onclick", icons[0].acao);
+		backIcon.setAttribute("onclick", icons[0].action);
 		backIcon.style.visibility = "hidden";
 		backIcon.style.cursor = "pointer";
 
@@ -303,27 +303,27 @@ export function getErrorElement(err) {
 
 // Buttons
 export function getButton(button) {
-	switch (button.tipo) {
-		case "tente-novamente":
+	switch (button.type) {
+		case "tryAgain":
 			return getTryAgainButton();
 		case "home":
 			return getHomeButton();
-		case "voltar":
-			return getBackButton(button.acao);
-		case "fechar":
+		case "goBack":
+			return getBackButton(button.action);
+		case "close":
 			return getCloseButton();
-		case "cancelar":
-			return getCloseButton("labels.cancel", button.acao);
-		case "confirmar":
-			return getConfirmButton(button.acao);
-		case "apagar":
-			return getDeleteButton(button.acao);
-		case "apagar-basico":
-			return getDeleteButtonBasic(button.acao);
-		case "sim":
-			return getConfirmButton(button.acao, "labels.yes");
-		case "nao":
-			return getCloseButton("labels.no", button.acao);
+		case "cancel":
+			return getCloseButton("labels.cancel", button.action);
+		case "confirm":
+			return getConfirmButton(button.action);
+		case "delete":
+			return getDeleteButton(button.action);
+		case "deleteBasic":
+			return getDeleteButtonBasic(button.action);
+		case "yes":
+			return getConfirmButton(button.action, "labels.yes");
+		case "no":
+			return getCloseButton("labels.no", button.action);
 		default:
 			return getCloseButton("labels.understood");
 	}
@@ -343,7 +343,7 @@ export function getHomeButton() {
 	button.setAttribute("onclick", `window.location.href = "${homeButton}";`);
 
 	const icon = document.createElement("i");
-	icon.id = "transporte-nav";
+	icon.id = "transportation-nav";
 	icon.className = "iconify";
 	icon.setAttribute("data-icon", "bx:home");
 

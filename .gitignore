@@ -84,8 +84,9 @@ yarn.lock
 # dotenv environment variables file
 .env
 
-# export-maps-data
+# scripts info
 scripts/export-maps-data/.env
 scripts/export-maps-data/output.json
 scripts/export-maps-data/input/*
 !scripts/export-maps-data/input/.gitkeep
+scripts/translation/results/*

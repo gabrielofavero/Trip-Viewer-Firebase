@@ -42,10 +42,10 @@ async function loadCurrencies() {
 async function loadCurrencyConversion() {
 	const comparacoes = [];
 	const chaves = [];
-	for (const moeda of CURRENCIES.summary) {
-		if (moeda !== DEFAULT_CURRENCY) {
-			comparacoes.push(`${moeda}-${DEFAULT_CURRENCY}`);
-			chaves.push(moeda + DEFAULT_CURRENCY);
+	for (const currency of CURRENCIES.summary) {
+		if (currency !== DEFAULT_CURRENCY) {
+			comparacoes.push(`${currency}-${DEFAULT_CURRENCY}`);
+			chaves.push(currency + DEFAULT_CURRENCY);
 		}
 	}
 	if (comparacoes.length === 0) {

@@ -20,7 +20,7 @@ export let LOGO_DARK = "";
 export function setLogoLight(value: string) { LOGO_LIGHT = value; }
 export function setLogoDark(value: string) { LOGO_DARK = value; }
 
-export function loadVisibility(colors = getState()?.cores) {
+export function loadVisibility(colors = getState()?.colors) {
 	if (colors?.light && colors?.dark) {
 		setLightColor(colors.light);
 		setDarkColor(colors.dark);
@@ -233,14 +233,14 @@ export function isModalOpen(modalID = "modal") {
 }
 
 // ======= Edit Pages =======
-export function loadEditModule(categoria, addFn?: () => void) {
-	const habilitado = getID(`enabled-${categoria}`);
+export function loadEditModule(category, addFn?: () => void) {
+	const habilitado = getID(`enabled-${category}`);
 	if (habilitado.checked) {
-		showContent(categoria);
-		if (!getID(`enabled-${categoria}-content`).innerText) {
+		showContent(category);
+		if (!getID(`enabled-${category}-content`).innerText) {
 			// Prefer the directly-passed function (avoids circular dependency issues);
 			// fall back to _exports lookup for backward compat.
-			const type = firstCharToUpperCase(categoria).trim();
+			const type = firstCharToUpperCase(category).trim();
 			if (addFn) {
 				setTimeout(() => addFn(), 0);
 			} else {
@@ -253,18 +253,18 @@ export function loadEditModule(categoria, addFn?: () => void) {
 			}
 		}
 	} else {
-		hideContent(categoria);
+		hideContent(category);
 	}
-	loadListener(categoria, addFn);
+	loadListener(category, addFn);
 }
 
-export function loadListener(categoria, addFn?: () => void) {
-	const habilitado = getID(`enabled-${categoria}`);
+export function loadListener(category, addFn?: () => void) {
+	const habilitado = getID(`enabled-${category}`);
 	habilitado.addEventListener("change", function () {
 		if (habilitado.checked) {
-			showContent(categoria);
-			const box = getID(`${categoria}-box`);
-			const habilitadoContent = getID(`enabled-${categoria}-content`);
+			showContent(category);
+			const box = getID(`${category}-box`);
+			const habilitadoContent = getID(`enabled-${category}-content`);
 
 			if (
 				(box && !box.innerText) ||
@@ -273,12 +273,12 @@ export function loadListener(categoria, addFn?: () => void) {
 				if (addFn) {
 					addFn();
 				} else {
-					visibilityAdd(firstCharToUpperCase(categoria).trim());
+					visibilityAdd(firstCharToUpperCase(category).trim());
 				}
 			}
 		} else {
-			removeEmptyChild(categoria);
-			hideContent(categoria);
+			removeEmptyChild(category);
+			hideContent(category);
 		}
 	});
 }
@@ -312,9 +312,9 @@ export function hideContent(type) {
 	}
 }
 
-export function addRemoveChildListener(categoria, j, customFunction = null) {
-	getID(`remove-${categoria}-${j}`).addEventListener("click", function () {
-		removeChildWithValidation(categoria, j);
+export function addRemoveChildListener(category, j, customFunction = null) {
+	getID(`remove-${category}-${j}`).addEventListener("click", function () {
+		removeChildWithValidation(category, j);
 		if (typeof customFunction === "function") {
 			customFunction();
 		}

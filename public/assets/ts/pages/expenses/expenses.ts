@@ -76,7 +76,7 @@ export async function loadExpensesPage() {
 		return;
 	}
 
-	if (!expensesExport?.ativo) {
+	if (!expensesExport?.active) {
 		displayForbidden(
 			translate("messages.errors.module_not_active", {
 				module: translate("trip.expenses.title"),

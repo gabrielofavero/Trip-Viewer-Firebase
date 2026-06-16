@@ -19,28 +19,28 @@ export function getAccommodationArray(protectedReservationCodes = false) {
 	for (const id of getChildIDs("accommodations-box")) {
 		const j = getJ(id);
 		result.push({
-			cafe: getID(`accommodations-cafe-${j}`).checked,
-			datas: {
-				checkin: formattedDateToDateObject(
+			breakfast: getID(`accommodations-breakfast-${j}`).checked,
+			dates: {
+				checkIn: formattedDateToDateObject(
 					getID(`check-in-${j}`).value,
-					getID(`check-in-horario-${j}`).value,
+					getID(`check-in-time-${j}`).value,
 				),
-				checkout: formattedDateToDateObject(
+				checkOut: formattedDateToDateObject(
 					getID(`check-out-${j}`).value,
-					getID(`check-out-horario-${j}`).value,
+					getID(`check-out-time-${j}`).value,
 				),
 			},
-			descricao: getID(`accommodations-description-${j}`).value,
-			endereco: getID(`accommodations-endereco-${j}`).value,
+			description: getID(`accommodations-description-${j}`).value,
+			address: getID(`accommodations-address-${j}`).value,
 			id: getOrCreateCategoryID("accommodations", j),
-			imagens: getAccommodationImages(j),
-			reserva: protectedReservationCodes
+			images: getAccommodationImages(j),
+			reservation: protectedReservationCodes
 				? ""
-				: getID(`reserva-accommodations-${j}`).value,
+				: getID(`reservation-accommodations-${j}`).value,
 			link: protectedReservationCodes
 				? ""
-				: getID(`reserva-accommodations-link-${j}`).value,
-			nome: getID(`accommodations-nome-${j}`).value,
+				: getID(`reservation-accommodations-link-${j}`).value,
+			name: getID(`accommodations-name-${j}`).value,
 		});
 	}
 	return result;
@@ -51,40 +51,40 @@ export function getProtectedAccommodationObject() {
 	for (const childID of getChildIDs("accommodations-box")) {
 		const j = getJ(childID);
 		const id = getID(`accommodations-id-${j}`).value;
-		const reserva = getID(`reserva-accommodations-${j}`).value;
-		const link = getID(`reserva-accommodations-link-${j}`).value;
-		result[id] = { reserva, link };
+		const reservation = getID(`reservation-accommodations-${j}`).value;
+		const link = getID(`reservation-accommodations-link-${j}`).value;
+		result[id] = { reservation, link };
 	}
 	return result;
 }
 
 function getAccommodationImages(j) {
 	const result = [];
-	for (const imagem of ACCOMMODATION_IMAGES[j]) {
-		if (imagem.file) {
-			CUSTOM_UPLOADS.accommodations.push(imagem);
+	for (const image of ACCOMMODATION_IMAGES[j]) {
+		if (image.file) {
+			CUSTOM_UPLOADS.accommodations.push(image);
 		}
 		result.push({
-			descricao: imagem.descricao,
-			link: imagem.link,
+			description: image.description,
+			link: image.link,
 		});
 	}
 	return result;
 }
 
-export function loadCheckIn(hospedagem, j) {
-	loadAccommodationCheck("checkin", "in", hospedagem, j);
+export function loadCheckIn(accommodation, j) {
+	loadAccommodationCheck("checkIn", "in", accommodation, j);
 }
 
-export function loadCheckOut(hospedagem, j) {
-	loadAccommodationCheck("checkout", "out", hospedagem, j);
+export function loadCheckOut(accommodation, j) {
+	loadAccommodationCheck("checkOut", "out", accommodation, j);
 }
 
-function loadAccommodationCheck(chave, checkTipo, hospedagem, j) {
-	const data = convertFromDateObject(hospedagem.datas[chave]);
+function loadAccommodationCheck(chave, checkTipo, accommodation, j) {
+	const data = convertFromDateObject(accommodation.dates[chave]);
 	if (data) {
 		getID(`check-${checkTipo}-${j}`).value = getDateString(data, "yyyy-mm-dd");
-		getID(`check-${checkTipo}-horario-${j}`).value =
+		getID(`check-${checkTipo}-time-${j}`).value =
 			getTimeStringFromDate(data);
 	}
 }
@@ -92,15 +92,15 @@ function loadAccommodationCheck(chave, checkTipo, hospedagem, j) {
 // Listener
 export function loadAccommodationListeners(j) {
 // Link Validation
-	getID(`reserva-accommodations-link-${j}`).addEventListener("change", () =>
-		validateLink(`reserva-accommodations-link-${j}`),
+	getID(`reservation-accommodations-link-${j}`).addEventListener("change", () =>
+		validateLink(`reservation-accommodations-link-${j}`),
 	);
 
 	// Nome
-	getID(`accommodations-nome-${j}`).addEventListener("change", function () {
-		if (getID(`accommodations-nome-${j}`).value) {
+	getID(`accommodations-name-${j}`).addEventListener("change", function () {
+		if (getID(`accommodations-name-${j}`).value) {
 			getID(`accommodations-title-${j}`).innerText = getID(
-				`accommodations-nome-${j}`,
+				`accommodations-name-${j}`,
 			).value;
 		}
 	});
@@ -115,34 +115,34 @@ export function accommodationsAddListenerAction() {
 // Internal Loading (Modal)
 export function openAccommodationImages(j) {
 	const size = 5;
-	const propriedades = cloneObject(MESSAGE_PROPERTIES);
+	const properties = cloneObject(MESSAGE_PROPERTIES);
 
-	propriedades.titulo = translate("labels.image.add_title");
-	propriedades.containers = getContainersInput();
-	propriedades.conteudo = getAccommodationImageContent(size);
-	propriedades.icons = [
-		{ tipo: "voltar", acao: `closeInnerAccommodationImage()` },
+	properties.title = translate("labels.image.add_title");
+	properties.containers = getContainersInput();
+	properties.content = getAccommodationImageContent(size);
+	properties.icons = [
+		{ type: "goBack", action: `closeInnerAccommodationImage()` },
 	];
-	propriedades.botoes = [
+	properties.buttons = [
 		{
-			tipo: "cancelar",
+			type: "cancel",
 		},
 		{
-			tipo: "confirmar",
-			acao: `confirmAccommodationImages(${j})`,
+			type: "confirm",
+			action: `confirmAccommodationImages(${j})`,
 		},
 	];
 
-	displayFullMessage(propriedades);
-	initializeSortableForGroup(`image-hospedagens`, { onEnd: "" });
+	displayFullMessage(properties);
+	initializeSortableForGroup(`image-accommodations`, { onEnd: "" });
 
 	for (let k = 1; k <= size; k++) {
-		const imagem = ACCOMMODATION_IMAGES[j][k - 1];
-		if (imagem) {
-			getID(`accommodations-image-description-${k}`).value = imagem.descricao;
-			getID(`link-accommodations-${k}`).value = imagem.link;
+		const image = ACCOMMODATION_IMAGES[j][k - 1];
+		if (image) {
+			getID(`accommodations-image-description-${k}`).value = image.description;
+			getID(`link-accommodations-${k}`).value = image.link;
 			getID(`accommodations-image-button-${k}`).innerText =
-				imagem.descricao || `${translate("labels.image.title")} ${k}`;
+				image.description || `${translate("labels.image.title")} ${k}`;
 		}
 
 		loadImageSelector(`accommodations-${k}`);
@@ -153,43 +153,43 @@ export function openAccommodationImages(j) {
 }
 
 function getAccommodationImageContent(size = 5) {
-	let botoes = "";
+	let buttons = "";
 	let inner = "";
 	for (let k = 1; k <= size; k++) {
-		botoes += `
+		buttons += `
         <div class='input-button-container' id="input-button-container-${k}">
-            <button id="hospedagens-imagem-botao-${k}" class="btn input-button draggable" data-action="open-inner-accommodation-image" data-index="${k}" style="margin-top:1em">${translate("labels.image.add")}</button>
+            <button id="accommodations-image-button-${k}" class="btn input-button draggable" data-action="open-inner-accommodation-image" data-index="${k}" style="margin-top:1em">${translate("labels.image.add")}</button>
             <i class="iconify drag-icon" data-icon="mdi:drag"></i>
         </div>`;
 
 		inner += `
-        <div id="hospedagens-imagem-${k}" style="display: none">
+        <div id="accommodations-image-${k}" style="display: none">
             <div class="nice-form-group customization-box" id="accommodations-box-${k}">
                 <label>${translate("labels.image.title_plural")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-                <input id="upload-hospedagens-${k}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
-                <p id="upload-hospedagens-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate("labels.image.upload_limit")}</p>
+                <input id="upload-accommodations-${k}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
+                <p id="upload-accommodations-${k}-size-message" class="message-text"> <i class='red'>*</i> ${translate("labels.image.upload_limit")}</p>
             </div>
 
             <div class="nice-form-group">
-                <input id="link-hospedagens-${k}" class='image-input' type="url" placeholder="${translate("labels.image.placeholder")}" value=""
+                <input id="link-accommodations-${k}" class='image-input' type="url" placeholder="${translate("labels.image.placeholder")}" value=""
                 class="icon-right">
             </div>
 
-            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-hospedagens-${k}">
+            <fieldset class="nice-form-group image-checkbox" id="upload-checkbox-accommodations-${k}">
                 <div class="nice-form-group">
-                <input type="radio" name="type-hospedagens-${k}" id="enable-link-hospedagens-${k}" checked>
-                <label for="enable-link-hospedagens-${k}">${translate("labels.image.link")}</label>
+                <input type="radio" name="type-accommodations-${k}" id="enable-link-accommodations-${k}" checked>
+                <label for="enable-link-accommodations-${k}">${translate("labels.image.link")}</label>
                 </div>
 
                 <div class="nice-form-group">
-                <input type="radio" name="type-hospedagens-${k}" id="enable-upload-hospedagens-${k}">
-                <label for="enable-upload-hospedagens-${k}">${translate("labels.image.upload")} <span class="opcional"> (${translate("labels.image.upload_limit")})</span></label>
+                <input type="radio" name="type-accommodations-${k}" id="enable-upload-accommodations-${k}">
+                <label for="enable-upload-accommodations-${k}">${translate("labels.image.upload")} <span class="opcional"> (${translate("labels.image.upload_limit")})</span></label>
                 </div>
             </fieldset>
 
             <div class="nice-form-group">
                 <label>${translate("labels.image.description")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-                <input id="hospedagens-imagem-descricao-${k}" type="text" placeholder="${translate("trip.accommodation.description_placeholder")}" />
+                <input id="accommodations-image-description-${k}" type="text" placeholder="${translate("trip.accommodation.description_placeholder")}" />
             </div>
         </div>
         `;
@@ -197,35 +197,35 @@ function getAccommodationImageContent(size = 5) {
 
 	return `
     <p style="font-size: 0.8em; margin-top: -20px">${translate("labels.image.quantity_limit")}</p>
-    <div class="draggable-area" data-group="imagem-hospedagens" id="imagem-hospedagens-botoes">
-        ${botoes}
+    <div class="draggable-area" data-group="image-accommodations" id="image-accommodations-buttons">
+        ${buttons}
     </div>
-    <div id="inner-hospedagens-imagem">
+    <div id="inner-accommodations-image">
         ${inner}
     </div>
     `;
 }
 
 export function openInnerAccommodationImage(k) {
-	fade([`image-accommodations-botoes`], [`accommodations-image-${k}`]);
+	fade([`image-accommodations-buttons`], [`accommodations-image-${k}`]);
 	getID("back-icon").style.visibility = "visible";
 }
 
 export function closeInnerAccommodationImage() {
-	for (const orderId of getChildIDs("inner-hospedagens-imagem")) {
+	for (const orderId of getChildIDs("inner-accommodations-image")) {
 		const k = getJ(orderId);
 		const id = `accommodations-image-${k}`;
 		if (getID(id).style.display == "block") {
-			let titulo = translate("labels.image.add");
+			let title = translate("labels.image.add");
 
 			if (hasInnerAccommodationImage(k)) {
-				titulo =
+				title =
 					getID(`accommodations-image-description-${k}`).value ||
 					`${translate("labels.image.title")} ${k}`;
 			}
 
-			getID(`accommodations-image-button-${k}`).innerText = titulo;
-			fade([`accommodations-image-${k}`], [`image-accommodations-botoes`]);
+			getID(`accommodations-image-button-${k}`).innerText = title;
+			fade([`accommodations-image-${k}`], [`image-accommodations-buttons`]);
 			break;
 		}
 	}
@@ -247,12 +247,12 @@ export function confirmAccommodationImages(j) {
 		closeInnerAccommodationImage();
 	} else {
 		saveAccommodationImages(j);
-		setImagemButtonLabel(j);
+		setImageButtonLabel(j);
 	}
 }
 
-export function setImagemButtonLabel(j) {
-	getID(`imagens-hospedagem-button-${j}`).innerText =
+export function setImageButtonLabel(j) {
+	getID(`images-accommodation-button-${j}`).innerText =
 		ACCOMMODATION_IMAGES[j].length > 0
 			? translate("labels.image.edit")
 			: translate("labels.image.add");
@@ -260,11 +260,11 @@ export function setImagemButtonLabel(j) {
 
 function saveAccommodationImages(j) {
 	const result = [];
-	for (const id of getChildIDs("imagem-hospedagens-botoes")) {
+	for (const id of getChildIDs("image-accommodations-buttons")) {
 		const k = getJ(id);
 		if (hasInnerAccommodationImage(k)) {
 			result.push({
-				descricao: getID(`accommodations-image-description-${k}`).value,
+				description: getID(`accommodations-image-description-${k}`).value,
 				link: getID(`enable-link-accommodations-${k}`).checked
 					? getID(`link-accommodations-${k}`).value
 					: "",
@@ -292,16 +292,16 @@ async function uploadAndSetAccommodationImages() {
 		return;
 	}
 
-	const hospedagensFiles = CUSTOM_UPLOADS.accommodations.map((file) => file.file);
-	const hospedagemResult = await uploadImages("trips", hospedagensFiles);
+	const accommodationFiles = CUSTOM_UPLOADS.accommodations.map((file) => file.file);
+	const accommodationResult = await uploadImages("trips", accommodationFiles);
 
 	if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
-		for (let i = 0; i < hospedagemResult.length; i++) {
+		for (let i = 0; i < accommodationResult.length; i++) {
 			const outerPosition = CUSTOM_UPLOADS.accommodations[i].position[0] - 1;
 			const innerPosition = CUSTOM_UPLOADS.accommodations[i].position[1] - 1;
 			FIRESTORE_NEW_DATA.accommodations[outerPosition].images[
 				innerPosition
-			].link = hospedagemResult[i].link;
+			].link = accommodationResult[i].link;
 		}
 	}
 }

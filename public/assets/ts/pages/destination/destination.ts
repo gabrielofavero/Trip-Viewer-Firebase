@@ -59,7 +59,7 @@ export async function loadDestinationPage() {
 
 	await loadDestinationsData();
 
-	const title = FIRESTORE_DESTINATIONS_DATA.titulo || "TripViewer";
+	const title = FIRESTORE_DESTINATIONS_DATA.title || "TripViewer";
 	setPageName(title);
 	getID("title").innerText = title;
 
@@ -67,7 +67,7 @@ export async function loadDestinationPage() {
 
 	if (
 		ACTIVE_CATEGORY &&
-		(ACTIVE_CATEGORY === "mapa" ||
+		(ACTIVE_CATEGORY === "map" ||
 			Object.keys(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]).length > 0)
 	) {
 		loadDestinationCustomSelect();
@@ -103,13 +103,13 @@ function loadDestinationByType(activeCategory) {
 		filterSortContainer.style.display = "";
 	}
 
-	const destino = FIRESTORE_DESTINATIONS_DATA[activeCategory];
-	const keys = Object.keys(destino);
+	const destination = FIRESTORE_DESTINATIONS_DATA[activeCategory];
+	const keys = Object.keys(destination);
 	for (let j = 1; j <= keys.length; j++) {
 		const id = keys[j - 1];
-		const item = destino[id];
+		const item = destination[id];
 		const innerHTML = getDestinationsHTML({ j, id, item });
-		loadEmbed(item?.midia, j);
+		loadEmbed(item?.media, j);
 		CONTENT.push({ id, innerHTML });
 	}
 
@@ -145,14 +145,14 @@ export function applyContent() {
 
 function orderInnerHTMLs(innerContents) {
 	innerContents.sort((a, b) => {
-		if (a.nota === "?") return 1;
-		if (b.nota === "?") return -1;
+		if (a.rating === "?") return 1;
+		if (b.rating === "?") return -1;
 
-		if (b.nota !== a.nota) {
-			return b.nota - a.nota;
+		if (b.rating !== a.rating) {
+			return b.rating - a.rating;
 		}
 
-		return a.titulo.localeCompare(b.titulo);
+		return a.title.localeCompare(b.title);
 	});
 
 	return innerContents.map((item) => item.innerHTML);
@@ -170,11 +170,11 @@ export function processAccordion(j) {
 
 function toggleMedia(j) {
 	const button = getID(`destinations-title-${j}`);
-	const midia = `midia-${j}`;
+	const media = `media-${j}`;
 	if (button.classList.contains("collapsed")) {
-		unloadMedia(midia);
+		unloadMedia(media);
 	} else {
-		loadMedia(midia);
+		loadMedia(media);
 		applyDestinationsMediaHeight();
 	}
 }
@@ -191,7 +191,7 @@ function loadDestinationCustomSelect() {
 	const customSelect = {
 		id: "destinations-select",
 		options: getDestinationCustomSelectOptions(),
-		activeOption: ACTIVE_CATEGORY === "mapa" ? "myMaps" : ACTIVE_CATEGORY,
+		activeOption: ACTIVE_CATEGORY === "map" ? "myMaps" : ACTIVE_CATEGORY,
 		action: loadDestinationCustomSelectAction,
 	};
 
@@ -238,8 +238,8 @@ export function getDataSet(key) {
 }
 
 export function getDestinationID(j) {
-	const destino = getID(`destinations-${j}`);
-	return destino.getAttribute("data-id");
+	const destination = getID(`destinations-${j}`);
+	return destination.getAttribute("data-id");
 }
 
 export function getItemFromJ(j) {
@@ -267,9 +267,9 @@ export async function refreshDestination() {
 }
 
 function share() {
-	const title = FIRESTORE_DESTINATIONS_DATA.titulo || document.title;
+	const title = FIRESTORE_DESTINATIONS_DATA.title || document.title;
 	const text = translate("destination.share", {
-		name: FIRESTORE_DESTINATIONS_DATA.titulo,
+		name: FIRESTORE_DESTINATIONS_DATA.title,
 	});
 	const url = getPageURL();
 	navigator.share({ title, text, url });

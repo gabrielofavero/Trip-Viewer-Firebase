@@ -5,13 +5,13 @@ import { setPageName, getHTMLpage } from '../../app/main.js';
 import { translate } from "../../i18n/translation.js";
 import { loadDestinations } from "../edit-trip/new-trip.js";
 import { loadActiveDestinations } from "../edit-trip/categories/destination.js";
-import { loadCustomizacaoData } from "../edit-trip/existing-trip.js";
+import { loadCustomizationData } from "../edit-trip/existing-trip.js";
 
 // Listagem Existente
 export async function loadListData(state?) {
 	try {
 		loadDadosBasicosListagemData(getState());
-		loadCustomizacaoData(getState());
+		loadCustomizationData(getState());
 		await loadDestinationsData();
 
 		setPageName(`${translate("labels.edit")} ${getState().title}`);
@@ -24,7 +24,7 @@ export async function loadListData(state?) {
 async function loadDestinationsData() {
 	if (
 		getHTMLpage() === "edit-listing" ||
-		getState().modulos?.destinos === true
+		getState().modules?.destinations === true
 	) {
 		if (getID("destinations-enabled")) {
 			getID("destinations-enabled").checked = true;
@@ -39,10 +39,10 @@ async function loadDestinationsData() {
 
 	loadDestinations();
 	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
-	for (const destino of getState().destinos) {
-		const id = destino.destinosID;
+	for (const destination of getState().destinations) {
+		const id = destination.id;
 		for (const card of cards) {
-			if (card.getAttribute("data-destino-id") === id) {
+			if (card.getAttribute("data-destination-id") === id) {
 				card.classList.add("selected");
 				const container = getID("destinations-checkboxes");
 				container.prepend(card);
@@ -54,8 +54,8 @@ async function loadDestinationsData() {
 }
 
 function loadDadosBasicosListagemData(state) {
-	getID("title").value = state.titulo;
-	getID("subtitle").value = state.subtitulo;
-	getID("description").value = state.descricao;
-	getID("show-in-destinations").checked = state.versao.exibirEmDestinos;
+	getID("title").value = state.title;
+	getID("subtitle").value = state.subtitle;
+	getID("description").value = state.description;
+	getID("show-in-destinations").checked = state.version.showInDestinations;
 }

@@ -290,8 +290,8 @@ export async function getSingleData(type) {
 		}
 		if (
 			[COLLECTION.TRIPS, COLLECTION.LISTINGS].includes(type) &&
-			data?.destinos &&
-			data.destinos.length > 0
+			(data?.destinationRefs || data?.destinations) &&
+			(data?.destinationRefs || data?.destinations)?.length > 0
 		) {
 			data = await getTripDataWithDestinations(data);
 		}
@@ -303,22 +303,22 @@ export async function getSingleData(type) {
 }
 
 export async function getTripDataWithDestinations(tripData) {
-	const refs = tripData?.destinos;
+	const refs = tripData?.destinations;
 	if (!refs || refs.length === 0) return tripData;
 
 	const results = await Promise.allSettled(
-		refs.map((ref) => get(`${COLLECTION.DESTINATIONS}/${ref.destinosID}`, false))
+		refs.map((ref) => get(`${COLLECTION.DESTINATIONS}/${ref.destinationId}`, false))
 	);
 
 	results.forEach((result, i) => {
 		if (result.status === "fulfilled" && result.value) {
-			tripData.destinos[i].destinos = result.value;
+			tripData.destinations[i].destinations = result.value;
 		} else {
 			const reason = result.status === "rejected" ? result.reason?.message : "not found";
 			console.warn(
-				`Unable to get destination ${refs[i].destinosID}: ${reason}`,
+				`Unable to get destination ${refs[i].destinationId}: ${reason}`,
 			);
-			tripData.destinos.splice(i, 1);
+			tripData.destinations.splice(i, 1);
 		}
 	});
 
@@ -589,7 +589,7 @@ export async function getTripComplete(tripId: string): Promise<any> {
 	const tripData = await get(`${COLLECTION.TRIPS}/${tripId}`);
 	if (!tripData) return null;
 
-	const destinationRefs = tripData.destinationRefs || tripData.destinos;
+	const destinationRefs = tripData.destinationRefs || tripData.destinations;
 
 	const [accommodations, transportation, itinerary, destinations] = await Promise.all([
 		getAccommodations(tripId).catch(() => []),
@@ -598,7 +598,7 @@ export async function getTripComplete(tripId: string): Promise<any> {
 		destinationRefs?.length
 			? Promise.all(
 				destinationRefs.map((ref: any) =>
-					get(`${COLLECTION.DESTINATIONS}/${ref.id || ref.destinosID}`, false)
+					get(`${COLLECTION.DESTINATIONS}/${ref.id || ref.destinationId}`, false)
 				)
 			).then(results => results.filter(Boolean))
 			: Promise.resolve([]),

@@ -19,7 +19,7 @@ export const confirmAction = "reconfirmPin()";
 
 export async function loadPinData() {
 	// This data can only be fetch by the owner of the document
-	const pinObject = await get(`protegido/${DOCUMENT_ID}`, true, true);
+	const pinObject = await get(`protected/${DOCUMENT_ID}`, true, true);
 
 	if (!pinObject || !pinObject.pin) {
 		return;
@@ -30,7 +30,7 @@ export async function loadPinData() {
 
 export function getNewPinObject() {
 	return PIN.new
-		? { pin: PIN.new, compartilhamento: FIRESTORE_NEW_DATA.compartilhamento }
+		? { pin: PIN.new, sharing: FIRESTORE_NEW_DATA.sharing }
 		: {};
 }
 
@@ -40,9 +40,9 @@ export function isDataUnprotected() {
 
 export function hasCurrentProtectedViagens() {
 	return (
-		(getState().transportes?.dados ?? []).some(
-			(t) => t.reserva || t.link,
-		) || (getState().hospedagens ?? []).some((h) => h.reserva || h.link)
+		(getState().transportation?.data ?? []).some(
+			(t) => t.reservation || t.link,
+		) || (getState().accommodations ?? []).some((h) => h.reservation || h.link)
 	);
 }
 
@@ -76,7 +76,7 @@ export function switchPinLabel() {
 			: translate("trip.basic_information.pin.new");
 }
 
-export function requestPinEditarGastos(invalid = false) {
+export function requestPinEditExpenses(invalid = false) {
 	const confirmAction = "reconfirmPin()";
 	const cancelAction = `closeMessage()`;
 	const precontent = translate("trip.basic_information.pin.insert");
@@ -84,11 +84,11 @@ export function requestPinEditarGastos(invalid = false) {
 }
 
 export function reconfirmPin() {
-	const atual = getID("pin-code").innerText;
-	if (!atual || atual.length < 4) {
-		requestPinEditarGastos(true);
+	const currentPin = getID("pin-code").innerText;
+	if (!currentPin || currentPin.length < 4) {
+		requestPinEditExpenses(true);
 	} else {
-		const confirmAction = `validatePin('${atual}')`;
+		const confirmAction = `validatePin('${currentPin}')`;
 		const cancelAction = `closeMessage()`;
 		const precontent = translate("trip.basic_information.pin.again");
 		requestPin({ confirmAction, cancelAction, precontent });

@@ -20,12 +20,12 @@ var DESTINO_TRANSLATIONS = {};
 // ======= LOADERS =======
 export function loadDestinations() {
 	for (let i = 0; i < DESTINATIONS.length; i++) {
-		P_RESULT[DESTINATIONS[i].destinos.destinosID] = DESTINATIONS[i].destinos;
+		P_RESULT[DESTINATIONS[i].destinations.id] = DESTINATIONS[i].destinations;
 	}
 
 	if (DESTINATIONS.length % 2 === 1) {
 	// Odd
-		getID("destinationsBox").classList.add("centered-destino-box");
+		getID("destinationsBox").classList.add("centered-destination-box");
 	}
 
 	if (
@@ -54,7 +54,7 @@ function autoNavigateDestinos() {
 	const hojeDestinos = SCHEDULE_DESTINATIONS[hojeKey];
 	if (!hojeDestinos || hojeDestinos.length === 0) return;
 
-	const targetDestinosID = hojeDestinos[0].destinosID;
+	const targetDestinosID = hojeDestinos[0].id;
 	if (!targetDestinosID) return;
 
 	const option = CUSTOM_SELECTS["destinations-select"]?.options.find(
@@ -66,7 +66,7 @@ function autoNavigateDestinos() {
 }
 
 export function loadDestinationsCustomSelect() {
-	setDestinations(getState().destinos);
+	setDestinations(getState().destinations);
 
 	if (DESTINATIONS.length <= 1) {
 		getID("destinations-select").style.display = "none";
@@ -86,20 +86,20 @@ export function loadDestinationsCustomSelect() {
 
 	function getDestinationsCustomSelectOptions() {
 		const options = [];
-		const itineraryOrder: Set<string> = getState().programacoes
+		const itineraryOrder: Set<string> = getState().itinerary
 			? new Set<string>(
-					getState().programacoes
+					getState().itinerary
 						.flatMap((item: any) =>
-							(item.destinosIDs || []).map((d: any) => d.destinosID),
+							(item.destinationIds || []).map((d: any) => d.id),
 						)
 						.filter(Boolean),
 				)
 			: new Set<string>();
 
-		for (const destino of DESTINATIONS) {
+		for (const destination of DESTINATIONS) {
 			options.push({
-				value: destino.destinosID,
-				label: destino.destinos.titulo,
+				value: destination.id,
+				label: destination.destinations.title,
 			});
 		}
 
@@ -129,9 +129,9 @@ export function loadDestinationsCustomSelect() {
 
 	function loadDestionationCustomSelectAction(value) {
 		for (let i = 0; i < DESTINATIONS.length; i++) {
-			if (DESTINATIONS[i].destinosID === value) {
-				ACTIVE_DESTINATION = DESTINATIONS[i].destinosID;
-				loadDestinationsHTML(getState().destinos[i]);
+			if (DESTINATIONS[i].id === value) {
+				ACTIVE_DESTINATION = DESTINATIONS[i].id;
+				loadDestinationsHTML(getState().destinations[i]);
 				adjustDestinationsHTML();
 				break;
 			}
@@ -139,7 +139,7 @@ export function loadDestinationsCustomSelect() {
 	}
 }
 
-export function loadDestinationsHTML(destino) {
+export function loadDestinationsHTML(destination) {
 	let text = "";
 	const destinationsConfig = getDestinations();
 	const types = destinationsConfig.categories.general;
@@ -147,7 +147,7 @@ export function loadDestinationsHTML(destino) {
 	for (let i = 0; i < types.length; i++) {
 		const type = types[i];
 
-		if (type != "mapa" && Object.keys(destino.destinos[type]).length === 0) {
+		if (type != "map" && Object.keys(destination.destinations[type]).length === 0) {
 			continue;
 		}
 

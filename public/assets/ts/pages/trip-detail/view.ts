@@ -116,32 +116,32 @@ function loadStartEnd(data = getState()) {
 function loadHeader() {
 	loadTitle();
 
-	if (TYPE == "destinations" && getState().versao?.ultimaAtualizacao) {
+	if (TYPE == "destinations" && getState().version?.lastUpdated) {
 		getID("hero-subtitle").innerHTML = getLastUpdatedOnText(
-			getState().versao.ultimaAtualizacao,
+			getState().version.lastUpdated,
 		);
 	}
 
-	if (getState()?.versao.exibirEmDestinos) {
-		let datas = [new Date(getState().versao.ultimaAtualizacao)];
+	if (getState()?.version.showInDestinations) {
+		let dates = [new Date(getState().version.lastUpdated)];
 
-		for (const destino of getState().destinos) {
-			const ultimaAtualizacao = destino.destinos.versao.ultimaAtualizacao;
-			if (ultimaAtualizacao) {
-				datas.push(new Date(ultimaAtualizacao));
+		for (const destination of getState().destinations) {
+			const lastUpdated = destination.destinations.version.lastUpdated;
+			if (lastUpdated) {
+				dates.push(new Date(lastUpdated));
 			}
 		}
 
-		const mostRecentDate = datas.reduce((a, b) => (a > b ? a : b));
+		const mostRecentDate = dates.reduce((a, b) => (a > b ? a : b));
 		getID("destinations-update").innerHTML = getLastUpdatedOnText(mostRecentDate);
 	}
 
-	if (getState().descricao) {
-		getID("destinations-description").innerHTML = getState().descricao;
+	if (getState().description) {
+		getID("destinations-description").innerHTML = getState().description;
 		getID("destinations-description").style.display = "block";
 	}
 
-	if (getState().links?.ativo) {
+	if (getState().links?.active) {
 		getID("social-links").style.display = "block";
 
 		if (getState().links.attachments) {
@@ -191,20 +191,20 @@ function loadHeader() {
 }
 
 function loadTitle(data = getState()) {
-	setPageName(data.titulo);
-	getID("header1").innerHTML = data.titulo;
+	setPageName(data.title);
+	getID("header1").innerHTML = data.title;
 	getID("header2").style.display = "none";
 
-	if (data.subtitulo) {
-		getID("hero-subtitle").innerHTML = data.subtitulo;
+	if (data.subtitle) {
+		getID("hero-subtitle").innerHTML = data.subtitle;
 	}
 }
 
 function loadHeaderImageAndLogo(data = getState()) {
-	if (data.imagem?.ativo) {
-		const background = data.imagem.background;
-		const claro = data.imagem.claro;
-		const escuro = data.imagem.escuro;
+	if (data.image?.active) {
+		const background = data.image.background;
+		const light = data.image.light;
+		const dark = data.image.dark;
 
 		if (background) {
 			var hero = getID("hero");
@@ -212,10 +212,10 @@ function loadHeaderImageAndLogo(data = getState()) {
 			hero.style.backgroundSize = "cover";
 		}
 
-		if (claro) {
-			setLogoLight(claro);
-			if (escuro) {
-				setLogoDark(escuro);
+		if (light) {
+			setLogoLight(light);
+			if (dark) {
+				setLogoDark(dark);
 			} else {
 				setLogoDark(LOGO_LIGHT);
 			}
@@ -251,7 +251,7 @@ function loadModules() {
 		}
 
 		function shareTrip() {
-			const title = getState().titulo || document.title;
+			const title = getState().title || document.title;
 			const text = getSharingText();
 			const url = getPageURL();
 			navigator.share({ title, text, url });
@@ -260,15 +260,15 @@ function loadModules() {
 		function getSharingText() {
 			switch (TYPE) {
 				case "listings":
-					return translate("listing.share", { name: getState().titulo });
+					return translate("listing.share", { name: getState().title });
 				case "destinations":
 					return translate("destination.share", {
-						name: getState().titulo,
+						name: getState().title,
 					});
 				case "trip":
 				case "trips":
 					return translate("trip.share", {
-						name: getState().titulo,
+						name: getState().title,
 						start: START_DATE.text,
 						end: END_DATE.text,
 					});
@@ -279,7 +279,7 @@ function loadModules() {
 	}
 
 	function loadSummaryModule() {
-		if (getState().modulos?.resumo === true) {
+		if (getState().modules?.summary === true) {
 			loadSummary();
 		} else {
 			getID("keypointsNav").innerHTML = "";
@@ -289,13 +289,13 @@ function loadModules() {
 	}
 
 	function loadExpensesModule() {
-		const ativo = getState().modulos?.gastos === true;
+		const active = getState().modules?.expenses === true;
 		localStorage.setItem(
 			"expenses",
-			JSON.stringify({ ativo, pin: getState().pin || "no-pin" }),
+			JSON.stringify({ active, pin: getState().pin || "no-pin" }),
 		);
 
-		if (ativo) {
+		if (active) {
 			openExpensesEmbed();
 			ACTIVE_EMBEDS["expenses"] = true;
 		} else {
@@ -306,7 +306,7 @@ function loadModules() {
 	}
 
 	function loadTransportationModule() {
-		if (getState().modulos?.transportes === true) {
+		if (getState().modules?.transportation === true) {
 			loadTransportation();
 		} else {
 			getID("transportationNav").innerHTML = "";
@@ -316,7 +316,7 @@ function loadModules() {
 	}
 
 	function loadAccommodationsModule() {
-		if (getState().modulos?.hospedagens === true) {
+		if (getState().modules?.accommodations === true) {
 			loadAccommodations();
 		} else {
 			getID("stayNav").innerHTML = "";
@@ -326,7 +326,7 @@ function loadModules() {
 	}
 
 	function loadItineraryScheduleModule() {
-		if (getState().modulos?.programacao === true) {
+		if (getState().modules?.itinerary === true) {
 			loadItinerarySchedule();
 		} else {
 			getID("scheduleCalendarNav").innerHTML = "";
@@ -339,8 +339,8 @@ function loadModules() {
 		switch (TYPE) {
 			case "trips":
 				if (
-					getState().modulos?.destinos === true &&
-					getState().destinos?.length > 0
+					getState().modules?.destinations === true &&
+					getState().destinations?.length > 0
 				) {
 					loadDestinationsDefault();
 				} else {
@@ -361,18 +361,18 @@ function loadModules() {
 
 			if (DESTINATIONS.length === 1) {
 				setUniqueDestinationText();
-				ACTIVE_DESTINATION = DESTINATIONS[0].destinosID;
+				ACTIVE_DESTINATION = DESTINATIONS[0].id;
 			}
 
 			loadDestinations();
 		}
 
 		function loadDestinationsExclusive() {
-			const destinosID = getURLParam("d");
-			const destinos = getState();
+			const id = getURLParam("d");
+			const destinations = getState();
 
-			setDestinations([{ destinosID, destinos }]);
-			ACTIVE_DESTINATION = destinosID;
+			setDestinations([{ id, destinations }]);
+			ACTIVE_DESTINATION = id;
 
 			getID("destinations-select").style.display = "none";
 
@@ -388,14 +388,14 @@ function loadModules() {
 		}
 
 		function setUniqueDestinationText() {
-			const titulo = DESTINATIONS[0].destinos.titulo;
-		getID("destinations-title").innerHTML = titulo;
-		getID("destinationsNavText").innerHTML = titulo;
+			const title = DESTINATIONS[0].destinations.title;
+		getID("destinations-title").innerHTML = title;
+		getID("destinationsNavText").innerHTML = title;
 		}
 	}
 
 	function loadGalleryModule() {
-		if (getState().modulos?.galeria === true) {
+		if (getState().modules?.gallery === true) {
 			loadGallery();
 		} else {
 			getID("portfolioM").innerHTML = "";
@@ -436,6 +436,6 @@ function loadProtectedData(firestoreData) {
 	loadTitle(firestoreData);
 	loadStartEnd(firestoreData);
 	loadHeaderImageAndLogo(firestoreData);
-	loadVisibility(firestoreData.cores);
+	loadVisibility(firestoreData.colors);
 	requestDocumentPin();
 }

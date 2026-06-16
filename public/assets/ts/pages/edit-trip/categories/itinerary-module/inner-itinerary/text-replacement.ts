@@ -4,7 +4,7 @@ import { getSelectCurrentLabel } from '../../../../../ui/fields.js';
 import { inputDateToKey, jsDateToInputDate } from '../../../../../utils/dates.js';
 import { DATAS } from "../../../new-trip.js";
 import { INNER_ITINERARY } from "./inner-itinerary.js";
-import { getTurno } from "../../../../destination/categories.js";
+import { getPeriod } from "../../../../destination/categories.js";
 
 const TITLE_REPLACEMENT = {
 	current: "",
@@ -68,11 +68,11 @@ function getTitleReplacement(j) {
 	if (!selected?.id) return "";
 
 	const idToSelectMap = {
-		"inner-itinerary-item-transporte-radio":
-			"inner-itinerary-select-transporte",
-		"inner-itinerary-item-hospedagens-radio":
-			"inner-itinerary-select-hospedagens",
-		"inner-itinerary-item-destinos-radio": "inner-itinerary-select-passeio",
+		"inner-itinerary-item-transportation-radio":
+			"inner-itinerary-select-transportation",
+		"inner-itinerary-item-accommodations-radio":
+			"inner-itinerary-select-accommodations",
+		"inner-itinerary-item-destinations-radio": "inner-itinerary-select-tour",
 	};
 
 	const select = getID(idToSelectMap[selected.id]);
@@ -104,8 +104,8 @@ function loadTimeReplacementCheckbox() {
 	if (getID("inner-itinerary-item-transportation-radio").checked && value) {
 		const j = findJFromID(value, "transportation");
 
-		TIME_REPLACEMENT.replacement.start = getID(`partida-horario-${j}`).value;
-		TIME_REPLACEMENT.replacement.end = getID(`chegada-horario-${j}`).value;
+		TIME_REPLACEMENT.replacement.start = getID(`departure-time-${j}`).value;
+		TIME_REPLACEMENT.replacement.end = getID(`arrival-time-${j}`).value;
 
 		if (
 			TIME_REPLACEMENT.current.start != TIME_REPLACEMENT.replacement.start ||
@@ -161,7 +161,7 @@ export function replaceTimeIfEnabled() {
 			const startHour = parseInt(
 				TIME_REPLACEMENT.replacement.start.split(":")[0],
 			);
-			getID("inner-itinerary-select-period").value = getTurno(startHour);
+			getID("inner-itinerary-select-period").value = getPeriod(startHour);
 		}
 	}
 	TIME_REPLACEMENT.current.start = "";
@@ -188,20 +188,20 @@ function processAccomodationReplacement(labelValue, itineraryJ) {
 	if (!isCheckIn && !isCheckOut) return labelValue;
 
 	const labelKey = isCheckIn
-		? "trip.accommodation.checkin"
-		: "trip.accommodation.checkout";
+		? "trip.accommodation.checkIn"
+		: "trip.accommodation.checkOut";
 	const treatedLabel = `${translate(labelKey)}: ${labelValue}`;
 
 	const itineraries = INNER_ITINERARY[inputDateToKey(inputDate)];
 	const allEntries = Object.values(itineraries).flat();
 	const hasTreatedLabel = allEntries.some(
-		(entry: any) => entry.programacao === treatedLabel,
+		(entry: any) => entry.label === treatedLabel,
 	);
 	const alreadyIncluded = allEntries.some((entry: any) =>
-		entry.programacao.includes(labelValue),
+		entry.label.includes(labelValue),
 	);
 	const labelKeyMentioned = allEntries.some((entry: any) =>
-		entry.programacao.includes(labelKey),
+		entry.label.includes(labelKey),
 	);
 
 	return hasTreatedLabel || alreadyIncluded || labelKeyMentioned
