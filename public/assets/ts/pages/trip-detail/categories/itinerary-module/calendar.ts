@@ -4,6 +4,7 @@ import { getID } from '../../../../utils/dom.js';
 import { translate } from '../../../../i18n/translation.js';
 import { refreshPills } from "./itinerary-module.js";
 import { SCHEDULE_DESTINATIONS } from './itinerary-module.js';
+import { loadCalendarItem } from './inner-itinerary.js';
 
 // ======= Calendar JS =======
 // Original: niinpatel (https://www.cssscript.com/minimal-calendar-ui-generator/)
@@ -126,10 +127,10 @@ function showCalendar(month, year) {
 				if (currentNoTime >= startNoTime && currentNoTime <= endNoTime) {
 					cell.classList.add("calendarTrip");
 					cell.id = `calendarTrip-${day}-${month + 1}-${year}`;
-					cell.setAttribute(
-						"onclick",
-						`loadCalendarItem(${day}, ${month + 1}, ${year})`,
-					);
+					const capturedDay = day;
+					cell.addEventListener("click", () => {
+						loadCalendarItem(capturedDay, month + 1, year);
+					});
 
 					const formattedMonth = String(month + 1).padStart(2, "0");
 					const formattedDay = String(day).padStart(2, "0");

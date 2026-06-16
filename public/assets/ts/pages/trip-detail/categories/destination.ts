@@ -151,7 +151,7 @@ export function loadDestinationsHTML(destination) {
 			continue;
 		}
 
-		const translatedType = destinationsConfig.translation[type] || type;
+		const translatedType = destinationsConfig.translation[type].toLowerCase() || type.toLowerCase();
 		const j = i + 1;
 		const box = destinationsConfig.boxes[getDestinationsBoxesIndex(i)];
 		const title = translate(`destination.${translatedType}.title`);

@@ -106,7 +106,7 @@ function openModalCalendar(schedule, instant = false) {
 			box.style.transition = "";
 		});
 	} else {
-		$("#label-box").show();
+		$("#itinerary-box").show();
 		setTimeout(() => {
 			getID("itinerary-box").classList.toggle("show");
 		}, 100);
@@ -123,7 +123,7 @@ export function closeModalCalendar() {
 	unloadCalendarTripActive();
 	getID("itinerary-box").classList.toggle("show");
 	setTimeout(() => {
-		$("#label-box").hide();
+		$("#itinerary-box").hide();
 	}, 300);
 }
 
@@ -169,6 +169,8 @@ export function loadCalendarItem(day, month, year, instant = false) {
 	unloadCalendarTripActive();
 
 	const calendarTrip = getID(`calendarTrip-${day}-${month}-${year}`);
+
+	if (!calendarTrip) return;
 
 	if (
 		day == CURRENT_SCHEDULE_DATE.day &&
@@ -217,7 +219,7 @@ function unloadCalendarTripActive() {
 // Getters
 function getInnerItineraryHTML(item) {
 	const innerItinerary = getInnerItinerary(item);
-	if (innerItinerary.content) {
+	if (innerItinerary?.content) {
 		CURRENT_INNER_ITINERARY.push(innerItinerary);
 		return `<i class="iconify external-link" data-icon="tabler:external-link" data-action="display-inner-itinerary-message" data-index="${CURRENT_INNER_ITINERARY.length - 1}"></i>`;
 	}
@@ -231,7 +233,7 @@ function getInnerItinerary(item, destinations?) {
 		content: "",
 		media: "",
 		container:
-			item?.type === "destinations"
+			item?.type === "destination"
 				? "destinations-container"
 				: "label-container",
 	};
@@ -253,7 +255,7 @@ function getInnerItinerary(item, destinations?) {
 				}
 			}
 			break;
-	case "accommodations":
+	case "accommodation":
 			if (getState().modules.accommodations === true && item.id) {
 				index = getState().accommodations
 					.map((accommodation) => accommodation.id)
@@ -264,7 +266,7 @@ function getInnerItinerary(item, destinations?) {
 				}
 			}
 			break;
-	case "destinations":
+	case "destination":
 			if (
 				getState().modules.destinations === true &&
 				item.location &&
@@ -272,7 +274,7 @@ function getInnerItinerary(item, destinations?) {
 				item.id
 			) {
 				if (!destinations) {
-					const destinationIds = DESTINATIONS.map((d) => d.destinationId);
+					const destinationIds = DESTINATIONS.map((d) => d.id);
 					index = destinationIds.indexOf(item.location);
 					destinations = DESTINATIONS?.[index]?.destinations;
 				}
@@ -312,6 +314,8 @@ function getInnerItinerary(item, destinations?) {
 		}
 		break;
 	}
+
+	return innerItinerary;
 }
 
 export function getScheduleTitle(title, destinations, placeholder = true) {
