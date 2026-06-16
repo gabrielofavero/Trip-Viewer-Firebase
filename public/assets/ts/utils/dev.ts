@@ -21,6 +21,7 @@
 // ---------- internal sentinel ----------
 const BUILTINS = new Set(["help", "list", "isEnabled", "host", "firestore", "messages"]);
 const STORE_KEY = Symbol("store");
+const GETTER_KEY = Symbol("getter");
 
 // ---------- helpers ----------
 function typeLabel(val: any): string {
@@ -58,9 +59,14 @@ function createNamespace(parentPath: string): Namespace & { [key: string]: any }
 	const proxy = new Proxy({} as any, {
 		get(_target, prop: string | symbol) {
 			if (prop === STORE_KEY) return store;
+			// resolve getter wrapper
+			const raw = store[prop];
+			if (raw && typeof raw === "object" && GETTER_KEY in raw) {
+				return (raw as any)[GETTER_KEY]();
+			}
 			// already a leaf value? return it
-			if (prop in store && !(store[prop] && typeof store[prop] === "object" && STORE_KEY in store[prop])) {
-				return store[prop];
+			if (prop in store && !(raw && typeof raw === "object" && STORE_KEY in raw)) {
+				return raw;
 			}
 			// auto-create nested namespace
 			if (!(prop in store) && typeof prop === "string") {
@@ -71,6 +77,14 @@ function createNamespace(parentPath: string): Namespace & { [key: string]: any }
 		set(_target, prop: string | symbol, value: any) {
 			if (prop === STORE_KEY) return true;
 			store[prop] = value;
+			return true;
+		},
+		defineProperty(_target, prop: string, descriptor: PropertyDescriptor) {
+			if (typeof descriptor.get === "function") {
+				store[prop] = { [GETTER_KEY]: descriptor.get };
+			} else if ("value" in descriptor) {
+				store[prop] = descriptor.value;
+			}
 			return true;
 		},
 		ownKeys() {
@@ -90,7 +104,17 @@ function listTree(store: Record<string, any>, prefix: string, indent: number): v
 	const pad = "  ".repeat(indent);
 	for (const key of keys) {
 		const val = store[key];
-		if (val && typeof val === "object" && STORE_KEY in val) {
+		if (val && typeof val === "object" && GETTER_KEY in val) {
+			const resolved = (val as any)[GETTER_KEY]();
+			console.log(
+				`${pad}%c${key}%c : %c${typeLabel(resolved)}%c =`,
+				"font-weight:bold;",
+				"",
+				"color:#4caf50;",
+				"",
+				resolved,
+			);
+		} else if (val && typeof val === "object" && STORE_KEY in val) {
 			console.log(`${pad}%c${key}/%c`, "font-weight:bold;color:#f0c040;", "");
 			listTree(val[STORE_KEY], prefix ? `${prefix}.${key}` : key, indent + 1);
 		} else {
@@ -145,6 +169,8 @@ function createMessagesNs(): any {
 }
 
 // ---------- firestore helpers ----------
+import { getStats, resetCounters } from '../data/firebase/counter.js';
+
 function createFirestoreNs(): any {
 	const ns = createNamespace("firestore");
 
@@ -173,6 +199,15 @@ function createFirestoreNs(): any {
 		}
 	};
 
+	// Firestore read/write counter (accessible via dev.firestore.stats)
+	Object.defineProperty(ns, "stats", {
+		get() { return getStats(); },
+		enumerable: true,
+		configurable: true,
+	});
+
+	ns.resetStats = resetCounters;
+
 	return ns;
 }
 
@@ -180,7 +215,13 @@ function createFirestoreNs(): any {
 export interface DevHost {
 	isEnabled: true;
 	host: string;
-	firestore: { get(path: string): Promise<any>; set(path: string, data: Record<string, any>): Promise<void>; [key: string]: any };
+	firestore: {
+		get(path: string): Promise<any>;
+		set(path: string, data: Record<string, any>): Promise<void>;
+		stats: { reads: number; writes: number; readPaths: string[]; writeOps: { type: string; path: string }[] };
+		resetStats(): void;
+		[key: string]: any;
+	};
 	messages: {
 		show(title?: string, content?: string): void;
 		error(err: any, tryAgain?: boolean): void;
@@ -217,6 +258,8 @@ export function initDev(): DevHost | null {
 		console.log("  %cdev.page.foo%c          — inspect a page variable", "font-weight:bold;", "");
 		console.log("  %cdev.firestore.get()%c   — read a Firestore document", "font-weight:bold;", "");
 		console.log("  %cdev.firestore.set()%c   — write a Firestore document", "font-weight:bold;", "");
+		console.log("  %cdev.firestore.stats%c   — show read/write counts for this page", "font-weight:bold;", "");
+		console.log("  %cdev.firestore.resetStats()%c — reset read/write counters", "font-weight:bold;", "");
 		console.log("  %cdev.messages.show()%c  — show a message modal", "font-weight:bold;", "");
 		console.log("  %cdev.messages.error()%c — show an error message", "font-weight:bold;", "");
 		console.log("  %cdev.messages.close()%c — close the current message", "font-weight:bold;", "");

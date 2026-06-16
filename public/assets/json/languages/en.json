@@ -1,6 +1,6 @@
 {
 	"account": {
-		"settings": "Account settings",
+		"settings": "Settings",
 		"backup": {
 			"title": "Backup account",
 			"prompt": "Would you like to back up sensitive trip data? You will need to enter the access PIN for each protected trip",
@@ -784,9 +784,9 @@
 	},
 	"index": {
 		"welcome_back": "Ready to explore your trips?",
-		"my_trips": "My Trips",
-		"my_destinations": "My Destinations",
-		"my_lists": "My Lists",
+		"my_trips": "Trips",
+		"my_destinations": "Destinations",
+		"my_lists": "Lists",
 		"no_trips": "No trips yet. Create your first trip!",
 		"no_destinations": "No destinations registered yet",
 		"no_lists": "No lists created yet",

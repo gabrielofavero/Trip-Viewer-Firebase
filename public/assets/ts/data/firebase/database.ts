@@ -6,6 +6,7 @@ import { getUID, getUserData } from './auth.js';
 import { ACTIVE_DESTINATIONS } from "../../pages/edit-trip/categories/destination.js";
 import { getURLParam } from "../../utils/dom.js";
 import { DOCUMENT_ID, ERROR_FROM_GET_REQUEST, setErrorFromGetRequest } from '../state.js';
+import { incrementReads, incrementWrites } from './counter.js';
 
 // ============================================================
 // Collection & Subcollection Name Constants
@@ -65,6 +66,7 @@ export async function get(path, treatError = true, hideWarn = false) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
+		incrementReads(path);
 
 		if (snapshot.exists) {
 			return snapshot.data();
@@ -86,6 +88,7 @@ export async function hasReadPermission(path) {
 	try {
 		const docRef = firebase.firestore().doc(path);
 		const snapshot = await docRef.get();
+		incrementReads(path);
 
 		if (!snapshot.exists) {
 			console.warn(
@@ -111,6 +114,7 @@ export async function create(collection, data, docName = "") {
 				.doc(docName)
 				.set(data);
 		}
+		incrementWrites([{ type: "create", path: docName ? `${collection}/${docName}` : `${collection}/${(docRef as any).id}` }]);
 		return buildDatabaseObject(
 			true,
 			translate("messages.documents.create.success"),
@@ -137,7 +141,7 @@ export async function deepCreate(path, data, docId = "") {
 			docRef = firebase.firestore().doc(`${path}/${docId}`);
 			await docRef.set(data);
 		}
-
+		incrementWrites([{ type: "create", path: `${path}/${docId || docRef.id}` }]);
 		return buildDatabaseObject(
 			true,
 			translate("messages.documents.create.success"),
@@ -156,6 +160,7 @@ export async function update(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const update = await docRef.update(newData);
+		incrementWrites([{ type: "update", path }]);
 		return buildDatabaseObject(
 			true,
 			translate("messages.documents.update.success"),
@@ -174,6 +179,7 @@ export async function override(path, newData) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		await docRef.set(newData, { merge: false });
+		incrementWrites([{ type: "overwrite", path }]);
 		return buildDatabaseObject(
 			true,
 			translate("messages.documents.replace.success"),
@@ -191,6 +197,7 @@ export async function deleteDocument(path, ignoreError = false) {
 	const docRef = firebase.firestore().doc(path);
 	try {
 		const deleteObj = await docRef.delete();
+		incrementWrites([{ type: "delete", path }]);
 		return buildDatabaseObject(
 			true,
 			translate("messages.documents.delete.success"),
@@ -258,6 +265,7 @@ export function createBatchOps() {
 
 			try {
 				await batch.commit();
+				incrementWrites(ops.map(o => ({ type: o.type, path: o.path }) as { type: "set" | "update" | "overwrite" | "delete" | "create"; path: string }));
 				return {
 					success: true,
 					operations: ops.length,

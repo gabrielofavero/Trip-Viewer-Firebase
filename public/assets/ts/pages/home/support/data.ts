@@ -1,9 +1,10 @@
 import { displayError } from '../../../utils/messages.js';
-import { getUserData, registerIfUserNotPresent, setUserData, USER_DATA } from '../../../data/firebase/auth.js';
+import { getUserData, registerIfUserNotPresent, setUserData, USER_DATA, getUID } from '../../../data/firebase/auth.js';
 import { getCurrentTrips, getID, getLastUpdatedOnText, getNextTrips, getOrderedDocumentByUpdateDate, getPreviousTrips } from '../../../utils/dom.js';
 import { translate, translatePage } from '../../../i18n/translation.js';
 import { stopLoadingScreen } from '../../../utils/loading.js';
 import { dateObjectToString } from '../../../utils/dates.js';
+import { getUserTripSummaries, getUserDestinationSummaries, getUserListingSummaries } from '../../../data/firebase/database.js';
 import { viewTrip, editTrip, viewDestination, editDestination, viewListing, editListing } from './navigation.js';
 
 var INDEX_DATA: Record<string, any> = {};
@@ -12,6 +13,16 @@ var PREVIOUS_TRIPS: any[] = [];
 var NEXT_TRIPS: any[] = [];
 var ALL_TRIPS: any[] = []; // Merged for the unified trip view
 var SELECTED_TRIP_ID: string | null = null;
+
+/** Convert an array of { id, ...data } to a Record<string, data> for compatibility with legacy helpers */
+function arrayToRecord<T extends { id: string }>(arr: T[]): Record<string, Omit<T, 'id'>> {
+	const record: Record<string, any> = {};
+	for (const item of arr) {
+		const { id, ...rest } = item;
+		record[id] = rest;
+	}
+	return record;
+}
 
 export async function loadUserIndex() {
 	try {
@@ -36,11 +47,19 @@ export async function loadUserIndex() {
 				getID("profile-icon").style.backgroundImage = photoURL;
 				getID("profile-icon").style.backgroundSize = "cover";
 
-				INDEX_DATA = {
-					trips: USER_DATA.trips || {},
-					destinations: USER_DATA.destinations || {},
-					listings: USER_DATA.listings || {},
-				};
+			// Load summaries from subcollections (post-migration 14)
+			const uid = await getUID();
+			const [tripSummaries, destSummaries, listSummaries] = await Promise.all([
+				getUserTripSummaries(uid),
+				getUserDestinationSummaries(uid),
+				getUserListingSummaries(uid),
+			]);
+
+			INDEX_DATA = {
+				trips: arrayToRecord(tripSummaries),
+				destinations: arrayToRecord(destSummaries),
+				listings: arrayToRecord(listSummaries),
+			};
 
 				CURRENT_TRIPS = getCurrentTrips(INDEX_DATA.trips);
 				PREVIOUS_TRIPS = getPreviousTrips(INDEX_DATA.trips);

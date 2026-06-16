@@ -1,6 +1,6 @@
 {
 	"account": {
-		"settings": "Ajustes da conta",
+		"settings": "Ajustes",
 		"backup": {
 			"title": "Backup da conta",
 			"prompt": "Você gostaria de fazer backup dos dados sensíveis de viagens? Será necessário inserir o PIN de acesso para cada viagem protegida",
@@ -781,9 +781,9 @@
 	},
 	"index": {
 		"welcome_back": "Pronto para explorar suas viagens?",
-		"my_trips": "Minhas Viagens",
-		"my_destinations": "Meus Destinos",
-		"my_lists": "Minhas Listas",
+		"my_trips": "Viagens",
+		"my_destinations": "Destinos",
+		"my_lists": "Listas",
 		"no_trips": "Nenhuma viagem ainda. Crie sua primeira viagem!",
 		"no_destinations": "Nenhum destino cadastrado ainda",
 		"no_lists": "Nenhuma lista criada ainda",
