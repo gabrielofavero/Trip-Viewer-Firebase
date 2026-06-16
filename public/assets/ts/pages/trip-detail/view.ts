@@ -2,7 +2,7 @@ import { startLoadingTimer, stopLoadingScreen } from '../../utils/loading.js';
 import { closeMessage, displayError, MESSAGE_MODAL_OPEN, registerActions } from '../../utils/messages.js';
 import { getState, setState, TRAVELERS, DOCUMENT_ID, DESTINATIONS, setDocumentId, setDestinations } from '../../data/state.js';
 import { getErrorFromGetRequestMessage, getID, getLastUpdatedOnText, getURLParam, getURLParams } from '../../utils/dom.js';
-import { getSingleData, haveErrorFromGetRequest } from '../../data/firebase/database.js';
+import { getSingleData, getTripComplete, haveErrorFromGetRequest, COLLECTION } from '../../data/firebase/database.js';
 import { isOnDarkMode, loadVisibility, LOGO_LIGHT, LOGO_DARK, setLogoLight, setLogoDark } from '../../theme/visibility.js';
 import { loadCloseCustomSelectListeners } from '../../ui/custom-select.js';
 import { convertFromDateObject } from '../../utils/dates.js';
@@ -63,7 +63,14 @@ export async function loadViewPage() {
 		}
 	});
 
-	const firestoreData = await getSingleData(TYPE);
+	let firestoreData;
+
+	if (TYPE === COLLECTION.TRIPS) {
+		const tripId = getURLParam("t");
+		firestoreData = await getTripComplete(tripId);
+	} else {
+		firestoreData = await getSingleData(TYPE);
+	}
 
 	if (haveErrorFromGetRequest()) {
 		displayError(getErrorFromGetRequestMessage(), true);
@@ -72,10 +79,21 @@ export async function loadViewPage() {
 	}
 
 	if (!haveErrorFromGetRequest()) {
+		// Keep a ref to raw data before normalization for dev tools
+		const rawFirestoreData = structuredClone(firestoreData);
+
+		// Normalize transportation data from subcollection format to module-expected format
+		if (firestoreData?.transportation) {
+			firestoreData.transportation = {
+				viewMode: firestoreData.transportation.settings?.viewMode || "simple-view",
+				data: firestoreData.transportation.legs || [],
+			};
+		}
+
 		if (firestoreData.pin === "all-data") {
-			loadProtectedData(firestoreData);
+			loadProtectedData(firestoreData, rawFirestoreData);
 		} else {
-			setFirestoreData(firestoreData);
+			setFirestoreData(firestoreData, rawFirestoreData);
 		}
 	}
 }
@@ -404,8 +422,32 @@ function loadModules() {
 	}
 }
 
-export function setFirestoreData(firestoreData) {
+/** Populate dev.page.* with useful references (only on localhost). */
+function populateDevPage(rawFirestoreData?: any) {
+	const dev = (window as any).dev;
+	if (!dev?.isEnabled) return;
+	const page = dev.page;
+
+	page.type = TYPE;
+	page.docId = DOCUMENT_ID;
+	page.startDate = START_DATE;
+	page.endDate = END_DATE;
+	page.state = { get: getState };
+	page.modules = () => getState().modules;
+	page.travelers = TRAVELERS;
+	page.destinations = DESTINATIONS;
+	page.pin = () => getState().pin;
+	page.title = () => getState().title;
+	page.raw = rawFirestoreData;
+	page.activeEmbeds = ACTIVE_EMBEDS;
+
+	console.log("%c[DEV]%c dev.page populated — type %cdev.page%c to explore",
+		"color:#f0c040;font-weight:bold;", "", "font-weight:bold;", "");
+}
+
+export function setFirestoreData(firestoreData, rawFirestoreData?: any) {
 	setState(firestoreData);
+	populateDevPage(rawFirestoreData);
 	console.log("Firestore Database data loaded successfully");
 	loadDocumentData();
 }
@@ -432,10 +474,11 @@ function loadDocumentData() {
 	}
 }
 
-function loadProtectedData(firestoreData) {
+function loadProtectedData(firestoreData, rawFirestoreData?: any) {
 	loadTitle(firestoreData);
 	loadStartEnd(firestoreData);
 	loadHeaderImageAndLogo(firestoreData);
 	loadVisibility(firestoreData.colors);
+	populateDevPage(rawFirestoreData);
 	requestDocumentPin();
 }

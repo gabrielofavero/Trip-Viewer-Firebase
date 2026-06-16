@@ -605,9 +605,11 @@ export async function getTripComplete(tripId: string): Promise<any> {
 		getItinerary(tripId).catch(() => []),
 		destinationRefs?.length
 			? Promise.all(
-				destinationRefs.map((ref: any) =>
-					get(`${COLLECTION.DESTINATIONS}/${ref.id || ref.destinationId}`, false)
-				)
+				destinationRefs.map(async (ref: any) => {
+					const id = ref.id || ref.destinationId;
+					const data = await get(`${COLLECTION.DESTINATIONS}/${id}`, false);
+					return data ? { id, destinations: data } : null;
+				})
 			).then(results => results.filter(Boolean))
 			: Promise.resolve([]),
 	]);
