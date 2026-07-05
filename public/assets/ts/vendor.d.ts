@@ -79,9 +79,7 @@ declare function getFormattedDate(...args: any[]): any;
 declare function openIndexPage(...args: any[]): any;
 declare function pillCircle(...args: any[]): any;
 declare function sendHeightMessageToParent(...args: any[]): any;
-declare function setFilterPreference(...args: any[]): any;
 declare function setProtectedDataAndExpenses(...args: any[]): any;
-declare function setSortPreference(...args: any[]): any;
 declare function transportationAddListenerAction(...args: any[]): any;
 declare function validatePinField(...args: any[]): any;
 

@@ -27,7 +27,7 @@ export function populateExistingDestinationForm() {
 
 		loadMapData();
 		setPageName(
-			`${translate("labels.edit")} ${FIRESTORE_DESTINATIONS_DATA.title}`,
+			`${translate("labels.edit")} ${FIRESTORE_DESTINATIONS_DATA?.title || ""}`,
 		);
 	} catch (error) {
 		displayError(error);
@@ -37,7 +37,7 @@ export function populateExistingDestinationForm() {
 
 // Modules: Existing Tour
 function loadBasicDestinationData() {
-	getID("title").value = FIRESTORE_DESTINATIONS_DATA.title;
+	getID("title").value = FIRESTORE_DESTINATIONS_DATA?.title || "";
 
 	const currencyValue = FIRESTORE_DESTINATIONS_DATA.currency;
 	const currencyDiv = getID("currency");
@@ -63,7 +63,7 @@ function loadExistingDestination(category) {
 		? "block"
 		: "none";
 
-	const itemsArr = Object.entries(FIRESTORE_DESTINATIONS_DATA[category])
+	const itemsArr = Object.entries(FIRESTORE_DESTINATIONS_DATA?.[category] || {})
 		.map(([id, value]) => ({
 			id,
 			...(value as Record<string, unknown>),

@@ -130,7 +130,7 @@ export function loadDestinationsCustomSelect() {
 	function loadDestionationCustomSelectAction(value) {
 		for (let i = 0; i < DESTINATIONS.length; i++) {
 			if (DESTINATIONS[i].id === value) {
-				ACTIVE_DESTINATION = DESTINATIONS[i].id.toLowerCase();
+				ACTIVE_DESTINATION = DESTINATIONS[i].id;
 				loadDestinationsHTML(getState().destinations[i]);
 				adjustDestinationsHTML();
 				break;
@@ -179,7 +179,7 @@ export function loadDestinationsHTML(destination) {
 }
 
 export function loadAndOpenDestino(code) {
-	const link = `destination?d=${ACTIVE_DESTINATION}&v=${DOCUMENT_ID}&type=${code.toLowerCase()}&visibility=${getVisibility()}`;
+	const link = `destination?d=${ACTIVE_DESTINATION}&t=${DOCUMENT_ID}&type=${code.toLowerCase()}&visibility=${getVisibility()}`;
 	openViewEmbed(link);
 }
 

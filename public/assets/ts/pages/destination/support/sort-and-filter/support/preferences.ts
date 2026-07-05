@@ -42,7 +42,7 @@ function setSortPreferences() {
 	);
 }
 
-function setFilterPreference(type, value) {
+export function setFilterPreference(type, value) {
 	if (!(type in FILTER_PREFERENCES)) {
 		return;
 	}
@@ -50,7 +50,7 @@ function setFilterPreference(type, value) {
 	setFilterPreferences();
 }
 
-function setSortPreference(type, value) {
+export function setSortPreference(type, value) {
 	SORT_PREFERENCES.type = type;
 	SORT_PREFERENCES.value = value;
 	setSortPreferences();

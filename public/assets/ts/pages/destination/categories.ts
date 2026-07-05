@@ -18,16 +18,24 @@ export var ACTIVE_CATEGORY;
 
 // Active Category
 export function loadActiveCategory(urlParams) {
-	let type = urlParams["type"];
+	const type = urlParams["type"];
 	const destinationsConfig = getDestinations();
-	const originals = destinationsConfig._deprecated_original;
+	const ids = destinationsConfig.categories.ids;
 
-	if (!type || !originals[type]) {
-		ACTIVE_CATEGORY = getFirstCategory();
+	// If the URL type is already a valid English category ID, use it directly.
+	// Otherwise, try the deprecated Portuguese→English mapping for old URLs.
+	if (type && ids.includes(type)) {
+		ACTIVE_CATEGORY = type;
 		return;
 	}
 
-	ACTIVE_CATEGORY = originals[type];
+	const originals = destinationsConfig._deprecated_original;
+	if (type && originals[type]) {
+		ACTIVE_CATEGORY = originals[type];
+		return;
+	}
+
+	ACTIVE_CATEGORY = getFirstCategory();
 
 	function getFirstCategory() {
 		const destinationsConfig = getDestinations();

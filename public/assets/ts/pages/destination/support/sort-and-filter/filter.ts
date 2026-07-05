@@ -54,7 +54,7 @@ export function filter(render = false) {
 		const value = item.price;
 
 		if (value === "$$$$") {
-			return true;
+			return false;
 		}
 
 		if (value != "default" && preferences.prices != "default") {

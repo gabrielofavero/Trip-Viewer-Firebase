@@ -154,5 +154,5 @@ export function isPriceInBucketRange(filter, raw) {
 	const filterRank = FILTER_SORT_KEYS_ORDER.prices.indexOf(filter);
 
 	if (rawRank === -1) return true;
-	return rawRank > filterRank;
+	return rawRank === filterRank;
 }

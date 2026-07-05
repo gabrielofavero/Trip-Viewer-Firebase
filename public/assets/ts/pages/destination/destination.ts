@@ -36,14 +36,21 @@ export async function loadDestinationsData(data?) {
 	setDocumentId(urlParams["d"]);
 
 	if (!DOCUMENT_ID) {
-		const error = translate("messages.errors.missing_data");
-		throw error;
+		console.warn("[destination] Missing ?d= param in URL:", window.location.href);
+		throw new Error(translate("messages.errors.missing_data") + " (no DOCUMENT_ID)");
 	}
 
+	const path = `destinations/${DOCUMENT_ID}`;
+	console.log("[destination] Fetching:", path);
 	const [tripData, destinosData] = await Promise.all([
-		getTripData(urlParams["v"]),
-		get(`destinations/${DOCUMENT_ID}`),
+		getTripData(urlParams["t"] || urlParams["v"]),
+		get(path),
 	]);
+
+	if (!destinosData) {
+		console.warn("[destination] Document not found at path:", path);
+		throw new Error(translate("messages.errors.missing_data") + ` (not found: ${path})`);
+	}
 
 	setFirestoreDestinationsData(destinosData);
 	setState(tripData);
@@ -59,6 +66,11 @@ export async function loadDestinationPage() {
 
 	await loadDestinationsData();
 
+	if (!FIRESTORE_DESTINATIONS_DATA) {
+		const error = translate("messages.errors.missing_data");
+		throw error;
+	}
+
 	const title = FIRESTORE_DESTINATIONS_DATA.title || "TripViewer";
 	setPageName(title);
 	getID("title").innerText = title;
@@ -68,7 +80,8 @@ export async function loadDestinationPage() {
 	if (
 		ACTIVE_CATEGORY &&
 		(ACTIVE_CATEGORY === "map" ||
-			Object.keys(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]).length > 0)
+			(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY] &&
+				Object.keys(FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY]).length > 0))
 	) {
 		loadDestinationCustomSelect();
 		window.addEventListener("resize", () => {
@@ -94,7 +107,7 @@ function loadDestinationByType(activeCategory) {
 
 	if (activeCategory === "myMaps") {
 		content.classList = "map-content";
-		loadMapDestination(FIRESTORE_DESTINATIONS_DATA.myMaps);
+		loadMapDestination(FIRESTORE_DESTINATIONS_DATA?.myMaps);
 		filterSortContainer.style.display = "none";
 		(document.querySelector(".add-container") as HTMLElement).style.display = "none";
 		return;
@@ -103,7 +116,8 @@ function loadDestinationByType(activeCategory) {
 		filterSortContainer.style.display = "";
 	}
 
-	const destination = FIRESTORE_DESTINATIONS_DATA[activeCategory];
+	const destination = FIRESTORE_DESTINATIONS_DATA?.[activeCategory];
+	if (!destination) return;
 	const keys = Object.keys(destination);
 	for (let j = 1; j <= keys.length; j++) {
 		const id = keys[j - 1];
@@ -206,12 +220,13 @@ function loadDestinationCustomSelect() {
 			if (
 				!values.includes(value) ||
 				(value !== "myMaps" &&
-					Object.keys(FIRESTORE_DESTINATIONS_DATA[value]).length === 0)
+					FIRESTORE_DESTINATIONS_DATA?.[value] &&
+				Object.keys(FIRESTORE_DESTINATIONS_DATA[value]).length === 0)
 			) {
 				continue;
 			}
 
-			const key = destinationsConfig.translation[value];
+			const key = destinationsConfig.translation[value].toLowerCase();
 			const label = translate(`destination.${key}.title`);
 			result.push({ value, label });
 		}
@@ -248,7 +263,7 @@ export function getItemFromJ(j) {
 }
 
 export function getItem(id) {
-	return FIRESTORE_DESTINATIONS_DATA[ACTIVE_CATEGORY][id];
+	return FIRESTORE_DESTINATIONS_DATA?.[ACTIVE_CATEGORY]?.[id];
 }
 
 function getItemValue(id, key) {
@@ -267,9 +282,9 @@ export async function refreshDestination() {
 }
 
 function share() {
-	const title = FIRESTORE_DESTINATIONS_DATA.title || document.title;
+	const title = FIRESTORE_DESTINATIONS_DATA?.title || document.title;
 	const text = translate("destination.share", {
-		name: FIRESTORE_DESTINATIONS_DATA.title,
+		name: FIRESTORE_DESTINATIONS_DATA?.title,
 	});
 	const url = getPageURL();
 	navigator.share({ title, text, url });

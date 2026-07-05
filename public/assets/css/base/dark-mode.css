@@ -135,10 +135,6 @@
 }
 
 /* ===== Navigation Menu (Sidebar) ===== */
-[data-theme="dark"] #header {
-	background: #303030;
-	border-right: 1px solid #404040;
-}
 
 [data-theme="dark"] .nav-menu a,
 [data-theme="dark"] .nav-menu a:focus {

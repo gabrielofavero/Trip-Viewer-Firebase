@@ -27,7 +27,7 @@ export async function refreshTripData() {
 
 // Planned Destination
 export function loadPlannedDestination() {
-	const schedules = getState()?.schedules || [];
+	const schedules = getState()?.itinerary || [];
 	for (const day of schedules) {
 		const data = day.data;
 		for (const period of getItinerary().timeOfDay) {
@@ -111,7 +111,9 @@ function loadPlannedDestinationEditFieldHTML(j) {
 	}
 
 	function loadAllOptions() {
-		for (const schedule of getState().schedules) {
+		const itinerary = getState().itinerary;
+		if (!itinerary) return;
+		for (const schedule of itinerary) {
 			const ids = schedule.destinationIds.map((destination) => destination.destinationId);
 
 			if (!ids.includes(DOCUMENT_ID)) {
@@ -158,7 +160,7 @@ export async function setPlannedDestination(id, j) {
 
 	const updatedSchedules = getUpdatedSchedules();
 	await update(`trips/${TRIP_ID}`, {
-		schedules: updatedSchedules,
+		itinerary: updatedSchedules,
 	});
 
 	return true;
@@ -176,13 +178,13 @@ export async function setPlannedDestination(id, j) {
 			return changeOrder();
 		}
 
-		return getState().schedules;
+		return getState().itinerary;
 	}
 
 	// ---------- helpers ----------
 
 	function removeDestinationReferences() {
-		const schedules = cloneObject(getState().schedules);
+		const schedules = cloneObject(getState().itinerary);
 
 		for (const day of schedules) {
 			for (const period of ["morning", "afternoon", "night", "earlyMorning"]) {
@@ -202,7 +204,7 @@ export async function setPlannedDestination(id, j) {
 	}
 
 	function addToLastPosition() {
-		const schedules = cloneObject(getState().schedules);
+		const schedules = cloneObject(getState().itinerary);
 
 		const targetDay = schedules.find(
 			(p) => dateObjectToInputDate(p.data) === newData,
@@ -234,7 +236,7 @@ export async function setPlannedDestination(id, j) {
 	}
 
 	function buildPlannedDestination() {
-		const people = cloneObject(getState().people);
+		const people = cloneObject(getState().travelers);
 		for (const person of people) {
 			person.isPresent = true;
 		}

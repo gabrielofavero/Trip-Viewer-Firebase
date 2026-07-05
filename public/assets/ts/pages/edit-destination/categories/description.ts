@@ -218,8 +218,10 @@ function importPTtranslations(input, lang = "en") {
 	const keys = ["snacks", "shopping", "restaurants", "nightlife", "tourism"];
 
 	for (const key of keys) {
-		for (let i = 0; i < FIRESTORE_DESTINATIONS_DATA[key].length; i++) {
-			const item = FIRESTORE_DESTINATIONS_DATA[key][i];
+		const categoryData = FIRESTORE_DESTINATIONS_DATA?.[key];
+		if (!categoryData) continue;
+		for (let i = 0; i < categoryData.length; i++) {
+			const item = categoryData[i];
 			const description = item.description || {};
 			description[lang] = input[key][i];
 			item.description = description;

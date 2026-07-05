@@ -493,6 +493,7 @@ h1::after {
 }
 
 .nota,
+.rating,
 .rating-no-margin,
 .planned {
 	font-size: 25px;
@@ -506,11 +507,16 @@ h1::after {
 	margin-right: 0;
 }
 
-.rating-box {
-	display: block;
-	white-space: nowrap;
-	margin-top: 5px;
-	margin-bottom: 20px;
+.link {
+	color: #3d85c6;
+	text-decoration: none;
+	cursor: pointer;
+	font-size: 25px;
+}
+
+.link:hover {
+	color: #195b96;
+	text-decoration: none;
 }
 
 .rating-text {
@@ -553,31 +559,27 @@ h1::after {
 	padding: 20px;
 }
 
-.destination-title {
+.destinations-title {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 16px;
 	border-bottom: 0.5px solid #d9d9d9;
 }
 
-.destinos-nome {
-	font-weight: bold;
-	font-size: 20px;
-	display: flex;
-	align-items: center;
-}
-
-.external-link {
-	color: #3d85c6;
-	font-size: 20px;
-	margin-left: 5px;
-	cursor: pointer;
-}
-
-.destinos-address {
+.ratings-box {
+	display: block;
+	white-space: nowrap;
 	margin-top: 5px;
-	margin-bottom: 10px;
-	font-size: 16px;
+	margin-bottom: 20px;
+}
+
+.links-container {
+	display: flex;
+	margin-top: 4.5px;
+}
+
+.links-container .iconify {
+	margin-left: 8px;
 }
 
 .color-icon {
@@ -585,17 +587,17 @@ h1::after {
 	color: var(--theme-color);
 }
 
-.destination-description {
+.destinations-description {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
-.destination-topics-box {
+.destinations-topicos-box {
 	margin-bottom: 10px;
 	font-size: 16px;
 }
 
-.destination-topic {
+.destinations-topic {
 	margin-top: 4px;
 	margin-bottom: 4px;
 }

@@ -49,7 +49,7 @@ function loadBasicTripData() {
 	getID("start").value = getDateString(start, "yyyy-mm-dd");
 	getID("end").value = getDateString(end, "yyyy-mm-dd");
 
-	setTravelers(cloneObject(getState().people));
+	setTravelers(cloneObject(getState().travelers));
 	validateTravelersObject();
 	updateTravelersButtonLabel();
 	setCurrentPreferencePIN(getState().pin);
@@ -261,14 +261,14 @@ export function loadItineraryData() {
 
 	let j = 1;
 	while (getID(`itinerary-title-${j}`)) {
-		const data = getState().schedules[j - 1];
+		const data = getState().itinerary[j - 1];
 		if (data?.data) {
 			applyLoadedItineraryData(j, data);
 		}
 		j++;
 	}
 	updateActiveDestinationsCardsHTML("itinerary");
-	setItineraryData(cloneObject(getState().schedules));
+	setItineraryData(cloneObject(getState().itinerary));
 }
 
 function loadGalleryData() {
