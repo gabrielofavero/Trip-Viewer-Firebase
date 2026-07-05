@@ -21,8 +21,11 @@ export async function getUserData(uid?) {
 
 export function unloadPageUserFunctions() {
 	const html = getHTMLpage();
-	if (html == "index") {
-		openIndexPage("unlogged", 0, 1);
+	if (html === "index") {
+		const unloggedView = document.getElementById("unlogged-view");
+		const loggedView = document.getElementById("logged-view");
+		if (unloggedView) unloggedView.style.display = "block";
+		if (loggedView) loggedView.style.display = "none";
 	}
 }
 
@@ -53,10 +56,16 @@ export async function signInWithEmailAndPassword() {
 export function signOut() {
 	UID = null;
 	firebase.auth().signOut();
-	if (window.location.href.includes("index.html")) {
-		openIndexPage("unlogged", 0, 1);
+	// Check if we're on the index page (clean URL "/" or "index.html")
+	const path = window.location.pathname.replace(/\/+$/, "");
+	if (path === "" || path === "/index" || path.endsWith("/index")) {
+		// Already on index — show unlogged view (no navigation needed)
+		const unloggedView = document.getElementById("unlogged-view");
+		const loggedView = document.getElementById("logged-view");
+		if (unloggedView) unloggedView.style.display = "block";
+		if (loggedView) loggedView.style.display = "none";
 	} else {
-		window.location.href = "index.html";
+		window.location.href = "/";
 	}
 }
 
@@ -74,10 +83,12 @@ export async function registerIfUserNotPresent() {
 	const registrationOpen = systemData?.registrationOpen == true;
 
 	if (!userDoc && !registrationOpen) {
-		signOut();
 		const title = translate('messages.too_early.title');
 		const content = translate('messages.too_early.message');
 		displayMessage(title, content);
+		// Sign out from Firebase Auth only (skip signOut() which redirects)
+		UID = null;
+		firebase.auth().signOut();
 		return;
 	}
 

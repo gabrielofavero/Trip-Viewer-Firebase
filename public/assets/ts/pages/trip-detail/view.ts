@@ -404,7 +404,7 @@ function loadModules() {
 
 			if (DESTINATIONS.length === 1) {
 				setUniqueDestinationText();
-				ACTIVE_DESTINATION = DESTINATIONS[0].id;
+				ACTIVE_DESTINATION = DESTINATIONS[0].id.toLowerCase();
 			}
 
 			loadDestinations();
@@ -415,7 +415,7 @@ function loadModules() {
 			const destinations = getState();
 
 			setDestinations([{ id, destinations }]);
-			ACTIVE_DESTINATION = id;
+			ACTIVE_DESTINATION = id.toLowerCase();
 
 			getID("destinations-select").style.display = "none";
 

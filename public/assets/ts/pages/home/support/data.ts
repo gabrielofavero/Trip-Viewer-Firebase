@@ -28,7 +28,7 @@ export async function loadUserIndex() {
 	try {
 		firebase.auth().onAuthStateChanged(async (user) => {
 			if (user) {
-				registerIfUserNotPresent();
+				await registerIfUserNotPresent();
 				showLoggedView();
 
 			setUserData(await getUserData(user.uid));
