@@ -3,6 +3,7 @@ import { translate } from '../i18n/translation.js';
 import { closeMessage, displayFullMessage, displayPrompt, getContainersInput, openToast, MESSAGE_PROPERTIES } from '../utils/messages.js';
 import { cloneObject, getID, getTranslatedDocumentLabel } from '../utils/dom.js';
 import { getTimestamp } from '../utils/dates.js';
+import { get } from '../data/firebase/database.js';
 import { getUID, USER_DATA } from '../data/firebase/auth.js';
 
 const MISSING_ACCOUNT_DATA = { jobs: [], protected: [], failed: [] };

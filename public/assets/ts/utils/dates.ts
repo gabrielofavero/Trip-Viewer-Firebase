@@ -372,6 +372,10 @@ export function getTimestamp() {
 		.padStart(2, "0")}`;
 }
 
+export function getFormattedDate(date: Date, format: string = "day_month"): string {
+	return getDateTitle(date, format);
+}
+
 export function getDateRegionalFormat() {
 	if (!DATE_REGIONAL_FORMAT) {
 		DATE_REGIONAL_FORMAT =

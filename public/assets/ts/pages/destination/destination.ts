@@ -23,8 +23,7 @@ import {
 } from "./support/media-embed.js";
 import { loadSortAndFilter } from "./support/sort-and-filter/sort-and-filter.js";
 import { adjustDrawer } from "./support/sort-and-filter/support/drawer.js";
-import { getTripData } from "./support/trip.js";
-import { loadPlannedDestination } from "./support/trip.js";
+import { getTripData, loadPlannedDestination, PLANNED_DESTINATION } from "./support/trip.js";
 import { applyDestinationsMediaHeight } from "./support/visibility.js";
 import { loadDestinationVisibility } from "./support/visibility.js";
 

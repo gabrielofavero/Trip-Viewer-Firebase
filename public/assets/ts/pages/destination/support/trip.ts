@@ -9,7 +9,8 @@ import { ACTIVE_CATEGORY } from "../destination.js";
 
 var TRIP_ID;
 export var PLANNED_DESTINATION = {};
-var ACTIVE_PLANNED_DESTINATION = [];
+var ACTIVE_PLANNED_DESTINATION: any[] = [];
+export function resetActivePlannedDestination() { ACTIVE_PLANNED_DESTINATION = []; }
 
 export async function getTripData(tripID) {
 	if (!tripID) return;

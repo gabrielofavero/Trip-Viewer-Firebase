@@ -1,12 +1,12 @@
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
 import { canConvert, convertCurrency, filterCurrencies, formatCurrency, getCurrencySymbol, loadCurrenciesObject, sortCurrencies } from '../../../models/expense.model.js';
-import { setTabListeners } from "../expenses.js";
+import { setTabListeners, applyExpenses } from "../expenses.js";
 import { EXPENSES_DATA } from '../expenses.js';
 
-var DEFAULT_CURRENCY;
-var CURRENCY_CONVERSION = {};
-var CURRENT_CURRENCY;
+export var DEFAULT_CURRENCY;
+export var CURRENCY_CONVERSION: Record<string, number> = {};
+export var CURRENT_CURRENCY;
 
 export var CURRENCIES = {
 	summary: [],

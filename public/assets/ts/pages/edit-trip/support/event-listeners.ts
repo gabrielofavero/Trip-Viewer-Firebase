@@ -8,7 +8,7 @@ import { registerActions } from '../../../ui/actions.js';
 import { registerActions as registerMessageActions } from '../../../utils/messages.js';
 import { openTravelersInfo, saveTravelersInfo } from '../categories/travelers.js';
 import { requestPinEditExpenses, reconfirmPin, validatePin } from '../categories/basic-data/protected-data.js';
-import { deleteTrip, deleteTripAction } from '../edit-trip.js';
+import { deleteTrip, deleteTripAction, NEW_TRIP } from '../edit-trip.js';
 import { DOCUMENT_ID, SUCCESSFUL_SAVE } from '../../../data/state.js';
 import { openInnerExpense, deleteInnerExpense, saveInnerExpense } from '../categories/expenses.js';
 import { openAttributions } from '../../../utils/attributions.js';

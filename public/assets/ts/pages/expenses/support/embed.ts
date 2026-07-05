@@ -29,13 +29,13 @@ function onViewMessage(data) {
 	}
 }
 
-function sendHeightMessageToParent() {
+export function sendHeightMessageToParent() {
 	setTimeout(() => {
 		sendToParent("height", getID("expenses-content").scrollHeight);
 	}, 500);
 }
 
-function embedAfterLoadAction(pin) {
+export function embedAfterLoadAction(pin) {
 	for (const card of document.querySelectorAll(".expenses-card")) {
 		card.classList.add("container-mode");
 	}

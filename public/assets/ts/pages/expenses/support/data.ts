@@ -2,6 +2,7 @@ import { getID } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
 import { isOnDarkMode } from '../../../theme/visibility.js';
 import { formatCurrency, getArrayRGBA, getChartColorsRGB, getChartConfig, getChartData } from '../../../models/expense.model.js';
+import { EXPENSES_DATA } from '../expenses.js';
 
 var EXPENSES_CHARTS = {};
 

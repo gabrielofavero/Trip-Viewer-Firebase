@@ -14,9 +14,7 @@ import { ACTIVE_CATEGORY, getDestinationID, getItem, getItemFromJ, processAccord
 import { getDestinationsAccordionBodyHTML } from "./support/content.js";
 import { getDestinationsHTML } from "./support/content.js";
 import { getEditHTML } from "./support/content.js";
-import { populatePlannedDestinationEditField } from "./support/trip.js";
-import { refreshTripData } from "./support/trip.js";
-import { setPlannedDestination } from "./support/trip.js";
+import { populatePlannedDestinationEditField, refreshTripData, resetActivePlannedDestination, setPlannedDestination } from "./support/trip.js";
 import { openDestinationsAccordion } from "./support/visibility.js";
 
 let ADDED_J;
@@ -344,7 +342,7 @@ export async function deleteEdit(id) {
 function abortEdit(title, message) {
 	displayMessage(translate(title), translate(message));
 	adjustEditVisibility();
-	ACTIVE_PLANNED_DESTINATION = [];
+	resetActivePlannedDestination();
 }
 
 function editError(message = "messages.errors.unknown") {
@@ -362,7 +360,7 @@ export function closeAddedDestination(index?) {
 	removeEl(`destinations-box-${ADDED_J}`);
 	adjustEditVisibility();
 	ADDED_J = null;
-	ACTIVE_PLANNED_DESTINATION = [];
+	resetActivePlannedDestination();
 }
 
 function restoreAccordionBody(j: number, item: Record<string, any>): void {

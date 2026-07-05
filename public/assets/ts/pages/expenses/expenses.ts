@@ -20,7 +20,7 @@ var TOTAL_EXPENSES = {
 var ACTIVE_EXPENSE_TAB = "summary";
 
 import { loadExpensesListeners } from './support/event-listeners.js';
-import { loadEmbedMode } from "./support/embed.js";
+import { loadEmbedMode, embedAfterLoadAction, sendHeightMessageToParent } from "./support/embed.js";
 import { requestInvalidPin } from "../../utils/pin.js";
 import { loadDuringTripExpenses, loadPreTripExpenses, loadSummary, loadTravelerExpenses } from "./categories.js";
 import { EXPENSES_EMBED } from './support/embed.js';
@@ -152,7 +152,7 @@ async function loadExpenses() {
 	}
 }
 
-function applyExpenses() {
+export function applyExpenses() {
 	const hasPreTrip = EXPENSES_DATA.preTrip?.length > 0;
 	const hasDuringTrip = EXPENSES_DATA.duringTrip?.length > 0;
 

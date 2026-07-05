@@ -6,7 +6,7 @@ import { deleteUserObjectDB, getPermissions, getSingleData, getTripDataWithDesti
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
 import { newDynamicSelect } from '../../ui/dynamic-select.js';
 import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
-import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '../../data/firebase/storage.js';
+import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector, setPermissions } from '../../data/firebase/storage.js';
 import { snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
@@ -21,13 +21,12 @@ import { initEditTabs } from "../../ui/edit-tabs.js";
 import { DateRangePicker } from "../../ui/date-range-picker.js";
 import { enhanceAllColorPickers } from "../../ui/color-picker-hex.js";
 
-var PERMISSIONS;
 export var FIRESTORE_PROTECTED_DATA: Record<string, any> = {};
 export var FIRESTORE_EXPENSES_DATA: Record<string, any> = {};
 export function setExpensesData(val: any) { FIRESTORE_EXPENSES_DATA = val; }
 
 export function setSuccessfulSave(val) { setSuccessfulSaveFn(val); }
-var NEW_TRIP = false;
+export var NEW_TRIP = false;
 
 const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
@@ -36,7 +35,7 @@ startLoadingScreen();
 
 export async function loadEditTripPage() {
 	setDocumentId(getURLParam("t"));
-	PERMISSIONS = await getPermissions();
+	setPermissions(await getPermissions());
 
 	loadVisibilityIndex();
 	initEditTabs();

@@ -2,7 +2,7 @@
 // Pure data transformation functions for trip data
 // Extracted from: view/categories/summary.js, edit-trip/
 
-import { convertFromDateObject } from '../utils/dates.js';
+import { convertFromDateObject, getFormattedDate } from '../utils/dates.js';
 import type { Trip, DateObject, Traveler } from './new-schema.js';
 
 // ======= Trip Duration & Traveler Count =======

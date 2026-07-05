@@ -7,6 +7,7 @@ import { getTravelersObject } from "./travelers.js";
 import { TRAVELERS } from '../../../data/state.js';
 import { getTravelerName } from "./travelers.js";
 import { getTravelersSelectOptionsHTML } from "./travelers.js";
+import { FIRESTORE_EXPENSES_DATA } from "../edit-trip.js";
 import { getSharingObject } from "../set-trip.js";
 
 var INNER_EXPENSES = {

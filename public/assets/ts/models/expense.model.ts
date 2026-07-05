@@ -9,7 +9,10 @@ import { getEmptyChar } from '../utils/dom.js';
 import { isOnDarkMode } from '../theme/visibility.js';
 import { hexToRgb, rgbToText } from '../theme/colors.js';
 import { EXPENSES_DATA } from "../pages/expenses/expenses.js";
-import { CURRENCIES } from "../pages/expenses/support/currency.js";
+import { CURRENCIES, DEFAULT_CURRENCY, CURRENCY_CONVERSION, CURRENT_CURRENCY } from "../pages/expenses/support/currency.js";
+
+// ======= Global state (shared across modules) =======
+export var EXPENSES_CONVERTED: Record<string, any> = {};
 
 // ======= Currency Filtering & Sorting =======
 

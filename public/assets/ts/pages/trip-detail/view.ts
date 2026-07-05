@@ -12,7 +12,7 @@ import { loadViewListeners } from './support/event-listeners.js';
 import { adjustCardsHeights, adjustCardsHeightsListener, loadViewVisibility, mainView } from "./support/visibility.js";
 import { loadViewEmbed, openExpensesEmbed } from "./support/embed.js";
 import { loadSensitiveReservations, requestDocumentPin, protectedDataConfirmAction } from "./support/sensitive-reservation.js";
-import { adjustDestinationsHTML, loadDestinations, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
+import { setActiveDestination, adjustDestinationsHTML, loadDestinations, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
 import { adjustPortfolioHeight, loadGallery, refreshCategorias } from "./categories/gallery.js";
 import { loadSummary } from "./categories/summary.js";
 import { loadTransportation } from "./categories/transportation-module.js";
@@ -404,7 +404,7 @@ function loadModules() {
 
 			if (DESTINATIONS.length === 1) {
 				setUniqueDestinationText();
-				ACTIVE_DESTINATION = DESTINATIONS[0].id;
+				setActiveDestination(DESTINATIONS[0].id);
 			}
 
 			loadDestinations();
@@ -415,7 +415,7 @@ function loadModules() {
 			const destinations = getState();
 
 			setDestinations([{ id, destinations }]);
-			ACTIVE_DESTINATION = id;
+			setActiveDestination(id);
 
 			getID("destinations-select").style.display = "none";
 

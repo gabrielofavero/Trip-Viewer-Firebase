@@ -2,7 +2,8 @@ import { getIcons } from '../../app/config.js';
 import { getID } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
 import { setChart, setTable } from "./support/data.js";
-import { formatCurrency } from "../../models/expense.model.js";
+import { formatCurrency, EXPENSES_CONVERTED } from "../../models/expense.model.js";
+import { CURRENT_CURRENCY } from "./support/currency.js";
 
 // Summary
 export function loadSummary() {

@@ -3,7 +3,7 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { cloneObject, getChildIDs, getID, getOrderedDocumentByTitle, getURLParam, setRequired } from '../../utils/dom.js';
 import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/firebase/database.js';
 import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
-import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector } from '../../data/firebase/storage.js';
+import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector, setPermissions } from '../../data/firebase/storage.js';
 import { hasUnsavedChanges, reEdit, snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule, searchDestinationsListenerAction } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
@@ -11,11 +11,11 @@ import { displayFullMessage, MESSAGE_PROPERTIES, registerActions } from '../../u
 import { loadVisibilityIndex } from '../home/support/visibility.js';
 
 var FIRESTORE_PROTECTED_DATA = {};
-var PERMISSIONS;
 
 startLoadingScreen();
 
 import { loadEditListingListeners } from './support/event-listeners.js';
+import { buildCompartilhamentoObject, buildDestinosArray, buildImagemObject, buildLinksObject } from './support/build-listing-objects.js';
 import { getVisibility } from "../../theme/theme.js";
 import { loadUploadSelector } from "../../data/firebase/storage.js";
 import { loadListData } from "./existing-listing.js";
@@ -32,7 +32,7 @@ export async function loadEditListingPage() {
 	registerActions({ deleteListagemAction });
 
 	setDocumentId(getURLParam("l"));
-	PERMISSIONS = await getPermissions();
+	setPermissions(await getPermissions());
 
 	loadVisibilityIndex();
 	initEditTabs();

@@ -14,6 +14,7 @@ import { SCHEDULE_DESTINATIONS } from "./itinerary-module/itinerary-module.js";
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var ACTIVE_DESTINATION;
+export function setActiveDestination(val: any) { ACTIVE_DESTINATION = val; }
 var DESTINO_EXPORT = {};
 var DESTINO_TRANSLATIONS = {};
 

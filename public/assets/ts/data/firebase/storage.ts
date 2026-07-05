@@ -10,6 +10,7 @@ export let IMAGE_UPLOAD_STATUS = {
 
 export let UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
 export let PERMISSIONS;
+export function setPermissions(val: any) { PERMISSIONS = val; }
 export let IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-enable image uploads
 
 export async function uploadImage(path, file) {
@@ -219,6 +220,8 @@ export function loadImageSelector(type) {
 export function removeImageSelectorListeners(type) {
 	const checkboxLink = getID(`enable-link-${type}`);
 	const checkboxUpload = getID(`enable-upload-${type}`);
+	const link = getID(`link-${type}`);
+	const upload = getID(`upload-${type}`);
 
 	checkboxLink.removeEventListener("change", function () {
 		if (checkboxLink.checked) {
