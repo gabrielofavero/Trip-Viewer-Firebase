@@ -1,11 +1,11 @@
 // ======= CSS RULES =======
 export function setCSSRule(selector, property, value) {
 	const rule = `${property}: ${value};`;
-	let styleElement = document.getElementById("custom-styles");
+	let styleElement = document.getElementById('custom-styles');
 
 	if (!styleElement) {
-		styleElement = document.createElement("style");
-		styleElement.id = "custom-styles";
+		styleElement = document.createElement('style');
+		styleElement.id = 'custom-styles';
 		document.head.appendChild(styleElement);
 	}
 
@@ -37,7 +37,7 @@ export function setCSSRule(selector, property, value) {
 }
 
 export function removeCSSRule(selector, property) {
-	let styleElement = document.getElementById("custom-styles");
+	let styleElement = document.getElementById('custom-styles');
 	if (!styleElement) {
 		return;
 	}
@@ -71,11 +71,11 @@ export function removeCSSRuleBatch(selector, properties) {
 export function setCSSMediaRule(media, selector, property, value) {
 	const rule = `${selector} { ${property}: ${value}; }`;
 	const mediaRule = `@media (${media}) { ${rule} }`;
-	let styleElement = document.getElementById("custom-media-styles");
+	let styleElement = document.getElementById('custom-media-styles');
 
 	if (!styleElement) {
-		styleElement = document.createElement("style");
-		styleElement.id = "custom-media-styles";
+		styleElement = document.createElement('style');
+		styleElement.id = 'custom-media-styles';
 		document.head.appendChild(styleElement);
 	}
 
@@ -108,10 +108,7 @@ export function setCSSMediaRule(media, selector, property, value) {
 		if (selectorRuleIndex !== -1) {
 			(mediaStyleSheet[selectorRuleIndex] as CSSStyleRule).style[property] = value;
 		} else {
-			mediaRule.insertRule(
-				rule,
-				mediaStyleSheet.length,
-			);
+			mediaRule.insertRule(rule, mediaStyleSheet.length);
 		}
 	} else {
 		styleSheet.insertRule(mediaRule, styleSheet.cssRules.length);
@@ -119,7 +116,7 @@ export function setCSSMediaRule(media, selector, property, value) {
 }
 
 export function removeCSSMediaRule(media, selector, property) {
-	let styleElement = document.getElementById("custom-media-styles");
+	let styleElement = document.getElementById('custom-media-styles');
 	if (!styleElement) {
 		return;
 	}
@@ -130,11 +127,11 @@ export function removeCSSMediaRule(media, selector, property) {
 		if (cssRule.media && cssRule.media.mediaText === `(${media})`) {
 			const mediaStyleSheet = cssRule.cssRules;
 			for (let j = 0; j < mediaStyleSheet.length; j++) {
-			const innerRule = mediaStyleSheet[j] as CSSStyleRule;
-			if (innerRule.selectorText === selector) {
-				innerRule.style.removeProperty(property);
-				if (innerRule.style.length === 0) {
-					(mediaStyleSheet as any).deleteRule(j);
+				const innerRule = mediaStyleSheet[j] as CSSStyleRule;
+				if (innerRule.selectorText === selector) {
+					innerRule.style.removeProperty(property);
+					if (innerRule.style.length === 0) {
+						(mediaStyleSheet as any).deleteRule(j);
 					}
 					break;
 				}
@@ -167,5 +164,3 @@ export function setCSSVariable(variable, value) {
 export function removeCSSVariable(variable) {
 	document.documentElement.style.removeProperty(`--${variable}`);
 }
-
-

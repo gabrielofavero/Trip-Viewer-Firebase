@@ -1,9 +1,31 @@
-import { getState, setState, DOCUMENT_ID, DESTINATIONS, FIRESTORE_NEW_DATA, SUCCESSFUL_SAVE, setDocumentId, setDestinations, setFirestoreNewData } from '../../data/state.js';
+import {
+	getState,
+	setState,
+	DOCUMENT_ID,
+	DESTINATIONS,
+	FIRESTORE_NEW_DATA,
+	SUCCESSFUL_SAVE,
+	setDocumentId,
+	setDestinations,
+	setFirestoreNewData,
+} from '../../data/state.js';
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
-import { cloneObject, getChildIDs, getID, getOrderedDocumentByTitle, getURLParam, setRequired } from '../../utils/dom.js';
+import {
+	cloneObject,
+	getChildIDs,
+	getID,
+	getOrderedDocumentByTitle,
+	getURLParam,
+	setRequired,
+} from '../../utils/dom.js';
 import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/firebase/database.js';
 import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
-import { deleteUserObjectStorage, loadImageSelector, loadLogoSelector, setPermissions } from '../../data/firebase/storage.js';
+import {
+	deleteUserObjectStorage,
+	loadImageSelector,
+	loadLogoSelector,
+	setPermissions,
+} from '../../data/firebase/storage.js';
 import { hasUnsavedChanges, reEdit, snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule, searchDestinationsListenerAction } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
@@ -15,15 +37,20 @@ var FIRESTORE_PROTECTED_DATA = {};
 startLoadingScreen();
 
 import { loadEditListingListeners } from './support/event-listeners.js';
-import { buildCompartilhamentoObject, buildDestinosArray, buildImagemObject, buildLinksObject } from './support/build-listing-objects.js';
-import { getVisibility } from "../../theme/theme.js";
-import { loadUploadSelector } from "../../data/firebase/storage.js";
-import { loadListData } from "./existing-listing.js";
-import { autoFillDarkColor } from "../edit-trip/categories/customization.js";
-import { loadDestinations } from "../edit-trip/new-trip.js";
-import { setDocumento } from "../../utils/set.js";
-import { initEditTabs } from "../../ui/edit-tabs.js";
-import { enhanceAllColorPickers } from "../../ui/color-picker-hex.js";
+import {
+	buildCompartilhamentoObject,
+	buildDestinosArray,
+	buildImagemObject,
+	buildLinksObject,
+} from './support/build-listing-objects.js';
+import { getVisibility } from '../../theme/theme.js';
+import { loadUploadSelector } from '../../data/firebase/storage.js';
+import { loadListData } from './existing-listing.js';
+import { autoFillDarkColor } from '../edit-trip/categories/customization.js';
+import { loadDestinations } from '../edit-trip/new-trip.js';
+import { setDocumento } from '../../utils/set.js';
+import { initEditTabs } from '../../ui/edit-tabs.js';
+import { enhanceAllColorPickers } from '../../ui/color-picker-hex.js';
 
 export async function loadEditListingPage() {
 	loadEditListingListeners();
@@ -31,7 +58,7 @@ export async function loadEditListingPage() {
 	// Register string-based button actions used in modals
 	registerActions({ deleteListagemAction });
 
-	setDocumentId(getURLParam("l"));
+	setDocumentId(getURLParam('l'));
 	setPermissions(await getPermissions());
 
 	loadVisibilityIndex();
@@ -47,7 +74,7 @@ export async function loadEditListingPage() {
 		loadDestinations();
 	}
 
-	loadImageSelector("background");
+	loadImageSelector('background');
 	loadLogoSelector();
 
 	loadEventListeners();
@@ -56,70 +83,65 @@ export async function loadEditListingPage() {
 
 	enhanceAllColorPickers();
 
-	$("body").css("overflow", "auto");
+	$('body').css('overflow', 'auto');
 }
 
 function loadHabilitados() {
-	loadEditModule("images");
-	loadEditModule("colors");
-	loadEditModule("links");
+	loadEditModule('images');
+	loadEditModule('colors');
+	loadEditModule('links');
 }
 
 function loadUploadSelectors() {
-	loadUploadSelector("background");
-	loadUploadSelector("logo");
+	loadUploadSelector('background');
+	loadUploadSelector('logo');
 }
 
 function loadEventListeners() {
-	getID("cancel-btn").addEventListener("click", () => {
-		window.location.href = "../index.html";
+	getID('cancel-btn').addEventListener('click', () => {
+		window.location.href = '../index.html';
 	});
 
-	getID("home").addEventListener("click", () => {
-		window.location.href = "../index.html";
+	getID('home').addEventListener('click', () => {
+		window.location.href = '../index.html';
 	});
 
-	getID("visualizar").addEventListener("click", () => {
+	getID('visualizar').addEventListener('click', () => {
 		if (DOCUMENT_ID) {
-			window.open(
-				`../view?l=${DOCUMENT_ID}&visibility=${getVisibility()}`,
-				"_blank",
-			);
+			window.open(`../view?l=${DOCUMENT_ID}&visibility=${getVisibility()}`, '_blank');
 		} else {
-			window.location.href = "../index.html";
+			window.location.href = '../index.html';
 		}
 	});
 
-	getID("save-btn").addEventListener("click", () => {
+	getID('save-btn').addEventListener('click', () => {
 		setListagem();
 	});
 
-	getID("re-edit").addEventListener("click", () => {
-		reEdit("listings", SUCCESSFUL_SAVE);
+	getID('re-edit').addEventListener('click', () => {
+		reEdit('listings', SUCCESSFUL_SAVE);
 	});
 
-	getID("home").addEventListener("click", () => {
-		window.location.href = "../index.html";
+	getID('home').addEventListener('click', () => {
+		window.location.href = '../index.html';
 	});
 
-	getID("destinations-search").addEventListener("input", () =>
-		searchDestinationsListenerAction(),
-	);
+	getID('destinations-search').addEventListener('input', () => searchDestinationsListenerAction());
 
-	window.addEventListener("beforeunload", (event) => {
+	window.addEventListener('beforeunload', (event) => {
 		if (hasUnsavedChanges() && !SUCCESSFUL_SAVE) {
 			event.preventDefault();
-			event.returnValue = translate("messages.exit_confirmation");
+			event.returnValue = translate('messages.exit_confirmation');
 		}
 	});
-	getID("light").addEventListener("change", () => autoFillDarkColor());
+	getID('light').addEventListener('change', () => autoFillDarkColor());
 }
 
 async function carregarListagem() {
-	getID("delete-text").style.display = "block";
+	getID('delete-text').style.display = 'block';
 	startLoadingScreen();
 
-	setState(await getSingleData("listings"));
+	setState(await getSingleData('listings'));
 
 	await loadListData(getState());
 	stopLoadingScreen();
@@ -129,19 +151,19 @@ async function buildListObject() {
 	setFirestoreNewData({
 		sharing: await buildCompartilhamentoObject(),
 		colors: {
-			active: getID("colors-enabled").checked,
-			light: getID("light").value,
-			dark: getID("dark").value,
+			active: getID('colors-enabled').checked,
+			light: getID('light').value,
+			dark: getID('dark').value,
 		},
-		description: getID("description").value,
+		description: getID('description').value,
 		destinations: buildDestinosArray(),
 		image: buildImagemObject(),
 		links: buildLinksObject(),
-		subtitle: getID("subtitle").value,
-		title: getID("title").value,
+		subtitle: getID('subtitle').value,
+		title: getID('title').value,
 		version: {
 			lastUpdated: new Date().toISOString(),
-			showInDestinations: getID("show-in-destinations").checked,
+			showInDestinations: getID('show-in-destinations').checked,
 		},
 	});
 }
@@ -156,30 +178,32 @@ function getIgnoredPathDestinos() {
 }
 
 async function setListagem() {
-	for (const child of getChildIDs("has-destinations")) {
-		const i = parseInt(child.split("-")[2]);
+	for (const child of getChildIDs('has-destinations')) {
+		const i = parseInt(child.split('-')[2]);
 		setRequired(`select-destinations-${i}`);
 	}
 
-	const type = "listings";
+	const type = 'listings';
 	const dataBuildingFunctions = [buildListObject];
 	await setDocumento({ type, dataBuildingFunctions });
 }
 
 export function deleteListagem() {
-	let listing = getID("title").value;
-	listing = listing ? ` "${listing}"` : "";
+	let listing = getID('title').value;
+	listing = listing ? ` "${listing}"` : '';
 
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate("listing.delete.title");
-	properties.content = translate("listing.delete.message", { name: listing.replace(/^ "|"$/g, "") });
+	properties.title = translate('listing.delete.title');
+	properties.content = translate('listing.delete.message', {
+		name: listing.replace(/^ "|"$/g, ''),
+	});
 	properties.botoes = [
 		{
-			type: "cancel",
+			type: 'cancel',
 		},
 		{
-			type: "confirm",
-			action: "deleteListagemAction()",
+			type: 'confirm',
+			action: 'deleteListagemAction()',
 		},
 	];
 
@@ -188,8 +212,8 @@ export function deleteListagem() {
 
 export async function deleteListagemAction() {
 	if (DOCUMENT_ID) {
-		await deleteUserObjectDB(DOCUMENT_ID, "listings");
+		await deleteUserObjectDB(DOCUMENT_ID, 'listings');
 		await deleteUserObjectStorage();
-		window.location.href = "../index.html";
+		window.location.href = '../index.html';
 	}
 }

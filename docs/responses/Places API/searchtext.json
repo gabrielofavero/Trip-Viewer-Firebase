@@ -1,656 +1,627 @@
 {
-    "places": [
-        {
-            "name": "places/ChIJn3d6_ahZzpQRbl7Wejik-8E",
-            "id": "ChIJn3d6_ahZzpQRbl7Wejik-8E",
-            "types": [
-                "ramen_restaurant",
-                "japanese_curry_restaurant",
-                "japanese_restaurant",
-                "restaurant",
-                "point_of_interest",
-                "food",
-                "establishment"
-            ],
-            "nationalPhoneNumber": "(11) 3207-5626",
-            "internationalPhoneNumber": "+55 11 3207-5626",
-            "formattedAddress": "R. dos Estudantes, 34 - Liberdade, São Paulo - SP, 01325-070, Brazil",
-            "addressComponents": [
-                {
-                    "longText": "34",
-                    "shortText": "34",
-                    "types": [
-                        "street_number"
-                    ],
-                    "languageCode": "en-US"
-                },
-                {
-                    "longText": "Rua dos Estudantes",
-                    "shortText": "R. dos Estudantes",
-                    "types": [
-                        "route"
-                    ],
-                    "languageCode": "pt"
-                },
-                {
-                    "longText": "Liberdade",
-                    "shortText": "Liberdade",
-                    "types": [
-                        "sublocality_level_1",
-                        "sublocality",
-                        "political"
-                    ],
-                    "languageCode": "pt"
-                },
-                {
-                    "longText": "São Paulo",
-                    "shortText": "São Paulo",
-                    "types": [
-                        "administrative_area_level_2",
-                        "political"
-                    ],
-                    "languageCode": "pt"
-                },
-                {
-                    "longText": "São Paulo",
-                    "shortText": "SP",
-                    "types": [
-                        "administrative_area_level_1",
-                        "political"
-                    ],
-                    "languageCode": "pt"
-                },
-                {
-                    "longText": "Brazil",
-                    "shortText": "BR",
-                    "types": [
-                        "country",
-                        "political"
-                    ],
-                    "languageCode": "en"
-                },
-                {
-                    "longText": "01325-070",
-                    "shortText": "01325-070",
-                    "types": [
-                        "postal_code"
-                    ],
-                    "languageCode": "en-US"
-                }
-            ],
-            "plusCode": {
-                "globalCode": "588MC9V8+Q3",
-                "compoundCode": "C9V8+Q3 Liberdade, São Paulo - State of São Paulo, Brazil"
-            },
-            "location": {
-                "latitude": -23.555613899999997,
-                "longitude": -46.6348639
-            },
-            "viewport": {
-                "low": {
-                    "latitude": -23.5569208802915,
-                    "longitude": -46.6362085802915
-                },
-                "high": {
-                    "latitude": -23.554222919708494,
-                    "longitude": -46.6335106197085
-                }
-            },
-            "rating": 4.5,
-            "googleMapsUri": "https://maps.google.com/?cid=13977946430960459374&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-            "websiteUri": "http://www.momolamen.com.br/",
-            "regularOpeningHours": {
-                "openNow": true,
-                "periods": [
-                    {
-                        "open": {
-                            "day": 0,
-                            "hour": 11,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 0,
-                            "hour": 21,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 1,
-                            "hour": 11,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 1,
-                            "hour": 16,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 2,
-                            "hour": 11,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 2,
-                            "hour": 16,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 3,
-                            "hour": 11,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 3,
-                            "hour": 16,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 4,
-                            "hour": 11,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 4,
-                            "hour": 16,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 4,
-                            "hour": 18,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 4,
-                            "hour": 21,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 5,
-                            "hour": 11,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 5,
-                            "hour": 16,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 5,
-                            "hour": 18,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 5,
-                            "hour": 21,
-                            "minute": 0
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 6,
-                            "hour": 11,
-                            "minute": 0
-                        },
-                        "close": {
-                            "day": 6,
-                            "hour": 21,
-                            "minute": 0
-                        }
-                    }
-                ],
-                "weekdayDescriptions": [
-                    "Monday: 11:00 AM – 4:00 PM",
-                    "Tuesday: 11:00 AM – 4:00 PM",
-                    "Wednesday: 11:00 AM – 4:00 PM",
-                    "Thursday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
-                    "Friday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
-                    "Saturday: 11:00 AM – 9:00 PM",
-                    "Sunday: 11:00 AM – 9:00 PM"
-                ],
-                "nextCloseTime": "2026-06-04T19:00:00Z"
-            },
-            "utcOffsetMinutes": -180,
-            "adrFormatAddress": "<span class=\"street-address\">R. dos Estudantes, 34</span> - <span class=\"extended-address\">Liberdade</span>, <span class=\"locality\">São Paulo</span> - <span class=\"region\">SP</span>, <span class=\"postal-code\">01325-070</span>, <span class=\"country-name\">Brazil</span>",
-            "businessStatus": "OPERATIONAL",
-            "priceLevel": "PRICE_LEVEL_MODERATE",
-            "userRatingCount": 9070,
-            "iconMaskBaseUri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
-            "iconBackgroundColor": "#FF9E67",
-            "displayName": {
-                "text": "Momo Lamen",
-                "languageCode": "pt"
-            },
-            "primaryTypeDisplayName": {
-                "text": "Ramen Restaurant",
-                "languageCode": "en-US"
-            },
-            "takeout": true,
-            "delivery": true,
-            "dineIn": true,
-            "servesBreakfast": false,
-            "servesLunch": true,
-            "servesDinner": true,
-            "servesBeer": true,
-            "servesWine": false,
-            "servesBrunch": false,
-            "servesVegetarianFood": true,
-            "currentOpeningHours": {
-                "openNow": true,
-                "periods": [
-                    {
-                        "open": {
-                            "day": 0,
-                            "hour": 11,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 7
-                            }
-                        },
-                        "close": {
-                            "day": 0,
-                            "hour": 21,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 7
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 1,
-                            "hour": 11,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 8
-                            }
-                        },
-                        "close": {
-                            "day": 1,
-                            "hour": 16,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 8
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 2,
-                            "hour": 11,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 9
-                            }
-                        },
-                        "close": {
-                            "day": 2,
-                            "hour": 16,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 9
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 3,
-                            "hour": 11,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 10
-                            }
-                        },
-                        "close": {
-                            "day": 3,
-                            "hour": 16,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 10
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 4,
-                            "hour": 11,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 4
-                            }
-                        },
-                        "close": {
-                            "day": 4,
-                            "hour": 16,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 4
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 4,
-                            "hour": 18,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 4
-                            }
-                        },
-                        "close": {
-                            "day": 4,
-                            "hour": 21,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 4
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 5,
-                            "hour": 11,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 5
-                            }
-                        },
-                        "close": {
-                            "day": 5,
-                            "hour": 16,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 5
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 5,
-                            "hour": 18,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 5
-                            }
-                        },
-                        "close": {
-                            "day": 5,
-                            "hour": 21,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 5
-                            }
-                        }
-                    },
-                    {
-                        "open": {
-                            "day": 6,
-                            "hour": 11,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 6
-                            }
-                        },
-                        "close": {
-                            "day": 6,
-                            "hour": 21,
-                            "minute": 0,
-                            "date": {
-                                "year": 2026,
-                                "month": 6,
-                                "day": 6
-                            }
-                        }
-                    }
-                ],
-                "weekdayDescriptions": [
-                    "Monday: 11:00 AM – 4:00 PM",
-                    "Tuesday: 11:00 AM – 4:00 PM",
-                    "Wednesday: 11:00 AM – 4:00 PM",
-                    "Thursday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
-                    "Friday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
-                    "Saturday: 11:00 AM – 9:00 PM",
-                    "Sunday: 11:00 AM – 9:00 PM"
-                ],
-                "nextCloseTime": "2026-06-04T19:00:00Z"
-            },
-            "primaryType": "ramen_restaurant",
-            "shortFormattedAddress": "R. dos Estudantes, 34 - Liberdade, São Paulo",
-            "editorialSummary": {
-                "text": "Snug, no-frills setting for classic Japanese noodle soups with a variety of toppings & dumplings.",
-                "languageCode": "en"
-            },
-            "outdoorSeating": false,
-            "liveMusic": false,
-            "menuForChildren": false,
-            "servesCocktails": false,
-            "servesDessert": true,
-            "servesCoffee": true,
-            "goodForChildren": true,
-            "allowsDogs": false,
-            "restroom": true,
-            "goodForGroups": true,
-            "goodForWatchingSports": false,
-            "paymentOptions": {
-                "acceptsCreditCards": true,
-                "acceptsDebitCards": true,
-                "acceptsCashOnly": false,
-                "acceptsNfc": true
-            },
-            "parkingOptions": {
-                "paidStreetParking": true
-            },
-            "accessibilityOptions": {
-                "wheelchairAccessibleParking": false,
-                "wheelchairAccessibleEntrance": true,
-                "wheelchairAccessibleRestroom": true,
-                "wheelchairAccessibleSeating": true
-            },
-            "addressDescriptor": {
-                "landmarks": [
-                    {
-                        "name": "places/ChIJbWmi2ahZzpQRnvZM7tkFpac",
-                        "placeId": "ChIJbWmi2ahZzpQRnvZM7tkFpac",
-                        "displayName": {
-                            "text": "Sogo Plaza Shopping",
-                            "languageCode": "pt"
-                        },
-                        "types": [
-                            "establishment",
-                            "point_of_interest",
-                            "shopping_mall"
-                        ],
-                        "spatialRelationship": "AROUND_THE_CORNER",
-                        "straightLineDistanceMeters": 62.333603,
-                        "travelDistanceMeters": 91.11308
-                    },
-                    {
-                        "name": "places/ChIJL7T4G6lZzpQR1pzauoGi1gI",
-                        "placeId": "ChIJL7T4G6lZzpQR1pzauoGi1gI",
-                        "displayName": {
-                            "text": "Tanka Restaurante",
-                            "languageCode": "pt"
-                        },
-                        "types": [
-                            "establishment",
-                            "food",
-                            "point_of_interest",
-                            "restaurant"
-                        ],
-                        "spatialRelationship": "AROUND_THE_CORNER",
-                        "straightLineDistanceMeters": 48.00488,
-                        "travelDistanceMeters": 64.89624
-                    },
-                    {
-                        "name": "places/ChIJ174XRqZZzpQR2ohylMT5d8s",
-                        "placeId": "ChIJ174XRqZZzpQR2ohylMT5d8s",
-                        "displayName": {
-                            "text": "Liberdade - Shopping Trade Center",
-                            "languageCode": "pt"
-                        },
-                        "types": [
-                            "establishment",
-                            "point_of_interest",
-                            "shopping_mall"
-                        ],
-                        "spatialRelationship": "AROUND_THE_CORNER",
-                        "straightLineDistanceMeters": 21.57957,
-                        "travelDistanceMeters": 70.58413
-                    },
-                    {
-                        "name": "places/ChIJi_GmIYRZzpQRnpAxZF6gNBA",
-                        "placeId": "ChIJi_GmIYRZzpQRnpAxZF6gNBA",
-                        "displayName": {
-                            "text": "We Coffee",
-                            "languageCode": "en"
-                        },
-                        "types": [
-                            "bakery",
-                            "cafe",
-                            "establishment",
-                            "food",
-                            "point_of_interest",
-                            "store"
-                        ],
-                        "spatialRelationship": "BESIDE",
-                        "straightLineDistanceMeters": 13.135441,
-                        "travelDistanceMeters": 12.864231
-                    },
-                    {
-                        "name": "places/ChIJv17fkKdZzpQRLQ7NykHT47s",
-                        "placeId": "ChIJv17fkKdZzpQRLQ7NykHT47s",
-                        "displayName": {
-                            "text": "Ikesaki Cosméticos - Galvão Bueno",
-                            "languageCode": "pt"
-                        },
-                        "types": [
-                            "beauty_salon",
-                            "establishment",
-                            "furniture_store",
-                            "home_goods_store",
-                            "point_of_interest",
-                            "store"
-                        ],
-                        "spatialRelationship": "AROUND_THE_CORNER",
-                        "straightLineDistanceMeters": 44.093052,
-                        "travelDistanceMeters": 85.59939
-                    }
-                ],
-                "areas": [
-                    {
-                        "name": "places/ChIJa4nJDKBZzpQRDeSky76of00",
-                        "placeId": "ChIJa4nJDKBZzpQRDeSky76of00",
-                        "displayName": {
-                            "text": "Liberdade",
-                            "languageCode": "en"
-                        },
-                        "containment": "WITHIN"
-                    },
-                    {
-                        "name": "places/ChIJLwcc3ahZzpQR_C8TME3BTgU",
-                        "placeId": "ChIJLwcc3ahZzpQR_C8TME3BTgU",
-                        "displayName": {
-                            "text": "Jardim Oriental Liberdade",
-                            "languageCode": "en"
-                        },
-                        "containment": "NEAR"
-                    }
-                ]
-            },
-            "googleMapsLinks": {
-                "directionsUri": "https://www.google.com/maps/dir//''/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!3e0?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-                "placeUri": "https://maps.google.com/?cid=13977946430960459374&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-                "writeAReviewUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!12e1?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-                "reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!9m1!1b1?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-                "photosUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!10e5?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
-            },
-            "priceRange": {
-                "startPrice": {
-                    "currencyCode": "BRL",
-                    "units": "60"
-                },
-                "endPrice": {
-                    "currencyCode": "BRL",
-                    "units": "80"
-                }
-            },
-            "reviewSummary": {
-                "text": {
-                    "text": "Diners say this restaurant offers delicious and well-prepared ramen, udon, and gyoza, with generous portions and a variety of options. They also highlight the reasonable prices, quick service, and pleasant atmosphere.\n\nSome reviews mention the service can be inattentive.",
-                    "languageCode": "en-US"
-                },
-                "flagContentUri": "https://www.google.com/local/content/rap/report?postId=5%401:CAIQACodChtyc19oOmt6NHhtZ25qbnhNRzY1X0VMV3lKdmc%7CCAIQACoqChtyc19oOmt6NHhtZ25qbnhNRzY1X0VMV3lKdmcSCwjd4cDQBhC42-8L&d=17924085&t=8",
-                "disclosureText": {
-                    "text": "Summarized with Gemini",
-                    "languageCode": "en-US"
-                },
-                "reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!9m1!1b1"
-            },
-            "timeZone": {
-                "id": "America/Sao_Paulo"
-            },
-            "postalAddress": {
-                "regionCode": "BR",
-                "languageCode": "en-US",
-                "postalCode": "01325-070",
-                "administrativeArea": "State of São Paulo",
-                "locality": "São Paulo",
-                "sublocality": "Liberdade",
-                "addressLines": [
-                    "R. dos Estudantes, 34"
-                ]
-            },
-            "googleMapsTypeLabel": {
-                "text": "Ramen Restaurant",
-                "languageCode": "en-US"
-            }
-        }
-    ],
-    "searchUri": "https://www.google.com/maps/search/Momo+Lamen"
+	"places": [
+		{
+			"name": "places/ChIJn3d6_ahZzpQRbl7Wejik-8E",
+			"id": "ChIJn3d6_ahZzpQRbl7Wejik-8E",
+			"types": [
+				"ramen_restaurant",
+				"japanese_curry_restaurant",
+				"japanese_restaurant",
+				"restaurant",
+				"point_of_interest",
+				"food",
+				"establishment"
+			],
+			"nationalPhoneNumber": "(11) 3207-5626",
+			"internationalPhoneNumber": "+55 11 3207-5626",
+			"formattedAddress": "R. dos Estudantes, 34 - Liberdade, São Paulo - SP, 01325-070, Brazil",
+			"addressComponents": [
+				{
+					"longText": "34",
+					"shortText": "34",
+					"types": ["street_number"],
+					"languageCode": "en-US"
+				},
+				{
+					"longText": "Rua dos Estudantes",
+					"shortText": "R. dos Estudantes",
+					"types": ["route"],
+					"languageCode": "pt"
+				},
+				{
+					"longText": "Liberdade",
+					"shortText": "Liberdade",
+					"types": ["sublocality_level_1", "sublocality", "political"],
+					"languageCode": "pt"
+				},
+				{
+					"longText": "São Paulo",
+					"shortText": "São Paulo",
+					"types": ["administrative_area_level_2", "political"],
+					"languageCode": "pt"
+				},
+				{
+					"longText": "São Paulo",
+					"shortText": "SP",
+					"types": ["administrative_area_level_1", "political"],
+					"languageCode": "pt"
+				},
+				{
+					"longText": "Brazil",
+					"shortText": "BR",
+					"types": ["country", "political"],
+					"languageCode": "en"
+				},
+				{
+					"longText": "01325-070",
+					"shortText": "01325-070",
+					"types": ["postal_code"],
+					"languageCode": "en-US"
+				}
+			],
+			"plusCode": {
+				"globalCode": "588MC9V8+Q3",
+				"compoundCode": "C9V8+Q3 Liberdade, São Paulo - State of São Paulo, Brazil"
+			},
+			"location": {
+				"latitude": -23.555613899999997,
+				"longitude": -46.6348639
+			},
+			"viewport": {
+				"low": {
+					"latitude": -23.5569208802915,
+					"longitude": -46.6362085802915
+				},
+				"high": {
+					"latitude": -23.554222919708494,
+					"longitude": -46.6335106197085
+				}
+			},
+			"rating": 4.5,
+			"googleMapsUri": "https://maps.google.com/?cid=13977946430960459374&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+			"websiteUri": "http://www.momolamen.com.br/",
+			"regularOpeningHours": {
+				"openNow": true,
+				"periods": [
+					{
+						"open": {
+							"day": 0,
+							"hour": 11,
+							"minute": 0
+						},
+						"close": {
+							"day": 0,
+							"hour": 21,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 1,
+							"hour": 11,
+							"minute": 0
+						},
+						"close": {
+							"day": 1,
+							"hour": 16,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 2,
+							"hour": 11,
+							"minute": 0
+						},
+						"close": {
+							"day": 2,
+							"hour": 16,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 3,
+							"hour": 11,
+							"minute": 0
+						},
+						"close": {
+							"day": 3,
+							"hour": 16,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 4,
+							"hour": 11,
+							"minute": 0
+						},
+						"close": {
+							"day": 4,
+							"hour": 16,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 4,
+							"hour": 18,
+							"minute": 0
+						},
+						"close": {
+							"day": 4,
+							"hour": 21,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 5,
+							"hour": 11,
+							"minute": 0
+						},
+						"close": {
+							"day": 5,
+							"hour": 16,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 5,
+							"hour": 18,
+							"minute": 0
+						},
+						"close": {
+							"day": 5,
+							"hour": 21,
+							"minute": 0
+						}
+					},
+					{
+						"open": {
+							"day": 6,
+							"hour": 11,
+							"minute": 0
+						},
+						"close": {
+							"day": 6,
+							"hour": 21,
+							"minute": 0
+						}
+					}
+				],
+				"weekdayDescriptions": [
+					"Monday: 11:00 AM – 4:00 PM",
+					"Tuesday: 11:00 AM – 4:00 PM",
+					"Wednesday: 11:00 AM – 4:00 PM",
+					"Thursday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
+					"Friday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
+					"Saturday: 11:00 AM – 9:00 PM",
+					"Sunday: 11:00 AM – 9:00 PM"
+				],
+				"nextCloseTime": "2026-06-04T19:00:00Z"
+			},
+			"utcOffsetMinutes": -180,
+			"adrFormatAddress": "<span class=\"street-address\">R. dos Estudantes, 34</span> - <span class=\"extended-address\">Liberdade</span>, <span class=\"locality\">São Paulo</span> - <span class=\"region\">SP</span>, <span class=\"postal-code\">01325-070</span>, <span class=\"country-name\">Brazil</span>",
+			"businessStatus": "OPERATIONAL",
+			"priceLevel": "PRICE_LEVEL_MODERATE",
+			"userRatingCount": 9070,
+			"iconMaskBaseUri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+			"iconBackgroundColor": "#FF9E67",
+			"displayName": {
+				"text": "Momo Lamen",
+				"languageCode": "pt"
+			},
+			"primaryTypeDisplayName": {
+				"text": "Ramen Restaurant",
+				"languageCode": "en-US"
+			},
+			"takeout": true,
+			"delivery": true,
+			"dineIn": true,
+			"servesBreakfast": false,
+			"servesLunch": true,
+			"servesDinner": true,
+			"servesBeer": true,
+			"servesWine": false,
+			"servesBrunch": false,
+			"servesVegetarianFood": true,
+			"currentOpeningHours": {
+				"openNow": true,
+				"periods": [
+					{
+						"open": {
+							"day": 0,
+							"hour": 11,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 7
+							}
+						},
+						"close": {
+							"day": 0,
+							"hour": 21,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 7
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 1,
+							"hour": 11,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 8
+							}
+						},
+						"close": {
+							"day": 1,
+							"hour": 16,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 8
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 2,
+							"hour": 11,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 9
+							}
+						},
+						"close": {
+							"day": 2,
+							"hour": 16,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 9
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 3,
+							"hour": 11,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 10
+							}
+						},
+						"close": {
+							"day": 3,
+							"hour": 16,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 10
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 4,
+							"hour": 11,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 4
+							}
+						},
+						"close": {
+							"day": 4,
+							"hour": 16,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 4
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 4,
+							"hour": 18,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 4
+							}
+						},
+						"close": {
+							"day": 4,
+							"hour": 21,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 4
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 5,
+							"hour": 11,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 5
+							}
+						},
+						"close": {
+							"day": 5,
+							"hour": 16,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 5
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 5,
+							"hour": 18,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 5
+							}
+						},
+						"close": {
+							"day": 5,
+							"hour": 21,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 5
+							}
+						}
+					},
+					{
+						"open": {
+							"day": 6,
+							"hour": 11,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 6
+							}
+						},
+						"close": {
+							"day": 6,
+							"hour": 21,
+							"minute": 0,
+							"date": {
+								"year": 2026,
+								"month": 6,
+								"day": 6
+							}
+						}
+					}
+				],
+				"weekdayDescriptions": [
+					"Monday: 11:00 AM – 4:00 PM",
+					"Tuesday: 11:00 AM – 4:00 PM",
+					"Wednesday: 11:00 AM – 4:00 PM",
+					"Thursday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
+					"Friday: 11:00 AM – 4:00 PM, 6:00 – 9:00 PM",
+					"Saturday: 11:00 AM – 9:00 PM",
+					"Sunday: 11:00 AM – 9:00 PM"
+				],
+				"nextCloseTime": "2026-06-04T19:00:00Z"
+			},
+			"primaryType": "ramen_restaurant",
+			"shortFormattedAddress": "R. dos Estudantes, 34 - Liberdade, São Paulo",
+			"editorialSummary": {
+				"text": "Snug, no-frills setting for classic Japanese noodle soups with a variety of toppings & dumplings.",
+				"languageCode": "en"
+			},
+			"outdoorSeating": false,
+			"liveMusic": false,
+			"menuForChildren": false,
+			"servesCocktails": false,
+			"servesDessert": true,
+			"servesCoffee": true,
+			"goodForChildren": true,
+			"allowsDogs": false,
+			"restroom": true,
+			"goodForGroups": true,
+			"goodForWatchingSports": false,
+			"paymentOptions": {
+				"acceptsCreditCards": true,
+				"acceptsDebitCards": true,
+				"acceptsCashOnly": false,
+				"acceptsNfc": true
+			},
+			"parkingOptions": {
+				"paidStreetParking": true
+			},
+			"accessibilityOptions": {
+				"wheelchairAccessibleParking": false,
+				"wheelchairAccessibleEntrance": true,
+				"wheelchairAccessibleRestroom": true,
+				"wheelchairAccessibleSeating": true
+			},
+			"addressDescriptor": {
+				"landmarks": [
+					{
+						"name": "places/ChIJbWmi2ahZzpQRnvZM7tkFpac",
+						"placeId": "ChIJbWmi2ahZzpQRnvZM7tkFpac",
+						"displayName": {
+							"text": "Sogo Plaza Shopping",
+							"languageCode": "pt"
+						},
+						"types": ["establishment", "point_of_interest", "shopping_mall"],
+						"spatialRelationship": "AROUND_THE_CORNER",
+						"straightLineDistanceMeters": 62.333603,
+						"travelDistanceMeters": 91.11308
+					},
+					{
+						"name": "places/ChIJL7T4G6lZzpQR1pzauoGi1gI",
+						"placeId": "ChIJL7T4G6lZzpQR1pzauoGi1gI",
+						"displayName": {
+							"text": "Tanka Restaurante",
+							"languageCode": "pt"
+						},
+						"types": [
+							"establishment",
+							"food",
+							"point_of_interest",
+							"restaurant"
+						],
+						"spatialRelationship": "AROUND_THE_CORNER",
+						"straightLineDistanceMeters": 48.00488,
+						"travelDistanceMeters": 64.89624
+					},
+					{
+						"name": "places/ChIJ174XRqZZzpQR2ohylMT5d8s",
+						"placeId": "ChIJ174XRqZZzpQR2ohylMT5d8s",
+						"displayName": {
+							"text": "Liberdade - Shopping Trade Center",
+							"languageCode": "pt"
+						},
+						"types": ["establishment", "point_of_interest", "shopping_mall"],
+						"spatialRelationship": "AROUND_THE_CORNER",
+						"straightLineDistanceMeters": 21.57957,
+						"travelDistanceMeters": 70.58413
+					},
+					{
+						"name": "places/ChIJi_GmIYRZzpQRnpAxZF6gNBA",
+						"placeId": "ChIJi_GmIYRZzpQRnpAxZF6gNBA",
+						"displayName": {
+							"text": "We Coffee",
+							"languageCode": "en"
+						},
+						"types": [
+							"bakery",
+							"cafe",
+							"establishment",
+							"food",
+							"point_of_interest",
+							"store"
+						],
+						"spatialRelationship": "BESIDE",
+						"straightLineDistanceMeters": 13.135441,
+						"travelDistanceMeters": 12.864231
+					},
+					{
+						"name": "places/ChIJv17fkKdZzpQRLQ7NykHT47s",
+						"placeId": "ChIJv17fkKdZzpQRLQ7NykHT47s",
+						"displayName": {
+							"text": "Ikesaki Cosméticos - Galvão Bueno",
+							"languageCode": "pt"
+						},
+						"types": [
+							"beauty_salon",
+							"establishment",
+							"furniture_store",
+							"home_goods_store",
+							"point_of_interest",
+							"store"
+						],
+						"spatialRelationship": "AROUND_THE_CORNER",
+						"straightLineDistanceMeters": 44.093052,
+						"travelDistanceMeters": 85.59939
+					}
+				],
+				"areas": [
+					{
+						"name": "places/ChIJa4nJDKBZzpQRDeSky76of00",
+						"placeId": "ChIJa4nJDKBZzpQRDeSky76of00",
+						"displayName": {
+							"text": "Liberdade",
+							"languageCode": "en"
+						},
+						"containment": "WITHIN"
+					},
+					{
+						"name": "places/ChIJLwcc3ahZzpQR_C8TME3BTgU",
+						"placeId": "ChIJLwcc3ahZzpQR_C8TME3BTgU",
+						"displayName": {
+							"text": "Jardim Oriental Liberdade",
+							"languageCode": "en"
+						},
+						"containment": "NEAR"
+					}
+				]
+			},
+			"googleMapsLinks": {
+				"directionsUri": "https://www.google.com/maps/dir//''/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!3e0?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"placeUri": "https://maps.google.com/?cid=13977946430960459374&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"writeAReviewUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!12e1?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!9m1!1b1?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+				"photosUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!10e5?g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+			},
+			"priceRange": {
+				"startPrice": {
+					"currencyCode": "BRL",
+					"units": "60"
+				},
+				"endPrice": {
+					"currencyCode": "BRL",
+					"units": "80"
+				}
+			},
+			"reviewSummary": {
+				"text": {
+					"text": "Diners say this restaurant offers delicious and well-prepared ramen, udon, and gyoza, with generous portions and a variety of options. They also highlight the reasonable prices, quick service, and pleasant atmosphere.\n\nSome reviews mention the service can be inattentive.",
+					"languageCode": "en-US"
+				},
+				"flagContentUri": "https://www.google.com/local/content/rap/report?postId=5%401:CAIQACodChtyc19oOmt6NHhtZ25qbnhNRzY1X0VMV3lKdmc%7CCAIQACoqChtyc19oOmt6NHhtZ25qbnhNRzY1X0VMV3lKdmcSCwjd4cDQBhC42-8L&d=17924085&t=8",
+				"disclosureText": {
+					"text": "Summarized with Gemini",
+					"languageCode": "en-US"
+				},
+				"reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x94ce59a8fd7a779f:0xc1fba4387ad65e6e!9m1!1b1"
+			},
+			"timeZone": {
+				"id": "America/Sao_Paulo"
+			},
+			"postalAddress": {
+				"regionCode": "BR",
+				"languageCode": "en-US",
+				"postalCode": "01325-070",
+				"administrativeArea": "State of São Paulo",
+				"locality": "São Paulo",
+				"sublocality": "Liberdade",
+				"addressLines": ["R. dos Estudantes, 34"]
+			},
+			"googleMapsTypeLabel": {
+				"text": "Ramen Restaurant",
+				"languageCode": "en-US"
+			}
+		}
+	],
+	"searchUri": "https://www.google.com/maps/search/Momo+Lamen"
 }

@@ -1,6 +1,5 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 const db = admin.firestore();
 const MAX_BATCH = 400;
@@ -8,7 +7,7 @@ const READ_CHUNK = 20; // limit concurrent reads to avoid throttling
 
 export const migrate = functions.https.onRequest(async (req, res) => {
 	try {
-		const usersSnapshot = await db.collection("usuarios").get();
+		const usersSnapshot = await db.collection('usuarios').get();
 
 		let batch = db.batch();
 		let batchCount = 0;
@@ -33,16 +32,14 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			await batch.commit();
 		}
 
-		res.status(200).send("Migration completed successfully.");
+		res.status(200).send('Migration completed successfully.');
 	} catch (err) {
-		console.error("Migration error:", err);
-		res.status(500).send("Migration failed.");
+		console.error('Migration error:', err);
+		res.status(500).send('Migration failed.');
 	}
 });
 
-async function buildTripMinimalData(
-	trips: Record<string, any>,
-): Promise<Record<string, any>> {
+async function buildTripMinimalData(trips: Record<string, any>): Promise<Record<string, any>> {
 	const result: Record<string, any> = {};
 	const ids = Object.keys(trips);
 
@@ -64,7 +61,7 @@ async function buildTripMinimalData(
 	for (let i = 0; i < idsNeedingFetch.length; i += READ_CHUNK) {
 		const chunk = idsNeedingFetch.slice(i, i + READ_CHUNK);
 
-		const refs = chunk.map((id) => db.collection("viagens").doc(id));
+		const refs = chunk.map((id) => db.collection('viagens').doc(id));
 		const snapshots = await db.getAll(...refs);
 
 		snapshots.forEach((snap, idx) => {

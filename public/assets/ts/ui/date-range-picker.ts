@@ -28,25 +28,55 @@ export class DateRangePicker {
 	private selecting: 'start' | 'end' = 'start';
 
 	private readonly monthKeys = [
-		'january', 'february', 'march', 'april', 'may', 'june',
-		'july', 'august', 'september', 'october', 'november', 'december'
+		'january',
+		'february',
+		'march',
+		'april',
+		'may',
+		'june',
+		'july',
+		'august',
+		'september',
+		'october',
+		'november',
+		'december',
 	];
-	private readonly weekDayKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+	private readonly weekDayKeys = [
+		'monday',
+		'tuesday',
+		'wednesday',
+		'thursday',
+		'friday',
+		'saturday',
+		'sunday',
+	];
 
 	private getMonths(): string[] {
-		return this.monthKeys.map(k => translate(`datetime.months.${k}`));
+		return this.monthKeys.map((k) => translate(`datetime.months.${k}`));
 	}
 
 	private getWeekDays(): string[] {
-		return this.weekDayKeys.map(k => translate(`datetime.weekdays.mini.${k}`));
+		return this.weekDayKeys.map((k) => translate(`datetime.weekdays.mini.${k}`));
 	}
 
 	private getShortcuts() {
 		return [
-			{ label: translate('datetime.datepicker.today'), get: () => this.shortcutToday() },
-			{ label: translate('datetime.datepicker.this_week'), get: () => this.shortcutThisWeek() },
-			{ label: translate('datetime.datepicker.this_month'), get: () => this.shortcutThisMonth() },
-			{ label: translate('datetime.datepicker.clear'), get: () => this.clear() },
+			{
+				label: translate('datetime.datepicker.today'),
+				get: () => this.shortcutToday(),
+			},
+			{
+				label: translate('datetime.datepicker.this_week'),
+				get: () => this.shortcutThisWeek(),
+			},
+			{
+				label: translate('datetime.datepicker.this_month'),
+				get: () => this.shortcutThisMonth(),
+			},
+			{
+				label: translate('datetime.datepicker.clear'),
+				get: () => this.clear(),
+			},
 		];
 	}
 
@@ -181,7 +211,12 @@ export class DateRangePicker {
 		const hasValue = this.startDate && this.endDate;
 		if (hasValue) {
 			const locale = getLanguagePackName() === 'pt' ? 'pt-BR' : 'en-US';
-		const fmt = (d: Date) => d.toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' });
+			const fmt = (d: Date) =>
+				d.toLocaleDateString(locale, {
+					month: 'short',
+					day: 'numeric',
+					year: 'numeric',
+				});
 			this.textEl.textContent = `${fmt(this.startDate!)} – ${fmt(this.endDate!)}`;
 			this.textEl.classList.remove('placeholder');
 			this.displayInput.classList.add('has-value');
@@ -301,11 +336,14 @@ export class DateRangePicker {
 		html += '</div>';
 
 		// Footer
-		const rangeLabel = this.startDate && this.endDate
-			? `${this.fmtShort(this.startDate)} – ${this.fmtShort(this.endDate)}`
-			: this.startDate
-				? translate('datetime.datepicker.start_pick_end', { start: this.fmtShort(this.startDate) })
-				: translate('datetime.datepicker.pick_start_date');
+		const rangeLabel =
+			this.startDate && this.endDate
+				? `${this.fmtShort(this.startDate)} – ${this.fmtShort(this.endDate)}`
+				: this.startDate
+					? translate('datetime.datepicker.start_pick_end', {
+							start: this.fmtShort(this.startDate),
+						})
+					: translate('datetime.datepicker.pick_start_date');
 
 		html += `<div class="cal-footer">
 			<span class="cal-range-label">${rangeLabel}</span>
@@ -323,23 +361,29 @@ export class DateRangePicker {
 
 	private bindCalendarEvents(): void {
 		// Navigation
-		this.calendar.querySelectorAll('.cal-nav-btn').forEach(btn => {
+		this.calendar.querySelectorAll('.cal-nav-btn').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				const action = (btn as HTMLElement).dataset.action;
 				if (action === 'prev') {
 					this.currentMonth--;
-					if (this.currentMonth < 0) { this.currentMonth = 11; this.currentYear--; }
+					if (this.currentMonth < 0) {
+						this.currentMonth = 11;
+						this.currentYear--;
+					}
 				} else if (action === 'next') {
 					this.currentMonth++;
-					if (this.currentMonth > 11) { this.currentMonth = 0; this.currentYear++; }
+					if (this.currentMonth > 11) {
+						this.currentMonth = 0;
+						this.currentYear++;
+					}
 				}
 				this.renderCalendar();
 			});
 		});
 
 		// Day clicks
-		this.calendar.querySelectorAll('.cal-day:not(.other-month)').forEach(btn => {
+		this.calendar.querySelectorAll('.cal-day:not(.other-month)').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				const ds = (btn as HTMLElement).dataset.date!;
@@ -364,11 +408,11 @@ export class DateRangePicker {
 		});
 
 		// Shortcuts
-		this.calendar.querySelectorAll('.cal-shortcut-btn').forEach(btn => {
+		this.calendar.querySelectorAll('.cal-shortcut-btn').forEach((btn) => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				const label = (btn as HTMLElement).dataset.shortcut!;
-			const shortcut = this.getShortcuts().find(s => s.label === label);
+				const shortcut = this.getShortcuts().find((s) => s.label === label);
 				if (shortcut) shortcut.get();
 				this.renderCalendar();
 			});
@@ -435,8 +479,12 @@ export class DateRangePicker {
 	}
 
 	/** Get the start input element */
-	getStartInput(): HTMLInputElement { return this.startInput; }
+	getStartInput(): HTMLInputElement {
+		return this.startInput;
+	}
 
 	/** Get the end input element */
-	getEndInput(): HTMLInputElement { return this.endInput; }
+	getEndInput(): HTMLInputElement {
+		return this.endInput;
+	}
 }

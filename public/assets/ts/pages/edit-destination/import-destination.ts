@@ -11,39 +11,38 @@
 import { buildDS, updateValueDS } from '../../ui/dynamic-select.js';
 import { getJs, getLastJ } from '../../utils/dom.js';
 import { closeAccordions, openLastAccordion } from '../../ui/accordion.js';
-import { addSnacks } from "./new-destination.js";
-import { addShopping } from "./new-destination.js";
-import { addRestaurants } from "./new-destination.js";
-import { addNightlife } from "./new-destination.js";
-import { addTourism } from "./new-destination.js";
-import { setDescription } from "./categories/description.js";
-import { updateDescriptionButtonLabel } from "./categories/description.js";
-import { loadCurrencyValueAndVisibility } from "./categories/price.js";
-import { updateDestinationsTitle } from "./edit-destination.js";
+import { addSnacks } from './new-destination.js';
+import { addShopping } from './new-destination.js';
+import { addRestaurants } from './new-destination.js';
+import { addNightlife } from './new-destination.js';
+import { addTourism } from './new-destination.js';
+import { setDescription } from './categories/description.js';
+import { updateDescriptionButtonLabel } from './categories/description.js';
+import { loadCurrencyValueAndVisibility } from './categories/price.js';
+import { updateDestinationsTitle } from './edit-destination.js';
 
-
-const IMPORT_TYPES = ["restaurants", "snacks", "nightlife", "tourism", "shopping"];
+const IMPORT_TYPES = ['restaurants', 'snacks', 'nightlife', 'tourism', 'shopping'];
 
 // ─── Core: Fill a destination's fields ────────────────────────────────────────
 function importFillDestination(category, j, data, force) {
 	const entries = [
-		{ key: "name", field: "name", type: "value" },
-		{ key: "emoji", field: "emoji", type: "value" },
-		{ key: "website", field: "website", type: "value" },
-		{ key: "map", field: "map", type: "value" },
-		{ key: "instagram", field: "instagram", type: "value" },
-		{ key: "media", field: "media", type: "value" },
-		{ key: "rating", field: "rating", type: "value" },
-		{ key: "id", field: "id", type: "value" },
-		{ key: "createdAt", field: "createdAt", type: "value" },
+		{ key: 'name', field: 'name', type: 'value' },
+		{ key: 'emoji', field: 'emoji', type: 'value' },
+		{ key: 'website', field: 'website', type: 'value' },
+		{ key: 'map', field: 'map', type: 'value' },
+		{ key: 'instagram', field: 'instagram', type: 'value' },
+		{ key: 'media', field: 'media', type: 'value' },
+		{ key: 'rating', field: 'rating', type: 'value' },
+		{ key: 'id', field: 'id', type: 'value' },
+		{ key: 'createdAt', field: 'createdAt', type: 'value' },
 	];
 
 	for (const { key, field, type } of entries) {
 		const el = document.getElementById(`${category}-${field}-${j}`);
 		if (!el) continue;
 		const newVal = data[key];
-		if (force || (newVal !== undefined && newVal !== null && newVal !== "")) {
-			if (type === "value") (el as HTMLInputElement).value = newVal;
+		if (force || (newVal !== undefined && newVal !== null && newVal !== '')) {
+			if (type === 'value') (el as HTMLInputElement).value = newVal;
 		}
 	}
 
@@ -56,18 +55,18 @@ function importFillDestination(category, j, data, force) {
 	}
 
 	// region (uses dynamic select + input)
-	if (force || (data.region !== undefined && data.region !== null && data.region !== "")) {
-		updateValueDS("region", data.region || "", `${category}-region-select-${j}`);
-		buildDS("region");
+	if (force || (data.region !== undefined && data.region !== null && data.region !== '')) {
+		updateValueDS('region', data.region || '', `${category}-region-select-${j}`);
+		buildDS('region');
 	}
 
 	// price (uses loadCurrencyValueAndVisibility)
-	if (force || (data.price !== undefined && data.price !== null && data.price !== "")) {
-		loadCurrencyValueAndVisibility(data.price || "", category, j);
+	if (force || (data.price !== undefined && data.price !== null && data.price !== '')) {
+		loadCurrencyValueAndVisibility(data.price || '', category, j);
 	}
 
 	// description
-	if (data.description && (force || Object.values(data.description).some(v => v))) {
+	if (data.description && (force || Object.values(data.description).some((v) => v))) {
 		setDescription(category, j, data.description);
 	}
 
@@ -99,12 +98,12 @@ const ADD_FUNCTIONS = {
  */
 function importNewDestination(type, data, force = false) {
 	if (!IMPORT_TYPES.includes(type)) {
-		console.error(`Invalid type: "${type}". Must be one of: ${IMPORT_TYPES.join(", ")}`);
+		console.error(`Invalid type: "${type}". Must be one of: ${IMPORT_TYPES.join(', ')}`);
 		return;
 	}
 
 	const addFn = ADD_FUNCTIONS[type];
-	if (typeof addFn !== "function") {
+	if (typeof addFn !== 'function') {
 		console.error(`Add function for "${type}" not found.`);
 		return;
 	}
@@ -114,10 +113,10 @@ function importNewDestination(type, data, force = false) {
 	addFn();
 	const j = importGetLastJ(type);
 	openLastAccordion(type);
-	buildDS("region");
+	buildDS('region');
 
 	importFillDestination(type, j, data, force);
-	console.log(`✅ Imported new "${type}" at index ${j}: ${data.name || "(unnamed)"}`);
+	console.log(`✅ Imported new "${type}" at index ${j}: ${data.name || '(unnamed)'}`);
 }
 
 // ─── 2. importDestinationByJ ──────────────────────────────────────────────────
@@ -130,7 +129,7 @@ function importNewDestination(type, data, force = false) {
  */
 function importDestinationByJ(type, j, data, force = false) {
 	if (!IMPORT_TYPES.includes(type)) {
-		console.error(`Invalid type: "${type}". Must be one of: ${IMPORT_TYPES.join(", ")}`);
+		console.error(`Invalid type: "${type}". Must be one of: ${IMPORT_TYPES.join(', ')}`);
 		return;
 	}
 
@@ -141,7 +140,7 @@ function importDestinationByJ(type, j, data, force = false) {
 	}
 
 	importFillDestination(type, j, data, force);
-	console.log(`✅ Imported "${type}" at index ${j}: ${data.name || "(unnamed)"}`);
+	console.log(`✅ Imported "${type}" at index ${j}: ${data.name || '(unnamed)'}`);
 }
 
 // ─── 3. importDestinationByName ───────────────────────────────────────────────
@@ -156,7 +155,7 @@ function importDestinationByName(name, data, type, force = false) {
 	const typesToSearch = type ? [type] : IMPORT_TYPES;
 
 	if (type && !IMPORT_TYPES.includes(type)) {
-		console.error(`Invalid type: "${type}". Must be one of: ${IMPORT_TYPES.join(", ")}`);
+		console.error(`Invalid type: "${type}". Must be one of: ${IMPORT_TYPES.join(', ')}`);
 		return;
 	}
 
@@ -166,7 +165,10 @@ function importDestinationByName(name, data, type, force = false) {
 		const js = [...new Set(getJs(`${cat}-box`))];
 		for (const j of js) {
 			const nameEl = document.getElementById(`${cat}-name-${j}`);
-			if (nameEl && (nameEl as HTMLInputElement).value.trim().toLowerCase() === name.trim().toLowerCase()) {
+			if (
+				nameEl &&
+				(nameEl as HTMLInputElement).value.trim().toLowerCase() === name.trim().toLowerCase()
+			) {
 				matches.push({ type: cat, j });
 			}
 		}
@@ -180,7 +182,7 @@ function importDestinationByName(name, data, type, force = false) {
 	if (matches.length > 1) {
 		console.error(
 			`❌ Multiple matches found for "${name}":`,
-			matches.map(m => `  - ${m.type}[${m.j}]`).join("\n")
+			matches.map((m) => `  - ${m.type}[${m.j}]`).join('\n'),
 		);
 		return;
 	}
@@ -192,28 +194,58 @@ function importDestinationByName(name, data, type, force = false) {
 // ─── Per-category convenience wrappers ────────────────────────────────────────
 
 // --- importNew* ---
-function importNewRestaurant(data, force) { importNewDestination("restaurants", data, force); }
-function importNewSnack(data, force) { importNewDestination("snacks", data, force); }
-function importNewNightlife(data, force) { importNewDestination("nightlife", data, force); }
-function importNewTourism(data, force) { importNewDestination("tourism", data, force); }
-function importNewShop(data, force) { importNewDestination("shopping", data, force); }
+function importNewRestaurant(data, force) {
+	importNewDestination('restaurants', data, force);
+}
+function importNewSnack(data, force) {
+	importNewDestination('snacks', data, force);
+}
+function importNewNightlife(data, force) {
+	importNewDestination('nightlife', data, force);
+}
+function importNewTourism(data, force) {
+	importNewDestination('tourism', data, force);
+}
+function importNewShop(data, force) {
+	importNewDestination('shopping', data, force);
+}
 
 // --- import*ByJ ---
-function importRestaurantByJ(j, data, force) { importDestinationByJ("restaurants", j, data, force); }
-function importSnackByJ(j, data, force) { importDestinationByJ("snacks", j, data, force); }
-function importNightlifeByJ(j, data, force) { importDestinationByJ("nightlife", j, data, force); }
-function importTourismByJ(j, data, force) { importDestinationByJ("tourism", j, data, force); }
-function importShopByJ(j, data, force) { importDestinationByJ("shopping", j, data, force); }
+function importRestaurantByJ(j, data, force) {
+	importDestinationByJ('restaurants', j, data, force);
+}
+function importSnackByJ(j, data, force) {
+	importDestinationByJ('snacks', j, data, force);
+}
+function importNightlifeByJ(j, data, force) {
+	importDestinationByJ('nightlife', j, data, force);
+}
+function importTourismByJ(j, data, force) {
+	importDestinationByJ('tourism', j, data, force);
+}
+function importShopByJ(j, data, force) {
+	importDestinationByJ('shopping', j, data, force);
+}
 
 // --- import*ByName ---
-function importRestaurantByName(name, data, force) { importDestinationByName(name, data, "restaurants", force); }
-function importSnackByName(name, data, force) { importDestinationByName(name, data, "snacks", force); }
-function importNightlifeByName(name, data, force) { importDestinationByName(name, data, "nightlife", force); }
-function importTourismByName(name, data, force) { importDestinationByName(name, data, "tourism", force); }
-function importShopByName(name, data, force) { importDestinationByName(name, data, "shopping", force); }
+function importRestaurantByName(name, data, force) {
+	importDestinationByName(name, data, 'restaurants', force);
+}
+function importSnackByName(name, data, force) {
+	importDestinationByName(name, data, 'snacks', force);
+}
+function importNightlifeByName(name, data, force) {
+	importDestinationByName(name, data, 'nightlife', force);
+}
+function importTourismByName(name, data, force) {
+	importDestinationByName(name, data, 'tourism', force);
+}
+function importShopByName(name, data, force) {
+	importDestinationByName(name, data, 'shopping', force);
+}
 
 // ─── Expose on dev.page for console use ──────────────────────────────────────
-if (typeof dev !== "undefined") {
+if (typeof dev !== 'undefined') {
 	dev.page.importNewDestination = importNewDestination;
 	dev.page.importDestinationByJ = importDestinationByJ;
 	dev.page.importDestinationByName = importDestinationByName;
@@ -236,5 +268,3 @@ if (typeof dev !== "undefined") {
 	dev.page.importTourismByName = importTourismByName;
 	dev.page.importShopByName = importShopByName;
 }
-
-

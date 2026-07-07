@@ -15,9 +15,9 @@ import {
 	createBatchOps,
 	COLLECTION,
 	SUBCOLLECTION,
-} from "../firebase/database.js";
+} from '../firebase/database.js';
 
-import { getUID } from "../firebase/auth.js";
+import { getUID } from '../firebase/auth.js';
 
 // Re-export raw database functions that destination pages may still use during transition
 export {
@@ -60,9 +60,10 @@ export async function createDestination(destData) {
 
 	// Option B: also create a destination summary in the user subcollection
 	if (result?.success && result?.data) {
-		const destId = typeof result.data === "string"
-			? result.data
-			: result.data?.id || result.data?.path?.split("/").pop();
+		const destId =
+			typeof result.data === 'string'
+				? result.data
+				: result.data?.id || result.data?.path?.split('/').pop();
 
 		if (destId) {
 			const uid = await getUID();
@@ -71,14 +72,14 @@ export async function createDestination(destData) {
 					await create(
 						`${COLLECTION.USERS}/${uid}/${SUBCOLLECTION.DESTINATION_SUMMARIES}`,
 						{
-							title: destData?.title || destData?.title || "",
-							currency: destData?.currency || destData?.currency || "",
+							title: destData?.title || destData?.title || '',
+							currency: destData?.currency || destData?.currency || '',
 							version: destData?.version || destData?.version || {},
 						},
 						destId,
 					);
 				} catch (e) {
-					console.warn("Failed to create destination summary:", e);
+					console.warn('Failed to create destination summary:', e);
 				}
 			}
 		}
@@ -117,11 +118,9 @@ export async function deleteDestination(destId) {
 				true,
 			);
 		} catch (e) {
-			console.warn("Failed to delete destination summary:", e);
+			console.warn('Failed to delete destination summary:', e);
 		}
 	}
 
 	return result;
 }
-
-

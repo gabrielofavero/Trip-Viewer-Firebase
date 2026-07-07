@@ -1,16 +1,22 @@
 import { getItinerary } from '../../../app/config.js';
 import { getState, setState, DOCUMENT_ID } from '../../../data/state.js';
 import { cloneObject, getID } from '../../../utils/dom.js';
-import { convertFromDateObject, dateObjectToInputDate, getDateTitle } from '../../../utils/dates.js';
+import {
+	convertFromDateObject,
+	dateObjectToInputDate,
+	getDateTitle,
+} from '../../../utils/dates.js';
 import { get, update } from '../../../data/firebase/database.js';
-import { translate } from "../../../i18n/translation.js";
-import { jsDateToInputDate } from "../../../utils/dates.js";
-import { ACTIVE_CATEGORY } from "../destination.js";
+import { translate } from '../../../i18n/translation.js';
+import { jsDateToInputDate } from '../../../utils/dates.js';
+import { ACTIVE_CATEGORY } from '../destination.js';
 
 var TRIP_ID;
 export var PLANNED_DESTINATION = {};
 var ACTIVE_PLANNED_DESTINATION: any[] = [];
-export function resetActivePlannedDestination() { ACTIVE_PLANNED_DESTINATION = []; }
+export function resetActivePlannedDestination() {
+	ACTIVE_PLANNED_DESTINATION = [];
+}
 
 export async function getTripData(tripID) {
 	if (!tripID) return;
@@ -37,16 +43,14 @@ export function loadPlannedDestination() {
 
 			for (const schedule of periods) {
 				const item = schedule?.item;
-				if (!item || item.type !== "destinations") continue;
+				if (!item || item.type !== 'destinations') continue;
 				addPlannedDestination(item, data, period);
 			}
 		}
 	}
 
 	function addPlannedDestination(item, data, period) {
-		const destination = getState().destinations.find(
-			(d) => d.destinationId === item.location,
-		);
+		const destination = getState().destinations.find((d) => d.destinationId === item.location);
 		if (!destination || destination.destinationId != DOCUMENT_ID) return;
 
 		PLANNED_DESTINATION[item.category] ??= {};
@@ -72,7 +76,7 @@ function loadPlannedDestinationEditFieldHTML(j) {
 	const dataSelect = getID(`edit-planned-select-data-${j}`);
 	const periodSelect = getID(`edit-planned-select-period-${j}`);
 
-	let options = `<option value="">${translate("labels.planned.not_planned")}</option>`;
+	let options = `<option value="">${translate('labels.planned.not_planned')}</option>`;
 
 	switch (ACTIVE_PLANNED_DESTINATION.length) {
 		case 0:
@@ -85,13 +89,13 @@ function loadPlannedDestinationEditFieldHTML(j) {
 			loadMultiPD();
 	}
 
-	container.style.display = "";
+	container.style.display = '';
 
 	function loadNoPD() {
 		loadAllOptions();
 		dataSelect.innerHTML = options;
-		dataSelect.value = "";
-		periodSelect.style.display = "none";
+		dataSelect.value = '';
+		periodSelect.style.display = 'none';
 		addSelectListener();
 	}
 
@@ -105,10 +109,10 @@ function loadPlannedDestinationEditFieldHTML(j) {
 	}
 
 	function loadMultiPD() {
-		options += `<option value="multi">${translate("labels.planned.multiple")}</option>`;
+		options += `<option value="multi">${translate('labels.planned.multiple')}</option>`;
 		dataSelect.innerHTML = options;
-		dataSelect.value = "multi";
-		periodSelect.style.display = "none";
+		dataSelect.value = 'multi';
+		periodSelect.style.display = 'none';
 	}
 
 	function loadAllOptions() {
@@ -123,14 +127,14 @@ function loadPlannedDestinationEditFieldHTML(j) {
 
 			const date = schedule.data;
 			const jsDate = convertFromDateObject(date);
-			const label = getDateTitle(jsDate, "weekday_day_month");
+			const label = getDateTitle(jsDate, 'weekday_day_month');
 			options += `<option value="${jsDateToInputDate(jsDate)}">${label}</option>`;
 		}
 	}
 
 	function addSelectListener() {
 		dataSelect.onchange = (e) => {
-			periodSelect.style.display = (e.target as HTMLSelectElement).value ? "" : "none";
+			periodSelect.style.display = (e.target as HTMLSelectElement).value ? '' : 'none';
 		};
 	}
 }
@@ -141,21 +145,15 @@ export async function setPlannedDestination(id, j) {
 
 	const currentSize = ACTIVE_PLANNED_DESTINATION.length;
 
-	if ((currentSize === 0 && !newData) || newData === "multi") {
+	if ((currentSize === 0 && !newData) || newData === 'multi') {
 		return false;
 	}
 
 	const currentData = ACTIVE_PLANNED_DESTINATION[0]?.data;
-	const currentInputDate = currentData
-		? dateObjectToInputDate(currentData)
-		: null;
+	const currentInputDate = currentData ? dateObjectToInputDate(currentData) : null;
 	const currentPeriod = ACTIVE_PLANNED_DESTINATION[0]?.period;
 
-	if (
-		currentSize === 1 &&
-		newData === currentInputDate &&
-		newPeriod === currentPeriod
-	) {
+	if (currentSize === 1 && newData === currentInputDate && newPeriod === currentPeriod) {
 		return false;
 	}
 
@@ -188,12 +186,12 @@ export async function setPlannedDestination(id, j) {
 		const schedules = cloneObject(getState().itinerary);
 
 		for (const day of schedules) {
-			for (const period of ["morning", "afternoon", "night", "earlyMorning"]) {
+			for (const period of ['morning', 'afternoon', 'night', 'earlyMorning']) {
 				day[period] = day[period].filter((p) => {
 					const item = p?.item;
 					return !(
 						item &&
-						item.type === "destinations" &&
+						item.type === 'destinations' &&
 						item.location === DOCUMENT_ID &&
 						item.id === id
 					);
@@ -207,9 +205,7 @@ export async function setPlannedDestination(id, j) {
 	function addToLastPosition() {
 		const schedules = cloneObject(getState().itinerary);
 
-		const targetDay = schedules.find(
-			(p) => dateObjectToInputDate(p.data) === newData,
-		);
+		const targetDay = schedules.find((p) => dateObjectToInputDate(p.data) === newData);
 
 		if (!targetDay) {
 			return schedules;
@@ -223,9 +219,7 @@ export async function setPlannedDestination(id, j) {
 	function changeOrder() {
 		let schedules = removeDestinationReferences();
 
-		const targetDay = schedules.find(
-			(p) => dateObjectToInputDate(p.data) === newData,
-		);
+		const targetDay = schedules.find((p) => dateObjectToInputDate(p.data) === newData);
 
 		if (!targetDay) {
 			return schedules;
@@ -244,14 +238,14 @@ export async function setPlannedDestination(id, j) {
 		return {
 			itinerary: getID(`edit-name-${j}`).value,
 			item: {
-				type: "destinations",
+				type: 'destinations',
 				category: ACTIVE_CATEGORY,
 				location: DOCUMENT_ID,
 				id: id,
 			},
-			end: "",
+			end: '',
 			people: people || [],
-			start: "",
+			start: '',
 		};
 	}
 }

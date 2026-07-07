@@ -1,35 +1,81 @@
 import { startLoadingTimer, stopLoadingScreen } from '../../utils/loading.js';
-import { closeMessage, displayError, MESSAGE_MODAL_OPEN, registerActions } from '../../utils/messages.js';
-import { getState, setState, TRAVELERS, DOCUMENT_ID, DESTINATIONS, setDocumentId, setDestinations } from '../../data/state.js';
-import { getErrorFromGetRequestMessage, getID, getLastUpdatedOnText, getURLParam, getURLParams } from '../../utils/dom.js';
-import { getSingleData, getTripComplete, haveErrorFromGetRequest, COLLECTION } from '../../data/firebase/database.js';
-import { isOnDarkMode, loadVisibility, LOGO_LIGHT, LOGO_DARK, setLogoLight, setLogoDark } from '../../theme/visibility.js';
+import {
+	closeMessage,
+	displayError,
+	MESSAGE_MODAL_OPEN,
+	registerActions,
+} from '../../utils/messages.js';
+import {
+	getState,
+	setState,
+	TRAVELERS,
+	DOCUMENT_ID,
+	DESTINATIONS,
+	setDocumentId,
+	setDestinations,
+} from '../../data/state.js';
+import {
+	getErrorFromGetRequestMessage,
+	getID,
+	getLastUpdatedOnText,
+	getURLParam,
+	getURLParams,
+} from '../../utils/dom.js';
+import {
+	getSingleData,
+	getTripComplete,
+	haveErrorFromGetRequest,
+	COLLECTION,
+} from '../../data/firebase/database.js';
+import {
+	isOnDarkMode,
+	loadVisibility,
+	LOGO_LIGHT,
+	LOGO_DARK,
+	setLogoLight,
+	setLogoDark,
+} from '../../theme/visibility.js';
 import { loadCloseCustomSelectListeners } from '../../ui/custom-select.js';
 import { convertFromDateObject } from '../../utils/dates.js';
 import { getPageURL, setPageName } from '../../app/main.js';
 import { translate } from '../../i18n/translation.js';
 import { loadViewListeners } from './support/event-listeners.js';
-import { adjustCardsHeights, adjustCardsHeightsListener, loadViewVisibility, mainView } from "./support/visibility.js";
-import { loadViewEmbed, openExpensesEmbed } from "./support/embed.js";
-import { loadSensitiveReservations, requestDocumentPin, protectedDataConfirmAction } from "./support/sensitive-reservation.js";
-import { setActiveDestination, adjustDestinationsHTML, loadDestinations, loadDestinationsCustomSelect, loadDestinationsHTML } from "./categories/destination.js";
-import { adjustPortfolioHeight, loadGallery, refreshCategorias } from "./categories/gallery.js";
-import { loadSummary } from "./categories/summary.js";
-import { loadTransportation } from "./categories/transportation-module.js";
-import { loadAccommodations } from "./categories/accommodation-module.js";
-import { loadItinerarySchedule } from "./categories/itinerary-module/itinerary-module.js";
+import {
+	adjustCardsHeights,
+	adjustCardsHeightsListener,
+	loadViewVisibility,
+	mainView,
+} from './support/visibility.js';
+import { loadViewEmbed, openExpensesEmbed } from './support/embed.js';
+import {
+	loadSensitiveReservations,
+	requestDocumentPin,
+	protectedDataConfirmAction,
+} from './support/sensitive-reservation.js';
+import {
+	setActiveDestination,
+	adjustDestinationsHTML,
+	loadDestinations,
+	loadDestinationsCustomSelect,
+	loadDestinationsHTML,
+} from './categories/destination.js';
+import { adjustPortfolioHeight, loadGallery, refreshCategorias } from './categories/gallery.js';
+import { loadSummary } from './categories/summary.js';
+import { loadTransportation } from './categories/transportation-module.js';
+import { loadAccommodations } from './categories/accommodation-module.js';
+import { loadItinerarySchedule } from './categories/itinerary-module/itinerary-module.js';
 import { ACTIVE_EMBEDS } from './support/embed.js';
 
 var REFRESHED = false;
-export var TYPE = "trips";
+export var TYPE = 'trips';
 export var START_DATE = {
 	date: null,
-	text: "",
+	text: '',
 };
 
 export var END_DATE = {
 	date: null,
-	text: "",
+	text: '',
 };
 
 /**
@@ -39,14 +85,18 @@ export var END_DATE = {
  */
 function normalizeTransportViewMode(raw: string): string {
 	switch (raw) {
-		case "simple": return "simple-view";
-		case "leg": return "leg-view";
-		case "people": return "people-view";
-		default: return raw || "simple-view";
+		case 'simple':
+			return 'simple-view';
+		case 'leg':
+			return 'leg-view';
+		case 'people':
+			return 'people-view';
+		default:
+			return raw || 'simple-view';
 	}
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener('DOMContentLoaded', async function () {
 	try {
 		startLoadingTimer();
 		mainView();
@@ -63,10 +113,10 @@ export async function loadViewPage() {
 	registerActions({ protectedDataConfirmAction });
 
 	const urlParams = getURLParams();
-	TYPE = urlParams["l"] ? "listings" : urlParams["d"] ? "destinations" : "trips";
-	setDocumentId(urlParams["l"] || urlParams["d"] || urlParams["t"]);
+	TYPE = urlParams['l'] ? 'listings' : urlParams['d'] ? 'destinations' : 'trips';
+	setDocumentId(urlParams['l'] || urlParams['d'] || urlParams['t']);
 
-	window.addEventListener("scroll", () => {
+	window.addEventListener('scroll', () => {
 		if (window.scrollY > 0) {
 			if (!REFRESHED) {
 				refreshCategorias();
@@ -80,7 +130,7 @@ export async function loadViewPage() {
 	let firestoreData;
 
 	if (TYPE === COLLECTION.TRIPS) {
-		const tripId = getURLParam("t");
+		const tripId = getURLParam('t');
 		firestoreData = await getTripComplete(tripId);
 	} else {
 		firestoreData = await getSingleData(TYPE);
@@ -103,11 +153,9 @@ export async function loadViewPage() {
 			const rawViewMode: string =
 				firestoreData.transportation.settings?.viewMode ||
 				firestoreData.transportation.viewMode ||
-				"simple";
+				'simple';
 			const rawData: any[] =
-				firestoreData.transportation.legs ||
-				firestoreData.transportation.data ||
-				[];
+				firestoreData.transportation.legs || firestoreData.transportation.data || [];
 
 			firestoreData.transportation = {
 				viewMode: normalizeTransportViewMode(rawViewMode),
@@ -115,7 +163,7 @@ export async function loadViewPage() {
 			};
 		}
 
-		if (firestoreData.pin === "all-data") {
+		if (firestoreData.pin === 'all-data') {
 			loadProtectedData(firestoreData, rawFirestoreData);
 		} else {
 			setFirestoreData(firestoreData, rawFirestoreData);
@@ -159,10 +207,8 @@ function loadStartEnd(data = getState()) {
 function loadHeader() {
 	loadTitle();
 
-	if (TYPE == "destinations" && getState().version?.lastUpdated) {
-		getID("hero-subtitle").innerHTML = getLastUpdatedOnText(
-			getState().version.lastUpdated,
-		);
+	if (TYPE == 'destinations' && getState().version?.lastUpdated) {
+		getID('hero-subtitle').innerHTML = getLastUpdatedOnText(getState().version.lastUpdated);
 	}
 
 	if (getState()?.version.showInDestinations) {
@@ -176,57 +222,57 @@ function loadHeader() {
 		}
 
 		const mostRecentDate = dates.reduce((a, b) => (a > b ? a : b));
-		getID("destinations-update").innerHTML = getLastUpdatedOnText(mostRecentDate);
+		getID('destinations-update').innerHTML = getLastUpdatedOnText(mostRecentDate);
 	}
 
 	if (getState().description) {
-		getID("destinations-description").innerHTML = getState().description;
-		getID("destinations-description").style.display = "block";
+		getID('destinations-description').innerHTML = getState().description;
+		getID('destinations-description').style.display = 'block';
 	}
 
 	if (getState().links?.active) {
-		getID("social-links").style.display = "block";
+		getID('social-links').style.display = 'block';
 
 		if (getState().links.attachments) {
-			getID("attachmentsLink").href = getState().links.attachments;
+			getID('attachmentsLink').href = getState().links.attachments;
 		} else {
-			getID("attachmentsLink").style.display = "none";
+			getID('attachmentsLink').style.display = 'none';
 		}
 
 		if (getState().links.sheet) {
-			getID("sheetLink").href = getState().links.sheet;
+			getID('sheetLink').href = getState().links.sheet;
 		} else {
-			getID("sheetLink").style.display = "none";
+			getID('sheetLink').style.display = 'none';
 		}
 
 		if (getState().links.ppt) {
-			getID("pptLink").href = getState().links.ppt;
+			getID('pptLink').href = getState().links.ppt;
 		} else {
-			getID("pptLink").style.display = "none";
+			getID('pptLink').style.display = 'none';
 		}
 
 		if (getState().links.drive) {
-			getID("driveLink").href = getState().links.drive;
+			getID('driveLink').href = getState().links.drive;
 		} else {
-			getID("driveLink").style.display = "none";
+			getID('driveLink').style.display = 'none';
 		}
 
 		if (getState().links.vaccine) {
-			getID("vaccineLink").href = getState().links.vaccine;
+			getID('vaccineLink').href = getState().links.vaccine;
 		} else {
-			getID("vaccineLink").style.display = "none";
+			getID('vaccineLink').style.display = 'none';
 		}
 
 		if (getState().links.pdf) {
-			getID("pdfLink").href = getState().links.pdf;
+			getID('pdfLink').href = getState().links.pdf;
 		} else {
-			getID("pdfLink").style.display = "none";
+			getID('pdfLink').style.display = 'none';
 		}
 
 		if (getState().links.maps) {
-			getID("mapsLink").href = getState().links.maps;
+			getID('mapsLink').href = getState().links.maps;
 		} else {
-			getID("mapsLink").style.display = "none";
+			getID('mapsLink').style.display = 'none';
 		}
 	}
 
@@ -235,11 +281,11 @@ function loadHeader() {
 
 function loadTitle(data = getState()) {
 	setPageName(data.title);
-	getID("header1").innerHTML = data.title;
-	getID("header2").style.display = "none";
+	getID('header1').innerHTML = data.title;
+	getID('header2').style.display = 'none';
 
 	if (data.subtitle) {
-		getID("hero-subtitle").innerHTML = data.subtitle;
+		getID('hero-subtitle').innerHTML = data.subtitle;
 	}
 }
 
@@ -250,9 +296,9 @@ function loadHeaderImageAndLogo(data = getState()) {
 		const dark = data.image.dark;
 
 		if (background) {
-			var hero = getID("hero");
+			var hero = getID('hero');
 			hero.style.background = 'url("' + background + '") top center no-repeat';
-			hero.style.backgroundSize = "cover";
+			hero.style.backgroundSize = 'cover';
 		}
 
 		if (light) {
@@ -263,11 +309,11 @@ function loadHeaderImageAndLogo(data = getState()) {
 				setLogoDark(LOGO_LIGHT);
 			}
 
-			getID("header2").src = isOnDarkMode() ? LOGO_DARK : LOGO_LIGHT;
-			getID("header1").style.display = "none";
-			getID("header2").style.display = "block";
-			document.querySelectorAll(".header-text").forEach((element) => {
-				(element as HTMLElement).style.textAlign = "center";
+			getID('header2').src = isOnDarkMode() ? LOGO_DARK : LOGO_LIGHT;
+			getID('header1').style.display = 'none';
+			getID('header2').style.display = 'block';
+			document.querySelectorAll('.header-text').forEach((element) => {
+				(element as HTMLElement).style.textAlign = 'center';
 			});
 		}
 	}
@@ -284,13 +330,13 @@ function loadModules() {
 	loadGalleryModule();
 
 	function loadSharingModule() {
-		const share = getID("share");
-		if (navigator.share && window.location.hostname != "localhost") {
-			share.addEventListener("click", () => {
+		const share = getID('share');
+		if (navigator.share && window.location.hostname != 'localhost') {
+			share.addEventListener('click', () => {
 				shareTrip();
 			});
 		} else {
-			share.style.display = "none";
+			share.style.display = 'none';
 		}
 
 		function shareTrip() {
@@ -302,21 +348,21 @@ function loadModules() {
 
 		function getSharingText() {
 			switch (TYPE) {
-				case "listings":
-					return translate("listing.share", { name: getState().title });
-				case "destinations":
-					return translate("destination.share", {
+				case 'listings':
+					return translate('listing.share', { name: getState().title });
+				case 'destinations':
+					return translate('destination.share', {
 						name: getState().title,
 					});
-				case "trip":
-				case "trips":
-					return translate("trip.share", {
+				case 'trip':
+				case 'trips':
+					return translate('trip.share', {
 						name: getState().title,
 						start: START_DATE.text,
 						end: END_DATE.text,
 					});
 				default:
-					return translate("messages.share");
+					return translate('messages.share');
 			}
 		}
 	}
@@ -325,26 +371,23 @@ function loadModules() {
 		if (getState().modules?.summary === true) {
 			loadSummary();
 		} else {
-			getID("keypointsNav").innerHTML = "";
-			getID("keypoints").innerHTML = "";
-			getID("keypoints").style.display = "none";
+			getID('keypointsNav').innerHTML = '';
+			getID('keypoints').innerHTML = '';
+			getID('keypoints').style.display = 'none';
 		}
 	}
 
 	function loadExpensesModule() {
 		const active = getState().modules?.expenses === true;
-		localStorage.setItem(
-			"expenses",
-			JSON.stringify({ active, pin: getState().pin || "no-pin" }),
-		);
+		localStorage.setItem('expenses', JSON.stringify({ active, pin: getState().pin || 'no-pin' }));
 
 		if (active) {
 			openExpensesEmbed();
-			ACTIVE_EMBEDS["expenses"] = true;
+			ACTIVE_EMBEDS['expenses'] = true;
 		} else {
-			getID("expensesNav").innerHTML = "";
-			getID("expenses").innerHTML = "";
-			getID("expenses").style.display = "none";
+			getID('expensesNav').innerHTML = '';
+			getID('expenses').innerHTML = '';
+			getID('expenses').style.display = 'none';
 		}
 	}
 
@@ -352,9 +395,9 @@ function loadModules() {
 		if (getState().modules?.transportation === true) {
 			loadTransportation();
 		} else {
-			getID("transportationNav").innerHTML = "";
-			getID("transportation").innerHTML = "";
-			getID("transportation").style.display = "none";
+			getID('transportationNav').innerHTML = '';
+			getID('transportation').innerHTML = '';
+			getID('transportation').style.display = 'none';
 		}
 	}
 
@@ -362,9 +405,9 @@ function loadModules() {
 		if (getState().modules?.accommodations === true) {
 			loadAccommodations();
 		} else {
-			getID("stayNav").innerHTML = "";
-			getID("stay").innerHTML = "";
-			getID("stay").style.display = "none";
+			getID('stayNav').innerHTML = '';
+			getID('stay').innerHTML = '';
+			getID('stay').style.display = 'none';
 		}
 	}
 
@@ -372,28 +415,25 @@ function loadModules() {
 		if (getState().modules?.itinerary === true) {
 			loadItinerarySchedule();
 		} else {
-			getID("scheduleCalendarNav").innerHTML = "";
-			getID("scheduleCalendar").innerHTML = "";
-			getID("scheduleCalendar").style.display = "none";
+			getID('scheduleCalendarNav').innerHTML = '';
+			getID('scheduleCalendar').innerHTML = '';
+			getID('scheduleCalendar').style.display = 'none';
 		}
 	}
 
 	function loadDestinationsModule() {
 		switch (TYPE) {
-			case "trips":
-				if (
-					getState().modules?.destinations === true &&
-					getState().destinations?.length > 0
-				) {
+			case 'trips':
+				if (getState().modules?.destinations === true && getState().destinations?.length > 0) {
 					loadDestinationsDefault();
 				} else {
 					disableDestinations();
 				}
 				break;
-			case "listings":
+			case 'listings':
 				loadDestinationsDefault();
 				break;
-			case "destinations":
+			case 'destinations':
 				loadDestinationsExclusive();
 				break;
 		}
@@ -411,13 +451,13 @@ function loadModules() {
 		}
 
 		function loadDestinationsExclusive() {
-			const id = getURLParam("d");
+			const id = getURLParam('d');
 			const destinations = getState();
 
 			setDestinations([{ id, destinations }]);
 			setActiveDestination(id);
 
-			getID("destinations-select").style.display = "none";
+			getID('destinations-select').style.display = 'none';
 
 			setUniqueDestinationText();
 			loadDestinationsHTML(DESTINATIONS[0]);
@@ -426,14 +466,14 @@ function loadModules() {
 		}
 
 		function disableDestinations() {
-		getID("destinations").style.display = "none";
-		getID("destinationsNav").innerHTML = "";
+			getID('destinations').style.display = 'none';
+			getID('destinationsNav').innerHTML = '';
 		}
 
 		function setUniqueDestinationText() {
 			const title = DESTINATIONS[0].destinations.title;
-		getID("destinations-title").innerHTML = title;
-		getID("destinationsNavText").innerHTML = title;
+			getID('destinations-title').innerHTML = title;
+			getID('destinationsNavText').innerHTML = title;
 		}
 	}
 
@@ -441,8 +481,8 @@ function loadModules() {
 		if (getState().modules?.gallery === true) {
 			loadGallery();
 		} else {
-			getID("portfolioM").innerHTML = "";
-			getID("portfolio").style.display = "none";
+			getID('portfolioM').innerHTML = '';
+			getID('portfolio').style.display = 'none';
 		}
 	}
 }
@@ -466,14 +506,19 @@ function populateDevPage(rawFirestoreData?: any) {
 	page.raw = rawFirestoreData;
 	page.activeEmbeds = ACTIVE_EMBEDS;
 
-	console.log("%c[DEV]%c dev.page populated — type %cdev.page%c to explore",
-		"color:#f0c040;font-weight:bold;", "", "font-weight:bold;", "");
+	console.log(
+		'%c[DEV]%c dev.page populated — type %cdev.page%c to explore',
+		'color:#f0c040;font-weight:bold;',
+		'',
+		'font-weight:bold;',
+		'',
+	);
 }
 
 export function setFirestoreData(firestoreData, rawFirestoreData?: any) {
 	setState(firestoreData);
 	populateDevPage(rawFirestoreData);
-	console.log("Firestore Database data loaded successfully");
+	console.log('Firestore Database data loaded successfully');
 	loadDocumentData();
 }
 
@@ -484,11 +529,11 @@ function loadDocumentData() {
 	adjustPortfolioHeight();
 	refreshCategorias();
 
-	if (getState().pin == "sensitive-only") {
+	if (getState().pin == 'sensitive-only') {
 		loadSensitiveReservations();
 	}
 
-	$("body").css("overflow", "auto");
+	$('body').css('overflow', 'auto');
 
 	if (!MESSAGE_MODAL_OPEN) {
 		setTimeout(() => {

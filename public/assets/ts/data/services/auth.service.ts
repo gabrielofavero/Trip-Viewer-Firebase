@@ -13,7 +13,7 @@ import {
 	getUID,
 	getFirebaseIdToken,
 	getUser,
-} from "../firebase/auth.js";
+} from '../firebase/auth.js';
 
 import {
 	getSystemData,
@@ -23,8 +23,8 @@ import {
 	getUserDestinationSummaries,
 	getUserListingSummaries,
 	COLLECTION,
-} from "../firebase/database.js";
-import { getID } from "../../utils/dom.js";
+} from '../firebase/database.js';
+import { getID } from '../../utils/dom.js';
 
 // Re-export raw user functions that pages may still use during transition
 export {
@@ -50,8 +50,8 @@ export {
  */
 export async function login(email, password) {
 	// _signInWithEmailAndPassword reads from DOM elements, so we set them temporarily
-	const emailEl = getID<HTMLInputElement>("login-email");
-	const passwordEl = getID<HTMLInputElement>("login-password");
+	const emailEl = getID<HTMLInputElement>('login-email');
+	const passwordEl = getID<HTMLInputElement>('login-password');
 
 	if (emailEl && passwordEl) {
 		emailEl.value = email;
@@ -63,10 +63,10 @@ export async function login(email, password) {
 	try {
 		await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 		const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-		console.log("User signed in:", userCredential.user);
+		console.log('User signed in:', userCredential.user);
 		return userCredential.user;
 	} catch (error) {
-		console.error("Error signing in:", error.message);
+		console.error('Error signing in:', error.message);
 		throw error;
 	}
 }
@@ -140,13 +140,13 @@ export async function getUserTrips(uid?) {
 		// Convert object {id: data} → array of {id, ...data}
 		return Object.entries(userData.trips).map(([id, data]: [string, any]) => ({
 			id,
-			...(typeof data === "object" ? data : { title: data }),
+			...(typeof data === 'object' ? data : { title: data }),
 		}));
 	}
 	if (userData?.trips) {
 		return Object.entries(userData.trips).map(([id, data]: [string, any]) => ({
 			id,
-			...(typeof data === "object" ? data : { title: data }),
+			...(typeof data === 'object' ? data : { title: data }),
 		}));
 	}
 
@@ -170,13 +170,13 @@ export async function getUserDestinations(uid?) {
 	if (userData?.destinations) {
 		return Object.entries(userData.destinations).map(([id, data]: [string, any]) => ({
 			id,
-			...(typeof data === "object" ? data : { title: data }),
+			...(typeof data === 'object' ? data : { title: data }),
 		}));
 	}
 	if (userData?.destinations) {
 		return Object.entries(userData.destinations).map(([id, data]: [string, any]) => ({
 			id,
-			...(typeof data === "object" ? data : { title: data }),
+			...(typeof data === 'object' ? data : { title: data }),
 		}));
 	}
 
@@ -200,13 +200,13 @@ export async function getUserListings(uid?) {
 	if (userData?.listings) {
 		return Object.entries(userData.listings).map(([id, data]: [string, any]) => ({
 			id,
-			...(typeof data === "object" ? data : { title: data }),
+			...(typeof data === 'object' ? data : { title: data }),
 		}));
 	}
 	if (userData?.listings) {
 		return Object.entries(userData.listings).map(([id, data]: [string, any]) => ({
 			id,
-			...(typeof data === "object" ? data : { title: data }),
+			...(typeof data === 'object' ? data : { title: data }),
 		}));
 	}
 

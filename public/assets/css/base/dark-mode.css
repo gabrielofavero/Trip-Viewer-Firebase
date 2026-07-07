@@ -29,10 +29,10 @@
 	--table-border: #414040;
 	--text-color: #e2e2e2;
 	--background-color: #303030;
-	--shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-	--shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-	--shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
-	--shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
+	--shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+	--shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+	--shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
 /* ===== General / Typography ===== */
@@ -96,7 +96,7 @@
 
 /* ===== Top Bar ===== */
 [data-theme="dark"] .top-bar {
-	background: rgba(28,28,30,0.85);
+	background: rgba(28, 28, 30, 0.85);
 	backdrop-filter: blur(20px) saturate(180%);
 	-webkit-backdrop-filter: blur(20px) saturate(180%);
 	border-bottom: 1px solid var(--border-color);
@@ -219,7 +219,7 @@
 [data-theme="dark"] #footer,
 [data-theme="dark"] .footer {
 	color: #f2f2f2;
-	background: rgba(28,28,30,0.5);
+	background: rgba(28, 28, 30, 0.5);
 }
 
 [data-theme="dark"] .attributions:hover,
@@ -252,14 +252,14 @@
 [data-theme="dark"] .trip-card,
 [data-theme="dark"] .dest-card,
 [data-theme="dark"] .list-card {
-	background: rgba(44,44,46,0.7);
+	background: rgba(44, 44, 46, 0.7);
 	border-color: var(--border-color);
 }
 
 [data-theme="dark"] .trip-card:hover,
 [data-theme="dark"] .dest-card:hover,
 [data-theme="dark"] .list-card:hover {
-	border-color: rgba(var(--theme-color-rgb),0.5);
+	border-color: rgba(var(--theme-color-rgb), 0.5);
 }
 
 [data-theme="dark"] .trip-card-image.no-image,
@@ -285,13 +285,13 @@
 
 /* ===== Greeting ===== */
 [data-theme="dark"] .greeting-section {
-	background: rgba(44,44,46,0.6);
+	background: rgba(44, 44, 46, 0.6);
 	border-color: var(--border-color);
 }
 
 /* ===== Category Tabs ===== */
 [data-theme="dark"] .category-tabs {
-	background: rgba(44,44,46,0.5);
+	background: rgba(44, 44, 46, 0.5);
 	border-color: var(--border-color);
 }
 
@@ -307,7 +307,7 @@
 }
 
 [data-theme="dark"] .dialog-overlay {
-	background: rgba(0,0,0,0.65);
+	background: rgba(0, 0, 0, 0.65);
 }
 
 [data-theme="dark"] .module-pill {
@@ -319,7 +319,7 @@
 /* ===== Settings ===== */
 [data-theme="dark"] .settings-card,
 [data-theme="dark"] .settings-section {
-	background: rgba(44,44,46,0.7);
+	background: rgba(44, 44, 46, 0.7);
 	border-color: var(--border-color);
 }
 
@@ -329,7 +329,7 @@
 }
 
 [data-theme="dark"] .modal-overlay {
-	background: rgba(0,0,0,0.7);
+	background: rgba(0, 0, 0, 0.7);
 }
 
 /* ===== Language Selector ===== */
@@ -367,7 +367,7 @@
 }
 
 [data-theme="dark"] .btn-outline-theme:hover {
-	background: rgba(var(--theme-color-rgb),0.1);
+	background: rgba(var(--theme-color-rgb), 0.1);
 }
 
 [data-theme="dark"] .btn-theme,

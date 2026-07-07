@@ -23,4 +23,3 @@ interface Window {
 	closeViewEmbed?: () => void;
 	[key: string]: any;
 }
-

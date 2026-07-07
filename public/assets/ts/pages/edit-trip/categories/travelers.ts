@@ -3,49 +3,58 @@
 
 import { cloneObject, getID, getReadableArray } from '../../../utils/dom.js';
 import { translate } from '../../../i18n/translation.js';
-import { closeMessage, displayFullMessage, getContainersInput, MESSAGE_PROPERTIES } from '../../../utils/messages.js';
-import { getNewTravelerID, hasDuplicateTravelerNames, validateTravelersObject } from '../../../models/traveler.model.js';
-import { loadItineraryData } from "../existing-trip.js";
+import {
+	closeMessage,
+	displayFullMessage,
+	getContainersInput,
+	MESSAGE_PROPERTIES,
+} from '../../../utils/messages.js';
+import {
+	getNewTravelerID,
+	hasDuplicateTravelerNames,
+	validateTravelersObject,
+} from '../../../models/traveler.model.js';
+import { loadItineraryData } from '../existing-trip.js';
 import { TRAVELERS, DOCUMENT_ID, setTravelersFn } from '../../../data/state.js';
 
-export function setTravelers(val) { setTravelersFn(val); }
+export function setTravelers(val) {
+	setTravelersFn(val);
+}
 const INCLUDE_LATE_TRAVELERS = false; // Flag to include late travelers in the fieldset
-let TRAVELER_SELECT_OPTIONS = "";
-
-
+let TRAVELER_SELECT_OPTIONS = '';
 
 export function openTravelersInfo() {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate("trip.travelers.info");
+	properties.title = translate('trip.travelers.info');
 	properties.containers = getContainersInput();
 	properties.content = getTravelersInfoContent();
 	properties.buttons = [
 		{
-			type: "cancel",
+			type: 'cancel',
 		},
 		{
-			type: "confirm",
+			type: 'confirm',
 			action: `saveTravelersInfo()`,
 		},
 	];
 
 	displayFullMessage(properties);
-	getID("travelersCount").addEventListener("change", function () {
-		getID("travelers-names-container").innerHTML = getTravelersNameContent();
+	getID('travelersCount').addEventListener('change', function () {
+		getID('travelers-names-container').innerHTML = getTravelersNameContent();
 	});
 }
 
 function getTravelersInfoContent() {
 	return `
     <div class="nice-form-group">
-        <label>${translate("trip.travelers.quantity")}</label>
+        <label>${translate('trip.travelers.quantity')}</label>
         <input required class="flex-input" id="travelersCount" type="number" placeholder="0" min="1" max="10" value="${TRAVELERS.length || 1}" />
     </div>
     <div id="travelers-names-container">
         ${getTravelersNameContent()}
     </div>
     <div class="nice-form-group" id="travelers-names-unique" style="display: none">
-        <span class="red">${translate("trip.travelers.unique")}</span>
+        <span class="red">${translate('trip.travelers.unique')}</span>
     </div>
 
     `;
@@ -53,28 +62,25 @@ function getTravelersInfoContent() {
 
 function getTravelersNameContent() {
 	const properties = [];
-	const nameLabel = translate("labels.name");
-	const travelersCount = getID("travelersCount");
-	const quantity = travelersCount
-		? parseInt(travelersCount.value) || 1
-		: TRAVELERS.length || 1;
+	const nameLabel = translate('labels.name');
+	const travelersCount = getID('travelersCount');
+	const quantity = travelersCount ? parseInt(travelersCount.value) || 1 : TRAVELERS.length || 1;
 
 	for (let j = 1; j <= quantity; j++) {
 		const traveler = TRAVELERS[j - 1];
-		const id =
-			getID(`traveler-id-${j}`)?.value || traveler?.id || getNewTravelerID();
-		const name = getID(`traveler-name-${j}`)?.value || traveler?.name || "";
+		const id = getID(`traveler-id-${j}`)?.value || traveler?.id || getNewTravelerID();
+		const name = getID(`traveler-name-${j}`)?.value || traveler?.name || '';
 
 		properties.push(`
             <div class="nice-form-group">
                 <label>${nameLabel} ${j}</label>
                 <input id="traveler-id-${j}" type="text" value="${id}" style="display: none" disabled>
-                <input id="traveler-name-${j}" type="text" maxlength="10" placeholder="${nameLabel}" ${name ? `value="${name}"` : ""}>
+                <input id="traveler-name-${j}" type="text" maxlength="10" placeholder="${nameLabel}" ${name ? `value="${name}"` : ''}>
             </div>
         `);
 	}
 
-	return properties.join("");
+	return properties.join('');
 }
 
 export function saveTravelersInfo() {
@@ -90,11 +96,11 @@ export function saveTravelersInfo() {
 
 	const names = travelers.map((t) => t.name);
 	const hasRepetitions = names.some((name, index) => {
-		return names.indexOf(name) !== index && name !== "";
+		return names.indexOf(name) !== index && name !== '';
 	});
 
 	if (hasRepetitions) {
-		getID("travelers-names-unique").style.display = "block";
+		getID('travelers-names-unique').style.display = 'block';
 		return;
 	}
 
@@ -107,28 +113,26 @@ export function saveTravelersInfo() {
 }
 
 export function getTravelersFieldset(id, _defaultValue?) {
-	const result = document.createElement("div");
-	result.className = "nice-form-group";
+	const result = document.createElement('div');
+	result.className = 'nice-form-group';
 
 	if (id) {
 		result.id = id;
 	}
 
-	const mandatory = document.createElement("span");
+	const mandatory = document.createElement('span');
 	mandatory.id = `${id}-mandatory`;
-	mandatory.className = "red";
-	mandatory.textContent = `(${translate("messages.select_one")})`;
-	mandatory.style.display = "none";
+	mandatory.className = 'red';
+	mandatory.textContent = `(${translate('messages.select_one')})`;
+	mandatory.style.display = 'none';
 
-	const titleLabel = document.createElement("label");
-	titleLabel.appendChild(
-		document.createTextNode(translate("trip.travelers.title") + " "),
-	);
+	const titleLabel = document.createElement('label');
+	titleLabel.appendChild(document.createTextNode(translate('trip.travelers.title') + ' '));
 	titleLabel.appendChild(mandatory);
 	result.appendChild(titleLabel);
 
-	const fieldset = document.createElement("fieldset");
-	fieldset.className = "double-fieldset";
+	const fieldset = document.createElement('fieldset');
+	fieldset.className = 'double-fieldset';
 	let travelers = 0;
 
 	for (let j = 1; j <= TRAVELERS.length; j++) {
@@ -138,21 +142,21 @@ export function getTravelersFieldset(id, _defaultValue?) {
 			continue; // Skip if no name is provided
 		}
 
-		const div = document.createElement("div");
+		const div = document.createElement('div');
 		div.id = `checkbox-${j}`;
-		div.className = "nice-form-group";
-		div.style.marginTop = "0px";
+		div.className = 'nice-form-group';
+		div.style.marginTop = '0px';
 
-		const input = document.createElement("input");
-		input.type = "checkbox";
+		const input = document.createElement('input');
+		input.type = 'checkbox';
 		input.id = `${id}-${j}`;
 		input.value = traveler.id;
 		input.checked = true;
 
-		const label = document.createElement("label");
+		const label = document.createElement('label');
 		label.id = `${id}-label-${j}`;
-		label.className = "checkbox-label";
-		label.setAttribute("for", input.id);
+		label.className = 'checkbox-label';
+		label.setAttribute('for', input.id);
 		label.textContent = traveler.name;
 
 		div.appendChild(input);
@@ -163,7 +167,7 @@ export function getTravelersFieldset(id, _defaultValue?) {
 
 	result.appendChild(fieldset);
 
-	return travelers > 1 ? result.outerHTML : "";
+	return travelers > 1 ? result.outerHTML : '';
 }
 
 export function enableAllTravelersFieldset(id) {
@@ -182,9 +186,7 @@ export function updateTravelersFieldset(id, checkedData = []) {
 		const traveler = checkedData.find((t) => t.id === value);
 
 		checkbox.checked =
-			traveler?.isPresent === undefined
-				? INCLUDE_LATE_TRAVELERS
-				: traveler.isPresent;
+			traveler?.isPresent === undefined ? INCLUDE_LATE_TRAVELERS : traveler.isPresent;
 		j++;
 	}
 }
@@ -195,11 +197,11 @@ export function getCheckedTravelersIDs(containerID) {
 		return [];
 	}
 	const result = [];
-	const fieldset = container.querySelector("fieldset");
+	const fieldset = container.querySelector('fieldset');
 
 	for (const checkBoxContainer of fieldset.children) {
-		const label = checkBoxContainer.querySelector("label");
-		const checkbox = checkBoxContainer.querySelector("input");
+		const label = checkBoxContainer.querySelector('label');
+		const checkbox = checkBoxContainer.querySelector('input');
 		result.push({
 			id: checkbox.value,
 			name: label.innerText,
@@ -207,9 +209,7 @@ export function getCheckedTravelersIDs(containerID) {
 		});
 	}
 
-	const missingNames = TRAVELERS.filter(
-		(t) => !result.some((r) => r.name === t.name),
-	);
+	const missingNames = TRAVELERS.filter((t) => !result.some((r) => r.name === t.name));
 	for (const missing of missingNames) {
 		result.push({
 			id: missing.id,
@@ -237,17 +237,17 @@ export function validateTravelersFieldset(id) {
 		j++;
 	}
 	if (!isValid) {
-		mandatory.style.display = "inline";
+		mandatory.style.display = 'inline';
 	}
 
 	return isValid;
 }
 
 export function updateTravelersButtonLabel() {
-	const el = getID("travelers-info");
+	const el = getID('travelers-info');
 
 	if (TRAVELERS.length === 0) {
-		el.textContent = translate("trip.travelers.add");
+		el.textContent = translate('trip.travelers.add');
 		return;
 	}
 
@@ -269,7 +269,7 @@ export function getTravelersSelectOptionsHTML() {
 
 export function getTravelerName(id) {
 	const traveler = TRAVELERS.find((t) => t.id === id);
-	return traveler ? traveler.name : "";
+	return traveler ? traveler.name : '';
 }
 
 export function getTravelersObject() {

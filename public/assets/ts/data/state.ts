@@ -23,7 +23,7 @@ export function updateState(partial: TripState): void {
 // ======= Shared Mutable State (English names) =======
 // For backward compat, old Portuguese-named let exports are kept
 // in sync via the setters below (both vars updated on every write).
-export let DOCUMENT_ID = "";
+export let DOCUMENT_ID = '';
 export let SUCCESSFUL_SAVE = false;
 export let activeDestinations: any[] = [];
 export let TRAVELERS: any[] = [];
@@ -49,8 +49,12 @@ export let FIRESTORE_DESTINATIONS_NEW_DATA: Record<string, any> = {};
 // ======= Setters (update both old and new names for backward compat) =======
 // (ES module imports are live bindings — only the exporting module can reassign them)
 
-export function setErrorFromGetRequest(val: any) { ERROR_FROM_GET_REQUEST = val; }
-export function setDocumentId(val: string) { DOCUMENT_ID = val; }
+export function setErrorFromGetRequest(val: any) {
+	ERROR_FROM_GET_REQUEST = val;
+}
+export function setDocumentId(val: string) {
+	DOCUMENT_ID = val;
+}
 
 export function setSuccessfulSave(val: boolean) {
 	SUCCESSFUL_SAVE = val;
@@ -83,19 +87,31 @@ export function setPendingDestinationData(val: Record<string, any>) {
 // ======= Deprecated setter aliases (Portuguese names) =======
 
 /** @deprecated Use `setActiveDestinations` */
-export function setDestinations(val: any[]) { setActiveDestinations(val); }
+export function setDestinations(val: any[]) {
+	setActiveDestinations(val);
+}
 
 /** @deprecated Use `setTravelers` */
-export function setTravelersFn(val: any[]) { setTravelers(val); }
+export function setTravelersFn(val: any[]) {
+	setTravelers(val);
+}
 
 /** @deprecated Use `setActiveDestinationData` */
-export function setFirestoreDestinationsData(val: any) { setActiveDestinationData(val); }
+export function setFirestoreDestinationsData(val: any) {
+	setActiveDestinationData(val);
+}
 
 /** @deprecated Use `setPendingTripData` */
-export function setFirestoreNewData(val: Record<string, any>) { setPendingTripData(val); }
+export function setFirestoreNewData(val: Record<string, any>) {
+	setPendingTripData(val);
+}
 
 /** @deprecated Use `setPendingDestinationData` */
-export function setFirestoreDestinationsNewData(val: Record<string, any>) { setPendingDestinationData(val); }
+export function setFirestoreDestinationsNewData(val: Record<string, any>) {
+	setPendingDestinationData(val);
+}
 
 /** @deprecated Use `setSuccessfulSave` */
-export function setSuccessfulSaveFn(val: boolean) { setSuccessfulSave(val); }
+export function setSuccessfulSaveFn(val: boolean) {
+	setSuccessfulSave(val);
+}

@@ -1,114 +1,113 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 // ============================================================
 // Field Name Translation Map (Portuguese → English)
 // Unambiguous global renames — same meaning regardless of parent context.
 // ============================================================
 const FIELD_MAP: Record<string, string> = {
-	titulo: "title",
-	versao: "version",
-	visibilidade: "visibility",
-	inicio: "start",
-	fim: "end",
-	cores: "colors",
-	compartilhamento: "sharing",
-	modulos: "modules",
-	moeda: "currency",
-	pessoas: "travelers",
-	hospedagens: "accommodations",
-	transportes: "transportation",
-	programacoes: "itinerary",
-	galeria: "gallery",
-	nome: "name",
-	descricao: "description",
-	endereco: "address",
-	datas: "dates",
-	cafe: "breakfast",
-	imagens: "images",
-	reserva: "reservation",
-	empresa: "company",
-	pontos: "points",
-	duracao: "duration",
-	idaVolta: "direction",
-	pessoa: "person",
-	visualizacao: "viewMode",
-	destinosIDs: "destinationIds",
-	madrugada: "earlyMorning",
-	manha: "morning",
-	tarde: "afternoon",
-	noite: "night",
-	programacao: "label",
-	tipo: "type",
-	transporte: "type",
-	restaurantes: "restaurants",
-	lanches: "snacks",
-	lojas: "shopping",
-	saidas: "nightlife",
-	turismo: "tourism",
-	nota: "rating",
-	mapa: "map",
-	regiao: "region",
-	novo: "isNew",
-	criadoEm: "createdAt",
-	midia: "media",
-	permissoes: "permissions",
-	gastosDurante: "duringTrip",
-	gastosPrevios: "preTrip",
-	orcamento: "budget",
-	ultimaAtualizacao: "lastUpdated",
-	dono: "owner",
-	editores: "editors",
-	vacina: "vaccine",
-	traduzir: "translate",
-	checkin: "checkIn",
-	checkout: "checkOut",
-	ativo: "active",
+	titulo: 'title',
+	versao: 'version',
+	visibilidade: 'visibility',
+	inicio: 'start',
+	fim: 'end',
+	cores: 'colors',
+	compartilhamento: 'sharing',
+	modulos: 'modules',
+	moeda: 'currency',
+	pessoas: 'travelers',
+	hospedagens: 'accommodations',
+	transportes: 'transportation',
+	programacoes: 'itinerary',
+	galeria: 'gallery',
+	nome: 'name',
+	descricao: 'description',
+	endereco: 'address',
+	datas: 'dates',
+	cafe: 'breakfast',
+	imagens: 'images',
+	reserva: 'reservation',
+	empresa: 'company',
+	pontos: 'points',
+	duracao: 'duration',
+	idaVolta: 'direction',
+	pessoa: 'person',
+	visualizacao: 'viewMode',
+	destinosIDs: 'destinationIds',
+	madrugada: 'earlyMorning',
+	manha: 'morning',
+	tarde: 'afternoon',
+	noite: 'night',
+	programacao: 'label',
+	tipo: 'type',
+	transporte: 'type',
+	restaurantes: 'restaurants',
+	lanches: 'snacks',
+	lojas: 'shopping',
+	saidas: 'nightlife',
+	turismo: 'tourism',
+	nota: 'rating',
+	mapa: 'map',
+	regiao: 'region',
+	novo: 'isNew',
+	criadoEm: 'createdAt',
+	midia: 'media',
+	permissoes: 'permissions',
+	gastosDurante: 'duringTrip',
+	gastosPrevios: 'preTrip',
+	orcamento: 'budget',
+	ultimaAtualizacao: 'lastUpdated',
+	dono: 'owner',
+	editores: 'editors',
+	vacina: 'vaccine',
+	traduzir: 'translate',
+	checkin: 'checkIn',
+	checkout: 'checkOut',
+	ativo: 'active',
 	// Singular destinosID appears inside destinationRefs[] entries and itinerary destinationIds[] entries
-	destinosID: "id",
+	destinosID: 'id',
 	// dados = data array (e.g. transportation.dados)
-	dados: "data",
+	dados: 'data',
 	// Fields discovered missing after initial run:
-	destinos: "destinations",
-	valor: "price",
-	subtitulo: "subtitle",
-	imagem: "image",
-	foto: "photo",
-	altura: "height",
-	caminho: "path",
-	claro: "light",
-	escuro: "dark",
-	exibirEmDestinos: "showInDestinations",
-	gastos: "expenses",
-	resumo: "summary",
-	listagens: "listings",
-	viagens: "trips",
-	tamanhoUploadIrrestrito: "unlimitedUploadSize",
-	versoes: "versions",
-	enviadoEm: "sentAt",
-	link: "link",
-	instagram: "instagram",
-	website: "website",
-	emoji: "emoji",
-	preco: "price",
-	documento: "document",
-	arquivo: "file",
-	icone: "icon",
-	texto: "text",
-	legenda: "caption",
-	destaque: "highlight",
-	ordem: "order",
-	status: "status",
-	configuracao: "configuration",
-	tema: "theme",
-	idioma: "language",
-	categoria: "category",
-	local: "location",
+	destinos: 'destinations',
+	valor: 'price',
+	subtitulo: 'subtitle',
+	imagem: 'image',
+	foto: 'photo',
+	altura: 'height',
+	caminho: 'path',
+	claro: 'light',
+	escuro: 'dark',
+	exibirEmDestinos: 'showInDestinations',
+	gastos: 'expenses',
+	resumo: 'summary',
+	listagens: 'listings',
+	viagens: 'trips',
+	tamanhoUploadIrrestrito: 'unlimitedUploadSize',
+	versoes: 'versions',
+	enviadoEm: 'sentAt',
+	link: 'link',
+	instagram: 'instagram',
+	website: 'website',
+	emoji: 'emoji',
+	preco: 'price',
+	documento: 'document',
+	arquivo: 'file',
+	icone: 'icon',
+	texto: 'text',
+	legenda: 'caption',
+	destaque: 'highlight',
+	ordem: 'order',
+	status: 'status',
+	configuracao: 'configuration',
+	tema: 'theme',
+	idioma: 'language',
+	categoria: 'category',
+	local: 'location',
 	// Gallery plural fields (was inside galeria object)
-	categorias: "categories",
-	descricoes: "descriptions",
-	titulos: "titles",
+	categorias: 'categories',
+	descricoes: 'descriptions',
+	titulos: 'titles',
 };
 
 // ============================================================
@@ -119,37 +118,37 @@ const FIELD_MAP: Record<string, string> = {
 const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 	// Inside transportes.pontos: partida = origin point, chegada = destination point
 	pontos: {
-		partida: "origin",
-		chegada: "destination",
+		partida: 'origin',
+		chegada: 'destination',
 	},
 	// Inside transportes.datas: partida = departure date, chegada = arrival date
 	// (datas is renamed to dates by FIELD_MAP, but we match against the OLD key "datas"
 	//  because we check parent BEFORE renaming parent)
 	datas: {
-		partida: "departure",
-		chegada: "arrival",
+		partida: 'departure',
+		chegada: 'arrival',
 	},
 	// Inside itinerary entry title: valor = the title string, destinos = show flag
 	titulo: {
-		valor: "value",
-		destinos: "showDestinations",
+		valor: 'value',
+		destinos: 'showDestinations',
 	},
 	// Trip root: destinos array should become destinationRefs (not destinations)
 	// because it contains {id, ...} refs, not embedded destination data.
 	// Parent key is the collection name prefixed with _root_.
 	_root_viagens: {
-		destinos: "destinationRefs",
+		destinos: 'destinationRefs',
 	},
 	// Inside itinerary entries (parent is the ORIGINAL Portuguese key "programacoes",
 	// NOT the translated "itinerary" — because transformObject passes old keys as context):
 	// data = Portuguese for "date"
 	programacoes: {
-		data: "date",
+		data: 'date',
 	},
 	// Inside modulos object: programacao = itinerary module flag
 	// (singular, unlike FIELD_MAP's programacoes: "itinerary" for the array)
 	modulos: {
-		programacao: "itinerary",
+		programacao: 'itinerary',
 	},
 };
 
@@ -160,42 +159,42 @@ const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 // ============================================================
 const VALUE_MAP: Record<string, string> = {
 	// Transport type
-	voo: "flight",
-	onibus: "bus",
-	carro: "car",
-	"trem-bala": "bullet_train",
+	voo: 'flight',
+	onibus: 'bus',
+	carro: 'car',
+	'trem-bala': 'bullet_train',
 	// Direction
-	ida: "departure",
-	volta: "return",
-	durante: "during",
+	ida: 'departure',
+	volta: 'return',
+	durante: 'during',
 	// View mode
-	"simple-view": "simple",
-	"leg-view": "leg",
+	'simple-view': 'simple',
+	'leg-view': 'leg',
 	// Itinerary item type (when stored as a string value)
-	destinos: "destination",
-	transporte: "transportation",
-	hospedagens: "accommodation",
+	destinos: 'destination',
+	transporte: 'transportation',
+	hospedagens: 'accommodation',
 	// User visibility mode
-	dinamico: "dynamic",
+	dinamico: 'dynamic',
 	// Theme / visibility values (stored as string values, e.g. visibility.light = "claro")
-	claro: "light",
-	escuro: "dark",
-	ativo: "active",
+	claro: 'light',
+	escuro: 'dark',
+	ativo: 'active',
 	// Module keys (when stored as string values in arrays or settings)
-	saidas: "nightlife",
-	mapa: "map",
-	gastos: "expenses",
-	resumo: "summary",
+	saidas: 'nightlife',
+	mapa: 'map',
+	gastos: 'expenses',
+	resumo: 'summary',
 	// Category values (e.g. categoria: "restaurantes" in itinerary items)
-	restaurantes: "restaurants",
-	lanches: "snacks",
-	lojas: "shopping",
-	turismo: "tourism",
+	restaurantes: 'restaurants',
+	lanches: 'snacks',
+	lojas: 'shopping',
+	turismo: 'tourism',
 	// Common enum values
-	sim: "yes",
-	nao: "no",
-	todos: "all",
-	nenhum: "none",
+	sim: 'yes',
+	nao: 'no',
+	todos: 'all',
+	nenhum: 'none',
 };
 
 // ============================================================
@@ -205,7 +204,7 @@ const VALUE_MAP: Record<string, string> = {
 // ============================================================
 const DOC_ID_MAP: Record<string, Record<string, string>> = {
 	admin: {
-		permissoes: "permissions",
+		permissoes: 'permissions',
 	},
 };
 
@@ -213,14 +212,14 @@ const DOC_ID_MAP: Record<string, Record<string, string>> = {
 // Top-level collections to process (Portuguese names)
 // ============================================================
 const TOP_COLLECTIONS = [
-	"usuarios",
-	"viagens",
-	"destinos",
-	"listagens",
-	"gastos",
-	"protegido",
-	"config",
-	"admin",
+	'usuarios',
+	'viagens',
+	'destinos',
+	'listagens',
+	'gastos',
+	'protegido',
+	'config',
+	'admin',
 ];
 
 // ============================================================
@@ -262,8 +261,8 @@ function transformObject(
 	}
 
 	// Null or non-object (string/number/boolean): check value translation
-	if (obj === null || typeof obj !== "object") {
-		if (typeof obj === "string" && VALUE_MAP[obj] !== undefined) {
+	if (obj === null || typeof obj !== 'object') {
+		if (typeof obj === 'string' && VALUE_MAP[obj] !== undefined) {
 			return { result: VALUE_MAP[obj], fieldsRenamed, valuesTranslated: 1 };
 		}
 		return { result: obj, fieldsRenamed, valuesTranslated };
@@ -315,7 +314,7 @@ function isAlreadyTranslated(data: Record<string, unknown>): boolean {
 	// (e.g. "data" inside "programacoes" → should be detected as Portuguese).
 	const knownPortugueseKeys = new Set(Object.keys(FIELD_MAP));
 	for (const parentKey of Object.keys(CONTEXT_FIELD_MAP)) {
-		if (!parentKey.startsWith("_root_")) {
+		if (!parentKey.startsWith('_root_')) {
 			knownPortugueseKeys.add(parentKey);
 		}
 		// Also add the inner Portuguese keys from each context entry
@@ -326,9 +325,9 @@ function isAlreadyTranslated(data: Record<string, unknown>): boolean {
 
 	// Recursively check for any Portuguese key
 	function hasPortugueseKeys(obj: unknown): boolean {
-		if (obj === null || typeof obj !== "object") return false;
+		if (obj === null || typeof obj !== 'object') return false;
 		if (Array.isArray(obj)) {
-			return obj.some(item => hasPortugueseKeys(item));
+			return obj.some((item) => hasPortugueseKeys(item));
 		}
 		const record = obj as Record<string, unknown>;
 		for (const key of Object.keys(record)) {
@@ -379,10 +378,7 @@ async function migrateCollection(
 
 		// Idempotency: if new ID already exists, this rename was already done — just clean up old doc
 		if (newDocId) {
-			const newDocSnap = await admin
-				.firestore()
-				.doc(`${collectionName}/${newDocId}`)
-				.get();
+			const newDocSnap = await admin.firestore().doc(`${collectionName}/${newDocId}`).get();
 			if (newDocSnap.exists) {
 				console.log(
 					`[${collectionName}/${doc.id}] Already renamed to ${newDocId} — deleting old doc.`,
@@ -408,9 +404,7 @@ async function migrateCollection(
 		const transformed = transformObject(data, `_root_${collectionName}`);
 
 		if (transformed.fieldsRenamed === 0 && transformed.valuesTranslated === 0) {
-			console.log(
-				`[${collectionName}/${doc.id}] No changes needed — skipping.`,
-			);
+			console.log(`[${collectionName}/${doc.id}] No changes needed — skipping.`);
 			continue;
 		}
 
@@ -418,17 +412,15 @@ async function migrateCollection(
 		report.valuesTranslated += transformed.valuesTranslated;
 
 		if (dryRun) {
-			const renameNote = newDocId
-				? ` (doc ID: ${doc.id} → ${newDocId})`
-				: "";
+			const renameNote = newDocId ? ` (doc ID: ${doc.id} → ${newDocId})` : '';
 			console.log(
 				`[DRY RUN] [${collectionName}/${doc.id}] ` +
 					`${transformed.fieldsRenamed} fields renamed, ` +
 					`${transformed.valuesTranslated} values translated.${renameNote}`,
 			);
-			console.log(`  Old keys: ${Object.keys(data).join(", ")}`);
+			console.log(`  Old keys: ${Object.keys(data).join(', ')}`);
 			console.log(
-				`  New keys: ${Object.keys(transformed.result as Record<string, unknown>).join(", ")}`,
+				`  New keys: ${Object.keys(transformed.result as Record<string, unknown>).join(', ')}`,
 			);
 			continue;
 		}
@@ -442,9 +434,7 @@ async function migrateCollection(
 			batchOpCount += 2;
 			report.docsWritten++;
 			report.docIdsRenamed++;
-			console.log(
-				`[${collectionName}] Doc ID renamed: ${doc.id} → ${newDocId}`,
-			);
+			console.log(`[${collectionName}] Doc ID renamed: ${doc.id} → ${newDocId}`);
 		} else {
 			// Write: set with merge=false replaces the entire document
 			batch.set(doc.ref, transformed.result as FirebaseFirestore.DocumentData);
@@ -480,16 +470,11 @@ async function migrateCollection(
  * These use the pattern: {parent}/{tripId}/protected/{pin}/{tripId}
  * We need to read protecido/{tripId} to discover the pin for each trip.
  */
-async function migrateProtectedSubcollections(
-	dryRun: boolean,
-): Promise<MigrationReport[]> {
+async function migrateProtectedSubcollections(dryRun: boolean): Promise<MigrationReport[]> {
 	const reports: MigrationReport[] = [];
 
 	// Read all protected metadata docs
-	const protectedSnapshot = await admin
-		.firestore()
-		.collection("protegido")
-		.get();
+	const protectedSnapshot = await admin.firestore().collection('protegido').get();
 
 	const tripPins: Record<string, string> = {};
 	protectedSnapshot.forEach((doc) => {
@@ -497,9 +482,7 @@ async function migrateProtectedSubcollections(
 		if (pin) tripPins[doc.id] = pin;
 	});
 
-	console.log(
-		`[protected-subcollections] Found ${Object.keys(tripPins).length} trip PINs.`,
-	);
+	console.log(`[protected-subcollections] Found ${Object.keys(tripPins).length} trip PINs.`);
 
 	// For each trip with a PIN, process viagens/protected/{pin}/{tripId}
 	for (const [tripId, pin] of Object.entries(tripPins)) {
@@ -519,11 +502,8 @@ async function migrateProtectedSubcollections(
 				continue;
 			}
 
-			const transformed = transformObject(data, "_root_viagens_protected");
-			if (
-				transformed.fieldsRenamed === 0 &&
-				transformed.valuesTranslated === 0
-			) {
+			const transformed = transformObject(data, '_root_viagens_protected');
+			if (transformed.fieldsRenamed === 0 && transformed.valuesTranslated === 0) {
 				continue;
 			}
 
@@ -534,9 +514,7 @@ async function migrateProtectedSubcollections(
 						`${transformed.valuesTranslated} values translated.`,
 				);
 			} else {
-				await docRef.set(
-					transformed.result as FirebaseFirestore.DocumentData,
-				);
+				await docRef.set(transformed.result as FirebaseFirestore.DocumentData);
 				console.log(`[${viagensPath}] Written.`);
 			}
 
@@ -569,11 +547,8 @@ async function migrateProtectedSubcollections(
 				continue;
 			}
 
-			const transformed = transformObject(data, "_root_gastos_protected");
-			if (
-				transformed.fieldsRenamed === 0 &&
-				transformed.valuesTranslated === 0
-			) {
+			const transformed = transformObject(data, '_root_gastos_protected');
+			if (transformed.fieldsRenamed === 0 && transformed.valuesTranslated === 0) {
 				continue;
 			}
 
@@ -584,9 +559,7 @@ async function migrateProtectedSubcollections(
 						`${transformed.valuesTranslated} values translated.`,
 				);
 			} else {
-				await docRef.set(
-					transformed.result as FirebaseFirestore.DocumentData,
-				);
+				await docRef.set(transformed.result as FirebaseFirestore.DocumentData);
 				console.log(`[${gastosPath}] Written.`);
 			}
 
@@ -611,13 +584,11 @@ async function migrateProtectedSubcollections(
 // ============================================================
 
 export const migrate = functions.https.onRequest(async (req, res) => {
-	const dryRun = req.query.dryRun === "true";
-	const mode = dryRun ? "DRY RUN" : "LIVE";
+	const dryRun = req.query.dryRun === 'true';
+	const mode = dryRun ? 'DRY RUN' : 'LIVE';
 
 	console.log(`[migrate-english-fields] Starting ${mode}...`);
-	console.log(
-		`[migrate-english-fields] Collections to process: ${TOP_COLLECTIONS.join(", ")}`,
-	);
+	console.log(`[migrate-english-fields] Collections to process: ${TOP_COLLECTIONS.join(', ')}`);
 
 	const allReports: MigrationReport[] = [];
 
@@ -642,26 +613,11 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		allReports.push(...subReports);
 
 		// Summary
-		const totalDocs = allReports.reduce(
-			(sum, r) => sum + r.docsProcessed,
-			0,
-		);
-		const totalRenamed = allReports.reduce(
-			(sum, r) => sum + r.fieldsRenamed,
-			0,
-		);
-		const totalTranslated = allReports.reduce(
-			(sum, r) => sum + r.valuesTranslated,
-			0,
-		);
-		const totalWritten = allReports.reduce(
-			(sum, r) => sum + r.docsWritten,
-			0,
-		);
-		const totalDocIdsRenamed = allReports.reduce(
-			(sum, r) => sum + r.docIdsRenamed,
-			0,
-		);
+		const totalDocs = allReports.reduce((sum, r) => sum + r.docsProcessed, 0);
+		const totalRenamed = allReports.reduce((sum, r) => sum + r.fieldsRenamed, 0);
+		const totalTranslated = allReports.reduce((sum, r) => sum + r.valuesTranslated, 0);
+		const totalWritten = allReports.reduce((sum, r) => sum + r.docsWritten, 0);
+		const totalDocIdsRenamed = allReports.reduce((sum, r) => sum + r.docIdsRenamed, 0);
 
 		const summary =
 			`\n========================================\n` +
@@ -676,13 +632,15 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 
 		console.log(summary);
 
-		res.status(200).send(
-			dryRun
-				? `DRY RUN complete. ${totalRenamed} fields would be renamed, ${totalTranslated} values would be translated across ${totalDocs} documents. Remove ?dryRun=true to execute.`
-				: `Migration complete. ${totalRenamed} fields renamed, ${totalTranslated} values translated across ${totalDocs} documents (${totalWritten} written).`,
-		);
+		res
+			.status(200)
+			.send(
+				dryRun
+					? `DRY RUN complete. ${totalRenamed} fields would be renamed, ${totalTranslated} values would be translated across ${totalDocs} documents. Remove ?dryRun=true to execute.`
+					: `Migration complete. ${totalRenamed} fields renamed, ${totalTranslated} values translated across ${totalDocs} documents (${totalWritten} written).`,
+			);
 	} catch (error) {
-		console.error("[migrate-english-fields] Fatal error:", error);
+		console.error('[migrate-english-fields] Fatal error:', error);
 		res.status(500).send(`Migration failed: ${(error as Error).message}`);
 	}
 });

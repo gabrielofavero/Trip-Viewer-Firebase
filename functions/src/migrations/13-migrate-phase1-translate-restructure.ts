@@ -1,6 +1,6 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-import { FieldValue } from "firebase-admin/firestore";
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 
 // ============================================================
 // PHASE 1: Translate & Restructure
@@ -23,176 +23,176 @@ import { FieldValue } from "firebase-admin/firestore";
 // ============================================================
 
 const FIELD_MAP: Record<string, string> = {
-	titulo: "title",
-	versao: "version",
-	visibilidade: "visibility",
-	inicio: "start",
-	fim: "end",
-	cores: "colors",
-	compartilhamento: "sharing",
-	modulos: "modules",
-	moeda: "currency",
-	pessoas: "travelers",
-	hospedagens: "accommodations",
-	transportes: "transportation",
-	programacoes: "itinerary",
-	galeria: "gallery",
-	nome: "name",
-	descricao: "description",
-	endereco: "address",
-	datas: "dates",
-	cafe: "breakfast",
-	imagens: "images",
-	reserva: "reservation",
-	empresa: "company",
-	pontos: "points",
-	duracao: "duration",
-	idaVolta: "direction",
-	pessoa: "person",
-	visualizacao: "viewMode",
-	destinosIDs: "destinationIds",
-	madrugada: "earlyMorning",
-	manha: "morning",
-	tarde: "afternoon",
-	noite: "night",
-	programacao: "label",
-	tipo: "type",
-	transporte: "type",
-	restaurantes: "restaurants",
-	lanches: "snacks",
-	lojas: "shopping",
-	saidas: "nightlife",
-	turismo: "tourism",
-	nota: "rating",
-	mapa: "map",
-	regiao: "region",
-	novo: "isNew",
-	criadoEm: "createdAt",
-	midia: "media",
-	permissoes: "permissions",
-	gastosDurante: "duringTrip",
-	gastosPrevios: "preTrip",
-	orcamento: "budget",
-	ultimaAtualizacao: "lastUpdated",
-	dono: "owner",
-	editores: "editors",
-	vacina: "vaccine",
-	traduzir: "translate",
-	checkin: "checkIn",
-	checkout: "checkOut",
-	ativo: "active",
-	destinosID: "id",
-	dados: "data",
-	destinos: "destinations",
-	valor: "price",
-	subtitulo: "subtitle",
-	imagem: "image",
-	foto: "photo",
-	altura: "height",
-	caminho: "path",
-	claro: "light",
-	escuro: "dark",
-	exibirEmDestinos: "showInDestinations",
-	gastos: "expenses",
-	resumo: "summary",
-	listagens: "listings",
-	viagens: "trips",
-	tamanhoUploadIrrestrito: "unlimitedUploadSize",
-	versoes: "versions",
-	enviadoEm: "sentAt",
-	link: "link",
-	instagram: "instagram",
-	website: "website",
-	emoji: "emoji",
-	preco: "price",
-	documento: "document",
-	arquivo: "file",
-	icone: "icon",
-	texto: "text",
-	legenda: "caption",
-	destaque: "highlight",
-	ordem: "order",
-	status: "status",
-	configuracao: "configuration",
-	tema: "theme",
-	idioma: "language",
-	categoria: "category",
-	local: "location",
-	categorias: "categories",
-	descricoes: "descriptions",
-	titulos: "titles",
+	titulo: 'title',
+	versao: 'version',
+	visibilidade: 'visibility',
+	inicio: 'start',
+	fim: 'end',
+	cores: 'colors',
+	compartilhamento: 'sharing',
+	modulos: 'modules',
+	moeda: 'currency',
+	pessoas: 'travelers',
+	hospedagens: 'accommodations',
+	transportes: 'transportation',
+	programacoes: 'itinerary',
+	galeria: 'gallery',
+	nome: 'name',
+	descricao: 'description',
+	endereco: 'address',
+	datas: 'dates',
+	cafe: 'breakfast',
+	imagens: 'images',
+	reserva: 'reservation',
+	empresa: 'company',
+	pontos: 'points',
+	duracao: 'duration',
+	idaVolta: 'direction',
+	pessoa: 'person',
+	visualizacao: 'viewMode',
+	destinosIDs: 'destinationIds',
+	madrugada: 'earlyMorning',
+	manha: 'morning',
+	tarde: 'afternoon',
+	noite: 'night',
+	programacao: 'label',
+	tipo: 'type',
+	transporte: 'type',
+	restaurantes: 'restaurants',
+	lanches: 'snacks',
+	lojas: 'shopping',
+	saidas: 'nightlife',
+	turismo: 'tourism',
+	nota: 'rating',
+	mapa: 'map',
+	regiao: 'region',
+	novo: 'isNew',
+	criadoEm: 'createdAt',
+	midia: 'media',
+	permissoes: 'permissions',
+	gastosDurante: 'duringTrip',
+	gastosPrevios: 'preTrip',
+	orcamento: 'budget',
+	ultimaAtualizacao: 'lastUpdated',
+	dono: 'owner',
+	editores: 'editors',
+	vacina: 'vaccine',
+	traduzir: 'translate',
+	checkin: 'checkIn',
+	checkout: 'checkOut',
+	ativo: 'active',
+	destinosID: 'id',
+	dados: 'data',
+	destinos: 'destinations',
+	valor: 'price',
+	subtitulo: 'subtitle',
+	imagem: 'image',
+	foto: 'photo',
+	altura: 'height',
+	caminho: 'path',
+	claro: 'light',
+	escuro: 'dark',
+	exibirEmDestinos: 'showInDestinations',
+	gastos: 'expenses',
+	resumo: 'summary',
+	listagens: 'listings',
+	viagens: 'trips',
+	tamanhoUploadIrrestrito: 'unlimitedUploadSize',
+	versoes: 'versions',
+	enviadoEm: 'sentAt',
+	link: 'link',
+	instagram: 'instagram',
+	website: 'website',
+	emoji: 'emoji',
+	preco: 'price',
+	documento: 'document',
+	arquivo: 'file',
+	icone: 'icon',
+	texto: 'text',
+	legenda: 'caption',
+	destaque: 'highlight',
+	ordem: 'order',
+	status: 'status',
+	configuracao: 'configuration',
+	tema: 'theme',
+	idioma: 'language',
+	categoria: 'category',
+	local: 'location',
+	categorias: 'categories',
+	descricoes: 'descriptions',
+	titulos: 'titles',
 };
 
 const CONTEXT_FIELD_MAP: Record<string, Record<string, string>> = {
 	pontos: {
-		partida: "origin",
-		chegada: "destination",
+		partida: 'origin',
+		chegada: 'destination',
 	},
 	datas: {
-		partida: "departure",
-		chegada: "arrival",
+		partida: 'departure',
+		chegada: 'arrival',
 	},
 	titulo: {
-		valor: "value",
-		destinos: "showDestinations",
+		valor: 'value',
+		destinos: 'showDestinations',
 	},
 	_root_viagens: {
-		destinos: "destinationRefs",
+		destinos: 'destinationRefs',
 	},
 	programacoes: {
-		data: "date",
+		data: 'date',
 	},
 	modulos: {
-		programacao: "itinerary",
+		programacao: 'itinerary',
 	},
 };
 
 const VALUE_MAP: Record<string, string> = {
-	voo: "flight",
-	onibus: "bus",
-	carro: "car",
-	"trem-bala": "bullet_train",
-	ida: "departure",
-	volta: "return",
-	durante: "during",
-	"simple-view": "simple",
-	"leg-view": "leg",
-	destinos: "destination",
-	transporte: "transportation",
-	hospedagens: "accommodation",
-	dinamico: "dynamic",
-	claro: "light",
-	escuro: "dark",
-	ativo: "active",
-	saidas: "nightlife",
-	mapa: "map",
-	gastos: "expenses",
-	resumo: "summary",
-	restaurantes: "restaurants",
-	lanches: "snacks",
-	lojas: "shopping",
-	turismo: "tourism",
-	sim: "yes",
-	nao: "no",
-	todos: "all",
-	nenhum: "none",
+	voo: 'flight',
+	onibus: 'bus',
+	carro: 'car',
+	'trem-bala': 'bullet_train',
+	ida: 'departure',
+	volta: 'return',
+	durante: 'during',
+	'simple-view': 'simple',
+	'leg-view': 'leg',
+	destinos: 'destination',
+	transporte: 'transportation',
+	hospedagens: 'accommodation',
+	dinamico: 'dynamic',
+	claro: 'light',
+	escuro: 'dark',
+	ativo: 'active',
+	saidas: 'nightlife',
+	mapa: 'map',
+	gastos: 'expenses',
+	resumo: 'summary',
+	restaurantes: 'restaurants',
+	lanches: 'snacks',
+	lojas: 'shopping',
+	turismo: 'tourism',
+	sim: 'yes',
+	nao: 'no',
+	todos: 'all',
+	nenhum: 'none',
 };
 
 const DOC_ID_MAP: Record<string, Record<string, string>> = {
 	admin: {
-		permissoes: "permissions",
+		permissoes: 'permissions',
 	},
 };
 
 const TOP_COLLECTIONS = [
-	"usuarios",
-	"viagens",
-	"destinos",
-	"listagens",
-	"gastos",
-	"protegido",
-	"config",
-	"admin",
+	'usuarios',
+	'viagens',
+	'destinos',
+	'listagens',
+	'gastos',
+	'protegido',
+	'config',
+	'admin',
 ];
 
 // ============================================================
@@ -217,8 +217,8 @@ function transformObject(
 		return { result: arrResult, fieldsRenamed, valuesTranslated };
 	}
 
-	if (obj === null || typeof obj !== "object") {
-		if (typeof obj === "string" && VALUE_MAP[obj] !== undefined) {
+	if (obj === null || typeof obj !== 'object') {
+		if (typeof obj === 'string' && VALUE_MAP[obj] !== undefined) {
 			return { result: VALUE_MAP[obj], fieldsRenamed, valuesTranslated: 1 };
 		}
 		return { result: obj, fieldsRenamed, valuesTranslated };
@@ -252,7 +252,7 @@ function transformObject(
 function isAlreadyTranslated(data: Record<string, unknown>): boolean {
 	const knownPortugueseKeys = new Set(Object.keys(FIELD_MAP));
 	for (const parentKey of Object.keys(CONTEXT_FIELD_MAP)) {
-		if (!parentKey.startsWith("_root_")) {
+		if (!parentKey.startsWith('_root_')) {
 			knownPortugueseKeys.add(parentKey);
 		}
 		for (const innerKey of Object.keys(CONTEXT_FIELD_MAP[parentKey])) {
@@ -261,7 +261,7 @@ function isAlreadyTranslated(data: Record<string, unknown>): boolean {
 	}
 
 	function hasPortugueseKeys(obj: unknown): boolean {
-		if (obj === null || typeof obj !== "object") return false;
+		if (obj === null || typeof obj !== 'object') return false;
 		if (Array.isArray(obj)) {
 			return obj.some((item) => hasPortugueseKeys(item));
 		}
@@ -281,10 +281,10 @@ function isAlreadyTranslated(data: Record<string, unknown>): boolean {
 // ============================================================
 
 function randomId(length = 5, pool: string[] = []): string {
-	const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	const array = new Uint32Array(length);
 	crypto.getRandomValues(array);
-	let id = "";
+	let id = '';
 	for (let i = 0; i < length; i++) {
 		id += chars[array[i] % chars.length];
 	}
@@ -353,69 +353,73 @@ function extractUserSummaries(
 	batch: BatchManager,
 	dryRun: boolean,
 ): UserSummaryReport {
-	const report: UserSummaryReport = { tripSummaries: 0, destinationSummaries: 0, listingSummaries: 0 };
+	const report: UserSummaryReport = {
+		tripSummaries: 0,
+		destinationSummaries: 0,
+		listingSummaries: 0,
+	};
 	const fieldsToDelete: string[] = [];
 
 	// Trip summaries
 	const tripsData = translatedData.trips;
-	if (tripsData && typeof tripsData === "object" && !Array.isArray(tripsData)) {
+	if (tripsData && typeof tripsData === 'object' && !Array.isArray(tripsData)) {
 		const entries = Object.entries(tripsData as Record<string, any>);
 		for (const [tripId, summary] of entries) {
-			if (!summary || typeof summary !== "object") continue;
+			if (!summary || typeof summary !== 'object') continue;
 			const doc = {
-				title: summary.title ?? "",
+				title: summary.title ?? '',
 				start: summary.start ?? null,
 				end: summary.end ?? null,
-				image: summary.image ?? "",
+				image: summary.image ?? '',
 				colors: summary.colors ?? {},
 				version: summary.version ?? {},
-				pin: summary.pin ?? "no-pin",
+				pin: summary.pin ?? 'no-pin',
 				modules: summary.modules ?? {},
 			};
-			console.log(`    ${dryRun ? "[DRY RUN] " : ""}Creating tripSummary: ${tripId}`);
-			if (!dryRun) batch.set(userDocRef.collection("tripSummaries").doc(tripId), doc);
+			console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating tripSummary: ${tripId}`);
+			if (!dryRun) batch.set(userDocRef.collection('tripSummaries').doc(tripId), doc);
 			report.tripSummaries++;
 		}
-		fieldsToDelete.push("trips");
+		fieldsToDelete.push('trips');
 	}
 
 	// Destination summaries
 	const destData = translatedData.destinations;
-	if (destData && typeof destData === "object" && !Array.isArray(destData)) {
+	if (destData && typeof destData === 'object' && !Array.isArray(destData)) {
 		const entries = Object.entries(destData as Record<string, any>);
 		for (const [destId, summary] of entries) {
-			if (!summary || typeof summary !== "object") continue;
+			if (!summary || typeof summary !== 'object') continue;
 			const doc = {
-				title: summary.title ?? "",
-				currency: summary.currency ?? "",
+				title: summary.title ?? '',
+				currency: summary.currency ?? '',
 				version: summary.version ?? {},
 			};
-			console.log(`    ${dryRun ? "[DRY RUN] " : ""}Creating destinationSummary: ${destId}`);
-			if (!dryRun) batch.set(userDocRef.collection("destinationSummaries").doc(destId), doc);
+			console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating destinationSummary: ${destId}`);
+			if (!dryRun) batch.set(userDocRef.collection('destinationSummaries').doc(destId), doc);
 			report.destinationSummaries++;
 		}
-		fieldsToDelete.push("destinations");
+		fieldsToDelete.push('destinations');
 	}
 
 	// Listing summaries
 	const listingData = translatedData.listings;
-	if (listingData && typeof listingData === "object" && !Array.isArray(listingData)) {
+	if (listingData && typeof listingData === 'object' && !Array.isArray(listingData)) {
 		const entries = Object.entries(listingData as Record<string, any>);
 		for (const [listingId, summary] of entries) {
-			if (!summary || typeof summary !== "object") continue;
+			if (!summary || typeof summary !== 'object') continue;
 			const doc = {
-				title: summary.title ?? "",
-				subtitle: summary.subtitle ?? "",
-				description: summary.description ?? "",
-				image: summary.image ?? "",
+				title: summary.title ?? '',
+				subtitle: summary.subtitle ?? '',
+				description: summary.description ?? '',
+				image: summary.image ?? '',
 				colors: summary.colors ?? {},
 				version: summary.version ?? {},
 			};
-			console.log(`    ${dryRun ? "[DRY RUN] " : ""}Creating listingSummary: ${listingId}`);
-			if (!dryRun) batch.set(userDocRef.collection("listingSummaries").doc(listingId), doc);
+			console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating listingSummary: ${listingId}`);
+			if (!dryRun) batch.set(userDocRef.collection('listingSummaries').doc(listingId), doc);
 			report.listingSummaries++;
 		}
-		fieldsToDelete.push("listings");
+		fieldsToDelete.push('listings');
 	}
 
 	// Remove embedded fields from translated data
@@ -435,14 +439,23 @@ function stripDestinationRefs(translatedData: Record<string, any>): number {
 	if (!Array.isArray(refs) || refs.length === 0) return 0;
 
 	const fatKeys = new Set([
-		"title", "currency", "version", "sharing", "modules",
-		"myMaps", "restaurants", "snacks", "shopping", "nightlife", "tourism",
+		'title',
+		'currency',
+		'version',
+		'sharing',
+		'modules',
+		'myMaps',
+		'restaurants',
+		'snacks',
+		'shopping',
+		'nightlife',
+		'tourism',
 	]);
 
 	const slimRefs: { id: string }[] = [];
 	let stripped = 0;
 	for (const ref of refs) {
-		if (!ref || typeof ref !== "object") continue;
+		if (!ref || typeof ref !== 'object') continue;
 		const id = ref.id || ref.destinosID;
 		if (!id) continue;
 		const hasFatKeys = Object.keys(ref).some((k) => fatKeys.has(k));
@@ -472,17 +485,26 @@ function moveAccommodations(
 
 	let moved = 0;
 	for (const acc of accs) {
-		if (!acc || typeof acc !== "object") continue;
+		if (!acc || typeof acc !== 'object') continue;
 		const accId = randomId(5, existingIds);
 		existingIds.push(accId);
 
 		const doc: Record<string, any> = {};
-		for (const f of ["name", "description", "address", "dates", "breakfast", "images", "reservation", "link"]) {
+		for (const f of [
+			'name',
+			'description',
+			'address',
+			'dates',
+			'breakfast',
+			'images',
+			'reservation',
+			'link',
+		]) {
 			if (acc[f] !== undefined) doc[f] = acc[f];
 		}
 
-		console.log(`    ${dryRun ? "[DRY RUN] " : ""}Creating accommodation: ${accId}`);
-		if (!dryRun) batch.set(tripDocRef.collection("accommodations").doc(accId), doc);
+		console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating accommodation: ${accId}`);
+		if (!dryRun) batch.set(tripDocRef.collection('accommodations').doc(accId), doc);
 		moved++;
 	}
 
@@ -502,15 +524,18 @@ function moveTransportation(
 	dryRun: boolean,
 ): { legs: number; settings: boolean } {
 	const transport = translatedData.transportation;
-	if (!transport || typeof transport !== "object") return { legs: 0, settings: false };
+	if (!transport || typeof transport !== 'object') return { legs: 0, settings: false };
 
 	let legsMoved = 0;
 	let settingsMoved = false;
 
 	// viewMode → _settings doc
 	if (transport.viewMode !== undefined && transport.viewMode !== null) {
-		console.log(`    ${dryRun ? "[DRY RUN] " : ""}Creating transportation _settings`);
-		if (!dryRun) batch.set(tripDocRef.collection("transportation").doc("_settings"), { viewMode: transport.viewMode });
+		console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating transportation _settings`);
+		if (!dryRun)
+			batch.set(tripDocRef.collection('transportation').doc('_settings'), {
+				viewMode: transport.viewMode,
+			});
 		settingsMoved = true;
 	}
 
@@ -518,17 +543,27 @@ function moveTransportation(
 	const legs = transport.data;
 	if (Array.isArray(legs) && legs.length > 0) {
 		for (const leg of legs) {
-			if (!leg || typeof leg !== "object") continue;
+			if (!leg || typeof leg !== 'object') continue;
 			const legId = randomId(5, existingIds);
 			existingIds.push(legId);
 
 			const doc: Record<string, any> = {};
-			for (const f of ["type", "company", "points", "dates", "duration", "direction", "reservation", "link", "person"]) {
+			for (const f of [
+				'type',
+				'company',
+				'points',
+				'dates',
+				'duration',
+				'direction',
+				'reservation',
+				'link',
+				'person',
+			]) {
 				if (leg[f] !== undefined) doc[f] = leg[f];
 			}
 
-			console.log(`    ${dryRun ? "[DRY RUN] " : ""}Creating transport leg: ${legId}`);
-			if (!dryRun) batch.set(tripDocRef.collection("transportation").doc(legId), doc);
+			console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating transport leg: ${legId}`);
+			if (!dryRun) batch.set(tripDocRef.collection('transportation').doc(legId), doc);
 			legsMoved++;
 		}
 	}
@@ -543,11 +578,16 @@ function moveTransportation(
 
 function buildDayId(day: Record<string, any>, index: number): string {
 	const date = day.date;
-	if (date && typeof date === "object" &&
-		typeof date.year === "number" && typeof date.month === "number" && typeof date.day === "number") {
+	if (
+		date &&
+		typeof date === 'object' &&
+		typeof date.year === 'number' &&
+		typeof date.month === 'number' &&
+		typeof date.day === 'number'
+	) {
 		const y = String(date.year);
-		const m = String(date.month).padStart(2, "0");
-		const d = String(date.day).padStart(2, "0");
+		const m = String(date.month).padStart(2, '0');
+		const d = String(date.day).padStart(2, '0');
 		return `${y}${m}${d}`;
 	}
 	return `day-${index + 1}`;
@@ -566,29 +606,37 @@ function moveItinerary(
 	let daysMoved = 0;
 	for (let i = 0; i < itinerary.length; i++) {
 		const day = itinerary[i];
-		if (!day || typeof day !== "object") continue;
+		if (!day || typeof day !== 'object') continue;
 
 		let dayId = buildDayId(day, i);
 		if (existingIds.has(dayId)) {
-			const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+			const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 			const arr = new Uint32Array(3);
 			crypto.getRandomValues(arr);
-			let suffix = "";
+			let suffix = '';
 			for (let j = 0; j < 3; j++) suffix += chars[arr[j] % chars.length];
 			dayId = `${dayId}-${suffix}`;
 		}
 		existingIds.add(dayId);
 
 		const doc: Record<string, any> = {};
-		for (const f of ["title", "date", "destinationIds", "earlyMorning", "morning", "afternoon", "night"]) {
+		for (const f of [
+			'title',
+			'date',
+			'destinationIds',
+			'earlyMorning',
+			'morning',
+			'afternoon',
+			'night',
+		]) {
 			if (day[f] !== undefined) doc[f] = day[f];
 		}
 		for (const [k, v] of Object.entries(day)) {
 			if (!(k in doc)) doc[k] = v;
 		}
 
-		console.log(`    ${dryRun ? "[DRY RUN] " : ""}Creating itinerary day: ${dayId}`);
-		if (!dryRun) batch.set(tripDocRef.collection("itinerary").doc(dayId), doc);
+		console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating itinerary day: ${dayId}`);
+		if (!dryRun) batch.set(tripDocRef.collection('itinerary').doc(dayId), doc);
 		daysMoved++;
 	}
 
@@ -615,13 +663,23 @@ interface DocReport {
 async function processCollection(
 	collectionName: string,
 	dryRun: boolean,
-): Promise<{ reports: DocReport[]; totalRenamed: number; totalTranslated: number; totalWritten: number }> {
+): Promise<{
+	reports: DocReport[];
+	totalRenamed: number;
+	totalTranslated: number;
+	totalWritten: number;
+}> {
 	const colRef = admin.firestore().collection(collectionName);
 	const snapshot = await colRef.get();
 
 	if (snapshot.empty) {
 		console.log(`[${collectionName}] No documents — skipping.`);
-		return { reports: [], totalRenamed: 0, totalTranslated: 0, totalWritten: 0 };
+		return {
+			reports: [],
+			totalRenamed: 0,
+			totalTranslated: 0,
+			totalWritten: 0,
+		};
 	}
 
 	console.log(`\n[${collectionName}] Processing ${snapshot.size} document(s)...`);
@@ -632,7 +690,11 @@ async function processCollection(
 
 	for (const doc of snapshot.docs) {
 		const data = doc.data();
-		const report: DocReport = { docId: doc.id, fieldsRenamed: 0, valuesTranslated: 0 };
+		const report: DocReport = {
+			docId: doc.id,
+			fieldsRenamed: 0,
+			valuesTranslated: 0,
+		};
 
 		// ID renaming check
 		const idMap = DOC_ID_MAP[collectionName] ?? {};
@@ -667,21 +729,21 @@ async function processCollection(
 		const docRef = doc.ref; // original ref (Portuguese collection)
 
 		// Step 2: Collection-specific restructuring
-		if (collectionName === "usuarios") {
+		if (collectionName === 'usuarios') {
 			report.summaries = extractUserSummaries(newData, docRef, batch, dryRun);
 		}
 
-		if (collectionName === "viagens") {
+		if (collectionName === 'viagens') {
 			// Get existing subcollection IDs for collision avoidance
 			const existingAccIds: string[] = [];
 			const existingItinIds = new Set<string>();
 			if (!dryRun) {
-				const accSnap = await docRef.collection("accommodations").get();
+				const accSnap = await docRef.collection('accommodations').get();
 				accSnap.forEach((d) => existingAccIds.push(d.id));
-				const itinSnap = await docRef.collection("itinerary").get();
+				const itinSnap = await docRef.collection('itinerary').get();
 				itinSnap.forEach((d) => existingItinIds.add(d.id));
 				// Also add transport IDs
-				const transSnap = await docRef.collection("transportation").get();
+				const transSnap = await docRef.collection('transportation').get();
 				transSnap.forEach((d) => existingAccIds.push(d.id));
 			}
 
@@ -694,14 +756,14 @@ async function processCollection(
 		}
 
 		// Step 3: Write back translated + restructured data
-		const renameNote = newDocId ? ` (ID: ${doc.id} → ${newDocId})` : "";
+		const renameNote = newDocId ? ` (ID: ${doc.id} → ${newDocId})` : '';
 		console.log(
 			`[${collectionName}/${doc.id}] ${report.fieldsRenamed} fields, ${report.valuesTranslated} values${renameNote}`,
 		);
 
 		if (dryRun) {
-			console.log(`  Old keys: ${Object.keys(data).join(", ")}`);
-			console.log(`  New keys: ${Object.keys(newData).join(", ")}`);
+			console.log(`  Old keys: ${Object.keys(data).join(', ')}`);
+			console.log(`  New keys: ${Object.keys(newData).join(', ')}`);
 		} else {
 			if (newDocId) {
 				const newRef = admin.firestore().doc(`${collectionName}/${newDocId}`);
@@ -717,7 +779,12 @@ async function processCollection(
 	}
 
 	if (!dryRun) await batch.commitAll();
-	return { reports, totalRenamed: reports.reduce((s, r) => s + r.fieldsRenamed, 0), totalTranslated: reports.reduce((s, r) => s + r.valuesTranslated, 0), totalWritten };
+	return {
+		reports,
+		totalRenamed: reports.reduce((s, r) => s + r.fieldsRenamed, 0),
+		totalTranslated: reports.reduce((s, r) => s + r.valuesTranslated, 0),
+		totalWritten,
+	};
 }
 
 // ============================================================
@@ -725,7 +792,7 @@ async function processCollection(
 // ============================================================
 
 async function processProtectedSubcollections(dryRun: boolean): Promise<number> {
-	const protectedSnap = await admin.firestore().collection("protegido").get();
+	const protectedSnap = await admin.firestore().collection('protegido').get();
 	const tripPins: Record<string, string> = {};
 	protectedSnap.forEach((doc) => {
 		const pin = doc.data()?.pin;
@@ -736,7 +803,7 @@ async function processProtectedSubcollections(dryRun: boolean): Promise<number> 
 
 	let processed = 0;
 	for (const [tripId, pin] of Object.entries(tripPins)) {
-		for (const parent of ["viagens", "gastos"]) {
+		for (const parent of ['viagens', 'gastos']) {
 			const path = `${parent}/protected/${pin}/${tripId}`;
 			try {
 				const docRef = admin.firestore().doc(path);
@@ -749,7 +816,9 @@ async function processProtectedSubcollections(dryRun: boolean): Promise<number> 
 				const transformed = transformObject(data, `_root_${parent}_protected`);
 				if (transformed.fieldsRenamed === 0 && transformed.valuesTranslated === 0) continue;
 
-				console.log(`[${path}] ${transformed.fieldsRenamed} fields, ${transformed.valuesTranslated} values`);
+				console.log(
+					`[${path}] ${transformed.fieldsRenamed} fields, ${transformed.valuesTranslated} values`,
+				);
 				if (!dryRun) {
 					await docRef.set(transformed.result as FirebaseFirestore.DocumentData);
 				}
@@ -767,8 +836,8 @@ async function processProtectedSubcollections(dryRun: boolean): Promise<number> 
 // ============================================================
 
 export const migrate = functions.https.onRequest(async (req, res) => {
-	const dryRun = req.query.dryRun === "true";
-	const mode = dryRun ? "DRY RUN" : "LIVE";
+	const dryRun = req.query.dryRun === 'true';
+	const mode = dryRun ? 'DRY RUN' : 'LIVE';
 
 	console.log(`\n========================================`);
 	console.log(`[phase1-translate-restructure] ${mode}`);
@@ -785,7 +854,9 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			grandTotalRenamed += result.totalRenamed;
 			grandTotalTranslated += result.totalTranslated;
 			grandTotalWritten += result.totalWritten;
-			console.log(`[${col}] ${result.totalRenamed} fields renamed, ${result.totalTranslated} values, ${result.totalWritten} written.`);
+			console.log(
+				`[${col}] ${result.totalRenamed} fields renamed, ${result.totalTranslated} values, ${result.totalWritten} written.`,
+			);
 		}
 
 		// Step 2: Process protected subcollections
@@ -801,13 +872,15 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			`========================================`;
 
 		console.log(summary);
-		res.status(200).send(
-			dryRun
-				? `DRY RUN complete. ${grandTotalRenamed} fields would be renamed, ${grandTotalTranslated} values translated, ${grandTotalWritten} docs written. Remove ?dryRun=true to execute.`
-				: `Phase 1 complete. ${grandTotalRenamed} fields renamed, ${grandTotalTranslated} values translated, ${grandTotalWritten} docs written.`,
-		);
+		res
+			.status(200)
+			.send(
+				dryRun
+					? `DRY RUN complete. ${grandTotalRenamed} fields would be renamed, ${grandTotalTranslated} values translated, ${grandTotalWritten} docs written. Remove ?dryRun=true to execute.`
+					: `Phase 1 complete. ${grandTotalRenamed} fields renamed, ${grandTotalTranslated} values translated, ${grandTotalWritten} docs written.`,
+			);
 	} catch (error) {
-		console.error("[phase1] Fatal error:", error);
+		console.error('[phase1] Fatal error:', error);
 		res.status(500).send(`Migration failed: ${(error as Error).message}`);
 	}
 });

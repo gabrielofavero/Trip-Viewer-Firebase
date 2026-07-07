@@ -4,9 +4,9 @@ import { validateImageLink } from '../../../ui/fields.js';
 import { closeAccordions, openLastAccordion } from '../../../ui/accordion.js';
 import { buildDS } from '../../../ui/dynamic-select.js';
 import { FIRESTORE_NEW_DATA } from '../../../data/state.js';
-import { IMAGE_UPLOAD_STATUS } from "../../../data/firebase/storage.js";
-import { CUSTOM_UPLOADS } from "../../../utils/set.js";
-import { addGallery } from "../new-trip.js";
+import { IMAGE_UPLOAD_STATUS } from '../../../data/firebase/storage.js';
+import { CUSTOM_UPLOADS } from '../../../utils/set.js';
+import { addGallery } from '../new-trip.js';
 
 export function getGalleryObject() {
 	let result = {
@@ -16,18 +16,18 @@ export function getGalleryObject() {
 		titles: [],
 	};
 
-	const childIDs = getChildIDs("gallery-box");
+	const childIDs = getChildIDs('gallery-box');
 	for (var i = 0; i < childIDs.length; i++) {
 		const j = getJ(childIDs[i]);
 
-		const description = getID(`gallery-description-${j}`).value || "";
+		const description = getID(`gallery-description-${j}`).value || '';
 		result.descriptions.push(description);
 
-		const title = getID(`gallery-title-${j}`).value || "";
+		const title = getID(`gallery-title-${j}`).value || '';
 		result.titles.push(title);
 
 		if (getID(`enable-upload-gallery-${j}`).checked) {
-			result.images.push("");
+			result.images.push('');
 			CUSTOM_UPLOADS.gallery.push({
 				file: getID(`upload-gallery-${j}`)?.files[0],
 				position: j,
@@ -51,24 +51,21 @@ function deleteGallery(i) {
 export function loadGalleryListeners(j) {
 	// Dynamic Title
 	getID(`gallery-title-${j}`).addEventListener(
-		"change",
-		() =>
-			(getID(`gallery-title-${j}`).innerText = getID(
-				`gallery-title-${j}`,
-			).value),
+		'change',
+		() => (getID(`gallery-title-${j}`).innerText = getID(`gallery-title-${j}`).value),
 	);
 
-// Link Validation
-	getID(`link-gallery-${j}`).addEventListener("change", () =>
+	// Link Validation
+	getID(`link-gallery-${j}`).addEventListener('change', () =>
 		validateImageLink(`link-gallery-${j}`),
 	);
 }
 
 export function galleryAddListenerAction() {
-	closeAccordions("gallery");
+	closeAccordions('gallery');
 	addGallery();
-	openLastAccordion("gallery");
-	buildDS("gallery-category");
+	openLastAccordion('gallery');
+	buildDS('gallery-category');
 }
 
 async function uploadAndSetGalleryImages() {
@@ -76,7 +73,7 @@ async function uploadAndSetGalleryImages() {
 		return;
 	}
 	const galleryFiles = CUSTOM_UPLOADS.gallery.map((file) => file.file);
-	const galleryResult = await uploadImages("trips", galleryFiles);
+	const galleryResult = await uploadImages('trips', galleryFiles);
 
 	if (IMAGE_UPLOAD_STATUS.hasErrors === false) {
 		for (let i = 0; i < galleryResult.length; i++) {

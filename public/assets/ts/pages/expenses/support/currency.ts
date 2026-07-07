@@ -1,7 +1,15 @@
 import { getChildIDs, getID } from '../../../utils/dom.js';
 import { setCSSRule } from '../../../theme/stylesheets.js';
-import { canConvert, convertCurrency, filterCurrencies, formatCurrency, getCurrencySymbol, loadCurrenciesObject, sortCurrencies } from '../../../models/expense.model.js';
-import { setTabListeners, applyExpenses } from "../expenses.js";
+import {
+	canConvert,
+	convertCurrency,
+	filterCurrencies,
+	formatCurrency,
+	getCurrencySymbol,
+	loadCurrenciesObject,
+	sortCurrencies,
+} from '../../../models/expense.model.js';
+import { setTabListeners, applyExpenses } from '../expenses.js';
 import { EXPENSES_DATA } from '../expenses.js';
 
 export var DEFAULT_CURRENCY;
@@ -14,8 +22,6 @@ export var CURRENCIES = {
 	duringTrip: [],
 };
 
-
-
 export async function loadExpenseCurrencies() {
 	DEFAULT_CURRENCY = EXPENSES_DATA.currency;
 
@@ -26,11 +32,11 @@ export async function loadExpenseCurrencies() {
 			CURRENT_CURRENCY = CURRENCIES.summary.includes(DEFAULT_CURRENCY)
 				? DEFAULT_CURRENCY
 				: CURRENCIES.summary[0];
-			getID("tab-currencies").style.display = "none";
+			getID('tab-currencies').style.display = 'none';
 			break;
 		case 1:
 			CURRENT_CURRENCY = CURRENCIES.summary[0];
-			// fall through to default
+		// fall through to default
 		default:
 			CURRENT_CURRENCY = CURRENCIES.summary.includes(DEFAULT_CURRENCY)
 				? DEFAULT_CURRENCY
@@ -52,7 +58,7 @@ async function loadCurrencyConversion() {
 	if (comparacoes.length === 0) {
 		return;
 	}
-	const url = `https://economia.awesomeapi.com.br/last/${comparacoes.join(",")}`;
+	const url = `https://economia.awesomeapi.com.br/last/${comparacoes.join(',')}`;
 	const data = await fetchConversoes(url);
 	if (data) {
 		for (const chave of chaves) {
@@ -65,9 +71,7 @@ async function fetchConversoes(url) {
 	try {
 		const response = await fetch(url);
 		if (!response.ok) {
-			console.error(
-				`Network issue while trying to fetch currency information:`,
-			);
+			console.error(`Network issue while trying to fetch currency information:`);
 			console.error(response);
 			console.warn(`Using default currency ${DEFAULT_CURRENCY}`);
 		}
@@ -80,28 +84,28 @@ async function fetchConversoes(url) {
 }
 
 export function loadCurrenciesTab() {
-	const currencyTab = getID("tab-currencies");
-	currencyTab.innerHTML = "";
-	currencyTab.style.display = CURRENCIES.summary.length > 1 ? "" : "none";
+	const currencyTab = getID('tab-currencies');
+	currencyTab.innerHTML = '';
+	currencyTab.style.display = CURRENCIES.summary.length > 1 ? '' : 'none';
 
 	for (let j = 1; j <= CURRENCIES.summary.length; j++) {
-		const checked = CURRENCIES.summary[j - 1] === CURRENT_CURRENCY ? "checked" : "";
+		const checked = CURRENCIES.summary[j - 1] === CURRENT_CURRENCY ? 'checked' : '';
 		currencyTab.innerHTML += `<input type="radio" id="radio-currency-${j}" name="tabs-currencies" ${checked} />`;
 		currencyTab.innerHTML += `<label class="tab-mini" for="radio-currency-${j}">${CURRENCIES.summary[j - 1]}</label>`;
 	}
 
 	currencyTab.innerHTML += '<span class="glider-mini"></span>';
 
-	const childs = getChildIDs("tab-currencies");
+	const childs = getChildIDs('tab-currencies');
 	for (let i = 0; i < childs.length; i++) {
 		setCSSRule(
 			`input[id="${childs[i]}"]:checked~.glider-mini`,
-			"transform",
+			'transform',
 			`translateX(${i * 100}%)`,
 		);
 
 		const radio = getID(`radio-currency-${i + 1}`);
-		radio.addEventListener("change", () => {
+		radio.addEventListener('change', () => {
 			if (radio.checked) {
 				CURRENT_CURRENCY = CURRENCIES.summary[i];
 				applyExpenses();

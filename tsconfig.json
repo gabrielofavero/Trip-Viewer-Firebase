@@ -1,18 +1,18 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES2020",
-    "moduleResolution": "bundler",
-    "strict": false,
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "skipLibCheck": true
-  },
-  "include": [
-    "public/assets/ts/**/*.ts",
-    "public/assets/ts/vendor.d.ts",
-    "index.ts",
-    "firebase-config.ts"
-  ]
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ES2020",
+		"moduleResolution": "bundler",
+		"strict": false,
+		"noEmit": true,
+		"allowImportingTsExtensions": true,
+		"isolatedModules": true,
+		"skipLibCheck": true
+	},
+	"include": [
+		"public/assets/ts/**/*.ts",
+		"public/assets/ts/vendor.d.ts",
+		"index.ts",
+		"firebase-config.ts"
+	]
 }

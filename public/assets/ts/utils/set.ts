@@ -27,13 +27,11 @@ export async function setDocumento({
 	try {
 		const uid = await getUID();
 		const ops = createBatchOps();
-		let response = translate("messages.documents.save.success");
+		let response = translate('messages.documents.save.success');
 
 		if (!uid || !type) {
 			throwSetError(
-				!uid
-					? translate("labels.unauthenticated")
-					: translate("messages.documents.save.error"),
+				!uid ? translate('labels.unauthenticated') : translate('messages.documents.save.error'),
 			);
 			return;
 		}
@@ -54,7 +52,7 @@ export async function setDocumento({
 		}
 
 		if (!hasUnsavedChanges()) {
-			throwSetError(`${translate("messages.documents.save.no_new_data")}`);
+			throwSetError(`${translate('messages.documents.save.no_new_data')}`);
 			return;
 		}
 
@@ -76,31 +74,31 @@ export async function setDocumento({
 		const result = await ops.commit();
 
 		if (!result.success) {
-			throwSetError(translate("messages.documents.save.error"));
+			throwSetError(translate('messages.documents.save.error'));
 			return;
 		}
 
 		setSuccessfulSaveFn(true);
-		getID("modal-inner-text").innerHTML = response;
+		getID('modal-inner-text').innerHTML = response;
 		stopLoadingScreen();
-		openModal("modal");
+		openModal('modal');
 	} catch (e) {
 		console.log(e);
-		throwSetError(translate("messages.documents.save.error"));
+		throwSetError(translate('messages.documents.save.error'));
 	}
 }
 
 function throwSetError(message) {
 	setSuccessfulSaveFn(false);
-	getID("modal-inner-text").innerHTML = message;
+	getID('modal-inner-text').innerHTML = message;
 	stopLoadingScreen();
-	openModal("modal");
+	openModal('modal');
 }
 
 function setUserData(ops, uid, type, documentData) {
 	const newData = getSingleUserData(type, documentData);
 	if (Object.keys(newData).length === 0) {
-		throwSetError("Error while fetching user data");
+		throwSetError('Error while fetching user data');
 		return;
 	}
 
@@ -110,13 +108,13 @@ function setUserData(ops, uid, type, documentData) {
 
 	function getSingleUserData(type, data) {
 		switch (type) {
-			case "destinations":
+			case 'destinations':
 				return {
 					currency: data.currency,
 					title: data.title,
 					version: data.version,
 				};
-			case "listings":
+			case 'listings':
 				return {
 					colors: data.colors,
 					description: data.description,
@@ -125,12 +123,12 @@ function setUserData(ops, uid, type, documentData) {
 					title: data.title,
 					version: data.version,
 				};
-			case "trips":
+			case 'trips':
 				return {
 					colors: data.colors,
-				end: data.end,
-				image: data.image,
-				start: data.start,
+					end: data.end,
+					image: data.image,
+					start: data.start,
 					modules: data.modules,
 					pin: data.pin,
 					title: data.title,

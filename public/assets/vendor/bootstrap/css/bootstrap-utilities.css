@@ -1393,26 +1393,17 @@
 
 .bg-primary {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-primary-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-secondary {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-secondary-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-success {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-success-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-info {
@@ -1422,10 +1413,7 @@
 
 .bg-warning {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-warning-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-danger {
@@ -1455,10 +1443,7 @@
 
 .bg-body {
 	--bs-bg-opacity: 1;
-	background-color: rgba(
-		var(--bs-body-bg-rgb),
-		var(--bs-bg-opacity)
-	) !important;
+	background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-transparent {

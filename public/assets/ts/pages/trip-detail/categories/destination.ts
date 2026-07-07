@@ -4,17 +4,19 @@ import { getChildIDs, getID } from '../../../utils/dom.js';
 import { convertFromDateObject, getTodayDateObject, jsDateToKey } from '../../../utils/dates.js';
 import { loadCustomSelect, loadCustomSelectAction } from '../../../ui/custom-select.js';
 import { translate } from '../../../i18n/translation.js';
-import { openViewEmbed } from "../support/embed.js";
-import { getVisibility } from "../../../theme/theme.js";
-import { CUSTOM_SELECTS } from "../../../ui/custom-select.js";
-import { END_DATE } from "../view.js";
-import { START_DATE } from "../view.js";
-import { SCHEDULE_DESTINATIONS } from "./itinerary-module/itinerary-module.js";
+import { openViewEmbed } from '../support/embed.js';
+import { getVisibility } from '../../../theme/theme.js';
+import { CUSTOM_SELECTS } from '../../../ui/custom-select.js';
+import { END_DATE } from '../view.js';
+import { START_DATE } from '../view.js';
+import { SCHEDULE_DESTINATIONS } from './itinerary-module/itinerary-module.js';
 
 var P_RESULT = {};
 var PLACES_FILTERED_SIZE;
 var ACTIVE_DESTINATION;
-export function setActiveDestination(val: any) { ACTIVE_DESTINATION = val; }
+export function setActiveDestination(val: any) {
+	ACTIVE_DESTINATION = val;
+}
 var DESTINO_EXPORT = {};
 var DESTINO_TRANSLATIONS = {};
 
@@ -25,19 +27,19 @@ export function loadDestinations() {
 	}
 
 	if (DESTINATIONS.length % 2 === 1) {
-	// Odd
-		getID("destinationsBox").classList.add("centered-destination-box");
+		// Odd
+		getID('destinationsBox').classList.add('centered-destination-box');
 	}
 
 	if (
 		DESTINATIONS.length === 1 &&
-		getID("destinations-select").style.display === "none" &&
-		getChildIDs("destinationsBox").length <= 1
+		getID('destinations-select').style.display === 'none' &&
+		getChildIDs('destinationsBox').length <= 1
 	) {
-		getID("destinationsTitleContainer").style.display = "none";
+		getID('destinationsTitleContainer').style.display = 'none';
 	}
 
-	window.addEventListener("resize", function () {
+	window.addEventListener('resize', function () {
 		adjustDestinationsHTML();
 	});
 
@@ -58,26 +60,26 @@ function autoNavigateDestinos() {
 	const targetDestinosID = hojeDestinos[0].id;
 	if (!targetDestinosID) return;
 
-	const option = CUSTOM_SELECTS["destinations-select"]?.options.find(
+	const option = CUSTOM_SELECTS['destinations-select']?.options.find(
 		(opt) => opt.value === targetDestinosID,
 	);
 	if (!option) return;
 
-	loadCustomSelectAction("destinations-select", targetDestinosID, option.label);
+	loadCustomSelectAction('destinations-select', targetDestinosID, option.label);
 }
 
 export function loadDestinationsCustomSelect() {
 	setDestinations(getState().destinations);
 
 	if (DESTINATIONS.length <= 1) {
-		getID("destinations-select").style.display = "none";
+		getID('destinations-select').style.display = 'none';
 		return;
 	}
 
 	const options = getDestinationsCustomSelectOptions();
 
 	const customSelect = {
-		id: "destinations-select",
+		id: 'destinations-select',
 		options,
 		activeOption: options[0].value,
 		action: loadDestionationCustomSelectAction,
@@ -89,10 +91,8 @@ export function loadDestinationsCustomSelect() {
 		const options = [];
 		const itineraryOrder: Set<string> = getState().itinerary
 			? new Set<string>(
-					getState().itinerary
-						.flatMap((item: any) =>
-							(item.destinationIds || []).map((d: any) => d.id),
-						)
+					getState()
+						.itinerary.flatMap((item: any) => (item.destinationIds || []).map((d: any) => d.id))
 						.filter(Boolean),
 				)
 			: new Set<string>();
@@ -141,14 +141,14 @@ export function loadDestinationsCustomSelect() {
 }
 
 export function loadDestinationsHTML(destination) {
-	let text = "";
+	let text = '';
 	const destinationsConfig = getDestinations();
 	const types = destinationsConfig.categories.general;
 
 	for (let i = 0; i < types.length; i++) {
 		const type = types[i];
 
-		if (type != "map" && Object.keys(destination.destinations[type]).length === 0) {
+		if (type != 'map' && Object.keys(destination.destinations[type]).length === 0) {
 			continue;
 		}
 
@@ -176,7 +176,7 @@ export function loadDestinationsHTML(destination) {
     </div>`;
 	}
 
-	getID("destinationsBox").innerHTML = text;
+	getID('destinationsBox').innerHTML = text;
 }
 
 export function loadAndOpenDestino(code) {
@@ -192,10 +192,10 @@ function getDestinationsBoxesIndex(i) {
 }
 
 export function adjustDestinationsHTML() {
-	const elements = Array.from(document.querySelectorAll(".bd"));
+	const elements = Array.from(document.querySelectorAll('.bd'));
 
 	for (const el of elements) {
-		(el as HTMLElement).style.height = "auto";
+		(el as HTMLElement).style.height = 'auto';
 	}
 
 	const maxHeight = Math.max(...elements.map((el) => (el as HTMLElement).offsetHeight));

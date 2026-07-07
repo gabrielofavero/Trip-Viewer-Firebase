@@ -10,7 +10,9 @@ export let IMAGE_UPLOAD_STATUS = {
 
 export let UPLOAD_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
 export let PERMISSIONS;
-export function setPermissions(val: any) { PERMISSIONS = val; }
+export function setPermissions(val: any) {
+	PERMISSIONS = val;
+}
 export let IMAGE_UPLOAD_ENABLED = false; // Master switch — set to true to re-enable image uploads
 
 export async function uploadImage(path, file) {
@@ -32,12 +34,10 @@ export async function uploadImage(path, file) {
 			result.link = downloadURL;
 			result.path = snapshot.ref.fullPath;
 
-			console.log(
-				`Image '${result.name}' uploaded successfully: ${result.link}`,
-			);
+			console.log(`Image '${result.name}' uploaded successfully: ${result.link}`);
 		} catch (error) {
 			IMAGE_UPLOAD_STATUS.hasErrors = true;
-			console.error("Error while uploading image:", error.message || error);
+			console.error('Error while uploading image:', error.message || error);
 
 			const key = codifyText(getLastDir(path));
 			IMAGE_UPLOAD_STATUS.messages[key] = getStorageErrorMessage(error);
@@ -83,7 +83,7 @@ export async function deleteImage(path) {
 export async function deleteImageByLink(link) {
 	const path = getImagePathFromLink(link);
 	if (!path) {
-		console.error("URL path could not be extracted from the link:", link);
+		console.error('URL path could not be extracted from the link:', link);
 		return;
 	}
 
@@ -102,7 +102,7 @@ export function getImagePathFromLink(link) {
 		if (!match || !match[1]) return null;
 		return decodeURIComponent(match[1]);
 	} catch (e) {
-		console.error("URL path could not be extracted from the link:", e);
+		console.error('URL path could not be extracted from the link:', e);
 		return null;
 	}
 }
@@ -139,19 +139,16 @@ export async function deleteUserObjectStorage() {
 export function checkFileSize(fileInput, type) {
 	const file = fileInput.files[0];
 
-	if (
-		(PERMISSIONS && PERMISSIONS["unlimitedUploadSize"] === true) ||
-		file.size <= UPLOAD_SIZE
-	) {
-		getID(`upload-${type}-size-message`).style.display = "none";
+	if ((PERMISSIONS && PERMISSIONS['unlimitedUploadSize'] === true) || file.size <= UPLOAD_SIZE) {
+		getID(`upload-${type}-size-message`).style.display = 'none';
 	} else {
-		getID(`upload-${type}-size-message`).style.display = "block";
-		fileInput.value = "";
+		getID(`upload-${type}-size-message`).style.display = 'block';
+		fileInput.value = '';
 	}
 }
 
 export function loadUploadSelector(type) {
-	if (type === "logo") {
+	if (type === 'logo') {
 		loadLogoSelector();
 	} else {
 		loadImageSelector(type);
@@ -169,51 +166,51 @@ export function loadImageSelector(type) {
 	// Guard: if any required element is missing, abort gracefully
 	if (!link || !upload) return;
 
-	if (IMAGE_UPLOAD_ENABLED && PERMISSIONS && PERMISSIONS["upload"] === true) {
+	if (IMAGE_UPLOAD_ENABLED && PERMISSIONS && PERMISSIONS['upload'] === true) {
 		if (checkboxLink?.checked) {
-			link.style.display = "block";
-			upload.style.display = "none";
+			link.style.display = 'block';
+			upload.style.display = 'none';
 			hideSizeMsg();
 		} else {
-			link.style.display = "none";
-			upload.style.display = "block";
+			link.style.display = 'none';
+			upload.style.display = 'block';
 		}
 
-		checkboxLink?.addEventListener("change", function () {
+		checkboxLink?.addEventListener('change', function () {
 			if (checkboxLink.checked) {
-				link.style.display = "block";
-				upload.style.display = "none";
+				link.style.display = 'block';
+				upload.style.display = 'none';
 				hideSizeMsg();
 			} else {
-				link.style.display = "none";
-				upload.style.display = "block";
+				link.style.display = 'none';
+				upload.style.display = 'block';
 			}
 		});
-		checkboxUpload?.addEventListener("change", function () {
+		checkboxUpload?.addEventListener('change', function () {
 			if (checkboxUpload.checked) {
-				link.style.display = "none";
-				upload.style.display = "block";
+				link.style.display = 'none';
+				upload.style.display = 'block';
 			} else {
-				link.style.display = "block";
-				upload.style.display = "none";
+				link.style.display = 'block';
+				upload.style.display = 'none';
 				hideSizeMsg();
 			}
 		});
-		upload?.addEventListener("change", function () {
+		upload?.addEventListener('change', function () {
 			checkFileSize(upload, type);
 		});
 
 		function hideSizeMsg() {
 			const sizeMsg = document.getElementById(`upload-${type}-size-message`);
-			if (sizeMsg) sizeMsg.style.display = "none";
+			if (sizeMsg) sizeMsg.style.display = 'none';
 		}
 	} else {
-		link.style.display = "block";
-		upload.style.display = "none";
-		if (checkboxGroup) checkboxGroup.style.display = "none";
+		link.style.display = 'block';
+		upload.style.display = 'none';
+		if (checkboxGroup) checkboxGroup.style.display = 'none';
 		// Hide size message when upload is disabled
 		const sizeMsg = document.getElementById(`upload-${type}-size-message`);
-		if (sizeMsg) sizeMsg.style.display = "none";
+		if (sizeMsg) sizeMsg.style.display = 'none';
 	}
 }
 
@@ -223,24 +220,24 @@ export function removeImageSelectorListeners(type) {
 	const link = getID(`link-${type}`);
 	const upload = getID(`upload-${type}`);
 
-	checkboxLink.removeEventListener("change", function () {
+	checkboxLink.removeEventListener('change', function () {
 		if (checkboxLink.checked) {
-			link.style.display = "block";
-			upload.style.display = "none";
+			link.style.display = 'block';
+			upload.style.display = 'none';
 		} else {
-			link.style.display = "none";
-			upload.style.display = "block";
+			link.style.display = 'none';
+			upload.style.display = 'block';
 		}
 	});
-	checkboxUpload.removeEventListener("change", function () {
+	checkboxUpload.removeEventListener('change', function () {
 		if (checkboxUpload.checked) {
-			link.style.display = "none";
-			upload.style.display = "block";
+			link.style.display = 'none';
+			upload.style.display = 'block';
 		} else {
-			link.style.display = "block";
-			upload.style.display = "none";
+			link.style.display = 'block';
+			upload.style.display = 'none';
 		}
-		upload.removeEventListener("change", function () {
+		upload.removeEventListener('change', function () {
 			checkFileSize(upload, type);
 		});
 	});
@@ -259,100 +256,100 @@ export function loadLogoSelector() {
 	// Guard: if any required element is missing, abort gracefully
 	if (!linkLight || !linkDark || !uploadLight || !uploadDark) return;
 
-	if (IMAGE_UPLOAD_ENABLED && PERMISSIONS && PERMISSIONS["upload"] === true) {
+	if (IMAGE_UPLOAD_ENABLED && PERMISSIONS && PERMISSIONS['upload'] === true) {
 		if (checkboxLink?.checked) {
-			linkLight.style.display = "block";
-			linkDark.style.display = "block";
+			linkLight.style.display = 'block';
+			linkDark.style.display = 'block';
 
-			uploadLight.style.display = "none";
-			uploadDark.style.display = "none";
+			uploadLight.style.display = 'none';
+			uploadDark.style.display = 'none';
 			hideLogoSizeMsgs();
 		} else {
-			linkLight.style.display = "none";
-			linkDark.style.display = "none";
+			linkLight.style.display = 'none';
+			linkDark.style.display = 'none';
 
-			uploadLight.style.display = "block";
-			uploadDark.style.display = "block";
+			uploadLight.style.display = 'block';
+			uploadDark.style.display = 'block';
 		}
 
-		checkboxLink?.addEventListener("change", function () {
+		checkboxLink?.addEventListener('change', function () {
 			if (checkboxLink.checked) {
-				linkLight.style.display = "block";
-				linkDark.style.display = "block";
+				linkLight.style.display = 'block';
+				linkDark.style.display = 'block';
 
-				uploadLight.style.display = "none";
-				uploadDark.style.display = "none";
+				uploadLight.style.display = 'none';
+				uploadDark.style.display = 'none';
 				hideLogoSizeMsgs();
 			} else {
-				linkLight.style.display = "none";
-				linkDark.style.display = "none";
+				linkLight.style.display = 'none';
+				linkDark.style.display = 'none';
 
-				uploadLight.style.display = "block";
-				uploadDark.style.display = "block";
+				uploadLight.style.display = 'block';
+				uploadDark.style.display = 'block';
 			}
 		});
-		checkboxUpload?.addEventListener("change", function () {
+		checkboxUpload?.addEventListener('change', function () {
 			if (checkboxUpload.checked) {
-				linkLight.style.display = "none";
-				linkDark.style.display = "none";
+				linkLight.style.display = 'none';
+				linkDark.style.display = 'none';
 
-				uploadLight.style.display = "block";
-				uploadDark.style.display = "block";
+				uploadLight.style.display = 'block';
+				uploadDark.style.display = 'block';
 			} else {
-				linkLight.style.display = "block";
-				linkDark.style.display = "block";
+				linkLight.style.display = 'block';
+				linkDark.style.display = 'block';
 
-				uploadLight.style.display = "none";
-				uploadDark.style.display = "none";
+				uploadLight.style.display = 'none';
+				uploadDark.style.display = 'none';
 				hideLogoSizeMsgs();
 			}
 		});
 
-		uploadLight?.addEventListener("change", function () {
-			checkFileSize(uploadLight, "logo-light");
+		uploadLight?.addEventListener('change', function () {
+			checkFileSize(uploadLight, 'logo-light');
 		});
 
-		uploadDark?.addEventListener("change", function () {
-			checkFileSize(uploadDark, "logo-dark");
+		uploadDark?.addEventListener('change', function () {
+			checkFileSize(uploadDark, 'logo-dark');
 		});
 
 		function hideLogoSizeMsgs() {
-			const sizeMsgLight = document.getElementById("upload-logo-light-size-message");
-			if (sizeMsgLight) sizeMsgLight.style.display = "none";
-			const sizeMsgDark = document.getElementById("upload-logo-dark-size-message");
-			if (sizeMsgDark) sizeMsgDark.style.display = "none";
+			const sizeMsgLight = document.getElementById('upload-logo-light-size-message');
+			if (sizeMsgLight) sizeMsgLight.style.display = 'none';
+			const sizeMsgDark = document.getElementById('upload-logo-dark-size-message');
+			if (sizeMsgDark) sizeMsgDark.style.display = 'none';
 		}
 	} else {
-		linkLight.style.display = "block";
-		linkDark.style.display = "block";
-		uploadLight.style.display = "none";
-		uploadDark.style.display = "none";
+		linkLight.style.display = 'block';
+		linkDark.style.display = 'block';
+		uploadLight.style.display = 'none';
+		uploadDark.style.display = 'none';
 
 		// Hide upload checkbox group and size messages when upload disabled
-		const checkboxGroup = document.getElementById("upload-checkbox-logo");
-		if (checkboxGroup) checkboxGroup.style.display = "none";
-		const sizeMsgLight = document.getElementById("upload-logo-light-size-message");
-		if (sizeMsgLight) sizeMsgLight.style.display = "none";
-		const sizeMsgDark = document.getElementById("upload-logo-dark-size-message");
-		if (sizeMsgDark) sizeMsgDark.style.display = "none";
+		const checkboxGroup = document.getElementById('upload-checkbox-logo');
+		if (checkboxGroup) checkboxGroup.style.display = 'none';
+		const sizeMsgLight = document.getElementById('upload-logo-light-size-message');
+		if (sizeMsgLight) sizeMsgLight.style.display = 'none';
+		const sizeMsgDark = document.getElementById('upload-logo-dark-size-message');
+		if (sizeMsgDark) sizeMsgDark.style.display = 'none';
 	}
 }
 
 export function getLastDir(path) {
-	if (path && typeof path === "string") {
-		const splitPath = path.split("/");
+	if (path && typeof path === 'string') {
+		const splitPath = path.split('/');
 		if (splitPath.length > 0) {
 			return splitPath[splitPath.length - 1];
 		}
 	}
-	return translate("messages.errors.unknown_directory");
+	return translate('messages.errors.unknown_directory');
 }
 
 export function getStorageErrorMessage(error) {
-	if (error.code == "storage/unauthorized") {
-		return translate("messages.errors.no_upload_permission");
+	if (error.code == 'storage/unauthorized') {
+		return translate('messages.errors.no_upload_permission');
 	} else {
-		return `${translate("messages.errors.upload_error")}: '${error.code}'. ${translate("messages.error.contact_admin")}`;
+		return `${translate('messages.errors.upload_error')}: '${error.code}'. ${translate('messages.error.contact_admin')}`;
 	}
 }
 
@@ -369,7 +366,7 @@ export async function getAllImageUrls(path) {
 
 		return downloadURLs; // Array of image URLs
 	} catch (error) {
-		console.error("Error while listing images:", error.message || error);
+		console.error('Error while listing images:', error.message || error);
 		return [];
 	}
 }

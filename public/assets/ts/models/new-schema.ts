@@ -26,45 +26,40 @@ export interface DateObject {
 // ============================================================
 
 export type CollectionName =
-	| "users"
-	| "trips"
-	| "destinations"
-	| "listings"
-	| "expenses"
-	| "protected"
-	| "config";
+	| 'users'
+	| 'trips'
+	| 'destinations'
+	| 'listings'
+	| 'expenses'
+	| 'protected'
+	| 'config';
 
 /** was "voo" | "onibus" | "carro" */
-export type TransportType = "flight" | "bus" | "car";
+export type TransportType = 'flight' | 'bus' | 'car';
 
 /** was "ida" | "volta" | "durante" */
-export type Direction = "departure" | "return" | "during";
+export type Direction = 'departure' | 'return' | 'during';
 
 /** was "simple-view" | "leg-view" */
-export type TransportViewMode = "simple" | "leg";
+export type TransportViewMode = 'simple' | 'leg';
 
 /** was "sensitive-only" | "no-pin" (already English in data) */
-export type PinType = "sensitive-only" | "no-pin";
+export type PinType = 'sensitive-only' | 'no-pin';
 
 /** was "claro" | "escuro" | "ativo" */
-export type ThemeMode = "light" | "dark" | "active";
+export type ThemeMode = 'light' | 'dark' | 'active';
 
 /** was "dinamico" */
-export type UserVisibilityMode = "dynamic";
+export type UserVisibilityMode = 'dynamic';
 
 /** was "destinos" | "transporte" | "hospedagens" */
-export type ItineraryItemType = "destination" | "transportation" | "accommodation";
+export type ItineraryItemType = 'destination' | 'transportation' | 'accommodation';
 
 /** was "madrugada" | "manha" | "tarde" | "noite" */
-export type ItineraryPeriod = "earlyMorning" | "morning" | "afternoon" | "night";
+export type ItineraryPeriod = 'earlyMorning' | 'morning' | 'afternoon' | 'night';
 
 /** was "restaurantes" | "lanches" | "lojas" | "saidas" | "turismo" */
-export type DestinationCategory =
-	| "restaurants"
-	| "snacks"
-	| "shopping"
-	| "nightlife"
-	| "tourism";
+export type DestinationCategory = 'restaurants' | 'snacks' | 'shopping' | 'nightlife' | 'tourism';
 
 // ============================================================
 // Core Entities
@@ -72,8 +67,8 @@ export type DestinationCategory =
 
 /** A traveler/person on a trip.  was "pessoas[i]" */
 export interface Traveler {
-	id: string; /** was "id" */
-	name: string; /** was "nome" */
+	id: string /** was "id" */;
+	name: string /** was "nome" */;
 }
 
 // -----------------------------------------------------------

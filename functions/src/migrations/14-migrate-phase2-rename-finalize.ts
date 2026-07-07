@@ -1,5 +1,5 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 // ============================================================
 // PHASE 2: Rename Collections & Finalize
@@ -22,34 +22,34 @@ import * as admin from "firebase-admin";
 // ============================================================
 
 const COLLECTION_RENAME_MAP: Record<string, string> = {
-	usuarios: "users",
-	viagens: "trips",
-	destinos: "destinations",
-	listagens: "listings",
-	gastos: "expenses",
-	protegido: "protected",
+	usuarios: 'users',
+	viagens: 'trips',
+	destinos: 'destinations',
+	listagens: 'listings',
+	gastos: 'expenses',
+	protegido: 'protected',
 };
 
 const PARENT_SUBCOLLECTIONS: Record<string, string[]> = {
-	usuarios: ["tripSummaries", "destinationSummaries", "listingSummaries"],
-	viagens: ["accommodations", "transportation", "itinerary"],
+	usuarios: ['tripSummaries', 'destinationSummaries', 'listingSummaries'],
+	viagens: ['accommodations', 'transportation', 'itinerary'],
 };
 
 const CATEGORY_MAP: Record<string, string> = {
-	restaurantes: "restaurants",
-	lanches: "snacks",
-	saidas: "nightlife",
-	turismo: "tourism",
-	lojas: "shopping",
+	restaurantes: 'restaurants',
+	lanches: 'snacks',
+	saidas: 'nightlife',
+	turismo: 'tourism',
+	lojas: 'shopping',
 };
 
 const TIPO_MAP: Record<string, string> = {
-	transporte: "transportation",
-	hospedagens: "accommodations",
-	destinos: "destinations",
+	transporte: 'transportation',
+	hospedagens: 'accommodations',
+	destinos: 'destinations',
 };
 
-const PERIODS = ["earlyMorning", "morning", "afternoon", "night"];
+const PERIODS = ['earlyMorning', 'morning', 'afternoon', 'night'];
 
 // ============================================================
 // BATCH MANAGER
@@ -142,11 +142,15 @@ async function migrateSubcollections(
 
 			for (const subDoc of subSnap.docs) {
 				report.processed++;
-				const newRef = admin.firestore().doc(`${newParent}/${parentDoc.id}/${subName}/${subDoc.id}`);
+				const newRef = admin
+					.firestore()
+					.doc(`${newParent}/${parentDoc.id}/${subName}/${subDoc.id}`);
 				const newSnap = await newRef.get();
 
 				if (newSnap.exists) {
-					console.log(`[sub] ${newParent}/${parentDoc.id}/${subName}/${subDoc.id} exists — deleting old.`);
+					console.log(
+						`[sub] ${newParent}/${parentDoc.id}/${subName}/${subDoc.id} exists — deleting old.`,
+					);
 					if (!dryRun) batch.delete(subDoc.ref);
 					report.deleted++;
 					continue;
@@ -179,17 +183,28 @@ async function migrateProtectedSubcollections(dryRun: boolean): Promise<MigrateR
 	// Gather PINs
 	const tripPins: Record<string, string> = {};
 	try {
-		const snap = await admin.firestore().collection("protegido").get();
+		const snap = await admin.firestore().collection('protegido').get();
 		snap.forEach((doc) => {
 			const pin = doc.data()?.pin;
 			if (pin) tripPins[doc.id] = pin;
 		});
-	} catch { /* collection may not exist */ }
+	} catch {
+		/* collection may not exist */
+	}
 
 	console.log(`[protected] ${Object.keys(tripPins).length} PIN(s).`);
 
-	for (const [oldParent, newParent] of [["viagens", "trips"], ["gastos", "expenses"]] as const) {
-		const report: MigrateReport = { label: `${oldParent}/protected/* → ${newParent}/protected/*`, processed: 0, copied: 0, deleted: 0, errors: [] };
+	for (const [oldParent, newParent] of [
+		['viagens', 'trips'],
+		['gastos', 'expenses'],
+	] as const) {
+		const report: MigrateReport = {
+			label: `${oldParent}/protected/* → ${newParent}/protected/*`,
+			processed: 0,
+			copied: 0,
+			deleted: 0,
+			errors: [],
+		};
 
 		const protectedRef = admin.firestore().doc(`${oldParent}/protected`);
 		let cols: FirebaseFirestore.CollectionReference[];
@@ -295,7 +310,7 @@ async function migrateTopLevel(
 async function fixItineraryTipo(dryRun: boolean): Promise<{ days: number; items: number }> {
 	console.log(`\n[fix-itinerary-tipo] Scanning trips/itinerary...`);
 
-	const tripsSnap = await admin.firestore().collection("trips").get();
+	const tripsSnap = await admin.firestore().collection('trips').get();
 	if (tripsSnap.empty) {
 		console.log(`[fix-itinerary-tipo] No trips found.`);
 		return { days: 0, items: 0 };
@@ -307,7 +322,7 @@ async function fixItineraryTipo(dryRun: boolean): Promise<{ days: number; items:
 	let batchCount = 0;
 
 	for (const tripDoc of tripsSnap.docs) {
-		const itinSnap = await tripDoc.ref.collection("itinerary").get();
+		const itinSnap = await tripDoc.ref.collection('itinerary').get();
 		if (itinSnap.empty) continue;
 
 		for (const dayDoc of itinSnap.docs) {
@@ -356,10 +371,12 @@ async function fixItineraryTipo(dryRun: boolean): Promise<{ days: number; items:
 // STEP 5: Fix destination categories (migration 22)
 // ============================================================
 
-async function fixDestinationCategories(dryRun: boolean): Promise<{ dests: number; subItems: number; moduleKeys: number }> {
+async function fixDestinationCategories(
+	dryRun: boolean,
+): Promise<{ dests: number; subItems: number; moduleKeys: number }> {
 	console.log(`\n[fix-destination-categories] Scanning destinations...`);
 
-	const destSnap = await admin.firestore().collection("destinations").get();
+	const destSnap = await admin.firestore().collection('destinations').get();
 	if (destSnap.empty) {
 		console.log(`[fix-destination-categories] No destinations.`);
 		return { dests: 0, subItems: 0, moduleKeys: 0 };
@@ -428,7 +445,10 @@ async function fixDestinationCategories(dryRun: boolean): Promise<{ dests: numbe
 					batch.set(destDoc.ref.collection(newCat).doc(item.id), item.data() || {});
 					batch.delete(item.ref);
 					bc += 2;
-					if (bc >= 500) { await batch.commit(); bc = 0; }
+					if (bc >= 500) {
+						await batch.commit();
+						bc = 0;
+					}
 				}
 				if (bc > 0) await batch.commit();
 				totalSubItems += allOld.size;
@@ -439,8 +459,14 @@ async function fixDestinationCategories(dryRun: boolean): Promise<{ dests: numbe
 		if (destChanged) destsProcessed++;
 	}
 
-	console.log(`[fix-destination-categories] ${destsProcessed} destinations, ${totalSubItems} sub-items, ${totalModuleKeys} module keys.`);
-	return { dests: destsProcessed, subItems: totalSubItems, moduleKeys: totalModuleKeys };
+	console.log(
+		`[fix-destination-categories] ${destsProcessed} destinations, ${totalSubItems} sub-items, ${totalModuleKeys} module keys.`,
+	);
+	return {
+		dests: destsProcessed,
+		subItems: totalSubItems,
+		moduleKeys: totalModuleKeys,
+	};
 }
 
 // ============================================================
@@ -465,7 +491,13 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 			continue;
 		}
 
-		const report: MigrateReport = { label: `cleanup:${oldName}`, processed: 0, copied: 0, deleted: 0, errors: [] };
+		const report: MigrateReport = {
+			label: `cleanup:${oldName}`,
+			processed: 0,
+			copied: 0,
+			deleted: 0,
+			errors: [],
+		};
 		const batch = new BatchManager();
 
 		for (const oldDoc of oldSnap.docs) {
@@ -492,19 +524,31 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 		const parentSnap = await admin.firestore().collection(oldParent).get();
 		if (parentSnap.empty) continue;
 
-		const report: MigrateReport = { label: `cleanup:sub:${oldParent}`, processed: 0, copied: 0, deleted: 0, errors: [] };
+		const report: MigrateReport = {
+			label: `cleanup:sub:${oldParent}`,
+			processed: 0,
+			copied: 0,
+			deleted: 0,
+			errors: [],
+		};
 		const batch = new BatchManager();
 
 		for (const parentDoc of parentSnap.docs) {
 			for (const subName of subNames) {
 				const oldPath = `${oldParent}/${parentDoc.id}/${subName}`;
 				let subSnap: FirebaseFirestore.QuerySnapshot;
-				try { subSnap = await admin.firestore().collection(oldPath).get(); } catch { continue; }
+				try {
+					subSnap = await admin.firestore().collection(oldPath).get();
+				} catch {
+					continue;
+				}
 				if (subSnap.empty) continue;
 
 				for (const subDoc of subSnap.docs) {
 					report.processed++;
-					const newRef = admin.firestore().doc(`${newParent}/${parentDoc.id}/${subName}/${subDoc.id}`);
+					const newRef = admin
+						.firestore()
+						.doc(`${newParent}/${parentDoc.id}/${subName}/${subDoc.id}`);
 					const match = await newRef.get();
 					if (!match.exists) {
 						console.log(`[cleanup:sub] ${oldPath}/${subDoc.id} — no match, SKIPPING.`);
@@ -529,12 +573,12 @@ async function cleanupOldCollections(dryRun: boolean): Promise<MigrateReport[]> 
 // ============================================================
 
 export const migrate = functions.https.onRequest(async (req, res) => {
-	const dryRun = req.query.dryRun === "true";
-	const doCleanup = req.query.cleanup === "true";
-	const mode = dryRun ? "DRY RUN" : "LIVE";
+	const dryRun = req.query.dryRun === 'true';
+	const doCleanup = req.query.cleanup === 'true';
+	const mode = dryRun ? 'DRY RUN' : 'LIVE';
 
 	console.log(`\n========================================`);
-	console.log(`[phase2-rename-finalize] ${mode}${doCleanup ? " + CLEANUP" : ""}`);
+	console.log(`[phase2-rename-finalize] ${mode}${doCleanup ? ' + CLEANUP' : ''}`);
 	console.log(`========================================\n`);
 
 	const allReports: MigrateReport[] = [];
@@ -592,7 +636,9 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			`  Errors:             ${totalErrors}\n` +
 			`  Itinerary days fixed: ${tipoResult.days} (${tipoResult.items} items)\n` +
 			`  Destination cats:   ${catResult.dests} dests, ${catResult.subItems} items, ${catResult.moduleKeys} keys\n` +
-			(doCleanup ? `  Cleanup deletes:    ${cleanupReports.reduce((s, r) => s + r.deleted, 0)}\n` : "") +
+			(doCleanup
+				? `  Cleanup deletes:    ${cleanupReports.reduce((s, r) => s + r.deleted, 0)}\n`
+				: '') +
 			`========================================`;
 
 		console.log(summary);
@@ -608,7 +654,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			cleanupDeletes: doCleanup ? cleanupReports.reduce((s, r) => s + r.deleted, 0) : 0,
 		});
 	} catch (error) {
-		console.error("[phase2] Fatal error:", error);
+		console.error('[phase2] Fatal error:', error);
 		res.status(500).send(`Migration failed: ${(error as Error).message}`);
 	}
 });

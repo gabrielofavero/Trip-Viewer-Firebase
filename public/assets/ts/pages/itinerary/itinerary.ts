@@ -2,7 +2,13 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getState, setState, DOCUMENT_ID, setDocumentId } from '../../data/state.js';
 import { getID, getURLParam, on, select } from '../../utils/dom.js';
 import { translate } from '../../i18n/translation.js';
-import { closeMessage, displayError, displayPrompt, openToast, registerActions } from '../../utils/messages.js';
+import {
+	closeMessage,
+	displayError,
+	displayPrompt,
+	openToast,
+	registerActions,
+} from '../../utils/messages.js';
 import { getItineraryContent } from '../../models/itinerary.model.js';
 import { isOnDarkMode, loadVisibility, switchVisibility } from '../../theme/visibility.js';
 import { loadEmbedVisibility } from '../../ui/embed.js';
@@ -13,37 +19,41 @@ import { requestPin } from '../../utils/pin.js';
 var FIRESTORE_PROTECTED_DATA;
 
 import { loadItineraryListeners } from './support/event-listeners.js';
-import { requestInvalidPin } from "../../utils/pin.js";
+import { requestInvalidPin } from '../../utils/pin.js';
 
 export async function loadItineraryPage() {
-	registerActions({ loadItinerary, requestPinItinerary, loadProtectedItinerary });
+	registerActions({
+		loadItinerary,
+		requestPinItinerary,
+		loadProtectedItinerary,
+	});
 	loadItineraryListeners();
 
-	setDocumentId(getURLParam("t"));
-	setPageName(translate("trip.itinerary.title"));
+	setDocumentId(getURLParam('t'));
+	setPageName(translate('trip.itinerary.title'));
 
 	if (!DOCUMENT_ID) {
 		displayError(
-			`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.no_code"))}`,
+			`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.no_code'))}`,
 		);
 	}
 
 	setState(await get(`trips/${DOCUMENT_ID}`));
 	if (!getState()) {
 		displayError(
-			`${translate("messages.documents.get.error")}. ${translate(translate("messages.documents.get.not_found"))}`,
+			`${translate('messages.documents.get.error')}. ${translate(translate('messages.documents.get.not_found'))}`,
 		);
 	}
 
 	loadItineraryVisibility();
-	getID("title").innerText = getState().title;
+	getID('title').innerText = getState().title;
 
 	switch (getState().pin) {
-		case "all-data":
+		case 'all-data':
 			stopLoadingScreen();
 			requestPinItinerary(true);
 			return;
-		case "sensitive-only":
+		case 'sensitive-only':
 			stopLoadingScreen();
 			displaySensitiveItineraryPrompt();
 			return;
@@ -53,17 +63,14 @@ export async function loadItineraryPage() {
 }
 
 async function loadItinerary() {
-	if (
-		document.querySelector(".input-container") ||
-		document.querySelector(".message-container")
-	) {
+	if (document.querySelector('.input-container') || document.querySelector('.message-container')) {
 		closeMessage();
 	}
 
-	getID("content").innerHTML = await getItineraryContent("page");
+	getID('content').innerHTML = await getItineraryContent('page');
 
-	getID("print").addEventListener("click", () => print());
-	getID("export").addEventListener("click", () => exportItinerary());
+	getID('print').addEventListener('click', () => print());
+	getID('export').addEventListener('click', () => exportItinerary());
 
 	initializeMobileMenu();
 }
@@ -71,27 +78,27 @@ async function loadItinerary() {
 // Mobile Menu
 function initializeMobileMenu() {
 	// Mobile nav toggle
-	on("click", ".mobile-nav-toggle", function (e) {
-		select("body").classList.toggle("mobile-nav-active");
-		this.classList.toggle("bi-list");
-		this.classList.toggle("bi-x");
+	on('click', '.mobile-nav-toggle', function (e) {
+		select('body').classList.toggle('mobile-nav-active');
+		this.classList.toggle('bi-list');
+		this.classList.toggle('bi-x');
 	});
 
 	// Mobile menu item handlers
-	getID("mobile-night-mode")?.addEventListener("click", (e) => {
+	getID('mobile-night-mode')?.addEventListener('click', (e) => {
 		e.preventDefault();
 		switchVisibility();
 		closeMobileMenu();
 		loadNightModeButtonLabel();
 	});
 
-	getID("mobile-export")?.addEventListener("click", (e) => {
+	getID('mobile-export')?.addEventListener('click', (e) => {
 		e.preventDefault();
 		exportItinerary();
 		closeMobileMenu();
 	});
 
-	getID("mobile-print")?.addEventListener("click", (e) => {
+	getID('mobile-print')?.addEventListener('click', (e) => {
 		e.preventDefault();
 		print();
 		closeMobileMenu();
@@ -99,12 +106,12 @@ function initializeMobileMenu() {
 }
 
 function closeMobileMenu() {
-	let body = select("body");
-	if (body.classList.contains("mobile-nav-active")) {
-		body.classList.remove("mobile-nav-active");
-		let navbarToggle = select(".mobile-nav-toggle");
-		navbarToggle.classList.toggle("bi-list");
-		navbarToggle.classList.toggle("bi-x");
+	let body = select('body');
+	if (body.classList.contains('mobile-nav-active')) {
+		body.classList.remove('mobile-nav-active');
+		let navbarToggle = select('.mobile-nav-toggle');
+		navbarToggle.classList.toggle('bi-list');
+		navbarToggle.classList.toggle('bi-x');
 	}
 }
 
@@ -116,40 +123,44 @@ function loadItineraryVisibility() {
 }
 
 function loadNightModeButtonLabel() {
-	const label = isOnDarkMode()
-		? translate("labels.light_mode")
-		: translate("labels.dark_mode");
-	getID("mobile-night-mode-label").innerText = label;
+	const label = isOnDarkMode() ? translate('labels.light_mode') : translate('labels.dark_mode');
+	getID('mobile-night-mode-label').innerText = label;
 }
 
 // Messages
 function requestPinItinerary(mandatory = false) {
-	if (document.querySelector(".message-container")) {
+	if (document.querySelector('.message-container')) {
 		closeMessage();
 	}
 
 	const confirmAction = `loadProtectedItinerary(${mandatory})`;
-	const cancelAction = mandatory ? null : "loadItinerary()";
+	const cancelAction = mandatory ? null : 'loadItinerary()';
 	requestPin({ confirmAction, cancelAction, precontent: undefined });
 }
 
 function requestPinItineraryInvalido(mandatory = false) {
 	const confirmAction = `loadProtectedItinerary(${mandatory})`;
-	const cancelAction = mandatory ? null : "loadItinerary()";
+	const cancelAction = mandatory ? null : 'loadItinerary()';
 	requestInvalidPin({ confirmAction, cancelAction, precontent: undefined });
 }
 
 function displaySensitiveItineraryPrompt() {
-	const title = translate("trip.protected");
-	const content = translate("messages.protected.prompt");
-	const yesAction = "requestPinItinerary()";
-	const noAction = "loadItinerary()";
+	const title = translate('trip.protected');
+	const content = translate('messages.protected.prompt');
+	const yesAction = 'requestPinItinerary()';
+	const noAction = 'loadItinerary()';
 	const critico = true;
-	displayPrompt({ title: title, content: content, yesAction, noAction, critical: critico });
+	displayPrompt({
+		title: title,
+		content: content,
+		yesAction,
+		noAction,
+		critical: critico,
+	});
 }
 
 async function loadProtectedItinerary(mandatory = false) {
-	const pin = getID("pin-code")?.innerText || "";
+	const pin = getID('pin-code')?.innerText || '';
 	const pinType = getState().pin;
 	closeMessage();
 	startLoadingScreen();
@@ -162,7 +173,7 @@ async function loadProtectedItinerary(mandatory = false) {
 			return;
 		}
 
-		if (pinType == "sensitive-only") {
+		if (pinType == 'sensitive-only') {
 			FIRESTORE_PROTECTED_DATA = protectedData;
 		} else {
 			setState(protectedData);
@@ -170,12 +181,12 @@ async function loadProtectedItinerary(mandatory = false) {
 
 		loadItinerary();
 	} catch (error) {
-		if (error?.message == "Missing or insufficient permissions.") {
+		if (error?.message == 'Missing or insufficient permissions.') {
 			console.warn(error.message);
 			requestPinItineraryInvalido(mandatory);
 		} else {
 			console.error(error);
-			displayError(translate("messages.errors.unknown"));
+			displayError(translate('messages.errors.unknown'));
 		}
 		stopLoadingScreen();
 	}
@@ -184,15 +195,15 @@ async function loadProtectedItinerary(mandatory = false) {
 }
 
 async function exportItinerary() {
-	const html = await getItineraryContent("notes");
-	const plainText = await getItineraryContent("text");
+	const html = await getItineraryContent('notes');
+	const plainText = await getItineraryContent('text');
 
 	await navigator.clipboard.write([
 		new ClipboardItem({
-			"text/html": new Blob([html], { type: "text/html" }),
-			"text/plain": new Blob([plainText], { type: "text/plain" }),
+			'text/html': new Blob([html], { type: 'text/html' }),
+			'text/plain': new Blob([plainText], { type: 'text/plain' }),
 		}),
 	]);
 
-	openToast(translate("messages.itinerary_copied"));
+	openToast(translate('messages.itinerary_copied'));
 }

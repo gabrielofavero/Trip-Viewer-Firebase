@@ -1,1169 +1,1169 @@
 {
-  "snacks": {
-    "WFH2e": {
-      "name": "Dutch Pancake Masters",
-      "region": "",
-      "media": "https://www.tiktok.com/@sisiwaldorf/video/7377354873005690145",
-      "createdAt": "2026-01-05T15:44:13.853Z",
-      "price": "default",
-      "map": "https://maps.app.goo.gl/3o65zeqc9CFv96LR8",
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "website": "",
-      "emoji": "🥞",
-      "isNew": false,
-      "instagram": "",
-      "rating": "3"
-    },
-    "oEVFg": {
-      "emoji": "🥐",
-      "website": "",
-      "isNew": false,
-      "rating": "3",
-      "instagram": "",
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "createdAt": "2026-01-05T15:44:11.853Z",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/SLUqrR1r5Hxdq36f9",
-      "region": "",
-      "media": "https://www.tiktok.com/@welikeamsterdam/video/7391863870228335889",
-      "name": "Lagom"
-    },
-    "jplQm": {
-      "description": {
-        "en": "",
-        "pt": "Confeitaria"
-      },
-      "instagram": "",
-      "isNew": false,
-      "rating": "4",
-      "emoji": "🍪🥐",
-      "website": "",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/EfCqjckFUsdRQRp9A",
-      "createdAt": "2026-01-05T15:44:05.853Z",
-      "name": "SALVO",
-      "media": "https://www.tiktok.com/@heytrishhey/video/7472030616398204183",
-      "region": ""
-    },
-    "9JJuV": {
-      "rating": "2",
-      "instagram": "",
-      "isNew": false,
-      "website": "",
-      "emoji": "🍗",
-      "description": {
-        "pt": "Frango frito picante.",
-        "en": ""
-      },
-      "media": "https://www.tiktok.com/@sarasbites._/video/7539586722527448352",
-      "region": "",
-      "name": "Cip Hot Chicken",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/fpY1B3Y6L4FFgR178",
-      "createdAt": "2026-01-05T15:44:09.853Z"
-    },
-    "utbKB": {
-      "media": "https://www.tiktok.com/@moakpancakes/video/7198514183598509317",
-      "region": "",
-      "name": "MOAK Pancakes City Center",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/Xvk5oniq28ErKbZm9",
-      "createdAt": "2026-01-05T15:44:14.853Z",
-      "isNew": false,
-      "instagram": "",
-      "rating": "3",
-      "emoji": "🥞",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": ""
-      }
-    },
-    "Xa5d4": {
-      "instagram": "",
-      "rating": "5",
-      "isNew": false,
-      "emoji": "🍤",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": "Loja de petiscos fritos prontos. Bem famoso e tradicional."
-      },
-      "price": "$",
-      "map": "https://maps.app.goo.gl/i5XSwXVG5ip8RHwG6",
-      "createdAt": "2026-01-05T15:44:01.853Z",
-      "media": "https://www.tiktok.com/@raphaelcamposo/video/7443591983936933176",
-      "region": "",
-      "name": "FEBO"
-    },
-    "maNLP": {
-      "rating": "5",
-      "isNew": false,
-      "instagram": "",
-      "emoji": "🥞",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "media": "https://www.tiktok.com/@goingwithnicole/video/7379713701844143393",
-      "region": "",
-      "name": "Pannenkoekenhuis Upstairs",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/59vK37tzumzchz8R8",
-      "createdAt": "2026-01-05T15:44:15.853Z"
-    },
-    "GUT7Z": {
-      "isNew": false,
-      "rating": "3",
-      "instagram": "",
-      "emoji": "🥪",
-      "website": "",
-      "description": {
-        "pt": "",
-        "en": ""
-      },
-      "map": "https://maps.app.goo.gl/8dXifTMPr2Jqmn4A9",
-      "price": "default",
-      "createdAt": "2026-01-05T15:44:12.853Z",
-      "media": "https://www.tiktok.com/@wanderingelsewhere_/video/7526062752222448903",
-      "region": "",
-      "name": "Sandwichshop"
-    },
-    "X4bMb": {
-      "name": "New York Pizza",
-      "media": "",
-      "region": "",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/vS4ysRrvi1DQfhM9A",
-      "createdAt": "2026-01-05T15:44:16.853Z",
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "instagram": "",
-      "isNew": false,
-      "rating": "3",
-      "website": "",
-      "emoji": "🍕"
-    },
-    "WWr4A": {
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "website": "",
-      "emoji": "🥞",
-      "instagram": "https://www.instagram.com/thepancakebakery/",
-      "rating": "3",
-      "isNew": false,
-      "createdAt": "2026-01-05T15:43:56.853Z",
-      "map": "https://maps.app.goo.gl/QPaS8Kqzk4C6RRGk9",
-      "price": "$$",
-      "name": "The Pancake Bakery",
-      "region": "",
-      "media": "https://www.tiktok.com/@the.pancake.bakery/video/7312838317865798945"
-    },
-    "CsgnI": {
-      "description": {
-        "pt": "Croissanterie Egstorf. Muitos docinhos e opções de lanchinhos.",
-        "en": ""
-      },
-      "emoji": "🧇",
-      "website": "",
-      "rating": "5",
-      "instagram": "",
-      "isNew": false,
-      "name": "Han's Egstorf",
-      "region": "",
-      "media": "https://www.tiktok.com/@chefsivo/video/7495064168073071894",
-      "createdAt": "2026-01-05T15:44:00.853Z",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/bxVkzWPiN829Pf3h9"
-    },
-    "oM7N3": {
-      "isNew": false,
-      "instagram": "",
-      "rating": "3",
-      "emoji": "🥪",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": "Casa de chá que serve diversas opções criativas de sanduíches, além de café e bebidas especiais. Bonito, mas muitas filas."
-      },
-      "map": "https://maps.app.goo.gl/EtgBNchMbDAnf7tQ9",
-      "price": "$",
-      "createdAt": "2026-01-05T15:43:58.853Z",
-      "media": "https://www.tiktok.com/@monathefoodie/video/7267228417425165600",
-      "region": "",
-      "name": "Chun Café Berenstraat"
-    },
-    "QpETz": {
-      "description": {
-        "pt": "Rede de fast-food que serve pratos mexicanos, como tacos, quesadillas e nachos.",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "🌮",
-      "instagram": "",
-      "isNew": false,
-      "rating": "2",
-      "name": "Taco Bell",
-      "region": "",
-      "media": "https://www.tiktok.com/@tacobellnl/video/7291674807257599264",
-      "createdAt": "2026-01-05T15:44:02.853Z",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/WPnwLWFe5FKwxaDx7"
-    },
-    "mKlv5": {
-      "description": {
-        "en": "",
-        "pt": "Restaurante especializado em dumplings"
-      },
-      "isNew": false,
-      "rating": "3",
-      "instagram": "",
-      "emoji": "🥟",
-      "website": "",
-      "name": "Dumplings",
-      "media": "https://www.tiktok.com/@riverswalters/video/7545082792091159830",
-      "region": "",
-      "price": "-",
-      "map": "https://maps.app.goo.gl/D9TMKyiP3S8r4Fd77",
-      "createdAt": "2026-01-05T15:44:10.853Z"
-    },
-    "hVwPA": {
-      "map": "https://maps.app.goo.gl/i4xGECMvqmAw5YH49",
-      "price": "$",
-      "createdAt": "2026-01-05T15:44:03.853Z",
-      "name": "Dunkin'",
-      "media": "https://www.tiktok.com/@thinkingoutloud247365/video/7442446894116195626",
-      "region": "",
-      "description": {
-        "en": "",
-        "pt": "Rede tradicional que serve opções especiais de café da manhã e uma variedade de bebidas com café."
-      },
-      "rating": "3",
-      "instagram": "",
-      "isNew": false,
-      "website": "",
-      "emoji": "🍩"
-    },
-    "AXR5v": {
-      "website": "",
-      "emoji": "🥪",
-      "isNew": false,
-      "instagram": "",
-      "rating": "4",
-      "description": {
-        "en": "",
-        "pt": "Restaurante italiano simples com sanduíches, pizzas e massas, além de almôndegas, cafés e cannoli para viagem."
-      },
-      "region": "",
-      "media": "https://www.tiktok.com/@wanderingelsewhere_/video/7526062752222448903",
-      "name": "Caldi e Freddi",
-      "createdAt": "2026-01-05T15:44:08.853Z",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/bKy16dy2VKPZwUzz9"
-    },
-    "lUhiQ": {
-      "map": "https://maps.app.goo.gl/eMFwFhFzkVte4MzJA",
-      "price": "-",
-      "createdAt": "2026-01-05T15:43:57.853Z",
-      "media": "https://www.tiktok.com/@extra.olive.club/video/7485300638599957766",
-      "region": "",
-      "name": "Little Collins De Pijp",
-      "rating": "3",
-      "isNew": false,
-      "instagram": "https://www.instagram.com/littlecollinsamsterdam/",
-      "website": "",
-      "emoji": "🥐",
-      "description": {
-        "pt": "Cafeteria fofinha",
-        "en": ""
-      }
-    },
-    "0uyua": {
-      "name": "Rudi’s Original Stroopwafels",
-      "region": "",
-      "media": "https://www.tiktok.com/@eatingeurope/video/7538104319984422166",
-      "createdAt": "2026-01-05T15:44:04.853Z",
-      "price": "€3",
-      "map": "https://maps.app.goo.gl/SpWGmxxyrtRsdMv98",
-      "description": {
-        "pt": "Barraca antiga no Albert Cuyp Market que oferece waffles com calda de caramelo feitos sob encomenda.",
-        "en": ""
-      },
-      "emoji": "🧇",
-      "website": "",
-      "isNew": false,
-      "instagram": "",
-      "rating": "5"
-    },
-    "olagv": {
-      "isNew": false,
-      "rating": "2",
-      "instagram": "",
-      "emoji": "🥐",
-      "website": "",
-      "description": {
-        "pt": "Café e bar elegante com fachada de vidro sobre um complexo comercial moderno, com vista panorâmica da cidade.",
-        "en": ""
-      },
-      "media": "https://www.tiktok.com/@iamsterdam_official/video/7148673533026045190",
-      "region": "",
-      "name": "Blue Amsterdam",
-      "price": "$$",
-      "map": "https://maps.app.goo.gl/VAWVgsn4VUBrjzQz9",
-      "createdAt": "2026-01-05T15:43:55.853Z"
-    },
-    "FiKW2": {
-      "name": "Zero Zero",
-      "region": "",
-      "media": "https://www.tiktok.com/@_elevatewithellie/video/7249288598023867650",
-      "createdAt": "2026-01-05T15:44:06.853Z",
-      "map": "https://maps.app.goo.gl/rv9UQYdJuP9CYfxd9",
-      "price": "$",
-      "description": {
-        "pt": "Sanduicheria",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "🥪",
-      "instagram": "",
-      "isNew": false,
-      "rating": "4"
-    },
-    "h4YHf": {
-      "instagram": "",
-      "rating": "4",
-      "isNew": false,
-      "emoji": "🥐",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": "Café e brunch"
-      },
-      "map": "https://maps.app.goo.gl/jbXRgNrmGMr7MYhK8",
-      "price": "$",
-      "createdAt": "2026-01-05T15:44:07.853Z",
-      "media": "https://www.tiktok.com/@wassima.hdr/video/7272686424552508704",
-      "region": "",
-      "name": "Locals"
-    },
-    "LS2Xn": {
-      "description": {
-        "en": "",
-        "pt": "Famosas mini panquecas holandesas"
-      },
-      "instagram": "",
-      "isNew": false,
-      "rating": "4",
-      "emoji": "🥞",
-      "website": "",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/9ftx94yinAffuwfC8",
-      "createdAt": "2026-01-05T15:43:59.853Z",
-      "name": "Pat's Poffertjes",
-      "media": "https://www.tiktok.com/@welikeamsterdam/video/7399656793359584532",
-      "region": ""
-    }
-  },
-  "tourism": {
-    "kl17q": {
-      "map": "https://maps.app.goo.gl/nVybxxo6akghYwc49",
-      "price": "€25",
-      "createdAt": "2026-01-05T15:44:02.853Z",
-      "name": "Heineken Experience",
-      "media": "https://www.tiktok.com/@nospaceinmypassport/video/7210110259925470469",
-      "region": "",
-      "description": {
-        "pt": "Tour interativo pela história da grande empresa cervejeira em uma antiga fábrica com degustação no final.",
-        "en": ""
-      },
-      "rating": "4",
-      "isNew": false,
-      "instagram": "",
-      "emoji": "🍺",
-      "website": ""
-    },
-    "BXF5Y": {
-      "media": "https://www.tiktok.com/@keicappa_amsterdam/video/7271516108593646881",
-      "region": "",
-      "name": "Sarphatipark",
-      "price": "-",
-      "map": "https://maps.app.goo.gl/uziAbq1r5k2g8KFD6",
-      "createdAt": "2026-01-05T15:44:08.853Z",
-      "rating": "2",
-      "instagram": "",
-      "isNew": false,
-      "emoji": "🏞️",
-      "website": "",
-      "description": {
-        "pt": "Jardim pequeno em estilo inglês com lagoas e prados, além de um memorial para o fundador do local, um médico.",
-        "en": ""
-      }
-    },
-    "W85hu": {
-      "map": "https://maps.app.goo.gl/gMfS9vhv4TCApY7F6",
-      "price": "-",
-      "createdAt": "2026-01-05T15:44:03.853Z",
-      "media": "https://www.tiktok.com/@whereiswanda/video/7365902788943007009",
-      "region": "",
-      "name": "Vondelpark",
-      "rating": "2",
-      "isNew": false,
-      "instagram": "",
-      "emoji": "🏞️",
-      "website": "",
-      "description": {
-        "pt": "Grande parque urbano do século XIX, com playground, lagoas e um teatro ao ar livre.",
-        "en": ""
-      }
-    },
-    "ei90L": {
-      "rating": "3",
-      "isNew": false,
-      "instagram": "",
-      "website": "",
-      "emoji": "🎨",
-      "description": {
-        "pt": "Museu de arte situado em uma casa geminada construída no início do século 20, com obras de Dalí e Banksy.",
-        "en": ""
-      },
-      "map": "https://maps.app.goo.gl/MEXybEcjCDD9Jyju7",
-      "price": "€19.95",
-      "createdAt": "2026-01-05T15:44:12.853Z",
-      "media": "https://www.tiktok.com/@welikeamsterdam/video/7425266010221038865",
-      "region": "",
-      "name": "Moco Museum"
-    },
-    "l5p2s": {
-      "region": "",
-      "media": "https://www.tiktok.com/@whereiswanda/video/7369268797301198113",
-      "name": "De Pijp",
-      "createdAt": "2026-01-05T15:43:59.853Z",
-      "map": "https://maps.app.goo.gl/Sy5BiGtyzjr8hAxX7",
-      "price": "-",
-      "emoji": "🏙️",
-      "website": "",
-      "rating": "5",
-      "instagram": "",
-      "isNew": false,
-      "description": {
-        "pt": "As ruas estreitas de Bohemian De Pijp estão repletas de restaurantes do Oriente Médio, bares antigos e cafés com mesas ao ar livre. Feirantes simpáticos do Albert Cuypmarkt vendem especialidades holandesas como arenques e waffles. Em uma antiga cervejaria, a atração Heineken Experience narra em multimídia a história da fabricação de cerveja e oferece degustações. Também na área, o Sarphatipark mostra jardins em estilo inglês com lagoas e áreas verdes.",
-        "en": ""
-      }
-    },
-    "NXLB0": {
-      "emoji": "🎨",
-      "website": "",
-      "rating": "2",
-      "instagram": "",
-      "isNew": false,
-      "description": {
-        "pt": "Casa museu onde Anne Frank e sua família se esconderam dos nazistas em um anexo secreto durante a II Guerra Mundial.",
-        "en": ""
-      },
-      "region": "",
-      "media": "https://www.tiktok.com/@bruwillians/video/7126709059612314886",
-      "name": "Anne Frank Huis",
-      "createdAt": "2026-01-05T15:44:05.853Z",
-      "map": "https://maps.app.goo.gl/dJekq6QuagkzmxHL8",
-      "price": "€16"
-    },
-    "ieffW": {
-      "media": "https://www.tiktok.com/@mikaserur/video/7151537503013457157",
-      "region": "",
-      "name": "Van Gogh Museum",
-      "map": "https://maps.app.goo.gl/Qpirm3x3v2Zb3StK7",
-      "price": " €24",
-      "createdAt": "2026-01-05T15:44:00.853Z",
-      "rating": "5",
-      "instagram": "",
-      "isNew": false,
-      "emoji": "🎨",
-      "website": "",
-      "description": {
-        "pt": "Museu que abriga o maior acervo de pinturas de Van Gogh do mundo, além de desenhos e cartas.",
-        "en": ""
-      }
-    },
-    "6ZhaU": {
-      "website": "https://www.airbnb.com.br/experiences/791554",
-      "emoji": "",
-      "isNew": true,
-      "instagram": "",
-      "rating": "5",
-      "description": {
-        "pt": "Participe de uma oficina exclusiva de comestíveis onde você aprenderá a fazer brownies e gomas deliciosas.",
-        "en": ""
-      },
-      "createdAt": "2026-02-04T01:42:03.484Z",
-      "price": "€50",
-      "map": "https://maps.app.goo.gl/enhWjyN37PdfwWJHA",
-      "region": "",
-      "media": "https://www.tiktok.com/@jesscoshott/video/7244136587708075282",
-      "name": "Make edibles in Amsterdam with Get Baked Amsterdam"
-    },
-    "oryC3": {
-      "emoji": "🏙️",
-      "website": "",
-      "instagram": "",
-      "rating": "5",
-      "isNew": false,
-      "description": {
-        "pt": "De Wallen é o centro da cidade medieval cruzado por canais e ruelas cheias de bares tradicionais. Cercada pelo bairro de prostituição com suas luzes de neon, a Oude Kerk é uma antiga igreja centenária que abriga eventos culturais. De maneira semelhante, a antiga bolsa de valores de tijolos vermelhos, Beurs van Berlage, agora apresenta exposições e concertos. O Museum Ons’ Lieve Heer Op Solder esconde uma ornamentada igreja católica no seu sótão do século 17.",
-        "en": ""
-      },
-      "region": "",
-      "media": "https://www.tiktok.com/@whereiswanda/video/7389286777590254880",
-      "name": "De Wallen",
-      "createdAt": "2026-01-05T15:43:55.853Z",
-      "price": "-",
-      "map": "https://maps.app.goo.gl/H8gf1yrJEHTb3U2x9"
-    },
-    "KApTi": {
-      "rating": "4",
-      "isNew": false,
-      "instagram": "",
-      "emoji": "🎢",
-      "website": "",
-      "description": {
-        "pt": "Elevador com show de luzes que leva a um terraço de 20 andares com restaurante/bar e um balanço na borda.",
-        "en": ""
-      },
-      "media": "https://www.tiktok.com/@alexojeda/video/7388961408462966059",
-      "region": "",
-      "name": "A’dam Lookout",
-      "price": "€16,50",
-      "map": "https://maps.app.goo.gl/6BJFmwY1DcFiuXrM9",
-      "createdAt": "2026-01-05T15:44:10.853Z"
-    },
-    "EQErj": {
-      "createdAt": "2026-01-05T15:43:58.853Z",
-      "map": "https://maps.app.goo.gl/MMFxxV9MDREG46eX6",
-      "price": "€25",
-      "region": "",
-      "media": "https://www.tiktok.com/@dreamstraveled/video/7429026170764528926",
-      "name": "Rijksmuseum",
-      "website": "",
-      "emoji": "🎨",
-      "rating": "4",
-      "instagram": "",
-      "isNew": false,
-      "description": {
-        "pt": "Edifício do século XIX que abriga obras de arte do Século de Ouro e uma vasta coleção de arte europeia.",
-        "en": ""
-      }
-    },
-    "xKq1J": {
-      "region": "",
-      "media": "https://www.tiktok.com/@urbanistariel/video/7143176196069559598",
-      "name": "Dam Square",
-      "createdAt": "2026-01-05T15:43:56.853Z",
-      "price": "-",
-      "map": "https://maps.app.goo.gl/CCf4bzHoiSc74Ypf9",
-      "emoji": "🏛️",
-      "website": "",
-      "instagram": "",
-      "rating": "2",
-      "isNew": false,
-      "description": {
-        "pt": "Praça pública central e famoso ponto de encontro desde o século 17, cercada pelo Palácio Real.",
-        "en": ""
-      }
-    },
-    "XQa4S": {
-      "createdAt": "2026-01-05T15:44:04.853Z",
-      "price": "-",
-      "map": "https://maps.app.goo.gl/xRQPFpqpMW7RcgWn8",
-      "name": "Jordaan",
-      "region": "",
-      "media": "https://www.tiktok.com/@whereiswanda/video/7368216530871487777",
-      "description": {
-        "pt": "As ruas e os canais estreitos do badalado bairro de Jordaan são ladeados por butiques independentes, bares aconchegantes e restaurantes modernos. As barraquinhas do mercado Noordermarkt oferecem joias, roupas, antiguidades e alimentos orgânicos. O antiquário Antiekcentrum Amsterdam vende cerâmicas e pinturas vintage, e as galerias menores da área têm como foco a arte contemporânea inovadora. Outras atrações são o Houseboat Museum e o Amsterdam Cheese Museum.",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "🏙️",
-      "instagram": "",
-      "rating": "5",
-      "isNew": false
-    },
-    "l61D1": {
-      "emoji": "🏳️‍🌈",
-      "website": "",
-      "rating": "5",
-      "instagram": "",
-      "isNew": false,
-      "description": {
-        "pt": "Rua famosa por ter muitos bares LGBT",
-        "en": ""
-      },
-      "createdAt": "2026-01-05T15:44:13.853Z",
-      "price": "-",
-      "map": "https://maps.app.goo.gl/DSEJoS1S4UKTdekr5",
-      "region": "",
-      "media": "https://www.tiktok.com/@jefporhobbie/video/7246564648399424773",
-      "name": "Reguliersdwarsstraat"
-    },
-    "qZ80o": {
-      "description": {
-        "pt": "Maior armazém da cidade, construído em 1889 no estilo gótico renascentista, com lojas e restaurantes.",
-        "en": ""
-      },
-      "emoji": "🚆",
-      "website": "",
-      "instagram": "",
-      "isNew": false,
-      "rating": "4",
-      "createdAt": "2026-01-05T15:44:06.853Z",
-      "map": "https://maps.app.goo.gl/GcWxpWhvrrnWhEUq7",
-      "price": "-",
-      "name": "Amsterdam Centraal",
-      "region": "",
-      "media": "https://www.tiktok.com/@whereiswanda/video/7477629651922242838"
-    },
-    "4mpmp": {
-      "price": "-",
-      "map": "https://maps.app.goo.gl/TzaoHcgAanrhiLh38",
-      "createdAt": "2026-01-05T15:44:09.853Z",
-      "media": "https://www.tiktok.com/@whereiswanda/video/7521754198048836896",
-      "region": "",
-      "name": "Amsterdam-Noord",
-      "isNew": false,
-      "instagram": "",
-      "rating": "5",
-      "website": "",
-      "emoji": "🏙️",
-      "description": {
-        "pt": "Região descolada em que é preciso atravessar de barco.",
-        "en": ""
-      }
-    },
-    "by3jU": {
-      "name": "Sex Museum",
-      "region": "",
-      "media": "",
-      "createdAt": "2026-01-05T15:43:57.853Z",
-      "price": "€10",
-      "map": "https://maps.app.goo.gl/Yng67hm7dZLT6Le9A",
-      "description": {
-        "pt": "",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "🍆",
-      "instagram": "",
-      "rating": "4",
-      "isNew": false
-    },
-    "m0jVo": {
-      "media": "https://www.tiktok.com/@santanamath/video/7277139290914557217",
-      "region": "",
-      "name": "Zaanse Schans",
-      "map": "https://maps.app.goo.gl/pZpiVL4UcycK3vEv6",
-      "price": "-",
-      "createdAt": "2026-01-05T15:44:01.853Z",
-      "rating": "4",
-      "instagram": "",
-      "isNew": false,
-      "website": "",
-      "emoji": "🏞️",
-      "description": {
-        "pt": "Cidade próxima a Amsterdam. Queijo e moinhos de vento.",
-        "en": ""
-      }
-    },
-    "TW7G6": {
-      "description": {
-        "pt": "Instalações grandes e imersivas que misturam tecnologia e criatividade com luz e som psicodélico.",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "🎨",
-      "rating": "2",
-      "isNew": false,
-      "instagram": "",
-      "name": "NXT Museum",
-      "region": "",
-      "media": "https://www.tiktok.com/@bodiek/video/7212302182475959558",
-      "createdAt": "2026-01-05T15:44:11.853Z",
-      "map": "https://maps.app.goo.gl/ZFpkvJQpTB1WnmHU9",
-      "price": "€19.50"
-    },
-    "APZoL": {
-      "createdAt": "2026-01-05T15:44:14.853Z",
-      "map": "https://maps.app.goo.gl/DAQmYsZVTD4mh69QA",
-      "price": "€18",
-      "name": "Fabrique des Lumières",
-      "region": "",
-      "media": "https://www.tiktok.com/@lifeofthetravelingpin/video/7567255276269718839",
-      "description": {
-        "pt": "",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "💡🎨",
-      "instagram": "",
-      "isNew": false,
-      "rating": "3"
-    },
-    "Y288u": {
-      "instagram": "",
-      "rating": "4",
-      "isNew": false,
-      "website": "",
-      "emoji": "🥐",
-      "description": {
-        "pt": "",
-        "en": ""
-      },
-      "map": "https://maps.app.goo.gl/TTZDJufYsmmq1YFo9",
-      "price": "-",
-      "createdAt": "2026-01-05T15:44:07.853Z",
-      "media": "https://www.tiktok.com/@mirandabrady_/video/7534292827019152661",
-      "region": "",
-      "name": "Albert Cuyp Market"
-    }
-  },
-  "sharing": {
-    "owner": "eySHdjIyK0MNAgiPU77xE0d1CTjp",
-    "active": true
-  },
-  "modules": {
-    "shopping": true,
-    "tourism": true,
-    "snacks": true,
-    "nightlife": true,
-    "restaurants": true,
-    "map": true
-  },
-  "myMaps": "https://www.google.com/maps/d/edit?mid=1gzl__JWQJxS695PTbvcw-jqS8Ah71HM&usp=sharing",
-  "restaurants": {
-    "qAaiA": {
-      "name": "Kikkie van de Prinsensluis",
-      "media": "https://www.tiktok.com/@wanderingelsewhere_/video/7525175246178127111",
-      "region": "",
-      "map": "https://maps.app.goo.gl/xQpSCz6f8bTPmg9u8",
-      "price": "$",
-      "createdAt": "2026-01-05T15:43:58.853Z",
-      "description": {
-        "en": "",
-        "pt": "Restaurante com vista para o canal. Famoso pelos hambúrgueres smash, mas com outras opções interessantes."
-      },
-      "rating": "3",
-      "isNew": false,
-      "instagram": "",
-      "website": "",
-      "emoji": "🍔"
-    },
-    "jl5Qh": {
-      "map": "https://maps.app.goo.gl/MfeEPeH7h7WWcbv99",
-      "price": "-",
-      "createdAt": "2026-01-05T15:43:55.853Z",
-      "media": "https://www.tiktok.com/@athaismota/video/7474052160012029189",
-      "region": "",
-      "name": "The Pantry",
-      "instagram": "",
-      "isNew": false,
-      "rating": "4",
-      "emoji": "🍲",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": "Comida holandesa"
-      }
-    },
-    "Ulvgo": {
-      "website": "",
-      "emoji": "🍽️",
-      "instagram": "",
-      "isNew": false,
-      "rating": "4",
-      "description": {
-        "en": "",
-        "pt": "Ambiente moderno com barracas de comida cosmopolita, desde hambúrguer e cachorro-quente até guiozas e tacos."
-      },
-      "region": "",
-      "media": "https://www.tiktok.com/@diaryofatorontogirl/video/7307627844115516678",
-      "name": "Foodhallen",
-      "createdAt": "2026-01-05T15:43:56.853Z",
-      "map": "https://maps.app.goo.gl/9nPxNSBU9tw1SFwt5",
-      "price": "-"
-    },
-    "jHs75": {
-      "description": {
-        "en": "",
-        "pt": "Restaurante muito bem ambientado, com vista de amsterdam noord"
-      },
-      "website": "",
-      "emoji": "🍕🧇",
-      "instagram": "",
-      "isNew": false,
-      "rating": "4",
-      "createdAt": "2026-01-05T15:43:57.853Z",
-      "price": "$$",
-      "map": "https://maps.app.goo.gl/fpJGvTvPCH2XAA5T6",
-      "name": "Deck",
-      "region": "",
-      "media": ""
-    },
-    "MGpql": {
-      "description": {
-        "pt": "Praça de alimentação em região comercial de Amsterdam",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "🍽️",
-      "instagram": "",
-      "rating": "3",
-      "isNew": false,
-      "createdAt": "2026-01-05T15:43:59.853Z",
-      "price": "default",
-      "map": "https://maps.app.goo.gl/pMEDxWH5Xbp7ayAr9",
-      "name": "Market 33",
-      "region": "",
-      "media": "https://www.tiktok.com/@jack.tom.ams/video/7561792899097087265"
-    }
-  },
-  "currency": "EUR",
-  "title": "Amsterdam",
-  "shopping": {
-    "fZxkf": {
-      "description": {
-        "en": "",
-        "pt": "Chocolate de altíssima qualidade."
-      },
-      "emoji": "🍫",
-      "website": "",
-      "isNew": false,
-      "instagram": "",
-      "rating": "4",
-      "createdAt": "2026-01-05T15:43:58.853Z",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/umsEtyrvhAnnGoudA",
-      "name": "Tony's Chocolonely Superstore",
-      "region": "",
-      "media": "https://www.tiktok.com/@roledevegano/video/7493920315953679671"
-    },
-    "BpdIk": {
-      "media": "https://www.tiktok.com/@rochellefitness/video/7548809286076484886",
-      "region": "",
-      "name": "Boerejongens Coffeeshop",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/Nz68KdK8YcRhuAPE8",
-      "createdAt": "2026-01-05T15:44:02.853Z",
-      "isNew": false,
-      "instagram": "",
-      "rating": "5",
-      "website": "",
-      "emoji": "🌿",
-      "description": {
-        "en": "",
-        "pt": "Local do viral red velvet batizado."
-      }
-    },
-    "8wBqD": {
-      "website": "",
-      "emoji": "👕",
-      "instagram": "",
-      "isNew": false,
-      "rating": "4",
-      "description": {
-        "pt": "Loja de roupas vintage",
-        "en": ""
-      },
-      "createdAt": "2026-01-05T15:43:59.853Z",
-      "price": "default",
-      "map": "https://maps.app.goo.gl/Rx7b5pwLQoKUMza86",
-      "region": "",
-      "media": "https://www.tiktok.com/@flossys_wonderland/video/7414497143710371104",
-      "name": "Figo Vintage"
-    },
-    "1fObq": {
-      "name": "TERPS Army",
-      "media": "",
-      "region": "",
-      "map": "https://maps.app.goo.gl/nkEccCAnuu7GQo947",
-      "price": "default",
-      "createdAt": "2026-01-05T15:44:04.853Z",
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "isNew": false,
-      "instagram": "",
-      "rating": "4",
-      "emoji": "🌿",
-      "website": ""
-    },
-    "1mbeC": {
-      "name": "Coffeeshop the Dolphins",
-      "media": "https://www.tiktok.com/@thedolphinsamsterdam/video/7561028480587058465",
-      "region": "",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/hnuwRTUonjgeGnjX9",
-      "createdAt": "2026-01-05T15:44:05.853Z",
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "instagram": "",
-      "isNew": false,
-      "rating": "5",
-      "website": "",
-      "emoji": "🌿"
-    },
-    "srSyF": {
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "instagram": "",
-      "isNew": false,
-      "rating": "5",
-      "emoji": "🌿",
-      "website": "",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/teES91Kf7pZz4X5w8",
-      "createdAt": "2026-01-05T15:43:56.853Z",
-      "name": "The Bulldog Palace",
-      "media": "",
-      "region": ""
-    },
-    "F0how": {
-      "media": "",
-      "region": "",
-      "name": "The Plug Coffeeshop",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/inmSwnXr8JV1MRH9A",
-      "createdAt": "2026-01-05T15:44:03.853Z",
-      "instagram": "",
-      "rating": "4",
-      "isNew": false,
-      "website": "",
-      "emoji": "🌿",
-      "description": {
-        "en": "",
-        "pt": "Space Pop recomendado"
-      }
-    },
-    "kRjq5": {
-      "createdAt": "2026-01-05T15:43:57.853Z",
-      "price": "$",
-      "map": "https://maps.app.goo.gl/8J5ShXYnHquTGm2i7",
-      "region": "",
-      "media": "",
-      "name": "Katsu Coffeeshop",
-      "emoji": "🌿",
-      "website": "",
-      "isNew": false,
-      "rating": "3",
-      "instagram": "",
-      "description": {
-        "en": "",
-        "pt": "Café aconchegante com arte local onde servem bebidas quentes e sucos, além de incluir jogos e TV com esportes."
-      }
-    },
-    "r6xDl": {
-      "description": {
-        "en": "",
-        "pt": "Supermercado"
-      },
-      "website": "",
-      "emoji": "🛒",
-      "isNew": false,
-      "rating": "5",
-      "instagram": "",
-      "name": "Albert Heijn",
-      "region": "",
-      "media": "https://www.tiktok.com/@julia.orige/video/7326196218860784901",
-      "createdAt": "2026-01-05T15:44:01.853Z",
-      "price": "default",
-      "map": "https://maps.app.goo.gl/wvHno2BeakncAh746"
-    },
-    "BGoXA": {
-      "rating": "3",
-      "instagram": "",
-      "isNew": false,
-      "emoji": "🧀",
-      "website": "https://amsterdamcheesecompany.com/",
-      "description": {
-        "pt": "",
-        "en": ""
-      },
-      "media": "",
-      "region": "",
-      "name": "Amsterdam Cheese Company",
-      "price": "-",
-      "map": "https://maps.app.goo.gl/p5pHZx4Gpk7e7Ye66",
-      "createdAt": "2026-01-05T15:43:55.853Z"
-    },
-    "bej0y": {
-      "map": "https://maps.app.goo.gl/16M3fJanBbNpHc7f9",
-      "price": "$",
-      "createdAt": "2026-01-05T15:44:00.853Z",
-      "media": "https://www.tiktok.com/@isaviagens12/video/7503926583095315718",
-      "region": "",
-      "name": "Henri Willig",
-      "isNew": false,
-      "rating": "3",
-      "instagram": "",
-      "emoji": "🧀",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": "Loja de queijos com degustação."
-      }
-    }
-  },
-  "version": {
-    "lastUpdated": "2026-01-23T00:34:47.438Z"
-  },
-  "nightlife": {
-    "0YKEq": {
-      "website": "",
-      "emoji": "🍺",
-      "rating": "4",
-      "instagram": "https://www.instagram.com/brouwerijtij/",
-      "isNew": false,
-      "description": {
-        "en": "",
-        "pt": "Cervejaria em estilo industrial perto de um moinho com cervejas orgânicas claras e escuras, e tours guiados."
-      },
-      "createdAt": "2026-01-05T15:43:55.853Z",
-      "map": "https://maps.app.goo.gl/94HUG9MbxfoNGoJFA",
-      "price": "$$",
-      "region": "",
-      "media": "https://www.tiktok.com/@aksopar/video/7171091344675441926",
-      "name": "Brouwerij 't IJ"
-    },
-    "lelcI": {
-      "description": {
-        "en": "",
-        "pt": "Bar LGBT"
-      },
-      "emoji": "🏳️‍🌈🪩",
-      "website": "",
-      "rating": "2",
-      "instagram": "",
-      "isNew": false,
-      "name": "Taboo Bar",
-      "region": "",
-      "media": "",
-      "createdAt": "2026-01-05T15:43:57.853Z",
-      "map": "https://maps.app.goo.gl/PUN6Jfr5EcAjUbYN8",
-      "price": "default"
-    },
-    "uzFPr": {
-      "description": {
-        "en": "",
-        "pt": ""
-      },
-      "emoji": "🏳️‍🌈🪩",
-      "website": "",
-      "rating": "4",
-      "isNew": false,
-      "instagram": "",
-      "createdAt": "2026-01-05T15:43:59.853Z",
-      "map": "https://maps.app.goo.gl/fSjYJiTEP34baDWB6",
-      "price": "default",
-      "name": "Club Church",
-      "region": "",
-      "media": ""
-    },
-    "qCw6V": {
-      "region": "",
-      "media": "",
-      "name": "PRIK",
-      "createdAt": "2026-01-05T15:44:01.853Z",
-      "map": "https://maps.app.goo.gl/q2Zoq2CBN9KVQ2bHA",
-      "price": "$",
-      "website": "",
-      "emoji": "🏳️‍🌈🍺",
-      "isNew": false,
-      "rating": "3",
-      "instagram": "",
-      "description": {
-        "en": "",
-        "pt": ""
-      }
-    },
-    "umHwy": {
-      "map": "https://maps.app.goo.gl/XP7ojrLmnwYFrV8TA",
-      "price": "$",
-      "createdAt": "2026-01-05T15:44:00.853Z",
-      "media": "",
-      "region": "",
-      "name": "The Queen's Head",
-      "rating": "3",
-      "instagram": "",
-      "isNew": false,
-      "emoji": "🏳️‍🌈🍺",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": ""
-      }
-    },
-    "ZILb5": {
-      "website": "",
-      "emoji": "🍹",
-      "isNew": false,
-      "rating": "4",
-      "instagram": "",
-      "description": {
-        "en": "",
-        "pt": "Restaurante casual no cais com terraço que serve frutos do mar, carnes e pratos veganos."
-      },
-      "createdAt": "2026-01-05T15:43:56.853Z",
-      "price": "$$",
-      "map": "https://maps.app.goo.gl/FkNABFmA9bmwm2Bz8",
-      "region": "",
-      "media": "https://www.tiktok.com/@hannekesboom/video/7502440420920528150",
-      "name": "Hannekes Boom"
-    },
-    "tD85m": {
-      "name": "Satellite Sportscafé",
-      "region": "",
-      "media": "https://www.tiktok.com/@luizasabaini/video/7569341460097568021",
-      "createdAt": "2026-01-05T15:44:02.853Z",
-      "map": "https://maps.app.goo.gl/tdyMEB3s7MBq2gbX6",
-      "price": "$$",
-      "description": {
-        "pt": "Restaurante descontraído ao lado do Bulldog que serve hambúrgueres, costelas, filés e chope, e tem TVs para a transmissão de jogos esportivos.",
-        "en": ""
-      },
-      "website": "",
-      "emoji": "🏈",
-      "isNew": false,
-      "rating": "3",
-      "instagram": ""
-    },
-    "dWZjc": {
-      "media": "",
-      "region": "",
-      "name": "Club NYX",
-      "price": "default",
-      "map": "https://maps.app.goo.gl/B9x41VqDy4D7m4ck9",
-      "createdAt": "2026-01-05T15:43:58.853Z",
-      "instagram": "",
-      "isNew": false,
-      "rating": "5",
-      "emoji": "🏳️‍🌈🪩",
-      "website": "",
-      "description": {
-        "en": "",
-        "pt": "Balada LGBT"
-      }
-    }
-  }
+	"snacks": {
+		"WFH2e": {
+			"name": "Dutch Pancake Masters",
+			"region": "",
+			"media": "https://www.tiktok.com/@sisiwaldorf/video/7377354873005690145",
+			"createdAt": "2026-01-05T15:44:13.853Z",
+			"price": "default",
+			"map": "https://maps.app.goo.gl/3o65zeqc9CFv96LR8",
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"website": "",
+			"emoji": "🥞",
+			"isNew": false,
+			"instagram": "",
+			"rating": "3"
+		},
+		"oEVFg": {
+			"emoji": "🥐",
+			"website": "",
+			"isNew": false,
+			"rating": "3",
+			"instagram": "",
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"createdAt": "2026-01-05T15:44:11.853Z",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/SLUqrR1r5Hxdq36f9",
+			"region": "",
+			"media": "https://www.tiktok.com/@welikeamsterdam/video/7391863870228335889",
+			"name": "Lagom"
+		},
+		"jplQm": {
+			"description": {
+				"en": "",
+				"pt": "Confeitaria"
+			},
+			"instagram": "",
+			"isNew": false,
+			"rating": "4",
+			"emoji": "🍪🥐",
+			"website": "",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/EfCqjckFUsdRQRp9A",
+			"createdAt": "2026-01-05T15:44:05.853Z",
+			"name": "SALVO",
+			"media": "https://www.tiktok.com/@heytrishhey/video/7472030616398204183",
+			"region": ""
+		},
+		"9JJuV": {
+			"rating": "2",
+			"instagram": "",
+			"isNew": false,
+			"website": "",
+			"emoji": "🍗",
+			"description": {
+				"pt": "Frango frito picante.",
+				"en": ""
+			},
+			"media": "https://www.tiktok.com/@sarasbites._/video/7539586722527448352",
+			"region": "",
+			"name": "Cip Hot Chicken",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/fpY1B3Y6L4FFgR178",
+			"createdAt": "2026-01-05T15:44:09.853Z"
+		},
+		"utbKB": {
+			"media": "https://www.tiktok.com/@moakpancakes/video/7198514183598509317",
+			"region": "",
+			"name": "MOAK Pancakes City Center",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/Xvk5oniq28ErKbZm9",
+			"createdAt": "2026-01-05T15:44:14.853Z",
+			"isNew": false,
+			"instagram": "",
+			"rating": "3",
+			"emoji": "🥞",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": ""
+			}
+		},
+		"Xa5d4": {
+			"instagram": "",
+			"rating": "5",
+			"isNew": false,
+			"emoji": "🍤",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": "Loja de petiscos fritos prontos. Bem famoso e tradicional."
+			},
+			"price": "$",
+			"map": "https://maps.app.goo.gl/i5XSwXVG5ip8RHwG6",
+			"createdAt": "2026-01-05T15:44:01.853Z",
+			"media": "https://www.tiktok.com/@raphaelcamposo/video/7443591983936933176",
+			"region": "",
+			"name": "FEBO"
+		},
+		"maNLP": {
+			"rating": "5",
+			"isNew": false,
+			"instagram": "",
+			"emoji": "🥞",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"media": "https://www.tiktok.com/@goingwithnicole/video/7379713701844143393",
+			"region": "",
+			"name": "Pannenkoekenhuis Upstairs",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/59vK37tzumzchz8R8",
+			"createdAt": "2026-01-05T15:44:15.853Z"
+		},
+		"GUT7Z": {
+			"isNew": false,
+			"rating": "3",
+			"instagram": "",
+			"emoji": "🥪",
+			"website": "",
+			"description": {
+				"pt": "",
+				"en": ""
+			},
+			"map": "https://maps.app.goo.gl/8dXifTMPr2Jqmn4A9",
+			"price": "default",
+			"createdAt": "2026-01-05T15:44:12.853Z",
+			"media": "https://www.tiktok.com/@wanderingelsewhere_/video/7526062752222448903",
+			"region": "",
+			"name": "Sandwichshop"
+		},
+		"X4bMb": {
+			"name": "New York Pizza",
+			"media": "",
+			"region": "",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/vS4ysRrvi1DQfhM9A",
+			"createdAt": "2026-01-05T15:44:16.853Z",
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"instagram": "",
+			"isNew": false,
+			"rating": "3",
+			"website": "",
+			"emoji": "🍕"
+		},
+		"WWr4A": {
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"website": "",
+			"emoji": "🥞",
+			"instagram": "https://www.instagram.com/thepancakebakery/",
+			"rating": "3",
+			"isNew": false,
+			"createdAt": "2026-01-05T15:43:56.853Z",
+			"map": "https://maps.app.goo.gl/QPaS8Kqzk4C6RRGk9",
+			"price": "$$",
+			"name": "The Pancake Bakery",
+			"region": "",
+			"media": "https://www.tiktok.com/@the.pancake.bakery/video/7312838317865798945"
+		},
+		"CsgnI": {
+			"description": {
+				"pt": "Croissanterie Egstorf. Muitos docinhos e opções de lanchinhos.",
+				"en": ""
+			},
+			"emoji": "🧇",
+			"website": "",
+			"rating": "5",
+			"instagram": "",
+			"isNew": false,
+			"name": "Han's Egstorf",
+			"region": "",
+			"media": "https://www.tiktok.com/@chefsivo/video/7495064168073071894",
+			"createdAt": "2026-01-05T15:44:00.853Z",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/bxVkzWPiN829Pf3h9"
+		},
+		"oM7N3": {
+			"isNew": false,
+			"instagram": "",
+			"rating": "3",
+			"emoji": "🥪",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": "Casa de chá que serve diversas opções criativas de sanduíches, além de café e bebidas especiais. Bonito, mas muitas filas."
+			},
+			"map": "https://maps.app.goo.gl/EtgBNchMbDAnf7tQ9",
+			"price": "$",
+			"createdAt": "2026-01-05T15:43:58.853Z",
+			"media": "https://www.tiktok.com/@monathefoodie/video/7267228417425165600",
+			"region": "",
+			"name": "Chun Café Berenstraat"
+		},
+		"QpETz": {
+			"description": {
+				"pt": "Rede de fast-food que serve pratos mexicanos, como tacos, quesadillas e nachos.",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "🌮",
+			"instagram": "",
+			"isNew": false,
+			"rating": "2",
+			"name": "Taco Bell",
+			"region": "",
+			"media": "https://www.tiktok.com/@tacobellnl/video/7291674807257599264",
+			"createdAt": "2026-01-05T15:44:02.853Z",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/WPnwLWFe5FKwxaDx7"
+		},
+		"mKlv5": {
+			"description": {
+				"en": "",
+				"pt": "Restaurante especializado em dumplings"
+			},
+			"isNew": false,
+			"rating": "3",
+			"instagram": "",
+			"emoji": "🥟",
+			"website": "",
+			"name": "Dumplings",
+			"media": "https://www.tiktok.com/@riverswalters/video/7545082792091159830",
+			"region": "",
+			"price": "-",
+			"map": "https://maps.app.goo.gl/D9TMKyiP3S8r4Fd77",
+			"createdAt": "2026-01-05T15:44:10.853Z"
+		},
+		"hVwPA": {
+			"map": "https://maps.app.goo.gl/i4xGECMvqmAw5YH49",
+			"price": "$",
+			"createdAt": "2026-01-05T15:44:03.853Z",
+			"name": "Dunkin'",
+			"media": "https://www.tiktok.com/@thinkingoutloud247365/video/7442446894116195626",
+			"region": "",
+			"description": {
+				"en": "",
+				"pt": "Rede tradicional que serve opções especiais de café da manhã e uma variedade de bebidas com café."
+			},
+			"rating": "3",
+			"instagram": "",
+			"isNew": false,
+			"website": "",
+			"emoji": "🍩"
+		},
+		"AXR5v": {
+			"website": "",
+			"emoji": "🥪",
+			"isNew": false,
+			"instagram": "",
+			"rating": "4",
+			"description": {
+				"en": "",
+				"pt": "Restaurante italiano simples com sanduíches, pizzas e massas, além de almôndegas, cafés e cannoli para viagem."
+			},
+			"region": "",
+			"media": "https://www.tiktok.com/@wanderingelsewhere_/video/7526062752222448903",
+			"name": "Caldi e Freddi",
+			"createdAt": "2026-01-05T15:44:08.853Z",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/bKy16dy2VKPZwUzz9"
+		},
+		"lUhiQ": {
+			"map": "https://maps.app.goo.gl/eMFwFhFzkVte4MzJA",
+			"price": "-",
+			"createdAt": "2026-01-05T15:43:57.853Z",
+			"media": "https://www.tiktok.com/@extra.olive.club/video/7485300638599957766",
+			"region": "",
+			"name": "Little Collins De Pijp",
+			"rating": "3",
+			"isNew": false,
+			"instagram": "https://www.instagram.com/littlecollinsamsterdam/",
+			"website": "",
+			"emoji": "🥐",
+			"description": {
+				"pt": "Cafeteria fofinha",
+				"en": ""
+			}
+		},
+		"0uyua": {
+			"name": "Rudi’s Original Stroopwafels",
+			"region": "",
+			"media": "https://www.tiktok.com/@eatingeurope/video/7538104319984422166",
+			"createdAt": "2026-01-05T15:44:04.853Z",
+			"price": "€3",
+			"map": "https://maps.app.goo.gl/SpWGmxxyrtRsdMv98",
+			"description": {
+				"pt": "Barraca antiga no Albert Cuyp Market que oferece waffles com calda de caramelo feitos sob encomenda.",
+				"en": ""
+			},
+			"emoji": "🧇",
+			"website": "",
+			"isNew": false,
+			"instagram": "",
+			"rating": "5"
+		},
+		"olagv": {
+			"isNew": false,
+			"rating": "2",
+			"instagram": "",
+			"emoji": "🥐",
+			"website": "",
+			"description": {
+				"pt": "Café e bar elegante com fachada de vidro sobre um complexo comercial moderno, com vista panorâmica da cidade.",
+				"en": ""
+			},
+			"media": "https://www.tiktok.com/@iamsterdam_official/video/7148673533026045190",
+			"region": "",
+			"name": "Blue Amsterdam",
+			"price": "$$",
+			"map": "https://maps.app.goo.gl/VAWVgsn4VUBrjzQz9",
+			"createdAt": "2026-01-05T15:43:55.853Z"
+		},
+		"FiKW2": {
+			"name": "Zero Zero",
+			"region": "",
+			"media": "https://www.tiktok.com/@_elevatewithellie/video/7249288598023867650",
+			"createdAt": "2026-01-05T15:44:06.853Z",
+			"map": "https://maps.app.goo.gl/rv9UQYdJuP9CYfxd9",
+			"price": "$",
+			"description": {
+				"pt": "Sanduicheria",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "🥪",
+			"instagram": "",
+			"isNew": false,
+			"rating": "4"
+		},
+		"h4YHf": {
+			"instagram": "",
+			"rating": "4",
+			"isNew": false,
+			"emoji": "🥐",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": "Café e brunch"
+			},
+			"map": "https://maps.app.goo.gl/jbXRgNrmGMr7MYhK8",
+			"price": "$",
+			"createdAt": "2026-01-05T15:44:07.853Z",
+			"media": "https://www.tiktok.com/@wassima.hdr/video/7272686424552508704",
+			"region": "",
+			"name": "Locals"
+		},
+		"LS2Xn": {
+			"description": {
+				"en": "",
+				"pt": "Famosas mini panquecas holandesas"
+			},
+			"instagram": "",
+			"isNew": false,
+			"rating": "4",
+			"emoji": "🥞",
+			"website": "",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/9ftx94yinAffuwfC8",
+			"createdAt": "2026-01-05T15:43:59.853Z",
+			"name": "Pat's Poffertjes",
+			"media": "https://www.tiktok.com/@welikeamsterdam/video/7399656793359584532",
+			"region": ""
+		}
+	},
+	"tourism": {
+		"kl17q": {
+			"map": "https://maps.app.goo.gl/nVybxxo6akghYwc49",
+			"price": "€25",
+			"createdAt": "2026-01-05T15:44:02.853Z",
+			"name": "Heineken Experience",
+			"media": "https://www.tiktok.com/@nospaceinmypassport/video/7210110259925470469",
+			"region": "",
+			"description": {
+				"pt": "Tour interativo pela história da grande empresa cervejeira em uma antiga fábrica com degustação no final.",
+				"en": ""
+			},
+			"rating": "4",
+			"isNew": false,
+			"instagram": "",
+			"emoji": "🍺",
+			"website": ""
+		},
+		"BXF5Y": {
+			"media": "https://www.tiktok.com/@keicappa_amsterdam/video/7271516108593646881",
+			"region": "",
+			"name": "Sarphatipark",
+			"price": "-",
+			"map": "https://maps.app.goo.gl/uziAbq1r5k2g8KFD6",
+			"createdAt": "2026-01-05T15:44:08.853Z",
+			"rating": "2",
+			"instagram": "",
+			"isNew": false,
+			"emoji": "🏞️",
+			"website": "",
+			"description": {
+				"pt": "Jardim pequeno em estilo inglês com lagoas e prados, além de um memorial para o fundador do local, um médico.",
+				"en": ""
+			}
+		},
+		"W85hu": {
+			"map": "https://maps.app.goo.gl/gMfS9vhv4TCApY7F6",
+			"price": "-",
+			"createdAt": "2026-01-05T15:44:03.853Z",
+			"media": "https://www.tiktok.com/@whereiswanda/video/7365902788943007009",
+			"region": "",
+			"name": "Vondelpark",
+			"rating": "2",
+			"isNew": false,
+			"instagram": "",
+			"emoji": "🏞️",
+			"website": "",
+			"description": {
+				"pt": "Grande parque urbano do século XIX, com playground, lagoas e um teatro ao ar livre.",
+				"en": ""
+			}
+		},
+		"ei90L": {
+			"rating": "3",
+			"isNew": false,
+			"instagram": "",
+			"website": "",
+			"emoji": "🎨",
+			"description": {
+				"pt": "Museu de arte situado em uma casa geminada construída no início do século 20, com obras de Dalí e Banksy.",
+				"en": ""
+			},
+			"map": "https://maps.app.goo.gl/MEXybEcjCDD9Jyju7",
+			"price": "€19.95",
+			"createdAt": "2026-01-05T15:44:12.853Z",
+			"media": "https://www.tiktok.com/@welikeamsterdam/video/7425266010221038865",
+			"region": "",
+			"name": "Moco Museum"
+		},
+		"l5p2s": {
+			"region": "",
+			"media": "https://www.tiktok.com/@whereiswanda/video/7369268797301198113",
+			"name": "De Pijp",
+			"createdAt": "2026-01-05T15:43:59.853Z",
+			"map": "https://maps.app.goo.gl/Sy5BiGtyzjr8hAxX7",
+			"price": "-",
+			"emoji": "🏙️",
+			"website": "",
+			"rating": "5",
+			"instagram": "",
+			"isNew": false,
+			"description": {
+				"pt": "As ruas estreitas de Bohemian De Pijp estão repletas de restaurantes do Oriente Médio, bares antigos e cafés com mesas ao ar livre. Feirantes simpáticos do Albert Cuypmarkt vendem especialidades holandesas como arenques e waffles. Em uma antiga cervejaria, a atração Heineken Experience narra em multimídia a história da fabricação de cerveja e oferece degustações. Também na área, o Sarphatipark mostra jardins em estilo inglês com lagoas e áreas verdes.",
+				"en": ""
+			}
+		},
+		"NXLB0": {
+			"emoji": "🎨",
+			"website": "",
+			"rating": "2",
+			"instagram": "",
+			"isNew": false,
+			"description": {
+				"pt": "Casa museu onde Anne Frank e sua família se esconderam dos nazistas em um anexo secreto durante a II Guerra Mundial.",
+				"en": ""
+			},
+			"region": "",
+			"media": "https://www.tiktok.com/@bruwillians/video/7126709059612314886",
+			"name": "Anne Frank Huis",
+			"createdAt": "2026-01-05T15:44:05.853Z",
+			"map": "https://maps.app.goo.gl/dJekq6QuagkzmxHL8",
+			"price": "€16"
+		},
+		"ieffW": {
+			"media": "https://www.tiktok.com/@mikaserur/video/7151537503013457157",
+			"region": "",
+			"name": "Van Gogh Museum",
+			"map": "https://maps.app.goo.gl/Qpirm3x3v2Zb3StK7",
+			"price": " €24",
+			"createdAt": "2026-01-05T15:44:00.853Z",
+			"rating": "5",
+			"instagram": "",
+			"isNew": false,
+			"emoji": "🎨",
+			"website": "",
+			"description": {
+				"pt": "Museu que abriga o maior acervo de pinturas de Van Gogh do mundo, além de desenhos e cartas.",
+				"en": ""
+			}
+		},
+		"6ZhaU": {
+			"website": "https://www.airbnb.com.br/experiences/791554",
+			"emoji": "",
+			"isNew": true,
+			"instagram": "",
+			"rating": "5",
+			"description": {
+				"pt": "Participe de uma oficina exclusiva de comestíveis onde você aprenderá a fazer brownies e gomas deliciosas.",
+				"en": ""
+			},
+			"createdAt": "2026-02-04T01:42:03.484Z",
+			"price": "€50",
+			"map": "https://maps.app.goo.gl/enhWjyN37PdfwWJHA",
+			"region": "",
+			"media": "https://www.tiktok.com/@jesscoshott/video/7244136587708075282",
+			"name": "Make edibles in Amsterdam with Get Baked Amsterdam"
+		},
+		"oryC3": {
+			"emoji": "🏙️",
+			"website": "",
+			"instagram": "",
+			"rating": "5",
+			"isNew": false,
+			"description": {
+				"pt": "De Wallen é o centro da cidade medieval cruzado por canais e ruelas cheias de bares tradicionais. Cercada pelo bairro de prostituição com suas luzes de neon, a Oude Kerk é uma antiga igreja centenária que abriga eventos culturais. De maneira semelhante, a antiga bolsa de valores de tijolos vermelhos, Beurs van Berlage, agora apresenta exposições e concertos. O Museum Ons’ Lieve Heer Op Solder esconde uma ornamentada igreja católica no seu sótão do século 17.",
+				"en": ""
+			},
+			"region": "",
+			"media": "https://www.tiktok.com/@whereiswanda/video/7389286777590254880",
+			"name": "De Wallen",
+			"createdAt": "2026-01-05T15:43:55.853Z",
+			"price": "-",
+			"map": "https://maps.app.goo.gl/H8gf1yrJEHTb3U2x9"
+		},
+		"KApTi": {
+			"rating": "4",
+			"isNew": false,
+			"instagram": "",
+			"emoji": "🎢",
+			"website": "",
+			"description": {
+				"pt": "Elevador com show de luzes que leva a um terraço de 20 andares com restaurante/bar e um balanço na borda.",
+				"en": ""
+			},
+			"media": "https://www.tiktok.com/@alexojeda/video/7388961408462966059",
+			"region": "",
+			"name": "A’dam Lookout",
+			"price": "€16,50",
+			"map": "https://maps.app.goo.gl/6BJFmwY1DcFiuXrM9",
+			"createdAt": "2026-01-05T15:44:10.853Z"
+		},
+		"EQErj": {
+			"createdAt": "2026-01-05T15:43:58.853Z",
+			"map": "https://maps.app.goo.gl/MMFxxV9MDREG46eX6",
+			"price": "€25",
+			"region": "",
+			"media": "https://www.tiktok.com/@dreamstraveled/video/7429026170764528926",
+			"name": "Rijksmuseum",
+			"website": "",
+			"emoji": "🎨",
+			"rating": "4",
+			"instagram": "",
+			"isNew": false,
+			"description": {
+				"pt": "Edifício do século XIX que abriga obras de arte do Século de Ouro e uma vasta coleção de arte europeia.",
+				"en": ""
+			}
+		},
+		"xKq1J": {
+			"region": "",
+			"media": "https://www.tiktok.com/@urbanistariel/video/7143176196069559598",
+			"name": "Dam Square",
+			"createdAt": "2026-01-05T15:43:56.853Z",
+			"price": "-",
+			"map": "https://maps.app.goo.gl/CCf4bzHoiSc74Ypf9",
+			"emoji": "🏛️",
+			"website": "",
+			"instagram": "",
+			"rating": "2",
+			"isNew": false,
+			"description": {
+				"pt": "Praça pública central e famoso ponto de encontro desde o século 17, cercada pelo Palácio Real.",
+				"en": ""
+			}
+		},
+		"XQa4S": {
+			"createdAt": "2026-01-05T15:44:04.853Z",
+			"price": "-",
+			"map": "https://maps.app.goo.gl/xRQPFpqpMW7RcgWn8",
+			"name": "Jordaan",
+			"region": "",
+			"media": "https://www.tiktok.com/@whereiswanda/video/7368216530871487777",
+			"description": {
+				"pt": "As ruas e os canais estreitos do badalado bairro de Jordaan são ladeados por butiques independentes, bares aconchegantes e restaurantes modernos. As barraquinhas do mercado Noordermarkt oferecem joias, roupas, antiguidades e alimentos orgânicos. O antiquário Antiekcentrum Amsterdam vende cerâmicas e pinturas vintage, e as galerias menores da área têm como foco a arte contemporânea inovadora. Outras atrações são o Houseboat Museum e o Amsterdam Cheese Museum.",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "🏙️",
+			"instagram": "",
+			"rating": "5",
+			"isNew": false
+		},
+		"l61D1": {
+			"emoji": "🏳️‍🌈",
+			"website": "",
+			"rating": "5",
+			"instagram": "",
+			"isNew": false,
+			"description": {
+				"pt": "Rua famosa por ter muitos bares LGBT",
+				"en": ""
+			},
+			"createdAt": "2026-01-05T15:44:13.853Z",
+			"price": "-",
+			"map": "https://maps.app.goo.gl/DSEJoS1S4UKTdekr5",
+			"region": "",
+			"media": "https://www.tiktok.com/@jefporhobbie/video/7246564648399424773",
+			"name": "Reguliersdwarsstraat"
+		},
+		"qZ80o": {
+			"description": {
+				"pt": "Maior armazém da cidade, construído em 1889 no estilo gótico renascentista, com lojas e restaurantes.",
+				"en": ""
+			},
+			"emoji": "🚆",
+			"website": "",
+			"instagram": "",
+			"isNew": false,
+			"rating": "4",
+			"createdAt": "2026-01-05T15:44:06.853Z",
+			"map": "https://maps.app.goo.gl/GcWxpWhvrrnWhEUq7",
+			"price": "-",
+			"name": "Amsterdam Centraal",
+			"region": "",
+			"media": "https://www.tiktok.com/@whereiswanda/video/7477629651922242838"
+		},
+		"4mpmp": {
+			"price": "-",
+			"map": "https://maps.app.goo.gl/TzaoHcgAanrhiLh38",
+			"createdAt": "2026-01-05T15:44:09.853Z",
+			"media": "https://www.tiktok.com/@whereiswanda/video/7521754198048836896",
+			"region": "",
+			"name": "Amsterdam-Noord",
+			"isNew": false,
+			"instagram": "",
+			"rating": "5",
+			"website": "",
+			"emoji": "🏙️",
+			"description": {
+				"pt": "Região descolada em que é preciso atravessar de barco.",
+				"en": ""
+			}
+		},
+		"by3jU": {
+			"name": "Sex Museum",
+			"region": "",
+			"media": "",
+			"createdAt": "2026-01-05T15:43:57.853Z",
+			"price": "€10",
+			"map": "https://maps.app.goo.gl/Yng67hm7dZLT6Le9A",
+			"description": {
+				"pt": "",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "🍆",
+			"instagram": "",
+			"rating": "4",
+			"isNew": false
+		},
+		"m0jVo": {
+			"media": "https://www.tiktok.com/@santanamath/video/7277139290914557217",
+			"region": "",
+			"name": "Zaanse Schans",
+			"map": "https://maps.app.goo.gl/pZpiVL4UcycK3vEv6",
+			"price": "-",
+			"createdAt": "2026-01-05T15:44:01.853Z",
+			"rating": "4",
+			"instagram": "",
+			"isNew": false,
+			"website": "",
+			"emoji": "🏞️",
+			"description": {
+				"pt": "Cidade próxima a Amsterdam. Queijo e moinhos de vento.",
+				"en": ""
+			}
+		},
+		"TW7G6": {
+			"description": {
+				"pt": "Instalações grandes e imersivas que misturam tecnologia e criatividade com luz e som psicodélico.",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "🎨",
+			"rating": "2",
+			"isNew": false,
+			"instagram": "",
+			"name": "NXT Museum",
+			"region": "",
+			"media": "https://www.tiktok.com/@bodiek/video/7212302182475959558",
+			"createdAt": "2026-01-05T15:44:11.853Z",
+			"map": "https://maps.app.goo.gl/ZFpkvJQpTB1WnmHU9",
+			"price": "€19.50"
+		},
+		"APZoL": {
+			"createdAt": "2026-01-05T15:44:14.853Z",
+			"map": "https://maps.app.goo.gl/DAQmYsZVTD4mh69QA",
+			"price": "€18",
+			"name": "Fabrique des Lumières",
+			"region": "",
+			"media": "https://www.tiktok.com/@lifeofthetravelingpin/video/7567255276269718839",
+			"description": {
+				"pt": "",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "💡🎨",
+			"instagram": "",
+			"isNew": false,
+			"rating": "3"
+		},
+		"Y288u": {
+			"instagram": "",
+			"rating": "4",
+			"isNew": false,
+			"website": "",
+			"emoji": "🥐",
+			"description": {
+				"pt": "",
+				"en": ""
+			},
+			"map": "https://maps.app.goo.gl/TTZDJufYsmmq1YFo9",
+			"price": "-",
+			"createdAt": "2026-01-05T15:44:07.853Z",
+			"media": "https://www.tiktok.com/@mirandabrady_/video/7534292827019152661",
+			"region": "",
+			"name": "Albert Cuyp Market"
+		}
+	},
+	"sharing": {
+		"owner": "eySHdjIyK0MNAgiPU77xE0d1CTjp",
+		"active": true
+	},
+	"modules": {
+		"shopping": true,
+		"tourism": true,
+		"snacks": true,
+		"nightlife": true,
+		"restaurants": true,
+		"map": true
+	},
+	"myMaps": "https://www.google.com/maps/d/edit?mid=1gzl__JWQJxS695PTbvcw-jqS8Ah71HM&usp=sharing",
+	"restaurants": {
+		"qAaiA": {
+			"name": "Kikkie van de Prinsensluis",
+			"media": "https://www.tiktok.com/@wanderingelsewhere_/video/7525175246178127111",
+			"region": "",
+			"map": "https://maps.app.goo.gl/xQpSCz6f8bTPmg9u8",
+			"price": "$",
+			"createdAt": "2026-01-05T15:43:58.853Z",
+			"description": {
+				"en": "",
+				"pt": "Restaurante com vista para o canal. Famoso pelos hambúrgueres smash, mas com outras opções interessantes."
+			},
+			"rating": "3",
+			"isNew": false,
+			"instagram": "",
+			"website": "",
+			"emoji": "🍔"
+		},
+		"jl5Qh": {
+			"map": "https://maps.app.goo.gl/MfeEPeH7h7WWcbv99",
+			"price": "-",
+			"createdAt": "2026-01-05T15:43:55.853Z",
+			"media": "https://www.tiktok.com/@athaismota/video/7474052160012029189",
+			"region": "",
+			"name": "The Pantry",
+			"instagram": "",
+			"isNew": false,
+			"rating": "4",
+			"emoji": "🍲",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": "Comida holandesa"
+			}
+		},
+		"Ulvgo": {
+			"website": "",
+			"emoji": "🍽️",
+			"instagram": "",
+			"isNew": false,
+			"rating": "4",
+			"description": {
+				"en": "",
+				"pt": "Ambiente moderno com barracas de comida cosmopolita, desde hambúrguer e cachorro-quente até guiozas e tacos."
+			},
+			"region": "",
+			"media": "https://www.tiktok.com/@diaryofatorontogirl/video/7307627844115516678",
+			"name": "Foodhallen",
+			"createdAt": "2026-01-05T15:43:56.853Z",
+			"map": "https://maps.app.goo.gl/9nPxNSBU9tw1SFwt5",
+			"price": "-"
+		},
+		"jHs75": {
+			"description": {
+				"en": "",
+				"pt": "Restaurante muito bem ambientado, com vista de amsterdam noord"
+			},
+			"website": "",
+			"emoji": "🍕🧇",
+			"instagram": "",
+			"isNew": false,
+			"rating": "4",
+			"createdAt": "2026-01-05T15:43:57.853Z",
+			"price": "$$",
+			"map": "https://maps.app.goo.gl/fpJGvTvPCH2XAA5T6",
+			"name": "Deck",
+			"region": "",
+			"media": ""
+		},
+		"MGpql": {
+			"description": {
+				"pt": "Praça de alimentação em região comercial de Amsterdam",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "🍽️",
+			"instagram": "",
+			"rating": "3",
+			"isNew": false,
+			"createdAt": "2026-01-05T15:43:59.853Z",
+			"price": "default",
+			"map": "https://maps.app.goo.gl/pMEDxWH5Xbp7ayAr9",
+			"name": "Market 33",
+			"region": "",
+			"media": "https://www.tiktok.com/@jack.tom.ams/video/7561792899097087265"
+		}
+	},
+	"currency": "EUR",
+	"title": "Amsterdam",
+	"shopping": {
+		"fZxkf": {
+			"description": {
+				"en": "",
+				"pt": "Chocolate de altíssima qualidade."
+			},
+			"emoji": "🍫",
+			"website": "",
+			"isNew": false,
+			"instagram": "",
+			"rating": "4",
+			"createdAt": "2026-01-05T15:43:58.853Z",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/umsEtyrvhAnnGoudA",
+			"name": "Tony's Chocolonely Superstore",
+			"region": "",
+			"media": "https://www.tiktok.com/@roledevegano/video/7493920315953679671"
+		},
+		"BpdIk": {
+			"media": "https://www.tiktok.com/@rochellefitness/video/7548809286076484886",
+			"region": "",
+			"name": "Boerejongens Coffeeshop",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/Nz68KdK8YcRhuAPE8",
+			"createdAt": "2026-01-05T15:44:02.853Z",
+			"isNew": false,
+			"instagram": "",
+			"rating": "5",
+			"website": "",
+			"emoji": "🌿",
+			"description": {
+				"en": "",
+				"pt": "Local do viral red velvet batizado."
+			}
+		},
+		"8wBqD": {
+			"website": "",
+			"emoji": "👕",
+			"instagram": "",
+			"isNew": false,
+			"rating": "4",
+			"description": {
+				"pt": "Loja de roupas vintage",
+				"en": ""
+			},
+			"createdAt": "2026-01-05T15:43:59.853Z",
+			"price": "default",
+			"map": "https://maps.app.goo.gl/Rx7b5pwLQoKUMza86",
+			"region": "",
+			"media": "https://www.tiktok.com/@flossys_wonderland/video/7414497143710371104",
+			"name": "Figo Vintage"
+		},
+		"1fObq": {
+			"name": "TERPS Army",
+			"media": "",
+			"region": "",
+			"map": "https://maps.app.goo.gl/nkEccCAnuu7GQo947",
+			"price": "default",
+			"createdAt": "2026-01-05T15:44:04.853Z",
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"isNew": false,
+			"instagram": "",
+			"rating": "4",
+			"emoji": "🌿",
+			"website": ""
+		},
+		"1mbeC": {
+			"name": "Coffeeshop the Dolphins",
+			"media": "https://www.tiktok.com/@thedolphinsamsterdam/video/7561028480587058465",
+			"region": "",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/hnuwRTUonjgeGnjX9",
+			"createdAt": "2026-01-05T15:44:05.853Z",
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"instagram": "",
+			"isNew": false,
+			"rating": "5",
+			"website": "",
+			"emoji": "🌿"
+		},
+		"srSyF": {
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"instagram": "",
+			"isNew": false,
+			"rating": "5",
+			"emoji": "🌿",
+			"website": "",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/teES91Kf7pZz4X5w8",
+			"createdAt": "2026-01-05T15:43:56.853Z",
+			"name": "The Bulldog Palace",
+			"media": "",
+			"region": ""
+		},
+		"F0how": {
+			"media": "",
+			"region": "",
+			"name": "The Plug Coffeeshop",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/inmSwnXr8JV1MRH9A",
+			"createdAt": "2026-01-05T15:44:03.853Z",
+			"instagram": "",
+			"rating": "4",
+			"isNew": false,
+			"website": "",
+			"emoji": "🌿",
+			"description": {
+				"en": "",
+				"pt": "Space Pop recomendado"
+			}
+		},
+		"kRjq5": {
+			"createdAt": "2026-01-05T15:43:57.853Z",
+			"price": "$",
+			"map": "https://maps.app.goo.gl/8J5ShXYnHquTGm2i7",
+			"region": "",
+			"media": "",
+			"name": "Katsu Coffeeshop",
+			"emoji": "🌿",
+			"website": "",
+			"isNew": false,
+			"rating": "3",
+			"instagram": "",
+			"description": {
+				"en": "",
+				"pt": "Café aconchegante com arte local onde servem bebidas quentes e sucos, além de incluir jogos e TV com esportes."
+			}
+		},
+		"r6xDl": {
+			"description": {
+				"en": "",
+				"pt": "Supermercado"
+			},
+			"website": "",
+			"emoji": "🛒",
+			"isNew": false,
+			"rating": "5",
+			"instagram": "",
+			"name": "Albert Heijn",
+			"region": "",
+			"media": "https://www.tiktok.com/@julia.orige/video/7326196218860784901",
+			"createdAt": "2026-01-05T15:44:01.853Z",
+			"price": "default",
+			"map": "https://maps.app.goo.gl/wvHno2BeakncAh746"
+		},
+		"BGoXA": {
+			"rating": "3",
+			"instagram": "",
+			"isNew": false,
+			"emoji": "🧀",
+			"website": "https://amsterdamcheesecompany.com/",
+			"description": {
+				"pt": "",
+				"en": ""
+			},
+			"media": "",
+			"region": "",
+			"name": "Amsterdam Cheese Company",
+			"price": "-",
+			"map": "https://maps.app.goo.gl/p5pHZx4Gpk7e7Ye66",
+			"createdAt": "2026-01-05T15:43:55.853Z"
+		},
+		"bej0y": {
+			"map": "https://maps.app.goo.gl/16M3fJanBbNpHc7f9",
+			"price": "$",
+			"createdAt": "2026-01-05T15:44:00.853Z",
+			"media": "https://www.tiktok.com/@isaviagens12/video/7503926583095315718",
+			"region": "",
+			"name": "Henri Willig",
+			"isNew": false,
+			"rating": "3",
+			"instagram": "",
+			"emoji": "🧀",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": "Loja de queijos com degustação."
+			}
+		}
+	},
+	"version": {
+		"lastUpdated": "2026-01-23T00:34:47.438Z"
+	},
+	"nightlife": {
+		"0YKEq": {
+			"website": "",
+			"emoji": "🍺",
+			"rating": "4",
+			"instagram": "https://www.instagram.com/brouwerijtij/",
+			"isNew": false,
+			"description": {
+				"en": "",
+				"pt": "Cervejaria em estilo industrial perto de um moinho com cervejas orgânicas claras e escuras, e tours guiados."
+			},
+			"createdAt": "2026-01-05T15:43:55.853Z",
+			"map": "https://maps.app.goo.gl/94HUG9MbxfoNGoJFA",
+			"price": "$$",
+			"region": "",
+			"media": "https://www.tiktok.com/@aksopar/video/7171091344675441926",
+			"name": "Brouwerij 't IJ"
+		},
+		"lelcI": {
+			"description": {
+				"en": "",
+				"pt": "Bar LGBT"
+			},
+			"emoji": "🏳️‍🌈🪩",
+			"website": "",
+			"rating": "2",
+			"instagram": "",
+			"isNew": false,
+			"name": "Taboo Bar",
+			"region": "",
+			"media": "",
+			"createdAt": "2026-01-05T15:43:57.853Z",
+			"map": "https://maps.app.goo.gl/PUN6Jfr5EcAjUbYN8",
+			"price": "default"
+		},
+		"uzFPr": {
+			"description": {
+				"en": "",
+				"pt": ""
+			},
+			"emoji": "🏳️‍🌈🪩",
+			"website": "",
+			"rating": "4",
+			"isNew": false,
+			"instagram": "",
+			"createdAt": "2026-01-05T15:43:59.853Z",
+			"map": "https://maps.app.goo.gl/fSjYJiTEP34baDWB6",
+			"price": "default",
+			"name": "Club Church",
+			"region": "",
+			"media": ""
+		},
+		"qCw6V": {
+			"region": "",
+			"media": "",
+			"name": "PRIK",
+			"createdAt": "2026-01-05T15:44:01.853Z",
+			"map": "https://maps.app.goo.gl/q2Zoq2CBN9KVQ2bHA",
+			"price": "$",
+			"website": "",
+			"emoji": "🏳️‍🌈🍺",
+			"isNew": false,
+			"rating": "3",
+			"instagram": "",
+			"description": {
+				"en": "",
+				"pt": ""
+			}
+		},
+		"umHwy": {
+			"map": "https://maps.app.goo.gl/XP7ojrLmnwYFrV8TA",
+			"price": "$",
+			"createdAt": "2026-01-05T15:44:00.853Z",
+			"media": "",
+			"region": "",
+			"name": "The Queen's Head",
+			"rating": "3",
+			"instagram": "",
+			"isNew": false,
+			"emoji": "🏳️‍🌈🍺",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": ""
+			}
+		},
+		"ZILb5": {
+			"website": "",
+			"emoji": "🍹",
+			"isNew": false,
+			"rating": "4",
+			"instagram": "",
+			"description": {
+				"en": "",
+				"pt": "Restaurante casual no cais com terraço que serve frutos do mar, carnes e pratos veganos."
+			},
+			"createdAt": "2026-01-05T15:43:56.853Z",
+			"price": "$$",
+			"map": "https://maps.app.goo.gl/FkNABFmA9bmwm2Bz8",
+			"region": "",
+			"media": "https://www.tiktok.com/@hannekesboom/video/7502440420920528150",
+			"name": "Hannekes Boom"
+		},
+		"tD85m": {
+			"name": "Satellite Sportscafé",
+			"region": "",
+			"media": "https://www.tiktok.com/@luizasabaini/video/7569341460097568021",
+			"createdAt": "2026-01-05T15:44:02.853Z",
+			"map": "https://maps.app.goo.gl/tdyMEB3s7MBq2gbX6",
+			"price": "$$",
+			"description": {
+				"pt": "Restaurante descontraído ao lado do Bulldog que serve hambúrgueres, costelas, filés e chope, e tem TVs para a transmissão de jogos esportivos.",
+				"en": ""
+			},
+			"website": "",
+			"emoji": "🏈",
+			"isNew": false,
+			"rating": "3",
+			"instagram": ""
+		},
+		"dWZjc": {
+			"media": "",
+			"region": "",
+			"name": "Club NYX",
+			"price": "default",
+			"map": "https://maps.app.goo.gl/B9x41VqDy4D7m4ck9",
+			"createdAt": "2026-01-05T15:43:58.853Z",
+			"instagram": "",
+			"isNew": false,
+			"rating": "5",
+			"emoji": "🏳️‍🌈🪩",
+			"website": "",
+			"description": {
+				"en": "",
+				"pt": "Balada LGBT"
+			}
+		}
+	}
 }

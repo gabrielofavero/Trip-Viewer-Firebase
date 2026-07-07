@@ -11,5 +11,3 @@ import {
 } from '../../models/expense.model.js';
 
 export var GASTOS_CONVERTIDOS = {};
-
-

@@ -1,11 +1,10 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 export const migrate = functions.https.onRequest(async (req, res) => {
 	try {
 		const db = admin.firestore();
-		const usersRef = db.collection("usuarios");
+		const usersRef = db.collection('usuarios');
 		const usersSnapshot = await usersRef.get();
 
 		let batch = db.batch();
@@ -45,10 +44,10 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			await batch.commit();
 		}
 
-		res.status(200).send("Migration completed successfully.");
+		res.status(200).send('Migration completed successfully.');
 	} catch (error) {
-		console.error("Migration error:", error);
-		res.status(500).send("Migration failed.");
+		console.error('Migration error:', error);
+		res.status(500).send('Migration failed.');
 	}
 });
 
@@ -60,7 +59,7 @@ async function getTripMinimalData(ids: string[]) {
 
 	await Promise.all(
 		ids.map(async (id) => {
-			const doc = await db.collection("viagens").doc(id).get();
+			const doc = await db.collection('viagens').doc(id).get();
 			if (!doc.exists) return;
 			const d = doc.data();
 			result[id] = {
@@ -86,7 +85,7 @@ async function getDestinationMinimalData(ids: string[]) {
 
 	await Promise.all(
 		ids.map(async (id) => {
-			const doc = await db.collection("destinos").doc(id).get(); // ← adjust if needed
+			const doc = await db.collection('destinos').doc(id).get(); // ← adjust if needed
 			if (!doc.exists) return;
 			const d = doc.data();
 			result[id] = {
@@ -108,7 +107,7 @@ async function getListingMinimalData(ids: string[]) {
 
 	await Promise.all(
 		ids.map(async (id) => {
-			const doc = await db.collection("listagens").doc(id).get();
+			const doc = await db.collection('listagens').doc(id).get();
 			if (!doc.exists) return;
 			const d = doc.data();
 			result[id] = {

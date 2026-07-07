@@ -1,12 +1,12 @@
 import { getID, getJs, getLinkMediaButton } from '../../../utils/dom.js';
-import { getSystemWidth } from "./visibility.js";
+import { getSystemWidth } from './visibility.js';
 
 export var MEDIA_HYPERLINKS = {};
 const EMBED_TIMEOUT = 10000;
 
 // Loader
 export function loadEmbed(link, i) {
-	let result: any = "";
+	let result: any = '';
 
 	result = getEmbed(link);
 
@@ -27,7 +27,7 @@ export function loadMedia(id) {
 		}
 
 		initMediaWatchdogs();
-		if (MEDIA_HYPERLINKS[id].type === "instagram") {
+		if (MEDIA_HYPERLINKS[id].type === 'instagram') {
 			instgrm.Embeds.process();
 			adjustInstagramMedia();
 			initInstagramWatchdogs();
@@ -38,12 +38,12 @@ export function loadMedia(id) {
 export function unloadMedia(id) {
 	const div = getID(id);
 	if (div) {
-		div.innerHTML = "";
+		div.innerHTML = '';
 	}
 }
 
 export function unloadMedias(exclude) {
-	for (const j of getJs("content")) {
+	for (const j of getJs('content')) {
 		if (j !== exclude) {
 			unloadMedia(`media-${j}`);
 		}
@@ -53,22 +53,19 @@ export function unloadMedias(exclude) {
 // Support Functions
 
 function getEmbed(link) {
-	let type = "";
-	let content = "";
+	let type = '';
+	let content = '';
 
-	if (!link) return "";
+	if (!link) return '';
 
-	if (
-		(link.includes("youtu.be/") || link.includes("youtube.com")) &&
-		!link.includes("/shorts/")
-	) {
-		type = "youtube";
+	if ((link.includes('youtu.be/') || link.includes('youtube.com')) && !link.includes('/shorts/')) {
+		type = 'youtube';
 		content = getVideoEmbedYoutube(link);
-	} else if (link.includes("tiktok")) {
-		type = "tiktok";
+	} else if (link.includes('tiktok')) {
+		type = 'tiktok';
 		content = getMediaEmbedTikTok(link);
-	} else if (link.includes("instagram")) {
-		type = "instagram";
+	} else if (link.includes('instagram')) {
+		type = 'instagram';
 		content = getVideoEmbedInstagramReels(link);
 	}
 
@@ -78,31 +75,31 @@ function getEmbed(link) {
 			content: content,
 			button: getLinkMediaButton(link, type),
 		};
-	} else return "";
+	} else return '';
 }
 
 function getVideoEmbedYoutube(videoLink) {
-	let videoID = "";
-	if (videoLink && videoLink.includes("youtu.be/")) {
-		videoID = videoLink.split("youtu.be/")[1].split("&")[0];
-	} else if (videoLink && videoLink.includes("youtube.com")) {
-		videoID = videoLink.split("v=")[1].split("&")[0];
+	let videoID = '';
+	if (videoLink && videoLink.includes('youtu.be/')) {
+		videoID = videoLink.split('youtu.be/')[1].split('&')[0];
+	} else if (videoLink && videoLink.includes('youtube.com')) {
+		videoID = videoLink.split('v=')[1].split('&')[0];
 	}
 	if (videoID) {
 		let url = `https://www.youtube.com/embed/${videoID}`;
-		return getIframe(url, "youtube-embed", "youtube");
-	} else return "";
+		return getIframe(url, 'youtube-embed', 'youtube');
+	} else return '';
 }
 
 function getSpotifyEmbed(link) {
-	let typeAndID = link.split("spotify.com/")[1].split("?")[0];
+	let typeAndID = link.split('spotify.com/')[1].split('?')[0];
 	return `<iframe class="spotify" style="border-radius:12px" src="https://open.spotify.com/embed/${typeAndID}?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
 }
 
-function getIframe(url, iframeClass = "", provider = "generic") {
-	if (!url) return "";
+function getIframe(url, iframeClass = '', provider = 'generic') {
+	if (!url) return '';
 
-	const classItem = iframeClass ? `class="${iframeClass}"` : "";
+	const classItem = iframeClass ? `class="${iframeClass}"` : '';
 
 	return `
     <div class="media-embed"
@@ -214,53 +211,47 @@ function getInstagramBlockquote(id) {
 }
 
 function getMediaEmbedTikTok(link, version = 2) {
-	const type = link.includes("/video/")
-		? "video"
-		: link.includes("/photo/")
-			? "photo"
-			: "";
+	const type = link.includes('/video/') ? 'video' : link.includes('/photo/') ? 'photo' : '';
 	const linkError = `Cannot get TikTok video ID from '${link}'`;
 
 	if (!type) {
 		console.error(linkError);
-		return "";
+		return '';
 	}
 
-	let id = "";
-	if (!link.includes("vm.") && !link.includes("vt.")) {
+	let id = '';
+	if (!link.includes('vm.') && !link.includes('vt.')) {
 		try {
-			id = link.split(`/${type}/`)[1].split("?")[0];
+			id = link.split(`/${type}/`)[1].split('?')[0];
 			return getIframe(
 				`https://www.tiktok.com/embed/v${version}/${id}`,
 				`tiktok-embed-v${version} ${type}`,
-				"tiktok",
+				'tiktok',
 			);
 		} catch (e) {
 			console.error(linkError);
 		}
 	} else {
-		console.error(
-			`Short TikTok videos are not supported. Please fix the link for '${link}'`,
-		);
+		console.error(`Short TikTok videos are not supported. Please fix the link for '${link}'`);
 	}
 
-	return "";
+	return '';
 }
 
 function getVideoEmbedInstagramReels(link) {
-	const treatedLink = link.split("?")[0].replace("https://", "");
-	const split = treatedLink.split("/");
+	const treatedLink = link.split('?')[0].replace('https://', '');
+	const split = treatedLink.split('/');
 
-	let videoID = "";
+	let videoID = '';
 
-	if (split[2] && ["reel", "reels", "p"].includes(split[1])) {
+	if (split[2] && ['reel', 'reels', 'p'].includes(split[1])) {
 		videoID = split[2];
 		return getInstagramBlockquote(videoID);
 	} else {
 		console.error(`Cannot get Instagram Reels video ID from '${link}'`);
 	}
 
-	return "";
+	return '';
 }
 
 export function adjustMediaEmbeds() {
@@ -269,7 +260,7 @@ export function adjustMediaEmbeds() {
 		return;
 	}
 
-	for (const container of document.querySelectorAll(".media-container")) {
+	for (const container of document.querySelectorAll('.media-container')) {
 		const id = container.id;
 		setMediaButton(id);
 	}
@@ -286,8 +277,8 @@ export function adjustInstagramMedia() {
 	const maxWidth = 550;
 	const systemWidth = getSystemWidth();
 
-	let marginLeft = "";
-	let clipPathRight = "";
+	let marginLeft = '';
+	let clipPathRight = '';
 
 	if (systemWidth >= maxWidth) {
 		// Applies maximum margin and clip-path
@@ -304,7 +295,7 @@ export function adjustInstagramMedia() {
 		clipPathRight = `${minClipPathRight + percentage * (maxClipPathRight - minClipPathRight)}px`;
 	}
 
-	const instagramEmbeds = document.querySelectorAll(".instagram-embed");
+	const instagramEmbeds = document.querySelectorAll('.instagram-embed');
 	for (const embed of instagramEmbeds) {
 		(embed as HTMLElement).style.marginLeft = marginLeft;
 		(embed as HTMLElement).style.clipPath = `inset(57px ${clipPathRight} 166px 71px)`;
@@ -314,20 +305,20 @@ export function adjustInstagramMedia() {
 // Watchdogs
 
 function initMediaWatchdogs(timeout = EMBED_TIMEOUT) {
-	const wrappers = document.querySelectorAll<HTMLElement>(".media-embed");
+	const wrappers = document.querySelectorAll<HTMLElement>('.media-embed');
 
 	wrappers.forEach((wrapper) => {
 		const id = wrapper.parentElement!.id;
-		if (wrapper.dataset.embedInit === "1") return;
-		wrapper.dataset.embedInit = "1";
+		if (wrapper.dataset.embedInit === '1') return;
+		wrapper.dataset.embedInit = '1';
 
 		const url = wrapper.dataset.embedUrl;
 		const provider = wrapper.dataset.embedProvider;
-		const iframe = wrapper.querySelector("iframe");
+		const iframe = wrapper.querySelector('iframe');
 
 		let loaded = false;
 
-		iframe.addEventListener("load", () => {
+		iframe.addEventListener('load', () => {
 			loaded = true;
 
 			const zero = iframe.offsetHeight === 0 || iframe.clientHeight === 0;
@@ -350,29 +341,29 @@ function initMediaWatchdogs(timeout = EMBED_TIMEOUT) {
 }
 
 function initInstagramWatchdogs(timeout = EMBED_TIMEOUT) {
-	const blocks = document.querySelectorAll<HTMLElement>(".instagram-embed");
+	const blocks = document.querySelectorAll<HTMLElement>('.instagram-embed');
 
 	blocks.forEach((block) => {
 		const id = block.parentElement!.id;
-		if (block.dataset.igInit === "1") return;
-		block.dataset.igInit = "1";
+		if (block.dataset.igInit === '1') return;
+		block.dataset.igInit = '1';
 
 		setTimeout(() => {
-			const iframe = block.querySelector("iframe");
+			const iframe = block.querySelector('iframe');
 
 			if (!iframe) {
-				console.warn("[instagram] Embed link blocked (no iframe)");
-				watchdogFallback(id, block.dataset.embedUrl, "instagram");
+				console.warn('[instagram] Embed link blocked (no iframe)');
+				watchdogFallback(id, block.dataset.embedUrl, 'instagram');
 				return;
 			}
 
 			const zero = iframe.offsetHeight === 0 || iframe.clientHeight === 0;
 
 			if (zero) {
-				console.warn("[instagram] Embed link blocked (zero height)");
-				watchdogFallback(id, block.dataset.embedUrl, "instagram");
+				console.warn('[instagram] Embed link blocked (zero height)');
+				watchdogFallback(id, block.dataset.embedUrl, 'instagram');
 			} else {
-				console.log("[instagram] Embed link loaded successfully");
+				console.log('[instagram] Embed link loaded successfully');
 			}
 		}, timeout);
 	});

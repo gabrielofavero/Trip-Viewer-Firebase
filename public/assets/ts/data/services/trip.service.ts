@@ -19,10 +19,10 @@ import {
 	addToUserArray,
 	createBatchOps,
 	COLLECTION,
-} from "../firebase/database.js";
+} from '../firebase/database.js';
 
 // Side-effect import: ensures storage functions are attached to window
-import "../firebase/storage.js";
+import '../firebase/storage.js';
 
 // Re-export raw database functions that trip pages may still use during transition
 export {
@@ -127,5 +127,3 @@ export async function getTripTransportation(tripId) {
 export async function getTripItinerary(tripId) {
 	return await getItinerary(tripId);
 }
-
-

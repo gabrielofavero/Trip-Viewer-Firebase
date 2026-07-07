@@ -1,21 +1,21 @@
 import { getID } from '../../../../utils/dom.js';
-import {CONTENT, getDataSet, ACTIVE_CATEGORY} from "../../destination.js";
-import { closeAddedDestination } from "../../edit-destination.js";
-import { PLANNED_DESTINATION } from "../trip.js";
-import { filter } from "./filter.js";
-import { loadFilterOptions } from "./filter.js";
-import { loadSortOptions } from "./sort.js";
-import { sort } from "./sort.js";
-import { closeDrawer } from "./support/drawer.js";
-import { isDrawerOpen } from "./support/drawer.js";
-import { openDrawer } from "./support/drawer.js";
-import { getPriceBuckets } from "./support/price-bucket.js";
-import { getPrices } from "./support/price-bucket.js";
+import { CONTENT, getDataSet, ACTIVE_CATEGORY } from '../../destination.js';
+import { closeAddedDestination } from '../../edit-destination.js';
+import { PLANNED_DESTINATION } from '../trip.js';
+import { filter } from './filter.js';
+import { loadFilterOptions } from './filter.js';
+import { loadSortOptions } from './sort.js';
+import { sort } from './sort.js';
+import { closeDrawer } from './support/drawer.js';
+import { isDrawerOpen } from './support/drawer.js';
+import { openDrawer } from './support/drawer.js';
+import { getPriceBuckets } from './support/price-bucket.js';
+import { getPrices } from './support/price-bucket.js';
 
 export const FILTER_SORT_KEYS_ORDER = {
-	planned: ["planned", "not_planned"],
-	prices: ["-", "$", "$$", "$$$", "$$$$", "default"],
-	scores: ["5", "4", "3", "2", "1", "default"],
+	planned: ['planned', 'not_planned'],
+	prices: ['-', '$', '$$', '$$$', '$$$$', 'default'],
+	scores: ['5', '4', '3', '2', '1', 'default'],
 };
 
 export const FILTER_SORT_DATA = {};
@@ -32,8 +32,8 @@ export function loadSortAndFilter(force = false) {
 function loadSortAndFilterVisibility() {
 	const onlyOne = CONTENT.length === 1;
 
-	getID("sort").style.display = onlyOne ? "none" : "";
-	getID("filter").style.display = onlyOne || noFilters() ? "none" : "";
+	getID('sort').style.display = onlyOne ? 'none' : '';
+	getID('filter').style.display = onlyOne || noFilters() ? 'none' : '';
 
 	function noFilters() {
 		return !(
@@ -52,17 +52,17 @@ export function loadFilterSortingData(titles) {
 	for (const title in titles) {
 		let data;
 		switch (title) {
-			case "region":
-				data = getDataSet("region");
-				data.delete("");
+			case 'region':
+				data = getDataSet('region');
+				data.delete('');
 				break;
-			case "planned":
-				data = getDataSet("planned");
+			case 'planned':
+				data = getDataSet('planned');
 				break;
-			case "scores":
-				data = getDataSet("rating");
+			case 'scores':
+				data = getDataSet('rating');
 				break;
-			case "prices":
+			case 'prices':
 				data = getPriceBuckets();
 		}
 		FILTER_SORT_DATA[ACTIVE_CATEGORY][title] = data || new Set();
@@ -71,31 +71,26 @@ export function loadFilterSortingData(titles) {
 
 // Drawer
 function deactivateFilterSortContainerButtons() {
-	const container = getID("filter-sort-container");
+	const container = getID('filter-sort-container');
 	if (!container) return;
 
 	container
-		.querySelectorAll(".filter-sort.active")
-		.forEach((btn) => btn.classList.remove("active"));
+		.querySelectorAll('.filter-sort.active')
+		.forEach((btn) => btn.classList.remove('active'));
 }
 
 function activateFilterSortContainerButton(buttonEl) {
 	if (!buttonEl) return;
 
 	deactivateFilterSortContainerButtons();
-	buttonEl.classList.add("active");
+	buttonEl.classList.add('active');
 }
 
-export function openFilterSortDrawer({
-	triggerId,
-	getInnerHTML,
-	clickAction,
-	loadAction,
-}) {
+export function openFilterSortDrawer({ triggerId, getInnerHTML, clickAction, loadAction }) {
 	const trigger = getID(triggerId);
 	const title = trigger.innerText;
 
-	if (isDrawerOpen() && title === getID("drawerTitle").innerText) {
+	if (isDrawerOpen() && title === getID('drawerTitle').innerText) {
 		closeDrawer();
 		return;
 	}
@@ -113,8 +108,8 @@ export function openFilterSortDrawer({
 
 // Helpers
 export function shouldDisplayRegions() {
-	const REGIONS = getDataSet("region");
-	REGIONS.delete("");
+	const REGIONS = getDataSet('region');
+	REGIONS.delete('');
 	return REGIONS.size > 1;
 }
 
@@ -127,7 +122,7 @@ export function shouldDisplayPlanned() {
 }
 
 export function shouldDisplayScores() {
-	const ratings = getDataSet("rating");
+	const ratings = getDataSet('rating');
 	return ratings.size > 1;
 }
 

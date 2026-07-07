@@ -3,19 +3,37 @@ import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import { getID, getLastUnorderedJ, getRandomID, normalizeTikTokLink } from '../../utils/dom.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { getLanguagePackName, LANGUAGES, translate } from '../../i18n/translation.js';
-import { removeEl, validateInstagramLink, validateLink, validateMapLink, validateMediaLink } from '../../ui/fields.js';
+import {
+	removeEl,
+	validateInstagramLink,
+	validateLink,
+	validateMapLink,
+	validateMediaLink,
+} from '../../ui/fields.js';
 import { closeMessage, displayMessage, displayPrompt } from '../../utils/messages.js';
 import { update } from '../../data/firebase/database.js';
 import { getUID } from '../../data/firebase/auth.js';
-import {getRatingClass, getPlanned} from "./categories.js";
-import { getRatingIcon } from "./categories.js";
-import { FIRESTORE_DESTINATIONS_DATA } from "../../data/state.js";
-import { ACTIVE_CATEGORY, getDestinationID, getItem, getItemFromJ, processAccordion, refreshDestination } from "./destination.js";
-import { getDestinationsAccordionBodyHTML } from "./support/content.js";
-import { getDestinationsHTML } from "./support/content.js";
-import { getEditHTML } from "./support/content.js";
-import { populatePlannedDestinationEditField, refreshTripData, resetActivePlannedDestination, setPlannedDestination } from "./support/trip.js";
-import { openDestinationsAccordion } from "./support/visibility.js";
+import { getRatingClass, getPlanned } from './categories.js';
+import { getRatingIcon } from './categories.js';
+import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
+import {
+	ACTIVE_CATEGORY,
+	getDestinationID,
+	getItem,
+	getItemFromJ,
+	processAccordion,
+	refreshDestination,
+} from './destination.js';
+import { getDestinationsAccordionBodyHTML } from './support/content.js';
+import { getDestinationsHTML } from './support/content.js';
+import { getEditHTML } from './support/content.js';
+import {
+	populatePlannedDestinationEditField,
+	refreshTripData,
+	resetActivePlannedDestination,
+	setPlannedDestination,
+} from './support/trip.js';
+import { openDestinationsAccordion } from './support/visibility.js';
 
 let ADDED_J;
 
@@ -42,16 +60,16 @@ export async function edit(j: number): Promise<void> {
 	setEditListeners(j, item);
 
 	function populateEditFields(j, item) {
-		getID(`edit-name-${j}`).value = item.name || "";
-		getID(`edit-emoji-${j}`).value = item.emoji || "";
+		getID(`edit-name-${j}`).value = item.name || '';
+		getID(`edit-emoji-${j}`).value = item.emoji || '';
 
 		populatePlannedDestinationEditField(id, j);
 
-		getID(`edit-map-${j}`).value = item.map || "";
-		getID(`edit-instagram-${j}`).value = item.instagram || "";
-		getID(`edit-website-${j}`).value = item.website || "";
+		getID(`edit-map-${j}`).value = item.map || '';
+		getID(`edit-instagram-${j}`).value = item.instagram || '';
+		getID(`edit-website-${j}`).value = item.website || '';
 
-		getID(`edit-media-${j}`).value = item.media || "";
+		getID(`edit-media-${j}`).value = item.media || '';
 
 		populateScoresField(item.rating, j);
 		populateRegionField(item.region, j);
@@ -59,13 +77,13 @@ export async function edit(j: number): Promise<void> {
 		populateDescriptionFields(item.description || {}, j);
 
 		function populateScoresField(rating, j) {
-			getID(`edit-rating-${j}`).value = rating === "?" ? "default" : rating || "";
+			getID(`edit-rating-${j}`).value = rating === '?' ? 'default' : rating || '';
 			editScoreLoadAction(rating, j);
 		}
 
 		function populateRegionField(region, j) {
 			const regionSelect = getID(`edit-region-select-${j}`);
-			regionSelect.value = region || "";
+			regionSelect.value = region || '';
 		}
 
 		function populateValueField(price, j) {
@@ -74,44 +92,45 @@ export async function edit(j: number): Promise<void> {
 			if (values.includes(price)) {
 				valueSelect.value = price;
 			} else {
-				valueSelect.value = "custom";
-				editValueLoadAction("custom", j);
-				getID(`edit-price-input-${j}`).value = price || "";
+				valueSelect.value = 'custom';
+				editValueLoadAction('custom', j);
+				getID(`edit-price-input-${j}`).value = price || '';
 			}
 		}
 
 		function populateDescriptionFields(description, j) {
-			getID(`edit-description-en-${j}`).value = description.en || "";
-			getID(`edit-description-pt-${j}`).value = description.pt || "";
+			getID(`edit-description-en-${j}`).value = description.en || '';
+			getID(`edit-description-pt-${j}`).value = description.pt || '';
 			applyDescriptionLanguage(j);
 		}
 	}
 }
 
 export async function add(): Promise<void> {
-	(document.querySelector(".add-container") as HTMLElement).style.display = "none";
+	(document.querySelector('.add-container') as HTMLElement).style.display = 'none';
 	const canUserEdit = await canEdit();
 	if (!canUserEdit) {
 		editForbidden();
 		return;
 	}
 
-	const accordionItems = Array.from(
-		document.querySelectorAll(".accordion-item"),
-	);
-	const pool = accordionItems
-		.map((el) => el.getAttribute("data-id"))
-		.filter((id) => id !== null);
+	const accordionItems = Array.from(document.querySelectorAll('.accordion-item'));
+	const pool = accordionItems.map((el) => el.getAttribute('data-id')).filter((id) => id !== null);
 
 	const id = getRandomID({ pool });
-	const j = getLastUnorderedJ("content") + 1;
+	const j = getLastUnorderedJ('content') + 1;
 	const item = {
-		name: translate("destination.new"),
-		rating: "default",
+		name: translate('destination.new'),
+		rating: 'default',
 		isNew: true,
 	};
-	const closeAction = "_closeAddedDestination";
-	getID("content").innerHTML += getDestinationsHTML({ j, id, item, closeAction });
+	const closeAction = '_closeAddedDestination';
+	getID('content').innerHTML += getDestinationsHTML({
+		j,
+		id,
+		item,
+		closeAction,
+	});
 
 	const accordionBody = getID(`accordion-body-${j}`);
 	if (!accordionBody) {
@@ -121,7 +140,7 @@ export async function add(): Promise<void> {
 
 	ADDED_J = j;
 	accordionBody.innerHTML = getEditHTML(ADDED_J);
-	getID(`edit-delete-${ADDED_J}`).style.visibility = "hidden";
+	getID(`edit-delete-${ADDED_J}`).style.visibility = 'hidden';
 
 	openDestinationsAccordion(ADDED_J);
 	applyDescriptionLanguage(ADDED_J);
@@ -131,14 +150,14 @@ export async function add(): Promise<void> {
 // Visibility
 export async function adjustEditVisibility(j?: number): Promise<void> {
 	const canUserEdit = await canEdit();
-	const display = canUserEdit ? "" : "none";
-	(document.querySelector(".add-container") as HTMLElement).style.display = display;
+	const display = canUserEdit ? '' : 'none';
+	(document.querySelector('.add-container') as HTMLElement).style.display = display;
 	if (j) {
 		getID(`edit-container-${j}`).style.display = display;
 		return;
 	}
 
-	for (const container of document.querySelectorAll<HTMLElement>(".edit-container")) {
+	for (const container of document.querySelectorAll<HTMLElement>('.edit-container')) {
 		container.style.display = display;
 	}
 }
@@ -173,7 +192,7 @@ function setFieldListeners(j: number): void {
 		editDescriptionLoadAction((e.target as HTMLSelectElement).value, j);
 	};
 
-	document.querySelectorAll<HTMLElement>(".description-textarea").forEach((textarea) => {
+	document.querySelectorAll<HTMLElement>('.description-textarea').forEach((textarea) => {
 		textarea.onchange = (e: Event) => {
 			(e.target as HTMLInputElement).value = (e.target as HTMLInputElement).value.trim();
 		};
@@ -222,11 +241,11 @@ function editScoreLoadAction(value, j) {
 function editRegionLoadAction(value, j) {
 	const select = getID(`edit-region-select-${j}`);
 	const input = getID(`edit-region-input-${j}`);
-	if (value == "custom") {
-		input.style.display = "";
-		select.value = "custom";
+	if (value == 'custom') {
+		input.style.display = '';
+		select.value = 'custom';
 	} else {
-		input.style.display = "none";
+		input.style.display = 'none';
 	}
 }
 
@@ -234,17 +253,17 @@ function editValueLoadAction(value, j) {
 	const select = getID(`edit-price-select-${j}`);
 	const input = getID(`edit-price-input-${j}`);
 
-	if (value == "custom") {
-		input.style.display = "";
-		select.value = "custom";
+	if (value == 'custom') {
+		input.style.display = '';
+		select.value = 'custom';
 	} else {
-		input.style.display = "none";
+		input.style.display = 'none';
 	}
 }
 
 function editDescriptionLoadAction(value, j) {
 	for (const lang of LANGUAGES) {
-		const display = lang == value ? "" : "none";
+		const display = lang == value ? '' : 'none';
 		const id = `edit-description-${lang}-${j}`;
 		getID(id).style.display = display;
 	}
@@ -274,21 +293,18 @@ async function saveEdit(j, isNew = false) {
 		name: getID(`edit-name-${j}`).value,
 		rating: getID(`edit-rating-${j}`).value,
 		isNew: isNew ? true : originalItem.isNew,
-		region: getValue("region", j),
-		price: getValue("price", j),
+		region: getValue('region', j),
+		price: getValue('price', j),
 		website: getID(`edit-website-${j}`).value,
 	};
 
 	if (!item.name) {
 		stopLoadingScreen();
-		displayMessage(
-			translate("destination.edit"),
-			translate("destination.errors.missing_title"),
-		);
+		displayMessage(translate('destination.edit'), translate('destination.errors.missing_title'));
 		return;
 	}
 
-	if (item.media && item.media.includes("tiktok")) {
+	if (item.media && item.media.includes('tiktok')) {
 		item.media = await normalizeTikTokLink(item.media);
 	}
 
@@ -308,9 +324,7 @@ async function saveEdit(j, isNew = false) {
 
 	function getValue(type, j) {
 		const selectValue = getID(`edit-${type}-select-${j}`).value;
-		return selectValue != "custom"
-			? selectValue
-			: getID(`edit-${type}-input-${j}`).value;
+		return selectValue != 'custom' ? selectValue : getID(`edit-${type}-input-${j}`).value;
 	}
 }
 
@@ -319,8 +333,8 @@ function promptDeleteEdit(j) {
 	const id = getDestinationID(j);
 	const name = getItem(id).name;
 
-	const title = translate("destination.delete.title");
-	const content = translate("destination.delete.message", { name });
+	const title = translate('destination.delete.title');
+	const content = translate('destination.delete.message', { name });
 	const yesAction = `deleteEdit('${id}')`;
 
 	displayPrompt({ title, content, yesAction });
@@ -345,12 +359,12 @@ function abortEdit(title, message) {
 	resetActivePlannedDestination();
 }
 
-function editError(message = "messages.errors.unknown") {
-	abortEdit("messages.errors.load_title", message);
+function editError(message = 'messages.errors.unknown') {
+	abortEdit('messages.errors.load_title', message);
 }
 
-function editForbidden(message = "messages.access_denied.message.edit") {
-	abortEdit("messages.access_denied.title", message);
+function editForbidden(message = 'messages.access_denied.message.edit') {
+	abortEdit('messages.access_denied.title', message);
 }
 
 export function closeAddedDestination(index?) {
@@ -388,7 +402,7 @@ export function restoreIfEditing(j) {
 // Checkers
 function isEditing(j) {
 	const accordionBody = getID(`accordion-body-${j}`);
-	return accordionBody.querySelector(".edit-title-container") != undefined;
+	return accordionBody.querySelector('.edit-title-container') != undefined;
 }
 
 async function canEdit() {

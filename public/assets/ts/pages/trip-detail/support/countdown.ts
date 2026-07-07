@@ -1,7 +1,7 @@
 import { getState } from '../../../data/state.js';
 import { convertFromDateObject } from '../../../utils/dates.js';
 import { getID } from '../../../utils/dom.js';
-import { translate } from "../../../i18n/translation.js";
+import { translate } from '../../../i18n/translation.js';
 
 // ======= Countdown JS =======
 
@@ -16,7 +16,7 @@ COUNTDOWN = setInterval(function () {
 
 		if (now > start || distance < 0) {
 			clearInterval(COUNTDOWN);
-			getID("countdown").innerHTML = "";
+			getID('countdown').innerHTML = '';
 			hideCountdown();
 		} else {
 			var years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
@@ -36,32 +36,31 @@ COUNTDOWN = setInterval(function () {
 
 			var seconds = Math.floor(distance / 1000);
 
-			var countdownText = "";
+			var countdownText = '';
 
 			if (years > 0) {
-				countdownText += years + `${translate("datetime.countdown.years")} `;
+				countdownText += years + `${translate('datetime.countdown.years')} `;
 			}
 
 			if (months > 0) {
-				countdownText += months + `${translate("datetime.countdown.months")} `;
+				countdownText += months + `${translate('datetime.countdown.months')} `;
 			}
 
 			if (days > 0) {
-				countdownText += days + `${translate("datetime.countdown.days")} `;
+				countdownText += days + `${translate('datetime.countdown.days')} `;
 			}
 
 			if (hours > 0) {
-				countdownText += hours + `${translate("datetime.countdown.hours")} `;
+				countdownText += hours + `${translate('datetime.countdown.hours')} `;
 			}
 
 			if (minutes > 0) {
-				countdownText +=
-					minutes + `${translate("datetime.countdown.minutes")} `;
+				countdownText += minutes + `${translate('datetime.countdown.minutes')} `;
 			}
 
-			countdownText += seconds + `${translate("datetime.countdown.seconds")}`;
+			countdownText += seconds + `${translate('datetime.countdown.seconds')}`;
 
-			getID("countdown").innerHTML = countdownText;
+			getID('countdown').innerHTML = countdownText;
 
 			if (!isCountdownVisible()) {
 				showCountdown();
@@ -72,14 +71,14 @@ COUNTDOWN = setInterval(function () {
 
 // ======= SETTERS =======
 function hideCountdown() {
-	getID("countdown").style.display = "none";
+	getID('countdown').style.display = 'none';
 }
 
 function showCountdown() {
-	getID("countdown").style.display = "block";
+	getID('countdown').style.display = 'block';
 }
 
 // ======= CHECKERS =======
 function isCountdownVisible() {
-	return getID("countdown").style.display == "block";
+	return getID('countdown').style.display == 'block';
 }

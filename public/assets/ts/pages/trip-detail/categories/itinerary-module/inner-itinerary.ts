@@ -1,11 +1,20 @@
 import { getItinerary, getCurrencies } from '../../../../app/config.js';
 import { getState, TRAVELERS, DESTINATIONS } from '../../../../data/state.js';
 import { convertFromDateObject, getDateTitle } from '../../../../utils/dates.js';
-import { cloneObject, getAccommodationsHTML, getAndDestinationTitle, getDestinationTitle, getDestinationsBoxHTML, getID, getInnerItineraryTitleHTML, getLinkMediaButton } from '../../../../utils/dom.js';
+import {
+	cloneObject,
+	getAccommodationsHTML,
+	getAndDestinationTitle,
+	getDestinationTitle,
+	getDestinationsBoxHTML,
+	getID,
+	getInnerItineraryTitleHTML,
+	getLinkMediaButton,
+} from '../../../../utils/dom.js';
 import { displayFullMessage, MESSAGE_PROPERTIES } from '../../../../utils/messages.js';
 import { translate } from '../../../../i18n/translation.js';
-import { loadImageLightbox } from "../../support/embed.js";
-import { getFlightBoxHTML } from "../transportation-module.js";
+import { loadImageLightbox } from '../../support/embed.js';
+import { getFlightBoxHTML } from '../transportation-module.js';
 
 export var SCHEDULE_OPEN = false;
 export var CURRENT_SCHEDULE_DATE = {
@@ -18,14 +27,13 @@ var CURRENT_INNER_ITINERARY = [];
 
 function loadModalContentCalendar() {
 	let scheduleTitle = CURRENT_SCHEDULE.title;
-	const dateStr = getDateTitle(
-		convertFromDateObject(CURRENT_SCHEDULE.date),
-		"weekday_day_month",
-	);
+	const dateStr = getDateTitle(convertFromDateObject(CURRENT_SCHEDULE.date), 'weekday_day_month');
 
-	(getID("itinerary-title")!.querySelector(".title") as HTMLElement).innerText =
-		getScheduleTitle(scheduleTitle, CURRENT_SCHEDULE.destinationIds);
-	getID("itinerary-date").innerText = dateStr;
+	(getID('itinerary-title')!.querySelector('.title') as HTMLElement).innerText = getScheduleTitle(
+		scheduleTitle,
+		CURRENT_SCHEDULE.destinationIds,
+	);
+	getID('itinerary-date').innerText = dateStr;
 
 	CURRENT_INNER_ITINERARY = [];
 
@@ -34,8 +42,7 @@ function loadModalContentCalendar() {
 	// Helpers
 	function loadInnerItineraryHTML() {
 		const show = shouldShowCheckbox();
-		getID("inner-itinerary-travelers-checkboxes").style.display =
-			show ? "" : "none";
+		getID('inner-itinerary-travelers-checkboxes').style.display = show ? '' : 'none';
 
 		if (show) {
 			loadItineraryTravelersCheckboxes();
@@ -44,21 +51,12 @@ function loadModalContentCalendar() {
 		}
 
 		setModalCalendarInnerHTML(
-			getID("itinerary-items-early-morning"),
+			getID('itinerary-items-early-morning'),
 			CURRENT_SCHEDULE.earlyMorning,
 		);
-		setModalCalendarInnerHTML(
-			getID("itinerary-items-morning"),
-			CURRENT_SCHEDULE.morning,
-		);
-		setModalCalendarInnerHTML(
-			getID("itinerary-items-afternoon"),
-			CURRENT_SCHEDULE.afternoon,
-		);
-		setModalCalendarInnerHTML(
-			getID("itinerary-items-night"),
-			CURRENT_SCHEDULE.night,
-		);
+		setModalCalendarInnerHTML(getID('itinerary-items-morning'), CURRENT_SCHEDULE.morning);
+		setModalCalendarInnerHTML(getID('itinerary-items-afternoon'), CURRENT_SCHEDULE.afternoon);
+		setModalCalendarInnerHTML(getID('itinerary-items-night'), CURRENT_SCHEDULE.night);
 
 		adaptModalCalendarInnerHTML();
 	}
@@ -78,7 +76,7 @@ function loadModalContentCalendar() {
 					.map((p) => p.id)
 					.sort();
 
-				const key = present.join("|");
+				const key = present.join('|');
 
 				combinations.add(key);
 			}
@@ -97,18 +95,18 @@ function openModalCalendar(schedule, instant = false) {
 	loadModalContentCalendar();
 
 	if (instant) {
-		const box = getID("itinerary-box");
-		box.style.transition = "none";
-		box.style.display = "block";
-		box.classList.add("show");
-		box.style.opacity = "1";
+		const box = getID('itinerary-box');
+		box.style.transition = 'none';
+		box.style.display = 'block';
+		box.classList.add('show');
+		box.style.opacity = '1';
 		requestAnimationFrame(() => {
-			box.style.transition = "";
+			box.style.transition = '';
 		});
 	} else {
-		$("#itinerary-box").show();
+		$('#itinerary-box').show();
 		setTimeout(() => {
-			getID("itinerary-box").classList.toggle("show");
+			getID('itinerary-box').classList.toggle('show');
 		}, 100);
 	}
 }
@@ -121,18 +119,18 @@ export function closeModalCalendar() {
 	CURRENT_SCHEDULE_DATE.year = 0;
 
 	unloadCalendarTripActive();
-	getID("itinerary-box").classList.toggle("show");
+	getID('itinerary-box').classList.toggle('show');
 	setTimeout(() => {
-		$("#itinerary-box").hide();
+		$('#itinerary-box').hide();
 	}, 300);
 }
 
 function reloadModalCalendar(schedule) {
 	CURRENT_SCHEDULE = schedule;
-	getID("itinerary-modal").classList.toggle("show");
+	getID('itinerary-modal').classList.toggle('show');
 	setTimeout(() => {
 		loadModalContentCalendar();
-		getID("itinerary-modal").classList.toggle("show");
+		getID('itinerary-modal').classList.toggle('show');
 	}, 300);
 }
 
@@ -146,10 +144,10 @@ export function displayInnerItineraryMessage(index) {
 	displayFullMessage(properties);
 
 	switch (CURRENT_INNER_ITINERARY[index].type) {
-		case "accommodations":
-			loadImageLightbox("label-gallery");
+		case 'accommodations':
+			loadImageLightbox('label-gallery');
 			break;
-		case "destinations":
+		case 'destinations':
 			if (CURRENT_INNER_ITINERARY[index].media) {
 				loadInnerItineraryMedia(CURRENT_INNER_ITINERARY[index].media);
 			}
@@ -157,12 +155,12 @@ export function displayInnerItineraryMessage(index) {
 }
 
 function loadInnerItineraryMedia(media) {
-	getID("media-1").innerHTML = getLinkMediaButton(media);
+	getID('media-1').innerHTML = getLinkMediaButton(media);
 }
 
 export function loadCalendarItem(day, month, year, instant = false) {
 	if (!day || !month || !year) {
-		console.warn("No data string provided to load calendar item.");
+		console.warn('No data string provided to load calendar item.');
 		return;
 	}
 
@@ -181,15 +179,13 @@ export function loadCalendarItem(day, month, year, instant = false) {
 		return;
 	}
 
-	calendarTrip.classList.add("active");
+	calendarTrip.classList.add('active');
 	CURRENT_SCHEDULE_DATE.day = day;
 	CURRENT_SCHEDULE_DATE.month = month;
 	CURRENT_SCHEDULE_DATE.year = year;
 	if (day != 0) {
 		for (let i = 0; i < getState().itinerary.length; i++) {
-			var currentDate = convertFromDateObject(
-				getState().itinerary[i].date,
-			);
+			var currentDate = convertFromDateObject(getState().itinerary[i].date);
 			if (
 				currentDate.getUTCDate() == day &&
 				currentDate.getUTCMonth() == month - 1 &&
@@ -211,8 +207,8 @@ export function loadCalendarItem(day, month, year, instant = false) {
 window.loadCalendarItem = loadCalendarItem;
 
 function unloadCalendarTripActive() {
-	for (const el of document.querySelectorAll(".calendarTrip")) {
-		el.classList.remove("active");
+	for (const el of document.querySelectorAll('.calendarTrip')) {
+		el.classList.remove('active');
 	}
 }
 
@@ -223,56 +219,44 @@ function getInnerItineraryHTML(item) {
 		CURRENT_INNER_ITINERARY.push(innerItinerary);
 		return `<i class="iconify external-link" data-icon="tabler:external-link" data-action="display-inner-itinerary-message" data-index="${CURRENT_INNER_ITINERARY.length - 1}"></i>`;
 	}
-	return "";
+	return '';
 }
 
 function getInnerItinerary(item, destinations?) {
 	const innerItinerary = {
 		type: item?.type,
-		title: "",
-		content: "",
-		media: "",
-		container:
-			item?.type === "destination"
-				? "destinations-container"
-				: "label-container",
+		title: '',
+		content: '',
+		media: '',
+		container: item?.type === 'destination' ? 'destinations-container' : 'label-container',
 	};
 	let index = -1;
 	switch (item?.type) {
-	case "transportation":
+		case 'transportation':
 			if (getState().modules.transportation === true && item.id) {
-				index = getState().transportation.data
-					.map((leg) => leg.id)
+				index = getState()
+					.transportation.data.map((leg) => leg.id)
 					.indexOf(item.id);
 				if (index >= 0) {
 					const transport = getState().transportation.data[index];
 					innerItinerary.title = `${transport.points.origin} → ${transport.points.destination}`;
-					innerItinerary.content = getFlightBoxHTML(
-						index + 1,
-						"inner-itinerary",
-						true,
-					);
+					innerItinerary.content = getFlightBoxHTML(index + 1, 'inner-itinerary', true);
 				}
 			}
 			break;
-	case "accommodation":
+		case 'accommodation':
 			if (getState().modules.accommodations === true && item.id) {
-				index = getState().accommodations
-					.map((accommodation) => accommodation.id)
+				index = getState()
+					.accommodations.map((accommodation) => accommodation.id)
 					.indexOf(item.id);
 				if (index >= 0) {
-					innerItinerary.title = "";
+					innerItinerary.title = '';
 					innerItinerary.content = getAccommodationsHTML(index, true);
 				}
 			}
 			break;
-	case "destination":
-			if (
-				getState().modules.destinations === true &&
-				item.location &&
-				item.category &&
-				item.id
-			) {
+		case 'destination':
+			if (getState().modules.destinations === true && item.location && item.category && item.id) {
 				if (!destinations) {
 					const destinationIds = DESTINATIONS.map((d) => d.id);
 					index = destinationIds.indexOf(item.location);
@@ -292,44 +276,42 @@ function getInnerItinerary(item, destinations?) {
 							j: 1,
 							item: destinationItem,
 							innerItinerary: true,
-						values: getDestinationValues(destinations.currency),
-						currency: destinations.currency,
+							values: getDestinationValues(destinations.currency),
+							currency: destinations.currency,
 							planned: false,
 							editBtn: false,
 						} as any);
 						innerItinerary.media = destinationItem?.media;
+					}
+				}
+
+				return innerItinerary;
+
+				function getDestinationValues(destinationsCurrency) {
+					const currency = cloneObject(getCurrencies().scale[destinationsCurrency]);
+					const max = translate('destination.price.max', {
+						value: currency['$$$$'],
+					});
+					currency['-'] = translate('destination.price.free');
+					currency['default'] = translate('destination.price.default');
+					currency['$$$$'] = max;
+					return currency;
+				}
 			}
-	}
-
-	return innerItinerary;
-
-	function getDestinationValues(destinationsCurrency) {
-		const currency = cloneObject(getCurrencies().scale[destinationsCurrency]);
-		const max = translate("destination.price.max", { value: currency["$$$$"] });
-		currency["-"] = translate("destination.price.free");
-		currency["default"] = translate("destination.price.default");
-		currency["$$$$"] = max;
-		return currency;
-	}
-		}
-		break;
+			break;
 	}
 
 	return innerItinerary;
 }
 
 export function getScheduleTitle(title, destinations, placeholder = true) {
-	if (!title || typeof title === "string") {
-		const placeholderValue = placeholder
-			? translate("trip.itinerary.title")
-			: "";
+	if (!title || typeof title === 'string') {
+		const placeholderValue = placeholder ? translate('trip.itinerary.title') : '';
 		return title || placeholderValue;
 	}
 
 	if (!title.value) {
-		return placeholder
-			? translate("trip.itinerary.title")
-			: "";
+		return placeholder ? translate('trip.itinerary.title') : '';
 	}
 
 	if (title.showDestinations) {
@@ -345,12 +327,12 @@ export function getScheduleTitle(title, destinations, placeholder = true) {
 
 // Setters
 function setModalCalendarInnerHTML(div, period) {
-	div.innerHTML = "";
+	div.innerHTML = '';
 	for (let i = 0; i < period.length; i++) {
 		if (period[i].label) {
 			div.innerHTML += `<div>
                                 <i class="bi bi-chevron-right color-icon"></i>
-                                ${getInnerItineraryTitleHTML(period[i], "label-item")}
+                                ${getInnerItineraryTitleHTML(period[i], 'label-item')}
                                 ${getInnerItineraryHTML(period[i].item)}
                               </div>`;
 		}
@@ -359,27 +341,25 @@ function setModalCalendarInnerHTML(div, period) {
 
 // Converters
 function adaptModalCalendarInnerHTML() {
-	const earlyMorning = getID("itinerary-items-early-morning");
-	const morning = getID("itinerary-items-morning");
-	const afternoon = getID("itinerary-items-afternoon");
-	const night = getID("itinerary-items-night");
+	const earlyMorning = getID('itinerary-items-early-morning');
+	const morning = getID('itinerary-items-morning');
+	const afternoon = getID('itinerary-items-afternoon');
+	const night = getID('itinerary-items-night');
 
-	getID("itinerary-early-morning").style.display = earlyMorning.innerHTML
-		? "block"
-		: "none";
-	getID("itinerary-morning").style.display = morning.innerHTML ? "block" : "none";
-	getID("itinerary-afternoon").style.display = afternoon.innerHTML ? "block" : "none";
-	getID("itinerary-night").style.display = night.innerHTML ? "block" : "none";
-	getID("no-itinerary").style.display =
+	getID('itinerary-early-morning').style.display = earlyMorning.innerHTML ? 'block' : 'none';
+	getID('itinerary-morning').style.display = morning.innerHTML ? 'block' : 'none';
+	getID('itinerary-afternoon').style.display = afternoon.innerHTML ? 'block' : 'none';
+	getID('itinerary-night').style.display = night.innerHTML ? 'block' : 'none';
+	getID('no-itinerary').style.display =
 		earlyMorning.innerHTML || morning.innerHTML || afternoon.innerHTML || night.innerHTML
-			? "none"
-			: "block";
+			? 'none'
+			: 'block';
 }
 
 // Custom Checkboxes
 function loadItineraryTravelersCheckboxes() {
-	const container = getID("inner-itinerary-travelers-checkboxes");
-	container.innerHTML = "";
+	const container = getID('inner-itinerary-travelers-checkboxes');
+	container.innerHTML = '';
 
 	if (!TRAVELERS?.length) {
 		return;
@@ -402,7 +382,7 @@ function loadItineraryTravelersCheckboxes() {
 	}
 
 	// Listen for any checkbox toggle
-	container.addEventListener("change", loadItineraryTravelersCheckboxAction);
+	container.addEventListener('change', loadItineraryTravelersCheckboxAction);
 }
 
 function filterInnerItineraryByTravelers(list, selectedIds) {
@@ -418,32 +398,26 @@ function filterInnerItineraryByTravelers(list, selectedIds) {
 }
 
 function loadItineraryTravelersCheckboxAction() {
-	const container = getID("inner-itinerary-travelers-checkboxes");
-	const selectedIds = [
-		...container.querySelectorAll("input[type='checkbox']:checked"),
-	].map((i) => (i as HTMLInputElement).value);
+	const container = getID('inner-itinerary-travelers-checkboxes');
+	const selectedIds = [...container.querySelectorAll("input[type='checkbox']:checked")].map(
+		(i) => (i as HTMLInputElement).value,
+	);
 
 	const earlyMorningFiltered = filterInnerItineraryByTravelers(
 		CURRENT_SCHEDULE.earlyMorning,
 		selectedIds,
 	);
-	const morningFiltered = filterInnerItineraryByTravelers(
-		CURRENT_SCHEDULE.morning,
-		selectedIds,
-	);
+	const morningFiltered = filterInnerItineraryByTravelers(CURRENT_SCHEDULE.morning, selectedIds);
 	const afternoonFiltered = filterInnerItineraryByTravelers(
 		CURRENT_SCHEDULE.afternoon,
 		selectedIds,
 	);
-	const nightFiltered = filterInnerItineraryByTravelers(
-		CURRENT_SCHEDULE.night,
-		selectedIds,
-	);
+	const nightFiltered = filterInnerItineraryByTravelers(CURRENT_SCHEDULE.night, selectedIds);
 
-	setModalCalendarInnerHTML(getID("itinerary-items-early-morning"), earlyMorningFiltered);
-	setModalCalendarInnerHTML(getID("itinerary-items-morning"), morningFiltered);
-	setModalCalendarInnerHTML(getID("itinerary-items-afternoon"), afternoonFiltered);
-	setModalCalendarInnerHTML(getID("itinerary-items-night"), nightFiltered);
+	setModalCalendarInnerHTML(getID('itinerary-items-early-morning'), earlyMorningFiltered);
+	setModalCalendarInnerHTML(getID('itinerary-items-morning'), morningFiltered);
+	setModalCalendarInnerHTML(getID('itinerary-items-afternoon'), afternoonFiltered);
+	setModalCalendarInnerHTML(getID('itinerary-items-night'), nightFiltered);
 
 	adaptModalCalendarInnerHTML();
 }

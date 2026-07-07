@@ -32,7 +32,8 @@ export function validateTravelersObject(): void {
  */
 export function hasDuplicateTravelerNames(travelers: Traveler[]): boolean {
 	const names = travelers.map((t) => t.name); // was "nomes", "nome"
-	return names.some((name, index) => { // was "nome"
-		return names.indexOf(name) !== index && name !== "";
+	return names.some((name, index) => {
+		// was "nome"
+		return names.indexOf(name) !== index && name !== '';
 	});
 }

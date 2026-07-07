@@ -24,87 +24,89 @@ const noLiveReload = process.argv.includes("--no-livereload");
  * Recursively copy a directory (or file).
  */
 function copyRecursive(src, dest) {
-  const stat = fs.statSync(src);
-  if (stat.isDirectory()) {
-    fs.mkdirSync(dest, { recursive: true });
-    for (const entry of fs.readdirSync(src)) {
-      copyRecursive(path.join(src, entry), path.join(dest, entry));
-    }
-  } else {
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.copyFileSync(src, dest);
-  }
+	const stat = fs.statSync(src);
+	if (stat.isDirectory()) {
+		fs.mkdirSync(dest, { recursive: true });
+		for (const entry of fs.readdirSync(src)) {
+			copyRecursive(path.join(src, entry), path.join(dest, entry));
+		}
+	} else {
+		fs.mkdirSync(path.dirname(dest), { recursive: true });
+		fs.copyFileSync(src, dest);
+	}
 }
 
 /**
  * Clean dist/ then copy all sources.
  */
 function build() {
-  const start = Date.now();
+	const start = Date.now();
 
-  // 1. Clean dist/
-  fs.rmSync(DIST_DIR, { recursive: true, force: true });
+	// 1. Clean dist/
+	fs.rmSync(DIST_DIR, { recursive: true, force: true });
 
-  // 2. Copy all of public/ to dist/
-  console.log("[build] Copying public/ → dist/ ...");
-  copyRecursive(PUBLIC_DIR, DIST_DIR);
+	// 2. Copy all of public/ to dist/
+	console.log("[build] Copying public/ → dist/ ...");
+	copyRecursive(PUBLIC_DIR, DIST_DIR);
 
-  // 2b. Inject shared HTML partials into dist/ HTML files
-  console.log("[build] Injecting HTML partials...");
-  const { inject } = require("./inject-partials.js");
-  inject({ noLiveReload });
+	// 2b. Inject shared HTML partials into dist/ HTML files
+	console.log("[build] Injecting HTML partials...");
+	const { inject } = require("./inject-partials.js");
+	inject({ noLiveReload });
 
-  // 2c. Compile TypeScript → JavaScript
-  console.log("[build] Compiling TypeScript...");
-  const glob = require("glob");
-  const tsFiles = glob.sync("dist/assets/ts/**/*.ts");
-  if (tsFiles.length > 0) {
-    require("esbuild").buildSync({
-      entryPoints: tsFiles,
-      outdir: "dist/assets/ts",
-      format: "esm",
-      target: "es2020",
-      allowOverwrite: true,
-      logLevel: "error",
-    });
-  }
-  // Remove .ts source files from dist/ (only compiled .js needed)
-  glob.sync("dist/assets/ts/**/*.ts").forEach(f => fs.rmSync(f));
-  console.log(`[build] Compiled ${tsFiles.length} TS files.`);
+	// 2c. Compile TypeScript → JavaScript
+	console.log("[build] Compiling TypeScript...");
+	const glob = require("glob");
+	const tsFiles = glob.sync("dist/assets/ts/**/*.ts");
+	if (tsFiles.length > 0) {
+		require("esbuild").buildSync({
+			entryPoints: tsFiles,
+			outdir: "dist/assets/ts",
+			format: "esm",
+			target: "es2020",
+			allowOverwrite: true,
+			logLevel: "error",
+		});
+	}
+	// Remove .ts source files from dist/ (only compiled .js needed)
+	glob.sync("dist/assets/ts/**/*.ts").forEach((f) => fs.rmSync(f));
+	console.log(`[build] Compiled ${tsFiles.length} TS files.`);
 
-  // 3. Copy firebase.json, firebase-config.js, and index.js to dist/
-  console.log("[build] Copying Firebase config and entry files...");
-  const firebaseJson = path.join(ROOT, "firebase.json");
-  const firebaseConfig = path.join(ROOT, "firebase-config.js");
-  const indexJs = path.join(ROOT, "index.js");
+	// 3. Copy firebase.json, firebase-config.js, and index.js to dist/
+	console.log("[build] Copying Firebase config and entry files...");
+	const firebaseJson = path.join(ROOT, "firebase.json");
+	const firebaseConfig = path.join(ROOT, "firebase-config.js");
+	const indexJs = path.join(ROOT, "index.js");
 
-  if (fs.existsSync(firebaseJson)) {
-    fs.copyFileSync(firebaseJson, path.join(DIST_DIR, "firebase.json"));
-  } else {
-    console.warn("[build] WARNING: firebase.json not found at project root.");
-  }
+	if (fs.existsSync(firebaseJson)) {
+		fs.copyFileSync(firebaseJson, path.join(DIST_DIR, "firebase.json"));
+	} else {
+		console.warn("[build] WARNING: firebase.json not found at project root.");
+	}
 
-  if (fs.existsSync(firebaseConfig)) {
-    fs.copyFileSync(firebaseConfig, path.join(DIST_DIR, "firebase-config.js"));
-  } else {
-    console.warn("[build] WARNING: firebase-config.js not found at project root.");
-  }
+	if (fs.existsSync(firebaseConfig)) {
+		fs.copyFileSync(firebaseConfig, path.join(DIST_DIR, "firebase-config.js"));
+	} else {
+		console.warn(
+			"[build] WARNING: firebase-config.js not found at project root.",
+		);
+	}
 
-  if (fs.existsSync(indexJs)) {
-    fs.copyFileSync(indexJs, path.join(DIST_DIR, "index.js"));
-  } else {
-    console.warn("[build] WARNING: index.js not found at project root.");
-  }
+	if (fs.existsSync(indexJs)) {
+		fs.copyFileSync(indexJs, path.join(DIST_DIR, "index.js"));
+	} else {
+		console.warn("[build] WARNING: index.js not found at project root.");
+	}
 
-  // Signal live-reload clients immediately after compilation (before slow type-check)
-  fs.writeFileSync(path.join(DIST_DIR, "reload"), String(Date.now()));
+	// Signal live-reload clients immediately after compilation (before slow type-check)
+	fs.writeFileSync(path.join(DIST_DIR, "reload"), String(Date.now()));
 
-  const elapsed = Date.now() - start;
-  console.log(`[build] Compiled in ${elapsed}ms.`);
+	const elapsed = Date.now() - start;
+	console.log(`[build] Compiled in ${elapsed}ms.`);
 
-  // 4. Type-check TypeScript (runs after compilation so reload isn't blocked)
-  console.log("[build] Type-checking TypeScript...");
-  typeCheck();
+	// 4. Type-check TypeScript (runs after compilation so reload isn't blocked)
+	console.log("[build] Type-checking TypeScript...");
+	typeCheck();
 }
 
 /**
@@ -112,76 +114,82 @@ function build() {
  * In watch mode, only reports errors (non-blocking).
  */
 function typeCheck() {
-  try {
-    execSync(`"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit`, {
-      cwd: ROOT,
-      stdio: "inherit",
-    });
-    console.log("[build] Type-check passed.");
-  } catch {
-    // Collect per-file error summary from tsc (--pretty false for machine-parseable output)
-    try {
-      execSync(
-        `"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit --pretty false`,
-        { cwd: ROOT, stdio: "pipe" }
-      );
-    } catch (e) {
-      const output = (e.stdout || "") + (e.stderr || "");
-      const errorLines = output.split("\n").filter(l => l.includes("error TS"));
-      if (errorLines.length > 0) {
-        const files = new Set();
-        for (const line of errorLines) {
-          const m = line.match(/^(.+?)\(\d+/);
-          if (m) files.add(m[1]);
-        }
-        if (files.size > 0) {
-          console.error("\n[build] Files with TypeScript errors:");
-          for (const f of files) console.error(`  • ${f}`);
-        }
-      }
-    }
+	try {
+		execSync(`"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit`, {
+			cwd: ROOT,
+			stdio: "inherit",
+		});
+		console.log("[build] Type-check passed.");
+	} catch {
+		// Collect per-file error summary from tsc (--pretty false for machine-parseable output)
+		try {
+			execSync(
+				`"${path.join(ROOT, "node_modules", ".bin", "tsc")}" --noEmit --pretty false`,
+				{ cwd: ROOT, stdio: "pipe" },
+			);
+		} catch (e) {
+			const output = (e.stdout || "") + (e.stderr || "");
+			const errorLines = output
+				.split("\n")
+				.filter((l) => l.includes("error TS"));
+			if (errorLines.length > 0) {
+				const files = new Set();
+				for (const line of errorLines) {
+					const m = line.match(/^(.+?)\(\d+/);
+					if (m) files.add(m[1]);
+				}
+				if (files.size > 0) {
+					console.error("\n[build] Files with TypeScript errors:");
+					for (const f of files) console.error(`  • ${f}`);
+				}
+			}
+		}
 
-    if (watchMode) {
-      console.error("[build] ⚠ TypeScript errors found (page already reloaded).");
-    } else {
-      console.error("\n[build] ❌ Build aborted — TypeScript errors found. Fix them and try again.");
-      process.exit(1);
-    }
-  }
+		if (watchMode) {
+			console.error(
+				"[build] ⚠ TypeScript errors found (page already reloaded).",
+			);
+		} else {
+			console.error(
+				"\n[build] ❌ Build aborted — TypeScript errors found. Fix them and try again.",
+			);
+			process.exit(1);
+		}
+	}
 }
 
 // --- Watch mode ---
 if (watchMode) {
-  console.log("[watch] Watching public/ for changes...");
+	console.log("[watch] Watching public/ for changes...");
 
-  // Use a simple polling-based watcher for cross-platform compatibility.
-  let debounceTimer = null;
-  const watchDir = (dir) => {
-    try {
-      fs.watch(dir, { recursive: true }, (eventType, filename) => {
-        if (filename) {
-          // Debounce: wait 300ms after last change before rebuilding
-          clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(() => {
-            console.log(`[watch] Change detected: ${filename}`);
-            build();
-          }, 300);
-        }
-      });
-    } catch {
-      // Some platforms don't support recursive watch — fall back to non-recursive
-      fs.watch(dir, (eventType, filename) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          console.log(`[watch] Change detected: ${filename}`);
-          build();
-        }, 300);
-      });
-    }
-  };
+	// Use a simple polling-based watcher for cross-platform compatibility.
+	let debounceTimer = null;
+	const watchDir = (dir) => {
+		try {
+			fs.watch(dir, { recursive: true }, (eventType, filename) => {
+				if (filename) {
+					// Debounce: wait 300ms after last change before rebuilding
+					clearTimeout(debounceTimer);
+					debounceTimer = setTimeout(() => {
+						console.log(`[watch] Change detected: ${filename}`);
+						build();
+					}, 300);
+				}
+			});
+		} catch {
+			// Some platforms don't support recursive watch — fall back to non-recursive
+			fs.watch(dir, (eventType, filename) => {
+				clearTimeout(debounceTimer);
+				debounceTimer = setTimeout(() => {
+					console.log(`[watch] Change detected: ${filename}`);
+					build();
+				}, 300);
+			});
+		}
+	};
 
-  watchDir(PUBLIC_DIR);
-  build();
+	watchDir(PUBLIC_DIR);
+	build();
 } else {
-  build();
+	build();
 }

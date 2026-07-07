@@ -1,10 +1,9 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 export const migrate = functions.https.onRequest(async (req, res) => {
 	try {
-		const collection = admin.firestore().collection("viagens");
+		const collection = admin.firestore().collection('viagens');
 		const snapshot = await collection.get();
 		const batch = admin.firestore().batch();
 
@@ -23,10 +22,10 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 					}[];
 				}) => ({
 					...programacao,
-					madrugada: _getUpdatedProgramacao("madrugada", programacao, pessoas),
-					manha: _getUpdatedProgramacao("manha", programacao, pessoas),
-					tarde: _getUpdatedProgramacao("tarde", programacao, pessoas),
-					noite: _getUpdatedProgramacao("noite", programacao, pessoas),
+					madrugada: _getUpdatedProgramacao('madrugada', programacao, pessoas),
+					manha: _getUpdatedProgramacao('manha', programacao, pessoas),
+					tarde: _getUpdatedProgramacao('tarde', programacao, pessoas),
+					noite: _getUpdatedProgramacao('noite', programacao, pessoas),
 				}),
 			);
 
@@ -38,17 +37,16 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		});
 
 		await batch.commit();
-		res.status(200).send("Data migration completed successfully.");
+		res.status(200).send('Data migration completed successfully.');
 	} catch (error) {
-		console.error("Error migrating data:", error);
-		res.status(500).send("Error migrating data.");
+		console.error('Error migrating data:', error);
+		res.status(500).send('Error migrating data.');
 	}
 });
 
 function _getRandomID(idLength = 5) {
-	const characters =
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	let randomId = "";
+	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let randomId = '';
 
 	for (let i = 0; i < idLength; i++) {
 		const randomIndex = Math.floor(Math.random() * characters.length);

@@ -3,10 +3,7 @@
 // Core functions moved to models/itinerary.model.js — imported here for backward compat
 
 import { get } from '../../data/firebase/database.js';
-import {
-	getItineraryContent,
-	getItineraryData,
-} from '../../models/itinerary.model.js';
+import { getItineraryContent, getItineraryData } from '../../models/itinerary.model.js';
 
 var ITINERARY;
 export const ITINERARY_HTML = {};

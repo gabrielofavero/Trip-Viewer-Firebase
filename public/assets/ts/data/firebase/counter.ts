@@ -10,46 +10,46 @@
  */
 
 interface WriteOp {
-  type: "set" | "update" | "overwrite" | "delete" | "create";
-  path: string;
+	type: 'set' | 'update' | 'overwrite' | 'delete' | 'create';
+	path: string;
 }
 
 interface CounterStats {
-  reads: number;
-  writes: number;
-  readPaths: string[];
-  writeOps: WriteOp[];
+	reads: number;
+	writes: number;
+	readPaths: string[];
+	writeOps: WriteOp[];
 }
 
 const stats: CounterStats = {
-  reads: 0,
-  writes: 0,
-  readPaths: [],
-  writeOps: [],
+	reads: 0,
+	writes: 0,
+	readPaths: [],
+	writeOps: [],
 };
 
 export function incrementReads(path: string): void {
-  stats.reads += 1;
-  stats.readPaths.push(path);
+	stats.reads += 1;
+	stats.readPaths.push(path);
 }
 
 export function incrementWrites(ops: WriteOp[]): void {
-  stats.writes += ops.length;
-  stats.writeOps.push(...ops);
+	stats.writes += ops.length;
+	stats.writeOps.push(...ops);
 }
 
 export function resetCounters(): void {
-  stats.reads = 0;
-  stats.writes = 0;
-  stats.readPaths = [];
-  stats.writeOps = [];
+	stats.reads = 0;
+	stats.writes = 0;
+	stats.readPaths = [];
+	stats.writeOps = [];
 }
 
 export function getStats(): Readonly<CounterStats> {
-  return {
-    reads: stats.reads,
-    writes: stats.writes,
-    readPaths: [...stats.readPaths],
-    writeOps: [...stats.writeOps],
-  };
+	return {
+		reads: stats.reads,
+		writes: stats.writes,
+		readPaths: [...stats.readPaths],
+		writeOps: [...stats.writeOps],
+	};
 }

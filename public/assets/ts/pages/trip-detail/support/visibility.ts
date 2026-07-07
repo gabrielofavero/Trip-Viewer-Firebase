@@ -1,17 +1,17 @@
 import { getState } from '../../../data/state.js';
 import { getChildIDs, getID, getJ, on, onscroll, select } from '../../../utils/dom.js';
 import { getVisibility, loadDarkMode, loadLightMode } from '../../../theme/visibility.js';
-import { adjustTransportationBoxContainerHeight } from "../categories/transportation-module.js";
-import { sendToExpenses, ACTIVE_EMBEDS } from "./embed.js";
+import { adjustTransportationBoxContainerHeight } from '../categories/transportation-module.js';
+import { sendToExpenses, ACTIVE_EMBEDS } from './embed.js';
 
 export var ADJUST_HEIGHT_CARDS = [];
 
 export function adjustCardsHeightsListener() {
-	window.addEventListener("resize", function () {
+	window.addEventListener('resize', function () {
 		adjustCardsHeights();
 
 		const viewMode = getState()?.transportation?.viewMode;
-		if (viewMode && viewMode != "simple-view") {
+		if (viewMode && viewMode != 'simple-view') {
 			adjustTransportationBoxContainerHeight();
 		}
 	});
@@ -29,7 +29,7 @@ export function adjustCardsHeights(type?) {
 }
 
 function adjustSingleCardsHeights(type, second = false) {
-	let innerID = type === "accommodations" && !second ? "name" : "box";
+	let innerID = type === 'accommodations' && !second ? 'name' : 'box';
 
 	const sliders = getChildIDs(`${type}-wrapper`);
 	let maxHeight = 0;
@@ -39,7 +39,7 @@ function adjustSingleCardsHeights(type, second = false) {
 		const box = getID(`${type}-${innerID}-${j}`);
 
 		if (box) {
-			box.style.height = "auto";
+			box.style.height = 'auto';
 			const height = box.offsetHeight;
 			if (height > maxHeight) {
 				maxHeight = height;
@@ -55,50 +55,47 @@ function adjustSingleCardsHeights(type, second = false) {
 		}
 	}
 
-	if (type === "accommodations" && !second) {
-		adjustSingleCardsHeights("accommodations", true);
+	if (type === 'accommodations' && !second) {
+		adjustSingleCardsHeights('accommodations', true);
 	}
 }
 
 export function loadViewVisibility() {
 	if (getState().visibility) {
-		const nightMode = getID("night-mode");
+		const nightMode = getID('night-mode');
 
 		if (!getState().visibility.light) {
-			nightMode.style.display = "none";
+			nightMode.style.display = 'none';
 			loadDarkMode();
 		} else if (!getState().visibility.dark) {
-			nightMode.style.display = "none";
+			nightMode.style.display = 'none';
 			loadLightMode();
 		}
 	}
 }
 
 export function mainView() {
-	"use strict";
-	$("body").css("overflow", "hidden");
+	'use strict';
+	$('body').css('overflow', 'hidden');
 
 	/**
 	 * Navbar links active state on scroll
 	 */
-	let navbarlinks = select("#navbar .scrollto", true);
+	let navbarlinks = select('#navbar .scrollto', true);
 	const navbarlinksActive = () => {
 		let position = window.scrollY + 200;
 		navbarlinks.forEach((navbarlink) => {
 			if (!navbarlink.hash) return;
 			let section = select(navbarlink.hash);
 			if (!section) return;
-			if (
-				position >= section.offsetTop &&
-				position <= section.offsetTop + section.offsetHeight
-			) {
-				navbarlink.classList.add("active");
+			if (position >= section.offsetTop && position <= section.offsetTop + section.offsetHeight) {
+				navbarlink.classList.add('active');
 			} else {
-				navbarlink.classList.remove("active");
+				navbarlink.classList.remove('active');
 			}
 		});
 	};
-	window.addEventListener("load", navbarlinksActive);
+	window.addEventListener('load', navbarlinksActive);
 	onscroll(document, navbarlinksActive);
 
 	/**
@@ -108,51 +105,51 @@ export function mainView() {
 		let elementPos = select(el).offsetTop;
 		window.scrollTo({
 			top: elementPos,
-			behavior: "smooth",
+			behavior: 'smooth',
 		});
 	};
 
 	/**
 	 * Back to top button
 	 */
-	let backtotop = select(".back-to-top");
+	let backtotop = select('.back-to-top');
 	if (backtotop) {
 		const toggleBacktotop = () => {
 			if (window.scrollY > 100) {
-				backtotop.classList.add("active");
+				backtotop.classList.add('active');
 			} else {
-				backtotop.classList.remove("active");
+				backtotop.classList.remove('active');
 			}
 		};
-		window.addEventListener("load", toggleBacktotop);
+		window.addEventListener('load', toggleBacktotop);
 		onscroll(document, toggleBacktotop);
 	}
 
 	/**
 	 * Mobile nav toggle
 	 */
-	on("click", ".mobile-nav-toggle", function (e) {
-		select("body").classList.toggle("mobile-nav-active");
-		this.classList.toggle("bi-list");
-		this.classList.toggle("bi-x");
+	on('click', '.mobile-nav-toggle', function (e) {
+		select('body').classList.toggle('mobile-nav-active');
+		this.classList.toggle('bi-list');
+		this.classList.toggle('bi-x');
 	});
 
 	/**
 	 * Scrool with ofset on links with a class name .scrollto
 	 */
 	on(
-		"click",
-		".scrollto",
+		'click',
+		'.scrollto',
 		function (e) {
 			if (select(this.hash)) {
 				e.preventDefault();
 
-				let body = select("body");
-				if (body.classList.contains("mobile-nav-active")) {
-					body.classList.remove("mobile-nav-active");
-					let navbarToggle = select(".mobile-nav-toggle");
-					navbarToggle.classList.toggle("bi-list");
-					navbarToggle.classList.toggle("bi-x");
+				let body = select('body');
+				if (body.classList.contains('mobile-nav-active')) {
+					body.classList.remove('mobile-nav-active');
+					let navbarToggle = select('.mobile-nav-toggle');
+					navbarToggle.classList.toggle('bi-list');
+					navbarToggle.classList.toggle('bi-x');
 				}
 				scrollto(this.hash);
 			}
@@ -163,7 +160,7 @@ export function mainView() {
 	/**
 	 * Scroll with ofset on page load with hash links in the url
 	 */
-	window.addEventListener("load", () => {
+	window.addEventListener('load', () => {
 		if (window.location.hash) {
 			if (select(window.location.hash)) {
 				scrollto(window.location.hash);
@@ -174,11 +171,11 @@ export function mainView() {
 	/**
 	 * Hero type effect
 	 */
-	const typed = select(".typed");
+	const typed = select('.typed');
 	if (typed) {
-		const raw_strings = typed.getAttribute("data-typed-items") || "";
-		const typed_strings: string[] = raw_strings.split(",");
-		new Typed(".typed", {
+		const raw_strings = typed.getAttribute('data-typed-items') || '';
+		const typed_strings: string[] = raw_strings.split(',');
+		new Typed('.typed', {
 			strings: typed_strings,
 			loop: true,
 			typeSpeed: 100,
@@ -190,15 +187,15 @@ export function mainView() {
 	/**
 	 * Skills animation
 	 */
-	let skilsContent = select(".skills-content");
+	let skilsContent = select('.skills-content');
 	if (skilsContent) {
 		new Waypoint({
 			element: skilsContent,
-			offset: "80%",
+			offset: '80%',
 			handler: function (direction) {
-				let progress = select(".progress .progress-bar", true);
+				let progress = select('.progress .progress-bar', true);
 				progress.forEach((el) => {
-					el.style.width = el.getAttribute("aria-valuenow") + "%";
+					el.style.width = el.getAttribute('aria-valuenow') + '%';
 				});
 			},
 		});
@@ -207,29 +204,29 @@ export function mainView() {
 	/**
 	 * Porfolio isotope and filter
 	 */
-	window.addEventListener("load", () => {
-		let portfolioContainer = select(".portfolio-container");
+	window.addEventListener('load', () => {
+		let portfolioContainer = select('.portfolio-container');
 		if (portfolioContainer) {
 			let portfolioIsotope = new Isotope(portfolioContainer, {
-				itemSelector: ".portfolio-item",
+				itemSelector: '.portfolio-item',
 			});
 
-			let portfolioFilters = select("#portfolio-flters li", true);
+			let portfolioFilters = select('#portfolio-flters li', true);
 
 			on(
-				"click",
-				"#portfolio-flters li",
+				'click',
+				'#portfolio-flters li',
 				function (e) {
 					e.preventDefault();
 					portfolioFilters.forEach(function (el) {
-						el.classList.remove("filter-active");
+						el.classList.remove('filter-active');
 					});
-					this.classList.add("filter-active");
+					this.classList.add('filter-active');
 
 					portfolioIsotope.arrange({
-						filter: this.getAttribute("data-filter"),
+						filter: this.getAttribute('data-filter'),
 					});
-					portfolioIsotope.on("arrangeComplete", function () {
+					portfolioIsotope.on('arrangeComplete', function () {
 						AOS.refresh();
 					});
 				},
@@ -237,10 +234,10 @@ export function mainView() {
 			);
 		}
 	});
-	window.addEventListener("load", () => {
+	window.addEventListener('load', () => {
 		AOS.init({
 			duration: 1000,
-			easing: "ease-in-out",
+			easing: 'ease-in-out',
 			once: true,
 			mirror: false,
 		});
@@ -248,7 +245,7 @@ export function mainView() {
 }
 
 export function loadViewCustomVisibilityRules() {
-	if (ACTIVE_EMBEDS["expenses"] === true) {
-		sendToExpenses("visibility", getVisibility());
+	if (ACTIVE_EMBEDS['expenses'] === true) {
+		sendToExpenses('visibility', getVisibility());
 	}
 }

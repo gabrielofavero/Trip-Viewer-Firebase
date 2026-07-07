@@ -11,19 +11,10 @@ import {
 	deleteDocument,
 	createBatchOps,
 	COLLECTION,
-} from "../firebase/database.js";
+} from '../firebase/database.js';
 
 // Re-export raw database functions that expense pages may still use during transition
-export {
-	get,
-	create,
-	deepCreate,
-	update,
-	override,
-	deleteDocument,
-	createBatchOps,
-	COLLECTION,
-};
+export { get, create, deepCreate, update, override, deleteDocument, createBatchOps, COLLECTION };
 
 // ── Expense-specific wrappers ──
 
@@ -71,5 +62,3 @@ export async function setProtectedExpenses(pin, tripId, data) {
 export async function deleteExpenses(tripId) {
 	return await deleteDocument(`${COLLECTION.EXPENSES}/${tripId}`, true);
 }
-
-

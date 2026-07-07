@@ -1,20 +1,50 @@
 import { getTransportations } from '../../app/config.js';
 import { getCategoryID, getChildIDs, getID, getJ, getNextJ } from '../../utils/dom.js';
 import { addSelectorDS } from '../../ui/dynamic-select.js';
-import { formattedDateToDate, getArrayOfDates, getDateTitle, getNextCategoryStartEnd, getTodayFormatted, getTomorrowFormatted } from '../../utils/dates.js';
+import {
+	formattedDateToDate,
+	getArrayOfDates,
+	getDateTitle,
+	getNextCategoryStartEnd,
+	getTodayFormatted,
+	getTomorrowFormatted,
+} from '../../utils/dates.js';
 import { addRemoveChildListener, registerVisibilityExport } from '../../theme/visibility.js';
 import { loadImageSelector } from '../../data/firebase/storage.js';
 import { translate } from '../../i18n/translation.js';
 import { DESTINATIONS } from '../../data/state.js';
-import { loadTransportationListeners, loadTransportationVisibility, applyTransportationTypeVisualization, updateTransportationTitle } from './categories/transportation.js';
-import { loadAccommodationListeners, ACCOMMODATION_IMAGES, removeAccommodationImages } from './categories/accommodation.js';
+import {
+	loadTransportationListeners,
+	loadTransportationVisibility,
+	applyTransportationTypeVisualization,
+	updateTransportationTitle,
+} from './categories/transportation.js';
+import {
+	loadAccommodationListeners,
+	ACCOMMODATION_IMAGES,
+	removeAccommodationImages,
+} from './categories/accommodation.js';
 import { addRemoveTransportationListener } from './support/event-listeners.js';
 import { DateRangePicker } from '../../ui/date-range-picker.js';
-import { getDestinationsItemCheckbox, getActiveDestinationsSelectVisibility, getActiveDestinationsCheckboxOptions, getDestinationsItemCard, getActiveDestinationsCardOptions } from './categories/destination.js';
+import {
+	getDestinationsItemCheckbox,
+	getActiveDestinationsSelectVisibility,
+	getActiveDestinationsCheckboxOptions,
+	getDestinationsItemCard,
+	getActiveDestinationsCardOptions,
+} from './categories/destination.js';
 import { loadGalleryListeners } from './categories/gallery.js';
-import { getItineraryTitleSelectOptions, loadItineraryListeners, updateItineraryTitle, reloadItinerary } from './categories/itinerary-module/itinerary-module.js';
-import { updateActiveDestinationsHTMLs, reorganizeDestinationsCheckbox } from "./categories/destination.js";
-import { addRemoveGalleryListener } from "./support/event-listeners.js";
+import {
+	getItineraryTitleSelectOptions,
+	loadItineraryListeners,
+	updateItineraryTitle,
+	reloadItinerary,
+} from './categories/itinerary-module/itinerary-module.js';
+import {
+	updateActiveDestinationsHTMLs,
+	reorganizeDestinationsCheckbox,
+} from './categories/destination.js';
+import { addRemoveGalleryListener } from './support/event-listeners.js';
 
 export var DATAS = [];
 
@@ -22,11 +52,11 @@ const TODAY = getTodayFormatted();
 const TOMORROW = getTomorrowFormatted();
 
 // Register _add* functions for visibility module backward compat
-registerVisibilityExport("_addTransportation", addTransportation);
-registerVisibilityExport("_addAccommodations", addAccommodations);
-registerVisibilityExport("_addDestinations", loadDestinations);
-registerVisibilityExport("_addGallery", addGallery);
-registerVisibilityExport("_addItinerary", loadItinerarySchedule);
+registerVisibilityExport('_addTransportation', addTransportation);
+registerVisibilityExport('_addAccommodations', addAccommodations);
+registerVisibilityExport('_addDestinations', loadDestinations);
+registerVisibilityExport('_addGallery', addGallery);
+registerVisibilityExport('_addItinerary', loadItinerarySchedule);
 export function loadNewTrip() {
 	loadBasicFieldsNewTrip();
 	loadItinerarySchedule();
@@ -34,69 +64,69 @@ export function loadNewTrip() {
 }
 
 function loadBasicFieldsNewTrip() {
-	getID("start").value = TODAY;
-	getID("end").value = TOMORROW;
+	getID('start').value = TODAY;
+	getID('end').value = TOMORROW;
 
-	getID("currency").value = "BRL";
+	getID('currency').value = 'BRL';
 }
 
 export function addTransportation() {
-	const j = getNextJ("transportation-box");
+	const j = getNextJ('transportation-box');
 
-	$("#transportation-box").append(`
+	$('#transportation-box').append(`
   <div id="transportation-inner-box-${j}" class="inner-box draggable">
         <div id="transportation-${j}" class="accordion-item accordion-transportation accordion-draggable" >
         <h2 class="accordion-header" id="heading-transportation-${j}">
           <button id="transportation-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapse-transportation-${j}" aria-expanded="false" aria-controls="collapse-transportation-${j}">
-            ${translate("trip.transportation.title")} ${j}
+            ${translate('trip.transportation.title')} ${j}
           </button>
         </h2>
         <div id="collapse-transportation-${j}" class="accordion-collapse collapse"
           aria-labelledby="heading-transportation-${j}" data-bs-parent="#transportation-box">
             <div class="accordion-body">
               <div class="nice-form-group" style="display: none">
-              <label>${translate("labels.id")}</label>
+              <label>${translate('labels.id')}</label>
               <input id="transportation-id-${j}" type="text" disabled />
             </div>
 
             <fieldset class="nice-form-group" id="direction-box-${j}">
               <div class="modern-radio-group">
                 <div class="nice-form-group">
-                  <input type="radio" name="direction-${j}" id="departure-${j}" ${j === 1 ? "checked" : ""} />
-                  <label for="departure-${j}">${translate("trip.transportation.departure")}</label>
+                  <input type="radio" name="direction-${j}" id="departure-${j}" ${j === 1 ? 'checked' : ''} />
+                  <label for="departure-${j}">${translate('trip.transportation.departure')}</label>
                 </div>
 
                 <div class="nice-form-group">
                   <input type="radio" name="direction-${j}" id="during-${j}"/>
-                  <label for="during-${j}">${translate("trip.transportation.during")}</label>
+                  <label for="during-${j}">${translate('trip.transportation.during')}</label>
                 </div>
 
                 <div class="nice-form-group">
-                  <input type="radio" name="direction-${j}" id="return-${j}" ${j != 1 ? "checked" : ""} />
-                  <label for="return-${j}">${translate("trip.transportation.return")}</label>
+                  <input type="radio" name="direction-${j}" id="return-${j}" ${j != 1 ? 'checked' : ''} />
+                  <label for="return-${j}">${translate('trip.transportation.return')}</label>
                 </div>
               </div>
             </fieldset>
 
             <div class="nice-form-group" id="people-box-${j}">
-              <label>${translate("labels.person")}</label>
-              <select ${getID("people-view").checked ? "required" : ""} class="edit-select" id="transportation-person-select-${j}" style="display: none;"></select>
-              <input class="nice-form-group" id="transportation-person-${j}" type="text" placeholder="${translate("labels.person")}" />
+              <label>${translate('labels.person')}</label>
+              <select ${getID('people-view').checked ? 'required' : ''} class="edit-select" id="transportation-person-select-${j}" style="display: none;"></select>
+              <input class="nice-form-group" id="transportation-person-${j}" type="text" placeholder="${translate('labels.person')}" />
             </div>
 
             <div class="nice-form-group">
-              <label>Departure Point <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>Departure Point <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="departure-point-${j}" type="text" placeholder="Belo Horizonte" />
             </div>
 
             <div class="nice-form-group">
-              <label>Arrival Point <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>Arrival Point <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="arrival-point-${j}" type="text" placeholder="Las Vegas" />
             </div>
     
             <div class="nice-form-group">
-              <label>${translate("trip.transportation.duration")}</label>
+              <label>${translate('trip.transportation.duration')}</label>
               <div class="date-range-picker" id="transportation-duration-${j}">
                 <input type="hidden" id="departure-${j}" />
                 <input type="hidden" id="arrival-${j}" />
@@ -105,11 +135,11 @@ export function addTransportation() {
     
             <div class="side-by-side-box">
               <div class="nice-form-group side-by-side">
-                <label>${translate("trip.transportation.departure_time")}</label>
+                <label>${translate('trip.transportation.departure_time')}</label>
                 <input required class="flex-input mini-box" id="departure-time-${j}" type="time" value="00:00" />
               </div>
               <div class="nice-form-group side-by-side">
-                <label>${translate("trip.transportation.arrival_time")}</label>
+                <label>${translate('trip.transportation.arrival_time')}</label>
                 <input required class="flex-input mini-box" id="arrival-time-${j}" type="time" value="00:30" />
               </div>
             </div>
@@ -122,23 +152,23 @@ export function addTransportation() {
             </div>
 
             <div class="nice-form-group">
-              <label>${translate("labels.other")} <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>${translate('labels.other')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input class="flex-input" id="transportation-duration-other-${j}" type="time" />
             </div>
 
             <div class="nice-form-group" id="company-select-form-group-${j}">
-              <label>${translate("labels.company")} <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>${translate('labels.company')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <select class="edit-select" id="company-select-${j}" style="display: none;"></select>
-              <input class="nice-form-group" id="company-${j}" type="text" placeholder="${translate("labels.company")}" />
+              <input class="nice-form-group" id="company-${j}" type="text" placeholder="${translate('labels.company')}" />
             </div>
 
             <div class="nice-form-group">
-              <label>${translate("labels.reservation.code")} <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>${translate('labels.reservation.code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reservation-transportation-${j}" type="text" placeholder="ABC123" />
             </div>
 
             <div class="nice-form-group">
-              <label>${translate("labels.reservation.link")} <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>${translate('labels.reservation.link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="transportation-link-${j}" type="url" placeholder="https://www.google.com/" value=""
                 class="icon-right" />
             </div>
@@ -161,17 +191,11 @@ export function addTransportation() {
     </div>
       `);
 
-	getID(`transportation-id-${j}`).value = getCategoryID("transportation", j);
-	getID(`departure-point-${j}`).value =
-		j == 1 ? "" : getID(`arrival-point-${j - 1}`).value;
-	getID(`arrival-point-${j}`).value =
-		j == 2 ? getID(`departure-point-${j - 1}`).value : "";
+	getID(`transportation-id-${j}`).value = getCategoryID('transportation', j);
+	getID(`departure-point-${j}`).value = j == 1 ? '' : getID(`arrival-point-${j - 1}`).value;
+	getID(`arrival-point-${j}`).value = j == 2 ? getID(`departure-point-${j - 1}`).value : '';
 	getID(`departure-${j}`).value =
-		j == 1
-			? getID("start").value
-			: j == 2
-				? getID("end").value
-				: getID(`arrival-${j - 1}`).value;
+		j == 1 ? getID('start').value : j == 2 ? getID('end').value : getID(`arrival-${j - 1}`).value;
 	getID(`arrival-${j}`).value = getID(`departure-${j}`).value;
 
 	// Initialize date range picker for this transportation
@@ -183,14 +207,14 @@ export function addTransportation() {
 	applyTransportationTypeVisualization(j);
 	addRemoveTransportationListener(j);
 	addSelectorDS(
-		"transportation-person",
+		'transportation-person',
 		`transportation-person-select-${j}`,
 		`transportation-person-${j}`,
 		() => updateTransportationTitle(j),
 	);
 
 	function getTypeOptions() {
-		let result = "";
+		let result = '';
 		const transportation = getTransportations();
 		for (const type of transportation.types) {
 			const title = transportation.titles[type];
@@ -202,44 +226,44 @@ export function addTransportation() {
 }
 
 export function addAccommodations() {
-	const startEnd = getNextCategoryStartEnd("accommodations", "check-out");
-	const j = getNextJ("accommodations-box");
-	$("#accommodations-box").append(`
+	const startEnd = getNextCategoryStartEnd('accommodations', 'check-out');
+	const j = getNextJ('accommodations-box');
+	$('#accommodations-box').append(`
       <div id="accommodations-inner-box-${j}" class="inner-box draggable">
         <div id="accommodations-${j}" class="accordion-item accordion-accommodations accordion-draggable" >
         <h2 class="accordion-header" id="heading-accommodations-${j}">
           <button id="accommodations-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapse-accommodations-${j}" aria-expanded="false" aria-controls="collapse-accommodations-${j}">
-            ${translate("trip.accommodation.accommodation")} ${j}
+            ${translate('trip.accommodation.accommodation')} ${j}
           </button>
         </h2>
         <div id="collapse-accommodations-${j}" class="accordion-collapse collapse"
           aria-labelledby="heading-accommodations-${j}" data-bs-parent="#accommodations-box">
             <div class="accordion-body">
               <div class="nice-form-group" style="display: none">
-              <label>${translate("labels.id")}</label>
+              <label>${translate('labels.id')}</label>
               <input id="accommodations-id-${j}" type="text" disabled />
             </div>
 
             <div class="nice-form-group">
               <input id="accommodations-breakfast-${j}" type="checkbox" class="switch">
               <label for="accommodations-breakfast-${j}">
-                ${translate("trip.accommodation.breakfast")}
+                ${translate('trip.accommodation.breakfast')}
               </label>
             </div>
 
             <div class="nice-form-group">
-              <label>${translate("labels.name")}</label>
-              <input required id="accommodations-name-${j}" type="text" placeholder="${translate("trip.accommodation.name_placeholder")}" />
+              <label>${translate('labels.name')}</label>
+              <input required id="accommodations-name-${j}" type="text" placeholder="${translate('trip.accommodation.name_placeholder')}" />
             </div>
     
             <div class="nice-form-group">
-              <label>${translate("labels.address")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-              <input id="accommodations-address-${j}" type="text" placeholder="${translate("trip.accommodation.address_placeholder")}" />
+              <label>${translate('labels.address')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="accommodations-address-${j}" type="text" placeholder="${translate('trip.accommodation.address_placeholder')}" />
             </div>
     
             <div class="nice-form-group">
-              <label>${translate("trip.accommodation.stay_duration")}</label>
+              <label>${translate('trip.accommodation.stay_duration')}</label>
               <div class="date-range-picker" id="accommodations-duration-${j}">
                 <input type="hidden" id="check-in-${j}" value="${startEnd.start}" />
                 <input type="hidden" id="check-out-${j}" value="${startEnd.end}" />
@@ -248,34 +272,34 @@ export function addAccommodations() {
     
             <div class="side-by-side-box">
               <div class="nice-form-group side-by-side">
-                <label>${translate("trip.accommodation.checkin_time")}</label>
+                <label>${translate('trip.accommodation.checkin_time')}</label>
                 <input class="flex-input mini-box" id="check-in-time-${j}" type="time" value="14:00" />
               </div>
               <div class="nice-form-group side-by-side">
-                <label>${translate("trip.accommodation.checkout_time")}</label>
+                <label>${translate('trip.accommodation.checkout_time')}</label>
                 <input class="flex-input mini-box" id="check-out-time-${j}" type="time" value="12:00" />
               </div>
             </div>
     
             <div class="nice-form-group">
-              <label>${translate("labels.description.title")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-              <input id="accommodations-description-${j}" type="text" placeholder="${translate("trip.accommodation.description_placeholder")}" />
+              <label>${translate('labels.description.title')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <input id="accommodations-description-${j}" type="text" placeholder="${translate('trip.accommodation.description_placeholder')}" />
             </div>
 
             <div class="nice-form-group">
-              <label>${translate("labels.reservation.code")} <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>${translate('labels.reservation.code')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reservation-accommodations-${j}" type="text" placeholder="ABC123" />
             </div>
       
             <div class="nice-form-group">
-              <label>${translate("labels.reservation.link")} <span class="opcional"> (${translate("labels.optional")})</span></label>
+              <label>${translate('labels.reservation.link')} <span class="opcional"> (${translate('labels.optional')})</span></label>
               <input id="reservation-accommodations-link-${j}" type="url" placeholder="https://www.google.com/" value=""
                 class="icon-right" />
             </div>
 
             <div class="nice-form-group customization-box" id="accommodations-${j}-box">
-              <label>${translate("labels.image.title_plural")} <span class="opcional"> (${translate("labels.optional")})</span></label>
-              <button id="accommodation-images-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate("labels.image.add_title")}</button>
+              <label>${translate('labels.image.title_plural')} <span class="opcional"> (${translate('labels.optional')})</span></label>
+              <button id="accommodation-images-button-${j}" data-action="open-accommodation-images" data-index="${j}" class="btn input-button" style="margin-top:0px">${translate('labels.image.add_title')}</button>
             </div>
               
           </div>
@@ -296,8 +320,8 @@ export function addAccommodations() {
       </div>
       `);
 
-	getID(`accommodations-id-${j}`).value = getCategoryID("accommodations", j);
-	addRemoveChildListener("accommodations", j, () => removeAccommodationImages(j));
+	getID(`accommodations-id-${j}`).value = getCategoryID('accommodations', j);
+	addRemoveChildListener('accommodations', j, () => removeAccommodationImages(j));
 
 	// Initialize date range picker for this accommodation
 	const accommDurPicker = getID(`accommodations-duration-${j}`);
@@ -312,21 +336,21 @@ export function loadDestinations() {
 
 	let destinations = [...DESTINATIONS];
 	destinations.sort((a, b) => a.title.localeCompare(b.title));
-	getID("no-destinations").style.display = "none";
-	getID("has-destinations").style.display = "block";
+	getID('no-destinations').style.display = 'none';
+	getID('has-destinations').style.display = 'block';
 
-	const container = getID("destinations-checkboxes");
-	container.innerHTML = "";
+	const container = getID('destinations-checkboxes');
+	container.innerHTML = '';
 	for (const destination of destinations) {
 		container.innerHTML += getDestinationsItemCard(destination.id, destination.title);
 	}
 
 	// Card click: toggle selected, move to top of selected group
-	for (const card of container.querySelectorAll(".destination-card")) {
-		card.addEventListener("click", () => {
-			card.classList.toggle("selected");
+	for (const card of container.querySelectorAll('.destination-card')) {
+		card.addEventListener('click', () => {
+			card.classList.toggle('selected');
 			// Move clicked card to top of selected group
-			if (card.classList.contains("selected")) {
+			if (card.classList.contains('selected')) {
 				container.prepend(card);
 			}
 			reorganizeDestinationsCheckbox();
@@ -334,26 +358,21 @@ export function loadDestinations() {
 		});
 	}
 
-	getID("destinations-enabled")?.addEventListener("change", () =>
-		updateActiveDestinationsHTMLs(),
-	);
+	getID('destinations-enabled')?.addEventListener('change', () => updateActiveDestinationsHTMLs());
 }
 
 export function loadItinerarySchedule() {
-	const start = getID("start").value;
-	const end = getID("end").value;
+	const start = getID('start').value;
+	const end = getID('end').value;
 
-	DATAS = getArrayOfDates(
-		formattedDateToDate(start),
-		formattedDateToDate(end),
-	);
+	DATAS = getArrayOfDates(formattedDateToDate(start), formattedDateToDate(end));
 
-	const itineraryBox = getID("itinerary-box");
-	itineraryBox.innerHTML = "";
+	const itineraryBox = getID('itinerary-box');
+	itineraryBox.innerHTML = '';
 
 	for (let j = 1; j <= DATAS.length; j++) {
 		const data = DATAS[j - 1];
-		let formattedDate = getDateTitle(data, "weekday_day_month");
+		let formattedDate = getDateTitle(data, 'weekday_day_month');
 
 		itineraryBox.innerHTML += `
       <div id="itinerary-day-${j}" class="accordion-item accordion-itinerary" >
@@ -369,14 +388,14 @@ export function loadItinerarySchedule() {
         <div class="accordion-body">
 
           <div class="nice-form-group" id="itinerary-location-box-${j}" style="display: ${getActiveDestinationsSelectVisibility()}">
-            <label>${translate("destination.title")}<span class="optional"> (${translate("labels.optional")})</span></label>
+            <label>${translate('destination.title')}<span class="optional"> (${translate('labels.optional')})</span></label>
             <div class="destination-cards itinerary-cards" id="itinerary-location-${j}">
-              ${getActiveDestinationsCardOptions("itinerary", j)}
+              ${getActiveDestinationsCardOptions('itinerary', j)}
             </div>
           </div>
 
           <div class="nice-form-group">
-            <label>${translate("labels.title")}<span class="optional"> (${translate("labels.optional")})</span></label>
+            <label>${translate('labels.title')}<span class="optional"> (${translate('labels.optional')})</span></label>
               <select class="edit-select" id="itinerary-inner-title-select-${j}" style="display: block;">
                 ${getItineraryTitleSelectOptions()}
               </select>  
@@ -384,22 +403,22 @@ export function loadItinerarySchedule() {
           </div>
 
           <div class='period-box' id='itinerary-early-morning-${j}'>
-            <label>${translate("datetime.time_of_day.early_hours")}</label>
+            <label>${translate('datetime.time_of_day.early_hours')}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-early-morning-${j}"></div>
           </div>
 
           <div class='period-box' id='itinerary-morning-${j}'>
-            <label>${translate("datetime.time_of_day.morning")}</label>
+            <label>${translate('datetime.time_of_day.morning')}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-morning-${j}"></div>
           </div>
 
           <div class='period-box' id='itinerary-afternoon-${j}'>
-            <label>${translate("datetime.time_of_day.afternoon")}</label>
+            <label>${translate('datetime.time_of_day.afternoon')}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-afternoon-${j}"></div>
           </div>
 
           <div class='period-box' id='itinerary-night-${j}'>
-            <label>${translate("datetime.time_of_day.evening")}</label>
+            <label>${translate('datetime.time_of_day.evening')}</label>
             <div class="inner-itinerary draggable-area" data-group="itinerary-${j}" id="inner-itinerary-night-${j}"></div>
           </div>
 
@@ -413,7 +432,7 @@ export function loadItinerarySchedule() {
                   </path>
                 </g>
               </svg>
-              ${translate("labels.add")}
+              ${translate('labels.add')}
             </button>
           </div>
 
@@ -422,21 +441,18 @@ export function loadItinerarySchedule() {
     </div>`;
 	}
 
-	for (const child of getChildIDs("itinerary-box")) {
+	for (const child of getChildIDs('itinerary-box')) {
 		const j = getJ(child);
-		getID(`itinerary-inner-title-select-${j}`).addEventListener(
-			"change",
-			() => updateItineraryTitle(j),
-		);
-		getID(`itinerary-inner-title-${j}`).addEventListener("change", () =>
+		getID(`itinerary-inner-title-select-${j}`).addEventListener('change', () =>
 			updateItineraryTitle(j),
 		);
+		getID(`itinerary-inner-title-${j}`).addEventListener('change', () => updateItineraryTitle(j));
 		// Card click for itinerary destination cards
 		const localContainer = getID(`itinerary-location-${j}`);
-		for (const card of localContainer.querySelectorAll(".destination-card")) {
-			card.addEventListener("click", () => {
-				card.classList.toggle("selected");
-				if (card.classList.contains("selected")) {
+		for (const card of localContainer.querySelectorAll('.destination-card')) {
+			card.addEventListener('click', () => {
+				card.classList.toggle('selected');
+				if (card.classList.contains('selected')) {
 					localContainer.prepend(card);
 				}
 				updateItineraryTitle(j);
@@ -445,60 +461,58 @@ export function loadItinerarySchedule() {
 		loadItineraryListeners(j);
 	}
 
-	getID("itinerary-enabled").addEventListener("change", () =>
-		reloadItinerary(),
-	);
+	getID('itinerary-enabled').addEventListener('change', () => reloadItinerary());
 }
 
 export function addGallery() {
-	const j = getNextJ("gallery-box");
-	$("#gallery-box").append(`
+	const j = getNextJ('gallery-box');
+	$('#gallery-box').append(`
       <div id="gallery-${j}" class="accordion-item accordion-gallery" >
       <h2 class="accordion-header" id="heading-gallery-${j}">
         <button id="gallery-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-gallery-${j}" aria-expanded="false" aria-controls="collapse-accommodations-${j}">
-          ${translate("labels.image.title")} ${j}
+          ${translate('labels.image.title')} ${j}
         </button>
       </h2>
       <div id="collapse-gallery-${j}" class="accordion-collapse collapse"
         aria-labelledby="heading-gallery-${j}" data-bs-parent="#gallery-box">
         <div class="accordion-body">
           <div class="nice-form-group">
-            <label>${translate("labels.title")}</label>
-            <input required id="gallery-title-input-${j}" type="text" placeholder="${translate("destination.lineup.title")}" />
+            <label>${translate('labels.title')}</label>
+            <input required id="gallery-title-input-${j}" type="text" placeholder="${translate('destination.lineup.title')}" />
           </div>
 
           <div class="nice-form-group" id="gallery-select-form-group-${j}">
-            <label>${translate("labels.type")} <span class="optional"> (${translate("labels.optional")})</span></label>
+            <label>${translate('labels.type')} <span class="optional"> (${translate('labels.optional')})</span></label>
             <select id="gallery-category-select-${j}" style="display: none;"></select>
-            <input class="nice-form-group" id="gallery-category-${j}" type="text" placeholder="${translate("destination.map.title")}" />
+            <input class="nice-form-group" id="gallery-category-${j}" type="text" placeholder="${translate('destination.map.title')}" />
           </div>
     
           <div class="nice-form-group">
-            <label>${translate("labels.description.title")} <span class="optional"> (${translate("labels.optional")})</span></label>
-            <input id="gallery-description-${j}" type="text" placeholder="${translate("trip.gallery.description_placeholder")}" />
+            <label>${translate('labels.description.title')} <span class="optional"> (${translate('labels.optional')})</span></label>
+            <input id="gallery-description-${j}" type="text" placeholder="${translate('trip.gallery.description_placeholder')}" />
           </div>
     
           <div class="nice-form-group customization-box" id="gallery-${j}-box">
-            <label>${translate("labels.image.title")}</label>
+            <label>${translate('labels.image.title')}</label>
             <input id="upload-gallery-${j}" class='image-uploadbox' type="file" accept=".jpg, .jpeg, .png" />
-            <div id="upload-gallery-${j}-size-message" class="message-text"> <i class='red'>*</i> ${translate("labels.image.upload_limit")}</div>
+            <div id="upload-gallery-${j}-size-message" class="message-text"> <i class='red'>*</i> ${translate('labels.image.upload_limit')}</div>
           </div>
     
           <div class="nice-form-group">
-            <input id="link-gallery-${j}" class='image-input' type="url" placeholder="${translate("labels.image.placeholder")}" value=""
+            <input id="link-gallery-${j}" class='image-input' type="url" placeholder="${translate('labels.image.placeholder')}" value=""
               class="icon-right">
           </div>
     
           <fieldset class="nice-form-group image-checkbox">
             <div class="nice-form-group enable-link">
               <input type="radio" name="type-gallery-${j}" id="enable-link-gallery-${j}" checked>
-              <label for="enable-link-gallery-${j}">${translate("labels.image.link")}</label>
+              <label for="enable-link-gallery-${j}">${translate('labels.image.link')}</label>
             </div>
     
             <div class="nice-form-group">
               <input type="radio" name="type-gallery-${j}" id="enable-upload-gallery-${j}">
-              <label for="enable-upload-gallery-${j}">${translate("labels.image.upload")} <span class="optional"> (${translate("labels.image.upload_limit")})</span></label>
+              <label for="enable-upload-gallery-${j}">${translate('labels.image.upload')} <span class="optional"> (${translate('labels.image.upload_limit')})</span></label>
             </div>
           </fieldset>
     
@@ -521,9 +535,5 @@ export function addGallery() {
 	loadImageSelector(`gallery-${j}`);
 	loadGalleryListeners(j);
 	addRemoveGalleryListener(j);
-	addSelectorDS(
-		"gallery-category",
-		`gallery-category-select-${j}`,
-		`gallery-category-${j}`,
-	);
+	addSelectorDS('gallery-category', `gallery-category-select-${j}`, `gallery-category-${j}`);
 }

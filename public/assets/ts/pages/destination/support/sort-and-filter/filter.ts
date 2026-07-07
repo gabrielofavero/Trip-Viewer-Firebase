@@ -1,27 +1,32 @@
 import { getPriceLabel, isPriceInBucketRange } from '../../../../models/destination.model.js';
 import { translate } from '../../../../i18n/translation.js';
-import {FILTER_SORT_DATA, loadFilterSortingData, openFilterSortDrawer, shouldDisplayPlanned, shouldDisplayPrices, shouldDisplayRegions, shouldDisplayScores} from "./sort-and-filter.js";
-import { filterDrawerOptionClickAction } from "./support/drawer.js";
-import { filterDrawerOptionLoadAction } from "./support/drawer.js";
-import { getFilterDrawerInnerHTML } from "./support/drawer.js";
-import { ACTIVE_CATEGORY, applyContent, CONTENT, getItem, isPlanned } from "../../destination.js";
-import { getFilterPreferences } from "./support/preferences.js";
-import { getPrices } from "./support/price-bucket.js";
+import {
+	FILTER_SORT_DATA,
+	loadFilterSortingData,
+	openFilterSortDrawer,
+	shouldDisplayPlanned,
+	shouldDisplayPrices,
+	shouldDisplayRegions,
+	shouldDisplayScores,
+} from './sort-and-filter.js';
+import { filterDrawerOptionClickAction } from './support/drawer.js';
+import { filterDrawerOptionLoadAction } from './support/drawer.js';
+import { getFilterDrawerInnerHTML } from './support/drawer.js';
+import { ACTIVE_CATEGORY, applyContent, CONTENT, getItem, isPlanned } from '../../destination.js';
+import { getFilterPreferences } from './support/preferences.js';
+import { getPrices } from './support/price-bucket.js';
 
 export const FILTER_OPTIONS: Record<string, Record<string, Record<string, string>>> = {};
 
 // Main Action
 export function filter(render = false) {
 	const preferences = getFilterPreferences();
-	const isPlannedEnabled =
-		shouldDisplayPlanned() && preferences.planned !== "everything";
-	const isPricesEnabled =
-		shouldDisplayPrices() && preferences.prices !== "everything";
-	const isScoresEnabled =
-		shouldDisplayScores() && preferences.scores !== "everything";
+	const isPlannedEnabled = shouldDisplayPlanned() && preferences.planned !== 'everything';
+	const isPricesEnabled = shouldDisplayPrices() && preferences.prices !== 'everything';
+	const isScoresEnabled = shouldDisplayScores() && preferences.scores !== 'everything';
 	const isRegionsEnabled =
 		shouldDisplayRegions() &&
-		preferences.region !== "everything" &&
+		preferences.region !== 'everything' &&
 		FILTER_SORT_DATA[ACTIVE_CATEGORY].region.has(preferences.region);
 
 	for (const content of CONTENT) {
@@ -45,19 +50,19 @@ export function filter(render = false) {
 	function shouldFilterByPlanned(id) {
 		const planned = isPlanned(id);
 		return (
-			(planned && preferences.planned === "not_planned") ||
-			(!planned && preferences.planned === "planned")
+			(planned && preferences.planned === 'not_planned') ||
+			(!planned && preferences.planned === 'planned')
 		);
 	}
 
 	function shouldFilterByPrices(item) {
 		const value = item.price;
 
-		if (value === "$$$$") {
+		if (value === '$$$$') {
 			return false;
 		}
 
-		if (value != "default" && preferences.prices != "default") {
+		if (value != 'default' && preferences.prices != 'default') {
 			return !isPriceInBucketRange(preferences.prices, value);
 		}
 
@@ -67,7 +72,7 @@ export function filter(render = false) {
 	function shouldFilterByScores(item) {
 		const value = item.rating;
 
-		if (["default", "1"].includes(value)) {
+		if (['default', '1'].includes(value)) {
 			return true;
 		}
 
@@ -97,17 +102,17 @@ export function loadFilterOptions(force = false) {
 
 	if (shouldDisplayPlanned()) {
 		options.planned = {
-			planned: translate("destination.filter.planned.planned"),
-			not_planned: translate("destination.filter.planned.not_planned"),
+			planned: translate('destination.filter.planned.planned'),
+			not_planned: translate('destination.filter.planned.not_planned'),
 		};
 	}
 
 	if (shouldDisplayScores()) {
 		options.scores = {
-			5: translate("destination.filter.scores.5"),
-			4: translate("destination.filter.scores.4"),
-			3: translate("destination.filter.scores.3"),
-			2: translate("destination.filter.scores.2"),
+			5: translate('destination.filter.scores.5'),
+			4: translate('destination.filter.scores.4'),
+			3: translate('destination.filter.scores.3'),
+			2: translate('destination.filter.scores.2'),
 		};
 	}
 
@@ -119,7 +124,7 @@ export function loadFilterOptions(force = false) {
 				.sort((a, b) => a.localeCompare(b)),
 		);
 		options.region = {
-			none: translate("destination.filter.region.none"),
+			none: translate('destination.filter.region.none'),
 		};
 		for (const region of regions) {
 			options.region[region] = region;
@@ -130,11 +135,7 @@ export function loadFilterOptions(force = false) {
 		options.prices = {};
 		const prices = Array.from(getPrices()) as string[];
 
-		if (
-			prices.length === 2 &&
-			prices[0] === "-" &&
-			["$", "$$", "$$$"].includes(prices[1])
-		) {
+		if (prices.length === 2 && prices[0] === '-' && ['$', '$$', '$$$'].includes(prices[1])) {
 			prices.pop();
 		}
 
@@ -146,10 +147,10 @@ export function loadFilterOptions(force = false) {
 	function loadTitles() {
 		if (!FILTER_OPTIONS.titles) {
 			FILTER_OPTIONS.titles = {
-				planned: translate("destination.filter.planned.title"),
-				scores: translate("destination.filter.scores.title"),
-				region: translate("destination.filter.region.title"),
-				prices: translate("destination.filter.price.title"),
+				planned: translate('destination.filter.planned.title'),
+				scores: translate('destination.filter.scores.title'),
+				region: translate('destination.filter.region.title'),
+				prices: translate('destination.filter.price.title'),
 			};
 		}
 	}
@@ -158,7 +159,7 @@ export function loadFilterOptions(force = false) {
 // Drawer
 export function openFilterDrawer() {
 	openFilterSortDrawer({
-		triggerId: "filter",
+		triggerId: 'filter',
 		getInnerHTML: getFilterDrawerInnerHTML,
 		clickAction: filterDrawerOptionClickAction,
 		loadAction: filterDrawerOptionLoadAction,

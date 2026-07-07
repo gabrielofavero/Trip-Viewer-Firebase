@@ -1,15 +1,15 @@
 import { getState } from '../../../data/state.js';
 import { convertFromDateObject, getDateNoTime, getTodayDateObject } from '../../../utils/dates.js';
 import { getID } from '../../../utils/dom.js';
-import { loadImageLightbox } from "../support/embed.js";
-import { getSensitiveReservationHTML } from "../support/sensitive-reservation.js";
-import { initSwiper } from "../support/swiper.js";
-import { translate } from "../../../i18n/translation.js";
-import { getDateString } from "../../../utils/dates.js";
-import { getTimeStringFromDate } from "../../../utils/dates.js";
-import { ADJUST_HEIGHT_CARDS } from "../support/visibility.js";
-import { END_DATE } from "../view.js";
-import { START_DATE } from "../view.js";
+import { loadImageLightbox } from '../support/embed.js';
+import { getSensitiveReservationHTML } from '../support/sensitive-reservation.js';
+import { initSwiper } from '../support/swiper.js';
+import { translate } from '../../../i18n/translation.js';
+import { getDateString } from '../../../utils/dates.js';
+import { getTimeStringFromDate } from '../../../utils/dates.js';
+import { ADJUST_HEIGHT_CARDS } from '../support/visibility.js';
+import { END_DATE } from '../view.js';
+import { START_DATE } from '../view.js';
 
 export function loadAccommodations() {
 	let swiperData = [];
@@ -46,7 +46,7 @@ function getAccommodationsHTML(i, innerItinerary = false) {
 	};
 
 	if (innerItinerary) {
-		return getHotelBoxHTML(hospedagem, "inner-itinerary", true);
+		return getHotelBoxHTML(hospedagem, 'inner-itinerary', true);
 	}
 
 	const j = i + 1;
@@ -61,25 +61,20 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
 	const images = hospedagem.images;
 	const checkIn = hospedagem.checkIn;
 	const checkOut = hospedagem.checkOut;
-	const galeriaId = innerItinerary
-		? "itinerary-gallery"
-		: `accommodations-gallery-${j}`;
-	const isSensitive = getState().pin === "sensitive-only";
-	const reservationClass = isSensitive
-		? "hotel-reservation sensitive"
-		: "hotel-reservation";
-	const reservationVisibility =
-		isSensitive || hospedagem.reservation ? "block" : "none";
+	const galeriaId = innerItinerary ? 'itinerary-gallery' : `accommodations-gallery-${j}`;
+	const isSensitive = getState().pin === 'sensitive-only';
+	const reservationClass = isSensitive ? 'hotel-reservation sensitive' : 'hotel-reservation';
+	const reservationVisibility = isSensitive || hospedagem.reservation ? 'block' : 'none';
 
-	let galeriaItems = "";
+	let galeriaItems = '';
 
 	for (let i = 0; i < images.length; i++) {
 		const image = images[i];
-		galeriaItems += `<a href="${image.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${image.description}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ""}</a>`;
+		galeriaItems += `<a href="${image.link}" data-gallery="portfolioGallery" class="portfolio-lightbox ${galeriaId}" title="${image.description}">${i == 0 ? '<i class="bx bx-zoom-in"></i>' : ''}</a>`;
 	}
 
-	return `<div class="hotel-box${innerItinerary ? "-inner inner-itinerary-item" : ""}" id="accommodations-box-${j}${innerItinerary ? "-inner" : ""}">
-            <div class="portfolio-wrap" style="display: ${images.length > 0 ? "block" : "none"};">
+	return `<div class="hotel-box${innerItinerary ? '-inner inner-itinerary-item' : ''}" id="accommodations-box-${j}${innerItinerary ? '-inner' : ''}">
+            <div class="portfolio-wrap" style="display: ${images.length > 0 ? 'block' : 'none'};">
               <div class="hotel-img" style="background-image: url('${images?.[0]?.link}');">
                 <div class="portfolio-info">
                   <div class="portfolio-links">
@@ -87,8 +82,8 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                   </div>
                 </div>
                 <div class="hotel-img-text-container">
-                  <div class="hotel-img-text" style="display: ${hospedagem.breakfast ? "block" : "none"};">
-                    <i class="bx bx-coffee-togo"></i> ${translate("trip.accommodation.breakfast")}
+                  <div class="hotel-img-text" style="display: ${hospedagem.breakfast ? 'block' : 'none'};">
+                    <i class="bx bx-coffee-togo"></i> ${translate('trip.accommodation.breakfast')}
                   </div>
                 </div>
               </div>
@@ -99,11 +94,11 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                   <div class="hotel-name" id="accommodations-name-${j}">
                     ${hospedagem.name}
                     <div>
-                      <i style="display: ${hospedagem.link ? "block" : "none"}" class="iconify external-link" 
+                      <i style="display: ${hospedagem.link ? 'block' : 'none'}" class="iconify external-link" 
                       data-icon="tabler:external-link" data-action="open-link" data-url="${hospedagem.link}"></i>
                     </div> 
                   </div>
-                  <div class="hotel-address" style="display: ${hospedagem.address ? "block" : "none"}">
+                  <div class="hotel-address" style="display: ${hospedagem.address ? 'block' : 'none'}">
                     <i class="bx bxs-map color-icon"></i> 
                     ${hospedagem.address}
                   </div>
@@ -114,16 +109,16 @@ export function getHotelBoxHTML(hospedagem, j, innerItinerary = false) {
                 <i class="bx bxs-file color-icon"></i>
                 ${getAccommodationReservationHTML(hospedagem)} 
               </div>
-                <div class="hotel-description" style="display: ${hospedagem.description ? "block" : "none"}">
+                <div class="hotel-description" style="display: ${hospedagem.description ? 'block' : 'none'}">
                   <i class="bx bxs-hotel color-icon"></i> 
                   ${hospedagem.description}
                 </div>
                   <div class="hotel-description">
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkin")}:</strong> <span>${checkIn}</span> 
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate('trip.accommodation.checkin')}:</strong> <span>${checkIn}</span> 
                     </div>
                     <div>
-                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate("trip.accommodation.checkout")}:</strong> <span>${checkOut}</span>
+                      <i class="bi bi-chevron-right color-icon"></i><strong>${translate('trip.accommodation.checkout')}:</strong> <span>${checkOut}</span>
                     </div>
                   </div>
                 </div>
@@ -137,28 +132,27 @@ export function getHospedagensData(dataFirestore) {
 }
 
 function getAccommodationReservationHTML(hospedagem) {
-	if (getState().pin === "sensitive-only") {
-		return getSensitiveReservationHTML("accommodations", hospedagem.id);
+	if (getState().pin === 'sensitive-only') {
+		return getSensitiveReservationHTML('accommodations', hospedagem.id);
 	}
 	// remove # if first char is #
-	if (hospedagem.reservation && hospedagem.reservation.charAt(0) === "#") {
-		return `${translate("labels.reservation.title")} ${hospedagem.reservation}`;
+	if (hospedagem.reservation && hospedagem.reservation.charAt(0) === '#') {
+		return `${translate('labels.reservation.title')} ${hospedagem.reservation}`;
 	}
 
 	if (!hospedagem.reservation) {
-		return "";
+		return '';
 	}
 
-	return `${translate("labels.reservation.title")} #${hospedagem.reservation}`;
+	return `${translate('labels.reservation.title')} #${hospedagem.reservation}`;
 }
 
 function buildHospedagensSwiper(swiperData) {
-	const swiperButtonStyle =
-		swiperData.length > 1 ? "" : `style="display: none"`;
+	const swiperButtonStyle = swiperData.length > 1 ? '' : `style="display: none"`;
 	getID(`accommodations-box`).innerHTML =
 		`<div id="accommodations-swiper" class="testimonials-slider swiper aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                                           <div class="swiper-wrapper" id="accommodations-wrapper">
-                                            ${swiperData.join("")}
+                                            ${swiperData.join('')}
                                           </div>
                                           <div class="swiper-controls">
                                             <div class="swiper-button-prev accommodations-prev" ${swiperButtonStyle}></div>
@@ -166,8 +160,8 @@ function buildHospedagensSwiper(swiperData) {
                                             <div class="swiper-button-next accommodations-next" ${swiperButtonStyle}></div>
                                           </div>
                                         </div>`;
-	ADJUST_HEIGHT_CARDS.push("accommodations");
-	initSwiper("accommodations");
+	ADJUST_HEIGHT_CARDS.push('accommodations');
+	initSwiper('accommodations');
 }
 
 function autoNavigateHospedagens() {
@@ -179,10 +173,7 @@ function autoNavigateHospedagens() {
 
 	// Outside trip dates → show first element
 	if (START_DATE?.date && END_DATE?.date) {
-		if (
-			hoje < getDateNoTime(START_DATE.date) ||
-			hoje > getDateNoTime(END_DATE.date)
-		) {
+		if (hoje < getDateNoTime(START_DATE.date) || hoje > getDateNoTime(END_DATE.date)) {
 			targetIndex = 0;
 		}
 	}
@@ -224,7 +215,7 @@ function autoNavigateHospedagens() {
 
 	if (targetIndex === undefined || targetIndex < 0) return;
 
-	const swiperEl = getID("accommodations-swiper");
+	const swiperEl = getID('accommodations-swiper');
 	if (swiperEl?.swiper) {
 		swiperEl.swiper.slideTo(targetIndex, 600);
 	}

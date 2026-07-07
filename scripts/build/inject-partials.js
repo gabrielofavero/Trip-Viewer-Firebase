@@ -32,56 +32,56 @@ const DIST_DIR = path.join(ROOT, "dist");
  *   useTopBar — whether to include the top-bar partial
  */
 const PAGES = [
-  // Root-level pages
-  {
-    source: "index.html",
-    title: "TripViewer",
-    entry: "assets/ts/pages/home/index-entry.js",
-    useTopBar: true,
-  },
-  {
-    source: "view.html",
-    title: "TripViewer",
-    entry: "assets/ts/pages/trip-detail/view-entry.js",
-    useTopBar: true,
-  },
-  {
-    source: "destination.html",
-    title: "TripViewer",
-    entry: "assets/ts/pages/destination/destination-entry.js",
-    useTopBar: true,
-  },
-  {
-    source: "expenses.html",
-    title: "TripViewer",
-    entry: "assets/ts/pages/expenses/expenses-entry.js",
-    useTopBar: true,
-  },
-  {
-    source: "itinerary.html",
-    title: "TripViewer",
-    entry: "assets/ts/pages/itinerary/itinerary-entry.js",
-    useTopBar: true,
-  },
-  // Edit pages
-  {
-    source: "edit/trip.html",
-    title: "TripViewer",
-    entry: "../assets/ts/pages/edit-trip/trip-entry.js",
-    useTopBar: true,
-  },
-  {
-    source: "edit/destination.html",
-    title: "TripViewer",
-    entry: "../assets/ts/pages/edit-destination/destination-entry.js",
-    useTopBar: true,
-  },
-  {
-    source: "edit/listing.html",
-    title: "TripViewer",
-    entry: "../assets/ts/pages/edit-listing/listing-entry.js",
-    useTopBar: true,
-  },
+	// Root-level pages
+	{
+		source: "index.html",
+		title: "TripViewer",
+		entry: "assets/ts/pages/home/index-entry.js",
+		useTopBar: true,
+	},
+	{
+		source: "view.html",
+		title: "TripViewer",
+		entry: "assets/ts/pages/trip-detail/view-entry.js",
+		useTopBar: true,
+	},
+	{
+		source: "destination.html",
+		title: "TripViewer",
+		entry: "assets/ts/pages/destination/destination-entry.js",
+		useTopBar: true,
+	},
+	{
+		source: "expenses.html",
+		title: "TripViewer",
+		entry: "assets/ts/pages/expenses/expenses-entry.js",
+		useTopBar: true,
+	},
+	{
+		source: "itinerary.html",
+		title: "TripViewer",
+		entry: "assets/ts/pages/itinerary/itinerary-entry.js",
+		useTopBar: true,
+	},
+	// Edit pages
+	{
+		source: "edit/trip.html",
+		title: "TripViewer",
+		entry: "../assets/ts/pages/edit-trip/trip-entry.js",
+		useTopBar: true,
+	},
+	{
+		source: "edit/destination.html",
+		title: "TripViewer",
+		entry: "../assets/ts/pages/edit-destination/destination-entry.js",
+		useTopBar: true,
+	},
+	{
+		source: "edit/listing.html",
+		title: "TripViewer",
+		entry: "../assets/ts/pages/edit-listing/listing-entry.js",
+		useTopBar: true,
+	},
 ];
 
 // ---------------------------------------------------------------------------
@@ -95,72 +95,74 @@ const PAGES = [
  *   extraIcons        — additional icons after night-mode (share, export, print, menu, profile)
  */
 const TOP_BAR_ICONS = {
-  "index.html": {
-    backIcon: '<i id="back" class="bx bx-arrow-back icon-buttons" style="display: none;"></i>',
-    nightModeClasses: "",
-    extraIcons: '<i id="profile-icon" class="icon-buttons" style="display: none;"></i>',
-  },
-  "view.html": {
-    backIcon: "",
-    nightModeClasses: "",
-    extraIcons:
-      '        <i id="share" class="bx bx-share-alt icon-buttons"></i>\n' +
-      '        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>',
-  },
-  "destination.html": {
-    backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
-    nightModeClasses: "",
-    extraIcons:
-      '        <i id="share" style="display: none;" onclick="_share()" class="bx bx-share-alt icon-buttons"></i>',
-  },
-  "expenses.html": {
-    backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
-    nightModeClasses: "",
-    extraIcons: "",
-  },
-  "itinerary.html": {
-    backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
-    nightModeClasses: " d-none d-xl-block",
-    extraIcons:
-      '        <i id="export" class="iconify icon-buttons d-none d-xl-block" data-icon="ph:export-bold"></i>\n' +
-      '        <i id="print" class="iconify icon-buttons d-none d-xl-block" data-icon="lucide:printer"></i>\n' +
-      '        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>',
-  },
-  // Edit pages — all share the same icon layout
-  "edit/trip.html": {
-    backIcon:
-      '<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
-    nightModeClasses: "",
-    extraIcons: "",
-  },
-  "edit/destination.html": {
-    backIcon:
-      '<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
-    nightModeClasses: "",
-    extraIcons: "",
-  },
-  "edit/listing.html": {
-    backIcon:
-      '<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
-    nightModeClasses: "",
-    extraIcons: "",
-  },
+	"index.html": {
+		backIcon:
+			'<i id="back" class="bx bx-arrow-back icon-buttons" style="display: none;"></i>',
+		nightModeClasses: "",
+		extraIcons:
+			'<i id="profile-icon" class="icon-buttons" style="display: none;"></i>',
+	},
+	"view.html": {
+		backIcon: "",
+		nightModeClasses: "",
+		extraIcons:
+			'        <i id="share" class="bx bx-share-alt icon-buttons"></i>\n' +
+			'        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>',
+	},
+	"destination.html": {
+		backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
+		nightModeClasses: "",
+		extraIcons:
+			'        <i id="share" style="display: none;" onclick="_share()" class="bx bx-share-alt icon-buttons"></i>',
+	},
+	"expenses.html": {
+		backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
+		nightModeClasses: "",
+		extraIcons: "",
+	},
+	"itinerary.html": {
+		backIcon: '<i id="closeButton" class="bx bx-arrow-back icon-buttons"></i>',
+		nightModeClasses: " d-none d-xl-block",
+		extraIcons:
+			'        <i id="export" class="iconify icon-buttons d-none d-xl-block" data-icon="ph:export-bold"></i>\n' +
+			'        <i id="print" class="iconify icon-buttons d-none d-xl-block" data-icon="lucide:printer"></i>\n' +
+			'        <i id="menu" class="bi bi-list mobile-nav-toggle d-xl-none"></i>',
+	},
+	// Edit pages — all share the same icon layout
+	"edit/trip.html": {
+		backIcon:
+			'<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
+		nightModeClasses: "",
+		extraIcons: "",
+	},
+	"edit/destination.html": {
+		backIcon:
+			'<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
+		nightModeClasses: "",
+		extraIcons: "",
+	},
+	"edit/listing.html": {
+		backIcon:
+			'<i onclick="window.location = \'{{HOME_HREF}}\'" id="back" class="bx bx-arrow-back icon-buttons"></i>',
+		nightModeClasses: "",
+		extraIcons: "",
+	},
 };
 
 /**
  * Get top-bar icon replacements for a given page source.
  */
 function getTopBarIcons(source) {
-  const config = TOP_BAR_ICONS[source];
-  if (!config) {
-    console.warn(`[inject] WARNING: No top-bar icon config for: ${source}`);
-    return { BACK_ICON: "", NIGHT_MODE_CLASSES: "", EXTRA_ICONS: "" };
-  }
-  return {
-    BACK_ICON: config.backIcon,
-    NIGHT_MODE_CLASSES: config.nightModeClasses,
-    EXTRA_ICONS: config.extraIcons,
-  };
+	const config = TOP_BAR_ICONS[source];
+	if (!config) {
+		console.warn(`[inject] WARNING: No top-bar icon config for: ${source}`);
+		return { BACK_ICON: "", NIGHT_MODE_CLASSES: "", EXTRA_ICONS: "" };
+	}
+	return {
+		BACK_ICON: config.backIcon,
+		NIGHT_MODE_CLASSES: config.nightModeClasses,
+		EXTRA_ICONS: config.extraIcons,
+	};
 }
 
 // ---------------------------------------------------------------------------
@@ -171,12 +173,12 @@ function getTopBarIcons(source) {
  * Read a shared partial file from public/shared/.
  */
 function readPartial(name) {
-  const filePath = path.join(SHARED_DIR, name);
-  if (!fs.existsSync(filePath)) {
-    console.warn(`[inject] WARNING: Shared partial not found: ${name}`);
-    return `<!-- [inject] MISSING PARTIAL: ${name} -->`;
-  }
-  return fs.readFileSync(filePath, "utf8");
+	const filePath = path.join(SHARED_DIR, name);
+	if (!fs.existsSync(filePath)) {
+		console.warn(`[inject] WARNING: Shared partial not found: ${name}`);
+		return `<!-- [inject] MISSING PARTIAL: ${name} -->`;
+	}
+	return fs.readFileSync(filePath, "utf8");
 }
 
 /**
@@ -185,8 +187,8 @@ function readPartial(name) {
  *   - Edit pages (e.g., "edit/trip.html") → "../"
  */
 function getAssetPrefix(sourcePath) {
-  const depth = sourcePath.split("/").length - 1;
-  return depth === 0 ? "" : "../".repeat(depth);
+	const depth = sourcePath.split("/").length - 1;
+	return depth === 0 ? "" : "../".repeat(depth);
 }
 
 /**
@@ -195,19 +197,19 @@ function getAssetPrefix(sourcePath) {
  *   - Edit pages → "../index.html"
  */
 function getHomeHref(sourcePath) {
-  const depth = sourcePath.split("/").length - 1;
-  return depth === 0 ? "index.html" : "../".repeat(depth) + "index.html";
+	const depth = sourcePath.split("/").length - 1;
+	return depth === 0 ? "index.html" : "../".repeat(depth) + "index.html";
 }
 
 /**
  * Replace all placeholders in a string.
  */
 function replacePlaceholders(template, replacements) {
-  let result = template;
-  for (const [key, value] of Object.entries(replacements)) {
-    result = result.replace(new RegExp(`\\{\\{${key}\\}\\}`, "g"), value);
-  }
-  return result;
+	let result = template;
+	for (const [key, value] of Object.entries(replacements)) {
+		result = result.replace(new RegExp(`\\{\\{${key}\\}\\}`, "g"), value);
+	}
+	return result;
 }
 
 // ---------------------------------------------------------------------------
@@ -215,74 +217,74 @@ function replacePlaceholders(template, replacements) {
 // ---------------------------------------------------------------------------
 
 function inject(options = {}) {
-  console.log("[inject] Processing HTML partials...");
-  let count = 0;
+	console.log("[inject] Processing HTML partials...");
+	let count = 0;
 
-  // Pre-load shared partials
-  const partials = {
-    "shared/head.html": readPartial("head.html"),
-    "shared/scripts-vendor.html": readPartial("scripts-vendor.html"),
-    "shared/scripts-core.html": readPartial("scripts-core.html"),
-    "shared/top-bar.html": readPartial("top-bar.html"),
-  };
+	// Pre-load shared partials
+	const partials = {
+		"shared/head.html": readPartial("head.html"),
+		"shared/scripts-vendor.html": readPartial("scripts-vendor.html"),
+		"shared/scripts-core.html": readPartial("scripts-core.html"),
+		"shared/top-bar.html": readPartial("top-bar.html"),
+	};
 
-  // LiveReload is included by default; pass { noLiveReload: true } to skip it
-  if (!options.noLiveReload) {
-    partials["shared/livereload.html"] = readPartial("livereload.html");
-  }
+	// LiveReload is included by default; pass { noLiveReload: true } to skip it
+	if (!options.noLiveReload) {
+		partials["shared/livereload.html"] = readPartial("livereload.html");
+	}
 
-  for (const page of PAGES) {
-    const srcPath = path.join(PUBLIC_DIR, page.source);
+	for (const page of PAGES) {
+		const srcPath = path.join(PUBLIC_DIR, page.source);
 
-    if (!fs.existsSync(srcPath)) {
-      console.warn(`[inject] WARNING: Source not found: ${page.source}`);
-      continue;
-    }
+		if (!fs.existsSync(srcPath)) {
+			console.warn(`[inject] WARNING: Source not found: ${page.source}`);
+			continue;
+		}
 
-    let html = fs.readFileSync(srcPath, "utf8");
+		let html = fs.readFileSync(srcPath, "utf8");
 
-    // Compute placeholders
-    const assetPrefix = getAssetPrefix(page.source);
-    const homeHref = getHomeHref(page.source);
-    // Get top-bar icon configuration for this page
-    const topBarIcons = getTopBarIcons(page.source);
+		// Compute placeholders
+		const assetPrefix = getAssetPrefix(page.source);
+		const homeHref = getHomeHref(page.source);
+		// Get top-bar icon configuration for this page
+		const topBarIcons = getTopBarIcons(page.source);
 
-    const replacements = {
-      PAGE_TITLE: page.title,
-      ASSET_PREFIX: assetPrefix,
-      ENTRY_POINT: page.entry,
-      HOME_HREF: homeHref,
-      ...topBarIcons,
-    };
+		const replacements = {
+			PAGE_TITLE: page.title,
+			ASSET_PREFIX: assetPrefix,
+			ENTRY_POINT: page.entry,
+			HOME_HREF: homeHref,
+			...topBarIcons,
+		};
 
-    // Replace includes
-    for (const [includeName, partialContent] of Object.entries(partials)) {
-      const includeDirective = `<!-- #include ${includeName} -->`;
-      if (html.includes(includeDirective)) {
-        // Apply placeholders to the partial content
-        const processed = replacePlaceholders(partialContent, replacements);
-        html = html.replace(includeDirective, processed);
-      }
-    }
+		// Replace includes
+		for (const [includeName, partialContent] of Object.entries(partials)) {
+			const includeDirective = `<!-- #include ${includeName} -->`;
+			if (html.includes(includeDirective)) {
+				// Apply placeholders to the partial content
+				const processed = replacePlaceholders(partialContent, replacements);
+				html = html.replace(includeDirective, processed);
+			}
+		}
 
-    // Also replace any remaining placeholders in the main HTML
-    // (e.g., if a page doesn't use includes but still has placeholders)
-    html = replacePlaceholders(html, replacements);
+		// Also replace any remaining placeholders in the main HTML
+		// (e.g., if a page doesn't use includes but still has placeholders)
+		html = replacePlaceholders(html, replacements);
 
-    // Write to dist/
-    const distPath = path.join(DIST_DIR, page.source);
-    fs.mkdirSync(path.dirname(distPath), { recursive: true });
-    fs.writeFileSync(distPath, html, "utf8");
-    count++;
-    console.log(`[inject]   ${page.source}`);
-  }
+		// Write to dist/
+		const distPath = path.join(DIST_DIR, page.source);
+		fs.mkdirSync(path.dirname(distPath), { recursive: true });
+		fs.writeFileSync(distPath, html, "utf8");
+		count++;
+		console.log(`[inject]   ${page.source}`);
+	}
 
-  console.log(`[inject] Processed ${count} HTML file(s).`);
+	console.log(`[inject] Processed ${count} HTML file(s).`);
 }
 
 // --- Run (when called directly) ---
 if (require.main === module) {
-  inject();
+	inject();
 }
 
 // Export for use by build.js

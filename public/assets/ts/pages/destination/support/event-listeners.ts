@@ -9,33 +9,33 @@ import { openAttributions } from '../../../utils/attributions.js';
 import { closeToast } from '../../../utils/messages.js';
 
 export function loadDestinationListeners() {
-    registerActions({
-        "open-filter-drawer": () => openFilterDrawer(),
-        "open-sort-drawer": () => openSortDrawer(),
-        "add-destination": () => add(),
-        "open-attributions": () => openAttributions(),
-        "close-drawer": () => closeDrawer(),
-        "close-toast": () => closeToast(),
-        "open-link": (target) => {
-            const url = target.getAttribute("data-url");
-            if (url) window.open(url, "_blank");
-        },
-        "processAccordion": (target) => {
-            const index = parseInt(target.getAttribute("data-index"));
-            if (!isNaN(index)) processAccordion(index);
-        },
-        "closeAddedDestination": (target) => {
-            const index = parseInt(target.getAttribute("data-index"));
-            if (!isNaN(index)) closeAddedDestination(index);
-        },
-        "edit-destination": (target) => {
-            const index = parseInt(target.getAttribute("data-index"));
-            if (!isNaN(index)) edit(index);
-        },
-    });
+	registerActions({
+		'open-filter-drawer': () => openFilterDrawer(),
+		'open-sort-drawer': () => openSortDrawer(),
+		'add-destination': () => add(),
+		'open-attributions': () => openAttributions(),
+		'close-drawer': () => closeDrawer(),
+		'close-toast': () => closeToast(),
+		'open-link': (target) => {
+			const url = target.getAttribute('data-url');
+			if (url) window.open(url, '_blank');
+		},
+		processAccordion: (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) processAccordion(index);
+		},
+		closeAddedDestination: (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) closeAddedDestination(index);
+		},
+		'edit-destination': (target) => {
+			const index = parseInt(target.getAttribute('data-index'));
+			if (!isNaN(index)) edit(index);
+		},
+	});
 
-    // Register string-based button actions used in modals (via messages.js _actionRegistry)
-    registerMessageActions({
-        deleteEdit,
-    });
+	// Register string-based button actions used in modals (via messages.js _actionRegistry)
+	registerMessageActions({
+		deleteEdit,
+	});
 }

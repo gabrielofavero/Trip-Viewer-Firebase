@@ -44,8 +44,7 @@ Two callback functions are provided - onSuccess and onFailure
 import { translate } from '../i18n/translation.js';
 import { cloneObject } from './dom.js';
 import { displayFullMessage, getContainersInput, MESSAGE_PROPERTIES } from './messages.js';
-import { confirmAction } from "../pages/edit-trip/categories/basic-data/protected-data.js";
-
+import { confirmAction } from '../pages/edit-trip/categories/basic-data/protected-data.js';
 
 (function ($) {
 	//Declare our function
@@ -66,10 +65,10 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 		var $wrapper = $(this),
 			$el = $wrapper.find('[data-role="pin"]'),
 			$elCount = $wrapper.find('[data-role="pin"]').length;
-		var pin: any = "";
+		var pin: any = '';
 
 		$el.each(function () {
-			pin += ".";
+			pin += '.';
 		});
 
 		//Event Initializations
@@ -77,27 +76,27 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 
 		//Function Declarations
 		function bindEvents() {
-			$($el).on("focus", function () {
+			$($el).on('focus', function () {
 				selectText(this);
 			});
 
 			if (checkForMobileDevices()) {
-				$($el).on("keyup", function (e) {
+				$($el).on('keyup', function (e) {
 					var $that = this;
-					validateUserInput(e, $that, "keypress");
+					validateUserInput(e, $that, 'keypress');
 				});
 			} else {
-				$($el).on("keypress", function (e) {
+				$($el).on('keypress', function (e) {
 					var $that = this;
 					setTimeout(function () {
-						validateUserInput(e, $that, "keypress");
+						validateUserInput(e, $that, 'keypress');
 					}, 0);
 				});
 			}
-			$($el).on("keydown", function (e) {
+			$($el).on('keydown', function (e) {
 				var $that = this;
 				setTimeout(function () {
-					validateUserInput(e, $that, "keydown");
+					validateUserInput(e, $that, 'keydown');
 				}, 0);
 			});
 		}
@@ -105,7 +104,7 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 		//Select the text in an input field
 		function selectText(obj) {
 			var value = $(obj).val();
-			if (!checkForMobileDevices() && $.trim(value) != "") {
+			if (!checkForMobileDevices() && $.trim(value) != '') {
 				$(obj).select();
 			}
 		}
@@ -119,7 +118,7 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 				value = $(obj).val(),
 				empty;
 
-			if (event == "keydown") {
+			if (event == 'keydown') {
 				//Case - User Hits Left Arrow
 				if (keycode === 37) {
 					$(prevInput).focus();
@@ -130,7 +129,7 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 					selectText(nextInput);
 				}
 
-				if ($.trim(value) == "") {
+				if ($.trim(value) == '') {
 					if (keycode === 8) {
 						$(prevInput).focus();
 						settings.onFailure.call(this);
@@ -140,42 +139,36 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 				}
 			}
 
-			if (event == "keypress") {
+			if (event == 'keypress') {
 				if (keycode == 0) {
 					return false;
 				}
 
 				//Case - User Enters an alphabet or a special character
-				if (
-					(keycode >= 65 && keycode <= 90) ||
-					(keycode >= 186 && keycode <= 222)
-				) {
+				if ((keycode >= 65 && keycode <= 90) || (keycode >= 186 && keycode <= 222)) {
 					e.preventDefault();
 				}
 
 				//Case - User enters a number from the main keypad or the numpad
-				if (
-					(keycode >= 48 && keycode <= 57) ||
-					(keycode >= 96 && keycode <= 105)
-				) {
-					pin = $.trim(pin.replace(/\s/g, ""));
-					pin = pin.split("");
+				if ((keycode >= 48 && keycode <= 57) || (keycode >= 96 && keycode <= 105)) {
+					pin = $.trim(pin.replace(/\s/g, ''));
+					pin = pin.split('');
 					pin[index] = value;
-					pin = pin.join("");
+					pin = pin.join('');
 
 					$(nextInput).focus();
 
 					if (!checkForMobileDevices()) {
 						setTimeout(function () {
-							$(obj).val("•");
+							$(obj).val('•');
 						}, 200);
 					} else {
-						$(obj).val("•");
+						$(obj).val('•');
 					}
 				}
 
 				var empty = $($el).filter(function () {
-					return this.value === "";
+					return this.value === '';
 				});
 
 				if (empty.length) {
@@ -196,9 +189,7 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 
 		function checkForMobileDevices() {
 			if (
-				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-					navigator.userAgent,
-				)
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 			) {
 				return true;
 			} else {
@@ -208,7 +199,7 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 
 		if (settings.numericKeyboardOnMobile) {
 			if (checkForMobileDevices()) {
-				$el.prop("type", "tel");
+				$el.prop('type', 'tel');
 			}
 		}
 	};
@@ -217,46 +208,41 @@ import { confirmAction } from "../pages/edit-trip/categories/basic-data/protecte
 function loadPin() {
 	// Track actual digits via keydown — the validatePin plugin replaces input
 	// values with "•" bullets, so we must capture the real digits before masking.
-	const actualDigits: string[] = ["", "", "", ""];
-	const pinWrapper = document.querySelector(".pin-wrapper")!;
-	pinWrapper.addEventListener("keydown", (e: KeyboardEvent) => {
+	const actualDigits: string[] = ['', '', '', ''];
+	const pinWrapper = document.querySelector('.pin-wrapper')!;
+	pinWrapper.addEventListener('keydown', (e: KeyboardEvent) => {
 		const target = e.target as HTMLInputElement;
-		if (target.getAttribute("data-role") !== "pin") return;
+		if (target.getAttribute('data-role') !== 'pin') return;
 		const inputs = Array.from(pinWrapper.querySelectorAll<HTMLInputElement>('[data-role="pin"]'));
 		const index = inputs.indexOf(target);
 		if (index < 0) return;
 
-		if (e.key >= "0" && e.key <= "9") {
+		if (e.key >= '0' && e.key <= '9') {
 			actualDigits[index] = e.key;
-		} else if (e.key === "Backspace" || e.key === "Delete") {
-			actualDigits[index] = "";
+		} else if (e.key === 'Backspace' || e.key === 'Delete') {
+			actualDigits[index] = '';
 		}
 	});
 
-	$(".pin-wrapper").validatePin({
+	$('.pin-wrapper').validatePin({
 		numericKeyboardOnMobile: true,
 		blurOnSuccess: true,
 		onSuccess: function () {
-			$(".pin").html(actualDigits.join(""));
+			$('.pin').html(actualDigits.join(''));
 		},
 		onFailure: function () {
-			$(".pin").html("");
+			$('.pin').html('');
 		},
 	});
 }
 
-export function requestPin({
-	confirmAction,
-	cancelAction,
-	precontent,
-	invalid = false,
-}) {
+export function requestPin({ confirmAction, cancelAction, precontent, invalid = false }) {
 	if (precontent === undefined) {
-		precontent = translate("trip.basic_information.pin.request");
+		precontent = translate('trip.basic_information.pin.request');
 	}
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	const classComplement = invalid ? "-invalid" : "";
-	properties.title = translate("trip.basic_information.pin.title");
+	const classComplement = invalid ? '-invalid' : '';
+	properties.title = translate('trip.basic_information.pin.title');
 	properties.content = `${precontent}<div class="pin-wrapper">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
                                 <input type="text" data-role="pin" maxlength="1" class="pin-input${classComplement}">
@@ -270,13 +256,13 @@ export function requestPin({
 
 	if (cancelAction) {
 		properties.buttons.push({
-			type: "cancel",
+			type: 'cancel',
 			action: cancelAction,
 		});
 	}
 
 	properties.buttons.push({
-		type: "confirm",
+		type: 'confirm',
 		action: confirmAction,
 	});
 
@@ -287,7 +273,7 @@ export function requestPin({
 export function requestInvalidPin({ confirmAction, cancelAction, precontent }) {
 	const invalid = true;
 	if (precontent === undefined) {
-		precontent = translate("trip.basic_information.pin.invalid");
+		precontent = translate('trip.basic_information.pin.invalid');
 	}
 	requestPin({ confirmAction, cancelAction, precontent, invalid });
 }
@@ -299,8 +285,8 @@ export function setManualPin(pinString) {
 	if (inputs.length !== 4) return;
 
 	inputs.forEach((input) => {
-		input.value = "•";
+		input.value = '•';
 	});
 
-	document.querySelector(".pin")!.innerHTML = pinString;
+	document.querySelector('.pin')!.innerHTML = pinString;
 }

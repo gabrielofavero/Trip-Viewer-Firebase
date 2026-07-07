@@ -11,14 +11,14 @@ import { getDestinations } from '../../app/config.js';
 import { translate } from '../../i18n/translation.js';
 import { getURLParam, setURLParam } from '../../utils/dom.js';
 import { convertFromDateObject, getMonth, getWeekday } from '../../utils/dates.js';
-import { getPlannedDestinations } from "./support/trip.js";
+import { getPlannedDestinations } from './support/trip.js';
 import { FIRESTORE_DESTINATIONS_DATA } from '../../data/state.js';
 
 export var ACTIVE_CATEGORY;
 
 // Active Category
 export function loadActiveCategory(urlParams) {
-	const type = urlParams["type"];
+	const type = urlParams['type'];
 	const destinationsConfig = getDestinations();
 	const ids = destinationsConfig.categories.ids;
 
@@ -48,12 +48,12 @@ export function loadActiveCategory(urlParams) {
 				return type;
 			}
 		}
-		throw translate("messages.errors.missing_data");
+		throw translate('messages.errors.missing_data');
 	}
 }
 
 export function updateActiveCategory(category) {
-	const urlParam = getURLParam("type");
+	const urlParam = getURLParam('type');
 	const translations = getDestinations().translation;
 	const param = translations[category];
 
@@ -62,37 +62,37 @@ export function updateActiveCategory(category) {
 	}
 
 	ACTIVE_CATEGORY = category;
-	setURLParam("type", param);
+	setURLParam('type', param);
 }
 
 // Rating
 export function getRatingIcon(rating) {
 	switch (rating) {
-		case "5":
-			return "ph:number-five-bold";
-		case "4":
-			return "ph:number-four-bold";
-		case "3":
-			return "ph:number-three-bold";
-		case "2":
-			return "ph:number-two-bold";
-		case "1":
-			return "ph:number-one-bold";
+		case '5':
+			return 'ph:number-five-bold';
+		case '4':
+			return 'ph:number-four-bold';
+		case '3':
+			return 'ph:number-three-bold';
+		case '2':
+			return 'ph:number-two-bold';
+		case '1':
+			return 'ph:number-one-bold';
 		default:
-			return "ic:outline-question-mark";
+			return 'ic:outline-question-mark';
 	}
 }
 
 export function getRatingClass(rating) {
 	switch (rating) {
-		case "5":
-		case "4":
-		case "3":
-		case "2":
-		case "1":
+		case '5':
+		case '4':
+		case '3':
+		case '2':
+		case '1':
 			return `rating-${rating}`;
 		default:
-			return "rating-absent";
+			return 'rating-absent';
 	}
 }
 
@@ -100,7 +100,7 @@ export function getRatingClass(rating) {
 export function getLinkOnClick(item, type) {
 	if (item[type]) {
 		return ` data-action="open-link" data-url="${item[type]}"`;
-	} else return "";
+	} else return '';
 }
 
 // Planned
@@ -110,11 +110,11 @@ export function getPlanned(id) {
 
 	function getPlannedValue(plannedItems = []) {
 		if (plannedItems.length === 0) {
-			return "";
+			return '';
 		}
 
 		if (plannedItems.length > 1) {
-			return translate("labels.planned.multiple");
+			return translate('labels.planned.multiple');
 		}
 
 		const plannedItem = plannedItems[0];
@@ -123,21 +123,21 @@ export function getPlanned(id) {
 		const day = plannedItem.data.day;
 		const month = getMonth(plannedItem.data.month - 1).toLowerCase();
 		const period = getPeriod(plannedItem.period).toLowerCase();
-		const periodLabel = period ? ` (${period})` : "";
-		return `${translate("labels.planned.title")}: ${weekday}, ${translate("datetime.titles.day_month", { day, month })}${periodLabel}`;
+		const periodLabel = period ? ` (${period})` : '';
+		return `${translate('labels.planned.title')}: ${weekday}, ${translate('datetime.titles.day_month', { day, month })}${periodLabel}`;
 	}
 }
 
 export function getPeriod(period) {
 	switch (period) {
-		case "earlyMorning":
-			return translate("datetime.time_of_day.early_hours");
-		case "morning":
-			return translate("datetime.time_of_day.morning");
-		case "afternoon":
-			return translate("datetime.time_of_day.afternoon");
-		case "night":
-			return translate("datetime.time_of_day.evening");
+		case 'earlyMorning':
+			return translate('datetime.time_of_day.early_hours');
+		case 'morning':
+			return translate('datetime.time_of_day.morning');
+		case 'afternoon':
+			return translate('datetime.time_of_day.afternoon');
+		case 'night':
+			return translate('datetime.time_of_day.evening');
 		default:
 			return undefined;
 	}

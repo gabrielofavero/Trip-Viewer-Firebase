@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
@@ -18,9 +18,9 @@ admin.initializeApp();
 // ============================================================
 
 // Phase 1: Translate & Restructure (was migrations 13–18)
-import * as phase1 from "./migrations/13-migrate-phase1-translate-restructure";
+import * as phase1 from './migrations/13-migrate-phase1-translate-restructure';
 export const migratePhase1 = phase1.migrate;
 
 // Phase 2: Rename & Finalize (was migrations 19–22)
-import * as phase2 from "./migrations/14-migrate-phase2-rename-finalize";
+import * as phase2 from './migrations/14-migrate-phase2-rename-finalize';
 export const migratePhase2 = phase2.migrate;

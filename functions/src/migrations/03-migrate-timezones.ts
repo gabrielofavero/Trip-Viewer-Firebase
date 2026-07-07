@@ -1,10 +1,9 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
 export const migrateTimezones = functions.https.onRequest(async (req, res) => {
 	try {
-		const viagensCollection = admin.firestore().collection("viagens");
+		const viagensCollection = admin.firestore().collection('viagens');
 		const snapshot = await viagensCollection.get();
 		const batch = admin.firestore().batch();
 
@@ -24,16 +23,10 @@ export const migrateTimezones = functions.https.onRequest(async (req, res) => {
 			// hospedagens[x].datas.checkin, hospedagens.datas.checkout
 			const hospedagens = [];
 			for (const hospedagem of data.hospedagens) {
-				const checkin = _convertFromFirestoreDate(
-					hospedagem.datas.checkin,
-					timezoneOffset,
-				);
+				const checkin = _convertFromFirestoreDate(hospedagem.datas.checkin, timezoneOffset);
 				hospedagem.datas.checkin = _dateToDateObject(checkin);
 
-				const checkout = _convertFromFirestoreDate(
-					hospedagem.datas.checkout,
-					timezoneOffset,
-				);
+				const checkout = _convertFromFirestoreDate(hospedagem.datas.checkout, timezoneOffset);
 				hospedagem.datas.checkout = _dateToDateObject(checkout);
 
 				hospedagens.push(hospedagem);
@@ -52,16 +45,10 @@ export const migrateTimezones = functions.https.onRequest(async (req, res) => {
 			// transportes.dados[x].datas.partida, transportes.dados[x].datas.chegada
 			const dados = [];
 			for (const dado of data.transportes.dados) {
-				const partida = _convertFromFirestoreDate(
-					dado.datas.partida,
-					timezoneOffset,
-				);
+				const partida = _convertFromFirestoreDate(dado.datas.partida, timezoneOffset);
 				dado.datas.partida = _dateToDateObject(partida);
 
-				const chegada = _convertFromFirestoreDate(
-					dado.datas.chegada,
-					timezoneOffset,
-				);
+				const chegada = _convertFromFirestoreDate(dado.datas.chegada, timezoneOffset);
 				dado.datas.chegada = _dateToDateObject(chegada);
 
 				dados.push(dado);
@@ -73,10 +60,10 @@ export const migrateTimezones = functions.https.onRequest(async (req, res) => {
 		});
 
 		await batch.commit();
-		res.status(200).send("Data migration completed successfully.");
+		res.status(200).send('Data migration completed successfully.');
 	} catch (error) {
-		console.error("Error migrating data:", error);
-		res.status(500).send("Error migrating data.");
+		console.error('Error migrating data:', error);
+		res.status(500).send('Error migrating data.');
 	}
 
 	function _convertFromFirestoreDate(
@@ -90,13 +77,9 @@ export const migrateTimezones = functions.https.onRequest(async (req, res) => {
 	) {
 		let date;
 		if (timestamp.seconds) {
-			date = new Date(
-				timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000,
-			);
+			date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
 		} else {
-			date = new Date(
-				timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000,
-			);
+			date = new Date(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000);
 		}
 
 		if (timezoneOffset) {

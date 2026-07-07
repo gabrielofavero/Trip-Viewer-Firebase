@@ -1,6 +1,13 @@
 import { startLoadingScreen, stopLoadingScreen } from '../utils/loading.js';
 import { translate } from '../i18n/translation.js';
-import { closeMessage, displayFullMessage, displayPrompt, getContainersInput, openToast, MESSAGE_PROPERTIES } from '../utils/messages.js';
+import {
+	closeMessage,
+	displayFullMessage,
+	displayPrompt,
+	getContainersInput,
+	openToast,
+	MESSAGE_PROPERTIES,
+} from '../utils/messages.js';
 import { cloneObject, getID, getTranslatedDocumentLabel } from '../utils/dom.js';
 import { getTimestamp } from '../utils/dates.js';
 import { get } from '../data/firebase/database.js';
@@ -21,8 +28,8 @@ export async function backupOnClickAction() {
 		return;
 	}
 
-	const title = translate("account.backup.title");
-	const content = translate("account.backup.prompt");
+	const title = translate('account.backup.title');
+	const content = translate('account.backup.prompt');
 	displayPrompt({
 		title,
 		content,
@@ -42,7 +49,7 @@ function prepareMissingData() {
 	MISSING_ACCOUNT_DATA.protected = protectedJobs;
 
 	function prepareMainData() {
-		for (const type of ["trips", "destinations", "listings"]) {
+		for (const type of ['trips', 'destinations', 'listings']) {
 			for (const documentID in USER_DATA[type]) {
 				const title = USER_DATA[type][documentID].title;
 				jobs.push(getJobObject(title, documentID, type));
@@ -56,68 +63,57 @@ function prepareMissingData() {
 			const trip = trips[documentID];
 
 			switch (trip.pin) {
-				case "no-pin":
+				case 'no-pin':
 					if (trip?.modules?.expenses === true)
-						jobs.push(getJobObject(trip.title, documentID, "expenses"));
+						jobs.push(getJobObject(trip.title, documentID, 'expenses'));
 					break;
-				case "all-data":
-				case "sensitive-only":
+				case 'all-data':
+				case 'sensitive-only':
 					const innerJobs = [];
 					if (trip?.modules?.expenses === true) {
-						innerJobs.push(
-							getJobObject(trip.title, documentID, "expenses", "protected"),
-						);
-						innerJobs.push(
-							getJobObject(trip.title, documentID, "protected"),
-						);
+						innerJobs.push(getJobObject(trip.title, documentID, 'expenses', 'protected'));
+						innerJobs.push(getJobObject(trip.title, documentID, 'protected'));
 					}
-					if (
-						trip?.modules?.accommodations === true ||
-						trip?.modules?.transportation === true
-					)
-						innerJobs.push(
-							getJobObject(trip.title, documentID, "trips", "protected"),
-						);
-					protectedJobs.push(
-						getProtectedJobObject(trip.title, documentID, innerJobs),
-					);
+					if (trip?.modules?.accommodations === true || trip?.modules?.transportation === true)
+						innerJobs.push(getJobObject(trip.title, documentID, 'trips', 'protected'));
+					protectedJobs.push(getProtectedJobObject(trip.title, documentID, innerJobs));
 			}
 		}
 	}
 }
 
-function getJobObject(title, documentID, collection, subpath = "") {
+function getJobObject(title, documentID, collection, subpath = '') {
 	return { title, documentID, collection, subpath };
 }
 
-function getProtectedJobObject(title, documentID, jobs, pin = "") {
+function getProtectedJobObject(title, documentID, jobs, pin = '') {
 	return { title, documentID, jobs, pin };
 }
 
 export function displayPinRequestBackup() {
 	stopLoadingScreen();
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate("trip.basic_information.pin.title");
+	properties.title = translate('trip.basic_information.pin.title');
 	properties.containers = getContainersInput();
 	properties.content = getContent();
 	properties.buttons = [
-		{ type: "cancel" },
-		{ type: "confirm", action: () => backupAccountData(true) },
+		{ type: 'cancel' },
+		{ type: 'confirm', action: () => backupAccountData(true) },
 	];
 
 	displayFullMessage(properties);
 
 	function getContent() {
-		const content = [translate("trip.basic_information.pin.trip_pin.optional")];
+		const content = [translate('trip.basic_information.pin.trip_pin.optional')];
 		for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
 			content.push(`
                 <div class="nice-form-group">
                     <label>${protectedJob.title}</label>
-                    <input id="${protectedJob.documentID}" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" pattern="[0-9]*" placeholder="${translate("trip.basic_information.pin.insert")}" />
+                    <input id="${protectedJob.documentID}" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" pattern="[0-9]*" placeholder="${translate('trip.basic_information.pin.insert')}" />
                 </div>
             `);
 		}
-		return content.join("");
+		return content.join('');
 	}
 }
 
@@ -130,13 +126,13 @@ export async function backupAccountData(useSensitiveData = false) {
 	startLoadingScreen();
 	const accountData = await getAccountData(useSensitiveData);
 	const jsonStr = JSON.stringify(accountData, null, 2);
-	const blob = new Blob([jsonStr], { type: "application/json" });
+	const blob = new Blob([jsonStr], { type: 'application/json' });
 	const url = URL.createObjectURL(blob);
 
 	const timestamp = getTimestamp();
 	const uid = await getUID();
 
-	const link = document.createElement("a");
+	const link = document.createElement('a');
 	link.href = url;
 	link.download = `${timestamp}-tripviewer-backup-${uid}.json`;
 	document.body.appendChild(link);
@@ -149,12 +145,12 @@ export async function backupAccountData(useSensitiveData = false) {
 	if (MISSING_ACCOUNT_DATA.failed.length > 0) {
 		displayPartialBackupWarning();
 	} else {
-		openToast(translate("account.backup.success"));
+		openToast(translate('account.backup.success'));
 	}
 }
 
 function getProtectedJobPins() {
-	const inputs = getID("message-description").querySelectorAll("input");
+	const inputs = getID('message-description').querySelectorAll('input');
 	const ids = Array.from(inputs).map((input) => input.id);
 
 	for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
@@ -166,12 +162,12 @@ function getProtectedJobPins() {
 		const pin = inputs[index].value.trim();
 		if (!isNaN(Number(pin)) && pin.length === 4) {
 			protectedJob.pin = pin;
-		} else if (pin === "") {
-			console.warn("Skipping. No PIN provided for trip:", protectedJob.title);
+		} else if (pin === '') {
+			console.warn('Skipping. No PIN provided for trip:', protectedJob.title);
 		} else {
-			console.warn("Invalid PIN for trip:", protectedJob.title);
+			console.warn('Invalid PIN for trip:', protectedJob.title);
 			for (const job of protectedJob.jobs) {
-				newBackupFail(job, "not_found");
+				newBackupFail(job, 'not_found');
 			}
 		}
 	}
@@ -210,10 +206,7 @@ async function getAccountData(useSensitiveData = false) {
 					title: job.title,
 					collection: job.collection,
 					documentID: job.documentID,
-					subpath:
-						job.subpath === "protected"
-							? `protected/${entry.pin}`
-							: job.subpath,
+					subpath: job.subpath === 'protected' ? `protected/${entry.pin}` : job.subpath,
 				});
 			}
 		}
@@ -224,24 +217,23 @@ async function getAccountData(useSensitiveData = false) {
 	async function loadJobsConcurrently(jobList, store) {
 		const promises = jobList.map(async (job) => {
 			try {
-				const path = `${job.collection}/${job.subpath ? job.subpath + "/" : ""}${job.documentID}`;
+				const path = `${job.collection}/${job.subpath ? job.subpath + '/' : ''}${job.documentID}`;
 				const result = await get(path, true, false);
 
-				if (!result || Object.keys(result).length === 0)
-					return newBackupFail(job, "not_found");
+				if (!result || Object.keys(result).length === 0) return newBackupFail(job, 'not_found');
 
 				deepStore(path, result);
 			} catch (err) {
 				MISSING_ACCOUNT_DATA;
-				console.error("Load job failed:", job, err);
-				newBackupFail(job, "unknown");
+				console.error('Load job failed:', job, err);
+				newBackupFail(job, 'unknown');
 			}
 		});
 
 		await Promise.allSettled(promises);
 
 		function deepStore(path, value) {
-			const keys = path.split("/");
+			const keys = path.split('/');
 			let current = store;
 
 			for (let i = 0; i < keys.length - 1; i++) {
@@ -261,28 +253,27 @@ function newBackupFail(job, reason) {
 
 function displayPartialBackupWarning() {
 	const properties = cloneObject(MESSAGE_PROPERTIES);
-	properties.title = translate("account.backup.partial.title");
+	properties.title = translate('account.backup.partial.title');
 	properties.content = getContent();
-	properties.buttons = [{ type: "close" }];
+	properties.buttons = [{ type: 'close' }];
 
 	displayFullMessage(properties);
 
 	function getContent() {
-		const list = [translate("account.backup.partial.message")];
+		const list = [translate('account.backup.partial.message')];
 		const protectedDataAdded = [];
 		const failedItems = [];
 
 		for (const failed of MISSING_ACCOUNT_DATA.failed) {
 			const isProtected =
-				failed.job.subpath?.includes("protected") ||
-				failed.job.collection === "protected";
+				failed.job.subpath?.includes('protected') || failed.job.collection === 'protected';
 
 			if (isProtected) {
 				if (protectedDataAdded.includes(failed.job.documentID)) continue;
 				protectedDataAdded.push(failed.job.documentID);
 			}
 
-			const label = isProtected ? "trips/protected" : failed.job.collection;
+			const label = isProtected ? 'trips/protected' : failed.job.collection;
 			const type = getTranslatedDocumentLabel(label);
 
 			failedItems.push(
@@ -295,13 +286,13 @@ function displayPartialBackupWarning() {
 
 		const scrollableContent = `
             <div class="partial-backup-scroll">
-                ${failedItems.join("<br><br>")}
+                ${failedItems.join('<br><br>')}
             </div>
         `;
 
-// message + scrollable list
+		// message + scrollable list
 		list.push(scrollableContent);
 
-		return list.join("<br><br>");
+		return list.join('<br><br>');
 	}
 }

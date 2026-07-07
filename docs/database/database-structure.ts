@@ -21,24 +21,24 @@
  * Built by formattedDateToDateObject() in utils/dates.ts.
  */
 interface DateObject {
-  second: number;
-  month: number;   // 1-indexed (1 = January)
-  hour: number;
-  year: number;
-  minute: number;
-  day: number;
+	second: number;
+	month: number; // 1-indexed (1 = January)
+	hour: number;
+	year: number;
+	minute: number;
+	day: number;
 }
 
 /** ISO-8601 timestamp stored on every updatable document */
 interface VersionStamp {
-  ultimaAtualizacao: string;
+	ultimaAtualizacao: string;
 }
 
 /** Color pair for light/dark theme customization */
 interface ColorPair {
-  ativo: boolean;   // whether custom colors are enabled
-  claro: string;    // light-mode CSS color (e.g. "#ffffff")
-  escuro: string;   // dark-mode CSS color  (e.g. "#1a1a1a")
+	ativo: boolean; // whether custom colors are enabled
+	claro: string; // light-mode CSS color (e.g. "#ffffff")
+	escuro: string; // dark-mode CSS color  (e.g. "#1a1a1a")
 }
 
 /**
@@ -46,10 +46,10 @@ interface ColorPair {
  * Built by getImagemObject() in pages/edit-trip/set-trip.ts.
  */
 interface TripImageConfig {
-  ativo: boolean;
-  background: string;   // background image URL  (link-background input)
-  claro: string;        // light-mode logo URL   (link-logo-light input)
-  escuro: string;       // dark-mode logo URL    (link-logo-dark input)
+	ativo: boolean;
+	background: string; // background image URL  (link-background input)
+	claro: string; // light-mode logo URL   (link-logo-light input)
+	escuro: string; // dark-mode logo URL    (link-logo-dark input)
 }
 
 /**
@@ -58,34 +58,34 @@ interface TripImageConfig {
  * NOTE: has a nested background object unlike TripImageConfig.
  */
 interface ListingImageConfig {
-  background: {
-    caminho: string;   // storage path
-    link: string;      // public URL
-    nome: string;      // file name
-  };
-  ativo: boolean;
-  escuro: string;
-  altura: string;      // CSS height, e.g. "200px"
-  claro: string;
+	background: {
+		caminho: string; // storage path
+		link: string; // public URL
+		nome: string; // file name
+	};
+	ativo: boolean;
+	escuro: string;
+	altura: string; // CSS height, e.g. "200px"
+	claro: string;
 }
 
 /** Links block attached to trips and listings */
 interface LinksBlock {
-  ativo: boolean;
-  attachments: string;
-  drive: string;
-  maps: string;
-  pdf: string;
-  ppt: string;
-  sheet: string;
-  vacina: string;
+	ativo: boolean;
+	attachments: string;
+	drive: string;
+	maps: string;
+	pdf: string;
+	ppt: string;
+	sheet: string;
+	vacina: string;
 }
 
 /** Ownership / sharing metadata */
 interface SharingInfo {
-  ativo: boolean;
-  dono: string;          // Firebase Auth UID of the owner
-  editores?: string[];   // future: editor UIDs
+	ativo: boolean;
+	dono: string; // Firebase Auth UID of the owner
+	editores?: string[]; // future: editor UIDs
 }
 
 // ============================================================================
@@ -94,13 +94,13 @@ interface SharingInfo {
 
 /** admin/admin */
 interface AdminConfig {
-  admins: string[]; // Firebase Auth UIDs
+	admins: string[]; // Firebase Auth UIDs
 }
 
 /** admin/permissoes */
 interface AdminPermissions {
-  tamanhoUploadIrrestrito: string[];
-  upload: string[];
+	tamanhoUploadIrrestrito: string[];
+	upload: string[];
 }
 
 // ============================================================================
@@ -109,7 +109,7 @@ interface AdminPermissions {
 
 /** config/system */
 interface SystemConfig {
-  registrationOpen: boolean;
+	registrationOpen: boolean;
 }
 
 // ============================================================================
@@ -124,18 +124,18 @@ interface SystemConfig {
  * setUserData() on every save.
  */
 interface UsuarioDocument {
-  permissoes: {
-    admin: boolean;
-    tamanhoUploadIrrestrito: boolean;
-    upload: boolean;
-  };
-  nome: string;
-  foto: string;
-  visibilidade: string;    // "light" | "dark" | "auto"
+	permissoes: {
+		admin: boolean;
+		tamanhoUploadIrrestrito: boolean;
+		upload: boolean;
+	};
+	nome: string;
+	foto: string;
+	visibilidade: string; // "light" | "dark" | "auto"
 
-  destinos: Record<string, UsuarioDestinationRef>;
-  listagens: Record<string, UsuarioListingRef>;
-  viagens: Record<string, UsuarioTripRef>;
+	destinos: Record<string, UsuarioDestinationRef>;
+	listagens: Record<string, UsuarioListingRef>;
+	viagens: Record<string, UsuarioTripRef>;
 }
 
 /**
@@ -143,8 +143,8 @@ interface UsuarioDocument {
  * Fields: moeda, titulo, versao.
  */
 interface UsuarioDestinationRef extends VersionStamp {
-  moeda: string;
-  titulo: string;
+	moeda: string;
+	titulo: string;
 }
 
 /**
@@ -152,11 +152,11 @@ interface UsuarioDestinationRef extends VersionStamp {
  * Fields: cores, descricao, imagem, subtitulo, titulo, versao.
  */
 interface UsuarioListingRef extends VersionStamp {
-  cores: ColorPair;
-  descricao: string;
-  imagem: ListingImageConfig;
-  subtitulo: string;
-  titulo: string;
+	cores: ColorPair;
+	descricao: string;
+	imagem: ListingImageConfig;
+	subtitulo: string;
+	titulo: string;
 }
 
 /**
@@ -164,13 +164,13 @@ interface UsuarioListingRef extends VersionStamp {
  * Fields: cores, fim, imagem, inicio, modulos, pin, titulo, versao.
  */
 interface UsuarioTripRef extends VersionStamp {
-  cores: ColorPair;
-  fim: DateObject | "";
-  imagem: TripImageConfig;
-  inicio: DateObject | "";
-  modulos: TripModules;
-  pin: PinPreference;
-  titulo: string;
+	cores: ColorPair;
+	fim: DateObject | "";
+	imagem: TripImageConfig;
+	inicio: DateObject | "";
+	modulos: TripModules;
+	pin: PinPreference;
+	titulo: string;
 }
 
 // ============================================================================
@@ -207,64 +207,64 @@ type PinPreference = "no-pin" | "sensitive-only" | "all-data";
  *   getTripObjectFull(false) for the protected doc.
  */
 interface TripDocument {
-  // ── Core ────────────────────────────────────────────────────────────
-  titulo: string;
-  moeda: string;
-  inicio: DateObject | "";
-  fim: DateObject | "";
+	// ── Core ────────────────────────────────────────────────────────────
+	titulo: string;
+	moeda: string;
+	inicio: DateObject | "";
+	fim: DateObject | "";
 
-  /** PIN preference for THIS save */
-  pin: PinPreference;
+	/** PIN preference for THIS save */
+	pin: PinPreference;
 
-  // ── Modules toggle ──────────────────────────────────────────────────
-  modulos: TripModules;
+	// ── Modules toggle ──────────────────────────────────────────────────
+	modulos: TripModules;
 
-  // ── Styling ─────────────────────────────────────────────────────────
-  cores: ColorPair;
-  imagem: TripImageConfig;
+	// ── Styling ─────────────────────────────────────────────────────────
+	cores: ColorPair;
+	imagem: TripImageConfig;
 
-  /**
-   * Which theme(s) display transport data.
-   * When pin="all-data" in the main doc, transportes is reduced to just
-   * this visibility object (the full TransportationBlock lives in protected).
-   */
-  visibilidade: TransportVisibility;
+	/**
+	 * Which theme(s) display transport data.
+	 * When pin="all-data" in the main doc, transportes is reduced to just
+	 * this visibility object (the full TransportationBlock lives in protected).
+	 */
+	visibilidade: TransportVisibility;
 
-  // ── Content ─────────────────────────────────────────────────────────
-  /** Array of {destinosID} references */
-  destinos: DestinationRef[];
+	// ── Content ─────────────────────────────────────────────────────────
+	/** Array of {destinosID} references */
+	destinos: DestinationRef[];
 
-  /**
-   * Accommodation data.
-   * reserva & link are "" when the main doc is built with
-   * protectedReservationCodes=true ("sensitive-only" mode).
-   * Empty array [] when pin="all-data" (stripped stub).
-   */
-  hospedagens: AccommodationItem[];
+	/**
+	 * Accommodation data.
+	 * reserva & link are "" when the main doc is built with
+	 * protectedReservationCodes=true ("sensitive-only" mode).
+	 * Empty array [] when pin="all-data" (stripped stub).
+	 */
+	hospedagens: AccommodationItem[];
 
-  /**
-   * Transportation data.
-   * reserva & link are "" when the main doc is built with
-   * protectedReservationCodes=true.
-   * Reduced to just TransportVisibility when pin="all-data" (stripped stub).
-   */
-  transportes: TransportationBlock | TransportVisibility;
+	/**
+	 * Transportation data.
+	 * reserva & link are "" when the main doc is built with
+	 * protectedReservationCodes=true.
+	 * Reduced to just TransportVisibility when pin="all-data" (stripped stub).
+	 */
+	transportes: TransportationBlock | TransportVisibility;
 
-  /** Gallery — parallel arrays indexed together. {} when pin="all-data". */
-  galeria: GalleryBlock;
+	/** Gallery — parallel arrays indexed together. {} when pin="all-data". */
+	galeria: GalleryBlock;
 
-  /** Links block. {} when pin="all-data". */
-  links: LinksBlock;
+	/** Links block. {} when pin="all-data". */
+	links: LinksBlock;
 
-  /** Full itinerary. {} when pin="all-data". */
-  programacoes: ItineraryDay[];
+	/** Full itinerary. {} when pin="all-data". */
+	programacoes: ItineraryDay[];
 
-  /** Travelers. {} when pin="all-data". */
-  pessoas: Traveler[];
+	/** Travelers. {} when pin="all-data". */
+	pessoas: Traveler[];
 
-  // ── Metadata ────────────────────────────────────────────────────────
-  compartilhamento: SharingInfo;
-  versao: VersionStamp;
+	// ── Metadata ────────────────────────────────────────────────────────
+	compartilhamento: SharingInfo;
+	versao: VersionStamp;
 }
 
 /**
@@ -273,151 +273,152 @@ interface TripDocument {
  * user profile listing and basic metadata.
  */
 interface TripStrippedDocument {
-  titulo: string;
-  moeda: string;
-  inicio: DateObject | "";
-  fim: DateObject | "";
-  pin: "all-data";
-  modulos: Record<string, never>;       // {}
-  cores: ColorPair;
-  imagem: TripImageConfig;
-  visibilidade: Record<string, never>;  // {}
-  destinos: DestinationRef[];
-  hospedagens: [];                       // empty array
-  transportes: TransportVisibility;      // only {claro, escuro}
-  galeria: Record<string, never>;       // {}
-  links: Record<string, never>;         // {}
-  programacoes: Record<string, never>;  // {}
-  pessoas: Record<string, never>;       // {}
-  compartilhamento: SharingInfo;
-  versao: VersionStamp;
+	titulo: string;
+	moeda: string;
+	inicio: DateObject | "";
+	fim: DateObject | "";
+	pin: "all-data";
+	modulos: Record<string, never>; // {}
+	cores: ColorPair;
+	imagem: TripImageConfig;
+	visibilidade: Record<string, never>; // {}
+	destinos: DestinationRef[];
+	hospedagens: []; // empty array
+	transportes: TransportVisibility; // only {claro, escuro}
+	galeria: Record<string, never>; // {}
+	links: Record<string, never>; // {}
+	programacoes: Record<string, never>; // {}
+	pessoas: Record<string, never>; // {}
+	compartilhamento: SharingInfo;
+	versao: VersionStamp;
 }
 
 // ── Trip sub-types ────────────────────────────────────────────────────
 
 interface TripModules {
-  hospedagens: boolean;
-  destinos: boolean;
-  gastos: boolean;
-  programacao: boolean;
-  resumo: boolean;       // always true
-  transportes: boolean;
-  galeria: boolean;
+	hospedagens: boolean;
+	destinos: boolean;
+	gastos: boolean;
+	programacao: boolean;
+	resumo: boolean; // always true
+	transportes: boolean;
+	galeria: boolean;
 }
 
 interface TransportVisibility {
-  claro: boolean;
-  escuro: boolean;
+	claro: boolean;
+	escuro: boolean;
 }
 
 interface DestinationRef {
-  destinosID: string;
+	destinosID: string;
 }
 
 // ── Accommodation ─────────────────────────────────────────────────────
 
 interface AccommodationItem {
-  cafe: boolean;          // breakfast included?
-  datas: {
-    checkin: DateObject;
-    checkout: DateObject;
-  };
-  descricao: string;
-  endereco: string;
-  id: string;            // autogenerated unique key within the trip
-  imagens: AccommodationImage[];
-  reserva: string;        // reservation code ("" when stored unprotected)
-  link: string;           // reservation link  ("" when stored unprotected)
-  nome: string;
+	cafe: boolean; // breakfast included?
+	datas: {
+		checkin: DateObject;
+		checkout: DateObject;
+	};
+	descricao: string;
+	endereco: string;
+	id: string; // autogenerated unique key within the trip
+	imagens: AccommodationImage[];
+	reserva: string; // reservation code ("" when stored unprotected)
+	link: string; // reservation link  ("" when stored unprotected)
+	nome: string;
 }
 
 interface AccommodationImage {
-  descricao: string;
-  link: string;
+	descricao: string;
+	link: string;
 }
 
 // ── Transportation ────────────────────────────────────────────────────
 
 interface TransportationBlock {
-  /** View mode: "people-view" | "leg-view" | "simple-view" */
-  visualizacao: "people-view" | "leg-view" | "simple-view";
-  dados: TransportationItem[];
+	/** View mode: "people-view" | "leg-view" | "simple-view" */
+	visualizacao: "people-view" | "leg-view" | "simple-view";
+	dados: TransportationItem[];
 }
 
 interface TransportationItem {
-  datas: {
-    chegada: DateObject;
-    partida: DateObject;
-  };
-  duracao: string;       // e.g. "2h 30min"
-  empresa: string;        // company name (could be selected or custom)
-  id: string;            // autogenerated unique key within the trip
-  idaVolta: "ida" | "volta" | "durante";
-  link: string;           // reservation link  ("" when stored unprotected)
-  pontos: {
-    chegada: string;     // arrival point
-    partida: string;     // departure point
-  };
-  reserva: string;        // reservation code ("" when stored unprotected)
-  transporte: string;    // transport type (e.g. "voo", "onibus", "carro")
-  pessoa: string;         // traveler name/id (only meaningful in people-view)
+	datas: {
+		chegada: DateObject;
+		partida: DateObject;
+	};
+	duracao: string; // e.g. "2h 30min"
+	empresa: string; // company name (could be selected or custom)
+	id: string; // autogenerated unique key within the trip
+	idaVolta: "ida" | "volta" | "durante";
+	link: string; // reservation link  ("" when stored unprotected)
+	pontos: {
+		chegada: string; // arrival point
+		partida: string; // departure point
+	};
+	reserva: string; // reservation code ("" when stored unprotected)
+	transporte: string; // transport type (e.g. "voo", "onibus", "carro")
+	pessoa: string; // traveler name/id (only meaningful in people-view)
 }
 
 // ── Gallery ───────────────────────────────────────────────────────────
 
 interface GalleryBlock {
-  /** Descriptions for each gallery item */
-  descricoes: string[];
-  /** Category tags for each gallery item */
-  categorias: string[];
-  /** Image URLs for each gallery item */
-  imagens: string[];
-  /** Titles for each gallery item */
-  titulos: string[];
+	/** Descriptions for each gallery item */
+	descricoes: string[];
+	/** Category tags for each gallery item */
+	categorias: string[];
+	/** Image URLs for each gallery item */
+	imagens: string[];
+	/** Titles for each gallery item */
+	titulos: string[];
 }
 
 // ── Itinerary / Schedule ──────────────────────────────────────────────
 
 interface ItineraryDay {
-  data: DateObject;
-  destinosIDs: string[];
-  titulo: ItineraryTitle;
-  madrugada: InnerItineraryItem[]; // 00:00–06:00
-  manha: InnerItineraryItem[];     // 06:00–12:00
-  tarde: InnerItineraryItem[];     // 12:00–18:00
-  noite: InnerItineraryItem[];     // 18:00–24:00
+	data: DateObject;
+	destinosIDs: string[];
+	titulo: ItineraryTitle;
+	madrugada: InnerItineraryItem[]; // 00:00–06:00
+	manha: InnerItineraryItem[]; // 06:00–12:00
+	tarde: InnerItineraryItem[]; // 12:00–18:00
+	noite: InnerItineraryItem[]; // 18:00–24:00
 }
 
 interface ItineraryTitle {
-  valor: string;
-  /** Whether the title string is an i18n key (e.g. "departure") */
-  traduzir: boolean;
-  /** Whether destinations should be appended to the title */
-  destinos: boolean;
+	valor: string;
+	/** Whether the title string is an i18n key (e.g. "departure") */
+	traduzir: boolean;
+	/** Whether destinations should be appended to the title */
+	destinos: boolean;
 }
 
 interface InnerItineraryItem {
-  programacao: string;          // activity description
-  inicio?: string;              // start time (HH:mm)
-  fim?: string;                 // end time (HH:mm)
-  pessoas?: string[];           // traveler IDs assigned
-  local?: {                     // linked item (transport/accommodation/destination)
-    tipo: "transporte" | "hospedagens" | "destinos";
-    id: string;
-  };
-  destino?: {
-    id: string;
-    nome: string;
-  };
-  /** itinerary items support text replacement macros */
-  [key: string]: any;
+	programacao: string; // activity description
+	inicio?: string; // start time (HH:mm)
+	fim?: string; // end time (HH:mm)
+	pessoas?: string[]; // traveler IDs assigned
+	local?: {
+		// linked item (transport/accommodation/destination)
+		tipo: "transporte" | "hospedagens" | "destinos";
+		id: string;
+	};
+	destino?: {
+		id: string;
+		nome: string;
+	};
+	/** itinerary items support text replacement macros */
+	[key: string]: any;
 }
 
 // ── Travelers ─────────────────────────────────────────────────────────
 
 interface Traveler {
-  id: string;
-  nome: string;
+	id: string;
+	nome: string;
 }
 
 // ============================================================================
@@ -435,28 +436,34 @@ interface Traveler {
  *                       protection — reservation codes and links.
  */
 interface TripProtectedDocument {
-  /** The PIN type that governs this document */
-  pin: PinPreference;
+	/** The PIN type that governs this document */
+	pin: PinPreference;
 
-  /** Sensitive accommodation data: id → {reserva, link} */
-  hospedagens?: Record<string, {
-    reserva: string;
-    link: string;
-  }>;
+	/** Sensitive accommodation data: id → {reserva, link} */
+	hospedagens?: Record<
+		string,
+		{
+			reserva: string;
+			link: string;
+		}
+	>;
 
-  /** Sensitive transportation data: id → {reserva, link} */
-  transportes?: Record<string, {
-    reserva: string;
-    link: string;
-  }>;
+	/** Sensitive transportation data: id → {reserva, link} */
+	transportes?: Record<
+		string,
+		{
+			reserva: string;
+			link: string;
+		}
+	>;
 
-  /**
-   * When pin="all-data", this document ALSO carries all the non-sensitive
-   * fields from TripDocument (destinos, galeria, programacoes, etc.).
-   * Those fields are omitted here for brevity but are structurally
-   * identical to TripDocument.
-   */
-  [key: string]: any;
+	/**
+	 * When pin="all-data", this document ALSO carries all the non-sensitive
+	 * fields from TripDocument (destinos, galeria, programacoes, etc.).
+	 * Those fields are omitted here for brevity but are structurally
+	 * identical to TripDocument.
+	 */
+	[key: string]: any;
 }
 
 // ============================================================================
@@ -469,10 +476,10 @@ interface TripProtectedDocument {
  * serving the protected sub-collection.
  */
 interface ProtectedDocument {
-  /** Hashed PIN string */
-  pin: string;
-  /** Sharing info (kept here so it's behind the same PIN wall) */
-  compartilhamento: SharingInfo;
+	/** Hashed PIN string */
+	pin: string;
+	/** Sharing info (kept here so it's behind the same PIN wall) */
+	compartilhamento: SharingInfo;
 }
 
 // ============================================================================
@@ -486,22 +493,22 @@ interface ProtectedDocument {
  * gastos/protected/{pin}/{tripId} instead — same shape.
  */
 interface ExpensesDocument {
-  compartilhamento: SharingInfo;
-  /** Pre-trip expenses */
-  gastosPrevios: ExpenseItem[];
-  /** During-trip expenses */
-  gastosDurante: ExpenseItem[];
-  moeda: string;
-  pessoas: Traveler[];     // snapshot of travelers at save time
-  versao: VersionStamp;
+	compartilhamento: SharingInfo;
+	/** Pre-trip expenses */
+	gastosPrevios: ExpenseItem[];
+	/** During-trip expenses */
+	gastosDurante: ExpenseItem[];
+	moeda: string;
+	pessoas: Traveler[]; // snapshot of travelers at save time
+	versao: VersionStamp;
 }
 
 interface ExpenseItem {
-  nome: string;            // expense name
-  tipo: string;            // category (e.g. "Alimentação", "Transporte", or custom)
-  moeda: string;           // currency code
-  valor: number | string;  // amount
-  pessoa?: string;         // traveler name (optional — empty for shared expenses)
+	nome: string; // expense name
+	tipo: string; // category (e.g. "Alimentação", "Transporte", or custom)
+	moeda: string; // currency code
+	valor: number | string; // amount
+	pessoa?: string; // traveler name (optional — empty for shared expenses)
 }
 
 // ============================================================================
@@ -515,46 +522,46 @@ interface ExpenseItem {
  * {itemId → DestinationItem}.
  */
 interface DestinationDocument {
-  titulo: string;
-  moeda: string;
-  myMaps: string;           // Google My Maps embed/iframe URL
+	titulo: string;
+	moeda: string;
+	myMaps: string; // Google My Maps embed/iframe URL
 
-  modulos: {
-    restaurantes: boolean;
-    mapa: boolean;
-    saidas: boolean;
-    turismo: boolean;
-    lojas: boolean;
-    lanches: boolean;
-  };
+	modulos: {
+		restaurantes: boolean;
+		mapa: boolean;
+		saidas: boolean;
+		turismo: boolean;
+		lojas: boolean;
+		lanches: boolean;
+	};
 
-  compartilhamento: SharingInfo;
-  versao: VersionStamp;
+	compartilhamento: SharingInfo;
+	versao: VersionStamp;
 
-  // ── Item categories ────────────────────────────────────────────────
-  restaurantes: Record<string, DestinationItem>;
-  lanches: Record<string, DestinationItem>;
-  saidas: Record<string, DestinationItem>;
-  turismo: Record<string, DestinationItem>;
-  lojas: Record<string, DestinationItem>;
+	// ── Item categories ────────────────────────────────────────────────
+	restaurantes: Record<string, DestinationItem>;
+	lanches: Record<string, DestinationItem>;
+	saidas: Record<string, DestinationItem>;
+	turismo: Record<string, DestinationItem>;
+	lojas: Record<string, DestinationItem>;
 }
 
 interface DestinationItem {
-  novo: boolean;           // "new" badge
-  criadoEm: string;        // ISO timestamp when the item was first created
-  nome: string;
-  emoji: string;
-  descricao: {
-    pt: string;
-    en: string;
-  };
-  website: string;
-  instagram: string;
-  regiao: string;          // region / neighborhood
-  mapa: string;            // Google Maps link
-  midia: string;           // TikTok / social media embed URL
-  nota: string;            // rating / note
-  valor: string;           // price indicator (e.g. "$", "$$", "$$$", or custom)
+	novo: boolean; // "new" badge
+	criadoEm: string; // ISO timestamp when the item was first created
+	nome: string;
+	emoji: string;
+	descricao: {
+		pt: string;
+		en: string;
+	};
+	website: string;
+	instagram: string;
+	regiao: string; // region / neighborhood
+	mapa: string; // Google Maps link
+	midia: string; // TikTok / social media embed URL
+	nota: string; // rating / note
+	valor: string; // price indicator (e.g. "$", "$$", "$$$", or custom)
 }
 
 // ============================================================================
@@ -566,21 +573,21 @@ interface DestinationItem {
  * Built by buildListObject() in pages/edit-listing/edit-listing.ts.
  */
 interface ListingDocument {
-  compartilhamento: SharingInfo;
-  cores: ColorPair;
-  descricao: string;
-  /** Array of {destinosID} references */
-  destinos: DestinationRef[];
-  imagem: ListingImageConfig;
-  links: LinksBlock;
-  subtitulo: string;
-  titulo: string;
-  versao: ListingVersionStamp;
+	compartilhamento: SharingInfo;
+	cores: ColorPair;
+	descricao: string;
+	/** Array of {destinosID} references */
+	destinos: DestinationRef[];
+	imagem: ListingImageConfig;
+	links: LinksBlock;
+	subtitulo: string;
+	titulo: string;
+	versao: ListingVersionStamp;
 }
 
 interface ListingVersionStamp extends VersionStamp {
-  /** Whether this listing appears on destination pages */
-  exibirEmDestinos: boolean;
+	/** Whether this listing appears on destination pages */
+	exibirEmDestinos: boolean;
 }
 
 // ============================================================================
@@ -630,56 +637,49 @@ interface ListingVersionStamp extends VersionStamp {
 // ============================================================================
 
 export type {
-  // Shared
-  DateObject,
-  VersionStamp,
-  ColorPair,
-  TripImageConfig,
-  ListingImageConfig,
-  LinksBlock,
-  SharingInfo,
-
-  // Admin & Config
-  AdminConfig,
-  AdminPermissions,
-  SystemConfig,
-
-  // Usuarios
-  UsuarioDocument,
-  UsuarioDestinationRef,
-  UsuarioListingRef,
-  UsuarioTripRef,
-
-  // Trips
-  PinPreference,
-  TripDocument,
-  TripStrippedDocument,
-  TripModules,
-  TripProtectedDocument,
-  TransportVisibility,
-  DestinationRef,
-  AccommodationItem,
-  AccommodationImage,
-  TransportationBlock,
-  TransportationItem,
-  GalleryBlock,
-  ItineraryDay,
-  ItineraryTitle,
-  InnerItineraryItem,
-  Traveler,
-
-  // Expenses
-  ExpensesDocument,
-  ExpenseItem,
-
-  // Destinations
-  DestinationDocument,
-  DestinationItem,
-
-  // Listings
-  ListingDocument,
-  ListingVersionStamp,
-
-  // Protected
-  ProtectedDocument,
+	// Shared
+	DateObject,
+	VersionStamp,
+	ColorPair,
+	TripImageConfig,
+	ListingImageConfig,
+	LinksBlock,
+	SharingInfo,
+	// Admin & Config
+	AdminConfig,
+	AdminPermissions,
+	SystemConfig,
+	// Usuarios
+	UsuarioDocument,
+	UsuarioDestinationRef,
+	UsuarioListingRef,
+	UsuarioTripRef,
+	// Trips
+	PinPreference,
+	TripDocument,
+	TripStrippedDocument,
+	TripModules,
+	TripProtectedDocument,
+	TransportVisibility,
+	DestinationRef,
+	AccommodationItem,
+	AccommodationImage,
+	TransportationBlock,
+	TransportationItem,
+	GalleryBlock,
+	ItineraryDay,
+	ItineraryTitle,
+	InnerItineraryItem,
+	Traveler,
+	// Expenses
+	ExpensesDocument,
+	ExpenseItem,
+	// Destinations
+	DestinationDocument,
+	DestinationItem,
+	// Listings
+	ListingDocument,
+	ListingVersionStamp,
+	// Protected
+	ProtectedDocument,
 };

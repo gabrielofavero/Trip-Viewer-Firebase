@@ -79,7 +79,16 @@ export async function loadAllConfigs(languagePackName: string) {
 			loadVersions(),
 			loadLanguage(languagePackName),
 		]);
-	return { colors, destinations, itinerary, currencies, transportations, icons, versions, language };
+	return {
+		colors,
+		destinations,
+		itinerary,
+		currencies,
+		transportations,
+		icons,
+		versions,
+		language,
+	};
 }
 
 // ======= Synchronous Getters (for use after configs are loaded) =======

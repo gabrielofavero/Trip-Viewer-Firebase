@@ -1,7 +1,7 @@
 import { getChildIDs, getID, getIDs, getJ } from '../../../utils/dom.js';
 import { getHTMLpage } from '../../../app/main.js';
-import { translate } from "../../../i18n/translation.js";
-import { loadItineraryListeners } from "./itinerary-module/itinerary-module.js";
+import { translate } from '../../../i18n/translation.js';
+import { loadItineraryListeners } from './itinerary-module/itinerary-module.js';
 
 var DESTINATIONS = [];
 export var DESTINOS_DATA = {};
@@ -19,16 +19,16 @@ export function getDestinationsArray() {
 // Active Destinations
 export async function loadActiveDestinations(firstBoot = true) {
 	ACTIVE_DESTINATIONS = [];
-	const destinationsEnabled = getID("destinations-enabled");
+	const destinationsEnabled = getID('destinations-enabled');
 	if (destinationsEnabled && !destinationsEnabled.checked) return;
 
 	let result = [];
-	const container = getID("destinations-checkboxes");
+	const container = getID('destinations-checkboxes');
 	for (const card of container.children) {
-		if (!card.classList.contains("selected")) continue;
+		if (!card.classList.contains('selected')) continue;
 
-		const title = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
-		const destinationId = card.getAttribute("data-destination-id") || "";
+		const title = card.querySelector('.destination-card-name')?.textContent?.trim() || '';
+		const destinationId = card.getAttribute('data-destination-id') || '';
 
 		result.push({ title, destinationId });
 	}
@@ -39,13 +39,13 @@ export async function loadActiveDestinations(firstBoot = true) {
 export async function updateActiveDestinationsHTMLs() {
 	await loadActiveDestinations(false);
 
-	if (getHTMLpage() === "edit-trip") {
-		updateActiveDestinationsCardsHTML("itinerary");
+	if (getHTMLpage() === 'edit-trip') {
+		updateActiveDestinationsCardsHTML('itinerary');
 	}
 }
 
 function getActiveDestinationsSelectOptions(activeDestinations = ACTIVE_DESTINATIONS) {
-	let result = `<option value="">${translate("destination.undefined")}</option>`;
+	let result = `<option value="">${translate('destination.undefined')}</option>`;
 	for (const dest of activeDestinations) {
 		result += `<option value="${dest.destinationId}">${dest.title}</option>`;
 	}
@@ -53,12 +53,12 @@ function getActiveDestinationsSelectOptions(activeDestinations = ACTIVE_DESTINAT
 }
 
 export function getActiveDestinationsSelectVisibility() {
-	return ACTIVE_DESTINATIONS.length > 0 ? "block" : "none";
+	return ACTIVE_DESTINATIONS.length > 0 ? 'block' : 'none';
 }
 
 // Destination Cards for Itinerary
 export function updateActiveDestinationsCardsHTML(type, j?) {
-	const visibility = ACTIVE_DESTINATIONS.length > 0 ? "block" : "none";
+	const visibility = ACTIVE_DESTINATIONS.length > 0 ? 'block' : 'none';
 	const values = ACTIVE_DESTINATIONS.map((dest) => dest.id);
 
 	function write(type, j) {
@@ -69,24 +69,24 @@ export function updateActiveDestinationsCardsHTML(type, j?) {
 
 		// Collect currently selected values before rebuild
 		const selectedValues: string[] = [];
-		for (const card of container.querySelectorAll(".destination-card.selected")) {
-			const id = card.getAttribute("data-destination-id");
+		for (const card of container.querySelectorAll('.destination-card.selected')) {
+			const id = card.getAttribute('data-destination-id');
 			if (id) selectedValues.push(id);
 		}
 
 		container.innerHTML = getActiveDestinationsCardOptions(type, j);
 
 		// Re-select previously selected cards
-		for (const card of container.querySelectorAll(".destination-card")) {
-			const destinationId = card.getAttribute("data-destination-id");
+		for (const card of container.querySelectorAll('.destination-card')) {
+			const destinationId = card.getAttribute('data-destination-id');
 			if (selectedValues.includes(destinationId)) {
-				card.classList.add("selected");
+				card.classList.add('selected');
 				container.prepend(card);
 			}
 			// Add click listeners
-			card.addEventListener("click", () => {
-				card.classList.toggle("selected");
-				if (card.classList.contains("selected")) {
+			card.addEventListener('click', () => {
+				card.classList.toggle('selected');
+				if (card.classList.contains('selected')) {
 					container.prepend(card);
 				}
 			});
@@ -112,11 +112,9 @@ export function getActiveDestinationsCheckboxOptions(
 	let items = [];
 	for (let k = 1; k <= activeDestinations.length; k++) {
 		const dest = activeDestinations[k - 1];
-		items.push(
-			getDestinationsItemCheckbox(j, dest.destinationId, dest.title, type, k),
-		);
+		items.push(getDestinationsItemCheckbox(j, dest.destinationId, dest.title, type, k));
 	}
-	return items.join("");
+	return items.join('');
 }
 
 function getActiveDestinationsCheckboxOptionWithID(checkboxOption, type) {
@@ -134,9 +132,9 @@ export function addValuesForActiveDestinationsCheckbox(type, j, values) {
 	}
 }
 
-export function getDestinationsItemCheckbox(j, destinationId, title, type = "destinations", k?) {
+export function getDestinationsItemCheckbox(j, destinationId, title, type = 'destinations', k?) {
 	if (!j) {
-		console.error("Error in _getDestinationsItemCheckbox: j is undefined or null.");
+		console.error('Error in _getDestinationsItemCheckbox: j is undefined or null.');
 	}
 	const ids = k ? `${j}-${k}` : j;
 	return `<div class="nice-form-group" id="checkbox-${ids}">
@@ -153,7 +151,7 @@ export function getDestinationsItemCard(destinationId: string, title: string): s
 
 function loadDestinationsCheckboxListeners(type, j) {
 	switch (type) {
-		case "itinerary":
+		case 'itinerary':
 			loadItineraryListeners(j);
 	}
 }
@@ -161,7 +159,7 @@ function loadDestinationsCheckboxListeners(type, j) {
 export function getDestinationsFromCheckbox(type, j) {
 	let result = [];
 	for (const child of getChildIDs(`${type}-location-${j}`)) {
-		const k = child.split("-")[2];
+		const k = child.split('-')[2];
 		const checkbox = getID(`check-${type}-${j}-${k}`);
 		if (checkbox.checked) {
 			result.push({
@@ -183,16 +181,16 @@ export function getActiveDestinationsCardOptions(
 	for (const dest of activeDestinations) {
 		items.push(getDestinationsItemCard(dest.destinationId, dest.title));
 	}
-	return items.join("");
+	return items.join('');
 }
 
 export function getDestinationsFromCards(type: string, j: number) {
 	let result: { title: string; destinationId: string }[] = [];
 	const container = getID(`${type}-location-${j}`);
 	if (!container) return result;
-	for (const card of container.querySelectorAll(".destination-card.selected")) {
-		const title = card.querySelector(".destination-card-name")?.textContent?.trim() || "";
-		const destinationId = card.getAttribute("data-destination-id") || "";
+	for (const card of container.querySelectorAll('.destination-card.selected')) {
+		const title = card.querySelector('.destination-card-name')?.textContent?.trim() || '';
+		const destinationId = card.getAttribute('data-destination-id') || '';
 		result.push({ title, destinationId });
 	}
 	return result;
@@ -201,27 +199,27 @@ export function getDestinationsFromCards(type: string, j: number) {
 export function addValuesForActiveDestinationsCards(type: string, j: number, values: string[]) {
 	const container = getID(`${type}-location-${j}`);
 	if (!container) return;
-	for (const card of container.querySelectorAll(".destination-card")) {
-		const destinationId = card.getAttribute("data-destination-id");
+	for (const card of container.querySelectorAll('.destination-card')) {
+		const destinationId = card.getAttribute('data-destination-id');
 		if (values.includes(destinationId)) {
-			card.classList.add("selected");
+			card.classList.add('selected');
 			container.prepend(card);
 		}
 	}
 }
 
 function reorganizeDestinationsCheckbox() {
-	const fieldset = document.getElementById("destinations-checkboxes");
-	const cards = Array.from(fieldset.querySelectorAll(".destination-card"));
+	const fieldset = document.getElementById('destinations-checkboxes');
+	const cards = Array.from(fieldset.querySelectorAll('.destination-card'));
 
 	const selected: { element: Element; label: string }[] = [];
 	const unselected: { element: Element; label: string }[] = [];
 
 	cards.forEach((card) => {
-		const nameEl = card.querySelector(".destination-card-name");
-		const labelText = nameEl?.textContent?.trim() || "";
+		const nameEl = card.querySelector('.destination-card-name');
+		const labelText = nameEl?.textContent?.trim() || '';
 
-		if (card.classList.contains("selected")) {
+		if (card.classList.contains('selected')) {
 			selected.push({ element: card, label: labelText.toLowerCase() });
 		} else {
 			unselected.push({ element: card, label: labelText.toLowerCase() });
@@ -241,7 +239,7 @@ export { reorganizeDestinationsCheckbox };
 
 // Other (Generic)
 function getDestinationTitle(destinationId) {
-	if (!destinationId) return "";
+	if (!destinationId) return '';
 	for (const dest of DESTINATIONS) {
 		if (dest.id === destinationId) {
 			return dest.title;

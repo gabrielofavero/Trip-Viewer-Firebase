@@ -5,14 +5,14 @@ import { closeMessage, displayError } from '../../../utils/messages.js';
 import { get, haveErrorFromGetRequest } from '../../../data/firebase/database.js';
 import { translate } from '../../../i18n/translation.js';
 import { requestPin } from '../../../utils/pin.js';
-import { copyToClipboard } from "../categories/transportation-module.js";
-import { sendToExpenses } from "../support/embed.js";
-import { getURLParam } from "../../../utils/dom.js";
+import { copyToClipboard } from '../categories/transportation-module.js';
+import { sendToExpenses } from '../support/embed.js';
+import { getURLParam } from '../../../utils/dom.js';
 
 // Determine document type from URL params (avoids circular dependency with view.js)
 function getType(): string {
 	const urlParams = new URLSearchParams(window.location.search);
-	return urlParams.get("l") ? "listings" : urlParams.get("d") ? "destinations" : "trips";
+	return urlParams.get('l') ? 'listings' : urlParams.get('d') ? 'destinations' : 'trips';
 }
 
 const SENSITIVE_RESERVATION_BOXES = {
@@ -25,25 +25,25 @@ const ACTIVE_SENSITIVE_RESERVATION = {
 };
 export let PIN: string | null = null;
 
-const MASKED = "***";
-const MEASURE = document.createElement("span");
+const MASKED = '***';
+const MEASURE = document.createElement('span');
 
 export function loadSensitiveReservations(): void {
-	const boxes = document.querySelectorAll<HTMLElement>(".sensitive-box");
-	MEASURE.style.position = "absolute";
-	MEASURE.style.visibility = "hidden";
-	MEASURE.style.whiteSpace = "nowrap";
+	const boxes = document.querySelectorAll<HTMLElement>('.sensitive-box');
+	MEASURE.style.position = 'absolute';
+	MEASURE.style.visibility = 'hidden';
+	MEASURE.style.whiteSpace = 'nowrap';
 	document.body.appendChild(MEASURE);
 
 	boxes.forEach((box: HTMLElement) => {
-		const wrapper = box.querySelector<HTMLElement>(".code-wrapper")!;
-		const textEl = box.querySelector<HTMLElement>(".code-text")!;
+		const wrapper = box.querySelector<HTMLElement>('.code-wrapper')!;
+		const textEl = box.querySelector<HTMLElement>('.code-text')!;
 		const type = box.dataset.type!;
 		const id = box.dataset.id!;
 
 		SENSITIVE_RESERVATION_BOXES[type][id] = box;
-		wrapper.style.width = getSensitiveReservationWidth(textEl, MASKED) + "px";
-		(box.querySelector<HTMLElement>(".toggle-eye")!).onclick = () =>
+		wrapper.style.width = getSensitiveReservationWidth(textEl, MASKED) + 'px';
+		box.querySelector<HTMLElement>('.toggle-eye')!.onclick = () =>
 			loadSensitiveReservation(type, id);
 	});
 }
@@ -78,7 +78,12 @@ function loadSensitiveReservation(type: string, id: string): void {
 	if (!PIN) {
 		const confirmAction = `protectedDataConfirmAction(_updateSensitiveReservations)`;
 		const cancelAction = `closeMessage()`;
-		requestPin({ confirmAction, cancelAction, precontent: undefined as any, invalid: false });
+		requestPin({
+			confirmAction,
+			cancelAction,
+			precontent: undefined as any,
+			invalid: false,
+		});
 	} else {
 		loadSensitiveReservationAction(type, id);
 	}
@@ -94,19 +99,17 @@ function updateSensitiveReservations(firestoreData: Record<string, any>): void {
 			const entry = firestoreData[key]?.[id];
 			if (!entry) {
 				console.warn(
-					`[Sensitive] No entry in firestoreData.${key}["${id}"]. ` +
-					`Available ids in ${key}:`,
-					firestoreData[key] ? Object.keys(firestoreData[key]) : "(key missing)",
+					`[Sensitive] No entry in firestoreData.${key}["${id}"]. ` + `Available ids in ${key}:`,
+					firestoreData[key] ? Object.keys(firestoreData[key]) : '(key missing)',
 				);
 				continue;
 			}
-			const reservation = entry.reservation || translate("labels.non_specified");
-			box.dataset.reservation =
-				reservation.charAt(0) === "#" ? reservation : `#${reservation}`;
-			box.dataset.link = entry.link || "";
+			const reservation = entry.reservation || translate('labels.non_specified');
+			box.dataset.reservation = reservation.charAt(0) === '#' ? reservation : `#${reservation}`;
+			box.dataset.link = entry.link || '';
 
 			if (!box.dataset.link) {
-				const wrapper = box.querySelector(".code-wrapper");
+				const wrapper = box.querySelector('.code-wrapper');
 				wrapper.innerHTML = `<span class="code-text masked">${MASKED}</span>`;
 			}
 		}
@@ -115,7 +118,15 @@ function updateSensitiveReservations(firestoreData: Record<string, any>): void {
 	const adjustLoadables = false;
 	stopLoadingScreen({ adjustLoadables });
 	const { type, id } = ACTIVE_SENSITIVE_RESERVATION;
-	console.log('[Sensitive] updateSensitiveReservations done. boxes:', Object.keys(SENSITIVE_RESERVATION_BOXES.transportation).length + Object.keys(SENSITIVE_RESERVATION_BOXES.accommodations).length, '| active type:', type, '| active id:', id);
+	console.log(
+		'[Sensitive] updateSensitiveReservations done. boxes:',
+		Object.keys(SENSITIVE_RESERVATION_BOXES.transportation).length +
+			Object.keys(SENSITIVE_RESERVATION_BOXES.accommodations).length,
+		'| active type:',
+		type,
+		'| active id:',
+		id,
+	);
 	if (type && id) {
 		loadSensitiveReservationAction(type, id);
 	}
@@ -123,37 +134,49 @@ function updateSensitiveReservations(firestoreData: Record<string, any>): void {
 
 function loadSensitiveReservationAction(type: string, id: string): void {
 	const box = SENSITIVE_RESERVATION_BOXES[type][id];
-	const show = box.dataset.visible !== "true";
+	const show = box.dataset.visible !== 'true';
 	const label = box.dataset.reservation;
 	const link = box.dataset.link;
-	console.log('[Sensitive] loadSensitiveReservationAction | type:', type, '| id:', id, '| show:', show, '| label:', label, '| link:', link, '| box exists:', !!box);
-	const wrapper = box.querySelector(".code-wrapper");
-	const textEl = box.querySelector(".code-text");
+	console.log(
+		'[Sensitive] loadSensitiveReservationAction | type:',
+		type,
+		'| id:',
+		id,
+		'| show:',
+		show,
+		'| label:',
+		label,
+		'| link:',
+		link,
+		'| box exists:',
+		!!box,
+	);
+	const wrapper = box.querySelector('.code-wrapper');
+	const textEl = box.querySelector('.code-text');
 	const linkActive = show && link;
 
 	box.dataset.visible = show;
 
 	textEl.textContent = show ? label : MASKED;
-	textEl.classList.toggle("masked", !show);
-	textEl.classList.toggle("link-active", linkActive);
+	textEl.classList.toggle('masked', !show);
+	textEl.classList.toggle('link-active', linkActive);
 
 	if (linkActive) {
 		textEl.href = link;
 	}
 
-	wrapper.style.width =
-		getSensitiveReservationWidth(textEl, show ? label : MASKED) + "px";
+	wrapper.style.width = getSensitiveReservationWidth(textEl, show ? label : MASKED) + 'px';
 
-	box.querySelector(".eye-closed").style.display = show ? "none" : "";
-	box.querySelector(".eye-open").style.display = show ? "" : "none";
+	box.querySelector('.eye-closed').style.display = show ? 'none' : '';
+	box.querySelector('.eye-open').style.display = show ? '' : 'none';
 
 	if (!link && show) {
-		wrapper.style.cursor = "copy";
+		wrapper.style.cursor = 'copy';
 		wrapper.onclick = () => {
-			copyToClipboard(label.replace(/^#/, ""));
+			copyToClipboard(label.replace(/^#/, ''));
 		};
 	} else {
-		wrapper.style.cursor = "";
+		wrapper.style.cursor = '';
 		wrapper.onclick = null;
 	}
 }
@@ -168,7 +191,7 @@ const AFTER_ACTION_MAP: Record<string, (data: any) => void> = {
 
 export async function protectedDataConfirmAction(afterAction?: string | ((data: any) => void)) {
 	// Resolve string-based afterAction (from legacy string-action system)
-	if (typeof afterAction === "string") {
+	if (typeof afterAction === 'string') {
 		const resolved = AFTER_ACTION_MAP[afterAction];
 		if (resolved) {
 			afterAction = resolved;
@@ -178,7 +201,7 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 		}
 	}
 
-	PIN = getID("pin-code")?.innerText || "";
+	PIN = getID('pin-code')?.innerText || '';
 	closeMessage();
 	const adjustLoadables = false;
 	startLoadingScreen({ adjustLoadables });
@@ -193,7 +216,12 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 	const path = `${type}/protected/${PIN}/${getURLParam(type[0])}`;
 	console.log('[Sensitive] get() path:', path, '| PIN:', PIN);
 	const firestoreData = await get(path);
-	console.log('[Sensitive] get() result:', firestoreData, '| haveError:', haveErrorFromGetRequest());
+	console.log(
+		'[Sensitive] get() result:',
+		firestoreData,
+		'| haveError:',
+		haveErrorFromGetRequest(),
+	);
 
 	if (!haveErrorFromGetRequest() && !firestoreData) {
 		requestDocumentPin({ invalido });
@@ -208,10 +236,10 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 	}
 
 	if (getState().modules.expenses) {
-		sendToExpenses("pin", PIN);
+		sendToExpenses('pin', PIN);
 	}
 
-	if (typeof afterAction === "function") {
+	if (typeof afterAction === 'function') {
 		afterAction(firestoreData);
 	}
 }
@@ -219,10 +247,18 @@ export async function protectedDataConfirmAction(afterAction?: string | ((data: 
 export function requestDocumentPin({
 	invalido = false,
 	confirmAction = `protectedDataConfirmAction()`,
-}: { invalido?: boolean; confirmAction?: string } = {}): void {
-	const precontent = translate("messages.protected.pin");
+}: {
+	invalido?: boolean;
+	confirmAction?: string;
+} = {}): void {
+	const precontent = translate('messages.protected.pin');
 	stopLoadingScreen();
-	requestPin({ confirmAction, cancelAction: `closeMessage()`, precontent, invalid: invalido });
+	requestPin({
+		confirmAction,
+		cancelAction: `closeMessage()`,
+		precontent,
+		invalid: invalido,
+	});
 }
 
 export async function updateProtectedDataFromExternalPin(pin: string): Promise<void> {
