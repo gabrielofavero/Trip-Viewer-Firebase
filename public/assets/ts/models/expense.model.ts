@@ -50,6 +50,7 @@ export function convertCurrency(from: string, to: string, amount: number): numbe
 	} else {
 		console.error(`Conversion error: from ${amount} ${from} to ? ${to}`);
 		displayError(translate("messages.errors.unknown"));
+		return 0;
 	}
 }
 
@@ -219,7 +220,7 @@ export function processConvertedTravelerExpenses(): void {
 			items: Array.from(summaryMap.values()).sort(compareWithNonSpecifiedLast), // was "itens"
 		};
 
-		EXPENSES_CONVERTED[currency].travelerExpenses = { summary, items }; // was "gastosViajantes", "resumo", "itens"
+		EXPENSES_CONVERTED[currency].expensesTravelers = { summary, items }; // was "gastosViajantes", "resumo", "itens"
 	}
 }
 
@@ -270,18 +271,18 @@ export function calculateConvertedExpenses(type: string, currency: string): { su
 	const items: any[] = []; // was "itens"
 
 	for (const expense of expenses) { // was "gasto"
-		let amount = expense.amount; // was "valor"
+		let amount = Number(expense.price) || 0; // was "valor"
 		let include = true;
 
 		if (expense.currency != currency) { // was "moeda"
 			if (canConvert([expense.currency, currency])) { // was "moeda"
-				amount = convertCurrency(expense.currency, currency, expense.amount); // was "moeda", "valor"
+				amount = convertCurrency(expense.currency, currency, Number(expense.price) || 0); // was "moeda", "valor"
 			} else {
 				include = false;
 			}
 		}
 
-		if (include) {
+		if (include && amount > 0) {
 			summary.total += amount; // was "resumo"
 			amount = parseFloat(amount.toFixed(2));
 

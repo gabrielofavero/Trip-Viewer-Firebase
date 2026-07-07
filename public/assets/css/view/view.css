@@ -133,6 +133,12 @@
 	font-size: 20px;
 }
 
+.nav-menu a svg,
+.nav-menu a:focus svg {
+	flex-shrink: 0;
+	transition: none;
+}
+
 .nav-menu a span,
 .nav-menu a:focus span {
 	padding: 0 5px 0 7px;
@@ -1932,13 +1938,12 @@ iframe {
 
 .btn-theme {
 	background: var(--theme-color);
-	color: var(--background-color);
+	color: #ffffff;
 }
 
 .btn-theme:hover,
 .btn-theme:active {
 	background: var(--theme-color-hover);
-	color: var(--background-color);
 }
 
 #dDescription {

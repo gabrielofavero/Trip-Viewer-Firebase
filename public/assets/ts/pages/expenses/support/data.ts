@@ -14,7 +14,7 @@ export function setTable(id, items, total) {
 		return;
 	}
 
-	const table = getID(`${id}-tabela`);
+	const table = getID(`${id}-table`);
 	table.innerHTML = "";
 	table.appendChild(tbody(items));
 	table.appendChild(tfoot(total));
@@ -39,15 +39,15 @@ export function setTable(id, items, total) {
 		const tr = document.createElement("tr");
 
 		const td1 = document.createElement("td");
-		td1.className = `tabela-text-left`;
+		td1.className = `table-texto-left`;
 		td1.innerHTML = person
 			? `<span class="highlight">${person}:</span> ${title}`
 			: title;
 		tr.appendChild(td1);
 
 		const td2 = document.createElement("td");
-		td2.className = `tabela-text-right`;
-		td2.innerText = formatCurrency(item.value, true);
+		td2.className = `table-texto-right`;
+		td2.innerText = formatCurrency(item.amount, true);
 		tr.appendChild(td2);
 
 		return tr;
@@ -58,12 +58,12 @@ export function setTable(id, items, total) {
 
 		const tr = document.createElement("tr");
 		const td1 = document.createElement("td");
-		td1.className = "tabela-text-left total";
+		td1.className = "table-texto-left total";
 		td1.innerText = translate("labels.total");
 		tr.appendChild(td1);
 
 		const td2 = document.createElement("td");
-		td2.className = "tabela-text-right total";
+		td2.className = "table-texto-right total";
 		td2.innerText = formatCurrency(total, true);
 		tr.appendChild(td2);
 
@@ -73,17 +73,27 @@ export function setTable(id, items, total) {
 }
 
 export function setChart(type, id, labels, values) {
-	const div = getID(id);
+	const canvas = getID(id);
 
-	if (EXPENSES_CHARTS[id]) {
-		EXPENSES_CHARTS[id].data.datasets[0].data = values;
-		EXPENSES_CHARTS[id].update();
+	if (!canvas) {
+		console.warn(`setChart: canvas element "${id}" not found in DOM`);
 		return;
 	}
+
+	// Destroy any existing Chart.js instance on this canvas (handles DOM re-creation)
+	const existingChart = Chart.getChart(canvas);
+	if (existingChart) {
+		existingChart.destroy();
+	}
+
+	if (EXPENSES_CHARTS[id]) {
+		EXPENSES_CHARTS[id].destroy();
+	}
+
 	const colorsRGB = getChartColorsRGB(labels.length);
 	const chartData = getChartData(labels, values, colorsRGB);
 	const config = getChartConfig(type, chartData);
-	EXPENSES_CHARTS[id] = new Chart(div, config);
+	EXPENSES_CHARTS[id] = new Chart(canvas, config);
 }
 
 export function changeChartsLabelsVisibility() {

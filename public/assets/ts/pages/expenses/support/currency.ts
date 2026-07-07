@@ -16,7 +16,7 @@ export var CURRENCIES = {
 
 
 
-async function loadCurrencies() {
+export async function loadExpenseCurrencies() {
 	DEFAULT_CURRENCY = EXPENSES_DATA.currency;
 
 	loadCurrenciesObject();
@@ -30,6 +30,7 @@ async function loadCurrencies() {
 			break;
 		case 1:
 			CURRENT_CURRENCY = CURRENCIES.summary[0];
+			// fall through to default
 		default:
 			CURRENT_CURRENCY = CURRENCIES.summary.includes(DEFAULT_CURRENCY)
 				? DEFAULT_CURRENCY

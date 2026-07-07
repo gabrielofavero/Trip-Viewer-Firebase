@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
-#preloader {
+#preloader,
+.preloader {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -9,18 +10,19 @@
 	bottom: 0;
 	z-index: 9999;
 	overflow: hidden;
-	background: #fff;
+	background: var(--bg-primary);
 	transition: opacity 0.2s ease;
 }
 
-#preloader:before {
+#preloader:before,
+.preloader:before {
 	content: "";
 	position: fixed;
 	top: calc(50% - 30px);
 	left: calc(50% - 30px);
-	border: 6px solid #5b509e;
-	border-top-color: #f7f8f9;
-	border-bottom-color: #f7f8f9;
+	border: 6px solid var(--theme-color);
+	border-top-color: var(--bg-primary);
+	border-bottom-color: var(--bg-primary);
 	border-radius: 50%;
 	width: 60px;
 	height: 60px;

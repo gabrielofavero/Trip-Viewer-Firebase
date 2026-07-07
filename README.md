@@ -32,18 +32,16 @@ npm run dev
 
 | Icon | Title       | Code | Total | Done | Cancelled | Pending |
 | ---- | ----------- | ---- | ----- | ---- | --------- | ------- |
-| 🐞   | Bug         | B000 | 161   | 157  | 3         | 1       |
+| 🐞   | Bug         | B000 | 161   | 158  | 3         | 0       |
 | 🏆   | Feature     | F000 | 168   | 137  | 22        | 9       |
-| 📈   | Improvement | M000 | 154   | 129  | 23        | 2       |
-| ⚔️   | Epic        | E000 | 48    | 31   | 8         | 9       |
+| 📈   | Improvement | M000 | 156   | 131  | 23        | 2       |
+| ⚔️   | Epic        | E000 | 48    | 32   | 8         | 8       |
 
 ## Backlog
 
 ### High Priority
 
-- 🐞 **B161:** Fix page issues post migration
 - 🏆 **F168:** Add option to put image in destination (and make index.html see it)
-- ⚔️ **E048:** Database ovehaul
 - 📈 **M153:** Index improvements: 
   - trip/listing destination tags, destination images
 
@@ -75,6 +73,12 @@ npm run dev
 - ⚔️ **E047:** Implement Unit Tests (after TypeScript migration)
 
 ## Done
+
+### July 2026
+- ⚔️ **E048:** Database ovehaul
+- 🐞 **B161:** Fix page issues post migration
+- 📈 **M155:** Load dark/light mode as soon as page starts (no flicker)
+- 📈 **M156:** Export useful dev scripts into npm run
 
 ### June 2026
 - 🐞 **B158:** When clicking on last item of transportation tab, nothing happens

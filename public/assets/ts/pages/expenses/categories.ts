@@ -30,7 +30,7 @@ export function loadSummary() {
 	setTable("summary-duringTrip", duringTripExpenses.items, duringTripExpenses.total);
 
 	const travelerExpenses =
-		EXPENSES_CONVERTED[CURRENT_CURRENCY]["travelerExpenses"].summary;
+		EXPENSES_CONVERTED[CURRENT_CURRENCY]["expensesTravelers"].summary;
 	getID(`summary-expensesTravelers-title`).innerHTML = getTitleWithIcon(
 		"trip.travelers.title",
 	);
@@ -87,7 +87,7 @@ function setDoughnutChartCategoria(title, type) {
 	const labels = items.map((item) => translate(item.name, {}, false));
 	const values = items.map((item) => item.total);
 
-	setChart("doughnut", `${type}-grafico`, labels, values);
+	setChart("doughnut", `${type}-chart`, labels, values);
 }
 
 function setTableCategoria(type) {
@@ -102,7 +102,7 @@ function setTableCategoria(type) {
 
 		const recibo = document.createElement("div");
 		recibo.id = `${id}-recibo`;
-		recibo.className = "expenses-card expenses-recibo";
+		recibo.className = "expenses-card expenses-receipt";
 
 		const h2 = document.createElement("h2");
 		h2.className = "expenses-title";
@@ -111,7 +111,7 @@ function setTableCategoria(type) {
 
 		const tableEl = document.createElement("table");
 		tableEl.className = "card-full-size";
-		tableEl.id = `${id}-tabela`;
+		tableEl.id = `${id}-table`;
 		recibo.appendChild(tableEl);
 
 		container.appendChild(recibo);

@@ -280,25 +280,25 @@ section {
 	color: var(--subtitle);
 }
 
-.tabela-titulo-left {
+.table-titulo-left {
 	text-align: left;
 	color: var(--subtitle);
 }
 
-.tabela-titulo-right {
+.table-titulo-right {
 	text-align: right;
 	color: var(--subtitle);
 }
 
-.tabela-texto-left,
-.tabela-texto-right {
+.table-texto-left,
+.table-texto-right {
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
 	font-size: 0.875rem;
 	line-height: 1.25rem;
 }
 
-.tabela-texto-right {
+.table-texto-right {
 	text-align: right;
 	min-width: 100px;
 }

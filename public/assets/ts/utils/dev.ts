@@ -87,11 +87,38 @@ function createNamespace(parentPath: string): Namespace & { [key: string]: any }
 			}
 			return true;
 		},
+		has(_target, prop: string | symbol) {
+			if (prop === STORE_KEY) return true;
+			return prop in store;
+		},
 		ownKeys() {
 			return Object.keys(store);
 		},
 		getOwnPropertyDescriptor() {
 			return { enumerable: true, configurable: true };
+		},
+		apply(_target, _thisArg, _args: any[]) {
+			const label = parentPath || "dev";
+			const keys = Object.keys(store);
+			if (keys.length === 0) {
+				console.log(
+					`%c[DEV]%c %c${label}%c — no variables set yet.`,
+					"color:#f0c040;font-weight:bold;", "",
+					"font-weight:bold;", ""
+				);
+				return;
+			}
+			console.group(
+				`%c[DEV]%c %c${label}%c variables`,
+				"color:#f0c040;font-weight:bold;", "",
+				"font-weight:bold;", ""
+			);
+			listTree(store, parentPath || "", 0);
+			console.groupEnd();
+			console.log(
+				`%c💡 Tip: %ctype %c${label}.<name>%c to inspect any value.`,
+				"color:#f0c040;", "", "font-weight:bold;", ""
+			);
 		},
 	});
 
@@ -272,16 +299,22 @@ export function initDev(): DevHost | null {
 			console.log("%c[DEV]%c No variables set yet.", "color:#f0c040;font-weight:bold;", "");
 			return;
 		}
+		// Build a filtered store excluding built-in namespaces (firestore, messages, etc.)
+		const filtered: Record<string, any> = {};
+		for (const k of keys) filtered[k] = rootStore[k];
+
 		console.group(
 			`%c[DEV]%c variables`,
 			"color:#f0c040;font-weight:bold;",
 			"",
 		);
-		listTree(rootStore, "", 0);
+		listTree(filtered, "", 0);
 		console.groupEnd();
 		console.log(
 			"%c💡 Tip: %ctype %cdev.<name>%c to inspect any value.",
 			"color:#f0c040;",
+			"",
+			"font-weight:bold;",
 			"",
 			"font-weight:bold;",
 			"",

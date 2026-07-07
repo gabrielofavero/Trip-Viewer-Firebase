@@ -84,14 +84,14 @@
 /* ===== Preloader ===== */
 [data-theme="dark"] #preloader,
 [data-theme="dark"] .preloader {
-	background: #303030;
+	background: var(--bg-primary);
 }
 
 [data-theme="dark"] #preloader:before,
 [data-theme="dark"] .preloader:before {
-	border: 6px solid #7f75b9;
-	border-top-color: #404040;
-	border-bottom-color: #404040;
+	border: 6px solid var(--theme-color);
+	border-top-color: var(--bg-primary);
+	border-bottom-color: var(--bg-primary);
 }
 
 /* ===== Top Bar ===== */

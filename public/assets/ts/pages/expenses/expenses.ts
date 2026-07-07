@@ -5,7 +5,8 @@ import { getID, getURLParam, getURLParams } from '../../utils/dom.js';
 import { closeMessage, displayError, displayForbidden, registerActions } from '../../utils/messages.js';
 import { translate } from '../../i18n/translation.js';
 import { loadCurrencies } from '../../app/config.js';
-import { getConversionText, loadConvertedExpenses } from '../../models/expense.model.js';
+import { CURRENCIES, CURRENCY_CONVERSION, CURRENT_CURRENCY, DEFAULT_CURRENCY, loadExpenseCurrencies } from './support/currency.js';
+import { EXPENSES_CONVERTED, getConversionText, loadConvertedExpenses } from '../../models/expense.model.js';
 import { fade } from '../../theme/animations.js';
 import { requestPin } from '../../utils/pin.js';
 import { get } from '../../data/firebase/database.js';
@@ -66,6 +67,9 @@ export async function loadExpensesPage() {
 	if (EXPENSES_EMBED.enabled && !EXPENSES_EMBED.applied) {
 		loadEmbedMode(params.visibility);
 	}
+
+	// Populate dev.page early so console inspection works even before Firestore data loads
+	populateDevPage({ documentID, expensesExport, params });
 
 	if (!expensesExport || !documentID) {
 		const url = documentID ? `view.html?t=${documentID}` : "index.html";
@@ -131,10 +135,12 @@ async function loadExpenses() {
 
 		if (EXPENSES_DATA) {
 			await loadCurrencies();
+			await loadExpenseCurrencies();
 			loadConvertedExpenses();
 			applyExpenses();
 			getID("conversion").innerText = getConversionText();
 			setTabListeners();
+			populateDevPage();
 			stopLoadingScreen();
 			if (EXPENSES_EMBED.enabled) {
 				embedAfterLoadAction(pin);
@@ -213,6 +219,32 @@ export function applyExpenses() {
 		const hasPersonPre = EXPENSES_DATA.preTrip?.some((i: any) => i.person);
 		return EXPENSES_DATA.travelers && (hasPersonDuring || hasPersonPre);
 	}
+}
+
+/** Populate dev.page.* with useful references (only on localhost).
+ *  Called early (with page-level state) and again after Firestore data loads (with full state). */
+function populateDevPage(early?: { documentID?: string; expensesExport?: any; params?: Record<string, string> }) {
+	const dev = (window as any).dev;
+	if (!dev?.isEnabled) return;
+	const page = dev.page;
+
+	if (early) {
+		page.documentID = early.documentID;
+		page.expensesExport = early.expensesExport;
+		page.params = early.params;
+	}
+
+	page.EXPENSES_DATA = EXPENSES_DATA;
+	page.CURRENT_CURRENCY = CURRENT_CURRENCY;
+	page.DEFAULT_CURRENCY = DEFAULT_CURRENCY;
+	page.CURRENCIES = CURRENCIES;
+	page.CURRENCY_CONVERSION = CURRENCY_CONVERSION;
+	page.EXPENSES_CONVERTED = EXPENSES_CONVERTED;
+	page.EXPENSES_EMBED = EXPENSES_EMBED;
+	page.ACTIVE_EXPENSE_TAB = () => ACTIVE_EXPENSE_TAB;
+
+	console.log("%c[DEV]%c dev.page populated for expenses — type %cdev.page%c to explore",
+		"color:#f0c040;font-weight:bold;", "", "font-weight:bold;", "");
 }
 
 export function setTabListeners() {
