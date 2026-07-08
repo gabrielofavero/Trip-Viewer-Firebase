@@ -133,7 +133,7 @@ function getModulesObject() {
 	return {
 		accommodations: getID('accommodations-enabled').checked,
 		destinations: getID('destinations-enabled').checked,
-		expenses: getID('enabled-expenses').checked,
+		expenses: getID('expenses-enabled').checked,
 		itinerary: getID('itinerary-enabled').checked,
 		summary: true,
 		transportation: getID('transportation-enabled').checked,

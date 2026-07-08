@@ -59,6 +59,8 @@ export async function loadEditListingPage() {
 	registerActions({ deleteListagemAction });
 
 	setDocumentId(getURLParam('l'));
+	populateDevPage();
+
 	setPermissions(await getPermissions());
 
 	loadVisibilityIndex();
@@ -84,6 +86,8 @@ export async function loadEditListingPage() {
 	enhanceAllColorPickers();
 
 	$('body').css('overflow', 'auto');
+
+	populateDevPage();
 }
 
 function loadHabilitados() {
@@ -145,6 +149,7 @@ async function carregarListagem() {
 
 	await loadListData(getState());
 	stopLoadingScreen();
+	populateDevPage();
 }
 
 async function buildListObject() {
@@ -171,7 +176,8 @@ async function buildListObject() {
 function getIgnoredPathDestinos() {
 	if (!getState()) return [];
 	let result = [];
-	for (let i = 0; i < getState().destinations.length; i++) {
+	const dests = getState().destinations || getState().destinationRefs;
+	for (let i = 0; i < dests.length; i++) {
 		result.push(`destinations.${i}.destinations`);
 	}
 	return result;
@@ -216,4 +222,33 @@ export async function deleteListagemAction() {
 		await deleteUserObjectStorage();
 		window.location.href = '../index.html';
 	}
+}
+
+/** Populate dev.page.* with useful references (only on localhost). */
+function populateDevPage() {
+	const dev = (window as any).dev;
+	if (!dev?.isEnabled) return;
+	const page = dev.page;
+
+	page.type = 'edit-listing';
+	page.docId = DOCUMENT_ID;
+
+	// ── Raw data fetched from Firestore (existing listing) ──
+	page.state = getState();
+
+	// ── Reference data ──
+	page.destinations = DESTINATIONS;
+
+	// ── New data object built on save ──
+	page.newData = FIRESTORE_NEW_DATA;
+
+	page.successfulSave = SUCCESSFUL_SAVE;
+
+	console.log(
+		'%c[DEV]%c dev.page populated for edit-listing — type %cdev.page%c to explore',
+		'color:#f0c040;font-weight:bold;',
+		'',
+		'font-weight:bold;',
+		'',
+	);
 }

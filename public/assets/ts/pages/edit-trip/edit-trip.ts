@@ -1,9 +1,12 @@
 import { startLoadingScreen, stopLoadingScreen } from '../../utils/loading.js';
 import {
 	setState,
+	getState,
 	DOCUMENT_ID,
 	DESTINATIONS,
+	TRAVELERS,
 	SUCCESSFUL_SAVE,
+	FIRESTORE_NEW_DATA,
 	setDocumentId,
 	setDestinations,
 	setSuccessfulSaveFn,
@@ -20,6 +23,9 @@ import {
 	getPermissions,
 	getSingleData,
 	getTripDataWithDestinations,
+	getTransportation,
+	getAccommodations,
+	getItinerary,
 	get,
 	deleteDocument,
 } from '../../data/firebase/database.js';
@@ -53,6 +59,11 @@ import { loadUploadSelector } from '../../data/firebase/storage.js';
 import { initEditTabs } from '../../ui/edit-tabs.js';
 import { DateRangePicker } from '../../ui/date-range-picker.js';
 import { enhanceAllColorPickers } from '../../ui/color-picker-hex.js';
+import {
+	FIRESTORE_PROTECTED_NEW_DATA,
+	FIRESTORE_EXPENSES_NEW_DATA,
+	FIRESTORE_EXPENSES_PROTECTED_NEW_DATA,
+} from './set-trip.js';
 
 export var FIRESTORE_PROTECTED_DATA: Record<string, any> = {};
 export var FIRESTORE_EXPENSES_DATA: Record<string, any> = {};
@@ -72,6 +83,8 @@ startLoadingScreen();
 
 export async function loadEditTripPage() {
 	setDocumentId(getURLParam('t'));
+	populateDevPage();
+
 	setPermissions(await getPermissions());
 
 	loadVisibilityIndex();
@@ -103,6 +116,8 @@ export async function loadEditTripPage() {
 	enhanceAllColorPickers();
 
 	$('body').css('overflow', 'auto');
+
+	populateDevPage();
 }
 
 function loadEnabled() {
@@ -145,7 +160,7 @@ async function loadTrip(stripped = false) {
 			);
 			break;
 		case 'sensitive-only':
-			setState(getMergedTripObject(await getTravelDocument(stripped)));
+			setState(await getMergedTripObject(await getTravelDocument(stripped)));
 			break;
 		default:
 			setState(await getTravelDocument(stripped));
@@ -153,6 +168,7 @@ async function loadTrip(stripped = false) {
 
 	await loadTripData();
 	stopLoadingScreen();
+	populateDevPage();
 }
 
 export function deleteTrip() {
@@ -212,19 +228,38 @@ async function getTravelDocument(stripped = false) {
 	return stripped ? await get(`trips/${DOCUMENT_ID}`) : await getSingleData('trips');
 }
 
-function getMergedTripObject(tripData) {
+async function getMergedTripObject(tripData) {
+	// After migration, transportation/accommodations live in subcollections.
+	// Fetch them if not already embedded (old format compatibility).
+	if (!tripData.transportation?.data) {
+		const transport = await getTransportation(DOCUMENT_ID);
+		tripData.transportation = {
+			data: transport.legs || [],
+			viewMode: transport.settings?.viewMode || 'simple',
+		};
+	}
+
 	for (let i = 0; i < tripData.transportation.data.length; i++) {
 		const id = tripData.transportation.data[i].id;
 		tripData.transportation.data[i].reservation =
-			FIRESTORE_PROTECTED_DATA.transportation[id]?.reservation || '';
-		tripData.transportation.data[i].link = FIRESTORE_PROTECTED_DATA.transportation[id]?.link || '';
+			FIRESTORE_PROTECTED_DATA.transportation?.[id]?.reservation || '';
+		tripData.transportation.data[i].link = FIRESTORE_PROTECTED_DATA.transportation?.[id]?.link || '';
+	}
+
+	if (!tripData.accommodations?.length) {
+		tripData.accommodations = await getAccommodations(DOCUMENT_ID);
 	}
 
 	for (let i = 0; i < tripData.accommodations.length; i++) {
 		const id = tripData.accommodations[i].id;
 		tripData.accommodations[i].reservation =
-			FIRESTORE_PROTECTED_DATA.accommodations[id]?.reservation || '';
-		tripData.accommodations[i].link = FIRESTORE_PROTECTED_DATA.accommodations[id]?.link || '';
+			FIRESTORE_PROTECTED_DATA.accommodations?.[id]?.reservation || '';
+		tripData.accommodations[i].link = FIRESTORE_PROTECTED_DATA.accommodations?.[id]?.link || '';
+	}
+
+	// After migration 13, itinerary lives in trips/{tripId}/itinerary subcollection.
+	if (!tripData.itinerary?.length) {
+		tripData.itinerary = await getItinerary(DOCUMENT_ID);
 	}
 
 	return tripData;
@@ -242,4 +277,40 @@ function initDateRangePickers() {
 			picker.setRange(start.value, end.value);
 		}
 	}
+}
+
+/** Populate dev.page.* with useful references (only on localhost). */
+function populateDevPage() {
+	const dev = (window as any).dev;
+	if (!dev?.isEnabled) return;
+	const page = dev.page;
+
+	page.type = 'edit-trip';
+	page.docId = DOCUMENT_ID;
+	page.isNewTrip = NEW_TRIP;
+
+	// ── Raw data fetched from Firestore (existing trip + subcollections) ──
+	page.state = getState();
+	page.protectedData = FIRESTORE_PROTECTED_DATA;
+	page.expensesData = FIRESTORE_EXPENSES_DATA;
+
+	// ── Reference data ──
+	page.destinations = DESTINATIONS;
+	page.travelers = TRAVELERS;
+
+	// ── New data objects built on save (trip document + subcollections) ──
+	page.newData = FIRESTORE_NEW_DATA;
+	page.protectedNewData = FIRESTORE_PROTECTED_NEW_DATA;
+	page.expensesNewData = FIRESTORE_EXPENSES_NEW_DATA;
+	page.expensesProtectedNewData = FIRESTORE_EXPENSES_PROTECTED_NEW_DATA;
+
+	page.successfulSave = SUCCESSFUL_SAVE;
+
+	console.log(
+		'%c[DEV]%c dev.page populated for edit-trip — type %cdev.page%c to explore',
+		'color:#f0c040;font-weight:bold;',
+		'',
+		'font-weight:bold;',
+		'',
+	);
 }

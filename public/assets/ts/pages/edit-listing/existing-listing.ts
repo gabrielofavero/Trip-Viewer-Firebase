@@ -36,7 +36,7 @@ async function loadDestinationsData() {
 
 	loadDestinations();
 	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
-	for (const destination of getState().destinations) {
+	for (const destination of (getState().destinations || getState().destinationRefs)) {
 		const id = destination.id;
 		for (const card of cards) {
 			if (card.getAttribute('data-destination-id') === id) {

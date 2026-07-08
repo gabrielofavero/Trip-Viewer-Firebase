@@ -55,10 +55,12 @@ import { setDocumento } from '../../utils/set.js';
 import { buildDestinationObject, updateTikTokLinks } from './set-destination.js';
 import {
 	FIRESTORE_DESTINATIONS_DATA,
+	FIRESTORE_DESTINATIONS_NEW_DATA,
 	SUCCESSFUL_SAVE,
 	DOCUMENT_ID,
 	setDocumentId,
 	setFirestoreDestinationsData,
+	getState,
 } from '../../data/state.js';
 import { MESSAGE_PROPERTIES } from '../../utils/messages.js';
 import { initEditTabs } from '../../ui/edit-tabs.js';
@@ -74,6 +76,7 @@ export async function loadEditDestinationPage() {
 	loadEditDestinationListeners();
 
 	setDocumentId(getURLParam('d'));
+	populateDevPage();
 
 	loadVisibilityIndex();
 	initEditTabs();
@@ -88,6 +91,8 @@ export async function loadEditDestinationPage() {
 	stopLoadingScreen();
 	snapshotFormState();
 	$('body').css('overflow', 'auto');
+
+	populateDevPage();
 }
 
 function loadEnabled() {
@@ -212,6 +217,7 @@ async function loadDestinations() {
 
 	populateExistingDestinationForm();
 	stopLoadingScreen();
+	populateDevPage();
 }
 
 // Listeners
@@ -414,4 +420,31 @@ export async function deleteDestinationAction() {
 
 function getDestinationID(category, j) {
 	return getID(`${category}-id-${j}`).value;
+}
+
+/** Populate dev.page.* with useful references (only on localhost). */
+function populateDevPage() {
+	const dev = (window as any).dev;
+	if (!dev?.isEnabled) return;
+	const page = dev.page;
+
+	page.type = 'edit-destination';
+	page.docId = DOCUMENT_ID;
+
+	// ── Raw data fetched from Firestore (existing destination) ──
+	page.state = getState();
+	page.destinationsData = FIRESTORE_DESTINATIONS_DATA;
+
+	// ── New data object built on save ──
+	page.newData = FIRESTORE_DESTINATIONS_NEW_DATA;
+
+	page.successfulSave = SUCCESSFUL_SAVE;
+
+	console.log(
+		'%c[DEV]%c dev.page populated for edit-destination — type %cdev.page%c to explore',
+		'color:#f0c040;font-weight:bold;',
+		'',
+		'font-weight:bold;',
+		'',
+	);
 }

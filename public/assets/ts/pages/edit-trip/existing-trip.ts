@@ -132,8 +132,8 @@ export function loadCustomizationData(state?) {
 
 async function loadExpensesData() {
 	if (getState().modules.expenses === true) {
-		getID('enabled-expenses').checked = true;
-		getID('enabled-expenses-content').style.display = 'block';
+		getID('expenses-enabled').checked = true;
+		getID('expenses-enabled-content').style.display = 'block';
 	}
 
 	const getPath = PIN.current
@@ -156,7 +156,11 @@ async function loadTransportationData() {
 		getID('transportation-enabled-content').style.display = 'block';
 		getID('transportation-add-box').style.display = 'block';
 	}
-	getID(getState().transportation.viewMode || 'simple-view').checked = true;
+	// Migration 13 changed 'simple-view'→'simple', 'leg-view'→'leg' in Firestore.
+	// Map back to the radio button IDs used in the HTML.
+	const rawViewMode = getState().transportation.viewMode || 'simple-view';
+	const viewModeId = rawViewMode === 'simple' ? 'simple-view' : rawViewMode === 'leg' ? 'leg-view' : rawViewMode;
+	getID(viewModeId).checked = true;
 
 	for (let j = 1; j <= getState().transportation.data.length; j++) {
 		addTransportation();
@@ -200,8 +204,8 @@ async function loadTransportationData() {
 		getID(`transportation-id-${j}`).value = transport.id;
 		getID(`transportation-duration-${j}`).value = transport.duration;
 		getID(`reservation-transportation-${j}`).value = transport.reservation;
-		getID(`point-departure-${j}`).value = transport.points.departure;
-		getID(`point-arrival-${j}`).value = transport.points.arrival;
+		getID(`departure-point-${j}`).value = transport.points.origin;
+		getID(`arrival-point-${j}`).value = transport.points.destination;
 		getID(`transportation-link-${j}`).value = transport.link;
 
 		updateTransportationTitle(j);
@@ -251,9 +255,11 @@ async function loadDestinationsData() {
 	}
 
 	loadDestinations();
+	const destinations = getState().destinations || getState().destinationRefs;
+	if (!destinations || !destinations.length) return;
 	const cards = document.querySelectorAll('#destinations-checkboxes .destination-card');
-	for (const destination of getState().destinations) {
-		const id = destination.destinationId;
+	for (const destination of destinations) {
+		const id = destination.id || destination.destinationId;
 		for (const card of cards) {
 			if (card.getAttribute('data-destination-id') === id) {
 				card.classList.add('selected');

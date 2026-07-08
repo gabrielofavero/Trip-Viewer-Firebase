@@ -296,11 +296,15 @@ export async function getSingleData(type) {
 }
 
 export async function getTripDataWithDestinations(tripData) {
-	const refs = tripData?.destinations;
+	// Migration 13 renamed 'destinos' → 'destinationRefs' on trip docs.
+	const refs = tripData?.destinations || tripData?.destinationRefs;
 	if (!refs || refs.length === 0) return tripData;
 
+	// Normalize to the old 'destinations' key so downstream code sees it there.
+	if (!tripData.destinations) tripData.destinations = refs;
+
 	const results = await Promise.allSettled(
-		refs.map((ref) => get(`${COLLECTION.DESTINATIONS}/${ref.destinationId}`, false)),
+		refs.map((ref) => get(`${COLLECTION.DESTINATIONS}/${ref.id || ref.destinationId}`, false)),
 	);
 
 	results.forEach((result, i) => {
@@ -308,7 +312,7 @@ export async function getTripDataWithDestinations(tripData) {
 			tripData.destinations[i].destinations = result.value;
 		} else {
 			const reason = result.status === 'rejected' ? result.reason?.message : 'not found';
-			console.warn(`Unable to get destination ${refs[i].destinationId}: ${reason}`);
+			console.warn(`Unable to get destination ${refs[i].id || refs[i].destinationId}: ${reason}`);
 			tripData.destinations.splice(i, 1);
 		}
 	});

@@ -69,7 +69,7 @@ function autoNavigateDestinos() {
 }
 
 export function loadDestinationsCustomSelect() {
-	setDestinations(getState().destinations);
+	setDestinations(getState().destinations || getState().destinationRefs);
 
 	if (DESTINATIONS.length <= 1) {
 		getID('destinations-select').style.display = 'none';
@@ -132,7 +132,7 @@ export function loadDestinationsCustomSelect() {
 		for (let i = 0; i < DESTINATIONS.length; i++) {
 			if (DESTINATIONS[i].id === value) {
 				ACTIVE_DESTINATION = DESTINATIONS[i].id;
-				loadDestinationsHTML(getState().destinations[i]);
+				loadDestinationsHTML((getState().destinations || getState().destinationRefs)[i]);
 				adjustDestinationsHTML();
 				break;
 			}

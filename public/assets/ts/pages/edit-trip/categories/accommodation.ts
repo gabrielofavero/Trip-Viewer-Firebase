@@ -258,7 +258,7 @@ export function confirmAccommodationImages(j) {
 }
 
 export function setImageButtonLabel(j) {
-	getID(`images-accommodation-button-${j}`).innerText =
+	getID(`accommodation-images-button-${j}`).innerText =
 		ACCOMMODATION_IMAGES[j].length > 0
 			? translate('labels.image.edit')
 			: translate('labels.image.add');

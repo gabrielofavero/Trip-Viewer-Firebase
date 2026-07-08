@@ -257,10 +257,10 @@ export function isModalOpen(modalID = 'modal') {
 
 // ======= Edit Pages =======
 export function loadEditModule(category, addFn?: () => void) {
-	const habilitado = getID(`enabled-${category}`);
+	const habilitado = getID(`${category}-enabled`);
 	if (habilitado.checked) {
 		showContent(category);
-		if (!getID(`enabled-${category}-content`).innerText) {
+		if (!getID(`${category}-enabled-content`).innerText) {
 			// Prefer the directly-passed function (avoids circular dependency issues);
 			// fall back to _exports lookup for backward compat.
 			const type = firstCharToUpperCase(category).trim();
@@ -282,12 +282,12 @@ export function loadEditModule(category, addFn?: () => void) {
 }
 
 export function loadListener(category, addFn?: () => void) {
-	const habilitado = getID(`enabled-${category}`);
+	const habilitado = getID(`${category}-enabled`);
 	habilitado.addEventListener('change', function () {
 		if (habilitado.checked) {
 			showContent(category);
 			const box = getID(`${category}-box`);
-			const habilitadoContent = getID(`enabled-${category}-content`);
+			const habilitadoContent = getID(`${category}-enabled-content`);
 
 			if ((box && !box.innerText) || (habilitadoContent && !habilitadoContent.innerText)) {
 				if (addFn) {
@@ -304,7 +304,7 @@ export function loadListener(category, addFn?: () => void) {
 }
 
 export function showContent(type) {
-	const habilitadoContent = getID(`enabled-${type}-content`);
+	const habilitadoContent = getID(`${type}-enabled-content`);
 	habilitadoContent.style.display = 'block';
 
 	const adicionarBox = getID(`${type}-add-box`);
@@ -323,7 +323,7 @@ export function showContent(type) {
 }
 
 export function hideContent(type) {
-	const habilitadoContent = getID(`enabled-${type}-content`);
+	const habilitadoContent = getID(`${type}-enabled-content`);
 	habilitadoContent.style.display = 'none';
 
 	const adicionarBox = getID(`${type}-add-box`);

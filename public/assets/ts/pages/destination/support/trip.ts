@@ -50,7 +50,7 @@ export function loadPlannedDestination() {
 	}
 
 	function addPlannedDestination(item, data, period) {
-		const destination = getState().destinations.find((d) => d.destinationId === item.location);
+		const destination = (getState().destinations || getState().destinationRefs).find((d) => d.destinationId === item.location);
 		if (!destination || destination.destinationId != DOCUMENT_ID) return;
 
 		PLANNED_DESTINATION[item.category] ??= {};

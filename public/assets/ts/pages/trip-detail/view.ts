@@ -115,6 +115,7 @@ export async function loadViewPage() {
 	const urlParams = getURLParams();
 	TYPE = urlParams['l'] ? 'listings' : urlParams['d'] ? 'destinations' : 'trips';
 	setDocumentId(urlParams['l'] || urlParams['d'] || urlParams['t']);
+	populateDevPage();
 
 	window.addEventListener('scroll', () => {
 		if (window.scrollY > 0) {
@@ -214,7 +215,7 @@ function loadHeader() {
 	if (getState()?.version.showInDestinations) {
 		let dates = [new Date(getState().version.lastUpdated)];
 
-		for (const destination of getState().destinations) {
+		for (const destination of (getState().destinations || getState().destinationRefs)) {
 			const lastUpdated = destination.destinations.version.lastUpdated;
 			if (lastUpdated) {
 				dates.push(new Date(lastUpdated));
@@ -424,7 +425,7 @@ function loadModules() {
 	function loadDestinationsModule() {
 		switch (TYPE) {
 			case 'trips':
-				if (getState().modules?.destinations === true && getState().destinations?.length > 0) {
+				if (getState().modules?.destinations === true && (getState().destinations || getState().destinationRefs)?.length > 0) {
 					loadDestinationsDefault();
 				} else {
 					disableDestinations();
