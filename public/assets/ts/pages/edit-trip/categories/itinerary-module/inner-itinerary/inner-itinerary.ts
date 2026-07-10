@@ -41,20 +41,21 @@ export function loadInnerItineraryHTML(j) {
 
 	for (let period in INNER_ITINERARY[key]) {
 		const periodData = INNER_ITINERARY[key][period];
+		const periodHTML = period.replace(/([A-Z])/g, '-$1').toLowerCase();
 		for (let k = 1; k <= periodData.length; k++) {
 			const dataEntry = periodData[k - 1];
-			const div = getID(`inner-itinerary-${period}-${j}`);
+			const div = getID(`inner-itinerary-${periodHTML}-${j}`);
 
 			if (dataEntry.label) {
 				div.innerHTML += `<div class='input-button-container'>
-                                    <button id="input-button-${period}-${j}-${k}" class="btn input-button draggable" data-action="open-inner-itinerary-detail" data-j="${j}" data-k="${k}" data-period="${period}">
+                                    <button id="input-button-${periodHTML}-${j}-${k}" class="btn input-button draggable" data-action="open-inner-itinerary-detail" data-j="${j}" data-k="${k}" data-period="${period}">
                                         ${getInnerItineraryTitleHTML(dataEntry, 'inner-itinerary-highlight')}
                                     </button>
                                     <i class="iconify drag-icon" data-icon="mdi:drag"></i>
                                 </div>`;
 			}
 
-			getID(`itinerary-${period}-${j}`).style.display = div.innerHTML ? 'block' : 'none';
+			getID(`itinerary-${periodHTML}-${j}`).style.display = div.innerHTML ? 'block' : 'none';
 		}
 	}
 }

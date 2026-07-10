@@ -36,7 +36,7 @@
 			"united": "United Airlines",
 			"vueling": "Vueling Airlines"
 		},
-		"bulletTrain": {
+		"bullet_train": {
 			"eurostar": "Eurostar"
 		}
 	},
@@ -51,7 +51,7 @@
 		"ship": "icon-park-solid:sailboat-one",
 		"bus": "mingcute:bus-2-fill",
 		"other": "mingcute:rocket-fill",
-		"bulletTrain": "mingcute:train-fill",
+		"bullet_train": "mingcute:train-fill",
 		"flight": "fa-solid:plane"
 	},
 	"images": {
@@ -185,10 +185,10 @@
 				"dark": "assets/img/transportation/flight/vueling-dark.svg"
 			}
 		},
-		"bulletTrain": {
+		"bullet_train": {
 			"eurostar": {
-				"light": "assets/img/transportation/bulletTrain/eurostar.svg",
-				"dark": "assets/img/transportation/bulletTrain/eurostar-dark.svg"
+				"light": "assets/img/transportation/bullet_train/eurostar.svg",
+				"dark": "assets/img/transportation/bullet_train/eurostar-dark.svg"
 			}
 		}
 	},
@@ -230,7 +230,7 @@
 			"united": "https://www.united.com/",
 			"vueling": "https://www.vueling.com/"
 		},
-		"bulletTrain": {
+		"bullet_train": {
 			"eurostar": "https://www.eurostar.com/"
 		}
 	},
@@ -244,7 +244,7 @@
 		"subway",
 		"motorcycle",
 		"ship",
-		"bulletTrain",
+		"bullet_train",
 		"other"
 	],
 	"titles": {
@@ -257,7 +257,7 @@
 		"subway": "trip.transportation.type.subway",
 		"motorcycle": "trip.transportation.type.motocycle",
 		"ship": "trip.transportation.type.ship",
-		"bulletTrain": "trip.transportation.type.bullet_train",
+		"bullet_train": "trip.transportation.type.bullet_train",
 		"other": "labels.other"
 	}
 }

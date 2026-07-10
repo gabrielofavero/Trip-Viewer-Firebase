@@ -5,6 +5,7 @@ import {
 	getCurrentPreferencePIN,
 } from './categories/basic-data/protected-data.js';
 import { setExpensesData } from './edit-trip.js';
+import { loadExpenses } from './categories/expenses.js';
 import { DOCUMENT_ID } from '../../data/state.js';
 import { setCurrentPreferencePIN } from './categories/basic-data/set-protected-data.js';
 import { setTravelers, updateTravelersButtonLabel } from './categories/travelers.js';
@@ -147,7 +148,7 @@ async function loadExpensesData() {
 		return;
 	}
 
-	loadExpensesData();
+	loadExpenses();
 }
 
 async function loadTransportationData() {
@@ -159,7 +160,11 @@ async function loadTransportationData() {
 	// Migration 13 changed 'simple-view'→'simple', 'leg-view'→'leg' in Firestore.
 	// Map back to the radio button IDs used in the HTML.
 	const rawViewMode = getState().transportation.viewMode || 'simple-view';
-	const viewModeId = rawViewMode === 'simple' ? 'simple-view' : rawViewMode === 'leg' ? 'leg-view' : rawViewMode;
+	const viewModeId =
+		rawViewMode === 'simple' ? 'simple-view' :
+		rawViewMode === 'leg' ? 'leg-view' :
+		rawViewMode === 'people' ? 'people-view' :
+		rawViewMode;
 	getID(viewModeId).checked = true;
 
 	for (let j = 1; j <= getState().transportation.data.length; j++) {
@@ -246,9 +251,9 @@ async function loadDestinationsData() {
 		if (getID('destinations-enabled')) {
 			getID('destinations-enabled').checked = true;
 		}
-		getID('destinations-enabled-content').style.display = 'block';
+		getID('destinations-enabled-content').style.display = 'flex';
 		getID('no-destinations').style.display = 'none';
-		getID('has-destinations').style.display = 'block';
+		getID('has-destinations').style.display = 'flex';
 	} else {
 		getID('no-destinations').style.display = 'block';
 		getID('has-destinations').style.display = 'none';
@@ -284,7 +289,7 @@ export function loadItineraryData() {
 	let j = 1;
 	while (getID(`itinerary-title-${j}`)) {
 		const data = getState().itinerary[j - 1];
-		if (data?.data) {
+		if (data?.date) {
 			applyLoadedItineraryData(j, data);
 		}
 		j++;

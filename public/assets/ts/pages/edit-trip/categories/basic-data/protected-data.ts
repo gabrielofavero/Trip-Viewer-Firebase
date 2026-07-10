@@ -1,9 +1,8 @@
 import { getState } from '../../../../data/state.js';
 import { getID } from '../../../../utils/dom.js';
 import { translate } from '../../../../i18n/translation.js';
-import { closeMessage } from '../../../../utils/messages.js';
+import { closeMessage, displayMessage } from '../../../../utils/messages.js';
 import { stopLoadingScreen } from '../../../../utils/loading.js';
-import { openModal } from '../../../../theme/visibility.js';
 import { requestPin } from '../../../../utils/pin.js';
 import { get } from '../../../../data/firebase/database.js';
 import { setSuccessfulSave } from '../../edit-trip.js';
@@ -114,9 +113,8 @@ export function validatePinField() {
 		!PIN.current &&
 		!PIN.new
 	) {
-		getID('modal-inner-text').innerHTML = translate('trip.basic_information.pin.no_pin');
 		setSuccessfulSave(false);
 		stopLoadingScreen();
-		openModal();
+		displayMessage(null, translate('trip.basic_information.pin.no_pin'));
 	}
 }

@@ -35,25 +35,46 @@ export var FIRESTORE_PROTECTED_NEW_DATA = {};
 export var FIRESTORE_EXPENSES_NEW_DATA = {};
 export var FIRESTORE_EXPENSES_PROTECTED_NEW_DATA = {};
 
+/** Subcollection data (written to trips/{id}/accommodations, /transportation, /itinerary) */
+export var FIRESTORE_ACCOMMODATIONS_NEW_DATA: any[] = [];
+export var FIRESTORE_TRANSPORTATION_NEW_DATA: { data: any[]; viewMode: string } = { data: [], viewMode: 'simple' };
+export var FIRESTORE_ITINERARY_NEW_DATA: any[] = [];
+
 async function buildTripObject() {
+	let fullTripObject: Record<string, any>;
+
 	switch (getCurrentPreferencePIN()) {
 		case 'all-data':
 			setFirestoreNewData(await getUnprotectedTripObject());
-			FIRESTORE_PROTECTED_NEW_DATA = await getTripObjectFull(false);
+			fullTripObject = await getTripObjectFull(false);
+			FIRESTORE_PROTECTED_NEW_DATA = fullTripObject;
 			break;
 		case 'sensitive-only':
-			setFirestoreNewData(await getTripObjectFull(true));
+			fullTripObject = await getTripObjectFull(true);
+			setFirestoreNewData(stripSubcollections(fullTripObject));
 			FIRESTORE_PROTECTED_NEW_DATA = getSensitiveTripObject();
 			break;
 		default:
-			setFirestoreNewData(await getTripObjectFull(false));
+			fullTripObject = await getTripObjectFull(false);
+			setFirestoreNewData(stripSubcollections(fullTripObject));
 			FIRESTORE_PROTECTED_NEW_DATA = {};
 	}
+
+	// Store subcollection data for separate batch write
+	FIRESTORE_ACCOMMODATIONS_NEW_DATA = fullTripObject.accommodations || [];
+	FIRESTORE_TRANSPORTATION_NEW_DATA = fullTripObject.transportation || { data: [], viewMode: 'simple' };
+	FIRESTORE_ITINERARY_NEW_DATA = fullTripObject.itinerary || [];
+}
+
+/** Remove fields that now live in subcollections from the main document. */
+function stripSubcollections(tripObject: Record<string, any>): Record<string, any> {
+	const { accommodations, transportation, itinerary, ...rest } = tripObject;
+	return rest;
 }
 
 async function getUnprotectedTripObject() {
 	return {
-		destinations: getDestinationsArray(),
+		destinationRefs: getDestinationsArray(),
 		sharing: await getSharingObject(),
 		colors: getColorsObject(),
 		end: getID('end').value ? formattedDateToDateObject(getID('end').value) : '',
@@ -64,14 +85,14 @@ async function getUnprotectedTripObject() {
 		links: {},
 		modules: {},
 		currency: getID('currency').value,
-		schedules: {},
-		people: {},
+		itinerary: [],
+		travelers: [],
 		title: getID('title').value,
-		transportation: getVisibilityObject(),
+		transportation: { data: [], viewMode: 'simple' },
 		version: {
 			lastUpdated: new Date().toISOString(),
 		},
-		visibility: {},
+		visibility: getVisibilityObject(),
 		pin: getCurrentPreferencePIN(),
 	};
 }
@@ -93,7 +114,7 @@ function getSensitiveTripObject() {
 
 async function getTripObjectFull(protectedReservationCodes = false) {
 	return {
-		destinations: getDestinationsArray(),
+		destinationRefs: getDestinationsArray(),
 		sharing: await getSharingObject(),
 		colors: getColorsObject(),
 		end: getID('end').value ? formattedDateToDateObject(getID('end').value) : '',
@@ -104,8 +125,8 @@ async function getTripObjectFull(protectedReservationCodes = false) {
 		links: getLinksObject(),
 		modules: getModulesObject(),
 		currency: getID('currency').value,
-		schedules: getItineraryArray(),
-		people: TRAVELERS,
+		itinerary: getItineraryArray(),
+		travelers: TRAVELERS,
 		title: getID('title').value,
 		transportation: getTransportationObject(protectedReservationCodes),
 		version: {
@@ -193,37 +214,92 @@ function verifyImageUploads(type) {
 
 		const documentLinks = [];
 
-		if (FIRESTORE_NEW_DATA.image.background) {
+		if (FIRESTORE_NEW_DATA.image?.background) {
 			documentLinks.push(FIRESTORE_NEW_DATA.image.background);
 		}
 
-		if (FIRESTORE_NEW_DATA.image.light) {
+		if (FIRESTORE_NEW_DATA.image?.light) {
 			documentLinks.push(FIRESTORE_NEW_DATA.image.light);
 		}
 
-		if (FIRESTORE_NEW_DATA.image.dark) {
+		if (FIRESTORE_NEW_DATA.image?.dark) {
 			documentLinks.push(FIRESTORE_NEW_DATA.image.dark);
 		}
 
 		if (type == 'trips') {
-			const data: Record<string, any> =
-				getCurrentPreferencePIN() === 'all-data'
-					? FIRESTORE_PROTECTED_NEW_DATA
-					: FIRESTORE_NEW_DATA;
-			const accommodations = data.accommodations || [];
-			const accommodationLinks = (accommodations ?? []).flatMap((accommodation) =>
-				(accommodation?.images ?? []).map((image) => image?.link).filter(Boolean),
+			const accommodationLinks = FIRESTORE_ACCOMMODATIONS_NEW_DATA.flatMap((acc) =>
+				(acc?.images ?? []).map((image: any) => image?.link).filter(Boolean),
 			);
 
-			const images = data?.gallery?.images || [];
+			const galleryImages = FIRESTORE_NEW_DATA.gallery?.images || [];
 			documentLinks.push(...accommodationLinks);
-			documentLinks.push(...images);
+			documentLinks.push(...galleryImages);
 		}
 
 		deleteUnusedImages(path, documentLinks);
 	}
 
 	addSetResponse(translate('labels.image.check'), !IMAGE_UPLOAD_STATUS.hasErrors);
+}
+
+/** Build a day ID from the day's date field, matching the migration format (YYYYMMDD). */
+function buildDayId(day: Record<string, any>, index: number): string {
+	const date = day.date;
+	if (
+		date &&
+		typeof date === 'object' &&
+		typeof date.year === 'number' &&
+		typeof date.month === 'number' &&
+		typeof date.day === 'number'
+	) {
+		const y = String(date.year);
+		const m = String(date.month).padStart(2, '0');
+		const d = String(date.day).padStart(2, '0');
+		return `${y}${m}${d}`;
+	}
+	return `day-${index + 1}`;
+}
+
+/** Write accommodations, transportation, and itinerary to subcollections. */
+function writeTripSubcollections(ops: any) {
+	const tripId = DOCUMENT_ID;
+	if (!tripId) return;
+
+	// Accommodations → trips/{id}/accommodations/{accId}
+	for (const acc of FIRESTORE_ACCOMMODATIONS_NEW_DATA) {
+		if (acc.id) {
+			ops.set(`trips/${tripId}/accommodations/${acc.id}`, acc);
+		}
+	}
+
+	// Transportation legs → trips/{id}/transportation/{legId}
+	const { data: legs, viewMode } = FIRESTORE_TRANSPORTATION_NEW_DATA;
+	if (Array.isArray(legs)) {
+		for (const leg of legs) {
+			if (leg.id) {
+				ops.set(`trips/${tripId}/transportation/${leg.id}`, leg);
+			}
+		}
+	}
+	// Settings → trips/{id}/transportation/_settings
+	ops.set(`trips/${tripId}/transportation/_settings`, { viewMode: viewMode || 'simple' });
+
+	// Itinerary days → trips/{id}/itinerary/{dayId}
+	const usedIds = new Set<string>();
+	FIRESTORE_ITINERARY_NEW_DATA.forEach((day, i) => {
+		let dayId = buildDayId(day, i);
+		// Avoid collisions (e.g. two days with same date but different content)
+		if (usedIds.has(dayId)) {
+			const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+			const arr = new Uint32Array(3);
+			crypto.getRandomValues(arr);
+			let suffix = '';
+			for (let j = 0; j < 3; j++) suffix += chars[arr[j] % chars.length];
+			dayId = `${dayId}-${suffix}`;
+		}
+		usedIds.add(dayId);
+		ops.set(`trips/${tripId}/itinerary/${dayId}`, day);
+	});
 }
 
 export async function setTripData() {
@@ -237,7 +313,7 @@ export async function setTripData() {
 	const type = 'trips';
 	const checks = [validatePinField];
 	const dataBuildingFunctions = [buildTripObject, buildExpensesObject];
-	const batchFunctions = [setProtectedDataAndExpenses];
+	const batchFunctions = [setProtectedDataAndExpenses, writeTripSubcollections];
 
 	await setDocumento({ type, checks, dataBuildingFunctions, batchFunctions });
 }

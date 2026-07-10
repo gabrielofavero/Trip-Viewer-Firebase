@@ -39,12 +39,12 @@ export function getItineraryArray() {
 
 	for (let j = 1; j <= DATAS.length; j++) {
 		const innerResult = {
-			data: convertToDateObject(DATAS[j - 1]),
+			date: convertToDateObject(DATAS[j - 1]),
 			destinationIds: [],
 			title: {
-				price: '',
+				value: '',
 				translate: false,
-				destinations: false,
+				showDestinations: false,
 			},
 			earlyMorning: [],
 			morning: [],
@@ -56,9 +56,9 @@ export function getItineraryArray() {
 
 		const tituloSelectValue = getID(`itinerary-inner-title-select-${j}`).value;
 		if (tituloSelectValue == 'other') {
-			innerResult.title.price = getID(`itinerary-inner-title-${j}`).value;
+			innerResult.title.value = getID(`itinerary-inner-title-${j}`).value;
 		} else {
-			innerResult.title.price = tituloSelectValue;
+			innerResult.title.value = tituloSelectValue;
 		}
 
 		innerResult.title.translate = [
@@ -69,7 +69,7 @@ export function getItineraryArray() {
 			'return_and_destinations',
 		].includes(tituloSelectValue);
 
-		innerResult.title.destinations =
+		innerResult.title.showDestinations =
 			['departure_and_destinations', 'return_and_destinations', 'all_destinations'].includes(
 				tituloSelectValue,
 			) || DESTINATIONS.map((d) => d.id).includes(tituloSelectValue);
@@ -88,21 +88,22 @@ export function getItineraryArray() {
 }
 
 export function applyLoadedItineraryData(j, data) {
-	const jsDate = convertFromDateObject(data.data);
+	const jsDate = convertFromDateObject(data.date);
 
 	const destinationIdsObject = data.destinationIds;
 	let destinationIds = [];
 	if (destinationIdsObject && destinationIdsObject.length > 0) {
-		destinationIds = destinationIdsObject.map((dest) => dest.destinationId);
+		destinationIds = destinationIdsObject.map((dest) => dest.destinationId || dest.id);
 		addValuesForActiveDestinationsCards('itinerary', j, destinationIds);
 	}
 
 	getID(`itinerary-inner-title-select-${j}`).innerHTML = getItineraryTitleSelectOptions(j);
 
-	let title = data.title?.price ?? data.title;
+	let title = data.title?.value ?? data.title;
 	if (title) {
 		const selectValues = getAllValuesFromSelect(getID(`itinerary-inner-title-select-${j}`));
 		if (destinationIds && destinationIds.includes(title)) {
+			getID(`itinerary-inner-title-select-${j}`).value = title;
 			getID(`itinerary-inner-title-${j}`).style.display = 'none';
 		} else if (title.toLowerCase() == 'other' || !selectValues.includes(title)) {
 			getID(`itinerary-inner-title-select-${j}`).value = 'other';
@@ -203,17 +204,9 @@ export function getItineraryTitleSelectOptions(j = null) {
 	let idaVoltaDestino = '';
 
 	if (j) {
-		let labels = [];
-		let values = [];
-
-		for (const child of getChildIDs(`itinerary-location-${j}`)) {
-			const ids = getIDs(child);
-			const checkbox = getID(`check-itinerary-${ids}`);
-			if (checkbox.checked) {
-				labels.push(getID(`check-itinerary-label-${ids}`).innerText);
-				values.push(checkbox.value);
-			}
-		}
+		const activeDestinations = getActiveDestinations(j);
+		const labels = activeDestinations.map((d) => d.label);
+		const values = activeDestinations.map((d) => d.value);
 
 		if (values.length > 0 && ACTIVE_DESTINATIONS.length > 0) {
 			for (let i = 0; i < values.length; i++) {
@@ -261,7 +254,7 @@ function getItineraryTitle(dataFormatada, title = '') {
 export function reloadItinerary() {
 	if (!getID('itinerary-enabled').checked) return;
 	const originalData = getItineraryArray() || [];
-	const originalDataInputs = originalData.map((data) => dateObjectToKey(data.data));
+	const originalDataInputs = originalData.map((data) => dateObjectToKey(data.date));
 
 	let j = 1;
 	for (const data of DATAS.map((data) => jsDateToKey(data))) {

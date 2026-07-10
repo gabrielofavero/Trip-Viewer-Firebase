@@ -1,9 +1,10 @@
 import { cloneObject, getID } from './dom.js';
 import { stopLoadingScreen, stopLoadingTimer } from './loading.js';
 import { translate } from '../i18n/translation.js';
-import { disableScroll } from '../theme/visibility.js';
+import { disableScroll, getVisibility } from '../theme/visibility.js';
 import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from '../theme/animations.js';
+import { DOCUMENT_ID } from '../data/state.js';
 
 export let MESSAGE_MODAL_OPEN = false;
 // Use var (not const) to avoid TDZ errors from circular module dependencies
@@ -324,6 +325,10 @@ export function getButton(button) {
 			return getConfirmButton(button.action, 'labels.yes');
 		case 'no':
 			return getCloseButton('labels.no', button.action);
+		case 'edit':
+			return getEditButton();
+		case 'view':
+			return getViewButton(button.action);
 		default:
 			return getCloseButton('labels.understood');
 	}
@@ -347,6 +352,85 @@ export function getHomeButton() {
 	button.innerHTML += ` ${translate('labels.home')}`;
 
 	return button;
+}
+
+export function getEditButton() {
+	const button = document.createElement('button');
+	button.className = 'btn btn-basic btn-format';
+	button.type = 'button';
+	button.addEventListener('click', closeMessage);
+	button.id = 'message-edit';
+
+	const icon = document.createElement('i');
+	icon.className = 'iconify';
+	icon.setAttribute('data-icon', 'material-symbols:edit');
+
+	button.appendChild(icon);
+	button.innerHTML += ` ${translate('labels.edit')}`;
+
+	return button;
+}
+
+export function getViewButton(action: { type: string; docId: string }) {
+	const { type, docId } = action;
+	let url: string;
+
+	switch (type) {
+		case 'trips':
+			url = `../view.html?t=${docId}&visibility=${getVisibility()}`;
+			break;
+		case 'destinations':
+			url = `../destination.html?d=${docId}&visibility=${getVisibility()}`;
+			break;
+		case 'listings':
+			url = `../view.html?l=${docId}&visibility=${getVisibility()}`;
+			break;
+		default:
+			url = '../index.html';
+	}
+
+	const button = document.createElement('button');
+	button.className = 'btn btn-theme btn-format';
+	button.type = 'button';
+	button.setAttribute('onclick', `window.open('${url}', '_blank');`);
+	button.id = 'message-view';
+
+	const icon = document.createElement('i');
+	icon.className = 'iconify';
+	icon.setAttribute('data-icon', 'material-symbols:visibility');
+
+	button.appendChild(icon);
+	button.innerHTML += ` ${translate('labels.view')}`;
+
+	return button;
+}
+
+/**
+ * Display a save-success message with Edit, Home, and View buttons.
+ * Designed as a drop-in replacement for the legacy modal-content on edit pages.
+ *
+ * @param options.type - Document type ('trips', 'destinations', 'listings')
+ * @param options.docId - The Firestore document ID
+ * @param options.content - Success message (optional, defaults to translated save success)
+ */
+export function displaySaveSuccess({
+	type,
+	docId,
+	content,
+}: {
+	type: string;
+	docId: string;
+	content?: string;
+}) {
+	const properties = cloneObject(MESSAGE_PROPERTIES);
+	properties.title = '';
+	properties.content = content || translate('messages.documents.save.success');
+	properties.buttons = [
+		{ type: 'edit' },
+		{ type: 'home' },
+		{ type: 'view', action: { type, docId } },
+	];
+	displayFullMessage(properties);
 }
 
 export function getBackButton(redirectTo = 'index.html') {

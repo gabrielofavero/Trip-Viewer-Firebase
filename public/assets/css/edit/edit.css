@@ -26,7 +26,7 @@
 	content: "";
 	position: fixed;
 	inset: 0;
-	background: rgba(255, 255, 255, 0.82);
+	background: rgba(255, 255, 255, 0.55);
 	z-index: 0;
 	pointer-events: none;
 }
@@ -1051,13 +1051,22 @@
 	color: var(--text-muted);
 	flex-shrink: 0;
 	margin-right: 8px;
-	transition: color var(--transition-fast);
+	opacity: 1;
+	width: 20px;
+	overflow: hidden;
+	transition: opacity 0.25s ease, width 0.25s ease, margin-right 0.25s ease, color var(--transition-fast);
 }
 .drag-icon:hover {
 	color: var(--text-primary);
 }
 .drag-icon:active {
 	cursor: grabbing;
+}
+.drag-icon-hidden {
+	opacity: 0;
+	width: 0;
+	margin-right: 0;
+	pointer-events: none;
 }
 
 .draggable {
@@ -1096,18 +1105,32 @@
 	margin-top: 8px;
 }
 
+#transportation-enabled-content > .transportation-box {
+	margin-top: 16px;
+}
+
 /* Destinos Cards — modern card-based layout */
 #destinations-enabled-content {
 	max-height: 420px;
-	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+#destinations-enabled-content > #has-destinations {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	flex: 1;
 }
 
 .destinations-cards {
 	display: flex;
 	flex-direction: column;
+	flex: 1;
+	min-height: 0;
 	gap: 4px;
-	min-height: auto !important;
 	padding: 8px 0;
+	overflow-y: auto;
 }
 
 .destination-card {
@@ -1119,31 +1142,47 @@
 	background: var(--bg-primary, #fff);
 	cursor: pointer;
 	transition:
-		background var(--transition-fast),
-		border-color var(--transition-fast),
-		transform 0.15s ease;
+		background 0.2s ease,
+		border-color 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
 	user-select: none;
 }
 
 .destination-card:hover {
-	background: var(--bg-secondary);
-	border-color: var(--accent-color, #4a90d9);
+	background: rgba(var(--theme-color-rgb), 0.04);
+	border-color: rgba(var(--theme-color-rgb), 0.25);
+}
+
+.destination-card:active {
+	transform: scale(0.98);
 }
 
 .destination-card.selected {
-	background: var(--accent-color, #4a90d9);
-	border-color: var(--accent-color, #4a90d9);
-	color: #fff;
+	background: rgba(var(--theme-color-rgb), 0.08);
+	border-color: rgba(var(--theme-color-rgb), 0.35);
+	color: var(--theme-color);
+	box-shadow: 0 0 0 1px rgba(var(--theme-color-rgb), 0.1);
 }
 
 .destination-card.selected .destination-card-name {
-	color: #fff;
+	color: var(--theme-color);
+	font-weight: 600;
 }
 
 .destination-card-name {
 	font-weight: 500;
 	font-size: 0.875rem;
 	flex: 1;
+}
+
+/* Wider screens: 2-column grid layout */
+@media (min-width: 640px) {
+	.destinations-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 6px;
+	}
 }
 
 /* Keep old class for itinerary inner checkboxes (they still use checkboxes) */
@@ -1512,7 +1551,7 @@ details summary::-webkit-details-marker {
 # All [data-theme="dark"] rules scoped to edit components
 --------------------------------------------------------------*/
 [data-theme="dark"] #hero::before {
-	background: rgba(0, 0, 0, 0.82);
+	background: rgba(0, 0, 0, 0.55);
 }
 
 /* Tab Bar */
@@ -1892,6 +1931,7 @@ fieldset.modern-radio-group {
 
 .date-range-input .date-text.placeholder {
 	color: var(--nf-input-placeholder-color);
+	cursor: inherit;
 }
 
 .date-range-input .date-clear {

@@ -237,6 +237,9 @@ export function createBatchOps() {
 			track('delete', path);
 		},
 
+		/** Returns all tracked operations (for dryrun inspection). */
+		getOps: () => ops,
+
 		commit: async () => {
 			console.log('[Firestore batch] Operations to commit:', ops);
 

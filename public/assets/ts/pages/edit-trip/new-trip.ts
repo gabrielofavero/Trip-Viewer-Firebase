@@ -337,7 +337,8 @@ export function loadDestinations() {
 	let destinations = [...DESTINATIONS];
 	destinations.sort((a, b) => a.title.localeCompare(b.title));
 	getID('no-destinations').style.display = 'none';
-	getID('has-destinations').style.display = 'block';
+	getID('has-destinations').style.display = 'flex';
+	getID('all-destinations-used').style.display = 'none';
 
 	const container = getID('destinations-checkboxes');
 	container.innerHTML = '';

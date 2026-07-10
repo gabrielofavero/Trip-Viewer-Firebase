@@ -17,7 +17,7 @@ import {
 	getTomorrowFormatted,
 	jsDateToKey,
 } from '../../utils/dates.js';
-import { cloneObject, getID, getOrderedDocumentByTitle, getURLParam } from '../../utils/dom.js';
+import { cloneObject, getID, getURLParam } from '../../utils/dom.js';
 import {
 	deleteUserObjectDB,
 	getPermissions,
@@ -26,12 +26,13 @@ import {
 	getTransportation,
 	getAccommodations,
 	getItinerary,
+	getUserDestinationSummaries,
 	get,
 	deleteDocument,
 } from '../../data/firebase/database.js';
 import { loadDraggablesWithAccordions } from '../../ui/sortable.js';
 import { newDynamicSelect } from '../../ui/dynamic-select.js';
-import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
+import { getUserData, getUID, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import {
 	deleteUserObjectStorage,
 	loadImageSelector,
@@ -95,7 +96,8 @@ export async function loadEditTripPage() {
 	newDynamicSelect('transportation-person');
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinations || []));
+	const destSummaries = await getUserDestinationSummaries(await getUID());
+	setDestinations(destSummaries.sort((a: any, b: any) => a.title.localeCompare(b.title)));
 
 	if (DOCUMENT_ID) {
 		await loadTrip(true);
@@ -231,7 +233,7 @@ async function getTravelDocument(stripped = false) {
 async function getMergedTripObject(tripData) {
 	// After migration, transportation/accommodations live in subcollections.
 	// Fetch them if not already embedded (old format compatibility).
-	if (!tripData.transportation?.data) {
+	if (!tripData.transportation?.data?.length) {
 		const transport = await getTransportation(DOCUMENT_ID);
 		tripData.transportation = {
 			data: transport.legs || [],

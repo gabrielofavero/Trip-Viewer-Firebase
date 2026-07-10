@@ -1,6 +1,6 @@
 import { getID } from '../../../utils/dom.js';
-import { hasUnsavedChanges, reEdit, validateImageLink, validateLink } from '../../../ui/fields.js';
-import { searchDestinationsListenerAction, closeModal } from '../../../theme/visibility.js';
+import { hasUnsavedChanges, validateImageLink, validateLink } from '../../../ui/fields.js';
+import { searchDestinationsListenerAction } from '../../../theme/visibility.js';
 import { translate } from '../../../i18n/translation.js';
 import { getNextInputDay, getPreviousInputDay, inputDateToJsDate } from '../../../utils/dates.js';
 import { addRemoveChildListenerDS } from '../../../ui/dynamic-select.js';
@@ -13,7 +13,7 @@ import {
 	validatePin,
 } from '../categories/basic-data/protected-data.js';
 import { deleteTrip, deleteTripAction, NEW_TRIP } from '../edit-trip.js';
-import { DOCUMENT_ID, SUCCESSFUL_SAVE } from '../../../data/state.js';
+import { SUCCESSFUL_SAVE } from '../../../data/state.js';
 import { openInnerExpense, deleteInnerExpense, saveInnerExpense } from '../categories/expenses.js';
 import { openAttributions } from '../../../utils/attributions.js';
 import { switchPin } from '../categories/basic-data/protected-data.js';
@@ -41,7 +41,6 @@ import {
 	applyTransportationTypeVisualization,
 	transportationAddListenerAction,
 } from '../categories/transportation.js';
-import { getVisibility } from '../../../theme/theme.js';
 
 // Loader
 export function loadEventListeners() {
@@ -58,10 +57,6 @@ export function loadEventListeners() {
 			if (category) openInnerExpense(category);
 		},
 		'open-attributions': () => openAttributions(),
-		'close-modal': (target) => {
-			const modalId = target.getAttribute('data-modal') || 'delete-modal';
-			closeModal(modalId);
-		},
 		'close-toast': () => closeToast(),
 		'open-accommodation-images': (target) => {
 			const index = parseInt(target.getAttribute('data-index'));
@@ -119,10 +114,6 @@ export function loadEventListeners() {
 
 	// Buttons
 	getID('save-btn').addEventListener('click', () => setTripData());
-	getID('re-edit').addEventListener('click', () => reEdit('trips', SUCCESSFUL_SAVE));
-	getID('preview').addEventListener('click', () => visualizarListenerAction());
-	getID('home').addEventListener('click', () => (window.location.href = '../index.html'));
-	getID('home').addEventListener('click', () => (window.location.href = '../index.html'));
 	getID('cancel-btn').addEventListener('click', () => (window.location.href = '../index.html'));
 	getID('transportation-add').addEventListener('click', () => transportationAddListenerAction());
 	getID('accommodation-add').addEventListener('click', () => accommodationsAddListenerAction());
@@ -194,14 +185,6 @@ function endListenerAction() {
 	}
 
 	reloadItinerary();
-}
-
-function visualizarListenerAction() {
-	if (DOCUMENT_ID) {
-		window.open(`../view.html?t=${DOCUMENT_ID}&visibility=${getVisibility()}`, '_blank');
-	} else {
-		window.location.href = '../index.html';
-	}
 }
 
 export function addRemoveTransportationListener(j) {

@@ -23,7 +23,7 @@ var INNER_EXPENSES = {
 
 var LAST_INNER_EXPENSE_TYPE = '';
 
-function loadExpenses(data = FIRESTORE_EXPENSES_DATA) {
+export function loadExpenses(data = FIRESTORE_EXPENSES_DATA) {
 	pushExpense('preTrip', data);
 	pushExpense('duringTrip', data);
 	loadExpensesHTML();

@@ -18,10 +18,10 @@ export function getTransportationObject(protectedReservationCodes = false) {
 	const result = {
 		data: [],
 		viewMode: getID('people-view').checked
-			? 'people-view'
+			? 'people'
 			: getID('leg-view').checked
-				? 'leg-view'
-				: 'simple-view',
+				? 'leg'
+				: 'simple',
 	};
 	for (const child of getChildIDs('transportation-box')) {
 		const j = getJ(child);

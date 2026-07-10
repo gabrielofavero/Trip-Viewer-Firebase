@@ -11,7 +11,7 @@ export function getDestinationsArray() {
 	const result = [];
 	for (const dest of ACTIVE_DESTINATIONS) {
 		const destinationId = dest.destinationId;
-		result.push({ destinationId });
+		result.push({ id: destinationId });
 	}
 	return result;
 }

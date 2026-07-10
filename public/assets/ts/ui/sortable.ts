@@ -87,7 +87,7 @@ export function loadDraggablesWithAccordions(items = []) {
 		for (const child of parent.children) {
 			const dragIcon = child.querySelector('.drag-icon');
 			if (dragIcon) {
-				dragIcon.style.display = toShow ? 'block' : 'none';
+				dragIcon.classList.toggle('drag-icon-hidden', !toShow);
 			}
 		}
 	}

@@ -1,8 +1,7 @@
 import { firstCharToUpperCase, getID } from '../utils/dom.js';
 import { stopLoadingScreen } from '../utils/loading.js';
-import { closeModal, openModal } from '../theme/visibility.js';
 import { translate } from '../i18n/translation.js';
-import { openToast } from '../utils/messages.js';
+import { openToast, displayMessage, closeMessage } from '../utils/messages.js';
 import { DOCUMENT_ID, SUCCESSFUL_SAVE, setSuccessfulSaveFn } from '../data/state.js';
 
 let ORIGINAL_STATE = new Map();
@@ -94,9 +93,8 @@ export function validateRequiredFields() {
 
 	if (invalidFields.length > 0) {
 		setSuccessfulSaveFn(false);
-		getID('modal-inner-text').innerHTML = getInvalidFieldsText(invalidFields);
 		stopLoadingScreen();
-		openModal();
+		displayMessage(null, getInvalidFieldsText(invalidFields));
 	}
 }
 
@@ -184,7 +182,7 @@ export function reEdit(type, SUCCESSFUL_SAVE = true) {
 	if (param && DOCUMENT_ID && SUCCESSFUL_SAVE) {
 		window.location.href = `${url}?${param}=${DOCUMENT_ID}`;
 	} else if (!SUCCESSFUL_SAVE) {
-		closeModal();
+		closeMessage();
 	} else {
 		window.location.href = '../index.html';
 	}

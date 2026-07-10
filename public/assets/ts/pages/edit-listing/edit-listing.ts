@@ -14,19 +14,18 @@ import {
 	cloneObject,
 	getChildIDs,
 	getID,
-	getOrderedDocumentByTitle,
 	getURLParam,
 	setRequired,
 } from '../../utils/dom.js';
-import { deleteUserObjectDB, getPermissions, getSingleData } from '../../data/firebase/database.js';
-import { getUserData, setUserData, USER_DATA } from '../../data/firebase/auth.js';
+import { deleteUserObjectDB, getPermissions, getSingleData, getUserDestinationSummaries } from '../../data/firebase/database.js';
+import { getUserData, getUID, setUserData, USER_DATA } from '../../data/firebase/auth.js';
 import {
 	deleteUserObjectStorage,
 	loadImageSelector,
 	loadLogoSelector,
 	setPermissions,
 } from '../../data/firebase/storage.js';
-import { hasUnsavedChanges, reEdit, snapshotFormState } from '../../ui/fields.js';
+import { hasUnsavedChanges, snapshotFormState } from '../../ui/fields.js';
 import { loadEditModule, searchDestinationsListenerAction } from '../../theme/visibility.js';
 import { translate } from '../../i18n/translation.js';
 import { displayFullMessage, MESSAGE_PROPERTIES, registerActions } from '../../utils/messages.js';
@@ -43,7 +42,7 @@ import {
 	buildImagemObject,
 	buildLinksObject,
 } from './support/build-listing-objects.js';
-import { getVisibility } from '../../theme/theme.js';
+
 import { loadUploadSelector } from '../../data/firebase/storage.js';
 import { loadListData } from './existing-listing.js';
 import { autoFillDarkColor } from '../edit-trip/categories/customization.js';
@@ -68,7 +67,8 @@ export async function loadEditListingPage() {
 	loadHabilitados();
 
 	setUserData(await getUserData());
-	setDestinations(getOrderedDocumentByTitle(USER_DATA?.destinations || []));
+	const destSummaries = await getUserDestinationSummaries(await getUID());
+	setDestinations(destSummaries.sort((a: any, b: any) => a.title.localeCompare(b.title)));
 
 	if (DOCUMENT_ID) {
 		await carregarListagem();
@@ -106,28 +106,8 @@ function loadEventListeners() {
 		window.location.href = '../index.html';
 	});
 
-	getID('home').addEventListener('click', () => {
-		window.location.href = '../index.html';
-	});
-
-	getID('visualizar').addEventListener('click', () => {
-		if (DOCUMENT_ID) {
-			window.open(`../view?l=${DOCUMENT_ID}&visibility=${getVisibility()}`, '_blank');
-		} else {
-			window.location.href = '../index.html';
-		}
-	});
-
 	getID('save-btn').addEventListener('click', () => {
 		setListagem();
-	});
-
-	getID('re-edit').addEventListener('click', () => {
-		reEdit('listings', SUCCESSFUL_SAVE);
-	});
-
-	getID('home').addEventListener('click', () => {
-		window.location.href = '../index.html';
 	});
 
 	getID('destinations-search').addEventListener('input', () => searchDestinationsListenerAction());

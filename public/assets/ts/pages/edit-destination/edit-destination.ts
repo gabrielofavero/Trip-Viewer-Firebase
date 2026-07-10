@@ -25,7 +25,6 @@ import {
 } from '../../ui/dynamic-select.js';
 import {
 	hasUnsavedChanges,
-	reEdit,
 	snapshotFormState,
 	validateInstagramLink,
 	validateLink,
@@ -157,24 +156,8 @@ function loadEventListeners() {
 		setDocumento({ type, dataBuildingFunctions });
 	});
 
-	getID('re-edit').addEventListener('click', () => {
-		reEdit('destinations', SUCCESSFUL_SAVE);
-	});
-
 	getID('cancel-btn').addEventListener('click', () => {
 		window.location.href = `../index?visibility=${getVisibility()}`;
-	});
-
-	getID('home').addEventListener('click', () => {
-		window.location.href = `../index?visibility=${getVisibility()}`;
-	});
-
-	getID('visualizar').addEventListener('click', () => {
-		if (DOCUMENT_ID) {
-			window.open(`../destination?d=${DOCUMENT_ID}&visibility=${getVisibility()}`, '_blank');
-		} else {
-			window.location.href = `../index?visibility=${getVisibility()}`;
-		}
 	});
 
 	getID('currency').addEventListener('change', () => {

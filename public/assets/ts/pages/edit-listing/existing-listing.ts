@@ -26,9 +26,9 @@ async function loadDestinationsData() {
 		if (getID('destinations-enabled')) {
 			getID('destinations-enabled').checked = true;
 		}
-		getID('destinations-enabled-content').style.display = 'block';
+		getID('destinations-enabled-content').style.display = 'flex';
 		getID('no-destinations').style.display = 'none';
-		getID('has-destinations').style.display = 'block';
+		getID('has-destinations').style.display = 'flex';
 	} else {
 		getID('no-destinations').style.display = 'block';
 		getID('has-destinations').style.display = 'none';
