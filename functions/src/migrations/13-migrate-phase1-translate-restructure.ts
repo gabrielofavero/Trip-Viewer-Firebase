@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { FieldValue } from 'firebase-admin/firestore';
 
 // ============================================================
 // PHASE 1: Translate & Restructure
