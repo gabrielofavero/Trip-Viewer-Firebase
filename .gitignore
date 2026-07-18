@@ -4,8 +4,11 @@ dist/
 # Functions compiled output
 functions/lib/
 
+# Auto-generated backups
+*-tripviewer-backup-*.json
+
 # Dev
-dev/
+/dev/
 
 # Logs
 logs

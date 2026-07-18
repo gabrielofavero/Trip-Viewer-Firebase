@@ -127,12 +127,14 @@
 .btn:active {
 	transform: scale(0.97);
 }
-.btn-primary-theme {
+.btn-primary-theme,
+.btn-theme {
 	background: var(--theme-color);
 	color: #fff;
 	box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.3);
 }
-.btn-primary-theme:hover {
+.btn-primary-theme:hover,
+.btn-theme:hover {
 	background: var(--theme-secondary);
 	box-shadow: 0 4px 16px rgba(var(--theme-color-rgb), 0.4);
 	transform: translateY(-1px);

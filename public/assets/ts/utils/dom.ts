@@ -718,7 +718,7 @@ export function getNextTrips(data: Record<string, any>) {
 		.map(([id, v]: [string, any]) => ({ id, ...v }))
 		.sort(
 			(a: any, b: any) =>
-				convertFromDateObject(a.start).getTime() - convertFromDateObject(b.start).getTime(),
+				convertFromDateObject(b.start).getTime() - convertFromDateObject(a.start).getTime(),
 		);
 }
 

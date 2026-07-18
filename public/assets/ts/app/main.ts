@@ -122,7 +122,7 @@ function initializeApp() {
 export function setPageName(pageName?) {
 	const isDev = APP.projectId === 'trip-viewer-dev';
 	const host = location.hostname;
-	const isLocal = host === 'localhost' || !Number.isNaN(Number(host));
+	const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
 	const tag = isLocal ? (isDev ? '[LOCAL DEV]' : '[LOCAL PRD]') : isDev ? '[DEV]' : '';
 	const cleanTitle = document.title
 		.replace(/\[LOCAL (DEV|PRD)\]\s*/g, '')

@@ -1927,6 +1927,7 @@ fieldset.modern-radio-group {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	line-height: 1.4;
 }
 
 .date-range-input .date-text.placeholder {

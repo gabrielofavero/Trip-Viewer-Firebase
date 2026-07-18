@@ -24,3 +24,7 @@ export const migratePhase1 = phase1.migrate;
 // Phase 2: Rename & Finalize (was migrations 19–22)
 import * as phase2 from './migrations/14-migrate-phase2-rename-finalize';
 export const migratePhase2 = phase2.migrate;
+
+// Dev: initialize a fresh local Firestore emulator database
+import * as initLocalDbModule from './dev/init-local-db';
+export const initLocalDb = initLocalDbModule.initLocalDb;

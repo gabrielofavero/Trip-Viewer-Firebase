@@ -19,7 +19,8 @@
 		"check": "npx biome check",
 		"sync": "python scripts/utils/sync.py",
 		"deploy": "python scripts/build/deploy.py",
-		"export-maps": "python scripts/export-maps-data/export-maps-data.py"
+		"export-maps": "python scripts/export-maps-data/export-maps-data.py",
+		"backup": "firebase emulators:export ./.emulator-data"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.11",

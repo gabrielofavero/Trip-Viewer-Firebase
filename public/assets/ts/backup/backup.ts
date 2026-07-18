@@ -177,6 +177,8 @@ async function getAccountData(useSensitiveData = false) {
 	const data = getInitialBaseStructure();
 	const jobs = buildMissingJobs(useSensitiveData);
 	await loadJobsConcurrently(jobs, data);
+	// Load subcollections (accommodations, transportation, itinerary) for each trip
+	await loadTripSubcollections(data, useSensitiveData);
 	return data;
 
 	function getInitialBaseStructure() {
@@ -244,6 +246,72 @@ async function getAccountData(useSensitiveData = false) {
 
 			current[keys[keys.length - 1]] = value;
 		}
+	}
+}
+
+/**
+ * Fetch all documents from a Firestore collection path.
+ * Returns a map of docId → data, or empty object if collection is empty/missing.
+ */
+async function getCollectionDocs(collectionPath: string): Promise<Record<string, any>> {
+	try {
+		const snap = await firebase.firestore().collection(collectionPath).get();
+		const result: Record<string, any> = {};
+		snap.forEach((doc) => {
+			result[doc.id] = doc.data();
+		});
+		return result;
+	} catch {
+		// Collection may not exist or permission denied — that's OK
+		return {};
+	}
+}
+
+/**
+ * After loading all top-level trip documents, also fetch their subcollections
+ * (accommodations, transportation, itinerary) and store them under
+ * data._subcollections.trips[tripId].
+ */
+async function loadTripSubcollections(data: Record<string, any>, useSensitiveData: boolean) {
+	const scTrips: Record<string, any> = {};
+
+	// Helper to load subs for a trip doc
+	async function loadForTrip(tripId: string) {
+		const [accommodations, transportation, itinerary] = await Promise.all([
+			getCollectionDocs(`trips/${tripId}/accommodations`),
+			getCollectionDocs(`trips/${tripId}/transportation`),
+			getCollectionDocs(`trips/${tripId}/itinerary`),
+		]);
+
+		const entry: Record<string, any> = {};
+		if (Object.keys(accommodations).length > 0) entry.accommodations = accommodations;
+		if (Object.keys(transportation).length > 0) entry.transportation = transportation;
+		if (Object.keys(itinerary).length > 0) entry.itinerary = itinerary;
+
+		if (Object.keys(entry).length > 0) {
+			scTrips[tripId] = entry;
+		}
+	}
+
+	// Public trips
+	const tripsData = data.trips;
+	if (tripsData && typeof tripsData === 'object') {
+		const tripIds = Object.keys(tripsData).filter((k) => k !== 'protected');
+		await Promise.allSettled(tripIds.map(loadForTrip));
+	}
+
+	// Protected trips
+	if (useSensitiveData && tripsData?.protected) {
+		for (const [pin, pinData] of Object.entries(tripsData.protected as Record<string, any>)) {
+			if (!pinData || typeof pinData !== 'object') continue;
+			const protTripIds = Object.keys(pinData);
+			await Promise.allSettled(protTripIds.map(loadForTrip));
+		}
+	}
+
+	if (Object.keys(scTrips).length > 0) {
+		if (!data._subcollections) data._subcollections = {};
+		data._subcollections.trips = scTrips;
 	}
 }
 

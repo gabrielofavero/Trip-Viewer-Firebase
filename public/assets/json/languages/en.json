@@ -21,7 +21,8 @@
 			"prompt": "Are you sure you want to restore your account from a backup? This will overwrite your current trip data. This action cannot be undone",
 			"invalid_file": "The selected file is not a valid backup file",
 			"incorrect_owner": "The selected backup file does not belong to the current user",
-			"success": "The account restoration was completed successfully"
+			"success": "The account restoration was completed successfully",
+			"owner_updated": "The account restoration was completed successfully ({{count}} owner(s) updated to your account.)"
 		},
 		"delete": {
 			"title": "Delete account",
