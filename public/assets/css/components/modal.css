@@ -93,3 +93,25 @@
 		width: 90%;
 	}
 }
+
+/*--------------------------------------------------------------
+# Shared Button Variants (used by messages.ts across all pages)
+--------------------------------------------------------------*/
+
+.btn-format {
+	margin: 5px;
+}
+
+.btn-basic {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+	background: none;
+}
+
+.btn-basic:hover,
+.btn-basic:focus {
+	background: var(--theme-color);
+	color: #fff;
+}

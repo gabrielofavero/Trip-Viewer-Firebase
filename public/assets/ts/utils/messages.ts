@@ -211,11 +211,12 @@ export function closeMessage() {
 		const preloader = getID('preloader');
 		if (preloader) {
 			preloader.style.opacity = '0';
-			setTimeout(() => {
+			(preloader as any)._closeMsgTimeout = setTimeout(() => {
 				preloader.innerHTML = '';
 				preloader.style.background = '';
 				preloader.style.display = 'none';
 				preloader.style.opacity = '';
+				delete (preloader as any)._closeMsgTimeout;
 			}, 200);
 		}
 		MESSAGE_MODAL_OPEN = false;
@@ -339,7 +340,7 @@ export function getHomeButton() {
 		? '../index.html'
 		: 'index.html';
 	const button = document.createElement('button');
-	button.className = 'btn btn-theme btn-format';
+	button.className = 'btn btn-secondary btn-format';
 	button.type = 'submit';
 	button.setAttribute('onclick', `window.location.href = "${homeButton}";`);
 

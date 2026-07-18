@@ -15,6 +15,11 @@ export function startLoadingScreen({ useTimer = false, adjustLoadables = true } 
 	}
 	const preloader = getID('preloader');
 	if (preloader) {
+		// Cancel any pending close-message animation that would hide the preloader
+		if ((preloader as any)._closeMsgTimeout) {
+			clearTimeout((preloader as any)._closeMsgTimeout);
+			delete (preloader as any)._closeMsgTimeout;
+		}
 		if (adjustLoadables) {
 			document.querySelectorAll('.loadable').forEach((el) => {
 				(el as HTMLElement).style.display = '';

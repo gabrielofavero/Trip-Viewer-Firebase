@@ -42,13 +42,13 @@ export class DateRangePicker {
 		'december',
 	];
 	private readonly weekDayKeys = [
+		'sunday',
 		'monday',
 		'tuesday',
 		'wednesday',
 		'thursday',
 		'friday',
 		'saturday',
-		'sunday',
 	];
 
 	private getMonths(): string[] {
