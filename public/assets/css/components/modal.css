@@ -129,3 +129,46 @@
 	background: #555;
 	color: #fff;
 }
+
+/*--------------------------------------------------------------
+# Backup PIN dialog
+--------------------------------------------------------------*/
+
+.pin-backup-instruction {
+	text-align: left;
+	margin-bottom: 12px;
+}
+
+.pin-backup-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+.pin-backup-table td.pin-backup-label {
+	text-align: left;
+	padding: 8px 12px 8px 0;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.pin-backup-table td.pin-backup-input-cell {
+	padding: 8px 0 8px 12px;
+	vertical-align: middle;
+}
+
+.pin-backup-input {
+	width: 80px;
+	padding: 6px 10px;
+	text-align: center;
+	font-size: 1rem;
+	letter-spacing: 4px;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+
+.pin-backup-input:focus {
+	outline: none;
+	border-color: var(--theme-color);
+	box-shadow: 0 0 0 2px var(--theme-color);
+}

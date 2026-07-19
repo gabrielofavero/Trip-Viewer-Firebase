@@ -22,8 +22,10 @@ export function addRestaurants() {
         <button id="restaurants-title-${j}" class="accordion-button collapsed flex-button" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-restaurants-${j}" aria-expanded="true"
           aria-controls="collapse-restaurants-${j}">
-          <span class="title-text" id="restaurants-title-text-${j}">${translate('destination.restaurants.title_singular')} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`restaurants-title-icon-${j}`)}</div>
+          <div class="flex-button-inner">
+            <span class="title-text" id="restaurants-title-text-${j}">${translate('destination.restaurants.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`restaurants-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
       <div id="collapse-restaurants-${j}" class="accordion-collapse collapse"
@@ -156,8 +158,10 @@ export function addSnacks() {
       <h2 class="accordion-header" id="heading-snacks-${j}">
         <button id="snacks-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-snacks-${j}" aria-expanded="true" aria-controls="collapse-snacks-${j}">
-          <span class="title-text" id="snacks-title-text-${j}">${translate('destination.snacks.title_singular')} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`snacks-title-icon-${j}`)}</div>
+          <div class="flex-button-inner">
+            <span class="title-text" id="snacks-title-text-${j}">${translate('destination.snacks.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`snacks-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
       <div id="collapse-snacks-${j}" class="accordion-collapse collapse" aria-labelledby="heading-snacks-${j}"
@@ -291,8 +295,10 @@ export function addNightlife() {
       <h2 class="accordion-header" id="heading-nightlife-${j}">
         <button id="nightlife-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-nightlife-${j}" aria-expanded="true" aria-controls="collapse-nightlife-${j}">
-          <span class="title-text" id="nightlife-title-text-${j}">${translate('destination.nightlife.title_singular')} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`nightlife-title-icon-${j}`)}</i></div>
+          <div class="flex-button-inner">
+            <span class="title-text" id="nightlife-title-text-${j}">${translate('destination.nightlife.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`nightlife-title-icon-${j}`)}</i></div>
+          </div>
         </button>
       </h2>
       <div id="collapse-nightlife-${j}" class="accordion-collapse collapse" aria-labelledby="heading-nightlife-${j}"
@@ -425,8 +431,10 @@ export function addTourism() {
       <h2 class="accordion-header" id="heading-tourism-${j}">
         <button id="tourism-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-tourism-${j}" aria-expanded="true" aria-controls="collapse-tourism-${j}">
-          <span class="title-text" id="tourism-title-text-${j}">${translate('destination.tourism.title_singular')} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`tourism-title-icon-${j}`)}</div>
+          <div class="flex-button-inner">
+            <span class="title-text" id="tourism-title-text-${j}">${translate('destination.tourism.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`tourism-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
       <div id="collapse-tourism-${j}" class="accordion-collapse collapse" aria-labelledby="heading-tourism-${j}"
@@ -559,8 +567,10 @@ export function addShopping() {
       <h2 class="accordion-header" id="heading-shopping-${j}">
         <button id="shopping-title-${j}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapse-shopping-${j}" aria-expanded="true" aria-controls="collapse-shopping-${j}">
-          <span class="title-text" id="shopping-title-text-${j}">${translate('destination.shopping.title_singular')} ${j}</span> 
-          <div class="icon-container">${getNewSvg(`shopping-title-icon-${j}`)}</div>
+          <div class="flex-button-inner">
+            <span class="title-text" id="shopping-title-text-${j}">${translate('destination.shopping.title_singular')} ${j}</span> 
+            <div class="icon-container">${getNewSvg(`shopping-title-icon-${j}`)}</div>
+          </div>
         </button>
       </h2>
 

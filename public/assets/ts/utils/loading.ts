@@ -26,6 +26,7 @@ export function startLoadingScreen({ useTimer = false, adjustLoadables = true } 
 			});
 		}
 		preloader.style.display = 'block';
+		preloader.style.opacity = '1';
 		disableScroll();
 	}
 }

@@ -53,6 +53,7 @@ async function restoreAccountData(restore) {
 	}
 
 	if (!isRestoreValid(normalized)) {
+		stopLoadingScreen();
 		displayMessage(
 			translate('account.restore.error_title'),
 			translate('account.restore.invalid_file'),

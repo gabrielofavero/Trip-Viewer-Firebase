@@ -37,9 +37,9 @@ startLoadingScreen();
 
 import { loadEditListingListeners } from './support/event-listeners.js';
 import {
-	buildCompartilhamentoObject,
-	buildDestinosArray,
-	buildImagemObject,
+	buildSharingObject,
+	buildDestinationsArray,
+	buildImageObject,
 	buildLinksObject,
 } from './support/build-listing-objects.js';
 
@@ -118,7 +118,7 @@ function loadEventListeners() {
 			event.returnValue = translate('messages.exit_confirmation');
 		}
 	});
-	getID('light').addEventListener('change', () => autoFillDarkColor());
+	getID('light-color').addEventListener('change', () => autoFillDarkColor());
 }
 
 async function carregarListagem() {
@@ -134,15 +134,15 @@ async function carregarListagem() {
 
 async function buildListObject() {
 	setFirestoreNewData({
-		sharing: await buildCompartilhamentoObject(),
+		sharing: await buildSharingObject(),
 		colors: {
 			active: getID('colors-enabled').checked,
-			light: getID('light').value,
-			dark: getID('dark').value,
+			light: getID('light-color').value,
+			dark: getID('dark-color').value,
 		},
 		description: getID('description').value,
-		destinations: buildDestinosArray(),
-		image: buildImagemObject(),
+		destinations: buildDestinationsArray(),
+		image: buildImageObject(),
 		links: buildLinksObject(),
 		subtitle: getID('subtitle').value,
 		title: getID('title').value,
@@ -219,8 +219,12 @@ function populateDevPage() {
 	// ── Reference data ──
 	page.destinations = DESTINATIONS;
 
-	// ── New data object built on save ──
-	page.newData = FIRESTORE_NEW_DATA;
+	// ── New data object built on save (live getter so it reflects the latest value) ──
+	Object.defineProperty(page, 'newData', {
+		get() { return FIRESTORE_NEW_DATA; },
+		enumerable: true,
+		configurable: true,
+	});
 
 	page.successfulSave = SUCCESSFUL_SAVE;
 

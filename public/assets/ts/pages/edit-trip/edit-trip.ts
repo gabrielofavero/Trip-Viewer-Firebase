@@ -300,11 +300,27 @@ function populateDevPage() {
 	page.destinations = DESTINATIONS;
 	page.travelers = TRAVELERS;
 
-	// ── New data objects built on save (trip document + subcollections) ──
-	page.newData = FIRESTORE_NEW_DATA;
-	page.protectedNewData = FIRESTORE_PROTECTED_NEW_DATA;
-	page.expensesNewData = FIRESTORE_EXPENSES_NEW_DATA;
-	page.expensesProtectedNewData = FIRESTORE_EXPENSES_PROTECTED_NEW_DATA;
+	// ── New data objects built on save (live getters so they reflect latest values) ──
+	Object.defineProperty(page, 'newData', {
+		get() { return FIRESTORE_NEW_DATA; },
+		enumerable: true,
+		configurable: true,
+	});
+	Object.defineProperty(page, 'protectedNewData', {
+		get() { return FIRESTORE_PROTECTED_NEW_DATA; },
+		enumerable: true,
+		configurable: true,
+	});
+	Object.defineProperty(page, 'expensesNewData', {
+		get() { return FIRESTORE_EXPENSES_NEW_DATA; },
+		enumerable: true,
+		configurable: true,
+	});
+	Object.defineProperty(page, 'expensesProtectedNewData', {
+		get() { return FIRESTORE_EXPENSES_PROTECTED_NEW_DATA; },
+		enumerable: true,
+		configurable: true,
+	});
 
 	page.successfulSave = SUCCESSFUL_SAVE;
 

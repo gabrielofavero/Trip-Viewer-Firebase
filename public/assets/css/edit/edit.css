@@ -1096,6 +1096,14 @@
 	margin-right: auto;
 }
 
+.flex-button-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-right: 6px;
+}
+
 .new {
 	fill: var(--theme-color);
 }

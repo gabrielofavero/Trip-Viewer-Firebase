@@ -326,7 +326,7 @@ export function getButton(button) {
 		case 'no':
 			return getCloseButton('labels.no', button.action);
 		case 'edit':
-			return getEditButton();
+			return getEditButton(button.action);
 		case 'view':
 			return getViewButton(button.action);
 		case 'download':
@@ -356,11 +356,21 @@ export function getHomeButton() {
 	return button;
 }
 
-export function getEditButton() {
+export function getEditButton(action?: { type: string; docId: string }) {
 	const button = document.createElement('button');
 	button.className = 'btn btn-basic btn-format';
 	button.type = 'button';
-	button.addEventListener('click', closeMessage);
+	button.addEventListener('click', () => {
+		if (action?.type && action?.docId) {
+			const param = { trips: 't', destinations: 'd', listings: 'l' }[action.type];
+			const page = { trips: 'trip', destinations: 'destination', listings: 'listing' }[action.type];
+			if (param && page) {
+				window.location.href = `${page}?${param}=${action.docId}`;
+				return;
+			}
+		}
+		closeMessage();
+	});
 	button.id = 'message-edit';
 
 	const icon = document.createElement('i');
@@ -445,7 +455,7 @@ export function displaySaveSuccess({
 	properties.title = '';
 	properties.content = content || translate('messages.documents.save.success');
 	properties.buttons = [
-		{ type: 'edit' },
+		{ type: 'edit', action: { type, docId } },
 		{ type: 'home' },
 		{ type: 'view', action: { type, docId } },
 	];

@@ -104,16 +104,23 @@ export function displayPinRequestBackup() {
 	displayFullMessage(properties);
 
 	function getContent() {
-		const content = [translate('trip.basic_information.pin.trip_pin.optional')];
+		const rows: string[] = [];
 		for (const protectedJob of MISSING_ACCOUNT_DATA.protected) {
-			content.push(`
-                <div class="nice-form-group">
-                    <label>${protectedJob.title}</label>
-                    <input id="${protectedJob.documentID}" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" pattern="[0-9]*" placeholder="${translate('trip.basic_information.pin.insert')}" />
-                </div>
-            `);
+			rows.push(`
+				<tr>
+					<td class="pin-backup-label">${protectedJob.title}</td>
+					<td class="pin-backup-input-cell">
+						<input id="${protectedJob.documentID}" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" pattern="[0-9]*" placeholder="0000" class="pin-backup-input" />
+					</td>
+				</tr>
+			`);
 		}
-		return content.join('');
+		return `
+			<p class="pin-backup-instruction">${translate('trip.basic_information.pin.trip_pin.optional')}</p>
+			<table class="pin-backup-table">
+				${rows.join('')}
+			</table>
+		`;
 	}
 }
 

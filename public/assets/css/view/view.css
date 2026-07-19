@@ -1040,6 +1040,20 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Destinations Description (View Page)
+--------------------------------------------------------------*/
+#destinations-description {
+	text-align: center;
+	max-width: 720px;
+	margin: 0 auto 24px auto;
+	font-size: 16px;
+	line-height: 1.6;
+	color: var(--font-color);
+	opacity: 0.75;
+	padding: 0 16px;
+}
+
+/*--------------------------------------------------------------
 # Services - Todos os Destinos
 --------------------------------------------------------------*/
 .services .icon-box {

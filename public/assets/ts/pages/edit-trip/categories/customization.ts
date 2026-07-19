@@ -27,5 +27,5 @@ export function autoFillDarkColor() {
 	if (DARK_COLOR.value == '#7f75b6' || (CURRENT_LIGHT && DARK_COLOR.value == CURRENT_LIGHT)) {
 		DARK_COLOR.value = getID('light-color').value;
 	}
-	CURRENT_LIGHT = getID('light').value;
+	CURRENT_LIGHT = getID('light-color').value;
 }
