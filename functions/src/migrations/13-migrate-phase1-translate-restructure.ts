@@ -81,6 +81,7 @@ const FIELD_MAP: Record<string, string> = {
 	checkout: 'checkOut',
 	ativo: 'active',
 	destinosID: 'id',
+	destinationId: 'id',
 	dados: 'data',
 	destinos: 'destinations',
 	valor: 'price',
@@ -359,67 +360,80 @@ function extractUserSummaries(
 	};
 	const fieldsToDelete: string[] = [];
 
-	// Trip summaries
-	const tripsData = translatedData.trips;
-	if (tripsData && typeof tripsData === 'object' && !Array.isArray(tripsData)) {
-		const entries = Object.entries(tripsData as Record<string, any>);
-		for (const [tripId, summary] of entries) {
-			if (!summary || typeof summary !== 'object') continue;
-			const doc = {
-				title: summary.title ?? '',
-				start: summary.start ?? null,
-				end: summary.end ?? null,
-				image: summary.image ?? '',
-				colors: summary.colors ?? {},
-				version: summary.version ?? {},
-				pin: summary.pin ?? 'no-pin',
-				modules: summary.modules ?? {},
-			};
-			console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating tripSummary: ${tripId}`);
-			if (!dryRun) batch.set(userDocRef.collection('tripSummaries').doc(tripId), doc);
-			report.tripSummaries++;
+	// Helper: extract summaries from either nested object or dot-notation keys.
+	// Firestore dot-notation keys appear as nested objects via SDK, but handle
+	// both forms defensively.
+	function extractSummaries(
+		prefix: string,
+		subcollectionName: string,
+		buildDoc: (id: string, summary: Record<string, any>) => Record<string, any>,
+	) {
+		// 1) Nested object: { trips: { id1: {...}, id2: {...} } }
+		const nested = translatedData[prefix];
+		if (nested && typeof nested === 'object' && !Array.isArray(nested)) {
+			for (const [id, summary] of Object.entries(nested as Record<string, any>)) {
+				if (!summary || typeof summary !== 'object') continue;
+				const doc = buildDoc(id, summary);
+				console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating ${subcollectionName}: ${id}`);
+				if (!dryRun)
+					batch.set(userDocRef.collection(subcollectionName).doc(id), doc);
+				report.tripSummaries += subcollectionName === 'tripSummaries' ? 1 : 0;
+				report.destinationSummaries +=
+					subcollectionName === 'destinationSummaries' ? 1 : 0;
+				report.listingSummaries += subcollectionName === 'listingSummaries' ? 1 : 0;
+			}
+			fieldsToDelete.push(prefix);
 		}
-		fieldsToDelete.push('trips');
+
+		// 2) Flat dot-notation: { "trips.id1": {...}, "trips.id2": {...} }
+		//    Firestore SDK normally nests these, but user docs created via
+		//    admin SDK update() with dot paths may retain flat keys.
+		const dotPrefix = `${prefix}.`;
+		for (const [key, summary] of Object.entries(translatedData)) {
+			if (!key.startsWith(dotPrefix)) continue;
+			if (!summary || typeof summary !== 'object') continue;
+			const id = key.slice(dotPrefix.length);
+			const doc = buildDoc(id, summary as Record<string, any>);
+			console.log(
+				`    ${dryRun ? '[DRY RUN] ' : ''}Creating ${subcollectionName} (dot-notation): ${id}`,
+			);
+			if (!dryRun)
+				batch.set(userDocRef.collection(subcollectionName).doc(id), doc);
+			if (subcollectionName === 'tripSummaries') report.tripSummaries++;
+			if (subcollectionName === 'destinationSummaries') report.destinationSummaries++;
+			if (subcollectionName === 'listingSummaries') report.listingSummaries++;
+			fieldsToDelete.push(key);
+		}
 	}
+
+	// Trip summaries
+	extractSummaries('trips', 'tripSummaries', (id, s) => ({
+		title: s.title ?? '',
+		start: s.start ?? null,
+		end: s.end ?? null,
+		image: s.image ?? '',
+		colors: s.colors ?? {},
+		version: s.version ?? {},
+		pin: s.pin ?? 'no-pin',
+		modules: s.modules ?? {},
+	}));
 
 	// Destination summaries
-	const destData = translatedData.destinations;
-	if (destData && typeof destData === 'object' && !Array.isArray(destData)) {
-		const entries = Object.entries(destData as Record<string, any>);
-		for (const [destId, summary] of entries) {
-			if (!summary || typeof summary !== 'object') continue;
-			const doc = {
-				title: summary.title ?? '',
-				currency: summary.currency ?? '',
-				version: summary.version ?? {},
-			};
-			console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating destinationSummary: ${destId}`);
-			if (!dryRun) batch.set(userDocRef.collection('destinationSummaries').doc(destId), doc);
-			report.destinationSummaries++;
-		}
-		fieldsToDelete.push('destinations');
-	}
+	extractSummaries('destinations', 'destinationSummaries', (id, s) => ({
+		title: s.title ?? '',
+		currency: s.currency ?? '',
+		version: s.version ?? {},
+	}));
 
 	// Listing summaries
-	const listingData = translatedData.listings;
-	if (listingData && typeof listingData === 'object' && !Array.isArray(listingData)) {
-		const entries = Object.entries(listingData as Record<string, any>);
-		for (const [listingId, summary] of entries) {
-			if (!summary || typeof summary !== 'object') continue;
-			const doc = {
-				title: summary.title ?? '',
-				subtitle: summary.subtitle ?? '',
-				description: summary.description ?? '',
-				image: summary.image ?? '',
-				colors: summary.colors ?? {},
-				version: summary.version ?? {},
-			};
-			console.log(`    ${dryRun ? '[DRY RUN] ' : ''}Creating listingSummary: ${listingId}`);
-			if (!dryRun) batch.set(userDocRef.collection('listingSummaries').doc(listingId), doc);
-			report.listingSummaries++;
-		}
-		fieldsToDelete.push('listings');
-	}
+	extractSummaries('listings', 'listingSummaries', (id, s) => ({
+		title: s.title ?? '',
+		subtitle: s.subtitle ?? '',
+		description: s.description ?? '',
+		image: s.image ?? '',
+		colors: s.colors ?? {},
+		version: s.version ?? {},
+	}));
 
 	// Remove embedded fields from translated data
 	for (const f of fieldsToDelete) {
@@ -485,7 +499,8 @@ function moveAccommodations(
 	let moved = 0;
 	for (const acc of accs) {
 		if (!acc || typeof acc !== 'object') continue;
-		const accId = randomId(5, existingIds);
+		// Preserve original ID so protected-doc mapping stays valid
+		const accId = acc.id && typeof acc.id === 'string' ? acc.id : randomId(5, existingIds);
 		existingIds.push(accId);
 
 		const doc: Record<string, any> = {};
@@ -543,7 +558,8 @@ function moveTransportation(
 	if (Array.isArray(legs) && legs.length > 0) {
 		for (const leg of legs) {
 			if (!leg || typeof leg !== 'object') continue;
-			const legId = randomId(5, existingIds);
+			// Preserve original ID so protected-doc mapping stays valid
+			const legId = leg.id && typeof leg.id === 'string' ? leg.id : randomId(5, existingIds);
 			existingIds.push(legId);
 
 			const doc: Record<string, any> = {};
@@ -708,26 +724,24 @@ async function processCollection(
 			}
 		}
 
-		// Idempotency: skip if already translated
-		if (isAlreadyTranslated(data)) {
-			console.log(`[${collectionName}/${doc.id}] Already translated — skipping.`);
-			continue;
-		}
-
-		// Step 1: Translate field names & values
-		const transformed = transformObject(data, `_root_${collectionName}`);
-		report.fieldsRenamed = transformed.fieldsRenamed;
-		report.valuesTranslated = transformed.valuesTranslated;
-
-		if (transformed.fieldsRenamed === 0 && transformed.valuesTranslated === 0) {
-			console.log(`[${collectionName}/${doc.id}] No changes — skipping.`);
-			continue;
-		}
-
-		const newData = transformed.result as Record<string, any>;
+		// Idempotency: determine translation state
+		const alreadyTranslated = isAlreadyTranslated(data);
 		const docRef = doc.ref; // original ref (Portuguese collection)
 
-		// Step 2: Collection-specific restructuring
+		// Step 1: Translate field names & values (if needed)
+		let newData: Record<string, any>;
+		if (alreadyTranslated) {
+			// Use data as-is; restructuring may still be needed
+			newData = { ...data };
+			console.log(`[${collectionName}/${doc.id}] Already translated — checking restructuring...`);
+		} else {
+			const transformed = transformObject(data, `_root_${collectionName}`);
+			report.fieldsRenamed = transformed.fieldsRenamed;
+			report.valuesTranslated = transformed.valuesTranslated;
+			newData = transformed.result as Record<string, any>;
+		}
+
+		// Step 2: Collection-specific restructuring (always run)
 		if (collectionName === 'usuarios') {
 			report.summaries = extractUserSummaries(newData, docRef, batch, dryRun);
 		}
@@ -754,10 +768,38 @@ async function processCollection(
 			report.itineraryDays = moveItinerary(newData, docRef, batch, existingItinIds, dryRun);
 		}
 
-		// Step 3: Write back translated + restructured data
+		// Step 3: Determine if write-back is needed
+		const hasRestructuring =
+			(report.summaries &&
+				(report.summaries.tripSummaries > 0 ||
+					report.summaries.destinationSummaries > 0 ||
+					report.summaries.listingSummaries > 0)) ||
+			(report.accsMoved ?? 0) > 0 ||
+			(report.transportLegs ?? 0) > 0 ||
+			(report.transportSettings ?? false) ||
+			(report.itineraryDays ?? 0) > 0 ||
+			(report.destRefsStripped ?? 0) > 0;
+
+		const hasTranslation = report.fieldsRenamed > 0 || report.valuesTranslated > 0;
+		const isEmpty = Object.keys(newData).length === 0;
+
+		// Gastos (expenses): write a version stub so the frontend can update() later.
+		// Other collections: skip empty writes (they cause NOT_FOUND in the emulator).
+		if (isEmpty && collectionName === 'gastos') {
+			newData.version = { lastUpdated: new Date().toISOString() };
+			console.log(`[${collectionName}/${doc.id}] Empty doc — writing version stub.`);
+		} else if (isEmpty || (!hasTranslation && !hasRestructuring)) {
+			console.log(`[${collectionName}/${doc.id}] No changes — skipping.`);
+			continue;
+		}
+
+		// Step 4: Write back translated + restructured data
 		const renameNote = newDocId ? ` (ID: ${doc.id} → ${newDocId})` : '';
+		const changeParts: string[] = [];
+		if (hasTranslation) changeParts.push(`${report.fieldsRenamed} fields, ${report.valuesTranslated} values`);
+		if (hasRestructuring) changeParts.push('restructuring');
 		console.log(
-			`[${collectionName}/${doc.id}] ${report.fieldsRenamed} fields, ${report.valuesTranslated} values${renameNote}`,
+			`[${collectionName}/${doc.id}] ${changeParts.join(' + ')}${renameNote}`,
 		);
 
 		if (dryRun) {
@@ -815,11 +857,14 @@ async function processProtectedSubcollections(dryRun: boolean): Promise<number> 
 				const transformed = transformObject(data, `_root_${parent}_protected`);
 				if (transformed.fieldsRenamed === 0 && transformed.valuesTranslated === 0) continue;
 
+				const result = transformed.result as Record<string, any>;
+				if (Object.keys(result).length === 0) continue;
+
 				console.log(
 					`[${path}] ${transformed.fieldsRenamed} fields, ${transformed.valuesTranslated} values`,
 				);
 				if (!dryRun) {
-					await docRef.set(transformed.result as FirebaseFirestore.DocumentData);
+					await docRef.set(result as FirebaseFirestore.DocumentData);
 				}
 				processed++;
 			} catch (err) {

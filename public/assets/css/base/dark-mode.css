@@ -399,6 +399,12 @@
 	color: #fff;
 }
 
+[data-theme="dark"] .btn-basic-secondary:hover,
+[data-theme="dark"] .btn-basic-secondary:focus {
+	background: #ced1d4;
+	color: #1a1a1a;
+}
+
 [data-theme="dark"] .btn {
 	color: var(--font-color);
 }

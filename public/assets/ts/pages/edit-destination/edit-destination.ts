@@ -50,7 +50,7 @@ import { addShopping } from './new-destination.js';
 import { addRestaurants } from './new-destination.js';
 import { addNightlife } from './new-destination.js';
 import { addTourism } from './new-destination.js';
-import { setDocumento } from '../../utils/set.js';
+import { setDocument } from '../../utils/set.js';
 import { buildDestinationObject, updateTikTokLinks } from './set-destination.js';
 import {
 	FIRESTORE_DESTINATIONS_DATA,
@@ -153,7 +153,7 @@ function loadEventListeners() {
 		const type = 'destinations';
 		const dataBuildingFunctions = [buildDestinationObject, updateTikTokLinks];
 
-		setDocumento({ type, dataBuildingFunctions });
+		setDocument({ type, dataBuildingFunctions });
 	});
 
 	getID('cancel-btn').addEventListener('click', () => {

@@ -47,7 +47,7 @@ import { loadUploadSelector } from '../../data/firebase/storage.js';
 import { loadListData } from './existing-listing.js';
 import { autoFillDarkColor } from '../edit-trip/categories/customization.js';
 import { loadDestinations } from '../edit-trip/new-trip.js';
-import { setDocumento } from '../../utils/set.js';
+import { setDocument } from '../../utils/set.js';
 import { initEditTabs } from '../../ui/edit-tabs.js';
 import { enhanceAllColorPickers } from '../../ui/color-picker-hex.js';
 
@@ -171,7 +171,7 @@ async function setListagem() {
 
 	const type = 'listings';
 	const dataBuildingFunctions = [buildListObject];
-	await setDocumento({ type, dataBuildingFunctions });
+	await setDocument({ type, dataBuildingFunctions });
 }
 
 export function deleteListagem() {

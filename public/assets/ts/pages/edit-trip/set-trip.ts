@@ -26,9 +26,10 @@ import {
 	getTransportationObject,
 } from './categories/transportation.js';
 import { getExpensesObject } from './categories/expenses.js';
-import { setDocumento, addSetResponse } from '../../utils/set.js';
+import { setDocument, addSetResponse } from '../../utils/set.js';
 import { IMAGE_UPLOAD_STATUS } from '../../data/firebase/storage.js';
 import { TRAVELERS } from '../../data/state.js';
+import { computeArrayDiff } from '../../utils/diff.js';
 
 export var FIRESTORE_PROTECTED_NEW_DATA = {};
 
@@ -260,46 +261,61 @@ function buildDayId(day: Record<string, any>, index: number): string {
 	return `day-${index + 1}`;
 }
 
-/** Write accommodations, transportation, and itinerary to subcollections. */
+/** Write accommodations, transportation, and itinerary to subcollections.
+ *  Uses computeArrayDiff to only write items that actually changed,
+ *  avoiding unnecessary Firestore writes. */
 function writeTripSubcollections(ops: any) {
 	const tripId = DOCUMENT_ID;
 	if (!tripId) return;
 
-	// Accommodations → trips/{id}/accommodations/{accId}
-	for (const acc of FIRESTORE_ACCOMMODATIONS_NEW_DATA) {
+	const originalState = getState();
+
+	// ── Accommodations ──────────────────────────────────────
+	const originalAccommodations = originalState?.accommodations || [];
+	const accDiff = computeArrayDiff(originalAccommodations, FIRESTORE_ACCOMMODATIONS_NEW_DATA);
+	for (const acc of accDiff.toSet) {
 		if (acc.id) {
 			ops.set(`trips/${tripId}/accommodations/${acc.id}`, acc);
 		}
 	}
+	for (const id of accDiff.toDelete) {
+		ops.delete(`trips/${tripId}/accommodations/${id}`);
+	}
 
-	// Transportation legs → trips/{id}/transportation/{legId}
-	const { data: legs, viewMode } = FIRESTORE_TRANSPORTATION_NEW_DATA;
-	if (Array.isArray(legs)) {
-		for (const leg of legs) {
-			if (leg.id) {
-				ops.set(`trips/${tripId}/transportation/${leg.id}`, leg);
-			}
+	// ── Transportation ──────────────────────────────────────
+	const originalLegs = originalState?.transportation?.data || [];
+	const { data: newLegs, viewMode } = FIRESTORE_TRANSPORTATION_NEW_DATA;
+	const legsDiff = computeArrayDiff(originalLegs, Array.isArray(newLegs) ? newLegs : []);
+	for (const leg of legsDiff.toSet) {
+		if (leg.id) {
+			ops.set(`trips/${tripId}/transportation/${leg.id}`, leg);
 		}
 	}
-	// Settings → trips/{id}/transportation/_settings
-	ops.set(`trips/${tripId}/transportation/_settings`, { viewMode: viewMode || 'simple' });
+	for (const id of legsDiff.toDelete) {
+		ops.delete(`trips/${tripId}/transportation/${id}`);
+	}
 
-	// Itinerary days → trips/{id}/itinerary/{dayId}
-	const usedIds = new Set<string>();
-	FIRESTORE_ITINERARY_NEW_DATA.forEach((day, i) => {
-		let dayId = buildDayId(day, i);
-		// Avoid collisions (e.g. two days with same date but different content)
-		if (usedIds.has(dayId)) {
-			const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-			const arr = new Uint32Array(3);
-			crypto.getRandomValues(arr);
-			let suffix = '';
-			for (let j = 0; j < 3; j++) suffix += chars[arr[j] % chars.length];
-			dayId = `${dayId}-${suffix}`;
+	// Only write _settings if viewMode changed
+	const originalViewMode = originalState?.transportation?.viewMode;
+	if (!originalViewMode || originalViewMode !== (viewMode || 'simple')) {
+		ops.set(`trips/${tripId}/transportation/_settings`, { viewMode: viewMode || 'simple' });
+	}
+
+	// ── Itinerary ───────────────────────────────────────────
+	const originalItinerary = originalState?.itinerary || [];
+	const itineraryDiff = computeArrayDiff(originalItinerary, FIRESTORE_ITINERARY_NEW_DATA);
+	for (const day of itineraryDiff.toSet) {
+		let dayId = day.id;
+		if (!dayId) {
+			// New day without ID — assign one
+			const index = FIRESTORE_ITINERARY_NEW_DATA.indexOf(day);
+			dayId = buildDayId(day, index);
 		}
-		usedIds.add(dayId);
 		ops.set(`trips/${tripId}/itinerary/${dayId}`, day);
-	});
+	}
+	for (const id of itineraryDiff.toDelete) {
+		ops.delete(`trips/${tripId}/itinerary/${id}`);
+	}
 }
 
 export async function setTripData() {
@@ -315,5 +331,5 @@ export async function setTripData() {
 	const dataBuildingFunctions = [buildTripObject, buildExpensesObject];
 	const batchFunctions = [setProtectedDataAndExpenses, writeTripSubcollections];
 
-	await setDocumento({ type, checks, dataBuildingFunctions, batchFunctions });
+	await setDocument({ type, checks, dataBuildingFunctions, batchFunctions });
 }

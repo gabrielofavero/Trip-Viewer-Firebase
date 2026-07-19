@@ -971,6 +971,49 @@
 	box-shadow: 0 4px 16px rgba(231, 76, 60, 0.4);
 }
 
+/* Button layout spacing */
+.btn-format {
+	margin: 5px;
+}
+
+.btn-format:first-child {
+	margin-left: 0;
+}
+
+.btn-format:last-child {
+	margin-right: 0;
+}
+
+/* Outlined basic — matches theme color */
+.btn-basic {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--theme-color);
+	color: var(--theme-color);
+	background: none;
+}
+
+.btn-basic:hover,
+.btn-basic:focus {
+	background: var(--theme-color);
+	color: #fff;
+}
+
+/* Outlined secondary — neutral gray */
+.btn-basic-secondary {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--text-secondary);
+	color: var(--text-secondary);
+	background: none;
+}
+
+.btn-basic-secondary:hover,
+.btn-basic-secondary:focus {
+	background: var(--text-secondary);
+	color: #fff;
+}
+
 /* Small variant */
 .btn-sm {
 	padding: 7px 16px;

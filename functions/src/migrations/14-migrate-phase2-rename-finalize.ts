@@ -368,6 +368,117 @@ async function fixItineraryTipo(dryRun: boolean): Promise<{ days: number; items:
 }
 
 // ============================================================
+// STEP 4.5: Fix itinerary destinationIds keys (destinationId → id)
+// ============================================================
+
+async function fixItineraryDestinationIdKeys(
+	dryRun: boolean,
+): Promise<{ days: number; items: number }> {
+	console.log(`\n[fix-itinerary-destinationIds] Scanning trips/itinerary...`);
+
+	const tripsSnap = await admin.firestore().collection('trips').get();
+	if (tripsSnap.empty) {
+		console.log(`[fix-itinerary-destinationIds] No trips found.`);
+		return { days: 0, items: 0 };
+	}
+
+	let totalDays = 0;
+	let totalItems = 0;
+	const batch = admin.firestore().batch();
+	let batchCount = 0;
+
+	for (const tripDoc of tripsSnap.docs) {
+		const itinSnap = await tripDoc.ref.collection('itinerary').get();
+		if (itinSnap.empty) continue;
+
+		for (const dayDoc of itinSnap.docs) {
+			const data = dayDoc.data();
+			if (!data) continue;
+
+			const destIds = data.destinationIds;
+			if (!Array.isArray(destIds) || destIds.length === 0) continue;
+
+			let changed = false;
+			for (const item of destIds) {
+				if (item && typeof item === 'object' && 'destinationId' in item && !('id' in item)) {
+					item.id = item.destinationId;
+					delete item.destinationId;
+					totalItems++;
+					changed = true;
+				}
+			}
+
+			if (changed) {
+				totalDays++;
+				if (dryRun) {
+					console.log(
+						`  [DRY RUN] Would fix destinationIds in trips/${tripDoc.id}/itinerary/${dayDoc.id}`,
+					);
+				} else {
+					batch.set(dayDoc.ref, data);
+					batchCount++;
+					if (batchCount >= 500) {
+						await batch.commit();
+						batchCount = 0;
+					}
+				}
+			}
+		}
+	}
+
+	// Also scan the old Portuguese collection if it still exists
+	try {
+		const oldTripsSnap = await admin.firestore().collection('viagens').get();
+		for (const tripDoc of oldTripsSnap.docs) {
+			const itinSnap = await tripDoc.ref.collection('itinerary').get();
+			if (itinSnap.empty) continue;
+
+			for (const dayDoc of itinSnap.docs) {
+				const data = dayDoc.data();
+				if (!data) continue;
+
+				const destIds = data.destinationIds;
+				if (!Array.isArray(destIds) || destIds.length === 0) continue;
+
+				let changed = false;
+				for (const item of destIds) {
+					if (item && typeof item === 'object' && 'destinationId' in item && !('id' in item)) {
+						item.id = item.destinationId;
+						delete item.destinationId;
+						totalItems++;
+						changed = true;
+					}
+				}
+
+				if (changed) {
+					totalDays++;
+					if (dryRun) {
+						console.log(
+							`  [DRY RUN] Would fix destinationIds in viagens/${tripDoc.id}/itinerary/${dayDoc.id}`,
+						);
+					} else {
+						batch.set(dayDoc.ref, data);
+						batchCount++;
+						if (batchCount >= 500) {
+							await batch.commit();
+							batchCount = 0;
+						}
+					}
+				}
+			}
+		}
+	} catch {
+		// Collection may not exist
+	}
+
+	if (batchCount > 0 && !dryRun) await batch.commit();
+	console.log(
+		`[fix-itinerary-destinationIds] ${totalDays} days, ${totalItems} items fixed.`,
+	);
+	return { days: totalDays, items: totalItems };
+}
+
+// ============================================================
 // STEP 5: Fix destination categories (migration 22)
 // ============================================================
 
@@ -609,6 +720,10 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 		console.log(`\n--- STEP 4: Fix Itinerary Tipo Values ---\n`);
 		const tipoResult = await fixItineraryTipo(dryRun);
 
+		// ── Step 4.5: Fix itinerary destinationIds keys ──
+		console.log(`\n--- STEP 4.5: Fix Itinerary destinationIds Keys ---\n`);
+		const destIdResult = await fixItineraryDestinationIdKeys(dryRun);
+
 		// ── Step 5: Fix destination categories ──
 		console.log(`\n--- STEP 5: Fix Destination Categories ---\n`);
 		const catResult = await fixDestinationCategories(dryRun);
@@ -635,6 +750,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			`  Docs deleted:       ${totalDeleted}\n` +
 			`  Errors:             ${totalErrors}\n` +
 			`  Itinerary days fixed: ${tipoResult.days} (${tipoResult.items} items)\n` +
+			`  DestinationIds fixed: ${destIdResult.days} days (${destIdResult.items} items)\n` +
 			`  Destination cats:   ${catResult.dests} dests, ${catResult.subItems} items, ${catResult.moduleKeys} keys\n` +
 			(doCleanup
 				? `  Cleanup deletes:    ${cleanupReports.reduce((s, r) => s + r.deleted, 0)}\n`
@@ -650,6 +766,7 @@ export const migrate = functions.https.onRequest(async (req, res) => {
 			totalDeleted,
 			totalErrors,
 			itineraryTipo: tipoResult,
+			destinationIdsFix: destIdResult,
 			destinationCategories: catResult,
 			cleanupDeletes: doCleanup ? cleanupReports.reduce((s, r) => s + r.deleted, 0) : 0,
 		});

@@ -4,7 +4,6 @@ import { translate } from '../i18n/translation.js';
 import { disableScroll, getVisibility } from '../theme/visibility.js';
 import { getHTMLpage } from '../app/main.js';
 import { fadeIn, fadeOut } from '../theme/animations.js';
-import { DOCUMENT_ID } from '../data/state.js';
 
 export let MESSAGE_MODAL_OPEN = false;
 // Use var (not const) to avoid TDZ errors from circular module dependencies
@@ -330,6 +329,8 @@ export function getButton(button) {
 			return getEditButton();
 		case 'view':
 			return getViewButton(button.action);
+		case 'download':
+			return getDownloadButton(button.action);
 		default:
 			return getCloseButton('labels.understood');
 	}
@@ -402,6 +403,23 @@ export function getViewButton(action: { type: string; docId: string }) {
 
 	button.appendChild(icon);
 	button.innerHTML += ` ${translate('labels.view')}`;
+
+	return button;
+}
+
+export function getDownloadButton(onclick) {
+	const button = document.createElement('button');
+	button.className = 'btn btn-theme btn-format';
+	button.type = 'button';
+	_setButtonAction(button, onclick, undefined);
+	button.id = 'message-download';
+
+	const icon = document.createElement('i');
+	icon.className = 'iconify';
+	icon.setAttribute('data-icon', 'material-symbols:download');
+
+	button.appendChild(icon);
+	button.innerHTML += ' Download JSON';
 
 	return button;
 }
