@@ -384,13 +384,19 @@
 }
 
 [data-theme="dark"] .btn-basic {
-	border-color: #d4d1e7;
-	color: #d4d1e7;
+	border-color: var(--theme-color);
+	color: var(--theme-color);
 }
 
 [data-theme="dark"] .btn-basic-secondary {
-	border-color: #ced1d4;
-	color: #ced1d4;
+	border-color: #555;
+	color: #555;
+}
+
+[data-theme="dark"] .btn-basic-secondary:hover,
+[data-theme="dark"] .btn-basic-secondary:focus {
+	background: #555;
+	color: #fff;
 }
 
 [data-theme="dark"] .btn {

@@ -53,8 +53,8 @@ function loadBasicDestinationData() {
 
 function loadExistingDestination(category) {
 	const enabled = FIRESTORE_DESTINATIONS_DATA.modules[category] === true;
-	getID(`enabled-${category}`).checked = enabled;
-	getID(`enabled-${category}-content`).style.display = enabled ? 'block' : 'none';
+	getID(`${category}-enabled`).checked = enabled;
+	getID(`${category}-enabled-content`).style.display = enabled ? 'block' : 'none';
 	getID(`${category}-add-box`).style.display = enabled ? 'block' : 'none';
 
 	const itemsArr = Object.entries(FIRESTORE_DESTINATIONS_DATA?.[category] || {})

@@ -257,7 +257,7 @@ export function removeChildWithValidation(category, j) {
 
 export function hideParentIfNoChildren(category) {
 	if (getChildIDs(`${category}-box`).length === 0) {
-		getID(`enabled-${category}`).checked = false;
+		getID(`${category}-enabled`).checked = false;
 		hideContent(category);
 	}
 }

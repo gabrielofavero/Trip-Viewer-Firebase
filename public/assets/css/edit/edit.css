@@ -290,6 +290,12 @@
 	line-height: 1.5;
 }
 
+/* Caption — helper text below inputs */
+.caption {
+	font-style: italic;
+	color: var(--text-muted);
+}
+
 .edit-page-content section p:last-child {
 	margin-bottom: 0;
 }
@@ -1019,7 +1025,7 @@
 	cursor: pointer;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 }
 
 .accordion-button[aria-expanded="false"] {
@@ -1040,6 +1046,20 @@
 
 .accordion-button::after {
 	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235859a7'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+/* "New" badge icon — right-aligned in accordion headers */
+.title-text {
+	margin-right: auto;
+}
+
+.new {
+	fill: var(--theme-color);
+}
+
+.icon-container {
+	display: flex;
+	align-items: center;
 }
 
 /*--------------------------------------------------------------

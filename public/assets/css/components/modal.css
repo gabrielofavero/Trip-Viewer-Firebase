@@ -115,3 +115,17 @@
 	background: var(--theme-color);
 	color: #fff;
 }
+
+.btn-basic-secondary {
+	border-width: 2px;
+	border-style: solid;
+	border-color: #555;
+	color: #555;
+	background: none;
+}
+
+.btn-basic-secondary:hover,
+.btn-basic-secondary:focus {
+	background: #555;
+	color: #fff;
+}

@@ -361,13 +361,13 @@ export function moveDestination(j, category) {
 
 		updateDescriptionButtonLabel(newCategory, newJ);
 
-		if (getID(`enabled-${newCategory}-content`).children.length === 1) {
-			getID(`enabled-${newCategory}`).checked = true;
+		if (getID(`${newCategory}-enabled-content`).children.length === 1) {
+			getID(`${newCategory}-enabled`).checked = true;
 			showContent(newCategory);
 		}
 
-		if (getID(`enabled-${category}-content`).children.length === 0) {
-			getID(`enabled-${category}`).checked = false;
+		if (getID(`${category}-enabled-content`).children.length === 0) {
+			getID(`${category}-enabled`).checked = false;
 			hideContent(category);
 		}
 	}

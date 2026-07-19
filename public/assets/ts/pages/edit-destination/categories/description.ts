@@ -76,7 +76,7 @@ export function openDescriptionModal(category, j) {
 	modalProperties.title = getID(`${category}-name-${j}`).value || defaultTitle;
 	modalProperties.containers = getContainersInput();
 	modalProperties.content = getDescriptionContent(category);
-	modalProperties.botoes = [
+	modalProperties.buttons = [
 		{
 			type: 'cancel',
 		},
@@ -103,7 +103,7 @@ function getDescriptionContent(category) {
 	const languages = {};
 
 	for (const lang of LANGUAGES) {
-		placeholders[lang] = translate(`destination.${translation}.placeholders.description.${lang}`);
+		placeholders[lang] = translate(`destination.${translation.toLowerCase()}.placeholders.description.${lang}`);
 		languages[lang] = translate(`labels.language.${lang}`);
 	}
 

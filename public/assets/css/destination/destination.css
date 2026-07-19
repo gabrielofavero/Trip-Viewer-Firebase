@@ -484,8 +484,13 @@ h1::after {
 
 .new {
 	fill: var(--theme-color);
-	margin-right: 10px;
+	margin-left: auto;
 	font-size: 20px;
+}
+
+.icon-container {
+	display: flex;
+	align-items: center;
 }
 
 .accordion-button::after {

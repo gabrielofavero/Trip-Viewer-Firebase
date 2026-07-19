@@ -28,12 +28,12 @@ export async function buildDestinationObject() {
 			getID('currency').value == 'other' ? getID('other-currency').value : getID('currency').value,
 		myMaps: getID('map-link').value,
 		modules: {
-			snacks: getID(`enabled-snacks`).checked,
-			shopping: getID(`enabled-shopping`).checked,
+			snacks: getID(`snacks-enabled`).checked,
+			shopping: getID(`shopping-enabled`).checked,
 			map: getID('map-enabled').checked,
-			restaurants: getID(`enabled-restaurants`).checked,
-			nightlife: getID(`enabled-nightlife`).checked,
-			tourism: getID(`enabled-tourism`).checked,
+			restaurants: getID(`restaurants-enabled`).checked,
+			nightlife: getID(`nightlife-enabled`).checked,
+			tourism: getID(`tourism-enabled`).checked,
 		},
 		sharing: {
 			active: true,
